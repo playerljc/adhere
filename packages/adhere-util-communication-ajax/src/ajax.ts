@@ -1,10 +1,20 @@
 import { notification } from 'antd';
 
+import MobileGlobalIndicator from '@baifendian/adhere-mobile-ui-globalindicator';
 import GlobalIndicator from '@baifendian/adhere-ui-globalindicator';
 import Util from '@baifendian/adhere-util';
 import intl from '@baifendian/adhere-util-intl';
 
-import type { IConfig, ISendArg, ISendPrepareArg, Method, Prepare, SendResult } from './types';
+import type {
+  IConfig,
+  ISendArg,
+  ISendPrepareArg,
+  Method,
+  Prepare,
+  RequestInterceptor,
+  ResponseInterceptor,
+  SendResult,
+} from './types';
 
 // 是否触发过402
 let trigger402 = false;
@@ -12,8 +22,89 @@ let trigger402 = false;
 // notification的节流时间(毫秒)
 const notificationThrottlingTime = 300;
 
-let errorInfoHandler;
-let warnInfoHandler;
+let errorInfoHandler: string | number | NodeJS.Timeout | null | undefined;
+let warnInfoHandler: string | number | NodeJS.Timeout | null | undefined;
+
+/**
+ * Interceptors
+ * @description 拦截器
+ */
+class Interceptors {
+  // 请求拦截器容器
+  protected requestInterceptors = new Set<RequestInterceptor>();
+
+  // 响应拦截器容器
+  protected responseInterceptors = new Set<ResponseInterceptor>();
+
+  /**
+   * addRequest
+   * @description 添加一个请求拦截器
+   * @param handler
+   */
+  addRequest(handler: RequestInterceptor | RequestInterceptor[]) {
+    if (Array.isArray(handler)) {
+      (handler as RequestInterceptor[]).forEach((_handler) => {
+        this.requestInterceptors.add(_handler);
+      });
+
+      return this.requestInterceptors;
+    }
+
+    return this.requestInterceptors.add(handler as RequestInterceptor);
+  }
+
+  /**
+   * addResponse
+   * @description 添加一个响应拦截器
+   * @param handler
+   */
+  addResponse(handler: ResponseInterceptor) {
+    if (Array.isArray(handler)) {
+      (handler as ResponseInterceptor[]).forEach((_handler) => {
+        this.responseInterceptors.add(_handler);
+      });
+
+      return this.responseInterceptors;
+    }
+
+    return this.responseInterceptors.add(handler as ResponseInterceptor);
+  }
+
+  /**
+   * remove
+   * @description 删除拦截器
+   * @param handler
+   */
+  remove(handler: RequestInterceptor | ResponseInterceptor) {
+    if (this.requestInterceptors.has(handler as RequestInterceptor)) {
+      this.requestInterceptors.delete(handler as RequestInterceptor);
+    } else if (this.responseInterceptors.has(handler as ResponseInterceptor)) {
+      this.responseInterceptors.delete(handler as ResponseInterceptor);
+    }
+  }
+
+  /**
+   * requestReducer
+   * @description 对请求参数进行拦截器处理
+   * @param params
+   */
+  requestReducer(params: ISendArg) {
+    return Array.from(this.requestInterceptors).reduce((result, interceptor) => {
+      return interceptor(result);
+    }, params);
+  }
+
+  /**
+   * responseReducer
+   * @description 对响应参数进行拦截器处理
+   * @param params
+   */
+  responseReducer(params: Parameters<ResponseInterceptor>[0]) {
+    return Array.from(this.responseInterceptors).reduce((result, interceptor) => {
+      return interceptor(result);
+    }, params);
+  }
+}
 
 /**
  * Ajax
@@ -72,6 +163,9 @@ class Ajax {
   static CONTENT_TYPE_APPLICATION_XML = 'application/xml';
 
   static CONTENT_TYPE_TEXT_PLAIN = 'text/plain';
+
+  // 真正的烂机器
+  static interceptors = new Interceptors();
 
   protected baseURL: string;
 
@@ -170,7 +264,7 @@ class Ajax {
  * @param title
  * @param message
  */
-function errorInfo(title, message) {
+function errorInfo(title: string, message: string) {
   if (errorInfoHandler) {
     clearTimeout(errorInfoHandler);
     errorInfoHandler = null;
@@ -189,7 +283,7 @@ function errorInfo(title, message) {
  * @param title
  * @param message
  */
-function warnInfo(title, message) {
+function warnInfo(title: string, message: string) {
   if (warnInfoHandler) {
     clearTimeout(warnInfoHandler);
     warnInfoHandler = null;
@@ -258,6 +352,8 @@ function getDefaultConfig(this: Ajax): IConfig {
       text: '',
       // 遮罩的元素
       el: document.body,
+      zIndex: 19999,
+      size: 'default',
     },
     onBeforeResponse: () => {},
     dataKey: 'data',
@@ -279,21 +375,21 @@ function initXhrEvents({ xhr, events, reject }) {
   const { onTimeout, onLoadsStart, onProgress, onAbort, onError, onLoad, onLoadend } = events;
 
   if (onTimeout) {
-    xhr.addEventListener('timeout', function (...params) {
+    xhr.addEventListener('timeout', function (...params: any) {
       onTimeout(...(params ?? {}));
       reject(...(params ?? {}));
     });
   }
 
   if (onAbort) {
-    xhr.addEventListener('abort', function (...params) {
+    xhr.addEventListener('abort', function (...params: any) {
       onAbort(...(params ?? {}));
       reject(...(params ?? {}));
     });
   }
 
   if (onError) {
-    xhr.addEventListener('error', function (...params) {
+    xhr.addEventListener('error', function (...params: any) {
       onError(...(params ?? {}));
       reject(...(params ?? {}));
     });
@@ -318,19 +414,21 @@ function initXhrEvents({ xhr, events, reject }) {
 
 /**
  * resolveData - onreadystatechange中resolve的数据
- * @param show
- * @param data
- * @param indicator
- * @param xhr
+ * @param params
  */
-function resolveData({ show, data, indicator, xhr }): {
+function resolveData(params): {
   data: any;
   xhr: XMLHttpRequest;
   hideIndicator?: () => void;
 } {
+  // 调用response拦截器
+  const { show, terminal, data, indicator, xhr } = Ajax.interceptors.responseReducer(params);
+
+  const targetGlobalIndicator = getGlobalIndicator(terminal);
+
   return {
     ...{ xhr, data },
-    ...(show ? { hideIndicator: () => GlobalIndicator.hide(indicator) } : {}),
+    ...(show ? { hideIndicator: () => targetGlobalIndicator.hide(indicator) } : {}),
   };
 }
 
@@ -340,6 +438,7 @@ function resolveData({ show, data, indicator, xhr }): {
  * @param interceptor
  * @param show
  * @param indicator
+ * @param terminal
  * @param messageKey
  * @param codeKey
  * @param codeSuccess
@@ -350,12 +449,14 @@ function resolveData({ show, data, indicator, xhr }): {
 function onreadystatechange({
   xhr,
   interceptor,
-  loading: { show, indicator },
+  loading: { show, indicator, terminal },
   business: { messageKey, codeKey, codeSuccess, showWarn },
   resolve,
   reject,
 }) {
   // const { status, readyState, statusText, response, responseText } = xhr;
+
+  const targetGlobalIndicator = getGlobalIndicator(terminal);
 
   // readyState === 4
   if (xhr.readyState === Ajax.READY_STATE_DONE) {
@@ -373,13 +474,14 @@ function onreadystatechange({
           warnInfo(intl.v('提示'), jsonObj[messageKey]);
         }
 
-        resolve(resolveData({ show, data: jsonObj, indicator, xhr }));
+        resolve(resolveData({ show, terminal, data: jsonObj, indicator, xhr }));
       }
       // response ContentType是xml
       else if ([Ajax.CONTENT_TYPE_TEXT_XML, Ajax.CONTENT_TYPE_TEXT_XML].includes(contentType)) {
         resolve(
           resolveData({
             show,
+            terminal,
             data: xhr.responseXML,
             indicator,
             xhr,
@@ -391,6 +493,7 @@ function onreadystatechange({
         resolve(
           resolveData({
             show,
+            terminal,
             data: xhr.response,
             indicator,
             xhr,
@@ -423,7 +526,7 @@ function onreadystatechange({
 
       // 取消遮罩
       if (show && indicator) {
-        GlobalIndicator.hide(indicator);
+        targetGlobalIndicator.hide(indicator);
       }
     }
   }
@@ -446,6 +549,16 @@ function isMultipartFormData(data: any) {
 }
 
 /**
+ * getGlobalIndicator
+ * @param terminal
+ */
+function getGlobalIndicator(terminal: string) {
+  if (terminal === 'pc') return GlobalIndicator;
+
+  return MobileGlobalIndicator;
+}
+
+/**
  * sendPrepare - send前的准备
  */
 function sendPrepare(
@@ -453,7 +566,13 @@ function sendPrepare(
   {
     // 当前方法独有
     method,
+    ...params
+  }: ISendPrepareArg,
+  { resolve, reject },
+): Prepare {
+  let indicator;
 
+  const {
     // get|post|path|put|delete方法独有
     path,
     headers,
@@ -472,18 +591,31 @@ function sendPrepare(
 
     // curConfig
     ...curConfig // timeout && withCredentials && events
-  }: ISendPrepareArg,
-  { resolve, reject },
-): Prepare {
-  let indicator;
+  } =
+    // 调用request拦截器
+    Ajax.interceptors.requestReducer(params);
 
   const defaultLoadingText = `${intl.v('加载中')}...`;
 
-  const { show = false, text = defaultLoadingText, el = document.body } = loading!;
+  const {
+    show = false,
+    text = defaultLoadingText,
+    el = document.body,
+    zIndex = 19999,
+    size = 'default',
+    terminal = 'pc',
+  } = loading!;
+
+  const targetGlobalIndicator = getGlobalIndicator(terminal);
 
   // 显示loading
   if (show) {
-    indicator = GlobalIndicator.show(el || document.body, text || defaultLoadingText);
+    indicator = targetGlobalIndicator.show(
+      el || document.body,
+      text || defaultLoadingText,
+      zIndex,
+      size,
+    );
   }
 
   // 如果是mock数据
@@ -493,7 +625,7 @@ function sendPrepare(
         resolve({
           data: path,
           hideIndicator: () => {
-            GlobalIndicator.hide(indicator);
+            targetGlobalIndicator.hide(indicator as any);
           },
         });
       } else {
@@ -574,6 +706,7 @@ function sendPrepare(
     interceptor,
     loading: {
       show,
+      terminal,
       indicator,
     },
     business: {
@@ -655,23 +788,37 @@ function getSendParams({ data, contentType = '', customSendJSONStringify }) {
       // 获取值
       const value = data.data[k];
 
-      let target = value;
-
       // 如果值是函数
       if (value instanceof Function) {
-        target = value();
+        formData.append(k, value());
       }
-
-      let params = [k];
-
-      if (Array.isArray(target)) {
-        params = [...params, ...target];
-      } else {
-        params = [...params, target];
+      // 如果值是数组
+      else if (Array.isArray(value)) {
+        value.forEach((_value) => {
+          formData.append(k, _value);
+        });
       }
+      // 正常的情况
+      else {
+        formData.append(k, value);
+      }
+      // let target = value;
 
-      // @ts-ignore
-      formData.append(...params);
+      // // 如果值是函数
+      // if (value instanceof Function) {
+      //   target = value();
+      // }
+      //
+      // let params = [k];
+      //
+      // if (Array.isArray(target)) {
+      //   params = [...params, ...target];
+      // } else {
+      //   params = [...params, target];
+      // }
+      //
+      // // @ts-ignore
+      // formData.append(...params);
       // console.log(k, data.data[k]);
     });
 
@@ -756,6 +903,7 @@ function deal401(this: Ajax) {
   window.location.href = Util.casUrl({
     baseUrl: this.systemManagerBaseURL,
     enterUrl: window.location.href,
+    defaultLocal: 'zh_CN',
   });
 }
 

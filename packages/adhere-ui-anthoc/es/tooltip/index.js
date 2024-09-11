@@ -1,2 +1,2 @@
-import _Tooltip from"antd/es/tooltip";import{createFactory}from"../util";export default createFactory(_Tooltip,{});
+import Tooltip from"./Tooltip";export default Tooltip;
 //# sourceMappingURL=index.js.map

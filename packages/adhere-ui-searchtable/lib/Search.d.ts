@@ -1,6 +1,6 @@
 import { TableRowSelection } from 'antd/es/table/interface';
 import PropTypes from 'prop-types';
-import { ReactElement, ReactNode, RefObject } from 'react';
+import React, { ReactElement, ReactNode, RefObject } from 'react';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import type { SearchProps, SearchState } from './types';
 /**
@@ -9,6 +9,7 @@ import type { SearchProps, SearchState } from './types';
  * @classdesc 查询
  */
 declare abstract class Search<P extends SearchProps = SearchProps, S extends SearchState = SearchState> extends Suspense<P, S> {
+    static displayName: string;
     static defaultProps: any;
     static propTypes: any;
     props: any;
@@ -27,6 +28,25 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      * @return {ReactNode}
      */
     abstract renderSearchForm(): ReactNode;
+    /**
+     * renderSearchFormToolBar
+     * @description 渲染查询表单的工具栏
+     * @return {ReactNode}
+     */
+    abstract renderSearchFormToolBar(): ReactNode;
+    /**
+     * renderSearchFormToolBarItems
+     * @description 渲染查询表单的工具栏项
+     * @param {ReactElement[]} defaultItems
+     * @return {ReactNode []}
+     */
+    abstract renderSearchFormToolBarItems(defaultItems: ReactElement[]): ReactNode[];
+    /**
+     * renderSearchFormToolBarDefaultPanel
+     * @description 渲染查询表单工具栏缺省面板
+     * @return {ReactNode}
+     */
+    abstract renderSearchFormToolBarDefaultPanel(): ReactNode;
     /**
      * renderSearchBefore
      * @description 渲染查询面板之后
@@ -52,11 +72,23 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      */
     abstract renderSearchFooterItems(defaultItems: ReactElement[]): ReactNode[];
     /**
+     * renderSearchBarActions
+     */
+    abstract renderSearchBarActions(): ReactNode;
+    /**
+     * renderTitle
+     */
+    renderTitle(): ReactElement;
+    /**
+     * renderSearchBarExtra
+     */
+    renderSearchBarExtra(): ReactNode;
+    /**
      * renderSearchToolBar
      * @description 渲染查询工具栏
      * @return {ReactNode}
      */
-    abstract renderSearchToolBar(): ReactNode;
+    renderSearchToolBar(): ReactNode;
     /**
      * renderBody
      * @description 渲染查询主体
@@ -93,7 +125,7 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      * @description 进行查询
      * @return {Promise<void>}
      */
-    abstract onSearch(): Promise<void>;
+    abstract onSearch(): Promise<any>;
     /**
      * getDerivedStateFromProps
      * @description getDerivedStateFromProps
@@ -138,15 +170,15 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      * @description - 清除操作
      * @return {Promise<void>}
      */
-    onClear(): Promise<void>;
+    onClear(): Promise<any>;
     /**
      * renderInner
      * @description
      * @param {any} bodyWrapRef
      * @param {string} className
-     * @return {ReactElement | null}
+     * @return {ReactElement}
      */
-    renderInner(bodyWrapRef?: any, className?: string): ReactElement | null;
+    renderInner(bodyWrapRef?: any, className?: string): React.JSX.Element;
 }
 export declare const defaultProps: {
     className: string;

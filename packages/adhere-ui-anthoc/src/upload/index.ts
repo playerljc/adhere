@@ -1,5 +1,3 @@
-import { Upload } from 'antd';
+import Upload from './Upload';
 
-import { createFactory } from '../util';
-
-export default createFactory(Upload, { name: 'file', withCredentials: true });
+export default Upload;

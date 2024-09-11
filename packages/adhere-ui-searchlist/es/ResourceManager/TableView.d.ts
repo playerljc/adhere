@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import type { SearchTableImplementProps, SearchTableImplementState } from '@baifendian/adhere-ui-searchtable/es/types';
 declare const TableView_base: {
     new (props: any): {
@@ -8,7 +8,7 @@ declare const TableView_base: {
             density: any;
             onChange: any;
             onReset: any;
-        }): JSX.Element;
+        }): React.JSX.Element;
         isMount: boolean;
         componentDidMount(): void;
         fetchData(): Promise<any>;
@@ -32,5 +32,6 @@ declare const TableView_base: {
  * @classdesc TableView
  */
 declare class TableView<P extends SearchTableImplementProps, S extends SearchTableImplementState> extends TableView_base {
+    static displayName: string;
 }
 export default TableView;

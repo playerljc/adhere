@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["flex/index.js"],"sourcesContent":["import Flex from './Flex';\nexport default Flex;"],"names":["Flex"],"mappings":"OAAOA,SAAU,wBACFA"}

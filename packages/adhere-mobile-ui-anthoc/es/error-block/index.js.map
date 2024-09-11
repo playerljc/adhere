@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["error-block/index.js"],"sourcesContent":["import ErrorBlock from './ErrorBlock';\nexport default ErrorBlock;"],"names":["ErrorBlock"],"mappings":"OAAOA,eAAgB,8BACRA"}

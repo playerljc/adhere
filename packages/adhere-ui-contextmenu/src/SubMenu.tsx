@@ -1,13 +1,13 @@
 import classNames from 'classnames';
-import React, { FC, memo, useContext } from 'react';
+import React, { memo, useContext } from 'react';
 
 import { ProviderContext } from './ContextMenuContext';
 import MenuItem from './MenuItem';
-import { ContextMenuContext, SubMenuProps } from './types';
+import type { ContextMenuContext, SubMenuProps } from './types';
 
-const selectorPrefix = 'adhere-ui-contextmenu-submenu';
+const selectorPrefix = 'adhere-ui-context-menu-sub-menu';
 
-const SubMenu: FC<SubMenuProps> = (props) => {
+const SubMenu = memo<SubMenuProps>((props) => {
   const { className = '', style = {}, data = [] } = props;
 
   const { config } = useContext<ContextMenuContext>(ProviderContext);
@@ -31,6 +31,8 @@ const SubMenu: FC<SubMenuProps> = (props) => {
       ))}
     </ul>
   );
-};
+});
 
-export default memo(SubMenu);
+SubMenu.displayName = 'SubMenu';
+
+export default SubMenu;

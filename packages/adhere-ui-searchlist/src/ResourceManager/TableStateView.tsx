@@ -20,6 +20,8 @@ class TableStateView<
   S extends SearchTableImplementState,
 > extends TableViewFactory<SearchTableStateImplementProps, SearchTableImplementState>(
   TableStateImplement,
-) {}
+) {
+  static displayName = 'TableStateView';
+}
 
 export default TableStateView;

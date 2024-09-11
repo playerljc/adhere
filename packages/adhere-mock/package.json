@@ -1,0 +1,54 @@
+{
+  "name": "@baifendian/adhere-mock",
+  "version": "2.11.0",
+  "private": true,
+  "description": "adhere的mock",
+  "homepage": "https://github.com/playerljc/adhere",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "typings": "es/index.d.ts",
+  "files": [
+    "lib",
+    "es",
+    "umd"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
+    "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
+    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
+    "buildumd": "ctbuild buildumd --packagename AdhereAntMobileHOC --define alias=@,evnVars=true",
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "upgrade": "yarn upgrade",
+    "upgrade-interactive": "yarn upgrade-interactive"
+  },
+  "dependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.0.0",
+    "core-js": "^3.27.1",
+    "eslint": "^8.31.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^27.2.0",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "fs-extra": "^11.1.0",
+    "lerna": "^7.3.0",
+    "postcss": "^8.4.20",
+    "stylelint-config-css-modules": "^4.1.0",
+    "stylelint-declaration-block-no-ignored-properties": "^2.6.0"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.25.6",
+    "@ctsj/build": "^6.3.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.6.2"
+  }
+}

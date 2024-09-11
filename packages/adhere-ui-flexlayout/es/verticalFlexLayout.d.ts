@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import React from 'react';
 import type { VerticalFlexLayoutProps } from './types';
 /**
  * VerticalFlexLayout
  * @constructor
  * @param props
  */
-declare const VerticalFlexLayout: FC<VerticalFlexLayoutProps>;
+declare const VerticalFlexLayout: React.NamedExoticComponent<VerticalFlexLayoutProps>;
 export default VerticalFlexLayout;

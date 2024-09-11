@@ -1,0 +1,41 @@
+// import Mockjs from 'mockjs';
+import React from 'react';
+
+// import Mock from '@baifendian/adhere-mock';
+import { CheckList } from '../../src/index';
+
+import '../../src/index.less';
+
+const options = Array.from({ length: 100 }).map((t, _index) => {
+  return {
+    title: `${_index + 1}`,
+    value: _index + 1,
+  };
+});
+
+const defaultPaging = {
+  limit: 20,
+};
+
+export default () => {
+  return (
+    <CheckList.PagingCheckList
+      multiple
+      pagingProps={{
+        style: { height: '100%' },
+        defaultPaging,
+        isLocal: false,
+        onLoad: (page, limit) => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve({
+                data: options.slice((page - 1) * limit, page * limit),
+                total: options.length,
+              });
+            }, 1000);
+          });
+        },
+      }}
+    />
+  );
+};

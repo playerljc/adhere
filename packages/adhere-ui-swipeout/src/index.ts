@@ -1,3 +1,3 @@
-import SwipeOut from './swipeout';
+import SwipeOut from './SwipeOut';
 
 export default SwipeOut;

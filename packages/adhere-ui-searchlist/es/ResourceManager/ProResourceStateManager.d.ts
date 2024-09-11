@@ -4,7 +4,7 @@ export declare const SearchAndPaginParamsMemo: any;
  * ProResourceStateManager
  * @classdesc 高级查询列表
  */
-declare const _default: {
+declare const ProResourceStateManager: {
     new (props: any): {
         [x: string]: any;
         getParams(): any;
@@ -31,7 +31,7 @@ declare const _default: {
                 startName?: undefined;
                 endName?: undefined;
             };
-            render: (value: any, record: any) => JSX.Element;
+            render: (value: any, record: any) => React.JSX.Element;
             align?: undefined;
             width?: undefined;
         } | {
@@ -49,7 +49,7 @@ declare const _default: {
                 startName?: undefined;
                 endName?: undefined;
             };
-            render: (value: any) => JSX.Element;
+            render: (value: any) => React.JSX.Element;
         } | {
             title: string;
             dataIndex: string;
@@ -65,7 +65,7 @@ declare const _default: {
                 startName?: undefined;
                 endName?: undefined;
             };
-            render: (value: any) => JSX.Element | "-";
+            render: (value: any) => React.JSX.Element | "-";
         } | {
             title: string;
             dataIndex: string;
@@ -81,12 +81,13 @@ declare const _default: {
                 endName: string;
                 dictName?: undefined;
             };
-            render: (value: any) => JSX.Element;
+            render: (value: any) => React.JSX.Element;
         })[];
         renderGridViewCard({ record }: {
             record: any;
         }): React.ReactNode;
     };
     [x: string]: any;
+    displayName: string;
 };
-export default _default;
+export default ProResourceStateManager;

@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
 
-import { FontSizeSetting, Space } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
-export default () => {
-  const [fontSize, setFontSize] = useState(12);
+import P1 from './examples/p1';
 
+export default () => {
   function boxPanelConfig() {
     return [
       {
@@ -20,42 +20,9 @@ export default () => {
             info: '基本使用',
           },
         },
-        codeText: `
-  import React, { useState } from 'react';
-  import { FontSizeSetting, Space } from '@baifendian/adhere';
-
-  const [fontSize, setFontSize] = useState(12);
-
-  <FontSizeSetting
-    min={12}
-    max={40}
-    step={1}
-    onChange={(size) => {
-      setFontSize(size);
-    }}
-  />
-
-  <Space direction="vertical" />
-
-  <p style={{ fontSize }}>我是一个粉刷匠</p>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <FontSizeSetting
-              min={12}
-              max={40}
-              step={1}
-              onChange={(size) => {
-                setFontSize(size);
-              }}
-            />
-
-            <Space direction="vertical" />
-
-            <p style={{ fontSize }}>我是一个粉刷匠</p>
-          </>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
     ];
   }

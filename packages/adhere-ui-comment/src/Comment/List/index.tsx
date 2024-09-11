@@ -1,13 +1,13 @@
 import { Skeleton } from 'antd';
 import classnames from 'classnames';
-import React, { FC, ReactElement, memo, useRef } from 'react';
-import ReactDOM from 'react-dom';
+import React, { ReactElement, memo, useRef } from 'react';
 
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
+import type { ScrollLoadRefHandle } from '@baifendian/adhere-ui-scrollload/es/types';
 
-import { ListProps } from '../../types';
+import type { ListProps } from '../../types';
 
 const selectorPrefix = 'adhere-ui-comment-inner-list';
 
@@ -16,18 +16,20 @@ const selectorPrefix = 'adhere-ui-comment-inner-list';
  * @constructor
  * @classdesc 评论列表
  */
-const CommentList: FC<ListProps> = (props) => {
+const CommentList = memo<ListProps>((props) => {
   const {
     className = '',
-    style = {},
+    style,
     isLoading = false,
     hasMore = false,
     onLoadMore,
-    scrollLoadProps = {},
+    scrollLoadProps,
     renderFirstLoading,
-    getScrollWrapContainer,
+    pages,
     children,
   } = props;
+
+  const scrollLoadRef = useRef<ScrollLoadRefHandle | null>(null);
 
   // 第一次
   const isFirst = useRef(true);
@@ -35,7 +37,7 @@ const CommentList: FC<ListProps> = (props) => {
   // 第一次加载
   const isFirstLoading = useRef(false);
 
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
 
   /**
    * renderDispatch
@@ -87,8 +89,7 @@ const CommentList: FC<ListProps> = (props) => {
    */
   function renderNormal() {
     const defaultScrollLoadProps = {
-      getScrollContainer: () => getScrollWrapContainer?.()?.firstElementChild as HTMLElement,
-      onScrollBottom: onLoadMore!,
+      onScrollBottom: onLoadMore,
     };
 
     return (
@@ -96,36 +97,19 @@ const CommentList: FC<ListProps> = (props) => {
         {() => (
           <div className={`${selectorPrefix}-normal-wrap`}>
             <ScrollLoad
+              ref={scrollLoadRef}
               {...defaultScrollLoadProps}
               {...(scrollLoadProps ?? {})}
               distance={scrollLoadProps?.distance || 50}
+              disabled={pages <= 1}
             >
               {children}
             </ScrollLoad>
 
-            <ConditionalRender
-              conditional={!!(getScrollWrapContainer ? getScrollWrapContainer() : null)}
-              noMatch={() => (
-                <BackTopAnimation
-                  getContainer={() =>
-                    wrapRef?.current?.querySelector?.('.adhere-ui-scrollload') as HTMLElement
-                  }
-                  onTrigger={() => Promise.resolve()}
-                />
-              )}
-            >
-              {() =>
-                ReactDOM.createPortal(
-                  <BackTopAnimation
-                    getContainer={() =>
-                      getScrollWrapContainer?.()?.firstElementChild as HTMLElement
-                    }
-                    onTrigger={() => Promise.resolve()}
-                  />,
-                  getScrollWrapContainer?.() as HTMLElement,
-                )
-              }
-            </ConditionalRender>
+            <BackTopAnimation
+              getContainer={() => scrollLoadRef?.current?.getScrollContainer?.()}
+              onTrigger={() => Promise.resolve()}
+            />
           </div>
         )}
       </ConditionalRender>
@@ -137,6 +121,8 @@ const CommentList: FC<ListProps> = (props) => {
       {renderDispatch()}
     </div>
   );
-};
+});
 
-export default memo(CommentList);
+CommentList.displayName = 'CommentList';
+
+export default CommentList;

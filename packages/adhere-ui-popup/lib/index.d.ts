@@ -1,2 +1,2 @@
-import Popup from './popup';
+import Popup from './Popup';
 export default Popup;

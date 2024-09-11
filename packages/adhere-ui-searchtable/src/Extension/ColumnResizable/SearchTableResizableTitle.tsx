@@ -66,4 +66,6 @@ SearchTableResizableTitle.propTypes = {
   column: PropTypes.object,
 };
 
+SearchTableResizableTitle.displayName = 'SearchTableResizableTitle';
+
 export default SearchTableResizableTitle;

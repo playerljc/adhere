@@ -1,0 +1,2 @@
+import _Cascader from"antd/es/cascader";import{createFactory}from"../util";var CascaderHOC=createFactory(_Cascader,{showSearch:{filter:function(a,e){return e.some(function(e){return"string"==typeof(null==e?void 0:e.label)&&-1<(null==(e=null==e?void 0:e.label)?void 0:e.toLowerCase().indexOf(a.toLowerCase()))})}},allowClear:!0,placement:"bottomLeft"});CascaderHOC.displayName="Cascader";export default CascaderHOC;
+//# sourceMappingURL=Cascader.js.map

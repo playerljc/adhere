@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["e-charts/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-echarts/es';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,kDACHA"}

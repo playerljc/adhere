@@ -1,8 +1,51 @@
+# 1.0.40
+
+***
+
+2024-04-22
+
+* 对props.onRow进行适配
+* 拖拽排序加入可以在列上加入自定义句柄
+* $search中的输入框去掉trim
+* $search中加入isShowLabelSymbol配置项对ProSearchTable的label符号进行控制
+* 加入REM适配
+* 可编辑单元格和可编辑的Table单元格中$editable的rules和props支持函数形式
+
+# 1.0.39
+
+***
+
+2024-01-24
+
+* 使用fetchData的方法都变成Promise
+* 可以自定义高级查询面板
+* 高级查询优化
+
+# 1.0.38
+
+***
+
+2023-10-01
+
+* 修改renderSearchToolBar变为renderTitle，renderSearchBarExtra，renderSearchBarActions
+* 查询区域加入工具栏，操作工具栏和查询工具栏分离，查询工具栏加入收起功能
+* OptionsWrap加入收起功能
+* 缺省的工具按钮修改
+* 列头和查询文字支持tip显示
+
+# 1.0.37
+
+***
+
+2023-09-29
+
+* 加入导出excel功能
+
 # 1.0.36
 
 ***
 
-2023-09-1287
+2023-09-87
 
 * 修复$hide的列没有传递参数给接口的问题
 * 有查询条件的列头图标高亮

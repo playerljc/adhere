@@ -4,13 +4,9 @@ export declare const SearchAndPaginParamsMemo: any;
  * ProSearchStateList
  * @classdesc 高级查询列表
  */
-declare const _default: {
+declare const ProSearchStateList: {
     new (props: any): {
         [x: string]: any;
-        /**
-         * ProSearchStateList
-         * @classdesc 高级查询列表
-         */
         getParams(): {};
         getColumns(): never[];
         componentWillUnmount(): void;
@@ -29,24 +25,20 @@ declare const _default: {
         getLimit(): number;
         getFetchDataParams(): {};
         getTableColumns(): any;
+        getTableColumnSearchHeaderIcon(column: import("@baifendian/adhere-ui-searchtable/es/types").ColumnTypeExt): React.JSX.Element;
         getOptionsColumnDataIndex(): string;
         getLinkColumnDataIndex(): string;
         getPagination(): any;
-        getGridSearchFormGroupParams(): ({
-            name: string;
+        getGridSearchFormColgroup(): {
             columnCount: number;
             colgroup: (string | undefined)[];
-            data: {
-                key: number;
-                sort?: number | undefined;
-                label: React.ReactNode;
-                value: React.ReactNode;
-            }[];
-        }[] | {
-            rowCount?: undefined;
-        } | {
+        };
+        getGridSearchFormRowCount(): number;
+        getGridSearchFormProps(): {
             rowCount: number;
-        })[];
+        };
+        getGridSearchFormGroupParams(): {}[];
+        getSearchLabelSymbol($search: any): React.JSX.Element | null;
         getGridSearchFormGroupDataByColumnConfig(): {
             key: number;
             sort?: number | undefined;
@@ -54,16 +46,27 @@ declare const _default: {
             value: React.ReactNode;
         }[];
         assignSearchConfig(searchConfig: any, column: any): any;
-        renderSearchForm(): JSX.Element;
+        renderSearchBarCollapseControl(): any;
+        renderSearchForm(): React.JSX.Element | null;
+        renderSearchFormToolBarItems(_defaultItems: any): any[];
+        renderSearchFormToolBarDefaultPanel(): React.JSX.Element | null;
         renderSearchFooterItems(_defaultItems: any): any[];
+        getSearchFooterItemsEllipsisCount(): number;
+        isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
         renderSearchFooterItemsImpl(defaultItems: any): any[];
         renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
             searchConfig: any;
             column: any;
             dataIndex: any;
         }): React.ReactNode;
-        renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): JSX.Element;
+        renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): React.JSX.Element;
+        renderAdvancedSearchPanel(params: any): null;
         renderOptionColumn(defaultItems: any, params: any): any;
     };
+    /**
+     * ProSearchStateList
+     * @classdesc 高级查询列表
+     */
+    displayName: string;
 };
-export default _default;
+export default ProSearchStateList;

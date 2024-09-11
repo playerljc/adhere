@@ -1,5 +1,3 @@
-import { Mentions } from 'antd';
+import Mentions from './Mentions';
 
-import { createFactory } from '../util';
-
-export default createFactory(Mentions, {});
+export default Mentions;

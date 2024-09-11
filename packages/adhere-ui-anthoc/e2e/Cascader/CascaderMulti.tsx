@@ -1,0 +1,49 @@
+import React from 'react';
+
+import Cascader from '../../src/cascader';
+
+export default () => {
+  const options = [
+    {
+      label: 'Light',
+      value: 'light',
+      children: new Array(20).fill(null).map((_, index) => ({
+        label: `Number ${index}`,
+        value: index,
+      })),
+    },
+    {
+      label: 'Bamboo',
+      value: 'bamboo',
+      children: [
+        {
+          label: 'Little',
+          value: 'little',
+          children: [
+            {
+              label: 'Toy Fish',
+              value: 'fish',
+              disableCheckbox: true,
+            },
+            {
+              label: 'Toy Cards',
+              value: 'cards',
+            },
+            {
+              label: 'Toy Bird',
+              value: 'bird',
+            },
+          ],
+        },
+      ],
+    },
+  ];
+
+  const onChange = (value) => {
+    console.log(value);
+  };
+
+  return (
+    <Cascader.CascaderMulti placeholder="Please select" options={options} onChange={onChange} />
+  );
+};

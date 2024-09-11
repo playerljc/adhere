@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DateDisplay, Resource, SearchTable } from '@baifendian/adhere';
+import { DateDisplay, FieldGeneratorToDict, Resource, SearchTable } from '@baifendian/adhere';
 
 import './serviceRegister';
 
@@ -74,9 +74,9 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
         width: 150,
         render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
         $search: {
-          type: 'select',
+          type: 'dict',
           visible: true,
-          dictName: 'SystemTestSexSelect',
+          dictName: `SystemTestSex${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
         },
       },
       {

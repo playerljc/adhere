@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["paging-entity-value-hoc/index.js"],"sourcesContent":["import PagingEntityValueHOC from './PagingEntityValueHOC';\nexport default PagingEntityValueHOC;"],"names":["PagingEntityValueHOC"],"mappings":"OAAOA,yBAA0B,wCAClBA"}

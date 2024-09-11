@@ -1,11 +1,18 @@
+import MobileSignatureCore from './signature/MobileSignatureCore';
+
 import type { ModalProps } from 'antd/lib/modal/interface';
-import type { CSSProperties } from 'react';
+import { PropsWithoutRef } from 'react';
+import type { CSSProperties, NamedExoticComponent, RefAttributes } from 'react';
 
 import type {
   CenterProps,
   TBLRCLayoutProps,
   TBLRProps,
 } from '@baifendian/adhere-ui-flexlayout/es/types';
+
+import Signature from './signature';
+import SignatureCore from './signature/SignatureCore';
+import MobileSignature from './signature/mobile';
 
 /**
  * WritingBoardHandle
@@ -107,3 +114,18 @@ export interface SignatureProps {
   value?: string;
   onChange: (base64?: string) => void;
 }
+
+export type WritingBoardComponent = NamedExoticComponent<
+  PropsWithoutRef<WritingBoardProps> & RefAttributes<WritingBoardHandle>
+> &
+  RefAttributes<WritingBoardHandle> & {
+    Signature: typeof Signature;
+    MobileSignature: typeof MobileSignature;
+  };
+
+export type SignatureComponent = NamedExoticComponent<
+  PropsWithoutRef<SignatureProps> & RefAttributes<SignatureHandle>
+> & {
+  SignatureCore: typeof SignatureCore;
+  MobileSignatureCore: typeof MobileSignatureCore;
+};

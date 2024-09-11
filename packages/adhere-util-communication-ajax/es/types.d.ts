@@ -1,3 +1,4 @@
+import { Size } from '@baifendian/adhere-ui-globalindicator/es/types';
 /**
  * IConfig
  * @interface IConfig
@@ -56,6 +57,9 @@ export interface IConfig {
         show: boolean;
         text: string;
         el: HTMLElement;
+        zIndex: number;
+        size: Size;
+        terminal?: 'pc' | 'mobile';
     };
     onBeforeResponse?: () => void;
     dataKey?: string;
@@ -94,4 +98,18 @@ export type Prepare = {
 };
 export type SendResult = Prepare & {
     promise: Promise<any>;
+};
+export type RequestInterceptor = (params: ISendArg) => ISendArg;
+export type ResponseInterceptor = (params: {
+    show: boolean;
+    terminal: string;
+    data: any;
+    indicator: any;
+    xhr: XMLHttpRequest;
+}) => {
+    show: boolean;
+    terminal: string;
+    data: any;
+    indicator: any;
+    xhr: XMLHttpRequest;
 };

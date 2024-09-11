@@ -5,21 +5,23 @@ import CodePanel from './CodePanel';
 import CodeTabPanel from './CodeTabPanel';
 import FunctionProps from './FunctionProps';
 import PlayGround from './PlayGround';
-import PlayGroundMulit from './PlayGroundMulit';
+import PlayGroundMulti from './PlayGroundMulti';
 import PlayGroundPage from './PlayGroundPage';
 import { PlayGroundPageContext } from './PlayGroundPage/Context';
 import PlayGroundTab from './PlayGroundTab';
+import PlayGroundTabMobile from './PlayGroundTabMobile';
 import Props from './Props';
 
 export default {
+  Props,
   CodePanel,
   CodeTabPanel,
   CodeBoxPanel,
   PlayGround,
   PlayGroundTab,
-  PlayGroundMulit,
+  PlayGroundMulti,
+  PlayGroundTabMobile,
   PlayGroundPage,
-  Props,
   FunctionProps,
   AnchorNavigation,
   AnchorNavigationContext,

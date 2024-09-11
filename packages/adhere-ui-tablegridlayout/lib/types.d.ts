@@ -1,4 +1,7 @@
 import type { CSSProperties, NamedExoticComponent, ReactElement, ReactNode } from 'react';
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
+import Label from './Label';
+import Value from './Value';
 export type DensityType = 'default' | 'middle' | 'small' | undefined;
 export type LayoutType = 'vertical' | 'horizontal';
 /**
@@ -37,7 +40,8 @@ export interface RenderGridSearchForm {
         rowCountRef?: RowCountRef;
         layout?: LayoutType;
         density?: DensityType;
-        parity?: boolean;
+        mode?: TableGridLayoutProps['mode'];
+        media?: ConfigProviderProps['media'];
     }): ReactElement;
 }
 /**
@@ -74,7 +78,7 @@ export interface TableGridLayoutProps {
     style?: CSSProperties;
     layout: LayoutType;
     density?: DensityType;
-    parity?: boolean;
+    mode?: 'normal' | 'parity' | 'bordered';
 }
 /**
  * GroupDetail
@@ -97,11 +101,11 @@ export interface RenderDetail {
         detail: GroupRenderDetail;
     }[];
 }
-export interface TableGridLayoutMemoWrap extends NamedExoticComponent {
+export type TableGridLayoutComponent = NamedExoticComponent<TableGridLayoutProps> & {
     propTypes: object;
     defaultProps: object;
-    Label: any;
-    Value: any;
-    renderGridSearchFormGroup(data?: DataItem[], props?: Omit<TableGridLayoutProps, 'data'>): ReactNode;
+    Label: typeof Label;
+    Value: typeof Value;
+    renderGridSearchFormGroup(data?: DataItem[], props?: Omit<TableGridLayoutProps, 'data'>, media?: ConfigProviderProps['media']): ReactNode;
     getRenderDetail(data: DataItem[], props: Omit<TableGridLayoutProps, 'data'>): RenderDetail;
-}
+};

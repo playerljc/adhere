@@ -83,6 +83,24 @@ const {
   RichTextSandBox,
   Ellipsis,
   Expression,
+  AutoComplete,
+  QuickRangeDate,
+  CurrencySymbol,
+  MobileSuccessPrompt,
+  MobileErrorPrompt,
+  MobileWarnPrompt,
+  MobileGlobalIndicator,
+  MobileDelConfirm,
+  MobileImportantConfirm,
+  MobileTabs,
+  MobileTimePickerView,
+  MobileAutoComplete,
+  MobileAntHOC,
+  MobileFieldGeneratorToDict,
+  MobilePRSL,
+  MobileQuickRangeDate,
+  MobilePopoverMenu,
+  MobileSpin,
 } = Components;
 
 export default () => [
@@ -415,11 +433,6 @@ export default () => [
                 name: 'ConfigProvider',
                 component: ConfigProvider,
               },
-              // {
-              //   path: '/adhere/component/ui/antdformitem',
-              //   name: 'AntdFormItem',
-              //   component: AntdFormItem,
-              // },
               {
                 path: '/adhere/component/ui/anthoc',
                 name: 'AntHOC',
@@ -444,6 +457,21 @@ export default () => [
                 path: '/adhere/component/ui/expression',
                 name: 'Expression',
                 component: Expression,
+              },
+              {
+                path: '/adhere/component/ui/autocomplete',
+                name: 'AutoComplete',
+                component: AutoComplete,
+              },
+              {
+                path: '/adhere/component/ui/quickrangedate',
+                name: 'QuickRangeDate',
+                component: QuickRangeDate,
+              },
+              {
+                path: '/adhere/component/ui/currencysymbol',
+                name: 'CurrencySymbol',
+                component: CurrencySymbol,
               },
             ],
           },
@@ -534,6 +562,91 @@ export default () => [
                 path: '/adhere/component/util/iframeio',
                 name: 'IframeIO',
                 component: IframeIO,
+              },
+            ],
+          },
+          {
+            path: '/adhere/component/mobile',
+            name: 'Mobile',
+            routes: [
+              {
+                path: '/',
+                redirect: '/adhere/component/mobile/successprompt',
+              },
+              {
+                path: '/adhere/component/mobile/successprompt',
+                name: 'SuccessPrompt',
+                component: MobileSuccessPrompt,
+              },
+              {
+                path: '/adhere/component/mobile/errorprompt',
+                name: 'ErrorPrompt',
+                component: MobileErrorPrompt,
+              },
+              {
+                path: '/adhere/component/mobile/warnprompt',
+                name: 'WarnPrompt',
+                component: MobileWarnPrompt,
+              },
+              {
+                path: '/adhere/component/mobile/globalindicator',
+                name: 'GlobalIndicator',
+                component: MobileGlobalIndicator,
+              },
+              {
+                path: '/adhere/component/mobile/delconfirm',
+                name: 'DelConfirm',
+                component: MobileDelConfirm,
+              },
+              {
+                path: '/adhere/component/mobile/importantconfirm',
+                name: 'ImportantConfirm',
+                component: MobileImportantConfirm,
+              },
+              {
+                path: '/adhere/component/mobile/tabs',
+                name: 'Tabs',
+                component: MobileTabs,
+              },
+              {
+                path: '/adhere/component/mobile/timepickerview',
+                name: 'TimePickerView',
+                component: MobileTimePickerView,
+              },
+              {
+                path: '/adhere/component/mobile/autocomplete',
+                name: 'AutoComplete',
+                component: MobileAutoComplete,
+              },
+              {
+                path: '/adhere/component/mobile/anthoc',
+                name: 'AntHOC',
+                component: MobileAntHOC,
+              },
+              {
+                path: '/adhere/component/mobile/fieldgeneratortodict',
+                name: 'FieldGeneratorToDict',
+                component: MobileFieldGeneratorToDict,
+              },
+              {
+                path: '/adhere/component/mobile/prsl',
+                name: 'PRSL',
+                component: MobilePRSL,
+              },
+              {
+                path: '/adhere/component/mobile/quickrangedate',
+                name: 'QuickRangeDate',
+                component: MobileQuickRangeDate,
+              },
+              {
+                path: '/adhere/component/mobile/popovermenu',
+                name: 'PopoverMenu',
+                component: MobilePopoverMenu,
+              },
+              {
+                path: '/adhere/component/mobile/spin',
+                name: 'Spin',
+                component: MobileSpin,
               },
             ],
           },

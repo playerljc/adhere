@@ -1,2 +1,2 @@
-import _Pagination from"antd/es/pagination";import{createFactory}from"../util";export default createFactory(_Pagination,{});
+import Pagination from"./Pagination";export default Pagination;
 //# sourceMappingURL=index.js.map

@@ -1,7 +1,5 @@
 import React from 'react';
-import { ConfigProviderProps } from './types';
-/**
- * ConfigProviderHOC
- */
-declare const ConfigProviderHOC: React.NamedExoticComponent<ConfigProviderProps>;
-export default ConfigProviderHOC;
+import type { ConfigProviderComponent, ConfigProviderContext } from './types';
+export declare const Context: React.Context<ConfigProviderContext>;
+declare const ConfigProvider: ConfigProviderComponent;
+export default ConfigProvider;

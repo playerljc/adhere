@@ -157,3 +157,10 @@ export type ResourceType = 'file' | 'directory';
  * FileType - 文件类型
  */
 export type FileType = 'doc' | 'video' | 'audio' | 'image' | 'compress' | 'other';
+
+export interface ListDensitySettingProps {
+  density: ListSize;
+  onReset: (...args: any[]) => any;
+  onChange: (...args: any[]) => any;
+  renderDensitySettingBtn?: () => ReactNode;
+}

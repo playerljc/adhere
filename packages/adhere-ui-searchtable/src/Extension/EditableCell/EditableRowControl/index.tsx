@@ -143,4 +143,6 @@ const EditableRowControl: FC<EditorRowControlProps> = ({
   );
 };
 
+EditableRowControl.displayName = 'EditableRowControl';
+
 export default EditableRowControl;

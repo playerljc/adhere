@@ -4,6 +4,7 @@ import type { Rule } from 'antd/lib/form/index';
 import type { ColumnType } from 'antd/lib/table/interface';
 import type { DataIndex } from 'rc-table/lib/interface';
 import type { CSSProperties, ForwardRefExoticComponent, PropsWithoutRef, ReactElement, ReactNode, RefAttributes, RefObject } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
 import type SearchTableImplement from './SearchTableImplement';
 import type { SearchTableStateImplement } from './SearchTableStateImplement';
@@ -29,6 +30,7 @@ export interface ColumnSearchConfig {
     render?: () => ReactNode | null;
     startName?: string;
     endName?: string;
+    isShowLabelSymbol?: boolean;
 }
 export interface ColumnParams {
     value: string;
@@ -186,7 +188,6 @@ export interface FormItemGeneratorConfig {
     type?: FormItemType | string;
     props?: any;
     dictName?: string;
-    renderChildren?: (params?: any) => ReactNode | null;
     form?: FormInstance<any> | null;
     dataIndex?: DataIndex;
     rowIndex?: number;
@@ -216,12 +217,12 @@ export interface ColumnEditableConfig {
     }) => Promise<void>;
     onBeforeCancel?: (params: ColumnParams) => Promise<void>;
     formItemProps?: any;
-    props?: any;
+    props?: ((params: ColumnParams) => any) | object;
     useTrigger?: boolean;
     renderToEditTrigger?: (params: ColumnParams) => ReactNode;
     renderSaveTrigger?: (params: ColumnParams) => ReactNode;
     renderCancelTrigger?: (params: ColumnParams) => ReactNode;
-    rules?: Rule[];
+    rules?: ((params: ColumnParams) => Rule[]) | Rule[];
     dataIndex?: DataIndex;
     dictName?: string;
     renderChildren?: (params?: any) => ReactNode | null;
@@ -237,6 +238,8 @@ export interface ColumnRowDragSortConfig {
  * @description Column列的扩展设置
  */
 export interface ColumnTypeExt extends ColumnType<any> {
+    $tip?: ReactNode;
+    renderTip?: (tip: ReactNode) => ReactNode;
     $authorized?: () => boolean;
     $resizable?: boolean;
     $hide?: boolean;
@@ -261,6 +264,8 @@ export interface SearchProps extends SuspenseProps {
     bodyClassName: string;
     bodyStyle: CSSProperties;
     title: string;
+    router: 'browser' | 'hash';
+    publicPath: string;
 }
 /**
  * SearchState
@@ -392,6 +397,15 @@ export interface AdvancedSearchPanelProps {
     onSearch: Function;
     onReset: Function;
     onCollapse: Function;
+    children?: (params: {
+        groupData: AdvancedSearchPanelGroupData[];
+        tableGridLayoutConfig: AdvancedSearchPanelTableGridLayoutConfig;
+        remainingGroupData: AdvancedSearchPanelGroupData[];
+        advancedSearchConfig: AdvancedSearchPanelSearchConfig;
+        onSearch: Function;
+        onReset: Function;
+        onCollapse: Function;
+    }) => ReactNode;
 }
 export interface SearchTableImplementFactoryFunction<T, P> {
     (params: {
@@ -410,6 +424,38 @@ export interface SearchTableStateImplementFactoryFunction<T, P> {
         mapDispatchToProps?: (dispatch?: any) => any;
     }): (Component: typeof SearchTableStateImplement) => ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>;
 }
+export interface TableDensitySettingProps {
+    density: TableDensity;
+    onReset: (...args: any[]) => any;
+    onChange: (...args: any[]) => any;
+    renderDensitySettingBtn?: () => ReactNode;
+}
+export interface ColumnSettingProps {
+    columns: ColumnTypeExt[];
+    onShowColumns: (...args: any[]) => any;
+    onReset: (...args: any[]) => any;
+    onDisplayColumn: (...args: any[]) => any;
+    onSortEnd: (...args: any[]) => any;
+    renderColumnSettingBtn?: () => ReactNode;
+}
+export interface ExportExcelProps {
+    title: string;
+    getDataSource: () => any[];
+    getColumns: () => ColumnTypeExt[];
+    renderExportExcelBtn?: (onExportExcel: () => void) => ReactNode;
+}
+export interface ReloadTableProps {
+    onReload: () => void;
+    showLoading: boolean;
+    renderReloadBtn?: ({ showLoading, onReload, }: {
+        showLoading: boolean;
+        onReload: () => void;
+    }) => ReactNode;
+}
+export interface ColumnTipTitleProps {
+    tip: ReactNode;
+    title: ReactNode;
+}
 /**
  * TableDensity
  */
@@ -417,4 +463,12 @@ export declare enum TableDensity {
     DEFAULT = "default",
     MIDDLE = "middle",
     SMALL = "small"
+}
+export interface DragSortRowContextProps {
+    dragResult: ReturnType<typeof useDrag>;
+    dropResult: ReturnType<typeof useDrop>;
+    setCanDrag: (canDrag: boolean) => void;
+}
+export interface DragSortColumnProps extends ColumnTypeExt {
+    className?: string;
 }

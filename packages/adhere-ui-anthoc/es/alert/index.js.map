@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["alert/index.js"],"sourcesContent":["import _Alert from \"antd/es/alert\";\nimport { createFactory } from '../util';\nexport default createFactory(_Alert, {});"],"names":["_Alert","createFactory"],"mappings":"OAAOA,WAAY,uBACVC,aAA8B,KAAT,yBACfA,cAAcD,OAAQ,EAAE"}
+{"version":3,"file":"index.js","sources":["alert/index.js"],"sourcesContent":["import Alert from './Alert';\nexport default Alert;"],"names":["Alert"],"mappings":"OAAOA,UAAW,yBACHA"}

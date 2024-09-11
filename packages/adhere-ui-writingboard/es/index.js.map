@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import WritingBoard from './writingboard';\nexport default WritingBoard;"],"names":["WritingBoard"],"mappings":"OAAOA,iBAAkB,gCACVA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import WritingBoard from './WritingBoard';\nexport default WritingBoard;"],"names":["WritingBoard"],"mappings":"OAAOA,iBAAkB,gCACVA"}

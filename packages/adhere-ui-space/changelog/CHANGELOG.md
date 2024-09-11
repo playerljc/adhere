@@ -1,3 +1,20 @@
+# 1.0.5
+
+***
+
+2024-05-26
+
+* 间距BUG修改
+* REM适配
+
+# 1.0.4
+
+***
+
+2023-09-24
+
+* 修复Rendered more hooks than during the previous render错误
+
 # 1.0.3
 
 ***

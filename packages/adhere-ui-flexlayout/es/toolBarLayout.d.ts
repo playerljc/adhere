@@ -1,4 +1,9 @@
 import React from 'react';
 import type { ToolBarLayoutProps } from './types';
-declare const _default: React.NamedExoticComponent<ToolBarLayoutProps>;
-export default _default;
+/**
+ * ToolBarLayout
+ * @constructor
+ * @param props
+ */
+declare const ToolBarLayout: React.NamedExoticComponent<ToolBarLayoutProps>;
+export default ToolBarLayout;

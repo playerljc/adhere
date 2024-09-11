@@ -20,7 +20,7 @@ import {
   SelectType,
 } from './types';
 
-const selectorPrefix = 'adhere-ui-polygonselection';
+const selectorPrefix = 'adhere-ui-polygon-selection';
 
 /**
  * PolygonSelection

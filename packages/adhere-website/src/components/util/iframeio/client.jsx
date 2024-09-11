@@ -170,7 +170,7 @@ export default function () {
               <Input.Group compact>
                 <Input
                   value={value}
-                  style={{ width: 'calc(100% - 200px)' }}
+                  className={styles.InputWrapper}
                   onChange={(e) => setValue(e.target.value)}
                 />
                 <Button type="primary" onClick={onSend}>
@@ -223,7 +223,7 @@ export default function () {
           name="server"
           ref={iframeRef}
           className={styles.Iframe}
-          src="/iframeServer"
+          src="/#/iframeServer"
           onLoad={onIframeLoad}
         />
       </div>

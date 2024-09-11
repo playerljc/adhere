@@ -1,10 +1,9 @@
 import classNames from 'classnames';
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
 import Ellipsis from '@baifendian/adhere-ui-ellipsis';
 
-import { selectorPrefix } from './expression';
+import { selectorPrefix } from './Expression';
 import type { ViewProps } from './types';
 
 /**
@@ -16,7 +15,7 @@ import type { ViewProps } from './types';
  * @return {JSX.Element}
  * @constructor
  */
-const View: FC<ViewProps> = ({ wrapClassName, wrapStyle, value, ...ellipsisProps }) => (
+const View = memo<ViewProps>(({ wrapClassName, wrapStyle, value, ...ellipsisProps }) => (
   <div
     className={classNames(`${selectorPrefix}-view`, wrapClassName ?? '')}
     style={wrapStyle ?? {}}
@@ -26,6 +25,6 @@ const View: FC<ViewProps> = ({ wrapClassName, wrapStyle, value, ...ellipsisProps
       dangerouslySetInnerHTML={{ __html: value ?? '' }}
     ></Ellipsis>
   </div>
-);
+));
 
-export default memo(View);
+export default View;

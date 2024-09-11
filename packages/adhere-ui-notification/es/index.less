@@ -1,18 +1,17 @@
-//@import '~@baifendian/adhere-ui-css/lib/vars';
-@import '~@baifendian/adhere-ui-css/lib/mixin';
-
-@adhere-ui-notification-transitionduration: 600ms;
-@adhere-ui-notification-standard-header-icon-width: 50px;
-@adhere-ui-notification-standard-header-icon-height: 50px;
-@adhere-ui-notification-ios-closebtn-width: 30px;
-@adhere-ui-notification-ios-closebtn-height: 30px;
-@adhere-ui-notification-material-closebtn-width: 30px;
-@adhere-ui-notification-material-closebtn-height: 30px;
-//@adhere-ui-notification-border-color: @adhere-border-color;
-@adhere-ui-notification-standard-content-color: #8e8e93;
-@adhere-ui-notification-material-ul-backgroundcolor: #323232;
+@import '~@baifendian/adhere-ui-css/es/mixin';
 
 .adhere-ui-notification {
+  @adhere-ui-notification-transition-duration: 600ms;
+  @adhere-ui-notification-standard-header-icon-width: 50px;
+  @adhere-ui-notification-standard-header-icon-height: 50px;
+  @adhere-ui-notification-ios-close-btn-width: 30px;
+  @adhere-ui-notification-ios-close-btn-height: 30px;
+  @adhere-ui-notification-material-close-btn-width: 30px;
+  @adhere-ui-notification-material-close-btn-height: 30px;
+  //@adhere-ui-notification-border-color: @adhere-border-color;
+  @adhere-ui-notification-standard-content-color: #8e8e93;
+  @adhere-ui-notification-material-ul-background-color: #323232;
+
   &-top,
   &-bottom {
     &-material,
@@ -34,7 +33,7 @@
           position: relative;
           height: 0;
           padding: 0 20px;
-          transition: height @adhere-ui-notification-transitionduration 0ms;
+          transition: height @adhere-ui-notification-transition-duration 0ms;
 
           > .info {
             flex-grow: 1;
@@ -42,7 +41,7 @@
             padding: 10px 10px 10px 0;
             font-size: var(--adhere-font-size-base);
             opacity: 0;
-            transition: opacity @adhere-ui-notification-transitionduration 0ms;
+            transition: opacity @adhere-ui-notification-transition-duration 0ms;
             .adhere-word-break();
 
             > .adhere-ui-notification-standard-header {
@@ -87,7 +86,7 @@
 
               > .adhere-ui-notification-standard-content-media-r {
                 align-self: flex-start;
-                width: @adhere-ui-notification-standard-header-icon-width;
+                //width: @adhere-ui-notification-standard-header-icon-width;
                 margin: 10px;
                 overflow: hidden;
                 font-size: var(--adhere-font-size-base);
@@ -150,8 +149,8 @@
           }
 
           > .close-btn {
-            width: @adhere-ui-notification-ios-closebtn-width;
-            height: @adhere-ui-notification-ios-closebtn-height;
+            width: @adhere-ui-notification-ios-close-btn-width;
+            height: @adhere-ui-notification-ios-close-btn-height;
             margin-top: 10px;
             background: url('./images/ioscha.svg') no-repeat;
             background-size: 100% 100%;
@@ -162,7 +161,7 @@
 
     &-material {
       > ul {
-        background-color: @adhere-ui-notification-material-ul-backgroundcolor;
+        background-color: @adhere-ui-notification-material-ul-background-color;
 
         > li {
           border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
@@ -193,8 +192,8 @@
           }
 
           > .close-btn {
-            width: @adhere-ui-notification-material-closebtn-width;
-            height: @adhere-ui-notification-material-closebtn-height;
+            width: @adhere-ui-notification-material-close-btn-width;
+            height: @adhere-ui-notification-material-close-btn-height;
             background: url('./images/materialcha.png') no-repeat;
             background-size: 100% 100%;
           }

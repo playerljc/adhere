@@ -1,4 +1,4 @@
 declare const _default: {
-    Dict: import("@baifendian/adhere-util-dict/lib/types.js").DictObj;
+    Dict: import("@baifendian/adhere-util-dict/es/types.js").DictObj;
 };
 export default _default;

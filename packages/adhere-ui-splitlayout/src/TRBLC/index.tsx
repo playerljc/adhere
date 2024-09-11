@@ -7,10 +7,12 @@ import LBCSplitLayout from './LBCLayout';
 import LCBSplitLayout from './LCBLayout';
 import LCSplitLayout from './LCLayout';
 import LCRBSplitLayout from './LCRBLayout';
+import LCRSplitLayout from './LCRLayout';
 import LRTCBSplitLayout from './LRTCBLayout';
 import LTCBSplitLayout from './LTCBLayout';
 import LTCSplitLayout from './LTCLayout';
 import TBLCRSplitLayout from './TBLCRLayout';
+import TCBSplitLayout from './TCBLayout';
 import TCBRSplitLayout from './TCBRLayout';
 import TCSplitLayout from './TCLayout';
 import TCRSplitLayout from './TCRLayout';
@@ -30,6 +32,7 @@ export {
   LRTCBSplitLayout,
   LTCBSplitLayout,
   LTCSplitLayout,
+  LCRSplitLayout,
   TBLCRSplitLayout,
   TCBRSplitLayout,
   TCSplitLayout,
@@ -37,4 +40,5 @@ export {
   TLCSplitLayout,
   TLRCSplitLayout,
   TRCSplitLayout,
+  TCBSplitLayout,
 };

@@ -1,7 +1,10 @@
-import { Button } from 'antd';
-import React from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
+import P5CodeText from '!!raw-loader!./examples/p5';
 
-import { Space, WatchMemoized } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -9,7 +12,11 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-const { createRef, memoized, watch } = WatchMemoized;
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
+import P5 from './examples/p5';
 
 export default () => {
   function boxPanelConfig() {
@@ -25,103 +32,9 @@ export default () => {
             info: '单值缓存监控',
           },
         },
-        codeText: `
-  import { WatchMemoized, Space } from '@baifendian/adhere';
-
-  const { createRef, memoized } = WatchMemoized;
-
-  // 单值监控light比较
-  const [get1Value, set1Value, property1] = createRef([{ a: 1 }]);
-  console.log('srcValue1', get1Value());
-  memoized.watch.race(() => {
-    console.log('changeValue', get1Value());
-  }, [
-    {
-      property: property1,
-      mode: 'light',
-    },
-  ]);
-
-  // 单值监控deep比较
-  const [get2Value, set2Value, property2] = createRef([{ a: 1 }]);
-  console.log('srcValue2', get2Value());
-  memoized.watch.race(() => {
-    console.log('changeValue', get2Value());
-  }, [
-    {
-      property: property2,
-      mode: 'deep',
-    },
-  ]);
-
-  // 单值监控自定义比较
-  const [get3Value, set3Value, property3] = createRef([{ a: 1 }]);
-  console.log('srcValue3', get3Value());
-  memoized.watch.race(() => {
-    console.log('changeValue', get3Value());
-  }, [
-    {
-      property: property3,
-      mode: ({ oldValue, newValue }) => {
-        return oldValue === newValue;
-      },
-    },
-  ]);
-
-  <Space.Group direction="horizontal" size={10}>
-    <Button
-      onClick={() => {
-        set1Value([{ a: 1 }]);
-      }}
-    >
-      light比较
-    </Button>
-
-    <Button
-      onClick={() => {
-        set2Value([{ a: 1 }]);
-      }}
-    >
-      deep比较
-    </Button>
-
-    <Button
-      onClick={() => {
-        set3Value([{ a: 1 }]);
-      }}
-    >
-      自定义比较
-    </Button>
-  </Space.Group>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Space.Group direction="horizontal" size={10}>
-            <Button
-              onClick={() => {
-                set1Value([{ a: 1 }]);
-              }}
-            >
-              light比较
-            </Button>
-
-            <Button
-              onClick={() => {
-                set2Value([{ a: 1 }]);
-              }}
-            >
-              deep比较
-            </Button>
-
-            <Button
-              onClick={() => {
-                set3Value([{ a: 1 }]);
-              }}
-            >
-              自定义比较
-            </Button>
-          </Space.Group>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -134,66 +47,9 @@ export default () => {
             info: '多值缓存监控',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { WatchMemoized, Space } from '@baifendian/adhere';
-
-  const { createRef, memoized } = WatchMemoized;
-
-  // 多值监控light比较
-  const [get4Value, property4] = createRef([{ a: 1 }]);
-  const [get5Value, property5] = createRef([{ a: 2 }]);
-  console.log('srcValue4', get4Value());
-  console.log('srcValue5', get5Value());
-  memoized.watch.all(() => {
-    console.log('changeValue', get4Value());
-    console.log('changeValue', get5Value());
-  }, [
-    {
-      property: property4,
-      mode: 'light',
-    },
-    {
-      property: property5,
-      mode: 'light',
-    },
-  ]);
-
-  <Space.Group direction="horizontal" size={10}>
-    <Button
-      onClick={() => {
-        watchObj1.value.a = 'a';
-        watchObj1.value.b = 'b';
-        watchObj1.value.c = { gl: 1 };
-        watchObj1.value.c.c1 = {
-          g2: 2,
-        };
-        watchObj1.value.c.c1.c111 = {
-          g3: 3,
-          c1111: '1',
-        };
-
-        delete watchObj1.value.c.c1.c111.c1111;
-      }}
-    >
-      对obj1进行监控
-    </Button>
-  </Space.Group>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Space.Group direction="horizontal" size={10}>
-            <Button
-              onClick={() => {
-                set4Value([{ a: 1 }]);
-                set5Value([{ a: 2 }]);
-              }}
-            >
-              light比较
-            </Button>
-          </Space.Group>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
       {
         id: `p3`,
@@ -206,80 +62,9 @@ export default () => {
             info: 'watch对象的变化',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { WatchMemoized, Space } from '@baifendian/adhere';
-
-  const { watch } = WatchMemoized;
-
-  // watch监控对象的变化
-  const srcObj1 = {};
-  const watchObj1 = watch.create(srcObj1, {
-    a: () => {
-      console.log('a改变了');
-    },
-    b: () => {
-      console.log('b改变了');
-    },
-    c: () => {
-      console.log('c改变了');
-    },
-    'c.c1': () => {
-      console.log('c.c1改变了');
-    },
-    'c.c1.c111.c1111': (property) => {
-      console.log('c.c1.c111.c1111改变了', property);
-    },
-  });
-  watchObj1.on('c.c1.c111', () => {
-    console.log('c.c1.c111改变了');
-  });
-
-  <Space.Group direction="horizontal" size={10}>
-    <Button
-      onClick={() => {
-        watchObj1.value.a = 'a';
-        watchObj1.value.b = 'b';
-        watchObj1.value.c = { gl: 1 };
-        watchObj1.value.c.c1 = {
-          g2: 2,
-        };
-        watchObj1.value.c.c1.c111 = {
-          g3: 3,
-          c1111: '1',
-        };
-
-        delete watchObj1.value.c.c1.c111.c1111;
-      }}
-    >
-      对obj1进行监控
-    </Button>
-  </Space.Group>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Space.Group direction="horizontal" size={10}>
-            <Button
-              onClick={() => {
-                watchObj1.value.a = 'a';
-                watchObj1.value.b = 'b';
-                watchObj1.value.c = { gl: 1 };
-                watchObj1.value.c.c1 = {
-                  g2: 2,
-                };
-                watchObj1.value.c.c1.c111 = {
-                  g3: 3,
-                  c1111: '1',
-                };
-
-                delete watchObj1.value.c.c1.c111.c1111;
-              }}
-            >
-              对obj1进行监控
-            </Button>
-          </Space.Group>
-        ),
+        codeText: P3CodeText,
+        renderChildren: () => <P3 />,
       },
       {
         id: `p4`,
@@ -292,43 +77,9 @@ export default () => {
             info: '创建一个memoized的普通函数',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { WatchMemoized, Space } from '@baifendian/adhere';
-
-  const {  memoized } = WatchMemoized;
-
-  // 创建一个memoized的函数
-  const sumFun = memoized.createMemoFun((...params) => {
-    console.log('callSumFun');
-    return params.reduce((pre, current) => pre + current, 0);
-  });
-
-  <Space.Group direction="horizontal" size={10}>
-    <Button
-      onClick={() => {
-        console.log('subFun', sumFun({ a: 1 }, 2, 3));
-        console.log('subFun', sumFun({ a: 1 }, 2, 3));
-      }}
-    >
-      调用memoized函数
-    </Button>
-  </Space.Group>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Space.Group direction="horizontal" size={10}>
-            <Button
-              onClick={() => {
-                console.log('subFun', sumFun({ a: 1 }, 2, 3));
-                console.log('subFun', sumFun({ a: 1 }, 2, 3));
-              }}
-            >
-              调用memoized函数
-            </Button>
-          </Space.Group>
-        ),
+        codeText: P4CodeText,
+        renderChildren: () => <P4 />,
       },
       {
         id: `p5`,
@@ -341,154 +92,12 @@ export default () => {
             info: '创建一个memoized的Promise函数',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { WatchMemoized, Space } from '@baifendian/adhere';
-
-  const { memoized } = WatchMemoized;
-
-  // 创建一个memoized的Promise函数
-  const anyncFun = memoized.createMemoFun((...params) => {
-    console.log('callAnyncFun');
-    return new Promise((resolve) => {
-      resolve(params.reduce((pre, current) => pre + current, 0));
-    });
-  });
-
-  <Space.Group direction="horizontal" size={10}>
-    <Button
-      onClick={() => {
-        anyncFun(1, 2, 3).then((res) => {
-          console.log('asyncFun', res);
-        });
-
-        console.log('asyncFun', anyncFun(1, 2, 3));
-
-        console.log('asyncFun', anyncFun(1, 2, 4));
-        console.log('asyncFun', anyncFun(1, 2, 4));
-      }}
-    >
-      调用memoized函数
-    </Button>
-  </Space.Group>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Space.Group direction="horizontal" size={10}>
-            <Button
-              onClick={() => {
-                asyncFun(1, 2, 3).then((res) => {
-                  console.log('asyncFun', res);
-                });
-
-                console.log('asyncFun', asyncFun(1, 2, 3));
-
-                console.log('asyncFun', asyncFun(1, 2, 4));
-                console.log('asyncFun', asyncFun(1, 2, 4));
-              }}
-            >
-              调用memoized函数
-            </Button>
-          </Space.Group>
-        ),
+        codeText: P5CodeText,
+        renderChildren: () => <P5 />,
       },
     ];
   }
-
-  // 单值监控light比较
-  const [get1Value, set1Value, property1] = createRef([{ a: 1 }]);
-  console.log('srcValue1', get1Value());
-  memoized.watch.race(() => {
-    console.log('changeValue', get1Value());
-  }, [
-    {
-      property: property1,
-      mode: 'light',
-    },
-  ]);
-
-  // 单值监控deep比较
-  const [get2Value, set2Value, property2] = createRef([{ a: 1 }]);
-  console.log('srcValue2', get2Value());
-  memoized.watch.race(() => {
-    console.log('changeValue', get2Value());
-  }, [
-    {
-      property: property2,
-      mode: 'deep',
-    },
-  ]);
-
-  // 单值监控自定义比较
-  const [get3Value, set3Value, property3] = createRef([{ a: 1 }]);
-  console.log('srcValue3', get3Value());
-  memoized.watch.race(() => {
-    console.log('changeValue', get3Value());
-  }, [
-    {
-      property: property3,
-      mode: ({ oldValue, newValue }) => {
-        return oldValue === newValue;
-      },
-    },
-  ]);
-
-  // 多值监控light比较
-  const [get4Value, set4Value, property4] = createRef([{ a: 1 }]);
-  const [get5Value, set5Value, property5] = createRef([{ a: 2 }]);
-  console.log('srcValue4', get4Value());
-  console.log('srcValue5', get5Value());
-  memoized.watch.all(() => {
-    console.log('changeValue', get4Value());
-    console.log('changeValue', get5Value());
-  }, [
-    {
-      property: property4,
-      mode: 'light',
-    },
-    {
-      property: property5,
-      mode: 'light',
-    },
-  ]);
-
-  // watch监控对象的变化
-  const srcObj1 = {};
-  const watchObj1 = watch.create(srcObj1, {
-    a: () => {
-      console.log('a改变了');
-    },
-    b: () => {
-      console.log('b改变了');
-    },
-    c: () => {
-      console.log('c改变了');
-    },
-    'c.c1': () => {
-      console.log('c.c1改变了');
-    },
-    'c.c1.c111.c1111': (property) => {
-      console.log('c.c1.c111.c1111改变了', property);
-    },
-  });
-  watchObj1.on('c.c1.c111', () => {
-    console.log('c.c1.c111改变了');
-  });
-
-  // 创建一个memoized的函数
-  const sumFun = memoized.createMemoFun((...params) => {
-    console.log('callSumFun');
-    return params.reduce((pre, current) => pre + current, 0);
-  });
-
-  // 创建一个memoized的Promise函数
-  const asyncFun = memoized.createMemoFun((...params) => {
-    console.log('callAnyncFun');
-    return new Promise((resolve) => {
-      resolve(params.reduce((pre, current) => pre + current, 0));
-    });
-  });
 
   return (
     <PlayGroundPage>

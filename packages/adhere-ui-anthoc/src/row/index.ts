@@ -1,5 +1,3 @@
-import { Row } from 'antd';
+import Row from './Row';
 
-import { createFactory } from '../util';
-
-export default createFactory(Row, {});
+export default Row;

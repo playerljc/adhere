@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["mask/index.js"],"sourcesContent":["import Mask from './Mask';\nexport default Mask;"],"names":["Mask"],"mappings":"OAAOA,SAAU,wBACFA"}

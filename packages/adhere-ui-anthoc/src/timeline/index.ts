@@ -1,5 +1,3 @@
-import { Timeline } from 'antd';
+import Timeline from './Timeline';
 
-import { createFactory } from '../util';
-
-export default createFactory(Timeline, {});
+export default Timeline;

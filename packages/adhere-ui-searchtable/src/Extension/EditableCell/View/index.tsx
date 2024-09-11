@@ -50,12 +50,12 @@ const EditableCellView: FC<EditableCellViewProps> = (props) => {
   }
 
   return (
-    <div className={`${selectorPrefix}-editablecell-view`}>
+    <div className={`${selectorPrefix}-editable-cell-view`}>
       <div
         className={classNames(
-          `${selectorPrefix}-editablecell-view-inner`,
+          `${selectorPrefix}-editable-cell-view-inner`,
           'ellipsis' in column && column.ellipsis
-            ? `${selectorPrefix}-editablecell-view-inner-ellipsis`
+            ? `${selectorPrefix}-editable-cell-view-inner-ellipsis`
             : '',
         )}
       >
@@ -64,8 +64,8 @@ const EditableCellView: FC<EditableCellViewProps> = (props) => {
           restProps?.children
         }
       </div>
-      <div className={`${selectorPrefix}-editablecell-view-trigger`}>
-        <div className={`${selectorPrefix}-editablecell-view-trigger-inner`} onClick={onTrigger}>
+      <div className={`${selectorPrefix}-editable-cell-view-trigger`}>
+        <div className={`${selectorPrefix}-editable-cell-view-trigger-inner`} onClick={onTrigger}>
           {!!renderToEditTrigger &&
             renderToEditTrigger?.({
               value: record?.[dataIndex as string],
@@ -79,5 +79,7 @@ const EditableCellView: FC<EditableCellViewProps> = (props) => {
     </div>
   );
 };
+
+EditableCellView.displayName = 'EditableCellView';
 
 export default EditableCellView;

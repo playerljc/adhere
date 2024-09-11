@@ -1,4 +1,11 @@
 import React from 'react';
 import type { SignatureCoreHandle, SignatureCoreProps } from '../types';
-declare const _default: React.MemoExoticComponent<React.ForwardRefExoticComponent<SignatureCoreProps & React.RefAttributes<SignatureCoreHandle>>>;
-export default _default;
+/**
+ * Signature
+ * @description 签名
+ * @param {SignatureProps} props
+ * @param ref
+ * @constructor
+ */
+declare const Signature: React.NamedExoticComponent<SignatureCoreProps & React.RefAttributes<SignatureCoreHandle>>;
+export default Signature;

@@ -1,7 +1,9 @@
 import { Avatar, Button, List, Space, Table, Tag } from 'antd';
 import React, { useRef, useState } from 'react';
 
-import { Space as BSpace, ConditionalRender, Spin } from '@baifendian/adhere';
+import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import BSpace from '@baifendian/adhere-ui-space';
+import Spin from '@baifendian/adhere-ui-spin';
 
 import JdCategoryTab from '../src/index';
 

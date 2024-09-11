@@ -2,7 +2,11 @@
 declare const SearchEditableTable_base: {
     new (props: any): {
         [x: string]: any;
-        formRef: import("react").RefObject<import("antd").FormInstance<any> | null>;
+        formRef: import("react").RefObject<import("antd").FormInstance<any> | null>; /**
+         * updateEditorData
+         * @description 更新可编辑的所有单元格
+         * @return Promise<void>
+         */
         onTableRowComponentReducers(columns: import("../types").ColumnTypeExt[]): string[];
         onTableCellComponentReducers(columns: import("../types").ColumnTypeExt[]): string[];
         rowEditableReducer(params: {

@@ -8,7 +8,7 @@ export type BackTopAnimationProps = {
     style?: CSSProperties;
     zIndex?: string | number;
     duration?: number;
-    getContainer: () => HTMLElement;
+    getContainer: () => HTMLElement | null | undefined;
     onTrigger: () => Promise<void>;
     onScrollTop?: (scrollTopVal: number) => void;
 };

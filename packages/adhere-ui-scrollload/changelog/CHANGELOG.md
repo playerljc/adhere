@@ -1,3 +1,13 @@
+# 1.0.20
+
+***
+
+2024-04-22
+
+* 加入getScrollContainer方法
+* 加入disabled设置
+* 加入HIDE_EMPTY做性能优化
+
 # 1.0.19
 
 ***

@@ -1,5 +1,5 @@
 import Quill, { DeltaStatic, Sources, StringMap } from 'quill';
-import React from 'react';
+import React, { NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import { Range, UnprivilegedEditor, Value } from 'react-quill';
 
 /**
@@ -48,3 +48,9 @@ export interface ReactQuillSandboxProps extends ReactQuillProps {
   wrapStyle?: React.CSSProperties;
   quillStyle?: string;
 }
+
+export type ReactQuillSandboxComponent = NamedExoticComponent<
+  PropsWithoutRef<ReactQuillSandboxProps> & RefAttributes<ReactQuillSandboxHandler>
+> & {
+  AntdFormRequireValidator: (editor: any, tip: any) => any;
+};

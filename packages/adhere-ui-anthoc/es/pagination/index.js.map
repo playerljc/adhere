@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["pagination/index.js"],"sourcesContent":["import _Pagination from \"antd/es/pagination\";\nimport { createFactory } from '../util';\nexport default createFactory(_Pagination, {});"],"names":["_Pagination","createFactory"],"mappings":"OAAOA,gBAAiB,4BACfC,aAA8B,KAAT,yBACfA,cAAcD,YAAa,EAAE"}
+{"version":3,"file":"index.js","sources":["pagination/index.js"],"sourcesContent":["import Pagination from './Pagination';\nexport default Pagination;"],"names":["Pagination"],"mappings":"OAAOA,eAAgB,8BACRA"}

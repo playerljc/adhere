@@ -1,3 +1,203 @@
+# 2.11.0
+
+***
+
+2024-05-11
+
+* **adhere-mobile-ui-spin**
+  - 加入adhere-mobile-ui-spin组件
+* **adhere-mobile-ui-prompt-warnprompt**
+  - 加入adhere-mobile-ui-prompt-warnprompt组件
+* **adhere-mobile-ui-prompt-successprompt**
+  - 加入adhere-mobile-ui-prompt-successprompt组件
+* **adhere-mobile-ui-prompt-errorprompt**
+  - 加入adhere-mobile-ui-prompt-errorprompt组件
+* **adhere-mobile-ui-tabs**
+  - 加入adhere-mobile-ui-tabs组件
+* **adhere-mobile-ui-time-picker-view**
+  - 加入adhere-mobile-ui-time-picker-view组件
+* **adhere-mobile-ui-anthoc**
+  - 加入adhere-mobile-ui-anthoc组件
+* **adhere-mobile-ui-auto-complete**
+  - 加入adhere-mobile-ui-auto-complete组件
+* **adhere-ui-auto-complete**
+  - 加入adhere-ui-auto-complete组件
+* **adhere-mobile-ui-prsl**
+  - 加入adhere-mobile-ui-prsl组件
+* **adhere-ui-quick-range-date**
+  - 加入adhere-ui-quick-range-date组件
+* **adhere-mobile-ui-popovermenu**
+  - 加入adhere-mobile-ui-popovermenu组件
+* **adhere-mobile-ui-quick-range-date**
+  - 加入adhere-mobile-ui-quick-range-date组件
+* **adhere-ui-currency-symbol**
+  - 加入adhere-ui-currency-symbol组件
+* **adhere-ui-searchtable**
+  - 拖拽排序加入可以在列上加入自定义句柄
+  - $search中的输入框去掉trim
+  - $search中加入isShowLabelSymbol配置项对ProSearchTable的label符号进行控制
+  - 加入REM适配
+  - 加入导出excel功能
+  - 查询区域加入工具栏
+  - 操作工具栏和查询工具栏分离
+  - 查询工具栏加入收起功能
+  - OptionsWrap加入收起功能
+  - 缺省的工具按钮修改
+  - 列头和查询文字支持tip显示
+  - 修改renderSearchToolBar变为renderTitle，renderSearchBarExtra，renderSearchBarActions
+  - 可以自定义高级查询面板，高级查询优化
+  - 使用fetchData的方法都变成Promise
+  - 可编辑单元格和可编辑的Table单元格中$editable的rules和props支持函数形式
+* **adhere-ui-anthoc**
+  - Form中加入对FormItem加入getErrorContainer自定义错误输出
+  - Form中加入NestingFormItem组件
+  - Form的Validate的rules加入required设置
+  - 修复CheckAll不返回children的默认值设置
+  - ConfigProvider加入router、publicPath参数的传递
+  - CheckboxGroup加入spaceProps属性的设置
+  - ArrayEntityValueHOC、TreeEntityValueHOC加入isUsePrimaryValue(是否使用原始值)的判断
+  - tree加入了AutoComplete、table加入了TreeAutoComplete
+  - tree-select加入数据源组件
+  - 加入Calendar的ValueHOC
+  - 加入ListPagingEntityValueHOC
+  - 加入一系列EntityValueHOC
+  - List和Table的Paging加入SuspenseAsync的包裹
+  - 加入AutoCompleteSelectInput
+  - 加入Tag的AutoComplete
+  - 带有全选按钮可以自定义全选按钮的位置
+  - hoc文件结构调整
+* **adhere-util**
+  - 加入getSaerch、getPathname方法
+  - encrypt函数加入options
+  - 加入dom尺寸计算方法
+  - clientToCtxPoint去掉使用zoom计算
+  - 加入pxToRem方法
+  - 修复math中的clientToCtxPoint方法适配zoom
+  - 加入getTransformValues方法
+  - treeToArray方法排除children属性
+  - 加入isPromise方法
+  - 修改getTopDom方法的BUG，selector支持数组形式
+  - 加入gcoord
+  - getTopDom方法修改
+  - 加入pascalCaseToKebabCase2
+  - pascalCaseToKebabCase方法修改
+  - 将未导出的ts定义进行导出
+  - 修复tree中的若干方法的细节
+* **adhere-ui-searchlist**
+  - 使用fetchData的方法都变成Promise
+  - 修改文件名的大小写
+  - 综合修改 1.修复已知BUG 2.适配adhere-ui-searchtable的修改
+* **adhere-ui-fieldgeneratortodict**
+  - 优化组件实现，加入了直接使用预定义名称使用的方式，减少拼接
+  - 加入一系列ValueEntityHOC
+* **adhere-ui-messagedialog**
+  - Trigger加入defaultCloseBtn配置
+  - 修改Trigger修改props不刷新的问题
+  - 加入allowMultipleInstances参数控制是否允许多实例共存
+  - Mobile的适配
+  - 修复MaximizeModal组件最大化和最小化的样式问题
+  - 加入renderToWrapper方法
+  - 加入disable设置和update刷新方法
+  - 加入是否允许多实例共存的设置
+  - 加入Trigger和TriggerPrompt组件
+  - 加入disabled设置和update刷新方法
+  - Modal和MaximizeModal的返回值中加入setConfig方法
+* **adhere-ui-suspense**
+  - 加入onFirstFetchDataBefore和onFirstFetchDataAfter方法
+  - 加入onFirstFetchDataBefore和onFirstFetchDataAfter方法
+  - Asyc和Sync在Impl中实现，加入Impl实现
+* **adhere-ui-popup**
+  - Action为空不渲染wrapper
+  - 移动端适配
+  - 加入对closeAction的控制
+  - 加入renderToWrapper方法
+  - 加入Trigger和TriggerPrompt组件
+  - 加入disabled设置和update刷新方法
+* **adhere-ui-scrollload**
+  - 加入HIDE_EMPTY做性能优化
+  - 加入disabled设置
+  - 加入getScrollContainer方法
+* **adhere-ui-autocomplete**
+  - TreeAutoComplete加入不筛选的属性
+  - 重构最终数据源的计算
+  - 修改初始化没有下拉数据的BUG
+* **adhere-ui-flexlayout**
+  - Auto加入isUseNormal属性
+  - 加入isUseNormal属性
+  - 加入REM适配
+  - 展开和收起(trigger)内部实现修改
+  - 加入展开和收起功能(trigger)
+  - 加入LCRLayout、TCBLayout
+* **adhere-util-communication-ajax**
+  - loading适配移动端
+  - 修改FormData值是数组情况
+* **adhere-ui-configprovider**
+  - 加入router、publicPath参数的注入
+  - 加入media配置项控制是否支持REM
+  - 加入Wrapper元素用来存放css变量
+* **adhere-ui-css**
+  - 加入adhere-box-shadow-primary变量
+  - 加入REM适配
+  - 加入DPR变量
+  - init方法修改
+* **adhere-util-intl**
+  - 国际化方法加入description方法
+  - 序号词条翻译修改
+  - 加入quick-range-date的词条
+* **adhere-ui-olmap**
+  - 文件大小写修改为帕斯卡命名规则
+  - OLMap组件的fitZoom参数默认值修改
+* **adhere-ui-playground**
+  - Anchors修改
+  - SimpleTabs，CodeTabPanel加入className和style参数
+  - 加入PlayGroundTabMobile组件
+* **adhere-util-watchmemoized**
+  - 浅比较修改为Object.is
+* **adhere-ui-splitlayout**
+  - TRBLC结构调整
+* **adhere-ui-comment**
+  - 使用ScrollLoad的优化
+* **adhere-ui-contextmenu**
+  - 加入renderToWrapper方法
+  - 加入扇形菜单
+* **adhere-util-resource**
+  - dict.locals.config.js加入AntDesignMobile的国际化
+  - dict.locals.config.js加入可以动态添加和删除的方法
+  - dict.moment.config.js中加入时间国际化formats和本地化formats
+  - dict.locals.config.js加入可以动态添加和删除的方法
+* **adhere-ui-datedisplay**
+  - 加入本地化显示的组件
+  - 优化内部函数，去掉一些无用函数
+* **adhere-ui-hooks**
+  - 加入use
+  - useLatestState和useSetState修改为使用ref
+  - 加入useLatestState的hook
+  - 加入usePropToState的hook
+  - 加入useTriggerQuery
+  - 加入useSafeRef的hook
+  - 加入useLatestState的hook
+  - 加入usePropToState的hook
+  - 加入useSafeRef
+* **adhere-util-adapterscreen**
+  - 加入flexible方法适配REM
+  - 加入devicePixelRatio的适配
+* **adhere-ui-css**
+  - 加入adhere-box-shadow-primary变量
+  - 加入REM适配
+  - 加入DPR变量
+* **adhere-ui-tablegridlayout**
+  - 加入mode属性
+  - 奇偶颜色互换位置
+  - 加入REM适配
+* **adhere-ui-space**
+  - 间距BUG修改
+  - 加入REM适配
+* **adhere-ui-split**
+  - 间距BUG修改
+  - 加入REM适配
+* **adhere-ui-stickuplayout**
+  - 加入resize适配
+
 # 2.10.28
 
 ***
@@ -163,6 +363,7 @@
 2023-08-18
 
 * **adhere-ui-tablegridlayout**
+  - 加入REM适配
   - 加入show属性控制显隐
 
 # 2.10.13

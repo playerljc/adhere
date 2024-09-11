@@ -1,0 +1,2 @@
+"use strict";var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},util_1=(Object.defineProperty(exports,"__esModule",{value:!0}),require("../util")),InternalTimeModal_1=__importDefault(require("./InternalTimeModal")),TimeModalHOC=(0,util_1.createFactory)(InternalTimeModal_1.default,{});TimeModalHOC.displayName="TimeModal",exports.default=TimeModalHOC;
+//# sourceMappingURL=TimeModal.js.map

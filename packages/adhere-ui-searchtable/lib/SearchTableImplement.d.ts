@@ -1,14 +1,16 @@
 import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
 import type { ReactElement, ReactNode, RefObject } from 'react';
+import React from 'react';
 import SearchTable from './SearchTable';
 import type { ColumnTypeExt, ISearchTableImplement, SearchTableImplementFactoryFunction, SearchTableImplementProps, SearchTableImplementState, SearchTableProps, SearchTableState } from './types';
-export declare const selectorPrefix = "adhere-ui-searchtableimplement";
+export declare const selectorPrefix = "adhere-ui-search-table-implement";
 /**
  * SearchTableImplement
  * @class SearchTableImplement
  * @classdesc SearchTableImplement - SearchTable的默认实现
  */
 export declare class SearchTableImplement<P extends SearchTableProps, S extends SearchTableState> extends SearchTable<SearchTableImplementProps, SearchTableImplementState> implements ISearchTableImplement {
+    static displayName: string;
     innerWrapRef: RefObject<HTMLDivElement>;
     constructor(props: any);
     componentDidMount(): void;
@@ -167,7 +169,7 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      * @description - 渲染主体
      * @return {ReactElement | null}
      */
-    renderInner(): ReactElement | null;
+    renderInner(): React.JSX.Element;
     /**
      * renderSearchFooterItems
      * @description - 渲染表格的工具栏
@@ -258,7 +260,7 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      * @override
      * @return {Promise<void>}
      */
-    onSearch(): Promise<void>;
+    onSearch(): Promise<any>;
     /**
      * getColumns
      * @return {ColumnType<object>[]}
@@ -292,6 +294,8 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      * @return {ReactNode}
      */
     renderSearchHeader(): ReactNode;
+    renderSearchFormToolBarDefaultPanel(): ReactNode;
+    renderSearchFormToolBarItems(defaultItems: ReactElement[]): ReactNode[];
     /**
      * onTableRowComponentReducers
      * @param {ColumnTypeExt[]} columns

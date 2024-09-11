@@ -1,2 +1,2 @@
-import HistoryBack from"./historyback";export default HistoryBack;
+import HistoryBack from"./HistoryBack";export default HistoryBack;
 //# sourceMappingURL=index.js.map

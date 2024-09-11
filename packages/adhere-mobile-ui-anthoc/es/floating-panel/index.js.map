@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["floating-panel/index.js"],"sourcesContent":["import FloatingPanel from './FloatingPanel';\nexport default FloatingPanel;"],"names":["FloatingPanel"],"mappings":"OAAOA,kBAAmB,iCACXA"}

@@ -15,20 +15,21 @@ arr.fill(0);
 
 export default () => {
   function boxPanelConfig() {
-    return arr.map((t, index) => {
-      if (index % 3 === 0) {
-        return {
-          id: `p${index + 1}`,
-          name: `p${index + 1}`,
-          mode: 'code',
-          scope: { React },
-          cardProps: {
-            description: {
-              title: '123',
-              info: '123',
+    return [
+      ...arr.map((t, index) => {
+        if (index % 3 === 0) {
+          return {
+            id: `p${index + 1}`,
+            name: `p${index + 1}`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: '123',
+                info: '123',
+              },
             },
-          },
-          codeText: `
+            codeText: `
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
 
@@ -44,41 +45,41 @@ export default () => {
     <a>删除</a>
   </DelConfirm>
       `,
-          type: 'PlayGround',
-          theme: 'eclipse',
-          renderChildren: () => (
-            <DelConfirm
-              success={() => {
-                return new Promise((resolve) => {
-                  alert('点击了确认');
+            type: 'PlayGround',
+            theme: 'eclipse',
+            renderChildren: () => (
+              <DelConfirm
+                success={() => {
+                  return new Promise((resolve) => {
+                    alert('点击了确认');
 
-                  resolve();
-                });
-              }}
-            >
-              <a>删除</a>
-            </DelConfirm>
-          ),
-        };
-      }
-      //
-      else if (index % 3 === 1) {
-        return {
-          id: `p${index + 1}`,
-          name: `p${index + 1}`,
-          cardProps: {
-            description: {
-              title: '123',
-              info: '123',
+                    resolve();
+                  });
+                }}
+              >
+                <a>删除</a>
+              </DelConfirm>
+            ),
+          };
+        }
+
+        if (index % 3 === 1) {
+          return {
+            id: `p${index + 1}`,
+            name: `p${index + 1}`,
+            cardProps: {
+              description: {
+                title: '123',
+                info: '123',
+              },
             },
-          },
-          config: [
-            {
-              title: 'a.jsx',
-              mode: 'code',
-              theme: 'eclipse',
-              scope: { React },
-              codeText: `
+            config: [
+              {
+                title: 'a.jsx',
+                mode: 'code',
+                theme: 'eclipse',
+                scope: { React },
+                codeText: `
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
 
@@ -94,12 +95,12 @@ export default () => {
     <a>删除</a>
   </DelConfirm>
                   `,
-            },
-            {
-              title: 'a.less',
-              mode: 'code',
-              scope: { React },
-              codeText: `
+              },
+              {
+                title: 'a.less',
+                mode: 'code',
+                scope: { React },
+                codeText: `
   .adhere-ui-delconfirm {
     position: relative;
 
@@ -108,18 +109,18 @@ export default () => {
     }
   }
                   `,
-            },
-            {
-              title: 'b.jsx',
-              mode: 'code',
-              scope: { React },
-              type: 'CodeTabPanel',
-              active: 'Typescript',
-              config: [
-                {
-                  key: 'Typescript',
-                  title: 'Typescript',
-                  codeText: `
+              },
+              {
+                title: 'b.jsx',
+                mode: 'code',
+                scope: { React },
+                type: 'CodeTabPanel',
+                active: 'Typescript',
+                config: [
+                  {
+                    key: 'Typescript',
+                    title: 'Typescript',
+                    codeText: `
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
 
@@ -137,12 +138,12 @@ export default () => {
     <a>删除</a>
   </DelConfirm>
       `,
-                  theme: 'eclipse',
-                },
-                {
-                  key: 'Javascript',
-                  title: 'Javascript',
-                  codeText: `
+                    theme: 'eclipse',
+                  },
+                  {
+                    key: 'Javascript',
+                    title: 'Javascript',
+                    codeText: `
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
 
@@ -160,43 +161,117 @@ export default () => {
     <a>删除</a>
   </DelConfirm>
       `,
-                },
-              ],
-            },
-          ],
-          type: 'PlayGroundMulit',
-          renderChildren: () => (
-            <DelConfirm
-              success={() => {
-                return new Promise((resolve) => {
-                  alert('点击了确认');
+                  },
+                ],
+              },
+            ],
+            type: 'PlayGroundMulti',
+            renderChildren: () => (
+              <DelConfirm
+                success={() => {
+                  return new Promise((resolve) => {
+                    alert('点击了确认');
 
-                  resolve();
-                });
-              }}
-            >
-              <a>删除</a>
-            </DelConfirm>
-          ),
-        };
-      }
-      //
-      else if (index % 3 === 2) {
-        return {
-          id: `p${index + 1}`,
-          name: `p${index + 1}`,
-          cardProps: {
-            description: {
-              title: '123',
-              info: '123',
+                    resolve();
+                  });
+                }}
+              >
+                <a>删除</a>
+              </DelConfirm>
+            ),
+          };
+        }
+
+        if (index % 3 === 2) {
+          return {
+            id: `p${index + 1}`,
+            name: `p${index + 1}`,
+            cardProps: {
+              description: {
+                title: '123',
+                info: '123',
+              },
             },
+            active: 'Typescript',
+            config: [
+              {
+                key: 'Typescript',
+                title: 'Typescript',
+                codeText: `
+  import React from 'react';
+  import { DelConfirm } from '@baifendian/adhere';
+
+  console.log(111);
+
+  <DelConfirm
+    success={() => {
+      return new Promise((resolve) => {
+        alert('点击了确认');
+
+        resolve();
+      });
+    }}
+  >
+    <a>删除</a>
+  </DelConfirm>
+      `,
+                theme: 'eclipse',
+              },
+              {
+                key: 'Javascript',
+                title: 'Javascript',
+                codeText: `
+  import React from 'react';
+  import { DelConfirm } from '@baifendian/adhere';
+
+  console.log(222);
+
+  <DelConfirm
+    success={() => {
+      return new Promise((resolve) => {
+        alert('点击了确认');
+
+        resolve();
+      });
+    }}
+  >
+    <a>删除</a>
+  </DelConfirm>
+      `,
+              },
+            ],
+            type: 'PlayGroundTab',
+            renderChildren: () => (
+              <DelConfirm
+                success={() => {
+                  return new Promise((resolve) => {
+                    alert('点击了确认');
+
+                    resolve();
+                  });
+                }}
+              >
+                <a>删除</a>
+              </DelConfirm>
+            ),
+          };
+        }
+      }),
+      {
+        id: `p${arr.length}`,
+        name: `p${arr.length}`,
+        cardProps: {
+          description: {
+            title: '123',
+            info: '123',
           },
-          active: 'Typescript',
-          config: [
-            {
-              key: 'Typescript',
-              title: 'Typescript',
-              codeText: `
+        },
+        active: 'Typescript',
+        config: [
+          {
+            key: 'Typescript',
+            title: 'Typescript',
+            codeText: `
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
 
@@ -214,12 +289,12 @@ export default () => {
     <a>删除</a>
   </DelConfirm>
       `,
-              theme: 'eclipse',
-            },
-            {
-              key: 'Javascript',
-              title: 'Javascript',
-              codeText: `
+            theme: 'eclipse',
+          },
+          {
+            key: 'Javascript',
+            title: 'Javascript',
+            codeText: `
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
 
@@ -237,25 +312,12 @@ export default () => {
     <a>删除</a>
   </DelConfirm>
       `,
-            },
-          ],
-          type: 'PlayGroundTab',
-          renderChildren: () => (
-            <DelConfirm
-              success={() => {
-                return new Promise((resolve) => {
-                  alert('点击了确认');
-
-                  resolve();
-                });
-              }}
-            >
-              <a>删除</a>
-            </DelConfirm>
-          ),
-        };
-      }
-    });
+          },
+        ],
+        type: 'PlayGroundTabMobile',
+        url: 'http://www.baidu.com',
+      },
+    ];
   }
 
   return (

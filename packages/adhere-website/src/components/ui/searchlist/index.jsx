@@ -1,3 +1,16 @@
+import ServiceRegisterCodeText from '!!raw-loader!./ServiceRegister';
+import CardListCodeText from '!!raw-loader!./examples/CardList';
+import CustomRenderDataListCodeText from '!!raw-loader!./examples/CustomRenderDataList';
+import CustomRenderItemListCodeText from '!!raw-loader!./examples/CustomRenderItemList';
+import ExpandableListCodeText from '!!raw-loader!./examples/ExpandableList';
+import NormalListCodeText from '!!raw-loader!./examples/NormalList';
+import ResourceManagerCodeText from '!!raw-loader!./examples/ResourceManager';
+import SelectionListCodeText from '!!raw-loader!./examples/SelectionList';
+import VerticalNormalListCodeText from '!!raw-loader!./examples/VerticalNormalList';
+import MockCodeText from '!!raw-loader!./mock';
+import ModelUserCodeText from '!!raw-loader!./model/user';
+import ServiceUserCodeText from '!!raw-loader!./service/user';
+
 import React from 'react';
 
 import PlayGroundPage, {
@@ -7,14 +20,37 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-import CardList from './cardList';
-import CustomRenderDataList from './customRenderDataList';
-import CustomRenderItemList from './customRenderItemList';
-import ExpandableList from './expandableList';
-import NormalList from './normalList';
-import ResourceManager from './resourceManager';
-import SelectionList from './selectionList';
-import VerticalNormalList from './verticalNormalList';
+import CardList from './examples/CardList';
+import CustomRenderDataList from './examples/CustomRenderDataList';
+import CustomRenderItemList from './examples/CustomRenderItemList';
+import ExpandableList from './examples/ExpandableList';
+import NormalList from './examples/NormalList';
+import ResourceManager from './examples/ResourceManager';
+import SelectionList from './examples/SelectionList';
+import VerticalNormalList from './examples/VerticalNormalList';
+
+const CommonConfig = [
+  {
+    title: 'model/user.js',
+    key: 'model/user.js',
+    codeText: ModelUserCodeText,
+  },
+  {
+    title: 'service/user.js',
+    key: 'service/user.js',
+    codeText: ServiceUserCodeText,
+  },
+  {
+    title: 'mock.js',
+    key: 'mock.js',
+    codeText: MockCodeText,
+  },
+  {
+    title: 'ServiceRegister.js',
+    key: 'ServiceRegister.js',
+    codeText: ServiceRegisterCodeText,
+  },
+];
 
 export default () => {
   function boxPanelConfig() {
@@ -30,123 +66,16 @@ export default () => {
             info: '基本使用',
           },
         },
-        codeText: `
-  import React from 'react';
-
-  import { SearchList } from '@baifendian/adhere';
-
-  import './serviceRegister';
-
-  const { ProSearchStateList, SearchListStateImplementFactory } = SearchList;
-
-  const serviceName = 'user';
-
-  /**
-   * ProSearchStateListImpl
-   * @class ProSearchStateListImpl
-   * @classdesc ProSearchStateListImpl
-   */
-  class ProSearchStateListImpl extends ProSearchStateList {
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        ...this.state,
-        expandedRowKeys: [],
-      };
-    }
-
-    getComponentId() {
-      return 'ProSearchStateListImpl';
-    }
-
-    getServiceName() {
-      return serviceName;
-    }
-
-    getFetchListPropName() {
-      return 'fetchList';
-    }
-
-    getDataKey() {
-      return 'list';
-    }
-
-    getTotalKey() {
-      return 'totalCount';
-    }
-
-    getRowSelection() {
-      return null;
-    }
-
-    getColumns() {
-      return [
-        {
-          dataIndex: 'title',
-          key: 'title',
-          title: '标题',
-          $search: {
-            visible: true,
-            type: 'input',
+        type: 'PlayGroundTab',
+        active: 'NormalList.jsx',
+        config: [
+          {
+            title: 'NormalList.jsx',
+            key: 'NormalList.jsx',
+            codeText: NormalListCodeText,
           },
-        },
-        {
-          dataIndex: 'subTitle',
-          key: 'subTitle',
-          title: '副标题',
-          $search: {
-            visible: true,
-            type: 'input',
-          },
-        },
-        {
-          dataIndex: 'content',
-          key: 'subTitle',
-          title: '副标题',
-          $search: {
-            visible: true,
-            type: 'textArea',
-          },
-        },
-      ];
-    }
-  }
-
-  ProSearchStateListImpl.propTypes = {};
-
-  const models = [];
-  const requireComponent = require.context('./model', false, /.*\\.(js)$/);
-  requireComponent.keys().forEach((fileName) => {
-    const model = requireComponent(fileName);
-    models.push(model.default());
-  });
-
-  const Wrap = SearchListStateImplementFactory({
-    serviceNames: [serviceName],
-    middleWares: [],
-    reducer: null,
-    models,
-  })(ProSearchStateListImpl);
-
-  export default (props) => (
-    <Wrap
-      bodyStyle={{ padding: '20px 30px' }}
-      antdListProps={
-        {
-          // itemLayout: 'vertical',
-          // grid: { gutter: 16, column: 4 },
-          // renderItem: () => {
-          //   return <div>Custom</div>;
-          // },
-        }
-      }
-      {...props}
-    />
-  );
-
-                    `,
-        type: 'PlayGround',
+          ...CommonConfig,
+        ],
         renderChildren: () => <NormalList />,
       },
       {
@@ -160,120 +89,16 @@ export default () => {
             info: '竖排列表',
           },
         },
-        codeText: `
-  import React from 'react';
-
-  import { SearchList } from '@baifendian/adhere';
-
-  import './serviceRegister';
-
-  const { ProSearchStateList, SearchListStateImplementFactory } = SearchList;
-
-  const serviceName = 'user';
-
-  /**
-   * ProSearchStateListImpl
-   * @class ProSearchStateListImpl
-   * @classdesc ProSearchStateListImpl
-   */
-  class ProSearchStateListImpl extends ProSearchStateList {
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        ...this.state,
-        expandedRowKeys: [],
-      };
-    }
-
-    getComponentId() {
-      return 'ProSearchStateListImpl';
-    }
-
-    getServiceName() {
-      return serviceName;
-    }
-
-    getFetchListPropName() {
-      return 'fetchList';
-    }
-
-    getDataKey() {
-      return 'list';
-    }
-
-    getTotalKey() {
-      return 'totalCount';
-    }
-
-    getRowSelection() {
-      return null;
-    }
-
-    getColumns() {
-      return [
-        {
-          dataIndex: 'title',
-          key: 'title',
-          title: '标题',
-          $search: {
-            visible: true,
-            type: 'input',
+        type: 'PlayGroundTab',
+        active: 'VerticalNormalList.jsx',
+        config: [
+          {
+            title: 'VerticalNormalList.jsx',
+            key: 'VerticalNormalList.jsx',
+            codeText: VerticalNormalListCodeText,
           },
-        },
-        {
-          dataIndex: 'subTitle',
-          key: 'subTitle',
-          title: '副标题',
-          $search: {
-            visible: true,
-            type: 'input',
-          },
-        },
-        {
-          dataIndex: 'content',
-          key: 'subTitle',
-          title: '副标题',
-          $search: {
-            visible: true,
-            type: 'textArea',
-          },
-        },
-      ];
-    }
-  }
-
-  ProSearchStateListImpl.propTypes = {};
-
-  const models = [];
-  const requireComponent = require.context('./model', false, /.*\\.(js)$/);
-  requireComponent.keys().forEach((fileName) => {
-    const model = requireComponent(fileName);
-    models.push(model.default());
-  });
-
-  const Wrap = SearchListStateImplementFactory({
-    serviceNames: [serviceName],
-    middleWares: [],
-    reducer: null,
-    models,
-  })(ProSearchStateListImpl);
-
-  export default (props) => (
-    <Wrap
-      bodyStyle={{ padding: '20px 30px' }}
-      antdListProps={{
-        itemLayout: 'vertical',
-        // grid: { gutter: 16, column: 4 },
-        // renderItem: () => {
-        //   return <div>Custom</div>;
-        // },
-      }}
-      {...props}
-    />
-  );
-                    `,
-        type: 'PlayGround',
+          ...CommonConfig,
+        ],
         renderChildren: () => <VerticalNormalList />,
       },
       {
@@ -287,123 +112,16 @@ export default () => {
             info: '可选列表',
           },
         },
-        codeText: `
-  import React from 'react';
-
-  import { SearchList } from '@baifendian/adhere';
-
-  import './serviceRegister';
-
-  const { ProSearchStateList, SearchListStateImplementFactory } = SearchList;
-
-  const serviceName = 'user';
-
-  /**
-   * ProSearchStateListImpl
-   * @class ProSearchStateListImpl
-   * @classdesc ProSearchStateListImpl
-   */
-  class ProSearchStateListImpl extends ProSearchStateList {
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        ...this.state,
-        expandedRowKeys: [],
-      };
-    }
-
-    getComponentId() {
-      return 'ProSearchStateListImpl';
-    }
-
-    getServiceName() {
-      return serviceName;
-    }
-
-    getFetchListPropName() {
-      return 'fetchList';
-    }
-
-    getDataKey() {
-      return 'list';
-    }
-
-    getTotalKey() {
-      return 'totalCount';
-    }
-
-    // getRowSelection() {
-    //   return null;
-    // }
-
-    getColumns() {
-      return [
-        {
-          dataIndex: 'title',
-          key: 'title',
-          title: '标题',
-          $search: {
-            visible: true,
-            type: 'input',
+        type: 'PlayGroundTab',
+        active: 'SelectionList.jsx',
+        config: [
+          {
+            title: 'SelectionList.jsx',
+            key: 'SelectionList.jsx',
+            codeText: SelectionListCodeText,
           },
-        },
-        {
-          dataIndex: 'subTitle',
-          key: 'subTitle',
-          title: '副标题',
-          $search: {
-            visible: true,
-            type: 'input',
-          },
-        },
-        {
-          dataIndex: 'content',
-          key: 'subTitle',
-          title: '副标题',
-          $search: {
-            visible: true,
-            type: 'textArea',
-          },
-        },
-      ];
-    }
-  }
-
-  ProSearchStateListImpl.propTypes = {};
-
-  const models = [];
-  const requireComponent = require.context('./model', false, /.*\\.(js)$/);
-  requireComponent.keys().forEach((fileName) => {
-    const model = requireComponent(fileName);
-    models.push(model.default());
-  });
-
-  const Wrap = SearchListStateImplementFactory({
-    serviceNames: [serviceName],
-    middleWares: [],
-    reducer: null,
-    models,
-  })(ProSearchStateListImpl);
-
-  export default (props) => (
-    <Wrap
-      bodyStyle={{ padding: '20px 30px' }}
-      antdListProps={
-        {
-          // itemLayout: 'vertical',
-          // grid: { gutter: 16, column: 4 },
-          // renderItem: () => {
-          //   return <div>Custom</div>;
-          // },
-        }
-      }
-      {...props}
-    />
-  );
-
-                    `,
-        type: 'PlayGround',
+          ...CommonConfig,
+        ],
         renderChildren: () => <SelectionList />,
       },
       {
@@ -417,121 +135,16 @@ export default () => {
             info: '卡片列表',
           },
         },
-        codeText: `
-  import React from 'react';
-
-  import { SearchList } from '@baifendian/adhere';
-
-  import './serviceRegister';
-
-  const { ProSearchStateList, SearchListStateImplementFactory } = SearchList;
-
-  const serviceName = 'user';
-
-  /**
-   * ProSearchStateListImpl
-   * @class ProSearchStateListImpl
-   * @classdesc ProSearchStateListImpl
-   */
-  class ProSearchStateListImpl extends ProSearchStateList {
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        ...this.state,
-        expandedRowKeys: [],
-      };
-    }
-
-    getComponentId() {
-      return 'ProSearchStateListImpl';
-    }
-
-    getServiceName() {
-      return serviceName;
-    }
-
-    getFetchListPropName() {
-      return 'fetchList';
-    }
-
-    getDataKey() {
-      return 'list';
-    }
-
-    getTotalKey() {
-      return 'totalCount';
-    }
-
-    getRowSelection() {
-      return null;
-    }
-
-    getColumns() {
-      return [
-        {
-          dataIndex: 'title',
-          key: 'title',
-          title: '标题',
-          $search: {
-            visible: true,
-            type: 'input',
+        type: 'PlayGroundTab',
+        active: 'CardList.jsx',
+        config: [
+          {
+            title: 'CardList.jsx',
+            key: 'CardList.jsx',
+            codeText: CardListCodeText,
           },
-        },
-        {
-          dataIndex: 'subTitle',
-          key: 'subTitle',
-          title: '副标题',
-          $search: {
-            visible: true,
-            type: 'input',
-          },
-        },
-        {
-          dataIndex: 'content',
-          key: 'subTitle',
-          title: '副标题',
-          $search: {
-            visible: true,
-            type: 'textArea',
-          },
-        },
-      ];
-    }
-  }
-
-  ProSearchStateListImpl.propTypes = {};
-
-  const models = [];
-  const requireComponent = require.context('./model', false, /.*\\.(js)$/);
-  requireComponent.keys().forEach((fileName) => {
-    const model = requireComponent(fileName);
-    models.push(model.default());
-  });
-
-  const Wrap = SearchListStateImplementFactory({
-    serviceNames: [serviceName],
-    middleWares: [],
-    reducer: null,
-    models,
-  })(ProSearchStateListImpl);
-
-  export default (props) => (
-    <Wrap
-      bodyStyle={{ padding: '20px 30px' }}
-      antdListProps={{
-        // itemLayout: 'vertical',
-        grid: { gutter: 16, column: 3 },
-        // renderItem: () => {
-        //   return <div>Custom</div>;
-        // },
-      }}
-      {...props}
-    />
-  );
-
-                    `,
-        type: 'PlayGround',
+          ...CommonConfig,
+        ],
         renderChildren: () => <CardList />,
       },
       {
@@ -545,132 +158,16 @@ export default () => {
             info: '可折叠列表',
           },
         },
-        codeText: `
-  import React from 'react';
-
-  import { SearchList } from '@baifendian/adhere';
-
-  import './serviceRegister';
-
-  const { ProSearchStateList, SearchListStateImplementFactory } = SearchList;
-
-  const serviceName = 'user';
-
-  /**
-   * ProSearchStateListImpl
-   * @class ProSearchStateListImpl
-   * @classdesc ProSearchStateListImpl
-   */
-  class ProSearchStateListImpl extends ProSearchStateList {
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        ...this.state,
-        expandedRowKeys: [],
-      };
-    }
-
-    getComponentId() {
-      return 'ProSearchStateListImpl';
-    }
-
-    getServiceName() {
-      return serviceName;
-    }
-
-    getFetchListPropName() {
-      return 'fetchList';
-    }
-
-    getDataKey() {
-      return 'list';
-    }
-
-    getTotalKey() {
-      return 'totalCount';
-    }
-
-    // getRowSelection() {
-    //   return null;
-    // }
-
-    getExpandable() {
-      return {
-        expandedRowKeys: this.state.expandedRowKeys,
-        onExpandedRowsChange: (_expandedRowKeys) => {
-          this.setState({
-            expandedRowKeys: _expandedRowKeys,
-          });
-        },
-      };
-    }
-
-    getColumns() {
-      return [
-        {
-          dataIndex: 'title',
-          key: 'title',
-          title: '标题',
-          $search: {
-            visible: true,
-            type: 'input',
+        type: 'PlayGroundTab',
+        active: 'ExpandableList.jsx',
+        config: [
+          {
+            title: 'ExpandableList.jsx',
+            key: 'ExpandableList.jsx',
+            codeText: ExpandableListCodeText,
           },
-        },
-        {
-          dataIndex: 'subTitle',
-          key: 'subTitle',
-          title: '副标题',
-          $search: {
-            visible: true,
-            type: 'input',
-          },
-        },
-        {
-          dataIndex: 'content',
-          key: 'subTitle',
-          title: '副标题',
-          $search: {
-            visible: true,
-            type: 'textArea',
-          },
-        },
-      ];
-    }
-  }
-
-  ProSearchStateListImpl.propTypes = {};
-
-  const models = [];
-  const requireComponent = require.context('./model', false, /.*\\.(js)$/);
-  requireComponent.keys().forEach((fileName) => {
-    const model = requireComponent(fileName);
-    models.push(model.default());
-  });
-
-  const Wrap = SearchListStateImplementFactory({
-    serviceNames: [serviceName],
-    middleWares: [],
-    reducer: null,
-    models,
-  })(ProSearchStateListImpl);
-
-  export default (props) => (
-    <Wrap
-      bodyStyle={{ padding: '20px 30px' }}
-      antdListProps={{
-        itemLayout: 'vertical',
-        // grid: { gutter: 16, column: 3 },
-        // renderItem: () => {
-        //   return <div>Custom</div>;
-        // },
-      }}
-      {...props}
-    />
-  );
-
-                    `,
-        type: 'PlayGround',
+          ...CommonConfig,
+        ],
         renderChildren: () => <ExpandableList />,
       },
       {
@@ -684,155 +181,16 @@ export default () => {
             info: '自定义render',
           },
         },
-        codeText: `
-  import React from 'react';
-
-  import { SearchList } from '@baifendian/adhere';
-
-  import './serviceRegister';
-
-  const { ProSearchStateList, SearchListStateImplementFactory } = SearchList;
-
-  const serviceName = 'user';
-
-  /**
-   * ProSearchStateListImpl
-   * @class ProSearchStateListImpl
-   * @classdesc ProSearchStateListImpl
-   */
-  class ProSearchStateListImpl extends ProSearchStateList {
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        ...this.state,
-        expandedRowKeys: [],
-      };
-    }
-
-    getComponentId() {
-      return 'ProSearchStateListImpl';
-    }
-
-    getServiceName() {
-      return serviceName;
-    }
-
-    getFetchListPropName() {
-      return 'fetchList';
-    }
-
-    getDataKey() {
-      return 'list';
-    }
-
-    getTotalKey() {
-      return 'totalCount';
-    }
-
-    getRowSelection() {
-      return null;
-    }
-
-    getMetas() {
-      return {
-        title: {
-          dataIndex: 'title',
-          render: (val) => <div style={{ color: 'red' }}>{val}</div>,
-        },
-        subTitle: {
-          dataIndex: 'subTitle',
-          render: (val) => <div style={{ color: 'red' }}>{val}</div>,
-        },
-        description: {
-          dataIndex: 'description',
-          render: (val) => <div style={{ color: 'red' }}>{val}</div>,
-        },
-        avatar: {
-          dataIndex: 'avatar',
-          render: (val) => <img src={val} alt="" />,
-        },
-        content: {
-          dataIndex: 'content',
-          render: (val) => <div style={{ color: 'red' }}>{val}</div>,
-        },
-        actions: {
-          dataIndex: 'actions',
-          // cardActionProps: 'extra',
-          render: () => [<a>1</a>, <a>2</a>, <a>3</a>],
-        },
-        extra: {
-          dataIndex: 'extra',
-          render: () => <div>extra</div>,
-        },
-      };
-    }
-
-    getColumns() {
-      return [
-        {
-          dataIndex: 'title',
-          key: 'title',
-          title: '标题',
-          $search: {
-            visible: true,
-            type: 'input',
+        type: 'PlayGroundTab',
+        active: 'CustomRenderDataList.jsx',
+        config: [
+          {
+            title: 'CustomRenderDataList.jsx',
+            key: 'CustomRenderDataList.jsx',
+            codeText: CustomRenderDataListCodeText,
           },
-        },
-        {
-          dataIndex: 'subTitle',
-          key: 'subTitle',
-          title: '副标题',
-          $search: {
-            visible: true,
-            type: 'input',
-          },
-        },
-        {
-          dataIndex: 'content',
-          key: 'subTitle',
-          title: '副标题',
-          $search: {
-            visible: true,
-            type: 'textArea',
-          },
-        },
-      ];
-    }
-  }
-
-  ProSearchStateListImpl.propTypes = {};
-
-  const models = [];
-  const requireComponent = require.context('./model', false, /.*\\.(js)$/);
-  requireComponent.keys().forEach((fileName) => {
-    const model = requireComponent(fileName);
-    models.push(model.default());
-  });
-
-  const Wrap = SearchListStateImplementFactory({
-    serviceNames: [serviceName],
-    middleWares: [],
-    reducer: null,
-    models,
-  })(ProSearchStateListImpl);
-
-  export default (props) => (
-    <Wrap
-      bodyStyle={{ padding: '20px 30px' }}
-      antdListProps={{
-        itemLayout: 'vertical',
-        // grid: { gutter: 16, column: 4 },
-        // renderItem: () => {
-        //   return <div>Custom</div>;
-        // },
-      }}
-      {...props}
-    />
-  );
-
-                    `,
-        type: 'PlayGround',
+          ...CommonConfig,
+        ],
         renderChildren: () => <CustomRenderDataList />,
       },
       {
@@ -846,119 +204,16 @@ export default () => {
             info: '自定义renderItem',
           },
         },
-        codeText: `
-  import React from 'react';
-
-  import { SearchList } from '@baifendian/adhere';
-
-  import './serviceRegister';
-
-  const { ProSearchStateList, SearchListStateImplementFactory } = SearchList;
-
-  const serviceName = 'user';
-
-  /**
-   * ProSearchStateListImpl
-   * @class ProSearchStateListImpl
-   * @classdesc ProSearchStateListImpl
-   */
-  class ProSearchStateListImpl extends ProSearchStateList {
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        ...this.state,
-        expandedRowKeys: [],
-      };
-    }
-
-    getComponentId() {
-      return 'ProSearchStateListImpl';
-    }
-
-    getServiceName() {
-      return serviceName;
-    }
-
-    getFetchListPropName() {
-      return 'fetchList';
-    }
-
-    getDataKey() {
-      return 'list';
-    }
-
-    getTotalKey() {
-      return 'totalCount';
-    }
-
-    getRowSelection() {
-      return null;
-    }
-
-    getColumns() {
-      return [
-        {
-          dataIndex: 'title',
-          key: 'title',
-          title: '标题',
-          $search: {
-            visible: true,
-            type: 'input',
+        type: 'PlayGroundTab',
+        active: 'CustomRenderItemList.jsx',
+        config: [
+          {
+            title: 'CustomRenderItemList.jsx',
+            key: 'CustomRenderItemList.jsx',
+            codeText: CustomRenderItemListCodeText,
           },
-        },
-        {
-          dataIndex: 'subTitle',
-          key: 'subTitle',
-          title: '副标题',
-          $search: {
-            visible: true,
-            type: 'input',
-          },
-        },
-        {
-          dataIndex: 'content',
-          key: 'subTitle',
-          title: '副标题',
-          $search: {
-            visible: true,
-            type: 'textArea',
-          },
-        },
-      ];
-    }
-  }
-
-  ProSearchStateListImpl.propTypes = {};
-
-  const models = [];
-  const requireComponent = require.context('./model', false, /.*\\.(js)$/);
-  requireComponent.keys().forEach((fileName) => {
-    const model = requireComponent(fileName);
-    models.push(model.default());
-  });
-
-  const Wrap = SearchListStateImplementFactory({
-    serviceNames: [serviceName],
-    middleWares: [],
-    reducer: null,
-    models,
-  })(ProSearchStateListImpl);
-
-  export default (props) => (
-    <Wrap
-      bodyStyle={{ padding: '20px 30px' }}
-      antdListProps={{
-        renderItem: () => {
-          return <div>Custom</div>;
-        },
-      }}
-      {...props}
-    />
-  );
-
-                    `,
-        type: 'PlayGround',
+          ...CommonConfig,
+        ],
         renderChildren: () => <CustomRenderItemList />,
       },
       {
@@ -972,76 +227,16 @@ export default () => {
             info: '文件管理器',
           },
         },
-        codeText: `
-  import React from 'react';
-
-  import { SearchList } from '@baifendian/adhere';
-
-  import './serviceRegister';
-
-  const { ProResourceStateManager, SearchListStateImplementFactory } = SearchList;
-
-  const serviceName = 'user';
-
-  /**
-   * ProSearchStateListImpl
-   * @class ProSearchStateListImpl
-   * @classdesc ProSearchStateListImpl
-   */
-  class ProSearchStateListImpl extends ProResourceStateManager {
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        ...this.state,
-        expandedRowKeys: [],
-      };
-    }
-
-    getComponentId() {
-      return 'ProSearchStateListImpl';
-    }
-
-    getServiceName() {
-      return serviceName;
-    }
-
-    getFetchListPropName() {
-      return 'fetchList';
-    }
-
-    getDataKey() {
-      return 'list';
-    }
-
-    getTotalKey() {
-      return 'totalCount';
-    }
-  }
-
-  ProSearchStateListImpl.propTypes = {};
-
-  const models = [];
-  const requireComponent = require.context('./model', false, /.*\\.(js)$/);
-  requireComponent.keys().forEach((fileName) => {
-    const model = requireComponent(fileName);
-    models.push(model.default());
-  });
-
-  const Wrap = SearchListStateImplementFactory({
-    serviceNames: [serviceName],
-    middleWares: [],
-    reducer: null,
-    models,
-  })(ProSearchStateListImpl);
-
-  export default (props) => (
-    <Wrap
-      {...props}
-    />
-  );
-                    `,
-        type: 'PlayGround',
+        type: 'PlayGroundTab',
+        active: 'ResourceManager.jsx',
+        config: [
+          {
+            title: 'ResourceManager.jsx',
+            key: 'ResourceManager.jsx',
+            codeText: ResourceManagerCodeText,
+          },
+          ...CommonConfig,
+        ],
         renderChildren: () => <ResourceManager />,
       },
     ];
@@ -1136,7 +331,7 @@ export default () => {
       />
 
       <PropsSection
-        title="Api"
+        title="Props"
         config={[
           {
             border: true,

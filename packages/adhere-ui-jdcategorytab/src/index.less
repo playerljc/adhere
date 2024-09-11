@@ -1,29 +1,30 @@
-//@import '~@baifendian/adhere-ui-css/lib/vars';
+//@import '~@baifendian/adhere-ui-css/es/vars';
 
-@adhere-ui-jdcategorytab-menu-item-active-color: #f15353;
-@adhere-ui-jdcategorytab-menu-item-background-color: #f3f4f6;
+@adhere-ui-jd-category-tab-menu-item-active-color: #f15353;
+@adhere-ui-jd-category-tab-menu-item-background-color: #f3f4f6;
 
 /* 京东的分类面板 */
-.adhere-ui-jdcategorytab {
+.adhere-ui-jd-category-tab {
   position: relative;
+  display: flex;
   width: 100%;
   height: 100%;
   overflow: hidden;
 
-  > .adhere-ui-jdcategorytab-menu {
+  > .adhere-ui-jd-category-tab-menu {
     position: relative;
-    float: left;
-    width: 4rem;
+    flex-shrink: 0;
+    //width: 4rem;
     height: 100%;
     overflow: hidden;
     overflow-scrolling: touch;
 
-    > .adhere-ui-jdcategorytab-menu-inner {
+    > .adhere-ui-jd-category-tab-menu-inner {
       margin: 0;
       padding: 0;
       list-style: none;
 
-      > .adhere-ui-jdcategorytab-menu-item {
+      > .adhere-ui-jd-category-tab-menu-item {
         margin: 0;
         padding: 0;
 
@@ -36,13 +37,14 @@
 
         &:not(:last-child) {
           > a {
-            border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+            border-bottom: var(--adhere-line-width) var(--adhere-line-type)
+              var(--adhere-color-border-base);
           }
         }
 
         &.active {
           > a {
-            color: @adhere-ui-jdcategorytab-menu-item-active-color;
+            color: @adhere-ui-jd-category-tab-menu-item-active-color;
             //background: #fff;
             border-right: var(--adhere-line-width) var(--adhere-line-type) #fff;
           }
@@ -52,28 +54,31 @@
           display: block;
           box-sizing: border-box;
           width: 100%;
-          height: 3rem;
+          padding: 5px 10px;
+          //height: 3rem;
           font-size: var(--adhere-font-size-base);
-          line-height: 3rem;
+          //line-height: 3rem;
           white-space: nowrap;
           text-align: center;
           text-overflow: ellipsis;
           word-wrap: break-word;
           word-break: break-all;
-          background: @adhere-ui-jdcategorytab-menu-item-background-color;
-          border-right: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+          background: @adhere-ui-jd-category-tab-menu-item-background-color;
+          border-right: var(--adhere-line-width) var(--adhere-line-type)
+            var(--adhere-color-border-base);
         }
       }
     }
   }
 
-  > .adhere-ui-jdcategorytab-tab {
-    height: 100%;
-    margin: 0 0 0 4rem;
+  > .adhere-ui-jd-category-tab-tab {
+    flex: 1;
+    min-width: 0;
+    margin: 0 0 0 20px;
     padding: 0;
     list-style: none;
 
-    > .adhere-ui-jdcategorytab-tab-item {
+    > .adhere-ui-jd-category-tab-tab-item {
       display: none;
       width: 100%;
       height: 100%;

@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-cascadecompared",
-  "version": "2.10.28",
+  "version": "2.11.0",
   "description": "级联比较",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -14,6 +14,7 @@
   "author": "playerljc",
   "main": "lib/index.js",
   "module": "es/index.js",
+  "typings": "es/index.d.ts",
   "files": [
     "lib",
     "es",
@@ -25,22 +26,26 @@
     "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename AdhereCascadeCompared --define alias=@,evnVars=true",
-    "generatorchangelog": "bd changelog/CHANGELOG.html"
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "upgrade": "yarn upgrade",
+    "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-stickuplayout": "^2.10.28",
-    "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.10",
-    "classnames": "^2.3.2",
+    "@baifendian/adhere-ui-stickuplayout": "^2.11.0",
+    "@types/iscroll": "^5.2.8",
+    "classnames": "^2.5.1",
     "iscroll": "^5.2.0",
-    "react": "^18.2.0",
+    "react": "^18.3.1",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.21.0",
+    "@babel/runtime": "^7.25.6",
+    "@baifendian/adhere-e2e": "^2.11.0",
     "@ctsj/build": "^6.3.0",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
     "npm-run-all": "^4.1.5",
-    "typescript": "^5.0.4"
+    "typescript": "^5.6.2"
   },
   "peerDependencies": {
     "react": ">=18.0.0 - <19.0.0",

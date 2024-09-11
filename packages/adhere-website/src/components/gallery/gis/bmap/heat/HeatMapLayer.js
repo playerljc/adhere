@@ -1,4 +1,4 @@
-import '@baifendian/adhere-ui-bmap/lib/heatmap.js';
+import '@baifendian/adhere-ui-bmap/es/heatmap.js';
 
 import citys from './data.json';
 

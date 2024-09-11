@@ -1,3 +1,3 @@
-import { SplitFunction, SplitProps } from './types';
-declare const MemoWrap: SplitFunction<SplitProps>;
-export default MemoWrap;
+import type { SplitComponent } from './types';
+declare const Split: SplitComponent;
+export default Split;

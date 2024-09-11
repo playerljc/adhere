@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, memo } from 'react';
+import React, { memo } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -7,7 +7,7 @@ import { TableProps } from './types';
 
 const selectorPrefix = 'adhere-ui-playground-table';
 
-const Table: FC<TableProps> = (props) => {
+const Table = memo<TableProps>((props) => {
   const {
     className = '',
     style = {},
@@ -92,7 +92,9 @@ const Table: FC<TableProps> = (props) => {
       </table>
     </div>
   );
-};
+});
+
+Table.displayName = 'Table';
 
 // /**
 //  * Table
@@ -243,4 +245,4 @@ const Table: FC<TableProps> = (props) => {
 //   rowKey: PropTypes.string,
 // };
 
-export default memo(Table);
+export default Table;

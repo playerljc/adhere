@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["descriptions/index.js"],"sourcesContent":["import _Descriptions from \"antd/es/descriptions\";\nimport { createFactory } from '../util';\nexport default createFactory(_Descriptions, {});"],"names":["_Descriptions","createFactory"],"mappings":"OAAOA,kBAAmB,8BACjBC,aAA8B,KAAT,yBACfA,cAAcD,cAAe,EAAE"}
+{"version":3,"file":"index.js","sources":["descriptions/index.js"],"sourcesContent":["import Descriptions from './Descriptions';\nexport default Descriptions;"],"names":["Descriptions"],"mappings":"OAAOA,iBAAkB,gCACVA"}

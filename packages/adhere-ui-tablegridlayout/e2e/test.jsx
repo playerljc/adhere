@@ -9,12 +9,14 @@ const { Label, Value } = TableGridLayout;
 export default () => {
   return (
     <TableGridLayout
+      bordered
+      mode="bordered"
       data={[
         {
           name: 'g1',
           width: '100%',
           columnCount: 3,
-          colgroup: [, 'auto', , 'auto', , 'auto'],
+          colgroup: [150, 'auto', 150, 'auto', 150, 'auto'],
           data: [
             {
               key: 'UserName',
@@ -32,19 +34,23 @@ export default () => {
               key: 'Live',
               label: <Label>Live：</Label>,
               value: <Value>Hangzhou, Zhejiang</Value>,
-              show: false,
+              // show: false,
             },
             {
               key: 'Remark',
               label: <Label>Remark：</Label>,
               value: <Value>empty</Value>,
-              show: false,
+              // show: false,
             },
             {
               key: 'Address',
               label: <Label valign="top">Address：</Label>,
-              value: <Value>No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China</Value>,
-              show: false,
+              value: (
+                <Value colSpan={5}>
+                  No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                </Value>
+              ),
+              // show: false,
             },
           ],
         },
@@ -52,37 +58,41 @@ export default () => {
           name: 'g2',
           width: '100%',
           columnCount: 3,
-          colgroup: [, 'auto', , 'auto', , 'auto'],
+          colgroup: [150, 'auto', 150, 'auto', 150, 'auto'],
           data: [
             {
               key: 'UserName',
               label: <Label>UserName：</Label>,
               value: <Value>Zhou Maomao</Value>,
-              show: false,
+              // show: false,
             },
             {
               key: 'Telephone',
               label: <Label>Telephone：</Label>,
               value: <Value>1810000000</Value>,
-              show: true,
+              // show: true,
             },
             {
               key: 'Live',
               label: <Label>Live：</Label>,
               value: <Value>Hangzhou, Zhejiang</Value>,
-              show: false,
+              // show: false,
             },
             {
               key: 'Remark',
               label: <Label>Remark：</Label>,
               value: <Value>empty</Value>,
-              show: false,
+              // show: false,
             },
             {
               key: 'Address',
               label: <Label valign="top">Address：</Label>,
-              value: <Value>No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China</Value>,
-              show: false,
+              value: (
+                <Value colSpan={3}>
+                  No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                </Value>
+              ),
+              // show: false,
             },
           ],
         },

@@ -1,7 +1,6 @@
-import { Button, Card, Empty } from 'antd';
-import React, { useRef, useState } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
 
-import { MessageDialog, Permission } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -10,18 +9,9 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-const { Permission: PermissionWrap, setPermission, getPermission } = Permission;
-
-setPermission(['1']);
+import P1 from './examples/p1';
 
 export default () => {
-  const [allPermission, setAllPermission] = useState(getPermission());
-  const [curPermission, setCurPermission] = useState(['2']);
-
-  const ref1 = useRef();
-
-  const ref2 = useRef();
-
   function boxPanelConfig() {
     return [
       {
@@ -35,169 +25,9 @@ export default () => {
             info: '基本使用',
           },
         },
-        codeText: `
-  import React, { useState, useRef } from 'react';
-  import { Card, Empty, Button } from 'antd';
-  import { Permission, MessageDialog } from '@baifendian/adhere';
-
-  const { Permission: PermissionWrap, setPermission, getPermission } = Permission;
-
-  setPermission(['1']);
-
-  <Card
-  actions={[
-    <Button
-      type="primary"
-      onClick={() => {
-        const {close} = MessageDialog.Modal({
-          config: {
-            title: '权限所有设置',
-            width: 300,
-            footer: [
-              <Button
-                type="primary"
-                onClick={() => {
-                  const val = ref1.current.value.trim();
-                  if (val) {
-                    setPermission(val.split(','));
-                    setAllPermission(getPermission());
-                  }
-                  // MessageDialog.close(el);
-                  close();
-                }}
-              >
-                确定
-              </Button>,
-            ],
-          },
-          children: (
-            <div>
-              <input autoFocus={true} ref={ref1} defaultValue={getPermission()} />
-            </div>
-          ),
-        });
-      }}
-    >
-      设置所有权限
-    </Button>,
-
-    <Button
-      onClick={() => {
-        const {close} = MessageDialog.Modal({
-          config: {
-            title: '权限当前设置',
-            width: 300,
-            footer: [
-              <Button
-                type="primary"
-                onClick={() => {
-                  const val = ref2.current.value.trim();
-                  if (val) {
-                    setCurPermission(val.split(','));
-                  }
-                  // MessageDialog.close(el);
-                  close();
-                }}
-              >
-                确定
-              </Button>,
-            ],
-          },
-          children: (
-            <div>
-              <input autoFocus={true} ref={ref2} defaultValue={curPermission} />
-            </div>
-          ),
-        });
-      }}
-    >
-      设置当前权限
-    </Button>,
-  ]}
-  >
-    <PermissionWrap permissions={curPermission} noMatch={<Empty />}>
-      <Button>有权限才能看到这个按钮</Button>
-    </PermissionWrap>
-  </Card>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Card
-            actions={[
-              <Button
-                type="primary"
-                onClick={() => {
-                  const { close } = MessageDialog.Modal({
-                    config: {
-                      title: '权限所有设置',
-                      width: 300,
-                      footer: [
-                        <Button
-                          type="primary"
-                          onClick={() => {
-                            const val = ref1.current.value.trim();
-                            if (val) {
-                              setPermission(val.split(','));
-                              setAllPermission(getPermission());
-                            }
-                            // MessageDialog.close(el);
-                            close();
-                          }}
-                        >
-                          确定
-                        </Button>,
-                      ],
-                    },
-                    children: (
-                      <div>
-                        <input autoFocus={true} ref={ref1} defaultValue={getPermission()} />
-                      </div>
-                    ),
-                  });
-                }}
-              >
-                设置所有权限
-              </Button>,
-
-              <Button
-                onClick={() => {
-                  const { close } = MessageDialog.Modal({
-                    config: {
-                      title: '权限当前设置',
-                      width: 300,
-                      footer: [
-                        <Button
-                          type="primary"
-                          onClick={() => {
-                            const val = ref2.current.value.trim();
-                            if (val) {
-                              setCurPermission(val.split(','));
-                            }
-                            // MessageDialog.close(el);
-                            close();
-                          }}
-                        >
-                          确定
-                        </Button>,
-                      ],
-                    },
-                    children: (
-                      <div>
-                        <input autoFocus={true} ref={ref2} defaultValue={curPermission} />
-                      </div>
-                    ),
-                  });
-                }}
-              >
-                设置当前权限
-              </Button>,
-            ]}
-          >
-            <PermissionWrap permissions={curPermission} noMatch={() => <Empty />}>
-              {() => <Button>有权限才能看到这个按钮</Button>}
-            </PermissionWrap>
-          </Card>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
     ];
   }

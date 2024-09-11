@@ -43,25 +43,25 @@
  *
  * */
 
-import React, { FC,memo } from 'react';
+import React, {memo } from 'react';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import intl from '@baifendian/adhere-util-intl';
 
 import Collapse from './Collapse';
-import { FunctionProps } from './types';
+import type { FunctionProps } from './types';
 
 const selectorPrefix = 'adhere-ui-playground-functionprops';
 
-const FunctionProps: FC<FunctionProps> = (props) => {
-  const { data = [], ...others } = props;
+const FunctionProps = memo<FunctionProps>((props) => {
+  const { data = [], ...restProps } = props;
 
   return (
-    <Collapse {...others}>
+    <Collapse {...restProps}>
       <div className={selectorPrefix}>
         <table className={`${selectorPrefix}-inner`}>
-          {(data || []).map(({ name, desc, modifier, params, returnType, returnDesc }, index) => (
-            <>
-              <tr key={`${index}`} className={`${selectorPrefix}-item`}>
+          {(data || []).map(({ name, desc, modifier, params, returnType, returnDesc }, _index) => (
+            <React.Fragment key={`${_index}`}>
+              <tr className={`${selectorPrefix}-item`}>
                 <td valign="top" className={`${selectorPrefix}-item-name`}>
                   <ConditionalRender conditional={!!modifier}>
                     {() => (
@@ -151,16 +151,18 @@ const FunctionProps: FC<FunctionProps> = (props) => {
                   </dl>
                 </td>
               </tr>
-              <ConditionalRender conditional={index !== data.length - 1}>
+              <ConditionalRender conditional={_index !== data.length - 1}>
                 {() => <div className={`${selectorPrefix}-dividing`} />}
               </ConditionalRender>
-            </>
+            </React.Fragment>
           ))}
         </table>
       </div>
     </Collapse>
   );
-};
+});
+
+FunctionProps.displayName = 'FunctionProps';
 
 // /**
 //  * FunctionProps
@@ -437,4 +439,4 @@ const FunctionProps: FC<FunctionProps> = (props) => {
 //
 // FunctionProps.propTypes = FunctionPropsPropTypes;
 
-export default memo(FunctionProps);
+export default FunctionProps;

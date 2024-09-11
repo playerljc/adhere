@@ -1,14 +1,19 @@
-@import '~@baifendian/adhere-ui-suspense/lib/index.less';
-@import '~@baifendian/adhere-ui-flexlayout/lib/index.less';
-@import '~@baifendian/adhere-ui-slidelayout/lib/index.less';
-@import '~@baifendian/adhere-ui-space/lib/index';
-@import '~@baifendian/adhere-ui-split/lib/index';
-@import '~@baifendian/adhere-ui-tablegridlayout/lib/index';
-@import '~@baifendian/adhere-ui-fieldgeneratortodict/lib/index';
-@import '~@baifendian/adhere-ui-css/lib/iconfont/iconfont.less';
+@import '~@baifendian/adhere-ui-suspense/es/index.less';
+@import '~@baifendian/adhere-ui-flexlayout/es/index.less';
+@import '~@baifendian/adhere-ui-slidelayout/es/index.less';
+@import '~@baifendian/adhere-ui-space/es/index';
+@import '~@baifendian/adhere-ui-split/es/index';
+@import '~@baifendian/adhere-ui-tablegridlayout/es/index';
+@import '~@baifendian/adhere-ui-fieldgeneratortodict/es/index';
+@import '~@baifendian/adhere-ui-css/es/iconfont/iconfont.less';
+@import '~@baifendian/adhere-ui-globalindicator/es/index';
+@import '~@baifendian/adhere-ui-prompt-successprompt/es/index';
+@import '~@baifendian/adhere-ui-prompt-errorprompt/es/index';
 
-@import './Extension/ColumnSetting/setting';
-@import './Extension/TableDensitySetting/setting';
+@import './Extension/ColumnSetting/index';
+@import './Extension/ColumnSetting/Setting';
+@import './Extension/TableDensitySetting/index';
+@import './Extension/TableDensitySetting/Setting';
 @import './Extension/AdvancedSearchPanel/index';
 @import './Extension/DisabledOption/index';
 @import './Extension/OptionsWrap/index';
@@ -16,22 +21,26 @@
 @import './Extension/EditableCell/View/index';
 @import './Extension/EditableCell/EditableRowControl/index';
 @import './Extension/DragSort/RowDragSort/index';
+@import './Extension/ExportExcel/index';
+@import './Extension/ReloadTable/index';
+@import './Extension/ColumnTipTitle/index';
 @import './ProTable.less';
+@import './Extension/DragSort/RowDragSort/DragSortColumn/index.less';
 
-@adhere-ui-searchtable-searchfooteritem-search-btn-icon-color: #fff;
-@adhere-ui-searchtable-background-color: #f0f2f5;
-@adhere-ui-searchtable-split: 20px;
+@adhere-ui-search-table-search-footer-item-search-btn-icon-color: #fff;
+@adhere-ui-search-table-background-color: #f0f2f5;
+@adhere-ui-search-table-split: 20px;
 
-.adhere-ui-searchtableimplement-wrap {
+.adhere-ui-search-table-implement-wrap {
   width: 100%;
   height: 100%;
 }
 
-.adhere-ui-searchtable-wrap {
+.adhere-ui-search-table-wrap {
   display: flex;
   width: 100%;
 
-  > .adhere-ui-searchtable-form {
+  > .adhere-ui-search-table-form {
     display: flex;
     width: 100%;
   }
@@ -39,13 +48,13 @@
   > .adhere-ui-suspense {
     overflow: auto;
 
-    .adhere-ui-searchtable {
+    .adhere-ui-search-table {
       position: relative;
       height: 100%;
 
-      &.fixedtablespacebetween {
-        > .adhere-ui-searchtable-autowrapper {
-          > .adhere-ui-searchtable-tablewrapper {
+      &.fixed-table-space-between {
+        > .adhere-ui-search-table-auto-wrapper {
+          > .adhere-ui-search-table-table-wrapper {
             .ant-table-wrapper {
               height: 100%;
 
@@ -100,7 +109,7 @@
         }
       }
 
-      .adhere-ui-searchtable-tablewrapper {
+      .adhere-ui-search-table-table-wrapper {
         > .ant-table-wrapper {
           > .ant-spin-nested-loading {
             > .ant-spin-container {
@@ -118,71 +127,43 @@
 
       > div {
         &:not(:last-child) {
-          margin-bottom: @adhere-ui-searchtable-split;
+          margin-bottom: @adhere-ui-search-table-split;
         }
       }
 
-      > .adhere-ui-searchtable-searchwrapper {
+      > .adhere-ui-search-table-search-wrapper {
         > div {
           &:not(:last-child) {
-            margin-bottom: @adhere-ui-searchtable-split;
+            margin-bottom: @adhere-ui-search-table-split;
           }
         }
 
-        .adhere-ui-searchtable-searchfooterwrapper {
+        .adhere-ui-search-table-search-footer-wrapper {
           display: flex;
           align-items: center;
           justify-content: flex-end;
 
-          > .adhere-ui-searchtable-searchfooteritem {
+          > .adhere-ui-search-table-search-footer-item {
             display: flex;
             align-items: center;
 
             &:not(:last-child) {
-              margin-right: 10px;
+              margin-right: 15px;
             }
 
             &.ant-btn {
               display: flex;
             }
 
-            .adhere-ui-searchtable-searchfooteritem-search-btn-icon {
-              color: @adhere-ui-searchtable-searchfooteritem-search-btn-icon-color;
+            .adhere-ui-search-table-search-footer-item-search-btn-icon {
+              color: @adhere-ui-search-table-search-footer-item-search-btn-icon-color;
               font-size: var(adhere-font-size-base);
-            }
-
-            > .adhere-ui-searchtable-searchfooteritem-expand-search-up-btn {
-              display: flex;
-              align-items: center;
-
-              > span {
-                margin-right: 5px;
-              }
-
-              > i {
-                color: var(--adhere-color-primary);
-                font-size: var(--adhere-font-size-lg);
-              }
-            }
-
-            > .adhere-ui-searchtable-searchfooteritem-expand-search-down-btn {
-              display: flex;
-              align-items: center;
-
-              > span {
-                margin-right: 5px;
-              }
-
-              > i {
-                color: var(--adhere-color-primary);
-                font-size: var(--adhere-font-size-lg);
-              }
             }
           }
         }
       }
 
-      > .adhere-ui-searchtable-autowrapper {
+      > .adhere-ui-search-table-auto-wrapper {
         position: relative;
         border-radius: 2px;
 
@@ -190,7 +171,7 @@
           overflow-y: auto;
         }
 
-        > .adhere-ui-searchtable-tablewrapper {
+        > .adhere-ui-search-table-table-wrapper {
           width: 100%;
 
           > .ant-table-wrapper {
@@ -199,7 +180,7 @@
         }
       }
 
-      .adhere-ui-searchtable-resizable-handle {
+      .adhere-ui-search-table-resizable-handle {
         position: absolute;
         right: -5px;
         bottom: 0;
@@ -210,8 +191,119 @@
       }
     }
 
-    .adhere-ui-searchtableimplement-tablewrapper {
+    .adhere-ui-search-table-implement-table-wrapper {
       height: 100%;
+
+      > .adhere-ui-search-table {
+        > .adhere-ui-search-table-search-wrapper {
+          > .adhere-ui-search-table-search-form-tool-bar {
+            display: flex;
+            align-items: center;
+
+            > .adhere-ui-search-table-search-form-tool-bar-default-panel {
+              flex: 1;
+              min-width: 0;
+              margin-right: 15px;
+            }
+
+            > .adhere-ui-search-table-search-form-tool-bar-items {
+              display: flex;
+              flex-shrink: 1;
+              align-items: center;
+
+              > .adhere-ui-search-table-search-form-tool-bar-item {
+                &:not(:last-child) {
+                  margin-right: 10px;
+                }
+
+                &.ant-btn {
+                  display: flex;
+                }
+
+                .adhere-ui-search-table-search-footer-item-search-btn-icon {
+                  color: @adhere-ui-search-table-search-footer-item-search-btn-icon-color;
+                  font-size: var(adhere-font-size-base);
+                }
+
+                > .adhere-ui-search-table-search-footer-item-expand-search-up-btn {
+                  display: flex;
+                  align-items: center;
+
+                  > span {
+                    margin-right: 5px;
+                  }
+
+                  > i {
+                    color: var(--adhere-color-primary);
+                    font-size: var(--adhere-font-size-lg);
+                  }
+                }
+
+                > .adhere-ui-search-table-search-footer-item-expand-search-down-btn {
+                  display: flex;
+                  align-items: center;
+
+                  > span {
+                    margin-right: 5px;
+                  }
+
+                  > i {
+                    color: var(--adhere-color-primary);
+                    font-size: var(--adhere-font-size-lg);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.adhere-ui-search-table-search-tool-bar {
+  display: flex;
+
+  > .adhere-ui-search-table-search-tool-bar-title {
+    display: flex;
+    flex-shrink: 1;
+
+    > .adhere-ui-search-table-search-tool-bar-title-inner {
+      display: flex;
+      align-items: center;
+
+      > .adhere-ui-search-table-search-tool-bar-title-content {
+        margin: 0 5px;
+        color: var(--adhere-color-text-secondary);
+        font-weight: 500;
+        font-size: 16px;
+      }
+
+      > .adhere-ui-search-table-search-tool-bar-title-info {
+        font-size: 16px;
+
+        &:hover {
+          color: var(--adhere-color-primary);
+          cursor: help;
+        }
+      }
+    }
+  }
+
+  > .adhere-ui-search-table-search-tool-bar-auto {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    min-width: 0;
+
+    > .adhere-ui-search-table-search-tool-bar-extra {
+      flex: 1;
+      min-width: 0;
+    }
+
+    > .adhere-ui-search-table-search-tool-bar-actions {
+      display: flex;
+      flex-shrink: 1;
     }
   }
 }

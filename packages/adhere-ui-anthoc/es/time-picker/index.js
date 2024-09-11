@@ -1,2 +1,2 @@
-import _TimePicker from"antd/es/time-picker";import{createFactory}from"../util";export default createFactory(_TimePicker,{allowClear:!0,placement:"bottomLeft"});
+import TimePicker from"./TimePicker";export default TimePicker;
 //# sourceMappingURL=index.js.map

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["side-bar/index.js"],"sourcesContent":["import SideBar from './SideBar';\nexport default SideBar;"],"names":["SideBar"],"mappings":"OAAOA,YAAa,2BACLA"}

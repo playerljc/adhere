@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["back-top/index.js"],"sourcesContent":["import _BackTop from \"antd/es/back-top\";\nimport { createFactory } from '../util';\nexport default createFactory(_BackTop, {});"],"names":["_BackTop","createFactory"],"mappings":"OAAOA,aAAc,0BACZC,aAA8B,KAAT,yBACfA,cAAcD,SAAU,EAAE"}
+{"version":3,"file":"index.js","sources":["back-top/index.js"],"sourcesContent":["import BackTop from './BackTop';\nexport default BackTop;"],"names":["BackTop"],"mappings":"OAAOA,YAAa,2BACLA"}

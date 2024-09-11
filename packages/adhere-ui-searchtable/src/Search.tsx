@@ -1,8 +1,10 @@
+import { Tooltip } from 'antd';
 import { TablePaginationConfig, TableRowSelection } from 'antd/es/table/interface';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { ReactElement, ReactNode, RefObject, createRef } from 'react';
 
+import { InfoCircleOutlined } from '@ant-design/icons';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import Intl from '@baifendian/adhere-util-intl';
@@ -21,9 +23,14 @@ abstract class Search<
   P extends SearchProps = SearchProps,
   S extends SearchState = SearchState,
 > extends Suspense<P, S> {
+  static displayName = 'Search';
+
   static defaultProps: any;
+
   static propTypes: any;
+
   props: any;
+
   state: any;
 
   protected searchFormRef: RefObject<HTMLElement> = createRef();
@@ -45,6 +52,28 @@ abstract class Search<
    * @return {ReactNode}
    */
   abstract renderSearchForm(): ReactNode;
+
+  /**
+   * renderSearchFormToolBar
+   * @description 渲染查询表单的工具栏
+   * @return {ReactNode}
+   */
+  abstract renderSearchFormToolBar(): ReactNode;
+
+  /**
+   * renderSearchFormToolBarItems
+   * @description 渲染查询表单的工具栏项
+   * @param {ReactElement[]} defaultItems
+   * @return {ReactNode []}
+   */
+  abstract renderSearchFormToolBarItems(defaultItems: ReactElement[]): ReactNode[];
+
+  /**
+   * renderSearchFormToolBarDefaultPanel
+   * @description 渲染查询表单工具栏缺省面板
+   * @return {ReactNode}
+   */
+  abstract renderSearchFormToolBarDefaultPanel(): ReactNode;
 
   /**
    * renderSearchBefore
@@ -75,11 +104,68 @@ abstract class Search<
   abstract renderSearchFooterItems(defaultItems: ReactElement[]): ReactNode[];
 
   /**
+   * renderSearchBarActions
+   */
+  abstract renderSearchBarActions(): ReactNode;
+
+  /**
+   * renderTitle
+   */
+  renderTitle(): ReactElement {
+    const { title } = this.props;
+
+    return (
+      <div className={`${selectorPrefix}-search-tool-bar-title-inner`}>
+        <div className={`${selectorPrefix}-search-tool-bar-title-content`}>{title}</div>
+        <div className={`${selectorPrefix}-search-tool-bar-title-info`}>
+          <Tooltip title={title}>
+            <InfoCircleOutlined />
+          </Tooltip>
+        </div>
+      </div>
+    );
+  }
+
+  /**
+   * renderSearchBarExtra
+   */
+  renderSearchBarExtra(): ReactNode {
+    return null;
+  }
+
+  /**
    * renderSearchToolBar
    * @description 渲染查询工具栏
    * @return {ReactNode}
    */
-  abstract renderSearchToolBar(): ReactNode;
+  renderSearchToolBar(): ReactNode {
+    return (
+      <>
+        {this.props.title && !!this.renderTitle && !!this.renderTitle?.() && (
+          <div className={classNames(`${selectorPrefix}-search-tool-bar-title`)}>
+            {this.renderTitle()}
+          </div>
+        )}
+
+        {((!!this.renderSearchBarExtra && !!this.renderSearchBarExtra?.()) ||
+          (!!this.renderSearchBarActions && !!this.renderSearchBarActions?.())) && (
+          <div className={classNames(`${selectorPrefix}-search-tool-bar-auto`)}>
+            {!!this.renderSearchBarExtra && !!this.renderSearchBarExtra?.() && (
+              <div className={classNames(`${selectorPrefix}-search-tool-bar-extra`)}>
+                {this.renderSearchBarExtra()}
+              </div>
+            )}
+
+            {!!this.renderSearchBarActions && !!this.renderSearchBarActions?.() && (
+              <div className={classNames(`${selectorPrefix}-search-tool-bar-actions`)}>
+                {this.renderSearchBarActions()}
+              </div>
+            )}
+          </div>
+        )}
+      </>
+    );
+  }
 
   /**
    * renderBody
@@ -122,7 +208,7 @@ abstract class Search<
    * @description 进行查询
    * @return {Promise<void>}
    */
-  abstract onSearch(): Promise<void>;
+  abstract onSearch(): Promise<any>;
 
   /**
    * getDerivedStateFromProps
@@ -217,9 +303,10 @@ abstract class Search<
    * @description - 清除操作
    * @return {Promise<void>}
    */
-  onClear(): Promise<void> {
-    // @ts-ignore
-    return this.clearAll().then(() => this.fetchData());
+  onClear(): Promise<any> {
+    return new Promise((resolve) => {
+      this.clearAll().then(() => this.fetchData().then((res) => resolve(res)));
+    });
   }
 
   /**
@@ -227,22 +314,29 @@ abstract class Search<
    * @description
    * @param {any} bodyWrapRef
    * @param {string} className
-   * @return {ReactElement | null}
+   * @return {ReactElement}
    */
-  renderInner(bodyWrapRef?: any, className?: string): ReactElement | null {
+  renderInner(bodyWrapRef?: any, className?: string) {
     const {
       style,
       bodyClassName,
       bodyStyle,
       searchClassName,
       searchStyle,
-      // fitSearch,
       fitBody = true,
       autoFixed = true,
     } = this.props;
 
     const { expand = false } = this.state;
 
+    // SearchFormBefore
+    // SearchForm
+    // SearchFormToolBar
+    // SearchToolBar
+    // SearchFormAfter
+    // SearchHeader
+    // SearchBody
+    // SearchFooter
     return (
       <FlexLayout
         direction="vertical"
@@ -254,9 +348,8 @@ abstract class Search<
           (!!this.renderSearchToolBar && !!this.renderSearchToolBar?.()) ||
           (!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.())) && (
           <Fixed
-            className={classNames(`${selectorPrefix}-searchwrapper`, searchClassName)}
+            className={classNames(`${selectorPrefix}-search-wrapper`, searchClassName)}
             style={{ ...(searchStyle ?? {}) }}
-            // fit={fitSearch}
           >
             {!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.() && (
               <Fixed className={`${selectorPrefix}-search-form-before`}>
@@ -264,6 +357,7 @@ abstract class Search<
               </Fixed>
             )}
 
+            {/* 查询 */}
             {!!this.renderSearchForm && !!this.renderSearchForm?.() && expand && (
               <Fixed
                 // @ts-ignore
@@ -276,7 +370,17 @@ abstract class Search<
                 {this.renderSearchForm()}
               </Fixed>
             )}
+            {/* 查询的工具栏 */}
+            {!!this.renderSearchForm &&
+              !!this.renderSearchForm?.() &&
+              !!this.renderSearchFormToolBar &&
+              !!this.renderSearchFormToolBar?.() && (
+                <Fixed className={classNames(`${selectorPrefix}-search-form-tool-bar`)}>
+                  {this.renderSearchFormToolBar()}
+                </Fixed>
+              )}
 
+            {/* 工具栏 */}
             {!!this.renderSearchToolBar && !!this.renderSearchToolBar?.() && (
               <Fixed
                 data-title={this.props.title}
@@ -296,23 +400,26 @@ abstract class Search<
           </Fixed>
         )}
 
+        {/* Header */}
         {!!this.renderSearchHeader && !!this.renderSearchHeader?.() && (
           <Fixed className={`${selectorPrefix}-search-header`}>{this.renderSearchHeader?.()}</Fixed>
         )}
 
+        {/* Body */}
         <Auto
           style={{ ...(bodyStyle ?? {}) }}
-          className={classNames(`${selectorPrefix}-autowrapper`, bodyClassName, {
+          className={classNames(`${selectorPrefix}-auto-wrapper`, bodyClassName, {
             ['autofixed']: autoFixed,
           })}
           fit={fitBody}
           autoFixed={autoFixed}
         >
-          <div ref={bodyWrapRef} className={`${selectorPrefix}-tablewrapper`}>
+          <div ref={bodyWrapRef} className={`${selectorPrefix}-table-wrapper`}>
             {this.renderBody()}
           </div>
         </Auto>
 
+        {/* Footer */}
         {!!this.renderSearchFooter && !!this.renderSearchFooter?.() && (
           <Fixed className={`${selectorPrefix}-search-footer`}>{this.renderSearchFooter?.()}</Fixed>
         )}

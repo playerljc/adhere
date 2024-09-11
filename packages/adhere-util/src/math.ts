@@ -1,3 +1,6 @@
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
+
+import Dom from './dom';
 import { ICircle, IPoint } from './types';
 
 export default {
@@ -79,11 +82,23 @@ export default {
    * @param {Rect} - rect
    * @return {x:number,y:number}
    */
-  clientToCtxPoint({ event, rect }: { event: MouseEvent; rect: DOMRect }): IPoint {
-    const { clientX, clientY } = event;
+  clientToCtxPoint({ event, rect }: { event: MouseEvent | TouchEvent; rect: DOMRect }): IPoint {
+    let clientX: number;
+    let clientY: number;
+
+    if (event instanceof MouseEvent) {
+      clientX = event.clientX;
+      clientY = event.clientY;
+    } else {
+      clientX = event.changedTouches[0].clientX;
+      clientY = event.changedTouches[0].clientY;
+    }
+
+    // const zoom = Dom.getZoom();
+
     return {
-      x: clientX - rect.left,
-      y: clientY - rect.top,
+      x: clientX /*/ zoom*/ - rect.left,
+      y: clientY /*/ zoom*/ - rect.top,
     };
   },
   /**
@@ -261,15 +276,38 @@ export default {
    * getOvalPoint
    * @description - 获取椭圆上任意一点
    * @param center
-   * @param raduisX
+   * @param radiusX
    * @param radiusY
    * @param angle
    */
-  getOvalPoint(center: IPoint, raduisX: number, radiusY: number, angle: number): IPoint {
+  getOvalPoint(center: IPoint, radiusX: number, radiusY: number, angle: number): IPoint {
     return {
-      x: center.x + Math.cos(angle) * raduisX,
+      x: center.x + Math.cos(angle) * radiusX,
       y: center.y + Math.sin(angle) * radiusY,
     };
+  },
+  /**
+   * pxToRemNumber
+   * @param {number} px
+   * @param {number} base
+   * @return {number}
+   */
+  pxToRemNumber(px: number, base: number): number {
+    return px / base;
+  },
+  /**
+   * pxToRem
+   * @param {number} px
+   * @param {number} base
+   * @param media
+   * @return {string}
+   */
+  pxToRem(px: number, base: number, media?: ConfigProviderProps['media']): string {
+    if (!media || media.isUseMedia) {
+      return `${this.pxToRemNumber(px, base)}rem`;
+    }
+
+    return `${px}px`;
   },
   /**--------------------------math-end------------------------**/
 };

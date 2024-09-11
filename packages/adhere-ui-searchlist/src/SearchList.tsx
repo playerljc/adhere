@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { ReactElement, ReactNode, RefObject, createContext, createRef } from 'react';
 
+import { DownOutlined, SearchOutlined, UpOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 import Intl from '@baifendian/adhere-util-intl';
@@ -11,9 +12,9 @@ import Intl from '@baifendian/adhere-util-intl';
 import ListDensitySetting from './Extension/ListDensitySetting';
 import type { Metas, SearchListProps, SearchListState } from './types';
 
-const { Search } = SearchTable;
+const { Search, ReloadTable, ExportExcel } = SearchTable;
 
-export const selectorPrefix = 'adhere-ui-searchtable';
+export const selectorPrefix = 'adhere-ui-search-table';
 
 export const SearchListContext = createContext<{
   context: SearchList;
@@ -26,6 +27,8 @@ abstract class SearchList<
   P extends SearchListProps = SearchListProps,
   S extends SearchListState = SearchListState,
 > extends Search<P, S> {
+  static displayName = 'SearchList';
+
   // 序号生成的规则 - 单独模式
   static NUMBER_GENERATOR_RULE_ALONE = Symbol();
   // 序号生成的规则 - 连续模式
@@ -177,6 +180,36 @@ abstract class SearchList<
   }
 
   /**
+   * getExportExcelData
+   * @description 获取导出excel的数据
+   * @return any[]
+   */
+  getExportExcelData() {
+    return this.getData();
+  }
+
+  /**
+   * getExportExcelColumns
+   * @description 获取导出excel的列
+   * @param _columns
+   * return _columns
+   */
+  getExportExcelColumns(_columns: any[]): any[] {
+    return _columns
+      .filter(({ dataIndex }) => !['_number'].includes(dataIndex))
+      .map((_column) => {
+        if ('children' in _column && Array.isArray(_column.children) && !!_column.children.length) {
+          return {
+            ..._column,
+            children: this.getExportExcelColumns(_column.children || []),
+          };
+        }
+
+        return _column;
+      });
+  }
+
+  /**
    * renderTableDensitySetting
    * @description 表格密度设置
    * @return {ReactElement}
@@ -203,104 +236,141 @@ abstract class SearchList<
   }
 
   /**
-   * renderSearchToolBar
-   * @description 渲染查询工具栏
+   * renderTableReload
+   * @description 刷新
    * @return {ReactElement}
    */
-  renderSearchToolBar(): ReactElement {
+  renderTableReload(): ReactElement {
+    return <ReloadTable onReload={() => this.fetchData()} showLoading={this.showLoading()} />;
+  }
+
+  /**
+   * renderExportExcel
+   * @description 导出excel
+   * @return {ReactElement}
+   */
+  renderExportExcel(): ReactElement {
+    return (
+      <ExportExcel
+        title={this.props.title}
+        getDataSource={() => this.getExportExcelData()}
+        // @ts-ignore
+        getColumns={() => this.getExportExcelColumns(this.getColumns())}
+      />
+    );
+  }
+
+  /**
+   * renderSearchBarCollapseControl
+   */
+  renderSearchBarCollapseControl() {
+    return (
+      <ConditionalRender
+        conditional={this.state.expand as boolean}
+        noMatch={() => (
+          <a
+            key="expand"
+            className={`${selectorPrefix}-search-footer-item-expand-search-up-btn`}
+            onClick={() => {
+              this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
+              // @ts-ignore
+              this.setState(
+                {
+                  expand: true,
+                },
+                () => this.onSearchPanelCollapseAfter && this.onSearchPanelCollapseAfter(),
+              );
+            }}
+          >
+            <span>{Intl.v('展开')}</span>
+            <DownOutlined />
+          </a>
+        )}
+      >
+        {() => (
+          <a
+            key="hide"
+            className={`${selectorPrefix}-search-footer-item-expand-search-down-btn`}
+            onClick={() => {
+              this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
+
+              // @ts-ignore
+              this.setState(
+                {
+                  expand: false,
+                },
+                () => this.onSearchPanelCollapseAfter && this.onSearchPanelCollapseAfter(),
+              );
+            }}
+          >
+            <span>{Intl.v('收起')}</span>
+            <UpOutlined />
+          </a>
+        )}
+      </ConditionalRender>
+    );
+  }
+
+  /**
+   * renderSearchFormToolBar
+   * @description 渲染查询表单的工具栏
+   * @return {ReactNode}
+   */
+  renderSearchFormToolBar(): ReactNode {
     // @ts-ignore
     const { isShowExpandSearch } = this.props;
 
     const defaultItems = [
       <Button
-        className={`${selectorPrefix}-searchfooteritem`}
+        className={`${selectorPrefix}-search-footer-item`}
         type="primary"
         key="search"
-        icon={
-          <i
-            className={classNames(
-              `${selectorPrefix}-searchfooteritem-search-btn-icon`,
-              'iconfont iconsousuo',
-            )}
-          />
-        }
+        loading={this.showLoading()}
+        icon={<SearchOutlined />}
         onClick={() => {
           this.search();
         }}
       >
         {Intl.v('查询')}
       </Button>,
-      <Button
-        className={`${selectorPrefix}-searchfooteritem`}
-        key="reset"
-        // @ts-ignore
-        onClick={this.onClear}
-      >
+      <Button className={`${selectorPrefix}-search-footer-item`} key="reset" onClick={this.onClear}>
         {Intl.v('重置')}
       </Button>,
-    ];
+      isShowExpandSearch && this.renderSearchBarCollapseControl(),
+    ].filter((t) => !!t);
 
-    if (isShowExpandSearch) {
-      defaultItems.push(
-        <ConditionalRender
-          conditional={
-            // @ts-ignore
-            this.state.expand as boolean
-          }
-          noMatch={() => (
-            <a
-              key="expand"
-              className={`${selectorPrefix}-searchfooteritem-expand-search-up-btn`}
-              onClick={() => {
-                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
-
-                // @ts-ignore
-                this.setState(
-                  {
-                    expand: true,
-                  },
-                  () => this.onSearchPanelCollapseAfter && this.onSearchPanelCollapseAfter(),
-                );
-              }}
-            >
-              <span>{Intl.v('展开')}</span>
-              <i className="iconfont iconup" />
-            </a>
-          )}
-        >
-          {() => (
-            <a
-              key="hide"
-              className={`${selectorPrefix}-searchfooteritem-expand-search-down-btn`}
-              onClick={() => {
-                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
-
-                // @ts-ignore
-                this.setState(
-                  {
-                    expand: false,
-                  },
-                  () => this.onSearchPanelCollapseAfter && this.onSearchPanelCollapseAfter(),
-                );
-              }}
-            >
-              <span>{Intl.v('关闭')}</span>
-              <i className="iconfont icondownarrow" />
-            </a>
-          )}
-        </ConditionalRender>,
-      );
-    }
-
-    // @ts-ignore
-    const items = this.renderSearchFooterItems(defaultItems) || [...defaultItems];
+    const items = this.renderSearchFormToolBarItems(defaultItems) || defaultItems;
 
     return (
-      <div className={`${selectorPrefix}-searchfooterwrapper`}>
+      <>
+        <div className={`${selectorPrefix}-search-form-tool-bar-default-panel`}>
+          {this.renderSearchFormToolBarDefaultPanel?.()}
+        </div>
+        {!!items.length && (
+          <div className={`${selectorPrefix}-search-footer-wrapper`}>
+            {items.map((t, index) => (
+              <div key={index} className={`${selectorPrefix}-search-footer-item`}>
+                {t}
+              </div>
+            ))}
+          </div>
+        )}
+      </>
+    );
+  }
+
+  /**
+   * renderSearchBarActions
+   * @description 渲染查询工具栏
+   * @return {ReactElement}
+   */
+  renderSearchBarActions(): ReactNode {
+    const items = this.renderSearchFooterItems([]) || [];
+
+    return (
+      <div className={`${selectorPrefix}-search-footer-wrapper`}>
         {items.map((t, index) => (
-          <div key={index} className={`${selectorPrefix}-searchfooteritem`}>
+          <div key={index} className={`${selectorPrefix}-search-footer-item`}>
             {t}
           </div>
         ))}
@@ -377,14 +447,14 @@ abstract class SearchList<
    * @description 渲染SearchTable
    * @return {ReactElement | null}
    */
-  renderInner(): ReactElement | null {
+  renderInner() {
     // @ts-ignore
     const { fixedListSpaceBetween = true } = this.props;
 
     return super.renderInner(
       this.listWrapRef,
       classNames({
-        ['fixedlistspacebetween']: fixedListSpaceBetween,
+        ['fixed-list-space-between']: fixedListSpaceBetween,
       }),
     );
   }
@@ -425,6 +495,7 @@ export const defaultProps = {
 };
 
 export const propTypes = {
+  title: PropTypes.string,
   antdListProps: PropTypes.object,
   // 锁定选择猎头，列表滚动
   fixedSelectionHeaderAutoList: PropTypes.bool,

@@ -8,16 +8,16 @@ module.exports = {
     defaultBabelConfig.presets[0].push({
       modules: false,
     });
-    defaultBabelConfig.plugins.push(require('../../babel-plugin-import-antd.js').es);
+    defaultBabelConfig.plugins.push(...require('../../babel-plugin-import-antd.js').es);
 
     defaultBabelConfig.plugins.push([
       'import',
       {
-        libraryName: '@baifendian/adhere-ui-anthoc',
+        libraryName: '@baifendian/adhere-mobile-ui-anthoc',
         libraryDirectory: 'es',
         style: false,
       },
-      'adhere-ui-anthoc',
+      'adhere-mobile-ui-anthoc',
     ]);
   },
 };

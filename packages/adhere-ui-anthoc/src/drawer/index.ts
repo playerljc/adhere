@@ -1,5 +1,3 @@
-import { Drawer } from 'antd';
+import Drawer from './Drawer';
 
-import { createFactory } from '../util';
-
-export default createFactory(Drawer, {});
+export default Drawer;

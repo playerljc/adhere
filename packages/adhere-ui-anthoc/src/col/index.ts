@@ -1,5 +1,3 @@
-import { Col } from 'antd';
+import Col from './Col';
 
-import { createFactory } from '../util';
-
-export default createFactory(Col, {});
+export default Col;

@@ -1,2 +1,2 @@
-import Revolving from"./revolving";export default Revolving;
+import Revolving from"./Revolving";export default Revolving;
 //# sourceMappingURL=index.js.map

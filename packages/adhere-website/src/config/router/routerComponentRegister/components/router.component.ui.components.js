@@ -160,3 +160,15 @@ export const Ellipsis = lazy(() =>
 export const Expression = lazy(() =>
   import(/* webpackChunkName: "expression" */ '@/components/ui/expression'),
 );
+
+export const AutoComplete = lazy(() =>
+  import(/* webpackChunkName: "autocomplete" */ '@/components/ui/autocomplete'),
+);
+
+export const QuickRangeDate = lazy(() =>
+  import(/* webpackChunkName: "quickrangedate" */ '@/components/ui/quickrangedate'),
+);
+
+export const CurrencySymbol = lazy(() =>
+  import(/* webpackChunkName: "currencysymbol" */ '@/components/ui/currencysymbol'),
+);

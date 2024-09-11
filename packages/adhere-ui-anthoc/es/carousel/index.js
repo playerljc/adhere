@@ -1,2 +1,2 @@
-import _Carousel from"antd/es/carousel";import{createFactory}from"../util";export default createFactory(_Carousel,{});
+import Carousel from"./Carousel";export default Carousel;
 //# sourceMappingURL=index.js.map

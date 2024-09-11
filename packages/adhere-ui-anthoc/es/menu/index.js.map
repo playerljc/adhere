@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["menu/index.js"],"sourcesContent":["import _Menu from \"antd/es/menu\";\nimport { createFactory } from '../util';\nexport default createFactory(_Menu, {});"],"names":["_Menu","createFactory"],"mappings":"OAAOA,UAAW,sBACTC,aAA8B,KAAT,yBACfA,cAAcD,MAAO,EAAE"}
+{"version":3,"file":"index.js","sources":["menu/index.js"],"sourcesContent":["import Menu from './Menu';\nexport default Menu;"],"names":["Menu"],"mappings":"OAAOA,SAAU,wBACFA"}

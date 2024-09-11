@@ -1,5 +1,3 @@
-import { Tooltip } from 'antd';
+import Tooltip from './Tooltip';
 
-import { createFactory } from '../util';
-
-export default createFactory(Tooltip, {});
+export default Tooltip;

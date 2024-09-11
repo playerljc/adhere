@@ -1,4 +1,14 @@
 import React from 'react';
-import { TBLRCLayoutProps } from '../types';
-declare const _default: React.MemoExoticComponent<React.ForwardRefExoticComponent<TBLRCLayoutProps & React.RefAttributes<any>>>;
-export default _default;
+import type { TBLRCLayoutProps } from '../types';
+/**
+ * CRLayout
+ * @param tProps
+ * @param cProps
+ * @param autoWrapProps
+ * @param autoInnerProps
+ * @param props
+ * @param ref
+ * @constructor
+ */
+declare const CRLayout: React.NamedExoticComponent<TBLRCLayoutProps & React.RefAttributes<HTMLDivElement>>;
+export default CRLayout;

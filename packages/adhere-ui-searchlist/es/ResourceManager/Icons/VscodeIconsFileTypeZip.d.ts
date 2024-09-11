@@ -1,2 +1,3 @@
-export function VscodeIconsFileTypeZip(props: any): JSX.Element;
+export function VscodeIconsFileTypeZip(props: any): React.JSX.Element;
 export default VscodeIconsFileTypeZip;
+import React from 'react';

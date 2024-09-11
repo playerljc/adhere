@@ -15,4 +15,8 @@ export const SearchAndPaginParamsMemo: any = MemoManager.create();
  * ProSearchList
  * @classdesc 高级查询列表
  */
-export default ProListFactory(SearchListImplement, SearchAndPaginParamsMemo);
+const ProSearchList = ProListFactory(SearchListImplement, SearchAndPaginParamsMemo);
+
+ProSearchList.displayName = 'ProSearchList';
+
+export default ProSearchList;

@@ -27,11 +27,14 @@ import SearchEditableRowTable from './Editable/SearchEditableRowTable';
 import SearchEditableStateTable from './Editable/SearchEditableStateTable';
 import SearchEditableTable from './Editable/SearchEditableTable';
 import DisabledOption from './Extension/DisabledOption';
+import DragSortColumn from './Extension/DragSort/RowDragSort/DragSortColumn';
 import { EditableContext } from './Extension/EditableCell/EditableRow';
 import EditableRowControl from './Extension/EditableCell/EditableRowControl';
 import EditableTableControl from './Extension/EditableCell/EditableTableControl';
+import ExportExcel from './Extension/ExportExcel';
 import LinkColumn from './Extension/LinkColumn';
 import OptionsWrap from './Extension/OptionsWrap';
+import ReloadTable from './Extension/ReloadTable';
 import * as SearchAndPaginParams from './Extension/SearchAndPaginParams';
 import TableDensitySetting from './Extension/TableDensitySetting';
 import ProSearchStateTable from './ProSearchStateTable';
@@ -49,6 +52,9 @@ export default {
   Table: SearchTable,
   SearchTableContext,
   TableDensitySetting,
+  ReloadTable,
+  ExportExcel,
+  DragSortColumn,
   TableImplement: SearchTableImplement,
   TableStateImplement: SearchTableStateImplement,
   SearchTableImplementFactory,

@@ -1,11 +1,11 @@
-//@import '~@baifendian/adhere-ui-css/lib/vars.less';
+//@import '~@baifendian/adhere-ui-css/es/vars.less';
 @import './load-awesome.less';
 
-.adhere-ui-pullrefresh {
+.adhere-ui-pull-refresh {
   position: relative;
   overflow: hidden;
 
-  > .adhere-ui-pullrefresh-scroll {
+  > .adhere-ui-pull-refresh-scroll {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -13,7 +13,7 @@
     overflow: hidden auto;
   }
 
-  > .adhere-ui-pullrefresh-trigger {
+  > .adhere-ui-pull-refresh-trigger {
     position: absolute;
     top: 0;
     display: flex;
@@ -23,7 +23,7 @@
     height: 60px;
     transform: translate3d(0, -100%, 0);
 
-    > .adhere-ui-pullrefresh-trigger-inner {
+    > .adhere-ui-pull-refresh-trigger-inner {
       position: relative;
       display: flex;
       flex-direction: column;
@@ -32,7 +32,7 @@
       width: 100%;
       height: 100%;
 
-      > .adhere-ui-pullrefresh-trigger-icon {
+      > .adhere-ui-pull-refresh-trigger-icon {
         position: absolute;
         left: 0;
         display: flex;
@@ -41,7 +41,7 @@
         width: 80px;
         height: 60px;
 
-        > .adhere-ui-pullrefresh-trigger-icon-inner {
+        > .adhere-ui-pull-refresh-trigger-icon-inner {
           display: flex;
           align-items: center;
           justify-content: center;
@@ -55,24 +55,24 @@
         }
       }
 
-      > .adhere-ui-pullrefresh-trigger-label,
-      .adhere-ui-pullrefresh-trigger-update {
+      > .adhere-ui-pull-refresh-trigger-label,
+      .adhere-ui-pull-refresh-trigger-update {
         margin: 0;
         padding: 5px;
       }
 
-      > .adhere-ui-pullrefresh-trigger-label {
+      > .adhere-ui-pull-refresh-trigger-label {
         color: var(--adhere-color-text-secondary);
         font-size: var(--adhere-font-size-lg);
       }
 
-      > .adhere-ui-pullrefresh-trigger-update {
+      > .adhere-ui-pull-refresh-trigger-update {
         color: var(--adhere-color-text-tertiary);
         font-size: var(--adhere-font-size-lg);
       }
     }
 
-    > .adhere-ui-pullrefresh-trigger-refresh {
+    > .adhere-ui-pull-refresh-trigger-refresh {
       display: none;
       color: var(--adhere-color-primary);
 
@@ -83,7 +83,7 @@
   }
 }
 
-.adhere-ui-pullrefresh-mask {
+.adhere-ui-pull-refresh-mask {
   position: absolute;
   top: 0;
   left: 0;

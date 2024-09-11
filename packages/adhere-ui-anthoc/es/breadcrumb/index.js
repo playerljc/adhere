@@ -1,2 +1,2 @@
-import _Breadcrumb from"antd/es/breadcrumb";import{createFactory}from"../util";export default createFactory(_Breadcrumb,{});
+import Breadcrumb from"./Breadcrumb";export default Breadcrumb;
 //# sourceMappingURL=index.js.map

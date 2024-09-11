@@ -1,27 +1,26 @@
-import { Button } from 'antd';
-import React, { useEffect } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
+import P5CodeText from '!!raw-loader!./examples/p5';
+import P6CodeText from '!!raw-loader!./examples/p6';
+import P7CodeText from '!!raw-loader!./examples/p7';
+import P8CodeText from '!!raw-loader!./examples/p8';
 
-import { Hooks, Space } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, { CodeBoxSection, Section } from '@/lib/PlaygroundPage';
 
-const { useFirst, useForceUpdate, usePrevious, useSetState } = Hooks;
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
+import P5 from './examples/p5';
+import P6 from './examples/p6';
+import P7 from './examples/p7';
+import P8 from './examples/p8';
 
 export default () => {
-  const [count1, setCount1] = useSetState(0);
-
-  const [count2, setCount2] = useSetState(0);
-
-  const [count3, setCount3] = useSetState(0);
-
-  const [isFirst, updateFirst] = useFirst();
-
-  const val = usePrevious(3);
-
-  console.log(val);
-
-  const forceUpdate = useForceUpdate();
-
   function boxPanelConfig() {
     return [
       {
@@ -31,55 +30,13 @@ export default () => {
         scope: { React },
         cardProps: {
           description: {
-            title: '基本的使用',
-            info: '基本的使用',
+            title: 'useForceUpdate',
+            info: 'useForceUpdate',
           },
         },
-        codeText: `
-  import React, { useEffect } from 'react';
-  import { Button } from 'antd';
-  import { Hooks } from '@baifendian/adhere';
-
-  const { useFirst, useForceUpdate, usePrevious } = Hooks;
-
-  return () => {
-    const [isFirst, updateFirst] = useFirst();
-
-    const val = usePrevious(3);
-
-    console.log(val);
-
-    const forceUpdate = useForceUpdate();
-
-    useEffect(() => {
-      console.log('isFirst', isFirst);
-      updateFirst(true);
-    }, []);
-
-    return (
-       <Button
-        type="primary"
-        onClick={() => {
-          forceUpdate();
-        }}
-      >
-        forceUpdate
-      </Button>
-    );
-  };
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              // eslint-disable-next-line @typescript-eslint/no-use-before-define
-              forceUpdate();
-            }}
-          >
-            forceUpdate
-          </Button>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -88,115 +45,106 @@ export default () => {
         scope: { React },
         cardProps: {
           description: {
-            title: '基本的使用',
-            info: '基本的使用',
+            title: 'useSetState',
+            info: 'useSetState',
           },
         },
-        codeText: `
-  import React, { useEffect } from 'react';
-  import { Button, Space } from 'antd';
-  import { Hooks } from '@baifendian/adhere';
-
-  const { useSetState } = Hooks;
-
-  export default () => {
-    const [count1, setCount1] = useSetState(0);
-
-    const [count2, setCount2] = useSetState(0);
-
-    const [count3, setCount3] = useSetState(0);
-
-    return (
-      <div>
-        <div>
-          <Space.Group direction="horizontal">
-            <Button
-              onClick={() => {
-                setCount1(count1 + 1, () => console.log('count1更新完成'));
-              }}
-            >
-              setCount1
-            </Button>
-            <Button
-              onClick={() => {
-                setCount2(count2 + 1, () => console.log('count2更新完成'));
-              }}
-            >
-              setCount2
-            </Button>
-            <Button
-              onClick={() => {
-                setCount3(
-                  (count) => count + 1,
-                  () => console.log('count3更新完成'),
-                );
-              }}
-            >
-              setCount3
-            </Button>
-          </Space.Group>
-        </div>
-        <div>
-          <p>count1: {count1}</p>
-          <p>count2: {count2}</p>
-          <p>count3: {count3}</p>
-        </div>
-      </div>
-    )
-  }
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div>
-            <div>
-              <Space.Group direction="horizontal">
-                <Button
-                  onClick={() => {
-                    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-                    setCount1(count1 + 1, () => console.log('count1更新完成'));
-                  }}
-                >
-                  setCount1
-                </Button>
-                <Button
-                  onClick={() => {
-                    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-                    setCount2(count2 + 1, () => console.log('count2更新完成'));
-                  }}
-                >
-                  setCount2
-                </Button>
-                <Button
-                  onClick={() => {
-                    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-                    setCount3(
-                      (count) => count + 1,
-                      () => console.log('count3更新完成'),
-                    );
-                  }}
-                >
-                  setCount3
-                </Button>
-              </Space.Group>
-            </div>
-            <div>
-              {/* eslint-disable-next-line @typescript-eslint/no-use-before-define */}
-              <p>count1: {count1}</p>
-              {/* eslint-disable-next-line @typescript-eslint/no-use-before-define */}
-              <p>count2: {count2}</p>
-              {/* eslint-disable-next-line @typescript-eslint/no-use-before-define */}
-              <p>count3: {count3}</p>
-            </div>
-          </div>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
+      },
+      {
+        id: `p3`,
+        name: `useLatestState`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'useLatestState',
+            info: 'useLatestState',
+          },
+        },
+        type: 'PlayGround',
+        codeText: P3CodeText,
+        renderChildren: () => <P3 />,
+      },
+      {
+        id: `p4`,
+        name: `useSetState`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'useSetState',
+            info: 'useSetState',
+          },
+        },
+        type: 'PlayGround',
+        codeText: P4CodeText,
+        renderChildren: () => <P4 />,
+      },
+      {
+        id: `p5`,
+        name: `usePropToState`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'usePropToState',
+            info: 'usePropToState',
+          },
+        },
+        type: 'PlayGround',
+        codeText: P5CodeText,
+        renderChildren: () => <P5 />,
+      },
+      {
+        id: `p6`,
+        name: `useTriggerQuery`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'useTriggerQuery',
+            info: 'useTriggerQuery',
+          },
+        },
+        type: 'PlayGround',
+        codeText: P6CodeText,
+        renderChildren: () => <P6 />,
+      },
+      {
+        id: `p7`,
+        name: `use`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'use',
+            info: 'use',
+          },
+        },
+        type: 'PlayGround',
+        codeText: P7CodeText,
+        renderChildren: () => <P7 />,
+      },
+      {
+        id: `p8`,
+        name: `useItemsRef`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'useItemsRef',
+            info: 'useItemsRef',
+          },
+        },
+        type: 'PlayGround',
+        codeText: P8CodeText,
+        renderChildren: () => <P8 />,
       },
     ];
   }
-
-  useEffect(() => {
-    console.log('isFirst', isFirst);
-    updateFirst(true);
-  }, []);
 
   return (
     <PlayGroundPage>
@@ -205,6 +153,12 @@ export default () => {
           <li>- useFirst</li>
           <li>- useForceUpdate</li>
           <li>- usePrevious</li>
+          <li>- useLatestState</li>
+          <li>- usePropToState</li>
+          <li>- useSetState</li>
+          <li>- useTriggerQuery</li>
+          <li>- use</li>
+          <li>- useItemsRef</li>
         </ul>
       </Section>
 

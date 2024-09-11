@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #container {
+            width: 200px;
+            border: 1px solid red;
+            transition: max-height 0.2s;
+            max-height: 500px;
+            overflow: hidden;
+        }
+
+        .hide {
+           max-height: 0 !important;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            const trigger = document.getElementById('trigger');
+
+            const el = document.getElementById('container');
+
+            trigger.addEventListener('click', function () {
+                if (el.classList.contains('hide')) {
+                    el.classList.remove('hide');
+                } else {
+                    el.classList.add('hide');
+                }
+            });
+
+
+
+        }
+    </script>
+</head>
+<body>
+<div id="trigger">trigger</div>
+<div id="container">
+    <p>111</p>
+    <p>111</p>
+    <p>111</p>
+    <p>111</p>
+    <p>111</p>
+    <p>111</p>
+    <p>111</p>
+    <p>111</p>
+    <p>111</p>
+    <p>111</p>
+    <p>111</p>
+    <p>111</p>
+</div>
+</body>
+</html>

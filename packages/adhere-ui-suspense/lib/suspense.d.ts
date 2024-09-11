@@ -11,26 +11,43 @@ import { ISuspense, SuspenseProps, SuspenseState } from './types';
  * showLoading
  */
 declare abstract class Suspense<P extends SuspenseProps = SuspenseProps, S extends SuspenseState = SuspenseState> extends React.PureComponent<P, S> implements ISuspense {
+    static displayName: string;
     isFirst: boolean;
     isFirstLoading: boolean;
     static defaultProps: any;
     static propTypes: any;
-    static Sync: Function;
-    static ASync: Function;
     /**
-     * fetchData - 加载数据
+     * fetchData
+     * @description 加载数据
+     * @param params?: any
+     * @return Promise<any>
      */
-    abstract fetchData(): void;
+    abstract fetchData(params?: any): Promise<any>;
     /**
-     * renderInner - 渲染实际内容
+     * renderInner
+     * @description 渲染实际内容
      * @return React.ReactElement
      */
-    abstract renderInner(): React.ReactElement | null;
+    abstract renderInner(): React.ReactNode;
     /**
-     * showLoading - 是否显示遮罩
+     * showLoading
+     * @description 是否显示遮罩
      * @return boolean
      */
     abstract showLoading(): boolean;
+    /**
+     * onFirstFetchDataBefore
+     * @description 第一次调用接口之前
+     * @return Promise<any>
+     */
+    abstract onFirstFetchDataBefore(): Promise<any>;
+    /**
+     * onFirstFetchDataAfter
+     * @description 第一次调用接口之后
+     * @param res any
+     * @return Promise<any>
+     */
+    abstract onFirstFetchDataAfter(res?: any): Promise<any>;
     constructor(props: any);
     componentWillReceiveProps(nextProps: any): void;
     componentDidMount(): void;
@@ -54,6 +71,6 @@ declare abstract class Suspense<P extends SuspenseProps = SuspenseProps, S exten
      * @return {React.Element|*}
      */
     private renderDispatch;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Suspense;

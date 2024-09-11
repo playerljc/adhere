@@ -1,4 +1,4 @@
-import React, { FC, memo, useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -8,8 +8,8 @@ import { PropsProps } from './types';
 
 const selectPrefix = 'adhere-ui-playground-props';
 
-const Props: FC<PropsProps> = (props) => {
-  const { data = [], children, ...others } = props;
+const Props = memo<PropsProps>((props) => {
+  const { data = [], children, ...restProps } = props;
 
   const columns = useMemo(
     () => [
@@ -44,7 +44,7 @@ const Props: FC<PropsProps> = (props) => {
   );
 
   return (
-    <Collapse {...others}>
+    <Collapse {...restProps}>
       <div className={selectPrefix}>
         <Table
           columns={columns}
@@ -54,7 +54,9 @@ const Props: FC<PropsProps> = (props) => {
       </div>
     </Collapse>
   );
-};
+});
+
+Props.displayName = 'Props';
 // /**
 //  * Props
 //  * @class Props
@@ -186,4 +188,4 @@ const Props: FC<PropsProps> = (props) => {
 //
 // Props.propTypes = PropsPropTypes;
 
-export default memo(Props);
+export default Props;

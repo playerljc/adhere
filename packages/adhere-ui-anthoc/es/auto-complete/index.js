@@ -1,2 +1,2 @@
-import _AutoComplete from"antd/es/auto-complete";import{createFactory}from"../util";export default createFactory(_AutoComplete,{allowClear:!0,filterOption:function(e,t){return 0<=t.value.toUpperCase().indexOf(e.toUpperCase())}});
+import AutoComplete from"./AutoComplete";import AutoCompleteSelectInput from"./AutoCompleteSelectInput";AutoComplete.AutoCompleteSelectInput=AutoCompleteSelectInput;export default AutoComplete;
 //# sourceMappingURL=index.js.map

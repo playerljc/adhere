@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 
 import { IDomEditor, IEditorConfig, SlateDescendant } from '@wangeditor/editor';
 import * as wangEditor from '@wangeditor/editor';
@@ -35,10 +35,16 @@ export interface WangEditorSandboxProps {
   wrapStyle?: React.CSSProperties;
   wangEditorStyle?: string;
   value?: string;
-  onChange: (editor: IDomEditor) => void;
+  onChange?: (editor: IDomEditor) => void;
   toolBarProps?: ToolBarProps;
   editorProps?: EditorProps;
   readOnly?: boolean;
   lang?: 'zh_CN' | 'en_US';
   bordered?: boolean;
 }
+
+export type WangEditorSandboxComponent = NamedExoticComponent<
+  PropsWithoutRef<WangEditorSandboxProps> & RefAttributes<WangEditorSandboxHandler>
+> & {
+  AntdFormRequireValidator: (editor: any, tip: any) => any;
+};

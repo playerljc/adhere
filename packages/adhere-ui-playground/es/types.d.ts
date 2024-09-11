@@ -1,5 +1,10 @@
-import { FC, ForwardRefExoticComponent, NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
+import { NamedExoticComponent } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
+import CodeBoxSection from './PlayGroundPage/CodeBoxSection';
+import FunctionPropsSection from './PlayGroundPage/FunctionPropsSection';
+import PropsSection from './PlayGroundPage/PropsSection';
+import Section from './PlayGroundPage/Section';
+import TabPanel from './SimpleTabs/TabPanel';
 /**
  * CardProps
  */
@@ -62,14 +67,17 @@ export interface PlayGroundProps extends CodePanelProps {
     expand?: boolean;
     title?: any;
     active?: string;
+    className?: string;
+    style?: CSSProperties;
+    children?: ReactNode;
 }
 /**
- * PlayGroundMulitProps
+ * PlayGroundMultiProps
  */
-export interface PlayGroundMulitProps extends PlayGroundProps {
+export interface PlayGroundMultiProps extends PlayGroundProps {
     config?: PlayGroundProps[];
 }
-export interface PlayGroundMulitState extends PlayGroundState {
+export interface PlayGroundMultiState extends PlayGroundState {
     config?: PlayGroundProps[];
 }
 /**
@@ -129,23 +137,27 @@ export interface CodeBoxPlayGroundProps extends PlayGroundProps {
     renderWrap?: (columnIndex: number, index: number, config: PlayGroundProps, children: ReactNode) => ReactNode;
     renderChildren?: (columnIndex: number, index: number, config: Array<CodeBoxPlayGroundProps>) => ReactNode;
 }
-export interface CodeBoxPlayGroundMulitProps extends PlayGroundMulitProps {
-    type: 'PlayGroundMulit';
-    renderWrap?: (columnIndex: number, index: number, config: Array<CodeBoxPlayGroundMulitProps>, children: ReactNode) => ReactNode;
-    renderChildren?: (columnIndex: number, index: number, config: Array<CodeBoxPlayGroundMulitProps>) => ReactNode;
+export interface CodeBoxPlayGroundMultiProps extends PlayGroundMultiProps {
+    type: 'PlayGroundMulti';
+    renderWrap?: (columnIndex: number, index: number, config: Array<CodeBoxPlayGroundMultiProps>, children: ReactNode) => ReactNode;
+    renderChildren?: (columnIndex: number, index: number, config: Array<CodeBoxPlayGroundMultiProps>) => ReactNode;
 }
 export interface CodeBoxPlayGroundTabProps extends PlayGroundTabProps {
     type: 'PlayGroundTab';
     renderWrap?: (columnIndex: number, index: number, config: PlayGroundTabProps, children: ReactNode) => ReactNode;
     renderChildren?: (columnIndex: number, index: number, config: Array<PlayGroundTabProps>) => ReactNode;
 }
+export interface CodeBoxPlayGroundMobileTabProps extends PlayGroundTabMobileProps {
+    type: 'PlayGroundTabMobile';
+    renderWrap?: (columnIndex: number, index: number, config: PlayGroundTabMobileProps, children: ReactNode) => ReactNode;
+}
 export interface CodeBoxProps {
     title?: string | ReactNode;
     extra?: ReactNode;
     isShowExpandAllBtn: boolean;
     columnCount: number;
-    expandAll?: boolean;
-    config: Array<CodeBoxPlayGroundProps | CodeBoxPlayGroundMulitProps | CodeBoxPlayGroundTabProps>;
+    expandAll: boolean;
+    config: Array<CodeBoxPlayGroundProps | CodeBoxPlayGroundMultiProps | CodeBoxPlayGroundTabProps | CodeBoxPlayGroundMobileTabProps>;
 }
 export interface CollapseState {
     collapse: boolean;
@@ -153,6 +165,8 @@ export interface CollapseState {
 export interface CodeTabPanelItemProps extends CodePanelProps {
     key?: string;
     title: string | ReactNode;
+    className?: string;
+    style?: CSSProperties;
 }
 export interface CodeTabPanelProps {
     active?: string;
@@ -161,8 +175,19 @@ export interface CodeTabPanelProps {
 }
 export interface PlayGroundTabProps extends CodeTabPanelProps, PlayGroundProps {
 }
+export interface PlayGroundTabMobileProps extends PlayGroundTabProps {
+    url: string;
+    bodyClassName?: string;
+    bodyStyle?: CSSProperties;
+    displayClassName?: string;
+    displayBodyStyle?: CSSProperties;
+}
 export interface PlayGroundTabState extends PlayGroundState {
     activeKey?: string;
+}
+export interface PlayGroundTabMobileState extends PlayGroundTabState {
+    iframeCount?: number;
+    qrcode?: string;
 }
 export interface CodeBoxContextValue {
     activeAnchor: string;
@@ -171,6 +196,12 @@ export interface AnchorNavigationContextValue {
     scrollEl: HTMLElement | null;
 }
 export interface AnchorNavigationProps {
+    className?: string;
+    style?: CSSProperties;
+    autoClassName?: string;
+    autoStyle?: CSSProperties;
+    fixedClassName?: string;
+    fixedStyle?: CSSProperties;
     activeAnchor?: string;
     anchors?: Array<{
         anchor: string;
@@ -187,12 +218,13 @@ export interface TabContextValue {
 }
 export interface TabPanelProps {
     className?: string;
+    style?: CSSProperties;
     index?: number | string;
     children?: any;
 }
-export interface SimpleTabsFunction<P> extends NamedExoticComponent<P> {
-    TabPanel: FC<TabPanelProps>;
-}
+export type SimpleTabsComponent = NamedExoticComponent<SimpleTabsProps> & {
+    TabPanel: typeof TabPanel;
+};
 export interface SimpleTabsProps {
     activeKey?: string;
     className?: string;
@@ -215,15 +247,21 @@ export interface FunctionPropsSectionProps extends SectionProps {
 export interface PlayGroundPageContextValue {
     scrollEl?: HTMLElement | null;
 }
-export interface PlayGroundPageHOC<T, P> extends ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>> {
-    Section: FC<SectionProps>;
-    CodeBoxSection: FC<CodeBoxProps>;
-    PropsSection: FC<PropsSectionProps>;
-    FunctionPropsSection: FC<FunctionPropsSectionProps>;
-}
+export type PlayGroundPageComponent = NamedExoticComponent<PlayGroundPageProps> & {
+    Section: typeof Section;
+    CodeBoxSection: typeof CodeBoxSection;
+    PropsSection: typeof PropsSection;
+    FunctionPropsSection: typeof FunctionPropsSection;
+};
 export interface PlayGroundPageProps {
     className?: string;
     style?: CSSProperties;
+    anchorNavigationClassName?: string;
+    anchorNavigationStyle?: CSSProperties;
+    anchorNavigationAutoClassName?: string;
+    anchorNavigationAutoStyle?: CSSProperties;
+    anchorNavigationFixedClassName?: string;
+    anchorNavigationFixedStyle?: CSSProperties;
     anchorPosition: {
         top: number;
         width: number;

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import QuickRangeDate from './QuickRangeDate';\nexport default QuickRangeDate;"],"names":["QuickRangeDate"],"mappings":"OAAOA,mBAAoB,kCACZA"}

@@ -1,5 +1,6 @@
 import { Avatar } from 'antd';
 import faker from 'faker';
+import Mock from 'mockjs';
 import React from 'react';
 
 import {
@@ -12,7 +13,8 @@ import {
 } from '@ant-design/icons';
 import Dict from '@baifendian/adhere-util-dict';
 
-import { City, County, Province, books } from '../../../data';
+import books from '@/mock/book';
+import { City, County, Province } from '@/mock/pcc';
 
 const PCCFlat = [
   ...Province.map((t) => ({
@@ -97,8 +99,33 @@ const ssqCascade = [
   },
 ];
 
+const UserData = Array.from({ length: 100 }).map(() => {
+  const label = Mock.mock('@cname');
+  const value = Mock.mock('@guid');
+
+  return {
+    id: value,
+    label,
+    value,
+    title: label,
+    avatar: `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${value}`,
+  };
+});
+
 export default {
   initStatic() {
+    // sex
+    Dict.handlers.SystemTestSex = () => [
+      {
+        label: '男',
+        value: '1',
+      },
+      {
+        label: '女',
+        value: '0',
+      },
+    ];
+
     Dict.handlers.SystemBookCatalog = () =>
       [
         {
@@ -173,6 +200,95 @@ export default {
         label: t.catalog,
         value: t.id,
       }));
+
+    Dict.handlers.SystemBookCatalogDynamic = () =>
+      Promise.resolve(
+        [
+          {
+            id: '242',
+            catalog: '中国文学',
+          },
+          {
+            id: '243',
+            catalog: '外国文学',
+          },
+          {
+            id: '244',
+            catalog: '儿童文学',
+          },
+          {
+            id: '245',
+            catalog: '散文',
+          },
+          {
+            id: '246',
+            catalog: '经典名著',
+          },
+          {
+            id: '247',
+            catalog: '小说',
+          },
+          {
+            id: '248',
+            catalog: '历史',
+          },
+          {
+            id: '249',
+            catalog: '教育',
+          },
+          {
+            id: '250',
+            catalog: '成功励志',
+          },
+          {
+            id: '251',
+            catalog: '心灵鸡汤',
+          },
+          {
+            id: '252',
+            catalog: '人物传记',
+          },
+          {
+            id: '253',
+            catalog: '心理学',
+          },
+          {
+            id: '254',
+            catalog: '管理',
+          },
+          {
+            id: '255',
+            catalog: '经济',
+          },
+          {
+            id: '256',
+            catalog: '理财',
+          },
+          {
+            id: '257',
+            catalog: '哲学',
+          },
+          {
+            id: '258',
+            catalog: '计算机',
+          },
+        ].map((t) => ({
+          label: t.catalog,
+          value: t.id,
+          children: t.catalog,
+          key: t.id,
+          title: t.catalog,
+        })),
+      );
+
+    Dict.handlers.SystemBookCatalogRem = () =>
+      Promise.resolve(
+        [].map((t) => ({
+          label: t.catalog,
+          value: t.id,
+          children: t.catalog,
+        })),
+      );
 
     Dict.handlers.SystemOrg = () => [
       {
@@ -584,46 +700,54 @@ export default {
     };
 
     Dict.handlers.SystemFilterBookList = () => (kw) => {
-      const data = books.map((t) => ({
-        label: t.label,
-        value: faker.random.uuid(),
-      }));
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          if (!kw) {
+            resolve([]);
+            return;
+          }
 
-      return Promise.resolve(data.filter((t) => t.label.includes(kw)));
+          resolve(books.filter((t) => t.label.includes(kw)));
+        }, 1000);
+      });
     };
 
-    Dict.handlers.SystemUserPagin = () => (paging) => {
-      const { current, pageSize } = paging;
+    Dict.handlers.SystemUserPagin = () => (page, limit) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            totalCount: UserData.length,
+            data: UserData.slice((page - 1) * limit, page * limit),
+          });
+        }, 1000);
+      });
+    };
 
-      const data = [];
-      data.length = 300;
-      data.fill(0);
+    Dict.handlers.SystemUserACPagin = () => (page, limit, _kw) => {
+      console.log(page, limit, _kw);
 
-      const res = {
-        resCode: 0,
-        data: {
-          total: data.length,
-          pages: 30,
-          current: 1,
-          records: data
-            .slice((current - 1) * pageSize, (current - 1) * pageSize + pageSize)
-            .map((t, index) => ({
-              id: (current - 1) * pageSize + (index + 1),
-              isMore: !!Math.floor((Math.random() * 10) % 2),
-              name: faker.internet.userName(),
-              sex: `${(index + 1) % 2}`,
-              birthDay: faker.time.recent(),
-              deptName: faker.company.companyName(),
-              height: faker.random.number(),
-              width: faker.random.number(),
-              hometown: faker.address.city(),
-              address: faker.address.streetAddress(),
-            })),
-        },
-        resMsg: '',
-      };
+      return new Promise((resolve) => {
+        const data = !_kw ? [] : UserData.filter(({ label }) => label.indexOf(_kw) !== -1);
 
-      return Promise.resolve(res.data);
+        resolve({
+          totalCount: data.length,
+          data: data.slice((page - 1) * limit, page * limit),
+        });
+      });
+    };
+
+    Dict.handlers.SystemBookAC = () => (_kw) => {
+      return new Promise((resolve) => {
+        if (!_kw) {
+          resolve([]);
+        }
+
+        setTimeout(() => {
+          const result = books.filter((_book) => _book.t.indexOf(_kw) !== -1);
+
+          resolve(result);
+        }, 500);
+      });
     };
 
     Dict.handlers.SystemDepartment = () => (pid, cascadeParams) => {
@@ -660,5 +784,34 @@ export default {
     Dict.handlers.SystemDepartmentAll = () => Promise.resolve(PCCFlat);
 
     Dict.handlers.SystemSSQRemote = () => ssqCascade;
+
+    Dict.handlers.SystemBook = () => Promise.resolve(books);
+
+    Dict.handlers.SystemTableBook = () =>
+      Promise.resolve(
+        books.map(({ children, ...t }) => ({
+          ...t,
+          value: t.id,
+        })),
+      );
+
+    Dict.handlers.SystemTableBookAC = () => (_kw) => {
+      return new Promise((resolve) => {
+        if (!_kw) {
+          resolve([]);
+        }
+
+        setTimeout(() => {
+          const result = books
+            .map(({ children, ...t }) => ({
+              ...t,
+              value: t.id,
+            }))
+            .filter((_book) => _book.t.indexOf(_kw) !== -1);
+
+          resolve(result);
+        }, 500);
+      });
+    };
   },
 };

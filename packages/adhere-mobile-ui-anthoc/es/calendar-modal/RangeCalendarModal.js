@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(a){for(var e,r=1,n=arguments.length;r<n;r++)for(var t in e=arguments[r])Object.prototype.hasOwnProperty.call(e,t)&&(a[t]=e[t]);return a}).apply(this,arguments)};import React from"react";import CalendarModal from"./CalendarModal";var RangeCalendarModal=function(a){return React.createElement(CalendarModal,__assign({},a,{selectionMode:"range"}))};export default RangeCalendarModal;
+//# sourceMappingURL=RangeCalendarModal.js.map

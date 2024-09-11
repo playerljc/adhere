@@ -1,5 +1,3 @@
-import { ColorPicker } from 'antd';
+import ColorPicker from './ColorPicker';
 
-import { createFactory } from '../util';
-
-export default createFactory(ColorPicker, {});
+export default ColorPicker;

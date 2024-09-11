@@ -1,18 +1,18 @@
-import { Button, ConfigProvider, Form } from 'antd';
-import { ConfigProviderProps } from 'antd/lib/config-provider';
-import type { FormInstance } from 'antd/lib/form';
-import React from 'react';
+import { Button, Form } from 'antd';
+import type { FormInstance } from 'antd/es/form';
+import { produce } from 'immer';
+import React, { ReactNode } from 'react';
 import ReactDOM, { Root } from 'react-dom/client';
 
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { DEFAULT_LOCAL, DEFAULT_WIDTH, DEFAULT_ZINDEX, LOCAL, PROMPT_LAYOUT } from './Constent';
+import { DEFAULT_WIDTH, DEFAULT_ZINDEX, PROMPT_LAYOUT } from './Constent';
 import MaximizeModalDialog from './MaximizeModal';
 import ModalDialog, { selectorPrefix } from './Modal';
+import Trigger from './Trigger';
+import TriggerPrompt from './TriggerPrompt';
 import type { AlertArgv, ConfirmArgv, ModalArgv, PromptArgv } from './types';
-
-let antdConfigProviderProps: ConfigProviderProps = {};
 
 /**
  * renderByIcon
@@ -20,7 +20,7 @@ let antdConfigProviderProps: ConfigProviderProps = {};
  * @param text
  * @return React.ReactElement
  */
-function renderByIcon(icon, text) {
+function renderByIcon(icon: ReactNode, text: ReactNode) {
   return (
     <div className={`${selectorPrefix}-render-icon`}>
       <div className={`${selectorPrefix}-render-icon-fixed`}>{icon}</div>
@@ -29,16 +29,24 @@ function renderByIcon(icon, text) {
   );
 }
 
+// 是否允许多实例共存(也就是弹层之后再弹层) 默认是允许
+let allowMultipleInstances = true;
+
+// lock
+let lock = false;
+
+let renderToWrapper: (children: () => ReactNode) => ReactNode;
+
 const MessageDialogHandlers = new WeakMap<HTMLElement, Root>();
 
 const MessageDialogFactory = {
   /**
-   * setAntdConfigProviderProps
-   * @description 设置ConfigProvider的props
-   * @param params
+   * setRenderToWrapper
+   * @description 设置renderToWrapper方法
+   * @param _renderToWrapper
    */
-  setAntdConfigProviderProps(params) {
-    antdConfigProviderProps = params;
+  setRenderToWrapper(_renderToWrapper) {
+    renderToWrapper = _renderToWrapper;
   },
   /**
    * Confirm
@@ -58,7 +66,7 @@ const MessageDialogFactory = {
     icon = null,
     onSuccess,
   }: ConfirmArgv) {
-    const { close } = this.Modal({
+    const result = this.Modal({
       config: {
         title,
         centered: true,
@@ -72,9 +80,9 @@ const MessageDialogFactory = {
             title={Intl.v('确定')}
             onClick={() => {
               if (onSuccess) {
-                onSuccess().then(() => close());
+                onSuccess().then(() => result?.close?.());
               } else {
-                close();
+                result?.close?.();
               }
             }}
           >
@@ -85,6 +93,8 @@ const MessageDialogFactory = {
       local,
       children: icon ? renderByIcon(icon, text) : text,
     });
+
+    return result;
   },
   /**
    * Alert
@@ -103,7 +113,7 @@ const MessageDialogFactory = {
     local,
     icon,
   }: AlertArgv) {
-    this.Modal({
+    return this.Modal({
       config: {
         title,
         centered: true,
@@ -137,7 +147,7 @@ const MessageDialogFactory = {
   }: PromptArgv) {
     const ref = React.createRef<FormInstance>();
 
-    const { close } = this.Modal({
+    const result = this.Modal({
       config: {
         title,
         centered: true,
@@ -152,10 +162,10 @@ const MessageDialogFactory = {
             onClick={() => {
               if (onSuccess) {
                 ref.current!.validateFields().then((values) => {
-                  onSuccess(values?.value).then(() => close());
+                  onSuccess(values?.value).then(() => result?.close?.());
                 });
               } else {
-                close();
+                result?.close?.();
               }
             }}
           >
@@ -182,9 +192,17 @@ const MessageDialogFactory = {
         </Form>
       ),
     });
+
+    return result;
   },
+  /**
+   * InputPrompt
+   * @param config
+   * @param params
+   * @constructor
+   */
   InputPrompt({ config, ...params }: PromptArgv) {
-    MessageDialogFactory.Prompt({
+    return MessageDialogFactory.Prompt({
       ...params,
       config: {
         ...config,
@@ -192,8 +210,14 @@ const MessageDialogFactory = {
       },
     });
   },
+  /**
+   * TextAreaPrompt
+   * @param config
+   * @param params
+   * @constructor
+   */
   TextAreaPrompt({ config, ...params }) {
-    MessageDialogFactory.Prompt({
+    return MessageDialogFactory.Prompt({
       ...params,
       config: {
         ...config,
@@ -201,8 +225,14 @@ const MessageDialogFactory = {
       },
     });
   },
+  /**
+   * PassWordPrompt
+   * @param config
+   * @param params
+   * @constructor
+   */
   PassWordPrompt({ config, ...params }) {
-    MessageDialogFactory.Prompt({
+    return MessageDialogFactory.Prompt({
       ...params,
       config: {
         ...config,
@@ -210,8 +240,14 @@ const MessageDialogFactory = {
       },
     });
   },
+  /**
+   * NumberPrompt
+   * @param config
+   * @param params
+   * @constructor
+   */
   NumberPrompt({ config, ...params }) {
-    MessageDialogFactory.Prompt({
+    return MessageDialogFactory.Prompt({
       ...params,
       config: {
         ...config,
@@ -234,34 +270,58 @@ const MessageDialogFactory = {
    *  @param {ReactNode} - children
    *  @param defaultCloseBtn
    */
-  Modal({
-    config = {},
-    children = null,
-    defaultCloseBtn = true,
-    local = DEFAULT_LOCAL,
-  }: ModalArgv) {
-    const modalConfig = Object.assign(
-      {
-        maskClosable: false,
+  Modal({ config = {}, children = null, defaultCloseBtn = true }: ModalArgv): {
+    el: HTMLElement;
+    close: () => void;
+    setConfig: (callback: any) => void;
+    update: (children?: any) => void;
+  } | void {
+    // allowMultipleInstances true 允许多实例
+    // allowMultipleInstances false 不允许
+    if (!allowMultipleInstances && lock) return;
+
+    lock = true;
+
+    function render(_children?: any) {
+      const element = (
+        <ModalDialog open={open} close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
+          {_children ?? children}
+        </ModalDialog>
+      );
+
+      root.render(renderToWrapper?.(() => element) ?? element);
+    }
+
+    function close() {
+      open = false;
+
+      render();
+
+      setTimeout(() => {
+        root.unmount();
+        lock = false;
+      }, 300);
+    }
+
+    let open = true;
+
+    let modalConfig = {
+      maskClosable: false,
+      ...config,
+      afterClose: () => {
+        lock = false;
+
+        if (config?.afterClose) {
+          config?.afterClose?.();
+        }
       },
-      config,
-    );
+    };
 
     const el = document.createElement('div');
 
-    function close() {
-      root.unmount();
-    }
-
     const root = ReactDOM.createRoot(el);
 
-    root.render(
-      <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
-        <ModalDialog close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
-          {children}
-        </ModalDialog>
-      </ConfigProvider>,
-    );
+    render();
 
     MessageDialogHandlers.set(el, root);
 
@@ -270,36 +330,78 @@ const MessageDialogFactory = {
     return {
       el,
       close,
+      setConfig: (callback: any, _children?: any) => {
+        modalConfig = produce(modalConfig, callback);
+        render(_children);
+      },
+      update: (_children) => {
+        render(_children);
+      },
     };
   },
-  MaximizeModal({
-    config = {},
-    children = null,
-    defaultCloseBtn = true,
-    local = DEFAULT_LOCAL,
-  }: ModalArgv) {
-    const modalConfig = Object.assign(
-      {
-        maskClosable: false,
+  /**
+   * MaximizeModal
+   * @param config
+   * @param children
+   * @param defaultCloseBtn
+   * @param local
+   * @constructor
+   */
+  MaximizeModal({ config = {}, children = null, defaultCloseBtn = true }: ModalArgv): {
+    el: HTMLElement;
+    close: () => void;
+    setConfig: (callback: any, _children?: any) => void;
+    update: (children?: any) => void;
+  } | void {
+    if (!allowMultipleInstances && lock) return;
+
+    lock = true;
+
+    function render(_children?: any) {
+      const element = (
+        <MaximizeModalDialog
+          open={open}
+          close={close}
+          config={modalConfig}
+          closeBtn={defaultCloseBtn}
+        >
+          {_children ?? children}
+        </MaximizeModalDialog>
+      );
+
+      root.render(renderToWrapper?.(() => element) ?? element);
+    }
+
+    function close() {
+      open = false;
+
+      render();
+
+      setTimeout(() => {
+        root.unmount();
+        lock = false;
+      }, 300);
+    }
+
+    let open = true;
+
+    let modalConfig = {
+      maskClosable: false,
+      ...config,
+      afterClose: () => {
+        lock = false;
+
+        if (config?.afterClose) {
+          config?.afterClose?.();
+        }
       },
-      config,
-    );
+    };
 
     const el = document.createElement('div');
 
-    function close() {
-      root.unmount();
-    }
-
     const root = ReactDOM.createRoot(el);
 
-    root.render(
-      <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
-        <MaximizeModalDialog close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
-          {children}
-        </MaximizeModalDialog>
-      </ConfigProvider>,
-    );
+    render();
 
     MessageDialogHandlers.set(el, root);
 
@@ -308,6 +410,13 @@ const MessageDialogFactory = {
     return {
       el,
       close,
+      setConfig: (callback: any, _children) => {
+        modalConfig = produce(modalConfig, callback);
+        render(_children);
+      },
+      update: (_children) => {
+        render(_children);
+      },
     };
   },
   /**
@@ -316,13 +425,32 @@ const MessageDialogFactory = {
    */
   close(el: HTMLElement) {
     const root = MessageDialogHandlers.get(el);
+
     if (root) {
       root.unmount();
     }
+
+    lock = false;
     // const flag = ReactDOM.unmountComponentAtNode(el);
     // if (flag) {
     //   el?.parentElement?.removeChild?.(el);
     // }
+  },
+  /**
+   * Trigger
+   */
+  Trigger,
+  /**
+   * TriggerPrompt
+   */
+  TriggerPrompt,
+  /**
+   * allowMultipleInstances
+   * @description 设置是否允许多实例共存
+   * @param {boolean} allow
+   */
+  allowMultipleInstances: (allow: boolean) => {
+    allowMultipleInstances = allow;
   },
 };
 

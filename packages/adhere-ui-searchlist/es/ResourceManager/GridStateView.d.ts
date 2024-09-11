@@ -8,7 +8,7 @@ declare const GridStateView_base: {
             density: any;
             onChange: any;
             onReset: any;
-        }): JSX.Element;
+        }): React.JSX.Element;
         isMount: boolean;
         componentDidMount(): void;
         fetchData(): Promise<any>;
@@ -32,5 +32,6 @@ declare const GridStateView_base: {
  * @classdesc GridStateView
  */
 declare class GridStateView<P extends SearchListStateImplementProps, S extends SearchListImplementState> extends GridStateView_base {
+    static displayName: string;
 }
 export default GridStateView;

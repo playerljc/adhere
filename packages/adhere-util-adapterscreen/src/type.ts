@@ -33,4 +33,7 @@ export interface IAdapterScreen {
    */
   off(id: string): void;
   elRectification(el: string, level: number): void;
+  flexible(): void;
+  setPageMinSizeToCSS: (el?: HTMLElement) => void;
+  detectZoom: () => void;
 }

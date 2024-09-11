@@ -8,7 +8,7 @@ export interface DictObj {
     value: any;
     init: InitFunc;
     React: DictReactComponentObj;
-    useDict: Function;
+    useDict: (dictName: string) => StateData;
 }
 export interface InitFunc {
     (dictArray: IDict[], config: IConfig): void;
@@ -19,7 +19,7 @@ export interface IConfig {
 export interface DictNoPromiseComponentProps {
     children?: (params?: any) => ReactNode;
     isEmpty?: (params?: any) => boolean;
-    renderEmpty?: Function;
+    renderEmpty?: () => ReactNode;
 }
 export interface DictPromiseComponentProps extends DictNoPromiseComponentProps {
     firstLoading?: ReactElement;

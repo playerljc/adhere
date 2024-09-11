@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["swipe-action/index.js"],"sourcesContent":["import SwipeAction from './SwipeAction';\nexport default SwipeAction;"],"names":["SwipeAction"],"mappings":"OAAOA,gBAAiB,+BACTA"}

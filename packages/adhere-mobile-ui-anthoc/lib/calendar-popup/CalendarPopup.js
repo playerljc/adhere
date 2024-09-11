@@ -1,0 +1,2 @@
+"use strict";var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},util_1=(Object.defineProperty(exports,"__esModule",{value:!0}),require("../util")),InternalCalendarPopup_1=__importDefault(require("./InternalCalendarPopup")),CalendarPopupHOC=(0,util_1.createFactory)(InternalCalendarPopup_1.default,{});CalendarPopupHOC.displayName="CalendarPopup",exports.default=CalendarPopupHOC;
+//# sourceMappingURL=CalendarPopup.js.map

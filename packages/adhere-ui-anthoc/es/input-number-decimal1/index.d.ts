@@ -1,2 +1,2 @@
-declare const _default: any;
-export default _default;
+import InputNumberDecimal1 from './InputNumberDecimal1';
+export default InputNumberDecimal1;

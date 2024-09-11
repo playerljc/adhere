@@ -140,7 +140,7 @@ export default () => {
                 const canvasData = polygonSelection.current.getHistoryData();
 
                 if (!canvasData || !canvasData.length) {
-                  message.warn('画布上没有可以保存的数据！');
+                  message.warning('画布上没有可以保存的数据！');
                   return;
                 }
 
@@ -193,7 +193,7 @@ export default () => {
                     key: 'option',
                     render: (text, record) => {
                       return (
-                        <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
+                        <div className={styles.OptionWrapper}>
                           <a
                             href="#"
                             onClick={() => {

@@ -1,7 +1,8 @@
-import { Button } from 'antd';
-import React, { useRef } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
 
-import { Space, Surnames } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -10,119 +11,17 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+
 import './index.less';
 
-function getIndexesProps() {
-  const startCharCode = 'A'.charCodeAt();
-  const endCharCode = 'Z'.charCodeAt();
-
-  const indexes = [];
-
-  const count = [];
-  count.length = 10;
-  count.fill(1);
-
-  for (let i = startCharCode; i <= endCharCode; i++) {
-    indexes.push({
-      index: String.fromCharCode(i),
-      renderIndex: (index) => index.index,
-      renderTitle: (record) => record.index,
-      renderContent: (record) => (
-        <ul key={record.index}>
-          {count.map((t, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <li key={index + 1}>{`${record.index}${index + 1}`}</li>
-          ))}
-        </ul>
-      ),
-    });
-  }
-
-  return indexes;
-}
-
-function getDataSource() {
-  const startCharCode = 'A'.charCodeAt();
-  const endCharCode = 'Z'.charCodeAt();
-
-  const dataSource = [];
-
-  for (let i = startCharCode; i <= endCharCode; i++) {
-    dataSource.push({
-      index: String.fromCharCode(i),
-      data: [],
-    });
-  }
-
-  return dataSource;
-}
-
 export default () => {
-  const ref1 = useRef();
-
   function boxPanelConfig() {
     return [
       {
         id: `p1`,
-        name: `公共代码`,
-        mode: 'code',
-        scope: { React },
-        cardProps: {
-          description: {
-            title: '公共代码',
-            info: '公共代码',
-          },
-        },
-        codeText: `
-  function getIndexesProps() {
-    const startCharCode = 'A'.charCodeAt();
-    const endCharCode = 'Z'.charCodeAt();
-
-    const indexes = [];
-
-    const count = [];
-    count.length = 10;
-    count.fill(1);
-
-    for (let i = startCharCode; i <= endCharCode; i++) {
-      indexes.push({
-        index: String.fromCharCode(i),
-        renderIndex: (index) => index.index,
-        renderTitle: (record) => record.index,
-        renderContent: (record) => (
-          <ul key={record.index}>
-            {count.map((t, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <li key={index + 1}>{record + 1}-{index + 1}</li>
-            ))}
-          </ul>
-        ),
-      });
-    }
-
-    return indexes;
-  }
-
-  function getDataSource() {
-    const startCharCode = 'A'.charCodeAt();
-    const endCharCode = 'Z'.charCodeAt();
-
-    const dataSource = [];
-
-    for (let i = startCharCode; i <= endCharCode; i++) {
-      dataSource.push({
-        index: String.fromCharCode(i),
-        data: [],
-      });
-    }
-
-    return dataSource;
-  }
-        `,
-        type: 'PlayGround',
-      },
-      {
-        id: `p2`,
         name: `基本使用`,
         mode: 'code',
         scope: { React },
@@ -132,56 +31,12 @@ export default () => {
             info: '基本使用',
           },
         },
-        codeText: `
-  import { Surnames, Space } from '@baifendian/adhere';
-
-  <div style={{ display: 'flex' }}>
-    <Space.Group direction="horizontal">
-      <div style={{ width: 300 }}>
-        <Surnames
-          style={{ border: '1px solid #ccc' }}
-          indexes={getIndexesProps()}
-          dataSource={getDataSource()}
-        />
-      </div>
-
-      <div style={{ width: 300 }}>
-        <Surnames
-          position="left"
-          style={{ border: '1px solid #ccc' }}
-          indexes={getIndexesProps()}
-          dataSource={getDataSource()}
-        />
-      </div>
-    </Space.Group>
-  </div>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ display: 'flex' }}>
-            <Space.Group direction="horizontal">
-              <div style={{ width: 300 }}>
-                <Surnames
-                  style={{ border: '1px solid #ccc' }}
-                  indexes={getIndexesProps()}
-                  dataSource={getDataSource()}
-                />
-              </div>
-
-              <div style={{ width: 300 }}>
-                <Surnames
-                  position="left"
-                  style={{ border: '1px solid #ccc' }}
-                  indexes={getIndexesProps()}
-                  dataSource={getDataSource()}
-                />
-              </div>
-            </Space.Group>
-          </div>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
-        id: `p3`,
+        id: `p2`,
         name: `上下结构`,
         mode: 'code',
         scope: { React },
@@ -191,59 +46,12 @@ export default () => {
             info: '上下结构',
           },
         },
-        codeText: `
-  import { Surnames, Space } from '@baifendian/adhere';
-
-  <div style={{ display: 'flex' }}>
-    <Space.Group direction="horizontal">
-      <div style={{ height: 516 }}>
-        <Surnames
-          position="top"
-          style={{ border: '1px solid #ccc' }}
-          indexes={getIndexesProps()}
-          dataSource={getDataSource()}
-        />
-      </div>
-
-      <div style={{ height: 516 }}>
-        <Surnames
-          position="bottom"
-          style={{ border: '1px solid #ccc' }}
-          indexes={getIndexesProps()}
-          dataSource={getDataSource()}
-        />
-      </div>
-    </Space.Group>
-  </div>
-      `,
         type: 'PlayGround',
-
-        renderChildren: () => (
-          <div style={{ display: 'flex' }}>
-            <Space.Group direction="horizontal">
-              <div style={{ height: 516 }}>
-                <Surnames
-                  position="top"
-                  style={{ border: '1px solid #ccc' }}
-                  indexes={getIndexesProps()}
-                  dataSource={getDataSource()}
-                />
-              </div>
-
-              <div style={{ height: 516 }}>
-                <Surnames
-                  position="bottom"
-                  style={{ border: '1px solid #ccc' }}
-                  indexes={getIndexesProps()}
-                  dataSource={getDataSource()}
-                />
-              </div>
-            </Space.Group>
-          </div>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
       {
-        id: `p4`,
+        id: `p3`,
         name: `使用api`,
         mode: 'code',
         scope: { React },
@@ -253,73 +61,9 @@ export default () => {
             info: '使用api',
           },
         },
-        codeText: `
-  import { Surnames, Space } from '@baifendian/adhere';
-
-  const ref1 = useRef();
-
-  <Space.Group direction="horizontal">
-    <Button
-      type="primary"
-      onClick={() => {
-        ref1.current.scrollToAnimation('Z');
-      }}
-    >
-      滚动到底部
-    </Button>
-    <Button
-      onClick={() => {
-        ref1.current.scrollToAnimation('A');
-      }}
-    >
-      滚动到顶部
-    </Button>
-  </Space.Group>
-
-  <Space direction="vertical" />
-
-  <div style={{ width: 300 }}>
-    <Surnames
-      ref={ref1}
-      style={{ border: '1px solid #ccc' }}
-      indexes={getIndexesProps()}
-      dataSource={getDataSource()}
-    />
-  </div>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <Space.Group direction="horizontal">
-              <Button
-                type="primary"
-                onClick={() => {
-                  ref1.current.scrollToAnimation('Z');
-                }}
-              >
-                滚动到底部
-              </Button>
-              <Button
-                onClick={() => {
-                  ref1.current.scrollToAnimation('A');
-                }}
-              >
-                滚动到顶部
-              </Button>
-            </Space.Group>
-
-            <Space direction="vertical" />
-
-            <div style={{ width: 300 }}>
-              <Surnames
-                ref={ref1}
-                style={{ border: '1px solid #ccc' }}
-                indexes={getIndexesProps()}
-                dataSource={getDataSource()}
-              />
-            </div>
-          </>
-        ),
+        codeText: P3CodeText,
+        renderChildren: () => <P3 />,
       },
     ];
   }

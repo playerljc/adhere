@@ -1,29 +1,31 @@
-import React, { forwardRef, memo } from 'react';
-import type { ForwardRefRenderFunction } from 'react';
+import React, { PropsWithoutRef, RefAttributes, forwardRef, memo } from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
-import SplitLayout from '../splitlayout';
+import SplitLayout from '../SplitLayout';
 import { TBLRCSplitLayoutProps } from '../types';
 
 /**
  * TLRCLayout
  * @constructor
  */
-const TLRCLayout: ForwardRefRenderFunction<any, TBLRCSplitLayoutProps> = (
-  { tSplitProps, lSplitProps, rSplitProps, ...props },
-  ref,
-) => {
-  return (
-    <FlexLayout.TRBLC.TLRCLayout
-      // @ts-ignore
-      ref={ref}
-      {...props}
-      tSplit={<SplitLayout {...(tSplitProps ?? {})} />}
-      lSplit={<SplitLayout {...(lSplitProps ?? {})} />}
-      rSplit={<SplitLayout {...(rSplitProps ?? {})} />}
-    />
-  );
-};
+const TLRCLayout = memo<PropsWithoutRef<TBLRCSplitLayoutProps> & RefAttributes<HTMLDivElement>>(
+  forwardRef<HTMLDivElement, TBLRCSplitLayoutProps>(
+    ({ tSplitProps, lSplitProps, rSplitProps, ...props }, ref) => {
+      return (
+        <FlexLayout.TRBLC.TLRCLayout
+          // @ts-ignore
+          ref={ref}
+          {...props}
+          tSplit={<SplitLayout {...(tSplitProps ?? {})} />}
+          lSplit={<SplitLayout {...(lSplitProps ?? {})} />}
+          rSplit={<SplitLayout {...(rSplitProps ?? {})} />}
+        />
+      );
+    },
+  ),
+);
 
-export default memo(forwardRef<any, TBLRCSplitLayoutProps>(TLRCLayout));
+TLRCLayout.displayName = 'TLRCLayout';
+
+export default TLRCLayout;

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["grid/index.js"],"sourcesContent":["import Grid from './Grid';\nexport default Grid;"],"names":["Grid"],"mappings":"OAAOA,SAAU,wBACFA"}

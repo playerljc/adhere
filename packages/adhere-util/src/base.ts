@@ -84,9 +84,18 @@ export default {
   /**
    * isRef - 是否是引用类型
    * @param obj
+   * @return {boolean}
    */
   isRef(obj) {
     return this.isArray(obj) || this.isObject(obj);
+  },
+  /**
+   * isPromise - 是否是Promise
+   * @param obj
+   * @return {boolean}
+   */
+  isPromise(obj) {
+    return obj && typeof obj.then === 'function';
   },
   /**
    * chainCallAssignment - 对象的链式赋值
@@ -183,12 +192,25 @@ export default {
   },
   /**
    * pascalCaseToKebabCase 驼峰转xxx-xxx-xxx
-   * @param name - string pascalCase的字符串
+   * @param _str - string pascalCase的字符串
+   * @param symbol 分隔符
    * @return {string}
    */
-  pascalCaseToKebabCase(name) {
+  pascalCaseToKebabCase(_str, symbol = '-') {
+    // const result = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2');
+    // return (result.startsWith('-') ? result.substring(1) : result).toLowerCase();
+    const cells = _str.match(/([A-Z]+(?=[A-Z]|$))|([A-Z]?[^A-Z]+)/g) || [];
+    return cells.map((c) => c.toLowerCase()).join(symbol);
+  },
+  /**
+   * pascalCaseToKebabCase 驼峰转xxx-xxx-xxx
+   * @param name
+   * @param symbol 分隔符
+   * @return {string}
+   */
+  pascalCaseToKebabCase2(name, symbol = '-') {
     const result = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2');
-    return (result.startsWith('-') ? result.substring(1) : result).toLowerCase();
+    return (result.startsWith(symbol) ? result.substring(1) : result).toLowerCase();
   },
   /**
    * execExpression - 执行表达式

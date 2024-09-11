@@ -1,26 +1,30 @@
 import classNames from 'classnames';
-import React, { ForwardRefRenderFunction, forwardRef, useImperativeHandle, useRef } from 'react';
+import React, { ReactNode, forwardRef, useImperativeHandle, useRef } from 'react';
 import ReactDOM, { Root } from 'react-dom/client';
 
+import CircularMenuFactory from './CircularMenu/factory';
 import { ProviderContext } from './ContextMenuContext';
 import Menu from './Menu';
 import type {
   Config,
+  ContextMenuComponent,
   ContextMenuComponentProps,
   ContextMenuComponentRefHandle,
   MenuData,
   MenuRefHandle,
 } from './types';
 
-const selectorPrefix = 'adhere-ui-contextmenu';
+const selectorPrefix = 'adhere-ui-context-menu';
 
-const ContextMenuComponent: ForwardRefRenderFunction<
+let renderToWrapper: (children: () => ReactNode) => ReactNode;
+
+const ContextMenuComponentFunction = forwardRef<
   ContextMenuComponentRefHandle,
   ContextMenuComponentProps
-> = (props, ref) => {
+>((props, ref) => {
   const { data = [], config, el } = props;
 
-  const menuIns = useRef<MenuRefHandle | null>(null);
+  const menuIns = useRef<MenuRefHandle>();
 
   function onClick(e) {
     e.stopPropagation();
@@ -72,21 +76,25 @@ const ContextMenuComponent: ForwardRefRenderFunction<
           data={data}
           className={config.className ?? ''}
           style={config.style ?? {}}
+          // @ts-ignore
           ref={menuIns}
         />
       </div>
     </ProviderContext.Provider>
   );
-};
-
-const ContextMenuComponentHOC = forwardRef<
-  ContextMenuComponentRefHandle,
-  ContextMenuComponentProps
->(ContextMenuComponent);
+});
 
 const openHandlers = new WeakMap<HTMLElement, Root>();
 
-const ContextMenu = {
+const ContextMenu: ContextMenuComponent = {
+  /**
+   * setRenderToWrapper
+   * @description 设置renderToWrapper方法
+   * @param _renderToWrapper
+   */
+  setRenderToWrapper(_renderToWrapper) {
+    renderToWrapper = _renderToWrapper;
+  },
   /**
    * config
    * {
@@ -123,8 +131,8 @@ const ContextMenu = {
       // () => contextMenuIns.current?.mount(),
     );
 
-    root.render(
-      <ContextMenuComponentHOC
+    const element = (
+      <ContextMenuComponentFunction
         data={data}
         config={config}
         el={parentEl}
@@ -133,8 +141,10 @@ const ContextMenu = {
           contextMenuIns.current = ins;
           contextMenuIns.current?.mount();
         }}
-      />,
+      />
     );
+
+    root.render(renderToWrapper?.(() => element) ?? element);
 
     openHandlers.set(parentEl, root);
 
@@ -150,6 +160,30 @@ const ContextMenu = {
     // if (flag) {
     //   el.parentElement.removeChild(el);
     // }
+  },
+  /**
+   * openCircular
+   * @description 打开扇形菜单
+   * @param point
+   * @param config
+   */
+  openCircular(config, point) {
+    CircularMenuFactory.open(config, point);
+  },
+  /**
+   * hideCircular
+   * @description 关闭扇形菜单
+   */
+  hideCircular() {
+    CircularMenuFactory.hide();
+  },
+  /**
+   * stylesCircular
+   * @description 设置样式
+   * @param properties
+   */
+  stylesCircular(properties) {
+    CircularMenuFactory.styles(properties);
   },
 };
 

@@ -1,9 +1,9 @@
-import AnimationManager from './animationmanager';
-import GeoLayer from './geolayer';
-import HeatMap from './heatmap';
-import OLMap from './olmap';
-import * as TitleLayer from './titlelayer';
-import Util from './util';
+import AnimationManager from './AnimationManager';
+import GeoLayer from './GeoLayer';
+import HeatMap from './HeatMap';
+import OLMap from './OLMap';
+import * as TitleLayer from './TitleLayer';
+import Util from './Util';
 
 export default {
   AnimationManager,

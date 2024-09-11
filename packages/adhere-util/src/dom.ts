@@ -39,21 +39,23 @@ const DomUtil = {
     return el.firstElementChild as HTMLElement;
   },
   /**
-   * getTopDom - 已target为开始向上查找元素
-   * @param {HtmlElement} target
-   * @param {string} selector
+   * getTopDom - 已source为开始向上查找元素
+   * @param {HtmlElement} source
+   * @param {string | string[]} selector
    * @return {HtmlElement}
    */
-  getTopDom(target, selector: string): HTMLElement | null {
-    if (!target || !selector) return null;
+  getTopDom(source: HTMLElement, selector: string | string[]): HTMLElement | null {
+    if (!source || !selector || (Array.isArray(selector) && !selector.length)) return null;
 
-    if (target.className.indexOf(selector) !== -1) {
-      return target;
+    const classNames = typeof selector === 'string' ? [selector] : selector;
+
+    if (classNames.every((name) => source.classList.contains(name))) {
+      return source;
     }
 
-    let parentDom = target;
-    while ((parentDom = parentDom.parentNode)) {
-      if (parentDom.className.indexOf(selector) !== -1) {
+    let parentDom: HTMLElement | null = source;
+    while ((parentDom = parentDom?.parentElement)) {
+      if (classNames.every((name) => parentDom?.classList?.contains?.(name))) {
         break;
       } else if (parentDom === document.body) break;
     }
@@ -675,6 +677,107 @@ const DomUtil = {
     }
 
     return null;
+  },
+  /**
+   * getTransformValues
+   * @description
+   * @param {HTMLElement} element
+   * @return {
+   *
+   * }
+   */
+  getTransformValues(element: HTMLElement) {
+    const style = window.getComputedStyle(element);
+    const transform = style.transform;
+
+    // 矩阵解析
+    const mat = transform.match(/^matrix\((.+)\)$/);
+    if (mat) {
+      const values = mat[1].split(', ').map(parseFloat);
+      return {
+        translateX: values[4],
+        translateY: values[5],
+        scaleX: Math.sqrt(values[0] * values[0] + values[1] * values[1]),
+        scaleY: Math.sqrt(values[2] * values[2] + values[3] * values[3]),
+        rotate: Math.atan2(values[1], values[0]) * (180 / Math.PI),
+        // 这里的旋转角度是以度数返回的
+      };
+    }
+    // 如果没有应用 transform 或格式不是 matrix，可以返回一个默认或空对象
+    return {
+      translateX: 0,
+      translateY: 0,
+      scaleX: 1,
+      scaleY: 1,
+      rotate: 0,
+    };
+  },
+  getZoom() {
+    let ratio = window.devicePixelRatio;
+
+    if (ratio) {
+      ratio = Math.round(ratio * 100);
+    }
+
+    return 100 / Number(ratio);
+  },
+  /**
+   * getScrollbarWidth
+   * @description 获取滚动条的宽度
+   * @return {number}
+   */
+  getScrollbarWidth(): number {
+    // Create a temporary div container and append it into the body
+    const container = document.createElement('div');
+    // Force scrollbars
+    container.style.overflow = 'scroll';
+    container.style.visibility = 'hidden';
+    container.style.position = 'absolute';
+    container.style.top = '-9999px';
+    document.body.appendChild(container);
+
+    // Create a temporary inner element and append it into the container
+    const inner = document.createElement('div');
+    container.appendChild(inner);
+
+    // Calculate the scrollbar width
+    const scrollbarWidth = container.offsetWidth - inner.offsetWidth;
+
+    // Remove the temporary elements from the DOM
+    document.body.removeChild(container);
+
+    return scrollbarWidth;
+  },
+
+  /**
+   * getMaximizedViewportSize
+   * @return {{width: number; height: number}}
+   */
+  getMaximizedViewportSize(): { width: number; height: number } {
+    // 获取当前窗口的视口宽度和高度
+    const currentWidth = window.innerWidth;
+    const currentHeight = window.innerHeight;
+
+    // 获取当前窗口的外部宽度和高度
+    const outerWidth = window.outerWidth;
+    const outerHeight = window.outerHeight;
+
+    // 获取可用屏幕宽度和高度
+    const availWidth = screen.availWidth;
+    const availHeight = screen.availHeight;
+
+    // 计算窗口边框、标题栏等非视口部分的宽度和高度
+    const borderWidth = outerWidth - currentWidth;
+    const borderHeight = outerHeight - currentHeight;
+
+    // 计算最大化窗口的视口宽度和高度
+    const maximizedWidth = availWidth - borderWidth;
+    const maximizedHeight = availHeight - borderHeight;
+
+    return {
+      width: maximizedWidth,
+      height: maximizedHeight,
+    };
   },
   /**--------------------------dom-end-------------------------**/
 };

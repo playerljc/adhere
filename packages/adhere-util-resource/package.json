@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-resource",
-  "version": "2.10.28",
+  "version": "2.11.0",
   "description": "常用的资源",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -14,6 +14,7 @@
   "author": "playerljc",
   "main": "lib/index.js",
   "module": "es/index.js",
+  "typings": "es/index.d.ts",
   "files": [
     "lib",
     "es",
@@ -26,20 +27,24 @@
     "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --config ctbuild.config.umd.js --packagename AdhereResource --define alias=@,evnVars=true",
-    "generatorchangelog": "bd changelog/CHANGELOG.html"
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "upgrade": "yarn upgrade",
+    "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^2.10.28",
-    "@baifendian/adhere-util-dict": "^2.10.28",
-    "@baifendian/adhere-util-intl": "^2.10.28",
-    "antd": "^5.9.3",
-    "dayjs": "^1.11.7"
+    "@baifendian/adhere-util": "^2.11.0",
+    "@baifendian/adhere-util-dict": "^2.11.0",
+    "@baifendian/adhere-util-intl": "^2.11.0",
+    "antd": "^5.20.6",
+    "antd-mobile": "^5.37.1",
+    "dayjs": "^1.11.12"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.21.0",
+    "@babel/runtime": "^7.25.6",
+    "@baifendian/adhere-e2e": "^2.11.0",
     "@ctsj/build": "^6.3.0",
     "npm-run-all": "^4.1.5",
-    "typescript": "^5.0.4"
+    "typescript": "^5.6.2"
   },
   "peerDependencies": {
     "antd": ">=4.22.2"

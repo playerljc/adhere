@@ -7,10 +7,12 @@ import LBCLayout from './LBCLayout';
 import LCBLayout from './LCBLayout';
 import LCLayout from './LCLayout';
 import LCRBLayout from './LCRBLayout';
+import LCRLayout from './LCRLayout';
 import LRTCBLayout from './LRTCBLayout';
 import LTCBLayout from './LTCBLayout';
 import LTCLayout from './LTCLayout';
 import TBLCRLayout from './TBLCRLayout';
+import TCBLayout from './TCBLayout';
 import TCBRLayout from './TCBRLayout';
 import TCLayout from './TCLayout';
 import TCRLayout from './TCRLayout';
@@ -27,10 +29,12 @@ export {
   LCBLayout,
   LCLayout,
   LCRBLayout,
+  LCRLayout,
   LRTCBLayout,
   LTCBLayout,
   LTCLayout,
   TBLCRLayout,
+  TCBLayout,
   TCBRLayout,
   TCLayout,
   TCRLayout,

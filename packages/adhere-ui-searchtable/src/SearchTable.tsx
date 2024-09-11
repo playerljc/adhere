@@ -11,11 +11,11 @@ import type {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import classNames from 'classnames';
-import cloneDeep from 'lodash.clonedeep';
 import PropTypes from 'prop-types';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createContext, createRef } from 'react';
 
+import { DownOutlined, SearchOutlined, UpOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -24,10 +24,13 @@ import ColumnResizable, {
   SearchTableResizableTitle,
 } from './Extension/ColumnResizable';
 import ColumnSetting from './Extension/ColumnSetting';
+import ExportExcel from './Extension/ExportExcel';
+import ReloadTable from './Extension/ReloadTable';
 import TableCell from './Extension/TableComponents/TableCell';
 import TableRow from './Extension/TableComponents/TableRow';
 import TableDensitySetting from './Extension/TableDensitySetting';
 import Search, { defaultProps as searchDefaultProps, propTypes as searchPropTypes } from './Search';
+import { cloneDeep } from './Util';
 import type {
   CellConfigReducer,
   ColumnTypeExt,
@@ -38,7 +41,7 @@ import type {
 } from './types';
 import { TableDensity } from './types';
 
-export const selectorPrefix = 'adhere-ui-searchtable';
+export const selectorPrefix = 'adhere-ui-search-table';
 
 export const SearchTableContext = createContext<{
   context: SearchTable;
@@ -66,6 +69,8 @@ abstract class SearchTable<
   P extends SearchTableProps = SearchTableProps,
   S extends SearchTableState = SearchTableState,
 > extends Search<P, S> {
+  static displayName = 'SearchTable';
+
   // 序号生成的规则 - 单独模式
   static NUMBER_GENERATOR_RULE_ALONE = Symbol();
   // 序号生成的规则 - 连续模式
@@ -423,28 +428,46 @@ abstract class SearchTable<
     const prePage = this.state.page;
     const preLimit = this.state.limit;
 
-    // @ts-ignore
-    this.setState(
-      {
-        page: pagination.current,
-        limit: pagination.pageSize,
-        [this.getOrderFieldProp()]: sorter.field || this.getOrderFieldValue(),
-        [this.getOrderProp()]: sorter.order /* || this.getOrderPropValue()*/,
-      },
-      () => {
-        const { order } = sorter;
+    return new Promise((resolve) => {
+      this.setState(
+        {
+          page: pagination.current,
+          limit: pagination.pageSize,
+          [this.getOrderFieldProp()]: sorter.field || this.getOrderFieldValue(),
+          [this.getOrderProp()]: sorter.order /* || this.getOrderPropValue()*/,
+        },
+        () => {
+          const { order } = sorter;
 
-        if (!order) {
-          if (this.state.page !== prePage || this.state.limit !== preLimit) {
-            this.fetchData();
+          if (!order) {
+            if (this.state.page !== prePage || this.state.limit !== preLimit) {
+              this.fetchData().then((res) => resolve(res));
+            }
+          } else {
+            this.fetchData().then((res) => resolve(res));
           }
-        } else {
-          this.fetchData();
-        }
 
-        this.onSubTableChange(pagination, filters, sorter);
-      },
-    );
+          this.onSubTableChange(pagination, filters, sorter);
+        },
+      );
+    });
+  };
+
+  onTableRow = (columns, record, rowIndex) => {
+    // 这块可能以后会有很多操作
+    // 行的所有操作都可以在这里处理
+    return {
+      record,
+      rowIndex,
+      columns,
+      rowKey: this.getRowKey(),
+      rowConfig: this.onRowConfigReducers({
+        rowIndex: Number(rowIndex),
+        record,
+        columns,
+      }),
+      ...(this.props?.onRow?.(columns, record, rowIndex) ?? {}),
+    };
   };
 
   /**
@@ -456,9 +479,11 @@ abstract class SearchTable<
   sortOrder(columnName: string): string {
     if (!this.state) return '';
 
-    return this.state[this.getOrderFieldProp()] === columnName
-      ? this.state[this.getOrderProp()]
-      : '';
+    if (this.state[this.getOrderFieldProp()] === columnName) {
+      return this.state[this.getOrderProp()];
+    }
+
+    return '';
   }
 
   /**
@@ -545,14 +570,14 @@ abstract class SearchTable<
    * search
    */
   search() {
-    return new Promise<void>((resolve) => {
+    return new Promise<any>((resolve) => {
       // @ts-ignore
       this.setState(
         {
           page: 1,
         },
         () => {
-          this.onSearch().then(() => resolve());
+          this.onSearch().then((res) => resolve(res));
         },
       );
     });
@@ -674,7 +699,6 @@ abstract class SearchTable<
     const { page = 1, limit = this.getLimit() } = this.state;
 
     return {
-      ...(this.getTableNumberColumnProps ? this.getTableNumberColumnProps() ?? {} : {}),
       ...{
         title: Intl.v('序号'),
         dataIndex: '_number',
@@ -697,6 +721,7 @@ abstract class SearchTable<
           </ConditionalRender>
         ),
       },
+      ...(this.getTableNumberColumnProps ? this.getTableNumberColumnProps() ?? {} : {}),
     };
   }
 
@@ -717,6 +742,52 @@ abstract class SearchTable<
   }
 
   /**
+   * getExportExcelColumns
+   * @description 获取导出excel的列
+   * @param _columns
+   * return _columns
+   */
+  getExportExcelColumns(_columns: any[]): any[] {
+    return _columns
+      .filter(
+        ({ dataIndex }) =>
+          ![
+            '_number',
+            // @ts-ignore
+            this?.getOptionsColumnDataIndex?.() || '_options',
+          ].includes(dataIndex),
+      )
+      .map((_column) => {
+        if ('children' in _column && Array.isArray(_column.children) && !!_column.children.length) {
+          return {
+            ..._column,
+            children: this.getExportExcelColumns(_column.children || []),
+          };
+        }
+
+        return _column;
+      });
+  }
+
+  /**
+   * getExportExcelData
+   * @description 获取导出excel的数据
+   * @return any[]
+   */
+  getExportExcelData() {
+    return this.getData();
+  }
+
+  /**
+   * getDataSource
+   * @description 获取Table的数据
+   * @return Record<string, any>[]
+   */
+  getDataSource() {
+    return this.getData();
+  }
+
+  /**
    * renderTableNumberColumn
    * @description - 渲染序号列
    * @param {string} number
@@ -725,10 +796,18 @@ abstract class SearchTable<
    */
   renderTableNumberColumn(
     number: string = '',
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     params: { value: any; record: object; index: number },
   ) {
     return <span>{number}</span>;
+  }
+
+  /**
+   * renderTableReload
+   * @description 刷新表格
+   * @return {ReactElement}
+   */
+  renderTableReload(): ReactElement {
+    return <ReloadTable onReload={() => this.fetchData()} showLoading={this.showLoading()} />;
   }
 
   /**
@@ -815,90 +894,128 @@ abstract class SearchTable<
   }
 
   /**
-   * renderSearchToolBar
-   * @description 渲染查询工具栏
+   * renderExportExcel
+   * @description 渲染导出excel
    * @return {ReactElement}
    */
-  renderSearchToolBar(): ReactElement {
+  renderExportExcel(): ReactElement {
+    return (
+      <ExportExcel
+        title={this.props.title}
+        getDataSource={() => this.getExportExcelData()}
+        getColumns={() => this.getExportExcelColumns(this.getTableColumns())}
+      />
+    );
+  }
+
+  /**
+   * renderSearchBarCollapseControl
+   */
+  renderSearchBarCollapseControl() {
+    return (
+      <ConditionalRender
+        conditional={this.state.expand as boolean}
+        noMatch={() => (
+          <a
+            key="expand"
+            className={`${selectorPrefix}-search-footer-item-expand-search-down-btn`}
+            onClick={() => {
+              this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
+              // @ts-ignore
+              this.setState(
+                {
+                  expand: true,
+                },
+                () => this.onSearchPanelCollapseAfter && this.onSearchPanelCollapseAfter(),
+              );
+            }}
+          >
+            <span>{Intl.v('展开')}</span>
+            <DownOutlined />
+          </a>
+        )}
+      >
+        {() => (
+          <a
+            key="hide"
+            className={`${selectorPrefix}-search-footer-item-expand-search-up-btn`}
+            onClick={() => {
+              this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
+              // @ts-ignore
+              this.setState(
+                {
+                  expand: false,
+                },
+                () => this.onSearchPanelCollapseAfter && this.onSearchPanelCollapseAfter(),
+              );
+            }}
+          >
+            <span>{Intl.v('收起')}</span>
+            <UpOutlined />
+          </a>
+        )}
+      </ConditionalRender>
+    );
+  }
+
+  /**
+   * renderSearchFormToolBar
+   * @description 渲染查询表单的工具栏
+   * @return {ReactNode}
+   */
+  renderSearchFormToolBar(): ReactNode {
     const { isShowExpandSearch } = this.props;
 
     const defaultItems = [
       <Button
-        className={`${selectorPrefix}-searchfooteritem`}
+        className={`${selectorPrefix}-search-footer-item`}
         type="primary"
         key="search"
-        icon={
-          <i
-            className={classNames(
-              `${selectorPrefix}-searchfooteritem-search-btn-icon`,
-              'iconfont iconsousuo',
-            )}
-          />
-        }
+        loading={this.showLoading()}
+        icon={<SearchOutlined />}
         onClick={() => this.search()}
       >
         {Intl.v('查询')}
       </Button>,
-      <Button className={`${selectorPrefix}-searchfooteritem`} key="reset" onClick={this.onClear}>
+      <Button className={`${selectorPrefix}-search-footer-item`} key="reset" onClick={this.onClear}>
         {Intl.v('重置')}
       </Button>,
-    ];
+      isShowExpandSearch && this.renderSearchBarCollapseControl(),
+    ].filter((t) => !!t);
 
-    if (isShowExpandSearch) {
-      defaultItems.push(
-        <ConditionalRender
-          conditional={this.state.expand as boolean}
-          noMatch={() => (
-            <a
-              key="expand"
-              className={`${selectorPrefix}-searchfooteritem-expand-search-up-btn`}
-              onClick={() => {
-                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
-                // @ts-ignore
-                this.setState(
-                  {
-                    expand: true,
-                  },
-                  () => this.onSearchPanelCollapseAfter && this.onSearchPanelCollapseAfter(),
-                );
-              }}
-            >
-              <span>{Intl.v('展开')}</span>
-              <i className="iconfont iconup" />
-            </a>
-          )}
-        >
-          {() => (
-            <a
-              key="hide"
-              className={`${selectorPrefix}-searchfooteritem-expand-search-down-btn`}
-              onClick={() => {
-                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
-                // @ts-ignore
-                this.setState(
-                  {
-                    expand: false,
-                  },
-                  () => this.onSearchPanelCollapseAfter && this.onSearchPanelCollapseAfter(),
-                );
-              }}
-            >
-              <span>{Intl.v('关闭')}</span>
-              <i className="iconfont icondownarrow" />
-            </a>
-          )}
-        </ConditionalRender>,
-      );
-    }
-
-    const items = this.renderSearchFooterItems(defaultItems) || [...defaultItems];
+    const items = this.renderSearchFormToolBarItems(defaultItems) || defaultItems;
 
     return (
-      <div className={`${selectorPrefix}-searchfooterwrapper`}>
+      <>
+        <div className={`${selectorPrefix}-search-form-tool-bar-default-panel`}>
+          {this.renderSearchFormToolBarDefaultPanel?.()}
+        </div>
+
+        {!!items.length && (
+          <div className={`${selectorPrefix}-search-form-tool-bar-items`}>
+            {items.map((t, index) => (
+              <div key={index} className={`${selectorPrefix}-search-form-tool-bar-item`}>
+                {t}
+              </div>
+            ))}
+          </div>
+        )}
+      </>
+    );
+  }
+
+  /**
+   * renderSearchBarActions
+   * @description 渲染查询工具栏
+   * @return {ReactNode}
+   */
+  renderSearchBarActions(): ReactNode {
+    const items = this.renderSearchFooterItems([]) || [];
+
+    return (
+      <div className={`${selectorPrefix}-search-footer-wrapper`}>
         {items.map((t, index) => (
-          <div key={index} className={`${selectorPrefix}-searchfooteritem`}>
+          <div key={index} className={`${selectorPrefix}-search-footer-item`}>
             {t}
           </div>
         ))}
@@ -932,7 +1049,7 @@ abstract class SearchTable<
     // Table的antdProps配置
     const tableProps: TableProps<any> = {
       rowKey: this.getRowKey(),
-      dataSource: this.getData(),
+      dataSource: this.getDataSource(),
       columns,
       onChange: this.onTableChange,
       pagination: this.getPagination(),
@@ -942,22 +1059,7 @@ abstract class SearchTable<
       components: this.components, // this.onComponents(columns, this.components),
       // onRow
       // 给TableRow的props参数
-      // @ts-ignore
-      onRow: (record, rowIndex) => {
-        // 这块可能以后会有很多操作
-        // 行的所有操作都可以在这里处理
-        return {
-          record,
-          rowIndex,
-          columns,
-          rowKey: this.getRowKey(),
-          rowConfig: this.onRowConfigReducers({
-            rowIndex: Number(rowIndex),
-            record,
-            columns,
-          }),
-        };
-      },
+      onRow: (...params) => this.onTableRow(columns, ...params),
       ...(antdTableProps ?? {}),
       expandable: {
         ...(antdTableProps ?? {}).expandable,
@@ -992,13 +1094,13 @@ abstract class SearchTable<
    * @description 渲染SearchTable
    * @return {ReactElement | null}
    */
-  renderInner(): ReactElement | null {
+  renderInner() {
     const { fixedTableSpaceBetween } = this.props;
 
     return super.renderInner(
       this.tableWrapRef,
       classNames({
-        ['fixedtablespacebetween']: fixedTableSpaceBetween,
+        ['fixed-table-space-between']: fixedTableSpaceBetween,
       }),
     );
   }

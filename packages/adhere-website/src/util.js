@@ -1,6 +1,9 @@
 import qs from 'qs';
+import reactElementToJsxString from 'react-element-to-jsx-string';
 
 import { Dict, Preferences, Util } from '@baifendian/adhere';
+
+import Constent from '@/constent';
 
 export default {
   /**
@@ -52,13 +55,45 @@ export default {
    */
   setLang(lang) {
     Preferences.putStringByLocal('language', lang ?? Dict.value.SystemDefaultLang.value);
-  }
+  },
   /**
    * getEvnVars
    * @description 获取webpack的define参数
    * @return {object}
-   */,
+   */
   getEvnVars() {
     return CustomEvnVars;
+  },
+  /**
+   * reactElementToJsxStringById
+   * @param config
+   * @return {string}
+   */
+  reactElementToJsxStringById({ element, displayName }) {
+    return reactElementToJsxString(element, {
+      displayName: () => displayName,
+    });
+  },
+  /**
+   * getMobileCodeText
+   * @param path
+   * @return {Promise<string>}
+   */
+  getMobileCodeText(path) {
+    return new Promise((resolve) => {
+      fetch(`${Constent(CustomEvnVars).mobileOrigin}/codeText/${path}`).then((res) => {
+        res.text().then((text) => {
+          resolve(text);
+        });
+      });
+    });
+  },
+  /**
+   * isUseMedia
+   * @description 是否使用媒体
+   * @return {boolean}
+   */
+  isUseMedia() {
+    return this.getEvnVars().media === 'true';
   },
 };

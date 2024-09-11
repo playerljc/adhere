@@ -1,2 +1,2 @@
-import Notification from"./notification";export default Notification;
+import Notification from"./Notification";export default Notification;
 //# sourceMappingURL=index.js.map

@@ -1,5 +1,3 @@
-import { BackTop } from 'antd';
+import BackTop from './BackTop';
 
-import { createFactory } from '../util';
-
-export default createFactory(BackTop, {});
+export default BackTop;

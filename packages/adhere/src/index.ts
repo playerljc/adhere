@@ -1,3 +1,17 @@
+import MobileAutoComplete from '@baifendian/adhere-mobile-ui-auto-complete';
+import MobileDelConfirm from '@baifendian/adhere-mobile-ui-confirm-delconfirm';
+import MobileImportantConfirm from '@baifendian/adhere-mobile-ui-confirm-importantconfirm';
+import MobileGlobalIndicator from '@baifendian/adhere-mobile-ui-globalindicator';
+import MobilePopoverMenu from '@baifendian/adhere-mobile-ui-popovermenu';
+import MobileErrorPrompt from '@baifendian/adhere-mobile-ui-prompt-errorprompt';
+import MobileSuccessPrompt from '@baifendian/adhere-mobile-ui-prompt-successprompt';
+import MobileWarnPrompt from '@baifendian/adhere-mobile-ui-prompt-warnprompt';
+import MobilePRSL from '@baifendian/adhere-mobile-ui-prsl';
+import MobileQuickRangeDate from '@baifendian/adhere-mobile-ui-quick-range-date';
+import MobileSpin from '@baifendian/adhere-mobile-ui-spin';
+import MobileTabs from '@baifendian/adhere-mobile-ui-tabs';
+import MobileTimePickerView from '@baifendian/adhere-mobile-ui-time-picker-view';
+import AutoComplete from '@baifendian/adhere-ui-auto-complete';
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import BMap from '@baifendian/adhere-ui-bmap';
 import CascadeCompared from '@baifendian/adhere-ui-cascadecompared';
@@ -8,7 +22,9 @@ import DelConfirm from '@baifendian/adhere-ui-confirm-delconfirm';
 import ImportantConfirm from '@baifendian/adhere-ui-confirm-importantconfirm';
 import ContextMenu from '@baifendian/adhere-ui-contextmenu';
 import ContourBlock from '@baifendian/adhere-ui-contourblock';
+import CurrencySymbol from '@baifendian/adhere-ui-currency-symbol';
 import DateDisplay from '@baifendian/adhere-ui-datedisplay';
+import ECharts from '@baifendian/adhere-ui-echarts';
 import Ellipsis from '@baifendian/adhere-ui-ellipsis';
 import Expression from '@baifendian/adhere-ui-expression';
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
@@ -32,6 +48,7 @@ import ErrorPrompt from '@baifendian/adhere-ui-prompt-errorprompt';
 import SuccessPrompt from '@baifendian/adhere-ui-prompt-successprompt';
 import WarnPrompt from '@baifendian/adhere-ui-prompt-warnprompt';
 import PullRefresh from '@baifendian/adhere-ui-pullrefresh';
+import QuickRangeDate from '@baifendian/adhere-ui-quick-range-date';
 import Revolving from '@baifendian/adhere-ui-revolving';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
 import SearchList from '@baifendian/adhere-ui-searchlist';
@@ -68,6 +85,20 @@ import Validator from '@baifendian/adhere-util-validator';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
 export { 
+  MobileAutoComplete,
+  MobileDelConfirm,
+  MobileImportantConfirm,
+  MobileGlobalIndicator,
+  MobilePopoverMenu,
+  MobileErrorPrompt,
+  MobileSuccessPrompt,
+  MobileWarnPrompt,
+  MobilePRSL,
+  MobileQuickRangeDate,
+  MobileSpin,
+  MobileTabs,
+  MobileTimePickerView,
+  AutoComplete,
   BackTopAnimation,
   BMap,
   CascadeCompared,
@@ -78,7 +109,9 @@ export {
   ImportantConfirm,
   ContextMenu,
   ContourBlock,
+  CurrencySymbol,
   DateDisplay,
+  ECharts,
   Ellipsis,
   Expression,
   FieldGeneratorToDict,
@@ -102,6 +135,7 @@ export {
   SuccessPrompt,
   WarnPrompt,
   PullRefresh,
+  QuickRangeDate,
   Revolving,
   ScrollLoad,
   SearchList,

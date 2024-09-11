@@ -5,16 +5,6 @@ module.exports = {
     return path.join(__dirname, 'tsconfig.cjs.json');
   },
   getBabelConfig(defaultBabelConfig) {
-    defaultBabelConfig.plugins.push(require('../../babel-plugin-import-antd.js').lib);
-
-    defaultBabelConfig.plugins.push([
-      'import',
-      {
-        libraryName: '@baifendian/adhere-ui-anthoc',
-        libraryDirectory: 'lib',
-        style: false,
-      },
-      'adhere-ui-anthoc',
-    ]);
+    defaultBabelConfig.plugins.push(...require('../../babel-plugin-import-antd.js').lib);
   },
 };

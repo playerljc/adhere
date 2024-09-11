@@ -7,7 +7,7 @@ import '../src/index.less';
 export default () => {
   return (
     <div style={{ display: 'flex', height: 20 }}>
-      <Split.Group direction="vertical" isUseMedia={false}>
+      <Split.Group direction="horizontal">
         <div>1</div>
         <div>2</div>
         <div>3</div>

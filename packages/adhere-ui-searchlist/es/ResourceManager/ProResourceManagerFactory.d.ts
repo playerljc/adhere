@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-export declare const selectorPrefix = "adhere-ui-searchtable-protable";
+import React, { ReactNode } from 'react';
+export declare const selectorPrefix = "adhere-ui-search-table-pro-table";
 /**
  * ProResourceManagerFactory
  * @param SuperClass
@@ -39,7 +39,7 @@ export default function <P, S>(SuperClass: any): {
                 startName?: undefined;
                 endName?: undefined;
             };
-            render: (value: any, record: any) => JSX.Element;
+            render: (value: any, record: any) => React.JSX.Element;
             align?: undefined;
             width?: undefined;
         } | {
@@ -57,7 +57,7 @@ export default function <P, S>(SuperClass: any): {
                 startName?: undefined;
                 endName?: undefined;
             };
-            render: (value: any) => JSX.Element;
+            render: (value: any) => React.JSX.Element;
         } | {
             title: string;
             dataIndex: string;
@@ -73,7 +73,7 @@ export default function <P, S>(SuperClass: any): {
                 startName?: undefined;
                 endName?: undefined;
             };
-            render: (value: any) => JSX.Element | "-";
+            render: (value: any) => React.JSX.Element | "-";
         } | {
             title: string;
             dataIndex: string;
@@ -89,7 +89,7 @@ export default function <P, S>(SuperClass: any): {
                 endName: string;
                 dictName?: undefined;
             };
-            render: (value: any) => JSX.Element;
+            render: (value: any) => React.JSX.Element;
         })[];
         /**
          * renderGridViewCard
@@ -100,4 +100,5 @@ export default function <P, S>(SuperClass: any): {
         }): ReactNode;
     };
     [x: string]: any;
+    displayName: string;
 };

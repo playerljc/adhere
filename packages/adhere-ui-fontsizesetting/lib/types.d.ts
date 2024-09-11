@@ -6,9 +6,9 @@ import { CSSProperties } from 'react';
 export interface FontSizeSettingProps {
     className?: string;
     style?: CSSProperties;
-    min: number;
-    max: number;
-    step: number;
-    value: number;
+    min?: number;
+    max?: number;
+    step?: number;
+    value?: number;
     onChange?: (value?: number) => void;
 }

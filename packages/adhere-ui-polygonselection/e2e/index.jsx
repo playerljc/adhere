@@ -1,32 +1,12 @@
-import { ConfigProvider } from 'antd';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 
-import { ConfigProvider as AdhereConfigProvider, Resource } from '@baifendian/adhere';
+import e2e from '@baifendian/adhere-e2e';
 
-// import DrawingBoard from './DrawingBoard';
-
-import 'antd/dist/reset.css';
-import 'font-awesome/css/font-awesome.min.css';
+import DrawingBoard from './DrawingBoard';
 import Cropping from './cropping';
 
-import '@baifendian/adhere/lib/css.less';
+import './index.less';
 
-ReactDOM.createRoot(document.getElementById('app')).render(
-  <ConfigProvider locale={Resource.Dict.value.LocalsAntd.value['zh_CN']}>
-    <AdhereConfigProvider
-      intl={{
-        lang: 'zh_CN',
-        locales: {
-          en_US: [],
-          zh_CN: [],
-          pt_PT: [],
-        },
-      }}
-    >
-      {() => {
-        return <Cropping />;
-      }}
-    </AdhereConfigProvider>
-  </ConfigProvider>,
-);
+e2e.PC({
+  children: <Cropping />,
+});

@@ -329,7 +329,7 @@ const WatchMemoized: IWatchMemoized = {
 
               if (config.mode === 'light') {
                 // 如果是浅比较
-                if (oldValue !== newValue) {
+                if (!Object.is(oldValue, newValue)) {
                   changeDetail(type);
                 }
               } else if (config.mode === 'deep') {
@@ -341,7 +341,7 @@ const WatchMemoized: IWatchMemoized = {
                   }
                 } else {
                   // 否则进行浅比较
-                  if (oldValue !== newValue) {
+                  if (!Object.is(oldValue, newValue)) {
                     changeDetail(type);
                   }
                 }
@@ -411,7 +411,7 @@ const WatchMemoized: IWatchMemoized = {
 
               if (config.mode === 'light') {
                 // 如果是浅比较
-                if (oldValue !== newValue) {
+                if (!Object.is(oldValue, newValue)) {
                   handler();
                 }
               } else if (config.mode === 'deep') {
@@ -423,7 +423,7 @@ const WatchMemoized: IWatchMemoized = {
                   }
                 } else {
                   // 否则进行浅比较
-                  if (oldValue !== newValue) {
+                  if (!Object.is(oldValue, newValue)) {
                     handler();
                   }
                 }

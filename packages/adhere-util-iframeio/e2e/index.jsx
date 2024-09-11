@@ -1,8 +1,6 @@
-import { ConfigProvider } from 'antd';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 
-import { ConfigProvider as AdhereConfigProvider, Resource } from '@baifendian/adhere';
+import e2e from '@baifendian/adhere-e2e';
 import { browserConfig } from '@ctsj/router';
 
 import Client from './app/client';
@@ -13,37 +11,22 @@ import 'font-awesome/css/font-awesome.min.css';
 
 import '@baifendian/adhere/lib/css.less';
 
-ReactDOM.createRoot(document.getElementById('app')).render(
-  <ConfigProvider locale={Resource.Dict.value.LocalsAntd.value['zh_CN']}>
-    <AdhereConfigProvider
-      intl={{
-        lang: 'zh_CN',
-        locales: {
-          en_US: [],
-          zh_CN: [],
-          pt_PT: [],
-        },
-      }}
-    >
-      {() => {
-        return browserConfig(
-          [
-            {
-              path: '/',
-              redirect: '/client',
-            },
-            {
-              path: '/client',
-              component: Client,
-            },
-            {
-              path: '/server',
-              component: Server,
-            },
-          ],
-          () => {},
-        );
-      }}
-    </AdhereConfigProvider>
-  </ConfigProvider>,
-);
+e2e.PC({
+  children: browserConfig(
+    [
+      {
+        path: '/',
+        redirect: '/client',
+      },
+      {
+        path: '/client',
+        component: Client,
+      },
+      {
+        path: '/server',
+        component: Server,
+      },
+    ],
+    () => {},
+  ),
+});

@@ -1,2 +1,2 @@
-import ReactQuillSandbox from './reactQuillSandbox';
+import ReactQuillSandbox from './ReactQuillSandbox';
 export default ReactQuillSandbox;

@@ -1,0 +1,2 @@
+"use strict";var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}},colors_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./colors"))),merge_1=__importDefault(require("./merge")),options_1=__importDefault(require("./options"));exports.default={merge:merge_1.default,options:options_1.default,colors:colors_1.default};
+//# sourceMappingURL=index.js.map

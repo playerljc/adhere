@@ -13,6 +13,8 @@ import { PlayGroundTabProps, PlayGroundTabState } from './types';
  * @classdesc PlayGroundTab
  */
 class PlayGroundTab extends APlayGround<PlayGroundTabProps, PlayGroundTabState> {
+  static displayName = 'PlayGroundTab';
+
   constructor(props) {
     super(props);
 
@@ -38,7 +40,7 @@ class PlayGroundTab extends APlayGround<PlayGroundTabProps, PlayGroundTabState> 
 
     const { isFirst } = this;
 
-    const { cardProps, id, isActive, ...others } = this.props;
+    const { cardProps, id, isActive, ...restProps } = this.props;
 
     return (
       <ConditionalRender
@@ -46,8 +48,8 @@ class PlayGroundTab extends APlayGround<PlayGroundTabProps, PlayGroundTabState> 
         noMatch={() => (
           <Card style={{ display: expand ? '' : 'none' }}>
             <CodeTabPanel
-              {...others}
-              active={activeKey}
+              {...restProps}
+              active={activeKey as string}
               onChange={(key) =>
                 this.setState({
                   activeKey: key,
@@ -62,8 +64,8 @@ class PlayGroundTab extends APlayGround<PlayGroundTabProps, PlayGroundTabState> 
             {() => (
               <Card>
                 <CodeTabPanel
-                  {...others}
-                  active={activeKey}
+                  {...restProps}
+                  active={activeKey as string}
                   onChange={(key) =>
                     this.setState({
                       activeKey: key,

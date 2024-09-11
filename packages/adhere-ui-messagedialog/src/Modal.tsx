@@ -1,16 +1,16 @@
 import { Button, Modal } from 'antd';
-import React, { FC, memo, useCallback, useMemo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
 import { ModalDialogProps } from './types';
 
-export const selectorPrefix = 'adhere-ui-messagedialog';
+export const selectorPrefix = 'adhere-ui-message-dialog';
 
-const ModalDialog: FC<ModalDialogProps> = (props) => {
-  const { config, closeBtn, close, children } = props;
+const ModalDialog = memo<ModalDialogProps>((props) => {
+  const { config, closeBtn, close, open, children } = props;
 
-  const { footer = [], centered = true, ...other } = config;
+  const { footer = [], centered = true, ...rest } = config;
 
   /**
    * renderCloseBtn
@@ -63,13 +63,15 @@ const ModalDialog: FC<ModalDialogProps> = (props) => {
       centered={centered}
       wrapClassName={selectorPrefix}
       onCancel={onCancel}
-      open
-      {...other}
+      open={open}
+      {...rest}
       footer={footerNode}
     >
       {children}
     </Modal>
   );
-};
+});
 
-export default memo(ModalDialog);
+ModalDialog.displayName = 'ModalDialog';
+
+export default ModalDialog;

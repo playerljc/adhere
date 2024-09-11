@@ -1,2 +1,2 @@
-import _Anchor from"antd/es/anchor";import{createFactory}from"../util";export default createFactory(_Anchor,{});
+import Anchor from"./Anchor";export default Anchor;
 //# sourceMappingURL=index.js.map

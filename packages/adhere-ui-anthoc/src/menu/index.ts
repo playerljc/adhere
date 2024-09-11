@@ -1,5 +1,3 @@
-import { Menu } from 'antd';
+import Menu from './Menu';
 
-import { createFactory } from '../util';
-
-export default createFactory(Menu, {});
+export default Menu;

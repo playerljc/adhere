@@ -1,2 +1,2 @@
-import _Statistic from"antd/es/statistic";import{createFactory}from"../util";export default createFactory(_Statistic,{});
+import Statistic from"./Statistic";export default Statistic;
 //# sourceMappingURL=index.js.map

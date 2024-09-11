@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Notification from './notification';\nexport default Notification;\n"],"names":["Notification"],"mappings":"OAAOA,iBAAkB,gCACVA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Notification from './Notification';\nexport default Notification;\n"],"names":["Notification"],"mappings":"OAAOA,iBAAkB,gCACVA"}

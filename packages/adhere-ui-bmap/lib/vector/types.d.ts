@@ -4,26 +4,26 @@ import { IPoint } from './interaction/types';
  */
 export declare enum GeometryType {
     Point = "Point",
-    MulitPoint = "MulitPoint",
+    MultiPoint = "MultiPoint",
     Circle = "Circle",
-    MulitCircle = "MulitCircle",
+    MultiCircle = "MultiCircle",
     LineString = "LineString",
-    MulitLineString = "MulitLineString",
+    MultiLineString = "MultiLineString",
     Polygon = "Polygon",
-    MulitPolygon = "MulitPolygon",
+    MultiPolygon = "MultiPolygon",
     Rect = "Rect",
     RadiusRect = "RadiusRect",
-    MulitRadiusRect = "MulitRadiusRect",
+    MultiRadiusRect = "MultiRadiusRect",
     Leaf = "Leaf",
-    MulitLeaf = "MulitLeaf",
-    MulitRect = "MulitRect",
+    MultiLeaf = "MultiLeaf",
+    MultiRect = "MultiRect",
     Text = "Text",
     RegularPolygon = "RegularPolygon",
-    MulitRegularPolygon = "MulitRegularPolygon",
+    MultiRegularPolygon = "MultiRegularPolygon",
     Start = "Start",
-    MulitStart = "MulitStart",
+    MultiStart = "MultiStart",
     Sector = "Sector",
-    MulitSector = "MulitSector"
+    MultiSector = "MultiSector"
 }
 /**
  * IGeometryStyle
@@ -156,9 +156,9 @@ export interface IPointGeometry extends IGeometry {
     getCoordinates: () => ICoordinate;
 }
 /**
- * IMulitLineStringGeometry
+ * IMultiLineStringGeometry
  */
-export interface IMulitPointGeometry extends IGeometry {
+export interface IMultiPointGeometry extends IGeometry {
     setCoordinates: (coordinates: ICoordinate[]) => void;
     getCoordinates: () => ICoordinate[];
 }
@@ -170,9 +170,9 @@ export interface ICircleGeometry extends IGeometry {
     getCoordinates: () => ICircleGeometryData;
 }
 /**
- * IMulitCircleGeometry
+ * IMultiCircleGeometry
  */
-export interface IMulitCircleGeometry extends IGeometry {
+export interface IMultiCircleGeometry extends IGeometry {
     setCoordinates: (coordinates: ICircleGeometryData[]) => void;
     getCoordinates: () => ICircleGeometryData[];
 }
@@ -184,9 +184,9 @@ export interface ILineStringGeometry extends IGeometry {
     getCoordinates: () => ILineStringGeometryData;
 }
 /**
- * IMulitLineStringGeometry
+ * IMultiLineStringGeometry
  */
-export interface IMulitLineStringGeometry extends IGeometry {
+export interface IMultiLineStringGeometry extends IGeometry {
     setCoordinates: (coordinates: ILineStringGeometryData[]) => void;
     getCoordinates: () => ILineStringGeometryData[];
 }
@@ -198,9 +198,9 @@ export interface IPolygonGeometry extends IGeometry {
     getCoordinates: () => ICoordinate[];
 }
 /**
- * IMulitPolygonGeometry
+ * IMultiPolygonGeometry
  */
-export interface IMulitPolygonGeometry extends IGeometry {
+export interface IMultiPolygonGeometry extends IGeometry {
     setCoordinates: (coordinates: Array<ICoordinate[]>) => void;
     getCoordinates: () => Array<ICoordinate[]>;
 }
@@ -212,9 +212,9 @@ export interface IRectGeometry extends IGeometry {
     getCoordinates: () => IRectGeometryData;
 }
 /**
- * IMulitRectGeometry
+ * IMultiRectGeometry
  */
-export interface IMulitRectGeometry extends IGeometry {
+export interface IMultiRectGeometry extends IGeometry {
     setCoordinates: (coordinates: IRectGeometryData[]) => void;
     getCoordinates: () => IRectGeometryData[];
 }
@@ -234,9 +234,9 @@ export interface IRegularPolygonGeometryData {
     size: number;
 }
 /**
- * IMulitRegularPolygonGeometry
+ * IMultiRegularPolygonGeometry
  */
-export interface IMulitRegularPolygonGeometry extends IGeometry {
+export interface IMultiRegularPolygonGeometry extends IGeometry {
     setCoordinates: (coordinates: IRegularPolygonGeometryData[]) => void;
     getCoordinates: () => IRegularPolygonGeometryData[];
 }
@@ -257,9 +257,9 @@ export interface ILeafGeometryData {
     length: number;
 }
 /**
- * IMulitLeafGeometry
+ * IMultiLeafGeometry
  */
-export interface IMulitLeafGeometry extends IGeometry {
+export interface IMultiLeafGeometry extends IGeometry {
     setCoordinates: (coordinates: ILeafGeometryData[]) => void;
     getCoordinates: () => ILeafGeometryData[];
 }
@@ -279,9 +279,9 @@ export interface IStartGeometry extends IGeometry {
     getCoordinates: () => IStartGeometryData;
 }
 /**
- * IMulitStartGeometry
+ * IMultiStartGeometry
  */
-export interface IMulitStartGeometry extends IGeometry {
+export interface IMultiStartGeometry extends IGeometry {
     setCoordinates: (coordinates: IStartGeometryData[]) => void;
     getCoordinates: () => IStartGeometryData[];
 }
@@ -302,9 +302,9 @@ export interface ISectorGeometry extends IGeometry {
     getCoordinates: () => ISectorGeometryData;
 }
 /**
- * IMulitSectorGeometry
+ * IMultiSectorGeometry
  */
-export interface IMulitSectorGeometry extends IGeometry {
+export interface IMultiSectorGeometry extends IGeometry {
     setCoordinates: (coordinates: ISectorGeometryData[]) => void;
     getCoordinates: () => ISectorGeometryData[];
 }
@@ -467,9 +467,9 @@ export interface IGeoJSONPoint {
     coordinates: number[];
 }
 /**
- * IGeoJSONMulitPoint
+ * IGeoJSONMultiPoint
  */
-export interface IGeoJSONMulitPoint {
+export interface IGeoJSONMultiPoint {
     readonly type: 'MultiPoint';
     coordinates: Array<number[]>;
 }
@@ -526,7 +526,7 @@ export interface IGeoJSONFeatureCollection {
     features: IGeoJSONFeature[];
     bbox?: number[];
 }
-export type Geometry = IGeoJSONPoint | IGeoJSONMulitPoint | IGeoJSONLineString | IGeoJSONMultiLineString | IGeoJSONPolygon | IGeoJSONMultiPolygon | IGeoJSONGeometryCollection;
+export type Geometry = IGeoJSONPoint | IGeoJSONMultiPoint | IGeoJSONLineString | IGeoJSONMultiLineString | IGeoJSONPolygon | IGeoJSONMultiPolygon | IGeoJSONGeometryCollection;
 export type GeoJSONNode = Geometry | IGeoJSONFeature | IGeoJSONFeatureCollection;
 export declare enum GeoJSONType {
     Point = "Point",

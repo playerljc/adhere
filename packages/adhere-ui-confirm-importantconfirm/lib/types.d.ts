@@ -1,5 +1,5 @@
-import type { CSSProperties } from 'react';
-import { ConfirmArgv } from '@baifendian/adhere-ui-messagedialog/lib/types';
+import type { CSSProperties, NamedExoticComponent } from 'react';
+import type { ConfirmArgv } from '@baifendian/adhere-ui-messagedialog/lib/types';
 /**
  * ImportantConfirmProps
  * @interface ImportantConfirmProps
@@ -9,8 +9,11 @@ export interface ImportantConfirmProps {
     zIndex?: number;
     className?: string;
     style?: CSSProperties;
-    success?: () => void;
+    success?: () => Promise<void>;
 }
 export interface OpenFunction extends Omit<ConfirmArgv, 'onSuccess'> {
     success?: () => Promise<void>;
 }
+export type ImportantConfirmComponent = NamedExoticComponent<ImportantConfirmProps> & {
+    open: (arg: OpenFunction) => void;
+};

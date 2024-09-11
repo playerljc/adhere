@@ -1,3 +1,29 @@
+# 1.0.18
+
+***
+
+2024-03-17
+
+* 加入移动端数据源组件
+
+# 1.0.17
+
+***
+
+2024-01-24
+
+* 加入ArrayEntityValueHOC
+* 加入AsyncTreeEntityValueHOC
+* 加入TreeEntityValueHOC
+
+# 1.0.16
+
+***
+
+2023-10-07
+
+* 加入DictNames属性
+
 # 1.0.15
 
 ***

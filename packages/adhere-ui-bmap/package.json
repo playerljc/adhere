@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-bmap",
-  "version": "2.10.28",
+  "version": "2.11.0",
   "description": "百度地图3.0的封装",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -14,6 +14,7 @@
   "author": "playerljc",
   "main": "lib/index.js",
   "module": "es/index.js",
+  "typings": "es/index.d.ts",
   "files": [
     "lib",
     "es",
@@ -27,27 +28,30 @@
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "postbuildpackage": "node script/removeUseStrict.js",
     "buildumd": "ctbuild buildumd --packagename AdhereBMap --define alias=@,evnVars=true",
-    "generatorchangelog": "bd changelog/CHANGELOG.html"
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "upgrade": "yarn upgrade",
+    "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^2.10.28",
-    "@baifendian/adhere-util": "^2.10.28",
-    "@baifendian/adhere-util-emitter": "^2.10.28",
-    "@baifendian/adhere-util-intl": "^2.10.28",
+    "@baifendian/adhere-ui-conditionalrender": "^2.11.0",
+    "@baifendian/adhere-util": "^2.11.0",
+    "@baifendian/adhere-util-emitter": "^2.11.0",
+    "@baifendian/adhere-util-intl": "^2.11.0",
     "@turf/turf": "^6.5.0",
-    "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.10",
     "bmap-wind": "1.1.1-alpha.2",
-    "classnames": "^2.3.2",
-    "react": "^18.2.0",
+    "classnames": "^2.5.1",
+    "react": "^18.3.1",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.20.11",
-    "@babel/runtime": "^7.21.0",
+    "@babel/runtime": "^7.25.6",
+    "@baifendian/adhere-e2e": "^2.11.0",
     "@ctsj/build": "^6.3.0",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
     "npm-run-all": "^4.1.5",
-    "typescript": "^5.0.4"
+    "typescript": "^5.6.2"
   },
   "peerDependencies": {
     "react": ">=18.0.0 - <19.0.0",

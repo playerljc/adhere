@@ -6,9 +6,10 @@ import qs from 'qs';
 import type { ReactNode } from 'react';
 import React from 'react';
 
-import { FilterOutlined, SearchOutlined } from '@ant-design/icons';
+import { EllipsisOutlined, FilterOutlined, SearchOutlined } from '@ant-design/icons';
 import {
   DatePicker,
+  Dropdown,
   InputNumberDecimal1,
   InputNumberDecimal2,
   InputNumberInteger,
@@ -16,31 +17,35 @@ import {
   TimePicker,
 } from '@baifendian/adhere-ui-anthoc';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
+import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 import Resource from '@baifendian/adhere-util-resource';
 import Validator from '@baifendian/adhere-util-validator';
 
 import AdvancedSearchPanel from './Extension/AdvancedSearchPanel';
+import ColumnTipTitle from './Extension/ColumnTipTitle';
 // import InputHOC from './Extension/InputHOC';
 import RouteListen from './Extension/SearchAndPaginParams/routeListen';
 import { selectorPrefix } from './SearchTable';
 import type { AdvancedSearchPanelGroupData, ColumnTypeExt } from './types';
 
-const { FormItemGeneratorToDict } = FieldGeneratorToDict;
-
+// const { FormItemGeneratorToDict } = FieldGeneratorToDict;
+const { TextArea } = Input;
 const { renderGridSearchFormGroup, Label, Value } = TableGridLayout;
 const _selectorPrefix = `${selectorPrefix}-protable`;
 
 export default (SuperClass, searchAndPaginParamsMemo) =>
   class extends SuperClass {
+    static displayName = '';
+
     constructor(props) {
       super(props);
 
-      // 地址栏的pathname
-      this.pathname = typeof window !== 'undefined' ? this.getPathName() : '';
+      this.pathname = this.getPathName();
 
       // 获取浏览器地址栏上默认的searchQuery和分页参数
       let defaultSearchAndPaginParams = {
@@ -50,8 +55,8 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       };
 
       if (
-        !('openSearchParamsMemory' in this.props) ||
-        ('openSearchParamsMemory' in this.props && this.props.openSearchParamsMemory)
+        !('openSearchParamsMemory' in (this.props ?? {})) ||
+        ('openSearchParamsMemory' in (this.props ?? {}) && this.props.openSearchParamsMemory)
       ) {
         defaultSearchAndPaginParams = this.initSearchAndPaginParams();
       }
@@ -147,11 +152,16 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       // 查询条件
       const searchParams = this.state.searchParams ?? {};
 
-      const pathname = this.pathname;
+      const pathname = this.pathname ?? '';
 
       const componentId = this.getComponentId();
 
       if (searchAndPaginParamsMemo.isEmpty()) {
+        // console.log('===================s1:', pathname, componentId, {
+        //   search: searchParams,
+        //   page: this.state.page,
+        //   limit: this.state.limit,
+        // });
         searchAndPaginParamsMemo.add(pathname, {
           [componentId]: {
             search: searchParams,
@@ -162,10 +172,17 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       } else {
         const item = searchAndPaginParamsMemo.findByPath(pathname);
 
-        if (item) {
+        if (item && item?.components?.[componentId]) {
           item.components[componentId].search = searchParams;
           item.components[componentId].page = this.state.page;
           item.components[componentId].limit = this.state.limit;
+
+          // console.log(
+          //   '===================s2:',
+          //   pathname,
+          //   componentId,
+          //   item.components[componentId],
+          // );
         } else {
           searchAndPaginParamsMemo.add(pathname, {
             [componentId]: {
@@ -174,11 +191,17 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
               limit: this.state.limit,
             },
           });
+
+          // console.log('===================s3:', pathname, componentId, {
+          //   search: searchParams,
+          //   page: this.state.page,
+          //   limit: this.state.limit,
+          // });
         }
       }
 
       //{
-      // key: adhere-ui-searchtable
+      // key: adhere-ui-search-table
       // value: [
       //   {
       //     path: 路由
@@ -218,9 +241,17 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         };
       }
 
-      const item = searchAndPaginParamsMemo.findByPath(this.pathname);
+      const pathname = this.pathname ?? '';
+
+      // console.log('================pathName:', pathname);
+
+      const item = searchAndPaginParamsMemo.findByPath(pathname);
+
+      // console.log('================item:', item);
 
       const componentId = this.getComponentId();
+
+      // console.log('================componentId:', componentId);
 
       if (item && item.components[componentId]) {
         return {
@@ -268,7 +299,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @description 不同路由模式下获取pathname的方法
      */
     getPathName() {
-      return window.location.pathname;
+      const publicPath = this.props.publicPath ?? '/';
+      const router = this.props.router ?? 'browser';
+
+      return Util.getPathName(publicPath, router); /*window.location.pathname;*/
     }
 
     /**
@@ -276,7 +310,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @description 不同路由模式下获取search的方法
      */
     getSearch() {
-      return window.location.search;
+      return Util.getSearch(this.props.router ?? 'browser') ?? ''; /*window.location.search;*/
     }
 
     /**
@@ -332,18 +366,35 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     getDateState(state) {
       // null | null字符串 | 时间字符串
       const dateKeys = Object.keys(state).filter(
-        (key) =>
-          state[key] === null ||
-          state[key] === 'null' ||
-          Validator.isDate(state[key], {
-            format: 'YYYY-MM-DD',
-          }),
+        (key) => {
+          let result = false;
+          try {
+            result =
+              state[key] === null ||
+              state[key] === 'null' ||
+              state[key] === undefined ||
+              state[key] === 'undefined' ||
+              state[key] === '' ||
+              Validator.isDate(state[key]);
+          } catch (e) {}
+
+          return result;
+        },
+        // 判断是否是时间字符串
+        // dayjs(state[key]).isValid(),
       );
 
       const dateObj = {};
 
       dateKeys.forEach((key) => {
-        dateObj[key] = state[key] === null || state[key] === 'null' ? null : dayjs(state[key]);
+        dateObj[key] =
+          state[key] === null ||
+          state[key] === 'null' ||
+          state[key] === undefined ||
+          state[key] === 'undefined' ||
+          state[key] === ''
+            ? null
+            : dayjs(state[key]);
       });
 
       return dateObj;
@@ -402,8 +453,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           : null;
       });
 
+      // 对时间类型对象(一般是dayjs对象)进行转换，现在是format转换，其实应该转换成时间戳才对
       const dateKeys = Object.keys(searchParams).filter(
-        (key) => !(key in dateSearchParams) && searchParams[key] instanceof dayjs,
+        (key) => !(key in dateSearchParams) && dayjs.isDayjs(searchParams[key]),
       );
 
       dateKeys.forEach((key) => {
@@ -552,6 +604,33 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
             return loop(_t);
           })
+          // 处理tip
+          .map((_t) => {
+            const loop = (t) => {
+              const { $tip, title, renderTip } = t;
+
+              let currentTitle = title;
+
+              if ($tip) {
+                currentTitle = renderTip?.($tip) ?? <ColumnTipTitle tip={$tip} title={title} />;
+              }
+
+              let column = {
+                ...t,
+                title: currentTitle,
+              };
+
+              if (t.children && Array.isArray(t.children)) {
+                t.children.forEach((item, _index) => {
+                  t.children[_index] = loop(item);
+                });
+              }
+
+              return column;
+            };
+
+            return loop(_t);
+          })
       );
     }
 
@@ -619,6 +698,39 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     }
 
     /**
+     * getGridSearchFormColgroup
+     */
+    getGridSearchFormColgroup() {
+      return {
+        columnCount: 3,
+        colgroup: [, 'auto', , 'auto', , 'auto'],
+      };
+    }
+
+    /**
+     * getGridSearchFormRowCount
+     */
+    getGridSearchFormRowCount() {
+      return 1; // Number.MAX_VALUE;
+    }
+
+    /**
+     * getGridSearchFormProps
+     */
+    getGridSearchFormProps() {
+      return {
+        rowCount: this.getGridSearchFormRowCount(),
+        // renderTitleLabel: () => <div>搜索</div>,
+        // // 渲染高级查询面板的Collapse
+        // renderCollapse: (collapse) => <div>收起</div>,
+        // // 渲染高级查询面板显示的按钮
+        // renderSearchButton: (callback) => <div onClick={() => callback()}>高级搜索</div>,
+        // // 高级查询面板查询按钮的插入位置 (defaultItems) => {}
+        // insertSearchButton: null,
+      };
+    }
+
+    /**
      * getGridSearchFormGroupParams
      */
     getGridSearchFormGroupParams() {
@@ -626,23 +738,20 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         [
           {
             name: 'g1',
-            columnCount: 3,
-            colgroup: [, 'auto', , 'auto', , 'auto'],
+            ...this.getGridSearchFormColgroup(),
             data: this.getGridSearchFormGroupDataByColumnConfig(),
           },
         ],
         {},
-        {
-          rowCount: 1,
-          // renderTitleLabel: () => <div>搜索</div>,
-          // // 渲染高级查询面板的Collapse
-          // renderCollapse: (collapse) => <div>收起</div>,
-          // // 渲染高级查询面板显示的按钮
-          // renderSearchButton: (callback) => <div onClick={() => callback()}>高级搜索</div>,
-          // // 高级查询面板查询按钮的插入位置 (defaultItems) => {}
-          // insertSearchButton: null,
-        },
+        this.getGridSearchFormProps(),
       ];
+    }
+
+    getSearchLabelSymbol($search) {
+      const isShowLabelSymbol = !('isShowLabelSymbol' in $search)
+        ? true
+        : !!$search.isShowLabelSymbol;
+      return isShowLabelSymbol ? <span>：</span> : null;
     }
 
     /**
@@ -662,17 +771,28 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         columns
           .filter((t) => '$search' in t && !!t.$search.visible)
           .forEach((t) => {
-            const { $search, ...column } = t;
+            const { $search, $tip, renderTip, ...column } = t;
 
             const searchConfig = this.assignSearchConfig($search, column);
             const type = searchConfig?.type || 'input';
             const dataIndex = searchConfig.dataIndex || t.dataIndex;
             const title = $search.title || t.title;
 
+            let currentTitle = title;
+
+            if ($tip) {
+              currentTitle = renderTip?.($tip) ?? <ColumnTipTitle tip={$tip} title={title} />;
+            }
+
             searchFormGroupData.push({
               key: dataIndex,
               sort: $search.sort,
-              label: <Label {...($search.labelAttrs ?? {})}>{title}：</Label>,
+              label: (
+                <Label {...($search.labelAttrs ?? {})}>
+                  {Util.isFunction(currentTitle) ? currentTitle() : currentTitle}
+                  {this.getSearchLabelSymbol($search)}
+                </Label>
+              ),
               value: ConditionalRender.conditionalRender({
                 conditional: this.hasAuthority ? this.hasAuthority?.(searchConfig.authority) : true,
                 /*Dict.value.SystemAuthoritySwitch.value
@@ -765,21 +885,51 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     }
 
     /**
+     * renderSearchBarCollapseControl
+     */
+    renderSearchBarCollapseControl() {
+      const gridSearchFormGroupParams: any[] = [...this.getGridSearchFormGroupParams()];
+
+      // 如果查询项 > 列数
+      if (
+        gridSearchFormGroupParams[0][0].data.length > gridSearchFormGroupParams[0][0].columnCount
+      ) {
+        return super.renderSearchBarCollapseControl();
+      }
+
+      return null;
+    }
+
+    /**
      * renderSearchForm
      * 渲染Table查询的表单
      * @override
      */
     renderSearchForm() {
-      // @ts-ignore
-      return this.renderGridSearchFormGroup(...this.getGridSearchFormGroupParams());
+      let hasSearch = true;
+
+      if (this.getTableColumnsAll) {
+        hasSearch = this.getTableColumnsAll().some((_column) => {
+          return (
+            '$search' in _column && 'visible' in _column.$search && _column.$search.visible
+            // || !('visible' in _column.$search)
+          );
+        });
+      }
+
+      if (hasSearch) {
+        // @ts-ignore
+        return this.renderGridSearchFormGroup(...this.getGridSearchFormGroupParams());
+      } else return null;
     }
 
-    /***
-     * renderSearchFooterItems
+    /**
+     * renderSearchFormToolBarItems
+     * @description 渲染查询表单的工具栏项
+     * @return {ReactNode []}
      * @param _defaultItems
-     * @return {*}
      */
-    renderSearchFooterItems(_defaultItems) {
+    renderSearchFormToolBarItems(_defaultItems) {
       const defaultItems = [...(_defaultItems || [])];
 
       if (this.hasAdvancedSearch() && this.hasAdvancedSearchPanel && this.state.expand) {
@@ -823,9 +973,73 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         }
       }
 
+      return defaultItems;
+    }
+
+    /**
+     * renderSearchFormToolBarDefaultPanel
+     * @description 渲染查询表单工具栏缺省面板
+     * @return {ReactNode}
+     */
+    renderSearchFormToolBarDefaultPanel() {
+      const { expand = false } = this.state;
+
+      if (expand) {
+        return null;
+      }
+
+      const gridSearchFormGroupParams: any[] = [...this.getGridSearchFormGroupParams()];
+
+      // 如果查询项 > 列数
+      if (
+        gridSearchFormGroupParams[0][0].data.length > gridSearchFormGroupParams[0][0].columnCount
+      ) {
+        gridSearchFormGroupParams[0][0].columnCount = 2;
+
+        const layout = gridSearchFormGroupParams[1].layout;
+
+        if (layout === 'horizontal') {
+          gridSearchFormGroupParams[0][0].colgroup = [, 'auto', , 'auto'];
+        } else if (layout === 'vertical') {
+          gridSearchFormGroupParams[0][0].colgroup = ['auto', 'auto'];
+        }
+
+        gridSearchFormGroupParams[2].rowCount = 1;
+      }
+
+      // @ts-ignore
+      return this.renderGridSearchFormGroup(...gridSearchFormGroupParams);
+    }
+
+    /***
+     * renderSearchFooterItems
+     * @param _defaultItems
+     * @return {*}
+     */
+    renderSearchFooterItems(_defaultItems) {
+      const defaultItems = [...(_defaultItems || [])];
+
       return this.renderSearchFooterItemsImpl(defaultItems).map((t) =>
         '$$typeof' in t ? t : t.value,
       );
+    }
+
+    /**
+     * getSearchFooterItemsEllipsisCount
+     * @description 获取SearchFooterItems省略的个数
+     * @return {Number}
+     */
+    getSearchFooterItemsEllipsisCount() {
+      return 5;
+    }
+
+    /**
+     * isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing
+     * @description 是否折叠后只显示一个操作按钮
+     * @return {boolean}
+     */
+    isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing() {
+      return false;
     }
 
     /**
@@ -834,13 +1048,56 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @return {*}
      */
     renderSearchFooterItemsImpl(defaultItems) {
+      let currentDefaultItems = [...defaultItems];
+
+      let searchFooterItemsEllipsisCount = this.getSearchFooterItemsEllipsisCount() ?? 5;
+      if (searchFooterItemsEllipsisCount <= 0) {
+        searchFooterItemsEllipsisCount = 5;
+      }
+
+      if (defaultItems.length >= searchFooterItemsEllipsisCount) {
+        const showOnlyOneDisplay = this.isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing();
+        const displayEndIndex = showOnlyOneDisplay ? 1 : searchFooterItemsEllipsisCount - 1;
+        const ellipseStartIndex = showOnlyOneDisplay ? 1 : searchFooterItemsEllipsisCount - 1;
+
+        if (!!defaultItems.length && defaultItems.length >= searchFooterItemsEllipsisCount) {
+          currentDefaultItems = [
+            ...defaultItems.slice(0, displayEndIndex),
+            {
+              key: 'menu',
+              value: (
+                <Dropdown
+                  key="menu"
+                  menu={{
+                    items: defaultItems.slice(ellipseStartIndex).map(({ key, value }) => ({
+                      key: key,
+                      label: value,
+                    })),
+                  }}
+                >
+                  <Button>
+                    <EllipsisOutlined />
+                  </Button>
+                </Dropdown>
+              ),
+            },
+          ];
+        }
+      }
+
       return [
-        ...defaultItems,
+        ...currentDefaultItems,
+        this.renderTableReload && !!this.renderTableReload?.() && (
+          <div className={`${_selectorPrefix}-headeritem`}>{this.renderTableReload()}</div>
+        ),
         this.renderTableDensitySetting && !!this.renderTableDensitySetting?.() && (
           <div className={`${_selectorPrefix}-headeritem`}>{this.renderTableDensitySetting()}</div>
         ),
         this.renderColumnSetting && !!this.renderColumnSetting?.() && (
           <div className={`${_selectorPrefix}-headeritem`}>{this.renderColumnSetting()}</div>
+        ),
+        this.renderExportExcel && !!this.renderExportExcel?.() && (
+          <div className={`${_selectorPrefix}-headeritem`}>{this.renderExportExcel()}</div>
         ),
       ].filter((t) => !!t);
     }
@@ -854,410 +1111,27 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @param dataIndex
      */
     renderGridSearchFormGroupDataItem(type, { searchConfig, column, dataIndex }) {
-      // const renderSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}FormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderMultiSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}MulitFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderCheckAllMultiSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}CheckAllMulitFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      //
-      // const renderAutoCompleteSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}FormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderAutoCompleteSelectMulti = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}MulitFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderAutoCompleteSelectCheckAllMulti = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}CheckAllMulitFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      //
-      // const renderRadioHorizontal = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}HorizontalFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderRadioButton = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}ButtonFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderRadioSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}SelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderRadioCustom = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}CustomFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     >
-      //       {(data) => searchConfig?.renderChildren?.(data)}
-      //     </Component>
-      //   );
-      // };
-      //
-      // const renderCheckBoxHorizontal = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}HorizontalFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderCheckBoxCheckAllHorizontal = ({ searchConfig, dataIndex }) => {
-      //   const Component =
-      //     FormItemGeneratorToDict[`${searchConfig.dictName}CheckAllHorizontalFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderCheckboxSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}SelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderCheckBoxCheckAllSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}CheckAllSelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderCheckBoxCustom = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}CustomFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     >
-      //       {(dataSource) => searchConfig?.renderChildren?.(dataSource)}
-      //     </Component>
-      //   );
-      // };
-      // const renderCheckBoxCheckAllCustom = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}CheckAllCustomFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     >
-      //       {(dataSource) => searchConfig?.renderChildren?.(dataSource)}
-      //     </Component>
-      //   );
-      // };
-      //
-      // const renderTransferSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}SelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      //
-      // const renderTableSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}SelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderTableMultiSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}MulitSelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderTablePagingSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component =
-      //     FormItemGeneratorToDict[`${searchConfig.dictName}PaginationSelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderTablePagingMultiSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component =
-      //     FormItemGeneratorToDict[`${searchConfig.dictName}PaginationMulitSelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      //
-      // const renderListSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}SelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderListMultiSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}MulitSelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderListPagingSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component =
-      //     FormItemGeneratorToDict[`${searchConfig.dictName}PaginationSelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderListPagingMultiSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component =
-      //     FormItemGeneratorToDict[`${searchConfig.dictName}PaginationMulitSelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      //
-      // const renderTreeSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}FormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderTreeMultiSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}MulitFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderTreeSelectLeaf = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}LeafFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderTreeMultiSelectLeaf = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}LeafMulitFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      //
-      // const renderCascaderSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}FormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderCascaderMultiSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}MulitFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderCascaderSelectLeaf = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}LeafFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderCascaderMultiSelectLeaf = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}LeafMulitFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const InputComponent = InputHOC(Input);
-      // const TextAreaComponent = InputHOC(Input.TextArea);
-      // const InputNumberComponent = InputHOC(InputNumber);
-      // const InputNumberDecimal1Component = InputHOC(InputNumberDecimal1);
-      // const InputNumberDecimal2Component = InputHOC(InputNumberDecimal2);
-      // const InputNumberIntegerComponent = InputHOC(InputNumberInteger);
-
       const renderInput = ({ searchConfig, dataIndex }) => {
         return (
           <Input
             value={this.state[dataIndex]}
             onChange={(e) => this.onInputChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
       const renderTextArea = ({ searchConfig, dataIndex }) => {
         return (
-          <Input.TextArea
+          <TextArea
             value={this.state[dataIndex]}
             onChange={(e) => this.onInputChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1266,7 +1140,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <InputNumber
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1275,7 +1152,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <InputNumberDecimal1
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1284,7 +1164,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <InputNumberDecimal2
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1293,7 +1176,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <InputNumberInteger
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1306,7 +1192,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                 [dataIndex]: dayjs ? dayjs : null,
               });
             }}
-            {...(searchConfig.props ?? {})}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1319,7 +1207,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                 [dataIndex]: dayjs ? dayjs : null,
               });
             }}
-            {...(searchConfig.props ?? {})}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1332,7 +1222,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
             onChange={(dayjs) => {
               this.onDateTimeRangeChange([startName, endName], dayjs);
             }}
-            {...(searchConfig.props ?? {})}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1341,7 +1233,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <Slider
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1351,7 +1245,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
             range
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1360,7 +1256,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <Rate
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1369,7 +1267,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <Switch
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1377,7 +1277,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         return searchConfig?.render?.({ searchConfig, column, dataIndex });
       };
       const renderDict = ({ searchConfig, column, dataIndex }) => {
-        const Component = FormItemGeneratorToDict[`${searchConfig.dictName}FormItem`];
+        const Component = FieldGeneratorToDict.Components[searchConfig.dictName];
 
         // popUp控件的缺省popps
         const popUpDefaultProps = {
@@ -1389,23 +1289,29 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           },
         };
 
-        if (searchConfig.dictName.indexOf('CustomFormItem') !== -1) {
-          return (
-            <Component
-              value={this.state[dataIndex]}
-              onChange={(e) => this.onSelectChange(dataIndex, e)}
-              {...Object.assign(popUpDefaultProps, searchConfig.props ?? {})}
-            >
-              {(data) => searchConfig?.renderChildren?.(data)}
-            </Component>
-          );
-        }
+        // if (searchConfig.dictName.indexOf('CustomFormItem') !== -1) {
+        //   return (
+        //     <Component
+        //       value={this.state[dataIndex]}
+        //       onChange={(e) => this.onSelectChange(dataIndex, e)}
+        //       {...Object.assign(popUpDefaultProps, searchConfig.props ?? {})}
+        //     >
+        //       {(data) => searchConfig?.renderChildren?.(data)}
+        //     </Component>
+        //   );
+        // }
 
         return (
           <Component
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...Object.assign(popUpDefaultProps, searchConfig.props ?? {})}
+            {...Object.assign(
+              {
+                placeholder: searchConfig.title ?? column.title,
+              },
+              popUpDefaultProps,
+              searchConfig.props ?? {},
+            )}
           />
         );
       };
@@ -1549,7 +1455,11 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       );
 
       // 标准的查询面板
-      const StandardSearchPanel = renderGridSearchFormGroup(group, defaultProps);
+      const StandardSearchPanel = (
+        <ConfigProvider.Context.Consumer>
+          {({ media }) => renderGridSearchFormGroup(group, defaultProps, media)}
+        </ConfigProvider.Context.Consumer>
+      );
 
       if (
         (this.advancedSearchConfig && this.advancedSearchConfig.rowCount !== 'auto') ||
@@ -1619,12 +1529,17 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
             this.state.advancedSearchPanelCollapse;
 
           return (
-            <div className={`${_selectorPrefix}-gridsearchformgroupwrap`}>
-              {renderGridSearchFormGroup(
-                // @ts-ignore
-                gData,
-                defaultProps,
-              )}
+            <div className={`${_selectorPrefix}-grid-search-form-group-wrap`}>
+              <ConfigProvider.Context.Consumer>
+                {({ media }) =>
+                  renderGridSearchFormGroup(
+                    // @ts-ignore
+                    gData,
+                    defaultProps,
+                    media,
+                  )
+                }
+              </ConfigProvider.Context.Consumer>
               <AdvancedSearchPanel
                 groupData={group}
                 tableGridLayoutConfig={defaultProps}
@@ -1649,7 +1564,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                     advancedSearchPanelCollapse: collapse,
                   })
                 }
-              />
+              >
+                {(args) => this.renderAdvancedSearchPanel(args)}
+              </AdvancedSearchPanel>
             </div>
           );
         }
@@ -1658,9 +1575,16 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       this.hasAdvancedSearchPanel = false;
 
       return (
-        <div className={`${_selectorPrefix}-gridsearchformgroupwrap`}>{StandardSearchPanel}</div>
+        <div className={`${_selectorPrefix}-grid-search-form-group-wrap`}>
+          {StandardSearchPanel}
+        </div>
       );
     }
+
+    renderAdvancedSearchPanel(params) {
+      return null;
+    }
+    // showStrategy
 
     /**
      * renderOptionColumn

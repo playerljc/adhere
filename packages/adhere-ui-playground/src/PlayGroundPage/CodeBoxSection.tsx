@@ -1,13 +1,15 @@
-import React, { FC, memo } from 'react';
+import React, { memo } from 'react';
 
 import CodeBoxPanel from '../CodeBoxPanel';
-import { CodeBoxProps } from '../types';
+import type { CodeBoxProps } from '../types';
 
 /**
  * CodeBoxSection
  * @param props
  * @constructor
  */
-const CodeBoxSection: FC<CodeBoxProps> = (props) => <CodeBoxPanel {...props} />;
+const CodeBoxSection = memo<CodeBoxProps>((props) => <CodeBoxPanel {...props} />);
 
-export default memo(CodeBoxSection);
+CodeBoxSection.displayName = 'CodeBoxSection';
+
+export default CodeBoxSection;

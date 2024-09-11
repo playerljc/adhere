@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["footer/index.js"],"sourcesContent":["import Footer from './Footer';\nexport default Footer;"],"names":["Footer"],"mappings":"OAAOA,WAAY,0BACJA"}

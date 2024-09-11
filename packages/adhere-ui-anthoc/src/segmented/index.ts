@@ -1,5 +1,3 @@
-import { Segmented } from 'antd';
+import Segmented from './Segmented';
 
-import { createFactory } from '../util';
-
-export default createFactory(Segmented, {});
+export default Segmented;

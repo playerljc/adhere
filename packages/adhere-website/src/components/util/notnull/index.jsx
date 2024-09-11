@@ -1,13 +1,16 @@
-import { Button } from 'antd';
-import React from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
 
-import { NotNull } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
   FunctionPropsSection,
   Section,
 } from '@/lib/PlaygroundPage';
+
+import P1 from './examples/p1';
+import P2 from './examples/p2';
 
 export default () => {
   function boxPanelConfig() {
@@ -23,49 +26,9 @@ export default () => {
             info: '对一个null值进行监控',
           },
         },
-        codeText: `
-  import { NotNull } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      const obj = NotNull(null);
-      obj.a = {
-        b: {
-          c: {},
-        },
-      };
-      console.log(obj);
-      console.log(obj.a);
-      console.log(obj.a.b);
-      console.log(obj.a.b.c);
-      console.log(obj.a.b.c.d.e);
-    }}
-  >
-    监控并访问
-  </Button>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              const obj = NotNull(null);
-              obj.a = {
-                b: {
-                  c: {},
-                },
-              };
-              console.log(obj);
-              console.log(obj.a);
-              console.log(obj.a.b);
-              console.log(obj.a.b.c);
-              console.log(obj.a.b.c.d.e);
-            }}
-          >
-            监控并访问
-          </Button>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -78,53 +41,9 @@ export default () => {
             info: '对一个Array值进行监控',
           },
         },
-        codeText: `
-  import { NotNull } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      const arr = NotNull([]);
-      console.log(arr[5].a.b.c);
-
-      arr[5] = {
-        a: {
-          b: {
-            c: {},
-          },
-        },
-      };
-
-      console.log(arr[5]);
-      console.log(arr.length);
-    }}
-  >
-    监控并访问
-  </Button>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              const arr = NotNull([]);
-              console.log(arr[5].a.b.c);
-
-              arr[5] = {
-                a: {
-                  b: {
-                    c: {},
-                  },
-                },
-              };
-
-              console.log(arr[5]);
-              console.log(arr.length);
-            }}
-          >
-            监控并访问
-          </Button>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
     ];
   }

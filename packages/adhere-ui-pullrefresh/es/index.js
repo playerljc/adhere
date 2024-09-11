@@ -1,2 +1,2 @@
-import PullRefresh from"./pullrefresh";export default PullRefresh;
+import PullRefresh from"./PullRefresh";export default PullRefresh;
 //# sourceMappingURL=index.js.map

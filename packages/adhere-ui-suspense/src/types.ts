@@ -8,6 +8,8 @@ export interface ISuspense {
   isFirst: boolean;
   // 第一次加载
   isFirstLoading: boolean;
+  onFirstFetchDataBefore?: () => Promise<any>;
+  onFirstFetchDataAfter?: (res?: any) => Promise<any>;
 }
 
 export interface SuspenseProps {
@@ -22,13 +24,13 @@ export interface SuspenseState {}
 
 export interface ISuspenseSync {
   isLoading: boolean;
-  reset: Function;
+  reset: () => Promise<any>;
 }
 
 export interface SuspenseSyncProps extends SuspenseProps {
   data: any;
   isEmpty: () => boolean;
-  renderEmpty?: Function;
+  renderEmpty?: () => ReactNode;
   children?: any;
 }
 
@@ -38,9 +40,9 @@ export interface SuspenseSyncState extends SuspenseState {
 
 export interface SuspenseASyncProps extends SuspenseProps {
   isEmpty: () => boolean;
-  renderEmpty?: Function;
-  children?: Function;
-  fetchData?: Function;
+  renderEmpty?: () => ReactNode;
+  children?: ReactNode;
+  fetchData?: (params?: any) => Promise<any>;
 }
 
 export interface SuspenseASyncState extends SuspenseState {
@@ -56,5 +58,5 @@ export interface showLoading {
 }
 
 export interface renderInner {
-  (): ReactElement | null;
+  (): ReactNode;
 }

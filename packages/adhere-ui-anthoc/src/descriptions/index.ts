@@ -1,5 +1,3 @@
-import { Descriptions } from 'antd';
+import Descriptions from './Descriptions';
 
-import { createFactory } from '../util';
-
-export default createFactory(Descriptions, {});
+export default Descriptions;

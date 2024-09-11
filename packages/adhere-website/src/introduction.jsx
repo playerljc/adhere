@@ -2,7 +2,7 @@ import { Typography } from 'antd';
 import React from 'react';
 
 import Playground from '@/lib/Playground';
-import PlayGroundMulit from '@/lib/PlaygroundMulit';
+import PlayGroundMulti from '@/lib/PlaygroundMulti';
 import ScrollFooterPanel from '@/lib/ScrollFooterPanel';
 
 import styles from './introduction.less';
@@ -91,7 +91,7 @@ class Introduction extends React.Component {
                 注意：使用umd的时候不能使用babel-plugin-import插件，webpack的alias中不能进行vue的设置
               </p>
             </Paragraph>
-            <PlayGroundMulit
+            <PlayGroundMulti
               mode="code"
               scope={{ React }}
               expand

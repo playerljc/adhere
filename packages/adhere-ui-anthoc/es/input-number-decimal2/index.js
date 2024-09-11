@@ -1,2 +1,2 @@
-import _InputNumber from"antd/es/input-number";import{createFactory}from"../util";export default createFactory(_InputNumber,{precision:2});
+import InputNumberDecimal2 from"./InputNumberDecimal2";export default InputNumberDecimal2;
 //# sourceMappingURL=index.js.map

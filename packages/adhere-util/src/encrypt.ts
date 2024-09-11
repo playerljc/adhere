@@ -24,13 +24,14 @@ function hashEncrypt(type: string[], value: string = '') {
  * @param _type
  * @param _pwd
  * @param _value
+ * @param options
  * @return 加密的结果字符串
  */
-function symmetricEncrypt(_type: string, _pwd: string, _value: string) {
+function symmetricEncrypt(_type: string, _pwd: string, _value: string, options?: any) {
   const value = (_value || '').trim();
   const pwd = (_pwd || '').trim();
   const type = (_type || '').trim();
-  return CryptoJS[type].encrypt(value, pwd);
+  return CryptoJS[type].encrypt(value, pwd, options).toString();
 }
 
 /**
@@ -40,12 +41,13 @@ function symmetricEncrypt(_type: string, _pwd: string, _value: string) {
  * @param _type
  * @param _pwd
  * @param _value
+ * @param options
  */
-function symmetricDecrypt(_type: string, _pwd: string, _value: string) {
+function symmetricDecrypt(_type: string, _pwd: string, _value: string, options?: any) {
   const value = (_value || '').trim();
   const pwd = (_pwd || '').trim();
   const type = (_type || '').trim();
-  return CryptoJS[type].decrypt(value, pwd).toString(CryptoJS.enc.Utf8);
+  return CryptoJS[type].decrypt(value, pwd, options).toString(CryptoJS.enc.Utf8);
 }
 
 const EncryptUtil = {
@@ -240,65 +242,70 @@ const EncryptUtil = {
    * @description 对称加密算法
    * @param _value 加密的字符串
    * @param _pwd 密钥
+   * @param options
    * @return 加密后的字符串
    */
-  symmetricEncryptToAES(_value: string = '', _pwd: string = '') {
+  symmetricEncryptToAES(_value: string = '', _pwd: string = '', options?: any) {
     const value = (_value || '').trim();
     const pwd = (_pwd || '').trim();
 
-    return symmetricEncrypt('AES', pwd, value);
+    return symmetricEncrypt('AES', pwd, value, options);
   },
   /**
    * symmetricEncryptToDES
    * @description 对称加密算法
    * @param _value 加密的字符串
    * @param _pwd 密钥
+   * @param options
    * @return 加密后的字符串
    */
-  symmetricEncryptToDES(_value: string = '', _pwd: string = '') {
+  symmetricEncryptToDES(_value: string = '', _pwd: string = '', options?: any) {
     const value = (_value || '').trim();
     const pwd = (_pwd || '').trim();
 
-    return symmetricEncrypt('DES', pwd, value);
+    return symmetricEncrypt('DES', pwd, value, options);
   },
   /**
    * symmetricEncryptToRC4
    * @description 对称加密算法
    * @param _value 加密的字符串
    * @param _pwd 密钥
+   * @param options
    * @return 加密后的字符串
    */
-  symmetricEncryptToRC4(_value: string = '', _pwd: string = '') {
+  symmetricEncryptToRC4(_value: string = '', _pwd: string = '', options?: any) {
     const value = (_value || '').trim();
     const pwd = (_pwd || '').trim();
 
-    return symmetricEncrypt('RC4', pwd, value);
+    return symmetricEncrypt('RC4', pwd, value, options);
   },
   /**
    * symmetricEncryptToRabbit
    * @description 对称加密算法
    * @param _value 加密的字符串
    * @param _pwd 密钥
+   * @param options
    * @return 加密后的字符串
    */
-  symmetricEncryptToRabbit(_value: string = '', _pwd: string = '') {
+  symmetricEncryptToRabbit(_value: string = '', _pwd: string = '', options?: any) {
     const value = (_value || '').trim();
     const pwd = (_pwd || '').trim();
 
-    return symmetricEncrypt('Rabbit', pwd, value);
+    return symmetricEncrypt('Rabbit', pwd, value, options);
   },
   /**
    * symmetricEncryptToTripleDes
    * @description 对称加密算法
    * @param _value 加密的字符串
    * @param _pwd 密钥
+   * @param options
    * @return 加密后的字符串
    */
-  symmetricEncryptToTripleDes(_value: string = '', _pwd: string = '') {
+  symmetricEncryptToTripleDes(_value: string = '', _pwd: string = '', options?: any) {
     const value = (_value || '').trim();
     const pwd = (_pwd || '').trim();
 
-    return symmetricEncrypt('TripleDes', pwd, value);
+    return symmetricEncrypt('TripleDes', pwd, value, options);
   },
 
   /**
@@ -306,65 +313,70 @@ const EncryptUtil = {
    * @description 对称解密算法
    * @param _value 加密的字符串
    * @param _pwd 密钥
+   * @param options
    * @return 解密后的字符串
    */
-  symmetricDecryptToAES(_value: string = '', _pwd: string = '') {
+  symmetricDecryptToAES(_value: string = '', _pwd: string = '', options?: any) {
     const value = (_value || '').trim();
     const pwd = (_pwd || '').trim();
 
-    return symmetricDecrypt('AES', pwd, value);
+    return symmetricDecrypt('AES', pwd, value, options);
   },
   /**
    * symmetricDecryptToDES
    * @description 对称解密算法
    * @param _value 加密的字符串
    * @param _pwd 密钥
+   * @param options
    * @return 解密后的字符串
    */
-  symmetricDecryptToDES(_value: string = '', _pwd: string = '') {
+  symmetricDecryptToDES(_value: string = '', _pwd: string = '', options?: any) {
     const value = (_value || '').trim();
     const pwd = (_pwd || '').trim();
 
-    return symmetricDecrypt('DES', pwd, value);
+    return symmetricDecrypt('DES', pwd, value, options);
   },
   /**
    * symmetricDecryptToRC4
    * @description 对称解密算法
    * @param _value 加密的字符串
    * @param _pwd 密钥
+   * @param options
    * @return 解密后的字符串
    */
-  symmetricDecryptToRC4(_value: string = '', _pwd: string = '') {
+  symmetricDecryptToRC4(_value: string = '', _pwd: string = '', options?: any) {
     const value = (_value || '').trim();
     const pwd = (_pwd || '').trim();
 
-    return symmetricDecrypt('RC4', pwd, value);
+    return symmetricDecrypt('RC4', pwd, value, options);
   },
   /**
    * symmetricDecryptToRabbit
    * @description 对称解密算法
    * @param _value 加密的字符串
    * @param _pwd 密钥
+   * @param options
    * @return 解密后的字符串
    */
-  symmetricDecryptToRabbit(_value: string = '', _pwd: string = '') {
+  symmetricDecryptToRabbit(_value: string = '', _pwd: string = '', options?: any) {
     const value = (_value || '').trim();
     const pwd = (_pwd || '').trim();
 
-    return symmetricDecrypt('Rabbit', pwd, value);
+    return symmetricDecrypt('Rabbit', pwd, value, options);
   },
   /**
    * symmetricDecryptToTripleDes
    * @description 对称解密算法
    * @param _value 加密的字符串
    * @param _pwd 密钥
+   * @param options
    * @return 解密后的字符串
    */
-  symmetricDecryptToTripleDes(_value: string = '', _pwd: string = '') {
+  symmetricDecryptToTripleDes(_value: string = '', _pwd: string = '', options?: any) {
     const value = (_value || '').trim();
     const pwd = (_pwd || '').trim();
 
-    return symmetricDecrypt('TripleDes', pwd, value);
+    return symmetricDecrypt('TripleDes', pwd, value, options);
   },
   /**
    * dataUrlToBlob

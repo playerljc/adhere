@@ -1,18 +1,28 @@
 import { useUpdateEffect } from 'ahooks';
-import { App, ConfigProvider } from 'antd';
+import { App } from 'antd';
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import {
+  StyleProvider,
+  legacyLogicalPropertiesTransformer,
+  px2remTransformer,
+} from '@ant-design/cssinjs';
+import {
+  AdapterScreen,
   ConfigProvider as AdhereConfigProvider,
+  ContextMenu,
   DateDisplay,
   Dict,
   Emitter,
   MessageDialog,
+  Notification,
+  Popup,
   Preferences,
   Resource,
   Util,
 } from '@baifendian/adhere';
+import { ConfigProvider } from '@baifendian/adhere-ui-anthoc';
 
 import DictConfig from '@/config/dict/dict.config';
 import Router from '@/lib/Router';
@@ -22,24 +32,23 @@ import SelfUtil from './util';
 
 import 'nprogress/nprogress.css';
 
+import '@baifendian/adhere-ui-anthoc/lib/index.less';
 import '@baifendian/adhere/lib/css.less';
 
-// import '@baifendian/adhere/lib/index.less';
 import styles from './index.less';
+
+if (SelfUtil.isUseMedia()) {
+  // 适配REM
+  AdapterScreen.flexible();
+
+  // 适配minSize
+  AdapterScreen.setPageMinSizeToCSS(document.getElementById('app'));
+}
 
 let root;
 let RouterConfig;
 let lang;
 let direction;
-
-/**
- * initMessageDialog
- * @description 初始化messageDialog
- * @param params configProviderProps
- */
-function initMessageDialog(params) {
-  MessageDialog.setAntdConfigProviderProps(params);
-}
 
 /**
  * Application
@@ -51,7 +60,12 @@ function Application() {
 
   const colorPrimary = themeToken.getCommonPrimaryColor();
 
-  const configProviderProps = {
+  const media = {
+    isUseMedia: SelfUtil.isUseMedia(),
+    designWidth: 192,
+  };
+
+  const antDesignConfigProviderProps = {
     direction,
     theme: {
       token: {
@@ -63,8 +77,77 @@ function Application() {
     locale: Resource.Dict.value.LocalsAntd.value[lang],
   };
 
+  const styleProviderProps = {
+    transformers: [
+      legacyLogicalPropertiesTransformer,
+      media.isUseMedia &&
+        px2remTransformer({
+          rootValue: 192,
+        }),
+    ].filter((c) => !!c),
+  };
+
+  const adhereProviderProps = {
+    theme: {
+      colorPrimary,
+      colorTextBase: themeValue.mapToken.colorTextBase,
+      colorBgBase: themeValue.mapToken.colorBgBase,
+      colorBorderBase: themeValue.mapToken.colorBorder,
+      colorSplitBase: themeValue.mapToken.colorSplit,
+      fontSizeBase: `${Util.pxToRem(themeValue.mapToken.fontSize, media.designWidth, media)}`,
+      borderRadiusBase: `${Util.pxToRem(
+        themeValue.mapToken.borderRadius,
+        media.designWidth,
+        media,
+      )}`,
+      lineWidth: `${Util.pxToRem(themeValue.mapToken.lineWidth, media.designWidth, media)}`,
+      lintType: themeValue.mapToken.lineType,
+    },
+    intl: {
+      lang,
+      locales: Array.from(Object.values(Dict.value.SystemLang.value)).reduce((pre, cur) => {
+        pre[cur.code] = cur.module;
+        return pre;
+      }, {}),
+    },
+    onIntlInit: () => {
+      Router().then((routerConfig) => {
+        RouterConfig = routerConfig;
+        render();
+      });
+    },
+    media,
+  };
+
+  function renderToFragmentWrapper(children) {
+    return (
+      <ConfigProvider {...antDesignConfigProviderProps}>
+        <StyleProvider {...styleProviderProps}>
+          <AdhereConfigProvider {...adhereProviderProps} onIntlInit={() => {}} isUseWrapper={false}>
+            {children}
+          </AdhereConfigProvider>
+        </StyleProvider>
+      </ConfigProvider>
+    );
+  }
+
+  function renderToWrapper(children) {
+    return (
+      <ConfigProvider {...antDesignConfigProviderProps}>
+        <StyleProvider {...styleProviderProps}>
+          <App className={styles.App}>
+            <AdhereConfigProvider {...adhereProviderProps}>{children}</AdhereConfigProvider>
+          </App>
+        </StyleProvider>
+      </ConfigProvider>
+    );
+  }
+
   useUpdateEffect(() => {
-    initMessageDialog({ ...configProviderProps });
+    MessageDialog.setRenderToWrapper(renderToFragmentWrapper);
+    Popup.setRenderToWrapper(renderToFragmentWrapper);
+    ContextMenu.setRenderToWrapper(renderToFragmentWrapper);
+    Notification.setRenderToWrapper(renderToFragmentWrapper);
   });
 
   useEffect(() => {
@@ -79,40 +162,7 @@ function Application() {
     };
   }, []);
 
-  return (
-    <ConfigProvider {...configProviderProps}>
-      <App className={styles.App}>
-        <AdhereConfigProvider
-          theme={{
-            colorPrimary,
-            colorTextBase: themeValue.mapToken.colorTextBase,
-            colorBgBase: themeValue.mapToken.colorBgBase,
-            colorBorderBase: themeValue.mapToken.colorBorder,
-            colorSplitBase: themeValue.mapToken.colorSplit,
-            fontSizeBase: `${themeValue.mapToken.fontSize}px`,
-            borderRadiusBase: `${themeValue.mapToken.borderRadius}px`,
-            lineWidth: `${themeValue.mapToken.lineWidth}px`,
-            lintType: themeValue.mapToken.lineType,
-          }}
-          intl={{
-            lang,
-            locales: Array.from(Object.values(Dict.value.SystemLang.value)).reduce((pre, cur) => {
-              pre[cur.code] = cur.module;
-              return pre;
-            }, {}),
-          }}
-          onIntlInit={() => {
-            Router().then((routerConfig) => {
-              RouterConfig = routerConfig;
-              render();
-            });
-          }}
-        >
-          {() => RouterConfig}
-        </AdhereConfigProvider>
-      </App>
-    </ConfigProvider>
-  );
+  return renderToWrapper(() => RouterConfig);
 }
 
 /**

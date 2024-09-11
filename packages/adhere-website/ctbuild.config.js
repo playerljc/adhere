@@ -25,8 +25,6 @@ module.exports = {
   getConfig({ webpack, webpackConfig, plugins }) {
     const publicPath = process.env.publicPath || '/';
 
-    console.log('publicPath', publicPath);
-
     // TODO:umd  umd时候需要打开
     // webpackConfig.externals = {
     //   '@baifendian/adhere': "adhere",
@@ -51,6 +49,10 @@ module.exports = {
     webpackConfig.output.filename = chunkNameJs;
 
     webpackConfig.output.chunkFilename = webpackConfig.output.filename;
+
+    webpackConfig.externals = {
+      '@/constent': 'Constent',
+    };
 
     // 这块只有需要主题切换的时候才能用到
     const MiniCssExtractPluginIndex = isProd(webpackConfig.mode) ? 3 : 2;
@@ -82,11 +84,16 @@ module.exports = {
           environment: JSON.stringify(process.env.environment),
           publicPath: JSON.stringify(process.env.publicPath),
           router: JSON.stringify(process.env.router),
+          media: JSON.stringify(process.env.media),
         },
       }),
     );
 
     webpackConfig.module.rules[2].include.push(/ol.css/, /swiper.css/, /nprogress.css/);
+
+    webpackConfig.module.rules[3].use.push({
+      loader: '@ctsj/less-media-query-loader',
+    });
 
     // TODO:umd umd的时候需要注释掉
     // babel-plugin-import的配置
@@ -110,37 +117,48 @@ module.exports = {
     });
 
     if (babelLoaderConfig) {
-      babelLoaderConfig.options.plugins.push([
-        'import',
-        {
-          libraryName: '@baifendian/adhere',
-          libraryDirectory: 'es',
-          transformToDefaultImport: true,
-          style: true,
-          // styleLibraryDirectory: 'es'
-        },
-        'adhere',
-      ]);
-
-      babelLoaderConfig.options.plugins.push([
-        'import',
-        {
-          libraryName: '@baifendian/adhere-ui-anthoc',
-          libraryDirectory: 'es',
-          style: false,
-        },
-        'adhere-ui-anthoc',
-      ]);
-
-      babelLoaderConfig.options.plugins.push([
-        'import',
-        {
-          libraryName: '@baifendian/adhere-ui-richtext-sandbox',
-          libraryDirectory: 'es',
-          style: true,
-        },
-        'adhere-ui-richtext-sandbox',
-      ]);
+      babelLoaderConfig.options.plugins.push(
+        [
+          'import',
+          {
+            libraryName: '@baifendian/adhere',
+            libraryDirectory: 'es',
+            transformToDefaultImport: true,
+            style: true,
+          },
+          'adhere',
+        ],
+        [
+          'import',
+          {
+            libraryName: '@baifendian/adhere-ui-anthoc',
+            libraryDirectory: 'es',
+            transformToDefaultImport: true,
+            style: true,
+          },
+          'adhere-ui-anthoc',
+        ],
+        [
+          'import',
+          {
+            libraryName: '@baifendian/adhere-ui-richtext-sandbox',
+            libraryDirectory: 'es',
+            transformToDefaultImport: true,
+            style: true,
+          },
+          'adhere-ui-richtext-sandbox',
+        ],
+        [
+          'import',
+          {
+            libraryName: '@ant-design/icons',
+            libraryDirectory: 'es/icons',
+            camel2DashComponentName: false,
+            style: false,
+          },
+          '@ant-design/icons',
+        ],
+      );
     }
 
     if (webpackConfig.mode === 'production') {

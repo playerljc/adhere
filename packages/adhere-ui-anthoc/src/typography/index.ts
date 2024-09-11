@@ -1,5 +1,3 @@
-import { Typography } from 'antd';
+import Typography from './Typography';
 
-import { createFactory } from '../util';
-
-export default createFactory(Typography, {});
+export default Typography;

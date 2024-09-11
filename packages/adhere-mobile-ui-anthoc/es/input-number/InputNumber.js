@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var r,n=1,e=arguments.length;n<e;n++)for(var a in r=arguments[n])Object.prototype.hasOwnProperty.call(r,a)&&(t[a]=r[a]);return t}).apply(this,arguments)};import Input from"../input";import{createFactory}from"../util";var InputNumberHOC=createFactory(Input,{},function(t){return __assign(__assign({},t),{type:"number"})});InputNumberHOC.displayName="InputNumber";export default InputNumberHOC;
+//# sourceMappingURL=InputNumber.js.map

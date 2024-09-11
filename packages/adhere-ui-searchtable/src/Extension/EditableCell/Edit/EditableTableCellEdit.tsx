@@ -1,10 +1,11 @@
 import { Form } from 'antd';
 import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import type { FC, ReactNode } from 'react';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import Util from '@baifendian/adhere-util';
 
 import type SearchTable from '../../../SearchTable';
 import { SearchTableContext, selectorPrefix } from '../../../SearchTable';
@@ -116,17 +117,19 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
   }
 
   function renderFormItem() {
-    const formItemNode = FormItemGenerator.render({
+    const childrenProps = Util.isFunction(props.editableConfig.props)
+      ? (props.editableConfig.props as Function)({ record, dataIndex, rowIndex }) ?? {}
+      : props.editableConfig.props ?? {};
+
+    return FormItemGenerator.render({
       type,
-      props: { autoFocus: !useKeepEdit, ...props.editableConfig.props },
+      props: { autoFocus: !useKeepEdit, ...childrenProps },
       dictName: props.editableConfig.dictName,
-      renderChildren: props.editableConfig.renderChildren,
+      // renderChildren: props.editableConfig.renderChildren,
       form: context?.editable?.tableEditable?.form,
       dataIndex,
       rowIndex,
-    });
-
-    return formItemNode; /*render
+    }); /*render
       ? render({
           value: record?.[dataIndex as string],
           record,
@@ -137,6 +140,19 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
         })
       : formItemNode;*/
   }
+
+  const targetRules = useMemo(() => {
+    if (Util.isFunction(rules)) {
+      return (rules as Function)({
+        record,
+        value,
+        rowIndex,
+        dataIndex,
+      });
+    }
+
+    return rules;
+  }, [rules, record, value, rowIndex, dataIndex]);
 
   useEffect(() => {
     context?.editable?.tableEditable?.form?.setFieldValue(
@@ -163,12 +179,12 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
   // }, [record?.[dataIndex as string]]);
 
   return (
-    <div className={`${selectorPrefix}-editablecell-edit`}>
-      <div className={`${selectorPrefix}-editablecell-edit-inner`}>
+    <div className={`${selectorPrefix}-editable-cell-edit`}>
+      <div className={`${selectorPrefix}-editable-cell-edit-inner`}>
         <Form.Item
           // initialValue={record[dataIndex as string]}
           name={nameItemPath}
-          rules={rules}
+          rules={targetRules}
           {...(formItemProps ?? {})}
         >
           {type !== 'custom'
@@ -185,10 +201,10 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
 
       <ConditionalRender conditional={!!useTrigger && !useKeepEdit}>
         {() => (
-          <div className={`${selectorPrefix}-editablecell-edit-trigger`}>
-            <div className={`${selectorPrefix}-editablecell-edit-trigger-inner`}>
+          <div className={`${selectorPrefix}-editable-cell-edit-trigger`}>
+            <div className={`${selectorPrefix}-editable-cell-edit-trigger-inner`}>
               <div
-                className={`${selectorPrefix}-editablecell-edit-trigger-save`}
+                className={`${selectorPrefix}-editable-cell-edit-trigger-save`}
                 onClick={onSaveTrigger}
               >
                 {!!renderSaveTrigger &&
@@ -202,7 +218,7 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
               </div>
 
               <div
-                className={`${selectorPrefix}-editablecell-edit-trigger-cancel`}
+                className={`${selectorPrefix}-editable-cell-edit-trigger-cancel`}
                 onClick={onCancelTrigger}
               >
                 {!!renderCancelTrigger &&
@@ -221,5 +237,7 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
     </div>
   );
 };
+
+EditableTableCellEdit.displayName = 'EditableTableCellEdit';
 
 export default EditableTableCellEdit;

@@ -151,4 +151,6 @@ const EditableTableControl: FC<EditorTableControlProps> = ({
   );
 };
 
+EditableTableControl.displayName = 'EditableTableControl';
+
 export default EditableTableControl;

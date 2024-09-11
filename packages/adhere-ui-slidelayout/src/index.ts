@@ -1,3 +1,3 @@
-import SlideLayout from './slidelayout';
+import SlideLayout from './SlideLayout';
 
 export default SlideLayout;

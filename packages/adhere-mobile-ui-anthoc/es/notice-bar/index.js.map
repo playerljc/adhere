@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["notice-bar/index.js"],"sourcesContent":["import NoticeBar from './NoticeBar';\nexport default NoticeBar;"],"names":["NoticeBar"],"mappings":"OAAOA,cAAe,6BACPA"}

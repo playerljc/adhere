@@ -1,7 +1,9 @@
-import { Button } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
 
-import { CascadeCompared, Space } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -10,104 +12,12 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-const columns = [];
-columns.length = 10;
-columns.fill(0);
-
-const data = [];
-data.length = 10;
-data.fill(0);
-
-function getIndicator() {
-  return {
-    columns: columns.map((t, i) => ({
-      dataIndex: `column${i + 1}`,
-      isFixed: i === 0,
-      width: 120,
-      render: () => <h2>{`指标${i + 1}`}</h2>,
-    })),
-    dataSource: {
-      columns1: 1,
-      columns2: 2,
-      columns3: 3,
-      columns4: 4,
-      columns5: 5,
-      columns6: 6,
-      columns7: 7,
-      columns8: 8,
-      columns9: 9,
-      columns10: 10,
-    },
-  };
-}
-
-function getMaster() {
-  return data.map((t, i) => ({
-    title: (
-      <h2
-        style={{ padding: '15px 0 15px 15px', margin: 0, borderBottom: '1px solid rgba(0,0,0,.1)' }}
-      >{`header${i + 1}`}</h2>
-    ),
-    columns: columns.map((c, j) => ({
-      dataIndex: `column${j + 1}`,
-      isFixed: j === 0,
-      width: 120,
-      render: () => <h4>{`厂家指导价${j + 1}`}</h4>,
-    })),
-    dataSource: [
-      {
-        columns1: 1,
-        columns2: 2,
-        columns3: 3,
-        columns4: 4,
-        columns5: 5,
-        columns6: 6,
-        columns7: 7,
-        columns8: 8,
-        columns9: 9,
-        columns10: 10,
-      },
-      {
-        columns1: 1,
-        columns2: 2,
-        columns3: 3,
-        columns4: 4,
-        columns5: 5,
-        columns6: 6,
-        columns7: 7,
-        columns8: 8,
-        columns9: 9,
-        columns10: 10,
-      },
-      {
-        columns1: 1,
-        columns2: 2,
-        columns3: 3,
-        columns4: 4,
-        columns5: 5,
-        columns6: 6,
-        columns7: 7,
-        columns8: 8,
-        columns9: 9,
-        columns10: 10,
-      },
-    ],
-  }));
-}
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
 
 export default () => {
-  const ref1 = useRef();
-
-  const ref2 = useRef();
-
-  const ref3 = useRef();
-
-  const [data1, setData1] = useState(getMaster());
-
-  useEffect(() => {
-    ref1.current.scrollToByIndex(data1.length - 1);
-  }, [data1]);
-
   return (
     <PlayGroundPage className="CascadeCompared">
       <Section title="CascadeCompared">
@@ -120,105 +30,6 @@ export default () => {
         config={[
           {
             id: `p1`,
-            name: `公共代码`,
-            mode: 'code',
-            scope: { React },
-            cardProps: {
-              description: {
-                title: '公共代码',
-                info: '下面例子公共的代码',
-              },
-            },
-            codeText: `
-  const columns = [];
-  columns.length = 10;
-  columns.fill(0);
-
-  const data = [];
-  data.length = 10;
-  data.fill(0);
-
-  function getIndicator() {
-    return {
-      columns: columns.map((t, i) => ({
-        dataIndex: "column" + (i + 1),
-        isFixed: i === 0,
-        width: 120,
-        render: () => <h2>{"指标" + (i + 1)}</h2>,
-      })),
-      dataSource: {
-        columns1: 1,
-        columns2: 2,
-        columns3: 3,
-        columns4: 4,
-        columns5: 5,
-        columns6: 6,
-        columns7: 7,
-        columns8: 8,
-        columns9: 9,
-        columns10: 10,
-      },
-    };
-  }
-
-  function getMaster() {
-    return data.map((t, i) => ({
-      title: (
-        <h2
-          style={{ padding: '15px 0 15px 15px', margin: 0, borderBottom: '1px solid rgba(0,0,0,.1)' }}
-        >{"header" + (i + 1)}</h2>
-      ),
-      columns: columns.map((c, j) => ({
-        dataIndex: "column" + (j + 1),
-        isFixed: j === 0,
-        width: 120,
-        render: () => <h4>{"厂家指导价" + (j + 1)}</h4>,
-      })),
-      dataSource: [
-        {
-          columns1: 1,
-          columns2: 2,
-          columns3: 3,
-          columns4: 4,
-          columns5: 5,
-          columns6: 6,
-          columns7: 7,
-          columns8: 8,
-          columns9: 9,
-          columns10: 10,
-        },
-        {
-          columns1: 1,
-          columns2: 2,
-          columns3: 3,
-          columns4: 4,
-          columns5: 5,
-          columns6: 6,
-          columns7: 7,
-          columns8: 8,
-          columns9: 9,
-          columns10: 10,
-        },
-        {
-          columns1: 1,
-          columns2: 2,
-          columns3: 3,
-          columns4: 4,
-          columns5: 5,
-          columns6: 6,
-          columns7: 7,
-          columns8: 8,
-          columns9: 9,
-          columns10: 10,
-        },
-      ],
-    }));
-  }
-      `,
-            type: 'PlayGround',
-          },
-          {
-            id: `p2`,
             name: `基本使用`,
             mode: 'code',
             scope: { React },
@@ -228,22 +39,12 @@ export default () => {
                 info: '基本的级联操作',
               },
             },
-            codeText: `
-  import { CascadeCompared } from '@baifendian/adhere';
-
-  <div style={{ width: 320, height: 548, border: '1px solid rgba(0,0,0,.1)' }}>
-    <CascadeCompared indicator={getIndicator()} master={getMaster()} />
-  </div>
-      `,
+            codeText: P1CodeText,
             type: 'PlayGround',
-            renderChildren: () => (
-              <div style={{ width: 320, height: 548, border: '1px solid rgba(0,0,0,.1)' }}>
-                <CascadeCompared indicator={getIndicator()} master={getMaster()} />
-              </div>
-            ),
+            renderChildren: () => <P1 />,
           },
           {
-            id: `p3`,
+            id: `p2`,
             name: `在底部插入`,
             mode: 'code',
             scope: { React },
@@ -253,168 +54,12 @@ export default () => {
                 info: '在底部插入行',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { Button } from 'antd';
-  import { CascadeCompared, Space } from '@baifendian/adhere';
-
-  const [data1, setData1] = useState(getMaster());
-
-  <Button
-    type="primary"
-    onClick={() => {
-      // eslint-disable-next-line no-shadow
-      setData1((data) => {
-        return data.concat([
-          {
-            title: (
-              <h2
-                style={{
-                  padding: '15px 0 15px 15px',
-                  margin: 0,
-                  borderBottom: '1px solid rgba(0,0,0,.1)',
-                }}
-              >{"header" + (data.length + 1)}</h2>
-            ),
-            columns: columns.map((c, j) => ({
-              dataIndex: "column" + (j + 1),
-              isFixed: j === 0,
-              width: 120,
-              render: () => <h4>{"厂家指导价" + (j + 1)}</h4>,
-            })),
-            dataSource: [
-              {
-                columns1: 1,
-                columns2: 2,
-                columns3: 3,
-                columns4: 4,
-                columns5: 5,
-                columns6: 6,
-                columns7: 7,
-                columns8: 8,
-                columns9: 9,
-                columns10: 10,
-              },
-              {
-                columns1: 1,
-                columns2: 2,
-                columns3: 3,
-                columns4: 4,
-                columns5: 5,
-                columns6: 6,
-                columns7: 7,
-                columns8: 8,
-                columns9: 9,
-                columns10: 10,
-              },
-              {
-                columns1: 1,
-                columns2: 2,
-                columns3: 3,
-                columns4: 4,
-                columns5: 5,
-                columns6: 6,
-                columns7: 7,
-                columns8: 8,
-                columns9: 9,
-                columns10: 10,
-              },
-            ],
-          },
-        ]);
-      });
-    }}
-  >
-    插入
-  </Button>
-
-  <Space direction="vertical" />
-
-  <div style={{ width: 320, height: 548, border: '1px solid rgba(0,0,0,.1)' }}>
-    <CascadeCompared ref={ref1} indicator={getIndicator()} master={data1} />
-  </div>
-      `,
+            codeText: P2CodeText,
             type: 'PlayGround',
-            renderChildren: () => (
-              <>
-                <Button
-                  type="primary"
-                  onClick={() => {
-                    // eslint-disable-next-line no-shadow
-                    setData1((data) => {
-                      return data.concat([
-                        {
-                          title: (
-                            <h2
-                              style={{
-                                padding: '15px 0 15px 15px',
-                                margin: 0,
-                                borderBottom: '1px solid rgba(0,0,0,.1)',
-                              }}
-                            >{`header${data.length + 1}`}</h2>
-                          ),
-                          columns: columns.map((c, j) => ({
-                            dataIndex: `column${j + 1}`,
-                            isFixed: j === 0,
-                            width: 120,
-                            render: () => <h4>{`厂家指导价${j + 1}`}</h4>,
-                          })),
-                          dataSource: [
-                            {
-                              columns1: 1,
-                              columns2: 2,
-                              columns3: 3,
-                              columns4: 4,
-                              columns5: 5,
-                              columns6: 6,
-                              columns7: 7,
-                              columns8: 8,
-                              columns9: 9,
-                              columns10: 10,
-                            },
-                            {
-                              columns1: 1,
-                              columns2: 2,
-                              columns3: 3,
-                              columns4: 4,
-                              columns5: 5,
-                              columns6: 6,
-                              columns7: 7,
-                              columns8: 8,
-                              columns9: 9,
-                              columns10: 10,
-                            },
-                            {
-                              columns1: 1,
-                              columns2: 2,
-                              columns3: 3,
-                              columns4: 4,
-                              columns5: 5,
-                              columns6: 6,
-                              columns7: 7,
-                              columns8: 8,
-                              columns9: 9,
-                              columns10: 10,
-                            },
-                          ],
-                        },
-                      ]);
-                    });
-                  }}
-                >
-                  插入
-                </Button>
-
-                <Space direction="vertical" />
-
-                <div style={{ width: 320, height: 548, border: '1px solid rgba(0,0,0,.1)' }}>
-                  <CascadeCompared ref={ref1} indicator={getIndicator()} master={data1} />
-                </div>
-              </>
-            ),
+            renderChildren: () => <P2 />,
           },
           {
-            id: `p4`,
+            id: `p3`,
             name: `通过索引滚动`,
             mode: 'code',
             scope: { React },
@@ -424,86 +69,12 @@ export default () => {
                 info: '通过索引滚动到顶部',
               },
             },
-            codeText: `
-  import React, { useRef } from 'react';
-  import { Button } from 'antd';
-  import { CascadeCompared, Space } from '@baifendian/adhere';
-
-  const ref2 = useRef();
-
-  <Space.Group direction="horizontal">
-    <Button
-      type="primary"
-      onClick={() => {
-        ref2.current.scrollToByIndex(9, 0);
-      }}
-    >
-      滚动到底部(无动画)
-    </Button>
-
-    <Button
-      onClick={() => {
-        ref2.current.scrollToByIndex(9);
-      }}
-    >
-      滚动到底部(有动画)
-    </Button>
-
-    <Button
-      onClick={() => {
-        ref2.current.scrollToByIndex(0);
-      }}
-    >
-      回到顶部
-    </Button>
-  </Space.Group>
-
-  <Space direction="vertical" />
-
-  <div style={{ width: 320, height: 548, border: '1px solid rgba(0,0,0,.1)' }}>
-    <CascadeCompared ref={ref2} indicator={getIndicator()} master={getMaster()} />
-  </div>
-      `,
+            codeText: P3CodeText,
             type: 'PlayGround',
-            renderChildren: () => (
-              <>
-                <Space.Group direction="horizontal">
-                  <Button
-                    type="primary"
-                    onClick={() => {
-                      ref2.current.scrollToByIndex(9, 0);
-                    }}
-                  >
-                    滚动到底部(无动画)
-                  </Button>
-
-                  <Button
-                    onClick={() => {
-                      ref2.current.scrollToByIndex(9);
-                    }}
-                  >
-                    滚动到底部(有动画)
-                  </Button>
-
-                  <Button
-                    onClick={() => {
-                      ref2.current.scrollToByIndex(0);
-                    }}
-                  >
-                    回到顶部
-                  </Button>
-                </Space.Group>
-
-                <Space direction="vertical" />
-
-                <div style={{ width: 320, height: 548, border: '1px solid rgba(0,0,0,.1)' }}>
-                  <CascadeCompared ref={ref2} indicator={getIndicator()} master={getMaster()} />
-                </div>
-              </>
-            ),
+            renderChildren: () => <P3 />,
           },
           {
-            id: `p5`,
+            id: `p4`,
             name: `滚动到指定列`,
             mode: 'code',
             scope: { React },
@@ -513,67 +84,9 @@ export default () => {
                 info: '滚动到指定列',
               },
             },
-            codeText: `
-  import React, { useRef } from 'react';
-  import { Button } from 'antd';
-  import { CascadeCompared, Space } from '@baifendian/adhere';
-
-  const ref3 = useRef();
-
-  <Space.Group direction="horizontal">
-    <Button
-      type="primary"
-      onClick={() => {
-        ref3.current.scrollToByColumn(1);
-      }}
-    >
-      滚动到第一列
-    </Button>
-
-    <Button
-      onClick={() => {
-        ref3.current.scrollToByColumn(9);
-      }}
-    >
-      滚动到最后一列(有动画)
-    </Button>
-  </Space.Group>
-
-  <Space direction="vertical" />
-
-  <div style={{ width: 320, height: 548, border: '1px solid rgba(0,0,0,.1)' }}>
-    <CascadeCompared ref={ref3} indicator={getIndicator()} master={getMaster()} />
-  </div>
-      `,
+            codeText: P4CodeText,
             type: 'PlayGround',
-            renderChildren: () => (
-              <>
-                <Space.Group direction="horizontal">
-                  <Button
-                    type="primary"
-                    onClick={() => {
-                      ref3.current.scrollToByColumn(1);
-                    }}
-                  >
-                    滚动到第一列
-                  </Button>
-
-                  <Button
-                    onClick={() => {
-                      ref3.current.scrollToByColumn(9);
-                    }}
-                  >
-                    滚动到最后一列(有动画)
-                  </Button>
-                </Space.Group>
-
-                <Space direction="vertical" />
-
-                <div style={{ width: 320, height: 548, border: '1px solid rgba(0,0,0,.1)' }}>
-                  <CascadeCompared ref={ref3} indicator={getIndicator()} master={getMaster()} />
-                </div>
-              </>
-            ),
+            renderChildren: () => <P4 />,
           },
         ]}
       />

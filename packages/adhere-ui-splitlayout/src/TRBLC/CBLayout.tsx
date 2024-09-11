@@ -1,26 +1,27 @@
-import React, { forwardRef, ForwardRefRenderFunction, memo } from 'react';
+import React, { PropsWithoutRef, RefAttributes, forwardRef, memo } from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
-import SplitLayout from '../splitlayout';
-import { TBLRCSplitLayoutProps } from '../types';
+import SplitLayout from '../SplitLayout';
+import type { TBLRCSplitLayoutProps } from '../types';
 
 /**
  * CBLayout
  * @constructor
  */
-const CBLayout: ForwardRefRenderFunction<any, TBLRCSplitLayoutProps> = (
-  { bSplitProps, ...props },
-  ref,
-) => {
-  return (
-    <FlexLayout.TRBLC.CBLayout
-      // @ts-ignore
-      ref={ref}
-      {...props}
-      bSplit={<SplitLayout {...(bSplitProps ?? {})} />}
-    />
-  );
-};
+const CBLayout = memo<PropsWithoutRef<TBLRCSplitLayoutProps> & RefAttributes<HTMLDivElement>>(
+  forwardRef<HTMLDivElement, TBLRCSplitLayoutProps>(({ bSplitProps, ...props }, ref) => {
+    return (
+      <FlexLayout.TRBLC.CBLayout
+        // @ts-ignore
+        ref={ref}
+        {...props}
+        bSplit={<SplitLayout {...(bSplitProps ?? {})} />}
+      />
+    );
+  }),
+);
 
-export default memo(forwardRef<any, TBLRCSplitLayoutProps>(CBLayout));
+CBLayout.displayName = 'CBLayout';
+
+export default CBLayout;

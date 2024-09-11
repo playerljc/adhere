@@ -1,0 +1,2 @@
+"use strict";var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},util_1=(Object.defineProperty(exports,"__esModule",{value:!0}),require("../util")),InternalDatePopup_1=__importDefault(require("./InternalDatePopup")),DatePopupHOC=(0,util_1.createFactory)(InternalDatePopup_1.default,{});DatePopupHOC.displayName="DatePopup",exports.default=DatePopupHOC;
+//# sourceMappingURL=DatePopup.js.map

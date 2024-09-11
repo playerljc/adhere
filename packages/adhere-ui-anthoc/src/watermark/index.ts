@@ -1,5 +1,3 @@
-import { Watermark } from 'antd';
+import Watermark from './Watermark';
 
-import { createFactory } from '../util';
-
-export default createFactory(Watermark, {});
+export default Watermark;

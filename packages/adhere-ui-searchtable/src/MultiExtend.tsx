@@ -1,6 +1,7 @@
-import cloneDeep from 'lodash.clonedeep';
 import type { Component } from 'react';
 import React from 'react';
+
+import { clone } from './Util';
 
 /**
  * MultiExtendFactory
@@ -28,7 +29,12 @@ function MultiExtendFactory<P, S>(
 
       SuperClasses.forEach((SuperClass) => {
         SuperClass.call(this, props);
-        SuperClassesObjs.push(cloneDeep(this));
+        try {
+          const cloneObj = clone(this);
+          SuperClassesObjs.push(cloneObj);
+        } catch (err) {
+          console.log('err', err);
+        }
       });
 
       ConstructorMethod.call(this, SuperClassesObjs);

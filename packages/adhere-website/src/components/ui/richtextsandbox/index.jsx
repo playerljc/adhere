@@ -1,8 +1,11 @@
-import { Button, Form } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
+import P5CodeText from '!!raw-loader!./examples/p5';
+import P6CodeText from '!!raw-loader!./examples/p6';
 
-import { FlexLayout, Space } from '@baifendian/adhere';
-import { ReactQuillSandbox, WangEditorSandbox } from '@baifendian/adhere-ui-richtext-sandbox';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -11,38 +14,14 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-const { Fixed, Auto } = FlexLayout;
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
+import P5 from './examples/p5';
+import P6 from './examples/p6';
 
 export default () => {
-  const [theme, setTheme] = useState('snow');
-  const [modules, setModules] = useState({});
-  const [formats, setFormats] = useState(null);
-  const [quillValue, setQuillValue] = useState(
-    '<p><span style="background-color: red; color: rgb(31, 35, 40);">TML, a&nbsp;</span><a href="https://quilljs.com/docs/delta/" target="_blank" style="color: var(--color-accent-fg); background-color: rgb(255, 255, 255);">Quill Delta</a><span style="background-color: rgb(255, 255, 255); color: rgb(31, 35, 40);">&nbsp;instance, or a</span></p>',
-  );
-  const quillRef = useRef();
-  const [quillForm] = Form.useForm();
-
-  const wangEditorRef = useRef();
-  const [wangForm] = Form.useForm();
-  const [wangValue, setWangValue] = useState(
-    '<p><span style="background-color: red; color: rgb(31, 35, 40);">TML, a&nbsp;</span><a href="https://quilljs.com/docs/delta/" target="_blank" style="color: var(--color-accent-fg); background-color: rgb(255, 255, 255);">Quill Delta</a><span style="background-color: rgb(255, 255, 255); color: rgb(31, 35, 40);">&nbsp;instance, or a</span></p>',
-  );
-
-  useEffect(() => {
-    quillForm.setFieldsValue({
-      article: `
-        <h3>Controlled mode caveats</h3><p>In controlled mode, components are supposed to prevent local stateful changes, and instead only have them happen through&nbsp;<code style="background-color: rgb(247, 247, 247);">onChange</code>&nbsp;and&nbsp;<code style="background-color: rgb(247, 247, 247);">value</code>.</p><p>Because Quill handles its own changes, and does not allow preventing edits, ReactQuill has to settle for a hybrid between controlled and uncontrolled mode. It can't prevent the change, but will still override the content whenever&nbsp;<code style="background-color: rgb(247, 247, 247);">value</code>&nbsp;differs from current state.</p><p>If you frequently need to manipulate the DOM or use the&nbsp;<a href="https://quilljs.com/docs/api/" target="_blank" style="color: rgb(203, 56, 55); background-color: transparent;">Quill API</a>s imperatively, you might consider switching to fully uncontrolled mode. ReactQuill will initialize the editor using&nbsp;<code style="background-color: rgb(247, 247, 247);">defaultValue</code>, but won't try to reset it after that. The&nbsp;<code style="background-color: rgb(247, 247, 247);">onChange</code>&nbsp;callback will still work as expected.</p><p>Read more about uncontrolled components in the&nbsp;<a href="https://facebook.github.io/react/docs/uncontrolled-components.html#default-values" target="_blank" style="color: rgb(203, 56, 55); background-color: transparent;">React docs</a>.</p><p><br></p>
-      `,
-    });
-
-    wangForm.setFieldsValue({
-      article: `
-        <h3>Controlled mode caveats</h3><p>In controlled mode, components are supposed to prevent local stateful changes, and instead only have them happen through&nbsp;<code style="background-color: rgb(247, 247, 247);">onChange</code>&nbsp;and&nbsp;<code style="background-color: rgb(247, 247, 247);">value</code>.</p><p>Because Quill handles its own changes, and does not allow preventing edits, ReactQuill has to settle for a hybrid between controlled and uncontrolled mode. It can't prevent the change, but will still override the content whenever&nbsp;<code style="background-color: rgb(247, 247, 247);">value</code>&nbsp;differs from current state.</p><p>If you frequently need to manipulate the DOM or use the&nbsp;<a href="https://quilljs.com/docs/api/" target="_blank" style="color: rgb(203, 56, 55); background-color: transparent;">Quill API</a>s imperatively, you might consider switching to fully uncontrolled mode. ReactQuill will initialize the editor using&nbsp;<code style="background-color: rgb(247, 247, 247);">defaultValue</code>, but won't try to reset it after that. The&nbsp;<code style="background-color: rgb(247, 247, 247);">onChange</code>&nbsp;callback will still work as expected.</p><p>Read more about uncontrolled components in the&nbsp;<a href="https://facebook.github.io/react/docs/uncontrolled-components.html#default-values" target="_blank" style="color: rgb(203, 56, 55); background-color: transparent;">React docs</a>.</p><p><br></p>
-      `,
-    });
-  }, []);
-
   return (
     <PlayGroundPage>
       <Section title="RichTextSandBox">
@@ -62,205 +41,9 @@ export default () => {
                 info: 'ReactQuillSandBox基本使用',
               },
             },
-            codeText: `
-  import { Button,  } from 'antd';
-  import React, { useRef, useState } from 'react';
-
-  import { FlexLayout, Space } from '@baifendian/adhere';
-  import { ReactQuillSandbox } from '@baifendian/adhere-ui-richtext-sandbox';
-
-  const { Fixed, Auto } = FlexLayout;
-
-  export default () => {
-    const [theme, setTheme] = useState('snow');
-    const [modules, setModules] = useState({});
-    const [formats, setFormats] = useState(null);
-    const [quillValue, setQuillValue] = useState(
-      '<p><span style="background-color: red; color: rgb(31, 35, 40);">TML, a&nbsp;</span><a href="https://quilljs.com/docs/delta/" target="_blank" style="color: var(--color-accent-fg); background-color: rgb(255, 255, 255);">Quill Delta</a><span style="background-color: rgb(255, 255, 255); color: rgb(31, 35, 40);">&nbsp;instance, or a</span></p>',
-    );
-    const quillRef = useRef();
-
-    return (
-     <FlexLayout style={{ height: 800 }}>
-      <Fixed style={{ marginBottom: 20 }}>
-        <Space.Group>
-          <Button
-            type="primary"
-            onClick={() => {
-              setTheme('bubble');
-            }}
-          >
-            设置Theme
-          </Button>
-          <Button
-            type="primary"
-            onClick={() => {
-              setModules({
-                toolbar: [
-                  [{ header: [1, 2, false] }],
-                  ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                  [
-                    { list: 'ordered' },
-                    { list: 'bullet' },
-                    { indent: '-1' },
-                    { indent: '+1' },
-                  ],
-                  ['link', 'image'],
-                  ['clean'],
-                ],
-              });
-            }}
-          >
-            设置modules
-          </Button>
-          <Button
-            type="primary"
-            onClick={() => {
-              setFormats([
-                'header',
-                'bold',
-                'italic',
-                'underline',
-                'strike',
-                'blockquote',
-                'list',
-                'bullet',
-                'indent',
-                'link',
-                'image',
-              ]);
-            }}
-          >
-            设置formats
-          </Button>
-          <Button
-            type="primary"
-            onClick={() => {
-              setQuillValue(\`${Date.now()}\`);
-            }}
-          >
-            设置值
-          </Button>
-          <Button
-            type="primary"
-            onClick={() => {
-              alert(quillValue);
-              console.log(/*ref.current.getEditor().root.innerHTML*/);
-            }}
-          >
-            获取值
-          </Button>
-        </Space.Group>
-      </Fixed>
-
-      <Auto>
-        <ReactQuillSandbox
-          ref={quillRef}
-          onChange={(_v) => {
-            console.log('外部的onChange', _v);
-            setQuillValue(_v);
-          }}
-          value={quillValue}
-          theme={theme}
-          modules={modules}
-          formats={formats}
-          wrapStyle={{ height: '100%' }}
-        />
-      </Auto>
-    </FlexLayout>
-    );
-  }
-            `,
             type: 'PlayGround',
-            renderChildren: () => (
-              <FlexLayout style={{ height: 800 }}>
-                <Fixed style={{ marginBottom: 20 }}>
-                  <Space.Group>
-                    <Button
-                      type="primary"
-                      onClick={() => {
-                        setTheme('bubble');
-                      }}
-                    >
-                      设置Theme
-                    </Button>
-                    <Button
-                      type="primary"
-                      onClick={() => {
-                        setModules({
-                          toolbar: [
-                            [{ header: [1, 2, false] }],
-                            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                            [
-                              { list: 'ordered' },
-                              { list: 'bullet' },
-                              { indent: '-1' },
-                              { indent: '+1' },
-                            ],
-                            ['link', 'image'],
-                            ['clean'],
-                          ],
-                        });
-                      }}
-                    >
-                      设置modules
-                    </Button>
-                    <Button
-                      type="primary"
-                      onClick={() => {
-                        setFormats([
-                          'header',
-                          'bold',
-                          'italic',
-                          'underline',
-                          'strike',
-                          'blockquote',
-                          'list',
-                          'bullet',
-                          'indent',
-                          'link',
-                          'image',
-                        ]);
-                      }}
-                    >
-                      设置formats
-                    </Button>
-                    <Button
-                      type="primary"
-                      onClick={() => {
-                        setQuillValue(`${Date.now()}`);
-                      }}
-                    >
-                      设置值
-                    </Button>
-                    <Button
-                      type="primary"
-                      onClick={() => {
-                        alert(quillValue);
-                        console.log(/*ref.current.getEditor().root.innerHTML*/);
-                      }}
-                    >
-                      获取值
-                    </Button>
-                  </Space.Group>
-                </Fixed>
-
-                <Auto>
-                  <ReactQuillSandbox
-                    ref={quillRef}
-                    onChange={(_v) => {
-                      console.log('外部的onChange', _v);
-                      setQuillValue(_v);
-                    }}
-                    value={quillValue}
-                    theme={theme}
-                    modules={modules}
-                    formats={formats}
-                    wrapStyle={{ height: '100%' }}
-                  />
-                </Auto>
-              </FlexLayout>
-            ),
+            codeText: P1CodeText,
+            renderChildren: () => <P1 />,
           },
           {
             id: `p2`,
@@ -273,128 +56,9 @@ export default () => {
                 info: 'ReactQuillSandBox结合Form',
               },
             },
-            codeText: `
-  import { Button, Form } from 'antd';
-  import React, { useEffect, useRef, useState } from 'react';
-
-  import { FlexLayout, Space } from '@baifendian/adhere';
-  import { ReactQuillSandbox } from '@baifendian/adhere-ui-richtext-sandbox';
-
-  const { Fixed, Auto } = FlexLayout;
-
-  export default () => {
-    const [theme, setTheme] = useState('snow');
-    const [modules, setModules] = useState({});
-    const [formats, setFormats] = useState(null);
-    const [quillForm] = Form.useForm();
-
-    useEffect(() => {
-      quillForm.setFieldsValue({
-        article: \`
-          <h3>Controlled mode caveats</h3><p>In controlled mode, components are supposed to prevent local stateful changes, and instead only have them happen through&nbsp;<code style="background-color: rgb(247, 247, 247);">onChange</code>&nbsp;and&nbsp;<code style="background-color: rgb(247, 247, 247);">value</code>.</p><p>Because Quill handles its own changes, and does not allow preventing edits, ReactQuill has to settle for a hybrid between controlled and uncontrolled mode. It can't prevent the change, but will still override the content whenever&nbsp;<code style="background-color: rgb(247, 247, 247);">value</code>&nbsp;differs from current state.</p><p>If you frequently need to manipulate the DOM or use the&nbsp;<a href="https://quilljs.com/docs/api/" target="_blank" style="color: rgb(203, 56, 55); background-color: transparent;">Quill API</a>s imperatively, you might consider switching to fully uncontrolled mode. ReactQuill will initialize the editor using&nbsp;<code style="background-color: rgb(247, 247, 247);">defaultValue</code>, but won't try to reset it after that. The&nbsp;<code style="background-color: rgb(247, 247, 247);">onChange</code>&nbsp;callback will still work as expected.</p><p>Read more about uncontrolled components in the&nbsp;<a href="https://facebook.github.io/react/docs/uncontrolled-components.html#default-values" target="_blank" style="color: rgb(203, 56, 55); background-color: transparent;">React docs</a>.</p><p><br></p>
-        \`,
-      });
-    }, []);
-
-    return (
-      <Form name="quillForm" form={quillForm}>
-        <FlexLayout>
-          <Fixed style={{ marginBottom: 20 }}>
-            <Space.Group>
-              <Button
-                type="primary"
-                onClick={() => {
-                  quillForm.setFieldsValue({
-                    article: \`${Date.now()}\`,
-                  });
-                }}
-              >
-                设置表单值
-              </Button>
-              <Button
-                type="primary"
-                onClick={() => {
-                  alert(quillForm.getFieldValue('article'));
-                }}
-              >
-                获取表单值
-              </Button>
-            </Space.Group>
-          </Fixed>
-
-          <Auto>
-            <Form.Item
-              name="article"
-              rules={[
-                {
-                  required: true,
-                  message: '请输入文章',
-                },
-              ]}
-            >
-              <ReactQuillSandbox
-                onChange={() => {}}
-                theme={theme}
-                modules={modules}
-                formats={formats}
-                wrapStyle={{ height: 500 }}
-              />
-            </Form.Item>
-          </Auto>
-        </FlexLayout>
-      </Form>
-    );
-  }
-            `,
             type: 'PlayGround',
-            renderChildren: () => (
-              <Form name="quillForm" form={quillForm}>
-                <FlexLayout>
-                  <Fixed style={{ marginBottom: 20 }}>
-                    <Space.Group>
-                      <Button
-                        type="primary"
-                        onClick={() => {
-                          quillForm.setFieldsValue({
-                            article: `${Date.now()}`,
-                          });
-                        }}
-                      >
-                        设置表单值
-                      </Button>
-                      <Button
-                        type="primary"
-                        onClick={() => {
-                          alert(quillForm.getFieldValue('article'));
-                        }}
-                      >
-                        获取表单值
-                      </Button>
-                    </Space.Group>
-                  </Fixed>
-
-                  <Auto>
-                    <Form.Item
-                      name="article"
-                      rules={[
-                        {
-                          required: true,
-                          message: '请输入文章',
-                        },
-                      ]}
-                    >
-                      <ReactQuillSandbox
-                        onChange={() => {}}
-                        theme={theme}
-                        modules={modules}
-                        formats={formats}
-                        wrapStyle={{ height: 500 }}
-                      />
-                    </Form.Item>
-                  </Auto>
-                </FlexLayout>
-              </Form>
-            ),
+            codeText: P2CodeText,
+            renderChildren: () => <P2 />,
           },
           {
             id: `p3`,
@@ -407,25 +71,9 @@ export default () => {
                 info: 'ReactQuillSandBox的只读模式',
               },
             },
-            codeText: `
-  import React from 'react';
-
-  import { ReactQuillSandbox } from '@baifendian/adhere-ui-richtext-sandbox';
-
-  export default () => {
-    const [quillValue] = useState(
-      '<p><span style="background-color: red; color: rgb(31, 35, 40);">TML, a&nbsp;</span><a href="https://quilljs.com/docs/delta/" target="_blank" style="color: var(--color-accent-fg); background-color: rgb(255, 255, 255);">Quill Delta</a><span style="background-color: rgb(255, 255, 255); color: rgb(31, 35, 40);">&nbsp;instance, or a</span></p>',
-    );
-
-    return (
-      <ReactQuillSandbox readOnly value={quillValue} wrapStyle={{ height: 500 }} />
-    );
-  }
-            `,
             type: 'PlayGround',
-            renderChildren: () => (
-              <ReactQuillSandbox readOnly value={quillValue} wrapStyle={{ height: 500 }} />
-            ),
+            codeText: P3CodeText,
+            renderChildren: () => <P3 />,
           },
           {
             id: `p4`,
@@ -438,96 +86,9 @@ export default () => {
                 info: 'WangEditorSandBox基本使用',
               },
             },
-            codeText: `
-  import { Button } from 'antd';
-  import React, { useRef, useState } from 'react';
-
-  import { FlexLayout, Space } from '@baifendian/adhere';
-  import { WangEditorSandbox } from '@baifendian/adhere-ui-richtext-sandbox';
-
-  const { Fixed, Auto } = FlexLayout;
-
-  export default () => {
-    const wangEditorRef = useRef();
-    const [wangValue, setWangValue] = useState(
-      '<p><span style="background-color: red; color: rgb(31, 35, 40);">TML, a&nbsp;</span><a href="https://quilljs.com/docs/delta/" target="_blank" style="color: var(--color-accent-fg); background-color: rgb(255, 255, 255);">Quill Delta</a><span style="background-color: rgb(255, 255, 255); color: rgb(31, 35, 40);">&nbsp;instance, or a</span></p>',
-    );
-
-    return (
-      <FlexLayout style={{ height: 800 }}>
-        <Fixed style={{ marginBottom: 20 }}>
-          <Space.Group>
-            <Button
-              type="primary"
-              onClick={() => {
-                setWangValue(\`${Date.now()}\`);
-              }}
-            >
-              设置值
-            </Button>
-            <Button
-              type="primary"
-              onClick={() => {
-                alert(wangValue);
-              }}
-            >
-              获取值
-            </Button>
-          </Space.Group>
-        </Fixed>
-
-        <Auto>
-          <WangEditorSandbox
-            ref={wangEditorRef}
-            onChange={(_v) => {
-              console.log('外部的onChange', _v);
-              setWangValue(_v);
-            }}
-            value={wangValue}
-            wrapStyle={{ height: '100%' }}
-          />
-        </Auto>
-      </FlexLayout>
-    );
-  }
-            `,
             type: 'PlayGround',
-            renderChildren: () => (
-              <FlexLayout style={{ height: 800 }}>
-                <Fixed style={{ marginBottom: 20 }}>
-                  <Space.Group>
-                    <Button
-                      type="primary"
-                      onClick={() => {
-                        setWangValue(`${Date.now()}`);
-                      }}
-                    >
-                      设置值
-                    </Button>
-                    <Button
-                      type="primary"
-                      onClick={() => {
-                        alert(wangValue);
-                      }}
-                    >
-                      获取值
-                    </Button>
-                  </Space.Group>
-                </Fixed>
-
-                <Auto>
-                  <WangEditorSandbox
-                    ref={wangEditorRef}
-                    onChange={(_v) => {
-                      console.log('外部的onChange', _v);
-                      setWangValue(_v);
-                    }}
-                    value={wangValue}
-                    wrapStyle={{ height: '100%' }}
-                  />
-                </Auto>
-              </FlexLayout>
-            ),
+            codeText: P4CodeText,
+            renderChildren: () => <P4 />,
           },
           {
             id: `p5`,
@@ -540,121 +101,9 @@ export default () => {
                 info: 'WangEditorSandBox结合Form',
               },
             },
-            codeText: `
-  import { Button, Form } from 'antd';
-  import React, { useEffect } from 'react';
-
-  import { FlexLayout, Space } from '@baifendian/adhere';
-  import { WangEditorSandbox } from '@baifendian/adhere-ui-richtext-sandbox';
-
-  const { Fixed, Auto } = FlexLayout;
-
-  export default () => {
-    const [wangForm] = Form.useForm();
-
-    useEffect(() => {
-      wangForm.setFieldsValue({
-        article: \`
-          <h3>Controlled mode caveats</h3><p>In controlled mode, components are supposed to prevent local stateful changes, and instead only have them happen through&nbsp;<code style="background-color: rgb(247, 247, 247);">onChange</code>&nbsp;and&nbsp;<code style="background-color: rgb(247, 247, 247);">value</code>.</p><p>Because Quill handles its own changes, and does not allow preventing edits, ReactQuill has to settle for a hybrid between controlled and uncontrolled mode. It can't prevent the change, but will still override the content whenever&nbsp;<code style="background-color: rgb(247, 247, 247);">value</code>&nbsp;differs from current state.</p><p>If you frequently need to manipulate the DOM or use the&nbsp;<a href="https://quilljs.com/docs/api/" target="_blank" style="color: rgb(203, 56, 55); background-color: transparent;">Quill API</a>s imperatively, you might consider switching to fully uncontrolled mode. ReactQuill will initialize the editor using&nbsp;<code style="background-color: rgb(247, 247, 247);">defaultValue</code>, but won't try to reset it after that. The&nbsp;<code style="background-color: rgb(247, 247, 247);">onChange</code>&nbsp;callback will still work as expected.</p><p>Read more about uncontrolled components in the&nbsp;<a href="https://facebook.github.io/react/docs/uncontrolled-components.html#default-values" target="_blank" style="color: rgb(203, 56, 55); background-color: transparent;">React docs</a>.</p><p><br></p>
-        \`,
-      });
-    }, []);
-
-    return (
-      <Form name="wangForm" form={wangForm}>
-        <FlexLayout>
-          <Fixed style={{ marginBottom: 20 }}>
-            <Space.Group>
-              <Button
-                type="primary"
-                onClick={() => {
-                  wangForm.setFieldsValue({
-                    article: \`${Date.now()}\`,
-                  });
-                }}
-              >
-                设置表单值
-              </Button>
-              <Button
-                type="primary"
-                onClick={() => {
-                  alert(wangForm.getFieldValue('article'));
-                }}
-              >
-                获取表单值
-              </Button>
-            </Space.Group>
-          </Fixed>
-
-          <Auto>
-            <Form.Item
-              name="article"
-              rules={[
-                {
-                  required: true,
-                  message: '请输入文章',
-                },
-              ]}
-            >
-              <WangEditorSandbox
-                wrapStyle={{
-                  height: 500,
-                }}
-              />
-            </Form.Item>
-          </Auto>
-        </FlexLayout>
-      </Form>
-    );
-  }
-            `,
             type: 'PlayGround',
-            renderChildren: () => (
-              <Form name="wangForm" form={wangForm}>
-                <FlexLayout>
-                  <Fixed style={{ marginBottom: 20 }}>
-                    <Space.Group>
-                      <Button
-                        type="primary"
-                        onClick={() => {
-                          wangForm.setFieldsValue({
-                            article: `${Date.now()}`,
-                          });
-                        }}
-                      >
-                        设置表单值
-                      </Button>
-                      <Button
-                        type="primary"
-                        onClick={() => {
-                          alert(wangForm.getFieldValue('article'));
-                        }}
-                      >
-                        获取表单值
-                      </Button>
-                    </Space.Group>
-                  </Fixed>
-
-                  <Auto>
-                    <Form.Item
-                      name="article"
-                      rules={[
-                        {
-                          required: true,
-                          message: '请输入文章',
-                        },
-                      ]}
-                    >
-                      <WangEditorSandbox
-                        wrapStyle={{
-                          height: 500,
-                        }}
-                      />
-                    </Form.Item>
-                  </Auto>
-                </FlexLayout>
-              </Form>
-            ),
+            codeText: P5CodeText,
+            renderChildren: () => <P5 />,
           },
           {
             id: `p6`,
@@ -667,25 +116,9 @@ export default () => {
                 info: 'WangEditorSandBox的只读模式',
               },
             },
-            codeText: `
-  import React from 'react';
-
-  import { WangEditorSandbox } from '@baifendian/adhere-ui-richtext-sandbox';
-
-  export default () => {
-    const [wangValue] = useState(
-      '<p><span style="background-color: red; color: rgb(31, 35, 40);">TML, a&nbsp;</span><a href="https://quilljs.com/docs/delta/" target="_blank" style="color: var(--color-accent-fg); background-color: rgb(255, 255, 255);">Quill Delta</a><span style="background-color: rgb(255, 255, 255); color: rgb(31, 35, 40);">&nbsp;instance, or a</span></p>',
-    );
-
-    return (
-      <WangEditorSandbox readOnly value={wangValue} wrapStyle={{ height: 500 }} />
-    );
-  }
-            `,
             type: 'PlayGround',
-            renderChildren: () => (
-              <WangEditorSandbox readOnly value={wangValue} wrapStyle={{ height: 500 }} />
-            ),
+            codeText: P6CodeText,
+            renderChildren: () => <P6 />,
           },
         ]}
         title="代码演示"

@@ -1,9 +1,10 @@
-import { FC, FunctionComponent, NamedExoticComponent } from 'react';
-import type { CSSProperties } from 'react';
+import type { CSSProperties, NamedExoticComponent } from 'react';
 
-export interface SpaceFunction<P> extends NamedExoticComponent<P> {
-  Group: FC<SpaceGroupProps>;
-}
+import SpaceGroup from './Group';
+
+export type SpaceComponent = NamedExoticComponent<SpaceProps> & {
+  Group: typeof SpaceGroup;
+};
 
 /**
  * SpaceProps
@@ -14,8 +15,7 @@ export interface SpaceProps {
   style?: CSSProperties;
   direction?: 'vertical' | 'horizontal';
   size?: string | number;
-  isUseMedia?: boolean;
-  rootValue?: number;
+  horizontalFit?: boolean;
 }
 
 /**

@@ -21,7 +21,6 @@ export type Local =
   | string;
 
 export interface CommentProps {
-  getScrollWrapContainer?: () => HTMLElement;
   fetchCommentData?: (params?: any) => Promise<any>;
   commentDataKeys?: {
     current: string;
@@ -76,7 +75,6 @@ export interface ReplyProps {
 }
 
 export interface ListStandardProps {
-  getScrollWrapContainer?: () => HTMLElement;
   flexLayoutProps?: FlexLayoutProps;
   listProps?: ListProps;
   limit?: number;
@@ -94,7 +92,6 @@ export interface ListStandardProps {
 }
 
 export interface ListProps {
-  getScrollWrapContainer?: () => HTMLElement;
   className?: string;
   style?: CSSProperties;
   isLoading?: boolean;
@@ -102,6 +99,7 @@ export interface ListProps {
   onLoadMore?: (handle?: (status?: string) => void) => void;
   renderFirstLoading?: () => ReactNode | null;
   scrollLoadProps?: ScrollLoadProps;
+  pages: number;
   children?: any;
 }
 

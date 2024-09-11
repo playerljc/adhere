@@ -1,2 +1,2 @@
-import _Space from"antd/es/space";import{createFactory}from"../util";export default createFactory(_Space,{});
+import Space from"./Space";export default Space;
 //# sourceMappingURL=index.js.map

@@ -1,2 +1,2 @@
-import SlideLayout from"./slidelayout";export default SlideLayout;
+import SlideLayout from"./SlideLayout";export default SlideLayout;
 //# sourceMappingURL=index.js.map

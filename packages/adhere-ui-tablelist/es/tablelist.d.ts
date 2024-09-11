@@ -1,12 +1,13 @@
 import React from 'react';
 import { TableListProps } from './types';
-export declare const selectorPrefix = "adhere-ui-tablelist";
+export declare const selectorPrefix = "adhere-ui-table-list";
 /**
  * Template
  * @class Template
  * @classdesc Template
  */
 declare class TableList<RecordType extends object = any> extends React.PureComponent<TableListProps<RecordType>, any> {
+    static displayName: string;
     static defaultProps: any;
     static propTypes: any;
     private readonly searchFormRef;
@@ -57,6 +58,6 @@ declare class TableList<RecordType extends object = any> extends React.PureCompo
      * 加载效果
      */
     private renderLoading;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default TableList;

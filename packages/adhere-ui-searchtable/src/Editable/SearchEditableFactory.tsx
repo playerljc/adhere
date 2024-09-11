@@ -4,8 +4,8 @@ import type { ReactElement } from 'react';
 import React, { createRef } from 'react';
 
 import { SearchTableContext, selectorPrefix } from '../SearchTable';
+import { findRecord } from '../Util';
 import type { ColumnTypeExt, RowConfig, RowEditableConfig } from '../types';
-import { findRecord } from '../util';
 
 export default function <P, S>(SuperClass) {
   return class extends SuperClass<P, S> {

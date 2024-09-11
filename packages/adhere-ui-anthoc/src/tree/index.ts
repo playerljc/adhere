@@ -1,5 +1,3 @@
-import { Tree } from 'antd';
+import Tree from './Tree';
 
-import { createFactory } from '../util';
-
-export default createFactory(Tree, {});
+export default Tree;

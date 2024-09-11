@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import React from 'react';
 import type { ColumnTypeExt } from './types';
 declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
     new (props: any): {
@@ -26,7 +27,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * @description - 初始化组件的查询和分页参数
          * @param queryReduce 查询参数的处理
          */
-        initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+        initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
         /**
          * hasAdvancedSearchPanel
          * @description 是否开启高级搜索
@@ -107,7 +108,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * @param {ColumnTypeExt} column
          * @return JSX.Element
          */
-        getTableColumnSearchHeaderIcon(column: ColumnTypeExt): JSX.Element;
+        getTableColumnSearchHeaderIcon(column: ColumnTypeExt): React.JSX.Element;
         /**
          * getOptionsColumnDataIndex
          * @description 操作列的索引名
@@ -126,23 +127,27 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          */
         getPagination(): any;
         /**
-         * getGridSearchFormGroupParams
+         * getGridSearchFormColgroup
          */
-        getGridSearchFormGroupParams(): ({
-            name: string;
+        getGridSearchFormColgroup(): {
             columnCount: number;
             colgroup: (string | undefined)[];
-            data: {
-                key: number;
-                sort?: number | undefined;
-                label: ReactNode;
-                value: ReactNode | null;
-            }[];
-        }[] | {
-            rowCount?: undefined;
-        } | {
+        };
+        /**
+         * getGridSearchFormRowCount
+         */
+        getGridSearchFormRowCount(): number;
+        /**
+         * getGridSearchFormProps
+         */
+        getGridSearchFormProps(): {
             rowCount: number;
-        })[];
+        };
+        /**
+         * getGridSearchFormGroupParams
+         */
+        getGridSearchFormGroupParams(): {}[];
+        getSearchLabelSymbol($search: any): React.JSX.Element | null;
         /**
          * getGridSearchFormGroupDataByColumnConfig
          * @description 通过列设置获取gridSearchFormGroup的Data数据
@@ -162,17 +167,46 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          */
         assignSearchConfig(searchConfig: any, column: any): any;
         /**
+         * renderSearchBarCollapseControl
+         */
+        renderSearchBarCollapseControl(): any;
+        /**
          * renderSearchForm
          * 渲染Table查询的表单
          * @override
          */
-        renderSearchForm(): JSX.Element;
+        renderSearchForm(): React.JSX.Element | null;
+        /**
+         * renderSearchFormToolBarItems
+         * @description 渲染查询表单的工具栏项
+         * @return {ReactNode []}
+         * @param _defaultItems
+         */
+        renderSearchFormToolBarItems(_defaultItems: any): any[];
+        /**
+         * renderSearchFormToolBarDefaultPanel
+         * @description 渲染查询表单工具栏缺省面板
+         * @return {ReactNode}
+         */
+        renderSearchFormToolBarDefaultPanel(): React.JSX.Element | null;
         /***
          * renderSearchFooterItems
          * @param _defaultItems
          * @return {*}
          */
         renderSearchFooterItems(_defaultItems: any): any[];
+        /**
+         * getSearchFooterItemsEllipsisCount
+         * @description 获取SearchFooterItems省略的个数
+         * @return {Number}
+         */
+        getSearchFooterItemsEllipsisCount(): number;
+        /**
+         * isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing
+         * @description 是否折叠后只显示一个操作按钮
+         * @return {boolean}
+         */
+        isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
         /**
          * renderSearchFooterItemsImpl
          * @param defaultItems
@@ -199,7 +233,8 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * @param advancedSearchConfig - 高级搜索条件
          * @return {JSX.Element}
          */
-        renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): JSX.Element;
+        renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): React.JSX.Element;
+        renderAdvancedSearchPanel(params: any): null;
         /**
          * renderOptionColumn
          * @description 渲染配置列
@@ -210,5 +245,6 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
         renderOptionColumn(defaultItems: any, params: any): any;
     };
     [x: string]: any;
+    displayName: string;
 };
 export default _default;

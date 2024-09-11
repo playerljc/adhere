@@ -1,4 +1,3 @@
-import React from 'react';
-import { CroppingHandle, CroppingProps } from '../types';
-declare const CroppingHOC: React.MemoExoticComponent<React.ForwardRefExoticComponent<CroppingProps & React.RefAttributes<CroppingHandle>>>;
-export default CroppingHOC;
+import type { CroppingComponent } from '../types';
+declare const Cropping: CroppingComponent;
+export default Cropping;

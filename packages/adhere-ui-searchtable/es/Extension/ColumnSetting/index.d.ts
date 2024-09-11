@@ -1,22 +1,10 @@
-/// <reference types="react" />
-import PropTypes from 'prop-types';
+import { FC } from 'react';
+import type { ColumnSettingProps } from '../../types';
 /**
  * ColumnSetting
  * @description 列设置
  * @param props
  * @constructor
  */
-declare function ColumnSetting(props: any): JSX.Element;
-declare namespace ColumnSetting {
-    var defaultProps: {
-        columns: never[];
-    };
-    var propTypes: {
-        columns: PropTypes.Requireable<any[]>;
-        onShowColumns: PropTypes.Requireable<(...args: any[]) => any>;
-        onReset: PropTypes.Requireable<(...args: any[]) => any>;
-        onDisplayColumn: PropTypes.Requireable<(...args: any[]) => any>;
-        onSortEnd: PropTypes.Requireable<(...args: any[]) => any>;
-    };
-}
+declare const ColumnSetting: FC<ColumnSettingProps>;
 export default ColumnSetting;

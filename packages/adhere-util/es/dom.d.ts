@@ -25,12 +25,12 @@ declare const DomUtil: {
      */
     createElement(htmlStr: string): HTMLElement;
     /**
-     * getTopDom - 已target为开始向上查找元素
-     * @param {HtmlElement} target
-     * @param {string} selector
+     * getTopDom - 已source为开始向上查找元素
+     * @param {HtmlElement} source
+     * @param {string | string[]} selector
      * @return {HtmlElement}
      */
-    getTopDom(target: any, selector: string): HTMLElement | null;
+    getTopDom(source: HTMLElement, selector: string | string[]): HTMLElement | null;
     /**
      * on - 注册事件
      * @param el
@@ -183,7 +183,7 @@ declare const DomUtil: {
      * @param handler
      * @param capture
      */
-    addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean) => Function;
+    addClickListener: (el: HTMLElement, handler: (e) => {}, capture?: boolean) => Function;
     /**
      * clickInRange
      * @description 再点击区域内执行点击操作，超出的区域执行bodyClickHandler的操作
@@ -246,5 +246,35 @@ declare const DomUtil: {
      * @return {DOMRect | null}
      */
     getCursorRectByDocument(): DOMRect | null;
+    /**
+     * getTransformValues
+     * @description
+     * @param {HTMLElement} element
+     * @return {
+     *
+     * }
+     */
+    getTransformValues(element: HTMLElement): {
+        translateX: number;
+        translateY: number;
+        scaleX: number;
+        scaleY: number;
+        rotate: number;
+    };
+    getZoom(): number;
+    /**
+     * getScrollbarWidth
+     * @description 获取滚动条的宽度
+     * @return {number}
+     */
+    getScrollbarWidth(): number;
+    /**
+     * getMaximizedViewportSize
+     * @return {{width: number; height: number}}
+     */
+    getMaximizedViewportSize(): {
+        width: number;
+        height: number;
+    };
 };
 export default DomUtil;

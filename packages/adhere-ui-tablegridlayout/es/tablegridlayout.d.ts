@@ -1,3 +1,4 @@
-import type { TableGridLayoutMemoWrap } from './types';
-declare const TableGridLayoutWrap: TableGridLayoutMemoWrap;
-export default TableGridLayoutWrap;
+import type { TableGridLayoutComponent } from './types';
+export declare const selectorPrefix = "adhere-ui-table-grid-layout";
+declare const TableGridLayout: TableGridLayoutComponent;
+export default TableGridLayout;

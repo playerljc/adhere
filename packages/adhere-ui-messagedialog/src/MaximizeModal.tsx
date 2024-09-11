@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, memo, useCallback, useMemo, useRef, useState } from 'react';
+import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 
 import { BlockOutlined, BorderOutlined, CloseOutlined } from '@ant-design/icons';
@@ -8,7 +8,7 @@ import Space from '@baifendian/adhere-ui-space';
 import Modal from './Modal';
 import { ModalDialogProps } from './types';
 
-export const selectorPrefix = 'adhere-ui-messagedialog-maximize-modal';
+export const selectorPrefix = 'adhere-ui-message-dialog-maximize-modal';
 
 /**
  * MaximizeModalDialog
@@ -16,10 +16,10 @@ export const selectorPrefix = 'adhere-ui-messagedialog-maximize-modal';
  * @param props
  * @constructor
  */
-const MaximizeModalDialog: FC<ModalDialogProps> = (props) => {
+const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
   const {
-    config: { title, closeIcon, ...resetConfig },
-    ...resetProps
+    config: { title, closeIcon, ...restConfig },
+    ...restProps
   } = props;
 
   const draggableRef = useRef<any>(null);
@@ -37,16 +37,13 @@ const MaximizeModalDialog: FC<ModalDialogProps> = (props) => {
 
   const modalClassName = useMemo(
     () =>
-      classNames(`${selectorPrefix}`, resetConfig.className ?? '', {
+      classNames(`${selectorPrefix}`, restConfig.className ?? '', {
         [`${selectorPrefix}-maximize`]: isMaximize,
       }),
-    [isMaximize],
+    [isMaximize, restConfig],
   );
 
-  const modalRender = useCallback(
-    (_modal) => renderDraggableModal(_modal),
-    [isMaximize, bounds, draggableDisabled],
-  );
+  const modalRender = (_modal) => renderDraggableModal(_modal);
 
   /**
    * renderDraggableModal
@@ -77,7 +74,7 @@ const MaximizeModalDialog: FC<ModalDialogProps> = (props) => {
       );
     }
 
-    return <CloseOutlined className={`${selectorPrefix}-header-action`} onClick={onClose} />;
+    return <CloseOutlined rev="" className={`${selectorPrefix}-header-action`} onClick={onClose} />;
   }
 
   /**
@@ -108,10 +105,15 @@ const MaximizeModalDialog: FC<ModalDialogProps> = (props) => {
           <div className={`${selectorPrefix}-header-actions`}>
             <Space.Group direction="horizontal" size={5}>
               {isMaximize && (
-                <BlockOutlined className={`${selectorPrefix}-header-action`} onClick={onRevert} />
+                <BlockOutlined
+                  rev=""
+                  className={`${selectorPrefix}-header-action`}
+                  onClick={onRevert}
+                />
               )}
               {!isMaximize && (
                 <BorderOutlined
+                  rev=""
                   className={`${selectorPrefix}-header-action`}
                   onClick={onMaximize}
                 />
@@ -154,7 +156,7 @@ const MaximizeModalDialog: FC<ModalDialogProps> = (props) => {
   }
 
   function close() {
-    resetProps?.close?.();
+    restProps?.close?.();
   }
 
   function onClose() {
@@ -171,14 +173,16 @@ const MaximizeModalDialog: FC<ModalDialogProps> = (props) => {
 
   return (
     <Modal
-      {...resetProps}
+      {...restProps}
       config={{
-        ...(resetConfig ?? {}),
+        ...(restConfig ?? {}),
         className: modalClassName,
         modalRender,
       }}
     />
   );
-};
+});
 
-export default memo(MaximizeModalDialog);
+MaximizeModalDialog.displayName = 'MaximizeModalDialog';
+
+export default MaximizeModalDialog;

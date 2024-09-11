@@ -1,15 +1,43 @@
-import { Button, Result } from 'antd';
-import React from 'react';
+import SelectPersonCodeText from '!!raw-loader!./SelectPerson';
+import TaskCodeText from '!!raw-loader!./Task';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
+import P5CodeText from '!!raw-loader!./examples/p5';
+import P6CodeText from '!!raw-loader!./examples/p6';
+import P7CodeText from '!!raw-loader!./examples/p7';
+import P8CodeText from '!!raw-loader!./examples/p8';
+import P9CodeText from '!!raw-loader!./examples/p9';
+import P10CodeText from '!!raw-loader!./examples/p10';
+import P11CodeText from '!!raw-loader!./examples/p11';
+import P12CodeText from '!!raw-loader!./examples/p12';
+import P13CodeText from '!!raw-loader!./examples/p13';
+import P14CodeText from '!!raw-loader!./examples/p14';
 
-import { FormItemCreator, MessageDialog } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
   FunctionPropsSection,
+  PropsSection,
   Section,
 } from '@/lib/PlaygroundPage';
 
-import icon from './icon.svg';
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
+import P5 from './examples/p5';
+import P6 from './examples/p6';
+import P7 from './examples/p7';
+import P8 from './examples/p8';
+import P9 from './examples/p9';
+import P10 from './examples/p10';
+import P11 from './examples/p11';
+import P12 from './examples/p12';
+import P13 from './examples/p13';
+import P14 from './examples/p14';
 
 export default () => {
   function boxPanelConfig() {
@@ -25,59 +53,9 @@ export default () => {
             info: '使用Confirm',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      MessageDialog.Confirm({
-        title: '提示',
-        text: '确认要进行此操作码？',
-        width: 300,
-        zIndex: 1000,
-        local: 'zh_CN',
-        icon: <img src={icon} alt="" width={30} />,
-        onSuccess: () => {
-          return new Promise((resolve) => {
-            alert('点击了确认');
-
-            resolve();
-          });
-        },
-      });
-    }}
-  >
-    Open Confirm
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              MessageDialog.Confirm({
-                title: '提示',
-                text: '确认要进行此操作码？',
-                width: 300,
-                zIndex: 1000,
-                local: 'zh_CN',
-                icon: <img src={icon} alt="" width={30} />,
-                onSuccess: () => {
-                  return new Promise((resolve) => {
-                    alert('点击了确认');
-
-                    resolve();
-                  });
-                },
-              });
-            }}
-          >
-            Open Confirm
-          </Button>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -90,45 +68,9 @@ export default () => {
             info: '使用Alert',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      MessageDialog.Alert({
-        title: '提示',
-        text: '操作失败！',
-        width: 300,
-        zIndex: 1000,
-        local: 'zh_CN',
-        icon: <img src={icon} alt="" width={30} />,
-      });
-    }}
-  >
-    Open Alert
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              MessageDialog.Alert({
-                title: '提示',
-                text: '操作失败！',
-                width: 300,
-                zIndex: 1000,
-                local: 'zh_CN',
-                icon: <img src={icon} alt="" width={30} />,
-              });
-            }}
-          >
-            Open Alert
-          </Button>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
       {
         id: `p3`,
@@ -141,63 +83,9 @@ export default () => {
             info: '使用Prompt',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MessageDialog,FormItemCreator } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      MessageDialog.Prompt({
-        title: '提示',
-        config: {
-          type: FormItemCreator.SLIDER,
-          label: '大小',
-          initialValue: 10,
-        },
-        width: 300,
-        zIndex: 1000,
-        local: 'zh_CN',
-        onSuccess: (value) => {
-          return new Promise((resolve) => {
-            alert(value);
-            resolve();
-          });
-        },
-      });
-    }}
-  >
-    Open Prompt
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              MessageDialog.Prompt({
-                title: '提示',
-                config: {
-                  type: FormItemCreator.SLIDER,
-                  label: '大小',
-                  initialValue: 10,
-                },
-                width: 300,
-                zIndex: 1000,
-                local: 'zh_CN',
-                onSuccess: (value) => {
-                  return new Promise((resolve) => {
-                    alert(value);
-                    resolve();
-                  });
-                },
-              });
-            }}
-          >
-            Open Prompt
-          </Button>
-        ),
+        codeText: P3CodeText,
+        renderChildren: () => <P3 />,
       },
       {
         id: `p4`,
@@ -210,61 +98,9 @@ export default () => {
             info: '使用InputPrompt',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      MessageDialog.InputPrompt({
-        title: '提示',
-        config: {
-          label: '姓名',
-          initialValue: '张三',
-        },
-        width: 300,
-        zIndex: 1000,
-        local: 'zh_CN',
-        onSuccess: (value) => {
-          return new Promise((resolve) => {
-            alert(value);
-            resolve();
-          });
-        },
-      });
-    }}
-  >
-    Open InputPrompt
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              MessageDialog.InputPrompt({
-                title: '提示',
-                config: {
-                  label: '姓名',
-                  initialValue: '张三',
-                },
-                width: 300,
-                zIndex: 1000,
-                local: 'zh_CN',
-                onSuccess: (value) => {
-                  return new Promise((resolve) => {
-                    alert(value);
-                    resolve();
-                  });
-                },
-              });
-            }}
-          >
-            Open InputPrompt
-          </Button>
-        ),
+        codeText: P4CodeText,
+        renderChildren: () => <P4 />,
       },
       {
         id: `p5`,
@@ -277,61 +113,9 @@ export default () => {
             info: '使用TextAreaPrompt',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      MessageDialog.TextAreaPrompt({
-        title: '提示',
-        config: {
-          label: '地址',
-          initialValue: '',
-        },
-        width: 300,
-        zIndex: 1000,
-        local: 'zh_CN',
-        onSuccess: (value) => {
-          return new Promise((resolve) => {
-            alert(value);
-            resolve();
-          });
-        },
-      });
-    }}
-  >
-    Open InputPrompt
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              MessageDialog.TextAreaPrompt({
-                title: '提示',
-                config: {
-                  label: '地址',
-                  initialValue: '',
-                },
-                width: 300,
-                zIndex: 1000,
-                local: 'zh_CN',
-                onSuccess: (value) => {
-                  return new Promise((resolve) => {
-                    alert(value);
-                    resolve();
-                  });
-                },
-              });
-            }}
-          >
-            Open TextAreaPrompt
-          </Button>
-        ),
+        codeText: P5CodeText,
+        renderChildren: () => <P5 />,
       },
       {
         id: `p6`,
@@ -344,61 +128,9 @@ export default () => {
             info: '使用PassWordPrompt',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      MessageDialog.PassWordPrompt({
-        title: '提示',
-        config: {
-          label: '密码',
-          initialValue: '',
-        },
-        width: 300,
-        zIndex: 1000,
-        local: 'zh_CN',
-        onSuccess: (value) => {
-          return new Promise((resolve) => {
-            alert(value);
-            resolve();
-          });
-        },
-      });
-    }}
-  >
-    Open PassWordPrompt
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              MessageDialog.PassWordPrompt({
-                title: '提示',
-                config: {
-                  label: '密码',
-                  initialValue: '',
-                },
-                width: 300,
-                zIndex: 1000,
-                local: 'zh_CN',
-                onSuccess: (value) => {
-                  return new Promise((resolve) => {
-                    alert(value);
-                    resolve();
-                  });
-                },
-              });
-            }}
-          >
-            Open PassWordPrompt
-          </Button>
-        ),
+        codeText: P6CodeText,
+        renderChildren: () => <P6 />,
       },
       {
         id: `p7`,
@@ -411,61 +143,9 @@ export default () => {
             info: '使用NumberPrompt',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      MessageDialog.NumberPrompt({
-        title: '提示',
-        config: {
-          label: '数字',
-          initialValue: '',
-        },
-        width: 300,
-        zIndex: 1000,
-        local: 'zh_CN',
-        onSuccess: (value) => {
-          return new Promise((resolve) => {
-            alert(value);
-            resolve();
-          });
-        },
-      });
-    }}
-  >
-    Open NumberPrompt
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              MessageDialog.NumberPrompt({
-                title: '提示',
-                config: {
-                  label: '数字',
-                  initialValue: '',
-                },
-                width: 300,
-                zIndex: 1000,
-                local: 'zh_CN',
-                onSuccess: (value) => {
-                  return new Promise((resolve) => {
-                    alert(value);
-                    resolve();
-                  });
-                },
-              });
-            }}
-          >
-            Open NumberPrompt
-          </Button>
-        ),
+        codeText: P7CodeText,
+        renderChildren: () => <P7 />,
       },
       {
         id: `p8`,
@@ -478,75 +158,9 @@ export default () => {
             info: '使用Modal',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Result, Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      const {close} = MessageDialog.Modal({
-        config: {
-          title: '提示',
-        },
-        defaultCloseBtn: false,
-        children: (
-          <Result
-            title="Your operation has been executed"
-            extra={
-              <Button
-                type="primary"
-                key="console"
-                onClick={() => {
-                  // MessageDialog.close(el);
-                  close();
-                }}
-              >
-                Close
-              </Button>
-            }
-          />
-        ),
-      });
-    }}
-  >
-    Open Modal
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              const { close } = MessageDialog.Modal({
-                config: {
-                  title: '提示',
-                },
-                defaultCloseBtn: false,
-                children: (
-                  <Result
-                    title="Your operation has been executed"
-                    extra={
-                      <Button
-                        type="primary"
-                        key="console"
-                        onClick={() => {
-                          // MessageDialog.close(el);
-                          close();
-                        }}
-                      >
-                        Close
-                      </Button>
-                    }
-                  />
-                ),
-              });
-            }}
-          >
-            Open Modal
-          </Button>
-        ),
+        codeText: P8CodeText,
+        renderChildren: () => <P8 />,
       },
       {
         id: `p9`,
@@ -559,75 +173,114 @@ export default () => {
             info: '使用MaximizeModal',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Result, Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      const {close} = MessageDialog.Modal({
-        config: {
-          title: '提示',
-        },
-        defaultCloseBtn: false,
-        children: (
-          <Result
-            title="Your operation has been executed"
-            extra={
-              <Button
-                type="primary"
-                key="console"
-                onClick={() => {
-                  // MessageDialog.close(el);
-                  close();
-                }}
-              >
-                Close
-              </Button>
-            }
-          />
-        ),
-      });
-    }}
-  >
-    Open Modal
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              const { close } = MessageDialog.MaximizeModal({
-                config: {
-                  title: '提示',
-                },
-                defaultCloseBtn: false,
-                children: (
-                  <Result
-                    title="Your operation has been executed"
-                    extra={
-                      <Button
-                        type="primary"
-                        key="console"
-                        onClick={() => {
-                          // MessageDialog.close(el);
-                          close();
-                        }}
-                      >
-                        Close
-                      </Button>
-                    }
-                  />
-                ),
-              });
-            }}
-          >
-            Open MaximizeModal
-          </Button>
-        ),
+        codeText: P9CodeText,
+        renderChildren: () => <P9 />,
+      },
+      {
+        id: `p10`,
+        name: '使用TriggerPrompt弹出MessageDialog',
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '使用TriggerPrompt弹出MessageDialog',
+            info: '基本的显示 - 只显示内容',
+          },
+        },
+        type: 'PlayGround',
+        codeText: P10CodeText,
+        renderChildren: () => <P10 />,
+      },
+      {
+        id: `p11`,
+        name: '使用TriggerPrompt选取人员',
+        cardProps: {
+          description: {
+            title: '使用TriggerPrompt选取人员',
+            info: '在弹出的穿梭框中选取指定的人员',
+          },
+        },
+        active: 'p11.jsx',
+        config: [
+          {
+            key: 'p11.jsx',
+            title: 'p11.jsx',
+            codeText: P11CodeText,
+          },
+          {
+            key: 'SelectPerson.jsx',
+            title: 'SelectPerson.jsx',
+            codeText: SelectPersonCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P11 />,
+      },
+      {
+        id: `p12`,
+        name: '在表单中当作一个FormItem来使用TriggerPrompt',
+        cardProps: {
+          description: {
+            title: '在表单中当作一个FormItem来使用TriggerPrompt',
+            info: '在表单中当作一个FormItem来使用TriggerPrompt',
+          },
+        },
+        type: 'PlayGroundTab',
+        active: 'p12.jsx',
+        config: [
+          {
+            key: 'p12.jsx',
+            title: 'p12.jsx',
+            codeText: P12CodeText,
+          },
+          {
+            key: 'SelectPerson.jsx',
+            title: 'SelectPerson.jsx',
+            codeText: SelectPersonCodeText,
+          },
+        ],
+        renderChildren: () => <P12 />,
+      },
+      {
+        id: `p13`,
+        name: '处理一个表单',
+        cardProps: {
+          description: {
+            title: '弹出一个表单进行处理',
+            info: '弹出一个表单进行处理',
+          },
+        },
+        type: 'PlayGroundTab',
+        active: 'p13.jsx',
+        config: [
+          {
+            key: 'p13.jsx',
+            title: 'p13.jsx',
+            codeText: P13CodeText,
+          },
+          {
+            key: 'Task.jsx',
+            title: 'Task.jsx',
+            codeText: TaskCodeText,
+          },
+        ],
+        renderChildren: () => <P13 />,
+      },
+      {
+        id: `p14`,
+        name: '动态设置Modal的参数',
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '动态设置Modal的参数',
+            info: '动态设置Modal的参数',
+          },
+        },
+        type: 'PlayGround',
+        codeText: P14CodeText,
+        renderChildren: () => <P14 />,
       },
     ];
   }
@@ -1135,6 +788,49 @@ export default () => {
           },
           {
             border: true,
+            title: 'MaximizeModal方法',
+            data: [
+              {
+                name: 'MessageDialog.MaximizeModal',
+                desc: '打开一个可以最大化和还原的对话框',
+                modifier: 'static',
+                params: [
+                  {
+                    name: 'config',
+                    desc: '配置',
+                    type: 'Object - antd的Modal的配置',
+                    defaultVal: '{}',
+                    required: '',
+                  },
+                  {
+                    name: 'children',
+                    desc: '显示的内容',
+                    type: 'React.ReactElement | null',
+                    defaultVal: '',
+                    required: '',
+                  },
+                  {
+                    name: 'defaultCloseBtn',
+                    desc: '是否缺省有关闭按钮',
+                    type: 'boolean',
+                    defaultVal: 'true',
+                    required: '',
+                  },
+                  {
+                    name: 'local',
+                    desc: '语言',
+                    type: 'string [zh_CN | pt_PT | en_US]',
+                    defaultVal: 'zh_CN',
+                    required: '',
+                  },
+                ],
+                returnType: 'HtmlElement',
+                returnDesc: '返回Modal的HtmlElement对象',
+              },
+            ],
+          },
+          {
+            border: true,
             title: 'Close方法',
             data: [
               {
@@ -1152,6 +848,130 @@ export default () => {
                 ],
                 returnType: 'void',
                 returnDesc: '',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'Trigger',
+            data: [
+              {
+                name: 'MessageDialog.Trigger',
+                desc: 'Trigger组件',
+                modifier: 'static',
+                params: [],
+                returnType: 'ReactFunction',
+                returnDesc: '',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'TriggerPrompt',
+            data: [
+              {
+                name: 'MessageDialog.TriggerPrompt',
+                desc: 'Trigger组件',
+                modifier: 'static',
+                params: [],
+                returnType: 'ReactFunction',
+                returnDesc: '',
+              },
+            ],
+          },
+        ]}
+      />
+
+      <PropsSection
+        title="Props"
+        config={[
+          {
+            border: true,
+            title: 'Trigger',
+            data: [
+              {
+                params: 'className',
+                desc: '附加的样式表',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '附加的样式',
+                type: 'React.CSSProperties',
+                defaultVal: '',
+              },
+              {
+                params: 'children',
+                desc: '',
+                type: 'any',
+                defaultVal: '',
+              },
+              {
+                params: 'value',
+                desc: '',
+                type: 'any',
+                defaultVal: '',
+              },
+              {
+                params: 'onChange',
+                desc: '',
+                type: '(params?: any) => void',
+                defaultVal: '',
+              },
+              {
+                params: 'renderTrigger',
+                desc: '',
+                type: '() => ReactNode',
+                defaultVal: '',
+              },
+              {
+                params: 'maximized',
+                desc: '',
+                type: 'boolean',
+                defaultVal: '',
+              },
+              {
+                params: 'actions',
+                desc: '',
+                type: `
+                  Omit<ButtonProps, 'onClick'> &
+                    {
+                      key: any;
+                      onClick?: () => Promise<any>;
+                    }[];
+                  modalConfig?: Omit<
+                    Omit<ModalArgv, 'config'> & {
+                      config?: Omit<ModalProps, 'footer'>;
+                    },
+                    'children' | 'defaultCloseBtn'
+                  >
+                `,
+                defaultVal: '',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'TriggerPrompt',
+            data: [
+              {
+                params: 'onSubmit',
+                desc: '提交，resolve的值是onChange的参数',
+                type: '() => Promise<any>',
+                defaultVal: '',
+              },
+              {
+                params: 'modalConfig',
+                desc: 'Modal的配置',
+                type: "Omit<ModalArgv, 'children' | 'defaultCloseBtn'>",
+                defaultVal: '',
+              },
+              {
+                params: 'okText',
+                desc: '确定按钮的文本',
+                type: 'string',
+                defaultVal: '',
               },
             ],
           },

@@ -1,3 +1,45 @@
+# 1.0.24
+
+***
+
+2024-04-22
+
+* 加入beforeTrigger方法
+* Trigger和TriggerPrompt加入close方法
+* Trigger加入defaultCloseBtn配置
+* 修改Trigger修改props不刷新的问题
+* 加入allowMultipleInstances参数控制是否允许多实例共存
+* Mobile的适配
+* 修复MaximizeModal组件最大化和最小化的样式问题
+* 加入renderToWrapper方法
+* 加入disable设置和update刷新方法
+* 加入是否允许多实例共存的设置
+
+# 1.0.23
+
+***
+
+2024-02-06
+
+* Modal和MaximizeModal的返回值中加入setConfig方法
+
+# 1.0.22
+
+***
+
+2024-01-28
+
+* 加入节流操作
+
+# 1.0.21
+
+***
+
+2023-10-10
+
+* 加入Trigger组件
+* 加入TriggerPrompt组件
+
 # 1.0.20
 
 ***

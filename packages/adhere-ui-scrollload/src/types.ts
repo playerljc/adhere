@@ -1,15 +1,18 @@
-import { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
+import { NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import type { CSSProperties } from 'react';
 
-export interface ScrollLoadHOCFunction<T, P>
-  extends ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>> {
+export type ScrollLoadComponent = NamedExoticComponent<
+  PropsWithoutRef<ScrollLoadProps> & RefAttributes<ScrollLoadRefHandle>
+> & {
   EMPTY: string;
   ERROR: string;
   NORMAL: string;
-}
+  HIDE_EMPTY: string;
+};
 
 export interface ScrollLoadRefHandle {
   hideAll: () => void;
+  getScrollContainer: () => HTMLElement | null;
 }
 
 /**
@@ -26,6 +29,7 @@ export interface ScrollLoadProps {
   emptyStyle?: CSSProperties;
   errorClassName?: string;
   errorStyle?: CSSProperties;
+  disabled?: boolean;
   distance?: number;
   onScrollBottom?: (handle?: (status?: string) => void) => void;
   onEmptyClick?: () => void;

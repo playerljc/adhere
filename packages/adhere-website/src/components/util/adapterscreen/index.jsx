@@ -1,13 +1,14 @@
-import { Button, Table } from 'antd';
-import React, { useRef } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
 
-import { AdapterScreen } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
   FunctionPropsSection,
   Section,
 } from '@/lib/PlaygroundPage';
+
+import P1 from './examples/p1';
 
 // const dataSource = [
 //   {
@@ -58,31 +59,9 @@ export default () => {
             info: '基本使用',
           },
         },
-        codeText: `
-  import { AdapterScreen } from '@baifendian/adhere';
-  import React from 'react';
-  import { Button } from 'antd';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      AdapterScreen.init();
-    }}
-  >
-    控制整体页面的缩放
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              AdapterScreen.init();
-            }}
-          >
-            控制整体页面的缩放
-          </Button>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       /*{
         id: `p2`,

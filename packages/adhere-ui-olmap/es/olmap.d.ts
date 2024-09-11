@@ -1,6 +1,6 @@
 import React from 'react';
-import GeoLayer from './geolayer';
-import { OLMapProps } from './types';
+import GeoLayer from './GeoLayer';
+import type { OLMapProps } from './types';
 /**
  * OlMap
  * @class OlMap
@@ -38,14 +38,14 @@ declare class OlMap extends React.Component<OLMapProps, any> {
      * @param config
      * @param zIndex
      */
-    addWindLayer(data: any, config: any, zIndex?: number): import("./windlayer").default;
+    addWindLayer(data: any, config: any, zIndex?: number): import("./WindLayer").default;
     /**
      * 添加数据层
      * @return {*|{vectorLayer, vectorSource}}
      */
     addDataLayer(zIndex: any): {
-        vectorLayer: import("ol/layer/Vector").default<import("ol/source/Vector").default<import("ol/geom/Geometry").default>>;
-        vectorSource: import("ol/source/Vector").default<import("ol/geom/Geometry").default>;
+        vectorLayer: import("ol/layer").Vector<import("ol/source").Vector<import("ol/geom").Geometry>>;
+        vectorSource: import("ol/source").Vector<import("ol/geom").Geometry>;
     };
     /**
      * 给地图实例添加 hover监听者
@@ -81,6 +81,6 @@ declare class OlMap extends React.Component<OLMapProps, any> {
      * @return {*|Map}
      */
     getMap(): any;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default OlMap;

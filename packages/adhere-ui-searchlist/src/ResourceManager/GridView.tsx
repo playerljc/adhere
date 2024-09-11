@@ -12,8 +12,8 @@ import GridViewFactory from './GridViewFactory';
 class GridView<
   P extends SearchListImplementProps,
   S extends SearchListImplementState,
-> extends GridViewFactory<SearchListImplementProps, SearchListImplementState>(
-  SearchListImplement,
-) {}
+> extends GridViewFactory<SearchListImplementProps, SearchListImplementState>(SearchListImplement) {
+  static displayName = 'GridView';
+}
 
 export default GridView;

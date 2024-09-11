@@ -1,5 +1,3 @@
-import { Anchor } from 'antd';
+import Anchor from './Anchor';
 
-import { createFactory } from '../util';
-
-export default createFactory(Anchor, {});
+export default Anchor;

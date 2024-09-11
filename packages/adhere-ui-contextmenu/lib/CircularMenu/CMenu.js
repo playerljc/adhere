@@ -1,0 +1,2 @@
+"use strict";var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}},config_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./config"))),hide_1=__importDefault(require("./hide")),show_1=__importDefault(require("./show")),styles_1=__importDefault(require("./styles"));function CMenu(e,t){this._container=e,t&&(this._pMenu=t)}(exports.default=CMenu).prototype={constructor:CMenu,config:config_1.default,show:show_1.default,hide:hide_1.default,styles:styles_1.default};
+//# sourceMappingURL=CMenu.js.map

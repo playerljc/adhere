@@ -1,28 +1,30 @@
-import type { ForwardRefRenderFunction } from 'react';
-import React, { forwardRef, memo } from 'react';
+import React, { PropsWithoutRef, RefAttributes, forwardRef, memo } from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
-import SplitLayout from '../splitlayout';
+import SplitLayout from '../SplitLayout';
 import { TBLRCSplitLayoutProps } from '../types';
 
 /**
  * TRCLayout
  * @constructor
  */
-const TRCLayout: ForwardRefRenderFunction<any, TBLRCSplitLayoutProps> = (
-  { tSplitProps, rSplitProps, ...props },
-  ref,
-) => {
-  return (
-    <FlexLayout.TRBLC.TRCLayout
-      // @ts-ignore
-      ref={ref}
-      {...props}
-      tSplit={<SplitLayout {...(tSplitProps ?? {})} />}
-      rSplit={<SplitLayout {...(rSplitProps ?? {})} />}
-    />
-  );
-};
+const TRCLayout = memo<PropsWithoutRef<TBLRCSplitLayoutProps> & RefAttributes<HTMLDivElement>>(
+  forwardRef<HTMLDivElement, TBLRCSplitLayoutProps>(
+    ({ tSplitProps, rSplitProps, ...props }, ref) => {
+      return (
+        <FlexLayout.TRBLC.TRCLayout
+          // @ts-ignore
+          ref={ref}
+          {...props}
+          tSplit={<SplitLayout {...(tSplitProps ?? {})} />}
+          rSplit={<SplitLayout {...(rSplitProps ?? {})} />}
+        />
+      );
+    },
+  ),
+);
 
-export default memo(forwardRef<any, TBLRCSplitLayoutProps>(TRCLayout));
+TRCLayout.displayName = 'TRCLayout';
+
+export default TRCLayout;

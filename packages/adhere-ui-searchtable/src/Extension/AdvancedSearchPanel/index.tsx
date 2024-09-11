@@ -1,8 +1,7 @@
 import { Button } from 'antd';
 import classNames from 'classnames';
-import type { FC } from 'react';
-import React, { useEffect, useRef, useState } from 'react';
-import ReactDOM from 'react-dom';
+import React, { memo, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import {
   FilterOutlined,
@@ -12,6 +11,7 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import SlideLayout from '@baifendian/adhere-ui-slidelayout';
 import Space from '@baifendian/adhere-ui-space';
@@ -25,7 +25,7 @@ const { VerticalFlexLayout, ScrollLayout } = FlexLayout;
 const { renderGridSearchFormGroup } = TableGridLayout;
 const { Overlay } = SlideLayout;
 
-const _selectorPrefix = `${selectorPrefix}-advancedsearchpanel`;
+const _selectorPrefix = `${selectorPrefix}-advanced-search-panel`;
 
 /**
  * AdvancedSearchPanel
@@ -33,7 +33,7 @@ const _selectorPrefix = `${selectorPrefix}-advancedsearchpanel`;
  * @return {React.ReactPortal}
  * @constructor
  */
-const AdvancedSearchPanel: FC<AdvancedSearchPanelProps> = (props) => {
+const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
   const {
     advancedSearchConfig: {
       advancedSearch: { getPopupContainer, ...overlayProps },
@@ -59,7 +59,7 @@ const AdvancedSearchPanel: FC<AdvancedSearchPanelProps> = (props) => {
     setCollapse(overlayProps.collapse);
   }, [overlayProps.collapse]);
 
-  return ReactDOM.createPortal(
+  return createPortal(
     <Overlay
       ref={overlayRef}
       {...(overlayProps as any)}
@@ -115,11 +115,21 @@ const AdvancedSearchPanel: FC<AdvancedSearchPanelProps> = (props) => {
           <div className={`${_selectorPrefix}-main`}>
             <div className={`${_selectorPrefix}-scroll`}>
               <ScrollLayout scrollY className={`${_selectorPrefix}-scroll-innner`}>
-                {renderGridSearchFormGroup(
+                {
                   // @ts-ignore
-                  showStrategy === 'all' ? groupData : remainingGroupData,
-                  tableGridLayoutConfig,
-                )}
+                  props?.children?.({ ...props }) ?? (
+                    <ConfigProvider.Context.Consumer>
+                      {({ media }) =>
+                        renderGridSearchFormGroup(
+                          // @ts-ignore
+                          showStrategy === 'all' ? groupData : remainingGroupData,
+                          tableGridLayoutConfig,
+                          media,
+                        )
+                      }
+                    </ConfigProvider.Context.Consumer>
+                  )
+                }
               </ScrollLayout>
             </div>
 
@@ -149,8 +159,9 @@ const AdvancedSearchPanel: FC<AdvancedSearchPanelProps> = (props) => {
     </Overlay>,
     getPopupContainer(),
   );
-};
+});
 
+// @ts-ignore
 AdvancedSearchPanel.defaultProps = {
   groupData: [],
   tableGridLayoutConfig: {
@@ -194,4 +205,6 @@ AdvancedSearchPanel.defaultProps = {
   },
 };
 
-export default React.memo(AdvancedSearchPanel);
+AdvancedSearchPanel.displayName = 'AdvancedSearchPanel';
+
+export default AdvancedSearchPanel;

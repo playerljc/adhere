@@ -1,2 +1,2 @@
-import _Layout from"antd/es/layout";import{createFactory}from"../util";export default createFactory(_Layout,{});
+import Layout from"./Layout";export default Layout;
 //# sourceMappingURL=index.js.map

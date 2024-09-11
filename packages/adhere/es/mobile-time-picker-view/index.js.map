@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["mobile-time-picker-view/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-mobile-ui-time-picker-view/es';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,kEACHA"}

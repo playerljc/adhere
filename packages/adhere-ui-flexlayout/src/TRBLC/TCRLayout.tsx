@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import omit from 'omit.js';
-import React, { ForwardRefRenderFunction, forwardRef, memo, useMemo } from 'react';
+import React, { PropsWithoutRef, RefAttributes, forwardRef, memo, useMemo } from 'react';
 
-import Auto from '../auto';
-import Fixed from '../fixed';
-import FlexLayout, { selectorPrefix } from '../flexlayout';
-import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
+import Auto from '../Auto';
+import Fixed from '../Fixed';
+import FlexLayout, { selectorPrefix } from '../FlexLayout';
+import type { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
 
 /**
  * TCRLayout
@@ -18,94 +18,104 @@ import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @param ref
  * @constructor
  */
-const TCRLayout: ForwardRefRenderFunction<any, TBLRCLayoutProps> = (
-  {
-    wrapClassName,
-    wrapStyle,
-    autoWrapProps,
-    autoInnerProps,
-    rProps,
-    rSplit,
-    tProps,
-    tSplit,
-    cProps,
-    ...props
-  },
-  ref,
-) => {
-  // @ts-ignore
-  const RProps = omit<TBLRProps, string>(rProps, ['children']);
-  // @ts-ignore
-  const TProps = omit<TBLRProps, string>(tProps, ['children']);
-  // @ts-ignore
-  const CProps = omit<CenterProps, string>(cProps, ['children']);
+const TCRLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivElement>>(
+  forwardRef<HTMLDivElement, TBLRCLayoutProps>(
+    (
+      {
+        wrapClassName,
+        wrapStyle,
+        autoWrapProps,
+        autoInnerProps,
+        rProps,
+        rSplit,
+        tProps,
+        tSplit,
+        cProps,
+        ...props
+      },
+      ref,
+    ) => {
+      // @ts-ignore
+      const RProps = omit<TBLRProps, string>(rProps, ['children']);
+      // @ts-ignore
+      const TProps = omit<TBLRProps, string>(tProps, ['children']);
+      // @ts-ignore
+      const CProps = omit<CenterProps, string>(cProps, ['children']);
 
-  const classList = useMemo(
-    () =>
-      classNames(
-        `${selectorPrefix}-trblc`,
-        {
-          [`${selectorPrefix}-trblc-no-autofix`]:
-            cProps && 'autoFixed' in cProps && !cProps.autoFixed,
-        },
-        wrapClassName ?? '',
-      ),
-    [cProps],
-  );
+      const classList = useMemo(
+        () =>
+          classNames(
+            `${selectorPrefix}-trblc`,
+            {
+              [`${selectorPrefix}-trblc-no-autofix`]:
+                cProps && 'autoFixed' in cProps && !cProps.autoFixed,
+            },
+            wrapClassName ?? '',
+          ),
+        [cProps],
+      );
 
-  const autoWrapClassList = useMemo(
-    () =>
-      classNames(
-        `${selectorPrefix}-trblc-auto`,
-        {
-          [`${selectorPrefix}-trblc-auto-no-autofix`]:
-            autoWrapProps && 'autoFixed' in autoWrapProps && !autoWrapProps.autoFixed,
-        },
-        autoWrapProps?.className ?? '',
-      ),
-    [autoWrapProps],
-  );
+      const autoWrapClassList = useMemo(
+        () =>
+          classNames(
+            `${selectorPrefix}-trblc-auto`,
+            {
+              [`${selectorPrefix}-trblc-auto-no-autofix`]:
+                autoWrapProps && 'autoFixed' in autoWrapProps && !autoWrapProps.autoFixed,
+            },
+            autoWrapProps?.className ?? '',
+          ),
+        [autoWrapProps],
+      );
 
-  const autoInnerClassList = useMemo(
-    () =>
-      classNames(
-        `${selectorPrefix}-trblc-auto-inner`,
-        {
-          [`${selectorPrefix}-trblc-auto-inner-no-autofix`]:
-            autoInnerProps && 'autoFixed' in autoInnerProps && !autoInnerProps.autoFixed,
-        },
-        autoInnerProps?.className ?? '',
-      ),
-    [autoInnerProps],
-  );
+      const autoInnerClassList = useMemo(
+        () =>
+          classNames(
+            `${selectorPrefix}-trblc-auto-inner`,
+            {
+              [`${selectorPrefix}-trblc-auto-inner-no-autofix`]:
+                autoInnerProps && 'autoFixed' in autoInnerProps && !autoInnerProps.autoFixed,
+            },
+            autoInnerProps?.className ?? '',
+          ),
+        [autoInnerProps],
+      );
 
-  return (
-    <div ref={ref} className={classList} style={wrapStyle ?? {}}>
-      <FlexLayout
-        {...(props ?? {})}
-        className={classNames(`${selectorPrefix}-tcr-layout`, props?.className ?? '')}
-        direction="horizontal"
-      >
-        <Auto {...(autoWrapProps ?? {})} fit={false} className={autoWrapClassList}>
+      return (
+        <div ref={ref} className={classList} style={wrapStyle ?? {}}>
           <FlexLayout
-            {...(autoInnerProps ?? {})}
-            className={autoInnerClassList}
-            direction="vertical"
+            {...(props ?? {})}
+            className={classNames(`${selectorPrefix}-tcr-layout`, props?.className ?? '')}
+            direction="horizontal"
           >
-            <Fixed {...(TProps ?? {})}>{tProps?.children}</Fixed>
+            <Auto {...(autoWrapProps ?? {})} fit={false} className={autoWrapClassList}>
+              <FlexLayout
+                {...(autoInnerProps ?? {})}
+                className={autoInnerClassList}
+                direction="vertical"
+              >
+                <Fixed collapseDirection="T" {...(TProps ?? {})}>
+                  {tProps?.children}
+                </Fixed>
+
+                {tSplit}
+
+                <Auto {...(CProps ?? {})}>{cProps?.children}</Auto>
+              </FlexLayout>
+            </Auto>
 
             {tSplit}
 
-            <Auto {...(CProps ?? {})}>{cProps?.children}</Auto>
+            <Fixed collapseDirection="R" {...(RProps ?? {})}>
+              {rProps?.children}
+            </Fixed>
           </FlexLayout>
-        </Auto>
+        </div>
+      );
+    },
+  ),
+);
 
-        {tSplit}
+TCRLayout.displayName = 'TCRLayout';
 
-        <Fixed {...(RProps ?? {})}>{rProps?.children}</Fixed>
-      </FlexLayout>
-    </div>
-  );
-};
-
-export default memo(forwardRef<any, TBLRCLayoutProps>(TCRLayout));
+export default TCRLayout;

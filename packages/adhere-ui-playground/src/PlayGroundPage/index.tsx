@@ -1,11 +1,18 @@
 import classNames from 'classnames';
-import React, { ForwardRefRenderFunction, ReactElement, forwardRef, memo, useContext } from 'react';
+import React, {
+  PropsWithoutRef,
+  ReactElement,
+  RefAttributes,
+  forwardRef,
+  memo,
+  useContext,
+} from 'react';
 
 import Space from '@baifendian/adhere-ui-space';
 
 import AnchorNavigation from '../AnchorNavigation';
 import { AnchorNavigationContext } from '../AnchorNavigationContext';
-import { PlayGroundPageHOC, PlayGroundPageProps } from '../types';
+import type { PlayGroundPageComponent, PlayGroundPageProps } from '../types';
 import CodeBoxSection from './CodeBoxSection';
 import { PlayGroundPageContext } from './Context';
 import FunctionPropsSection from './FunctionPropsSection';
@@ -18,80 +25,83 @@ const selectPrefix = 'adhere-ui-playground-page';
  * PlayGroundPage
  * @constructor
  */
-const PlayGroundPage: ForwardRefRenderFunction<HTMLDivElement, PlayGroundPageProps> = (
-  props,
-  ref,
-) => {
-  const {
-    className = '',
-    style = {},
-    anchorPosition = {
-      top: 77,
-      width: 120,
-    },
-    children,
-  } = props;
+const InternalPlayGroundPage = memo<
+  PropsWithoutRef<PlayGroundPageProps> & RefAttributes<HTMLElement>
+>(
+  forwardRef<HTMLElement, PlayGroundPageProps>((props, ref) => {
+    const {
+      className,
+      style,
+      anchorNavigationClassName,
+      anchorNavigationStyle,
+      anchorNavigationAutoClassName,
+      anchorNavigationAutoStyle,
+      anchorNavigationFixedClassName,
+      anchorNavigationFixedStyle,
+      anchorPosition = {
+        top: 77,
+        width: 120,
+      },
+      children,
+    } = props;
 
-  const { scrollEl } = useContext(PlayGroundPageContext);
+    const { scrollEl } = useContext(PlayGroundPageContext);
 
-  function getAnchors() {
-    return children
-      .filter(
-        (c) =>
-          'type' in c &&
-          c.type?.type instanceof Function &&
-          c.type?.type === (CodeBoxSection as unknown as ReactElement)?.type,
-      )
-      .map((c) =>
-        c?.props?.config?.map((t) => ({
-          name: t.name,
-          anchor: t.id,
-        })),
-      )
-      ?.flat();
-  }
+    function getAnchors() {
+      return children
+        .flat()
+        .filter(
+          (c) =>
+            'type' in c &&
+            c.type?.type instanceof Function &&
+            c.type?.type === (CodeBoxSection as unknown as ReactElement)?.type,
+        )
+        .map((c) =>
+          c?.props?.config?.map((t) => ({
+            name: t.name,
+            anchor: t.id,
+          })),
+        )
+        ?.flat();
+    }
 
-  return (
-    <AnchorNavigationContext.Provider
-      value={{
-        scrollEl: scrollEl!,
-      }}
-    >
-      <div ref={ref} className={`${classNames(selectPrefix, className ?? '')}`} style={style ?? {}}>
-        <AnchorNavigation anchors={getAnchors()} anchorPosition={anchorPosition}>
-          <Space.Group direction="vertical">{children}</Space.Group>
-        </AnchorNavigation>
-      </div>
-    </AnchorNavigationContext.Provider>
-  );
-};
-
-// PlayGroundPage.defaultProps = {
-//   className: '',
-//   style: {},
-//   anchorPosition: {
-//     top: 77,
-//     width: 120,
-//   },
-// };
-//
-// PlayGroundPage.propTypes = {
-//   className: PropTypes.string,
-//   style: PropTypes.object,
-//   anchorPosition: PropTypes.shape({
-//     top: PropTypes.number,
-//     width: PropTypes.number,
-//   }),
-// };
-
-// @ts-ignore
-const PlayGroundPageForward: PlayGroundPageHOC<HTMLDivElement, PlayGroundPageProps> = memo(
-  forwardRef<HTMLDivElement, PlayGroundPageProps>(PlayGroundPage),
+    return (
+      <AnchorNavigationContext.Provider
+        value={{
+          scrollEl: scrollEl!,
+        }}
+      >
+        <div
+          // @ts-ignore
+          ref={ref}
+          className={`${classNames(selectPrefix, className ?? '')}`}
+          style={style ?? {}}
+        >
+          <AnchorNavigation
+            className={anchorNavigationClassName}
+            style={anchorNavigationStyle}
+            autoClassName={anchorNavigationAutoClassName}
+            autoStyle={anchorNavigationAutoStyle}
+            fixedClassName={anchorNavigationFixedClassName}
+            fixedStyle={anchorNavigationFixedStyle}
+            anchors={getAnchors()}
+            anchorPosition={anchorPosition}
+          >
+            <Space.Group direction="vertical">{children}</Space.Group>
+          </AnchorNavigation>
+        </div>
+      </AnchorNavigationContext.Provider>
+    );
+  }),
 );
 
-PlayGroundPageForward.Section = Section;
-PlayGroundPageForward.CodeBoxSection = CodeBoxSection;
-PlayGroundPageForward.PropsSection = PropsSection;
-PlayGroundPageForward.FunctionPropsSection = FunctionPropsSection;
+const PlayGroundPage = InternalPlayGroundPage as PlayGroundPageComponent;
 
-export default PlayGroundPageForward;
+PlayGroundPage.displayName = 'PlayGroundPage';
+
+PlayGroundPage.Section = Section;
+PlayGroundPage.CodeBoxSection = CodeBoxSection;
+PlayGroundPage.PropsSection = PropsSection;
+PlayGroundPage.FunctionPropsSection = FunctionPropsSection;
+
+export default PlayGroundPage;

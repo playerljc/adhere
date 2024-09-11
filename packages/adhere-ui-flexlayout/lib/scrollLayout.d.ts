@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { ScrollLayoutContextType, ScrollLayoutProps } from './types';
 /**
  * ScrollLayoutContext
@@ -16,5 +16,5 @@ export declare const useScrollLayout: () => {
  * @return {JSX.Element}
  * @constructor
  */
-declare const ScrollLayout: FC<ScrollLayoutProps>;
+declare const ScrollLayout: React.NamedExoticComponent<ScrollLayoutProps>;
 export default ScrollLayout;

@@ -8,7 +8,7 @@ import MimeConfig from './dict/dict.mime.config.js';
 import MomentConfig from './dict/dict.moment.config.js';
 import NormalConfig from './dict/dict.normal.config.js';
 
-function initDict(dict) {
+function initDict(dict: { initStatic: any; initRemote?: any }) {
   dict?.initStatic?.();
   dict?.initRemote?.();
 }

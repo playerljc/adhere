@@ -1,2 +1,2 @@
-import _ConfigProvider from"antd/es/config-provider";import{createFactory}from"../util";export default createFactory(_ConfigProvider,{});
+import ConfigProvider from"./ConfigProvider";export default ConfigProvider;
 //# sourceMappingURL=index.js.map

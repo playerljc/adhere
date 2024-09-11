@@ -1,4 +1,4 @@
 import React from 'react';
 import { PropsProps } from './types';
-declare const _default: React.NamedExoticComponent<PropsProps>;
-export default _default;
+declare const Props: React.NamedExoticComponent<PropsProps>;
+export default Props;

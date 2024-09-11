@@ -1,4 +1,4 @@
-import Dict from './dict';
+import SearchTable from '@baifendian/adhere-ui-searchtable';
 
 import ProSearchList from './ProSearchList';
 import ProSearchStateList from './ProSearchStateList';
@@ -11,6 +11,9 @@ import SearchListImplementFactory, { SearchListImplement } from './SearchListImp
 import SearchListStateImplementFactory, {
   SearchListStateImplement,
 } from './SearchListStateImplement';
+import Dict from './dict';
+
+const { OptionsWrap, DisabledOption, SearchAndPaginParams } = SearchTable;
 
 export default {
   List: SearchList,
@@ -26,4 +29,7 @@ export default {
   ResourceManager,
   ProResourceManager,
   ProResourceStateManager,
+  OptionsWrap,
+  DisabledOption,
+  SearchAndPaginParams,
 };

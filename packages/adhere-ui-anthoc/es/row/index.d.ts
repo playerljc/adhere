@@ -1,2 +1,2 @@
-declare const _default: any;
-export default _default;
+import Row from './Row';
+export default Row;

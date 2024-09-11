@@ -1,3 +1,3 @@
-import IJdCategoryTabProps from './jdcategorytab';
+import IJdCategoryTabProps from './JdCategoryTab';
 
 export default IJdCategoryTabProps;

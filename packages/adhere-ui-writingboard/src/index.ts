@@ -1,3 +1,3 @@
-import WritingBoard from './writingboard';
+import WritingBoard from './WritingBoard';
 
 export default WritingBoard;

@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 /**
  * LinkColumn
  * @param className
@@ -10,13 +10,16 @@
  * @param children
  * @returns {JSX.Element}
  */
-declare const _default: ({ className, style, record, rowIndex, dataIndex, to, children }: {
-    className: any;
-    style: any;
-    record: any;
-    rowIndex: any;
-    dataIndex: any;
-    to: any;
-    children: any;
-}) => JSX.Element;
-export default _default;
+declare const LinkColumn: {
+    ({ className, style, record, rowIndex, dataIndex, to, children }: {
+        className: any;
+        style: any;
+        record: any;
+        rowIndex: any;
+        dataIndex: any;
+        to: any;
+        children: any;
+    }): React.JSX.Element;
+    displayName: string;
+};
+export default LinkColumn;

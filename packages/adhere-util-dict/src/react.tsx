@@ -12,7 +12,7 @@ import React, {
 } from 'react';
 
 import Suspense from '@baifendian/adhere-ui-suspense';
-import SuspenseAsync from '@baifendian/adhere-ui-suspense/es/async';
+import type SuspenseAsync from '@baifendian/adhere-ui-suspense/es/async';
 import Util from '@baifendian/adhere-util';
 
 import Dict from './dict';
@@ -42,28 +42,19 @@ const FunctionComponent: (
 ) => ForwardRefRenderFunction<DictComponentHandler, DictFunctionComponentProps> =
   (key: string) =>
   (
-    {
-      children,
-      firstLoading,
-      renderNormalLoading,
-      isEmpty,
-      renderEmpty,
-      args,
-      isUseMemo,
-      ...others
-    },
+    { children, firstLoading, renderNormalLoading, isEmpty, renderEmpty, args, isUseMemo, ...rest },
     ref,
   ) => {
     const [data, setData] = useState<StateData>({
       data: null,
-      isValidate: true,
+      isValidate: false,
       isPending: true,
     });
 
     const asyncRef = useRef<SuspenseAsync>();
 
     const props = useMemo(() => {
-      const _props: any = { ...others };
+      const _props: any = { ...rest };
       if (firstLoading) _props.firstLoading = firstLoading;
       if (renderNormalLoading) _props.renderNormalLoading = renderNormalLoading;
       if (renderEmpty) _props.renderEmpty = renderEmpty;
@@ -163,7 +154,7 @@ const PromiseComponent: (
   key: string,
 ) => ForwardRefRenderFunction<DictComponentHandler, DictPromiseComponentProps> =
   (key: string) =>
-  ({ children, firstLoading, renderNormalLoading, isEmpty, renderEmpty, ...others }, ref) => {
+  ({ children, firstLoading, renderNormalLoading, isEmpty, renderEmpty, ...rest }, ref) => {
     const [data, setData] = useState<StateData>({
       data: null,
       isPending: true,
@@ -171,7 +162,8 @@ const PromiseComponent: (
     });
 
     const props = useMemo(() => {
-      const _props: any = { ...others };
+      const _props: any = { ...rest };
+
       if (firstLoading) _props.firstLoading = firstLoading;
       if (renderNormalLoading) _props.renderNormalLoading = renderNormalLoading;
       if (renderEmpty) _props.renderEmpty = renderEmpty;
@@ -236,12 +228,6 @@ const NoPromiseComponent: (key: string) => FC<DictNoPromiseComponentProps> =
       isValidate: true,
       isPending: false,
     });
-
-    // return data === null || data === undefined || isEmpty?.(data)
-    //   ? renderEmpty
-    //     ? renderEmpty?.()
-    //     : null
-    //   : children?.(data);
   };
 
 // 组件的config
@@ -308,7 +294,7 @@ const Component: (key: string) => ForwardRefRenderFunction<any, any> = (key) => 
     }
   }
 
-  return Component ? <Component ref={ref} {...props} /> : null;
+  return Component && <Component ref={ref} {...props} />;
 };
 
 /**
@@ -410,12 +396,10 @@ export const useDict = (dictName: string, _options?: UseDictOptions) => {
   }, [dictName, value, refresh, JSON.stringify(options)]);
 
   useMount(() => {
-    // console.log('mount');
     getData();
   });
 
   useUpdateEffect(() => {
-    // console.log('update');
     setData(({ data: _preData }) => ({
       data: _preData,
       isValidate: true,

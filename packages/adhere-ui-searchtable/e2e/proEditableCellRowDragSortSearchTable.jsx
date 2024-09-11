@@ -69,6 +69,7 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
         $search: {
           type: 'input',
           visible: true,
+          isShowLabelSymbol: false,
         },
         $editable: {
           editable: true,
@@ -229,6 +230,7 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
         key: 'homeTown',
         ellipsis: true,
         width: 200,
+        fixed: 'right',
         $search: {
           type: 'input',
           visible: true,
@@ -258,6 +260,7 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
         dataIndex: 'address',
         key: 'address',
         width: 300,
+        fixed: 'right',
         $search: {
           type: 'input',
           visible: true,
@@ -289,9 +292,9 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
         title: '操作',
         dataIndex: this.getOptionsColumnDataIndex(),
         key: this.getOptionsColumnDataIndex(),
-        width: 260,
+        width: 500,
         render: (v, record) => (
-          <OptionsWrap style={{ justifyContent: 'center' }}>
+          <OptionsWrap style={{ justifyContent: 'center' }} ellipsisCount={100}>
             {this.renderOptionColumn(
               [
                 {
@@ -311,6 +314,26 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
                       <a>删除</a>
                     </DelConfirm>
                   ),
+                },
+                {
+                  key: 'view',
+                  value: <a>查看</a>,
+                },
+                {
+                  key: 'view',
+                  value: <a>查看</a>,
+                },
+                {
+                  key: 'view',
+                  value: <a>查看</a>,
+                },
+                {
+                  key: 'view',
+                  value: <a>查看</a>,
+                },
+                {
+                  key: 'view',
+                  value: <a>查看</a>,
                 },
               ],
               { value: v, record },

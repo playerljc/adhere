@@ -18,6 +18,7 @@ import type {
   RefAttributes,
   RefObject,
 } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
 
@@ -115,6 +116,8 @@ export interface ColumnSearchConfig {
   startName?: string;
   // 时间区间控件的endName
   endName?: string;
+  // 是否显示label后面的：
+  isShowLabelSymbol?: boolean;
 }
 
 export interface ColumnParams {
@@ -263,7 +266,7 @@ export interface FormItemGeneratorConfig {
   // dist渲染的组件的字典名称(适用于FormItemGeneratorToDict)
   dictName?: string;
   // children自定义的渲染，适用于FormItemGeneratorToDict的自定义children时候使用
-  renderChildren?: (params?: any) => ReactNode | null;
+  // renderChildren?: (params?: any) => ReactNode | null;
   // 表单的实例
   form?: FormInstance<any> | null;
   // 行的索引值
@@ -304,7 +307,7 @@ export interface ColumnEditableConfig {
   // formItem的Props
   formItemProps?: any;
   // 组件的props定义
-  props?: any;
+  props?: ((params: ColumnParams) => any) | object;
   // 是否使用句柄来切换状态 view的时候有一个句柄点击后变成编辑状态，编辑的时候有2个句柄，save和cancel，如果设置为false，则关于句柄的事件将不会触发
   useTrigger?: boolean;
   // 渲染查看的句柄
@@ -314,7 +317,7 @@ export interface ColumnEditableConfig {
   // 渲染取消的句柄
   renderCancelTrigger?: (params: ColumnParams) => ReactNode;
   // FormItem的rules
-  rules?: Rule[];
+  rules?: ((params: ColumnParams) => Rule[]) | Rule[];
   // 如果有此属性，则不用column的dataIndex
   dataIndex?: DataIndex;
   // dist渲染的组件的字典名称(适用于FormItemGeneratorToDict)
@@ -336,6 +339,10 @@ export interface ColumnRowDragSortConfig {}
  * @description Column列的扩展设置
  */
 export interface ColumnTypeExt extends ColumnType<any> {
+  // 列头的提示信息，同时也是此列筛选项label的提示信息
+  $tip?: ReactNode;
+  // 自定义渲染tip
+  renderTip?: (tip: ReactNode) => ReactNode;
   // 列的权限设置，有权限才显示，没权限不显示
   $authorized?: () => boolean;
   // 列头是否可以拖动
@@ -376,6 +383,10 @@ export interface SearchProps extends SuspenseProps {
   bodyClassName: string;
   bodyStyle: CSSProperties;
   title: string;
+  // 使用的路由系统
+  router: 'browser' | 'hash';
+  // publicPath
+  publicPath: string;
 }
 
 /**
@@ -533,6 +544,15 @@ export interface AdvancedSearchPanelProps {
   onSearch: Function;
   onReset: Function;
   onCollapse: Function;
+  children?: (params: {
+    groupData: AdvancedSearchPanelGroupData[];
+    tableGridLayoutConfig: AdvancedSearchPanelTableGridLayoutConfig;
+    remainingGroupData: AdvancedSearchPanelGroupData[];
+    advancedSearchConfig: AdvancedSearchPanelSearchConfig;
+    onSearch: Function;
+    onReset: Function;
+    onCollapse: Function;
+  }) => ReactNode;
 }
 
 export interface SearchTableImplementFactoryFunction<T, P> {
@@ -558,6 +578,46 @@ export interface SearchTableStateImplementFactoryFunction<T, P> {
   ) => ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>;
 }
 
+export interface TableDensitySettingProps {
+  density: TableDensity;
+  onReset: (...args: any[]) => any;
+  onChange: (...args: any[]) => any;
+  renderDensitySettingBtn?: () => ReactNode;
+}
+
+export interface ColumnSettingProps {
+  columns: ColumnTypeExt[];
+  onShowColumns: (...args: any[]) => any;
+  onReset: (...args: any[]) => any;
+  onDisplayColumn: (...args: any[]) => any;
+  onSortEnd: (...args: any[]) => any;
+  renderColumnSettingBtn?: () => ReactNode;
+}
+
+export interface ExportExcelProps {
+  title: string;
+  getDataSource: () => any[];
+  getColumns: () => ColumnTypeExt[];
+  renderExportExcelBtn?: (onExportExcel: () => void) => ReactNode;
+}
+
+export interface ReloadTableProps {
+  onReload: () => void;
+  showLoading: boolean;
+  renderReloadBtn?: ({
+    showLoading,
+    onReload,
+  }: {
+    showLoading: boolean;
+    onReload: () => void;
+  }) => ReactNode;
+}
+
+export interface ColumnTipTitleProps {
+  tip: ReactNode;
+  title: ReactNode;
+}
+
 /**
  * TableDensity
  */
@@ -565,4 +625,14 @@ export enum TableDensity {
   DEFAULT = 'default',
   MIDDLE = 'middle',
   SMALL = 'small',
+}
+
+export interface DragSortRowContextProps {
+  dragResult: ReturnType<typeof useDrag>;
+  dropResult: ReturnType<typeof useDrop>;
+  setCanDrag: (canDrag: boolean) => void;
+}
+
+export interface DragSortColumnProps extends ColumnTypeExt {
+  className?: string;
 }

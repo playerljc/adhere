@@ -6,6 +6,7 @@ import type {
   TablePaginationConfig,
   TableRowSelection,
 } from 'antd/lib/table/interface';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createRef, forwardRef } from 'react';
@@ -23,18 +24,19 @@ import type {
   SearchTableState,
 } from './types';
 
-export const selectorPrefix = 'adhere-ui-searchtableimplement';
+export const selectorPrefix = 'adhere-ui-search-table-implement';
 
 /**
  * SearchTableImplement
  * @class SearchTableImplement
  * @classdesc SearchTableImplement - SearchTable的默认实现
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class SearchTableImplement<P extends SearchTableProps, S extends SearchTableState>
   extends SearchTable<SearchTableImplementProps, SearchTableImplementState>
   implements ISearchTableImplement
 {
+  static displayName = 'SearchTableImplement';
+
   innerWrapRef: RefObject<HTMLDivElement> = createRef();
 
   constructor(props) {
@@ -112,7 +114,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   onInputChange = (property: string, e): void => {
     // @ts-ignore
     this.setState({
-      [property]: e.target.value.trim(),
+      [property]: e.target.value,
     });
   };
 
@@ -369,10 +371,10 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @description - 渲染主体
    * @return {ReactElement | null}
    */
-  renderInner(): ReactElement | null {
+  renderInner() {
     const innerJSX = super.renderInner();
     return (
-      <div ref={this.innerWrapRef} className={`${selectorPrefix}-tablewrapper`}>
+      <div ref={this.innerWrapRef} className={`${selectorPrefix}-table-wrapper`}>
         {innerJSX}
       </div>
     );
@@ -505,7 +507,6 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
         limit,
         ...searchParams,
         [this.getOrderProp()]: order === 'descend' ? 'desc' : 'asc',
-
         [this.getOrderFieldProp()]: this.state?.[this.getOrderFieldProp()],
         ...this.getFetchDataParams(),
       },
@@ -533,25 +534,26 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
       const page = this.state?.page as number;
 
       if (page === 1) {
-        resolve(this.fetchData());
-        return;
+        this.fetchData().then((res) => resolve(res));
+      } else {
+        const res = this.fetchData().then((_res) => {
+          const data = _res?.data?.[this.getDataKey()] || [];
+
+          if (data.length) {
+            resolve(res);
+          } else {
+            // @ts-ignore
+            this.setState(
+              {
+                page: page - 1,
+              },
+              () => {
+                this.fetchData().then((res) => resolve(res));
+              },
+            );
+          }
+        });
       }
-
-      const res = this.fetchData().then((_res) => {
-        const data = _res?.data?.[this.getDataKey()] || [];
-
-        if (data.length) {
-          resolve(res);
-        } else {
-          // @ts-ignore
-          this.setState(
-            {
-              page: page - 1,
-            },
-            () => resolve(this.fetchData()),
-          );
-        }
-      });
     });
   }
 
@@ -576,14 +578,14 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @override
    * @return {Promise<void>}
    */
-  onSearch(): Promise<void> {
+  onSearch(): Promise<any> {
     const keys = Object.keys(this.getParams());
     const params = {};
     keys.forEach((key) => {
       params[key] = this.state?.[key];
     });
 
-    return new Promise<void>((resolve) => {
+    return new Promise<any>((resolve) => {
       // @ts-ignore
       this.setState(
         {
@@ -596,8 +598,8 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
           },
         },
         () => {
-          this.fetchData().then(() => {
-            resolve();
+          this.fetchData().then((res) => {
+            resolve(res);
           });
         },
       );
@@ -620,13 +622,9 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @param {TableCurrentDataSource<object> | undefined} extra
    */
   onSubTableChange(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     pagination: TablePaginationConfig,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     filters: Record<string, FilterValue | null>,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     sorter: SorterResult<object> | SorterResult<object>[],
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     extra?: TableCurrentDataSource<object> | undefined,
   ): void {}
 
@@ -662,7 +660,14 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     return null;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  renderSearchFormToolBarDefaultPanel(): ReactNode {
+    return null;
+  }
+
+  renderSearchFormToolBarItems(defaultItems: ReactElement[]): ReactNode[] {
+    return defaultItems;
+  }
+
   /**
    * onTableRowComponentReducers
    * @param {ColumnTypeExt[]} columns
@@ -672,7 +677,6 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     return this.tableRowComponentReducers;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   /**
    * onTableCellComponentReducers
    * @param {ColumnTypeExt[]} columns
@@ -732,12 +736,13 @@ const SearchTableImplementFactory: SearchTableImplementFactoryFunction<any, any>
         // @ts-ignore
         <Component
           ref={ref}
-          className={`${selectorPrefix}-wrap`}
           isShowExpandSearch
           defaultExpandSearchCollapse={false}
           fixedHeaderAutoTable
           fixedTableSpaceBetween
           {...props}
+          className={classNames(`${selectorPrefix}-wrap`, props.className ?? '')}
+          style={props.style ?? {}}
         />
       )),
     );

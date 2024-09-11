@@ -1,0 +1,2 @@
+"use strict";var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},classnames_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("classnames"))),react_1=__importDefault(require("react")),selectorPrefix="adhere-ui-tabs-side-tab",Tab=function(e){var a=e.className,a=void 0===a?"":a,t=e.style,t=void 0===t?{}:t,e=e.children;return react_1.default.createElement("div",{className:(0,classnames_1.default)(selectorPrefix,null!=a?a:""),style:null!=t?t:{}},e)};Tab.displayName="Tab",exports.default=Tab;
+//# sourceMappingURL=tab.js.map

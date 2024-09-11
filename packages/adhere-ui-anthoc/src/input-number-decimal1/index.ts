@@ -1,5 +1,3 @@
-import { InputNumber } from 'antd';
+import InputNumberDecimal1 from './InputNumberDecimal1';
 
-import { createFactory } from '../util';
-
-export default createFactory(InputNumber, { precision: 1 });
+export default InputNumberDecimal1;

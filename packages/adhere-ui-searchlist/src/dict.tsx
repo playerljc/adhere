@@ -30,7 +30,7 @@ const AdhereSearchListDict = {
     /**
      * AdhereSearchListResourceManagerLabelValueSelect
      */
-    Dict.handlers.AdhereSearchListResourceManagerLabelValueSelect = () => [
+    Dict.handlers.AdhereSearchListResourceManagerLabelValue = () => [
       {
         label: Intl.v('全部'),
         value: 'all',

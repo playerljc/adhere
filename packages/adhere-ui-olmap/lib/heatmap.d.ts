@@ -1,5 +1,5 @@
 import { Heatmap as HeatMapLayer } from 'ol/layer';
-import OlMap from './olmap';
+import OlMap from './OLMap';
 /**
  * HeatMap
  * @class HeatMap

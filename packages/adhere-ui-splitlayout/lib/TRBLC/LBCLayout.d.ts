@@ -1,4 +1,8 @@
 import React from 'react';
 import { TBLRCSplitLayoutProps } from '../types';
-declare const _default: React.MemoExoticComponent<React.ForwardRefExoticComponent<TBLRCSplitLayoutProps & React.RefAttributes<any>>>;
-export default _default;
+/**
+ * LBCLayout
+ * @constructor
+ */
+declare const LBCLayout: React.NamedExoticComponent<TBLRCSplitLayoutProps & React.RefAttributes<HTMLDivElement>>;
+export default LBCLayout;

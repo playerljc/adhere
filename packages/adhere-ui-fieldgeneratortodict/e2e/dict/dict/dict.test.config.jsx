@@ -1,5 +1,7 @@
 import { Avatar } from 'antd';
+import { Image } from 'antd-mobile';
 import faker from 'faker';
+import Mock from 'mockjs';
 import React from 'react';
 
 import {
@@ -10,9 +12,11 @@ import {
   SmileOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import { MobileGlobalIndicator } from '@baifendian/adhere';
+import Util from '@baifendian/adhere-util';
 import Dict from '@baifendian/adhere-util-dict';
 
-import { City, County, Province, books } from './data';
+import { City, County, Province, books, options } from './data';
 
 const PCCFlat = [
   ...Province.map((t) => ({
@@ -97,6 +101,97 @@ const ssqCascade = [
   },
 ];
 
+const UserData = Array.from({ length: 100 }).map(() => {
+  const label = Mock.mock('@cname');
+  const value = Mock.mock('@guid');
+
+  return {
+    id: value,
+    label,
+    value,
+    title: label,
+    avatar: `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${value}`,
+  };
+});
+
+function genChildren(length) {
+  return Array.from({ length: length }).map(() => {
+    const title = Mock.mock('@name');
+    const value = Mock.mock('@guid');
+
+    return {
+      value,
+      title,
+      label: title,
+      id: value,
+      name: title,
+      address: Mock.mock('@region'),
+      height: Mock.mock('@integer(60, 100)'),
+      width: Mock.mock('@integer(60, 100)'),
+      nativePlace: Mock.mock('@city'),
+    };
+  });
+}
+
+const TREE_DATA = Array.from({ length: 100 }).map(() => {
+  const title = Mock.mock('@name');
+  const value = Mock.mock('@guid');
+
+  return {
+    value,
+    title,
+    label: title,
+    id: value,
+    name: title,
+    address: Mock.mock('@region'),
+    height: Mock.mock('@integer(60, 100)'),
+    width: Mock.mock('@integer(60, 100)'),
+    nativePlace: Mock.mock('@city'),
+    children: genChildren(5).map((t) => ({
+      ...t,
+      children: genChildren(5),
+    })),
+  };
+});
+
+const FLAT_TREE_DATA = Util.treeToArray(
+  TREE_DATA,
+  {
+    parentIdAttr: 'pId',
+    rootParentId: 0,
+  },
+  'id',
+);
+
+const TABLE_TREE_DATA = Array.from({ length: 5 }).map(() => {
+  const title = Mock.mock('@name');
+  const value = Mock.mock('@guid');
+
+  return {
+    value,
+    title,
+    id: value,
+    name: title,
+    address: Mock.mock('@region'),
+    height: Mock.mock('@integer(60, 100)'),
+    width: Mock.mock('@integer(60, 100)'),
+    nativePlace: Mock.mock('@city'),
+    children: genChildren(5).map((t) => ({
+      ...t,
+      children: genChildren(5),
+    })),
+  };
+});
+
+const FLAT_TABLE_TREE_DATA = Util.treeToArray(
+  TABLE_TREE_DATA,
+  {
+    parentIdAttr: 'pId',
+    rootParentId: 0,
+  },
+  'id',
+);
+
 export default {
   initStatic() {
     Dict.handlers.SystemBookCatalog = () =>
@@ -172,13 +267,97 @@ export default {
       ].map((t) => ({
         label: t.catalog,
         value: t.id,
+        children: t.catalog,
+        key: t.id,
+        title: t.catalog,
       }));
+
+    Dict.handlers.SystemBookCatalogDynamic = () =>
+      Promise.resolve(
+        [
+          {
+            id: '242',
+            catalog: '中国文学',
+          },
+          {
+            id: '243',
+            catalog: '外国文学',
+          },
+          {
+            id: '244',
+            catalog: '儿童文学',
+          },
+          {
+            id: '245',
+            catalog: '散文',
+          },
+          {
+            id: '246',
+            catalog: '经典名著',
+          },
+          {
+            id: '247',
+            catalog: '小说',
+          },
+          {
+            id: '248',
+            catalog: '历史',
+          },
+          {
+            id: '249',
+            catalog: '教育',
+          },
+          {
+            id: '250',
+            catalog: '成功励志',
+          },
+          {
+            id: '251',
+            catalog: '心灵鸡汤',
+          },
+          {
+            id: '252',
+            catalog: '人物传记',
+          },
+          {
+            id: '253',
+            catalog: '心理学',
+          },
+          {
+            id: '254',
+            catalog: '管理',
+          },
+          {
+            id: '255',
+            catalog: '经济',
+          },
+          {
+            id: '256',
+            catalog: '理财',
+          },
+          {
+            id: '257',
+            catalog: '哲学',
+          },
+          {
+            id: '258',
+            catalog: '计算机',
+          },
+        ].map((t) => ({
+          label: t.catalog,
+          value: t.id,
+          children: t.catalog,
+          key: t.id,
+          title: t.catalog,
+        })),
+      );
 
     Dict.handlers.SystemBookCatalogRem = () =>
       Promise.resolve(
         [].map((t) => ({
           label: t.catalog,
           value: t.id,
+          children: t.catalog,
         })),
       );
 
@@ -592,49 +771,58 @@ export default {
     };
 
     Dict.handlers.SystemFilterBookList = () => (kw) => {
-      const data = books.map((t) => ({
-        label: t.label,
-        value: faker.random.uuid(),
-      }));
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          if (!kw) {
+            resolve([]);
+            return;
+          }
 
-      return Promise.resolve(data.filter((t) => t.label.includes(kw)));
+          resolve(books.filter((t) => t.label.includes(kw)));
+        }, 1000);
+      });
     };
 
-    Dict.handlers.SystemUserPagin = () => (paging) => {
-      const { current, pageSize } = paging;
+    Dict.handlers.SystemUserPagin = () => (page, limit) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            totalCount: UserData.length,
+            data: UserData.slice((page - 1) * limit, page * limit),
+          });
+        }, 1000);
+      });
+    };
 
-      const data = [];
-      data.length = 300;
-      data.fill(0);
+    Dict.handlers.SystemUserACPagin = () => (page, limit, _kw) => {
+      console.log(page, limit, _kw);
 
-      const res = {
-        resCode: 0,
-        data: {
-          total: data.length,
-          pages: 30,
-          current: 1,
-          records: data
-            .slice((current - 1) * pageSize, (current - 1) * pageSize + pageSize)
-            .map((t, index) => ({
-              id: (current - 1) * pageSize + (index + 1),
-              isMore: !!Math.floor((Math.random() * 10) % 2),
-              name: faker.internet.userName(),
-              sex: `${(index + 1) % 2}`,
-              birthDay: faker.time.recent(),
-              deptName: faker.company.companyName(),
-              height: faker.random.number(),
-              width: faker.random.number(),
-              hometown: faker.address.city(),
-              address: faker.address.streetAddress(),
-            })),
-        },
-        resMsg: '',
-      };
+      return new Promise((resolve) => {
+        const data = !_kw ? [] : UserData.filter(({ label }) => label.indexOf(_kw) !== -1);
 
-      return Promise.resolve(res.data);
+        resolve({
+          totalCount: data.length,
+          data: data.slice((page - 1) * limit, page * limit),
+        });
+      });
+    };
+
+    Dict.handlers.SystemBookAC = () => (_kw) => {
+      return new Promise((resolve) => {
+        if (!_kw) {
+          resolve([]);
+        }
+
+        setTimeout(() => {
+          const result = books.filter((_book) => _book.t.indexOf(_kw) !== -1);
+
+          resolve(result);
+        }, 500);
+      });
     };
 
     Dict.handlers.SystemDepartment = () => (pid, cascadeParams) => {
+      debugger;
       if (!pid) {
         return Promise.resolve(
           Province.map((t) => ({
@@ -668,5 +856,344 @@ export default {
     Dict.handlers.SystemDepartmentAll = () => Promise.resolve(PCCFlat);
 
     Dict.handlers.SystemSSQRemote = () => ssqCascade;
+
+    Dict.handlers.SystemBook = () => Promise.resolve(books);
+
+    Dict.handlers.SystemTableBook = () => {
+      const options = books.map(({ children, ...t }) => ({
+        ...t,
+        value: t.id,
+      }));
+
+      return Promise.resolve(options);
+    };
+
+    Dict.handlers.SystemTableBookAC = () => (_kw) => {
+      return new Promise((resolve) => {
+        if (!_kw) {
+          resolve([]);
+        }
+
+        setTimeout(() => {
+          const result = books
+            .map(({ children, ...t }) => ({
+              ...t,
+              value: t.id,
+            }))
+            .filter((_book) => _book.t.indexOf(_kw) !== -1);
+
+          resolve(result);
+        }, 500);
+      });
+    };
+
+    Dict.handlers.SystemTreeAC = () => (_kw) => {
+      return new Promise((resolve) => {
+        if (!_kw) {
+          resolve();
+          return;
+        }
+
+        setTimeout(() => {
+          // 正常
+          const flatTreeData = Util.treeToArray(
+            TREE_DATA,
+            { parentIdAttr: 'pId', rootParentId: '' },
+            'value',
+          );
+
+          const result = flatTreeData.filter((_node) => _node.title.indexOf(_kw) !== -1);
+
+          const targetTreeData = Util.completionIncompleteFlatArr(flatTreeData, result, {
+            keyAttr: 'value',
+            titleAttr: 'title',
+            parentIdAttr: 'pId',
+            rootParentId: '',
+          });
+
+          resolve(targetTreeData);
+        }, 100);
+      });
+    };
+
+    Dict.handlers.SystemTreeACFlat = () => (_kw) => {
+      return new Promise((resolve) => {
+        if (!_kw) {
+          resolve([]);
+          return;
+        }
+
+        setTimeout(() => {
+          const result = FLAT_TREE_DATA.filter((_node) => _node.title.indexOf(_kw) !== -1);
+
+          const targetTreeData = Util.treeToArray(
+            Util.completionIncompleteFlatArr(FLAT_TREE_DATA, result, {
+              keyAttr: 'id',
+              titleAttr: 'title',
+              parentIdAttr: 'pId',
+              rootParentId: 0,
+            }),
+            {
+              keyAttr: 'id',
+              titleAttr: 'title',
+              parentIdAttr: 'pId',
+              rootParentId: 0,
+            },
+          );
+
+          resolve(targetTreeData);
+        }, 100);
+      });
+    };
+
+    Dict.handlers.SystemTableTreeAC = () => (_kw) => {
+      return new Promise((resolve) => {
+        if (!_kw) {
+          resolve();
+          return;
+        }
+
+        setTimeout(() => {
+          // 正常
+          const flatTreeData = Util.treeToArray(
+            TABLE_TREE_DATA,
+            { parentIdAttr: 'pId', rootParentId: '' },
+            'value',
+          );
+
+          const result = flatTreeData.filter((_node) => _node.title.indexOf(_kw) !== -1);
+
+          const targetTreeData = Util.completionIncompleteFlatArr(flatTreeData, result, {
+            keyAttr: 'value',
+            titleAttr: 'title',
+            parentIdAttr: 'pId',
+            rootParentId: '',
+          });
+
+          resolve(targetTreeData);
+        }, 100);
+      });
+    };
+
+    Dict.handlers.SystemTableTreeACFlat = () => (_kw) => {
+      return new Promise((resolve) => {
+        if (!_kw) {
+          resolve([]);
+          return;
+        }
+
+        setTimeout(() => {
+          const result = FLAT_TABLE_TREE_DATA.filter((_node) => _node.title.indexOf(_kw) !== -1);
+
+          const targetTreeData = Util.treeToArray(
+            Util.completionIncompleteFlatArr(FLAT_TABLE_TREE_DATA, result, {
+              keyAttr: 'id',
+              titleAttr: 'title',
+              parentIdAttr: 'pId',
+              rootParentId: 0,
+            }),
+            {
+              keyAttr: 'id',
+              titleAttr: 'title',
+              parentIdAttr: 'pId',
+              rootParentId: 0,
+            },
+          );
+
+          resolve(targetTreeData);
+        }, 100);
+      });
+    };
+
+    Dict.handlers.SystemTableTreeACPaging = () => (page, limit, _kw) => {
+      return new Promise((resolve) => {
+        if (!_kw) {
+          resolve({
+            totalCount: 0,
+            data: [],
+          });
+          return;
+        }
+
+        setTimeout(() => {
+          const flatTreeData = Util.treeToArray(
+            TREE_DATA,
+            { parentIdAttr: 'pId', rootParentId: '' },
+            'value',
+          );
+
+          const result = flatTreeData.filter((_node) => _node.title.indexOf(_kw) !== -1);
+
+          const targetTreeData = Util.completionIncompleteFlatArr(flatTreeData, result, {
+            keyAttr: 'value',
+            titleAttr: 'title',
+            parentIdAttr: 'pId',
+            rootParentId: '',
+          });
+
+          resolve({
+            totalCount: targetTreeData.length,
+            data: targetTreeData.slice((page - 1) * limit, page * limit),
+          });
+        }, 100);
+      });
+    };
+
+    Dict.handlers.SystemUser = () =>
+      Promise.resolve(
+        Array.from({ length: 1000 }).map((t, _index) => {
+          const value = Mock.mock('@guid');
+          const title = `${Mock.mock('@name')}1`;
+
+          return {
+            value,
+            title,
+            label: title,
+            children: title,
+            id: value,
+            description: title,
+          };
+        }),
+      );
+
+    Dict.handlers.SystemUserStatic = () =>
+      Array.from({ length: 1000 }).map((t, _index) => {
+        const value = Mock.mock('@guid');
+        const title = `${Mock.mock('@name')}1`;
+
+        return {
+          value,
+          title,
+          label: title,
+          children: title,
+          id: value,
+          description: title,
+        };
+      });
+
+    Dict.handlers.SystemUserByKw = () => (_kw) => {
+      return new Promise((resolve) => {
+        if (!_kw) {
+          resolve([]);
+          return;
+        }
+
+        const handler = MobileGlobalIndicator.show();
+
+        setTimeout(() => {
+          MobileGlobalIndicator.hide(handler);
+          resolve(options.filter((_option) => _option.title.indexOf(_kw) !== -1));
+        }, 500);
+      });
+    };
+
+    Dict.handlers.SystemUserByKPL = () => (_kw, page, limit) => {
+      return new Promise((resolve) => {
+        const options = Array.from({ length: 1000 }).map((t, _index) => {
+          const value = Mock.mock('@guid');
+          const title = `${Mock.mock('@name')}1`;
+
+          return {
+            value,
+            title,
+            label: title,
+            children: title,
+            id: value,
+            description: title,
+          };
+        });
+
+        if (!_kw) {
+          resolve({
+            total: 0,
+            data: [],
+          });
+
+          return;
+        }
+
+        const handler = MobileGlobalIndicator.show();
+
+        setTimeout(() => {
+          const data = options.filter((t) => t.title.indexOf(_kw) > -1);
+
+          MobileGlobalIndicator.hide(handler);
+
+          resolve({
+            total: data.length,
+            data: data.slice((page - 1) * limit, page * limit),
+          });
+        }, 500);
+      });
+    };
+
+    Dict.handlers.SystemUserPaging = () => (page, limit) => {
+      const options = Array.from({ length: 1000 }).map((t, _index) => {
+        const value = Mock.mock('@guid');
+        const title = `${Mock.mock('@name')}1`;
+
+        return {
+          value,
+          title,
+          label: title,
+          children: title,
+          id: value,
+          description: title,
+        };
+      });
+
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            data: options.slice((page - 1) * limit, page * limit),
+            total: options.length,
+          });
+        }, 1000);
+      });
+    };
+
+    Dict.handlers.SystemListStatic = () =>
+      Array(1000)
+        .fill({
+          avatar:
+            'https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
+          name: 'Novalee Spicer',
+          description: 'Deserunt dolor ea eaque eos',
+        })
+        .map((t) => ({
+          ...t,
+          key: t.name,
+          prefix: (
+            <Image src={t.avatar} style={{ borderRadius: 20 }} fit="cover" width={40} height={40} />
+          ),
+        }));
+
+    Dict.handlers.SystemListDynamic = () =>
+      Promise.resolve(
+        Array(1000)
+          .fill({
+            avatar:
+              'https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
+            name: 'Novalee Spicer',
+            description: 'Deserunt dolor ea eaque eos',
+          })
+          .map((t) => ({
+            ...t,
+            key: t.name,
+            prefix: (
+              <Image
+                src={t.avatar}
+                style={{ borderRadius: 20 }}
+                fit="cover"
+                width={40}
+                height={40}
+              />
+            ),
+          })),
+      );
+
+    Dict.handlers.SystemTreeStatic = () => TREE_DATA;
+
+    Dict.handlers.SystemTreeDynamic = () => Promise.resolve(TREE_DATA);
   },
 };

@@ -1,5 +1,7 @@
+import { FC, NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import type { CSSProperties } from 'react';
 import type { EllipsisProps } from '@baifendian/adhere-ui-ellipsis/es/types';
+import { ElasticSearch, Math, Sql } from './operators';
 export type OperatorType = 'unary' | 'binary' | 'ternary' | 'brackets';
 /**
  * OperatorItem
@@ -87,7 +89,6 @@ export interface ExpressionHandle {
     setValue(html: string): void;
     getValue(): string;
     isEditorEmpty(): boolean;
-    hideQuickTip(): void;
     showQuickTip(): void;
     showOperators(): void;
     hideQuickTip(): void;
@@ -99,3 +100,16 @@ export interface ViewProps extends EllipsisProps {
     wrapStyle?: CSSProperties;
     value?: string;
 }
+export type ExpressionComponent = NamedExoticComponent<PropsWithoutRef<ExpressionProps<any>> & RefAttributes<ExpressionHandle>> & {
+    View: FC<ViewProps>;
+    parse: (queryHtml: string, callback: (value: {
+        nodeType: number;
+        value: string | null;
+    }) => string) => string;
+    validator: () => {
+        validator: (_: any, value: string) => Promise<any>;
+    };
+    ElasticSearchOptions: typeof ElasticSearch;
+    SqlOptions: typeof Sql;
+    MathOptions: typeof Math;
+};

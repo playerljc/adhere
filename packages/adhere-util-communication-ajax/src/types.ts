@@ -1,3 +1,5 @@
+import { Size } from '@baifendian/adhere-ui-globalindicator/es/types';
+
 /**
  * IConfig
  * @interface IConfig
@@ -65,6 +67,12 @@ export interface IConfig {
     text: string;
     // 遮罩的元素
     el: HTMLElement;
+    // 层级
+    zIndex: number;
+    // 大小
+    size: Size;
+    // 终端
+    terminal?: 'pc' | 'mobile';
   };
   // 和后端定义的三大业务key
   onBeforeResponse?: () => void;
@@ -125,3 +133,13 @@ export type Prepare = {
 export type SendResult = Prepare & {
   promise: Promise<any>;
 };
+
+export type RequestInterceptor = (params: ISendArg) => ISendArg;
+
+export type ResponseInterceptor = (params: {
+  show: boolean;
+  terminal: string;
+  data: any;
+  indicator: any;
+  xhr: XMLHttpRequest;
+}) => { show: boolean; terminal: string; data: any; indicator: any; xhr: XMLHttpRequest };

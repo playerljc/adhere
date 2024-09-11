@@ -1,5 +1,3 @@
-import { Breadcrumb } from 'antd';
+import Breadcrumb from './Breadcrumb';
 
-import { createFactory } from '../util';
-
-export default createFactory(Breadcrumb, {});
+export default Breadcrumb;

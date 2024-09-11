@@ -11,7 +11,7 @@ import Message from './Message';
 import Constant from './constant';
 import { PlayGroundProps, PlayGroundState } from './types';
 
-const selectPrefix = 'adhere-ui-playground';
+export const selectPrefix = 'adhere-ui-playground';
 
 /**
  * APlayGround
@@ -30,9 +30,9 @@ abstract class APlayGround<
 
   static defaultProps: PlayGroundProps;
   static propTypes: {
+    id: any;
     cardProps: any;
     expand: Requireable<boolean>;
-    id: any;
     isActive: Requireable<boolean>;
   };
 
@@ -60,6 +60,7 @@ abstract class APlayGround<
       activeKey: '',
     };
   }
+
   componentWillReceiveProps(nextProps) {
     this.setState({
       expand: nextProps.expand,
@@ -147,7 +148,6 @@ abstract class APlayGround<
    * @return {*}
    */
   render() {
-    // @ts-ignore
     const { children, cardProps, isActive, id } = this.props;
 
     const idProps = {
@@ -157,11 +157,14 @@ abstract class APlayGround<
     return (
       <div
         {...idProps}
-        className={classNames(selectPrefix, isActive ? `${selectPrefix}-active` : '')}
+        className={classNames(selectPrefix, {
+          [`${selectPrefix}-active`]: isActive,
+        })}
       >
         <Card actions={this.renderAction()} {...(cardProps ?? {})}>
           {children}
         </Card>
+
         {this.renderCodeView()}
       </div>
     );

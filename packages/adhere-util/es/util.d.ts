@@ -1,4 +1,22 @@
 declare const _default: {
+    CRSTypes: typeof import("gcoord").CRSTypes;
+    transform: <T extends import("gcoord").GeoJSON | import("gcoord").Position>(input: string | T, crsFrom: import("gcoord").CRSTypes, crsTo: import("gcoord").CRSTypes) => T;
+    WGS84: import("gcoord").CRSTypes.WGS84;
+    WGS1984: import("gcoord").CRSTypes.WGS84;
+    EPSG4326: import("gcoord").CRSTypes.WGS84;
+    GCJ02: import("gcoord").CRSTypes.GCJ02;
+    AMap: import("gcoord").CRSTypes.GCJ02;
+    BD09: import("gcoord").CRSTypes.BD09;
+    BD09LL: import("gcoord").CRSTypes.BD09;
+    Baidu: import("gcoord").CRSTypes.BD09;
+    BMap: import("gcoord").CRSTypes.BD09;
+    BD09MC: import("gcoord").CRSTypes.BD09MC;
+    BD09Meter: import("gcoord").CRSTypes.BD09MC;
+    EPSG3857: import("gcoord").CRSTypes.EPSG3857;
+    EPSG900913: import("gcoord").CRSTypes.EPSG3857;
+    EPSG102100: import("gcoord").CRSTypes.EPSG3857;
+    WebMercator: import("gcoord").CRSTypes.EPSG3857;
+    WM: import("gcoord").CRSTypes.EPSG3857;
     prettyBytes(number: any, options?: import("./types").PrettyBytesOptions | undefined): string;
     prettierJSON(_jsonStr?: string): string;
     compressJSON(_jsonStr?: string): string;
@@ -28,21 +46,18 @@ declare const _default: {
     hashEncryptToSHA3_348(_value?: string): string;
     hashEncryptToSHA3_512(_value?: string): string;
     hashEncryptToRIPEMD160(_value?: string): string;
-    symmetricEncryptToAES(_value?: string, _pwd?: string): any;
-    symmetricEncryptToDES(_value?: string, _pwd?: string): any;
-    symmetricEncryptToRC4(_value?: string, _pwd?: string): any;
-    symmetricEncryptToRabbit(_value?: string, _pwd?: string): any;
-    symmetricEncryptToTripleDes(_value?: string, _pwd?: string): any;
-    symmetricDecryptToAES(_value?: string, _pwd?: string): any;
-    symmetricDecryptToDES(_value?: string, _pwd?: string): any;
-    symmetricDecryptToRC4(_value?: string, _pwd?: string): any;
-    symmetricDecryptToRabbit(_value?: string, _pwd?: string): any;
-    symmetricDecryptToTripleDes(_value?: string, _pwd?: string): any;
+    symmetricEncryptToAES(_value?: string, _pwd?: string, options?: any): any;
+    symmetricEncryptToDES(_value?: string, _pwd?: string, options?: any): any;
+    symmetricEncryptToRC4(_value?: string, _pwd?: string, options?: any): any;
+    symmetricEncryptToRabbit(_value?: string, _pwd?: string, options?: any): any;
+    symmetricEncryptToTripleDes(_value?: string, _pwd?: string, options?: any): any;
+    symmetricDecryptToAES(_value?: string, _pwd?: string, options?: any): any;
+    symmetricDecryptToDES(_value?: string, _pwd?: string, options?: any): any;
+    symmetricDecryptToRC4(_value?: string, _pwd?: string, options?: any): any;
+    symmetricDecryptToRabbit(_value?: string, _pwd?: string, options?: any): any;
+    symmetricDecryptToTripleDes(_value?: string, _pwd?: string, options?: any): any;
     dataUrlToBlob(dataUrl: string): Blob | null;
     toTimestampByFormatStrAndTimeZone(str: string, timezone: string): number;
-    /**
-     * 函数节流
-     */
     toStrByTimestampAndTimeZone(_timestamp: string, timezone: string): string;
     getCurrentTimestamp(): number;
     getTimezone(): number;
@@ -54,10 +69,13 @@ declare const _default: {
     };
     parse(path?: string | undefined, config?: import("./types").IUrlConfig): object | null;
     stringify(record: object, config?: import("./types").IUrlConfig): string;
+    getPathName(publicPath?: string, router?: "hash" | "browser"): string;
+    getSearch(router?: "hash" | "browser"): string | undefined;
+    getFullPath(): string;
     treeToArray: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], config: {
         parentIdAttr: string;
         rootParentId: string | number;
-    }) => {
+    }, keyAttr?: string | undefined) => {
         [props: string]: any;
         children?: any[] | undefined;
         key: string;
@@ -100,14 +118,17 @@ declare const _default: {
     getLeafNodeByFlatDataToIndex: (arr: any[], indexAttr?: string | undefined) => {
         [props: string]: any;
     }[];
-    getTreeLevel: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[]) => number;
-    getTreeLevelByIndex: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], indexAttr?: string | undefined) => number;
+    getTreeLevel: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], keyAttr?: string | undefined) => number;
+    getTreeLevelByIndex: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], indexAttr: string, keyAttr: string) => number;
     getTreeLevelToFlat: (flatArr: any[], config: import("./types").IFlatTreeArrNode) => number;
     getTreeLevelByIndexToFlat: (flatArr: any[], config: import("./types").IFlatTreeArrNode, indexAttr: string) => number;
+    getNodeLevel: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], node: import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode, keyAttr: string) => number;
     completionIncompleteFlatArr: (treeFlatNodes: any[], incompleteTreeFlatNodes: any, config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode, "value">)[];
-    excludeAntdTreeNodes: (nodes: import("./types").IAntdTreeNode[], excludeKeys: string[]) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
-    excludeAntdSelectTreeNodes: (nodes: import("./types").IAntdTreeSelectNode[], excludeKeys: string[]) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeSelectNode, "value">)[];
-    getLang(defaultLocal?: string | undefined): string;
+    excludeAntdTreeNodes: (nodes: import("./types").IAntdTreeNode[], excludeKeys: string[], keyAttr?: string | undefined) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
+    excludeAntdSelectTreeNodes: (nodes: import("./types").IAntdTreeSelectNode[], excludeKeys: string[], keyAttr?: string | undefined) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeSelectNode, "value">)[];
+    getLang(defaultLocal?: string | undefined): string; /**
+     * 函数节流
+     */
     setLang(lang?: string): void;
     getDatePickerFormat(): string;
     casUrl({ baseUrl, enterUrl, defaultLocal }: {
@@ -163,7 +184,7 @@ declare const _default: {
         p2: import("./types").IPoint;
     }): number;
     clientToCtxPoint({ event, rect }: {
-        event: MouseEvent;
+        event: MouseEvent | TouchEvent;
         rect: DOMRect;
     }): import("./types").IPoint;
     isPointInCircle(point: import("./types").IPoint, circle: import("./types").ICircle): boolean;
@@ -185,12 +206,17 @@ declare const _default: {
     angleToRadian(angle: any): number;
     distance(value: number, unit: "kilometer"): number;
     getCirclePoint(center: import("./types").IPoint, raduis: number, angle: number): import("./types").IPoint;
-    getOvalPoint(center: import("./types").IPoint, raduisX: number, radiusY: number, angle: number): import("./types").IPoint;
+    getOvalPoint(center: import("./types").IPoint, radiusX: number, radiusY: number, angle: number): import("./types").IPoint;
+    pxToRemNumber(px: number, base: number): number;
+    pxToRem(px: number, base: number, media?: {
+        isUseMedia?: boolean | undefined;
+        designWidth?: number | undefined;
+    } | undefined): string;
     isTextNode(el: Node): boolean;
     isCommentNode(el: Node): boolean;
     isElementNode(el: Node): boolean;
     createElement(htmlStr: string): HTMLElement;
-    getTopDom(target: any, selector: string): HTMLElement | null;
+    getTopDom(source: HTMLElement, selector: string | string[]): HTMLElement | null;
     on(el: any, tag: string, type: string, handler: Function, capture?: boolean): void;
     off(el: HTMLElement, tag: string, type: string, handler: Function): void;
     addClass(el: any, classes?: string): void;
@@ -243,6 +269,19 @@ declare const _default: {
     getCurrentParentElementWithCursor(): Node | null;
     getCursorIndex(): number;
     getCursorRectByDocument(): DOMRect | null;
+    getTransformValues(element: HTMLElement): {
+        translateX: number;
+        translateY: number;
+        scaleX: number;
+        scaleY: number;
+        rotate: number;
+    };
+    getZoom(): number;
+    getScrollbarWidth(): number;
+    getMaximizedViewportSize(): {
+        width: number;
+        height: number;
+    };
     rgbRandom(): string;
     color16Random(): string;
     colorToRgb(color: string): number[];
@@ -257,6 +296,7 @@ declare const _default: {
     isFunction(obj: any): boolean;
     isObject(obj: any): boolean;
     isRef(obj: any): boolean;
+    isPromise(obj: any): any;
     chainCallAssignment({ obj, chainStr, value }: {
         obj: any;
         chainStr: any;
@@ -269,7 +309,8 @@ declare const _default: {
     toCamelCase(str: any, split?: string, toUpperCase?: boolean): any;
     isKebabCase(name: any): boolean;
     isPascalCase(name: any): boolean;
-    pascalCaseToKebabCase(name: any): any;
+    pascalCaseToKebabCase(_str: any, symbol?: string): any;
+    pascalCaseToKebabCase2(name: any, symbol?: string): any;
     execExpression(context: any, expressionStr: any, data: any): any;
     getCookie(name?: string): string;
     noop(): Function;

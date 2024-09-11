@@ -1,299 +1,77 @@
-import { Button } from 'antd';
-import React from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import PopupCodeText from '!!raw-loader!./popup';
 
-import { Popup } from '@baifendian/adhere';
+import React, { useContext, useEffect, useState } from 'react';
 
+import { Util as AdhereUtil, ConfigProvider } from '@baifendian/adhere';
+
+import Constent from '@/constent';
 import PlayGroundPage, {
   CodeBoxSection,
   FunctionPropsSection,
   PropsSection,
   Section,
 } from '@/lib/PlaygroundPage';
+import Util from '@/util';
 
-import { PopupClosePreInner, PopupInner } from './popup';
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+
+import IndexLessCodeText from '!!raw-loader!./index.less';
 
 export default () => {
+  const [indexCodeText, setIndexCodeText] = useState('');
+  const [selectPersonCodeText, setSelectPersonCodeText] = useState('');
+  const [taskCodeText, setTaskCodeText] = useState('');
+  const [p1CodeText, setP1CodeText] = useState('');
+  const [p2CodeText, setP2CodeText] = useState('');
+  const [p3CodeText, setP3CodeText] = useState('');
+  const [p4CodeText, setP4CodeText] = useState('');
+
+  const { media } = useContext(ConfigProvider.Context);
+
+  useEffect(() => {
+    Util.getMobileCodeText('popup/index.jsx').then(setIndexCodeText);
+    Util.getMobileCodeText('popup/SelectPerson.jsx').then(setSelectPersonCodeText);
+    Util.getMobileCodeText('popup/Task.jsx').then(setTaskCodeText);
+    Util.getMobileCodeText('popup/examples/p1.jsx').then(setP1CodeText);
+    Util.getMobileCodeText('popup/examples/p2.jsx').then(setP2CodeText);
+    Util.getMobileCodeText('popup/examples/p3.jsx').then(setP3CodeText);
+    Util.getMobileCodeText('popup/examples/p4.jsx').then(setP4CodeText);
+  }, []);
+
   function boxPanelConfig() {
     return [
       {
         id: `p1`,
         name: `打开`,
-        config: [
-          {
-            title: 'index.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { Popup } from '@baifendian/adhere';
-
-  import { PopupInner } from './popup';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      const ref = React.createRef();
-
-      const popup = Popup.create({
-        onCreate: () => {},
-        onBeforeShow: () => {},
-        onAfterShow: () => {},
-        onBeforeClose: () => {
-          return new Promise((resolve) => {
-            resolve();
-          });
-        },
-        onAfterClose: () => {
-          Popup.destroy(popup);
-        },
-        onDestroy: () => {},
-        children: <PopupInner ref={ref} />,
-        zIndex: 9999,
-      });
-
-      ref.current.setPopup(popup);
-
-      popup.show();
-    }}
-  >
-    Open Popup
-  </Button>
-    `,
-          },
-          {
-            title: 'popup.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-  import React, { useImperativeHandle, useRef, useState } from 'react';
-  import { Popup } from '@baifendian/adhere';
-
-  import styles from './index.less';
-
-  const PopupInner = React.forwardRef((props, ref) => {
-    const popupRef = useRef();
-
-    const [id, setId] = useState('');
-
-    useImperativeHandle(ref, () => ({
-      setPopup: (popup) => {
-        popupRef.current = popup;
-        setId(popup.getId());
-      },
-    }));
-
-    return (
-      <div className={styles.Wrap}>
-        <div className={styles.Fixed}>
-          <a
-            onClick={() => {
-              const tref = React.createRef();
-
-              const popup = Popup.create({
-                onCreate: () => {},
-                onBeforeShow: () => {},
-                onAfterShow: () => {},
-                onBeforeClose: () => Promise.resolve(),
-                onAfterClose: () => Popup.destroy(popup),
-                onDestroy: () => {},
-                children: <PopupInner ref={tref} />,
-                zIndex: 9999,
-              });
-
-              tref.current.setPopup(popup);
-
-              popup.show();
-            }}
-          >
-            OpenNewPopup
-          </a>
-          <div>Popup{id} Title</div>
-          <a
-            onClick={() => {
-              Popup.close(popupRef.current);
-            }}
-          >
-            Close
-          </a>
-        </div>
-
-        <div className={styles.Auto}>
-          <div className="block">
-            <p className="">
-              Here comes popup. You can put here anything, even independent view with its own
-              navigation. Also not, that by default popup looks a bit different on iPhone/iPod and
-              iPad, on iPhone it is fullscreen.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus mauris
-              leo, eu bibendum neque congue non. Ut leo mauris, eleifend eu commodo a, egestas ac
-              urna. Maecenas in lacus faucibus, viverra ipsum pulvinar, molestie arcu. Etiam lacinia
-              venenatis dignissim. Suspendisse non nisl semper tellus malesuada suscipit eu et eros.
-              Nulla eu enim quis quam elementum vulputate. Mauris ornare consequat nunc viverra
-              pellentesque. Aenean semper eu massa sit amet aliquam. Integer et neque sed libero
-              mollis elementum at vitae ligula. Vestibulum pharetra sed libero sed porttitor.
-              Suspendisse a faucibus lectus.
-            </p>
-            <p>
-              Duis ut mauris sollicitudin, venenatis nisi sed, luctus ligula. Phasellus blandit nisl
-              ut lorem semper pharetra. Nullam tortor nibh, suscipit in consequat vel, feugiat sed
-              quam. Nam risus libero, auctor vel tristique ac, malesuada ut ante. Sed molestie, est in
-              eleifend sagittis, leo tortor ullamcorper erat, at vulputate eros sapien nec libero.
-              Mauris dapibus laoreet nibh quis bibendum. Fusce dolor sem, suscipit in iaculis id,
-              pharetra at urna. Pellentesque tempor congue massa quis faucibus. Vestibulum nunc eros,
-              convallis blandit dui sit amet, gravida adipiscing libero.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  });
-
-  const PopupClosePreInner = React.forwardRef((props, ref) => {
-    const popupRef = useRef();
-
-    const [id, setId] = useState('');
-
-    useImperativeHandle(ref, () => ({
-      setPopup: (popup) => {
-        popupRef.current = popup;
-        setId(popup.getId());
-      },
-    }));
-
-    return (
-      <div className={styles.Wrap}>
-        <div className={styles.Fixed}>
-          <a
-            onClick={() => {
-              const tref = React.createRef();
-
-              const popup = Popup.create({
-                onCreate: () => {},
-                onBeforeShow: () => {},
-                onAfterShow: () => {},
-                onBeforeClose: () => Promise.resolve(),
-                onAfterClose: () => Popup.destroy(popup),
-                onDestroy: () => {},
-                children: <PopupInner ref={tref} />,
-                zIndex: 9999,
-              });
-
-              tref.current.setPopup(popup);
-
-              popup.showClosePrePopup();
-            }}
-          >
-            OpenNewPopup
-          </a>
-          <div>Popup{id} Title</div>
-          <a
-            onClick={() => {
-              Popup.close(popupRef.current);
-            }}
-          >
-            Close
-          </a>
-        </div>
-
-        <div className={styles.Auto}>
-          <div className="block">
-            <p className="">
-              Here comes popup. You can put here anything, even independent view with its own
-              navigation. Also not, that by default popup looks a bit different on iPhone/iPod and
-              iPad, on iPhone it is fullscreen.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus mauris
-              leo, eu bibendum neque congue non. Ut leo mauris, eleifend eu commodo a, egestas ac
-              urna. Maecenas in lacus faucibus, viverra ipsum pulvinar, molestie arcu. Etiam lacinia
-              venenatis dignissim. Suspendisse non nisl semper tellus malesuada suscipit eu et eros.
-              Nulla eu enim quis quam elementum vulputate. Mauris ornare consequat nunc viverra
-              pellentesque. Aenean semper eu massa sit amet aliquam. Integer et neque sed libero
-              mollis elementum at vitae ligula. Vestibulum pharetra sed libero sed porttitor.
-              Suspendisse a faucibus lectus.
-            </p>
-            <p>
-              Duis ut mauris sollicitudin, venenatis nisi sed, luctus ligula. Phasellus blandit nisl
-              ut lorem semper pharetra. Nullam tortor nibh, suscipit in consequat vel, feugiat sed
-              quam. Nam risus libero, auctor vel tristique ac, malesuada ut ante. Sed molestie, est in
-              eleifend sagittis, leo tortor ullamcorper erat, at vulputate eros sapien nec libero.
-              Mauris dapibus laoreet nibh quis bibendum. Fusce dolor sem, suscipit in iaculis id,
-              pharetra at urna. Pellentesque tempor congue massa quis faucibus. Vestibulum nunc eros,
-              convallis blandit dui sit amet, gravida adipiscing libero.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  });
-
-  export { PopupInner, PopupClosePreInner };
-            `,
-          },
-          {
-            title: 'index.less',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-  .Wrap {
-    display: flex;
-    flex-direction: column;
-
-    > .Fixed {
-      display: flex;
-      flex-shrink: 0;
-      align-items: center;
-      justify-content: space-between;
-      height: 3rem;
-    }
-
-    > .Auto {
-      flex-grow: 1;
-      box-sizing: border-box;
-      min-height: 0;
-      padding: 1rem;
-      overflow-y: auto;
-      font-size: 14px;
-      line-height: 21px;
-    }
-  }
-            `,
-          },
-        ],
         cardProps: {
           description: {
             title: '打开',
             info: '打开',
           },
         },
-        type: 'PlayGroundMulit',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              const ref = React.createRef();
-
-              const popup = Popup.create({
-                onCreate: () => {},
-                onBeforeShow: () => {},
-                onAfterShow: () => {},
-                onBeforeClose: () => Promise.resolve(),
-                onAfterClose: () => Popup.destroy(popup),
-                onDestroy: () => {},
-                children: <PopupInner ref={ref} getPopup={() => popup} />,
-                zIndex: 9999,
-              });
-
-              // ref.current.setPopup(popup);
-
-              popup.show();
-            }}
-          >
-            Open Popup
-          </Button>
-        ),
+        type: 'PlayGroundTab',
+        active: 'index.jsx',
+        config: [
+          {
+            title: 'index.jsx',
+            key: 'index.jsx',
+            codeText: P1CodeText,
+          },
+          {
+            title: 'popup.jsx',
+            key: 'popup.jsx',
+            codeText: PopupCodeText,
+          },
+          {
+            title: 'index.less',
+            key: 'index.less',
+            codeText: IndexLessCodeText,
+          },
+        ],
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -306,70 +84,76 @@ export default () => {
             info: '打开后删除之前的实例',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { Popup } from '@baifendian/adhere';
-
-  import { PopupClosePreInner } from './popup';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      const ref = React.createRef();
-
-      const popup = Popup.create({
-        onCreate: () => {},
-        onBeforeShow: () => {},
-        onAfterShow: () => {},
-        onBeforeClose: () => {
-          return new Promise((resolve) => {
-            resolve();
-          });
-        },
-        onAfterClose: () => {
-          Popup.destroy(popup);
-        },
-        onDestroy: () => {},
-        children: <PopupClosePreInner ref={ref} />,
-        zIndex: 9999
-      });
-
-      // ref.current.setPopup(popup);
-
-      popup.showClosePrePopup();
-    }}
-  >
-    Open Popup
-  </Button>
-
-    `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              const ref = React.createRef();
-
-              const popup = Popup.create({
-                onCreate: () => {},
-                onBeforeShow: () => {},
-                onAfterShow: () => {},
-                onBeforeClose: () => Promise.resolve(),
-                onAfterClose: () => Popup.destroy(popup),
-                onDestroy: () => {},
-                children: <PopupClosePreInner ref={ref} getPopup={() => popup} />,
-                zIndex: 9999,
-              });
-
-              // ref.current.setPopup(popup);
-
-              popup.show();
-            }}
-          >
-            Open Popup
-          </Button>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
+      },
+      {
+        id: `p3`,
+        name: `使用TriggerPrompt和Trigger`,
+        cardProps: {
+          description: {
+            title: '使用TriggerPrompt和Trigger',
+            info: '使用TriggerPrompt和Trigger',
+          },
+        },
+        active: 'index.jsx',
+        displayBodyStyle: {
+          width: 450,
+        },
+        config: [
+          {
+            key: 'index.jsx',
+            title: 'index.jsx',
+            style: { maxHeight: AdhereUtil.pxToRem(500, media.designWidth, media) },
+            codeText: indexCodeText,
+            theme: 'eclipse',
+          },
+          {
+            key: 'SelectPerson.jsx',
+            title: 'SelectPerson.jsx',
+            style: { maxHeight: AdhereUtil.pxToRem(500, media.designWidth, media) },
+            codeText: selectPersonCodeText,
+            theme: 'eclipse',
+          },
+          {
+            key: 'Task.jsx',
+            title: 'Task.jsx',
+            style: { maxHeight: AdhereUtil.pxToRem(500, media.designWidth, media) },
+            codeText: taskCodeText,
+            theme: 'eclipse',
+          },
+          {
+            key: 'p1.jsx',
+            title: 'p1.jsx',
+            style: { maxHeight: AdhereUtil.pxToRem(500, media.designWidth, media) },
+            codeText: p1CodeText,
+            theme: 'eclipse',
+          },
+          {
+            key: 'p2.jsx',
+            title: 'p2.jsx',
+            style: { maxHeight: AdhereUtil.pxToRem(500, media.designWidth, media) },
+            codeText: p2CodeText,
+            theme: 'eclipse',
+          },
+          {
+            key: 'p3.jsx',
+            title: 'p3.jsx',
+            style: { maxHeight: AdhereUtil.pxToRem(500, media.designWidth, media) },
+            codeText: p3CodeText,
+            theme: 'eclipse',
+          },
+          {
+            key: 'p4.jsx',
+            title: 'p4.jsx',
+            style: { maxHeight: AdhereUtil.pxToRem(500, media.designWidth, media) },
+            codeText: p4CodeText,
+            theme: 'eclipse',
+          },
+        ],
+        type: 'PlayGroundTabMobile',
+        url: `${Constent(CustomEvnVars).mobileOrigin}/#/adhere/component/ui/popup`,
       },
     ];
   }
@@ -439,6 +223,102 @@ export default () => {
                 desc: '显示的层级',
                 type: 'number',
                 defaultVal: '11000',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'Trigger',
+            data: [
+              {
+                params: 'className',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '',
+                type: 'CSSProperties',
+                defaultVal: '',
+              },
+              {
+                params: 'children',
+                desc: '',
+                type: 'any',
+                defaultVal: '',
+              },
+              {
+                params: 'value',
+                desc: '',
+                type: 'any',
+                defaultVal: '',
+              },
+              {
+                params: 'onChange',
+                desc: '',
+                type: '(params?: any) => void',
+                defaultVal: '',
+              },
+              {
+                params: 'renderTrigger',
+                desc: '',
+                type: '() => ReactNode',
+                defaultVal: '',
+              },
+              {
+                params: 'title',
+                desc: '',
+                type: 'ReactNode',
+                defaultVal: '',
+              },
+              {
+                params: 'closeIcon',
+                desc: '',
+                type: 'ReactNode',
+                defaultVal: '',
+              },
+              {
+                params: 'extra',
+                desc: '',
+                type: 'ReactNode',
+                defaultVal: '',
+              },
+              {
+                params: 'actions',
+                desc: '',
+                type: `
+                  Omit<AntdButtonProps | AntdMobileButtonProps, 'onClick'> &
+                  {
+                    key: any;
+                    onClick?: () => Promise<any>;
+                  }[]
+                `,
+                defaultVal: '',
+              },
+              {
+                params: 'popupConfig',
+                desc: '',
+                type: "Omit<IConfig, 'children'>",
+                defaultVal: '',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'TriggerPrompt',
+            data: [
+              {
+                params: 'onSubmit',
+                desc: '',
+                type: '() => Promise<any>',
+                defaultVal: '',
+              },
+              {
+                params: 'okText',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
               },
             ],
           },

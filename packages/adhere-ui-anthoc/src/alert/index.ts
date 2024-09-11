@@ -1,5 +1,3 @@
-import { Alert } from 'antd';
+import Alert from './Alert';
 
-import { createFactory } from '../util';
-
-export default createFactory(Alert, {});
+export default Alert;

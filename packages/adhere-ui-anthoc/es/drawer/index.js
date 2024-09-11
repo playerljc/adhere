@@ -1,2 +1,2 @@
-import _Drawer from"antd/es/drawer";import{createFactory}from"../util";export default createFactory(_Drawer,{});
+import Drawer from"./Drawer";export default Drawer;
 //# sourceMappingURL=index.js.map

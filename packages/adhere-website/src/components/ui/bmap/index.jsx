@@ -45,9 +45,9 @@ const { Option } = Select;
 //     },
 //     Geom: {
 //       PointGeometry,
-//       MulitPointGeometry,
+//       MultiPointGeometry,
 //       PolygonGeometry,
-//       MulitPolygonGeometry,
+//       MultiPolygonGeometry,
 //       LineStringGeometry,
 //       // 正多边形
 //       RegularPolygonGeometry,
@@ -97,9 +97,9 @@ let StartModifyAction;
 let TriangleModifyAction;
 let InteractionTypes;
 let PointGeometry;
-let MulitPointGeometry;
+let MultiPointGeometry;
 let PolygonGeometry;
-let MulitPolygonGeometry;
+let MultiPolygonGeometry;
 let LineStringGeometry;
 // 正多边形
 let RegularPolygonGeometry;
@@ -150,11 +150,11 @@ export default () => {
   const pointLayerSource = useRef();
   const [pointType, setPointType] = useState('-1');
 
-  const mulitPointLayerRef = useRef();
-  const mulitPointLayerOverlay = useRef();
-  const mulitPointLayerSource = useRef();
-  const preMulitPointFeature = useRef(null);
-  const [mulitPointType, setMulitPointType] = useState('-1');
+  const multiPointLayerRef = useRef();
+  const multiPointLayerOverlay = useRef();
+  const multiPointLayerSource = useRef();
+  const preMultiPointFeature = useRef(null);
+  const [multiPointType, setMultiPointType] = useState('-1');
 
   const geometryLayerRef = useRef();
   const geometryLayerOverlay = useRef();
@@ -164,9 +164,9 @@ export default () => {
   const polygonLayerOverlay = useRef();
   const polygonLayerSource = useRef();
 
-  const mulitPolygonLayerRef = useRef();
-  const mulitPolygonOverlay = useRef();
-  const mulitPolygonSource = useRef();
+  const multiPolygonLayerRef = useRef();
+  const multiPolygonOverlay = useRef();
+  const multiPolygonSource = useRef();
 
   const lineStringRef = useRef();
   const lineStringOverlay = useRef();
@@ -934,7 +934,7 @@ export default () => {
     <>
       <div className={styles.ToolBar}>
         <Select
-          style={{ width: 200 }}
+          className={styles.Select}
           value={interactionValue}
           onChange={(value) => {
             setInteractionValue(value);
@@ -1036,7 +1036,7 @@ export default () => {
           <>
             <div className={styles.ToolBar}>
               <Select
-                style={{ width: 200 }}
+                className={styles.Select}
                 value={interactionValue}
                 onChange={(value) => {
                   setInteractionValue(value);
@@ -1501,7 +1501,7 @@ export default () => {
       <div className={styles.ToolBar}>
         <span>点的类型：</span>
         <Select
-          style={{ width: 200 }}
+          className={styles.Select}
           value={pointType}
           onSelect={(value) => {
             setPointType(value);
@@ -1600,7 +1600,7 @@ export default () => {
             <div className={styles.ToolBar}>
               <span>点的类型：</span>
               <Select
-                style={{ width: 200 }}
+                className={styles.Select}
                 value={pointType}
                 onSelect={(value) => {
                   setPointType(value);
@@ -1727,16 +1727,16 @@ export default () => {
       VectorLayer,
       VectorSource,
       Geom: {
-        MulitPointGeometry,
+        MultiPointGeometry,
       },
     },
   } = BMap;
 
-  const mulitPointLayerRef = useRef();
-  const mulitPointLayerOverlay = useRef();
-  const mulitPointLayerSource = useRef();
-  const preMulitPointFeature = useRef(null);
-  const [mulitPointType, setMulitPointType] = useState('-1');
+  const multiPointLayerRef = useRef();
+  const multiPointLayerOverlay = useRef();
+  const multiPointLayerSource = useRef();
+  const preMultiPointFeature = useRef(null);
+  const [multiPointType, setMultiPointType] = useState('-1');
 
   function createVectorLayer({ overlay, ref, source, zIndex }) {
     if (overlay.current) return;
@@ -1758,24 +1758,24 @@ export default () => {
       <div className={styles.ToolBar}>
         <span>点的类型：</span>
         <Select
-          style={{ width: 200 }}
-          value={mulitPointType}
+          className={styles.Select}
+          value={multiPointType}
           onSelect={(value) => {
-            setMulitPointType(value);
+            setMultiPointType(value);
             if (value === '-1') return;
 
             createVectorLayer({
-              overlay: mulitPointLayerOverlay,
-              ref: mulitPointLayerRef,
-              source: mulitPointLayerSource,
+              overlay: multiPointLayerOverlay,
+              ref: multiPointLayerRef,
+              source: multiPointLayerSource,
               zIndex: 9999,
             });
 
-            if (preMulitPointFeature.current) {
-              mulitPointLayerSource.current.removeFeature(preMulitPointFeature.current);
+            if (preMultiPointFeature.current) {
+              multiPointLayerSource.current.removeFeature(preMultiPointFeature.current);
             }
 
-            const mulitPointGemo = new MulitPointGeometry(
+            const multiPointGemo = new MultiPointGeometry(
               citys.map((city) => ({
                 lng: city[0],
                 lat: city[1],
@@ -1783,10 +1783,10 @@ export default () => {
             );
 
             const id = \`${new Date().getTime()}\`;
-            preMulitPointFeature.current = new Feature({
+            preMultiPointFeature.current = new Feature({
               name: id,
               id,
-              geometry: mulitPointGemo,
+              geometry: multiPointGemo,
               style: {
                 lineWidth: 1,
                 strokeStyle: 'yellow',
@@ -1828,7 +1828,7 @@ export default () => {
               },
             });
 
-            mulitPointLayerSource.current.addFeature(preMulitPointFeature.current);
+            multiPointLayerSource.current.addFeature(preMultiPointFeature.current);
           }}
         >
           <Option value="-1">请选择</Option>
@@ -1844,11 +1844,11 @@ export default () => {
       </div>
       <div className={styles.BMapWrap}>
         <BMapComponent
-          ref={mulitPointLayerRef}
+          ref={multiPointLayerRef}
           zoom={5}
           externalImportBMapScript={true}
           onBMapInitReady={() => {
-            mulitPointLayerRef.current.getMap().enableScrollWheelZoom(true);
+            multiPointLayerRef.current.getMap().enableScrollWheelZoom(true);
           }}
         />
       </div>
@@ -1862,24 +1862,24 @@ export default () => {
             <div className={styles.ToolBar}>
               <span>点的类型：</span>
               <Select
-                style={{ width: 200 }}
-                value={mulitPointType}
+                className={styles.Select}
+                value={multiPointType}
                 onSelect={(value) => {
-                  setMulitPointType(value);
+                  setMultiPointType(value);
                   if (value === '-1') return;
 
                   createVectorLayer({
-                    overlay: mulitPointLayerOverlay,
-                    ref: mulitPointLayerRef,
-                    source: mulitPointLayerSource,
+                    overlay: multiPointLayerOverlay,
+                    ref: multiPointLayerRef,
+                    source: multiPointLayerSource,
                     zIndex: 9999,
                   });
 
-                  if (preMulitPointFeature.current) {
-                    mulitPointLayerSource.current.removeFeature(preMulitPointFeature.current);
+                  if (preMultiPointFeature.current) {
+                    multiPointLayerSource.current.removeFeature(preMultiPointFeature.current);
                   }
 
-                  const mulitPointGemo = new MulitPointGeometry(
+                  const multiPointGemo = new MultiPointGeometry(
                     citys.map((city) => ({
                       lng: city[0],
                       lat: city[1],
@@ -1887,10 +1887,10 @@ export default () => {
                   );
 
                   const id = `${new Date().getTime()}`;
-                  preMulitPointFeature.current = new /* InnerText */ Feature({
+                  preMultiPointFeature.current = new /* InnerText */ Feature({
                     name: id,
                     id,
-                    geometry: mulitPointGemo,
+                    geometry: multiPointGemo,
                     // text: '蜜雪冰城',
                     // textStyle: {
                     //   font: '10px sans-serif',
@@ -1941,7 +1941,7 @@ export default () => {
                     },
                   });
 
-                  mulitPointLayerSource.current.addFeature(preMulitPointFeature.current);
+                  multiPointLayerSource.current.addFeature(preMultiPointFeature.current);
                 }}
                 getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
               >
@@ -1958,11 +1958,11 @@ export default () => {
             </div>
             <div className={styles.BMapWrap}>
               <BMapComponent
-                ref={mulitPointLayerRef}
+                ref={multiPointLayerRef}
                 zoom={5}
                 externalImportBMapScript={true}
                 onBMapInitReady={() => {
-                  mulitPointLayerRef.current.getMap().enableScrollWheelZoom(true);
+                  multiPointLayerRef.current.getMap().enableScrollWheelZoom(true);
                 }}
               />
             </div>
@@ -2482,15 +2482,15 @@ export default () => {
       VectorLayer,
       VectorSource,
       Geom: {
-        MulitPolygonGeometry,
+        MultiPolygonGeometry,
       },
     },
     Util
   } = BMap;
 
-  const mulitPolygonLayerRef = useRef();
-  const mulitPolygonOverlay = useRef();
-  const mulitPolygonSource = useRef();
+  const multiPolygonLayerRef = useRef();
+  const multiPolygonOverlay = useRef();
+  const multiPolygonSource = useRef();
 
   function createVectorLayer({ overlay, ref, source, zIndex }) {
     if (overlay.current) return;
@@ -2510,17 +2510,17 @@ export default () => {
   ReactDOM.render(
     <div className={styles.BMapWrap}>
       <BMapComponent
-        ref={mulitPolygonLayerRef}
+        ref={multiPolygonLayerRef}
         zoom={5}
         externalImportBMapScript={true}
         onBMapInitReady={() => {
-          const map = mulitPolygonLayerRef.current.getMap();
+          const map = multiPolygonLayerRef.current.getMap();
           map.enableScrollWheelZoom(true);
 
           createVectorLayer({
-            overlay: mulitPolygonOverlay,
-            ref: mulitPolygonLayerRef,
-            source: mulitPolygonSource,
+            overlay: multiPolygonOverlay,
+            ref: multiPolygonLayerRef,
+            source: multiPolygonSource,
             zIndex: 9999,
           });
 
@@ -2581,12 +2581,12 @@ export default () => {
             ],
           ];
 
-          const mulitPolygonGemo = new MulitPolygonGeometry(polygon);
+          const multiPolygonGemo = new MultiPolygonGeometry(polygon);
 
           const feature = new Feature({
             id: v1(),
             name: v1(),
-            geometry: mulitPolygonGemo,
+            geometry: multiPolygonGemo,
             style: {
               lineWidth: 1,
               strokeStyle: 'yellow',
@@ -2594,7 +2594,7 @@ export default () => {
             },
           });
 
-          mulitPolygonSource.current.addFeature(feature);
+          multiPolygonSource.current.addFeature(feature);
 
           Util.fit(
             map,
@@ -2610,17 +2610,17 @@ export default () => {
         renderChildren: () => (
           <div className={styles.BMapWrap}>
             <BMapComponent
-              ref={mulitPolygonLayerRef}
+              ref={multiPolygonLayerRef}
               zoom={5}
               externalImportBMapScript={true}
               onBMapInitReady={() => {
-                const map = mulitPolygonLayerRef.current.getMap();
+                const map = multiPolygonLayerRef.current.getMap();
                 map.enableScrollWheelZoom(true);
 
                 createVectorLayer({
-                  overlay: mulitPolygonOverlay,
-                  ref: mulitPolygonLayerRef,
-                  source: mulitPolygonSource,
+                  overlay: multiPolygonOverlay,
+                  ref: multiPolygonLayerRef,
+                  source: multiPolygonSource,
                   zIndex: 9999,
                 });
 
@@ -2681,12 +2681,12 @@ export default () => {
                   ],
                 ];
 
-                const mulitPolygonGemo = new MulitPolygonGeometry(polygon);
+                const multiPolygonGemo = new MultiPolygonGeometry(polygon);
 
                 const feature = new Feature({
                   id: v1(),
                   name: v1(),
-                  geometry: mulitPolygonGemo,
+                  geometry: multiPolygonGemo,
                   style: {
                     lineWidth: 1,
                     strokeStyle: 'yellow',
@@ -2694,7 +2694,7 @@ export default () => {
                   },
                 });
 
-                mulitPolygonSource.current.addFeature(feature);
+                multiPolygonSource.current.addFeature(feature);
 
                 Util.fit(
                   map,
@@ -2763,7 +2763,7 @@ export default () => {
     <>
       <div className={styles.ToolBar}>
         <Select
-          style={{ width: 200 }}
+          className={styles.Select}
           value={lineStringType}
           onChange={(value) => {
             const map = lineStringRef.current.getMap();
@@ -2893,7 +2893,7 @@ export default () => {
           <>
             <div className={styles.ToolBar}>
               <Select
-                style={{ width: 200 }}
+                className={styles.Select}
                 value={lineStringType}
                 onChange={(value) => {
                   const map = lineStringRef.current.getMap();
@@ -3082,7 +3082,7 @@ export default () => {
     <>
       <div className={styles.ToolBar}>
         <Select
-          style={{ width: 200 }}
+          className={styles.Select}
           value={regularPolygonCount}
           onChange={(value) => {
             setRegularPolygonCount(value);
@@ -3146,7 +3146,7 @@ export default () => {
           <>
             <div className={styles.ToolBar}>
               <Select
-                style={{ width: 200 }}
+                className={styles.Select}
                 value={regularPolygonCount}
                 onChange={(value) => {
                   setRegularPolygonCount(value);
@@ -3270,7 +3270,7 @@ export default () => {
     <>
       <div className={styles.ToolBar}>
         <Select
-          style={{ width: 200 }}
+          className={styles.Select}
           value={leafCount}
           onChange={(value) => {
             setLeafCount(value);
@@ -3336,7 +3336,7 @@ export default () => {
           <>
             <div className={styles.ToolBar}>
               <Select
-                style={{ width: 200 }}
+                className={styles.Select}
                 value={leafCount}
                 onChange={(value) => {
                   setLeafCount(value);
@@ -3458,7 +3458,7 @@ export default () => {
     <>
       <div className={styles.ToolBar}>
         <Select
-          style={{ width: 200 }}
+          className={styles.Select}
           value={textCount}
           onChange={(value) => {
             const map = textRef.current.getMap();
@@ -3553,7 +3553,7 @@ export default () => {
           <>
             <div className={styles.ToolBar}>
               <Select
-                style={{ width: 200 }}
+                className={styles.Select}
                 value={textCount}
                 onChange={(value) => {
                   const map = textRef.current.getMap();
@@ -3682,9 +3682,9 @@ export default () => {
           },
           Geom: {
             PointGeometry: _PointGeometry,
-            MulitPointGeometry: _MulitPointGeometry,
+            MultiPointGeometry: _MultiPointGeometry,
             PolygonGeometry: _PolygonGeometry,
-            MulitPolygonGeometry: _MulitPolygonGeometry,
+            MultiPolygonGeometry: _MultiPolygonGeometry,
             LineStringGeometry: _LineStringGeometry,
             // 正多边形
             RegularPolygonGeometry: _RegularPolygonGeometry,
@@ -3734,9 +3734,9 @@ export default () => {
       TriangleModifyAction = _TriangleModifyAction;
       InteractionTypes = _InteractionTypes;
       PointGeometry = _PointGeometry;
-      MulitPointGeometry = _MulitPointGeometry;
+      MultiPointGeometry = _MultiPointGeometry;
       PolygonGeometry = _PolygonGeometry;
-      MulitPolygonGeometry = _MulitPolygonGeometry;
+      MultiPolygonGeometry = _MultiPolygonGeometry;
       LineStringGeometry = _LineStringGeometry;
       // 正多边形
       RegularPolygonGeometry = _RegularPolygonGeometry;
@@ -3796,16 +3796,16 @@ export default () => {
                       <li>CircleGeometry</li>
                       <li>LeafGeometry</li>
                       <li>LineStringGeometry</li>
-                      <li>MulitCircleGeometry</li>
-                      <li>MulitLeafGeometry</li>
-                      <li>MulitLineStringGeometry</li>
-                      <li>MulitPointGeometry</li>
-                      <li>MulitPolygonGeometry</li>
-                      <li>MulitRadiusRectGeometry</li>
-                      <li>MulitRectGeometry</li>
-                      <li>MulitRegularPolygonGeometry</li>
-                      <li>MulitSectorGeometry</li>
-                      <li>MulitStartGeometry</li>
+                      <li>MultiCircleGeometry</li>
+                      <li>MultiLeafGeometry</li>
+                      <li>MultiLineStringGeometry</li>
+                      <li>MultiPointGeometry</li>
+                      <li>MultiPolygonGeometry</li>
+                      <li>MultiRadiusRectGeometry</li>
+                      <li>MultiRectGeometry</li>
+                      <li>MultiRegularPolygonGeometry</li>
+                      <li>MultiSectorGeometry</li>
+                      <li>MultiStartGeometry</li>
                       <li>PointGeometry</li>
                       <li>PolygonGeometry</li>
                       <li>RadiusRectGeometry</li>

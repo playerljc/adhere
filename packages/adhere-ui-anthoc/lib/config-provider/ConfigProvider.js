@@ -1,0 +1,2 @@
+"use strict";var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},antd_1=(Object.defineProperty(exports,"__esModule",{value:!0}),require("antd")),util_1=require("../util"),DatePicker_1=__importDefault(require("./DatePicker")),reducer=[DatePicker_1.default],ConfigProviderHOC=(0,util_1.createFactory)(antd_1.ConfigProvider,{},function(r){return reducer.forEach(function(e){return e(r)}),r});ConfigProviderHOC.displayName="ConfigProvider",exports.default=ConfigProviderHOC;
+//# sourceMappingURL=ConfigProvider.js.map

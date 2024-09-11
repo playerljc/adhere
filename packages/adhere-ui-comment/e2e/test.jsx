@@ -167,34 +167,31 @@ export default function Wrap() {
 
   return (
     <div className="ScrollWrap" ref={ref}>
-      <div className="Scroll">
-        <Comment
-          getScrollWrapContainer={() => ref.current}
-          fetchCommentData={fetchCommentData}
-          renderCommentActions={renderCommentActions}
-          renderCommentAuthor={renderCommentAuthor}
-          renderCommentAvatar={renderCommentAvatar}
-          renderCommentContent={renderCommentContent}
-          renderCommentDateTime={renderCommentDateTime}
-          fetchReplyData={fetchReplyData}
-          renderReplyActions={renderReplyActions}
-          renderReplyAuthor={renderReplyAuthor}
-          renderReplyAvatar={renderReplyAvatar}
-          renderReplyContent={renderReplyContent}
-          renderReplyDateTime={renderReplyDateTime}
-          fetchReply={fetchReply}
-          // replyLimit={1}
-          // renderCommentLoading={() => <Spin />}
-          // renderFirstLoading={() => <Spin />}
-          // listProps={{
-          //   scrollLoadProps: {
-          //     renderLoading: () => <Spin />,
-          //     renderEmpty: () => <Empty />,
-          //     renderError: () => <div>error</div>,
-          //   },
-          // }}
-        />
-      </div>
+      <Comment
+        fetchCommentData={fetchCommentData}
+        renderCommentActions={renderCommentActions}
+        renderCommentAuthor={renderCommentAuthor}
+        renderCommentAvatar={renderCommentAvatar}
+        renderCommentContent={renderCommentContent}
+        renderCommentDateTime={renderCommentDateTime}
+        fetchReplyData={fetchReplyData}
+        renderReplyActions={renderReplyActions}
+        renderReplyAuthor={renderReplyAuthor}
+        renderReplyAvatar={renderReplyAvatar}
+        renderReplyContent={renderReplyContent}
+        renderReplyDateTime={renderReplyDateTime}
+        fetchReply={fetchReply}
+        // replyLimit={1}
+        // renderCommentLoading={() => <Spin />}
+        // renderFirstLoading={() => <Spin />}
+        // listProps={{
+        //   scrollLoadProps: {
+        //     renderLoading: () => <Spin />,
+        //     renderEmpty: () => <Empty />,
+        //     renderError: () => <div>error</div>,
+        //   },
+        // }}
+      />
     </div>
   );
 }

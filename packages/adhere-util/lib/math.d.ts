@@ -1,3 +1,4 @@
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
 import { ICircle, IPoint } from './types';
 declare const _default: {
     /**--------------------------math-start----------------------**/
@@ -48,7 +49,7 @@ declare const _default: {
      * @return {x:number,y:number}
      */
     clientToCtxPoint({ event, rect }: {
-        event: MouseEvent;
+        event: MouseEvent | TouchEvent;
         rect: DOMRect;
     }): IPoint;
     /**
@@ -140,10 +141,25 @@ declare const _default: {
      * getOvalPoint
      * @description - 获取椭圆上任意一点
      * @param center
-     * @param raduisX
+     * @param radiusX
      * @param radiusY
      * @param angle
      */
-    getOvalPoint(center: IPoint, raduisX: number, radiusY: number, angle: number): IPoint;
+    getOvalPoint(center: IPoint, radiusX: number, radiusY: number, angle: number): IPoint;
+    /**
+     * pxToRemNumber
+     * @param {number} px
+     * @param {number} base
+     * @return {number}
+     */
+    pxToRemNumber(px: number, base: number): number;
+    /**
+     * pxToRem
+     * @param {number} px
+     * @param {number} base
+     * @param media
+     * @return {string}
+     */
+    pxToRem(px: number, base: number, media?: ConfigProviderProps['media']): string;
 };
 export default _default;

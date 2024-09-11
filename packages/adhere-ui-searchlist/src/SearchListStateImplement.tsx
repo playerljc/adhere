@@ -11,7 +11,7 @@ import type {
   SearchListStateImplementProps,
 } from './types';
 
-export const selectorPrefix = 'adhere-ui-searchstatetableimplement';
+export const selectorPrefix = 'adhere-ui-search-state-table-implement';
 
 /**
  * SearchListStateImplement
@@ -24,6 +24,8 @@ export class SearchListStateImplement<
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   S extends SearchListImplementState,
 > extends SearchListImplement<SearchListStateImplementProps, SearchListImplementState> {
+  static displayName = 'SearchListStateImplement';
+
   private unsubscribe: Function;
 
   constructor(props) {

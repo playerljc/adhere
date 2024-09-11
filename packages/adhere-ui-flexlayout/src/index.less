@@ -1,69 +1,69 @@
-@import './toolBarLayout.less';
-@import './scrollLayout.less';
+@import './ToolBarLayout.less';
+@import './ScrollLayout.less';
 
-@adhere-ui-flexlayout-grid-count: 24;
+@adhere-ui-flex-layout-grid-count: 24;
 
-.adhere-ui-flexlayout-trblc {
+.adhere-ui-flex-layout-trblc {
   width: 100%;
   height: 100%;
   overflow: hidden;
 
-  &.adhere-ui-flexlayout-trblc-no-autofix {
-    overflow: auto;
-  }
+  //&.adhere-ui-flex-layout-trblc-no-autofix {
+  //  overflow: auto;
+  //}
 
-  > .adhere-ui-flexlayout {
+  > .adhere-ui-flex-layout {
     height: 100%;
 
-    &.adhere-ui-flexlayout-horizontal {
+    &.adhere-ui-flex-layout-horizontal {
       flex-wrap: nowrap;
     }
   }
 }
 
-.adhere-ui-flexlayout {
+.adhere-ui-flex-layout {
   display: flex;
 
-  &.adhere-ui-flexlayout-trblc-auto-inner {
+  &.adhere-ui-flex-layout-trblc-auto-inner {
     height: 100%;
 
-    &.adhere-ui-flexlayout-trblc-auto-inner-no-autofix {
+    &.adhere-ui-flex-layout-trblc-auto-inner-no-autofix {
       overflow: auto;
     }
   }
 
   // 横向
-  &.adhere-ui-flexlayout-horizontal {
+  &.adhere-ui-flex-layout-horizontal {
     flex-flow: row wrap;
 
-    &.adhere-ui-flexlayout-horizontal-flex-layout {
+    &.adhere-ui-flex-layout-horizontal-flex-layout {
       flex-wrap: nowrap;
     }
 
-    > .adhere-ui-flexlayout-fixed {
+    > .adhere-ui-flex-layout-fixed {
       // 横向的栅格系统设置
       .span(@n, @i: 0) when (@i =< @n) {
-        &.adhere-ui-flexlayout-fixed-col-@{i} {
+        &.adhere-ui-flex-layout-fixed-col-@{i} {
           //flex-basis: (@i * 100% / @n);
           //max-width: (@i * 100% / @n);
           width: (@i * 100% / @n);
         }
         .span(@n, (@i + 1));
       }
-      .span(@adhere-ui-flexlayout-grid-count);
+      .span(@adhere-ui-flex-layout-grid-count);
     }
 
-    > .adhere-ui-flexlayout-auto-auto-fixed {
+    > .adhere-ui-flex-layout-auto-auto-fixed {
       min-width: 0;
     }
   }
 
   // 纵向
-  &.adhere-ui-flexlayout-vertical {
+  &.adhere-ui-flex-layout-vertical {
     flex-direction: column;
 
-    > .adhere-ui-flexlayout-fixed {
-      &.adhere-ui-flexlayout-fixed-gap {
+    > .adhere-ui-flex-layout-fixed {
+      &.adhere-ui-flex-layout-fixed-gap {
         box-sizing: content-box !important;
 
         &:first-child {
@@ -76,8 +76,8 @@
       }
     }
 
-    > .adhere-ui-flexlayout-auto {
-      &.adhere-ui-flexlayout-auto-gap {
+    > .adhere-ui-flex-layout-auto {
+      &.adhere-ui-flex-layout-auto-gap {
         box-sizing: content-box !important;
 
         &:first-child {
@@ -90,18 +90,23 @@
       }
     }
 
-    > .adhere-ui-flexlayout-auto-auto-fixed {
+    > .adhere-ui-flex-layout-auto-auto-fixed {
       min-height: 0;
     }
   }
 
-  > .adhere-ui-flexlayout-fixed {
+  > .adhere-ui-flex-layout-fixed {
+    position: relative;
     flex-shrink: 0;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    transition: all 0.2s;
 
-    &.adhere-ui-flexlayout-fixed-fit {
+    &.adhere-ui-flex-layout-fixed-fit {
       display: flex;
 
-      > .adhere-ui-flexlayout {
+      > .adhere-ui-flex-layout {
         width: 100%;
       }
 
@@ -109,23 +114,68 @@
         width: 100%;
       }
     }
+
+    > .adhere-ui-flex-layout-fixed-trigger {
+      position: absolute;
+      z-index: 999;
+      width: auto;
+      color: var(--adhere-color-text-tertiary);
+      font-size: 18px;
+
+      &.adhere-ui-flex-layout-fixed-trigger-l,
+      &.adhere-ui-flex-layout-fixed-trigger-r {
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      &.adhere-ui-flex-layout-fixed-trigger-l {
+        right: 0;
+      }
+      &.adhere-ui-flex-layout-fixed-trigger-r {
+        left: 0;
+      }
+
+      &.adhere-ui-flex-layout-fixed-trigger-t,
+      &.adhere-ui-flex-layout-fixed-trigger-b {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &.adhere-ui-flex-layout-fixed-trigger-t {
+        bottom: 0;
+      }
+      &.adhere-ui-flex-layout-fixed-trigger-b {
+        top: 0;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 
-  > .adhere-ui-flexlayout-auto {
+  > .adhere-ui-flex-layout-auto {
     flex: 1;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
 
-    &.adhere-ui-flexlayout-trblc-auto {
-      overflow: hidden;
+    &.adhere-ui-flex-layout-normal {
+      flex: 0 1 auto;
+    }
 
-      &.adhere-ui-flexlayout-trblc-auto-no-autofix {
+    &.adhere-ui-flex-layout-trblc-auto {
+      &.adhere-ui-flex-layout-trblc-auto-no-autofix {
         overflow: inherit;
+      }
+
+      &.adhere-ui-flex-layout-auto-gap {
+        overflow: hidden !important;
       }
     }
 
-    &.adhere-ui-flexlayout-auto-fit {
+    &.adhere-ui-flex-layout-auto-fit {
       display: flex;
 
-      > .adhere-ui-flexlayout {
+      > .adhere-ui-flex-layout {
         width: 100%;
       }
 

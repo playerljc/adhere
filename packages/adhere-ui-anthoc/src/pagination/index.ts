@@ -1,5 +1,3 @@
-import { Pagination } from 'antd';
+import Pagination from './Pagination';
 
-import { createFactory } from '../util';
-
-export default createFactory(Pagination, {});
+export default Pagination;

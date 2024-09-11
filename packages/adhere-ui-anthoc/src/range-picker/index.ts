@@ -1,7 +1,3 @@
-import { DatePicker } from 'antd';
+import RangePicker from './RangePicker';
 
-import { createFactory } from '../util';
-
-const { RangePicker } = DatePicker;
-
-export default createFactory(RangePicker, { allowClear: true, placement: 'bottomLeft' });
+export default RangePicker;

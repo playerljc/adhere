@@ -1,2 +1,2 @@
-import FormItemCreator from './formitemcreator';
+import FormItemCreator from './FormItemCreator';
 export default FormItemCreator;

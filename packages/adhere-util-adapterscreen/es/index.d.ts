@@ -1,2 +1,2 @@
-import AdapterScreen from './adapterscreen';
+import AdapterScreen from './AdapterScreen';
 export default AdapterScreen;

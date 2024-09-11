@@ -1,3 +1,61 @@
+# 1.0.39
+
+***
+
+2024-02-22
+
+* 加入getSaerch、getPathname方法
+* encrypt函数加入options
+* 加入dom尺寸计算方法
+* clientToCtxPoint去掉使用zoom计算
+* 加入pxToRem方法
+* 修复math中的clientToCtxPoint方法适配zoom
+* 加入getTransformValues方法
+
+# 1.0.38
+
+***
+
+2024-02-04
+
+* treeToArray方法排除children属性
+
+# 1.0.37
+
+***
+
+2024-01-24
+
+* 修改getTopDom方法的BUG，selector支持数组形式
+* 修改getTopDom方法
+* 加入isPromise方法
+
+# 1.0.36
+
+***
+
+2023-12-17
+
+* getTopDom方法修改
+* 加入gcoord
+
+# 1.0.35
+
+***
+
+2023-11-06
+
+* 加入pascalCaseToKebabCase2
+* pascalCaseToKebabCase方法修改
+
+# 1.0.34
+
+***
+
+2023-09-29
+
+* 修复tree中的若干方法的细节
+
 # 1.0.33
 
 ***

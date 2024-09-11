@@ -55,8 +55,15 @@ declare const _default: {
     /**
      * isRef - 是否是引用类型
      * @param obj
+     * @return {boolean}
      */
     isRef(obj: any): boolean;
+    /**
+     * isPromise - 是否是Promise
+     * @param obj
+     * @return {boolean}
+     */
+    isPromise(obj: any): any;
     /**
      * chainCallAssignment - 对象的链式赋值
      * obj.a.b.c.d.x.x.x = value
@@ -103,10 +110,18 @@ declare const _default: {
     isPascalCase(name: any): boolean;
     /**
      * pascalCaseToKebabCase 驼峰转xxx-xxx-xxx
-     * @param name - string pascalCase的字符串
+     * @param _str - string pascalCase的字符串
+     * @param symbol 分隔符
      * @return {string}
      */
-    pascalCaseToKebabCase(name: any): any;
+    pascalCaseToKebabCase(_str: any, symbol?: string): any;
+    /**
+     * pascalCaseToKebabCase 驼峰转xxx-xxx-xxx
+     * @param name
+     * @param symbol 分隔符
+     * @return {string}
+     */
+    pascalCaseToKebabCase2(name: any, symbol?: string): any;
     /**
      * execExpression - 执行表达式
      * @param context - {Object} 执行的上下文

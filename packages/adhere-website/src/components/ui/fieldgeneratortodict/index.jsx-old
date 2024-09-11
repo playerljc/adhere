@@ -100,7 +100,7 @@ export default () => {
           export default () => {
             const [vals, setVals] = useState([]);
 
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestSelectMulitFormItem
+            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestSelectMultiFormItem
               selectProps={{
                 style: {
                   width: 200,
@@ -112,7 +112,7 @@ export default () => {
           }
                     `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestSelectMulitFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestSelectMultiFormItem
                 style={{ width: 300 }}
                 value={vals}
                 onChange={(v) => setVals(v)}
@@ -138,7 +138,7 @@ export default () => {
           export default () => {
             const [vals, setVals] = useState([]);
 
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestSelectCheckAllMulitFormItem
+            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestSelectCheckAllMultiFormItem
               selectProps={{
                 style: {
                   width: 200,
@@ -150,7 +150,7 @@ export default () => {
           }
                     `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestSelectCheckAllMulitFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestSelectCheckAllMultiFormItem
                 style={{ width: 300 }}
                 value={vals}
                 onChange={(v) => setVals(v)}
@@ -214,7 +214,7 @@ export default () => {
           export default () => {
             const [vals, setVals] = useState([]);
 
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestAutoCompleteSelectMulitFormItem
+            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestAutoCompleteSelectMultiFormItem
               selectProps={{
                 style: {
                   width: 200,
@@ -226,7 +226,7 @@ export default () => {
           }
                     `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestAutoSelectCompleteMulitFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestAutoSelectCompleteMultiFormItem
                 style={{ width: 200 }}
                 value={vals}
                 onChange={(v) => {
@@ -254,7 +254,7 @@ export default () => {
           export default () => {
             const [vals, setVals] = useState([]);
 
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestAutoCompleteSelectCheckAllMulitFormItem
+            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestAutoCompleteSelectCheckAllMultiFormItem
               selectProps={{
                 style: {
                   width: 200,
@@ -266,7 +266,7 @@ export default () => {
           }
                     `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestAutoSelectCompleteCheckAllMulitFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestAutoSelectCompleteCheckAllMultiFormItem
                 style={{ width: 200 }}
                 value={vals}
                 onChange={(v) => setVals(v)}
@@ -854,7 +854,7 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTreeMulitFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTreeMultiFormItem
       selectProps={{
         style: {
           width: 200,
@@ -866,7 +866,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTreeMulitFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTreeMultiFormItem
                 style={{ width: 300 }}
                 value={vals}
                 onChange={(v) => setVals(v)}
@@ -892,7 +892,7 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTreeLeafMulitFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTreeLeafMultiFormItem
       selectProps={{
         style: {
           width: 200,
@@ -904,7 +904,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTreeLeafMulitFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTreeLeafMultiFormItem
                 style={{ width: 200 }}
                 value={vals}
                 onChange={(v) => setVals(v)}
@@ -1192,7 +1192,7 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTableMulitSelectFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTableMultiSelectFormItem
       selectProps={{
         style: {
           width: 1024,
@@ -1231,7 +1231,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTableMulitSelectFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTableMultiSelectFormItem
                 selectProps={{
                   style: {
                     width: 1024,
@@ -1468,7 +1468,7 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTablePaginationMulitSelectFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTablePaginationMultiSelectFormItem
       selectProps={{
         style: { width: 1024 },
       }}
@@ -1509,7 +1509,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTablePaginationMulitSelectFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTablePaginationMultiSelectFormItem
                 selectProps={{
                   style: { width: 1024 },
                 }}
@@ -1642,7 +1642,7 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderMulitFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderMultiFormItem
       style={{ width: 500 }}
       value={vals}
       onChange={(v) => setVals(v || [])}
@@ -1650,7 +1650,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderMulitFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderMultiFormItem
                 style={{ width: 500 }}
                 value={vals}
                 onChange={(v) => setVals(v || [])}
@@ -1676,7 +1676,7 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderLeafMulitFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderLeafMultiFormItem
       style={{ width: 500 }}
       value={vals}
       onChange={(v) => setVals(v || [])}
@@ -1684,7 +1684,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderLeafMulitFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderLeafMultiFormItem
                 style={{ width: 500 }}
                 value={vals}
                 onChange={(v) => setVals(v || [])}
@@ -1821,7 +1821,7 @@ export default () => {
       </List.Item>
     );
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListMulitSelectFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListMultiSelectFormItem
       selectProps={{
         style: {
           width: 1024,
@@ -1834,7 +1834,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListMulitSelectFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListMultiSelectFormItem
                 selectProps={{
                   style: {
                     width: 1024,
@@ -1972,7 +1972,7 @@ export default () => {
       </List.Item>
     );
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListPaginationMulitSelectFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListPaginationMultiSelectFormItem
       selectProps={{
         style: {
           width: 1024,
@@ -1989,7 +1989,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListPaginationMulitSelectFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListPaginationMultiSelectFormItem
                 selectProps={{
                   style: { width: 1024 },
                 }}

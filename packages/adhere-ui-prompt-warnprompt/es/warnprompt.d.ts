@@ -1,20 +1,14 @@
-import { ArgsProps } from 'antd/lib/message';
-import { ModalProps } from 'antd/lib/modal/Modal';
-import React from 'react';
-type ConfigContent = React.ReactNode;
-type JointContent = ConfigContent | ArgsProps;
+import { JointContent, WarnDialog, duration } from './types';
 /**
- * openErrorDialog
+ * openWarnDialog
+ * @param duration
  * @param props
  */
-export declare const openWarnDialog: (props?: ModalProps) => {
-    destroy: () => void;
-    update: (configUpdate: import("antd").ModalFuncProps | ((prevConfig: import("antd").ModalFuncProps) => import("antd").ModalFuncProps)) => void;
-};
+export declare const openWarnDialog: WarnDialog;
 /**
  * 警告的提示
  * @param content
  * @param duration
+ * @param onClose
  */
-export declare const openWarnMessage: (content?: JointContent, duration?: number | VoidFunction, onClose?: VoidFunction) => import("antd/es/message/interface").MessageType;
-export {};
+export declare const openWarnMessage: (content?: JointContent, duration?: duration, onClose?: VoidFunction) => import("antd/es/message/interface").MessageType;

@@ -2,8 +2,8 @@ import { ListSize } from 'antd/es/list';
 import PropTypes from 'prop-types';
 import React, { ReactElement, ReactNode, RefObject } from 'react';
 import type { Metas, SearchListProps, SearchListState } from './types';
-declare const Search: typeof import("@baifendian/adhere-ui-searchtable/lib/Search").default;
-export declare const selectorPrefix = "adhere-ui-searchtable";
+declare const Search: typeof import("@baifendian/adhere-ui-searchtable/es/Search").default;
+export declare const selectorPrefix = "adhere-ui-search-table";
 export declare const SearchListContext: React.Context<{
     context: SearchList;
 } | null>;
@@ -11,6 +11,7 @@ export declare const SearchListContext: React.Context<{
  * SearchList
  */
 declare abstract class SearchList<P extends SearchListProps = SearchListProps, S extends SearchListState = SearchListState> extends Search<P, S> {
+    static displayName: string;
     static NUMBER_GENERATOR_RULE_ALONE: symbol;
     static NUMBER_GENERATOR_RULE_CONTINUITY: symbol;
     static defaultProps: any;
@@ -90,17 +91,52 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
      */
     getListDensity(): ListSize;
     /**
+     * getExportExcelData
+     * @description 获取导出excel的数据
+     * @return any[]
+     */
+    getExportExcelData(): object[];
+    /**
+     * getExportExcelColumns
+     * @description 获取导出excel的列
+     * @param _columns
+     * return _columns
+     */
+    getExportExcelColumns(_columns: any[]): any[];
+    /**
      * renderTableDensitySetting
      * @description 表格密度设置
      * @return {ReactElement}
      */
     renderTableDensitySetting(): ReactElement;
     /**
-     * renderSearchToolBar
+     * renderTableReload
+     * @description 刷新
+     * @return {ReactElement}
+     */
+    renderTableReload(): ReactElement;
+    /**
+     * renderExportExcel
+     * @description 导出excel
+     * @return {ReactElement}
+     */
+    renderExportExcel(): ReactElement;
+    /**
+     * renderSearchBarCollapseControl
+     */
+    renderSearchBarCollapseControl(): React.JSX.Element;
+    /**
+     * renderSearchFormToolBar
+     * @description 渲染查询表单的工具栏
+     * @return {ReactNode}
+     */
+    renderSearchFormToolBar(): ReactNode;
+    /**
+     * renderSearchBarActions
      * @description 渲染查询工具栏
      * @return {ReactElement}
      */
-    renderSearchToolBar(): ReactElement;
+    renderSearchBarActions(): ReactNode;
     /**
      * getPagination
      * @param params
@@ -120,19 +156,19 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
      * renderBody
      * @return {ReactNode}
      */
-    renderBody(): JSX.Element;
+    renderBody(): React.JSX.Element;
     /**
      * renderInner
      * @description 渲染SearchTable
      * @return {ReactElement | null}
      */
-    renderInner(): ReactElement | null;
+    renderInner(): React.JSX.Element;
     /**
      * renderChildren
      * @description renderChildren
      * @return {ReactNode}
      */
-    renderChildren(): JSX.Element;
+    renderChildren(): React.JSX.Element;
     /**
      * render
      * @protected
@@ -146,6 +182,7 @@ export declare const defaultProps: {
     fixedListSpaceBetween: boolean;
 };
 export declare const propTypes: {
+    title: PropTypes.Requireable<string>;
     antdListProps: PropTypes.Requireable<object>;
     fixedSelectionHeaderAutoList: PropTypes.Requireable<boolean>;
     fixedListSpaceBetween: PropTypes.Requireable<boolean>;

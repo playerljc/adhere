@@ -1,12 +1,13 @@
 import { SearchListImplement } from './SearchListImplement';
 import type { SearchListImplementState, SearchListStateImplementFactoryFunction, SearchListStateImplementProps } from './types';
-export declare const selectorPrefix = "adhere-ui-searchstatetableimplement";
+export declare const selectorPrefix = "adhere-ui-search-state-table-implement";
 /**
  * SearchListStateImplement
  * @class
  * @classdesc - SearchList的state实现
  */
 export declare class SearchListStateImplement<P extends SearchListStateImplementProps, S extends SearchListImplementState> extends SearchListImplement<SearchListStateImplementProps, SearchListImplementState> {
+    static displayName: string;
     private unsubscribe;
     constructor(props: any);
     componentWillUnmount(): void;

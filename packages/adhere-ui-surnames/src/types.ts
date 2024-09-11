@@ -12,6 +12,10 @@ export interface SurnamesRefHandle {
 export interface SurnamesProps {
   className?: string;
   style?: CSSProperties;
+  indexClassName?: string;
+  indexStyle?: CSSProperties;
+  contentClassName?: string;
+  contentStyle?: CSSProperties;
   position?: 'top' | 'right' | 'bottom' | 'left';
   indexes?: IndexConfig[];
   dataSource?: Record[];

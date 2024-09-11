@@ -38,24 +38,20 @@ declare const _default: {
             getLimit(): number;
             getFetchDataParams(): {};
             getTableColumns(): any;
+            getTableColumnSearchHeaderIcon(column: import("@baifendian/adhere-ui-searchtable/es/types").ColumnTypeExt): import("react").JSX.Element;
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
+            getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -63,17 +59,24 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
                 column: any;
                 dataIndex: any;
             }): import("react").ReactNode;
-            renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): JSX.Element;
+            renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
+        displayName: string;
     };
     ProSearchStateList: {
         new (props: any): {
@@ -96,24 +99,20 @@ declare const _default: {
             getLimit(): number;
             getFetchDataParams(): {};
             getTableColumns(): any;
+            getTableColumnSearchHeaderIcon(column: import("@baifendian/adhere-ui-searchtable/es/types").ColumnTypeExt): import("react").JSX.Element;
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
+            getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -121,17 +120,24 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
                 column: any;
                 dataIndex: any;
             }): import("react").ReactNode;
-            renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): JSX.Element;
+            renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
+        displayName: string;
     };
     ResourceStateManager: typeof ResourceStateManager;
     ResourceManager: typeof ResourceManager;
@@ -162,7 +168,7 @@ declare const _default: {
                     startName?: undefined;
                     endName?: undefined;
                 };
-                render: (value: any, record: any) => JSX.Element;
+                render: (value: any, record: any) => import("react").JSX.Element;
                 align?: undefined;
                 width?: undefined;
             } | {
@@ -180,7 +186,7 @@ declare const _default: {
                     startName?: undefined;
                     endName?: undefined;
                 };
-                render: (value: any) => JSX.Element;
+                render: (value: any) => import("react").JSX.Element;
             } | {
                 title: string;
                 dataIndex: string;
@@ -196,7 +202,7 @@ declare const _default: {
                     startName?: undefined;
                     endName?: undefined;
                 };
-                render: (value: any) => JSX.Element | "-";
+                render: (value: any) => import("react").JSX.Element | "-";
             } | {
                 title: string;
                 dataIndex: string;
@@ -212,13 +218,14 @@ declare const _default: {
                     endName: string;
                     dictName?: undefined;
                 };
-                render: (value: any) => JSX.Element;
+                render: (value: any) => import("react").JSX.Element;
             })[];
             renderGridViewCard({ record }: {
                 record: any;
             }): import("react").ReactNode;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProResourceStateManager: {
         new (props: any): {
@@ -247,7 +254,7 @@ declare const _default: {
                     startName?: undefined;
                     endName?: undefined;
                 };
-                render: (value: any, record: any) => JSX.Element;
+                render: (value: any, record: any) => import("react").JSX.Element;
                 align?: undefined;
                 width?: undefined;
             } | {
@@ -265,7 +272,7 @@ declare const _default: {
                     startName?: undefined;
                     endName?: undefined;
                 };
-                render: (value: any) => JSX.Element;
+                render: (value: any) => import("react").JSX.Element;
             } | {
                 title: string;
                 dataIndex: string;
@@ -281,7 +288,7 @@ declare const _default: {
                     startName?: undefined;
                     endName?: undefined;
                 };
-                render: (value: any) => JSX.Element | "-";
+                render: (value: any) => import("react").JSX.Element | "-";
             } | {
                 title: string;
                 dataIndex: string;
@@ -297,13 +304,33 @@ declare const _default: {
                     endName: string;
                     dictName?: undefined;
                 };
-                render: (value: any) => JSX.Element;
+                render: (value: any) => import("react").JSX.Element;
             })[];
             renderGridViewCard({ record }: {
                 record: any;
             }): import("react").ReactNode;
         };
         [x: string]: any;
+        displayName: string;
     };
+    OptionsWrap: {
+        ({ className, style, ellipsisCount, isEllipsesShowOnlyOneAfterCollapsing, children, }: {
+            className?: string | undefined;
+            style?: {} | undefined;
+            ellipsisCount?: number | undefined;
+            isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
+            children: any;
+        }): import("react").JSX.Element;
+        displayName: string;
+    };
+    DisabledOption: {
+        ({ className, style, children }: {
+            className: any;
+            style: any;
+            children: any;
+        }): import("react").JSX.Element;
+        displayName: string;
+    };
+    SearchAndPaginParams: typeof import("@baifendian/adhere-ui-searchtable/es/Extension/SearchAndPaginParams");
 };
 export default _default;

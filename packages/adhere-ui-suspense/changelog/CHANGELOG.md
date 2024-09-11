@@ -1,3 +1,13 @@
+# 1.0.7
+
+***
+
+2024-01-31
+
+* Asyc和Sync在Impl中实现，加入Impl实现
+* 加入onFirstFetchDataBefore方法
+* 加入onFirstFetchDataAfter方法
+
 # 1.0.6
 
 ***

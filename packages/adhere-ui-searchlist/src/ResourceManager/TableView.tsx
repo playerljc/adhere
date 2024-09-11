@@ -18,6 +18,8 @@ const { TableImplement } = SearchTable;
 class TableView<
   P extends SearchTableImplementProps,
   S extends SearchTableImplementState,
-> extends TableViewFactory<SearchTableImplementProps, SearchTableImplementProps>(TableImplement) {}
+> extends TableViewFactory<SearchTableImplementProps, SearchTableImplementProps>(TableImplement) {
+  static displayName = 'TableView';
+}
 
 export default TableView;

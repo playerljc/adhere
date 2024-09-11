@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["quick-range-date/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-quick-range-date/es';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,2DACHA"}

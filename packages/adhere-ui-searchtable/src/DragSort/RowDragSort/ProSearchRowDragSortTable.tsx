@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { MemoManager } from '../../Extension/SearchAndPaginParams';
 import ProTableFactory from '../../ProTableFactory';
 import SearchRowDragSortTable from './SearchRowDragSortTable';

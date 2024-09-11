@@ -26,7 +26,7 @@ export interface PullRefreshProps {
   updateTimeFormat?: string;
   renderIcon?: () => any;
   renderLabel?: () => any;
-  renderCanLabel: () => any;
+  renderCanLabel?: () => any;
   renderLoadingAnimation?: () => ReactElement | string;
   onPullStart?: () => void;
   onPullCanRefresh?: () => void;

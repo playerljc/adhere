@@ -4,12 +4,14 @@ import {
   checkPermission,
   getPermission,
   setPermission,
-} from './permission';
+} from './Permission';
 
-export default {
+const PermissionComponent = {
   Permission,
   setPermission,
   checkPermission,
   getPermission,
   PermissionFun,
 };
+
+export default PermissionComponent;

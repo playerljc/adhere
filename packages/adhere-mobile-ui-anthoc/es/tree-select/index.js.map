@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["tree-select/index.js"],"sourcesContent":["import TreeSelect from './TreeSelect';\nexport default TreeSelect;"],"names":["TreeSelect"],"mappings":"OAAOA,eAAgB,8BACRA"}

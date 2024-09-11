@@ -1,12 +1,24 @@
-import { Cascader } from 'antd';
+import AsyncCascader from './AsyncCascader';
+import AsyncCascaderChangeOnSelect from './AsyncCascaderChangeOnSelect';
+import AsyncCascaderMulti from './AsyncCascaderMulti';
+import AsyncCascaderShowChild from './AsyncCascaderShowChild';
+import AsyncCascaderShowParent from './AsyncCascaderShowParent';
+import Cascader from './Cascader';
+import CascaderChangeOnSelect from './CascaderChangeOnSelect';
+import CascaderMulti from './CascaderMulti';
+import CascaderShowChild from './CascaderShowChild';
+import CascaderShowParent from './CascaderShowParent';
+import CascaderTreeSelect from './CascaderTreeSelect';
 
-import { createFactory } from '../util';
+Cascader.AsyncCascader = AsyncCascader;
+Cascader.AsyncCascaderChangeOnSelect = AsyncCascaderChangeOnSelect;
+Cascader.AsyncCascaderMulti = AsyncCascaderMulti;
+Cascader.AsyncCascaderShowChild = AsyncCascaderShowChild;
+Cascader.AsyncCascaderShowParent = AsyncCascaderShowParent;
+Cascader.CascaderChangeOnSelect = CascaderChangeOnSelect;
+Cascader.CascaderMulti = CascaderMulti;
+Cascader.CascaderShowChild = CascaderShowChild;
+Cascader.CascaderShowParent = CascaderShowParent;
+Cascader.CascaderTreeSelect = CascaderTreeSelect;
 
-export default createFactory(Cascader, {
-  showSearch: {
-    filter: (inputValue, path) =>
-      path.some((option) => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1),
-  },
-  allowClear: true,
-  placement: 'bottomLeft',
-});
+export default Cascader;

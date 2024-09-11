@@ -24,7 +24,7 @@ import type {
 } from './types';
 import { Metas } from './types';
 
-export const selectorPrefix = 'adhere-ui-searchtableimplement';
+export const selectorPrefix = 'adhere-ui-search-table-implement';
 
 const defaultMetas: any = {
   ...{
@@ -57,6 +57,8 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   extends SearchList<SearchListImplementProps, SearchListImplementState>
   implements ISearchListImplement
 {
+  static displayName = 'SearchListImplement';
+
   innerWrapRef: RefObject<HTMLDivElement> = createRef();
 
   constructor(props) {
@@ -136,7 +138,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   onInputChange = (property: string, e): void => {
     // @ts-ignore
     this.setState({
-      [property]: e.target.value.trim(),
+      [property]: e.target.value,
     });
   };
 
@@ -326,10 +328,10 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @description - 渲染主体
    * @return {ReactElement | null}
    */
-  renderInner(): ReactElement | null {
+  renderInner() {
     const innerJSX = super.renderInner();
     return (
-      <div ref={this.innerWrapRef} className={`${selectorPrefix}-tablewrapper`}>
+      <div ref={this.innerWrapRef} className={`${selectorPrefix}-table-wrapper`}>
         {innerJSX}
       </div>
     );
@@ -444,25 +446,26 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
       const page = this.state.page as number;
 
       if (page === 1) {
-        resolve(this.fetchData());
-        return;
+        this.fetchData().then((res) => resolve(res));
+      } else {
+        const res = this.fetchData().then(() => {
+          const data = this.getData();
+
+          if (data.length) {
+            resolve(res);
+          } else {
+            // @ts-ignore
+            this.setState(
+              {
+                page: page - 1,
+              },
+              () => {
+                this.fetchData().then((res) => resolve(res));
+              },
+            );
+          }
+        });
       }
-
-      const res = this.fetchData().then(() => {
-        const data = this.getData();
-
-        if (data.length) {
-          resolve(res);
-        } else {
-          // @ts-ignore
-          this.setState(
-            {
-              page: page - 1,
-            },
-            () => resolve(this.fetchData()),
-          );
-        }
-      });
     });
   }
 
@@ -484,7 +487,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @description - 点击查询
    * @override
    */
-  onSearch(): Promise<void> {
+  onSearch(): Promise<any> {
     const keys = Object.keys(this.getParams());
     const params = {};
     keys.forEach((key) => {
@@ -501,8 +504,8 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
           },
         },
         () => {
-          this.fetchData().then(() => {
-            resolve();
+          this.fetchData().then((res) => {
+            resolve(res);
           });
         },
       );
@@ -549,22 +552,6 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
 
       resolve();
     });
-  }
-
-  renderSearchFormAfter(): ReactElement | null {
-    return null;
-  }
-
-  renderSearchFormBefore(): ReactElement | null {
-    return null;
-  }
-
-  renderSearchFooter(): ReactElement | null {
-    return null;
-  }
-
-  renderSearchHeader(): ReactElement | null {
-    return null;
   }
 
   /**
@@ -695,11 +682,11 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
     return (
       <>
         <List.Item.Meta {...metaProps} />
-        {content ? (
+        {content && (
           <div className={classNames(`${selectorPrefix}-list-item-content`, direction)}>
             {content}
           </div>
-        ) : null}
+        )}
       </>
     );
   }
@@ -1228,6 +1215,30 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
     }
 
     return null;
+  }
+
+  renderSearchFormAfter(): ReactNode {
+    return null;
+  }
+
+  renderSearchFormBefore(): ReactNode {
+    return null;
+  }
+
+  renderSearchFooter(): ReactNode {
+    return null;
+  }
+
+  renderSearchHeader(): ReactNode {
+    return null;
+  }
+
+  renderSearchFormToolBarDefaultPanel(): ReactNode {
+    return null;
+  }
+
+  renderSearchFormToolBarItems(defaultItems: ReactElement[]): ReactNode[] {
+    return defaultItems;
   }
 }
 

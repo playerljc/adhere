@@ -1,5 +1,6 @@
 import tinyColor from 'tinycolor2';
 
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
 import Util from '@baifendian/adhere-util';
 
 const defaultThemeMap = new Map<string, any>([
@@ -8,6 +9,13 @@ const defaultThemeMap = new Map<string, any>([
     'adhere-color-primary',
     {
       value: '#2480ff',
+    },
+  ],
+  // 主boxShadow颜色
+  [
+    'adhere-box-shadow-primary',
+    {
+      value: 'rgba(0, 0, 0, 0.15) 0 0 10px',
     },
   ],
   // 主文字颜色
@@ -57,7 +65,7 @@ const defaultThemeMap = new Map<string, any>([
         [
           'adhere-font-size-lg',
           {
-            calc: ' + 2px',
+            calc: '+ 2px',
           },
         ],
         [
@@ -103,14 +111,73 @@ const defaultThemeMap = new Map<string, any>([
       value: 'solid',
     },
   ],
+  // DPR
+  [
+    'adhere-device-pixel-ratio',
+    {
+      value: window.devicePixelRatio,
+    },
+  ],
 ]);
 
-// 当前变量
-const cssVars = {};
+export interface Init {
+  (
+    theme: { [prop: string]: string },
+    wrapperEL?: HTMLElement,
+    media?: ConfigProviderProps['media'],
+  ): void;
+}
 
-const exportObj = {};
+/**
+ * getValue
+ * @param {string | number} originValue
+ * @param {ConfigProviderProps['media']} media
+ * @return {string | number}
+ */
+function getValue(
+  originValue: string | number,
+  media: ConfigProviderProps['media'],
+): string | number {
+  if (media?.isUseMedia) {
+    if (typeof originValue === 'string' && originValue.endsWith('px')) {
+      return originValue
+        .split(/\s+/gim)
+        .map((value) => {
+          if (value.endsWith('px')) {
+            const number = parseFloat(value.replace('px', ''));
 
-(function () {
+            return Util.pxToRem(number, media.designWidth ?? 192, media);
+          }
+
+          return value;
+        })
+        .join(' ');
+    }
+  }
+
+  return originValue;
+}
+
+/**
+ * init
+ * @param theme
+ * @param wrapperEL
+ * @param media
+ */
+const init: Init = (
+  theme,
+  wrapperEL = document.documentElement,
+  media?: ConfigProviderProps['media'],
+) => {
+  const htmlEl = document.documentElement;
+
+  // 当前变量
+  const cssVars = {};
+
+  const exportObj = {};
+
+  const curTheme = theme ?? {};
+
   const keys = Array.from(defaultThemeMap.keys());
 
   keys.forEach((varName) => {
@@ -126,52 +193,96 @@ const exportObj = {};
     // cssVars定义驼峰变量
     Object.defineProperty(cssVars, varCamelCaseName, {
       set(value) {
+        const targetValue = getValue(value, media);
+
         // --------------定义css变量 -------------
-        document.documentElement.style.setProperty(`--${varName}`, value);
+        wrapperEL.style.setProperty(`--${varName}`, `${targetValue}`);
+        if (!htmlEl.style.getPropertyValue(`--${varName}`)) {
+          htmlEl.style.setProperty(`--${varName}`, `${targetValue}`);
+        }
 
         // 是颜色需要在定义一个-rgb的变量
-        const color = tinyColor(value);
+        const color = tinyColor(targetValue);
         if (color.isValid()) {
           const rgb = color.toRgb();
 
-          document.documentElement.style.setProperty(
-            `--${varName}-rgb`,
-            `${[rgb.r, rgb.g, rgb.b].join(',')}`,
-          );
+          wrapperEL.style.setProperty(`--${varName}-rgb`, `${[rgb.r, rgb.g, rgb.b].join(',')}`);
+          if (!htmlEl.style.getPropertyValue(`--${varName}-rgb`)) {
+            htmlEl.style.setProperty(`--${varName}-rgb`, `${[rgb.r, rgb.g, rgb.b].join(',')}`);
+          }
         }
 
         // 处理mapToken
         if (!entryValue?.mapToken) return;
         Array.from(entryValue?.mapToken?.keys?.())?.forEach?.((mapTokenVarName) => {
           const mapTokenVEntryValue = entryValue?.mapToken?.get?.(mapTokenVarName);
+          // alpha的处理
           if (mapTokenVEntryValue?.alpha) {
             color.setAlpha(Number.parseFloat(mapTokenVEntryValue?.alpha));
-            document.documentElement.style.setProperty(
-              `--${mapTokenVarName}`,
-              color.toPercentageRgbString(),
-            );
+
+            wrapperEL.style.setProperty(`--${mapTokenVarName}`, color.toPercentageRgbString());
+            if (!htmlEl.style.getPropertyValue(`--${mapTokenVarName}`)) {
+              htmlEl.style.setProperty(`--${mapTokenVarName}`, color.toPercentageRgbString());
+            }
           }
 
+          // calc的处理
           if (mapTokenVEntryValue.calc) {
-            document.documentElement.style.setProperty(
+            const targetCalc = getValue(mapTokenVEntryValue.calc, media);
+
+            wrapperEL.style.setProperty(
               `--${mapTokenVarName}`,
-              `calc(${value} ${mapTokenVEntryValue.calc})`,
+              `calc(${targetValue} ${targetCalc})`,
             );
+            if (!htmlEl.style.getPropertyValue(`--${mapTokenVarName}`)) {
+              htmlEl.style.setProperty(
+                `--${mapTokenVarName}`,
+                `calc(${targetValue} ${targetCalc})`,
+              );
+            }
           }
         });
       },
     });
 
     // 定义导出变量
-    exportObj[`set${varUpperCamelCaseName}`] = (value) => {
+    exportObj[`set${varUpperCamelCaseName}`] = (value: any) => {
       cssVars[varCamelCaseName] = value;
     };
 
     // 定义导出变量
     exportObj[`get${varUpperCamelCaseName}`] = () =>
-      document.documentElement.style.getPropertyValue(`--${varName}`);
+      wrapperEL.style.getPropertyValue(`--${varName}`);
+
+    // -----------------------------------------------------------------------------------------
+    // ColorPrimary
+    exportObj?.[`set${varUpperCamelCaseName}`]?.(
+      curTheme[
+        Util.lowercaseInitial(
+          varUpperCamelCaseName.substring(
+            varUpperCamelCaseName.indexOf('Adhere') + 'Adhere'.length,
+          ),
+        )
+      ] ?? defaultThemeMap.get(varName)?.value,
+    );
   });
-})();
+
+  // keys.forEach((varName) => {
+  //   // varName === adhere-color-primary
+  //
+  //   // AdhereColorPrimary
+  //   const varCamelCaseName = Util.toCamelCase(varName, '-', true);
+  //
+  //   // ColorPrimary
+  //   const inputName = Util.lowercaseInitial(
+  //     varCamelCaseName.substring(varCamelCaseName.indexOf('Adhere') + 'Adhere'.length),
+  //   );
+  //
+  //   exportObj?.[`set${varCamelCaseName}`]?.(
+  //     curTheme[inputName] ?? defaultThemeMap.get(varName)?.value,
+  //   );
+  // });
+};
 
 /**
  * theme
@@ -180,209 +291,4 @@ const exportObj = {};
  * }
  * @param theme
  */
-export default (theme) => {
-  // primaryColor
-
-  // setAdherePrimaryColor(theme?.primaryColor ?? defaultTheme.primaryColor);
-  // setAdhereNormalColor(theme?.normalColor ?? defaultTheme.normalColor);
-  // setAdhereBlackColor(theme?.backColor ?? defaultTheme.blackColor);
-  // setAdhereBaseFontSize(theme?.baseFontSize ?? defaultTheme.baseFontSize);
-  // setAdhereSmallFontSize(theme?.smallFontSize ?? defaultTheme.smallFontSize);
-  // setAdhereCommonMaxZIndex(theme?.commonMaxZIndex ?? defaultTheme.commonMaxZIndex);
-  const curTheme = theme ?? {};
-
-  Array.from(defaultThemeMap.keys()).forEach((varName) => {
-    // varName === adhere-color-primary
-
-    // AdhereColorPrimary
-    const varCamelCaseName = Util.toCamelCase(varName, '-', true);
-
-    // ColorPrimary
-    const inputName = Util.lowercaseInitial(
-      varCamelCaseName.substring(varCamelCaseName.indexOf('Adhere') + 'Adhere'.length),
-    );
-
-    exportObj?.[`set${varCamelCaseName}`]?.(
-      curTheme[inputName] ?? defaultThemeMap.get(varName)?.value,
-    );
-  });
-};
-
-// export default exportObj;
-
-/* 全局的css Vars*/
-// const cssVars = {
-//   /**
-//    * 品牌主颜色
-//    * @param value
-//    */
-//   set adherePrimaryColor(value) {
-//     const _tinyColor = tinyColor(value);
-//     const rgb = _tinyColor.toRgb();
-//
-//     document.documentElement.style.setProperty('--adhere-primary-color', value);
-//     document.documentElement.style.setProperty(
-//       '--adhere-primary-color-rgb',
-//       `${[rgb.r, rgb.g, rgb.b].join(',')}`,
-//     );
-//   },
-//   /**
-//    * 缺省的颜色
-//    * @param value
-//    */
-//   set adhereNormalColor(value) {
-//     const _tinyColor = tinyColor(value);
-//     const rgb = _tinyColor.toRgb();
-//
-//     document.documentElement.style.setProperty('--adhere-normal-color', value);
-//     document.documentElement.style.setProperty(
-//       '--adhere-normal-color-rgb',
-//       `${[rgb.r, rgb.g, rgb.b].join(',')}`,
-//     );
-//   },
-//   /**
-//    * 黑色
-//    * @param value
-//    */
-//   set adhereBlackColor(value) {
-//     const _tinyColor = tinyColor(value);
-//     const rgb = _tinyColor.toRgb();
-//
-//     document.documentElement.style.setProperty('--adhere-black-color', value);
-//     document.documentElement.style.setProperty(
-//       '--adhere-black-color-rgb',
-//       `${[rgb.r, rgb.g, rgb.b].join(',')}`,
-//     );
-//
-//     /* 不可用颜色 */
-//     _tinyColor.setAlpha(0.25);
-//     document.documentElement.style.setProperty(
-//       '--adhere-disabled-color',
-//       _tinyColor.toPercentageRgbString(),
-//     );
-//
-//     /* 边框 */
-//     _tinyColor.setAlpha(0.1);
-//     document.documentElement.style.setProperty(
-//       '--adhere-border-color',
-//       _tinyColor.toPercentageRgbString(),
-//     );
-//   },
-//   /**
-//    * 缺省的文字大小
-//    * @param value
-//    */
-//   set adhereBaseFontSize(value) {
-//     /* 缺省的文字大小 */
-//     document.documentElement.style.setProperty('--adhere-base-font-size', value);
-//     /* 大文字 */
-//     document.documentElement.style.setProperty('--adhere-large-font-size', `calc(${value} + 2px)`);
-//   },
-//   /**
-//    * 小文字
-//    * @param value
-//    */
-//   set adhereSmallFontSize(value) {
-//     /* 小文字 */
-//     document.documentElement.style.setProperty('--adhere-small-font-size', value);
-//   },
-//   /**
-//    * 最大层级
-//    * @param value
-//    */
-//   set adhereCommonMaxZIndex(value) {
-//     /* 最大层级 */
-//     document.documentElement.style.setProperty('--adhere-common-max-zindex', value);
-//   },
-//   get adherePrimaryColor() {
-//     return document.documentElement.style.getPropertyValue('--adhere-primary-color');
-//   },
-//   get adhereNormalColor() {
-//     return document.documentElement.style.getPropertyValue('--adhere-normal-color');
-//   },
-//   get adhereBlackColor() {
-//     return document.documentElement.style.getPropertyValue('--adhere-black-color');
-//   },
-//   get adhereBaseFontSize() {
-//     return document.documentElement.style.getPropertyValue('--adhere-base-font-size');
-//   },
-//   get adhereSmallFontSize() {
-//     return document.documentElement.style.getPropertyValue('--adhere-small-font-size');
-//   },
-//   get adhereCommonMaxZIndex() {
-//     return document.documentElement.style.getPropertyValue('--adhere-common-max-zindex');
-//   },
-//   get adhereDisabledColor() {
-//     return document.documentElement.style.getPropertyValue('--adhere-disabled-color');
-//   },
-//   get adhereBorderColor() {
-//     return document.documentElement.style.getPropertyValue('--adhere-border-color');
-//   },
-//   get adhereLargeFontSize() {
-//     return document.documentElement.style.getPropertyValue('--adhere-large-font-size');
-//   },
-// };
-
-// export function setAdherePrimaryColor(color) {
-//   cssVars.adherePrimaryColor = color;
-// }
-// export function setAdhereNormalColor(color) {
-//   cssVars.adhereNormalColor = color;
-// }
-// export function setAdhereBlackColor(color) {
-//   cssVars.adhereBlackColor = color;
-// }
-// export function setAdhereBaseFontSize(color) {
-//   cssVars.adhereBaseFontSize = color;
-// }
-// export function setAdhereSmallFontSize(color) {
-//   cssVars.adhereSmallFontSize = color;
-// }
-// export function setAdhereCommonMaxZIndex(color) {
-//   cssVars.adhereCommonMaxZIndex = color;
-// }
-//
-// export function getAdherePrimaryColor() {
-//   return cssVars.adherePrimaryColor;
-// }
-// export function getAdhereNormalColor() {
-//   return cssVars.adhereNormalColor;
-// }
-// export function getAdhereBlackColor() {
-//   return cssVars.adhereBlackColor;
-// }
-// export function getAdhereBaseFontSize() {
-//   return cssVars.adhereBaseFontSize;
-// }
-// export function getAdhereSmallFontSize() {
-//   return cssVars.adhereSmallFontSize;
-// }
-// export function getAdhereCommonMaxZIndex() {
-//   return cssVars.adhereCommonMaxZIndex;
-// }
-// export function getAdhereDisabledColor() {
-//   return cssVars.adhereDisabledColor;
-// }
-// export function getAdhereBorderColor() {
-//   return cssVars.adhereBorderColor;
-// }
-// export function getAdhereLargeFontSize() {
-//   return cssVars.adhereLargeFontSize;
-// }
-//
-// export const init: (theme?: {
-//   primaryColor?: string;
-//   normalColor?: string;
-//   backColor?: string;
-//   baseColor?: string;
-//   baseFontSize?: string;
-//   smallFontSize?: string;
-//   commonMaxZIndex?: string;
-// }) => void = (theme) => {
-//   setAdherePrimaryColor(theme?.primaryColor ?? defaultTheme.primaryColor);
-//   setAdhereNormalColor(theme?.normalColor ?? defaultTheme.normalColor);
-//   setAdhereBlackColor(theme?.backColor ?? defaultTheme.blackColor);
-//   setAdhereBaseFontSize(theme?.baseFontSize ?? defaultTheme.baseFontSize);
-//   setAdhereSmallFontSize(theme?.smallFontSize ?? defaultTheme.smallFontSize);
-//   setAdhereCommonMaxZIndex(theme?.commonMaxZIndex ?? defaultTheme.commonMaxZIndex);
-// };
+export default init;

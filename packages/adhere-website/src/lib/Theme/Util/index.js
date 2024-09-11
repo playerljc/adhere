@@ -10,6 +10,8 @@ const { getDesignToken, darkAlgorithm, defaultAlgorithm, defaultSeed } = theme;
 
 const designToken = getDesignToken();
 
+console.log('mapToken', defaultAlgorithm(defaultSeed));
+
 /**
  * themes
  */
@@ -135,10 +137,16 @@ const init = (theme, useStore) => {
   });
 
   Object.keys(mapToken).forEach((_key) => {
+    console.log('_key', _key);
+
     // colorPrimary
     const varName = Util.capitalized(Util.toCamelCase(_key, '-', true));
 
-    exportObj[`setAntd${varName}`](mapToken[_key]);
+    try {
+      exportObj[`setAntd${varName}`](mapToken[_key]);
+    } catch (error) {
+      debugger;
+    }
   });
 
   Object.keys(designToken).forEach((_key) => {
@@ -210,7 +218,7 @@ export default exportObj;
   [
     ...hostKeys,
     ...[...antdKeys, ...antdDesignKeys].map((_key) =>
-      Util.pascalCaseToKebabCase(`antd${Util.capitalized(_key)}`),
+      Util.pascalCaseToKebabCase2(`antd${Util.capitalized(_key)}`),
     ),
   ].forEach((varName) => {
     setCssVariable(varName);

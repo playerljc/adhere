@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["infinite-scroll/index.js"],"sourcesContent":["import InfiniteScroll from './InfiniteScroll';\nexport default InfiniteScroll;"],"names":["InfiniteScroll"],"mappings":"OAAOA,mBAAoB,kCACZA"}

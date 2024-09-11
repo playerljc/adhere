@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["jumbo-tabs/index.js"],"sourcesContent":["import JumboTabs from './JumboTabs';\nexport default JumboTabs;"],"names":["JumboTabs"],"mappings":"OAAOA,cAAe,6BACPA"}

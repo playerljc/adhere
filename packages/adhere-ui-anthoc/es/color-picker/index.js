@@ -1,2 +1,2 @@
-import _ColorPicker from"antd/es/color-picker";import{createFactory}from"../util";export default createFactory(_ColorPicker,{});
+import ColorPicker from"./ColorPicker";export default ColorPicker;
 //# sourceMappingURL=index.js.map

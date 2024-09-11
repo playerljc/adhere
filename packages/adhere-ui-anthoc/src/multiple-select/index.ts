@@ -1,11 +1,10 @@
-import { Select } from 'antd';
+import AutoCompleteCheckAllMultipleSelect from './AutoCompleteCheckAllMultipleSelect';
+import AutoCompleteMultipleSelect from './AutoCompleteMultipleSelect';
+import CheckAllSelect from './CheckAllMultipleSelect';
+import MultipleSelect from './MultipleSelect';
 
-import { createFactory } from '../util';
+MultipleSelect.CheckAllSelect = CheckAllSelect;
+MultipleSelect.AutoCompleteMultipleSelect = AutoCompleteMultipleSelect;
+MultipleSelect.AutoCompleteCheckAllMultipleSelect = AutoCompleteCheckAllMultipleSelect;
 
-export default createFactory(Select, {
-  showSearch: true,
-  allowClear: true,
-  mode: 'multiple',
-  placement: 'bottomLeft',
-  filterOption: (input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0,
-});
+export default MultipleSelect;

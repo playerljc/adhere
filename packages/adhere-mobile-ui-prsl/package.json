@@ -1,0 +1,80 @@
+{
+  "name": "@baifendian/adhere-mobile-ui-prsl",
+  "version": "2.11.0",
+  "description": "下拉重置，上拉刷新的操作",
+  "homepage": "https://github.com/playerljc/adhere",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "typings": "es/index.d.ts",
+  "files": [
+    "lib",
+    "es",
+    "umd"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildpackage:cjs": "ctbuild buildpackagets-babel -c ctbuild.package.ts.cjs.config.js -o lib",
+    "postbuildpackage:cjs": "tsc --declaration -p ./ --emitDeclarationOnly --outDir lib",
+    "buildpackage:esm": "ctbuild buildpackagets-babel -c ctbuild.package.ts.esm.config.js -o es",
+    "postbuildpackage:esm": "tsc --declaration -p ./ --emitDeclarationOnly --outDir es",
+    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
+    "buildumd": "ctbuild buildumd --config ctbuild.config.umd.js --packagename AdhereMoilePRSL --define alias=@,evnVars=true",
+    "e2e": "cross-env mobile=true e2e",
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "upgrade": "yarn upgrade",
+    "upgrade-interactive": "yarn upgrade-interactive"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.4.0",
+    "@baifendian/adhere-mobile-ui-anthoc": "^2.11.0",
+    "@baifendian/adhere-ui-popup": "^2.11.0",
+    "@baifendian/adhere-ui-scrollload": "^2.11.0",
+    "@baifendian/adhere-util": "^2.11.0",
+    "@baifendian/adhere-util-intl": "^2.11.0",
+    "@baifendian/adhere-util-preferences": "^2.11.0",
+    "ahooks": "^3.8.1",
+    "antd-mobile": "^5.37.1",
+    "antd-mobile-icons": "^0.3.0",
+    "array-move": "^4.0.0",
+    "classnames": "^2.5.1",
+    "lodash.difference": "^4.5.0",
+    "lodash.isempty": "^4.4.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-is": "^18.3.1",
+    "react-sortable-hoc": "^2.0.0",
+    "use-immer": "^0.10.0"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.25.6",
+    "@baifendian/adhere-e2e": "^2.11.0",
+    "@baifendian/adhere-mobile-ui-globalindicator": "^2.11.0",
+    "@baifendian/adhere-mock": "^2.11.0",
+    "@baifendian/adhere-ui-fieldgeneratortodict": "^2.11.0",
+    "@ctsj/build": "^6.3.0",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "babel-plugin-import": "^1.13.8",
+    "mockjs": "^1.1.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.6.2"
+  },
+  "peerDependencies": {
+    "antd-mobile": ">=5.0.0 - <6.0.0",
+    "react": ">=18.0.0 - <19.0.0",
+    "react-dom": ">=18.0.0 - <19.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "0a30e53db99509c44e577f464ca0bce0c457f8ba"
+}

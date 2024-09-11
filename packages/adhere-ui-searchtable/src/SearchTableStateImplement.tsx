@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { forwardRef } from 'react';
 
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
@@ -22,6 +23,8 @@ export class SearchTableStateImplement<
   P extends SearchTableStateImplementProps,
   S extends SearchTableImplementState,
 > extends SearchTableImplement<SearchTableStateImplementProps, SearchTableImplementState> {
+  static displayName = 'SearchTableStateImplement';
+
   private unsubscribe: Function;
 
   constructor(props) {
@@ -82,15 +85,6 @@ export class SearchTableStateImplement<
   }
 
   /**
-   * showLoading
-   * @description loading
-   * @return {boolean}
-   */
-  showLoading(): boolean {
-    return this.state?.loading?.[`${this.getServiceName()}/${this.getFetchListPropName()}`];
-  }
-
-  /**
    * fetchDataExecute
    * @description 调用列表数据接口
    * @param {any} searchParams
@@ -100,6 +94,15 @@ export class SearchTableStateImplement<
     return this.state?.[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
       searchParams,
     );
+  }
+
+  /**
+   * showLoading
+   * @description loading
+   * @return {boolean}
+   */
+  showLoading(): boolean {
+    return this.state?.loading?.[`${this.getServiceName()}/${this.getFetchListPropName()}`];
   }
 }
 
@@ -128,13 +131,14 @@ const SearchTableStateImplementFactory: SearchTableStateImplementFactoryFunction
       // @ts-ignore
       <Component
         ref={ref}
-        className={`${selectorPrefix}-wrap`}
         isShowExpandSearch
         defaultExpandSearchCollapse={false}
         openSearchParamsMemory={false}
         fixedHeaderAutoTable
         fixedTableSpaceBetween
         {...props}
+        className={classNames(`${selectorPrefix}-wrap`, props.className ?? '')}
+        style={props.style ?? {}}
         $state={{
           serviceNames,
           middleWares,

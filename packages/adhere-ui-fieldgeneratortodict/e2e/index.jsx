@@ -1,38 +1,130 @@
-import { ConfigProvider } from 'antd';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import MobileCascaderViewAsyncStandard from './MobileCascaderView/MobileCascaderViewAsyncStandard';
+import MobileCascaderViewDynamicFilter from './MobileCascaderView/MobileCascaderViewDynamicFilter';
+import MobileCascaderViewDynamicStandard from './MobileCascaderView/MobileCascaderViewDynamicStandard';
+import MobileCascaderViewFilter from './MobileCascaderView/MobileCascaderViewFilter';
+import MobileCascaderViewStandard from './MobileCascaderView/MobileCascaderViewStandard';
+import MobileCheckListACPaging from './MobileCheckList/MobileCheckListACPaging';
+import MobileCheckListACStandard from './MobileCheckList/MobileCheckListACStandard';
+import MobileCheckListDynamicCheckAll from './MobileCheckList/MobileCheckListDynamicCheckAll';
+import MobileCheckListDynamicFilter from './MobileCheckList/MobileCheckListDynamicFilter';
+import MobileCheckListDynamicFilterCheckAll from './MobileCheckList/MobileCheckListDynamicFilterCheckAll';
+import MobileCheckListDynamicStandard from './MobileCheckList/MobileCheckListDynamicStandard';
+import MobileCheckListPaginationFilter from './MobileCheckList/MobileCheckListPaginationFilter';
+import MobileCheckListPaginationStandard from './MobileCheckList/MobileCheckListPaginationStandard';
+import MobileCheckboxCheckListDynamicCheckAll from './MobileCheckList/MobileCheckboxCheckListDynamicCheckAll';
+import MobileCheckboxCheckListDynamicFilter from './MobileCheckList/MobileCheckboxCheckListDynamicFilter';
+import MobileCheckboxCheckListDynamicFilterCheckAll from './MobileCheckList/MobileCheckboxCheckListDynamicFilterCheckAll';
+import MobileCheckboxCheckListDynamicStandard from './MobileCheckList/MobileCheckboxCheckListDynamicStandard';
+import MobileCheckboxCheckListPaginationDynamicFilter from './MobileCheckList/MobileCheckboxCheckListPaginationDynamicFilter';
+import MobileCheckboxCheckListPaginationStandard from './MobileCheckList/MobileCheckboxCheckListPaginationStandard';
+import MobileCheckboxACPaging from './MobileCheckbox/MobileCheckboxACPaging';
+import MobileCheckboxACStandard from './MobileCheckbox/MobileCheckboxACStandard';
+import MobileCheckboxCheckAll from './MobileCheckbox/MobileCheckboxCheckAll';
+import MobileCheckboxDynamicCheckAll from './MobileCheckbox/MobileCheckboxDynamicCheckAll';
+import MobileCheckboxDynamicFilter from './MobileCheckbox/MobileCheckboxDynamicFilter';
+import MobileCheckboxDynamicFilterCheckAll from './MobileCheckbox/MobileCheckboxDynamicFilterCheckAll';
+import MobileCheckboxDynamicStandard from './MobileCheckbox/MobileCheckboxDynamicStandard';
+import MobileCheckboxFilter from './MobileCheckbox/MobileCheckboxFilter';
+import MobileCheckboxFilterCheckAll from './MobileCheckbox/MobileCheckboxFilterCheckAll';
+import MobileCheckboxPaginationDynamicFilter from './MobileCheckbox/MobileCheckboxPaginationDynamicFilter';
+import MobileCheckboxPaginationFilter from './MobileCheckbox/MobileCheckboxPaginationFilter';
+import MobileCheckboxPaginationStandard from './MobileCheckbox/MobileCheckboxPaginationStandard';
+import MobileCheckboxStandard from './MobileCheckbox/MobileCheckboxStandard';
+import MobileListDynamicStandard from './MobileList/MobileListDynamicStandard';
+import MobileListStandard from './MobileList/MobileListStandard';
+import MobileRadioACPaging from './MobileRadio/MobileRadioACPaging';
+import MobileRadioACStandard from './MobileRadio/MobileRadioACStandard';
+import MobileRadioDynamicFilter from './MobileRadio/MobileRadioDynamicFilter';
+import MobileRadioDynamicStandard from './MobileRadio/MobileRadioDynamicStandard';
+import MobileRadioFilter from './MobileRadio/MobileRadioFilter';
+import MobileRadioPaginationDynamicFilter from './MobileRadio/MobileRadioPaginationDynamicFilter';
+import MobileRadioPaginationFilter from './MobileRadio/MobileRadioPaginationFilter';
+import MobileRadioPaginationStandard from './MobileRadio/MobileRadioPaginationStandard';
+import MobileRadioStandard from './MobileRadio/MobileRadioStandard';
+import MobileSelectorACPaging from './MobileSelector/MobileSelectorACPaging';
+import MobileSelectorACStandard from './MobileSelector/MobileSelectorACStandard';
+import MobileSelectorCheckAll from './MobileSelector/MobileSelectorCheckAll';
+import MobileSelectorDynamicCheckAll from './MobileSelector/MobileSelectorDynamicCheckAll';
+import MobileSelectorDynamicFilter from './MobileSelector/MobileSelectorDynamicFilter';
+import MobileSelectorDynamicFilterCheckAll from './MobileSelector/MobileSelectorDynamicFilterCheckAll';
+import MobileSelectorDynamicStandard from './MobileSelector/MobileSelectorDynamicStandard';
+import MobileSelectorFilter from './MobileSelector/MobileSelectorFilter';
+import MobileSelectorFilterCheckAll from './MobileSelector/MobileSelectorFilterCheckAll';
+import MobileSelectorPaginationDynamicFilter from './MobileSelector/MobileSelectorPaginationDynamicFilter';
+import MobileSelectorPaginationFilter from './MobileSelector/MobileSelectorPaginationFilter';
+import MobileSelectorPaginationStandard from './MobileSelector/MobileSelectorPaginationStandard';
+import MobileSelectorStandard from './MobileSelector/MobileSelectorStandard';
 
-import { ConfigProvider as AdhereConfigProvider, Resource } from '@baifendian/adhere';
+import React from 'react';
+
+import e2e from '@baifendian/adhere-e2e';
+import Dict from '@baifendian/adhere-util-dict';
 
 import DictConfig from '@/dict/dict.config';
 
-import Test from './test';
+import AutoCompleteTest from './AutoComplete/SelectInput';
+import BreadcrumbTest from './Breadcrumb/SuspenseStandard';
+import CascaderAsyncEntityValueHOC from './Cascader/CascaderAsyncEntityValueHOC';
+import CascaderTest from './Cascader/CascaderAsyncFlatChangeOnSelect';
+import CascaderAsyncFlatEntityValueHOC from './Cascader/CascaderAsyncFlatEntityValueHOC';
+import CascaderEntityValueHOC from './Cascader/CascaderEntityValueHOC';
+import CascaderFlatEntityValueHOC from './Cascader/CascaderFlatEntityValueHOC';
+import CascaderMulitEntityValueHOC from './Cascader/CascaderMulitEntityValueHOC';
+import CheckboxTest from './Checkbox/Vertical.tsx';
+import DropdownTest from './Dropdown/Standard';
+import ListTest from './List/AutoCompleteCheckboxPagin';
+import MentionsTest from './Mentions/Standard';
+import MenuTest from './Menu/Standard';
+import RadioTest from './Radio/AutoCompleteButtonRadioSelect';
+import SegmentedTest from './Segmented/SuspenseStandard';
+import SelectTest from './Select/ArrayEntityValueHOC';
+import AutoCompleteCheckAllMultipleSelect from './Select/AutoCompleteCheckAllMultipleSelect';
+import MultipleSelect from './Select/MultipleSelect';
+import StepsTest from './Steps/SuspenseStandard';
+import TableTest from './Table/AutoCompleteCheckboxPagin';
+import AutoCompleteTableTreeMulti from './Table/AutoCompleteTableTreeMulti';
+import AutoCompleteTableTreeMultiPaging from './Table/AutoCompleteTableTreeMultiPaging';
+import AutoCompleteTableTreeMultiPagingValueHOC from './Table/AutoCompleteTableTreeMultiPagingValueHOC';
+import AutoCompleteTableTreeMultiValueHOC from './Table/AutoCompleteTableTreeMultiValueHOC';
+import AutoCompleteTableTreePaging from './Table/AutoCompleteTableTreePaging';
+import AutoCompleteTableTreeStandard from './Table/AutoCompleteTableTreeStandard';
+import CheckboxTablePagingEntityValueHOC from './Table/CheckboxTablePagingEntityValueHOC';
+import CheckboxTablePagingSelectEntityValueHOC from './Table/CheckboxTablePagingSelectEntityValueHOC';
+import MultiSelect from './Table/MultiSelect';
+import RadioTablePagingEntityValueHOC from './Table/RadioTablePagingEntityValueHOC';
+import RadioTablePagingSelectEntityValueHOC from './Table/RadioTablePagingSelectEntityValueHOC';
+import TagTest from './Tag/AutoCompleteTagCheckAllSelect';
+import TimelineTest from './Timeline/SuspenseStandard';
+import TransferTest from './Transfer/AutoComplete';
+import Transfer from './Transfer/Standard';
+import TreeAsyncEntityValueHOC from './Tree/TreeAsyncEntityValueHOC';
+import TreeTest from './Tree/TreeAsyncFlatCheckedShowParent';
+import TreeAsyncFlatEntityValueHOC from './Tree/TreeAsyncFlatEntityValueHOC';
+import TreeAsyncFlatMulitEntityValueHOC from './Tree/TreeAsyncFlatMulitEntityValueHOC';
+import TreeAsyncMulitEntityValueHOC from './Tree/TreeAsyncMulitEntityValueHOC';
+import TreeAutoCompleteLeaf from './Tree/TreeAutoCompleteLeaf.jsx';
+import TreeAutoCompleteMulti from './Tree/TreeAutoCompleteMulti.jsx';
+import TreeAutoCompleteMultiLeaf from './Tree/TreeAutoCompleteMultiLeaf';
+import TreeAutoCompleteMultiValueHOC from './Tree/TreeAutoCompleteMultiValueHOC';
+import TreeAutoCompleteShowAll from './Tree/TreeAutoCompleteShowAll';
+import TreeAutoCompleteShowChild from './Tree/TreeAutoCompleteShowChild';
+import TreeAutoCompleteShowParent from './Tree/TreeAutoCompleteShowParent';
+import TreeAutoCompleteStandard from './Tree/TreeAutoCompleteStandard';
+import TreeEntityValueHOC from './Tree/TreeEntityValueHOC';
+import TreeFlatCheckedShowAllEntityValueHOC from './Tree/TreeFlatCheckedShowAllEntityValueHOC';
+import TreeFlatEntityValueHOC from './Tree/TreeFlatEntityValueHOC';
+import TreeFlatMultiEntityValueHOC from './Tree/TreeFlatMultiEntityValueHOC';
+import TreeLeafEntityValueHOC from './Tree/TreeLeafEntityValueHOC';
+import TreeMultiEntityValueHOC from './Tree/TreeMultiEntityValueHOC';
 
-import 'antd/dist/reset.css';
-import 'font-awesome/css/font-awesome.min.css';
+import '../src/index.less';
 
-import '@baifendian/adhere/lib/css.less';
-
-import './index.less';
-
-// 配置字典
 DictConfig();
 
-ReactDOM.createRoot(document.getElementById('app')).render(
-  <ConfigProvider locale={Resource.Dict.value.LocalsAntd.value['zh_CN']}>
-    <AdhereConfigProvider
-      intl={{
-        lang: 'zh_CN',
-        locales: {
-          en_US: [],
-          zh_CN: [],
-          pt_PT: [],
-        },
-      }}
-    >
-      {() => {
-        return <Test />;
-      }}
-    </AdhereConfigProvider>
-  </ConfigProvider>,
-);
+// e2e.PC({
+//   children: <Transfer />,
+// });
+
+e2e.Mobile({
+  children: <MobileCheckListACStandard />,
+});

@@ -1,0 +1,1 @@
+{"version":3,"file":"Context.js","sources":["Context.js"],"sourcesContent":["import React from 'react';\nexport default /*#__PURE__*/React.createContext({\n  refs: []\n});"],"names":["React","createContext","refs"],"mappings":"OAAOA,UAAW,uBACUA,MAAMC,cAAc,CAC9CC,KAAM,EACR,CAAC"}

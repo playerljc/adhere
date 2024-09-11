@@ -1,2 +1,2 @@
-"use strict";var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},async_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./async"))),suspense_1=__importDefault(require("./suspense")),sync_1=__importDefault(require("./sync"));suspense_1.default.Sync=sync_1.default,suspense_1.default.ASync=async_1.default,exports.default=suspense_1.default;
+"use strict";var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},SuspenseImpl_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./SuspenseImpl")));exports.default=SuspenseImpl_1.default;
 //# sourceMappingURL=index.js.map

@@ -1,0 +1,21 @@
+.Tab {
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+
+  > .Fixed {
+    display: flex;
+    flex-shrink: 0;
+    :global {
+      .ant-btn {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  > .Auto {
+    position: relative;
+    flex-grow: 1;
+    min-height: 0;
+  }
+}

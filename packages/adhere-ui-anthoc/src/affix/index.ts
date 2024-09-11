@@ -1,5 +1,3 @@
-import { Affix } from 'antd';
+import Affix from './Affix';
 
-import { createFactory } from '../util';
-
-export default createFactory(Affix, {});
+export default Affix;

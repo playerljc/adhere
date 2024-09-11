@@ -1,6 +1,7 @@
 import React from 'react';
-import { TSortTableProps } from './types';
+import type { TSortTableProps } from './types';
 declare class SortableTable<RecordType extends object = any> extends React.Component<TSortTableProps<RecordType>, any> {
+    static displayName: string;
     state: {
         dataSource: readonly RecordType[];
         isSort: boolean;
@@ -13,14 +14,15 @@ declare class SortableTable<RecordType extends object = any> extends React.Compo
         dataSource?: undefined;
     } | null;
     /**
-     * 覆盖antdTable的tr
+     * DraggableBodyRow
+     * @description 覆盖antdTable的tr
      */
     DraggableBodyRow: ({ className, style, ...restProps }: {
         [x: string]: any;
         className: any;
         style: any;
-    }) => JSX.Element;
-    DraggableContainer: (containerProps: any) => JSX.Element;
+    }) => React.JSX.Element;
+    DraggableContainer: (containerProps: any) => React.JSX.Element;
     /**
      * 拖拽完成时更改dataSource
      */
@@ -28,6 +30,6 @@ declare class SortableTable<RecordType extends object = any> extends React.Compo
         oldIndex: any;
         newIndex: any;
     }) => void;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default SortableTable;

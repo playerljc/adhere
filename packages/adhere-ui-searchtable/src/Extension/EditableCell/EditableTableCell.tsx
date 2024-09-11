@@ -4,8 +4,8 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import type SearchTable from '../../SearchTable';
 import { SearchTableContext } from '../../SearchTable';
+import { createChildren } from '../../Util';
 import type { ColumnEditableConfig, TableCellComponentReducer } from '../../types';
-import { createChildren } from '../../util';
 import EditableTableCellEdit from './Edit/EditableTableCellEdit';
 import EditableCellView from './View';
 

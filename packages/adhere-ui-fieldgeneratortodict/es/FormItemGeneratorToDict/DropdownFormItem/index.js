@@ -1,2 +1,0 @@
-import _Dropdown from"@baifendian/adhere-ui-anthoc/es/dropdown";var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(r){for(var n,t=1,o=arguments.length;t<o;t++)for(var e in n=arguments[t])Object.prototype.hasOwnProperty.call(n,e)&&(r[e]=n[e]);return r}).apply(this,arguments)};import React from"react";var DropdownFormItem=function(r){return React.createElement(_Dropdown,__assign({},null!=r?r:{}))};export default DropdownFormItem;
-//# sourceMappingURL=index.js.map

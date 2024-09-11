@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["row/index.js"],"sourcesContent":["import _Row from \"antd/es/row\";\nimport { createFactory } from '../util';\nexport default createFactory(_Row, {});"],"names":["_Row","createFactory"],"mappings":"OAAOA,SAAU,qBACRC,aAA8B,KAAT,yBACfA,cAAcD,KAAM,EAAE"}
+{"version":3,"file":"index.js","sources":["row/index.js"],"sourcesContent":["import Row from './Row';\nexport default Row;"],"names":["Row"],"mappings":"OAAOA,QAAS,uBACDA"}

@@ -7,7 +7,7 @@ import ColumnResizable, { SearchTableResizableTitle } from './Extension/ColumnRe
 import Search from './Search';
 import type { CellConfigReducer, ColumnTypeExt, RowConfig, RowConfigReducer, SearchTableProps, SearchTableState } from './types';
 import { TableDensity } from './types';
-export declare const selectorPrefix = "adhere-ui-searchtable";
+export declare const selectorPrefix = "adhere-ui-search-table";
 export declare const SearchTableContext: React.Context<{
     context: SearchTable;
     editable?: {
@@ -30,6 +30,7 @@ export declare const SearchTableContext: React.Context<{
  * @classdesc SearchTable
  */
 declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps, S extends SearchTableState = SearchTableState> extends Search<P, S> {
+    static displayName: string;
     static NUMBER_GENERATOR_RULE_ALONE: symbol;
     static NUMBER_GENERATOR_RULE_CONTINUITY: symbol;
     static ROW_SELECTION_NORMAL_MODE: symbol;
@@ -191,7 +192,8 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @param {any} filters
      * @param {any} sorter
      */
-    onTableChange: (pagination: any, filters: any, sorter: any) => void;
+    onTableChange: (pagination: any, filters: any, sorter: any) => Promise<unknown>;
+    onTableRow: (columns: any, record: any, rowIndex: any) => any;
     /**
      * sortOrder
      * @description table的column中加入
@@ -239,7 +241,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     /**
      * search
      */
-    search(): Promise<void>;
+    search(): Promise<any>;
     /**
      * getTableDensity
      * @description 表格密度
@@ -267,7 +269,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
         key: string;
         align: string;
         width: number;
-        render: (v: any, r: any, index: any) => JSX.Element;
+        render: (v: any, r: any, index: any) => React.JSX.Element;
     };
     /**
      * getTableRowComponentReducers
@@ -280,6 +282,25 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     getTableCellComponentReducers(): string[];
     /**
+     * getExportExcelColumns
+     * @description 获取导出excel的列
+     * @param _columns
+     * return _columns
+     */
+    getExportExcelColumns(_columns: any[]): any[];
+    /**
+     * getExportExcelData
+     * @description 获取导出excel的数据
+     * @return any[]
+     */
+    getExportExcelData(): object[];
+    /**
+     * getDataSource
+     * @description 获取Table的数据
+     * @return Record<string, any>[]
+     */
+    getDataSource(): object[];
+    /**
      * renderTableNumberColumn
      * @description - 渲染序号列
      * @param {string} number
@@ -290,7 +311,13 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
         value: any;
         record: object;
         index: number;
-    }): JSX.Element;
+    }): React.JSX.Element;
+    /**
+     * renderTableReload
+     * @description 刷新表格
+     * @return {ReactElement}
+     */
+    renderTableReload(): ReactElement;
     /**
      * renderColumnSetting
      * @description 创建列设置组件
@@ -304,28 +331,44 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     renderTableDensitySetting(): ReactElement;
     /**
-     * renderSearchToolBar
-     * @description 渲染查询工具栏
+     * renderExportExcel
+     * @description 渲染导出excel
      * @return {ReactElement}
      */
-    renderSearchToolBar(): ReactElement;
+    renderExportExcel(): ReactElement;
+    /**
+     * renderSearchBarCollapseControl
+     */
+    renderSearchBarCollapseControl(): React.JSX.Element;
+    /**
+     * renderSearchFormToolBar
+     * @description 渲染查询表单的工具栏
+     * @return {ReactNode}
+     */
+    renderSearchFormToolBar(): ReactNode;
+    /**
+     * renderSearchBarActions
+     * @description 渲染查询工具栏
+     * @return {ReactNode}
+     */
+    renderSearchBarActions(): ReactNode;
     /**
      * renderTable
      * @description - 认选表格体
      * @return {ReactElement}
      */
-    renderBody(): JSX.Element;
+    renderBody(): React.JSX.Element;
     /**
      * renderInner
      * @description 渲染SearchTable
      * @return {ReactElement | null}
      */
-    renderInner(): ReactElement | null;
+    renderInner(): React.JSX.Element;
     /**
      * renderChildren
      * @return {ReactElement}
      */
-    renderChildren(): JSX.Element;
+    renderChildren(): React.JSX.Element;
     /**
      * render
      * @return {ReactElement}
@@ -337,11 +380,7 @@ export declare const defaultProps: {
     style: {};
     searchClassName: string;
     searchStyle: {};
-    isFirst: boolean; /**
-     * columnSettingEffect
-     * @param {SearchTableProps} props
-     * @protected
-     */
+    isFirst: boolean;
     isFirstLoading: null;
     isShowExpandSearch: boolean;
     defaultExpandSearchCollapse: boolean;

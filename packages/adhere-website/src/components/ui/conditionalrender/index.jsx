@@ -1,7 +1,13 @@
-import { Button, Card, Empty } from 'antd';
-import React, { useState } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
+import P5CodeText from '!!raw-loader!./examples/p5';
+import P6CodeText from '!!raw-loader!./examples/p6';
+import P7CodeText from '!!raw-loader!./examples/p7';
+import P8CodeText from '!!raw-loader!./examples/p8';
 
-import { ConditionalRender } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -10,16 +16,16 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-export default () => {
-  const [baseUseShow, setBaseUserShow] = useState(true);
-  const [noMatchUseShow, setNoMatchUserShow] = useState(true);
-  const [rShow, setRShow] = useState(true);
-  const [rNoMatchShow, setRNoMatchShow] = useState(true);
-  const [rFragmentShow, setRFragmentShow] = useState(true);
-  const [rVisibility, setRVisibility] = useState(true);
-  const [rNoMatchVisibility, setRNoMatchVisibility] = useState(true);
-  const [rFragmentVisibility, setRFragmentVisibility] = useState(true);
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
+import P5 from './examples/p5';
+import P6 from './examples/p6';
+import P7 from './examples/p7';
+import P8 from './examples/p8';
 
+export default () => {
   function boxPanelConfig() {
     return [
       {
@@ -33,63 +39,9 @@ export default () => {
             info: '基本的显示隐藏',
           },
         },
-        codeText: `
-       import React, { useState } from 'react';
-       import { ConditionalRender } from '@baifendian/adhere';
-       import { Button, Card } from 'antd';
-
-       const [baseUseShow, setBaseUserShow] = useState(true);
-
-       <Card
-         actions={[
-           // eslint-disable-next-line react/jsx-key
-           <Button
-             type="primary"
-             onClick={() => {
-               setBaseUserShow(!baseUseShow);
-             }}
-           >
-             {baseUseShow ? '隐藏' : '显示'}
-           </Button>,
-         ]}
-       >
-         <ConditionalRender conditional={baseUseShow}>
-           {
-             () => (<p>
-             In the process of internal desktop applications development, many different design
-             specs and implementations would be involved, which might cause designers and
-             developers difficulties and duplication and reduce the efficiency of development.
-           </p>)
-           }
-         </ConditionalRender>
-       </Card>
-           `,
+        codeText: P1CodeText,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Card
-            actions={[
-              // eslint-disable-next-line react/jsx-key
-              <Button
-                type="primary"
-                onClick={() => {
-                  setBaseUserShow(!baseUseShow);
-                }}
-              >
-                {baseUseShow ? '隐藏' : '显示'}
-              </Button>,
-            ]}
-          >
-            <ConditionalRender conditional={baseUseShow}>
-              {() => (
-                <p>
-                  In the process of internal desktop applications development, many different design
-                  specs and implementations would be involved, which might cause designers and
-                  developers difficulties and duplication and reduce the efficiency of development.
-                </p>
-              )}
-            </ConditionalRender>
-          </Card>
-        ),
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -102,65 +54,9 @@ export default () => {
             info: '自定义UI',
           },
         },
-        codeText: `
-       import React, { useState } from 'react';
-       import { ConditionalRender } from '@baifendian/adhere';
-       import { Button, Card, Empty } from 'antd';
-
-       const [noMatchUseShow, setNoMatchUserShow] = useState(true);
-
-       <Card
-         actions={[
-           // eslint-disable-next-line react/jsx-key
-           <Button
-             type="primary"
-             onClick={() => {
-               setNoMatchUserShow(!noMatchUseShow);
-             }}
-           >
-             {noMatchUseShow ? '隐藏' : '显示'}
-           </Button>,
-         ]}
-       >
-         <ConditionalRender conditional={noMatchUseShow} noMatch={() => <Empty />}>
-           {
-             () => (
-               <p>
-                 In the process of internal desktop applications development, many different design
-                 specs and implementations would be involved, which might cause designers and
-                 developers difficulties and duplication and reduce the efficiency of development.
-               </p>
-             )
-           }
-         </ConditionalRender>
-       </Card>
-           `,
+        codeText: P2CodeText,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Card
-            actions={[
-              // eslint-disable-next-line react/jsx-key
-              <Button
-                type="primary"
-                onClick={() => {
-                  setNoMatchUserShow(!noMatchUseShow);
-                }}
-              >
-                {noMatchUseShow ? '隐藏' : '显示'}
-              </Button>,
-            ]}
-          >
-            <ConditionalRender conditional={noMatchUseShow} noMatch={() => <Empty />}>
-              {() => (
-                <p>
-                  In the process of internal desktop applications development, many different design
-                  specs and implementations would be involved, which might cause designers and
-                  developers difficulties and duplication and reduce the efficiency of development.
-                </p>
-              )}
-            </ConditionalRender>
-          </Card>
-        ),
+        renderChildren: () => <P2 />,
       },
       {
         id: `p3`,
@@ -176,57 +72,9 @@ export default () => {
                  `,
           },
         },
-        codeText: `
-       import React, { useState } from 'react';
-       import { ConditionalRender } from '@baifendian/adhere';
-       import { Button, Card, Empty } from 'antd';
-
-       const [rShow, setRShow] = useState(true);
-
-       <Card
-          actions={[
-            <Button
-              type="primary"
-              onClick={() => {
-                setRShow(!rShow);
-              }}
-            >
-              {rShow ? '隐藏' : '显示'}
-            </Button>,
-          ]}
-       >
-          <ConditionalRender.Show conditional={rShow}>
-            <p>
-              In the process of internal desktop applications development, many different design
-              specs and implementations would be involved, which might cause designers and
-              developers difficulties and duplication and reduce the efficiency of development.
-            </p>
-          </ConditionalRender.Show>
-       </Card>
-           `,
+        codeText: P3CodeText,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Card
-            actions={[
-              <Button
-                type="primary"
-                onClick={() => {
-                  setRShow(!rShow);
-                }}
-              >
-                {rShow ? '隐藏' : '显示'}
-              </Button>,
-            ]}
-          >
-            <ConditionalRender.Show conditional={rShow}>
-              <p>
-                In the process of internal desktop applications development, many different design
-                specs and implementations would be involved, which might cause designers and
-                developers difficulties and duplication and reduce the efficiency of development.
-              </p>
-            </ConditionalRender.Show>
-          </Card>
-        ),
+        renderChildren: () => <P3 />,
       },
       {
         id: `p4`,
@@ -242,57 +90,9 @@ export default () => {
                  `,
           },
         },
-        codeText: `
-       import React, { useState } from 'react';
-       import { ConditionalRender } from '@baifendian/adhere';
-       import { Button, Card, Empty } from 'antd';
-
-       const [rNoMatchShow, setRNoMatchShow] = useState(true);
-
-       <Card
-          actions={[
-            <Button
-              type="primary"
-              onClick={() => {
-                setRNoMatchShow(!rNoMatchShow);
-              }}
-            >
-              {rNoMatchShow ? '隐藏' : '显示'}
-            </Button>,
-          ]}
-        >
-          <ConditionalRender.Show conditional={rNoMatchShow} noMatch={<p>noMatch</p>}>
-            <p>
-              In the process of internal desktop applications development, many different design
-              specs and implementations would be involved, which might cause designers and
-              developers difficulties and duplication and reduce the efficiency of development.
-            </p>
-          </ConditionalRender.Show>
-        </Card>
-           `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Card
-            actions={[
-              <Button
-                type="primary"
-                onClick={() => {
-                  setRNoMatchShow(!rNoMatchShow);
-                }}
-              >
-                {rNoMatchShow ? '隐藏' : '显示'}
-              </Button>,
-            ]}
-          >
-            <ConditionalRender.Show conditional={rNoMatchShow} noMatch={<p>noMatch</p>}>
-              <p>
-                In the process of internal desktop applications development, many different design
-                specs and implementations would be involved, which might cause designers and
-                developers difficulties and duplication and reduce the efficiency of development.
-              </p>
-            </ConditionalRender.Show>
-          </Card>
-        ),
+        codeText: P4CodeText,
+        renderChildren: () => <P4 />,
       },
       {
         id: `p5`,
@@ -308,71 +108,9 @@ export default () => {
             `,
           },
         },
-        codeText: `
-       import React, { useState } from 'react';
-       import { ConditionalRender } from '@baifendian/adhere';
-       import { Button, Card, Empty } from 'antd';
-
-       const [rFragmentShow, setRFragmentShow] = useState(true);
-
-       <Card
-          actions={[
-            <Button
-              type="primary"
-              onClick={() => {
-                setRFragmentShow(!rFragmentShow);
-              }}
-            >
-              {rFragmentShow ? '隐藏' : '显示'}
-            </Button>,
-          ]}
-        >
-          <ConditionalRender.Show
-            conditional={rFragmentShow}
-            noMatch={
-              <>
-                <p>NoMatchFragment1</p>
-                <p>NoMatchFragment2</p>
-                <p>NoMatchFragment3</p>
-              </>
-            }
-          >
-            <p>Fragment1</p>
-            <p>Fragment2</p>
-            <p>Fragment3</p>
-          </ConditionalRender.Show>
-        </Card>
-      `,
+        codeText: P5CodeText,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Card
-            actions={[
-              <Button
-                type="primary"
-                onClick={() => {
-                  setRFragmentShow(!rFragmentShow);
-                }}
-              >
-                {rFragmentShow ? '隐藏' : '显示'}
-              </Button>,
-            ]}
-          >
-            <ConditionalRender.Show
-              conditional={rFragmentShow}
-              noMatch={
-                <>
-                  <p>NoMatchFragment1</p>
-                  <p>NoMatchFragment2</p>
-                  <p>NoMatchFragment3</p>
-                </>
-              }
-            >
-              <p>Fragment1</p>
-              <p>Fragment2</p>
-              <p>Fragment3</p>
-            </ConditionalRender.Show>
-          </Card>
-        ),
+        renderChildren: () => <P5 />,
       },
       {
         id: `p6`,
@@ -388,57 +126,9 @@ export default () => {
                  `,
           },
         },
-        codeText: `
-       import React, { useState } from 'react';
-       import { ConditionalRender } from '@baifendian/adhere';
-       import { Button, Card } from 'antd';
-
-       const [rVisibility, setRVisibility] = useState(true);
-
-       <Card
-          actions={[
-            <Button
-              type="primary"
-              onClick={() => {
-                setRVisibility(!rVisibility);
-              }}
-            >
-              {rVisibility ? '隐藏' : '显示'}
-            </Button>,
-          ]}
-        >
-          <ConditionalRender.Visibility conditional={rVisibility}>
-            <p>
-              In the process of internal desktop applications development, many different design
-              specs and implementations would be involved, which might cause designers and
-              developers difficulties and duplication and reduce the efficiency of development.
-            </p>
-          </ConditionalRender.Visibility>
-        </Card>
-           `,
+        codeText: P6CodeText,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Card
-            actions={[
-              <Button
-                type="primary"
-                onClick={() => {
-                  setRVisibility(!rVisibility);
-                }}
-              >
-                {rVisibility ? '隐藏' : '显示'}
-              </Button>,
-            ]}
-          >
-            <ConditionalRender.Visibility conditional={rVisibility}>
-              <p>
-                In the process of internal desktop applications development, many different design
-                specs and implementations would be involved, which might cause designers and
-                developers difficulties and duplication and reduce the efficiency of development.
-              </p>
-            </ConditionalRender.Visibility>
-          </Card>
-        ),
+        renderChildren: () => <P6 />,
       },
       {
         id: `p7`,
@@ -454,57 +144,9 @@ export default () => {
                  `,
           },
         },
-        codeText: `
-       import React, { useState } from 'react';
-       import { ConditionalRender } from '@baifendian/adhere';
-       import { Button, Card } from 'antd';
-
-       const [rNoMatchVisibility, setRNoMatchVisibility] = useState(true);
-
-       <Card
-          actions={[
-            <Button
-              type="primary"
-              onClick={() => {
-                setRNoMatchVisibility(!rNoMatchVisibility);
-              }}
-            >
-              {rNoMatchVisibility ? '隐藏' : '显示'}
-            </Button>,
-          ]}
-        >
-          <ConditionalRender.Visibility conditional={rNoMatchVisibility} noMatch={<p>noMatch</p>}>
-            <p>
-              In the process of internal desktop applications development, many different design
-              specs and implementations would be involved, which might cause designers and
-              developers difficulties and duplication and reduce the efficiency of development.
-            </p>
-          </ConditionalRender.Visibility>
-        </Card>
-           `,
+        codeText: P7CodeText,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Card
-            actions={[
-              <Button
-                type="primary"
-                onClick={() => {
-                  setRNoMatchVisibility(!rNoMatchVisibility);
-                }}
-              >
-                {rNoMatchVisibility ? '隐藏' : '显示'}
-              </Button>,
-            ]}
-          >
-            <ConditionalRender.Visibility conditional={rNoMatchVisibility} noMatch={<p>noMatch</p>}>
-              <p>
-                In the process of internal desktop applications development, many different design
-                specs and implementations would be involved, which might cause designers and
-                developers difficulties and duplication and reduce the efficiency of development.
-              </p>
-            </ConditionalRender.Visibility>
-          </Card>
-        ),
+        renderChildren: () => <P7 />,
       },
       {
         id: `p8`,
@@ -520,71 +162,9 @@ export default () => {
             `,
           },
         },
-        codeText: `
-       import React, { useState } from 'react';
-       import { ConditionalRender } from '@baifendian/adhere';
-       import { Button, Card } from 'antd';
-
-       const [rFragmentVisibility, setRFragmentVisibility] = useState(true);
-
-       <Card
-        actions={[
-          <Button
-            type="primary"
-            onClick={() => {
-              setRFragmentVisibility(!rFragmentVisibility);
-            }}
-          >
-            {rFragmentVisibility ? '隐藏' : '显示'}
-          </Button>,
-        ]}
-      >
-        <ConditionalRender.Visibility
-          conditional={rFragmentVisibility}
-          noMatch={
-            <>
-              <p>NoMatchFragment1</p>
-              <p>NoMatchFragment2</p>
-              <p>NoMatchFragment3</p>
-            </>
-          }
-        >
-          <p>Fragment1</p>
-          <p>Fragment2</p>
-          <p>Fragment3</p>
-        </ConditionalRender.Visibility>
-      </Card>
-      `,
+        codeText: P8CodeText,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Card
-            actions={[
-              <Button
-                type="primary"
-                onClick={() => {
-                  setRFragmentVisibility(!rFragmentVisibility);
-                }}
-              >
-                {rFragmentVisibility ? '隐藏' : '显示'}
-              </Button>,
-            ]}
-          >
-            <ConditionalRender.Visibility
-              conditional={rFragmentVisibility}
-              noMatch={
-                <>
-                  <p>NoMatchFragment1</p>
-                  <p>NoMatchFragment2</p>
-                  <p>NoMatchFragment3</p>
-                </>
-              }
-            >
-              <p>Fragment1</p>
-              <p>Fragment2</p>
-              <p>Fragment3</p>
-            </ConditionalRender.Visibility>
-          </Card>
-        ),
+        renderChildren: () => <P8 />,
       },
     ];
   }

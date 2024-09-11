@@ -1,5 +1,3 @@
-import { Statistic } from 'antd';
+import Statistic from './Statistic';
 
-import { createFactory } from '../util';
-
-export default createFactory(Statistic, {});
+export default Statistic;
