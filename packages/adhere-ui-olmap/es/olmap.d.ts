@@ -76,7 +76,7 @@ declare class OlMap extends React.Component<OLMapProps, any> {
      * onAllTileloadend
      * @description 所有瓦片加载完成的时间
      */
-    onAllTileloadend(): void;
+    private onAllTileloadend;
     /**
      * 清空所有层，除了底图和常州geoJSOn层
      */

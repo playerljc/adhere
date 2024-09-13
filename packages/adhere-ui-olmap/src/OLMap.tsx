@@ -52,6 +52,9 @@ class OlMap extends React.Component<OLMapProps, any> {
 
     this.zoom = this.map.getView().getZoom();
 
+    // 注册所有瓦片加载完成事件
+    this.onAllTileloadend();
+
     // 添加主GeoJSON的Layer
     // this.addMainGeoJSONLayer();
   }
@@ -163,7 +166,7 @@ class OlMap extends React.Component<OLMapProps, any> {
    * onAllTileloadend
    * @description 所有瓦片加载完成的时间
    */
-  onAllTileloadend() {
+  private onAllTileloadend() {
     const tileLayer = this.getTileLayer();
 
     // 追踪加载中的瓦片数
