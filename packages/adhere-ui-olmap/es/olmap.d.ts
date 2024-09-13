@@ -11,7 +11,6 @@ declare class OlMap extends React.Component<OLMapProps, any> {
     private el;
     private zoom;
     protected map: any;
-    private props;
     static defaultProps: any;
     static propTypes: any;
     constructor(props: any);
@@ -72,6 +71,12 @@ declare class OlMap extends React.Component<OLMapProps, any> {
      * 将此处鼠标点样式
      */
     setCursor: (style: any) => void;
+    getTileLayer(): any;
+    /**
+     * onAllTileloadend
+     * @description 所有瓦片加载完成的时间
+     */
+    onAllTileloadend(): void;
     /**
      * 清空所有层，除了底图和常州geoJSOn层
      */

@@ -4,6 +4,7 @@
 
 2021-10-02
 
+* 加入onAllTileloadend事件
 * OLMap组件的fitZoom参数默认值修改
 
 # 1.0.7
