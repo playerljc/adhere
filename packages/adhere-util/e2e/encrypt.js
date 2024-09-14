@@ -1,0 +1,6 @@
+import encrypt from '../src/encrypt';
+
+const kw =
+  'W3siaWQiOiIxNTlBOWFkMS1COGY3LTdmZjYtNDg4RC1kODI0M0RDQTU2NTkiLCJjb25kaXRpb24iOjEsInR5cGUiOjQsImt3IjoiMzMzMzMzMzMiLCJncm91cElkIjoyMTIsImNvbnRlbnQiOiI8c3BhbiBjbGFzcz1cInRleHRcIj4yIDwvc3Bhbj48c3BhbiBjbGFzcz1cIm9wZXJhdG9yXCIgY29udGVudGVkaXRhYmxlPVwiZmFsc2VcIj5PUjwvc3Bhbj48c3BhbiBjbGFzcz1cInRleHRcIj4gMyZuYnNwOzwvc3Bhbj4ifV0==';
+
+console.log('kw', encrypt.base64Decode(kw));

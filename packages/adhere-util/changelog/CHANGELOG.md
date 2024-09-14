@@ -4,7 +4,8 @@
 
 2024-02-22
 
-* 加入getSaerch、getPathname方法
+* 加入Collection集合类的操作
+* 加入getSearch、getPathname方法
 * encrypt函数加入options
 * 加入dom尺寸计算方法
 * clientToCtxPoint去掉使用zoom计算

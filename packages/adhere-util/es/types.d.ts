@@ -52,3 +52,14 @@ export interface PrettyBytesOptions {
     maximumFractionDigits?: number;
     space?: boolean;
 }
+/**
+ * ProcessAsyncQueueItem
+ * @description 异步执行队列的任务项
+ */
+export interface ProcessAsyncQueueItem {
+    argv?: any[];
+    run: (...argv: any[]) => Promise<any>;
+    context?: any;
+    success?: (params?: any) => void;
+    fail?: (error?: any) => void;
+}

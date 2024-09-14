@@ -1,5 +1,6 @@
 import Base from './base';
 import clientDetection from './clientDetection';
+import Collection from './collection';
 import Color from './color';
 import Date from './date';
 import Dom from './dom';
@@ -31,4 +32,5 @@ export default {
   ...Format,
   ...Size,
   ...Gcoord,
+  ...Collection,
 };
