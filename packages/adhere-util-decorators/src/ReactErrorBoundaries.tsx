@@ -1,4 +1,5 @@
 import { Empty } from 'antd';
+import classNames from 'classnames';
 import React from 'react';
 
 import Util from '@baifendian/adhere-util';
@@ -6,6 +7,7 @@ import intl from '@baifendian/adhere-util-intl';
 
 import type { IReactErrorBoundariesState } from './types';
 
+const selectorPrefix = 'adhere-util-decorators';
 // import errorIcon from './component_error.svg';
 
 const errorIcon =
@@ -13,13 +15,15 @@ const errorIcon =
 
 // 缺省的错误UI
 let DEFAULT_ERROR_UI = (
-  <Empty
-    image={errorIcon}
-    imageStyle={{
-      height: 60,
-    }}
-    description={intl.v('糟糕！，出了些问题')}
-  />
+  <div className={classNames(`${selectorPrefix}-default-error-ui-wrapper`)}>
+    <Empty
+      image={errorIcon}
+      imageStyle={{
+        height: 60,
+      }}
+      description={intl.v('糟糕！，出了些问题')}
+    />
+  </div>
 );
 
 /**
