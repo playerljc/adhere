@@ -1,0 +1,1 @@
+{"version":3,"file":"TreeNodeContext.js","sources":["TreeNodeContext.js"],"sourcesContent":["import React from 'react';\nexport default /*#__PURE__*/React.createContext({});"],"names":["React","createContext"],"mappings":"OAAOA,UAAW,uBACUA,MAAMC,cAAc,EAAE"}

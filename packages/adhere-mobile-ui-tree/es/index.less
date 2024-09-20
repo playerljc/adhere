@@ -1,0 +1,43 @@
+@import '~@baifendian/adhere-ui-space/es/index.less';
+
+.adhere-mobile-ui-tree {
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  white-space: nowrap;
+  list-style: none;
+
+  .adhere-mobile-ui-tree-node {
+    &.adhere-mobile-ui-tree-node-disabled {
+    }
+
+    > .adhere-mobile-ui-tree-node-info {
+      line-height: 2em;
+
+      > .adhere-mobile-ui-tree-node-info-checkbox {
+        margin-right: 10px;
+      }
+
+      > .adhere-mobile-ui-tree-node-info-expanded {
+        margin-right: 5px;
+        font-weight: bold;
+        font-size: 20px;
+      }
+
+      > .adhere-mobile-ui-tree-node-info-title {
+        padding: 5px;
+        font-size: 16px;
+
+        &.adhere-mobile-ui-tree-node-info-title-selected {
+          background-color: rgba(var(--adhere-color-primary-rgb), 0.1);
+        }
+      }
+    }
+
+    > .adhere-mobile-ui-tree-node-children {
+      margin: 0;
+      padding-left: 30px;
+      list-style: none;
+    }
+  }
+}
