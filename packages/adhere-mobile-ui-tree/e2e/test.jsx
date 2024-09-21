@@ -20,6 +20,8 @@ function generateTree(depth, width, currentDepth = 1, parentKey = '0') {
       key: key,
       title: `Node ${key}`,
       children: generateTree(depth, width, currentDepth + 1, key), // 递归生成子节点
+      checkable: currentDepth === depth,
+      disabled: currentDepth !== depth,
     });
   }
 
@@ -35,7 +37,7 @@ export default () => {
       <Tree
         treeData={treeData}
         size="middle"
-        multiple
+        multiple={false}
         checkable
         checkStrictly
         selectedKeys={['0-0-0-0']}
@@ -43,7 +45,9 @@ export default () => {
         checkedKeys={['0-0-0-0', '0-0-0-1', '0-0-0-2']}
         onExpand={function () {}}
         onSelect={function () {}}
-        onCheck={function () {}}
+        onCheck={function () {
+          debugger;
+        }}
         icon={() => <ScanCodeOutline />}
         // titleRender={function () {
         //   return <span>333</span>;

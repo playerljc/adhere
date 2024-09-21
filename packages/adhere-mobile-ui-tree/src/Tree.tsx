@@ -15,8 +15,10 @@ import {
 } from './Constant';
 import TreeContext from './TreeContext';
 import TreeNode from './TreeNode';
+import TreeNodeContext from './TreeNodeContext';
 import type { TreeProps } from './types';
 import useChecked from './useChecked';
+import useUtil from './useUtil';
 
 const selectorPrefix = 'adhere-mobile-ui-tree';
 
@@ -47,30 +49,32 @@ const Tree = memo<TreeProps>(
     onExpand,
     onCheck,
   }) => {
-    const { getDefaultCheckedKeysWithCheckStrictly } = useChecked();
+    const { omitDisabledKeys } = useUtil();
+    const { getDefaultCheckedKeysWithCheckStrictly, existsCheckableNodeInParentChildren } =
+      useChecked();
 
     // Tree的密度
     const targetSize = useMemo(() => size ?? DEFAULT_SIZE, [size]);
 
     // 整个Tree是否是可勾选的Tree
-    const targetCheckable = useMemo(() => {
+    const targetCheckable = useMemo<boolean>(() => {
       if (Util.isEmpty(checkable)) return DEFAULT_TREE_CHECKABLE;
 
-      return checkable;
+      return checkable as boolean;
     }, [checkable]);
 
     // 是否可以选中多个节点
-    const targetMultiple = useMemo(() => {
+    const targetMultiple = useMemo<boolean>(() => {
       if (Util.isEmpty(multiple)) return DEFAULT_MULTIPLE;
 
-      return multiple;
+      return multiple as boolean;
     }, [multiple]);
 
     // checkbox是否受控
-    const targetCheckStrictly = useMemo(() => {
+    const targetCheckStrictly = useMemo<boolean>(() => {
       if (Util.isEmpty(checkStrictly)) return DEFAULT_CHECKSTRICTLY;
 
-      return checkStrictly;
+      return checkStrictly as boolean;
     }, [checkStrictly]);
 
     // Tree的数据
@@ -81,11 +85,16 @@ const Tree = memo<TreeProps>(
     const [targetExpandedKeys, setTargetExpandedKeys] = usePropToState(defaultExpandedKeys);
 
     // 选择的keys
-    const defaultSelectedKeys = useMemo(() => selectedKeys ?? [], [selectedKeys]);
+    const defaultSelectedKeys = useMemo(
+      // 排除不可用的节点keys
+      () => omitDisabledKeys(targetTreeData, selectedKeys ?? []),
+      [targetTreeData, selectedKeys],
+    );
     const [targetSelectedKeys, setTargetSelectedKeys] = usePropToState(defaultSelectedKeys);
 
+    // 勾选的keys
     const defaultCheckedKeys = useMemo(() => {
-      const _defaultCheckedKeys = checkedKeys ?? [];
+      const _defaultCheckedKeys = omitDisabledKeys(targetTreeData, checkedKeys ?? []);
 
       // 如果是受控
       if (targetCheckStrictly) {
@@ -110,16 +119,26 @@ const Tree = memo<TreeProps>(
       [targetSize],
     );
 
+    // children elements
     const treeChildrenElements = useMemo(
       () =>
         targetTreeData.map((_treeNodeData) => (
-          <TreeNode level={0} id={_treeNodeData.key} {..._treeNodeData} />
+          <TreeNodeContext.Provider
+            value={{
+              existsCheckableNodeInParentChildren: () =>
+                existsCheckableNodeInParentChildren(_treeNodeData.children),
+            }}
+          >
+            <TreeNode level={0} id={_treeNodeData.key} {..._treeNodeData} />
+          </TreeNodeContext.Provider>
         )),
       [targetTreeData, switcherIcon, titleRender],
     );
 
+    // 是否微空
     const isEmpty = useMemo(() => !treeChildrenElements.length, [treeChildrenElements]);
 
+    // contextProvider
     const contextProviderValue = useMemo(
       () => ({
         expandedKeys: () => targetExpandedKeys,

@@ -30,13 +30,35 @@ function useUtil() {
    * @return {string[]}
    */
   function getLeafKeys({ treeData, keys }: { treeData: TreeData; keys: string[] }): string[] {
+    // @ts-ignore
     const leafKeys = Util.getLeafNodes(treeData).map(({ key }) => key);
     return keys.filter((key) => leafKeys.includes(key));
+  }
+
+  /**
+   * omitDisabledKeys
+   * @description 排除不可用的keys
+   * @param {TreeData} treeData
+   * @param {string[]} keys
+   * @return {string[]}
+   */
+  function omitDisabledKeys(treeData: TreeData, keys: string[]): string[] {
+    // @ts-ignore
+    const nodes = keys.map((key) => Util.findNodeByKey(treeData, key, { keyAttr: 'key' }));
+
+    return nodes
+      .filter((node) => {
+        if (!('disabled' in node)) return true;
+
+        return !node.disabled;
+      })
+      .map(({ key }) => key);
   }
 
   return {
     getTreeNodesByKeys,
     getLeafKeys,
+    omitDisabledKeys,
   };
 }
 

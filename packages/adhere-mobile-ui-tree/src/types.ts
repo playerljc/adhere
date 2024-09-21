@@ -77,25 +77,26 @@ export interface TreeProps {
   ) => void;
 }
 
-export type TreeNodeProps = {
+export type TreeNodeProps = TreeDataItem & {
   // 层级(从0开始)
   level: number;
   // 设置为叶子节点 (设置了 loadData 时有效)。为 false 时会强制将其作为父节点	boolean
   isLeaf?: boolean;
   // 当树为 checkable 时，设置独立节点是否展示 Checkbox
-  checkable?: TreeDataItem['checkable'];
+  // checkable?: TreeDataItem['checkable'];
   // 禁掉响应
-  disabled?: TreeDataItem['disabled'];
+  // disabled?: TreeDataItem['disabled'];
   // 被树的 (default)ExpandedKeys / (default)CheckedKeys / (default)SelectedKeys 属性所用。注意：整个树范围内的所有节点的 key 值不能重复！	string	(内部计算出的节点位置)
   id: TreeDataItem['key'];
   // 设置节点是否可被选中	boolean	true
-  selectable?: TreeDataItem['selectable'];
+  // selectable?: TreeDataItem['selectable'];
   // 标题
-  title?: TreeDataItem['title'];
+  // title?: TreeDataItem['title'];
 };
 
 export interface TreeNodeContext {
-  updateParentChecked: (params: { key: string; checked: boolean; checkedKeys: string[] }) => void;
+  updateParentChecked?: (params: { key: string; checked: boolean; checkedKeys: string[] }) => void;
+  existsCheckableNodeInParentChildren: () => boolean;
 }
 
 export interface TreeContext {

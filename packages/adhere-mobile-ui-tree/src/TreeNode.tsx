@@ -42,6 +42,7 @@ const TreeNode = memo<TreeNodeProps>(
       onCheck,
     } = useContext(TreeContext);
 
+    // 当前节点数据的扩展
     const nodeDataExtra = useMemo<TreeDataItemExtra>(
       () => ({
         key: id,
@@ -54,9 +55,11 @@ const TreeNode = memo<TreeNodeProps>(
       [id, level, disabled, selectable, checkable, children],
     );
 
+    // 当前节点的icon
     const targetIcon = useMemo(() => icon?.(nodeDataExtra), [nodeDataExtra]);
 
-    const { updateParentChecked: next } = useContext(TreeNodeContext);
+    const { updateParentChecked: next, existsCheckableNodeInParentChildren: existsCheckable } =
+      useContext(TreeNodeContext);
 
     // 是否可用
     const targetDisabled = useMemo(() => {
@@ -66,24 +69,26 @@ const TreeNode = memo<TreeNodeProps>(
     }, [disabled]);
 
     // 是否可选中
-    const targetSelectable = useMemo(() => {
+    const targetSelectable = useMemo<boolean>(() => {
       if (Util.isEmpty(selectable)) return DEFAULT_SELECTABLE;
 
-      return selectable;
+      return selectable as boolean;
     }, [selectable]);
 
     // 是否可勾选
-    const targetCheckable = useMemo(() => {
+    const targetCheckable = useMemo<boolean>(() => {
       if (Util.isEmpty(checkable)) return DEFAULT_TREE_NODE_CHECKABLE;
 
-      return checkable;
+      return checkable as boolean;
     }, [checkable]);
 
+    // children数据
     const targetChildrenData = useMemo(() => children ?? [], [children]);
 
-    const hasChildren = useMemo(() => !!targetChildrenData.length, [targetChildrenData]);
+    // 是否有children
+    const hasChildren = useMemo<boolean>(() => !!targetChildrenData.length, [targetChildrenData]);
 
-    const { handleCheck, updateParentChecked } = useChecked();
+    const { handleCheck, updateParentChecked, existsCheckableNodeInParentChildren } = useChecked();
 
     const { getTreeNodesByKeys, getLeafKeys } = useUtil();
 
@@ -106,6 +111,8 @@ const TreeNode = memo<TreeNodeProps>(
                   next,
                 });
               },
+              existsCheckableNodeInParentChildren: () =>
+                existsCheckableNodeInParentChildren(targetChildrenData),
             }}
           >
             <TreeNode level={level + 1} id={_treeNodeData.key} {..._treeNodeData} />
@@ -163,8 +170,8 @@ const TreeNode = memo<TreeNodeProps>(
      * onSelected
      */
     function onSelected(e) {
-      // 如果不能选中
-      if (!targetSelectable) return;
+      // 如果不能选中或者不可用
+      if (!targetSelectable || targetDisabled) return;
 
       function _e(keys) {
         return {
@@ -273,6 +280,9 @@ const TreeNode = memo<TreeNodeProps>(
                 />
               </span>
             )}
+            {treeCheckable() && !targetCheckable && existsCheckable() && (
+              <span className={classNames(`${selectorPrefix}-info-checkbox`)} />
+            )}
 
             {/* 展开和折叠节点 */}
             {hasChildren && (
@@ -286,12 +296,13 @@ const TreeNode = memo<TreeNodeProps>(
               className={classNames(`${selectorPrefix}-info-title-wrapper`, {
                 [`${selectorPrefix}-info-title-selected`]: targetSelectable && isSelected,
               })}
+              onClick={onSelected}
             >
               {/* 节点内容之前的icon */}
               {!!targetIcon && <span className={`${selectorPrefix}-info-icon`}>{targetIcon}</span>}
 
               {/* 节点内容 */}
-              <span className={`${selectorPrefix}-info-title`} onClick={onSelected}>
+              <span className={`${selectorPrefix}-info-title`}>
                 {titleRender?.(nodeDataExtra) ?? title}
               </span>
             </span>

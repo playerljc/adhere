@@ -9,12 +9,19 @@
 
   .adhere-mobile-ui-tree-node {
     &.adhere-mobile-ui-tree-node-disabled {
+      > .adhere-mobile-ui-tree-node-info {
+        > .adhere-mobile-ui-tree-node-info-title-wrapper {
+          color: var(--adhere-color-text-quaternary);
+        }
+      }
     }
 
     > .adhere-mobile-ui-tree-node-info {
       line-height: 2em;
 
       > .adhere-mobile-ui-tree-node-info-checkbox {
+        display: inline-block;
+        width: 20px;
         margin-right: 5px;
       }
 

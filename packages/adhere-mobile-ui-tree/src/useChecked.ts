@@ -1,11 +1,25 @@
 import Util from '@baifendian/adhere-util';
 
-import { TreeData } from './types';
+import type { TreeData, TreeDataItem } from './types';
 
 /**
  * useChecked
  */
 function useChecked() {
+  function targetChildren(children) {
+    return children
+      ?.filter((node) => {
+        if (!('checkable' in node)) return true;
+
+        return node.checkable;
+      })
+      ?.filter((node) => {
+        if (!('disabled' in node)) return true;
+
+        return !node.disabled;
+      });
+  }
+
   /**
    * getChildrenKeys
    * @description 递归获取所有子节点的key
@@ -15,8 +29,10 @@ function useChecked() {
   function getChildrenKeys(node) {
     let keys = [node.key];
 
-    if (node.children) {
-      node.children.forEach((child) => {
+    const children = targetChildren(node.children ?? []);
+
+    if (children) {
+      children.forEach((child) => {
         keys = keys.concat(getChildrenKeys(child));
       });
     }
@@ -35,7 +51,7 @@ function useChecked() {
     treeData: TreeData,
     defaultCheckedKeys: string[],
   ): string[] {
-    const checkedKeys = [];
+    const checkedKeys: string[] = [];
 
     function up({ key, checkedKeys, parentId, childrenData }) {
       const childrenKeys = childrenData
@@ -52,6 +68,7 @@ function useChecked() {
         }
       }
 
+      // @ts-ignore
       const parentNodeData = Util.findParentNodeByKey(treeData, parentId, {
         keyAttr: 'key',
       });
@@ -61,7 +78,7 @@ function useChecked() {
           key: parentId,
           checkedKeys,
           parentId: parentNodeData.key,
-          childrenData: parentNodeData.children,
+          childrenData: targetChildren(parentNodeData.children),
         });
       }
     }
@@ -69,6 +86,7 @@ function useChecked() {
     defaultCheckedKeys.forEach((checkedKey) => {
       checkedKeys.push(checkedKey);
 
+      // @ts-ignore
       const parentNodeData = Util.findParentNodeByKey(treeData, checkedKey, {
         keyAttr: 'key',
       });
@@ -78,7 +96,7 @@ function useChecked() {
           key: checkedKey,
           checkedKeys,
           parentId: parentNodeData.key,
-          childrenData: parentNodeData.children,
+          childrenData: targetChildren(parentNodeData.children),
         });
       }
     });
@@ -104,8 +122,10 @@ function useChecked() {
 
     let selfChecked = false;
 
+    const targetChildrenData = targetChildren(childrenData);
+
     if (checked) {
-      const childrenKeys = childrenData
+      const childrenKeys = targetChildrenData
         ?.filter(({ key: itemKey }) => itemKey !== key)
         .map(({ key }) => key);
 
@@ -177,9 +197,24 @@ function useChecked() {
     next?.({ key: node.key, checked, checkedKeys });
   }
 
+  /**
+   * existsCheckableNodeInParentChildren
+   * @description 在parentChildren中是否存在checkable的节点
+   * @param children
+   */
+  function existsCheckableNodeInParentChildren(children?: Readonly<TreeDataItem[]>): boolean {
+    if (!children) return false;
+    return children?.some((node) => {
+      if (!('checkable' in node)) return true;
+
+      return !!node.checkable;
+    });
+  }
+
   return {
     handleCheck,
     updateParentChecked,
+    existsCheckableNodeInParentChildren,
     getDefaultCheckedKeysWithCheckStrictly,
   };
 }

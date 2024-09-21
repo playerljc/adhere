@@ -1,0 +1,2 @@
+import Util from"@baifendian/adhere-util";function useUtil(){return{getTreeNodesByKeys:function(e){var t=e.treeData;return e.keys.map(function(e){return Util.findNodeByKey(t,e,{keyAttr:"key"})})},getLeafKeys:function(e){var t=e.treeData,e=e.keys,r=Util.getLeafNodes(t).map(function(e){return e.key});return e.filter(function(e){return r.includes(e)})}}}export default useUtil;
+//# sourceMappingURL=useUtil.js.map
