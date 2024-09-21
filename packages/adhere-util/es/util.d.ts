@@ -1,4 +1,5 @@
 declare const _default: {
+    processAsyncQueue(tasks?: import("./types").ProcessAsyncQueueItem[] | undefined): Promise<void>;
     CRSTypes: typeof import("gcoord").CRSTypes;
     transform: <T extends import("gcoord").GeoJSON | import("gcoord").Position>(input: string | T, crsFrom: import("gcoord").CRSTypes, crsTo: import("gcoord").CRSTypes) => T;
     WGS84: import("gcoord").CRSTypes.WGS84;
@@ -126,9 +127,7 @@ declare const _default: {
     completionIncompleteFlatArr: (treeFlatNodes: any[], incompleteTreeFlatNodes: any, config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode, "value">)[];
     excludeAntdTreeNodes: (nodes: import("./types").IAntdTreeNode[], excludeKeys: string[], keyAttr?: string | undefined) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
     excludeAntdSelectTreeNodes: (nodes: import("./types").IAntdTreeSelectNode[], excludeKeys: string[], keyAttr?: string | undefined) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeSelectNode, "value">)[];
-    getLang(defaultLocal?: string | undefined): string; /**
-     * 函数节流
-     */
+    getLang(defaultLocal?: string | undefined): string;
     setLang(lang?: string): void;
     getDatePickerFormat(): string;
     casUrl({ baseUrl, enterUrl, defaultLocal }: {

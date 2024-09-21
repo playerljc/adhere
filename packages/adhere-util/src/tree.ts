@@ -510,17 +510,21 @@ const TreeUtil: TreeUtilType = {
    * @description 获取叶子节点
    */
   getLeafNodes(nodes = [], childrenAttr = 'children') {
-    function loop(treeNodes, childrenAttr) {
+    function loop(treeNodes: any[], childrenAttr: string): any[] {
       let result: any[] = [];
 
       for (let i = 0; i < treeNodes.length; i++) {
         const node = treeNodes[i];
 
-        if (childrenAttr in node && Array.isArray(node[childrenAttr])) {
-          // 有孩子
-          result = [...result, ...loop(node[childrenAttr], childrenAttr)];
+        if (
+          childrenAttr in node &&
+          Array.isArray(node[childrenAttr]) &&
+          node[childrenAttr].length > 0
+        ) {
+          // 递归子节点
+          result.push(...loop(node[childrenAttr], childrenAttr));
         } else {
-          // 没有孩子就是叶子节点
+          // 叶子节点
           result.push(node);
         }
       }
@@ -528,7 +532,7 @@ const TreeUtil: TreeUtilType = {
       return result;
     }
 
-    return loop(nodes || [], childrenAttr || 'children');
+    return loop(nodes, childrenAttr);
   },
   /**
    * getLeafNodesByIndex
