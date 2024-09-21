@@ -4,12 +4,14 @@ import classNames from 'classnames';
 import React, { memo, useContext, useMemo } from 'react';
 
 import Space from '@baifendian/adhere-ui-space';
+import Util from '@baifendian/adhere-util';
 
 import { DEFAULT_DISABLED, DEFAULT_SELECTABLE, DEFAULT_TREE_NODE_CHECKABLE } from './Constant';
 import TreeContext from './TreeContext';
 import TreeNodeContext from './TreeNodeContext';
-import type { TreeNodeProps } from './types';
+import type { TreeDataItemExtra, TreeNodeProps } from './types';
 import useChecked from './useChecked';
+import useUtil from './useUtil';
 
 const selectorPrefix = 'adhere-mobile-ui-tree-node';
 
@@ -18,7 +20,7 @@ const selectorPrefix = 'adhere-mobile-ui-tree-node';
  * @description TreeNode
  */
 const TreeNode = memo<TreeNodeProps>(
-  ({ id, level, isLeaf, icon, title, checkable, disabled, selectable, children, titleRender }) => {
+  ({ id, level, isLeaf, title, checkable, disabled, selectable, children }) => {
     const {
       setSelectedKeys,
       setExpandedKeys,
@@ -30,27 +32,49 @@ const TreeNode = memo<TreeNodeProps>(
       size,
       multiple,
       checkable: treeCheckable,
+      checkStrictly,
+      treeData,
+      icon,
+      titleRender,
+      switcherIcon,
+      onSelect,
+      onExpand,
+      onCheck,
     } = useContext(TreeContext);
+
+    const nodeDataExtra = useMemo<TreeDataItemExtra>(
+      () => ({
+        key: id,
+        level,
+        disabled,
+        selectable,
+        checkable,
+        isLeaf: !children?.length,
+      }),
+      [id, level, disabled, selectable, checkable, children],
+    );
+
+    const targetIcon = useMemo(() => icon?.(nodeDataExtra), [nodeDataExtra]);
 
     const { updateParentChecked: next } = useContext(TreeNodeContext);
 
     // 是否可用
     const targetDisabled = useMemo(() => {
-      if (disabled === undefined || disabled === null) return DEFAULT_DISABLED;
+      if (Util.isEmpty(disabled)) return DEFAULT_DISABLED;
 
       return disabled;
     }, [disabled]);
 
     // 是否可选中
     const targetSelectable = useMemo(() => {
-      if (selectable === undefined || selectable === null) return DEFAULT_SELECTABLE;
+      if (Util.isEmpty(selectable)) return DEFAULT_SELECTABLE;
 
       return selectable;
     }, [selectable]);
 
     // 是否可勾选
     const targetCheckable = useMemo(() => {
-      if (checkable === undefined || checkable === null) return DEFAULT_TREE_NODE_CHECKABLE;
+      if (Util.isEmpty(checkable)) return DEFAULT_TREE_NODE_CHECKABLE;
 
       return checkable;
     }, [checkable]);
@@ -60,6 +84,8 @@ const TreeNode = memo<TreeNodeProps>(
     const hasChildren = useMemo(() => !!targetChildrenData.length, [targetChildrenData]);
 
     const { handleCheck, updateParentChecked } = useChecked();
+
+    const { getTreeNodesByKeys, getLeafKeys } = useUtil();
 
     // 1
     //  1.1
@@ -82,13 +108,7 @@ const TreeNode = memo<TreeNodeProps>(
               },
             }}
           >
-            <TreeNode
-              level={level + 1}
-              icon={icon}
-              titleRender={titleRender}
-              id={_treeNodeData.key}
-              {..._treeNodeData}
-            />
+            <TreeNode level={level + 1} id={_treeNodeData.key} {..._treeNodeData} />
           </TreeNodeContext.Provider>
         )),
       [targetChildrenData],
@@ -103,36 +123,81 @@ const TreeNode = memo<TreeNodeProps>(
     /**
      * onExpanded
      */
-    function onExpanded() {
+    function onExpanded(e) {
+      function _e(_targetExpandedKeys) {
+        return {
+          expanded: !isExpanded,
+          expandedNodes: getTreeNodesByKeys({
+            treeData: treeData() ?? [],
+            keys: _targetExpandedKeys,
+          }),
+          node: nodeDataExtra,
+          event: e,
+        };
+      }
+
       if (isExpanded) {
         // 关闭
-        setExpandedKeys((_expandedKeys) => (_expandedKeys ?? []).filter((_id) => _id !== id));
+        setExpandedKeys((_expandedKeys) => {
+          const targetExpandedKeys = (_expandedKeys ?? []).filter((_id) => _id !== id);
+
+          onExpand?.(targetExpandedKeys, _e(targetExpandedKeys));
+
+          return targetExpandedKeys;
+        });
 
         return;
       }
 
       // 展开
-      setExpandedKeys((_expandedKeys) => [...(_expandedKeys ?? []), id]);
+      setExpandedKeys((_expandedKeys) => {
+        const targetExpandedKeys = [...(_expandedKeys ?? []), id];
+
+        onExpand?.(targetExpandedKeys, _e(targetExpandedKeys));
+
+        return targetExpandedKeys;
+      });
     }
 
     /**
      * onSelected
      */
-    function onSelected() {
+    function onSelected(e) {
       // 如果不能选中
       if (!targetSelectable) return;
+
+      function _e(keys) {
+        return {
+          selected: !isSelected,
+          selectedNodes: getTreeNodesByKeys({ treeData: treeData() ?? [], keys }),
+          node: nodeDataExtra,
+          event: e,
+        };
+      }
 
       // 多选
       if (multiple()) {
         if (isSelected) {
           // 关闭
-          setSelectedKeys((_selectedKeys) => (_selectedKeys ?? []).filter((_id) => _id !== id));
+          setSelectedKeys((_selectedKeys) => {
+            const targetSelectedKeys = (_selectedKeys ?? []).filter((_id) => _id !== id);
+
+            onSelect?.(targetSelectedKeys, _e(targetSelectedKeys));
+
+            return targetSelectedKeys;
+          });
 
           return;
         }
 
         // 展开
-        setSelectedKeys((_selectedKeys) => [...(_selectedKeys ?? []), id]);
+        setSelectedKeys((_selectedKeys) => {
+          const targetSelectedKeys = [...(_selectedKeys ?? []), id];
+
+          onSelect?.(targetSelectedKeys, _e(targetSelectedKeys));
+
+          return targetSelectedKeys;
+        });
 
         return;
       }
@@ -141,10 +206,14 @@ const TreeNode = memo<TreeNodeProps>(
       if (isSelected) {
         setSelectedKeys([]);
 
+        onSelect?.([], _e([]));
+
         return;
       }
 
       setSelectedKeys([id]);
+
+      onSelect?.([id], _e([id]));
     }
 
     /**
@@ -155,16 +224,31 @@ const TreeNode = memo<TreeNodeProps>(
       const _checkedKeys = checkedKeys();
 
       handleCheck({
-        checkedKeys: _checkedKeys,
-        checked: _checked,
         node: {
           key: id,
           children,
         },
+        checked: _checked,
+        checkedKeys: _checkedKeys,
+        checkStrictly: checkStrictly(),
         next,
       });
 
       setCheckedKeys([..._checkedKeys]);
+
+      let targetCheckedKeys = [..._checkedKeys];
+
+      // 如果是受控模式的时候
+      if (onCheck && checkStrictly()) {
+        // 需要筛选出叶子节点
+        targetCheckedKeys = getLeafKeys({ treeData: treeData() ?? [], keys: _checkedKeys });
+      }
+
+      onCheck?.(targetCheckedKeys, {
+        checked: _checked,
+        checkedNodes: getTreeNodesByKeys({ treeData: treeData() ?? [], keys: targetCheckedKeys }),
+        node: nodeDataExtra,
+      });
     }
 
     return (
@@ -193,25 +277,23 @@ const TreeNode = memo<TreeNodeProps>(
             {/* 展开和折叠节点 */}
             {hasChildren && (
               <span className={`${selectorPrefix}-info-expanded`} onClick={onExpanded}>
-                {isExpanded && (icon?.(isExpanded) ?? <MinusOutline />)}
-                {!isExpanded && (icon?.(isExpanded) ?? <AddOutline />)}
+                {isExpanded && (switcherIcon?.(isExpanded, nodeDataExtra) ?? <MinusOutline />)}
+                {!isExpanded && (switcherIcon?.(isExpanded, nodeDataExtra) ?? <AddOutline />)}
               </span>
             )}
-            {/* 节点内容 */}
+
             <span
-              className={classNames(`${selectorPrefix}-info-title`, {
+              className={classNames(`${selectorPrefix}-info-title-wrapper`, {
                 [`${selectorPrefix}-info-title-selected`]: targetSelectable && isSelected,
               })}
-              onClick={onSelected}
             >
-              {titleRender?.({
-                key: id,
-                title,
-                disabled,
-                selectable,
-                checkable,
-                children,
-              }) ?? title}
+              {/* 节点内容之前的icon */}
+              {!!targetIcon && <span className={`${selectorPrefix}-info-icon`}>{targetIcon}</span>}
+
+              {/* 节点内容 */}
+              <span className={`${selectorPrefix}-info-title`} onClick={onSelected}>
+                {titleRender?.(nodeDataExtra) ?? title}
+              </span>
             </span>
           </div>
 

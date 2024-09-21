@@ -1,14 +1,22 @@
+import { useUpdateEffect } from 'ahooks';
 import { ErrorBlock } from 'antd-mobile';
 import classNames from 'classnames';
 import React, { memo, useMemo } from 'react';
 
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Space from '@baifendian/adhere-ui-space';
+import Util from '@baifendian/adhere-util';
 
-import { DEFAULT_MULTIPLE, DEFAULT_SIZE, DEFAULT_TREE_CHECKABLE } from './Constant';
+import {
+  DEFAULT_CHECKSTRICTLY,
+  DEFAULT_MULTIPLE,
+  DEFAULT_SIZE,
+  DEFAULT_TREE_CHECKABLE,
+} from './Constant';
 import TreeContext from './TreeContext';
 import TreeNode from './TreeNode';
 import type { TreeProps } from './types';
+import useChecked from './useChecked';
 
 const selectorPrefix = 'adhere-mobile-ui-tree';
 
@@ -28,28 +36,42 @@ const Tree = memo<TreeProps>(
     selectedKeys,
     switcherIcon,
     titleRender,
+    icon,
     renderEmpty,
     size,
     checkable,
     checkedKeys,
     multiple,
+    checkStrictly,
+    onSelect,
+    onExpand,
+    onCheck,
   }) => {
+    const { getDefaultCheckedKeysWithCheckStrictly } = useChecked();
+
     // Tree的密度
     const targetSize = useMemo(() => size ?? DEFAULT_SIZE, [size]);
 
     // 整个Tree是否是可勾选的Tree
     const targetCheckable = useMemo(() => {
-      if (checkable === undefined || checkable === null) return DEFAULT_TREE_CHECKABLE;
+      if (Util.isEmpty(checkable)) return DEFAULT_TREE_CHECKABLE;
 
       return checkable;
     }, [checkable]);
 
     // 是否可以选中多个节点
     const targetMultiple = useMemo(() => {
-      if (multiple === undefined || multiple === null) return DEFAULT_MULTIPLE;
+      if (Util.isEmpty(multiple)) return DEFAULT_MULTIPLE;
 
       return multiple;
     }, [multiple]);
+
+    // checkbox是否受控
+    const targetCheckStrictly = useMemo(() => {
+      if (Util.isEmpty(checkStrictly)) return DEFAULT_CHECKSTRICTLY;
+
+      return checkStrictly;
+    }, [checkStrictly]);
 
     // Tree的数据
     const targetTreeData = useMemo(() => treeData ?? [], [treeData]);
@@ -62,9 +84,20 @@ const Tree = memo<TreeProps>(
     const defaultSelectedKeys = useMemo(() => selectedKeys ?? [], [selectedKeys]);
     const [targetSelectedKeys, setTargetSelectedKeys] = usePropToState(defaultSelectedKeys);
 
-    // check的keys
-    const defaultCheckedKeys = useMemo(() => checkedKeys ?? [], [checkedKeys]);
+    const defaultCheckedKeys = useMemo(() => {
+      const _defaultCheckedKeys = checkedKeys ?? [];
+
+      // 如果是受控
+      if (targetCheckStrictly) {
+        return getDefaultCheckedKeysWithCheckStrictly(targetTreeData, _defaultCheckedKeys);
+      }
+
+      return _defaultCheckedKeys;
+    }, [targetTreeData, checkedKeys, targetCheckStrictly]);
     const [targetCheckedKeys, setTargetCheckedKeys] = usePropToState(defaultCheckedKeys);
+    useUpdateEffect(() => {
+      setTargetCheckedKeys(defaultCheckedKeys);
+    }, [defaultCheckedKeys]);
 
     // 行的间距
     const rowGap = useMemo(
@@ -80,13 +113,7 @@ const Tree = memo<TreeProps>(
     const treeChildrenElements = useMemo(
       () =>
         targetTreeData.map((_treeNodeData) => (
-          <TreeNode
-            level={0}
-            icon={switcherIcon}
-            titleRender={titleRender}
-            id={_treeNodeData.key}
-            {..._treeNodeData}
-          />
+          <TreeNode level={0} id={_treeNodeData.key} {..._treeNodeData} />
         )),
       [targetTreeData, switcherIcon, titleRender],
     );
@@ -106,6 +133,13 @@ const Tree = memo<TreeProps>(
         multiple: () => targetMultiple,
         checkable: () => targetCheckable,
         treeData: () => treeData,
+        checkStrictly: () => targetCheckStrictly,
+        icon,
+        titleRender,
+        switcherIcon,
+        onSelect,
+        onExpand,
+        onCheck,
       }),
       [
         targetExpandedKeys,
@@ -116,6 +150,13 @@ const Tree = memo<TreeProps>(
         targetMultiple,
         targetCheckable,
         treeData,
+        checkStrictly,
+        icon,
+        titleRender,
+        switcherIcon,
+        onSelect,
+        onExpand,
+        onCheck,
       ],
     );
 

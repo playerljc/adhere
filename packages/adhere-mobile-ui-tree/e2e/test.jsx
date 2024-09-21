@@ -1,3 +1,4 @@
+import { ScanCodeOutline } from 'antd-mobile-icons';
 import React from 'react';
 
 import Tree from '../src';
@@ -31,7 +32,26 @@ const treeData = generateTree(3, 3);
 export default () => {
   return (
     <div style={{ padding: 20, width: '100%', height: '100%', overflowY: 'auto' }}>
-      <Tree treeData={treeData} size="middle" multiple={false} checkable />
+      <Tree
+        treeData={treeData}
+        size="middle"
+        multiple
+        checkable
+        checkStrictly
+        selectedKeys={['0-0-0-0']}
+        expandedKeys={['0-0', '0-0-0']}
+        checkedKeys={['0-0-0-0', '0-0-0-1', '0-0-0-2']}
+        onExpand={function () {}}
+        onSelect={function () {}}
+        onCheck={function () {}}
+        icon={() => <ScanCodeOutline />}
+        // titleRender={function () {
+        //   return <span>333</span>;
+        // }}
+        // switcherIcon={function () {
+        //   return <span>666</span>;
+        // }}
+      />
     </div>
   );
 };
