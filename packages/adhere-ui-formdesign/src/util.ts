@@ -24,7 +24,7 @@ import { DLayoutWidget, DWidget, ILayoutWidget, IWidget } from './types/WidgetTy
 export function parseWidgets(
   dataSource: Array<DWidget | DLayoutWidget>,
 ): Array<IWidget | ILayoutWidget> {
-  return dataSource.map((_widget) => parseWidget(_widget));
+  return dataSource.current.map((_widget) => parseWidget(_widget));
 }
 
 /**
