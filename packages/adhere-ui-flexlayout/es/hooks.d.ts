@@ -16,7 +16,7 @@ export declare const useGap: (gutter: any) => boolean;
 /**
  * useTrigger
  */
-export declare const useTrigger: ({ trigger, collapseDirection, collapsedSize, defaultCollapsible, onCollapse, selectorPrefix, elRef, }: Pick<FixedProps, 'trigger' | 'collapseDirection' | 'collapsedSize' | 'defaultCollapsible' | 'onCollapse'> & {
+export declare const useTrigger: ({ trigger, collapseDirection, collapsedSize, defaultCollapsible, onCollapse, selectorPrefix, elRef, }: Pick<FixedProps, "trigger" | "collapseDirection" | "collapsedSize" | "defaultCollapsible" | "onCollapse"> & {
     elRef: MutableRefObject<HTMLDivElement | null>;
     selectorPrefix: string;
 }) => {
