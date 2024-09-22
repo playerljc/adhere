@@ -6,13 +6,25 @@ export type TreeDataItem = Readonly<{
   disabled?: boolean;
   selectable?: boolean;
   checkable?: boolean;
+  props?: any;
   children?: TreeData;
+  // checkbox的宽度(默认是20px)
+  checkboxWidth?: TreeProps['checkboxWidth'];
+  // checkbox的间距
+  checkboxGap?: TreeProps['checkboxGap'];
+  // title元素的间距
+  titleGap?: TreeProps['titleGap'];
+  // icon的间距
+  iconGap?: TreeProps['iconGap'];
+  // 缩进
+  indent?: TreeProps['indent'];
 }>;
 
 export type TreeDataItemExtra = Readonly<
   Omit<TreeDataItem, 'title' | 'children'> & {
     level: number;
     isLeaf: boolean;
+    props?: any;
   }
 >;
 
@@ -46,6 +58,22 @@ export interface TreeProps {
   checkStrictly?: boolean;
   // title之前的节点的图标
   icon?: (nodeData: TreeDataItemExtra) => ReactNode;
+  // 异步加载的hook
+  loadData?: (nodeData: TreeDataItemExtra) => Promise<void>;
+  // （受控）已经加载的节点，需要配合 loadData 使用
+  loadedKeys?: string[];
+  // 行距(如果指定行距则size不起作用)
+  rowGap?: number;
+  // checkbox的宽度(默认是20px)
+  checkboxWidth?: number;
+  // checkbox的间距
+  checkboxGap?: number;
+  // title元素的间距
+  titleGap?: number;
+  // icon的间距
+  iconGap?: number;
+  // 缩进
+  indent?: number;
   // 选中的hook
   onSelect?: (
     selectedKeys: string[],
@@ -103,6 +131,7 @@ export interface TreeContext {
   expandedKeys: () => string[];
   selectedKeys: () => string[];
   checkedKeys: () => string[];
+  loadedKeys: () => string[];
   treeData: () => TreeProps['treeData'];
   size(): 'large' | 'middle' | 'small';
   checkStrictly: () => boolean;
@@ -110,12 +139,19 @@ export interface TreeContext {
   multiple: () => boolean;
   checkable: () => boolean;
   icon?: TreeProps['icon'];
+  checkboxWidth: () => string;
+  checkboxGap: () => string;
+  titleGap: () => string;
+  iconGap: () => string;
+  indent: () => string;
   titleRender?: TreeProps['titleRender'];
   switcherIcon?: TreeProps['switcherIcon'];
   children?: TreeDataItem['children'];
   setExpandedKeys: Function;
   setSelectedKeys: Function;
   setCheckedKeys: Function;
+  setLoadedKeys: Function;
+  loadData?: TreeProps['loadData'];
   onSelect?: TreeProps['onSelect'];
   onExpand?: TreeProps['onExpand'];
   onCheck?: TreeProps['onCheck'];

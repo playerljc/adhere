@@ -34,10 +34,13 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@baifendian/adhere-ui": "^2.11.0",
+    "@ant-design/icons": "^5.4.0",
+    "@baifendian/adhere-ui-configprovider": "^2.11.0",
     "@baifendian/adhere-ui-hooks": "^2.11.0",
     "@baifendian/adhere-ui-space": "^2.11.0",
+    "@baifendian/adhere-util": "^2.11.0",
     "ahooks": "^3.8.1",
+    "antd-mobile": "^5.37.1",
     "antd-mobile-icons": "^0.3.0",
     "classnames": "^2.5.1",
     "react": "^18.3.1",

@@ -1,16 +1,21 @@
-import { useUpdateEffect } from 'ahooks';
 import { ErrorBlock } from 'antd-mobile';
 import classNames from 'classnames';
-import React, { memo, useMemo } from 'react';
+import React, { memo, useContext, useMemo } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Space from '@baifendian/adhere-ui-space';
 import Util from '@baifendian/adhere-util';
 
 import {
+  DEFAULT_CHECKBOX_GAP,
+  DEFAULT_CHECKBOX_WIDTH,
   DEFAULT_CHECKSTRICTLY,
+  DEFAULT_ICON_GAP,
+  DEFAULT_INDENT,
   DEFAULT_MULTIPLE,
   DEFAULT_SIZE,
+  DEFAULT_TITLE_GAP,
   DEFAULT_TREE_CHECKABLE,
 } from './Constant';
 import TreeContext from './TreeContext';
@@ -45,11 +50,31 @@ const Tree = memo<TreeProps>(
     checkedKeys,
     multiple,
     checkStrictly,
+
+    loadData,
+    loadedKeys,
+
+    // 行距(如果指定行距则size不起作用)
+    rowGap: globalRowGap,
+    // checkbox的宽度(默认是20px)
+    checkboxWidth,
+    // checkbox的间距
+    checkboxGap,
+    // title元素的间距
+    titleGap,
+    // icon的间距
+    iconGap,
+    // 缩进
+    indent,
+
     onSelect,
     onExpand,
     onCheck,
   }) => {
-    const { omitDisabledKeys } = useUtil();
+    const { media } = useContext(ConfigProvider.Context);
+
+    const { omitDisabledKeys, getValueWithUnit } = useUtil();
+
     const { getDefaultCheckedKeysWithCheckStrictly, existsCheckableNodeInParentChildren } =
       useChecked();
 
@@ -88,7 +113,7 @@ const Tree = memo<TreeProps>(
     const defaultSelectedKeys = useMemo(
       // 排除不可用的节点keys
       () => omitDisabledKeys(targetTreeData, selectedKeys ?? []),
-      [targetTreeData, selectedKeys],
+      [selectedKeys],
     );
     const [targetSelectedKeys, setTargetSelectedKeys] = usePropToState(defaultSelectedKeys);
 
@@ -102,21 +127,52 @@ const Tree = memo<TreeProps>(
       }
 
       return _defaultCheckedKeys;
-    }, [targetTreeData, checkedKeys, targetCheckStrictly]);
+    }, [checkedKeys, targetCheckStrictly]);
     const [targetCheckedKeys, setTargetCheckedKeys] = usePropToState(defaultCheckedKeys);
-    useUpdateEffect(() => {
-      setTargetCheckedKeys(defaultCheckedKeys);
-    }, [defaultCheckedKeys]);
+
+    // 异步加载的keys
+    const defaultLoadedKeys = useMemo(
+      // 排除不可用的节点keys
+      () => omitDisabledKeys(targetTreeData, loadedKeys ?? []),
+      [loadedKeys],
+    );
+    const [targetLoadedKeys, setTargetLoadedKeys] = usePropToState(defaultLoadedKeys);
+
+    const targetCheckboxWidth = useMemo(
+      () => getValueWithUnit(checkboxWidth ?? DEFAULT_CHECKBOX_WIDTH, media) as string,
+      [checkboxWidth, media],
+    );
+
+    const targetCheckboxGap = useMemo(
+      () => getValueWithUnit(checkboxGap ?? DEFAULT_CHECKBOX_GAP, media) as string,
+      [checkboxGap, media],
+    );
+
+    const targetTitleGap = useMemo(
+      () => getValueWithUnit(titleGap ?? DEFAULT_TITLE_GAP, media) as string,
+      [titleGap, media],
+    );
+
+    const targetIconGap = useMemo(
+      () => getValueWithUnit(iconGap ?? DEFAULT_ICON_GAP, media) as string,
+      [iconGap, media],
+    );
+
+    const targetIndent = useMemo(
+      () => getValueWithUnit(indent ?? DEFAULT_INDENT, media) as string,
+      [indent, media],
+    );
 
     // 行的间距
     const rowGap = useMemo(
       () =>
+        globalRowGap ??
         new Map([
           ['small', 5],
           ['middle', 15],
           ['large', 25],
         ]).get(targetSize),
-      [targetSize],
+      [targetSize, globalRowGap],
     );
 
     // children elements
@@ -144,9 +200,12 @@ const Tree = memo<TreeProps>(
         expandedKeys: () => targetExpandedKeys,
         selectedKeys: () => targetSelectedKeys,
         checkedKeys: () => targetCheckedKeys,
+        loadedKeys: () => targetLoadedKeys,
         setSelectedKeys: setTargetSelectedKeys,
         setExpandedKeys: setTargetExpandedKeys,
         setCheckedKeys: setTargetCheckedKeys,
+        setLoadedKeys: setTargetLoadedKeys,
+        loadData,
         size: () => targetSize,
         rowGap: () => rowGap ?? 15,
         multiple: () => targetMultiple,
@@ -154,6 +213,11 @@ const Tree = memo<TreeProps>(
         treeData: () => treeData,
         checkStrictly: () => targetCheckStrictly,
         icon,
+        checkboxWidth: () => targetCheckboxWidth,
+        checkboxGap: () => targetCheckboxGap,
+        titleGap: () => targetTitleGap,
+        iconGap: () => targetIconGap,
+        indent: () => targetIndent,
         titleRender,
         switcherIcon,
         onSelect,
@@ -164,13 +228,20 @@ const Tree = memo<TreeProps>(
         targetExpandedKeys,
         targetSelectedKeys,
         targetCheckedKeys,
+        targetLoadedKeys,
         rowGap,
         targetSize,
         targetMultiple,
         targetCheckable,
         treeData,
+        loadData,
         checkStrictly,
         icon,
+        targetCheckboxWidth,
+        targetCheckboxGap,
+        targetTitleGap,
+        targetIconGap,
+        targetIndent,
         titleRender,
         switcherIcon,
         onSelect,

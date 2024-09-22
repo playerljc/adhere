@@ -1,5 +1,6 @@
-import { ScanCodeOutline } from 'antd-mobile-icons';
-import React from 'react';
+import React, { useState } from 'react';
+
+import Util from '@baifendian/adhere-util';
 
 import Tree from '../src';
 
@@ -20,18 +21,20 @@ function generateTree(depth, width, currentDepth = 1, parentKey = '0') {
       key: key,
       title: `Node ${key}`,
       children: generateTree(depth, width, currentDepth + 1, key), // 递归生成子节点
-      checkable: currentDepth === depth,
-      disabled: currentDepth !== depth,
+      isLeaf: false,
+      props: {
+        depth,
+        width,
+      },
     });
   }
 
   return tree;
 }
 
-// 生成深度为 3，宽度为 3 的树形数据
-const treeData = generateTree(3, 3);
-
 export default () => {
+  const [treeData, setTreeData] = useState(generateTree(1, 3));
+
   return (
     <div style={{ padding: 20, width: '100%', height: '100%', overflowY: 'auto' }}>
       <Tree
@@ -40,21 +43,26 @@ export default () => {
         multiple={false}
         checkable
         checkStrictly
-        selectedKeys={['0-0-0-0']}
-        expandedKeys={['0-0', '0-0-0']}
-        checkedKeys={['0-0-0-0', '0-0-0-1', '0-0-0-2']}
         onExpand={function () {}}
         onSelect={function () {}}
-        onCheck={function () {
-          debugger;
+        onCheck={function () {}}
+        loadData={(nodeData) => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              setTreeData((_treeData) => {
+                const children = generateTree(1, 3, 1, nodeData.key);
+
+                const item = Util.findNodeByKey(_treeData, nodeData.key, { keyAttr: 'key' });
+
+                item.children = children;
+
+                return JSON.parse(JSON.stringify(_treeData));
+              });
+
+              resolve();
+            }, 1000);
+          });
         }}
-        icon={() => <ScanCodeOutline />}
-        // titleRender={function () {
-        //   return <span>333</span>;
-        // }}
-        // switcherIcon={function () {
-        //   return <span>666</span>;
-        // }}
       />
     </div>
   );

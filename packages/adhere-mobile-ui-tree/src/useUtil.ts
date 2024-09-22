@@ -1,3 +1,4 @@
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
 import Util from '@baifendian/adhere-util';
 
 import type { TreeData, TreeDataItemExtra } from './types';
@@ -48,16 +49,46 @@ function useUtil() {
 
     return nodes
       .filter((node) => {
-        if (!('disabled' in node)) return true;
+        if (node && !('disabled' in node)) return true;
 
-        return !node.disabled;
+        return !node?.disabled;
       })
-      .map(({ key }) => key);
+      .map((node) => node?.key as string);
+  }
+
+  function getValueWithUnit(
+    pixel: number | string | undefined | null,
+    media: ConfigProviderProps['media'],
+  ) {
+    if (!pixel) return pixel;
+
+    if (Util.isString(pixel)) return pixel;
+
+    const value = getValue(pixel as number, media);
+
+    if (media?.isUseMedia) {
+      return `${value}rem`;
+    }
+
+    return `${value}px`;
+  }
+
+  function getValue(
+    pixel: number,
+    media: ConfigProviderProps['media'] = { isUseMedia: false, designWidth: 192 },
+  ) {
+    if (media?.isUseMedia) {
+      return Util.pxToRemNumber(pixel, media.designWidth as number);
+    }
+
+    return pixel;
   }
 
   return {
     getTreeNodesByKeys,
     getLeafKeys,
+    getValueWithUnit,
+    getValue,
     omitDisabledKeys,
   };
 }

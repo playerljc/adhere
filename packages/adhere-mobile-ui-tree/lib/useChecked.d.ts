@@ -18,7 +18,7 @@ declare function useChecked(): {
         childrenData: any;
         next: any;
     }) => void;
-    hasCheckableNodeInParentChildren: (children?: Readonly<TreeDataItem[]>) => boolean;
+    existsCheckableNodeInParentChildren: (children?: Readonly<TreeDataItem[]>) => boolean;
     getDefaultCheckedKeysWithCheckStrictly: (treeData: TreeData, defaultCheckedKeys: string[]) => string[];
 };
 export default useChecked;

@@ -5,11 +5,18 @@ export type TreeDataItem = Readonly<{
     disabled?: boolean;
     selectable?: boolean;
     checkable?: boolean;
+    props?: any;
     children?: TreeData;
+    checkboxWidth?: TreeProps['checkboxWidth'];
+    checkboxGap?: TreeProps['checkboxGap'];
+    titleGap?: TreeProps['titleGap'];
+    iconGap?: TreeProps['iconGap'];
+    indent?: TreeProps['indent'];
 }>;
 export type TreeDataItemExtra = Readonly<Omit<TreeDataItem, 'title' | 'children'> & {
     level: number;
     isLeaf: boolean;
+    props?: any;
 }>;
 export type TreeData = Readonly<TreeDataItem[]>;
 export interface TreeProps {
@@ -28,6 +35,14 @@ export interface TreeProps {
     multiple?: boolean;
     checkStrictly?: boolean;
     icon?: (nodeData: TreeDataItemExtra) => ReactNode;
+    loadData?: (nodeData: TreeDataItemExtra) => Promise<void>;
+    loadedKeys?: string[];
+    rowGap?: number;
+    checkboxWidth?: number;
+    checkboxGap?: number;
+    titleGap?: number;
+    iconGap?: number;
+    indent?: number;
     onSelect?: (selectedKeys: string[], e: {
         selected: boolean;
         selectedNodes: TreeDataItemExtra[];
@@ -57,12 +72,13 @@ export interface TreeNodeContext {
         checked: boolean;
         checkedKeys: string[];
     }) => void;
-    hasCheckableNodeInParentChildren: () => boolean;
+    existsCheckableNodeInParentChildren: () => boolean;
 }
 export interface TreeContext {
     expandedKeys: () => string[];
     selectedKeys: () => string[];
     checkedKeys: () => string[];
+    loadedKeys: () => string[];
     treeData: () => TreeProps['treeData'];
     size(): 'large' | 'middle' | 'small';
     checkStrictly: () => boolean;
@@ -70,12 +86,19 @@ export interface TreeContext {
     multiple: () => boolean;
     checkable: () => boolean;
     icon?: TreeProps['icon'];
+    checkboxWidth: () => string;
+    checkboxGap: () => string;
+    titleGap: () => string;
+    iconGap: () => string;
+    indent: () => string;
     titleRender?: TreeProps['titleRender'];
     switcherIcon?: TreeProps['switcherIcon'];
     children?: TreeDataItem['children'];
     setExpandedKeys: Function;
     setSelectedKeys: Function;
     setCheckedKeys: Function;
+    setLoadedKeys: Function;
+    loadData?: TreeProps['loadData'];
     onSelect?: TreeProps['onSelect'];
     onExpand?: TreeProps['onExpand'];
     onCheck?: TreeProps['onCheck'];
