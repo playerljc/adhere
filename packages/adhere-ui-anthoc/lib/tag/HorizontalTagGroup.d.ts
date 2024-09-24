@@ -1,4 +1,10 @@
 import React from 'react';
 import type { DisplayNameInternal, HorizontalTagGroupProps } from '../types';
-declare const HorizontalTagGroup: DisplayNameInternal<React.NamedExoticComponent<HorizontalTagGroupProps>>;
+/**
+ * HorizontalTagGroup
+ * @description 横向的Tag
+ * @constructor
+ */
+declare const InternalHorizontalTagGroup: React.NamedExoticComponent<HorizontalTagGroupProps>;
+declare const HorizontalTagGroup: DisplayNameInternal<typeof InternalHorizontalTagGroup>;
 export default HorizontalTagGroup;

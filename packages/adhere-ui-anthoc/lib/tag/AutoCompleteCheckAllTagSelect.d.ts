@@ -1,4 +1,11 @@
 import React from 'react';
 import type { AutoCompleteCheckAllTagSelectProps, DisplayNameInternal } from '../types';
-declare const AutoCompleteCheckAllTagSelect: DisplayNameInternal<React.NamedExoticComponent<AutoCompleteCheckAllTagSelectProps>>;
+/**
+ * AutoCompleteCheckAllTagSelect
+ * @param tagProps
+ * @param props
+ * @constructor
+ */
+declare const InternalAutoCompleteCheckAllTagSelect: React.NamedExoticComponent<AutoCompleteCheckAllTagSelectProps>;
+declare const AutoCompleteCheckAllTagSelect: DisplayNameInternal<typeof InternalAutoCompleteCheckAllTagSelect>;
 export default AutoCompleteCheckAllTagSelect;

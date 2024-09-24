@@ -747,6 +747,7 @@ export type TableHOCComponent = ReturnType<typeof createFactory<TableProps<any>>
   RadioTreeTable: FC<RadioTreeTableProps>;
   CheckboxTable: FC<CheckboxTableProps>;
   CheckboxTreeTable: FC<CheckboxTreeTableProps>;
+  TableExt: FC<TableExtProps>;
 };
 
 export type TagHOCComponent = ReturnType<typeof createFactory<TagProps>> & {
@@ -1163,4 +1164,11 @@ export interface InputMultipleSelectProps extends InputMultipleProps {
 
 export type InputMultipleHOCComponent = ReturnType<typeof createFactory<InputMultipleProps>> & {
   Select: FC<InputMultipleSelectProps>;
+};
+
+export type TableExtProps = TableProps & {
+  wrapperClassName?: string;
+  wrapperStyle?: CSSProperties;
+  fixedHeaderAutoTable?: boolean;
+  fixedTableSpaceBetween?: boolean;
 };

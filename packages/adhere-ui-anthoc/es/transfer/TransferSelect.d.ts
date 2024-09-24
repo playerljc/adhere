@@ -1,4 +1,11 @@
 import React from 'react';
 import type { DisplayNameInternal, TransferSelectProps } from '../types';
-declare const TransferSelect: DisplayNameInternal<React.NamedExoticComponent<TransferSelectProps>>;
+/**
+ * TransferSelect
+ * @param transferProps
+ * @param props
+ * @constructor
+ */
+declare const InternalTransferSelect: React.NamedExoticComponent<TransferSelectProps>;
+declare const TransferSelect: DisplayNameInternal<typeof InternalTransferSelect>;
 export default TransferSelect;

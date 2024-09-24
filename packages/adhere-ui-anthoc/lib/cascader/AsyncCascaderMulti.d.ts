@@ -1,4 +1,10 @@
 import React from 'react';
 import type { AsyncCascaderProps, DisplayNameInternal } from '../types';
-declare const AsyncCascaderMulti: DisplayNameInternal<React.NamedExoticComponent<AsyncCascaderProps>>;
+/**
+ * AsyncCascaderMulti
+ * @param props
+ * @constructor
+ */
+declare const InternalAsyncCascaderMulti: React.NamedExoticComponent<AsyncCascaderProps>;
+declare const AsyncCascaderMulti: DisplayNameInternal<typeof InternalAsyncCascaderMulti>;
 export default AsyncCascaderMulti;

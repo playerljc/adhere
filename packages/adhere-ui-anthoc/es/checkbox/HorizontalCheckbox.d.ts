@@ -1,4 +1,11 @@
 import React from 'react';
 import type { CheckboxGroupExtProps, DisplayNameInternal } from '../types';
-declare const HorizontalCheckbox: DisplayNameInternal<React.NamedExoticComponent<CheckboxGroupExtProps>>;
+/**
+ * HorizontalCheckbox
+ * @description 横向的CheckboxGroup
+ * @param props
+ * @constructor
+ */
+declare const InternalHorizontalCheckbox: React.NamedExoticComponent<CheckboxGroupExtProps>;
+declare const HorizontalCheckbox: DisplayNameInternal<typeof InternalHorizontalCheckbox>;
 export default HorizontalCheckbox;

@@ -7,6 +7,7 @@ import CheckboxTreeTable from './CheckboxTreeTable';
 import RadioTable from './RadioTable';
 import RadioTreeTable from './RadioTreeTable';
 import Table from './Table';
+import TableExt from './TableExt';
 import TablePaging from './TablePaging';
 import TablePagingSelect from './TablePagingSelect';
 import TableSelect from './TableSelect';
@@ -22,4 +23,6 @@ Table.RadioTable = RadioTable;
 Table.CheckboxTable = CheckboxTable;
 Table.RadioTreeTable = RadioTreeTable;
 Table.CheckboxTreeTable = CheckboxTreeTable;
+Table.TableExt = TableExt;
+
 export default Table;

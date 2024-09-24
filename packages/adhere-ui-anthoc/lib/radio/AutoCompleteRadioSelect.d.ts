@@ -1,4 +1,11 @@
 import React from 'react';
 import { AutoCompleteRadioSelectProps, DisplayNameInternal } from '../types';
-declare const AutoCompleteRadioSelect: DisplayNameInternal<React.NamedExoticComponent<AutoCompleteRadioSelectProps>>;
+/**
+ * AutoCompleteRadioSelect
+ * @param radioProps
+ * @param props
+ * @constructor
+ */
+declare const InternalAutoCompleteRadioSelect: React.NamedExoticComponent<AutoCompleteRadioSelectProps>;
+declare const AutoCompleteRadioSelect: DisplayNameInternal<typeof InternalAutoCompleteRadioSelect>;
 export default AutoCompleteRadioSelect;

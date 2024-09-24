@@ -1,4 +1,11 @@
 import React from 'react';
 import type { AutoCompleteCheckAllCheckboxSelectProps, DisplayNameInternal } from '../types';
-declare const AutoCompleteCheckAllCheckboxSelect: DisplayNameInternal<React.NamedExoticComponent<AutoCompleteCheckAllCheckboxSelectProps>>;
+/**
+ * AutoCompleteCheckAllCheckboxSelect
+ * @param checkboxProps
+ * @param props
+ * @constructor
+ */
+declare const InternalAutoCompleteCheckAllCheckboxSelect: React.NamedExoticComponent<AutoCompleteCheckAllCheckboxSelectProps>;
+declare const AutoCompleteCheckAllCheckboxSelect: DisplayNameInternal<typeof InternalAutoCompleteCheckAllCheckboxSelect>;
 export default AutoCompleteCheckAllCheckboxSelect;

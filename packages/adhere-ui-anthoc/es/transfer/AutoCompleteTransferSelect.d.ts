@@ -1,4 +1,11 @@
 import React from 'react';
 import type { AutoCompleteTransferSelectProps, DisplayNameInternal } from '../types';
-declare const AutoCompleteTransferSelect: DisplayNameInternal<React.NamedExoticComponent<AutoCompleteTransferSelectProps>>;
+/**
+ * AutoCompleteTransferSelect
+ * @param transferProps
+ * @param props
+ * @constructor
+ */
+declare const InternalAutoCompleteTransferSelect: React.NamedExoticComponent<AutoCompleteTransferSelectProps>;
+declare const AutoCompleteTransferSelect: DisplayNameInternal<typeof InternalAutoCompleteTransferSelect>;
 export default AutoCompleteTransferSelect;

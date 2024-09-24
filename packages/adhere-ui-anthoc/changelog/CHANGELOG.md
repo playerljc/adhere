@@ -4,6 +4,7 @@
 
 2024-04-22
 
+* Table加入TableExt组件
 * 加入InputMultiple组件
 * Form中加入对FormItem加入getErrorContainer自定义错误输出
 * Form中加入NestingFormItem组件

@@ -24,6 +24,7 @@ import CheckAllMultipleSelect from './Select/CheckAllMultipleSelect';
 import AutoCompleteTablePagingSelectValueHOC from './Table/AutoCompleteTablePagingSelectValueHOC.tsx';
 import AutoCompleteTableSelectValueHOC from './Table/AutoCompleteTableSelectValueHOC.tsx';
 import TableTest from './Table/AutoCompleteTreeTablePagingSelectValueHOC.jsx';
+import TableExt from './Table/TableExt';
 import TagTest from './Tag/HorizontalCheckableTagGroup';
 import TimePickerValueHOCInFormTest from './TimePickerValueHOCInFormTest';
 import TimePickerValueHOCTest from './TimePickerValueHOCTest';
@@ -37,5 +38,5 @@ import AntHOC from './test';
 import '../src/index.less';
 
 e2e.PC({
-  children: <NestingFormItem />,
+  children: <TableExt />,
 });
