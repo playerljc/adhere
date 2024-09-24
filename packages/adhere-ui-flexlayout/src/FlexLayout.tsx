@@ -26,7 +26,7 @@ export const selectorPrefix = 'adhere-ui-flex-layout';
  */
 const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes<any>>(
   forwardRef<any, FlexLayoutProps>((props, ref) => {
-    const { className, style, direction, gutter, children, ...attrs } = props;
+    const { className, style, direction, gutter = [0, 0], children, ...attrs } = props;
 
     const { media } = useContext(ConfigProvider.Context);
 
@@ -89,7 +89,7 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
       const defaultStyle = style ?? {};
 
       // 栅格的style
-      const gridStyle = 'gutter' in props ? getGridStyle() : {};
+      const gridStyle = getGridStyle(); // 'gutter' in props ? getGridStyle() : {};
 
       return {
         ...defaultStyle,
