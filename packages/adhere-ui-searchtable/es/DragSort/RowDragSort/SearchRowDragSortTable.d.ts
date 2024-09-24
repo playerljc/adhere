@@ -1,4 +1,3 @@
-/// <reference types="react" />
 declare const SearchRowDragSortTable_base: {
     new (props: any): {
         [x: string]: any;
@@ -34,7 +33,7 @@ declare const SearchRowDragSortTable_base: {
             };
             columns: import("../../types").ColumnTypeExt[];
         }): import("../../types").ColumnRowDragSortConfig;
-        render(): import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>>;
+        render(): import("react").ReactElement;
     };
     [x: string]: any;
 };

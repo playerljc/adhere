@@ -135,9 +135,9 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      */
     static getDerivedStateFromProps(props: SearchProps, state: SearchState): {
         prePage: number | undefined;
-        expand?: boolean | undefined;
-        page?: number | undefined;
-        limit?: number | undefined;
+        expand?: boolean;
+        page?: number;
+        limit?: number;
     };
     /**
      * getPagination

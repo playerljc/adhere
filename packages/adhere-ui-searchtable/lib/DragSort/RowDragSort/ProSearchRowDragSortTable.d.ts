@@ -1,4 +1,3 @@
-/// <reference types="react" />
 export declare const SearchAndPaginParamsMemo: any;
 /**
  * ProSearchRowDragSortTable
@@ -11,7 +10,7 @@ declare const _default: {
         onSubTableChange(pagination: any, filters: any, sorter: any): void;
         onSearchPanelCollapseBefore(): void;
         unMountSearchAndPaginParamsDeal(): void;
-        initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+        initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
         hasAdvancedSearch(): boolean;
         hasNumberColumnFixed(): boolean;
         hasOptionColumnFixed(): boolean;
@@ -41,9 +40,9 @@ declare const _default: {
         getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
         getGridSearchFormGroupDataByColumnConfig(): {
             key: number;
-            sort?: number | undefined;
+            sort?: number;
             label: import("react").ReactNode;
-            value: import("react").ReactNode;
+            value: import("react").ReactNode | null;
         }[];
         assignSearchConfig(searchConfig: any, column: any): any;
         renderSearchBarCollapseControl(): any;

@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import SearchRowDragSortStateTable from './DragSort/RowDragSort/SearchRowDragSortStateTable';
 import SearchRowDragSortTable from './DragSort/RowDragSort/SearchRowDragSortTable';
 import SearchEditableCellStateTable from './Editable/SearchEditableCellStateTable';
@@ -17,20 +16,20 @@ declare const _default: {
     Search: typeof Search;
     Table: typeof SearchTable;
     SearchTableContext: import("react").Context<{
-        context: SearchTable<import("./types").SearchTableProps, import("./types").SearchTableState>;
+        context: SearchTable;
         editable?: {
             tableEditable?: {
-                form?: import("antd").FormInstance<any> | undefined;
+                form?: import("antd").FormInstance;
                 formList?: {
                     fields: import("antd").FormListFieldData[];
-                    operation?: import("antd").FormListOperation | undefined;
+                    operation?: import("antd").FormListOperation;
                     meta?: {
-                        errors?: import("react").ReactNode[] | undefined;
-                        warnings?: import("react").ReactNode[] | undefined;
-                    } | undefined;
-                } | undefined;
-            } | undefined;
-        } | undefined;
+                        errors?: import("react").ReactNode[];
+                        warnings?: import("react").ReactNode[];
+                    };
+                };
+            };
+        };
     } | null>;
     TableDensitySetting: import("react").FC<import("./types").TableDensitySettingProps>;
     ReloadTable: import("react").FC<import("./types").ReloadTableProps>;
@@ -61,7 +60,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -91,9 +90,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;
@@ -123,7 +122,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -153,9 +152,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;
@@ -185,7 +184,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -215,9 +214,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;
@@ -247,7 +246,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -277,9 +276,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;
@@ -309,7 +308,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -339,9 +338,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;
@@ -371,7 +370,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -401,9 +400,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;
@@ -433,7 +432,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -463,9 +462,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;
@@ -495,7 +494,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -525,9 +524,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;
@@ -557,7 +556,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -587,9 +586,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;
@@ -619,7 +618,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -649,9 +648,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;
@@ -681,7 +680,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -711,9 +710,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;
@@ -743,7 +742,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -773,9 +772,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;
@@ -805,7 +804,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -835,9 +834,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;
@@ -867,7 +866,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -897,9 +896,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;
@@ -929,7 +928,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -959,9 +958,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;
@@ -991,7 +990,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -1021,9 +1020,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;
@@ -1053,7 +1052,7 @@ declare const _default: {
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
             unMountSearchAndPaginParamsDeal(): void;
-            initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -1083,9 +1082,9 @@ declare const _default: {
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
-                sort?: number | undefined;
+                sort?: number;
                 label: import("react").ReactNode;
-                value: import("react").ReactNode;
+                value: import("react").ReactNode | null;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchBarCollapseControl(): any;

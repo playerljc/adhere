@@ -329,7 +329,7 @@ abstract class SearchTable<
         const tableWrapRef = this.tableWrapRef.current as HTMLElement;
 
         const tableHeaderHeight =
-          (tableWrapRef.querySelector('.ant-table-header') as HTMLElement)?.offsetHeight || 0;
+          (tableWrapRef.querySelector('.ant-table-thead') as HTMLElement)?.offsetHeight || 0;
 
         const tablePaginationHeight =
           (tableWrapRef.querySelector('.ant-table-pagination') as HTMLElement)?.offsetHeight || 0;
@@ -654,6 +654,7 @@ abstract class SearchTable<
                 rowIndex,
                 column: _column,
                 record,
+                // @ts-ignore
                 columns,
               }),
               // 所有列的配置

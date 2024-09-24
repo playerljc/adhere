@@ -155,7 +155,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          */
         getGridSearchFormGroupDataByColumnConfig(): {
             key: number;
-            sort?: number | undefined;
+            sort?: number;
             label: ReactNode;
             value: ReactNode | null;
         }[];

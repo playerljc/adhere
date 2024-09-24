@@ -11,7 +11,7 @@ declare const ProSearchStateTable: {
         onSubTableChange(pagination: any, filters: any, sorter: any): void;
         onSearchPanelCollapseBefore(): void;
         unMountSearchAndPaginParamsDeal(): void;
-        initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+        initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
         hasAdvancedSearch(): boolean;
         hasNumberColumnFixed(): boolean;
         hasOptionColumnFixed(): boolean;
@@ -41,9 +41,9 @@ declare const ProSearchStateTable: {
         getSearchLabelSymbol($search: any): React.JSX.Element | null;
         getGridSearchFormGroupDataByColumnConfig(): {
             key: number;
-            sort?: number | undefined;
+            sort?: number;
             label: React.ReactNode;
-            value: React.ReactNode;
+            value: React.ReactNode | null;
         }[];
         assignSearchConfig(searchConfig: any, column: any): any;
         renderSearchBarCollapseControl(): any;

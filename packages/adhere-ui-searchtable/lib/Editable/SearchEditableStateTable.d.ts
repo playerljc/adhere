@@ -1,4 +1,3 @@
-/// <reference types="react" />
 declare const SearchEditableStateTable_base: {
     new (props: any): {
         [x: string]: any;
@@ -25,7 +24,7 @@ declare const SearchEditableStateTable_base: {
         onExpandedRowsChange(expandedRows: any): any;
         setFieldValues(dataSource: any): void;
         fetchData(): any;
-        render(): import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>>;
+        render(): import("react").ReactElement;
     };
     [x: string]: any;
 };

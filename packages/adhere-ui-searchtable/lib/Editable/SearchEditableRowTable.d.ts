@@ -6,13 +6,7 @@ declare const SearchEditableRowTable_base: {
             rowIndex: number;
             record: {
                 [prop: string]: any;
-            }; /**
-             * updateEditorCellRowData
-             * @description 更新可编辑单元格一行的数据
-             * @param values 一行的数据
-             * @param record
-             * @return Promise<void>
-             */
+            };
             columns: import("../types").ColumnTypeExt[];
             rowConfig: import("../types").RowConfig;
         }): import("../types").RowConfig;

@@ -30,7 +30,7 @@ declare const SearchEditableCellStateTable_base: {
             columns: import("../types").ColumnTypeExt[];
         }): import("../types").ColumnTypeExt;
         valueToFormItemValue({ type, record, dataIndex, }: {
-            type: string;
+            type: import("../types").FormItemType;
             record: {
                 [prop: string]: any;
             };

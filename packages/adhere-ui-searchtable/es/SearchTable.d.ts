@@ -12,17 +12,17 @@ export declare const SearchTableContext: React.Context<{
     context: SearchTable;
     editable?: {
         tableEditable?: {
-            form?: FormInstance<any> | undefined;
+            form?: FormInstance;
             formList?: {
                 fields: FormListFieldData[];
-                operation?: FormListOperation | undefined;
+                operation?: FormListOperation;
                 meta?: {
-                    errors?: ReactNode[] | undefined;
-                    warnings?: ReactNode[] | undefined;
-                } | undefined;
-            } | undefined;
-        } | undefined;
-    } | undefined;
+                    errors?: ReactNode[];
+                    warnings?: ReactNode[];
+                };
+            };
+        };
+    };
 } | null>;
 /**
  * SearchTable
