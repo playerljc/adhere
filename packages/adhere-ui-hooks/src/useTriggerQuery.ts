@@ -28,18 +28,20 @@ function useTriggerQuery<T extends Record<string, any>>(defaultValue: T) {
     setSearchParams(searchParams, cb);
   }
 
-  function reset(cb) {
-    const keys = Object.keys(memoDefaultValue);
+  function reset(cb, defaultValue?: Record<string, string>) {
+    const origin = { ...memoDefaultValue, ...(defaultValue ?? {}) };
+
+    const keys = Object.keys(origin);
 
     setFieldsValue((draft) => {
       keys.forEach((key) => {
-        draft[key] = memoDefaultValue[key];
+        draft[key] = origin[key];
       });
     });
 
     const searchParams: any = {};
     keys.forEach((key) => {
-      searchParams[key] = memoDefaultValue[key];
+      searchParams[key] = origin[key];
     });
     setSearchParams(searchParams, cb);
   }

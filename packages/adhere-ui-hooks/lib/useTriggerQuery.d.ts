@@ -8,6 +8,6 @@ declare function useTriggerQuery<T extends Record<string, any>>(defaultValue: T)
     fieldsValue: import("react").MutableRefObject<T>;
     searchParams: import("react").MutableRefObject<T>;
     search: (cb: any) => void;
-    reset: (cb: any) => void;
+    reset: (cb: any, defaultValue?: Record<string, string>) => void;
 };
 export default useTriggerQuery;
