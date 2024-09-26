@@ -1,16 +1,7 @@
-# 1.0.1
-
-***
-
-2024-02-19
-
-* value支持对象类型
-* Result面板使用FloatPanel实现
-
 # 1.0.0
 
 ***
 
-2023-10-07
+2024-09-22
 
-* 加入adhere-mobile-ui-auto-complete代码
+* 加入adhere-mobile-ui-tree代码

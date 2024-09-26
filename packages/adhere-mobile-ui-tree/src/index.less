@@ -1,5 +1,22 @@
 @import '~@baifendian/adhere-ui-space/es/index.less';
 
+.adhere-mobile-ui-tree-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  > .adhere-mobile-ui-tree-search {
+    flex-shrink: 0;
+    padding: 15px 0;
+  }
+
+  > .adhere-mobile-ui-tree-body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+
 .adhere-mobile-ui-tree {
   margin: 0;
   padding: 0;

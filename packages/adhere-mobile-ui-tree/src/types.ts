@@ -1,4 +1,6 @@
-import type { CSSProperties, MouseEvent, ReactNode, TouchEvent } from 'react';
+import type { CSSProperties, MouseEvent, NamedExoticComponent, ReactNode, TouchEvent } from 'react';
+
+import TreeSelect from './TreeSelect';
 
 export type TreeDataItem = Readonly<{
   key: string;
@@ -62,6 +64,12 @@ export interface TreeProps {
   loadData?: (nodeData: TreeDataItemExtra) => Promise<void>;
   // （受控）已经加载的节点，需要配合 loadData 使用
   loadedKeys?: string[];
+
+  // 是否可以搜索(本地数据)
+  showSearch?: boolean;
+  // 当showSearch为true时候，搜索数据的key默认是title，只有值是string类型才可以，也可是级联的如props.a
+  filterKey?: string;
+
   // 行距(如果指定行距则size不起作用)
   rowGap?: number;
   // checkbox的宽度(默认是20px)
@@ -104,6 +112,15 @@ export interface TreeProps {
     },
   ) => void;
 }
+
+export type TreeSelectProps = Omit<TreeProps, 'className' | 'style' | 'checkable' | 'onCheck'> & {
+  className?: string;
+  style?: CSSProperties;
+  treeClassName?: string;
+  treeStyle?: CSSProperties;
+  value?: string[];
+  onChange?: TreeProps['onCheck'];
+};
 
 export type TreeNodeProps = TreeDataItem & {
   // 层级(从0开始)
@@ -156,3 +173,7 @@ export interface TreeContext {
   onExpand?: TreeProps['onExpand'];
   onCheck?: TreeProps['onCheck'];
 }
+
+export type TreeComponent = NamedExoticComponent<TreeProps> & {
+  TreeSelect: typeof TreeSelect;
+};

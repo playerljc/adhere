@@ -1,4 +1,5 @@
-import type { CSSProperties, MouseEvent, ReactNode, TouchEvent } from 'react';
+import type { CSSProperties, MouseEvent, NamedExoticComponent, ReactNode, TouchEvent } from 'react';
+import TreeSelect from './TreeSelect';
 export type TreeDataItem = Readonly<{
     key: string;
     title?: ReactNode;
@@ -37,6 +38,8 @@ export interface TreeProps {
     icon?: (nodeData: TreeDataItemExtra) => ReactNode;
     loadData?: (nodeData: TreeDataItemExtra) => Promise<void>;
     loadedKeys?: string[];
+    showSearch?: boolean;
+    filterKey?: string;
     rowGap?: number;
     checkboxWidth?: number;
     checkboxGap?: number;
@@ -61,6 +64,14 @@ export interface TreeProps {
         node: TreeDataItemExtra;
     }) => void;
 }
+export type TreeSelectProps = Omit<TreeProps, 'className' | 'style' | 'checkable' | 'onCheck'> & {
+    className?: string;
+    style?: CSSProperties;
+    treeClassName?: string;
+    treeStyle?: CSSProperties;
+    value?: string[];
+    onChange?: TreeProps['onCheck'];
+};
 export type TreeNodeProps = TreeDataItem & {
     level: number;
     isLeaf?: boolean;
@@ -103,3 +114,6 @@ export interface TreeContext {
     onExpand?: TreeProps['onExpand'];
     onCheck?: TreeProps['onCheck'];
 }
+export type TreeComponent = NamedExoticComponent<TreeProps> & {
+    TreeSelect: typeof TreeSelect;
+};

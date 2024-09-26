@@ -1,27 +1,33 @@
-import { ErrorBlock } from 'antd-mobile';
+import { ErrorBlock, SearchBar } from 'antd-mobile';
 import classNames from 'classnames';
-import React, { memo, useContext, useMemo } from 'react';
+import React, { memo, useContext, useMemo, useState } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Space from '@baifendian/adhere-ui-space';
 import Util from '@baifendian/adhere-util';
+import Intl from '@baifendian/adhere-util-intl';
 
 import {
   DEFAULT_CHECKBOX_GAP,
   DEFAULT_CHECKBOX_WIDTH,
   DEFAULT_CHECKSTRICTLY,
+  DEFAULT_FILTER_KEY,
   DEFAULT_ICON_GAP,
   DEFAULT_INDENT,
   DEFAULT_MULTIPLE,
+  DEFAULT_ROW_GAP,
+  DEFAULT_SHOW_SEARCH,
   DEFAULT_SIZE,
   DEFAULT_TITLE_GAP,
   DEFAULT_TREE_CHECKABLE,
+  DEFAULT_TREE_UTIL_CONFIG,
 } from './Constant';
 import TreeContext from './TreeContext';
 import TreeNode from './TreeNode';
 import TreeNodeContext from './TreeNodeContext';
-import type { TreeProps } from './types';
+import TreeSelect from './TreeSelect';
+import type { TreeComponent, TreeProps } from './types';
 import useChecked from './useChecked';
 import useUtil from './useUtil';
 
@@ -33,7 +39,7 @@ const { usePropToState } = Hooks;
  * Tree
  * @description Tree
  */
-const Tree = memo<TreeProps>(
+const InternalTree = memo<TreeProps>(
   ({
     className,
     style,
@@ -53,6 +59,9 @@ const Tree = memo<TreeProps>(
 
     loadData,
     loadedKeys,
+
+    showSearch,
+    filterKey,
 
     // 行距(如果指定行距则size不起作用)
     rowGap: globalRowGap,
@@ -102,8 +111,40 @@ const Tree = memo<TreeProps>(
       return checkStrictly as boolean;
     }, [checkStrictly]);
 
+    // 是否进行了查询
+    const [isSearching, setIsSearching] = useState(false);
+    // 查询的关键字
+    const [kw, setKw] = useState<string>('');
+
+    // 是否可以进行搜索
+    const targetShowSearch = useMemo(() => {
+      if (Util.isEmpty(showSearch)) return DEFAULT_SHOW_SEARCH;
+
+      return showSearch as boolean;
+    }, [showSearch]);
+
+    // 搜索的key
+    const targetFilterKey = useMemo(() => {
+      if (Util.isEmpty(filterKey)) return DEFAULT_FILTER_KEY;
+
+      return filterKey as string;
+    }, [filterKey]);
+
     // Tree的数据
-    const targetTreeData = useMemo(() => treeData ?? [], [treeData]);
+    const targetTreeData = useMemo(() => {
+      const _treeData = treeData ?? [];
+
+      if (!isSearching) return _treeData;
+
+      if (!kw) return _treeData;
+
+      // @ts-ignore
+      return Util.filterTree(_treeData, kw, {
+        ...DEFAULT_TREE_UTIL_CONFIG,
+        filterAttr: targetFilterKey,
+        titleAttr: targetFilterKey,
+      });
+    }, [kw, isSearching, treeData]);
 
     // 展开的keys
     const defaultExpandedKeys = useMemo(() => expandedKeys ?? [], [expandedKeys]);
@@ -191,7 +232,7 @@ const Tree = memo<TreeProps>(
       [targetTreeData, switcherIcon, titleRender],
     );
 
-    // 是否微空
+    // 是否为空
     const isEmpty = useMemo(() => !treeChildrenElements.length, [treeChildrenElements]);
 
     // contextProvider
@@ -207,7 +248,7 @@ const Tree = memo<TreeProps>(
         setLoadedKeys: setTargetLoadedKeys,
         loadData,
         size: () => targetSize,
-        rowGap: () => rowGap ?? 15,
+        rowGap: () => rowGap ?? DEFAULT_ROW_GAP,
         multiple: () => targetMultiple,
         checkable: () => targetCheckable,
         treeData: () => treeData,
@@ -250,7 +291,7 @@ const Tree = memo<TreeProps>(
       ],
     );
 
-    return (
+    const treeElement = (
       <TreeContext.Provider value={contextProviderValue}>
         <ul className={classNames(selectorPrefix, className)} style={style ?? {}}>
           <Space.Group direction="vertical" size={rowGap}>
@@ -260,8 +301,44 @@ const Tree = memo<TreeProps>(
         </ul>
       </TreeContext.Provider>
     );
+
+    function onSearch() {
+      setIsSearching(true);
+    }
+
+    function onClear() {
+      setKw('');
+      setIsSearching(false);
+    }
+
+    return (
+      <>
+        {targetShowSearch && (
+          <div className={classNames(`${selectorPrefix}-wrapper`)}>
+            <div className={classNames(`${selectorPrefix}-search`)}>
+              <SearchBar
+                placeholder={Intl.v('请输入')}
+                showCancelButton
+                value={kw}
+                onChange={setKw}
+                onSearch={onSearch}
+                onClear={onClear}
+              />
+            </div>
+
+            <div className={classNames(`${selectorPrefix}-body`)}>{treeElement}</div>
+          </div>
+        )}
+
+        {!targetShowSearch && treeElement}
+      </>
+    );
   },
 );
+
+const Tree = InternalTree as TreeComponent;
+
+Tree.TreeSelect = TreeSelect;
 
 Tree.displayName = 'Tree';
 

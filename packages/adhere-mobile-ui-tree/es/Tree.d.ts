@@ -1,8 +1,3 @@
-import React from 'react';
-import type { TreeProps } from './types';
-/**
- * Tree
- * @description Tree
- */
-declare const Tree: React.NamedExoticComponent<TreeProps>;
+import type { TreeComponent } from './types';
+declare const Tree: TreeComponent;
 export default Tree;
