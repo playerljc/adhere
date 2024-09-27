@@ -51,12 +51,14 @@ export interface TreeUtilType {
     treeFlatNodes: any[],
     kw: string,
     config: IFlatTreeArrNode & { filterAttr: string },
+    filter?: (nodeData) => boolean,
   ) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
 
   filterTree: (
     treeNodes: (IAntdTreeNode | IAntdTreeSelectNode)[],
     kw: string,
     config: IFlatTreeArrNode & { filterAttr: string },
+    filter?: (nodeData) => boolean,
   ) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
 
   findNodeByKey: (
@@ -376,19 +378,24 @@ const TreeUtil: TreeUtilType = {
    * @param treeFlatNodes
    * @param kw
    * @param config
+   * @param filter
    */
-  filterTreeByFlatData(this: TreeUtilType, treeFlatNodes, kw, config) {
+  filterTreeByFlatData(this: TreeUtilType, treeFlatNodes, kw, config, filter) {
     const { filterAttr, ...arrayToAntdTreeConfig } = config;
 
-    if (kw) {
-      const arr = treeFlatNodes.filter((node) => {
-        return node[config.filterAttr].indexOf(kw) !== -1;
-      });
+    if (filter) {
+      const arr = treeFlatNodes.filter((node) => filter?.(node));
 
       return this.completionIncompleteFlatArr(treeFlatNodes, arr, config);
-    } else {
-      return this.arrayToAntdTree(treeFlatNodes, arrayToAntdTreeConfig);
     }
+
+    if (kw) {
+      const arr = treeFlatNodes.filter((node) => node[config.filterAttr].indexOf(kw) !== -1);
+
+      return this.completionIncompleteFlatArr(treeFlatNodes, arr, config);
+    }
+
+    return this.arrayToAntdTree(treeFlatNodes, arrayToAntdTreeConfig);
   },
   /**
    * filterTree
@@ -396,8 +403,9 @@ const TreeUtil: TreeUtilType = {
    * @param treeNodes
    * @param kw
    * @param config
+   * @param filter
    */
-  filterTree(this: TreeUtilType, treeNodes, kw, config) {
+  filterTree(this: TreeUtilType, treeNodes, kw, config, filter) {
     const { filterAttr, ...arrayToAntdTreeConfig } = config;
 
     const treeFlatNodes = this.treeToArray(treeNodes, {
@@ -405,15 +413,19 @@ const TreeUtil: TreeUtilType = {
       rootParentId: config.rootParentId,
     });
 
-    if (kw) {
-      const arr = treeFlatNodes.filter((node) => {
-        return node[config.filterAttr].indexOf(kw) !== -1;
-      });
+    if (filter) {
+      const arr = treeFlatNodes.filter((node) => filter?.(node));
 
       return this.completionIncompleteFlatArr(treeFlatNodes, arr, config);
-    } else {
-      return this.arrayToAntdTree(treeFlatNodes, arrayToAntdTreeConfig);
     }
+
+    if (kw) {
+      const arr = treeFlatNodes.filter((node) => node[config.filterAttr].indexOf(kw) !== -1);
+
+      return this.completionIncompleteFlatArr(treeFlatNodes, arr, config);
+    }
+
+    return this.arrayToAntdTree(treeFlatNodes, arrayToAntdTreeConfig);
   },
   /**
    * findNodeByKey

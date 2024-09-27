@@ -19,10 +19,10 @@ export interface TreeUtilType {
     getDescendants: (data: any[], node: any, config: Omit<IFlatTreeArrNode, 'titleAttr'>) => any[];
     filterTreeByFlatData: (treeFlatNodes: any[], kw: string, config: IFlatTreeArrNode & {
         filterAttr: string;
-    }) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
+    }, filter?: (nodeData: any) => boolean) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
     filterTree: (treeNodes: (IAntdTreeNode | IAntdTreeSelectNode)[], kw: string, config: IFlatTreeArrNode & {
         filterAttr: string;
-    }) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
+    }, filter?: (nodeData: any) => boolean) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
     findNodeByKey: (treeData: (IAntdTreeNode | IAntdTreeSelectNode)[], val: any, config: {
         keyAttr: string;
     }) => IAntdTreeNode | IAntdTreeSelectNode | null;

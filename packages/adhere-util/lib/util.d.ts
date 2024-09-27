@@ -92,10 +92,10 @@ declare const _default: {
     getDescendants: (data: any[], node: any, config: Omit<import("./types").IFlatTreeArrNode, "titleAttr">) => any[];
     filterTreeByFlatData: (treeFlatNodes: any[], kw: string, config: import("./types").IFlatTreeArrNode & {
         filterAttr: string;
-    }) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
+    }, filter?: ((nodeData: any) => boolean) | undefined) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
     filterTree: (treeNodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], kw: string, config: import("./types").IFlatTreeArrNode & {
         filterAttr: string;
-    }) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
+    }, filter?: ((nodeData: any) => boolean) | undefined) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
     findNodeByKey: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], val: any, config: {
         keyAttr: string;
     }) => import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode | null;
