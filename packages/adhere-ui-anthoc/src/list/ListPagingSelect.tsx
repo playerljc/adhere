@@ -1,5 +1,6 @@
 import { useMount } from 'ahooks';
-import React, { memo } from 'react';
+import uniqBy from 'lodash.uniqby';
+import React, { memo, useMemo } from 'react';
 
 import DropdownRenderSelect from '../select/DropdownRenderSelect';
 import type { DisplayNameInternal, ListPagingSelectProps } from '../types';
@@ -15,7 +16,7 @@ import usePagingRenderProps from './usePagingRenderProps';
  * @constructor
  */
 const InternalListPagingSelect = memo<ListPagingSelectProps<any>>(
-  ({ pagingProps, listPagingProps, ...props }) => {
+  ({ pagingProps, listPagingProps, defaultOptions, ...props }) => {
     const {
       isMultiple,
       inputValue,
@@ -32,6 +33,16 @@ const InternalListPagingSelect = memo<ListPagingSelectProps<any>>(
       ...pagingProps,
     });
 
+    const allOptions = useMemo(
+      () => uniqBy([...(defaultOptions ?? []), ...(options ?? [])], 'value'),
+      [defaultOptions, options],
+    );
+
+    const targetOptions = useMemo(() => {
+      const optionKeys = options.map(({ value }) => value);
+      return allOptions.filter(({ value }) => optionKeys.includes(value));
+    }, [options, allOptions]);
+
     useMount(() => {
       fetchData();
     });
@@ -40,7 +51,7 @@ const InternalListPagingSelect = memo<ListPagingSelectProps<any>>(
       <DropdownRenderSelect
         {...props}
         defaultInputValue={inputValue}
-        options={options}
+        options={allOptions}
         onSearch={setInputValue}
         onClear={() => {
           setPaging({
@@ -49,12 +60,19 @@ const InternalListPagingSelect = memo<ListPagingSelectProps<any>>(
           });
         }}
       >
-        {({ originNode, ...rest }) => (
-          <>
-            {isMultiple && <CheckboxPagingList {...renderProps(rest)} />}
-            {!isMultiple && <RadioPagingList {...renderProps(rest)} />}
-          </>
-        )}
+        {({ originNode, ...rest }) => {
+          const listProps = renderProps({
+            ...rest,
+            options: targetOptions,
+          });
+
+          return (
+            <>
+              {isMultiple && <CheckboxPagingList {...listProps} />}
+              {!isMultiple && <RadioPagingList {...listProps} />}
+            </>
+          );
+        }}
       </DropdownRenderSelect>
     );
   },

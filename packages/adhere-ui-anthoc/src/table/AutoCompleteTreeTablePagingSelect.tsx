@@ -1,3 +1,4 @@
+import uniqBy from 'lodash.uniqby';
 import React, { memo, useMemo } from 'react';
 
 import Util from '@baifendian/adhere-util';
@@ -18,8 +19,18 @@ import usePagingTreeRenderProps from './usePagingTreeRenderProps';
  * @constructor
  */
 const InternalAutoCompleteTreeTablePagingSelect = memo<AutoCompleteTreeTablePagingSelectProps>(
-  ({ pagingProps, tablePagingProps, treeDataSimpleModeConfig, ...props }) => {
+  ({ pagingProps, tablePagingProps, treeDataSimpleModeConfig, defaultTreeData, ...props }) => {
     const fetchLoading = useAutoCompleteFetchLoading(props.renderLoading);
+
+    const targetTreeDataSimpleModeConfig = useMemo(
+      () => ({
+        keyAttr: treeDataSimpleModeConfig?.keyAttr ?? 'value',
+        titleAttr: treeDataSimpleModeConfig?.titleAttr ?? 'title',
+        rootParentId: treeDataSimpleModeConfig?.rootParentId ?? 0,
+        parentIdAttr: treeDataSimpleModeConfig?.parentIdAttr ?? 'pId',
+      }),
+      [treeDataSimpleModeConfig],
+    );
 
     const {
       isMultiple,
@@ -43,10 +54,73 @@ const InternalAutoCompleteTreeTablePagingSelect = memo<AutoCompleteTreeTablePagi
       [isMultiple],
     );
 
+    // const allTreeData = useMemo(() => {
+    //   let _treeFlatData = treeData ?? [];
+    //   let _defaultTreeFlatData = defaultTreeData ?? [];
+    //
+    //   if (!props.treeDataSimpleMode) {
+    //     // 拉平
+    //     _treeFlatData = Util.treeToArray(
+    //       _treeFlatData,
+    //       {
+    //         parentIdAttr: targetTreeDataSimpleModeConfig.parentIdAttr,
+    //         rootParentId: targetTreeDataSimpleModeConfig.rootParentId,
+    //       },
+    //       targetTreeDataSimpleModeConfig.keyAttr,
+    //     );
+    //     _defaultTreeFlatData = Util.treeToArray(
+    //       _defaultTreeFlatData,
+    //       {
+    //         parentIdAttr: targetTreeDataSimpleModeConfig.parentIdAttr,
+    //         rootParentId: targetTreeDataSimpleModeConfig.rootParentId,
+    //       },
+    //       targetTreeDataSimpleModeConfig.keyAttr,
+    //     );
+    //   }
+    //
+    //   const flatAllData = uniqBy(
+    //     [...(_defaultTreeFlatData ?? []), ...(_treeFlatData ?? [])],
+    //     targetTreeDataSimpleModeConfig.keyAttr,
+    //   );
+    //
+    //   if (!props.treeDataSimpleMode) {
+    //     // 转换成treeData
+    //     return Util.arrayToAntdTreeSelect(flatAllData, targetTreeDataSimpleModeConfig);
+    //   }
+    //
+    //   return flatAllData;
+    // }, [defaultTreeData, treeData]);
+
+    // const targetTreeData = useMemo(() => {
+    //   let _treeFlatData = treeData ?? [];
+    //   let _allTreeFlatData = allTreeData ?? [];
+    //
+    //   if (!props.treeDataSimpleMode) {
+    //     // 拉平
+    //     _treeFlatData = Util.treeToArray(_treeFlatData, targetTreeDataSimpleModeConfig);
+    //     _allTreeFlatData = Util.treeToArray(_allTreeFlatData, targetTreeDataSimpleModeConfig);
+    //   }
+    //
+    //   const optionKeys = _treeFlatData.map(
+    //     (nodeData) => nodeData[targetTreeDataSimpleModeConfig.keyAttr],
+    //   );
+    //   const flatTreeData = _allTreeFlatData.filter((nodeData) =>
+    //     optionKeys.includes(nodeData[targetTreeDataSimpleModeConfig.keyAttr]),
+    //   );
+    //
+    //   if (!props.treeDataSimpleMode) {
+    //     // 转换成treeData
+    //     return Util.arrayToAntdTreeSelect(flatTreeData, targetTreeDataSimpleModeConfig);
+    //   }
+    //
+    //   return flatTreeData;
+    // }, [treeData, allTreeData]);
+
     return (
       <Component
         {...props}
         treeData={treeData}
+        defaultTreeData={defaultTreeData}
         onSearch={setInputValue}
         onClear={() => {
           setPaging({
@@ -70,13 +144,8 @@ const InternalAutoCompleteTreeTablePagingSelect = memo<AutoCompleteTreeTablePagi
           const { treeData: _omitTreeData, ...tablePropsRest } = rest;
 
           const options = isTreeDataSimpleMode
-            ? Util.arrayToAntdTreeSelect(treeData ?? [], {
-                keyAttr: treeDataSimpleModeConfig?.keyAttr ?? 'value',
-                titleAttr: treeDataSimpleModeConfig?.titleAttr ?? 'title',
-                rootParentId: treeDataSimpleModeConfig?.rootParentId ?? 0,
-                parentIdAttr: treeDataSimpleModeConfig?.parentIdAttr ?? 'pId',
-              })
-            : treeData;
+            ? Util.arrayToAntdTreeSelect(_omitTreeData ?? [], targetTreeDataSimpleModeConfig)
+            : _omitTreeData;
 
           const tableProps = renderProps({
             options,

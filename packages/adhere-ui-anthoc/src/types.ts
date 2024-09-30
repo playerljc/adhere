@@ -193,7 +193,11 @@ export type ListPagingProps<T> = {
   mode?: DropdownRenderSelectProps['mode'];
 };
 
-export type ListPagingSelectProps<T> = Omit<DropdownRenderSelectProps, 'children'> &
+export type PagingSelectProps = Omit<DropdownRenderSelectProps, 'children'> & {
+  defaultOptions?: any[];
+};
+
+export type ListPagingSelectProps<T> = PagingSelectProps &
   Omit<ListPagingProps<T>, 'mode' | 'value' | 'onChange'>;
 
 export type TablePagingProps<T> = {
@@ -208,7 +212,7 @@ export type TablePagingProps<T> = {
   mode?: DropdownRenderSelectProps['mode'];
 };
 
-export type TablePagingSelectProps<T> = Omit<DropdownRenderSelectProps, 'children'> &
+export type TablePagingSelectProps<T> = PagingSelectProps &
   Omit<TablePagingProps<T>, 'mode' | 'value' | 'onChange'>;
 
 export type RadioTableProps = Omit<TableProps<any>, 'onChange'> & {
@@ -600,6 +604,7 @@ export type AutoCompleteTablePagingSelectProps = AutoCompleteProps & {
 export type AutoCompleteTreeTablePagingSelectProps = TreeAutoCompleteProps & {
   treeDataSimpleModeConfig?: IFlatTreeArrNode;
   pagingProps: PagingWrapperProps<any>;
+  // defaultTreeData?: TreeAutoCompleteProps['treeData'];
   tablePagingProps?:
     | Omit<CheckboxPagingTreeTableProps, 'value' | 'onChange'>
     | Omit<RadioPagingTreeTableProps, 'value' | 'onChange'>;

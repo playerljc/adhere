@@ -32,13 +32,17 @@ export default () => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    form.setFieldValue('sex', [
-      {
-        label: 'A',
-        value: 'A',
-      },
-      'B',
-    ]);
+    // form.setFieldValue('sex', [
+    //   {
+    //     label: 'A',
+    //     value: 'A',
+    //   },
+    //   'B',
+    // ]);
+
+    // form.setFieldValue('sex', [1]);
+
+    form.setFieldValue('sex', [tableData[0], tableData[1].value]);
   }, []);
 
   return (
@@ -102,7 +106,7 @@ export default () => {
             })}
           />*/}
 
-          {/*<Table.TableSelect
+          <Table.TableSelect
             mode="multiple"
             style={{ width: 600 }}
             placeholder="TableSelect"
@@ -137,9 +141,9 @@ export default () => {
                 },
               ],
             }}
-          />*/}
+          />
 
-          <Transfer.TransferSelect
+          {/*<Transfer.TransferSelect
             placeholder="A-Z"
             style={{ width: 410 }}
             options={Array.from({ length: 26 }).map((t, _index) => {
@@ -150,7 +154,7 @@ export default () => {
                 value: letter,
               };
             })}
-          />
+          />*/}
 
           {/*<Tag.TagSelect
             mode="multiple"

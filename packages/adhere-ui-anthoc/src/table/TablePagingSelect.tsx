@@ -1,5 +1,6 @@
 import { useMount } from 'ahooks';
-import React, { memo } from 'react';
+import uniqBy from 'lodash.uniqby';
+import React, { memo, useMemo } from 'react';
 
 import DropdownRenderSelect from '../select/DropdownRenderSelect';
 import type { DisplayNameInternal, TablePagingSelectProps } from '../types';
@@ -15,7 +16,7 @@ import usePagingRenderProps from './usePagingRenderProps';
  * @constructor
  */
 const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
-  ({ pagingProps, tablePagingProps, ...props }) => {
+  ({ pagingProps, tablePagingProps, defaultOptions, ...props }) => {
     const {
       isMultiple,
       inputValue,
@@ -32,6 +33,16 @@ const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
       ...pagingProps,
     });
 
+    const allOptions = useMemo(
+      () => uniqBy([...(defaultOptions ?? []), ...(options ?? [])], 'value'),
+      [defaultOptions, options],
+    );
+
+    const targetOptions = useMemo(() => {
+      const optionKeys = options.map(({ value }) => value);
+      return allOptions.filter(({ value }) => optionKeys.includes(value));
+    }, [options, allOptions]);
+
     useMount(() => {
       fetchData();
     });
@@ -40,7 +51,7 @@ const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
       <DropdownRenderSelect
         {...props}
         defaultInputValue={inputValue}
-        options={options}
+        options={allOptions}
         onSearch={setInputValue}
         onClear={() => {
           setPaging({
@@ -50,7 +61,10 @@ const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
         }}
       >
         {({ originNode, ...rest }) => {
-          const tableProps = renderProps(rest);
+          const tableProps = renderProps({
+            ...rest,
+            options: targetOptions,
+          });
 
           return (
             <>

@@ -56,16 +56,17 @@ export default () => {
             message: '请选择性别',
           },
         ]}
-        // initialValue={[]}
+        initialValue={[dataSource[0]]}
       >
         <PagingEntityValueHOC>
           <Table.AutoCompleteTablePagingSelect
             placeholder="AutoCompleteTablePagingSelect"
             style={{ width: 600 }}
             dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+            defaultOptions={[dataSource[0]]}
             mode="multiple"
-            value={value}
-            onChange={setValue}
+            // value={value}
+            // onChange={setValue}
             pagingProps={{
               loadData,
               defaultLimit: 5,

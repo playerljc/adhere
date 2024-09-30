@@ -22,7 +22,7 @@ const TREE_DATA = [
           },
           {
             value: 'leaf2',
-            title: 'leaf2',
+            title: 'leaf2Text',
             id: 'leaf2',
           },
         ],
@@ -58,7 +58,7 @@ const defaultTreeData = {
           children: [
             {
               value: 'leaf2',
-              title: 'leaf2',
+              title: 'leaf2Text',
               id: 'leaf2',
             },
           ],
@@ -92,15 +92,17 @@ const flatDefaultTreeData = {
 export default () => {
   const [treeData, setTreeData] = useState([]);
 
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(['leaf2']);
 
   return (
     <TreeSelect.AutoCompleteTreeSelect
       style={{ width: 300 }}
       value={value}
       dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+      // defaultTreeData={flatDefaultTreeData.value}
+      defaultTreeData={defaultTreeData.value}
       placeholder="Please select"
-      treeDataSimpleMode
+      // treeDataSimpleMode
       loadData={(_kw) => {
         return new Promise((resolve) => {
           if (!_kw) {
@@ -111,38 +113,38 @@ export default () => {
 
           setTimeout(() => {
             // 正常
-            // const flatTreeData = Util.treeToArray(
-            //   TREE_DATA,
-            //   { parentIdAttr: 'pId', rootParentId: '' },
-            //   'value',
-            // );
-            //
-            // const result = flatTreeData.filter((_node) => _node.title.indexOf(_kw) !== -1);
-            //
-            // const targetTreeData = Util.completionIncompleteFlatArr(flatTreeData, result, {
-            //   keyAttr: 'value',
-            //   titleAttr: 'title',
-            //   parentIdAttr: 'pId',
-            //   rootParentId: '',
-            // });
+            const flatTreeData = Util.treeToArray(
+              TREE_DATA,
+              { parentIdAttr: 'pId', rootParentId: '' },
+              'value',
+            );
+
+            const result = flatTreeData.filter((_node) => _node.title.indexOf(_kw) !== -1);
+
+            const targetTreeData = Util.completionIncompleteFlatArr(flatTreeData, result, {
+              keyAttr: 'value',
+              titleAttr: 'title',
+              parentIdAttr: 'pId',
+              rootParentId: '',
+            });
 
             // flat
-            const result = FLAT_TREE_DATA.filter((_node) => _node.title.indexOf(_kw) !== -1);
-
-            const targetTreeData = Util.treeToArray(
-              Util.completionIncompleteFlatArr(FLAT_TREE_DATA, result, {
-                keyAttr: 'id',
-                titleAttr: 'title',
-                parentIdAttr: 'pId',
-                rootParentId: 0,
-              }),
-              {
-                keyAttr: 'id',
-                titleAttr: 'title',
-                parentIdAttr: 'pId',
-                rootParentId: 0,
-              },
-            );
+            // const result = FLAT_TREE_DATA.filter((_node) => _node.title.indexOf(_kw) !== -1);
+            //
+            // const targetTreeData = Util.treeToArray(
+            //   Util.completionIncompleteFlatArr(FLAT_TREE_DATA, result, {
+            //     keyAttr: 'id',
+            //     titleAttr: 'title',
+            //     parentIdAttr: 'pId',
+            //     rootParentId: 0,
+            //   }),
+            //   {
+            //     keyAttr: 'id',
+            //     titleAttr: 'title',
+            //     parentIdAttr: 'pId',
+            //     rootParentId: 0,
+            //   },
+            // );
 
             setTreeData(targetTreeData);
 

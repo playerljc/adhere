@@ -9,34 +9,34 @@ import TreeSelect from '../../src/tree-select';
 const TREE_DATA = [
   {
     value: 'parent 1',
-    title: 'parent 1',
+    title: 'parent 1Test',
     id: 'parent 1',
     children: [
       {
         value: 'parent 1-0',
-        title: 'parent 1-0',
+        title: 'parent 1-0Test',
         id: 'parent 1-0',
         children: [
           {
             value: 'leaf1',
-            title: 'leaf1',
+            title: 'leaf1Test',
             id: 'leaf1',
           },
           {
             value: 'leaf2',
-            title: 'leaf2',
+            title: 'leaf2Test',
             id: 'leaf2',
           },
         ],
       },
       {
         value: 'parent 1-1',
-        title: 'parent 1-1',
+        title: 'parent 1-1Test',
         id: 'parent 1-1',
         children: [
           {
             value: 'leaf3',
-            title: 'leaf3',
+            title: 'leaf3Test',
             id: 'leaf3',
           },
         ],
@@ -50,17 +50,17 @@ const defaultTreeData = {
   value: [
     {
       value: 'parent 1',
-      title: 'parent 1',
+      title: 'parent 1Test',
       id: 'parent 1',
       children: [
         {
           value: 'parent 1-0',
-          title: 'parent 1-0',
+          title: 'parent 1-0Test',
           id: 'parent 1-0',
           children: [
             {
               value: 'leaf2',
-              title: 'leaf2',
+              title: 'leaf2Test',
               id: 'leaf2',
             },
           ],
@@ -94,7 +94,7 @@ const flatDefaultTreeData = {
 export default () => {
   const [treeData, setTreeData] = useState([]);
 
-  const [value, setValue] = useState();
+  // const [value, setValue] = useState();
 
   const [form] = Form.useForm();
 
@@ -114,12 +114,18 @@ export default () => {
             message: '请选择性别',
           },
         ]}
-        // initialValue={[]}
+        initialValue={[
+          {
+            value: 'leaf2',
+            title: 'leaf2Test',
+            id: 'leaf2',
+          },
+        ]}
       >
         <TreeEntityValueHOC>
           <TreeSelect.AutoCompleteTreeMultiSelect
             style={{ width: 300 }}
-            value={value}
+            // value={value}
             dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
             placeholder="Please select"
             treeDataSimpleMode
@@ -173,9 +179,9 @@ export default () => {
               });
             }}
             treeData={treeData}
-            onChange={(_value) => {
-              setValue(_value);
-            }}
+            // onChange={(_value) => {
+            //   setValue(_value);
+            // }}
           />
         </TreeEntityValueHOC>
       </Form.Item>

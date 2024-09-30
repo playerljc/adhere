@@ -130,7 +130,10 @@ export type ListPagingProps<T> = {
     onChange?: DropdownRenderSelectProps['onChange'];
     mode?: DropdownRenderSelectProps['mode'];
 };
-export type ListPagingSelectProps<T> = Omit<DropdownRenderSelectProps, 'children'> & Omit<ListPagingProps<T>, 'mode' | 'value' | 'onChange'>;
+export type PagingSelectProps = Omit<DropdownRenderSelectProps, 'children'> & {
+    defaultOptions?: any[];
+};
+export type ListPagingSelectProps<T> = PagingSelectProps & Omit<ListPagingProps<T>, 'mode' | 'value' | 'onChange'>;
 export type TablePagingProps<T> = {
     isSuspenseAsync?: boolean;
     suspenseProps?: SuspenseASyncProps;
@@ -140,7 +143,7 @@ export type TablePagingProps<T> = {
     onChange?: DropdownRenderSelectProps['onChange'];
     mode?: DropdownRenderSelectProps['mode'];
 };
-export type TablePagingSelectProps<T> = Omit<DropdownRenderSelectProps, 'children'> & Omit<TablePagingProps<T>, 'mode' | 'value' | 'onChange'>;
+export type TablePagingSelectProps<T> = PagingSelectProps & Omit<TablePagingProps<T>, 'mode' | 'value' | 'onChange'>;
 export type RadioTableProps = Omit<TableProps<any>, 'onChange'> & {
     value?: SelectProps['value'];
     options?: TableProps<any>['dataSource'];

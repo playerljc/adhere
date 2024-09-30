@@ -6,7 +6,7 @@ import ArrayEntityValueHOC from './ArrayEntityValueHOC';
 import AsyncTreeEntityValueHOC from './AsyncTreeEntityValueHOC';
 import AutoCompleteTest from './AutoComplete/AutoCompleteSelectInput';
 import CascaderTest from './Cascader/FlatAsyncCascader.tsx';
-import CheckboxTest from './Checkbox/VerticalCheckAllCheckbox.tsx';
+import AutoCompleteCheckboxSelect from './Checkbox/AutoCompleteCheckboxSelect';
 import DatePickerValueHOCInFormTest from './DatePickerValueHOCInFormTest';
 import DatePickerValueHOCTest from './DatePickerValueHOCTest';
 import FormErrorContainer from './Form/FormErrorContainer';
@@ -21,16 +21,16 @@ import RangePickerValueHOCInFormTest from './RangePickerValueHOCInFormTest';
 import RangePickerValueHOCTest from './RangePickerValueHOCTest';
 import SelectTest from './Select/AutoCompleteCheckAllMultipleSelect';
 import CheckAllMultipleSelect from './Select/CheckAllMultipleSelect';
-import AutoCompleteTablePagingSelectValueHOC from './Table/AutoCompleteTablePagingSelectValueHOC.tsx';
 import AutoCompleteTableSelectValueHOC from './Table/AutoCompleteTableSelectValueHOC.tsx';
+import AutoCompleteTreeTablePagingSelect from './Table/AutoCompleteTreeTablePagingSelect';
+// import AutoCompleteTablePagingSelect from './Table/AutoCompleteTreeTablePagingSelect.tsx';
 import TableTest from './Table/AutoCompleteTreeTablePagingSelectValueHOC.jsx';
-import TableExt from './Table/TableExt';
 import TagTest from './Tag/HorizontalCheckableTagGroup';
 import TimePickerValueHOCInFormTest from './TimePickerValueHOCInFormTest';
 import TimePickerValueHOCTest from './TimePickerValueHOCTest';
 import TransferTest from './Transfer/AutoCompleteTransferSelect.tsx';
 import TreeEntityValueHOC from './TreeEntityValueHOC';
-import TreeSelectTest from './TreeSelect/AutoCompleteTreeMultiSelectValueHOC.jsx';
+import AutoCompleteTreeMultiSelectValueHOC from './TreeSelect/AutoCompleteTreeMultiSelectValueHOC';
 import Anchor from './anchor';
 import FormRulesTest from './formRulesTest';
 import AntHOC from './test';
@@ -38,5 +38,5 @@ import AntHOC from './test';
 import '../src/index.less';
 
 e2e.PC({
-  children: <TableExt />,
+  children: <AutoCompleteTreeTablePagingSelect />,
 });

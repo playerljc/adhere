@@ -4,8 +4,8 @@ import Mock from '@baifendian/adhere-mock';
 
 const { Book } = Mock;
 
-export default Book.map((t) => {
-  const id = Mockjs.mock('@guid');
+export default Book.map((t, _index) => {
+  const id = `${_index + 1}`; //Mockjs.mock('@guid');
 
   return {
     ...t,
