@@ -2,24 +2,24 @@ import Feature from 'ol/Feature.js';
 import Map from 'ol/Map';
 import Overlay from 'ol/Overlay.js';
 import View from 'ol/View';
-import {defaults as defaultControls} from 'ol/control.js';
+import { defaults as defaultControls } from 'ol/control.js';
 import MousePosition from 'ol/control/MousePosition.js';
 import ScaleLine from 'ol/control/ScaleLine.js';
 import Zoom from 'ol/control/Zoom.js';
-import {createStringXY} from 'ol/coordinate';
-import {boundingExtent, getBottomLeft, getTopRight} from 'ol/extent.js';
-import {LineString, Point} from 'ol/geom';
+import { createStringXY } from 'ol/coordinate';
+import { boundingExtent, getBottomLeft, getTopRight } from 'ol/extent.js';
+import { LineString, Point } from 'ol/geom';
 import Circle from 'ol/geom/Circle';
 import LinearRing from 'ol/geom/LinearRing';
 import Polygon from 'ol/geom/Polygon';
-import Draw, {createBox} from 'ol/interaction/Draw.js';
+import Draw, { createBox } from 'ol/interaction/Draw.js';
 import Modify from 'ol/interaction/Modify';
-import {Heatmap as HeatMapLayer, Vector as VectorLayer} from 'ol/layer.js';
-import {fromLonLat, toLonLat, transform, transformExtent} from 'ol/proj.js';
-import {Vector as VectorSource} from 'ol/source.js';
-import {Circle as CircleStyle, Fill, Icon, RegularShape, Stroke, Style} from 'ol/style.js';
+import { Heatmap as HeatMapLayer, Vector as VectorLayer } from 'ol/layer.js';
+import { fromLonLat, toLonLat, transform, transformExtent } from 'ol/proj.js';
+import { Vector as VectorSource } from 'ol/source.js';
+import { Circle as CircleStyle, Fill, Icon, RegularShape, Stroke, Style } from 'ol/style.js';
 import Text from 'ol/style/Text';
-import {v4} from 'uuid';
+import { v4 } from 'uuid';
 
 import Resource from '@baifendian/adhere-util-resource';
 
@@ -46,7 +46,7 @@ function getMinZoom(target) {
  */
 function transformLonLat(point?: Array<number>) {
   return transform(
-    <any>point,
+    point,
     Resource.Dict.value.ResourceGisEpsg3857.value,
     Resource.Dict.value.ResourceGisEpsg4326.value,
   );
@@ -110,7 +110,7 @@ export default {
         zoom = fitZoom;
       } else {
         // @ts-ignore
-        const mapExtentTransform = [...fromLonLat(extent[0]),...fromLonLat(extent[1])];
+        const mapExtentTransform = [...fromLonLat(extent[0]), ...fromLonLat(extent[1])];
         const resolution = map.getView().getResolutionForExtent(mapExtentTransform);
         zoom = map.getView().getZoomForResolution(resolution);
         // zoom = 11.5;
@@ -686,7 +686,7 @@ export default {
           color,
           lineCap: lineCap as CanvasLineCap,
           lineJoin: lineJoin as CanvasLineJoin,
-          lineDash: lineDash as number[]
+          lineDash: lineDash as number[],
         }),
       }),
     );
@@ -1363,7 +1363,7 @@ export default {
     const top3857 = fromLonLat(top4236);
     // 计算出纬度方向上距离圆心1000米的点的坐标
     const lon1 =
-        center4326[0] + (radius / (R * Math.cos((Math.PI * center4326[1]) / 180))) * (180 / Math.PI);
+      center4326[0] + (radius / (R * Math.cos((Math.PI * center4326[1]) / 180))) * (180 / Math.PI);
     const right4236 = [lon1, center4326[1]];
     const right3857 = fromLonLat(right4236);
     // 计算经度方向上的点和圆心的平面距离
