@@ -37,6 +37,7 @@
     "@baifendian/adhere-util-watchmemoized": "^2.11.0",
     "antd": "^5.20.6",
     "lodash.debounce": "^4.0.8",
+    "lodash.uniqby": "^4.7.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "use-immer": "^0.10.0"

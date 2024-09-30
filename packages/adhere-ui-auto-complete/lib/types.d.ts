@@ -12,6 +12,7 @@ export interface IAutoComplete {
     debounceTimeout?: number;
     loadData?: (kw?: string) => Promise<void>;
     emptyContent?: ReactElement;
+    defaultTreeData?: TreeSelectProps['treeData'];
 }
 export type AutoCompleteProps = IAutoComplete & Omit<SelectProps, 'children'> & {
     defaultOptions?: SelectProps['options'];
