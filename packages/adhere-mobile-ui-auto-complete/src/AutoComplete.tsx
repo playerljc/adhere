@@ -8,14 +8,15 @@ import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
-import type { AutoCompleteProps } from './types';
+import TreeAutoComplete from './TreeAutoComplete';
+import type { AutoCompleteComponent, AutoCompleteProps } from './types';
 
 const selectorPrefix = 'adhere-mobile-ui-auto-complete';
 
 const { Title, Text } = Typography;
 
 /**
- * AutoComplete
+ * InternalAutoComplete
  * @param className
  * @param style
  * @param searchBarProps
@@ -30,7 +31,7 @@ const { Title, Text } = Typography;
  * @param children
  * @constructor
  */
-const AutoComplete = memo<AutoCompleteProps>(
+const InternalAutoComplete = memo<AutoCompleteProps>(
   ({
     className,
     style,
@@ -41,6 +42,7 @@ const AutoComplete = memo<AutoCompleteProps>(
     placeholder,
     searchBarProps,
     loadData,
+    defaultDataSource,
     searchDataSource,
     rowKey,
     labelProp,
@@ -56,7 +58,7 @@ const AutoComplete = memo<AutoCompleteProps>(
 
     const [kw, setKw] = useState<string>('');
 
-    const [dataSource, setDataSource] = useState<any[]>([]);
+    const [dataSource, setDataSource] = useState<any[]>(defaultDataSource ?? []);
 
     const valueToIds = useMemo(
       () =>
@@ -109,11 +111,11 @@ const AutoComplete = memo<AutoCompleteProps>(
       const targetValues = Array.isArray(_values) ? _values : [_values];
 
       setDataSource((_dataSource) =>
-        targetValues.map((_value) =>
-          [...(searchDataSource ?? []), ..._dataSource]?.find?.(
+        targetValues.map((_value) => {
+          return [...(searchDataSource ?? []), ..._dataSource]?.find?.(
             (_r) => (getValue(_r) ?? getKey(_r)) === _value,
-          ),
-        ),
+          );
+        }),
       );
 
       onChange?.(_values);
@@ -129,7 +131,11 @@ const AutoComplete = memo<AutoCompleteProps>(
 
     useEffect(() => {
       setDataSource((_dataSource) => {
-        const allDataSource = [...(searchDataSource ?? []), ..._dataSource];
+        const allDataSource = [
+          ...(searchDataSource ?? []),
+          ...(defaultDataSource ?? []),
+          ..._dataSource,
+        ];
 
         return (
           value?.map?.((_value) => {
@@ -141,7 +147,7 @@ const AutoComplete = memo<AutoCompleteProps>(
           }) ?? []
         );
       });
-    }, [searchDataSource, value]);
+    }, [searchDataSource, defaultDataSource, value]);
 
     return (
       <div
@@ -225,6 +231,10 @@ const AutoComplete = memo<AutoCompleteProps>(
     );
   },
 );
+
+const AutoComplete = InternalAutoComplete as AutoCompleteComponent;
+
+AutoComplete.TreeAutoComplete = TreeAutoComplete;
 
 AutoComplete.displayName = 'AutoComplete';
 

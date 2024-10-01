@@ -33,6 +33,7 @@ export default () => {
         }, 500);
       }}
       onChange={(_value) => {
+        debugger;
         setValue(_value);
       }}
       searchDataSource={searchDataSource}
