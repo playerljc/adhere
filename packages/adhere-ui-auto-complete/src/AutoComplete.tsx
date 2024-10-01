@@ -28,9 +28,9 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
     styleWrap,
     renderLoading,
     debounceTimeout,
+    defaultOptions,
     options,
     loadData,
-    defaultOptions,
     emptyContent,
     children,
     ...selectProps
