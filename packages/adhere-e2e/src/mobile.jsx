@@ -35,6 +35,9 @@ import '@baifendian/adhere-ui-css/lib/css.less';
 
 let timerRef = null;
 
+const rem = window.document.body.clientWidth / 10;
+document.documentElement.style.fontSize = rem + 'px';
+
 // app载入移动端样式;
 document.getElementById('app').classList.add('mobile');
 
