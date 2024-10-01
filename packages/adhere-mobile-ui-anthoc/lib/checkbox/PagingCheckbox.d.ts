@@ -1,4 +1,5 @@
 import React from 'react';
 import type { DisplayNameInternal, PagingCheckboxProps } from '../types';
-declare const PagingCheckbox: DisplayNameInternal<React.NamedExoticComponent<PagingCheckboxProps>>;
+declare const InternalPagingCheckbox: React.NamedExoticComponent<PagingCheckboxProps>;
+declare const PagingCheckbox: DisplayNameInternal<typeof InternalPagingCheckbox>;
 export default PagingCheckbox;

@@ -1,5 +1,6 @@
 import React from 'react';
 import type { FilterPagingCheckboxCheckListProps } from '../types';
 import { DisplayNameInternal } from '../types';
-declare const FilterPagingCheckboxCheckList: DisplayNameInternal<React.NamedExoticComponent<FilterPagingCheckboxCheckListProps>>;
+declare const InternalFilterPagingCheckboxCheckList: React.NamedExoticComponent<FilterPagingCheckboxCheckListProps>;
+declare const FilterPagingCheckboxCheckList: DisplayNameInternal<typeof InternalFilterPagingCheckboxCheckList>;
 export default FilterPagingCheckboxCheckList;

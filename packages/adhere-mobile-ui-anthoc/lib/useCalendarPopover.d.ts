@@ -1,7 +1,7 @@
 import React from 'react';
 import type { UseCalendarPopover } from './types';
 declare function useCalendarPopover({ popoverTriggerClassName, popoverTriggerStyle, placeholder, value, okLabel, cancelLabel, renderDisplay, locale, ...calendarPickerViewProps }: UseCalendarPopover<typeof value>): {
-    actions: (false | {
+    actions: ({
         key: string;
         text: NonNullable<React.ReactNode>;
         primary: boolean;

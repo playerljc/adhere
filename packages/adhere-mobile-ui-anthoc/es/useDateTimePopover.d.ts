@@ -2,7 +2,7 @@ import React from 'react';
 import type { DateTimeViewProps, UseDateTimerPopover } from './types';
 declare function useDateTimePopover<T extends DateTimeViewProps>({ popoverTriggerClassName, popoverTriggerStyle, placeholder, value, okLabel, cancelLabel, clearLabel, allowClearValue, formatValue, }: Parameters<UseDateTimerPopover<T, typeof value>>[0]): {
     key: string;
-    actions: (false | {
+    actions: ({
         key: string;
         text: string | NonNullable<import("./types").DateTimePopoverProps<T>["okLabel"]>;
         primary: boolean;

@@ -1,4 +1,10 @@
 import React from 'react';
 import type { CheckAllSelectorProps, DisplayNameInternal } from '../types';
-declare const CheckAllSelector: DisplayNameInternal<React.NamedExoticComponent<CheckAllSelectorProps>>;
+/**
+ * CheckAllSelector
+ * @description CheckAllSelector
+ * @constructor
+ */
+declare const InternalCheckAllSelector: React.NamedExoticComponent<CheckAllSelectorProps>;
+declare const CheckAllSelector: DisplayNameInternal<typeof InternalCheckAllSelector>;
 export default CheckAllSelector;

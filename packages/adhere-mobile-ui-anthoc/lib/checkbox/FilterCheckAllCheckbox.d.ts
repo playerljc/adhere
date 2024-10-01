@@ -1,4 +1,5 @@
 import React from 'react';
 import type { DisplayNameInternal, FilterCheckAllCheckboxProps } from '../types';
-declare const FilterCheckAllCheckbox: DisplayNameInternal<React.NamedExoticComponent<FilterCheckAllCheckboxProps>>;
+declare const InternalFilterCheckAllCheckbox: React.NamedExoticComponent<FilterCheckAllCheckboxProps>;
+declare const FilterCheckAllCheckbox: DisplayNameInternal<typeof InternalFilterCheckAllCheckbox>;
 export default FilterCheckAllCheckbox;

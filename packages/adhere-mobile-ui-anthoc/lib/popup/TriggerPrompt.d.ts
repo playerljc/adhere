@@ -1,4 +1,8 @@
 import React from 'react';
 import type { DisplayNameInternal, PopupTriggerPromptProps } from '../types';
-declare const PopupTriggerPrompt: DisplayNameInternal<React.NamedExoticComponent<PopupTriggerPromptProps<any>>>;
+/**
+ * InternalPopupTriggerPrompt
+ */
+declare const InternalPopupTriggerPrompt: React.NamedExoticComponent<PopupTriggerPromptProps<any>>;
+declare const PopupTriggerPrompt: DisplayNameInternal<typeof InternalPopupTriggerPrompt>;
 export default PopupTriggerPrompt;

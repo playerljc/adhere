@@ -7,10 +7,22 @@ import type { CSSProperties, ReactElement, ReactNode } from 'react';
 import { Context, FC } from 'react';
 import type { AutoCompleteProps as AdhereMobileAutoCompleteProps } from '@baifendian/adhere-mobile-ui-auto-complete/es/types';
 import type { TimePickerViewProps } from '@baifendian/adhere-mobile-ui-time-picker-view/es/types';
+import type { TreeSelectProps } from '@baifendian/adhere-mobile-ui-tree/es/types';
 import type { ScrollLoadProps, ScrollLoadRefHandle } from '@baifendian/adhere-ui-scrollload/es/types';
 import CustomWrapperFormItem from './form/CustomWrapperFormItem';
 import FormItem from './form/FormItem';
 import NestingFormItem from './form/NestingFormItem';
+import AsyncTreeLeafSelect from './tree-select/AsyncTreeLeafSelect';
+import AsyncTreeSelect from './tree-select/AsyncTreeSelect';
+import AsyncTreeShowAllSelect from './tree-select/AsyncTreeShowAllSelect';
+import AsyncTreeShowChildSelect from './tree-select/AsyncTreeShowChildSelect';
+import AutoCompleteTreeLeafSelect from './tree-select/AutoCompleteTreeLeafSelect';
+import AutoCompleteTreeSelect from './tree-select/AutoCompleteTreeSelect';
+import AutoCompleteTreeShowAllSelect from './tree-select/AutoCompleteTreeShowAllSelect';
+import AutoCompleteTreeShowChildSelect from './tree-select/AutoCompleteTreeShowChildSelect';
+import TreeLeafSelect from './tree-select/TreeLeafSelect';
+import TreeShowAllSelect from './tree-select/TreeShowAllSelect';
+import TreeShowChildSelect from './tree-select/TreeShowChildSelect';
 import { createFactory } from './util';
 type BaseType = {
     className?: string;
@@ -563,4 +575,43 @@ export type InputMultipleDialogProps<T> = InputMultipleProps<T> & {
 export type InputMultipleHOCComponent = ReturnType<typeof createFactory<InputMultipleProps<string>>> & {
     Dialog: FC<InputMultipleDialogProps<string>>;
 };
+export type TreeSelectHOCComponent = ReturnType<typeof createFactory<TreeSelectProps>> & {
+    TreeLeafSelect: typeof TreeLeafSelect;
+    AutoCompleteTreeLeafSelect: typeof AutoCompleteTreeLeafSelect;
+    AsyncTreeShowAllSelect: typeof AsyncTreeShowAllSelect;
+    AutoCompleteTreeShowAllSelect: typeof AutoCompleteTreeShowAllSelect;
+    AsyncTreeLeafSelect: typeof AsyncTreeLeafSelect;
+    AsyncTreeSelect: typeof AsyncTreeSelect;
+    TreeShowChildSelect: typeof TreeShowChildSelect;
+    AsyncTreeShowChildSelect: typeof AsyncTreeShowChildSelect;
+    AutoCompleteTreeShowChildSelect: typeof AutoCompleteTreeShowChildSelect;
+    TreeShowAllSelect: typeof TreeShowAllSelect;
+    AutoCompleteTreeSelect: typeof AutoCompleteTreeSelect;
+};
+export type UseTreeSelectLeaf = (treeData: TreeSelectProps['treeData']) => TreeSelectProps['treeData'];
+/**
+ * UseAsyncTreeSelect
+ */
+export interface UseAsyncTreeSelect {
+    (arg: {
+        cascadeParams: any;
+        onDataSourceChange?: (treeData: TreeSelectProps['treeData']) => void;
+        fetchBranch?: (value: TreeSelectProps['value'], cascadeParams: string | number) => Promise<TreeSelectProps['treeData']>;
+        fetchData: (defaultId: string | number, cascadeParams?: any) => Promise<TreeSelectProps['treeData']>;
+        defaultId: string | number;
+        value: TreeSelectProps['value'];
+    }): {
+        treeData: TreeSelectProps['treeData'];
+        onLoadData: any;
+        onChange: (onChange: TreeSelectProps['onChange'], ...treeOnChangeParams: any[]) => any;
+    };
+}
+export type AsyncTreeSelectProps = TreeSelectProps & {
+    cascadeParams: any;
+    onDataSourceChange?: (treeData: TreeSelectProps['treeData']) => void;
+    fetchBranch?: (value: TreeSelectProps['value'], cascadeParams: string | number) => Promise<TreeSelectProps['treeData']>;
+    fetchData: (defaultId: string | number, cascadeParams?: any) => Promise<TreeSelectProps['treeData']>;
+    defaultId: string | number;
+};
+export type AsyncTreeLeafSelectProps = AsyncTreeSelectProps;
 export {};

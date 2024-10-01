@@ -1,4 +1,10 @@
 import React from 'react';
 import type { CheckboxCheckAllCheckListProps, DisplayNameInternal } from '../types';
-declare const CheckboxCheckAllCheckList: DisplayNameInternal<React.NamedExoticComponent<CheckboxCheckAllCheckListProps>>;
+/**
+ * CheckboxCheckAllCheckList
+ * @description 带有全选按钮的竖向CheckboxGroup
+ * @constructor
+ */
+declare const InternalCheckboxCheckAllCheckList: React.NamedExoticComponent<CheckboxCheckAllCheckListProps>;
+declare const CheckboxCheckAllCheckList: DisplayNameInternal<typeof InternalCheckboxCheckAllCheckList>;
 export default CheckboxCheckAllCheckList;

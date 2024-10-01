@@ -1,4 +1,5 @@
 import React from 'react';
 import type { DisplayNameInternal, PagingCheckListProps } from '../types';
-declare const PagingCheckList: DisplayNameInternal<React.NamedExoticComponent<PagingCheckListProps>>;
+declare const InternalPagingCheckList: React.NamedExoticComponent<PagingCheckListProps>;
+declare const PagingCheckList: DisplayNameInternal<typeof InternalPagingCheckList>;
 export default PagingCheckList;

@@ -1,4 +1,5 @@
 import React from 'react';
 import { AutoCompletePagingCheckboxProps, DisplayNameInternal } from '../types';
-declare const AutoCompletePagingCheckbox: DisplayNameInternal<React.NamedExoticComponent<AutoCompletePagingCheckboxProps>>;
+declare const InternalAutoCompletePagingCheckbox: React.NamedExoticComponent<AutoCompletePagingCheckboxProps>;
+declare const AutoCompletePagingCheckbox: DisplayNameInternal<typeof InternalAutoCompletePagingCheckbox>;
 export default AutoCompletePagingCheckbox;

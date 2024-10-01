@@ -1,5 +1,5 @@
 import { useMount, useUpdateEffect } from 'ahooks';
-import difference from 'lodash/difference';
+import difference from 'lodash.difference';
 import React, { memo, useMemo, useRef, useState } from 'react';
 import { useImmer } from 'use-immer';
 

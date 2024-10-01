@@ -1,4 +1,8 @@
 import React from 'react';
 import type { DialogTriggerPromptProps, DisplayNameInternal } from '../types';
-declare const DialogTriggerPrompt: DisplayNameInternal<React.NamedExoticComponent<DialogTriggerPromptProps<any>>>;
+/**
+ * InternalDialogTriggerPrompt
+ */
+declare const InternalDialogTriggerPrompt: React.NamedExoticComponent<DialogTriggerPromptProps<any>>;
+declare const DialogTriggerPrompt: DisplayNameInternal<typeof InternalDialogTriggerPrompt>;
 export default DialogTriggerPrompt;

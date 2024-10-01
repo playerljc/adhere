@@ -1,7 +1,7 @@
 import React from 'react';
 import type { UseDatePopover } from './types';
 declare function useDatePopover({ popoverTriggerClassName, popoverTriggerStyle, placeholder, value, okLabel, cancelLabel, renderDisplay, locale, ...datePickerViewProps }: UseDatePopover<typeof value>): {
-    actions: (false | {
+    actions: ({
         key: string;
         text: NonNullable<React.ReactNode>;
         primary: boolean;

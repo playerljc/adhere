@@ -1,4 +1,9 @@
 import React from 'react';
 import type { DataSourceListProps, DisplayNameInternal } from '../types';
-declare const DataSourceList: DisplayNameInternal<React.NamedExoticComponent<DataSourceListProps>>;
+/**
+ * DataSourceList
+ * @constructor
+ */
+declare const InternalDataSourceList: React.NamedExoticComponent<DataSourceListProps>;
+declare const DataSourceList: DisplayNameInternal<typeof InternalDataSourceList>;
 export default DataSourceList;
