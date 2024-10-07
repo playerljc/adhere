@@ -81,7 +81,7 @@ const useAsyncTreeSelect: UseAsyncTreeSelect = ({
     if (!fetchBranch) return;
 
     // 回显 回显数据 并集 topLevel
-    Promise.all([loadData(defaultId), fetchBranch?.(value, cascadeParams)]).then(
+    Promise.all([loadData(defaultId, cascadeParams), fetchBranch?.(value, cascadeParams)]).then(
       ([rootNodes = [], treeBranchNode = []]) => {
         setTreeData([
           ...(treeBranchNode ?? []),
@@ -97,18 +97,21 @@ const useAsyncTreeSelect: UseAsyncTreeSelect = ({
    * loadData
    * @description Async加载数据
    * @param {string} id
+   * @param cascadeParams
    */
-  const loadData = (id) => fetchData(id, cascadeParams).then((data) => data);
+  const loadData = (id, cascadeParams) => fetchData(id, cascadeParams).then((data) => data);
 
   /**
    * onLoadData
-   * @param id
    * @return {Promise<undefined>}
+   * @param nodeData
    */
-  const onLoadData = ({ value: id }) =>
+  const onLoadData = (nodeData) =>
     new Promise<unknown>((resolve) => {
       setTimeout(() => {
-        loadData(id).then((data) => {
+        const { value: id, ...cascadeParams } = nodeData;
+
+        loadData(id, cascadeParams).then((data) => {
           setTreeData((_treeData) => {
             // 拉平数据处理
             if (!!treeDataSimpleMode) {
@@ -142,7 +145,7 @@ const useAsyncTreeSelect: UseAsyncTreeSelect = ({
 
   const onChange = (callback, params) => {
     changeValue.current = params;
-    callback(...params);
+    callback?.(...params);
   };
 
   useMount(() => {
