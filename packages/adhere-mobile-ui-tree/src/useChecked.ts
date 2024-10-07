@@ -1,5 +1,8 @@
+import uniq from 'lodash.uniq';
+
 import Util from '@baifendian/adhere-util';
 
+import { DEFAULT_TREE_UTIL_CONFIG } from './Constant';
 import type { TreeData, TreeDataItem } from './types';
 
 /**
@@ -27,7 +30,7 @@ function useChecked() {
    * @return {string[]}
    */
   function getChildrenKeys(node) {
-    let keys = [node.key];
+    let keys = [node[DEFAULT_TREE_UTIL_CONFIG.keyAttr]];
 
     const children = targetChildren(node.children ?? []);
 
@@ -51,12 +54,12 @@ function useChecked() {
     treeData: TreeData,
     defaultCheckedKeys: string[],
   ): string[] {
-    const checkedKeys: string[] = [];
+    const checkedKeys: string[] = [...defaultCheckedKeys];
 
     function up({ key, checkedKeys, parentId, childrenData }) {
       const childrenKeys = childrenData
         ?.filter(({ key: itemKey }) => itemKey !== key)
-        .map(({ key }) => key);
+        .map((node) => node[DEFAULT_TREE_UTIL_CONFIG.keyAttr]);
 
       let selfChecked: boolean;
 
@@ -70,7 +73,7 @@ function useChecked() {
 
       // @ts-ignore
       const parentNodeData = Util.findParentNodeByKey(treeData, parentId, {
-        keyAttr: 'key',
+        keyAttr: DEFAULT_TREE_UTIL_CONFIG.keyAttr,
       });
 
       if (parentNodeData) {
@@ -84,11 +87,20 @@ function useChecked() {
     }
 
     defaultCheckedKeys.forEach((checkedKey) => {
-      checkedKeys.push(checkedKey);
+      // @ts-ignore
+      const nodeData = Util.findNodeByKey(treeData, checkedKey, {
+        keyAttr: DEFAULT_TREE_UTIL_CONFIG.keyAttr,
+      });
+
+      if (nodeData) {
+        const descendants = getChildrenKeys(nodeData);
+        // 自己加子孙 向下所有的
+        checkedKeys.push(checkedKey, ...descendants);
+      }
 
       // @ts-ignore
       const parentNodeData = Util.findParentNodeByKey(treeData, checkedKey, {
-        keyAttr: 'key',
+        keyAttr: DEFAULT_TREE_UTIL_CONFIG.keyAttr,
       });
 
       if (parentNodeData) {
@@ -101,7 +113,7 @@ function useChecked() {
       }
     });
 
-    return checkedKeys;
+    return uniq(checkedKeys);
   }
 
   /**
@@ -146,7 +158,7 @@ function useChecked() {
     }
 
     // 调用parent的updateParentChecked
-    next?.({ key: parentId, checked: selfChecked, checkedKeys });
+    next?.({ [DEFAULT_TREE_UTIL_CONFIG.keyAttr]: parentId, checked: selfChecked, checkedKeys });
   }
 
   /**
@@ -162,12 +174,12 @@ function useChecked() {
     // 不受控
     if (!checkStrictly) {
       if (checked) {
-        if (!checkedKeys.includes(node.key)) {
-          checkedKeys.push(node.key);
+        if (!checkedKeys.includes(node[DEFAULT_TREE_UTIL_CONFIG.keyAttr])) {
+          checkedKeys.push(node[DEFAULT_TREE_UTIL_CONFIG.keyAttr]);
         }
       } else {
-        if (checkedKeys.includes(node.key)) {
-          checkedKeys.splice(checkedKeys.indexOf(node.key), 1);
+        if (checkedKeys.includes(node[DEFAULT_TREE_UTIL_CONFIG.keyAttr])) {
+          checkedKeys.splice(checkedKeys.indexOf(node[DEFAULT_TREE_UTIL_CONFIG.keyAttr]), 1);
         }
       }
       return;
@@ -194,7 +206,11 @@ function useChecked() {
     }
 
     // 更新父节点的状态
-    next?.({ key: node.key, checked, checkedKeys });
+    next?.({
+      [DEFAULT_TREE_UTIL_CONFIG.keyAttr]: node[DEFAULT_TREE_UTIL_CONFIG.keyAttr],
+      checked,
+      checkedKeys,
+    });
   }
 
   /**

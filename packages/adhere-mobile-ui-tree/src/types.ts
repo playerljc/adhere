@@ -22,15 +22,28 @@ export type TreeDataItem = Readonly<{
   indent?: TreeProps['indent'];
 }>;
 
+export type TreeDataFlatItem = Readonly<
+  Omit<TreeDataItem, 'children'> & {
+    pId: number;
+  }
+>;
+
 export type TreeDataItemExtra = Readonly<
-  Omit<TreeDataItem, 'title' | 'children'> & {
+  Omit<TreeDataItem | TreeDataFlatItem, 'title' | 'children'> & {
     level: number;
     isLeaf: boolean;
     props?: any;
   }
 >;
 
-export type TreeData = Readonly<TreeDataItem[]>;
+export type TreeData = Readonly<(TreeDataItem | TreeDataFlatItem)[]>;
+
+export type TreeDataSimpleModeFromObject = {
+  keyAttr: string;
+  titleAttr: string;
+  parentIdAttr: string;
+  rootParentId: string | number;
+};
 
 export interface TreeProps {
   className?: string;
@@ -61,9 +74,12 @@ export interface TreeProps {
   // title之前的节点的图标
   icon?: (nodeData: TreeDataItemExtra) => ReactNode;
   // 异步加载的hook
-  loadData?: (nodeData: TreeDataItemExtra) => Promise<void>;
+  loadData?: (nodeData: TreeDataItemExtra) => Promise<TreeData>;
   // （受控）已经加载的节点，需要配合 loadData 使用
   loadedKeys?: string[];
+
+  // 使用简单格式的 treeData，具体设置参考可设置的类型 (此时 treeData 应变为这样的数据结构: [{id:1, pId:0, value:'1', title:"test1",...},...]， pId 是父节点的 id)
+  treeDataSimpleMode?: boolean | TreeDataSimpleModeFromObject;
 
   // 是否可以搜索(本地数据)
   showSearch?: boolean;
@@ -161,6 +177,7 @@ export interface TreeContext {
   titleGap: () => string;
   iconGap: () => string;
   indent: () => string;
+  teeDataSimpleMode?: () => TreeProps['treeDataSimpleMode'];
   titleRender?: TreeProps['titleRender'];
   switcherIcon?: TreeProps['switcherIcon'];
   children?: TreeDataItem['children'];
@@ -168,6 +185,7 @@ export interface TreeContext {
   setSelectedKeys: Function;
   setCheckedKeys: Function;
   setLoadedKeys: Function;
+  setTreeData: Function;
   loadData?: TreeProps['loadData'];
   onSelect?: TreeProps['onSelect'];
   onExpand?: TreeProps['onExpand'];

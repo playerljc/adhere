@@ -32,34 +32,46 @@ function generateTree(depth, width, currentDepth = 1, parentKey = '0') {
   return tree;
 }
 
-export default () => {
-  const [treeData, setTreeData] = useState(generateTree(1, 3));
+const treeData = generateTree(1, 3);
 
+const flat = Util.treeToArray(
+  generateTree(1, 3),
+  {
+    parentIdAttr: 'pId',
+    rootParentId: 0,
+  },
+  'key',
+);
+
+export default () => {
   return (
     <div style={{ padding: 20, width: '100%', height: '100%', overflowY: 'auto' }}>
       <Tree
         treeData={treeData}
+        // treeDataSimpleMode
         size="middle"
         multiple={false}
         checkable
         checkStrictly
+        checkedKeys={['0-0-0-0', '0-0-0-1', '0-0-0-2']}
         onExpand={function () {}}
         onSelect={function () {}}
         onCheck={function () {}}
         loadData={(nodeData) => {
           return new Promise((resolve) => {
             setTimeout(() => {
-              setTreeData((_treeData) => {
-                const children = generateTree(1, 3, 1, nodeData.key);
+              resolve(generateTree(1, 3, 1, nodeData.key));
 
-                const item = Util.findNodeByKey(_treeData, nodeData.key, { keyAttr: 'key' });
-
-                item.children = children;
-
-                return JSON.parse(JSON.stringify(_treeData));
-              });
-
-              resolve();
+              // resolve(
+              //   Util.treeToArray(
+              //     generateTree(1, 3, 1, nodeData.key),
+              //     {
+              //       parentIdAttr: 'pId',
+              //       rootParentId: 0,
+              //     },
+              //     'key',
+              //   ),
+              // );
             }, 1000);
           });
         }}

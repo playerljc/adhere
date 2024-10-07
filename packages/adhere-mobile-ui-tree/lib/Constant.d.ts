@@ -15,6 +15,7 @@ export const DEFAULT_ICON_GAP: 5;
 export const DEFAULT_INDENT: 30;
 export namespace DEFAULT_TREE_UTIL_CONFIG {
     let keyAttr: string;
+    let titleAttr: string;
     let parentIdAttr: string;
     let rootParentId: number;
 }

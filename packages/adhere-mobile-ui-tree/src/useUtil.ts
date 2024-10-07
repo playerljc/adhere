@@ -1,6 +1,7 @@
 import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
 import Util from '@baifendian/adhere-util';
 
+import { DEFAULT_TREE_UTIL_CONFIG } from './Constant';
 import type { TreeData, TreeDataItemExtra } from './types';
 
 /**
@@ -32,7 +33,9 @@ function useUtil() {
    */
   function getLeafKeys({ treeData, keys }: { treeData: TreeData; keys: string[] }): string[] {
     // @ts-ignore
-    const leafKeys = Util.getLeafNodes(treeData).map(({ key }) => key);
+    const leafKeys = Util.getLeafNodes(treeData).map(
+      (nodeData) => nodeData[DEFAULT_TREE_UTIL_CONFIG.keyAttr],
+    );
     return keys.filter((key) => leafKeys.includes(key));
   }
 
@@ -44,8 +47,14 @@ function useUtil() {
    * @return {string[]}
    */
   function omitDisabledKeys(treeData: TreeData, keys: string[]): string[] {
-    // @ts-ignore
-    const nodes = keys.map((key) => Util.findNodeByKey(treeData, key, { keyAttr: 'key' }));
+    const nodes = keys
+      // @ts-ignore
+      .map((key) => Util.findNodeByKey(treeData, key, { keyAttr: 'key' }))
+      .filter((t) => !!t);
+
+    if (nodes.length !== keys.length) {
+      return keys;
+    }
 
     return nodes
       .filter((node) => {
@@ -53,7 +62,7 @@ function useUtil() {
 
         return !node?.disabled;
       })
-      .map((node) => node?.key as string);
+      .map((node) => node?.[DEFAULT_TREE_UTIL_CONFIG.keyAttr] as string);
   }
 
   function getValueWithUnit(
@@ -84,12 +93,23 @@ function useUtil() {
     return pixel;
   }
 
+  function checkTreeDataSimpleModeFromObject(treeDataSimpleMode: any) {
+    if (
+      'keyAttr' in treeDataSimpleMode &&
+      'titleAttr' in treeDataSimpleMode &&
+      'parentIdAttr' in treeDataSimpleMode &&
+      'rootParentId' in treeDataSimpleMode
+    ) {
+    }
+  }
+
   return {
     getTreeNodesByKeys,
     getLeafKeys,
     getValueWithUnit,
     getValue,
     omitDisabledKeys,
+    checkTreeDataSimpleModeFromObject,
   };
 }
 

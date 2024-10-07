@@ -14,12 +14,21 @@ export type TreeDataItem = Readonly<{
     iconGap?: TreeProps['iconGap'];
     indent?: TreeProps['indent'];
 }>;
-export type TreeDataItemExtra = Readonly<Omit<TreeDataItem, 'title' | 'children'> & {
+export type TreeDataFlatItem = Readonly<Omit<TreeDataItem, 'children'> & {
+    pId: number;
+}>;
+export type TreeDataItemExtra = Readonly<Omit<TreeDataItem | TreeDataFlatItem, 'title' | 'children'> & {
     level: number;
     isLeaf: boolean;
     props?: any;
 }>;
-export type TreeData = Readonly<TreeDataItem[]>;
+export type TreeData = Readonly<(TreeDataItem | TreeDataFlatItem)[]>;
+export type TreeDataSimpleModeFromObject = {
+    keyAttr: string;
+    titleAttr: string;
+    parentIdAttr: string;
+    rootParentId: string | number;
+};
 export interface TreeProps {
     className?: string;
     style?: CSSProperties;
@@ -36,8 +45,9 @@ export interface TreeProps {
     multiple?: boolean;
     checkStrictly?: boolean;
     icon?: (nodeData: TreeDataItemExtra) => ReactNode;
-    loadData?: (nodeData: TreeDataItemExtra) => Promise<void>;
+    loadData?: (nodeData: TreeDataItemExtra) => Promise<TreeData>;
     loadedKeys?: string[];
+    treeDataSimpleMode?: boolean | TreeDataSimpleModeFromObject;
     showSearch?: boolean;
     filterKey?: string;
     rowGap?: number;
@@ -102,6 +112,7 @@ export interface TreeContext {
     titleGap: () => string;
     iconGap: () => string;
     indent: () => string;
+    teeDataSimpleMode?: () => TreeProps['treeDataSimpleMode'];
     titleRender?: TreeProps['titleRender'];
     switcherIcon?: TreeProps['switcherIcon'];
     children?: TreeDataItem['children'];
@@ -109,6 +120,7 @@ export interface TreeContext {
     setSelectedKeys: Function;
     setCheckedKeys: Function;
     setLoadedKeys: Function;
+    setTreeData: Function;
     loadData?: TreeProps['loadData'];
     onSelect?: TreeProps['onSelect'];
     onExpand?: TreeProps['onExpand'];

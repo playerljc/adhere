@@ -1,5 +1,5 @@
 import { useUpdate } from 'ahooks';
-import { Checkbox, SpinLoading } from 'antd-mobile';
+import { Checkbox } from 'antd-mobile';
 import { AddOutline, MinusOutline } from 'antd-mobile-icons';
 import classNames from 'classnames';
 import React, { memo, useContext, useMemo } from 'react';
@@ -9,10 +9,16 @@ import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Space from '@baifendian/adhere-ui-space';
 import Util from '@baifendian/adhere-util';
 
-import { DEFAULT_DISABLED, DEFAULT_SELECTABLE, DEFAULT_TREE_NODE_CHECKABLE } from './Constant';
+import {
+  DEFAULT_DISABLED,
+  DEFAULT_SELECTABLE,
+  DEFAULT_TREE_NODE_CHECKABLE,
+  DEFAULT_TREE_UTIL_CONFIG,
+} from './Constant';
 import TreeContext from './TreeContext';
 import TreeNodeContext from './TreeNodeContext';
-import type { TreeDataItemExtra, TreeNodeProps } from './types';
+import type { TreeDataItem, TreeDataItemExtra, TreeNodeProps } from './types';
+import { TreeDataSimpleModeFromObject } from './types';
 import useChecked from './useChecked';
 import useLoadedLocks from './useLoadedLocks';
 import useUtil from './useUtil';
@@ -45,10 +51,12 @@ const TreeNode = memo<TreeNodeProps>(
       setExpandedKeys,
       setCheckedKeys,
       setLoadedKeys,
+      setTreeData,
       selectedKeys,
       expandedKeys,
       checkedKeys,
       loadedKeys,
+      teeDataSimpleMode,
       loadData,
       size,
       multiple,
@@ -98,7 +106,8 @@ const TreeNode = memo<TreeNodeProps>(
 
     const { handleCheck, updateParentChecked, existsCheckableNodeInParentChildren } = useChecked();
 
-    const { getTreeNodesByKeys, getLeafKeys, getValueWithUnit } = useUtil();
+    const { getTreeNodesByKeys, getLeafKeys, checkTreeDataSimpleModeFromObject, getValueWithUnit } =
+      useUtil();
 
     // 是否可用
     const targetDisabled = useMemo(() => {
@@ -183,7 +192,11 @@ const TreeNode = memo<TreeNodeProps>(
                 existsCheckableNodeInParentChildren(targetChildrenData),
             }}
           >
-            <TreeNode level={level + 1} id={_treeNodeData.key} {..._treeNodeData} />
+            <TreeNode
+              level={level + 1}
+              id={_treeNodeData[DEFAULT_TREE_UTIL_CONFIG.keyAttr]}
+              {..._treeNodeData}
+            />
           </TreeNodeContext.Provider>
         )),
       [targetChildrenData],
@@ -231,7 +244,46 @@ const TreeNode = memo<TreeNodeProps>(
       update();
 
       loadData?.(nodeDataExtra)
-        ?.then(() => {
+        ?.then((childrenTreeData) => {
+          setTreeData((_treeData) => {
+            let _childrenTreeData = childrenTreeData as TreeDataItem[];
+            const targetTreeDataSimpleMode = !!teeDataSimpleMode?.();
+
+            if (targetTreeDataSimpleMode) {
+              if (Util.isBoolean(targetTreeDataSimpleMode)) {
+                if (targetTreeDataSimpleMode as boolean) {
+                  // @ts-ignore
+                  _childrenTreeData = Util.arrayToAntdTreeSelect(
+                    _childrenTreeData,
+                    DEFAULT_TREE_UTIL_CONFIG,
+                  );
+                }
+              } else if (
+                Util.isObject(targetTreeDataSimpleMode) &&
+                checkTreeDataSimpleModeFromObject(targetTreeDataSimpleMode)
+              ) {
+                // @ts-ignore
+                _childrenTreeData = Util.arrayToAntdTreeSelect(
+                  _childrenTreeData,
+                  teeDataSimpleMode?.() as TreeDataSimpleModeFromObject,
+                );
+              }
+            }
+
+            const item = Util.findNodeByKey(
+              _treeData,
+              nodeDataExtra[DEFAULT_TREE_UTIL_CONFIG.keyAttr],
+              { keyAttr: DEFAULT_TREE_UTIL_CONFIG.keyAttr },
+            );
+
+            if (item) {
+              // @ts-ignore
+              item.children = _childrenTreeData ?? [];
+            }
+
+            return JSON.parse(JSON.stringify(_treeData));
+          });
+
           // 展开
           onExpanded(e);
 
@@ -363,7 +415,7 @@ const TreeNode = memo<TreeNodeProps>(
 
       handleCheck({
         node: {
-          key: id,
+          [DEFAULT_TREE_UTIL_CONFIG.keyAttr]: id,
           children,
         },
         checked: _checked,

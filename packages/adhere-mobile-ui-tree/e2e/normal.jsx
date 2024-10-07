@@ -1,6 +1,8 @@
 import { ScanCodeOutline } from 'antd-mobile-icons';
 import React from 'react';
 
+import Util from '@baifendian/adhere-util';
+
 import Tree from '../src';
 
 import '../src/index.less';
@@ -32,12 +34,22 @@ function generateTree(depth, width, currentDepth = 1, parentKey = '0') {
 // 生成深度为 3，宽度为 3 的树形数据
 const treeData = generateTree(3, 3);
 
+const flat = Util.treeToArray(
+  treeData,
+  {
+    parentIdAttr: 'pId',
+    rootParentId: 0,
+  },
+  'key',
+);
+
 export default () => {
   return (
     <div style={{ padding: 20, width: '100%', height: '100%', overflowY: 'auto' }}>
       <Tree
         showSearch
-        treeData={treeData}
+        treeData={flat}
+        treeDataSimpleMode
         size="middle"
         multiple={false}
         checkable

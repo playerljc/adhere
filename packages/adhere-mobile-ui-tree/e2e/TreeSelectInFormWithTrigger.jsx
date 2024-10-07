@@ -1,9 +1,9 @@
-import { useMount } from 'ahooks';
 import { Button, Form } from 'antd-mobile';
 import React from 'react';
 
 import { Modal } from '@baifendian/adhere-mobile-ui-anthoc';
 import { TreeEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
+import Util from '@baifendian/adhere-util';
 
 import Tree from '../src';
 
@@ -32,6 +32,15 @@ function generateTree(depth, width, currentDepth = 1, parentKey = '0') {
 
 // 生成深度为 3，宽度为 3 的树形数据
 const treeData = generateTree(3, 3);
+
+const flat = Util.treeToArray(
+  treeData,
+  {
+    parentIdAttr: 'pId',
+    rootParentId: 0,
+  },
+  'key',
+);
 
 export default () => {
   const [form] = Form.useForm();
@@ -83,7 +92,8 @@ export default () => {
         >
           <TreeEntityValueHOC treeDataProp="treeData">
             <Tree.TreeSelect
-              treeData={treeData}
+              treeDataSimpleMode
+              treeData={flat}
               size="middle"
               multiple={false}
               checkStrictly={false}

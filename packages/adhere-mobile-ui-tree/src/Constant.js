@@ -30,6 +30,7 @@ export const DEFAULT_INDENT = 30;
 
 export const DEFAULT_TREE_UTIL_CONFIG = {
   keyAttr: 'key',
+  titleAttr: 'title',
   parentIdAttr: 'pId',
   rootParentId: 0,
 };

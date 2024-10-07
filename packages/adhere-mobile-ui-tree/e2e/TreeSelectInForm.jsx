@@ -2,6 +2,8 @@ import { useMount } from 'ahooks';
 import { Button, Form } from 'antd-mobile';
 import React from 'react';
 
+import Util from '@baifendian/adhere-util';
+
 import Tree from '../src';
 
 import '../src/index.less';
@@ -30,12 +32,21 @@ function generateTree(depth, width, currentDepth = 1, parentKey = '0') {
 // 生成深度为 3，宽度为 3 的树形数据
 const treeData = generateTree(3, 3);
 
+const flat = Util.treeToArray(
+  treeData,
+  {
+    parentIdAttr: 'pId',
+    rootParentId: 0,
+  },
+  'key',
+);
+
 export default () => {
   const [form] = Form.useForm();
 
   useMount(() => {
     form.setFieldsValue({
-      persons: ['0-0-0-0'],
+      persons: ['0-0-0-0', '0-0-0-1', '0-0-0-2'],
     });
   });
 
@@ -60,8 +71,9 @@ export default () => {
     >
       <Form.Item name="persons" label="人员" rules={[{ required: true, message: '请选择人员' }]}>
         <Tree.TreeSelect
-          treeData={treeData}
+          treeData={flat}
           size="middle"
+          treeDataSimpleMode
           multiple={false}
           checkStrictly
           onExpand={function () {}}
