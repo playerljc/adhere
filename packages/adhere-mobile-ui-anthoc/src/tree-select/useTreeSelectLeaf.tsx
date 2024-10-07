@@ -9,6 +9,8 @@ import type { UseTreeSelectLeaf } from '../types';
  */
 const useTreeSelectLeaf: UseTreeSelectLeaf = (treeData = []) =>
   useMemo(() => {
+    debugger;
+
     function loop(nodes) {
       (nodes || []).forEach((node) => {
         if ('isLeaf' in node) {

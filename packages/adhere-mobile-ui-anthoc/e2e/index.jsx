@@ -76,9 +76,16 @@ import TimeModalFormatValueHOC from './TimeModal/FormatValueHOC';
 import TimeModal from './TimeModal/TimeModal';
 import TimeModalTimestampValueHOC from './TimeModal/TimestampValueHoc';
 import TimePopup from './TimePopup/TimePopup';
+import AsyncTreeLeafSelect from './TreeSelect/AsyncTreeLeafSelect';
+import AsyncTreeSelect from './TreeSelect/AsyncTreeSelect';
+import AutoCompleteTreeSelect from './TreeSelect/AutoCompleteTreeSelect';
+import TreeLeafSelect from './TreeSelect/TreeLeafSelect';
+import TreeSelect from './TreeSelect/TreeSelect';
+import TreeShowAllSelect from './TreeSelect/TreeShowAllSelect';
+import TreeShowChildSelect from './TreeSelect/TreeShowChildSelect';
 
 import '@baifendian/adhere-e2e/es/index.less';
 
 e2e.Mobile({
-  children: <AsyncCascaderView />,
+  children: <AutoCompleteTreeSelect />,
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { AsyncTreeSelectProps, DisplayNameInternal } from '../types';
+import type { DisplayNameInternal } from '../types';
 /**
  * AsyncTreeSelect
  * @param cascadeParams
@@ -10,6 +10,6 @@ import type { AsyncTreeSelectProps, DisplayNameInternal } from '../types';
  * @param props
  * @constructor
  */
-declare const InternalAsyncTreeSelect: React.NamedExoticComponent<AsyncTreeSelectProps>;
+declare const InternalAsyncTreeSelect: React.NamedExoticComponent<import("@baifendian/adhere-mobile-ui-tree/es/types").TreeSelectProps>;
 declare const AsyncTreeSelect: DisplayNameInternal<typeof InternalAsyncTreeSelect>;
 export default AsyncTreeSelect;

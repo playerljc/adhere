@@ -606,12 +606,6 @@ export interface UseAsyncTreeSelect {
         onChange: (onChange: TreeSelectProps['onChange'], ...treeOnChangeParams: any[]) => any;
     };
 }
-export type AsyncTreeSelectProps = TreeSelectProps & {
-    cascadeParams: any;
-    onDataSourceChange?: (treeData: TreeSelectProps['treeData']) => void;
-    fetchBranch?: (value: TreeSelectProps['value'], cascadeParams: string | number) => Promise<TreeSelectProps['treeData']>;
-    fetchData: (defaultId: string | number, cascadeParams?: any) => Promise<TreeSelectProps['treeData']>;
-    defaultId: string | number;
-};
+export type AsyncTreeSelectProps = TreeSelectProps;
 export type AsyncTreeLeafSelectProps = AsyncTreeSelectProps;
 export {};

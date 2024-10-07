@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 
 import type { AsyncTreeSelectProps, DisplayNameInternal } from '../types';
 import AsyncTreeSelect from './AsyncTreeSelect';
-import TreeSelect from './TreeSelect';
 
 /**
  * AsyncTreeCheckedShowParentSelect

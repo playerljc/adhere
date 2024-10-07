@@ -881,24 +881,6 @@ export interface UseAsyncTreeSelect {
   };
 }
 
-export type AsyncTreeSelectProps = TreeSelectProps & {
-  // 调用fetchData的参数
-  cascadeParams: any;
-  // 数据源发生变化的hook
-  onDataSourceChange?: (treeData: TreeSelectProps['treeData']) => void;
-  // onLoadData: TreeSelectProps['loadData'];
-  // 用选中值查询tree路径数据，用来回显使用的数据
-  fetchBranch?: (
-    value: TreeSelectProps['value'],
-    cascadeParams: string | number,
-  ) => Promise<TreeSelectProps['treeData']>;
-  // 异步加载数据的函数
-  fetchData: (
-    defaultId: string | number,
-    cascadeParams?: any,
-  ) => Promise<TreeSelectProps['treeData']>;
-  // 缺省加载数据的父id
-  defaultId: string | number;
-};
+export type AsyncTreeSelectProps = TreeSelectProps;
 
 export type AsyncTreeLeafSelectProps = AsyncTreeSelectProps;

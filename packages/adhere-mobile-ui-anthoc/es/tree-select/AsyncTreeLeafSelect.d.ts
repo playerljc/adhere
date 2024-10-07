@@ -11,6 +11,6 @@ import type { DisplayNameInternal } from '../types';
  * @param props
  * @constructor
  */
-declare const InternalAsyncTreeLeafSelect: React.NamedExoticComponent<import("../types").AsyncTreeSelectProps>;
+declare const InternalAsyncTreeLeafSelect: React.NamedExoticComponent<import("@baifendian/adhere-mobile-ui-tree/es/types").TreeSelectProps>;
 declare const AsyncTreeLeafSelect: DisplayNameInternal<typeof InternalAsyncTreeLeafSelect>;
 export default AsyncTreeLeafSelect;
