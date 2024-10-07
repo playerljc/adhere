@@ -11,5 +11,5 @@ import Normal from './normal';
 import '@baifendian/adhere-e2e/es/index.less';
 
 e2e.Mobile({
-  children: <TreeSelectInFormWithTrigger />,
+  children: <TreeSelect />,
 });

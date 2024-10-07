@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import Util from '@baifendian/adhere-util';
 
@@ -32,10 +32,10 @@ function generateTree(depth, width, currentDepth = 1, parentKey = '0') {
   return tree;
 }
 
-const treeData = generateTree(1, 3);
+const _treeData = generateTree(1, 3);
 
-const flat = Util.treeToArray(
-  generateTree(1, 3),
+const _flat = Util.treeToArray(
+  _treeData,
   {
     parentIdAttr: 'pId',
     rootParentId: 0,
@@ -44,11 +44,13 @@ const flat = Util.treeToArray(
 );
 
 export default () => {
+  const [treeData, setTreeData] = useState(_flat);
+
   return (
     <div style={{ padding: 20, width: '100%', height: '100%', overflowY: 'auto' }}>
       <Tree
         treeData={treeData}
-        // treeDataSimpleMode
+        treeDataSimpleMode
         size="middle"
         multiple={false}
         checkable
@@ -60,7 +62,38 @@ export default () => {
         loadData={(nodeData) => {
           return new Promise((resolve) => {
             setTimeout(() => {
-              resolve(generateTree(1, 3, 1, nodeData.key));
+              const children = generateTree(1, 3, 1, nodeData.key);
+
+              // 普通
+              // setTreeData((_treeData) => {
+              //   const item = Util.findNodeByKey(_treeData, nodeData.key, { keyAttr: 'key' });
+              //
+              //   if (item) {
+              //     item.children = children ?? [];
+              //   }
+              //
+              //   return JSON.parse(JSON.stringify(_treeData));
+              // });
+
+              // 拉平
+              setTreeData((_treeData) => {
+                const item = Util.findNodeByKey(_treeData, nodeData.key, { keyAttr: 'key' });
+
+                if (item) {
+                  item.children = children ?? [];
+                }
+
+                const data = Util.treeToArray(
+                  _treeData,
+                  {
+                    parentIdAttr: 'pId',
+                    rootParentId: 0,
+                  },
+                  'key',
+                );
+
+                return JSON.parse(JSON.stringify(data));
+              });
 
               // resolve(
               //   Util.treeToArray(
@@ -72,6 +105,8 @@ export default () => {
               //     'key',
               //   ),
               // );
+
+              resolve();
             }, 1000);
           });
         }}

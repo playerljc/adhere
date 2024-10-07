@@ -74,7 +74,7 @@ export interface TreeProps {
   // title之前的节点的图标
   icon?: (nodeData: TreeDataItemExtra) => ReactNode;
   // 异步加载的hook
-  loadData?: (nodeData: TreeDataItemExtra) => Promise<TreeData>;
+  loadData?: (nodeData: TreeDataItemExtra) => Promise<void>;
   // （受控）已经加载的节点，需要配合 loadData 使用
   loadedKeys?: string[];
 
@@ -185,7 +185,7 @@ export interface TreeContext {
   setSelectedKeys: Function;
   setCheckedKeys: Function;
   setLoadedKeys: Function;
-  setTreeData: Function;
+  // setTreeData: Function;
   loadData?: TreeProps['loadData'];
   onSelect?: TreeProps['onSelect'];
   onExpand?: TreeProps['onExpand'];

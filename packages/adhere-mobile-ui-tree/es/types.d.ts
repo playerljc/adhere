@@ -45,7 +45,7 @@ export interface TreeProps {
     multiple?: boolean;
     checkStrictly?: boolean;
     icon?: (nodeData: TreeDataItemExtra) => ReactNode;
-    loadData?: (nodeData: TreeDataItemExtra) => Promise<TreeData>;
+    loadData?: (nodeData: TreeDataItemExtra) => Promise<void>;
     loadedKeys?: string[];
     treeDataSimpleMode?: boolean | TreeDataSimpleModeFromObject;
     showSearch?: boolean;
@@ -120,7 +120,6 @@ export interface TreeContext {
     setSelectedKeys: Function;
     setCheckedKeys: Function;
     setLoadedKeys: Function;
-    setTreeData: Function;
     loadData?: TreeProps['loadData'];
     onSelect?: TreeProps['onSelect'];
     onExpand?: TreeProps['onExpand'];

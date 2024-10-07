@@ -142,7 +142,7 @@ const InternalTree = memo<TreeProps>(
     }, [filterKey]);
 
     // Tree的数据
-    const defaultTreeData = useMemo(() => {
+    const targetTreeData = useMemo(() => {
       let _targetTreeData = treeData ?? [];
 
       if (Util.isBoolean(targetTreeDataSimpleMode)) {
@@ -163,9 +163,13 @@ const InternalTree = memo<TreeProps>(
 
       const _treeData = _targetTreeData ?? [];
 
-      if (!isSearching) return _treeData;
+      if (!isSearching) {
+        return _treeData;
+      }
 
-      if (!kw) return _treeData;
+      if (!kw) {
+        return _treeData;
+      }
 
       // @ts-ignore
       return Util.filterTree(_treeData, kw, {
@@ -174,7 +178,7 @@ const InternalTree = memo<TreeProps>(
         titleAttr: targetFilterKey,
       });
     }, [kw, isSearching, targetTreeDataSimpleMode, treeData]);
-    const [targetTreeData, setTargetTreeData] = usePropToState(defaultTreeData);
+    // const [targetTreeData, setTargetTreeData] = usePropToState(defaultTreeData);
 
     // 展开的keys
     const defaultExpandedKeys = useMemo(() => expandedKeys ?? [], [expandedKeys]);
@@ -304,13 +308,33 @@ const InternalTree = memo<TreeProps>(
         setExpandedKeys: setTargetExpandedKeys,
         setCheckedKeys: setTargetCheckedKeys,
         setLoadedKeys: setTargetLoadedKeys,
-        setTreeData: setTargetTreeData,
+        // setTreeData: setTargetTreeData,
         loadData,
         size: () => targetSize,
         rowGap: () => rowGap ?? DEFAULT_ROW_GAP,
         multiple: () => targetMultiple,
         checkable: () => targetCheckable,
-        treeData: () => treeData,
+        treeData: () => {
+          let _treeData = treeData;
+
+          if (Util.isBoolean(targetTreeDataSimpleMode)) {
+            if (targetTreeDataSimpleMode as boolean) {
+              // @ts-ignore
+              _treeData = Util.arrayToAntdTreeSelect(_treeData, DEFAULT_TREE_UTIL_CONFIG);
+            }
+          } else if (
+            Util.isObject(targetTreeDataSimpleMode) &&
+            checkTreeDataSimpleModeFromObject(targetTreeDataSimpleMode)
+          ) {
+            _treeData = Util.arrayToAntdTreeSelect(
+              // @ts-ignore
+              _treeData,
+              targetTreeDataSimpleMode as TreeDataSimpleModeFromObject,
+            );
+          }
+
+          return _treeData;
+        },
         checkStrictly: () => targetCheckStrictly,
         teeDataSimpleMode: () => targetTreeDataSimpleMode,
         icon,
