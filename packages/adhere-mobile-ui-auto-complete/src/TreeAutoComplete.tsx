@@ -7,11 +7,20 @@ import Util from '@baifendian/adhere-util';
 import AutoComplete from './AutoComplete';
 import type { TreeAutoCompleteProps } from './types';
 
+/**
+ * TreeAutoComplete
+ * @description searchDataSource是带有children数据结构
+ */
 const TreeAutoComplete = memo<TreeAutoCompleteProps>(
   ({ treeSelectProps, ...autoCompleteProps }) => {
+    // 将带有children的数据结构转化成flat数据结构
     const autoCompleteSearchDataSource = useMemo(() => {
       if (!autoCompleteProps.searchDataSource) return [];
       if (!autoCompleteProps.searchDataSource.length) return [];
+
+      if (!!treeSelectProps?.treeDataSimpleMode) {
+        return autoCompleteProps.searchDataSource;
+      }
 
       return Util.treeToArray(
         autoCompleteProps.searchDataSource,

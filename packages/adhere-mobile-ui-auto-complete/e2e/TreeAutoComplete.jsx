@@ -2,6 +2,7 @@ import { Image, List } from 'antd-mobile';
 import React, { useState } from 'react';
 
 import { MobileGlobalIndicator } from '@baifendian/adhere';
+import { DEFAULT_TREE_UTIL_CONFIG } from '@baifendian/adhere-mobile-ui-tree/src/Constant';
 import Util from '@baifendian/adhere-util';
 
 import MobileAutoComplete from '../src';
@@ -47,7 +48,7 @@ const FLAT_TREE_DATA = Util.treeToArray(
     parentIdAttr: 'pId',
     rootParentId: 0,
   },
-  'id',
+  'key',
 );
 
 const defaultTreeData = {
@@ -80,7 +81,7 @@ const flatDefaultTreeData = {
       parentIdAttr: 'pId',
       rootParentId: 0,
     },
-    'id',
+    'key',
   ),
 };
 
@@ -95,6 +96,9 @@ export default () => {
       style={{ height: '100%' }}
       value={value}
       valueProp="key"
+      treeSelectProps={{
+        treeDataSimpleMode: true,
+      }}
       defaultDataSource={[TREE_DATA[0].children[0].children[0]]}
       loadData={(_kw) => {
         return new Promise((resolve) => {
@@ -106,41 +110,48 @@ export default () => {
 
           setTimeout(() => {
             // 正常
+            // const flatTreeData = Util.treeToArray(
+            //   TREE_DATA,
+            //   { parentIdAttr: 'pId', rootParentId: 0 },
+            //   'key',
+            // );
+            //
+            // const result = flatTreeData.filter((_node) => _node.title.indexOf(_kw) !== -1);
+            //
+            // const targetTreeData = Util.completionIncompleteFlatArr(flatTreeData, result, {
+            //   keyAttr: 'key',
+            //   titleAttr: 'title',
+            //   parentIdAttr: 'pId',
+            //   rootParentId: 0,
+            // });
 
-            const flatTreeData = Util.treeToArray(
-              TREE_DATA,
-              { parentIdAttr: 'pId', rootParentId: 0 },
-              'key',
-            );
+            // flat
+            const result = FLAT_TREE_DATA.filter((_node) => _node.title.indexOf(_kw) !== -1);
 
-            const result = flatTreeData.filter((_node) => _node.title.indexOf(_kw) !== -1);
-
-            const targetTreeData = Util.completionIncompleteFlatArr(flatTreeData, result, {
+            const all = Util.completionIncompleteFlatArr(FLAT_TREE_DATA, result, {
               keyAttr: 'key',
               titleAttr: 'title',
               parentIdAttr: 'pId',
               rootParentId: 0,
             });
 
-            // flat
-            // const result = FLAT_TREE_DATA.filter((_node) => _node.title.indexOf(_kw) !== -1);
-            //
-            // const targetTreeData = Util.treeToArray(
-            //   Util.completionIncompleteFlatArr(FLAT_TREE_DATA, result, {
-            //     keyAttr: 'key',
-            //     titleAttr: 'title',
-            //     parentIdAttr: 'pId',
-            //     rootParentId: 0,
-            //   }),
-            //   {
-            //     keyAttr: 'key',
-            //     titleAttr: 'title',
-            //     parentIdAttr: 'pId',
-            //     rootParentId: 0,
-            //   },
-            // );
+            const targetTreeData = Util.treeToArray(
+              all,
+              {
+                parentIdAttr: 'pId',
+                rootParentId: 0,
+              },
+              'key',
+            );
 
-            setSearchDataSource(targetTreeData);
+            // const a = Util.arrayToAntdTreeSelect(targetTreeData, {
+            //   keyAttr: 'key',
+            //   titleAttr: 'title',
+            //   parentIdAttr: 'pId',
+            //   rootParentId: 0,
+            // });
+
+            setSearchDataSource(JSON.parse(JSON.stringify(targetTreeData)));
 
             resolve();
           }, 100);
@@ -151,7 +162,6 @@ export default () => {
       }}
       searchDataSource={searchDataSource}
       renderResultItem={(record) => {
-        debugger;
         return (
           <List>
             <List.Item
