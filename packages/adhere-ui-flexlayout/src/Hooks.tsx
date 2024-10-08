@@ -5,9 +5,10 @@ import React, { MutableRefObject, useCallback, useContext, useMemo, useState } f
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
+import { FlexContext } from './Context';
 import { gridCount } from './Fixed';
 import { getValueWithUnit } from './Util';
-import type { FixedProps } from './types';
+import type { ContextType, FixedProps } from './types';
 
 // import { ResizeObserver } from '@juggle/resize-observer';
 
@@ -32,8 +33,10 @@ export const useGrid = (props: FixedProps): boolean =>
  * @param {number | number[]} gutter
  * @return {boolean}
  */
-export const useGap = (gutter: any): boolean =>
-  useMemo(() => {
+export const useGap = (gutter: any): boolean => {
+  const { direction } = useContext<ContextType>(FlexContext);
+
+  return useMemo(() => {
     if (
       gutter === undefined ||
       gutter === null ||
@@ -49,14 +52,33 @@ export const useGap = (gutter: any): boolean =>
       if (gutter.length === 0) return false;
 
       if (gutter.length >= 1 && gutter.length <= 2) {
-        return !gutter.some(
+        const validate = gutter.some(
           (g) => g === undefined || g === null || g === '' || typeof g !== 'number',
         );
+
+        if (validate) return false;
+
+        if (gutter.length === 1) {
+          if (gutter[0] === 0) return false;
+        }
+
+        if (gutter.length === 2) {
+          if (direction === 'vertical') {
+            if (gutter[0] === 0) return false;
+          }
+
+          if (direction === 'horizontal') {
+            if (gutter[1] === 0) return false;
+          }
+        }
+
+        return true;
       }
     }
 
     return true;
   }, [gutter]);
+};
 
 /**
  * useTrigger
