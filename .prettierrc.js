@@ -4,7 +4,7 @@ module.exports = {
   ...fabric.prettier,
   importOrder: [
     'amfe-flexible',
-    './Mobile',
+    '^./Mobile',
     '@/lib/Mobile',
     '^(?=[a-z]).*(?<!(less|css|sass|styl))$',
     '^(?=@[a-z]).*(?<!(less|css|sass|styl))$',

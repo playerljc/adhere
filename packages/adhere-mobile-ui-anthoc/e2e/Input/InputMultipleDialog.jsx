@@ -10,6 +10,7 @@ export default () => {
       <InputMultiple.Dialog
         value={value}
         onChange={setValue}
+        options={['222']}
         isCheckAll
         isFilter
         selectorProps={{

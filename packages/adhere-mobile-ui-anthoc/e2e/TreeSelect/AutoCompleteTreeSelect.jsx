@@ -92,8 +92,11 @@ export default () => {
     <TreeSelect.AutoCompleteTreeSelect
       placeholder="请输入关键字"
       style={{ height: '100%' }}
-      value={value}
       valueProp="key"
+      value={value}
+      onChange={(_value) => {
+        setValue(_value);
+      }}
       treeSelectProps={{
         treeDataSimpleMode: true,
       }}
@@ -147,10 +150,6 @@ export default () => {
             resolve();
           }, 100);
         });
-      }}
-      onChange={(_value) => {
-        debugger;
-        setValue(_value);
       }}
       searchDataSource={searchDataSource}
       renderResultItem={(record) => {

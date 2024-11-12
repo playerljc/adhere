@@ -71,6 +71,7 @@ import ResultPage from './result-page';
 import SafeArea from './safe-area';
 import ScrollMask from './scroll-mask';
 import SearchBar from './search-bar';
+import Segmented from './segmented';
 import Selector from './selector';
 import SideBar from './side-bar';
 import Skeleton from './skeleton';
@@ -171,6 +172,7 @@ export {
   SafeArea,
   ScrollMask,
   SearchBar,
+  Segmented,
   Selector,
   SideBar,
   Skeleton,
