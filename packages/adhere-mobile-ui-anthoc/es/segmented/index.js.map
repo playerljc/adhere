@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["segmented/index.js"],"sourcesContent":["import Segmented from './Segmented';\nexport default Segmented;"],"names":["Segmented"],"mappings":"OAAOA,cAAe,6BACPA"}
