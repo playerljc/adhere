@@ -35,7 +35,6 @@ const TableExt: FC<TableExtProps> = ({
   }, [fixedTableSpaceBetween]);
 
   useEffect(() => {
-    debugger;
     if (!tableWrapRef.current) return;
 
     if (targetFixedHeaderAutoTable) {
