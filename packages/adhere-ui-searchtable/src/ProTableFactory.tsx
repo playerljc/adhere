@@ -18,22 +18,21 @@ import {
 } from '@baifendian/adhere-ui-anthoc';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+// import Ellipsis from '@baifendian/adhere-ui-ellipsis';
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
-import Resource from '@baifendian/adhere-util-resource';
+// import Resource from '@baifendian/adhere-util-resource';
 import Validator from '@baifendian/adhere-util-validator';
 
 import AdvancedSearchPanel from './Extension/AdvancedSearchPanel';
 import ColumnTipTitle from './Extension/ColumnTipTitle';
-// import InputHOC from './Extension/InputHOC';
 import RouteListen from './Extension/SearchAndPaginParams/routeListen';
 import { selectorPrefix } from './SearchTable';
 import type { AdvancedSearchPanelGroupData, ColumnTypeExt } from './types';
 
-// const { FormItemGeneratorToDict } = FieldGeneratorToDict;
 const { TextArea } = Input;
 const { renderGridSearchFormGroup, Label, Value } = TableGridLayout;
 const _selectorPrefix = `${selectorPrefix}-protable`;
@@ -441,15 +440,24 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           ['end', 'End'].some((t) => key.indexOf(t) !== -1),
       );
 
+      // rangeDateKeys.forEach((key) => {
+      //   dateSearchParams[key] = searchParams[key]
+      //     ? `${searchParams[key].format(Resource.Dict.value.ResourceMomentFormat10.value())} ${
+      //         ['start', 'Start'].some((t) => key.indexOf(t) !== -1)
+      //           ? '00:00:00'
+      //           : ['end', 'End'].some((t) => key.indexOf(t) !== -1)
+      //           ? '23:59:59'
+      //           : ''
+      //       }`.trim()
+      //     : null;
+      // });
       rangeDateKeys.forEach((key) => {
         dateSearchParams[key] = searchParams[key]
-          ? `${searchParams[key].format(Resource.Dict.value.ResourceMomentFormat10.value())} ${
-              ['start', 'Start'].some((t) => key.indexOf(t) !== -1)
-                ? '00:00:00'
-                : ['end', 'End'].some((t) => key.indexOf(t) !== -1)
-                ? '23:59:59'
-                : ''
-            }`.trim()
+          ? ['start', 'Start'].some((t) => key.indexOf(t) !== -1)
+            ? searchParams[key].startOf('day').valueOf()
+            : ['end', 'End'].some((t) => key.indexOf(t) !== -1)
+            ? searchParams[key].endOf('day').valueOf()
+            : ''
           : null;
       });
 
@@ -458,10 +466,13 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         (key) => !(key in dateSearchParams) && dayjs.isDayjs(searchParams[key]),
       );
 
+      // dateKeys.forEach((key) => {
+      //   dateSearchParams[key] = searchParams[key]
+      //     ? searchParams[key].format(Resource.Dict.value.ResourceMomentFormat10.value()).trim()
+      //     : null;
+      // });
       dateKeys.forEach((key) => {
-        dateSearchParams[key] = searchParams[key]
-          ? searchParams[key].format(Resource.Dict.value.ResourceMomentFormat10.value()).trim()
-          : null;
+        dateSearchParams[key] = searchParams[key] ? searchParams[key].valueOf() : null;
       });
 
       return dateSearchParams;
@@ -473,10 +484,30 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @return {*}
      */
     getColumns(columns) {
-      return (columns || super.getColumns?.() || []).map((t) => ({
-        // ellipsis: 'ellipsis' in t ? t.ellipsis : true,
-        ...t,
-      }));
+      // const reducers = [
+      //   // render的处理
+      //   // (result) => {
+      //   //   if (result.render) {
+      //   //     result.render = (...params) => (
+      //   //       <Ellipsis isUseNativeTooltip tooltip={result.ellipsisTooltip}>
+      //   //         {result.render(...params)}
+      //   //       </Ellipsis>
+      //   //     );
+      //   //   }
+      //   //   return result;
+      //   // },
+      // ];
+
+      return (columns || super.getColumns?.() || []).map((t) => {
+        // return reducers.reduce((_result, reducer) => reducer(_result), {
+        //   ellipsis: 'ellipsis' in t ? t.ellipsis : true,
+        //   ...t,
+        // });
+        return {
+          ellipsis: 'ellipsis' in t ? t.ellipsis : true,
+          ...t,
+        };
+      });
     }
 
     /**
@@ -850,9 +881,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const defaultSearchConfig = {
         type: 'input',
         // 是否显示
-        visible: true,
+        visible: false,
         // 是否显示在列头上
-        showColumnHeader: true,
+        showColumnHeader: false,
         // 控件的props
         props: {},
         // TableGridLayout的Label的attrs

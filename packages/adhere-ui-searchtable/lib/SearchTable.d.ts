@@ -192,7 +192,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @param {any} filters
      * @param {any} sorter
      */
-    onTableChange: (pagination: any, filters: any, sorter: any) => Promise<unknown>;
+    onTableChange(pagination: any, filters: any, sorter: any): Promise<unknown>;
     onTableRow: (columns: any, record: any, rowIndex: any) => any;
     /**
      * sortOrder
@@ -238,6 +238,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @param {any[]} expandedRowKeys
      */
     onExpandedRowsChange(expandedRowKeys: any): Promise<void>;
+    onExpand(...params: any[]): void;
     /**
      * search
      */

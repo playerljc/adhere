@@ -138,6 +138,7 @@ const SearchListStateImplementFactory: SearchListStateImplementFactoryFunction<a
         defaultExpandSearchCollapse={false}
         openSearchParamsMemory={false}
         {...props}
+        // @ts-ignore
         $state={{
           serviceNames,
           middleWares,

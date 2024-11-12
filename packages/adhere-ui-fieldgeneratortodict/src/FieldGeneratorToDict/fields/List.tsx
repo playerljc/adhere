@@ -2,7 +2,7 @@ import type { ListProps } from 'antd';
 import React from 'react';
 
 import { List } from '@baifendian/adhere-ui-anthoc';
-import {
+import type {
   AutoCompleteCheckAllListSelectProps,
   AutoCompleteListPagingSelectProps,
   AutoCompleteListSelectProps,

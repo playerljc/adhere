@@ -71,8 +71,6 @@ export const useGap = (gutter: any): boolean => {
             if (gutter[1] === 0) return false;
           }
         }
-
-        return true;
       }
     }
 

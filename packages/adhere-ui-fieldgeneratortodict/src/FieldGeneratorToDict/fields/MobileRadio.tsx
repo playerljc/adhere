@@ -1,14 +1,14 @@
 import React from 'react';
 
 import { Radio } from '@baifendian/adhere-mobile-ui-anthoc';
-import {
+import type {
   AutoCompletePagingRadioProps,
   AutoCompleteRadioProps,
   FilterPagingRadioProps,
   FilterRadioProps,
   PagingRadioProps,
   RadioGroupProps,
-} from '@baifendian/adhere-mobile-ui-anthoc/src/types';
+} from '@baifendian/adhere-mobile-ui-anthoc/es/types';
 
 import {
   useAutoCompleteDict,

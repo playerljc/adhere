@@ -8,7 +8,7 @@ import type {
   AsyncTreeMultiSelectProps,
   AsyncTreeSelectProps,
 } from '@baifendian/adhere-ui-anthoc/es/types';
-import { TreeAutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
+import type { TreeAutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 
 import { useAsyncTree, useDict, useDynamicDict, useTreeAutoCompleteDict } from '../Hooks';
 import { setItem } from '../ItemFactory';

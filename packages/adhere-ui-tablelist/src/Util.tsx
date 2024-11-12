@@ -7,11 +7,13 @@
  */
 import { Tooltip } from 'antd';
 import dayjs from 'dayjs';
-import { difference, isEmpty, union } from 'lodash';
+import difference from 'lodash.difference';
+import isEmpty from 'lodash.isempty';
+import union from 'lodash.union';
 import React from 'react';
 
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
-import intl from '@baifendian/adhere-util-intl';
+import Intl from '@baifendian/adhere-util-intl';
 
 class Util {
   public ins: any;
@@ -142,7 +144,11 @@ class Util {
       pageSizeOptions: ['10', '20', '50'],
       showQuickJumper: true,
       showTotal: (total, [page, pageSize]) => {
-        return `当前 ${page}-${pageSize}/共 ${total} 条`;
+        return Intl.v(`当前 {page}-{pageSize}/共 {total}条`, {
+          page,
+          pageSize,
+          total,
+        });
       },
       onChange: this.onPageChange,
       onShowSizeChange: this.onPageChange,
@@ -194,7 +200,7 @@ class Util {
     // 如果showNumber 则添加序号列
     if (showNumber && !tableColumns.find((v) => v.key === 'xuhao')) {
       tableColumns.unshift({
-        title: intl.v('序号'),
+        title: Intl.v('序号'),
         dataIndex: 'xuhao',
         key: 'xuhao',
         width: 80,

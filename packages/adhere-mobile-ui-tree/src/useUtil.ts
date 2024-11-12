@@ -93,14 +93,13 @@ function useUtil() {
     return pixel;
   }
 
-  function checkTreeDataSimpleModeFromObject(treeDataSimpleMode: any) {
-    if (
+  function checkTreeDataSimpleModeFromObject(treeDataSimpleMode: object = {}) {
+    return (
       'keyAttr' in treeDataSimpleMode &&
       'titleAttr' in treeDataSimpleMode &&
       'parentIdAttr' in treeDataSimpleMode &&
       'rootParentId' in treeDataSimpleMode
-    ) {
-    }
+    );
   }
 
   return {

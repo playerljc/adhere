@@ -112,13 +112,13 @@ abstract class Search<
    * renderTitle
    */
   renderTitle(): ReactElement {
-    const { title } = this.props;
+    const { title, titleToolTip = '' } = this.props;
 
     return (
       <div className={`${selectorPrefix}-search-tool-bar-title-inner`}>
         <div className={`${selectorPrefix}-search-tool-bar-title-content`}>{title}</div>
         <div className={`${selectorPrefix}-search-tool-bar-title-info`}>
-          <Tooltip title={title}>
+          <Tooltip title={typeof title === 'string' ? title : titleToolTip}>
             <InfoCircleOutlined />
           </Tooltip>
         </div>

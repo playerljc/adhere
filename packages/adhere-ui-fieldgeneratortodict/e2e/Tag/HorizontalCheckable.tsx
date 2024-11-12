@@ -5,7 +5,7 @@ import FieldGeneratorToDict from '../../src/index';
 export default () => {
   const [value, setValue] = useState([]);
 
-  const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.VerticalCheckable}`;
+  const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.HorizontalCheckable}`;
   const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
   return <DictComponent value={value} onChange={setValue} />;

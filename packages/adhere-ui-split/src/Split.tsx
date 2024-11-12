@@ -27,6 +27,7 @@ const InternalSplit = memo<SplitProps>((props) => {
         display: 'inline-block',
         width: 1,
         margin: `0 ${value}`,
+        height: '100%',
       };
 
       if (horizontalFit) {

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 
 import ProListFactory from './ProListFactory';

@@ -1,12 +1,22 @@
 import { useMount, useUpdateEffect } from 'ahooks';
 import { useCallback, useState } from 'react';
 
-import type { PagingWrapperProps } from '@baifendian/adhere-ui-anthoc/es/types';
-import { AsyncCascaderProps, AsyncTreeSelectProps } from '@baifendian/adhere-ui-anthoc/src/types';
+import type {
+  AsyncTreeLeafSelectProps as MobileAsyncTreeLeafSelectProps,
+  AsyncTreeSelectProps as MobileAsyncTreeSelectProps,
+} from '@baifendian/adhere-mobile-ui-anthoc/es/types';
+import type { TreeAutoCompleteProps as MobileTreeAutoCompleteProps } from '@baifendian/adhere-mobile-ui-auto-complete/es/types';
+import { TreeDataSimpleModeFromObject } from '@baifendian/adhere-mobile-ui-tree/es/types';
+import type {
+  AsyncCascaderProps,
+  AsyncTreeSelectProps,
+  PagingWrapperProps,
+} from '@baifendian/adhere-ui-anthoc/es/types';
 import type {
   AutoCompleteProps,
   TreeAutoCompleteProps,
 } from '@baifendian/adhere-ui-auto-complete/es/types';
+import Util from '@baifendian/adhere-util';
 import Dict from '@baifendian/adhere-util-dict';
 
 import type { UseDictParams } from '../types';
@@ -144,8 +154,8 @@ export function useTreeAutoCompleteDict<D>({
   cascadeParams,
   onDataSourceChange,
 }: UseDictParams<D>): {
-  treeData: TreeAutoCompleteProps['treeData'];
-  loadData: TreeAutoCompleteProps['loadData'];
+  treeData: TreeAutoCompleteProps['treeData'] | MobileTreeAutoCompleteProps['searchDataSource'];
+  loadData: TreeAutoCompleteProps['loadData'] | MobileTreeAutoCompleteProps['loadData'];
 } {
   const dictValue = Dict.value[dictName].value;
 
@@ -239,8 +249,141 @@ export function useAutoCompletePaging<D>({
  */
 export function useAsyncTree<D>({
   dictName,
-}: UseDictParams<D>): AsyncTreeSelectProps['fetchData'] | AsyncCascaderProps['fetchData'] {
+}: UseDictParams<D>):
+  | AsyncTreeSelectProps['fetchData']
+  | AsyncCascaderProps['fetchData']
+  | MobileAsyncTreeLeafSelectProps['loadData']
+  | MobileAsyncTreeSelectProps['loadData'] {
   const dictValue = Dict.value[dictName].value;
 
   return useCallback<any>(dictValue, [dictName]);
+}
+
+/**
+ * useMobileAsyncTree
+ * @param {string} dictName
+ * @param {boolean} treeDataSimpleMode
+ */
+export function useMobileAsyncTree({ dictName, treeDataSimpleMode }) {
+  const [treeData, setTreeData] = useState([]);
+
+  const dictValue = Dict.value[dictName].value;
+
+  /**
+   * normalData
+   * @description 非简单数据(正常)
+   * @param _nodeData
+   * @param resultTreeData
+   */
+  function normalData({ _nodeData, resultTreeData }) {
+    setTreeData((_treeData) => {
+      if (!_nodeData) {
+        return resultTreeData;
+      }
+
+      // @ts-ignore
+      const item = Util.findNodeByKey(_treeData, _nodeData.key, { keyAttr: 'key' });
+
+      if (item) {
+        item.children = resultTreeData ?? [];
+      }
+
+      return JSON.parse(JSON.stringify(_treeData));
+    });
+  }
+
+  /**
+   * simpleData
+   * @description 简单数据(拉平数据)
+   * @param _nodeData
+   * @param resultTreeData
+   * @param config
+   */
+  function simpleData({
+    _nodeData,
+    resultTreeData,
+    config: { parentIdAttr, rootParentId, keyAttr },
+  }) {
+    setTreeData((_treeData) => {
+      function treeToArray(_originTreeData) {
+        return Util.treeToArray(
+          _originTreeData,
+          {
+            parentIdAttr,
+            rootParentId,
+          },
+          keyAttr,
+        );
+      }
+
+      if (!_nodeData) {
+        return treeToArray(resultTreeData);
+      }
+
+      // @ts-ignore
+      const item = Util.findNodeByKey(_treeData, _nodeData.key, { keyAttr });
+
+      if (item) {
+        item.children = resultTreeData ?? [];
+      }
+
+      const data = treeToArray(_treeData);
+
+      return JSON.parse(JSON.stringify(data));
+    });
+  }
+
+  const loadData = useCallback(
+    (_nodeData) => {
+      return dictValue(_nodeData).then((resultTreeData) => {
+        if (['boolean', 'object'].includes(typeof treeDataSimpleMode)) {
+          // 简单的数据
+          if (typeof treeDataSimpleMode === 'boolean') {
+            if (treeDataSimpleMode as boolean) {
+              // 简单数据
+              simpleData({
+                _nodeData,
+                resultTreeData,
+                config: {
+                  parentIdAttr: 'pId',
+                  rootParentId: 0,
+                  keyAttr: 'key',
+                },
+              });
+            }
+            //
+            else {
+              // 非简单数据
+              normalData({ _nodeData, resultTreeData });
+            }
+          }
+          //
+          else {
+            // 简单数据
+            simpleData({
+              _nodeData,
+              resultTreeData,
+              config: treeDataSimpleMode as TreeDataSimpleModeFromObject,
+            });
+          }
+        }
+        // 非简单数据
+        else {
+          normalData({ _nodeData, resultTreeData });
+        }
+
+        return resultTreeData;
+      });
+    },
+    [dictName],
+  );
+
+  useMount(() => {
+    loadData(undefined);
+  });
+
+  return {
+    treeData,
+    loadData,
+  };
 }

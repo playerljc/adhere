@@ -152,7 +152,7 @@ const InternalTree = memo<TreeProps>(
         }
       } else if (
         Util.isObject(targetTreeDataSimpleMode) &&
-        checkTreeDataSimpleModeFromObject(targetTreeDataSimpleMode)
+        checkTreeDataSimpleModeFromObject(targetTreeDataSimpleMode as TreeDataSimpleModeFromObject)
       ) {
         _targetTreeData = Util.arrayToAntdTreeSelect(
           // @ts-ignore
@@ -324,7 +324,9 @@ const InternalTree = memo<TreeProps>(
             }
           } else if (
             Util.isObject(targetTreeDataSimpleMode) &&
-            checkTreeDataSimpleModeFromObject(targetTreeDataSimpleMode)
+            checkTreeDataSimpleModeFromObject(
+              targetTreeDataSimpleMode as TreeDataSimpleModeFromObject,
+            )
           ) {
             _treeData = Util.arrayToAntdTreeSelect(
               // @ts-ignore

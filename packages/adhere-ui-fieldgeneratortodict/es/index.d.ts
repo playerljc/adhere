@@ -1,4 +1,3 @@
-/// <reference types="react" />
 declare const _default: {
     ComponentNames: {
         readonly Select: {
@@ -121,7 +120,7 @@ declare const _default: {
             readonly VerticalCheckable: "TagDynamicVerticalCheckable";
             readonly CheckAllVerticalCheckable: "TagDynamicCheckAllVerticalCheckable";
             readonly Horizontal: "TagDynamicHorizontal";
-            readonly HorizontalCheckable: "TagDynamicVerticalCheckable";
+            readonly HorizontalCheckable: "TagDynamicHorizontalCheckable";
             readonly CheckAllHorizontalCheckable: "TagDynamicCheckAllHorizontalCheckable";
             readonly SuspenseVertical: "TagDynamicSuspenseVertical";
             readonly SuspenseVerticalCheckable: "TagDynamicSuspenseVerticalCheckable";
@@ -313,6 +312,50 @@ declare const _default: {
             readonly Standard: "AutoCompleteDynamicStandard";
             readonly SelectInput: "AutoCompleteDynamicSelectInput";
         };
+        readonly InputMultiple: {
+            readonly Standard: "InputMultipleStandard";
+            readonly Vertical: "InputMultipleVertical";
+            readonly Horizontal: "InputMultipleHorizontal";
+            readonly VerticalCheckAll: "InputMultipleVerticalCheckAll";
+            readonly HorizontalCheckAll: "InputMultipleHorizontalCheckAll";
+            readonly Select: "InputMultipleSelect";
+            readonly VerticalSelect: "InputMultipleVerticalSelect";
+            readonly HorizontalSelect: "InputMultipleHorizontalSelect";
+            readonly VerticalCheckAllSelect: "InputMultipleVerticalCheckAllSelect";
+            readonly HorizontalCheckAllSelect: "InputMultipleHorizontalCheckAllSelect";
+        };
+        readonly InputMultipleDynamic: {
+            readonly Standard: "InputMultipleDynamicStandard";
+            readonly Vertical: "InputMultipleDynamicVertical";
+            readonly Horizontal: "InputMultipleDynamicHorizontal";
+            readonly VerticalCheckAll: "InputMultipleDynamicVerticalCheckAll";
+            readonly HorizontalCheckAll: "InputMultipleDynamicHorizontalCheckAll";
+            readonly Select: "InputMultipleDynamicSelect";
+            readonly VerticalSelect: "InputMultipleDynamicVerticalSelect";
+            readonly HorizontalSelect: "InputMultipleDynamicHorizontalSelect";
+            readonly VerticalCheckAllSelect: "InputMultipleDynamicVerticalCheckAllSelect";
+            readonly HorizontalCheckAllSelect: "InputMultipleDynamicHorizontalCheckAllSelect";
+        };
+        readonly MobileInputMultiple: {
+            readonly Standard: "MobileInputMultipleStandard";
+            readonly CheckAll: "MobileInputMultipleCheckAll";
+            readonly Filter: "MobileInputMultipleFilter";
+            readonly FilterCheckAll: "MobileInputMultipleFilterCheckAll";
+            readonly Select: "MobileInputMultipleSelect";
+            readonly CheckAllSelect: "MobileInputMultipleCheckAllSelect";
+            readonly FilterSelect: "MobileInputMultipleFilterSelect";
+            readonly FilterCheckAllSelect: "MobileInputMultipleFilterCheckAllSelect";
+        };
+        readonly MobileInputMultipleDynamic: {
+            readonly Standard: "MobileInputMultipleDynamicStandard";
+            readonly CheckAll: "MobileInputMultipleDynamicCheckAll";
+            readonly Filter: "MobileInputMultipleDynamicFilter";
+            readonly FilterCheckAll: "MobileInputMultipleDynamicFilterCheckAll";
+            readonly Select: "MobileInputMultipleDynamicSelect";
+            readonly CheckAllSelect: "MobileInputMultipleDynamicCheckAllSelect";
+            readonly FilterSelect: "MobileInputMultipleDynamicFilterSelect";
+            readonly FilterCheckAllSelect: "MobileInputMultipleDynamicFilterCheckAllSelect";
+        };
         readonly MobileCheckList: {
             readonly Standard: "MobileCheckListStandard";
             readonly CheckAll: "MobileCheckListCheckAll";
@@ -441,6 +484,30 @@ declare const _default: {
         readonly MobileCascaderViewAsync: {
             readonly Standard: "MobileCascaderViewAsyncStandard";
         };
+        readonly MobileTreeSelect: {
+            readonly Standard: "MobileTreeSelectStandard";
+            readonly Leaf: "MobileTreeSelectLeaf";
+            readonly ShowAll: "MobileTreeSelectShowAll";
+            readonly ShowChild: "MobileTreeSelectShowChild";
+        };
+        readonly MobileTreeSelectDynamic: {
+            readonly Standard: "MobileTreeSelectDynamicStandard";
+            readonly Leaf: "MobileTreeSelectDynamicLeaf";
+            readonly ShowAll: "MobileTreeSelectDynamicShowAll";
+            readonly ShowChild: "MobileTreeSelectDynamicShowChild";
+        };
+        readonly MobileTreeSelectAC: {
+            readonly Standard: "MobileTreeSelectACStandard";
+            readonly Leaf: "MobileTreeSelectACLeaf";
+            readonly ShowAll: "MobileTreeSelectACShowAll";
+            readonly ShowChild: "MobileTreeSelectACShowChild";
+        };
+        readonly MobileTreeSelectAsync: {
+            readonly Standard: "MobileTreeSelectAsyncStandard";
+            readonly Leaf: "MobileTreeSelectAsyncLeaf";
+            readonly ShowAll: "MobileTreeSelectAsyncShowAll";
+            readonly ShowChild: "MobileTreeSelectAsyncShowChild";
+        };
         readonly Breadcrumb: {
             readonly Standard: "BreadcrumbStandard";
             readonly SuspenseStandard: "BreadcrumbSuspenseStandard";
@@ -506,10 +573,10 @@ declare const _default: {
         validator(_: any, value: any): Promise<void>;
     };
     ArrayEntityValueHOC: import("react").NamedExoticComponent<import("@baifendian/adhere-ui-anthoc/es/types").ArrayEntityValueHOCProps & {
-        getOptionsByDataSource?: ((dataSource?: any) => any) | undefined;
+        getOptionsByDataSource?: (dataSource?: any) => any;
     }>;
     TreeEntityValueHOC: import("react").NamedExoticComponent<import("@baifendian/adhere-ui-anthoc/es/types").TreeEntityValueHOCProps & {
-        getTreeDataByDataSource?: ((dataSource?: any) => any) | undefined;
+        getTreeDataByDataSource?: (dataSource?: any) => any;
     }>;
     AsyncTreeEntityValueHOC: import("react").NamedExoticComponent<import("@baifendian/adhere-ui-anthoc/es/types").AsyncTreeEntityValueHOCProps>;
 };

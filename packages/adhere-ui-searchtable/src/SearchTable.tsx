@@ -424,7 +424,7 @@ abstract class SearchTable<
    * @param {any} filters
    * @param {any} sorter
    */
-  onTableChange = (pagination, filters, sorter) => {
+  onTableChange(pagination, filters, sorter) {
     const prePage = this.state.page;
     const preLimit = this.state.limit;
 
@@ -451,7 +451,7 @@ abstract class SearchTable<
         },
       );
     });
-  };
+  }
 
   onTableRow = (columns, record, rowIndex) => {
     // 这块可能以后会有很多操作
@@ -564,6 +564,12 @@ abstract class SearchTable<
         this.props.antdTableProps?.expandable?.onExpandedRowsChange?.(expandedRowKeys);
       }
     });
+  }
+
+  onExpand(...params) {
+    if ((this.props.antdTableProps ?? {})?.expandable?.onExpand) {
+      this.props.antdTableProps?.expandable?.onExpand?.(...params);
+    }
   }
 
   /**
@@ -1052,7 +1058,8 @@ abstract class SearchTable<
       rowKey: this.getRowKey(),
       dataSource: this.getDataSource(),
       columns,
-      onChange: this.onTableChange,
+      // @ts-ignore
+      onChange: (...params) => this.onTableChange(...params),
       pagination: this.getPagination(),
       rowSelection: this.getRowSelection(),
       size: tableDensity as SizeType,
@@ -1065,7 +1072,8 @@ abstract class SearchTable<
       expandable: {
         ...(antdTableProps ?? {}).expandable,
         expandedRowKeys: this.state.expandedRowKeys,
-        onExpandedRowsChange: this.onExpandedRowsChange,
+        onExpandedRowsChange: (...params) => this.onExpandedRowsChange(...params),
+        onExpand: (...params) => this?.onExpand(...params),
       },
     };
 

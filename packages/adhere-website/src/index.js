@@ -1,5 +1,8 @@
 import { useUpdateEffect } from 'ahooks';
 import { App } from 'antd';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -36,6 +39,20 @@ import '@baifendian/adhere-ui-anthoc/lib/index.less';
 import '@baifendian/adhere/lib/css.less';
 
 import styles from './index.less';
+
+// 配置字典
+DictConfig();
+
+// 调用initial之前的设置
+(function () {
+  [
+    // dayjs的设置
+    () => {
+      dayjs.extend(utc);
+      dayjs.extend(timezone);
+    },
+  ].forEach((r) => r());
+})();
 
 if (SelfUtil.isUseMedia()) {
   // 适配REM
@@ -174,9 +191,6 @@ function render() {
 }
 
 (function () {
-  // 配置字典
-  DictConfig();
-
   // 设置方向
   SelfUtil.initDirection();
 
@@ -190,7 +204,7 @@ function render() {
   direction = SelfUtil.getDirection();
 
   // 获取当前语言
-  lang = Util.getLang();
+  lang = SelfUtil.getLang();
 
   // 初始化dayjs的国际化
   DateDisplay.setGlobalLocal(Dict.value.SystemLang.value[lang].dayjsCode);

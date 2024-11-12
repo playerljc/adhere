@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { List } from '@baifendian/adhere-mobile-ui-anthoc';
-import { DataSourceListProps } from '@baifendian/adhere-mobile-ui-anthoc/src/types';
+import type { DataSourceListProps } from '@baifendian/adhere-mobile-ui-anthoc/es/types';
 
 import { useDict, useDynamicDict } from '../Hooks';
 import { setItem } from '../ItemFactory';

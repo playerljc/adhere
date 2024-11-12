@@ -1,63 +1,72 @@
-import { Form, FormInstance } from 'antd';
-import React, { ReactElement, ReactNode, useEffect, useMemo, useState } from 'react';
+import { Form } from 'antd';
+import classNames from 'classnames';
+import React, { ReactNode, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import type { FC } from 'react';
 
-import Util from '@baifendian/adhere-util';
-
 import type { FormItemProps } from '../types';
+
+const selectorPrefix = 'adhere-ui-anthoc-form-item';
+
+/**
+ * ErrorWrapper
+ * @description 专门处理自定义Error信息
+ * @param children
+ * @param props
+ * @constructor
+ */
+function ErrorWrapper({ children, ...props }) {
+  const { status, errors } = Form.Item.useStatus();
+
+  return children({ status, errors, ...props });
+}
 
 /**
  * FormItem
  * @description 自定义Form.Item，可以自定义error的错误信息显示位置
- * @param {() => HtmlElement | null} getErrorContainer
+ * @param useCustomError
  * @param children
+ * @param fit
  * @param {FormItemProps} props
  * @return {React.ReactNode}
  */
-const FormItem: FC<FormItemProps> = ({ getErrorContainer, children, ...props }) => {
-  // 显示错误信息的元素
-  const [errorContainer, setErrorContainer] = useState<HTMLElement | null>();
-
-  useEffect(() => {
-    setErrorContainer(getErrorContainer?.());
-  }, [getErrorContainer]);
-
-  const targetChildren = useMemo(() => {
-    if (!children) return null;
-
-    // 对children注入errorContainer
-
-    if (Util.isFunction(children)) {
-      return (form: FormInstance) => {
-        const target: ReactNode = (children as Function)(form);
-
-        if (!target) return null;
-
-        return React.cloneElement(target as ReactElement, {
-          ...((target as ReactElement)?.props ?? {}),
-          errorContainer,
-        });
-      };
-    } else {
-      return React.cloneElement(children as ReactElement, {
-        ...((children as ReactElement)?.props ?? {}),
-        errorContainer,
-      });
-    }
-  }, [children, errorContainer]);
-
+const FormItem: FC<FormItemProps> = ({
+  useCustomError = false,
+  children,
+  fit = false,
+  ...props
+}) => {
   const targetValidateTrigger = useMemo(() => {
     // @ts-ignore
-    if (targetChildren?.type?.displayName === 'NestingFormItem') {
+    if (children?.type?.displayName === 'NestingFormItem') {
       return '';
     }
 
     return 'onChange';
-  }, [targetChildren]);
+  }, [children]);
 
   return (
-    <Form.Item noStyle={!!errorContainer} validateTrigger={targetValidateTrigger} {...props}>
-      {targetChildren}
+    <Form.Item
+      noStyle={useCustomError}
+      validateTrigger={targetValidateTrigger}
+      {...(props ?? {})}
+      className={classNames(props?.className, {
+        [`${selectorPrefix}-fit`]: fit,
+      })}
+    >
+      <ErrorWrapper>
+        {({ status, errors, ...rest }) => {
+          if (children) {
+            return React.cloneElement(children as any, {
+              ...((children as any)?.props ?? {}),
+              ...(rest ?? {}),
+              status,
+              errors,
+            });
+          }
+
+          return children;
+        }}
+      </ErrorWrapper>
     </Form.Item>
   );
 };

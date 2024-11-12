@@ -354,7 +354,7 @@ setItem<VerticalCheckableTagGroupProps, VerticalCheckableTagGroupProps['options'
         cascadeParams,
         onDataSourceChange,
       });
-
+      debugger;
       return <Tag.VerticalCheckableTagGroup {...props} options={options} />;
     },
 );
@@ -408,7 +408,7 @@ setItem<HorizontalCheckableTagGroupProps, HorizontalCheckableTagGroupProps['opti
         cascadeParams,
         onDataSourceChange,
       });
-
+      debugger;
       return <Tag.HorizontalCheckableTagGroup {...props} options={options} />;
     },
 );

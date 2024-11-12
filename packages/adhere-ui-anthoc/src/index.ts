@@ -62,6 +62,7 @@ import Skeleton from './skeleton';
 import Slider from './slider';
 import Space from './space';
 import Spin from './spin';
+import Splitter from './splitter';
 import Statistic from './statistic';
 import Steps from './steps';
 import SubmitButton from './submit-button';
@@ -150,6 +151,7 @@ export {
   Space,
   Spin,
   Statistic,
+  Splitter,
   Steps,
   SubmitButton,
   Switch,

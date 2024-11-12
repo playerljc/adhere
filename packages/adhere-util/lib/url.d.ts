@@ -22,13 +22,13 @@ declare const methods: {
      * @description 不同路由模式下获取pathname的方法
      * @return {string}
      */
-    getPathName(publicPath?: string, router?: 'hash' | 'browser'): string;
+    getPathName(publicPath?: string, router?: "hash" | "browser"): string;
     /**
      * getSearch
      * @description 不同路由模式下获取search的方法
      * @return {string}
      */
-    getSearch(router?: 'hash' | 'browser'): string | undefined;
+    getSearch(router?: "hash" | "browser"): string | undefined;
     /**
      * getFullPath
      * @return {`${string}${string}`}

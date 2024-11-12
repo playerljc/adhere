@@ -140,7 +140,7 @@ const Components = {
     VerticalCheckable: 'TagDynamicVerticalCheckable',
     CheckAllVerticalCheckable: 'TagDynamicCheckAllVerticalCheckable',
     Horizontal: 'TagDynamicHorizontal',
-    HorizontalCheckable: 'TagDynamicVerticalCheckable',
+    HorizontalCheckable: 'TagDynamicHorizontalCheckable',
     CheckAllHorizontalCheckable: 'TagDynamicCheckAllHorizontalCheckable',
     SuspenseVertical: 'TagDynamicSuspenseVertical',
     SuspenseVerticalCheckable: 'TagDynamicSuspenseVerticalCheckable',
@@ -361,6 +361,56 @@ const Components = {
   },
   /* ------ AutoComplete end ------ */
 
+  /* ------ InputMultiple start ------ */
+  InputMultiple: {
+    Standard: 'InputMultipleStandard',
+    Vertical: 'InputMultipleVertical',
+    Horizontal: 'InputMultipleHorizontal',
+    VerticalCheckAll: 'InputMultipleVerticalCheckAll',
+    HorizontalCheckAll: 'InputMultipleHorizontalCheckAll',
+    Select: 'InputMultipleSelect',
+    VerticalSelect: 'InputMultipleVerticalSelect',
+    HorizontalSelect: 'InputMultipleHorizontalSelect',
+    VerticalCheckAllSelect: 'InputMultipleVerticalCheckAllSelect',
+    HorizontalCheckAllSelect: 'InputMultipleHorizontalCheckAllSelect',
+  },
+  InputMultipleDynamic: {
+    Standard: 'InputMultipleDynamicStandard',
+    Vertical: 'InputMultipleDynamicVertical',
+    Horizontal: 'InputMultipleDynamicHorizontal',
+    VerticalCheckAll: 'InputMultipleDynamicVerticalCheckAll',
+    HorizontalCheckAll: 'InputMultipleDynamicHorizontalCheckAll',
+    Select: 'InputMultipleDynamicSelect',
+    VerticalSelect: 'InputMultipleDynamicVerticalSelect',
+    HorizontalSelect: 'InputMultipleDynamicHorizontalSelect',
+    VerticalCheckAllSelect: 'InputMultipleDynamicVerticalCheckAllSelect',
+    HorizontalCheckAllSelect: 'InputMultipleDynamicHorizontalCheckAllSelect',
+  },
+  /* ------ InputMultiple end ------ */
+
+  /* ------ MobileInputMultiple start ------ */
+  MobileInputMultiple: {
+    Standard: 'MobileInputMultipleStandard',
+    CheckAll: 'MobileInputMultipleCheckAll',
+    Filter: 'MobileInputMultipleFilter',
+    FilterCheckAll: 'MobileInputMultipleFilterCheckAll',
+    Select: 'MobileInputMultipleSelect',
+    CheckAllSelect: 'MobileInputMultipleCheckAllSelect',
+    FilterSelect: 'MobileInputMultipleFilterSelect',
+    FilterCheckAllSelect: 'MobileInputMultipleFilterCheckAllSelect',
+  },
+  MobileInputMultipleDynamic: {
+    Standard: 'MobileInputMultipleDynamicStandard',
+    CheckAll: 'MobileInputMultipleDynamicCheckAll',
+    Filter: 'MobileInputMultipleDynamicFilter',
+    FilterCheckAll: 'MobileInputMultipleDynamicFilterCheckAll',
+    Select: 'MobileInputMultipleDynamicSelect',
+    CheckAllSelect: 'MobileInputMultipleDynamicCheckAllSelect',
+    FilterSelect: 'MobileInputMultipleDynamicFilterSelect',
+    FilterCheckAllSelect: 'MobileInputMultipleDynamicFilterCheckAllSelect',
+  },
+  /* ------ MobileInputMultiple end ------ */
+
   /* ------ MobileCheckList ------ */
   MobileCheckList: {
     Standard: 'MobileCheckListStandard',
@@ -499,6 +549,32 @@ const Components = {
   },
   MobileCascaderViewAsync: {
     Standard: 'MobileCascaderViewAsyncStandard',
+  },
+
+  /* MobileTreeSelect */
+  MobileTreeSelect: {
+    Standard: 'MobileTreeSelectStandard',
+    Leaf: 'MobileTreeSelectLeaf',
+    ShowAll: 'MobileTreeSelectShowAll',
+    ShowChild: 'MobileTreeSelectShowChild',
+  },
+  MobileTreeSelectDynamic: {
+    Standard: 'MobileTreeSelectDynamicStandard',
+    Leaf: 'MobileTreeSelectDynamicLeaf',
+    ShowAll: 'MobileTreeSelectDynamicShowAll',
+    ShowChild: 'MobileTreeSelectDynamicShowChild',
+  },
+  MobileTreeSelectAC: {
+    Standard: 'MobileTreeSelectACStandard',
+    Leaf: 'MobileTreeSelectACLeaf',
+    ShowAll: 'MobileTreeSelectACShowAll',
+    ShowChild: 'MobileTreeSelectACShowChild',
+  },
+  MobileTreeSelectAsync: {
+    Standard: 'MobileTreeSelectAsyncStandard',
+    Leaf: 'MobileTreeSelectAsyncLeaf',
+    ShowAll: 'MobileTreeSelectAsyncShowAll',
+    ShowChild: 'MobileTreeSelectAsyncShowChild',
   },
 
   Breadcrumb: {

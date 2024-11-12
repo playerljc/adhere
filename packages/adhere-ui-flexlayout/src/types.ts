@@ -1,4 +1,4 @@
-import { FC, NamedExoticComponent, PropsWithoutRef, ReactNode, RefAttributes } from 'react';
+import { NamedExoticComponent, PropsWithoutRef, ReactNode, RefAttributes } from 'react';
 import type { CSSProperties, Context, ReactElement } from 'react';
 
 import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
@@ -9,6 +9,8 @@ import { FlexContext } from './Context';
 import Fixed from './Fixed';
 import HorizontalFlexLayout from './HorizontalFlexLayout';
 import ScrollLayout, { ScrollLayoutContext, useScrollLayout } from './ScrollLayout';
+import SpaceAround from './SpaceAround';
+import SpaceBetween from './SpaceBetween';
 import CBLayout from './TRBLC/CBLayout';
 import CBRLayout from './TRBLC/CBRLayout';
 import CRBLayout from './TRBLC/CRBLayout';
@@ -39,36 +41,38 @@ export interface ContextType {
 }
 
 export interface FlexLayoutFunction<P> extends NamedExoticComponent<P> {
-  Fixed: FC<FixedProps>;
-  Auto: FC<AutoProps>;
+  Fixed: typeof Fixed;
+  Auto: typeof Auto;
   Context: Context<ContextType>;
-  HorizontalFlexLayout: FC<HorizontalFlexLayoutProps>;
-  VerticalFlexLayout: FC<VerticalFlexLayoutProps>;
-  ToolBarLayout: FC<ToolBarLayoutProps>;
-  BackLayout: FC<BackLayoutProps>;
-  ScrollLayout: FC<ScrollLayoutProps>;
+  HorizontalFlexLayout: typeof HorizontalFlexLayout;
+  VerticalFlexLayout: typeof VerticalFlexLayout;
+  ToolBarLayout: typeof ToolBarLayout;
+  BackLayout: typeof BackLayout;
+  ScrollLayout: typeof ScrollLayout;
+  SpaceAround: typeof SpaceAround;
+  SpaceBetween: typeof SpaceBetween;
   useScrollLayout: () => ScrollLayoutContextType;
   ScrollLayoutContext: Context<ScrollLayoutContextType>;
   selectorPrefix: string;
   TRBLC: {
-    CBLayout: FC<TBLRCLayoutProps>;
-    CBRLayout: FC<TBLRCLayoutProps>;
-    CRBLayout: FC<TBLRCLayoutProps>;
-    CRLayout: FC<TBLRCLayoutProps>;
-    LBCLayout: FC<TBLRCLayoutProps>;
-    LCBLayout: FC<TBLRCLayoutProps>;
-    LCLayout: FC<TBLRCLayoutProps>;
-    LCRBLayout: FC<TBLRCLayoutProps>;
-    LRTCBLayout: FC<TBLRCLayoutProps>;
-    LTCBLayout: FC<TBLRCLayoutProps>;
-    LTCLayout: FC<TBLRCLayoutProps>;
-    TBLCRLayout: FC<TBLRCLayoutProps>;
-    TCBRLayout: FC<TBLRCLayoutProps>;
-    TCLayout: FC<TBLRCLayoutProps>;
-    TCRLayout: FC<TBLRCLayoutProps>;
-    TLCLayout: FC<TBLRCLayoutProps>;
-    TLRCLayout: FC<TBLRCLayoutProps>;
-    TRCLayout: FC<TBLRCLayoutProps>;
+    CBLayout: typeof CBLayout;
+    CBRLayout: typeof CBRLayout;
+    CRBLayout: typeof CRBLayout;
+    CRLayout: typeof CRLayout;
+    LBCLayout: typeof LBCLayout;
+    LCBLayout: typeof LCBLayout;
+    LCLayout: typeof LCLayout;
+    LCRBLayout: typeof LCRBLayout;
+    LRTCBLayout: typeof LRTCBLayout;
+    LTCBLayout: typeof LTCBLayout;
+    LTCLayout: typeof LTCLayout;
+    TBLCRLayout: typeof TBLCRLayout;
+    TCBRLayout: typeof TCBRLayout;
+    TCLayout: typeof TCLayout;
+    TCRLayout: typeof TCRLayout;
+    TLCLayout: typeof TLCLayout;
+    TLRCLayout: typeof TLRCLayout;
+    TRCLayout: typeof TRCLayout;
   };
 }
 
@@ -283,6 +287,8 @@ export type FlexLayoutComponent = NamedExoticComponent<
   ToolBarLayout: typeof ToolBarLayout;
   BackLayout: typeof BackLayout;
   ScrollLayout: typeof ScrollLayout;
+  SpaceAround: typeof SpaceAround;
+  SpaceBetween: typeof SpaceBetween;
   useScrollLayout: typeof useScrollLayout;
   ScrollLayoutContext: typeof ScrollLayoutContext;
   TRBLC: {
@@ -308,3 +314,21 @@ export type FlexLayoutComponent = NamedExoticComponent<
     TCBLayout: typeof TCBLayout;
   };
 };
+
+export type SpaceBetweenComponent = NamedExoticComponent<InternalSpaceBetweenProps>;
+
+export type SpaceAroundComponent = NamedExoticComponent<InternalSpaceAroundProps>;
+
+export interface InternalSpaceBetweenProps {
+  className?: string;
+  style?: CSSProperties;
+  direction: FlexLayoutProps['direction'];
+  children?: any;
+}
+
+export interface InternalSpaceAroundProps {
+  className?: string;
+  style?: CSSProperties;
+  direction: FlexLayoutProps['direction'];
+  children?: any;
+}

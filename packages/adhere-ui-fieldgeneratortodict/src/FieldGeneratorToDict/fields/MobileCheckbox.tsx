@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Checkbox } from '@baifendian/adhere-mobile-ui-anthoc';
-import {
+import type {
   AutoCompleteCheckboxProps,
   AutoCompletePagingCheckboxProps,
   CheckAllCheckboxProps,
@@ -10,7 +10,7 @@ import {
   FilterCheckboxProps,
   FilterPagingCheckboxProps,
   PagingCheckboxProps,
-} from '@baifendian/adhere-mobile-ui-anthoc/src/types';
+} from '@baifendian/adhere-mobile-ui-anthoc/es/types';
 
 import {
   useAutoCompleteDict,

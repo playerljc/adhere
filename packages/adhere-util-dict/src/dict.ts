@@ -113,6 +113,33 @@ function initValue(p, params) {
   return value;
 }
 
+// /**
+//  * isLabelValueBeanArray
+//  * @description 是否是labelValueBean的数组
+//  * @param originValue {any[]}
+//  * @return {boolean}
+//  */
+// function isLabelValueBeanArray(originValue) {
+//   if (Array.isArray(originValue)) {
+//     return originValue.every((t) => typeof t === 'object' && 'label' in t && 'value' in t);
+//   }
+//
+//   return false;
+// }
+
+// /**
+//  * genLabelValueBeanMap
+//  * @description 将labelValueBean数组转换成map
+//  * @param originValue {{label: string; value: any}[]}
+//  * @return {Map<string,any>}
+//  */
+// function genLabelValueBeanMap(originValue) {
+//   return originValue.reduce((map, { label, value }) => {
+//     map.set(value, label);
+//     return map;
+//   }, new Map());
+// }
+
 const Dict: DictObj = {
   /**
    * handler - 字典的定义对象
@@ -121,6 +148,17 @@ const Dict: DictObj = {
     set(target: Object, property, value, receiver) {
       const result = Reflect.set(target, property, value, receiver);
 
+      // 原始值
+      // const originValue = value();
+
+      // 1.如果是labelValue数组则转换成对应的labelValueMap
+      // if (isLabelValueBeanArray(originValue)) {
+      //   Dict.handlers[`${property as string}Map`] = () => genLabelValueBeanMap(originValue);
+      // }
+
+      // 下面可能还有其他的处理
+
+      // React组件处理
       // @ts-ignore
       set(property);
 

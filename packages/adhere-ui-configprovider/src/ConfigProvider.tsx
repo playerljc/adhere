@@ -24,7 +24,7 @@ const selectorPrefix = 'adhere-ui-config-provider';
  */
 const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
   const {
-    intl: { lang, locales, prefix, mainLanguage },
+    intl: { lang, locales, prefix, mainLanguage, extraLibLocales = {} },
     theme,
     media,
     children,
@@ -84,6 +84,7 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
         currentLocale: lang,
         locales: locales ?? {},
         mainLanguage: mainLanguage || 'zh_CN',
+        extraLibLocales,
       },
       Intl.isInit(),
     );

@@ -25,6 +25,7 @@ export interface ColumnSearchConfig {
     renderNoAuthority?: (params?: any) => ReactNode | null;
     dataIndex?: string;
     title?: ReactNode;
+    titleToolTip?: string;
     dictName?: string;
     renderChildren?: (params?: any) => ReactNode | null;
     render?: () => ReactNode | null;

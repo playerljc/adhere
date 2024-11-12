@@ -1,5 +1,4 @@
-import { Form } from 'antd';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
@@ -22,19 +21,6 @@ export function createFactory<P>(
 } {
   const fn = (_props) => {
     const { getEl } = useScrollLayout();
-
-    const { status, errors } = Form.Item.useStatus();
-
-    // 对自动以error显示的处理
-    useEffect(() => {
-      if (_props.errorContainer && status === 'error' && errors && !!errors?.length) {
-        _props.errorContainer.innerHTML = errors[0];
-        _props.errorContainer.style.display = '';
-      } else if (_props.errorContainer && status === 'success') {
-        _props.errorContainer.innerHTML = '';
-        _props.errorContainer.style.display = 'none';
-      }
-    }, [_props.errorContainer, status, errors]);
 
     const props = {
       ...defaultProps,

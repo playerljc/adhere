@@ -1288,6 +1288,7 @@ const SearchListImplementFactory: SearchListImplementFactoryFunction<any, any> =
       forwardRef<any, any>((props, ref) => (
         // @ts-ignore
         <Component
+          // @ts-ignore
           ref={ref}
           className={`${selectorPrefix}-wrap`}
           isShowExpandSearch

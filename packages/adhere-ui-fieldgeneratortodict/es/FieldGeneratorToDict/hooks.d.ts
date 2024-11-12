@@ -1,5 +1,6 @@
-import type { PagingWrapperProps } from '@baifendian/adhere-ui-anthoc/es/types';
-import { AsyncCascaderProps, AsyncTreeSelectProps } from '@baifendian/adhere-ui-anthoc/src/types';
+import type { AsyncTreeLeafSelectProps as MobileAsyncTreeLeafSelectProps, AsyncTreeSelectProps as MobileAsyncTreeSelectProps } from '@baifendian/adhere-mobile-ui-anthoc/es/types';
+import type { TreeAutoCompleteProps as MobileTreeAutoCompleteProps } from '@baifendian/adhere-mobile-ui-auto-complete/es/types';
+import type { AsyncCascaderProps, AsyncTreeSelectProps, PagingWrapperProps } from '@baifendian/adhere-ui-anthoc/es/types';
 import type { AutoCompleteProps, TreeAutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 import type { UseDictParams } from '../types';
 /**
@@ -36,8 +37,8 @@ export declare function useAutoCompleteDict<D>({ dictName, cascadeParams, onData
  * @param onDataSourceChange
  */
 export declare function useTreeAutoCompleteDict<D>({ dictName, cascadeParams, onDataSourceChange, }: UseDictParams<D>): {
-    treeData: TreeAutoCompleteProps['treeData'];
-    loadData: TreeAutoCompleteProps['loadData'];
+    treeData: TreeAutoCompleteProps['treeData'] | MobileTreeAutoCompleteProps['searchDataSource'];
+    loadData: TreeAutoCompleteProps['loadData'] | MobileTreeAutoCompleteProps['loadData'];
 };
 /**
  * usePaging
@@ -63,4 +64,16 @@ export declare function useAutoCompletePaging<D>({ dictName, cascadeParams, onDa
  * @description TreeSelece或Cascader的Async
  * @param {string} dictName 字典名称
  */
-export declare function useAsyncTree<D>({ dictName, }: UseDictParams<D>): AsyncTreeSelectProps['fetchData'] | AsyncCascaderProps['fetchData'];
+export declare function useAsyncTree<D>({ dictName, }: UseDictParams<D>): AsyncTreeSelectProps['fetchData'] | AsyncCascaderProps['fetchData'] | MobileAsyncTreeLeafSelectProps['loadData'] | MobileAsyncTreeSelectProps['loadData'];
+/**
+ * useMobileAsyncTree
+ * @param {string} dictName
+ * @param {boolean} treeDataSimpleMode
+ */
+export declare function useMobileAsyncTree({ dictName, treeDataSimpleMode }: {
+    dictName: any;
+    treeDataSimpleMode: any;
+}): {
+    treeData: never[];
+    loadData: (_nodeData: any) => any;
+};

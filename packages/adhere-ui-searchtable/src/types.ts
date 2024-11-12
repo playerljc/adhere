@@ -106,6 +106,7 @@ export interface ColumnSearchConfig {
   dataIndex?: string; //column.dataIndex;
   // 如果有此属性则不用column的title
   title?: ReactNode; //column.title;
+  titleToolTip?: string;
   // dist渲染的组件的字典名称(适用于FormItemGeneratorToDict)
   dictName?: string;
   // children自定义的渲染，适用于FormItemGeneratorToDict的自定义children时候使用

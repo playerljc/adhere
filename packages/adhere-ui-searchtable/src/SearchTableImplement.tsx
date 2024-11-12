@@ -741,6 +741,7 @@ const SearchTableImplementFactory: SearchTableImplementFactoryFunction<any, any>
           fixedHeaderAutoTable
           fixedTableSpaceBetween
           {...props}
+          // @ts-ignore
           className={classNames(`${selectorPrefix}-wrap`, props.className ?? '')}
           style={props.style ?? {}}
         />

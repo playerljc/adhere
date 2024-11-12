@@ -30,6 +30,14 @@ import MobileCheckboxPaginationDynamicFilter from './MobileCheckbox/MobileCheckb
 import MobileCheckboxPaginationFilter from './MobileCheckbox/MobileCheckboxPaginationFilter';
 import MobileCheckboxPaginationStandard from './MobileCheckbox/MobileCheckboxPaginationStandard';
 import MobileCheckboxStandard from './MobileCheckbox/MobileCheckboxStandard';
+import MobileInputMultipleCheckAll from './MobileInputMultiple/CheckAll';
+import MobileInputMultipleCheckAllSelect from './MobileInputMultiple/CheckAllSelect';
+import MobileInputMultipleFilter from './MobileInputMultiple/Filter';
+import MobileInputMultipleFilterCheckAll from './MobileInputMultiple/FilterCheckAll';
+import MobileInputMultipleFilterCheckAllSelect from './MobileInputMultiple/FilterCheckAllSelect';
+import MobileInputMultipleFilterSelect from './MobileInputMultiple/FilterSelect';
+import MobileInputMultipleSelect from './MobileInputMultiple/Select';
+import MobileInputMultipleStandard from './MobileInputMultiple/Standard';
 import MobileListDynamicStandard from './MobileList/MobileListDynamicStandard';
 import MobileListStandard from './MobileList/MobileListStandard';
 import MobileRadioACPaging from './MobileRadio/MobileRadioACPaging';
@@ -54,6 +62,13 @@ import MobileSelectorPaginationDynamicFilter from './MobileSelector/MobileSelect
 import MobileSelectorPaginationFilter from './MobileSelector/MobileSelectorPaginationFilter';
 import MobileSelectorPaginationStandard from './MobileSelector/MobileSelectorPaginationStandard';
 import MobileSelectorStandard from './MobileSelector/MobileSelectorStandard';
+import MobileTreeSelectACStandard from './MobileTreeSelect/MobileTreeSelectACStandard';
+import MobileTreeSelectAsyncLeaf from './MobileTreeSelect/MobileTreeSelectAsyncLeaf';
+import MobileTreeSelectAsyncStandard from './MobileTreeSelect/MobileTreeSelectAsyncStandard';
+import MobileTreeSelectLeaf from './MobileTreeSelect/MobileTreeSelectLeaf';
+import MobileTreeSelectShowAll from './MobileTreeSelect/MobileTreeSelectShowAll';
+import MobileTreeSelectShowChild from './MobileTreeSelect/MobileTreeSelectShowChild';
+import MobileTreeSelectStandard from './MobileTreeSelect/MobileTreeSelectStandard';
 
 import React from 'react';
 
@@ -72,6 +87,14 @@ import CascaderFlatEntityValueHOC from './Cascader/CascaderFlatEntityValueHOC';
 import CascaderMulitEntityValueHOC from './Cascader/CascaderMulitEntityValueHOC';
 import CheckboxTest from './Checkbox/Vertical.tsx';
 import DropdownTest from './Dropdown/Standard';
+import InputMultipleHorizontal from './InputMultiple/Horizontal';
+import InputMultipleHorizontalCheckAll from './InputMultiple/HorizontalCheckAll';
+import InputMultipleHorizontalSelect from './InputMultiple/HorizontalSelect';
+import InputMultipleSelect from './InputMultiple/Select';
+import InputMultipleStandard from './InputMultiple/Standard';
+import InputMultipleVertical from './InputMultiple/Vertical';
+import InputMultipleVerticalCheckAll from './InputMultiple/VerticalCheckAll';
+import InputMultipleVerticalSelect from './InputMultiple/VerticalSelect';
 import ListTest from './List/AutoCompleteCheckboxPagin';
 import MentionsTest from './Mentions/Standard';
 import MenuTest from './Menu/Standard';
@@ -93,7 +116,7 @@ import CheckboxTablePagingSelectEntityValueHOC from './Table/CheckboxTablePaging
 import MultiSelect from './Table/MultiSelect';
 import RadioTablePagingEntityValueHOC from './Table/RadioTablePagingEntityValueHOC';
 import RadioTablePagingSelectEntityValueHOC from './Table/RadioTablePagingSelectEntityValueHOC';
-import TagTest from './Tag/AutoCompleteTagCheckAllSelect';
+import TagTest from './Tag/HorizontalCheckable';
 import TimelineTest from './Timeline/SuspenseStandard';
 import TransferTest from './Transfer/AutoComplete';
 import Transfer from './Transfer/Standard';
@@ -121,10 +144,10 @@ import '../src/index.less';
 
 DictConfig();
 
-// e2e.PC({
-//   children: <Transfer />,
-// });
-
-e2e.Mobile({
-  children: <MobileCheckListACStandard />,
+e2e.PC({
+  children: <TagTest />,
 });
+
+// e2e.Mobile({
+//   children: <MobileInputMultipleFilterCheckAllSelect />,
+// });

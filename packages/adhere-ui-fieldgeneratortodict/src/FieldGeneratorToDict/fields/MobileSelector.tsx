@@ -2,7 +2,7 @@ import type { SelectorProps } from 'antd-mobile';
 import React from 'react';
 
 import { Selector } from '@baifendian/adhere-mobile-ui-anthoc';
-import {
+import type {
   AutoCompletePagingSelectorProps,
   AutoCompleteSelectorProps,
   CheckAllSelectorProps,

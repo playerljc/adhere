@@ -1,7 +1,7 @@
 declare const _default: {
-    processAsyncQueue(tasks?: import("./types").ProcessAsyncQueueItem[] | undefined): Promise<void>;
+    processAsyncQueue(tasks?: import("./types").ProcessAsyncQueueItem[]): Promise<void>;
     CRSTypes: typeof import("gcoord").CRSTypes;
-    transform: <T extends import("gcoord").GeoJSON | import("gcoord").Position>(input: string | T, crsFrom: import("gcoord").CRSTypes, crsTo: import("gcoord").CRSTypes) => T;
+    transform: <T extends import("gcoord").GeoJSON | import("gcoord").Position>(input: T | string, crsFrom: import("gcoord").CRSTypes, crsTo: import("gcoord").CRSTypes) => T;
     WGS84: import("gcoord").CRSTypes.WGS84;
     WGS1984: import("gcoord").CRSTypes.WGS84;
     EPSG4326: import("gcoord").CRSTypes.WGS84;
@@ -18,7 +18,7 @@ declare const _default: {
     EPSG102100: import("gcoord").CRSTypes.EPSG3857;
     WebMercator: import("gcoord").CRSTypes.EPSG3857;
     WM: import("gcoord").CRSTypes.EPSG3857;
-    prettyBytes(number: any, options?: import("./types").PrettyBytesOptions | undefined): string;
+    prettyBytes(number: any, options?: import("./types").PrettyBytesOptions): string;
     prettierJSON(_jsonStr?: string): string;
     compressJSON(_jsonStr?: string): string;
     prettierXML(_xmlStr?: string): any;
@@ -68,7 +68,7 @@ declare const _default: {
         minutes: number;
         remainingSeconds: number;
     };
-    parse(path?: string | undefined, config?: import("./types").IUrlConfig): object | null;
+    parse(path?: string, config?: import("./types").IUrlConfig): object | null;
     stringify(record: object, config?: import("./types").IUrlConfig): string;
     getPathName(publicPath?: string, router?: "hash" | "browser"): string;
     getSearch(router?: "hash" | "browser"): string | undefined;
@@ -76,15 +76,15 @@ declare const _default: {
     treeToArray: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], config: {
         parentIdAttr: string;
         rootParentId: string | number;
-    }, keyAttr?: string | undefined) => {
+    }, keyAttr?: string) => {
         [props: string]: any;
-        children?: any[] | undefined;
+        children?: any[];
         key: string;
     }[];
     arrayToAntdTree: (arr: {
         [props: string]: any;
-        children?: any[] | undefined;
-        isLeaf?: boolean | undefined;
+        children?: any[];
+        isLeaf?: boolean;
         properties?: any;
     }[], config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
     arrayToAntdTreeSelect: (arr: any[], config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
@@ -92,10 +92,10 @@ declare const _default: {
     getDescendants: (data: any[], node: any, config: Omit<import("./types").IFlatTreeArrNode, "titleAttr">) => any[];
     filterTreeByFlatData: (treeFlatNodes: any[], kw: string, config: import("./types").IFlatTreeArrNode & {
         filterAttr: string;
-    }, filter?: ((nodeData: any) => boolean) | undefined) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
+    }, filter?: (nodeData: any) => boolean) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
     filterTree: (treeNodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], kw: string, config: import("./types").IFlatTreeArrNode & {
         filterAttr: string;
-    }, filter?: ((nodeData: any) => boolean) | undefined) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
+    }, filter?: (nodeData: any) => boolean) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
     findNodeByKey: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], val: any, config: {
         keyAttr: string;
     }) => import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode | null;
@@ -105,31 +105,28 @@ declare const _default: {
     transformTreeData: (treeData: any[], childrenAttr: string, onCallback: (node: any) => import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode) => (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[];
     getLeafNodesByIndex: (nodes: {
         [props: string]: any;
-    }[], childrenAttr?: string | undefined, indexAttr?: string | undefined) => {
+    }[], childrenAttr?: string, indexAttr?: string) => {
         [props: string]: any;
     }[];
     getLeafNodes: (nodes: {
         [props: string]: any;
-    }[], childrenAttr?: string | undefined) => {
+    }[], childrenAttr?: string) => {
         [props: string]: any;
     }[];
     getLeafNodeByFlatData: (arr: any[], config: import("./types").IFlatTreeArrNode) => {
         [props: string]: any;
     }[];
-    getLeafNodeByFlatDataToIndex: (arr: any[], indexAttr?: string | undefined) => {
+    getLeafNodeByFlatDataToIndex: (arr: any[], indexAttr?: string) => {
         [props: string]: any;
     }[];
-    getTreeLevel: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], keyAttr?: string | undefined) => number;
+    getTreeLevel: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], keyAttr?: string) => number;
     getTreeLevelByIndex: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], indexAttr: string, keyAttr: string) => number;
     getTreeLevelToFlat: (flatArr: any[], config: import("./types").IFlatTreeArrNode) => number;
     getTreeLevelByIndexToFlat: (flatArr: any[], config: import("./types").IFlatTreeArrNode, indexAttr: string) => number;
     getNodeLevel: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], node: import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode, keyAttr: string) => number;
     completionIncompleteFlatArr: (treeFlatNodes: any[], incompleteTreeFlatNodes: any, config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode, "value">)[];
-    excludeAntdTreeNodes: (nodes: import("./types").IAntdTreeNode[], excludeKeys: string[], keyAttr?: string | undefined) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
-    excludeAntdSelectTreeNodes: (nodes: import("./types").IAntdTreeSelectNode[], excludeKeys: string[], keyAttr?: string | undefined) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeSelectNode, "value">)[];
-    getLang(defaultLocal?: string | undefined): string;
-    setLang(lang?: string): void;
-    getDatePickerFormat(): string;
+    excludeAntdTreeNodes: (nodes: import("./types").IAntdTreeNode[], excludeKeys: string[], keyAttr?: string) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
+    excludeAntdSelectTreeNodes: (nodes: import("./types").IAntdTreeSelectNode[], excludeKeys: string[], keyAttr?: string) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeSelectNode, "value">)[];
     casUrl({ baseUrl, enterUrl, defaultLocal }: {
         baseUrl: any;
         enterUrl: any;
@@ -207,10 +204,7 @@ declare const _default: {
     getCirclePoint(center: import("./types").IPoint, raduis: number, angle: number): import("./types").IPoint;
     getOvalPoint(center: import("./types").IPoint, radiusX: number, radiusY: number, angle: number): import("./types").IPoint;
     pxToRemNumber(px: number, base: number): number;
-    pxToRem(px: number, base: number, media?: {
-        isUseMedia?: boolean | undefined;
-        designWidth?: number | undefined;
-    } | undefined): string;
+    pxToRem(px: number, base: number, media?: import("@baifendian/adhere-ui-configprovider/es/types").ConfigProviderProps["media"]): string;
     isTextNode(el: Node): boolean;
     isCommentNode(el: Node): boolean;
     isElementNode(el: Node): boolean;
@@ -254,11 +248,11 @@ declare const _default: {
         bottom: number;
     };
     isIframeEmbed(): boolean | null;
-    addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean | undefined) => Function;
+    addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean) => Function;
     clickInRange(params: {
         el: HTMLElement;
         rootEl: HTMLElement;
-        bodyClickHandler?: Function | undefined;
+        bodyClickHandler?: Function;
     }): Function;
     includeHTML(attr: string | undefined, onLoadError: () => string): Promise<string>;
     setCursorToEnd(element: HTMLElement): void;
@@ -284,14 +278,14 @@ declare const _default: {
     rgbRandom(): string;
     color16Random(): string;
     colorToRgb(color: string): number[];
-    rgbToColor(r: string | number, g: string | number, b: string | number): string;
+    rgbToColor(r: number | string, g: number | string, b: number | string): string;
     isEmpty(value: any): boolean;
     isNumber(val: any): boolean;
     isBoolean(val: any): boolean;
     isString(val: any): boolean;
     isSymbol(val: any): boolean;
     isPrimitive(val: any): boolean;
-    isArray(obj: any): boolean;
+    isArray(obj: any): obj is any[];
     isFunction(obj: any): boolean;
     isObject(obj: any): boolean;
     isRef(obj: any): boolean;

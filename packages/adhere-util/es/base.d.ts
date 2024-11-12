@@ -39,7 +39,7 @@ declare const _default: {
      * @param obj
      * @return {boolean}
      */
-    isArray(obj: any): boolean;
+    isArray(obj: any): obj is any[];
     /**
      * isFunction - 判断函数
      * @param obj

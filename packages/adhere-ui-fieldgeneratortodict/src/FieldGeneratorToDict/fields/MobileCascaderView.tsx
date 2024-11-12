@@ -2,10 +2,10 @@ import React from 'react';
 
 import { CascaderView } from '@baifendian/adhere-mobile-ui-anthoc';
 import type { InternalCascaderViewProps } from '@baifendian/adhere-mobile-ui-anthoc/es/types';
-import {
-  type AsyncCascaderViewProps,
+import type {
+  AsyncCascaderViewProps,
   FilterCascaderViewProps,
-} from '@baifendian/adhere-mobile-ui-anthoc/src/types';
+} from '@baifendian/adhere-mobile-ui-anthoc/es/types';
 
 import { useAsyncTree, useDict, useDynamicDict } from '../Hooks';
 import { setItem } from '../ItemFactory';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Dict from '../../src';
 
 export default {

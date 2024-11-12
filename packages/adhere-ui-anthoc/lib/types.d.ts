@@ -480,7 +480,8 @@ export type FormHOCComponent = ReturnType<typeof createFactory<FormProps>> & {
     Item: typeof FormItem;
 };
 export interface FormItemProps extends AntFormItemProps {
-    getErrorContainer: () => HTMLElement | null;
+    useCustomError?: boolean;
+    fit?: boolean;
 }
 export type ListHOCComponent = ReturnType<typeof createFactory<ListProps<any>>> & {
     AutoCompleteCheckAllListSelect: FC<AutoCompleteCheckAllListSelectProps>;
@@ -785,8 +786,9 @@ export interface InputMultipleProps {
     onChange?: (_value?: string[]) => void;
     options?: InputMultipleOptionsItem[];
 }
-export interface InputMultipleSelectProps extends InputMultipleProps {
+export interface InputMultipleSelectProps extends Omit<InputMultipleProps, 'options'> {
     selectProps?: SelectProps;
+    options?: Pick<InputMultipleOptionsItem, 'value'>[];
 }
 export type InputMultipleHOCComponent = ReturnType<typeof createFactory<InputMultipleProps>> & {
     Select: FC<InputMultipleSelectProps>;

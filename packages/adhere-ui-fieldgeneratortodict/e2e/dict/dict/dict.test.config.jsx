@@ -352,6 +352,80 @@ export default {
         })),
       );
 
+    Dict.handlers.SystemBookCatalogTextDynamic = () =>
+      Promise.resolve(
+        [
+          {
+            id: '242',
+            catalog: '中国文学',
+          },
+          {
+            id: '243',
+            catalog: '外国文学',
+          },
+          {
+            id: '244',
+            catalog: '儿童文学',
+          },
+          {
+            id: '245',
+            catalog: '散文',
+          },
+          {
+            id: '246',
+            catalog: '经典名著',
+          },
+          {
+            id: '247',
+            catalog: '小说',
+          },
+          {
+            id: '248',
+            catalog: '历史',
+          },
+          {
+            id: '249',
+            catalog: '教育',
+          },
+          {
+            id: '250',
+            catalog: '成功励志',
+          },
+          {
+            id: '251',
+            catalog: '心灵鸡汤',
+          },
+          {
+            id: '252',
+            catalog: '人物传记',
+          },
+          {
+            id: '253',
+            catalog: '心理学',
+          },
+          {
+            id: '254',
+            catalog: '管理',
+          },
+          {
+            id: '255',
+            catalog: '经济',
+          },
+          {
+            id: '256',
+            catalog: '理财',
+          },
+          {
+            id: '257',
+            catalog: '哲学',
+          },
+          {
+            id: '258',
+            catalog: '计算机',
+          },
+        ].map((t) => t.catalog),
+      );
+
     Dict.handlers.SystemBookCatalogRem = () =>
       Promise.resolve(
         [].map((t) => ({
@@ -365,16 +439,19 @@ export default {
       {
         title: 'Node1',
         value: '0-0',
+        key: '0-0',
         isLeaf: false,
         children: [
           {
             title: 'Child Node1',
             value: '0-0-1',
+            key: '0-0-1',
             isLeaf: true,
           },
           {
             title: 'Child Node2',
             value: '0-0-2',
+            key: '0-0-2',
             isLeaf: true,
           },
         ],
@@ -382,6 +459,7 @@ export default {
       {
         title: 'Node2',
         value: '0-1',
+        key: '0-1',
         isLeaf: true,
       },
     ];
@@ -822,13 +900,13 @@ export default {
     };
 
     Dict.handlers.SystemDepartment = () => (pid, cascadeParams) => {
-      debugger;
       if (!pid) {
         return Promise.resolve(
           Province.map((t) => ({
             title: t.name,
             label: t.name,
             value: t.id,
+            key: t.id,
             id: t.id,
             pId: 0,
             isLeaf: false,
@@ -841,10 +919,15 @@ export default {
         .flat()
         .map((t) => t.id);
 
+      if (typeof pid === 'object') {
+        pid = pid.key;
+      }
+
       const result = { ...City, ...County }[pid]?.map?.((t) => ({
         title: t.name,
         label: t.name,
         value: t.id,
+        key: t.id,
         id: t.id,
         pId: pid,
         isLeaf: countyIds.includes(t.id),

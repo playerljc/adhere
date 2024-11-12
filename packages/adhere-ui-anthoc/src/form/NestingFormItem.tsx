@@ -1,4 +1,5 @@
 import { useMount, useUpdateEffect } from 'ahooks';
+import classNames from 'classnames';
 import React, {
   PropsWithoutRef,
   RefAttributes,
@@ -13,6 +14,8 @@ import type {
   InternalNestingFormItemProps,
 } from '../types';
 import Form from './Form';
+
+const selectorPrefix = 'adhere-ui-anthoc-form-nesting-form-item';
 
 /**
  * InternalNestingFormItem
@@ -35,14 +38,13 @@ const InternalNestingFormItem = memo<
        * @return {Promise}
        */
       function validateFields(): Promise<any> {
-        return form
-          .validateFields()
-          .then(() => {
-            return;
-          })
-          .catch((err: string | undefined) => {
-            return new Error(err);
-          });
+        return form.validateFields();
+        // .then(() => {
+        //   return;
+        // })
+        // .catch((err: string | undefined) => {
+        //   return new Error(err);
+        // });
       }
 
       useMount(() => {
@@ -60,7 +62,7 @@ const InternalNestingFormItem = memo<
       return (
         <Form
           ref={ref}
-          className={className ?? ''}
+          className={classNames(selectorPrefix, className)}
           style={style ?? {}}
           form={form}
           {...(formProps ?? {})}

@@ -8,7 +8,7 @@ import Test from './test';
 import 'antd/dist/reset.css';
 import 'font-awesome/css/font-awesome.min.css';
 
-import '@baifendian/adhere/lib/css.less';
+import '@baifendian/adhere/es/css.less';
 
 DictConfig();
 

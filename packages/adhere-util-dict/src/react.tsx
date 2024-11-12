@@ -12,7 +12,7 @@ import React, {
 } from 'react';
 
 import Suspense from '@baifendian/adhere-ui-suspense';
-import type SuspenseAsync from '@baifendian/adhere-ui-suspense/es/async';
+import type SuspenseAsync from '@baifendian/adhere-ui-suspense/es/Async';
 import Util from '@baifendian/adhere-util';
 
 import Dict from './dict';

@@ -46,7 +46,7 @@ const labelByTypeMap = new Map<DateType, (value?: number) => string>([
  * @param {DateType | function} dateValue
  * @return {undefined | DateType}
  */
-function sync(dateValue: DateValue | undefined) {
+export function sync(dateValue: DateValue | undefined) {
   if (!dateValue) return undefined;
 
   const { type, value } = dateValue;
@@ -69,7 +69,7 @@ function sync(dateValue: DateValue | undefined) {
  * @param {DateValue | undefined} dateValue
  * @return {undefined | DateType | string}
  */
-const stringValue = (dateValue: DateValue | undefined) => {
+export const stringValue = (dateValue: DateValue | undefined) => {
   if (!dateValue) return undefined;
 
   const { type, value } = dateValue;
@@ -84,7 +84,7 @@ const stringValue = (dateValue: DateValue | undefined) => {
  * @param {[number | undefined, number | undefined]} dateValue
  * @return {null | [dayjs.Dayjs, dayjs.Dayjs]}
  */
-const numberToDayjs = (dateValue: [number | undefined, number | undefined]) => {
+export const numberToDayjs = (dateValue: [number | undefined, number | undefined]) => {
   if (!dateValue.filter((t) => !!t).length) return null;
 
   return dateValue.map((_v) => dayjs(_v as number)) as [dayjs.Dayjs, dayjs.Dayjs];
@@ -95,7 +95,7 @@ const numberToDayjs = (dateValue: [number | undefined, number | undefined]) => {
  * @param {undefined | [] | [dayjs.Dayjs, dayjs.Dayjs]} _value
  * @return {[undefined | number, undefined | number]}
  */
-const datesToNumbers = (_value) => {
+export const datesToNumbers = (_value) => {
   if (!_value) return [undefined, undefined];
 
   if (!_value.length) return [undefined, undefined];
@@ -108,7 +108,7 @@ const datesToNumbers = (_value) => {
  * @param {string} stringValue
  * @return { type: DateType, value: number }
  */
-const getValueEntityByStringValue = (stringValue: string) => {
+export const getValueEntityByStringValue = (stringValue: string) => {
   const arr = stringValue.split(',');
   const type = arr[0] as DateType;
   const value = Number(arr[1]);
@@ -125,7 +125,7 @@ const getValueEntityByStringValue = (stringValue: string) => {
  * @param {number} typeValue
  * @return {[number | undefined, number | undefined]}
  */
-const getDataRangeByValue = (type: DateType, typeValue: number) => {
+export const getDataRangeByValue = (type: DateType, typeValue: number) => {
   const arr = type.split('-');
 
   const direction = arr[0];
@@ -150,7 +150,7 @@ const getDataRangeByValue = (type: DateType, typeValue: number) => {
  * @param { type: DateType; value?: number } params
  * @return { ReactNode }
  */
-const getLabel = ({ type, value }: { type: DateType; value?: number }) => {
+export const getLabel = ({ type, value }: { type: DateType; value?: number }) => {
   return labelByTypeMap.get(type)?.(!isCustomByType(type) ? value : undefined);
 };
 
@@ -159,7 +159,7 @@ const getLabel = ({ type, value }: { type: DateType; value?: number }) => {
  * @param {DateValue} type
  * @return {boolean}
  */
-const isCustomByType = (type?: DateType) => {
+export const isCustomByType = (type?: DateType) => {
   return type === 'custom';
 };
 
@@ -256,9 +256,9 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
         <div className={`${selectorPrefix}-group`}>
           <Radio.Group
             value={stringValue(selfValue)}
-            {...(radioGroupProps ?? {})}
             optionType="button"
             buttonStyle="solid"
+            {...(radioGroupProps ?? {})}
           >
             {targetConfig.map(({ type, value: typeValue, label, render }) => {
               const itemEntityValue = {
@@ -373,5 +373,7 @@ QuickRangeDate.numberToDayjs = numberToDayjs;
 QuickRangeDate.datesToNumbers = datesToNumbers;
 
 QuickRangeDate.getValueEntityByStringValue = getValueEntityByStringValue;
+
+QuickRangeDate.getDataRangeByValue = getDataRangeByValue;
 
 export default QuickRangeDate;

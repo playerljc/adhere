@@ -1,20 +1,5 @@
 declare const _default: {
     /**
-     * getLang
-     * @return {String}
-     */
-    getLang(defaultLocal?: string): string;
-    /**
-     * setLang
-     * @param lang
-     */
-    setLang(lang?: string): void;
-    /**
-     * getDatePickerFormat
-     * @return {string}
-     */
-    getDatePickerFormat(): string;
-    /**
      * 401 casUrl
      * @param baseUrl
      * @param enterUrl

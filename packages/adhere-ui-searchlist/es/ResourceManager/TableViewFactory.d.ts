@@ -19,10 +19,7 @@ export default function <P, S>(SuperClass: any): {
             onChange: any;
             onReset: any;
         }): React.JSX.Element;
-        isMount: boolean; /**
-         * TableViewFactory
-         * @param SuperClass
-         */
+        isMount: boolean;
         componentDidMount(): void;
         fetchData(): Promise<any>;
         getParams(): any;

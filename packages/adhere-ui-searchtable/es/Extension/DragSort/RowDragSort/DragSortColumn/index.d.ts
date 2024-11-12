@@ -54,6 +54,7 @@ declare function DragSortColumn(columnConfig?: DragSortColumnProps): {
     dataIndex: any;
     shouldCellUpdate?: ((record: any, prevRecord: any) => boolean) | undefined;
     rowSpan?: number | undefined;
+    minWidth?: number | undefined;
     onCell?: import("rc-table/lib/interface").GetComponentProps<any> | undefined;
     onCellClick?: ((record: any, e: React.MouseEvent<HTMLElement>) => void) | undefined;
     key: import("rc-table/lib/interface").Key;

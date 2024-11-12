@@ -17,7 +17,7 @@ import type {
   VerticalCheckAllCheckboxProps,
 } from '@baifendian/adhere-ui-anthoc/es/types';
 
-import { SuspenseComponentProps } from '../../types';
+import type { SuspenseComponentProps } from '../../types';
 import { useAutoCompleteDict, useDict, useDynamicDict } from '../Hooks';
 import { setItem } from '../ItemFactory';
 import Suspense from '../Suspense';

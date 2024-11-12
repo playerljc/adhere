@@ -14,6 +14,12 @@ import NestingFormItem from './Form/NestingFormItem';
 import InputMultipleForm from './Input/Form';
 import InputMultiple from './Input/InputMultiple';
 import InputMultipleSelect from './Input/InputMultipleSelect';
+import InputNegativeNumberDecimal1 from './InputNumber/InputNegativeNumberDecimal1';
+import InputNegativeNumberDecimal2 from './InputNumber/InputNegativeNumberDecimal2';
+import InputNegativeNumberInteger from './InputNumber/InputNegativeNumberInteger';
+import InputPositiveNumberDecimal1 from './InputNumber/InputPositiveNumberDecimal1';
+import InputPositiveNumberDecimal2 from './InputNumber/InputPositiveNumberDecimal2';
+import InputPositiveNumberInteger from './InputNumber/InputPositiveNumberInteger';
 import ListTest from './List/CheckboxListPaging';
 import PagingEntityValueHOC from './PagingEntityValueHOC';
 import RadioTest from './Radio/AutoCompleteButtonRadioSelect.tsx';
@@ -38,5 +44,5 @@ import AntHOC from './test';
 import '../src/index.less';
 
 e2e.PC({
-  children: <AutoCompleteTreeTablePagingSelect />,
+  children: <FormErrorContainer />,
 });
