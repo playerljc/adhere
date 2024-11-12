@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useMemo } from 'react';
 
-import { Hooks } from '@baifendian/adhere';
+import Hooks from '@baifendian/adhere-ui-hooks';
 
 import Select from '../select';
 import type { InputMultipleSelectProps } from '../types';
