@@ -1,11 +1,13 @@
 import classNames from 'classnames';
 import React, { forwardRef } from 'react';
 
+import Util from '@baifendian/adhere-util';
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 import { createState } from '@ctsj/state/lib/react';
 
 import { defaultProps, propTypes } from './SearchTable';
 import { SearchTableImplement } from './SearchTableImplement';
+import { cloneDeep } from './Util';
 import type {
   SearchTableImplementState,
   SearchTableStateImplementFactoryFunction,
@@ -73,6 +75,39 @@ export class SearchTableStateImplement<
    */
   getData(): object[] {
     return this.state?.[this.getServiceName()]?.[this.getFetchListPropName()]?.[this.getDataKey()];
+  }
+
+  /**
+   * setData
+   * @description 设置数据
+   * @param data
+   */
+  setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<void> {
+    return new Promise((resolve) => {
+      let targetDataSource;
+
+      if (Util.isArray(data)) {
+        targetDataSource = data;
+      } else if (Util.isFunction(data)) {
+        targetDataSource = (data as Function)(this.getData());
+      }
+
+      if (targetDataSource) {
+        const listData = cloneDeep(this.state[this.getServiceName()]);
+        listData[this.getFetchListPropName()][this.getDataKey()] = targetDataSource;
+
+        this.setState(
+          {
+            [this.getServiceName()]: listData,
+          },
+          () => {
+            resolve();
+          },
+        );
+      }
+
+      resolve();
+    });
   }
 
   /**

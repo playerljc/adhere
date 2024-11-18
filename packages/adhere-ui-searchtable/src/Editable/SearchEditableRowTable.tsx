@@ -38,7 +38,7 @@ class SearchEditableRowTable<
 
       keys.forEach((dataIndex) => {
         let value = values[dataIndex];
-        if (value instanceof dayjs) {
+        if (dayjs.isDayjs(value)) {
           value = value.valueOf();
         }
 

@@ -119,7 +119,7 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
    * @description 更新单元格的值
    */
   function updateEditorCellData() {
-    if (value instanceof dayjs) {
+    if (dayjs.isDayjs(value)) {
       // @ts-ignore
       return context?.context?.updateEditorCellDateData({
         record,

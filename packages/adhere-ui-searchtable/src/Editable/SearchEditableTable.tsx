@@ -30,7 +30,7 @@ class SearchEditableTable extends SearchEditableFactory<
 
         keys.forEach((dataIndex) => {
           let value = record[dataIndex];
-          if (value instanceof dayjs) {
+          if (dayjs.isDayjs(value)) {
             value = value.valueOf();
           }
 

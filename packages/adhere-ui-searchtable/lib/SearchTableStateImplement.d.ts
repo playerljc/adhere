@@ -18,6 +18,12 @@ export declare class SearchTableStateImplement<P extends SearchTableStateImpleme
      */
     getData(): object[];
     /**
+     * setData
+     * @description 设置数据
+     * @param data
+     */
+    setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<void>;
+    /**
      * getTotal
      * @description 获取列表总的数据树
      * @return {number}

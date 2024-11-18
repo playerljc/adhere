@@ -1,4 +1,4 @@
-import type dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import type { SearchTableImplementProps, SearchTableImplementState } from '../types';
 declare const SearchEditableCellTable_base: {
     new (props: any): {
@@ -62,6 +62,16 @@ declare class SearchEditableCellTable<P extends SearchTableImplementProps, S ext
         dataIndex: string;
         value: any;
     }): Promise<void>;
+    /**
+     * updateEditorCellsDate
+     * @description 修改cells的值
+     * @param values
+     */
+    updateEditorCellsDate(values: {
+        record: any;
+        dataIndex: any;
+        value: any;
+    }[]): Promise<void>;
     /**
      * updateEditorCellDateData
      * @description 更新日期类型可编辑单元格的数据

@@ -282,7 +282,7 @@ export interface FormItemGeneratorConfig {
  */
 export interface ColumnEditableConfig {
   // 单元格是否是可编辑的单元格
-  editable: boolean;
+  editable: boolean | ((record: { [prop: string]: any }, rowIndex: number) => boolean);
   // 缺省的状态
   defaultStatus?: 'view' | 'edit' | string;
   // 编辑控件的类型

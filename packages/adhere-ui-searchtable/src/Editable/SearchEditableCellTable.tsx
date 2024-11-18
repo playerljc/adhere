@@ -1,4 +1,4 @@
-import type dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 import { SearchTableImplement } from '../SearchTableImplement';
 import { cloneDeep, findRecord } from '../Util';
@@ -55,6 +55,37 @@ class SearchEditableCellTable<
           })
           .then(() => resolve());
       } else resolve();
+    });
+  }
+
+  /**
+   * updateEditorCellsDate
+   * @description 修改cells的值
+   * @param values
+   */
+  updateEditorCellsDate(values: { record; dataIndex; value }[]): Promise<void> {
+    return new Promise((resolve) => {
+      const listData = cloneDeep(this.props[this.getServiceName()]);
+      const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];
+      const rowKey = this.getRowKey();
+
+      values.forEach(({ value, dataIndex, record }) => {
+        const recordItem = findRecord(dataSource, rowKey, record[rowKey]);
+        if (recordItem) {
+          if (dayjs.isDayjs(value)) {
+            recordItem[dataIndex] = value.valueOf();
+          } else {
+            recordItem[dataIndex] = value;
+          }
+        }
+      });
+
+      this.props
+        .dispatch({
+          type: `${this.getServiceName()}/receive`,
+          ...listData,
+        })
+        .then(() => resolve());
     });
   }
 

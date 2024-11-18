@@ -1,6 +1,8 @@
 import type { FormInstance } from 'antd/es/form';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 
+import Util from '@baifendian/adhere-util';
+
 import type SearchTable from '../../SearchTable';
 import { SearchTableContext } from '../../SearchTable';
 import { createChildren } from '../../Util';
@@ -13,7 +15,7 @@ import EditableCellView from './View';
  * @description 单元格编辑
  */
 const EditableCell: TableCellComponentReducer = (props) => {
-  const { column } = props;
+  const { column, rowIndex, record } = props;
 
   /**
    * defaultConfig
@@ -74,8 +76,16 @@ const EditableCell: TableCellComponentReducer = (props) => {
   return (tdREL) => {
     let res = tdREL;
 
+    let editable;
+
+    if (Util.isFunction(editableConfig.editable)) {
+      editable = (editableConfig.editable as Function)(record, rowIndex);
+    } else {
+      editable = editableConfig.editable;
+    }
+
     // 单元格不是可编辑的单元格
-    if (!editableConfig.editable) {
+    if (!editable) {
       res = tdREL;
     }
     // 始终保持编辑状态

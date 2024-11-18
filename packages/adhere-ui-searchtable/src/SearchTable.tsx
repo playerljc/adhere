@@ -168,6 +168,12 @@ abstract class SearchTable<
   abstract getData(): object[];
 
   /**
+   * setData
+   * @description 设置表格数据
+   */
+  abstract setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<void>;
+
+  /**
    * getColumns
    * @description 获取表格列的信息
    * @return Array<object>

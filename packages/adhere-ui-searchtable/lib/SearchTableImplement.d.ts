@@ -143,6 +143,12 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      */
     getData(): object[];
     /**
+     * setData
+     * @description 设置数据
+     * @param data
+     */
+    setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<void>;
+    /**
      * getTotal
      * @description - Table数据的总条数
      * @override

@@ -198,7 +198,9 @@ export interface FormItemGeneratorConfig {
  * @description 可编辑的单元格
  */
 export interface ColumnEditableConfig {
-    editable: boolean;
+    editable: boolean | ((record: {
+        [prop: string]: any;
+    }, rowIndex: number) => boolean);
     defaultStatus?: 'view' | 'edit' | string;
     type?: FormItemType | string;
     render?: (params: {
