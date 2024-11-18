@@ -26,7 +26,7 @@ import type { CascaderOption } from 'antd-mobile/es/components/cascader-view';
 import type { CheckListValue } from 'antd-mobile/es/components/check-list';
 import type { Action } from 'antd-mobile/es/components/modal';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
-import { Context, FC } from 'react';
+import { Context } from 'react';
 
 import type { AutoCompleteProps as AdhereMobileAutoCompleteProps } from '@baifendian/adhere-mobile-ui-auto-complete/es/types';
 import type { TimePickerViewProps } from '@baifendian/adhere-mobile-ui-time-picker-view/es/types';
@@ -36,9 +36,58 @@ import type {
   ScrollLoadRefHandle,
 } from '@baifendian/adhere-ui-scrollload/es/types';
 
+import RangeCalendarDialog from './calendar-dialog/RangeCalendarDialog';
+import RangeCalendarModal from './calendar-modal/RangeCalendarModal';
+import RangeCalendarPopup from './calendar-popup/RangeCalendarPopup';
+import AsyncCascaderView from './cascader-view/AsyncCascaderView';
+import FilterCascaderView from './cascader-view/FilterCascaderView';
+import AutoCompleteCheckList from './check-list/AutoCompleteCheckList';
+import AutoCompleteCheckboxCheckList from './check-list/AutoCompleteCheckboxCheckList';
+import AutoCompletePagingCheckList from './check-list/AutoCompletePagingCheckList';
+import AutoCompletePagingCheckboxCheckList from './check-list/AutoCompletePagingCheckboxCheckList';
+import CheckAllCheckList from './check-list/CheckAllCheckList';
+import CheckboxCheckAllCheckList from './check-list/CheckboxCheckAllCheckList';
+import CheckboxCheckList from './check-list/CheckboxCheckList';
+import FilterCheckAllCheckList from './check-list/FilterCheckAllCheckList';
+import FilterCheckList from './check-list/FilterCheckList';
+import FilterCheckboxCheckAllCheckList from './check-list/FilterCheckboxCheckAllCheckList';
+import FilterCheckboxCheckList from './check-list/FilterCheckboxCheckList';
+import FilterPagingCheckList from './check-list/FilterPagingCheckList';
+import FilterPagingCheckboxCheckList from './check-list/FilterPagingCheckboxCheckList';
+import PagingCheckList from './check-list/PagingCheckList';
+import PagingCheckboxCheckList from './check-list/PagingCheckboxCheckList';
+import AutoCompleteCheckbox from './checkbox/AutoCompleteCheckbox';
+import AutoCompletePagingCheckbox from './checkbox/AutoCompletePagingCheckbox';
+import CheckAllCheckbox from './checkbox/CheckAllCheckbox';
+import CheckboxGroup from './checkbox/CheckboxGroup';
+import FilterCheckAllCheckbox from './checkbox/FilterCheckAllCheckbox';
+import FilterCheckbox from './checkbox/FilterCheckbox';
+import FilterPagingCheckbox from './checkbox/FilterPagingCheckbox';
+import PagingCheckbox from './checkbox/PagingCheckbox';
+import DialogTrigger from './dialog/Trigger';
+import DialogTriggerPrompt from './dialog/TriggerPrompt';
 import CustomWrapperFormItem from './form/CustomWrapperFormItem';
 import FormItem from './form/FormItem';
 import NestingFormItem from './form/NestingFormItem';
+import InputMultipleDialog from './input-multiple/InputMultipleDialog';
+import DataSourceList from './list/DataSourceList';
+import ModalTrigger from './modal/Trigger';
+import ModalTriggerPrompt from './modal/TriggerPrompt';
+import PopupTrigger from './popup/Trigger';
+import PopupTriggerPrompt from './popup/TriggerPrompt';
+import AutoCompletePagingRadio from './radio/AutoCompletePagingRadio';
+import AutoCompleteRadio from './radio/AutoCompleteRadio';
+import FilterPagingRadio from './radio/FilterPagingRadio';
+import FilterRadio from './radio/FilterRadio';
+import PagingRadio from './radio/PagingRadio';
+import RadioGroup from './radio/RadioGroup';
+import AutoCompletePagingSelector from './selector/AutoCompletePagingSelector';
+import AutoCompleteSelector from './selector/AutoCompleteSelector';
+import CheckAllSelector from './selector/CheckAllSelector';
+import FilterCheckAllSelector from './selector/FilterCheckAllSelector';
+import FilterPagingSelector from './selector/FilterPagingSelector';
+import FilterSelector from './selector/FilterSelector';
+import PagingSelector from './selector/PagingSelector';
 import AsyncTreeLeafSelect from './tree-select/AsyncTreeLeafSelect';
 import AsyncTreeSelect from './tree-select/AsyncTreeSelect';
 import AsyncTreeShowAllSelect from './tree-select/AsyncTreeShowAllSelect';
@@ -205,44 +254,44 @@ export type TreeFilterProps = Omit<ListFilterProps<any>, 'options'> & {
 };
 
 export type CheckListHOCComponent = ReturnType<typeof createFactory<CheckListProps>> & {
-  CheckAllCheckList: FC<CheckAllCheckListProps>;
-  FilterCheckList: FC<FilterCheckListProps>;
-  FilterCheckAllCheckList: FC<FilterCheckAllCheckListProps>;
-  CheckboxCheckAllCheckList: FC<CheckboxCheckAllCheckListProps>;
-  CheckboxCheckList: FC<CheckboxCheckListProps>;
-  FilterCheckboxCheckAllCheckList: FC<FilterCheckboxCheckAllCheckListProps>;
-  FilterCheckboxCheckList: FC<FilterCheckboxCheckListProps>;
-  AutoCompleteCheckList: FC<AutoCompleteCheckListProps>;
-  AutoCompleteCheckboxCheckList: FC<AutoCompleteCheckboxCheckListProps>;
-  PagingCheckList: FC<PagingCheckListProps>;
-  PagingCheckboxCheckList: FC<PagingCheckboxCheckListProps>;
-  FilterPagingCheckList: FC<FilterPagingCheckListProps>;
-  FilterPagingCheckboxCheckList: FC<FilterPagingCheckboxCheckListProps>;
-  AutoCompletePagingCheckList: FC<AutoCompletePagingCheckListProps>;
-  AutoCompletePagingCheckboxCheckList: FC<AutoCompletePagingCheckboxCheckListProps>;
+  CheckAllCheckList: typeof CheckAllCheckList;
+  FilterCheckList: typeof FilterCheckList;
+  FilterCheckAllCheckList: typeof FilterCheckAllCheckList;
+  CheckboxCheckAllCheckList: typeof CheckboxCheckAllCheckList;
+  CheckboxCheckList: typeof CheckboxCheckList;
+  FilterCheckboxCheckAllCheckList: typeof FilterCheckboxCheckAllCheckList;
+  FilterCheckboxCheckList: typeof FilterCheckboxCheckList;
+  AutoCompleteCheckList: typeof AutoCompleteCheckList;
+  AutoCompleteCheckboxCheckList: typeof AutoCompleteCheckboxCheckList;
+  PagingCheckList: typeof PagingCheckList;
+  PagingCheckboxCheckList: typeof PagingCheckboxCheckList;
+  FilterPagingCheckList: typeof FilterPagingCheckList;
+  FilterPagingCheckboxCheckList: typeof FilterPagingCheckboxCheckList;
+  AutoCompletePagingCheckList: typeof AutoCompletePagingCheckList;
+  AutoCompletePagingCheckboxCheckList: typeof AutoCompletePagingCheckboxCheckList;
 };
 
 export type CheckboxHOCComponent = ReturnType<typeof createFactory<CheckboxGroupProps>> & {
-  CheckAllCheckbox: FC<CheckAllCheckboxProps>;
-  FilterCheckbox: FC<FilterCheckboxProps>;
-  FilterCheckAllCheckbox: FC<FilterCheckAllCheckboxProps>;
-  CheckboxGroup: FC<CheckboxGroupProps>;
-  AutoCompleteCheckbox: FC<AutoCompleteCheckboxProps>;
-  PagingCheckbox: FC<PagingCheckboxProps>;
-  FilterPagingCheckbox: FC<FilterPagingCheckboxProps>;
-  AutoCompletePagingCheckbox: FC<AutoCompletePagingCheckboxProps>;
+  CheckAllCheckbox: typeof CheckAllCheckbox;
+  FilterCheckbox: typeof FilterCheckbox;
+  FilterCheckAllCheckbox: typeof FilterCheckAllCheckbox;
+  CheckboxGroup: typeof CheckboxGroup;
+  AutoCompleteCheckbox: typeof AutoCompleteCheckbox;
+  PagingCheckbox: typeof PagingCheckbox;
+  FilterPagingCheckbox: typeof FilterPagingCheckbox;
+  AutoCompletePagingCheckbox: typeof AutoCompletePagingCheckbox;
 };
 
 export type ModalHOCComponent = ReturnType<typeof createFactory<ModalProps>> & {
   ModalTriggerContext: Context<ModalTriggerContext>;
-  Trigger: FC<ModalTriggerProps<any>>;
-  TriggerPrompt: FC<ModalTriggerPromptProps<any>>;
+  Trigger: typeof ModalTrigger;
+  TriggerPrompt: typeof ModalTriggerPrompt;
 };
 
 export type DialogHOCComponent = ReturnType<typeof createFactory<DialogProps>> & {
   Context: Context<DialogTriggerContext>;
-  Trigger: FC<DialogTriggerProps<any>>;
-  TriggerPrompt: FC<DialogTriggerPromptProps<any>>;
+  Trigger: typeof DialogTrigger;
+  TriggerPrompt: typeof DialogTriggerPrompt;
 };
 
 export type PopupShowProps = Omit<PopupProps, 'visible' | 'destroyOnClose' | 'forceRender'> & {
@@ -263,27 +312,27 @@ export type PopupHOCComponent = ReturnType<typeof createFactory<PopupProps>> & {
   show: (props: PopupShowProps) => PopupShowHandler;
   clear: () => void;
   Context: Context<PopupTriggerContext>;
-  Trigger: FC<PopupTriggerProps<any>>;
-  TriggerPrompt: FC<PopupTriggerPromptProps<any>>;
+  Trigger: typeof PopupTrigger;
+  TriggerPrompt: typeof PopupTriggerPrompt;
 };
 
 export type SelectorHOCComponent = ReturnType<typeof createFactory<SelectorProps<any>>> & {
-  CheckAllSelector: FC<CheckAllSelectorProps>;
-  FilterSelector: FC<FilterSelectorProps>;
-  FilterCheckAllSelector: FC<FilterCheckAllSelectorProps>;
-  AutoCompleteSelector: FC<AutoCompleteSelectorProps>;
-  PagingSelector: FC<PagingSelectorProps>;
-  FilterPagingSelector: FC<FilterPagingSelectorProps>;
-  AutoCompletePagingSelector: FC<AutoCompletePagingSelectorProps>;
+  CheckAllSelector: typeof CheckAllSelector;
+  FilterSelector: typeof FilterSelector;
+  FilterCheckAllSelector: typeof FilterCheckAllSelector;
+  AutoCompleteSelector: typeof AutoCompleteSelector;
+  PagingSelector: typeof PagingSelector;
+  FilterPagingSelector: typeof FilterPagingSelector;
+  AutoCompletePagingSelector: typeof AutoCompletePagingSelector;
 };
 
 export type RadioHOCComponent = ReturnType<typeof createFactory<RadioGroupProps>> & {
-  FilterRadio: FC<FilterRadioProps>;
-  RadioGroup: FC<RadioGroupProps>;
-  AutoCompleteRadio: FC<AutoCompleteRadioProps>;
-  PagingRadio: FC<PagingRadioProps>;
-  FilterPagingRadio: FC<FilterPagingRadioProps>;
-  AutoCompletePagingRadio: FC<AutoCompletePagingRadioProps>;
+  FilterRadio: typeof FilterRadio;
+  RadioGroup: typeof RadioGroup;
+  AutoCompleteRadio: typeof AutoCompleteRadio;
+  PagingRadio: typeof PagingRadio;
+  FilterPagingRadio: typeof FilterPagingRadio;
+  AutoCompletePagingRadio: typeof AutoCompletePagingRadio;
 };
 
 export type CheckboxCheckListProps = BaseType &
@@ -624,13 +673,13 @@ export type RangeCalendarDialogProps = Omit<CalendarDialogProps, 'selectionMode'
 export type RangeCalendarPopupProps = Omit<CalendarPopupProps, 'selectionMode'>;
 
 export type CalendarModalHOCComponent = ReturnType<typeof createFactory<CalendarModalProps>> & {
-  RangeCalendarModal: FC<RangeCalendarModalProps>;
+  RangeCalendarModal: typeof RangeCalendarModal;
 };
 export type CalendarDialogHOCComponent = ReturnType<typeof createFactory<CalendarDialogProps>> & {
-  RangeCalendarModal: FC<RangeCalendarDialogProps>;
+  RangeCalendarModal: typeof RangeCalendarDialog;
 };
 export type CalendarPopupHOCComponent = ReturnType<typeof createFactory<CalendarPopupProps>> & {
-  RangeCalendarModal: FC<RangeCalendarPopupProps>;
+  RangeCalendarModal: typeof RangeCalendarPopup;
 };
 
 export type DateTimestampValueHOCProps = Omit<
@@ -733,8 +782,8 @@ export type FilterCascaderViewProps = BaseType &
 export type CascaderViewHOCComponent = ReturnType<
   typeof createFactory<InternalCascaderViewProps>
 > & {
-  FilterCascaderView: FC<FilterCascaderViewProps>;
-  AsyncCascaderView: FC<AsyncCascaderViewProps>;
+  FilterCascaderView: typeof FilterCascaderView;
+  AsyncCascaderView: typeof AsyncCascaderView;
 };
 
 export type AsyncCascaderViewProps = Omit<InternalCascaderViewProps, 'options'> & {
@@ -762,7 +811,7 @@ export type DataSourceListProps = ListProps & {
 };
 
 export type ListHOCComponent = ReturnType<typeof createFactory<ListProps>> & {
-  DataSourceList: FC<DataSourceListProps>;
+  DataSourceList: typeof DataSourceList;
 };
 
 export type ValueHOCProps = BaseType & {
@@ -836,7 +885,7 @@ export type InputMultipleDialogProps<T> = InputMultipleProps<T> & {
 export type InputMultipleHOCComponent = ReturnType<
   typeof createFactory<InputMultipleProps<string>>
 > & {
-  Dialog: FC<InputMultipleDialogProps<string>>;
+  Dialog: typeof InputMultipleDialog;
 };
 
 export type TreeSelectHOCComponent = ReturnType<typeof createFactory<TreeSelectProps>> & {
