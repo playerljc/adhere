@@ -103,6 +103,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-mobile-ui-quick-range-date', 'MobileQuickRangeDate'],
   ['@baifendian/adhere-mobile-ui-popovermenu', 'MobilePopoverMenu'],
   ['@baifendian/adhere-mobile-ui-spin', 'MobileSpin'],
+  ['@baifendian/adhere-mobile-ui-tree', 'MobileTree'],
 ]);
 
 /**
