@@ -27,6 +27,7 @@ import RangePickerValueHOCInFormTest from './RangePickerValueHOCInFormTest';
 import RangePickerValueHOCTest from './RangePickerValueHOCTest';
 import SelectTest from './Select/AutoCompleteCheckAllMultipleSelect';
 import CheckAllMultipleSelect from './Select/CheckAllMultipleSelect';
+import StepsSwiper from './Steps/StepsSwiper';
 import AutoCompleteTableSelectValueHOC from './Table/AutoCompleteTableSelectValueHOC.tsx';
 import AutoCompleteTreeTablePagingSelect from './Table/AutoCompleteTreeTablePagingSelect';
 // import AutoCompleteTablePagingSelect from './Table/AutoCompleteTreeTablePagingSelect.tsx';
@@ -44,5 +45,5 @@ import AntHOC from './test';
 import '../src/index.less';
 
 e2e.PC({
-  children: <FormErrorContainer />,
+  children: <StepsSwiper />,
 });

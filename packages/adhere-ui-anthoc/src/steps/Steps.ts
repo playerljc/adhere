@@ -1,11 +1,10 @@
 import { Steps } from 'antd';
 import type { StepsProps } from 'antd';
 
+import type { StepsHOCComponent } from '../types';
 import { createFactory } from '../util';
 
-const StepsHOC: typeof Steps & {
-  defaultProps?: Partial<StepsProps>;
-} = createFactory<StepsProps>(Steps, {});
+const StepsHOC: StepsHOCComponent = createFactory<StepsProps>(Steps, {});
 
 StepsHOC.displayName = 'Steps';
 

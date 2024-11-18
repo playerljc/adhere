@@ -1,6 +1,3 @@
-import { Steps } from 'antd';
-import type { StepsProps } from 'antd';
-declare const StepsHOC: typeof Steps & {
-    defaultProps?: Partial<StepsProps>;
-};
+import type { StepsHOCComponent } from '../types';
+declare const StepsHOC: StepsHOCComponent;
 export default StepsHOC;
