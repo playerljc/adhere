@@ -242,17 +242,17 @@ const adapterScreen: IAdapterScreen = {
   },
   /**
    * flexible
-   * @param {{minWidth: number; minHeight:number;}} minSize
+   * @param {{minWidth: number; minHeight:number;availWidth?: number;}} minSize
    * @return {void}
    */
-  flexible(minSize?: { minWidth: number; minHeight: number }): void {
+  flexible(minSize?: { minWidth: number; minHeight: number; availWidth?: number }): void {
     /**
      * setBodyFontSize
      * @description adjust body font size
      */
     function setBodyFontSize() {
       if (document.body) {
-        const rem = window.screen.availWidth / 10;
+        const rem = (minSize?.availWidth ?? window.screen.availWidth) / 10;
         document.body.style.fontSize = (baseFontSize * dpr) / rem + 'rem';
       } else {
         document.addEventListener('DOMContentLoaded', setBodyFontSize);
@@ -265,7 +265,7 @@ const adapterScreen: IAdapterScreen = {
      */
     function setRemUnit() {
       // 使用window.screen.availWidth的目的是只有改变操作系统的分辨率才重新设置rem，如果是浏览器窗口的resize不重新计算rem
-      const rem = window.screen.availWidth / 10;
+      const rem = (minSize?.availWidth ?? window.screen.availWidth) / 10;
       docEl.style.fontSize = rem + 'px';
     }
 
