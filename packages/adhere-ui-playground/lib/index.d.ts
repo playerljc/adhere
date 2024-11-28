@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import PlayGround from './PlayGround';
 import PlayGroundMulti from './PlayGroundMulti';
 import PlayGroundTab from './PlayGroundTab';
