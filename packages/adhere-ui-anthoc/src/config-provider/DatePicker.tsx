@@ -30,6 +30,8 @@ export default (props) => {
 
   const locale = dayjsLocalesMap.get(localeKey);
 
+  if (!locale) return;
+
   if (props?.locale?.DatePicker?.lang) {
     if (!props.locale.DatePicker.lang.fieldDateTimeFormat) {
       // @ts-ignore

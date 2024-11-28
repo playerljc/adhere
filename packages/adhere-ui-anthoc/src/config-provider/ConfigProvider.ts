@@ -1,6 +1,5 @@
 import { ConfigProvider } from 'antd';
 import type { ConfigProviderProps } from 'antd/es/config-provider';
-import { produce } from 'immer';
 
 import { createFactory } from '../util';
 import DatePicker from './DatePicker';

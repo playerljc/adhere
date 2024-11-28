@@ -1,5 +1,6 @@
 .adhere-ui-anthoc-steps-swiper {
   display: flex;
+  gap: 20px;
 
   &.adhere-ui-anthoc-steps-swiper-full-width {
     width: 100%;
@@ -28,6 +29,22 @@
       }
     }
   }
+  &.adhere-ui-anthoc-steps-swiper-top {
+    > .adhere-ui-anthoc-steps-swiper-indicator {
+      order: 1;
+    }
+    > .adhere-ui-anthoc-steps-swiper-content {
+      order: 2;
+    }
+  }
+  &.adhere-ui-anthoc-steps-swiper-bottom {
+    > .adhere-ui-anthoc-steps-swiper-indicator {
+      order: 2;
+    }
+    > .adhere-ui-anthoc-steps-swiper-content {
+      order: 1;
+    }
+  }
 
   &.adhere-ui-anthoc-steps-swiper-left,
   &.adhere-ui-anthoc-steps-swiper-right {
@@ -47,6 +64,22 @@
       > .adhere-ui-anthoc-steps-swiper-content {
         flex: 0 1 auto;
       }
+    }
+  }
+  &.adhere-ui-anthoc-steps-swiper-left {
+    > .adhere-ui-anthoc-steps-swiper-indicator {
+      order: 1;
+    }
+    > .adhere-ui-anthoc-steps-swiper-content {
+      order: 2;
+    }
+  }
+  &.adhere-ui-anthoc-steps-swiper-right {
+    > .adhere-ui-anthoc-steps-swiper-indicator {
+      order: 2;
+    }
+    > .adhere-ui-anthoc-steps-swiper-content {
+      order: 1;
     }
   }
 
