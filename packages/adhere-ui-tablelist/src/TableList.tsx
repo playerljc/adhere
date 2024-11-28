@@ -7,11 +7,11 @@ import { Button, Checkbox, Form, List, Skeleton, Table } from 'antd';
 // import Checkbox from 'antd/lib/checkbox';
 import { FormInstance } from 'antd/lib/form';
 import classNames from 'classnames';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash.cloneDeep';
 import React from 'react';
 
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
-import intl from '@baifendian/adhere-util-intl';
+import Intl from '@baifendian/adhere-util-intl';
 
 import SortableTable from './SortableTable';
 import { ToolbarReload, ToolbarSelectAll, ToolbarSetting } from './TableListToolBar';
@@ -196,10 +196,10 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
           ) : (
             <div className="ant-form-btn-group">
               <Button onClick={() => this.onResetSearch()} size={size}>
-                {resetText || intl.v('重置')}
+                {resetText || Intl.v('重置')}
               </Button>
               <Button type="primary" onClick={() => this.onSearch()} size={size}>
-                {searchText || intl.v('搜索')}
+                {searchText || Intl.v('搜索')}
               </Button>
             </div>
           )}
@@ -227,7 +227,7 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
           {total ? (
             <span className={`${selectorPrefix}-toolbar-left-total`}>
               {total === true
-                ? intl.vHtml('共 <em>{n}</em> 条', { n: pagination && pagination.total })
+                ? Intl.vHtml('共 <em>{n}</em> 条', { n: pagination && pagination.total })
                 : total}
             </span>
           ) : null}
