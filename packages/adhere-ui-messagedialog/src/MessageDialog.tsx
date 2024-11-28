@@ -80,7 +80,9 @@ const MessageDialogFactory = {
             title={Intl.v('确定')}
             onClick={() => {
               if (onSuccess) {
-                onSuccess().then(() => result?.close?.());
+                onSuccess()
+                  .then(() => result?.close?.())
+                  .catch(() => result?.close?.());
               } else {
                 result?.close?.();
               }
