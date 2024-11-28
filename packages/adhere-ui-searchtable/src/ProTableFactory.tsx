@@ -1,4 +1,4 @@
-import { Button, Input, InputNumber, Rate, Slider, Switch } from 'antd';
+import { Button, ColorPicker, Input, InputNumber, Rate, Slider, Switch } from 'antd';
 import dayjs from 'dayjs';
 import merge from 'lodash.merge';
 import omit from 'omit.js';
@@ -18,13 +18,11 @@ import {
 } from '@baifendian/adhere-ui-anthoc';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
-// import Ellipsis from '@baifendian/adhere-ui-ellipsis';
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
-// import Resource from '@baifendian/adhere-util-resource';
 import Validator from '@baifendian/adhere-util-validator';
 
 import AdvancedSearchPanel from './Extension/AdvancedSearchPanel';
@@ -1190,6 +1188,30 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           />
         );
       };
+      const renderInputNegativeNumberDecimal1 = ({ searchConfig, dataIndex }) => {
+        return (
+          <InputNumberDecimal1.InputNegativeNumberDecimal1
+            value={this.state[dataIndex]}
+            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
+      const renderInputPositiveNumberDecimal1 = ({ searchConfig, dataIndex }) => {
+        return (
+          <InputNumberDecimal1.InputPositiveNumberDecimal1
+            value={this.state[dataIndex]}
+            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
       const renderInputNumberDecimal2 = ({ searchConfig, dataIndex }) => {
         return (
           <InputNumberDecimal2
@@ -1202,9 +1224,57 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           />
         );
       };
+      const renderInputNegativeNumberDecimal2 = ({ searchConfig, dataIndex }) => {
+        return (
+          <InputNumberDecimal2.InputNegativeNumberDecimal2
+            value={this.state[dataIndex]}
+            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
+      const renderInputPositiveNumberDecimal2 = ({ searchConfig, dataIndex }) => {
+        return (
+          <InputNumberDecimal2.InputPositiveNumberDecimal2
+            value={this.state[dataIndex]}
+            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
       const renderInputNumberInteger = ({ searchConfig, dataIndex }) => {
         return (
           <InputNumberInteger
+            value={this.state[dataIndex]}
+            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
+      const renderInputNegativeNumberInteger = ({ searchConfig, dataIndex }) => {
+        return (
+          <InputNumberInteger.InputNegativeNumberInteger
+            value={this.state[dataIndex]}
+            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
+      const renderInputPositiveNumberInteger = ({ searchConfig, dataIndex }) => {
+        return (
+          <InputNumberInteger.InputPositiveNumberInteger
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...{
@@ -1304,6 +1374,17 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           />
         );
       };
+      const renderColorPicker = ({ searchConfig }) => {
+        return (
+          <ColorPicker
+            value={this.state[dataIndex]}
+            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
       const renderCustom = ({ searchConfig, column, dataIndex }) => {
         return searchConfig?.render?.({ searchConfig, column, dataIndex });
       };
@@ -1387,8 +1468,14 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         ['textArea', renderTextArea],
         ['inputNumber', renderInputNumber],
         ['inputNumberDecimal1', renderInputNumberDecimal1],
+        ['inputNegativeNumberDecimal1', renderInputNegativeNumberDecimal1],
+        ['inputPositiveNumberDecimal1', renderInputPositiveNumberDecimal1],
         ['inputNumberDecimal2', renderInputNumberDecimal2],
+        ['inputNegativeNumberDecimal2', renderInputNegativeNumberDecimal2],
+        ['inputPositiveNumberDecimal2', renderInputPositiveNumberDecimal2],
         ['inputNumberInteger', renderInputNumberInteger],
+        ['inputNegativeNumberInteger', renderInputNegativeNumberInteger],
+        ['inputPositiveNumberInteger', renderInputPositiveNumberInteger],
         ['datePicker', renderDatePicker],
         ['timePicker', renderTimePicker],
         ['rangePicker', renderRangePicker],
@@ -1396,6 +1483,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         ['sliderRange', renderSliderRange],
         ['rate', renderRate],
         ['switch', renderSwitch],
+        ['colorPicker', renderColorPicker],
       ]);
 
       return typeMap.get(type)?.({
@@ -1615,7 +1703,6 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     renderAdvancedSearchPanel(params) {
       return null;
     }
-    // showStrategy
 
     /**
      * renderOptionColumn

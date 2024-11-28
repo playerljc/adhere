@@ -172,17 +172,17 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
       rowIndex,
     });
 
-    return render
-      ? render({
-          value: record?.[dataIndex as string],
-          record,
-          dataIndex,
-          rowIndex,
-          form,
-          updateEditorCellData: () => updateEditorCellData(),
-          children: formItemNode,
-        })
-      : formItemNode;
+    return (
+      render?.({
+        value: record?.[dataIndex as string],
+        record,
+        dataIndex,
+        rowIndex,
+        form,
+        updateEditorCellData: () => updateEditorCellData(),
+        children: formItemNode,
+      }) ?? formItemNode
+    );
   }
 
   const targetRules = useMemo(() => {
@@ -231,7 +231,17 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
           rules={targetRules ?? []}
           {...(formItemProps ?? {})}
         >
-          {type !== 'custom'
+          {type !== 'custom' && renderFormItem()}
+          {type === 'custom' &&
+            render?.({
+              value: record?.[dataIndex as string],
+              record,
+              dataIndex,
+              rowIndex,
+              form,
+              updateEditorCellData: () => updateEditorCellData(),
+            })}
+          {/*{type !== 'custom'
             ? renderFormItem()
             : render?.({
                 value: record?.[dataIndex as string],
@@ -240,7 +250,7 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
                 rowIndex,
                 form,
                 updateEditorCellData: () => updateEditorCellData(),
-              })}
+              })}*/}
         </Form.Item>
       </div>
 

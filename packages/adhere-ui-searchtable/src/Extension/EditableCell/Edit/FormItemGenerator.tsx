@@ -1,4 +1,4 @@
-import { Input, InputNumber, Rate, Slider, Switch } from 'antd';
+import { ColorPicker, Input, InputNumber, Rate, Slider, Switch } from 'antd';
 import type { ReactNode } from 'react';
 import React from 'react';
 
@@ -55,11 +55,37 @@ export default {
     const renderInputNumberDecimal1 = () => {
       return <InputNumberDecimal1 {...defaultProps} {...(props ?? {})} />;
     };
+    const renderInputNegativeNumberDecimal1 = () => {
+      return (
+        <InputNumberDecimal1.InputNegativeNumberDecimal1 {...defaultProps} {...(props ?? {})} />
+      );
+    };
+    const renderInputPositiveNumberDecimal1 = () => {
+      return (
+        <InputNumberDecimal1.InputPositiveNumberDecimal1 {...defaultProps} {...(props ?? {})} />
+      );
+    };
     const renderInputNumberDecimal2 = () => {
       return <InputNumberDecimal2 {...defaultProps} {...(props ?? {})} />;
     };
+    const renderInputNegativeNumberDecimal2 = () => {
+      return (
+        <InputNumberDecimal2.InputNegativeNumberDecimal2 {...defaultProps} {...(props ?? {})} />
+      );
+    };
+    const renderInputPositiveNumberDecimal2 = () => {
+      return (
+        <InputNumberDecimal2.InputPositiveNumberDecimal2 {...defaultProps} {...(props ?? {})} />
+      );
+    };
     const renderInputNumberInteger = () => {
       return <InputNumberInteger {...defaultProps} {...(props ?? {})} />;
+    };
+    const renderInputNegativeNumberInteger = () => {
+      return <InputNumberInteger.InputNegativeNumberInteger {...defaultProps} {...(props ?? {})} />;
+    };
+    const renderInputPositiveNumberInteger = () => {
+      return <InputNumberInteger.InputPositiveNumberInteger {...defaultProps} {...(props ?? {})} />;
     };
     const renderDatePicker = () => {
       return <DatePicker {...defaultProps} {...(props ?? {})} />;
@@ -78,6 +104,9 @@ export default {
     };
     const renderRate = () => {
       return <Rate {...defaultProps} {...(props ?? {})} />;
+    };
+    const renderColorPicker = () => {
+      return <ColorPicker {...defaultProps} {...(props ?? {})} />;
     };
     const renderSwitch = () => {
       return <Switch {...defaultProps} {...(props ?? {})} />;
@@ -145,8 +174,14 @@ export default {
       ['textArea', renderTextArea],
       ['inputNumber', renderInputNumber],
       ['inputNumberDecimal1', renderInputNumberDecimal1],
+      ['inputNegativeNumberDecimal1', renderInputNegativeNumberDecimal1],
+      ['inputPositiveNumberDecimal1', renderInputPositiveNumberDecimal1],
       ['inputNumberDecimal2', renderInputNumberDecimal2],
+      ['inputNegativeNumberDecimal2', renderInputNegativeNumberDecimal2],
+      ['inputPositiveNumberDecimal2', renderInputPositiveNumberDecimal2],
       ['inputNumberInteger', renderInputNumberInteger],
+      ['inputNegativeNumberInteger', renderInputNegativeNumberInteger],
+      ['inputPositiveNumberInteger', renderInputPositiveNumberInteger],
       ['datePicker', renderDatePicker],
       ['timePicker', renderTimePicker],
       ['rangePicker', renderRangePicker],
@@ -154,6 +189,7 @@ export default {
       ['sliderRange', renderSliderRange],
       ['rate', renderRate],
       ['switch', renderSwitch],
+      ['colorPicker', renderColorPicker],
     ]);
 
     return typeMap.get(type as string)?.();
