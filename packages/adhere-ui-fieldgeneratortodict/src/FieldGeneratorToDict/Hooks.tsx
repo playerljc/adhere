@@ -1,4 +1,5 @@
 import { useMount, useUpdateEffect } from 'ahooks';
+import closeDeep from 'lodash.clonedeep';
 import { useCallback, useState } from 'react';
 
 import type {
@@ -39,7 +40,7 @@ export function useDict<D>({ dictName, cascadeParams, onDataSourceChange }: UseD
     if (dictValue instanceof Function) {
       setDataSource(dictValue(cascadeParams));
     } else {
-      setDataSource(dictValue);
+      setDataSource(closeDeep(dictValue));
     }
   }
 
@@ -82,7 +83,7 @@ export function useDynamicDict<D>({
       });
     } else if (dictValue.then) {
       dictValue.then((res) => {
-        setDataSource(res);
+        setDataSource(closeDeep(res));
       });
     }
   }
