@@ -44,7 +44,7 @@ function getMinZoom(target) {
  * transformLonLat
  * @param point
  */
-function transformLonLat(point?: Array<number>) {
+function transformLonLat(point: Array<number>) {
   return transform(
     point,
     Resource.Dict.value.ResourceGisEpsg3857.value,
@@ -72,7 +72,6 @@ export default {
 
     // @ts-ignore
     const map = new Map({
-      ...config,
       controls: defaultControls({
         attributionOptions: {
           collapsible: false,
@@ -101,6 +100,7 @@ export default {
         // projection: 'EPSG:4326',
       }),
       layers: layers,
+      ...config,
     });
 
     setTimeout(() => {
