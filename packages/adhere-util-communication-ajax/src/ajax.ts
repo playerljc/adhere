@@ -3,7 +3,7 @@ import { notification } from 'antd';
 import MobileGlobalIndicator from '@baifendian/adhere-mobile-ui-globalindicator';
 import GlobalIndicator from '@baifendian/adhere-ui-globalindicator';
 import Util from '@baifendian/adhere-util';
-import intl from '@baifendian/adhere-util-intl';
+import Intl from '@baifendian/adhere-util-intl';
 
 import type {
   IConfig,
@@ -319,15 +319,15 @@ function getDefaultConfig(this: Ajax): IConfig {
     onProgress: () => {},
     // 超时
     onTimeout: () => {
-      warnInfo(intl.v('提示'), intl.v('请求超时'));
+      warnInfo(Intl.v('提示'), Intl.v('请求超时'));
     },
     // 取消
     onAbort: () => {
-      warnInfo(intl.v('提示'), intl.v('请求终止'));
+      warnInfo(Intl.v('提示'), Intl.v('请求终止'));
     },
     // 发生错误
     onError: () => {
-      errorInfo(intl.v('提示'), intl.v('请求发生错误'));
+      errorInfo(Intl.v('提示'), Intl.v('请求发生错误'));
     },
     // 拦截器
     interceptor: ({ status }) => {
@@ -339,7 +339,7 @@ function getDefaultConfig(this: Ajax): IConfig {
           deal402.call(this);
           break;
         default:
-          errorInfo(intl.v('提示'), intl.v('已提出请求，但未收到任何回复'));
+          errorInfo(Intl.v('提示'), Intl.v('已提出请求，但未收到任何回复'));
           break;
       }
     },
@@ -471,7 +471,7 @@ function onreadystatechange({
         const jsonObj = JSON.parse(xhr.responseText);
 
         if (showWarn && codeKey in jsonObj && jsonObj[codeKey] !== codeSuccess) {
-          warnInfo(intl.v('提示'), jsonObj[messageKey]);
+          warnInfo(Intl.v('提示'), jsonObj[messageKey]);
         }
 
         resolve(resolveData({ show, terminal, data: jsonObj, indicator, xhr }));
@@ -595,7 +595,7 @@ function sendPrepare(
     // 调用request拦截器
     Ajax.interceptors.requestReducer(params);
 
-  const defaultLoadingText = `${intl.v('加载中')}...`;
+  const defaultLoadingText = `${Intl.v('加载中')}...`;
 
   const {
     show = false,
@@ -681,7 +681,7 @@ function sendPrepare(
   } else {
     // 用户没有设置header
     // 会根据data初始化heeader
-    if (!Util.isEmpty(data) && Util.isRef(data) && method !== ('get' || 'GET')) {
+    if (!Util.isEmpty(data) && Util.isRef(data) && !['get', 'GET'].includes(method)) {
       if (!isMultipartFormData(data)) {
         // console.log('默认设置Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
         contentType = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
