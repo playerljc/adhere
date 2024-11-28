@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import Util from '@baifendian/adhere-util';
-import intl from '@baifendian/adhere-util-intl';
+import Intl from '@baifendian/adhere-util-intl';
 
 import type { IReactErrorBoundariesState } from './types';
 
@@ -21,7 +21,7 @@ let DEFAULT_ERROR_UI = (
       imageStyle={{
         height: 60,
       }}
-      description={intl.v('糟糕！，出了些问题')}
+      description={Intl.v('糟糕！，出了些问题')}
     />
   </div>
 );
@@ -99,6 +99,7 @@ const ReactErrorBoundariesHOC = (Component) => {
 
       // 如果 Component 是 FunctionComponent 就不赋值ref了
       if (Util.isArray(Component)) {
+        // @ts-ignore
         if (Component.prototype.isReactComponent) {
           this.refIns = forwardedRef || React.createRef();
           allProps.ref = this.refIns;
