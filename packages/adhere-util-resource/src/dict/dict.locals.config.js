@@ -24,11 +24,26 @@ export default {
       ar_EG: 'ar_EG',
     });
     Dict.handlers.AddLocals = () => (key, value) => {
-      Dict.value.Locals.value[key] = value;
+      const originValue = Dict.value.Locals.value;
+
+      Dict.handlers.Locals = () => ({
+        ...originValue,
+        [key]: value,
+      });
+
       Dict.value.Locals.refresh();
     };
     Dict.handlers.RemoveLocals = () => (key) => {
-      delete Dict.value.Locals.value[key];
+      const originValue = Dict.value.Locals.value;
+
+      Dict.handlers.Locals = () =>
+        Object.keys(originValue)
+          .filter((_key) => _key !== key)
+          .reduce((obj, key) => {
+            obj[key] = originValue[key];
+            return obj;
+          }, {});
+
       Dict.value.Locals.refresh();
     };
 
@@ -40,11 +55,26 @@ export default {
       ar_EG: arEG,
     });
     Dict.handlers.AddLocalsAntd = () => (key, value) => {
-      Dict.value.LocalsAntd.value[key] = value;
+      const originValue = Dict.value.LocalsAntd.value;
+
+      Dict.handlers.LocalsAntd = () => ({
+        ...originValue,
+        [key]: value,
+      });
+
       Dict.value.LocalsAntd.refresh();
     };
     Dict.handlers.RemoveLocalsAntd = () => (key) => {
-      delete Dict.value.LocalsAntd.value[key];
+      const originValue = Dict.value.LocalsAntd.value;
+
+      Dict.handlers.LocalsAntd = () =>
+        Object.keys(originValue)
+          .filter((_key) => _key !== key)
+          .reduce((obj, key) => {
+            obj[key] = originValue[key];
+            return obj;
+          }, {});
+
       Dict.value.LocalsAntd.refresh();
     };
 
@@ -56,11 +86,26 @@ export default {
       ar_EG: arEGMobile,
     });
     Dict.handlers.AddLocalsAntMobile = () => (key, value) => {
-      Dict.value.LocalsAntMobile.value[key] = value;
+      const originValue = Dict.value.LocalsAntMobile.value;
+
+      Dict.handlers.LocalsAntMobile = () => ({
+        ...originValue,
+        [key]: value,
+      });
+
       Dict.value.LocalsAntMobile.refresh();
     };
     Dict.handlers.RemoveLocalsAntMobile = () => (key) => {
-      delete Dict.value.LocalsAntMobile.value[key];
+      const originValue = Dict.value.LocalsAntMobile.value;
+
+      Dict.handlers.LocalsAntMobile = () =>
+        Object.keys(originValue)
+          .filter((_key) => _key !== key)
+          .reduce((obj, key) => {
+            obj[key] = originValue[key];
+            return obj;
+          }, {});
+
       Dict.value.LocalsAntMobile.refresh();
     };
 
@@ -80,11 +125,26 @@ export default {
       },
     });
     Dict.handlers.AddLocalsMoment = () => (key, value) => {
-      Dict.value.LocalsMoment.value[key] = value;
+      const originValue = Dict.value.LocalsMoment.value;
+
+      Dict.handlers.LocalsMoment = () => ({
+        ...originValue,
+        [key]: value,
+      });
+
       Dict.value.LocalsMoment.refresh();
     };
     Dict.handlers.RemoveLocalsMoment = () => (key) => {
-      delete Dict.value.LocalsMoment.value[key];
+      const originValue = Dict.value.LocalsMoment.value;
+
+      Dict.handlers.LocalsMoment = () =>
+        Object.keys(originValue)
+          .filter((_key) => _key !== key)
+          .reduce((obj, key) => {
+            obj[key] = originValue[key];
+            return obj;
+          }, {});
+
       Dict.value.LocalsMoment.refresh();
     };
   },
