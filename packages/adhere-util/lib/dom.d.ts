@@ -276,5 +276,12 @@ declare const DomUtil: {
         width: number;
         height: number;
     };
+    /**
+     * getProportionalSize
+     * @param {number} origin 原始大小
+     * @param {number} designWidth 设计稿大小
+     * @return {number}
+     */
+    getProportionalSize(origin: number, designWidth?: number): number;
 };
 export default DomUtil;
