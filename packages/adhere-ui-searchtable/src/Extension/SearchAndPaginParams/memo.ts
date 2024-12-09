@@ -23,6 +23,14 @@ export class Memo {
     return this.memo.findIndex((t) => t.path === path);
   }
 
+  deleteByPath(_path: string) {
+    this.memo
+      .filter(({ path }) => path.startsWith(_path))
+      .forEach(({ path }) => {
+        this.deleteByIndex(this.findIndexByPath(path));
+      });
+  }
+
   deleteByIndex(index) {
     return this.memo.splice(index, 1);
   }

@@ -9,15 +9,16 @@ let historyStack: string[] = [];
  * @param pathname
  */
 function clearSearAndPaginParamsByPathname(pathname) {
-  let findIndex = SearchAndPaginParamsMemo.findIndexByPath(pathname);
-  if (findIndex !== -1) {
-    SearchAndPaginParamsMemo.deleteByIndex(findIndex);
-  }
-
-  findIndex = StateSearchAndPaginParamsMemo.findIndexByPath(pathname);
-  if (findIndex !== -1) {
-    StateSearchAndPaginParamsMemo.deleteByIndex(findIndex);
-  }
+  // let findIndex = SearchAndPaginParamsMemo.findIndexByPath(pathname);
+  // if (findIndex !== -1) {
+  //   SearchAndPaginParamsMemo.deleteByIndex(findIndex);
+  // }
+  SearchAndPaginParamsMemo.deleteByPath(pathname);
+  StateSearchAndPaginParamsMemo.deleteByPath(pathname);
+  // findIndex = StateSearchAndPaginParamsMemo.findIndexByPath(pathname);
+  // if (findIndex !== -1) {
+  //   StateSearchAndPaginParamsMemo.deleteByIndex(findIndex);
+  // }
 }
 
 const codeStack: Array<() => void> = [];
