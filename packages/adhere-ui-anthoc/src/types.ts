@@ -30,6 +30,7 @@ import type { CSSProperties, ReactElement, ReactNode } from 'react';
 
 import type { TreeAutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
+import type { RevolvingProps, RevolvingRefHandle } from '@baifendian/adhere-ui-revolving/es/types';
 import ASync from '@baifendian/adhere-ui-suspense/es/Async';
 import type { SuspenseASyncProps } from '@baifendian/adhere-ui-suspense/es/types';
 import type { TreeUtilType } from '@baifendian/adhere-util/es/tree';
@@ -1306,3 +1307,38 @@ export type StepsSwiperProps = {
 export type StepsHOCComponent = ReturnType<typeof createFactory<StepsProps>> & {
   StepsSwiper: typeof StepsSwiper;
 };
+
+export interface RevolvingTableColumn<T, U> {
+  dataIndex: string;
+  key: string;
+  title?: ReactNode;
+  align?: 'left' | 'center' | 'right';
+  width?: number | string;
+  ellipsis?: boolean;
+  render?: (value?: U, record?: T, rowIndex?: number) => ReactNode;
+}
+
+export interface RevolvingTableProps<T, U> {
+  className?: string;
+  style?: CSSProperties;
+  headerClassName?: string;
+  headerStyle?: CSSProperties;
+  bodyClassName?: string;
+  bodyStyle?: CSSProperties;
+  rowKey?: string;
+  columns?: RevolvingTableColumn<T, U>[];
+  dataSource?: T[];
+  renderHeaderBefore?: () => ReactNode;
+  renderHeaderAfter?: () => ReactNode;
+  renderBodyBefore?: () => ReactNode;
+  renderBodyAfter?: () => ReactNode;
+  renderBodyScrollBefore?: () => ReactNode;
+  renderBodyScrollAfter?: () => ReactNode;
+  renderEmpty?: () => ReactNode;
+  revolvingConfig?: RevolvingProps;
+  size?: 'large' | 'middle' | 'small';
+  // 是否启用奇偶不同色
+  parity?: boolean;
+}
+
+export type RevolvingTablePropsHandle = RevolvingRefHandle;

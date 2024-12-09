@@ -37,8 +37,10 @@
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
     "@baifendian/adhere-ui-auto-complete": "^2.11.0",
+    "@baifendian/adhere-ui-configprovider": "^2.11.0",
     "@baifendian/adhere-ui-flexlayout": "^2.11.0",
     "@baifendian/adhere-ui-hooks": "^2.11.0",
+    "@baifendian/adhere-ui-revolving": "^2.11.0",
     "@baifendian/adhere-ui-space": "^2.11.0",
     "@baifendian/adhere-ui-suspense": "^2.11.0",
     "@baifendian/adhere-util": "^2.11.0",
@@ -49,6 +51,7 @@
     "classnames": "^2.5.1",
     "dayjs": "^1.11.12",
     "immer": "^9.0.21",
+    "lodash.merge": "^4.6.2",
     "lodash.uniqby": "^4.7.0",
     "lodash.xorby": "^4.7.0",
     "react": "^18.3.1",

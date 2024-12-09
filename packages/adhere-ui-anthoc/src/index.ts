@@ -55,6 +55,7 @@ import RangePickerFormatValueHOC from './range-picker-format-value-hoc';
 import RangePickerTimestampValueHOC from './range-picker-timestamp-value-hoc';
 import Rate from './rate';
 import Result from './result';
+import RevolvingTable from './revolving-table';
 import Row from './row';
 import Segmented from './segmented';
 import Select from './select';
@@ -142,6 +143,7 @@ export {
   RangePickerTimestampValueHOC,
   RangePickerFormatValueHOC,
   Rate,
+  RevolvingTable,
   Result,
   Row,
   Segmented,

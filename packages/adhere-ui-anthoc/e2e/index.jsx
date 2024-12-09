@@ -25,6 +25,7 @@ import PagingEntityValueHOC from './PagingEntityValueHOC';
 import RadioTest from './Radio/AutoCompleteButtonRadioSelect.tsx';
 import RangePickerValueHOCInFormTest from './RangePickerValueHOCInFormTest';
 import RangePickerValueHOCTest from './RangePickerValueHOCTest';
+import RevolvingTableNormal from './RevolvingTable/normal';
 import SelectTest from './Select/AutoCompleteCheckAllMultipleSelect';
 import CheckAllMultipleSelect from './Select/CheckAllMultipleSelect';
 import StepsSwiper from './Steps/StepsSwiper';
@@ -45,5 +46,5 @@ import AntHOC from './test';
 import '../src/index.less';
 
 e2e.PC({
-  children: <StepsSwiper />,
+  children: <RevolvingTableNormal />,
 });

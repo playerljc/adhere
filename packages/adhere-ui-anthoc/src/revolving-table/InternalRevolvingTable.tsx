@@ -1,0 +1,183 @@
+import classNames from 'classnames';
+import merge from 'lodash.merge';
+import React, { CSSProperties, forwardRef, memo, useContext, useMemo } from 'react';
+import type { PropsWithoutRef, RefAttributes } from 'react';
+
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+import Revolving from '@baifendian/adhere-ui-revolving';
+
+import Empty from '../empty';
+import type {
+  RevolvingTableColumn,
+  RevolvingTableProps,
+  RevolvingTablePropsHandle,
+} from '../types';
+import { getValue } from '../util';
+
+const selectorPrefix = 'adhere-ui-anthoc-revolving-table';
+
+const defaultSlidesPerView = 5;
+
+const InternalRevolvingTable = memo<
+  PropsWithoutRef<RevolvingTableProps<any, any>> & RefAttributes<RevolvingTablePropsHandle>
+>(
+  forwardRef<RevolvingTablePropsHandle, RevolvingTableProps<any, any>>(
+    (
+      {
+        className,
+        style,
+        headerClassName,
+        headerStyle,
+        bodyClassName,
+        bodyStyle,
+        rowKey,
+        columns,
+        dataSource,
+        revolvingConfig,
+        renderHeaderAfter,
+        renderHeaderBefore,
+        renderBodyAfter,
+        renderBodyBefore,
+        renderBodyScrollAfter,
+        renderBodyScrollBefore,
+        renderEmpty,
+        size,
+        parity,
+      },
+      ref,
+    ) => {
+      const { media } = useContext(ConfigProvider.Context);
+
+      const isEmpty = useMemo(() => !dataSource?.length, [dataSource]);
+
+      const targetRevolvingConfig = useMemo(
+        () =>
+          merge(
+            {
+              slidesPerView: defaultSlidesPerView,
+            },
+            revolvingConfig ?? {},
+          ),
+        [revolvingConfig],
+      );
+
+      function cellStyle({
+        width,
+        align,
+      }: {
+        width: RevolvingTableColumn<any, any>['width'];
+        align: RevolvingTableColumn<any, any>['align'];
+      }) {
+        const style: CSSProperties = {};
+
+        if (typeof width === 'number' || (typeof width === 'string' && width.endsWith('%'))) {
+          style.width = getValue(media, width);
+          style.flexShrink = 0;
+        } else {
+          style.flex = 1;
+          style.minWidth = 0;
+        }
+
+        style.textAlign = align ?? 'left';
+
+        return style;
+      }
+
+      return (
+        <div
+          className={classNames(
+            selectorPrefix,
+            `${selectorPrefix}-size-${size ?? 'middle'}`,
+            className,
+            {
+              [`${selectorPrefix}-parity`]: !!parity,
+            },
+          )}
+          style={style ?? {}}
+        >
+          {!!renderHeaderBefore && (
+            <div className={`${selectorPrefix}-header-before`}>{renderHeaderBefore?.()}</div>
+          )}
+
+          <ul
+            className={classNames(`${selectorPrefix}-header`, headerClassName)}
+            style={headerStyle ?? {}}
+          >
+            {columns?.map(({ key, dataIndex, title, align, width, ellipsis, render }) => (
+              <li
+                key={key}
+                className={classNames(`${selectorPrefix}-header-cell`, {
+                  [`${selectorPrefix}-header-cell-ellipsis`]: !!ellipsis,
+                })}
+                style={cellStyle({ width, align })}
+              >
+                {title}
+              </li>
+            ))}
+          </ul>
+
+          {!!renderHeaderAfter && (
+            <div className={`${selectorPrefix}-header-after`}>{renderHeaderAfter?.()}</div>
+          )}
+
+          <div
+            className={classNames(`${selectorPrefix}-body`, bodyClassName)}
+            style={bodyStyle ?? {}}
+          >
+            {!!renderBodyBefore && (
+              <div className={`${selectorPrefix}-body-before`}>{renderBodyBefore?.()}</div>
+            )}
+
+            <div className={classNames(`${selectorPrefix}-body-list`)}>
+              <Revolving
+                ref={ref}
+                className={classNames(`${selectorPrefix}-revolving`)}
+                direction="top"
+                loop={dataSource?.length >= targetRevolvingConfig.slidesPerView}
+                swiperConfig={targetRevolvingConfig}
+              >
+                {isEmpty && (
+                  <div className={`${selectorPrefix}-empty`}>{renderEmpty?.() ?? <Empty />}</div>
+                )}
+
+                {!isEmpty &&
+                  dataSource?.map((record, _rowIndex) => (
+                    <Revolving.Item
+                      key={record[rowKey ?? 'id']}
+                      className={classNames(`${selectorPrefix}-revolving-row`)}
+                    >
+                      <ul className={classNames(`${selectorPrefix}-row`)}>
+                        {columns?.map(
+                          ({ width, align, ellipsis, dataIndex, render }, _columnIndex) => {
+                            return (
+                              <li
+                                key={dataIndex}
+                                className={classNames(`${selectorPrefix}-row-cell`, {
+                                  [`${selectorPrefix}-row-cell-ellipsis`]: !!ellipsis,
+                                })}
+                                style={cellStyle({ width, align })}
+                                title={record[dataIndex]}
+                              >
+                                {render?.(record[dataIndex], record, _rowIndex) ??
+                                  record[dataIndex]}
+                              </li>
+                            );
+                          },
+                        )}
+                      </ul>
+                    </Revolving.Item>
+                  ))}
+              </Revolving>
+            </div>
+
+            {!!renderBodyAfter && (
+              <div className={`${selectorPrefix}-body-after`}>{renderBodyAfter?.()}</div>
+            )}
+          </div>
+        </div>
+      );
+    },
+  ),
+);
+
+export default InternalRevolvingTable;
