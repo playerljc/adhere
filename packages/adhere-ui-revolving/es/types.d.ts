@@ -1,5 +1,6 @@
 import { PropsWithoutRef, RefAttributes } from 'react';
 import type { CSSProperties, NamedExoticComponent } from 'react';
+import type { SwiperOptions } from 'swiper/types/swiper-options';
 import RevolvingItem from './Item';
 export type RevolvingComponent = NamedExoticComponent<PropsWithoutRef<RevolvingProps> & RefAttributes<RevolvingRefHandle>> & {
     Item: typeof RevolvingItem;
@@ -25,7 +26,7 @@ export interface RevolvingProps {
     stopOnLastSlide?: boolean;
     listeners?: object;
     children?: any;
-    swiperConfig?: any;
+    swiperConfig?: SwiperOptions;
 }
 export interface RevolvingItemProps {
     className?: string;

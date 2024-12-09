@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import merge from 'lodash.merge';
 import React, {
   PropsWithoutRef,
   RefAttributes,
@@ -9,7 +10,8 @@ import React, {
   useRef,
 } from 'react';
 import { Swiper } from 'swiper';
-import { Autoplay } from 'swiper/modules';
+import { Autoplay, Mousewheel } from 'swiper/modules';
+import type SwiperType from 'swiper/types/swiper-class';
 
 import RevolvingItem from './Item';
 import type { RevolvingComponent, RevolvingProps, RevolvingRefHandle } from './types';
@@ -33,12 +35,12 @@ const InternalRevolving = memo<PropsWithoutRef<RevolvingProps> & RefAttributes<R
       swiperConfig = {},
     } = props;
 
-    Swiper.use([Autoplay]);
+    Swiper.use([Autoplay, Mousewheel]);
 
-    const el = useRef<HTMLDivElement>(null);
-    const wrapperEl = useRef<HTMLDivElement>(null);
+    const el = useRef<HTMLDivElement | null>(null);
+    const wrapperEl = useRef<HTMLDivElement | null>(null);
 
-    const swiper = useRef<typeof Swiper | null>(null);
+    const swiper = useRef<SwiperType | null>(null);
 
     function initial() {
       if (swiper.current) {
@@ -49,19 +51,26 @@ const InternalRevolving = memo<PropsWithoutRef<RevolvingProps> & RefAttributes<R
         swiper.current = null;
       }
 
-      swiper.current = new Swiper(el.current as HTMLElement, {
-        allowTouchMove: false,
-        direction: getDirection(direction),
-        loop,
-        speed,
-        autoplay: {
-          delay,
-          stopOnLastSlide,
-          reverseDirection: direction === 'right' || direction === 'bottom',
-        },
-        on: listeners,
-        ...(swiperConfig ?? {}),
-      });
+      swiper.current = new Swiper(
+        el.current as HTMLElement,
+        merge(
+          {
+            allowTouchMove: false,
+            direction: getDirection(direction),
+            loop,
+            speed,
+            autoplay: {
+              delay,
+              stopOnLastSlide,
+              reverseDirection: direction === 'right' || direction === 'bottom',
+            },
+            on: listeners,
+          },
+          {
+            ...(swiperConfig ?? {}),
+          },
+        ),
+      );
     }
 
     function getDirection(direction) {
@@ -98,7 +107,7 @@ const InternalRevolving = memo<PropsWithoutRef<RevolvingProps> & RefAttributes<R
 
     useEffect(() => {
       initial();
-    }, [speed, delay, direction, loop, stopOnLastSlide, listeners]);
+    }, [speed, delay, direction, loop, stopOnLastSlide, listeners, swiperConfig]);
 
     return (
       <div
@@ -107,11 +116,7 @@ const InternalRevolving = memo<PropsWithoutRef<RevolvingProps> & RefAttributes<R
         ref={el}
       >
         <div
-          className={classNames(
-            `${selectorPrefix}-wrapper`,
-            'swiper-wrapper',
-            classNameWrapper ?? '',
-          )}
+          className={classNames(`${selectorPrefix}-wrapper`, 'swiper-wrapper', classNameWrapper)}
           style={styleWrapper ?? {}}
           ref={wrapperEl}
         >

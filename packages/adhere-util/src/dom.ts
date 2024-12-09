@@ -748,7 +748,6 @@ const DomUtil = {
 
     return scrollbarWidth;
   },
-
   /**
    * getMaximizedViewportSize
    * @return {{width: number; height: number}}
@@ -778,6 +777,15 @@ const DomUtil = {
       width: maximizedWidth,
       height: maximizedHeight,
     };
+  },
+  /**
+   * getProportionalSize
+   * @param {number} origin 原始大小
+   * @param {number} designWidth 设计稿大小
+   * @return {number}
+   */
+  getProportionalSize(origin: number, designWidth: number = 1920) {
+    return (document.documentElement.clientWidth * origin) / designWidth;
   },
   /**--------------------------dom-end-------------------------**/
 };
