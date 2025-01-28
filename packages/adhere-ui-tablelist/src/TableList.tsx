@@ -7,7 +7,7 @@ import { Button, Checkbox, Form, List, Skeleton, Table } from 'antd';
 // import Checkbox from 'antd/lib/checkbox';
 import { FormInstance } from 'antd/lib/form';
 import classNames from 'classnames';
-import cloneDeep from 'lodash.cloneDeep';
+import cloneDeep from 'lodash.clonedeep';
 import React from 'react';
 
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
