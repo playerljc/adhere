@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["revolving-table/index.js"],"sourcesContent":["import RevolvingTable from './RevolvingTable';\nexport default RevolvingTable;"],"names":["RevolvingTable"],"mappings":"OAAOA,mBAAoB,kCACZA"}

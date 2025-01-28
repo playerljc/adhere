@@ -2,16 +2,13 @@ import classNames from 'classnames';
 import merge from 'lodash.merge';
 import React, { CSSProperties, forwardRef, memo, useContext, useMemo } from 'react';
 import type { PropsWithoutRef, RefAttributes } from 'react';
+import { Autoplay, Mousewheel } from 'swiper/modules';
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
-import Revolving from '@baifendian/adhere-ui-revolving';
 
 import Empty from '../empty';
-import type {
-  RevolvingTableColumn,
-  RevolvingTableProps,
-  RevolvingTablePropsHandle,
-} from '../types';
+import type { RevolvingTableColumn, RevolvingTableProps } from '../types';
 import { getValue } from '../util';
 
 const selectorPrefix = 'adhere-ui-anthoc-revolving-table';
@@ -19,9 +16,9 @@ const selectorPrefix = 'adhere-ui-anthoc-revolving-table';
 const defaultSlidesPerView = 5;
 
 const InternalRevolvingTable = memo<
-  PropsWithoutRef<RevolvingTableProps<any, any>> & RefAttributes<RevolvingTablePropsHandle>
+  PropsWithoutRef<RevolvingTableProps<any, any>> & RefAttributes<SwiperRef>
 >(
-  forwardRef<RevolvingTablePropsHandle, RevolvingTableProps<any, any>>(
+  forwardRef<SwiperRef, RevolvingTableProps<any, any>>(
     (
       {
         className,
@@ -38,8 +35,8 @@ const InternalRevolvingTable = memo<
         renderHeaderBefore,
         renderBodyAfter,
         renderBodyBefore,
-        renderBodyScrollAfter,
-        renderBodyScrollBefore,
+        // renderBodyScrollAfter,
+        // renderBodyScrollBefore,
         renderEmpty,
         size,
         parity,
@@ -48,7 +45,9 @@ const InternalRevolvingTable = memo<
     ) => {
       const { media } = useContext(ConfigProvider.Context);
 
-      const isEmpty = useMemo(() => !dataSource?.length, [dataSource]);
+      const targetDataSource = useMemo(() => dataSource ?? [], [dataSource]);
+
+      const isEmpty = useMemo(() => !targetDataSource?.length, [targetDataSource]);
 
       const targetRevolvingConfig = useMemo(
         () =>
@@ -78,6 +77,12 @@ const InternalRevolvingTable = memo<
           style.minWidth = 0;
         }
 
+        const alignMap = new Map([
+          ['left', 'flex-start'],
+          ['center', 'center'],
+          ['right', 'flex-end'],
+        ]);
+        style.justifyContent = alignMap.get(align ?? 'left');
         style.textAlign = align ?? 'left';
 
         return style;
@@ -103,9 +108,10 @@ const InternalRevolvingTable = memo<
             className={classNames(`${selectorPrefix}-header`, headerClassName)}
             style={headerStyle ?? {}}
           >
-            {columns?.map(({ key, dataIndex, title, align, width, ellipsis, render }) => (
+            {columns?.map(({ key, title, align, width, ellipsis, tooltip }) => (
               <li
                 key={key}
+                title={tooltip}
                 className={classNames(`${selectorPrefix}-header-cell`, {
                   [`${selectorPrefix}-header-cell-ellipsis`]: !!ellipsis,
                 })}
@@ -129,20 +135,29 @@ const InternalRevolvingTable = memo<
             )}
 
             <div className={classNames(`${selectorPrefix}-body-list`)}>
-              <Revolving
+              <Swiper
                 ref={ref}
                 className={classNames(`${selectorPrefix}-revolving`)}
-                direction="top"
-                loop={dataSource?.length >= targetRevolvingConfig.slidesPerView}
-                swiperConfig={targetRevolvingConfig}
+                direction="vertical"
+                loop={targetDataSource?.length >= targetRevolvingConfig.slidesPerView}
+                mousewheel={{
+                  releaseOnEdges: true,
+                  sensitivity: 1,
+                }}
+                autoplay={{
+                  pauseOnMouseEnter: true,
+                  disableOnInteraction: true,
+                }}
+                modules={[Autoplay, Mousewheel]}
+                {...(targetRevolvingConfig ?? {})}
               >
                 {isEmpty && (
                   <div className={`${selectorPrefix}-empty`}>{renderEmpty?.() ?? <Empty />}</div>
                 )}
 
                 {!isEmpty &&
-                  dataSource?.map((record, _rowIndex) => (
-                    <Revolving.Item
+                  targetDataSource?.map((record, _rowIndex) => (
+                    <SwiperSlide
                       key={record[rowKey ?? 'id']}
                       className={classNames(`${selectorPrefix}-revolving-row`)}
                     >
@@ -165,9 +180,9 @@ const InternalRevolvingTable = memo<
                           },
                         )}
                       </ul>
-                    </Revolving.Item>
+                    </SwiperSlide>
                   ))}
-              </Revolving>
+              </Swiper>
             </div>
 
             {!!renderBodyAfter && (

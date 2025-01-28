@@ -6,6 +6,7 @@ import type { StepProps } from 'antd/es/steps';
 import type { CheckableTagProps } from 'antd/es/tag';
 import dayjs from 'dayjs';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
+import type { SwiperOptions } from 'swiper/types';
 import type { TreeAutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 import ASync from '@baifendian/adhere-ui-suspense/es/Async';
@@ -915,3 +916,34 @@ export type StepsSwiperProps = {
 export type StepsHOCComponent = ReturnType<typeof createFactory<StepsProps>> & {
     StepsSwiper: typeof StepsSwiper;
 };
+export interface RevolvingTableColumn<T, U> {
+    dataIndex: string;
+    key: string;
+    title?: ReactNode;
+    align?: 'left' | 'center' | 'right';
+    width?: number | string;
+    ellipsis?: boolean;
+    tooltip?: string;
+    render?: (value?: U, record?: T, rowIndex?: number) => ReactNode;
+}
+export interface RevolvingTableProps<T, U> {
+    className?: string;
+    style?: CSSProperties;
+    headerClassName?: string;
+    headerStyle?: CSSProperties;
+    bodyClassName?: string;
+    bodyStyle?: CSSProperties;
+    rowKey?: string;
+    columns?: RevolvingTableColumn<T, U>[];
+    dataSource?: T[];
+    renderHeaderBefore?: () => ReactNode;
+    renderHeaderAfter?: () => ReactNode;
+    renderBodyBefore?: () => ReactNode;
+    renderBodyAfter?: () => ReactNode;
+    renderBodyScrollBefore?: () => ReactNode;
+    renderBodyScrollAfter?: () => ReactNode;
+    renderEmpty?: () => ReactNode;
+    revolvingConfig?: SwiperOptions;
+    size?: 'large' | 'middle' | 'small';
+    parity?: boolean;
+}

@@ -1,0 +1,2 @@
+var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},util_1=(Object.defineProperty(exports,"__esModule",{value:!0}),require("../util")),InternalRevolvingTable_1=__importDefault(require("./InternalRevolvingTable")),RevolvingTable=(0,util_1.createFactory)(InternalRevolvingTable_1.default,{});RevolvingTable.displayName="RevolvingTable",exports.default=RevolvingTable;
+//# sourceMappingURL=RevolvingTable.js.map
