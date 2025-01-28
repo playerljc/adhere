@@ -6,17 +6,13 @@ import styles from './examples.less';
 
 export default () => {
   return (
-    <Revolving direction="top" className={styles.Wrapper}>
-      <Revolving.Item>Slide 1</Revolving.Item>
-      <Revolving.Item>Slide 2</Revolving.Item>
-      <Revolving.Item>Slide 3</Revolving.Item>
-      <Revolving.Item>Slide 4</Revolving.Item>
-      <Revolving.Item>Slide 5</Revolving.Item>
-      <Revolving.Item>Slide 6</Revolving.Item>
-      <Revolving.Item>Slide 7</Revolving.Item>
-      <Revolving.Item>Slide 8</Revolving.Item>
-      <Revolving.Item>Slide 9</Revolving.Item>
-      <Revolving.Item>Slide 10</Revolving.Item>
-    </Revolving>
+    <Revolving
+      direction="top"
+      classNameWrapper={styles.Wrapper}
+      items={Array.from({ length: 10 }).map((_, _index) => ({
+        key: `${_index + 1}`,
+        children: <span>Slide {_index + 1}</span>,
+      }))}
+    />
   );
 };
