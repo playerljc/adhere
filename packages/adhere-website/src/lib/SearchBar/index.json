@@ -295,6 +295,11 @@
     "path": "/adhere/component/ui/currencysymbol"
   },
   {
+    "kw": ["魔法面板", "MagicPanel"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/magicpanel"
+  },
+  {
     "kw": ["组件强制刷新", "ForceUpdate"],
     "group": "组件 - Util",
     "path": "/adhere/component/ui/forceupdate"

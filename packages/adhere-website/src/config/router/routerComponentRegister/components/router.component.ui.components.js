@@ -172,3 +172,7 @@ export const QuickRangeDate = lazy(() =>
 export const CurrencySymbol = lazy(() =>
   import(/* webpackChunkName: "currencysymbol" */ '@/components/ui/currencysymbol'),
 );
+
+export const MagicPanel = lazy(() =>
+  import(/* webpackChunkName: "magicpanel" */ '@/components/ui/magicpanel'),
+);
