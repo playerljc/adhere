@@ -441,7 +441,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
 
       // 总页数
       const pages = useMemo(() => {
-        return Math.floor((targetDataSource?.total ?? 0) / pagingRef.current.pageSize) || 1;
+        return Math.ceil((targetDataSource?.total ?? 0) / pagingRef.current.pageSize) || 1;
       }, [/*pagingRef.current.pageSize,*/ targetDataSource.total]);
 
       const defaultFirstLoading = useMemo(() => {
