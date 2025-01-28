@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE } from '../Constent';
+import { ERROR_MESSAGE } from '../Constant';
 import Request from '../Request';
 import Response from '../Response';
 import type { SendOptions } from '../types';
