@@ -63,5 +63,37 @@ declare const _default: {
         height: number;
         radius: number;
     }, onDraw: (ctx: CanvasRenderingContext2D) => {}): void;
+    /**
+     * calculateNewElementsInfo
+     * @description 计算图片大小变化后元素的新位置和宽高
+     * @param {{x:number;y:number;width:number;height:number;}[]} elementsInfo - 元素原始信息数组，每个元素是一个包含x、y、width、height的对象
+     * @param {number} widthOrigin - 原始图片宽度
+     * @param {number} heightOrigin - 原始图片高度
+     * @param {number} widthNew - 新的图片宽度
+     * @param {number} heightNew - 新的图片高度
+     * @returns {{
+     *   newX:number;
+     *   newY:number;
+     *   newWidth:number;
+     *   newHeight:number;
+     * }[]} - 元素的新位置和宽高信息数组
+     */
+    calculateNewElementsInfo({ elementsInfo, widthOrigin, heightOrigin, widthNew, heightNew, }: {
+        elementsInfo: {
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+        }[];
+        widthOrigin: number;
+        heightOrigin: number;
+        widthNew: number;
+        heightNew: number;
+    }): {
+        newX: number;
+        newY: number;
+        newWidth: number;
+        newHeight: number;
+    }[];
 };
 export default _default;

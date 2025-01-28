@@ -167,6 +167,23 @@ declare const _default: {
         height: number;
         radius: number;
     }, onDraw: (ctx: CanvasRenderingContext2D) => {}): void;
+    calculateNewElementsInfo({ elementsInfo, widthOrigin, heightOrigin, widthNew, heightNew, }: {
+        elementsInfo: {
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+        }[];
+        widthOrigin: number;
+        heightOrigin: number;
+        widthNew: number;
+        heightNew: number;
+    }): {
+        newX: number;
+        newY: number;
+        newWidth: number;
+        newHeight: number;
+    }[];
     toPoint(percent: string): number;
     toPercent(point: number): string;
     straightLineIntersection(p1: import("./types").IPoint, p2: import("./types").IPoint, p3: import("./types").IPoint, p4: import("./types").IPoint): import("./types").IPoint;
