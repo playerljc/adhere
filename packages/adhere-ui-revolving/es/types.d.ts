@@ -1,15 +1,15 @@
-import { PropsWithoutRef, RefAttributes } from 'react';
+import type { PropsWithoutRef, ReactNode, RefAttributes } from 'react';
 import type { CSSProperties, NamedExoticComponent } from 'react';
-import type { SwiperOptions } from 'swiper/types/swiper-options';
-import RevolvingItem from './Item';
-export type RevolvingComponent = NamedExoticComponent<PropsWithoutRef<RevolvingProps> & RefAttributes<RevolvingRefHandle>> & {
-    Item: typeof RevolvingItem;
-};
+import type { SwiperOptions } from 'swiper/types';
+export type RevolvingComponent = NamedExoticComponent<PropsWithoutRef<RevolvingProps> & RefAttributes<RevolvingRefHandle>> & {};
 export interface RevolvingRefHandle {
     start: () => void;
     stop: () => void;
     isRunning: () => boolean;
 }
+export type RevolvingItem = RevolvingItemProps & {
+    key: string;
+};
 /**
  * RevolvingProps
  * @interface RevolvingProps
@@ -25,11 +25,11 @@ export interface RevolvingProps {
     loop?: boolean;
     stopOnLastSlide?: boolean;
     listeners?: object;
-    children?: any;
+    items?: RevolvingItem[];
     swiperConfig?: SwiperOptions;
 }
 export interface RevolvingItemProps {
     className?: string;
     style?: CSSProperties;
-    children?: any;
+    children?: ReactNode;
 }
