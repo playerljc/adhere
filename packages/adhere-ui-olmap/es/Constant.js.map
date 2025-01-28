@@ -1,0 +1,1 @@
+{"version":3,"file":"Constant.js","sources":["Constant.js"],"sourcesContent":["export default {\n    MAP_TYPE_ADMINISTRATIVE: 'administrative',\n    MAP_TYPE_SATELLITE: 'satellite',\n};\n"],"names":["MAP_TYPE_ADMINISTRATIVE","MAP_TYPE_SATELLITE"],"mappings":"cAAe,CACXA,wBAAyB,iBACzBC,mBAAoB,WACxB"}

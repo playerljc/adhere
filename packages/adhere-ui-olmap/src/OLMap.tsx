@@ -4,7 +4,7 @@ import React, { createRef } from 'react';
 
 import Resource from '@baifendian/adhere-util-resource';
 
-import Constent from './Constent';
+import Constant from './Constant';
 import GeoLayer from './GeoLayer';
 import Util from './Util';
 import type { OLMapProps } from './types';
@@ -215,7 +215,7 @@ class OlMap extends React.Component<OLMapProps, any> {
 
 // 指定 props 的默认值：
 OlMap.defaultProps = {
-  type: Constent.MAP_TYPE_ADMINISTRATIVE,
+  type: Constant.MAP_TYPE_ADMINISTRATIVE,
   mapConfig: {},
   maxZoom: Resource.Dict.value.ResourceGisMapMaxZoom.value,
   zoom: Resource.Dict.value.ResourceGisMapMaxZoom.value,
@@ -226,7 +226,7 @@ OlMap.defaultProps = {
 };
 
 OlMap.propTypes = {
-  type: PropTypes.oneOf([Constent.MAP_TYPE_ADMINISTRATIVE, Constent.MAP_TYPE_SATELLITE]),
+  type: PropTypes.oneOf([Constant.MAP_TYPE_ADMINISTRATIVE, Constant.MAP_TYPE_SATELLITE]),
   mapConfig: PropTypes.object,
   maxZoom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   zoom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
