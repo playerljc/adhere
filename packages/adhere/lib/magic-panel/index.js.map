@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["magic-panel/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-magic-panel/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,uDACHA"}

@@ -76,6 +76,7 @@
     "@baifendian/adhere-ui-hooks": "^2.11.0",
     "@baifendian/adhere-ui-imagelazy": "^2.11.0",
     "@baifendian/adhere-ui-jdcategorytab": "^2.11.0",
+    "@baifendian/adhere-ui-magic-panel": "^2.11.0",
     "@baifendian/adhere-ui-messagedialog": "^2.11.0",
     "@baifendian/adhere-ui-notification": "^2.11.0",
     "@baifendian/adhere-ui-olmap": "^2.11.0",

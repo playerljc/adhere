@@ -38,6 +38,7 @@ import HistoryBack from '@baifendian/adhere-ui-historyback';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import ImageLazy from '@baifendian/adhere-ui-imagelazy';
 import JdCategoryTab from '@baifendian/adhere-ui-jdcategorytab';
+import MagicPanel from '@baifendian/adhere-ui-magic-panel';
 import MessageDialog from '@baifendian/adhere-ui-messagedialog';
 import Notification from '@baifendian/adhere-ui-notification';
 import OLMap from '@baifendian/adhere-ui-olmap';
@@ -126,6 +127,7 @@ export {
   Hooks,
   ImageLazy,
   JdCategoryTab,
+  MagicPanel,
   MessageDialog,
   Notification,
   OLMap,
