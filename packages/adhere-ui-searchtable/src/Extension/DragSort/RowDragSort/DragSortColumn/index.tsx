@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 
 import { HolderOutlined } from '@ant-design/icons';
 
-import { DRAG_SORT_ROW_COLUMN_KEY } from '../../../../Constent';
+import { DRAG_SORT_ROW_COLUMN_KEY } from '../../../../Constant';
 import type { DragSortColumnProps } from '../../../../types';
 import DragSortRowContext from '../DragSortRowContext';
 

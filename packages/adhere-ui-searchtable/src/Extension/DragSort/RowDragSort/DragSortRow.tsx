@@ -3,7 +3,7 @@ import { ReactElement, useMemo, useState } from 'react';
 import React, { useContext, useRef } from 'react';
 import { ConnectDragSource, ConnectDropTarget, useDrag, useDrop } from 'react-dnd';
 
-import { DRAG_SORT_ROW_COLUMN_KEY } from '../../../Constent';
+import { DRAG_SORT_ROW_COLUMN_KEY } from '../../../Constant';
 import type SearchTable from '../../../SearchTable';
 import { SearchTableContext, selectorPrefix } from '../../../SearchTable';
 import { isSameLevel } from '../../../Util';
