@@ -1,3 +1,5 @@
+import type { CascaderProps, SelectProps, TransferProps, TreeSelectProps } from 'antd';
+import type { LabeledValue } from 'antd/es/select';
 import React from 'react';
 
 import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
@@ -70,4 +72,124 @@ export function getValue(
   }
 
   return size;
+}
+
+export function existsValueInLabeledValueOptions(value: string | number, options: LabeledValue[]) {
+  return options.findIndex(({ value: itemValue }) => value === itemValue) !== -1;
+}
+
+export function isLabeledValue(val: LabeledValue): boolean {
+  return ('label' in val || 'title' in val) && 'value' in val;
+}
+
+export function checkLabeledValueExists(
+  value: string | number | LabeledValue,
+  options: LabeledValue[],
+) {
+  if (typeof value === 'string' || typeof value === 'number') {
+    return existsValueInLabeledValueOptions(value, options);
+  } else if (isLabeledValue(value)) {
+    return existsValueInLabeledValueOptions(value.value, options);
+  }
+  return false;
+}
+
+export function getOptionsValue(value: SelectProps['value'], options: LabeledValue[]) {
+  if (typeof value === 'string' || typeof value === 'number' || isLabeledValue(value)) {
+    return checkLabeledValueExists(value, options) ? value : undefined;
+  }
+
+  if (Array.isArray(value)) {
+    return (value as LabeledValue[]).filter((_value) => checkLabeledValueExists(_value, options));
+  }
+
+  return value;
+}
+
+export function existsValueInSimpleTreeData({
+  value,
+  treeData,
+  valueAttr = 'value',
+}: {
+  value: string;
+  treeData: { value?: string | number }[];
+  valueAttr?: string;
+}): boolean {
+  return treeData.findIndex(({ value: itemValue }) => value === itemValue) !== -1;
+}
+
+export function filterTreeValues(value: string | string[], treeData: any[], keyAttr: string) {
+  if (typeof value === 'string') {
+    return Util.findNodeByKey(treeData, value, { keyAttr }) ? value : undefined;
+  } else if (Array.isArray(value)) {
+    return value.filter((_value) => Util.findNodeByKey(treeData, _value, { keyAttr }));
+  }
+
+  return value;
+}
+
+export function filterCascaderValues(
+  value: CascaderProps['value'],
+  options: CascaderProps['options'],
+) {
+  return (value ?? [])
+    .filter((_value) => !!_value)
+    .filter((_value) => Util.findNodeByKey((options ?? []) as any[], _value, { keyAttr: 'value' }));
+}
+
+export function getTreeValue({
+  value,
+  treeData,
+  treeDataSimpleMode,
+}: {
+  value: TreeSelectProps['value'];
+  treeData: TreeSelectProps['treeData'];
+  treeDataSimpleMode: TreeSelectProps['treeDataSimpleMode'];
+}) {
+  // 简单数据
+  if (treeDataSimpleMode) {
+    const valueAttr =
+      typeof treeDataSimpleMode === 'boolean' ? 'value' : treeDataSimpleMode['value'];
+
+    // 单值
+    if (typeof value === 'string') {
+      return existsValueInSimpleTreeData({ value, treeData: treeData ?? [], valueAttr })
+        ? value
+        : undefined;
+    }
+    // 多值
+    else if (Array.isArray(value)) {
+      return value.filter((_value) =>
+        existsValueInSimpleTreeData({ value: _value, treeData: treeData ?? [], valueAttr }),
+      );
+    }
+  }
+  // 带有children的数据
+  else {
+    return filterTreeValues(value, treeData ?? [], 'value');
+  }
+
+  return value;
+}
+
+export function getCascaderValue({
+  value,
+  options,
+}: {
+  value: CascaderProps['value'];
+  options: CascaderProps['options'];
+}) {
+  return filterCascaderValues(value, options);
+}
+
+export function getTransferValue({
+  value,
+  dataSource,
+}: {
+  value: TransferProps['selectedKeys'];
+  dataSource: TransferProps['dataSource'];
+}) {
+  return (value ?? []).filter(
+    (_value) => (dataSource ?? []).findIndex(({ key }) => key === _value) !== -1,
+  );
 }

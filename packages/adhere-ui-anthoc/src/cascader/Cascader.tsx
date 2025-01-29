@@ -1,9 +1,10 @@
 import { Cascader, CascaderProps } from 'antd';
+import React, { useMemo } from 'react';
 
 import type { CascaderHOCComponent } from '../types';
-import { createFactory } from '../util';
+import { createFactory, getCascaderValue } from '../util';
 
-const CascaderHOC: CascaderHOCComponent = createFactory<CascaderProps>(Cascader, {
+const InternalCascader: CascaderHOCComponent = createFactory<CascaderProps>(Cascader, {
   showSearch: {
     filter: (inputValue, path) =>
       path.some((option) => {
@@ -17,6 +18,34 @@ const CascaderHOC: CascaderHOCComponent = createFactory<CascaderProps>(Cascader,
   allowClear: true,
   placement: 'bottomLeft',
 });
+
+const CascaderHOC: CascaderHOCComponent = ({
+  options,
+  defaultValue,
+  value,
+  isHideInvalidValue = true,
+  ...restProps
+}) => {
+  const targetDefaultValue = useMemo(
+    () => () =>
+      isHideInvalidValue ? getCascaderValue({ value: defaultValue, options }) : defaultValue,
+    [defaultValue, options, isHideInvalidValue],
+  );
+
+  const targetValue = useMemo(
+    () => () => isHideInvalidValue ? getCascaderValue({ value, options }) : value,
+    [value, options, isHideInvalidValue],
+  );
+
+  return (
+    <InternalCascader
+      {...restProps}
+      defaultValue={targetDefaultValue}
+      value={targetValue}
+      options={options}
+    />
+  );
+};
 
 CascaderHOC.displayName = 'Cascader';
 

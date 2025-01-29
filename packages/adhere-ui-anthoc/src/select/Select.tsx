@@ -1,12 +1,15 @@
 import type { SelectProps } from 'antd';
 import { Select } from 'antd';
-import type { LabeledValue } from 'antd/es/select';
 import React, { useMemo } from 'react';
 
 import type { SelectHOCComponent } from '../types';
-import { createFactory } from '../util';
+import { createFactory, getOptionsValue } from '../util';
 
-const InternalSelect: SelectHOCComponent = createFactory<SelectProps>(
+const InternalSelect: SelectHOCComponent = createFactory<
+  SelectProps & {
+    isHideInvalidValue: true;
+  }
+>(
   Select,
   {
     showSearch: true,
@@ -22,49 +25,29 @@ const InternalSelect: SelectHOCComponent = createFactory<SelectProps>(
   }),
 );
 
-const SelectHOC: SelectHOCComponent = ({ options, defaultValue, value, ...restProps }) => {
-  function existsValueInOptions(value: string | number, options: LabeledValue[]) {
-    return options.findIndex(({ value: itemValue }) => value === itemValue) !== -1;
-  }
-
-  function isLabeledValue(val: LabeledValue): boolean {
-    return 'label' in val && 'value' in val;
-  }
-
-  function checkExists(value: string | number | LabeledValue, options: LabeledValue[]) {
-    if (typeof value === 'string' || typeof value === 'number') {
-      return existsValueInOptions(value, options);
-    } else if (isLabeledValue(value)) {
-      return existsValueInOptions(value.value, options);
-    }
-    return false;
-  }
-
-  function getValue(value: SelectProps['value'], options: LabeledValue[]) {
-    if (typeof value === 'string' || typeof value === 'number' || isLabeledValue(value)) {
-      return checkExists(value, options) ? value : undefined;
-    }
-
-    if (Array.isArray(value)) {
-      return (value as LabeledValue[]).filter((_value) => checkExists(_value, options));
-    }
-
-    return value;
-  }
-
-  const targetValue = useMemo(() => getValue(value, options), [value, options]);
+const SelectHOC: SelectHOCComponent = ({
+  options,
+  defaultValue,
+  isHideInvalidValue = true,
+  value,
+  ...restProps
+}) => {
+  const targetValue = useMemo(
+    () => (isHideInvalidValue ? getOptionsValue(value, options) : defaultValue),
+    [value, options, isHideInvalidValue],
+  );
 
   const targetDefaultValue = useMemo(
-    () => getValue(defaultValue, options),
-    [defaultValue, options],
+    () => (isHideInvalidValue ? getOptionsValue(defaultValue, options) : defaultValue),
+    [defaultValue, options, isHideInvalidValue],
   );
 
   return (
     <InternalSelect
+      {...restProps}
       defaultValue={targetDefaultValue}
       value={targetValue}
       options={options}
-      {...restProps}
     />
   );
 };
