@@ -1,6 +1,8 @@
+import faker from 'faker';
 import React from 'react';
 
 import { DateDisplay, Resource } from '@baifendian/adhere';
+import Util from '@baifendian/adhere-util';
 
 import SearchTable from '../src/index';
 import './serviceRegister';
@@ -149,6 +151,26 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
         },
       },
     ]);
+  }
+
+  loadData(record) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(
+          Array.from({ length: 6 }).map((_, i) => ({
+            id: faker.random.uuid(),
+            name: faker.internet.userName(),
+            sex: `${Util.generatorRandom(0, 1)}`,
+            homeTown: faker.address.city(),
+            address: faker.address.city(),
+            birthday: new Date().getTime(),
+            deptName: faker.company.companyName(),
+            height: faker.random.number(),
+            width: faker.random.number(),
+          })),
+        );
+      }, 1000);
+    });
   }
 }
 
