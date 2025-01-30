@@ -8,9 +8,11 @@ import type {
 } from 'antd/lib/table/interface';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import type { ExpandableConfig } from 'rc-table/lib/interface';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createRef, forwardRef } from 'react';
 
+import { LoadingOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import Util from '@baifendian/adhere-util';
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 
@@ -54,6 +56,10 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
       },
       selectedRowKeys: [],
       selectedRows: [],
+      // 正在进行异步加载的keys
+      loadDataKeys: [],
+      // 异步加载数据完成的keys
+      loadDataSuccessKeys: [],
     });
   }
 
@@ -206,16 +212,6 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    */
   getRowSelectionMode(): symbol {
     return SearchTable.ROW_SELECTION_NORMAL_MODE;
-  }
-
-  /**
-   * getTableNumberColumnWidth
-   * @override
-   * @description - 表格序号列的宽度
-   * @return {number}
-   */
-  getTableNumberColumnWidth(): number {
-    return 80;
   }
 
   /**
@@ -385,6 +381,50 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   }
 
   /**
+   * getExpandable
+   */
+  getExpandable(): ExpandableConfig<any> {
+    let expandable: ExpandableConfig<any> = {
+      expandedRowKeys: this.state.expandedRowKeys,
+      indentSize: this.getIndentSize(),
+      onExpandedRowsChange: (...params) => this.onExpandedRowsChange(...params),
+      onExpand: (...params) => this?.onExpand(...params),
+    };
+
+    if (this.isUseLoadData() && 'expandIcon' in this) {
+      expandable = {
+        ...expandable,
+        expandIcon: (...params) => this?.expandIcon(...params),
+      };
+    }
+
+    expandable = {
+      ...expandable,
+      ...(this.props.antdTableProps ?? {}).expandable,
+    };
+
+    return expandable;
+  }
+
+  /**
+   * getTableNumberColumnWidth
+   * @override
+   * @description - 表格序号列的宽度
+   * @return {number | string}
+   */
+  getTableNumberColumnWidth(): number | string {
+    if (this.isUseLoadData() || this.isUseTreeData()) {
+      const indentSize = this.getIndentSize() ?? 15;
+
+      const { expandedRowKeys } = this.state;
+
+      return 80 + expandedRowKeys.length * indentSize;
+    }
+
+    return 80;
+  }
+
+  /**
    * renderSearchForm
    * @override
    * @description - 渲染Table查询的表单
@@ -481,6 +521,8 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
           selectedRowKeys: [],
           selectedRows: [],
           expandedRowKeys: [],
+          loadDataKeys: [],
+          loadDataSuccessKeys: [],
         },
         () => {
           resolve();
@@ -715,7 +757,156 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     return this.tableCellComponentReducers;
   }
 
-  // 异步加载
+  /**
+   * onExpand
+   * @param params
+   */
+  onExpand(...params) {
+    const [expanded, record] = params;
+
+    console.log('onExpand');
+
+    if (!expanded) {
+      super.onExpand(...params);
+      return;
+    }
+
+    // 不是动态加载
+    if (!this.isUseLoadData()) {
+      super.onExpand(...params);
+
+      return;
+    }
+
+    const _self = this;
+
+    function beforeLoadData() {
+      _self.setState((state: any) => {
+        state.loadDataKeys.push(key);
+
+        return {
+          ...state,
+        };
+      });
+    }
+
+    function afterLoadDataWithSuccess() {
+      _self.setState((state: any) => {
+        state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
+
+        state.loadDataSuccessKeys.push(key);
+
+        return {
+          ...state,
+        };
+      });
+    }
+
+    function afterLoadDataWithFail() {
+      _self.setState((state: any) => {
+        state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
+
+        return {
+          ...state,
+        };
+      });
+    }
+
+    // 使用了动态加载
+    const { loadDataKeys, loadDataSuccessKeys } = this.state;
+
+    const rowKey = this.getRowKey() ?? 'id';
+
+    const key = record[rowKey];
+
+    // 如果已经加载过则略过
+    if (loadDataSuccessKeys.includes(key)) {
+      console.log('如果已经加载过则略过');
+      return;
+    }
+
+    // 还没有决议
+    if (loadDataKeys.includes(key)) {
+      console.log('还没有决议');
+      return;
+    }
+
+    // 开始异步加载
+    beforeLoadData();
+
+    // @ts-ignore
+    this.loadData(record)
+      ?.then((childrenData) => {
+        this.setData((preData) => {
+          const _targetRecord = Util.findNodeByKey(preData as any[], key, {
+            keyAttr: rowKey,
+          });
+
+          if (_targetRecord) {
+            _targetRecord.children = childrenData;
+          }
+
+          return [...preData];
+        })
+          .then(() => {
+            afterLoadDataWithSuccess();
+          })
+          .catch(() => {
+            afterLoadDataWithFail();
+          });
+      })
+      .catch(() => {
+        afterLoadDataWithFail();
+      });
+
+    // 正在进行异步加载的keys
+    // loadDataKeys: [];
+
+    // 异步加载数据完成的keys
+    // loadDataSuccessKeys: [];
+  }
+
+  /**
+   * expandIcon
+   * @param expanded
+   * @param onExpand
+   * @param record
+   */
+  expandIcon({ expanded, onExpand, record }) {
+    const rowKey = this.getRowKey() ?? 'id';
+
+    const key = record[rowKey];
+
+    const { loadDataKeys } = this.state;
+
+    if (loadDataKeys.includes(key)) {
+      // loading
+      return (
+        <LoadingOutlined
+          className={classNames(`${selectorPrefix}-load-data-icon`)}
+          onClick={(e) => onExpand(record, e)}
+        />
+      );
+    }
+
+    if (!expanded) {
+      // +
+      return (
+        <button
+          className="ant-table-row-expand-icon ant-table-row-expand-icon-collapsed"
+          onClick={(e) => onExpand(record, e)}
+        />
+      );
+    }
+
+    // -
+    return (
+      <button
+        className="ant-table-row-expand-icon ant-table-row-expand-icon-expanded"
+        onClick={(e) => onExpand(record, e)}
+      />
+    );
+  }
 
   // 自定义CheckAll
 }

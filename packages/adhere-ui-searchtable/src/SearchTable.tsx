@@ -128,9 +128,9 @@ abstract class SearchTable<
   /**
    * getTableNumberColumnWidth
    * @description 表格序号列的宽度
-   * @return {number}
+   * @return {number | string}
    */
-  abstract getTableNumberColumnWidth(): number;
+  abstract getTableNumberColumnWidth(): number | string;
 
   /**
    * getTableNumberColumnProps
@@ -572,10 +572,23 @@ abstract class SearchTable<
     });
   }
 
+  /**
+   * onExpand
+   * @description 点击展开图标时触发
+   * @param params
+   */
   onExpand(...params) {
     if ((this.props.antdTableProps ?? {})?.expandable?.onExpand) {
       this.props.antdTableProps?.expandable?.onExpand?.(...params);
     }
+  }
+
+  /**
+   * getIndentSize
+   * @return {number}
+   */
+  getIndentSize() {
+    return 15;
   }
 
   /**
@@ -1064,23 +1077,18 @@ abstract class SearchTable<
       rowKey: this.getRowKey(),
       dataSource: this.getDataSource(),
       columns,
-      // @ts-ignore
-      onChange: (...params) => this.onTableChange(...params),
       pagination: this.getPagination(),
       rowSelection: this.getRowSelection(),
-      size: tableDensity as SizeType,
-      // 组件
-      components: this.components, // this.onComponents(columns, this.components),
-      // onRow
+      expandable: this.getExpandable(),
       // 给TableRow的props参数
+      components: this.components, // this.onComponents(columns, this.components),
+      // 组件
+      size: tableDensity as SizeType,
+      // @ts-ignore
+      onChange: (...params) => this.onTableChange(...params),
+      // onRow
       onRow: (...params) => this.onTableRow(columns, ...params),
       ...(antdTableProps ?? {}),
-      expandable: {
-        ...(antdTableProps ?? {}).expandable,
-        expandedRowKeys: this.state.expandedRowKeys,
-        onExpandedRowsChange: (...params) => this.onExpandedRowsChange(...params),
-        onExpand: (...params) => this?.onExpand(...params),
-      },
     };
 
     // 是否支持锁定列头，表格体滚动
@@ -1143,6 +1151,26 @@ abstract class SearchTable<
         {this.renderChildren()}
       </SearchTableContext.Provider>
     );
+  }
+
+  /**
+   * isUseLoadData
+   * @description 是否使用Tree的异步加载
+   * @return boolean
+   */
+  isUseLoadData() {
+    return 'loadData' in this;
+  }
+
+  /**
+   * isUseTreeData
+   * @description 是否使用Tree数据
+   * @return boolean
+   */
+  isUseTreeData() {
+    const dataSource = this.getDataSource();
+
+    return dataSource.some((record) => 'children' in record && Array.isArray(record.children));
   }
 }
 

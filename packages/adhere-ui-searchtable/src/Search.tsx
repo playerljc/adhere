@@ -2,6 +2,7 @@ import { Tooltip } from 'antd';
 import { TablePaginationConfig, TableRowSelection } from 'antd/es/table/interface';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import type { ExpandableConfig } from 'rc-table/lib/interface';
 import React, { ReactElement, ReactNode, RefObject, createRef } from 'react';
 
 import { InfoCircleOutlined } from '@ant-design/icons';
@@ -181,6 +182,14 @@ abstract class Search<
    * @return {TableRowSelection<any>}
    */
   abstract getRowSelection(): TableRowSelection<any>;
+
+  /**
+   *
+   * getExpandable
+   * @description 表格Tree展开对象
+   * @return {ExpandableConfig<any>}
+   */
+  abstract getExpandable(): ExpandableConfig<any>;
 
   /**
    * clear
