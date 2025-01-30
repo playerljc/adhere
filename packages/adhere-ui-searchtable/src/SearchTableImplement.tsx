@@ -714,6 +714,10 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   onTableCellComponentReducers(columns: ColumnTypeExt[]): string[] {
     return this.tableCellComponentReducers;
   }
+
+  // 异步加载
+
+  // 自定义CheckAll
 }
 
 SearchTableImplement.defaultProps = {

@@ -90,7 +90,7 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
         width: 200,
         sorter: true,
         sortOrder: this.sortOrder('birthday'),
-        render: (val) => <DateDisplay.DateDisplay10 value={val} />,
+        // render: (val) => <DateDisplay.DateDisplay format="L" value={val} />,
         $search: {
           type: 'rangePicker',
           visible: true,
