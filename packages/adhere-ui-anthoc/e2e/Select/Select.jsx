@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import Select from '../../src/select/index';
 
 export default () => {
+  const [value, setValue] = useState('2');
+
   const [options, setOptions] = useState([
     {
       label: '男',
@@ -15,21 +17,5 @@ export default () => {
     },
   ]);
 
-  return (
-    <div>
-      <button
-        onClick={() => {
-          setOptions([
-            {
-              label: '我',
-              value: '3',
-            },
-          ]);
-        }}
-      >
-        1
-      </button>
-      <Select style={{ width: 200 }} options={options} />
-    </div>
-  );
+  return <Select style={{ width: 200 }} options={options} value={value} onChange={setValue} />;
 };

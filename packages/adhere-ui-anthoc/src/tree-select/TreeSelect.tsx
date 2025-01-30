@@ -51,6 +51,7 @@ const TreeSelectHOC: TreeSelectHOCComponent = ({
       defaultValue={targetDefaultValue}
       value={targetValue}
       treeData={treeData}
+      treeDataSimpleMode={treeDataSimpleMode}
     />
   );
 };

@@ -5,6 +5,8 @@ import e2e from '@baifendian/adhere-e2e';
 import ArrayEntityValueHOC from './ArrayEntityValueHOC';
 import AsyncTreeEntityValueHOC from './AsyncTreeEntityValueHOC';
 import AutoCompleteTest from './AutoComplete/AutoCompleteSelectInput';
+import Cascader from './Cascader/Cascader';
+import CascaderMulti from './Cascader/CascaderMulti';
 import CascaderTest from './Cascader/FlatAsyncCascader.tsx';
 import AutoCompleteCheckboxSelect from './Checkbox/AutoCompleteCheckboxSelect';
 import DatePickerValueHOCInFormTest from './DatePickerValueHOCInFormTest';
@@ -28,6 +30,7 @@ import RangePickerValueHOCTest from './RangePickerValueHOCTest';
 import RevolvingTableNormal from './RevolvingTable/normal';
 import SelectTest from './Select/AutoCompleteCheckAllMultipleSelect';
 import CheckAllMultipleSelect from './Select/CheckAllMultipleSelect';
+import Select from './Select/Select';
 import StepsSwiper from './Steps/StepsSwiper';
 import AutoCompleteTableSelectValueHOC from './Table/AutoCompleteTableSelectValueHOC.tsx';
 import AutoCompleteTreeTablePagingSelect from './Table/AutoCompleteTreeTablePagingSelect';
@@ -37,8 +40,11 @@ import TagTest from './Tag/HorizontalCheckableTagGroup';
 import TimePickerValueHOCInFormTest from './TimePickerValueHOCInFormTest';
 import TimePickerValueHOCTest from './TimePickerValueHOCTest';
 import TransferTest from './Transfer/AutoCompleteTransferSelect.tsx';
+import Transfer from './Transfer/Transfer';
+import TransferSelect from './Transfer/TransferSelect';
 import TreeEntityValueHOC from './TreeEntityValueHOC';
 import AutoCompleteTreeMultiSelectValueHOC from './TreeSelect/AutoCompleteTreeMultiSelectValueHOC';
+import FlatTreeSelect from './TreeSelect/FlatTreeSelect';
 import Anchor from './anchor';
 import FormRulesTest from './formRulesTest';
 import AntHOC from './test';
@@ -46,5 +52,5 @@ import AntHOC from './test';
 import '../src/index.less';
 
 e2e.PC({
-  children: <RevolvingTableNormal />,
+  children: <TransferSelect />,
 });

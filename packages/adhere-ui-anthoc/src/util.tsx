@@ -95,6 +95,8 @@ export function checkLabeledValueExists(
 }
 
 export function getOptionsValue(value: SelectProps['value'], options: LabeledValue[]) {
+  if (!value || !options) return value;
+
   if (typeof value === 'string' || typeof value === 'number' || isLabeledValue(value)) {
     return checkLabeledValueExists(value, options) ? value : undefined;
   }
@@ -146,6 +148,8 @@ export function getTreeValue({
   treeData: TreeSelectProps['treeData'];
   treeDataSimpleMode: TreeSelectProps['treeDataSimpleMode'];
 }) {
+  if (!value || !treeData) return value;
+
   // 简单数据
   if (treeDataSimpleMode) {
     const valueAttr =
@@ -179,6 +183,8 @@ export function getCascaderValue({
   value: CascaderProps['value'];
   options: CascaderProps['options'];
 }) {
+  if (!value || !options) return value;
+
   return filterCascaderValues(value, options);
 }
 
@@ -189,6 +195,8 @@ export function getTransferValue({
   value: TransferProps['selectedKeys'];
   dataSource: TransferProps['dataSource'];
 }) {
+  if (!value || !dataSource) return value;
+
   return (value ?? []).filter(
     (_value) => (dataSource ?? []).findIndex(({ key }) => key === _value) !== -1,
   );
