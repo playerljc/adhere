@@ -1,14 +1,15 @@
 @import '~@baifendian/adhere-ui-css/es/mixin';
 
-@adhere-ui-table-grid-layout-table-row-label-require-color: red;
-@adhere-ui-table-grid-layout-table-row-odd-color: #fff;
-@adhere-ui-table-grid-layout-table-row-even-color: #fafafa;
-
 .adhere-ui-table-grid-layout {
   width: 100%;
 }
 
 .adhere-ui-table-grid-layout-inner-wrap {
+  @adhere-ui-table-grid-layout-table-row-label-require-color: red;
+  @adhere-ui-table-grid-layout-table-row-odd-color: #fff;
+  @adhere-ui-table-grid-layout-table-row-even-color: #fafafa;
+  @adhere-ui-table-grid-layout-table-row-label-font-size: 14px;
+
   &.adhere-ui-table-grid-layout-border {
     border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
     border-right: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
@@ -58,6 +59,7 @@
       > .adhere-ui-table-grid-layout-table-row-label {
         padding-right: 10px;
         color: var(--adhere-color-text-secondary);
+        font-size: @adhere-ui-table-grid-layout-table-row-label-font-size;
         white-space: nowrap;
         word-break: keep-all;
 
