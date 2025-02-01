@@ -366,6 +366,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
       };
     }
 
+    // 如果使用异步加载，自定义expandIcon方法
     if (this.isUseLoadData() && 'expandIcon' in this) {
       expandable = {
         ...expandable,
@@ -388,7 +389,9 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @return {number | string}
    */
   getTableNumberColumnWidth(): number | string {
+    // 动态计算序号列的宽度
     if (this.isUseLoadData() || this.isUseTreeData()) {
+      // 如果开启了异步加载模式
       const indentSize = this.getIndentSize() ?? 15;
 
       const { expandedRowKeys } = this.state;
@@ -401,6 +404,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
   /**
    * getTableCheckAllColumnWidth
+   * @description 获取全选列的宽度
    * @return {number | string}
    */
   getTableCheckAllColumnWidth(): number | string {
@@ -780,7 +784,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
      * @description 异步加载成功
      * @param {any[]} childrenData 加载完的children数据
      */
-    function afterLoadDataWithSuccess(childrenData) {
+    function afterLoadDataWithSuccess(childrenData: any[]) {
       _self.setState((state: any) => {
         state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
 
@@ -876,6 +880,54 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   }
 
   /**
+   * renderLoadingIcon
+   * @description 渲染loading图标
+   * @param onExpand
+   * @param record
+   * @return {ReactElement}
+   */
+  renderLoadingIcon({ onExpand, record }): ReactElement {
+    return (
+      <LoadingOutlined
+        className={classNames(`${selectorPrefix}-load-data-icon`)}
+        onClick={(e) => onExpand(record, e)}
+      />
+    );
+  }
+
+  /**
+   * renderExpandIcon
+   * @description 渲染展开图标
+   * @param onExpand
+   * @param record
+   * @return {ReactElement}
+   */
+  renderExpandIcon({ onExpand, record }): ReactElement {
+    return (
+      <button
+        className="ant-table-row-expand-icon ant-table-row-expand-icon-collapsed"
+        onClick={(e) => onExpand(record, e)}
+      />
+    );
+  }
+
+  /**
+   * renderCollapseIcon
+   * @description 渲染闭合图标
+   * @param onExpand
+   * @param record
+   * @return {ReactElement}
+   */
+  renderCollapseIcon({ onExpand, record }): ReactElement {
+    return (
+      <button
+        className="ant-table-row-expand-icon ant-table-row-expand-icon-expanded"
+        onClick={(e) => onExpand(record, e)}
+      />
+    );
+  }
+
+  /**
    * expandIcon
    * @description 处理Tree异步加载的图标
    * @param expanded
@@ -892,32 +944,17 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     // 这块是正在执行异步加载所以是loading图标
     if (loadDataKeys.includes(key)) {
       // loading
-      return (
-        <LoadingOutlined
-          className={classNames(`${selectorPrefix}-load-data-icon`)}
-          onClick={(e) => onExpand(record, e)}
-        />
-      );
+      return this.renderLoadingIcon({ onExpand, record });
     }
 
     // 闭合应该是展开(+)图表
     if (!expanded) {
       // +
-      return (
-        <button
-          className="ant-table-row-expand-icon ant-table-row-expand-icon-collapsed"
-          onClick={(e) => onExpand(record, e)}
-        />
-      );
+      return this.renderExpandIcon({ onExpand, record });
     }
 
     // 展开应该是(-)图标
-    return (
-      <button
-        className="ant-table-row-expand-icon ant-table-row-expand-icon-expanded"
-        onClick={(e) => onExpand(record, e)}
-      />
-    );
+    return this.renderCollapseIcon({ onExpand, record });
   }
 }
 

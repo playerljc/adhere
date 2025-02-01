@@ -749,7 +749,6 @@ abstract class SearchTable<
     return [
       // 如果使用CheckedStrategy模式则自定义Selection列
       this.isUseCheckedStrategy() && this.getCheckedStrategyColumnConfig(),
-      // this.isShowNumber() && Table.EXPAND_COLUMN,
       this.isShowNumber() && this.getTableColumnConfig(),
       ...columns,
     ].filter((t) => !!t);
@@ -913,6 +912,7 @@ abstract class SearchTable<
 
     const rowKey = this.getRowKey() ?? 'id';
 
+    // 当前页面数据的keys
     const keys = Util.treeToArray(this.getDataSource() as any[], TREE_UTIL_CONFIG, rowKey).map(
       (t) => t[rowKey],
     );
@@ -1013,9 +1013,9 @@ abstract class SearchTable<
           // 所有选择的key
           const { selectedRowKeys: selectedAllRowKeys = [] } = this.state;
 
-          const dataSource = this.getDataSource();
+          const dataSource = this.getDataSource() as any[];
 
-          const flatDataSource = Util.treeToArray(dataSource as any[], TREE_UTIL_CONFIG, rowKey);
+          const flatDataSource = Util.treeToArray(dataSource, TREE_UTIL_CONFIG, rowKey);
 
           const keys = flatDataSource.map((t) => t[rowKey]);
 
@@ -1039,7 +1039,7 @@ abstract class SearchTable<
             keyAttr: rowKey,
           });
 
-          let targetSelectedKeys;
+          let targetSelectedKeys: any[];
 
           if (selected) {
             const selectedKeys = [
@@ -1099,7 +1099,7 @@ abstract class SearchTable<
           rowSelectionConfig.onChange(
             //
             targetSelectedKeys,
-            //
+            // @ts-ignore
             targetSelectedRows,
             //
             {
@@ -1134,7 +1134,7 @@ abstract class SearchTable<
    * getTableRowComponentReducers
    * @return {string[]}
    */
-  getTableRowComponentReducers() {
+  getTableRowComponentReducers(): string[] {
     return this.tableRowComponentReducers;
   }
 
@@ -1142,7 +1142,7 @@ abstract class SearchTable<
    * getTableCellComponentReducers
    * @return {string[]}
    */
-  getTableCellComponentReducers() {
+  getTableCellComponentReducers(): string[] {
     return this.tableCellComponentReducers;
   }
 
@@ -1521,7 +1521,7 @@ abstract class SearchTable<
    * renderChildren
    * @return {ReactElement}
    */
-  renderChildren() {
+  renderChildren(): ReactElement {
     // @ts-ignore
     return <div className={`${selectorPrefix}-wrap`}>{super.render()}</div>;
   }
@@ -1553,10 +1553,10 @@ abstract class SearchTable<
 
   /**
    * getChildrenColumnName
-   * @description 获取Tree数据中chidren的属性名
+   * @description 获取Tree数据中children的属性名
    * @return {string}
    */
-  getChildrenColumnName() {
+  getChildrenColumnName(): string {
     return this.getExpandable()?.childrenColumnName ?? 'children';
   }
 
