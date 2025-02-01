@@ -153,13 +153,13 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
     ]);
   }
 
-  isUseCheckedStrategy() {
-    return true;
-  }
+  // isUseCheckedStrategy() {
+  //   return true;
+  // }
 
-  getRowSelectionMode() {
-    return SearchTable.Table.ROW_SELECTION_CONTINUOUS_MODE;
-  }
+  // getRowSelectionMode() {
+  //   return SearchTable.Table.ROW_SELECTION_CONTINUOUS_MODE;
+  // }
 
   loadData(record) {
     return new Promise((resolve, reject) => {

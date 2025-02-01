@@ -4,7 +4,6 @@ import type {
   SorterResult,
   TableCurrentDataSource,
   TablePaginationConfig,
-  TableRowSelection,
 } from 'antd/lib/table/interface';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -12,12 +11,13 @@ import type { ExpandableConfig } from 'rc-table/lib/interface';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createRef, forwardRef } from 'react';
 
-import { LoadingOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { LoadingOutlined } from '@ant-design/icons';
 import Util from '@baifendian/adhere-util';
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 
 import SearchTable, { defaultProps, propTypes } from './SearchTable';
 import { cloneDeep } from './Util';
+import type { TableRowSelectionExt } from './types';
 import type {
   ColumnTypeExt,
   ISearchTableImplement,
@@ -196,6 +196,26 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   }
 
   /**
+   * isUseCheckedStrategy
+   * @description 是否使用CheckAll列设置
+   * @override
+   * @return {boolean}
+   */
+  isUseCheckedStrategy(): boolean {
+    return false;
+  }
+
+  /**
+   * getCheckedStrategy
+   * @description CheckAll列的选择规则
+   * @override
+   * @return {symbol}
+   */
+  getCheckedStrategy(): symbol {
+    return SearchTable.CHECKED_STRATEGY_SHOW_CHILD;
+  }
+
+  /**
    * getNumberGeneratorRule
    * @override
    * @description - 表格序号列的生成规则
@@ -206,8 +226,9 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   }
 
   /**
-   * getNumberGeneratorRule
-   * @description 获取符号列的生成规则
+   * getRowSelectionMode
+   * @override
+   * @description 获取全选的生模式
    * @return {symbol}
    */
   getRowSelectionMode(): symbol {
@@ -216,9 +237,21 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
   /**
    * getTableNumberColumnProps
+   * @description 设置序号列的props
+   * @override
    * @return {object}
    */
   getTableNumberColumnProps(): object {
+    return {};
+  }
+
+  /**
+   * getTableCheckAllColumnProps
+   * @description 设置全选列的props
+   * @override
+   * @return {object}
+   */
+  getTableCheckAllColumnProps(): object {
     return {};
   }
 
@@ -303,85 +336,19 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getRowSelection
    * @override
    * @description - 获取表格行选择对象
-   * @return {TableRowSelection<object>}
+   * @return {TableRowSelectionExt<object>}
    */
-  getRowSelection(): TableRowSelection<object> {
-    const filter = (selected: boolean, records: any[]): Promise<void> =>
-      new Promise((resolve) => {
-        const rowKey = this.getRowKey();
+  getRowSelection(): TableRowSelectionExt<object> | null {
+    if (this.isUseCheckedStrategy()) {
+      return null;
+    }
 
-        if (selected) {
-          // add
-          // @ts-ignore
-          this.setState(
-            {
-              selectedRowKeys: [
-                ...(this.state?.selectedRowKeys || []),
-                ...records.map((r) => r[rowKey]),
-              ],
-              selectedRows: [...(this.state?.selectedRows || []), ...records],
-            },
-            () => {
-              resolve();
-            },
-          );
-        } else {
-          // remove
-          // @ts-ignore
-          this.setState(
-            {
-              selectedRows: (this.state?.selectedRows || []).filter(
-                (row) => !records.find((r) => r[rowKey] === row[rowKey]),
-              ),
-
-              selectedRowKeys: (this.state?.selectedRowKeys || []).filter(
-                (key) => !records.find((r) => r[rowKey] === key),
-              ),
-            },
-            () => {
-              resolve();
-            },
-          );
-        }
-      });
-
-    return {
-      selectedRowKeys: this.state?.selectedRowKeys,
-      onChange: (selectedRowKeys: any[], selectedRows: any[]) => {
-        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_CONTINUOUS_MODE) return;
-
-        // 如果是缺省模式(不能跨页选取)
-
-        // @ts-ignore
-        this.setState(
-          {
-            selectedRowKeys,
-            selectedRows,
-          },
-          () => {
-            this?.onRowSelectionChange?.();
-          },
-        );
-      },
-      onSelect: (record, selected) => {
-        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) return;
-
-        filter(selected, [record]).then(() => {
-          this?.onRowSelectionSelect?.();
-        });
-      },
-      onSelectAll: (selected, selectedRows, changeRows) => {
-        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) return;
-
-        filter(selected, changeRows).then(() => {
-          this?.onRowSelectionSelectAll?.();
-        });
-      },
-    };
+    return this.getRowSelectionConfig();
   }
 
   /**
    * getExpandable
+   * @description 获取展开的配置对象
    */
   getExpandable(): ExpandableConfig<any> {
     let expandable: ExpandableConfig<any> = {
@@ -390,6 +357,14 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
       onExpandedRowsChange: (...params) => this.onExpandedRowsChange(...params),
       onExpand: (...params) => this?.onExpand(...params),
     };
+
+    // Tree展开列放置的索引位置，设置展开列在第几个位置上（索引从0开始）
+    if (this.isUseCheckedStrategy() && this.isShowNumber()) {
+      expandable = {
+        ...expandable,
+        expandIconColumnIndex: 1,
+      };
+    }
 
     if (this.isUseLoadData() && 'expandIcon' in this) {
       expandable = {
@@ -422,6 +397,14 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     }
 
     return 80;
+  }
+
+  /**
+   * getTableCheckAllColumnWidth
+   * @return {number | string}
+   */
+  getTableCheckAllColumnWidth(): number | string {
+    return 50;
   }
 
   /**
@@ -662,9 +645,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
         {
           searchParams: {
             ...params,
-
             [this.getOrderFieldProp()]: this.state?.[this.getOrderFieldProp()],
-
             [this.getOrderProp()]: this.state?.[this.getOrderProp()],
           },
         },
@@ -759,13 +740,13 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
   /**
    * onExpand
+   * @description 在其中处理Tree数据的异步加载操作使用loadData方法
    * @param params
    */
   onExpand(...params) {
     const [expanded, record] = params;
 
-    console.log('onExpand');
-
+    // 关闭
     if (!expanded) {
       super.onExpand(...params);
       return;
@@ -780,6 +761,10 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
     const _self = this;
 
+    /**
+     * beforeLoadData
+     * @description 异步加载之前的操作
+     */
     function beforeLoadData() {
       _self.setState((state: any) => {
         state.loadDataKeys.push(key);
@@ -790,18 +775,38 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
       });
     }
 
-    function afterLoadDataWithSuccess() {
+    /**
+     * afterLoadDataWithSuccess
+     * @description 异步加载成功
+     * @param {any[]} childrenData 加载完的children数据
+     */
+    function afterLoadDataWithSuccess(childrenData) {
       _self.setState((state: any) => {
         state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
 
         state.loadDataSuccessKeys.push(key);
 
-        return {
-          ...state,
-        };
+        // 获取当前节点的选中状态
+        const currentNodeChecked = state.selectedRowKeys.includes(record[rowKey]);
+        // 如果是选中状态
+        // 则需要将孩子也选中
+        if (currentNodeChecked) {
+          state.selectedRowKeys = [
+            ...state.selectedRowKeys,
+            ...childrenData.map((t: any) => t[rowKey]),
+          ];
+
+          state.selectedRows = [...state.selectedRows, ...childrenData];
+        }
+
+        return JSON.parse(JSON.stringify(state));
       });
     }
 
+    /**
+     * afterLoadDataWithFail
+     * @description 异步加载失败
+     */
     function afterLoadDataWithFail() {
       _self.setState((state: any) => {
         state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
@@ -821,35 +826,39 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
     // 如果已经加载过则略过
     if (loadDataSuccessKeys.includes(key)) {
-      console.log('如果已经加载过则略过');
+      // console.log('如果已经加载过则略过');
       return;
     }
 
     // 还没有决议
     if (loadDataKeys.includes(key)) {
-      console.log('还没有决议');
+      // console.log('还没有决议');
       return;
     }
 
     // 开始异步加载
     beforeLoadData();
 
+    // 使用loadData进行异步加载
     // @ts-ignore
     this.loadData(record)
       ?.then((childrenData) => {
+        // 更新当前近节点的children数据
         this.setData((preData) => {
           const _targetRecord = Util.findNodeByKey(preData as any[], key, {
             keyAttr: rowKey,
           });
 
+          const childrenColumnName = this.getChildrenColumnName();
+
           if (_targetRecord) {
-            _targetRecord.children = childrenData;
+            _targetRecord[childrenColumnName] = childrenData;
           }
 
           return [...preData];
         })
           .then(() => {
-            afterLoadDataWithSuccess();
+            afterLoadDataWithSuccess(childrenData);
           })
           .catch(() => {
             afterLoadDataWithFail();
@@ -868,6 +877,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
   /**
    * expandIcon
+   * @description 处理Tree异步加载的图标
    * @param expanded
    * @param onExpand
    * @param record
@@ -879,6 +889,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
     const { loadDataKeys } = this.state;
 
+    // 这块是正在执行异步加载所以是loading图标
     if (loadDataKeys.includes(key)) {
       // loading
       return (
@@ -889,6 +900,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
       );
     }
 
+    // 闭合应该是展开(+)图表
     if (!expanded) {
       // +
       return (
@@ -899,7 +911,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
       );
     }
 
-    // -
+    // 展开应该是(-)图标
     return (
       <button
         className="ant-table-row-expand-icon ant-table-row-expand-icon-expanded"
@@ -907,8 +919,6 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
       />
     );
   }
-
-  // 自定义CheckAll
 }
 
 SearchTableImplement.defaultProps = {

@@ -2,7 +2,8 @@ import type { FormInstance } from 'antd/es/form';
 import type { TableProps } from 'antd/es/table/InternalTable';
 import type { Rule } from 'antd/lib/form/index';
 import type {
-  ColumnType, // FilterValue,
+  ColumnType,
+  TableRowSelection, // FilterValue,
   // SorterResult,
   // TableCurrentDataSource,
   // TablePaginationConfig,
@@ -637,3 +638,11 @@ export interface DragSortRowContextProps {
 export interface DragSortColumnProps extends ColumnTypeExt {
   className?: string;
 }
+
+export type TableRowSelectionExt<T> = TableRowSelection<T> & {
+  onCheckedStrategySelect: (
+    record: Record<string, any>,
+    changeRows: any[],
+    selected: boolean,
+  ) => void;
+};

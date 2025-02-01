@@ -1,4 +1,4 @@
-import { Button, Table } from 'antd';
+import { Button, Checkbox, Table } from 'antd';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
 import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import type { TableProps } from 'antd/es/table/InternalTable';
@@ -11,14 +11,17 @@ import type {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import classNames from 'classnames';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createContext, createRef } from 'react';
 
 import { DownOutlined, SearchOutlined, UpOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
+import { TREE_UTIL_CONFIG } from './Constant';
 import ColumnResizable, {
   SearchTableResizableObserver,
   SearchTableResizableTitle,
@@ -38,6 +41,7 @@ import type {
   RowConfigReducer,
   SearchTableProps,
   SearchTableState,
+  TableRowSelectionExt,
 } from './types';
 import { TableDensity } from './types';
 
@@ -80,6 +84,13 @@ abstract class SearchTable<
   static ROW_SELECTION_NORMAL_MODE = Symbol();
   // 全选的规则 - 可以跨页
   static ROW_SELECTION_CONTINUOUS_MODE = Symbol();
+
+  // 显示所有选中节点(包括父节点)
+  static CHECKED_STRATEGY_SHOW_ALL = Symbol();
+  // 只显示父节点(当父节点下所有子节点都选中时)
+  static CHECKED_STRATEGY_SHOW_PARENT = Symbol();
+  // 只显示子节点
+  static CHECKED_STRATEGY_SHOW_CHILD = Symbol();
 
   protected tableWrapRef: RefObject<HTMLDivElement> = createRef();
 
@@ -133,11 +144,25 @@ abstract class SearchTable<
   abstract getTableNumberColumnWidth(): number | string;
 
   /**
+   * getTableCheckAllColumnWidth
+   * @description 全选列的宽度
+   * @return {number | string}
+   */
+  abstract getTableCheckAllColumnWidth(): number | string;
+
+  /**
    * getTableNumberColumnProps
    * @description 获取序号列的Props
    * @return {object}
    */
   abstract getTableNumberColumnProps(): object;
+
+  /**
+   * getTableCheckAllColumnProps
+   * @description 获取全选列的Props
+   * @return {object}
+   */
+  abstract getTableCheckAllColumnProps(): object;
 
   /**
    * getNumberGeneratorRule
@@ -238,6 +263,37 @@ abstract class SearchTable<
    * @return {string[]}
    */
   abstract onTableCellComponentReducers(columns: ColumnTypeExt[]): string[];
+
+  /**
+   * isUseCheckedStrategy
+   * @description 定义选中项回填的方式。ProSearchTableImplSHOW_ALL: 显示所有选中节点(包括父节点)。ProSearchTableImplSHOW_PARENT: 只显示父节点(当父节点下所有子节点都选中时)。 默认只显示子节点
+   */
+  abstract isUseCheckedStrategy(): boolean;
+
+  /**
+   * getCheckedStrategy
+   * @description 定义选中项回填的方式。ProSearchTableImplSHOW_ALL: 显示所有选中节点(包括父节点)。ProSearchTableImplSHOW_PARENT: 只显示父节点(当父节点下所有子节点都选中时)。 默认只显示子节点
+   */
+  abstract getCheckedStrategy(): symbol;
+
+  /**
+   * onRowSelectionChange
+   */
+  abstract onRowSelectionChange(selectedRowKeys: any[], selectedRows: any[]): void;
+
+  /**
+   * onRowSelectionSelect
+   */
+  abstract onRowSelectionSelect(record: Record<string, any>, selected: boolean): void;
+
+  /**
+   * onRowSelectionSelectAll
+   */
+  abstract onRowSelectionSelectAll(
+    selected: boolean,
+    selectedRows: object[],
+    changeRows: object[],
+  ): void;
 
   constructor(props) {
     super(props);
@@ -585,6 +641,7 @@ abstract class SearchTable<
 
   /**
    * getIndentSize
+   * @description Tree数据展开列的递进
    * @return {number}
    */
   getIndentSize() {
@@ -621,7 +678,7 @@ abstract class SearchTable<
    * getTableColumnsAll
    */
   getTableColumnsAll(): any[] {
-    const isShowNumber = this.isShowNumber();
+    const childrenColumnName = this.getChildrenColumnName();
 
     // 对权限进行过滤
     const columns = this.getColumns()
@@ -645,11 +702,11 @@ abstract class SearchTable<
           }
 
           // @ts-ignore
-          if (_res?.children && Array.isArray(_res.children)) {
+          if (_res?.[childrenColumnName] && Array.isArray(_res[childrenColumnName])) {
             // @ts-ignore
-            _res.children.forEach((_t, _index) => {
+            _res[childrenColumnName].forEach((_t, _index) => {
               // @ts-ignore
-              _res.children[_index] = loop(_t);
+              _res[childrenColumnName][_index] = loop(_t);
             });
           }
 
@@ -689,11 +746,13 @@ abstract class SearchTable<
         };
       });
 
-    if (isShowNumber) {
-      return [this.getTableColumnConfig(), ...(columns || [])];
-    }
-
-    return columns;
+    return [
+      // 如果使用CheckedStrategy模式则自定义Selection列
+      this.isUseCheckedStrategy() && this.getCheckedStrategyColumnConfig(),
+      // this.isShowNumber() && Table.EXPAND_COLUMN,
+      this.isShowNumber() && this.getTableColumnConfig(),
+      ...columns,
+    ].filter((t) => !!t);
   }
 
   /**
@@ -752,6 +811,326 @@ abstract class SearchTable<
   }
 
   /**
+   * rowSelectionFilter
+   * @description rowSelectionFilter
+   * @param selected
+   * @param records
+   * @return {Promise<void>}
+   */
+  rowSelectionFilter(selected: boolean, records: any[]): Promise<void> {
+    return new Promise((resolve) => {
+      const rowKey = this.getRowKey();
+
+      if (selected) {
+        // add
+        // @ts-ignore
+        this.setState(
+          {
+            selectedRowKeys: [
+              ...(this.state?.selectedRowKeys ?? []),
+              ...records.map((r) => r[rowKey]),
+            ],
+            selectedRows: [...(this.state?.selectedRows ?? []), ...records],
+          },
+          () => {
+            resolve();
+          },
+        );
+      } else {
+        // remove
+        // @ts-ignore
+        this.setState(
+          {
+            selectedRows: (this.state?.selectedRows ?? []).filter(
+              (row: any) => !records.find((r) => r[rowKey] === row[rowKey]),
+            ),
+            selectedRowKeys: (this.state?.selectedRowKeys ?? []).filter(
+              (key: any) => !records.find((r) => r[rowKey] === key),
+            ),
+          },
+          () => {
+            resolve();
+          },
+        );
+      }
+    });
+  }
+
+  /**
+   * getRowSelectionConfig
+   * @description 获取RowSelection的配置对象
+   */
+  getRowSelectionConfig(): TableRowSelectionExt<object> {
+    return {
+      selectedRowKeys: this.state?.selectedRowKeys,
+      onChange: (selectedRowKeys: any[], selectedRows: any[]) => {
+        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_CONTINUOUS_MODE) return;
+
+        // 如果是缺省模式(不能跨页选取)
+
+        // @ts-ignore
+        this.setState(
+          {
+            selectedRowKeys,
+            selectedRows,
+          },
+          () => {
+            this?.onRowSelectionChange?.(selectedRowKeys, selectedRows);
+          },
+        );
+      },
+      onSelect: (record, selected) => {
+        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) return;
+
+        this.rowSelectionFilter(selected, [record]).then(() => {
+          this?.onRowSelectionSelect?.(record, selected);
+        });
+      },
+      // 使用CheckedStrategy模式
+      onCheckedStrategySelect: (record, changeRows, selected) => {
+        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) return;
+
+        this.rowSelectionFilter(selected, changeRows).then(() => {
+          this?.onRowSelectionSelect?.(record, selected);
+        });
+      },
+      onSelectAll: (selected, selectedRows, changeRows) => {
+        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) return;
+
+        this.rowSelectionFilter(selected, changeRows).then(() => {
+          this?.onRowSelectionSelectAll?.(selected, selectedRows, changeRows);
+        });
+      },
+    };
+  }
+
+  /**
+   * renderCheckedStrategyCheckAll
+   * @description 渲染CheckedStrategy的CheckAll(全选)
+   */
+  renderCheckedStrategyCheckAll() {
+    const { selectedRowKeys = [] } = this.state;
+
+    const rowKey = this.getRowKey() ?? 'id';
+
+    const keys = Util.treeToArray(this.getDataSource() as any[], TREE_UTIL_CONFIG, rowKey).map(
+      (t) => t[rowKey],
+    );
+
+    const checkedAll = !selectedRowKeys.length
+      ? false
+      : keys.every((key: any) => selectedRowKeys.includes(key));
+
+    const indeterminate = checkedAll
+      ? false
+      : keys.some((key: any) => selectedRowKeys.includes(key));
+
+    const rowSelectionConfig = this.getRowSelectionConfig();
+
+    return (
+      <Checkbox
+        checked={checkedAll}
+        indeterminate={indeterminate}
+        onChange={(e) => {
+          const selected = e.target.checked;
+
+          const flatDataSource = Util.treeToArray(
+            this.getDataSource() as any[],
+            TREE_UTIL_CONFIG,
+            rowKey,
+          );
+
+          // @ts-ignore
+          rowSelectionConfig.onSelectAll(
+            //
+            selected,
+            //
+            selected ? [...flatDataSource] : [],
+            //
+            [...flatDataSource],
+          );
+
+          // @ts-ignore
+          rowSelectionConfig.onChange(
+            //
+            selected ? keys : [],
+            //
+            selected ? [...flatDataSource] : [],
+            //
+            {
+              type: selected ? 'all' : 'invert',
+            },
+          );
+        }}
+      />
+    );
+  }
+
+  /**
+   * renderCheckedStrategyCheckItem
+   * @description 渲染CheckedStrategy的Check(每行一行)
+   * @param {any} record 行数据
+   * @param {number} rowIndex 行索引
+   */
+  renderCheckedStrategyCheckItem(record: Record<string, string>, rowIndex: number) {
+    const { selectedRowKeys = [] } = this.state;
+
+    const rowKey = this.getRowKey() ?? 'id';
+
+    const rowSelectionConfig = this.getRowSelectionConfig();
+
+    const flatDataSource = Util.treeToArray(
+      this.getDataSource() as any[],
+      TREE_UTIL_CONFIG,
+      rowKey,
+    );
+
+    // 向下是子孙
+    const descendants = Util.getDescendants(
+      flatDataSource,
+      flatDataSource.find((n) => n[rowKey] === record[rowKey]),
+      {
+        ...TREE_UTIL_CONFIG,
+        keyAttr: rowKey,
+      },
+    );
+
+    const checked = !selectedRowKeys.length ? false : selectedRowKeys.includes(record[rowKey]);
+
+    const descendantsKeys = descendants?.map((t) => t[rowKey]);
+
+    const indeterminate = checked
+      ? false
+      : descendantsKeys.some((key) => selectedRowKeys.includes(key));
+
+    return (
+      <Checkbox
+        checked={checked}
+        indeterminate={indeterminate}
+        onChange={(e) => {
+          const selected = e.target.checked;
+
+          // 所有选择的key
+          const { selectedRowKeys: selectedAllRowKeys = [] } = this.state;
+
+          const dataSource = this.getDataSource();
+
+          const flatDataSource = Util.treeToArray(dataSource as any[], TREE_UTIL_CONFIG, rowKey);
+
+          const keys = flatDataSource.map((t) => t[rowKey]);
+
+          // 当前页选择的key
+          const selectedRowKeys = _.difference(
+            selectedAllRowKeys,
+            _.difference(selectedAllRowKeys, keys),
+          );
+
+          const node = flatDataSource.find((n) => n[rowKey] === record[rowKey]);
+
+          // 向下是子孙
+          const descendants = Util.getDescendants(flatDataSource, node, {
+            ...TREE_UTIL_CONFIG,
+            keyAttr: rowKey,
+          });
+
+          // 向上是祖先
+          const ancestor = Util.getAncestor(flatDataSource, node, {
+            ...TREE_UTIL_CONFIG,
+            keyAttr: rowKey,
+          });
+
+          let targetSelectedKeys;
+
+          if (selected) {
+            const selectedKeys = [
+              ...selectedRowKeys,
+              ...[record[rowKey], ...descendants?.map((t) => t[rowKey])],
+            ];
+
+            // 处理祖先
+            for (let i = 0; i < ancestor.length; i++) {
+              const _node = ancestor[i];
+
+              // 获取一个祖先的子孙
+              const _ancestorKeys = Util.getDescendants(flatDataSource, _node, {
+                ...TREE_UTIL_CONFIG,
+                keyAttr: rowKey,
+              }).map((t) => t[rowKey]);
+
+              if (_ancestorKeys.every((key) => selectedKeys.includes(key))) {
+                selectedKeys.push(_node[rowKey]);
+              } else {
+                break;
+              }
+            }
+
+            targetSelectedKeys = selectedKeys;
+          }
+          //
+          else {
+            const mode = this.getRowSelectionMode();
+
+            const removeKeys = [
+              record[rowKey],
+              ...descendants?.map((t) => t[rowKey]),
+              ...ancestor.map((t) => t[rowKey]),
+            ];
+
+            targetSelectedKeys =
+              mode === SearchTable.ROW_SELECTION_NORMAL_MODE
+                ? _.difference(selectedRowKeys, removeKeys)
+                : removeKeys;
+          }
+
+          const targetSelectedRows = targetSelectedKeys.map((key) =>
+            flatDataSource.find((n) => n[rowKey] === key),
+          );
+
+          rowSelectionConfig.onCheckedStrategySelect(
+            //
+            node as any,
+            //
+            targetSelectedRows,
+            //
+            selected,
+          );
+
+          // @ts-ignore
+          rowSelectionConfig.onChange(
+            //
+            targetSelectedKeys,
+            //
+            targetSelectedRows,
+            //
+            {
+              type: selected ? 'multiple' : 'invert',
+            },
+          );
+        }}
+      />
+    );
+  }
+
+  /**
+   * getCheckedStrategyColumnConfig
+   * @description 自定义Selection列
+   */
+  getCheckedStrategyColumnConfig() {
+    return {
+      ...{
+        title: this.renderCheckedStrategyCheckAll(),
+        dataIndex: '_checkAll',
+        key: '_checkAll',
+        align: 'center',
+        width: this.getTableCheckAllColumnWidth(),
+        render: (v: any, record: Record<string, string>, rowIndex: number) =>
+          this.renderCheckedStrategyCheckItem(record, rowIndex),
+      },
+      ...(this.getTableCheckAllColumnProps ? this.getTableCheckAllColumnProps() ?? {} : {}),
+    };
+  }
+
+  /**
    * getTableRowComponentReducers
    * @return {string[]}
    */
@@ -774,20 +1153,27 @@ abstract class SearchTable<
    * return _columns
    */
   getExportExcelColumns(_columns: any[]): any[] {
+    const childrenColumnName = this.getChildrenColumnName();
+
     return _columns
       .filter(
         ({ dataIndex }) =>
           ![
             '_number',
+            '_checkAll',
             // @ts-ignore
             this?.getOptionsColumnDataIndex?.() || '_options',
           ].includes(dataIndex),
       )
       .map((_column) => {
-        if ('children' in _column && Array.isArray(_column.children) && !!_column.children.length) {
+        if (
+          childrenColumnName in _column &&
+          Array.isArray(_column[childrenColumnName]) &&
+          !!_column[childrenColumnName].length
+        ) {
           return {
             ..._column,
-            children: this.getExportExcelColumns(_column.children || []),
+            [childrenColumnName]: this.getExportExcelColumns(_column[childrenColumnName] || []),
           };
         }
 
@@ -810,7 +1196,7 @@ abstract class SearchTable<
    * @return Record<string, any>[]
    */
   getDataSource() {
-    return this.getData();
+    return this.getData() ?? [];
   }
 
   /**
@@ -1075,10 +1461,13 @@ abstract class SearchTable<
     // Table的antdProps配置
     const tableProps: TableProps<any> = {
       rowKey: this.getRowKey(),
-      dataSource: this.getDataSource(),
       columns,
+      dataSource: this.getDataSource(),
+      // 分页
       pagination: this.getPagination(),
+      // 行选择
       rowSelection: this.getRowSelection(),
+      // Tree展开
       expandable: this.getExpandable(),
       // 给TableRow的props参数
       components: this.components, // this.onComponents(columns, this.components),
@@ -1163,6 +1552,15 @@ abstract class SearchTable<
   }
 
   /**
+   * getChildrenColumnName
+   * @description 获取Tree数据中chidren的属性名
+   * @return {string}
+   */
+  getChildrenColumnName() {
+    return this.getExpandable()?.childrenColumnName ?? 'children';
+  }
+
+  /**
    * isUseTreeData
    * @description 是否使用Tree数据
    * @return boolean
@@ -1170,7 +1568,11 @@ abstract class SearchTable<
   isUseTreeData() {
     const dataSource = this.getDataSource();
 
-    return dataSource.some((record) => 'children' in record && Array.isArray(record.children));
+    const childrenColumnName = this.getChildrenColumnName();
+
+    return dataSource.some(
+      (record) => childrenColumnName in record && Array.isArray(record[childrenColumnName]),
+    );
   }
 }
 

@@ -5,7 +5,7 @@ import type { ReactElement, ReactNode, RefObject } from 'react';
 import React from 'react';
 import ColumnResizable, { SearchTableResizableTitle } from './Extension/ColumnResizable';
 import Search from './Search';
-import type { CellConfigReducer, ColumnTypeExt, RowConfig, RowConfigReducer, SearchTableProps, SearchTableState } from './types';
+import type { CellConfigReducer, ColumnTypeExt, RowConfig, RowConfigReducer, SearchTableProps, SearchTableState, TableRowSelectionExt } from './types';
 import { TableDensity } from './types';
 export declare const selectorPrefix = "adhere-ui-search-table";
 export declare const SearchTableContext: React.Context<{
@@ -35,6 +35,9 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     static NUMBER_GENERATOR_RULE_CONTINUITY: symbol;
     static ROW_SELECTION_NORMAL_MODE: symbol;
     static ROW_SELECTION_CONTINUOUS_MODE: symbol;
+    static CHECKED_STRATEGY_SHOW_ALL: symbol;
+    static CHECKED_STRATEGY_SHOW_PARENT: symbol;
+    static CHECKED_STRATEGY_SHOW_CHILD: symbol;
     protected tableWrapRef: RefObject<HTMLDivElement>;
     protected components: {
         header: {
@@ -60,15 +63,27 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     /**
      * getTableNumberColumnWidth
      * @description 表格序号列的宽度
-     * @return {number}
+     * @return {number | string}
      */
-    abstract getTableNumberColumnWidth(): number;
+    abstract getTableNumberColumnWidth(): number | string;
+    /**
+     * getTableCheckAllColumnWidth
+     * @description 全选列的宽度
+     * @return {number | string}
+     */
+    abstract getTableCheckAllColumnWidth(): number | string;
     /**
      * getTableNumberColumnProps
      * @description 获取序号列的Props
      * @return {object}
      */
     abstract getTableNumberColumnProps(): object;
+    /**
+     * getTableCheckAllColumnProps
+     * @description 获取全选列的Props
+     * @return {object}
+     */
+    abstract getTableCheckAllColumnProps(): object;
     /**
      * getNumberGeneratorRule
      * @description 获取符号列的生成规则
@@ -151,6 +166,28 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @return {string[]}
      */
     abstract onTableCellComponentReducers(columns: ColumnTypeExt[]): string[];
+    /**
+     * isUseCheckedStrategy
+     * @description 定义选中项回填的方式。ProSearchTableImplSHOW_ALL: 显示所有选中节点(包括父节点)。ProSearchTableImplSHOW_PARENT: 只显示父节点(当父节点下所有子节点都选中时)。 默认只显示子节点
+     */
+    abstract isUseCheckedStrategy(): boolean;
+    /**
+     * getCheckedStrategy
+     * @description 定义选中项回填的方式。ProSearchTableImplSHOW_ALL: 显示所有选中节点(包括父节点)。ProSearchTableImplSHOW_PARENT: 只显示父节点(当父节点下所有子节点都选中时)。 默认只显示子节点
+     */
+    abstract getCheckedStrategy(): symbol;
+    /**
+     * onRowSelectionChange
+     */
+    abstract onRowSelectionChange(selectedRowKeys: any[], selectedRows: any[]): void;
+    /**
+     * onRowSelectionSelect
+     */
+    abstract onRowSelectionSelect(record: Record<string, any>, selected: boolean): void;
+    /**
+     * onRowSelectionSelectAll
+     */
+    abstract onRowSelectionSelectAll(selected: boolean, selectedRows: object[], changeRows: object[]): void;
     constructor(props: any);
     componentDidMount(): void;
     componentWillUnmount(): void;
@@ -243,7 +280,18 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @param {any[]} expandedRowKeys
      */
     onExpandedRowsChange(expandedRowKeys: any): Promise<void>;
+    /**
+     * onExpand
+     * @description 点击展开图标时触发
+     * @param params
+     */
     onExpand(...params: any[]): void;
+    /**
+     * getIndentSize
+     * @description Tree数据展开列的递进
+     * @return {number}
+     */
+    getIndentSize(): number;
     /**
      * search
      */
@@ -274,8 +322,45 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
         dataIndex: string;
         key: string;
         align: string;
-        width: number;
+        width: string | number;
         render: (v: any, r: any, index: any) => React.JSX.Element;
+    };
+    /**
+     * rowSelectionFilter
+     * @description rowSelectionFilter
+     * @param selected
+     * @param records
+     * @return {Promise<void>}
+     */
+    rowSelectionFilter(selected: boolean, records: any[]): Promise<void>;
+    /**
+     * getRowSelectionConfig
+     * @description 获取RowSelection的配置对象
+     */
+    getRowSelectionConfig(): TableRowSelectionExt<object>;
+    /**
+     * renderCheckedStrategyCheckAll
+     * @description 渲染CheckedStrategy的CheckAll(全选)
+     */
+    renderCheckedStrategyCheckAll(): React.JSX.Element;
+    /**
+     * renderCheckedStrategyCheckItem
+     * @description 渲染CheckedStrategy的Check(每行一行)
+     * @param {any} record 行数据
+     * @param {number} rowIndex 行索引
+     */
+    renderCheckedStrategyCheckItem(record: Record<string, string>, rowIndex: number): React.JSX.Element;
+    /**
+     * getCheckedStrategyColumnConfig
+     * @description 自定义Selection列
+     */
+    getCheckedStrategyColumnConfig(): {
+        title: React.JSX.Element;
+        dataIndex: string;
+        key: string;
+        align: string;
+        width: string | number;
+        render: (v: any, record: Record<string, string>, rowIndex: number) => React.JSX.Element;
     };
     /**
      * getTableRowComponentReducers
@@ -380,6 +465,24 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @return {ReactElement}
      */
     render(): ReactElement;
+    /**
+     * isUseLoadData
+     * @description 是否使用Tree的异步加载
+     * @return boolean
+     */
+    isUseLoadData(): boolean;
+    /**
+     * getChildrenColumnName
+     * @description 获取Tree数据中chidren的属性名
+     * @return {string}
+     */
+    getChildrenColumnName(): string;
+    /**
+     * isUseTreeData
+     * @description 是否使用Tree数据
+     * @return boolean
+     */
+    isUseTreeData(): boolean;
 }
 export declare const defaultProps: {
     className: string;

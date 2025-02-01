@@ -1,7 +1,9 @@
-import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
+import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig } from 'antd/lib/table/interface';
+import type { ExpandableConfig } from 'rc-table/lib/interface';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React from 'react';
 import SearchTable from './SearchTable';
+import type { TableRowSelectionExt } from './types';
 import type { ColumnTypeExt, ISearchTableImplement, SearchTableImplementFactoryFunction, SearchTableImplementProps, SearchTableImplementState, SearchTableProps, SearchTableState } from './types';
 export declare const selectorPrefix = "adhere-ui-search-table-implement";
 /**
@@ -90,6 +92,20 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      */
     isShowNumber(): boolean;
     /**
+     * isUseCheckedStrategy
+     * @description 是否使用CheckAll列设置
+     * @override
+     * @return {boolean}
+     */
+    isUseCheckedStrategy(): boolean;
+    /**
+     * getCheckedStrategy
+     * @description CheckAll列的选择规则
+     * @override
+     * @return {symbol}
+     */
+    getCheckedStrategy(): symbol;
+    /**
      * getNumberGeneratorRule
      * @override
      * @description - 表格序号列的生成规则
@@ -97,23 +113,26 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      */
     getNumberGeneratorRule(): symbol;
     /**
-     * getNumberGeneratorRule
-     * @description 获取符号列的生成规则
+     * getRowSelectionMode
+     * @override
+     * @description 获取全选的生模式
      * @return {symbol}
      */
     getRowSelectionMode(): symbol;
     /**
-     * getTableNumberColumnWidth
-     * @override
-     * @description - 表格序号列的宽度
-     * @return {number}
-     */
-    getTableNumberColumnWidth(): number;
-    /**
      * getTableNumberColumnProps
+     * @description 设置序号列的props
+     * @override
      * @return {object}
      */
     getTableNumberColumnProps(): object;
+    /**
+     * getTableCheckAllColumnProps
+     * @description 设置全选列的props
+     * @override
+     * @return {object}
+     */
+    getTableCheckAllColumnProps(): object;
     /**
      * getRowKey
      * @override
@@ -159,9 +178,26 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      * getRowSelection
      * @override
      * @description - 获取表格行选择对象
-     * @return {TableRowSelection<object>}
+     * @return {TableRowSelectionExt<object>}
      */
-    getRowSelection(): TableRowSelection<object>;
+    getRowSelection(): TableRowSelectionExt<object> | null;
+    /**
+     * getExpandable
+     * @description 获取展开的配置对象
+     */
+    getExpandable(): ExpandableConfig<any>;
+    /**
+     * getTableNumberColumnWidth
+     * @override
+     * @description - 表格序号列的宽度
+     * @return {number | string}
+     */
+    getTableNumberColumnWidth(): number | string;
+    /**
+     * getTableCheckAllColumnWidth
+     * @return {number | string}
+     */
+    getTableCheckAllColumnWidth(): number | string;
     /**
      * renderSearchForm
      * @override
@@ -314,6 +350,24 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      * @return {string[]}
      */
     onTableCellComponentReducers(columns: ColumnTypeExt[]): string[];
+    /**
+     * onExpand
+     * @description 在其中处理Tree数据的异步加载操作使用loadData方法
+     * @param params
+     */
+    onExpand(...params: any[]): void;
+    /**
+     * expandIcon
+     * @description 处理Tree异步加载的图标
+     * @param expanded
+     * @param onExpand
+     * @param record
+     */
+    expandIcon({ expanded, onExpand, record }: {
+        expanded: any;
+        onExpand: any;
+        record: any;
+    }): React.JSX.Element;
 }
 /**
  * SearchTableImplementFactory

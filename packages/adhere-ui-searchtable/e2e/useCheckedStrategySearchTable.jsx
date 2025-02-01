@@ -157,29 +157,29 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
     return true;
   }
 
-  getRowSelectionMode() {
-    return SearchTable.Table.ROW_SELECTION_CONTINUOUS_MODE;
-  }
+  // getRowSelectionMode() {
+  //   return SearchTable.Table.ROW_SELECTION_CONTINUOUS_MODE;
+  // }
 
-  loadData(record) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(
-          Array.from({ length: 6 }).map((_, i) => ({
-            id: faker.random.uuid(),
-            name: faker.internet.userName(),
-            sex: `${Util.generatorRandom(0, 1)}`,
-            homeTown: faker.address.city(),
-            address: faker.address.city(),
-            birthday: new Date().getTime(),
-            deptName: faker.company.companyName(),
-            height: faker.random.number(),
-            width: faker.random.number(),
-          })),
-        );
-      }, 1000);
-    });
-  }
+  // loadData(record) {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       resolve(
+  //         Array.from({ length: 6 }).map((_, i) => ({
+  //           id: faker.random.uuid(),
+  //           name: faker.internet.userName(),
+  //           sex: `${Util.generatorRandom(0, 1)}`,
+  //           homeTown: faker.address.city(),
+  //           address: faker.address.city(),
+  //           birthday: new Date().getTime(),
+  //           deptName: faker.company.companyName(),
+  //           height: faker.random.number(),
+  //           width: faker.random.number(),
+  //         })),
+  //       );
+  //     }, 1000);
+  //   });
+  // }
 }
 
 RowDragSort.propTypes = {};

@@ -1,8 +1,8 @@
-import { TableRowSelection } from 'antd/es/table/interface';
 import PropTypes from 'prop-types';
+import type { ExpandableConfig } from 'rc-table/lib/interface';
 import React, { ReactElement, ReactNode, RefObject } from 'react';
 import Suspense from '@baifendian/adhere-ui-suspense';
-import type { SearchProps, SearchState } from './types';
+import { SearchProps, SearchState, TableRowSelectionExt } from './types';
 /**
  * Search
  * @class
@@ -99,9 +99,16 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      *
      * getRowSelection
      * @description 获取表格行选择对象
-     * @return {TableRowSelection<any>}
+     * @return {TableRowSelectionExt<any> | null}
      */
-    abstract getRowSelection(): TableRowSelection<any>;
+    abstract getRowSelection(): TableRowSelectionExt<any> | null;
+    /**
+     *
+     * getExpandable
+     * @description 表格Tree展开对象
+     * @return {ExpandableConfig<any>}
+     */
+    abstract getExpandable(): ExpandableConfig<any>;
     /**
      * clear
      * @description 清除查询操作

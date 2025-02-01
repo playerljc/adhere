@@ -1,5 +1,4 @@
 import { Tooltip } from 'antd';
-import { TablePaginationConfig, TableRowSelection } from 'antd/es/table/interface';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import type { ExpandableConfig } from 'rc-table/lib/interface';
@@ -11,7 +10,7 @@ import Suspense from '@baifendian/adhere-ui-suspense';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { selectorPrefix } from './SearchTable';
-import type { SearchProps, SearchState } from './types';
+import { SearchProps, SearchState, TableRowSelectionExt } from './types';
 
 const { Fixed, Auto } = FlexLayout;
 
@@ -179,9 +178,9 @@ abstract class Search<
    *
    * getRowSelection
    * @description 获取表格行选择对象
-   * @return {TableRowSelection<any>}
+   * @return {TableRowSelectionExt<any> | null}
    */
-  abstract getRowSelection(): TableRowSelection<any>;
+  abstract getRowSelection(): TableRowSelectionExt<any> | null;
 
   /**
    *

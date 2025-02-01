@@ -157,9 +157,9 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
     return true;
   }
 
-  getRowSelectionMode() {
-    return SearchTable.Table.ROW_SELECTION_CONTINUOUS_MODE;
-  }
+  // getRowSelectionMode() {
+  //   return SearchTable.Table.ROW_SELECTION_CONTINUOUS_MODE;
+  // }
 
   loadData(record) {
     return new Promise((resolve, reject) => {
