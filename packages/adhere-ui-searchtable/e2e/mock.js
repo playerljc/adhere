@@ -1,10 +1,13 @@
 import faker from 'faker';
 
 import { Util } from '@baifendian/adhere';
+import Mock from '@baifendian/adhere-mock';
 
-// const data = [];
-// data.length = 50;
-// data.fill(0);
+// const dataSource = [];
+// dataSource.length = 50;
+// dataSource.fill(0);
+
+const { Province, City, County } = Mock;
 
 export const oneData = {
   code: 200,
@@ -25,7 +28,7 @@ export const oneData = {
   },
 };
 
-const data = Array.from({ length: 100 }).map((t) => ({
+const dataSource = Array.from({ length: 100 }).map((t) => ({
   id: faker.random.uuid(),
   name: faker.internet.userName(),
   sex: `${Util.generatorRandom(0, 1)}`,
@@ -103,10 +106,28 @@ const data = Array.from({ length: 100 }).map((t) => ({
   // })),
 }));
 
-export default (params) => ({
+const treeData = Province.map((t) => {
+  return {
+    ...t,
+    children: City[t.id].map((city) => ({
+      ...city,
+      children: County[city.id],
+    })),
+  };
+});
+
+export const fetchData = (params) => ({
   code: 200,
   data: {
-    totalCount: data.length,
-    list: data.slice((params.page - 1) * params.limit, params.page * params.limit),
+    totalCount: dataSource.length,
+    list: dataSource.slice((params.page - 1) * params.limit, params.page * params.limit),
+  },
+});
+
+export const fetchTreeData = (params) => ({
+  code: 200,
+  data: {
+    totalCount: treeData.length,
+    list: treeData.slice((params.page - 1) * params.limit, params.page * params.limit),
   },
 });

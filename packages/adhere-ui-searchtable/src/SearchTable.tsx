@@ -11,7 +11,10 @@ import type {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import classNames from 'classnames';
-import _ from 'lodash';
+import difference from 'lodash.difference';
+import sortBy from 'lodash.sortby';
+import uniq from 'lodash.uniq';
+import uniqBy from 'lodash.uniqby';
 import PropTypes from 'prop-types';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createContext, createRef } from 'react';
@@ -85,11 +88,11 @@ abstract class SearchTable<
   // 全选的规则 - 可以跨页
   static ROW_SELECTION_CONTINUOUS_MODE = Symbol();
 
-  // 显示所有选中节点(包括父节点)
+  // 返回所有选择节点的数据
   static CHECKED_STRATEGY_SHOW_ALL = Symbol();
   // 只显示父节点(当父节点下所有子节点都选中时)
-  static CHECKED_STRATEGY_SHOW_PARENT = Symbol();
-  // 只显示子节点
+  // static CHECKED_STRATEGY_SHOW_PARENT = Symbol();
+  // 返回叶子节点的数据
   static CHECKED_STRATEGY_SHOW_CHILD = Symbol();
 
   protected tableWrapRef: RefObject<HTMLDivElement> = createRef();
@@ -188,7 +191,7 @@ abstract class SearchTable<
   /**
    * getData
    * @description 获取表格数据
-   * @return Array<Object>
+   * @return {object[]}
    */
   abstract getData(): object[];
 
@@ -201,7 +204,7 @@ abstract class SearchTable<
   /**
    * getColumns
    * @description 获取表格列的信息
-   * @return Array<object>
+   * @return {ColumnType<object>[]}
    */
   abstract getColumns(): ColumnType<object>[];
 
@@ -266,13 +269,18 @@ abstract class SearchTable<
 
   /**
    * isUseCheckedStrategy
-   * @description 定义选中项回填的方式。ProSearchTableImplSHOW_ALL: 显示所有选中节点(包括父节点)。ProSearchTableImplSHOW_PARENT: 只显示父节点(当父节点下所有子节点都选中时)。 默认只显示子节点
+   * @description 是否使用CheckedStrategy模式 默认false
+   * @return {boolean}
    */
   abstract isUseCheckedStrategy(): boolean;
 
   /**
    * getCheckedStrategy
-   * @description 定义选中项回填的方式。ProSearchTableImplSHOW_ALL: 显示所有选中节点(包括父节点)。ProSearchTableImplSHOW_PARENT: 只显示父节点(当父节点下所有子节点都选中时)。 默认只显示子节点
+   * @description 定义selectedRowKeys数据的返回
+   * CHECKED_STRATEGY_SHOW_ALL | CHECKED_STRATEGY_SHOW_CHILD 默认是CHECKED_STRATEGY_SHOW_ALL
+   * CHECKED_STRATEGY_SHOW_ALL: 返回所有有选择的数据
+   * CHECKED_STRATEGY_SHOW_CHILD: 返回叶子节点数据
+   * @return {symbol}
    */
   abstract getCheckedStrategy(): symbol;
 
@@ -339,17 +347,9 @@ abstract class SearchTable<
     // @ts-ignore
     super.componentWillReceiveProps(nextProps);
 
-    if (
-      JSON.stringify(this.state.expandedRowKeys) !==
-      JSON.stringify(nextProps.antdTableProps?.expandable?.expandedRowKeys || [])
-    ) {
-      // @ts-ignore
-      this.setState({
-        expandedRowKeys: nextProps.antdTableProps?.expandable?.expandedRowKeys,
-      });
-    }
+    this.effectWithExpandedRowKeys(nextProps);
 
-    this.columnSettingEffect(nextProps);
+    this.effectWithColumnSetting(nextProps);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -358,6 +358,106 @@ abstract class SearchTable<
 
     this.searchTableResizableEffectLayout();
     this.fixedHeaderAutoTableEffectLayout(prevProps, prevState);
+  }
+
+  /**
+   * effectWithExpandedRowKeys
+   * @protected
+   * @param nextProps
+   */
+  effectWithExpandedRowKeys(nextProps: SearchTableProps) {
+    if (
+      JSON.stringify(sortBy(this.state.expandedRowKeys ?? [])) !==
+      JSON.stringify(sortBy(nextProps.antdTableProps?.expandable?.expandedRowKeys ?? []))
+    ) {
+      // @ts-ignore
+      this.setState({
+        expandedRowKeys: nextProps.antdTableProps?.expandable?.expandedRowKeys,
+      });
+    }
+  }
+
+  /**
+   * syncCheckedStrategy
+   * @description 主要是对
+   * @param {{
+   *   selectedRowKeys: any[]
+   *   dataSource: any[]
+   * }} params
+   * @return {Promise<void>}
+   */
+  async syncCheckedStrategy({
+    selectedRowKeys,
+    dataSource,
+  }: {
+    selectedRowKeys: any[];
+    dataSource: any[];
+  }): Promise<void> {
+    const rowKey = this.getRowKey();
+
+    const flatDataSource = Util.treeToArray(dataSource, TREE_UTIL_CONFIG, rowKey);
+
+    for (let key of selectedRowKeys) {
+      try {
+        const record = flatDataSource.find((record) => record[rowKey] === key);
+
+        await this.strategyCheckItemChecked({
+          checked: true,
+          record,
+          dataSource,
+          flatDataSource,
+        });
+      } catch (error) {
+        throw new Error();
+      }
+    }
+
+    return Promise.resolve();
+
+    //
+    // const rowSelectionConfig = this.getRowSelectionConfig();
+    // selectedRowKeys.forEach((key) => {
+    //   // selectedRowKeys: any[], selectedRows: any[]
+    //   const record = dataSource.find((record) => record[rowKey] === key);
+    //
+    //   // @ts-ignore
+    //   rowSelectionConfig.onChange(
+    //     [key],
+    //     [record].filter((t) => !!t),
+    //   );
+    //
+    //   // record, selected
+    //   // @ts-ignore
+    //   rowSelectionConfig.onSelect(record, true);
+    // });
+    // 同步rows
+    // const { selectedRows: originSelectedRows = [] } = this.state;
+    //
+    // const rowKey = this.getRowKey();
+    //
+    // const noRowKeys = selectedRowKeys.filter(
+    //   (key) => originSelectedRows.findIndex((record: any) => record[rowKey] === key) === -1,
+    // );
+    //
+    // const dataSourceKeys = dataSource.map((record) => record[rowKey]);
+    //
+    // // 没有row的keys转换后的rows
+    // const rows1 = noRowKeys
+    //   .filter((key) => dataSourceKeys.includes(key))
+    //   .map((key) => dataSource.find((record) => record[rowKey] === key));
+    //
+    // // 删除多余的rows
+    // const rows2 = originSelectedRows.filter((record: any) =>
+    //   selectedRowKeys.includes(record[rowKey]),
+    // );
+    //
+    // const selectedRowKeysInDataSource = selectedRowKeys.filter((key) =>
+    //   dataSourceKeys.includes(key),
+    // );
+    //
+    // // 向上
+    //
+    // // 向下
   }
 
   /**
@@ -377,7 +477,7 @@ abstract class SearchTable<
    * @param {SearchTableProps} prevProps
    * @param {SearchTableState} prevState
    */
-  fixedHeaderAutoTableEffectLayout(prevProps, prevState) {
+  fixedHeaderAutoTableEffectLayout(prevProps: SearchTableProps, prevState: SearchTableState) {
     if (this.props.fixedHeaderAutoTable) {
       const dataSource = this.getData();
 
@@ -406,12 +506,12 @@ abstract class SearchTable<
   }
 
   /**
-   * columnSettingEffect
+   * effectWithColumnSetting
    * @param {SearchTableProps} props
    * @protected
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  columnSettingEffect(props: SearchTableProps) {
+  effectWithColumnSetting(props: SearchTableProps) {
     const preColumnSetting = this.state.columnSetting || [];
     const columnSetting = this.getTableColumns().map((column, index) => ({
       ...column,
@@ -644,7 +744,7 @@ abstract class SearchTable<
    * @description Tree数据展开列的递进
    * @return {number}
    */
-  getIndentSize() {
+  getIndentSize(): number {
     return 15;
   }
 
@@ -810,48 +910,57 @@ abstract class SearchTable<
   }
 
   /**
+   * getRowSelectionFilterData
+   * @param {boolean} selected
+   * @param {any:[]} records
+   * @return {object}
+   */
+  getRowSelectionFilterData(
+    selected: boolean,
+    records: any[],
+  ): {
+    selectedRowKeys: any[];
+    selectedRows: any[];
+  } {
+    const rowKey = this.getRowKey();
+
+    if (selected) {
+      return {
+        selectedRowKeys: uniq([
+          ...(this.state?.selectedRowKeys ?? []),
+          ...records.map((r) => r[rowKey]),
+        ]),
+        selectedRows: uniqBy([...(this.state?.selectedRows ?? []), ...records], rowKey),
+      };
+    }
+    //
+    else {
+      // remove
+      return {
+        selectedRowKeys: (this.state?.selectedRowKeys ?? []).filter(
+          (key: any) => !records.find((r) => r[rowKey] === key),
+        ),
+        selectedRows: (this.state?.selectedRows ?? []).filter(
+          (row: any) => !records.find((r) => r[rowKey] === row[rowKey]),
+        ),
+      };
+    }
+  }
+
+  /**
    * rowSelectionFilter
    * @description rowSelectionFilter
-   * @param selected
-   * @param records
+   * @param {boolean} selected
+   * @param {any[]} records
    * @return {Promise<void>}
    */
   rowSelectionFilter(selected: boolean, records: any[]): Promise<void> {
     return new Promise((resolve) => {
-      const rowKey = this.getRowKey();
+      const rowSelectionFilterData = this.getRowSelectionFilterData(selected, records);
 
-      if (selected) {
-        // add
-        // @ts-ignore
-        this.setState(
-          {
-            selectedRowKeys: [
-              ...(this.state?.selectedRowKeys ?? []),
-              ...records.map((r) => r[rowKey]),
-            ],
-            selectedRows: [...(this.state?.selectedRows ?? []), ...records],
-          },
-          () => {
-            resolve();
-          },
-        );
-      } else {
-        // remove
-        // @ts-ignore
-        this.setState(
-          {
-            selectedRows: (this.state?.selectedRows ?? []).filter(
-              (row: any) => !records.find((r) => r[rowKey] === row[rowKey]),
-            ),
-            selectedRowKeys: (this.state?.selectedRowKeys ?? []).filter(
-              (key: any) => !records.find((r) => r[rowKey] === key),
-            ),
-          },
-          () => {
-            resolve();
-          },
-        );
-      }
+      this.setState(rowSelectionFilterData, () => {
+        resolve();
+      });
     });
   }
 
@@ -863,44 +972,136 @@ abstract class SearchTable<
     return {
       selectedRowKeys: this.state?.selectedRowKeys,
       onChange: (selectedRowKeys: any[], selectedRows: any[]) => {
-        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_CONTINUOUS_MODE) return;
+        return new Promise<void>((resolve) => {
+          if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_CONTINUOUS_MODE) {
+            resolve();
+          } else {
+            // 如果是缺省模式(不能跨页选取)
 
-        // 如果是缺省模式(不能跨页选取)
-
-        // @ts-ignore
-        this.setState(
-          {
-            selectedRowKeys,
-            selectedRows,
-          },
-          () => {
-            this?.onRowSelectionChange?.(selectedRowKeys, selectedRows);
-          },
-        );
+            // @ts-ignore
+            this.setState(
+              {
+                selectedRowKeys,
+                selectedRows,
+              },
+              () => {
+                this?.onRowSelectionChange?.(selectedRowKeys, selectedRows);
+                resolve();
+              },
+            );
+          }
+        });
       },
       onSelect: (record, selected) => {
-        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) return;
-
-        this.rowSelectionFilter(selected, [record]).then(() => {
-          this?.onRowSelectionSelect?.(record, selected);
+        return new Promise<void>((resolve, reject) => {
+          if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) {
+            resolve();
+          } else {
+            this.rowSelectionFilter(selected, [record])
+              .then(() => {
+                this?.onRowSelectionSelect?.(record, selected);
+                resolve();
+              })
+              .catch(() => {
+                reject();
+              });
+          }
         });
       },
       // 使用CheckedStrategy模式
       onCheckedStrategySelect: (record, changeRows, selected) => {
-        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) return;
-
-        this.rowSelectionFilter(selected, changeRows).then(() => {
-          this?.onRowSelectionSelect?.(record, selected);
+        return new Promise<void>((resolve, reject) => {
+          if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) {
+            resolve();
+          } else {
+            this.rowSelectionFilter(selected, changeRows)
+              .then(() => {
+                this?.onRowSelectionSelect?.(record, selected);
+                resolve();
+              })
+              .catch(() => {
+                reject();
+              });
+          }
         });
       },
-      onSelectAll: (selected, selectedRows, changeRows) => {
-        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) return;
+      onCheckedStrategyVirtualSelect: (changeRows, selected) => {
+        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) {
+          return null;
+        }
 
-        this.rowSelectionFilter(selected, changeRows).then(() => {
-          this?.onRowSelectionSelectAll?.(selected, selectedRows, changeRows);
+        return this.getRowSelectionFilterData(selected, changeRows);
+      },
+      onVirtualChange: (selectedRowKeys: any[], selectedRows: any[]) => {
+        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_CONTINUOUS_MODE) {
+          return null;
+        }
+
+        return {
+          selectedRowKeys,
+          selectedRows,
+        };
+      },
+      onSelectAll: (selected, selectedRows, changeRows) => {
+        return new Promise<void>((resolve, reject) => {
+          if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) {
+            resolve();
+          } else {
+            this.rowSelectionFilter(selected, changeRows)
+              .then(() => {
+                this?.onRowSelectionSelectAll?.(selected, selectedRows, changeRows);
+                resolve();
+              })
+              .catch(() => {
+                reject();
+              });
+          }
         });
       },
     };
+  }
+
+  /**
+   * strategyCheckAllChecked
+   * @param checked
+   */
+  strategyCheckAllChecked(checked: boolean) {
+    const selected = checked;
+
+    const rowKey = this.getRowKey();
+
+    const rowSelectionConfig = this.getRowSelectionConfig();
+
+    const flatDataSource = Util.treeToArray(
+      this.getDataSource() as any[],
+      TREE_UTIL_CONFIG,
+      rowKey,
+    );
+
+    // 当前页面数据的keys
+    const keys = flatDataSource.map((t) => t[rowKey]);
+
+    // @ts-ignore
+    rowSelectionConfig.onSelectAll(
+      //
+      selected,
+      //
+      selected ? [...flatDataSource] : [],
+      //
+      [...flatDataSource],
+    );
+
+    // @ts-ignore
+    rowSelectionConfig.onChange(
+      //
+      selected ? keys : [],
+      //
+      selected ? [...flatDataSource] : [],
+      //
+      {
+        type: selected ? 'all' : 'invert',
+      },
+    );
   }
 
   /**
@@ -925,45 +1126,262 @@ abstract class SearchTable<
       ? false
       : keys.some((key: any) => selectedRowKeys.includes(key));
 
-    const rowSelectionConfig = this.getRowSelectionConfig();
-
     return (
       <Checkbox
         checked={checkedAll}
         indeterminate={indeterminate}
         onChange={(e) => {
-          const selected = e.target.checked;
-
-          const flatDataSource = Util.treeToArray(
-            this.getDataSource() as any[],
-            TREE_UTIL_CONFIG,
-            rowKey,
-          );
-
-          // @ts-ignore
-          rowSelectionConfig.onSelectAll(
-            //
-            selected,
-            //
-            selected ? [...flatDataSource] : [],
-            //
-            [...flatDataSource],
-          );
-
-          // @ts-ignore
-          rowSelectionConfig.onChange(
-            //
-            selected ? keys : [],
-            //
-            selected ? [...flatDataSource] : [],
-            //
-            {
-              type: selected ? 'all' : 'invert',
-            },
-          );
+          this.strategyCheckAllChecked(e.target.checked);
         }}
       />
     );
+  }
+
+  /**
+   * strategyCheckItemVirtualChecked
+   * @param {{
+   *   checked:boolean;
+   *   record:any;
+   *   dataSource?:any[];
+   *   flatDataSource?:any[];
+   * }} params
+   * @return {Promise<void>}
+   */
+  strategyCheckItemVirtualChecked({
+    checked,
+    record,
+    dataSource,
+    flatDataSource,
+  }: {
+    checked: boolean;
+    record: any;
+    dataSource?: any[];
+    flatDataSource?: any[];
+  }): {
+    selectedRowKeys: any[];
+    selectedRows: any[];
+  } | null {
+    if (!record) return null;
+
+    const selected = checked;
+
+    const rowKey = this.getRowKey();
+
+    // 所有选择的key
+    const { selectedRowKeys: selectedAllRowKeys = [] } = this.state;
+
+    const targetDataSource = dataSource ?? (this.getDataSource() as any[]);
+
+    const targetFlatDataSource =
+      flatDataSource ?? Util.treeToArray(targetDataSource, TREE_UTIL_CONFIG, rowKey);
+
+    const keys = targetFlatDataSource.map((t) => t[rowKey]);
+
+    // 当前页选择的key
+    const selectedRowKeys = difference(selectedAllRowKeys, difference(selectedAllRowKeys, keys));
+
+    const node = targetFlatDataSource.find((n) => n[rowKey] === record[rowKey]);
+
+    if (!node) return null;
+
+    // 向下是子孙
+    const descendants = Util.getDescendants(targetFlatDataSource, node, {
+      ...TREE_UTIL_CONFIG,
+      keyAttr: rowKey,
+    });
+
+    // 向上是祖先
+    const ancestor = Util.getAncestor(targetFlatDataSource, node, {
+      ...TREE_UTIL_CONFIG,
+      keyAttr: rowKey,
+    });
+
+    let targetSelectedKeys: any[];
+
+    if (selected) {
+      const selectedKeys = [
+        ...selectedRowKeys,
+        ...[record[rowKey], ...descendants?.map((t) => t[rowKey])],
+      ];
+
+      // 处理祖先
+      for (let i = 0; i < ancestor.length; i++) {
+        const _node = ancestor[i];
+
+        // 获取一个祖先的子孙
+        const _ancestorKeys = Util.getDescendants(targetFlatDataSource, _node, {
+          ...TREE_UTIL_CONFIG,
+          keyAttr: rowKey,
+        }).map((t) => t[rowKey]);
+
+        if (_ancestorKeys.every((key) => selectedKeys.includes(key))) {
+          selectedKeys.push(_node[rowKey]);
+        } else {
+          break;
+        }
+      }
+
+      targetSelectedKeys = selectedKeys;
+    }
+    //
+    else {
+      const mode = this.getRowSelectionMode();
+
+      const removeKeys = [
+        record[rowKey],
+        ...descendants?.map((t) => t[rowKey]),
+        ...ancestor.map((t) => t[rowKey]),
+      ];
+
+      targetSelectedKeys =
+        mode === SearchTable.ROW_SELECTION_NORMAL_MODE
+          ? difference(selectedRowKeys, removeKeys)
+          : removeKeys;
+    }
+
+    const targetSelectedRows = targetSelectedKeys.map((key) =>
+      targetFlatDataSource.find((n) => n[rowKey] === key),
+    );
+
+    const rowSelectionConfig = this.getRowSelectionConfig();
+
+    const result1 = rowSelectionConfig.onCheckedStrategyVirtualSelect(targetSelectedRows, selected);
+
+    const result2 = rowSelectionConfig.onVirtualChange(targetSelectedKeys, targetSelectedRows);
+
+    return result1 ?? result2;
+  }
+
+  /**
+   * strategyCheckItemChecked
+   * @param {{
+   *   checked:boolean;
+   *   record:any;
+   *   dataSource?:any[];
+   *   flatDataSource?:any[];
+   * }} params
+   * @return {Promise<void>}
+   */
+  strategyCheckItemChecked({
+    checked,
+    record,
+    dataSource,
+    flatDataSource,
+  }: {
+    checked: boolean;
+    record: any;
+    dataSource?: any[];
+    flatDataSource?: any[];
+  }): Promise<void> {
+    if (!record) return Promise.resolve();
+
+    const selected = checked;
+
+    const rowKey = this.getRowKey();
+
+    // 所有选择的key
+    const { selectedRowKeys: selectedAllRowKeys = [] } = this.state;
+
+    const targetDataSource = dataSource ?? (this.getDataSource() as any[]);
+
+    const targetFlatDataSource =
+      flatDataSource ?? Util.treeToArray(targetDataSource, TREE_UTIL_CONFIG, rowKey);
+
+    const keys = targetFlatDataSource.map((t) => t[rowKey]);
+
+    // 当前页选择的key
+    const selectedRowKeys = difference(selectedAllRowKeys, difference(selectedAllRowKeys, keys));
+
+    const node = targetFlatDataSource.find((n) => n[rowKey] === record[rowKey]);
+
+    if (!node) return Promise.resolve();
+
+    return new Promise<void>((resolve, reject) => {
+      // 向下是子孙
+      const descendants = Util.getDescendants(targetFlatDataSource, node, {
+        ...TREE_UTIL_CONFIG,
+        keyAttr: rowKey,
+      });
+
+      // 向上是祖先
+      const ancestor = Util.getAncestor(targetFlatDataSource, node, {
+        ...TREE_UTIL_CONFIG,
+        keyAttr: rowKey,
+      });
+
+      let targetSelectedKeys: any[];
+
+      if (selected) {
+        const selectedKeys = [
+          ...selectedRowKeys,
+          ...[record[rowKey], ...descendants?.map((t) => t[rowKey])],
+        ];
+
+        // 处理祖先
+        for (let i = 0; i < ancestor.length; i++) {
+          const _node = ancestor[i];
+
+          // 获取一个祖先的子孙
+          const _ancestorKeys = Util.getDescendants(targetFlatDataSource, _node, {
+            ...TREE_UTIL_CONFIG,
+            keyAttr: rowKey,
+          }).map((t) => t[rowKey]);
+
+          if (_ancestorKeys.every((key) => selectedKeys.includes(key))) {
+            selectedKeys.push(_node[rowKey]);
+          } else {
+            break;
+          }
+        }
+
+        targetSelectedKeys = selectedKeys;
+      }
+      //
+      else {
+        const mode = this.getRowSelectionMode();
+
+        const removeKeys = [
+          record[rowKey],
+          ...descendants?.map((t) => t[rowKey]),
+          ...ancestor.map((t) => t[rowKey]),
+        ];
+
+        targetSelectedKeys =
+          mode === SearchTable.ROW_SELECTION_NORMAL_MODE
+            ? difference(selectedRowKeys, removeKeys)
+            : removeKeys;
+      }
+
+      const targetSelectedRows = targetSelectedKeys.map((key) =>
+        targetFlatDataSource.find((n) => n[rowKey] === key),
+      );
+
+      const rowSelectionConfig = this.getRowSelectionConfig();
+
+      Promise.all([
+        rowSelectionConfig.onCheckedStrategySelect(
+          //
+          node as any,
+          //
+          targetSelectedRows,
+          //
+          selected,
+        ),
+        // @ts-ignore
+        rowSelectionConfig.onChange(
+          //
+          targetSelectedKeys,
+          // @ts-ignore
+          targetSelectedRows,
+          //
+          {
+            type: selected ? 'multiple' : 'invert',
+          },
+        ),
+      ])
+        .then(() => resolve())
+        .catch(() => reject());
+    });
   }
 
   /**
@@ -976,8 +1394,6 @@ abstract class SearchTable<
     const { selectedRowKeys = [] } = this.state;
 
     const rowKey = this.getRowKey() ?? 'id';
-
-    const rowSelectionConfig = this.getRowSelectionConfig();
 
     const flatDataSource = Util.treeToArray(
       this.getDataSource() as any[],
@@ -1008,104 +1424,10 @@ abstract class SearchTable<
         checked={checked}
         indeterminate={indeterminate}
         onChange={(e) => {
-          const selected = e.target.checked;
-
-          // 所有选择的key
-          const { selectedRowKeys: selectedAllRowKeys = [] } = this.state;
-
-          const dataSource = this.getDataSource() as any[];
-
-          const flatDataSource = Util.treeToArray(dataSource, TREE_UTIL_CONFIG, rowKey);
-
-          const keys = flatDataSource.map((t) => t[rowKey]);
-
-          // 当前页选择的key
-          const selectedRowKeys = _.difference(
-            selectedAllRowKeys,
-            _.difference(selectedAllRowKeys, keys),
-          );
-
-          const node = flatDataSource.find((n) => n[rowKey] === record[rowKey]);
-
-          // 向下是子孙
-          const descendants = Util.getDescendants(flatDataSource, node, {
-            ...TREE_UTIL_CONFIG,
-            keyAttr: rowKey,
+          this.strategyCheckItemChecked({
+            checked: e.target.checked,
+            record,
           });
-
-          // 向上是祖先
-          const ancestor = Util.getAncestor(flatDataSource, node, {
-            ...TREE_UTIL_CONFIG,
-            keyAttr: rowKey,
-          });
-
-          let targetSelectedKeys: any[];
-
-          if (selected) {
-            const selectedKeys = [
-              ...selectedRowKeys,
-              ...[record[rowKey], ...descendants?.map((t) => t[rowKey])],
-            ];
-
-            // 处理祖先
-            for (let i = 0; i < ancestor.length; i++) {
-              const _node = ancestor[i];
-
-              // 获取一个祖先的子孙
-              const _ancestorKeys = Util.getDescendants(flatDataSource, _node, {
-                ...TREE_UTIL_CONFIG,
-                keyAttr: rowKey,
-              }).map((t) => t[rowKey]);
-
-              if (_ancestorKeys.every((key) => selectedKeys.includes(key))) {
-                selectedKeys.push(_node[rowKey]);
-              } else {
-                break;
-              }
-            }
-
-            targetSelectedKeys = selectedKeys;
-          }
-          //
-          else {
-            const mode = this.getRowSelectionMode();
-
-            const removeKeys = [
-              record[rowKey],
-              ...descendants?.map((t) => t[rowKey]),
-              ...ancestor.map((t) => t[rowKey]),
-            ];
-
-            targetSelectedKeys =
-              mode === SearchTable.ROW_SELECTION_NORMAL_MODE
-                ? _.difference(selectedRowKeys, removeKeys)
-                : removeKeys;
-          }
-
-          const targetSelectedRows = targetSelectedKeys.map((key) =>
-            flatDataSource.find((n) => n[rowKey] === key),
-          );
-
-          rowSelectionConfig.onCheckedStrategySelect(
-            //
-            node as any,
-            //
-            targetSelectedRows,
-            //
-            selected,
-          );
-
-          // @ts-ignore
-          rowSelectionConfig.onChange(
-            //
-            targetSelectedKeys,
-            // @ts-ignore
-            targetSelectedRows,
-            //
-            {
-              type: selected ? 'multiple' : 'invert',
-            },
-          );
         }}
       />
     );
@@ -1150,7 +1472,7 @@ abstract class SearchTable<
    * getExportExcelColumns
    * @description 获取导出excel的列
    * @param _columns
-   * return _columns
+   * return {any[]}
    */
   getExportExcelColumns(_columns: any[]): any[] {
     const childrenColumnName = this.getChildrenColumnName();
@@ -1184,18 +1506,18 @@ abstract class SearchTable<
   /**
    * getExportExcelData
    * @description 获取导出excel的数据
-   * @return any[]
+   * @return {any[]}
    */
-  getExportExcelData() {
+  getExportExcelData(): any[] {
     return this.getData();
   }
 
   /**
    * getDataSource
    * @description 获取Table的数据
-   * @return Record<string, any>[]
+   * @return {Record<string, any>[]}
    */
-  getDataSource() {
+  getDataSource(): Record<string, any>[] {
     return this.getData() ?? [];
   }
 
@@ -1209,7 +1531,7 @@ abstract class SearchTable<
   renderTableNumberColumn(
     number: string = '',
     params: { value: any; record: object; index: number },
-  ) {
+  ): ReactNode {
     return <span>{number}</span>;
   }
 
@@ -1504,7 +1826,7 @@ abstract class SearchTable<
   /**
    * renderInner
    * @description 渲染SearchTable
-   * @return {ReactElement | null}
+   * @return {ReactNode}
    */
   renderInner() {
     const { fixedTableSpaceBetween } = this.props;
@@ -1545,9 +1867,9 @@ abstract class SearchTable<
   /**
    * isUseLoadData
    * @description 是否使用Tree的异步加载
-   * @return boolean
+   * @return {boolean}
    */
-  isUseLoadData() {
+  isUseLoadData(): boolean {
     return 'loadData' in this;
   }
 
@@ -1563,9 +1885,9 @@ abstract class SearchTable<
   /**
    * isUseTreeData
    * @description 是否使用Tree数据
-   * @return boolean
+   * @return {boolean}
    */
-  isUseTreeData() {
+  isUseTreeData(): boolean {
     const dataSource = this.getDataSource();
 
     const childrenColumnName = this.getChildrenColumnName();
@@ -1573,6 +1895,43 @@ abstract class SearchTable<
     return dataSource.some(
       (record) => childrenColumnName in record && Array.isArray(record[childrenColumnName]),
     );
+  }
+
+  /**
+   * getSelectedRowKeys
+   * @description 获取selectedRowKeys
+   * @return {any[]}
+   */
+  getSelectedRowKeys(): any[] {
+    const { selectedRowKeys } = this.state;
+
+    if (this.isUseCheckedStrategy()) {
+      const checkedStrategy = this.getCheckedStrategy();
+
+      if (checkedStrategy === SearchTable.CHECKED_STRATEGY_SHOW_CHILD) {
+        const { selectedRows } = this.state;
+        const rowKey = this.getRowKey();
+        const rowKeys = selectedRows.map((record: any) => record[rowKey]);
+        const childrenColumnName = this.getChildrenColumnName();
+
+        return selectedRowKeys.filter((key: any) => {
+          if (rowKeys.includes(key)) {
+            const row = selectedRows.find((record: any) => record[rowKey] === key);
+
+            return (
+              !(childrenColumnName in row) ||
+              (childrenColumnName in row &&
+                Array.isArray(row[childrenColumnName]) &&
+                !row[childrenColumnName].length)
+            );
+          }
+
+          return true;
+        });
+      }
+    }
+
+    return selectedRowKeys;
   }
 }
 

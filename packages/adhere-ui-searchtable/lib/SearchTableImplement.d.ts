@@ -148,6 +148,12 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      */
     getDataKey(): string;
     /**
+     * getFetchDataResultDataKey
+     * @description fetchData返回的结果中数据的key
+     * @return {string}
+     */
+    getFetchDataResultDataKey(): string;
+    /**
      * getTotalKey
      * @description - 获取total的key
      * @protected
@@ -195,6 +201,7 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
     getTableNumberColumnWidth(): number | string;
     /**
      * getTableCheckAllColumnWidth
+     * @description 获取全选列的宽度
      * @return {number | string}
      */
     getTableCheckAllColumnWidth(): number | string;
@@ -283,6 +290,12 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      */
     fetchData(): Promise<any>;
     /**
+     * afterFetchData
+     * @description fetchData之后的处理
+     * @param {} result {code: data:}
+     */
+    afterFetchData(result: any): void;
+    /**
      * sync
      * @description 同步
      * @return Promise<any>
@@ -357,6 +370,39 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      */
     onExpand(...params: any[]): void;
     /**
+     * renderLoadingIcon
+     * @description 渲染loading图标
+     * @param onExpand
+     * @param record
+     * @return {ReactElement}
+     */
+    renderLoadingIcon({ onExpand, record }: {
+        onExpand: any;
+        record: any;
+    }): ReactElement;
+    /**
+     * renderExpandIcon
+     * @description 渲染展开图标
+     * @param onExpand
+     * @param record
+     * @return {ReactElement}
+     */
+    renderExpandIcon({ onExpand, record }: {
+        onExpand: any;
+        record: any;
+    }): ReactElement;
+    /**
+     * renderCollapseIcon
+     * @description 渲染闭合图标
+     * @param onExpand
+     * @param record
+     * @return {ReactElement}
+     */
+    renderCollapseIcon({ onExpand, record }: {
+        onExpand: any;
+        record: any;
+    }): ReactElement;
+    /**
      * expandIcon
      * @description 处理Tree异步加载的图标
      * @param expanded
@@ -367,7 +413,7 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
         expanded: any;
         onExpand: any;
         record: any;
-    }): React.JSX.Element;
+    }): ReactElement<any, string | React.JSXElementConstructor<any>>;
 }
 /**
  * SearchTableImplementFactory

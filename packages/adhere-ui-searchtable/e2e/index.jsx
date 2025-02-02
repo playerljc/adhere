@@ -60,7 +60,9 @@ const store = createStore(null, {}, applyMiddleware(createLoggerMiddleware(), sa
 registerModels();
 
 const ProSearchStateTableImpl = lazy(() =>
-  import(/* webpackChunkName: "conditionalrender" */ './proRowDragSortSearchTable.jsx'),
+  import(
+    /* webpackChunkName: "conditionalrender" */ './defaultSelectedRowKeysCheckedStrategySearchTable.jsx'
+  ),
 );
 
 e2e.PC({

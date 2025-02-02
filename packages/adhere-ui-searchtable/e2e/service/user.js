@@ -1,26 +1,8 @@
-// import faker from 'faker';
-import {
-  Ajax,
-  /*Util*/
-} from '@baifendian/adhere';
+import { Ajax } from '@baifendian/adhere';
 
-import data from '../mock';
+import { fetchData, fetchTreeData } from '../mock';
 
 const request = new Ajax('');
-
-// const data = require('../mock.js').default;
-
-// const data = Array.from({ length: 100 }).map((t) => ({
-//   id: faker.random.uuid(),
-//   name: faker.internet.userName(),
-//   sex: `${Util.generatorRandom(0, 1)}`,
-//   homeTown: faker.address.city(),
-//   address: faker.address.city(),
-//   birthday: new Date().getTime(),
-//   deptName: faker.company.companyName(),
-//   height: faker.random.number(),
-//   width: faker.random.number(),
-// }));
 
 export const fetchList = (() => {
   return {
@@ -56,7 +38,25 @@ export const fetchList = (() => {
       // }).promise;
 
       return request.get({
-        path: data(params),
+        path: fetchData(params),
+        mock: true,
+        loading: {
+          show: false,
+        },
+      }).promise;
+    },
+    defaultResult: () => ({
+      total: 0,
+      list: [],
+    }),
+  };
+})();
+
+export const fetchTreeList = (() => {
+  return {
+    call: (params) => {
+      return request.get({
+        path: fetchTreeData(params),
         mock: true,
         loading: {
           show: false,

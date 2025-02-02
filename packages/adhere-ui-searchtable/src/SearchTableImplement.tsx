@@ -276,6 +276,15 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   }
 
   /**
+   * getFetchDataResultDataKey
+   * @description fetchData返回的结果中数据的key
+   * @return {string}
+   */
+  getFetchDataResultDataKey(): string {
+    return 'data';
+  }
+
+  /**
    * getTotalKey
    * @description - 获取total的key
    * @protected
@@ -578,8 +587,25 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @return {Promise<any>}
    */
   fetchData(): Promise<any> {
-    // console.log('fetchData');
-    return this.fetchDataExecute(this.getSearchParams());
+    return this.fetchDataExecute(this.getSearchParams()).then((result) => {
+      this.afterFetchData(result);
+
+      return result;
+    });
+  }
+
+  /**
+   * afterFetchData
+   * @description fetchData之后的处理
+   * @param {} result {code: data:}
+   */
+  afterFetchData(result: any) {
+    if (this.isUseCheckedStrategy()) {
+      this.syncCheckedStrategy({
+        selectedRowKeys: this.state.selectedRowKeys,
+        dataSource: result[this.getFetchDataResultDataKey()][this.getDataKey()],
+      });
+    }
   }
 
   /**

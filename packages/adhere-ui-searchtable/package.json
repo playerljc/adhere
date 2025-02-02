@@ -67,6 +67,10 @@
     "lodash.clone": "^4.5.0",
     "lodash.clonedeepwith": "^4.5.0",
     "lodash.merge": "^4.6.2",
+    "lodash.sortby": "^4.7.0",
+    "lodash.difference": "^4.5.0",
+    "lodash.uniq": "^4.5.0",
+    "lodash.uniqby": "^4.7.0",
     "omit.js": "^2.0.2",
     "react": "^18.3.1",
     "react-dnd": "^16.0.1",
@@ -78,6 +82,7 @@
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
     "@baifendian/adhere-e2e": "^2.11.0",
+    "@baifendian/adhere-mock": "^2.11.0",
     "@ctsj/build": "^6.3.0",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",

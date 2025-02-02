@@ -644,5 +644,19 @@ export type TableRowSelectionExt<T> = TableRowSelection<T> & {
     record: Record<string, any>,
     changeRows: any[],
     selected: boolean,
-  ) => void;
+  ) => Promise<void>;
+  onCheckedStrategyVirtualSelect: (
+    changeRows: any[],
+    selected: boolean,
+  ) => {
+    selectedRowKeys: any[];
+    selectedRows: any[];
+  } | null;
+  onVirtualChange: (
+    selectedRowKeys: any[],
+    selectedRows: any[],
+  ) => {
+    selectedRowKeys: any[];
+    selectedRows: any[];
+  } | null;
 };

@@ -36,7 +36,6 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     static ROW_SELECTION_NORMAL_MODE: symbol;
     static ROW_SELECTION_CONTINUOUS_MODE: symbol;
     static CHECKED_STRATEGY_SHOW_ALL: symbol;
-    static CHECKED_STRATEGY_SHOW_PARENT: symbol;
     static CHECKED_STRATEGY_SHOW_CHILD: symbol;
     protected tableWrapRef: RefObject<HTMLDivElement>;
     protected components: {
@@ -105,7 +104,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     /**
      * getData
      * @description 获取表格数据
-     * @return Array<Object>
+     * @return {object[]}
      */
     abstract getData(): object[];
     /**
@@ -116,7 +115,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     /**
      * getColumns
      * @description 获取表格列的信息
-     * @return Array<object>
+     * @return {ColumnType<object>[]}
      */
     abstract getColumns(): ColumnType<object>[];
     /**
@@ -168,12 +167,17 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     abstract onTableCellComponentReducers(columns: ColumnTypeExt[]): string[];
     /**
      * isUseCheckedStrategy
-     * @description 定义选中项回填的方式。ProSearchTableImplSHOW_ALL: 显示所有选中节点(包括父节点)。ProSearchTableImplSHOW_PARENT: 只显示父节点(当父节点下所有子节点都选中时)。 默认只显示子节点
+     * @description 是否使用CheckedStrategy模式 默认false
+     * @return {boolean}
      */
     abstract isUseCheckedStrategy(): boolean;
     /**
      * getCheckedStrategy
-     * @description 定义选中项回填的方式。ProSearchTableImplSHOW_ALL: 显示所有选中节点(包括父节点)。ProSearchTableImplSHOW_PARENT: 只显示父节点(当父节点下所有子节点都选中时)。 默认只显示子节点
+     * @description 定义selectedRowKeys数据的返回
+     * CHECKED_STRATEGY_SHOW_ALL | CHECKED_STRATEGY_SHOW_CHILD 默认是CHECKED_STRATEGY_SHOW_ALL
+     * CHECKED_STRATEGY_SHOW_ALL: 返回所有有选择的数据
+     * CHECKED_STRATEGY_SHOW_CHILD: 返回叶子节点数据
+     * @return {symbol}
      */
     abstract getCheckedStrategy(): symbol;
     /**
@@ -194,6 +198,25 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     componentWillReceiveProps(nextProps: SearchTableProps): void;
     componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void;
     /**
+     * effectWithExpandedRowKeys
+     * @protected
+     * @param nextProps
+     */
+    effectWithExpandedRowKeys(nextProps: SearchTableProps): void;
+    /**
+     * syncCheckedStrategy
+     * @description 主要是对
+     * @param {{
+     *   selectedRowKeys: any[]
+     *   dataSource: any[]
+     * }} params
+     * @return {Promise<void>}
+     */
+    syncCheckedStrategy({ selectedRowKeys, dataSource, }: {
+        selectedRowKeys: any[];
+        dataSource: any[];
+    }): Promise<void>;
+    /**
      * searchTableResizableEffectLayout
      * @protected
      */
@@ -204,13 +227,13 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @param {SearchTableProps} prevProps
      * @param {SearchTableState} prevState
      */
-    fixedHeaderAutoTableEffectLayout(prevProps: any, prevState: any): void;
+    fixedHeaderAutoTableEffectLayout(prevProps: SearchTableProps, prevState: SearchTableState): void;
     /**
-     * columnSettingEffect
+     * effectWithColumnSetting
      * @param {SearchTableProps} props
      * @protected
      */
-    columnSettingEffect(props: SearchTableProps): void;
+    effectWithColumnSetting(props: SearchTableProps): void;
     /**
      * onBodyKeyup
      */
@@ -326,10 +349,20 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
         render: (v: any, r: any, index: any) => React.JSX.Element;
     };
     /**
+     * getRowSelectionFilterData
+     * @param {boolean} selected
+     * @param {any:[]} records
+     * @return {object}
+     */
+    getRowSelectionFilterData(selected: boolean, records: any[]): {
+        selectedRowKeys: any[];
+        selectedRows: any[];
+    };
+    /**
      * rowSelectionFilter
      * @description rowSelectionFilter
-     * @param selected
-     * @param records
+     * @param {boolean} selected
+     * @param {any[]} records
      * @return {Promise<void>}
      */
     rowSelectionFilter(selected: boolean, records: any[]): Promise<void>;
@@ -339,10 +372,50 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     getRowSelectionConfig(): TableRowSelectionExt<object>;
     /**
+     * strategyCheckAllChecked
+     * @param checked
+     */
+    strategyCheckAllChecked(checked: boolean): void;
+    /**
      * renderCheckedStrategyCheckAll
      * @description 渲染CheckedStrategy的CheckAll(全选)
      */
     renderCheckedStrategyCheckAll(): React.JSX.Element;
+    /**
+     * strategyCheckItemVirtualChecked
+     * @param {{
+     *   checked:boolean;
+     *   record:any;
+     *   dataSource?:any[];
+     *   flatDataSource?:any[];
+     * }} params
+     * @return {Promise<void>}
+     */
+    strategyCheckItemVirtualChecked({ checked, record, dataSource, flatDataSource, }: {
+        checked: boolean;
+        record: any;
+        dataSource?: any[];
+        flatDataSource?: any[];
+    }): {
+        selectedRowKeys: any[];
+        selectedRows: any[];
+    } | null;
+    /**
+     * strategyCheckItemChecked
+     * @param {{
+     *   checked:boolean;
+     *   record:any;
+     *   dataSource?:any[];
+     *   flatDataSource?:any[];
+     * }} params
+     * @return {Promise<void>}
+     */
+    strategyCheckItemChecked({ checked, record, dataSource, flatDataSource, }: {
+        checked: boolean;
+        record: any;
+        dataSource?: any[];
+        flatDataSource?: any[];
+    }): Promise<void>;
     /**
      * renderCheckedStrategyCheckItem
      * @description 渲染CheckedStrategy的Check(每行一行)
@@ -376,21 +449,21 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * getExportExcelColumns
      * @description 获取导出excel的列
      * @param _columns
-     * return _columns
+     * return {any[]}
      */
     getExportExcelColumns(_columns: any[]): any[];
     /**
      * getExportExcelData
      * @description 获取导出excel的数据
-     * @return any[]
+     * @return {any[]}
      */
-    getExportExcelData(): object[];
+    getExportExcelData(): any[];
     /**
      * getDataSource
      * @description 获取Table的数据
-     * @return Record<string, any>[]
+     * @return {Record<string, any>[]}
      */
-    getDataSource(): object[];
+    getDataSource(): Record<string, any>[];
     /**
      * renderTableNumberColumn
      * @description - 渲染序号列
@@ -402,7 +475,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
         value: any;
         record: object;
         index: number;
-    }): React.JSX.Element;
+    }): ReactNode;
     /**
      * renderTableReload
      * @description 刷新表格
@@ -452,14 +525,14 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     /**
      * renderInner
      * @description 渲染SearchTable
-     * @return {ReactElement | null}
+     * @return {ReactNode}
      */
     renderInner(): React.JSX.Element;
     /**
      * renderChildren
      * @return {ReactElement}
      */
-    renderChildren(): React.JSX.Element;
+    renderChildren(): ReactElement;
     /**
      * render
      * @return {ReactElement}
@@ -468,21 +541,27 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     /**
      * isUseLoadData
      * @description 是否使用Tree的异步加载
-     * @return boolean
+     * @return {boolean}
      */
     isUseLoadData(): boolean;
     /**
      * getChildrenColumnName
-     * @description 获取Tree数据中chidren的属性名
+     * @description 获取Tree数据中children的属性名
      * @return {string}
      */
     getChildrenColumnName(): string;
     /**
      * isUseTreeData
      * @description 是否使用Tree数据
-     * @return boolean
+     * @return {boolean}
      */
     isUseTreeData(): boolean;
+    /**
+     * getSelectedRowKeys
+     * @description 获取selectedRowKeys
+     * @return {any[]}
+     */
+    getSelectedRowKeys(): any[];
 }
 export declare const defaultProps: {
     className: string;

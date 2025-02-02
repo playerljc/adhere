@@ -476,5 +476,13 @@ export interface DragSortColumnProps extends ColumnTypeExt {
     className?: string;
 }
 export type TableRowSelectionExt<T> = TableRowSelection<T> & {
-    onCheckedStrategySelect: (record: Record<string, any>, changeRows: any[], selected: boolean) => void;
+    onCheckedStrategySelect: (record: Record<string, any>, changeRows: any[], selected: boolean) => Promise<void>;
+    onCheckedStrategyVirtualSelect: (changeRows: any[], selected: boolean) => {
+        selectedRowKeys: any[];
+        selectedRows: any[];
+    } | null;
+    onVirtualChange: (selectedRowKeys: any[], selectedRows: any[]) => {
+        selectedRowKeys: any[];
+        selectedRows: any[];
+    } | null;
 };
