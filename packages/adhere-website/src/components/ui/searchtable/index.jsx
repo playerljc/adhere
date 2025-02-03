@@ -1,8 +1,10 @@
+import AsyncLoadDataTable from '!!raw-loader!./asyncLoadDataTable';
 import CascaderSaerchProTableCodeText from '!!raw-loader!./cascaderSaerchProTable';
 import ColumnHideProSearchTableCodeText from '!!raw-loader!./columnHideProSearchTable';
 import ColumnResizeTableCodeText from '!!raw-loader!./columnResizeTable';
 import ColumnSettingTableCodeText from '!!raw-loader!./columnSettingTable';
 import CustomAdvancedSearchPanelCodeText from '!!raw-loader!./customAdvancedSearchPanel';
+import DefaultSelectedRowKeysCheckedStrategySearchTable from '!!raw-loader!./defaultSelectedRowKeysCheckedStrategySearchTable';
 import EditableCellRenderTriggerStateSearchTableCodeText from '!!raw-loader!./editorCellRenderTriggerStateSearchTable';
 import EditorCellStateSearchTableCodeText from '!!raw-loader!./editorCellStateSearchTable';
 import EditorCellUseKeepEditStateSearchTableCodeText from '!!raw-loader!./editorCellUseKeepEditStateSearchTable';
@@ -28,6 +30,11 @@ import p20CodeText from '!!raw-loader!./examples/p20';
 import p21CodeText from '!!raw-loader!./examples/p21';
 import p22CodeText from '!!raw-loader!./examples/p22';
 import p23CodeText from '!!raw-loader!./examples/p23';
+import p24CodeText from '!!raw-loader!./examples/p24';
+import p25CodeText from '!!raw-loader!./examples/p25';
+import p26CodeText from '!!raw-loader!./examples/p26';
+import p27CodeText from '!!raw-loader!./examples/p27';
+import p28CodeText from '!!raw-loader!./examples/p28';
 import FixedTableSpaceBetweenTableCodeText from '!!raw-loader!./fixedTableSpaceBetweenTable';
 import UserModelCodeText from '!!raw-loader!./model/user';
 import ProRowDragSortSearchTableCodeText from '!!raw-loader!./proRowDragSortSearchTable';
@@ -42,6 +49,9 @@ import StateTableCodeText from '!!raw-loader!./stateTable';
 import TableCodeText from '!!raw-loader!./table';
 import TableDensitySettingCodeText from '!!raw-loader!./tableDensitySetting';
 import TableEditorStateSearchTableCodeText from '!!raw-loader!./tableEditorStateSearchTable';
+import UseCheckedStrategyAndAsyncLoadDataSearchTable from '!!raw-loader!./useCheckedStrategyAndAsyncLoadDataSearchTable';
+import UseCheckedStrategyAndAsyncLoadDataWithContinuonsSelectionModeSearchTable from '!!raw-loader!./useCheckedStrategyAndAsyncLoadDataWithContinuonsSelectionModeSearchTable';
+import UseCheckedStrategySearchTable from '!!raw-loader!./useCheckedStrategySearchTable';
 
 import React from 'react';
 
@@ -74,6 +84,11 @@ import P20 from './examples/p20';
 import P21 from './examples/p21';
 import P22 from './examples/p22';
 import P23 from './examples/p23';
+import P24 from './examples/p24';
+import P25 from './examples/p25';
+import P26 from './examples/p26';
+import P27 from './examples/p27';
+import P28 from './examples/p28';
 
 import FixedTableSpaceBetweenTableLessCodeText from '!!raw-loader!./fixedTableSpaceBetweenTable.less';
 
@@ -1099,6 +1114,282 @@ export default () => {
         ],
         type: 'PlayGroundTab',
         renderChildren: () => <P23 />,
+      },
+      //
+      {
+        id: `p24`,
+        name: `异步加载数据`,
+        cardProps: {
+          description: {
+            title: '异步加载数据',
+            info: '使用loadData异步加载数据',
+          },
+        },
+        active: 'p24.jsx',
+        config: [
+          {
+            title: 'p24.jsx',
+            key: 'p24.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: p24CodeText,
+          },
+          {
+            title: 'AsyncLoadDataTable.jsx',
+            key: 'AsyncLoadDataTable.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: AsyncLoadDataTable,
+          },
+          {
+            title: 'serviceRegister.jsx',
+            key: 'serviceRegister.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: serviceRegisterCodeText,
+          },
+          {
+            title: 'model/user.js',
+            key: 'model/user.js',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UserModelCodeText,
+          },
+          {
+            title: 'service/user.js',
+            key: 'service/user.js',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UserServiceCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P24 />,
+      },
+      {
+        id: `p25`,
+        name: `使用CheckedStrategy模式`,
+        cardProps: {
+          description: {
+            title: '使用CheckedStrategy模式',
+            info: '如果使用Tree数据，开启CheckedStrategy模式',
+          },
+        },
+        active: 'p25.jsx',
+        config: [
+          {
+            title: 'p25.jsx',
+            key: 'p25.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: p25CodeText,
+          },
+          {
+            title: 'UseCheckedStrategySearchTable.jsx',
+            key: 'UseCheckedStrategySearchTable.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UseCheckedStrategySearchTable,
+          },
+          {
+            title: 'serviceRegister.jsx',
+            key: 'serviceRegister.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: serviceRegisterCodeText,
+          },
+          {
+            title: 'model/user.js',
+            key: 'model/user.js',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UserModelCodeText,
+          },
+          {
+            title: 'service/user.js',
+            key: 'service/user.js',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UserServiceCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P25 />,
+      },
+      {
+        id: `p26`,
+        name: `异步加载 + CheckedStrategy模式`,
+        cardProps: {
+          description: {
+            title: '异步加载 + CheckedStrategy模式',
+            info: '同时使用异步加载和CheckedStrategy模式',
+          },
+        },
+        active: 'p26.jsx',
+        config: [
+          {
+            title: 'p26.jsx',
+            key: 'p26.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: p26CodeText,
+          },
+          {
+            title: 'UseCheckedStrategyAndAsyncLoadDataSearchTable.jsx',
+            key: 'UseCheckedStrategyAndAsyncLoadDataSearchTable.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UseCheckedStrategyAndAsyncLoadDataSearchTable,
+          },
+          {
+            title: 'serviceRegister.jsx',
+            key: 'serviceRegister.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: serviceRegisterCodeText,
+          },
+          {
+            title: 'model/user.js',
+            key: 'model/user.js',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UserModelCodeText,
+          },
+          {
+            title: 'service/user.js',
+            key: 'service/user.js',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UserServiceCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P26 />,
+      },
+      {
+        id: `p27`,
+        name: `异步加载 + CheckedStrategy模式 + 跨页选取`,
+        cardProps: {
+          description: {
+            title: '异步加载 + CheckedStrategy模式 + 跨页选取',
+            info: '同时使用异步加载和CheckedStrategy模式和跨页选取',
+          },
+        },
+        active: 'p27.jsx',
+        config: [
+          {
+            title: 'p27.jsx',
+            key: 'p27.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: p27CodeText,
+          },
+          {
+            title: 'UseCheckedStrategyAndAsyncLoadDataWithContinuonsSelectionModeSearchTable.jsx',
+            key: 'UseCheckedStrategyAndAsyncLoadDataWithContinuonsSelectionModeSearchTable.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UseCheckedStrategyAndAsyncLoadDataWithContinuonsSelectionModeSearchTable,
+          },
+          {
+            title: 'serviceRegister.jsx',
+            key: 'serviceRegister.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: serviceRegisterCodeText,
+          },
+          {
+            title: 'model/user.js',
+            key: 'model/user.js',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UserModelCodeText,
+          },
+          {
+            title: 'service/user.js',
+            key: 'service/user.js',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UserServiceCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P27 />,
+      },
+      {
+        id: `p28`,
+        name: `载CheckedStrategy模式下给出默认选中`,
+        cardProps: {
+          description: {
+            title: '载CheckedStrategy模式下给出默认选中',
+            info: '载CheckedStrategy模式下给出默认选中',
+          },
+        },
+        active: 'p28.jsx',
+        config: [
+          {
+            title: 'p28.jsx',
+            key: 'p28.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: p28CodeText,
+          },
+          {
+            title: 'DefaultSelectedRowKeysCheckedStrategySearchTable.jsx',
+            key: 'DefaultSelectedRowKeysCheckedStrategySearchTable.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: DefaultSelectedRowKeysCheckedStrategySearchTable,
+          },
+          {
+            title: 'serviceRegister.jsx',
+            key: 'serviceRegister.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: serviceRegisterCodeText,
+          },
+          {
+            title: 'model/user.js',
+            key: 'model/user.js',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UserModelCodeText,
+          },
+          {
+            title: 'service/user.js',
+            key: 'service/user.js',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UserServiceCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P28 />,
       },
     ];
   }

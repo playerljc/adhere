@@ -69,7 +69,7 @@ class TableImpl extends TableImplement {
   }
 
   getData() {
-    return this.state.dataSource.list;
+    return this.state?.dataSource?.list;
   }
 
   getPagination() {
@@ -309,7 +309,6 @@ class TableImpl extends TableImplement {
             this.request
               .get({
                 mock: true,
-                // eslint-disable-next-line global-require
                 path: require('./mock.js').default.data,
               })
               .promise.then((result) => {

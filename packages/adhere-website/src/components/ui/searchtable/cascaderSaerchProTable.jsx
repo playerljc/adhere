@@ -7,7 +7,6 @@ import {
   DateDisplay,
   DelConfirm,
   FieldGeneratorToDict,
-  Resource,
   SearchTable,
   WarnPrompt,
 } from '@baifendian/adhere';

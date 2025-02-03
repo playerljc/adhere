@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
-
 import { oneData } from './mock';
 import Table from './table';
 
