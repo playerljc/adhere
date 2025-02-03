@@ -16,6 +16,7 @@ import sortBy from 'lodash.sortby';
 import uniq from 'lodash.uniq';
 import uniqBy from 'lodash.uniqby';
 import PropTypes from 'prop-types';
+import { ExpandableConfig } from 'rc-table/lib/interface';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createContext, createRef } from 'react';
 
@@ -199,7 +200,7 @@ abstract class SearchTable<
    * setData
    * @description 设置表格数据
    */
-  abstract setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<void>;
+  abstract setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<any[]>;
 
   /**
    * getColumns
@@ -378,41 +379,186 @@ abstract class SearchTable<
   }
 
   /**
-   * syncCheckedStrategy
-   * @description 主要是对
-   * @param {{
-   *   selectedRowKeys: any[]
-   *   dataSource: any[]
-   * }} params
+   * syncCheckedStrategyWithShowChild
+   * @param {any[]} dataSource
    * @return {Promise<void>}
    */
-  async syncCheckedStrategy({
-    selectedRowKeys,
-    dataSource,
-  }: {
-    selectedRowKeys: any[];
-    dataSource: any[];
-  }): Promise<void> {
+  async syncCheckedStrategyWithShowChild(dataSource: any[]): Promise<void> {
     const rowKey = this.getRowKey();
 
     const flatDataSource = Util.treeToArray(dataSource, TREE_UTIL_CONFIG, rowKey);
+    const flatDataSourceKeys = flatDataSource.map((record) => record[rowKey]);
+    const { defaultSelectedRowKeys } = this.props;
+    // 筛选出需要矫正的keys
+    const asyncPageKeys = defaultSelectedRowKeys.filter((key: any) =>
+      flatDataSourceKeys.includes(key),
+    );
 
-    for (let key of selectedRowKeys) {
-      try {
-        const record = flatDataSource.find((record) => record[rowKey] === key);
+    let selectedKeysSet = new Set<any>(asyncPageKeys);
 
-        await this.strategyCheckItemChecked({
-          checked: true,
-          record,
-          dataSource,
-          flatDataSource,
-        });
-      } catch (error) {
-        throw new Error();
+    for (let i = 0; i < asyncPageKeys.length; i++) {
+      const key = asyncPageKeys[i];
+      const node = flatDataSource.find((n) => n[rowKey] === key);
+
+      if (!node) break;
+
+      // 向上是祖先
+      const ancestor = Util.getAncestor(flatDataSource, node, {
+        ...TREE_UTIL_CONFIG,
+        keyAttr: rowKey,
+      });
+
+      // 处理祖先
+      for (let j = 0; j < ancestor.length; j++) {
+        const _node = ancestor[j];
+
+        // 获取一个祖先的子孙
+        const _ancestorKeys = Util.getDescendants(flatDataSource, _node, {
+          ...TREE_UTIL_CONFIG,
+          keyAttr: rowKey,
+        }).map((t) => t[rowKey]);
+
+        if (_ancestorKeys.every((key) => selectedKeysSet.has(key))) {
+          selectedKeysSet.add(_node[rowKey]);
+        } else {
+          break;
+        }
       }
     }
 
+    const selectedKeys = Array.from(selectedKeysSet).filter((key) => !asyncPageKeys.includes(key));
+
+    const { selectedRowKeys, selectedRows } = this.state;
+
+    // 都不在selectedRowKeys中的时候
+    if (!selectedKeys.every((key) => selectedRowKeys.includes(key))) {
+      console.log('set');
+      this.setState({
+        selectedRowKeys: [...selectedRowKeys, ...selectedKeys],
+        selectedRows: [
+          ...selectedRows,
+          [...selectedKeys, ...asyncPageKeys].map((key) =>
+            flatDataSource.find((record) => record[rowKey] === key),
+          ),
+        ],
+      });
+    }
+  }
+
+  /**
+   * syncCheckedStrategyWithShowAll
+   * @param {any[]} dataSource
+   * @return {Promise<void>}
+   */
+  async syncCheckedStrategyWithShowAll(dataSource: any[]): Promise<void> {
+    console.log('syncCheckedStrategyWithShowAll');
+    const rowKey = this.getRowKey();
+
+    const flatDataSource = Util.treeToArray(dataSource, TREE_UTIL_CONFIG, rowKey);
+    const flatDataSourceKeys = flatDataSource.map((record) => record[rowKey]);
+    console.log('flatDataSourceKeys', flatDataSourceKeys);
+    const { defaultSelectedRowKeys } = this.props;
+    // 筛选出需要矫正的keys
+    const asyncPageKeys = defaultSelectedRowKeys.filter((key: any) =>
+      flatDataSourceKeys.includes(key),
+    );
+
+    let selectedKeysSet = new Set<any>(asyncPageKeys);
+
+    for (let i = 0; i < asyncPageKeys.length; i++) {
+      const key = asyncPageKeys[i];
+      const node = flatDataSource.find((n) => n[rowKey] === key);
+
+      if (!node) break;
+
+      // 向下是子孙
+      const descendants = Util.getDescendants(flatDataSource, node, {
+        ...TREE_UTIL_CONFIG,
+        keyAttr: rowKey,
+      });
+
+      descendants
+        ?.map((t) => t[rowKey])
+        .forEach((key: any) => {
+          selectedKeysSet.add(key);
+        });
+
+      // 向上是祖先
+      const ancestor = Util.getAncestor(flatDataSource, node, {
+        ...TREE_UTIL_CONFIG,
+        keyAttr: rowKey,
+      });
+
+      // 处理祖先
+      for (let j = 0; j < ancestor.length; j++) {
+        const _node = ancestor[j];
+
+        // 获取一个祖先的子孙
+        const _ancestorKeys = Util.getDescendants(flatDataSource, _node, {
+          ...TREE_UTIL_CONFIG,
+          keyAttr: rowKey,
+        }).map((t) => t[rowKey]);
+
+        if (_ancestorKeys.every((key) => selectedKeysSet.has(key))) {
+          selectedKeysSet.add(_node[rowKey]);
+        } else {
+          break;
+        }
+      }
+    }
+
+    const selectedKeys = Array.from(selectedKeysSet).filter((key) => !asyncPageKeys.includes(key));
+
+    const { selectedRowKeys, selectedRows } = this.state;
+
+    // 祖先节点都不在selectedRowKeys中的时候
+    console.log('selectedKeys', selectedKeys);
+    console.log('selectedRowKeys', selectedRowKeys);
+    if (!selectedKeys.every((key) => selectedRowKeys.includes(key))) {
+      console.log('set');
+      this.setState({
+        selectedRowKeys: [...selectedRowKeys, ...selectedKeys],
+        selectedRows: [
+          ...selectedRows,
+          [...selectedKeys, ...asyncPageKeys].map((key) =>
+            flatDataSource.find((record) => record[rowKey] === key),
+          ),
+        ],
+      });
+    }
+  }
+
+  /**
+   * syncCheckedStrategy
+   * @description 同步
+   * @param {any[]} dataSource
+   * @return {Promise<void>}
+   */
+  async syncCheckedStrategy(dataSource: any[]): Promise<void> {
+    if (this.getCheckedStrategy() === SearchTable.CHECKED_STRATEGY_SHOW_CHILD) {
+      return this.syncCheckedStrategyWithShowChild(dataSource);
+    }
+
+    if (this.getCheckedStrategy() === SearchTable.CHECKED_STRATEGY_SHOW_ALL) {
+      return this.syncCheckedStrategyWithShowAll(dataSource);
+    }
+
     return Promise.resolve();
+
+    // for (let key of selectedRowKeys) {
+    //   try {
+    //     const record = flatDataSource.find((record) => record[rowKey] === key);
+    //
+    //     await this.strategyCheckItemChecked({
+    //       checked: true,
+    //       record,
+    //       dataSource,
+    //       flatDataSource,
+    //     });
+    //   } catch (error) {
+    //     throw new Error();
+    //   }
+    // }
 
     //
     // const rowSelectionConfig = this.getRowSelectionConfig();
@@ -1111,7 +1257,7 @@ abstract class SearchTable<
   renderCheckedStrategyCheckAll() {
     const { selectedRowKeys = [] } = this.state;
 
-    const rowKey = this.getRowKey() ?? 'id';
+    const rowKey = this.getRowKey();
 
     // 当前页面数据的keys
     const keys = Util.treeToArray(this.getDataSource() as any[], TREE_UTIL_CONFIG, rowKey).map(
@@ -1137,120 +1283,120 @@ abstract class SearchTable<
     );
   }
 
-  /**
-   * strategyCheckItemVirtualChecked
-   * @param {{
-   *   checked:boolean;
-   *   record:any;
-   *   dataSource?:any[];
-   *   flatDataSource?:any[];
-   * }} params
-   * @return {Promise<void>}
-   */
-  strategyCheckItemVirtualChecked({
-    checked,
-    record,
-    dataSource,
-    flatDataSource,
-  }: {
-    checked: boolean;
-    record: any;
-    dataSource?: any[];
-    flatDataSource?: any[];
-  }): {
-    selectedRowKeys: any[];
-    selectedRows: any[];
-  } | null {
-    if (!record) return null;
-
-    const selected = checked;
-
-    const rowKey = this.getRowKey();
-
-    // 所有选择的key
-    const { selectedRowKeys: selectedAllRowKeys = [] } = this.state;
-
-    const targetDataSource = dataSource ?? (this.getDataSource() as any[]);
-
-    const targetFlatDataSource =
-      flatDataSource ?? Util.treeToArray(targetDataSource, TREE_UTIL_CONFIG, rowKey);
-
-    const keys = targetFlatDataSource.map((t) => t[rowKey]);
-
-    // 当前页选择的key
-    const selectedRowKeys = difference(selectedAllRowKeys, difference(selectedAllRowKeys, keys));
-
-    const node = targetFlatDataSource.find((n) => n[rowKey] === record[rowKey]);
-
-    if (!node) return null;
-
-    // 向下是子孙
-    const descendants = Util.getDescendants(targetFlatDataSource, node, {
-      ...TREE_UTIL_CONFIG,
-      keyAttr: rowKey,
-    });
-
-    // 向上是祖先
-    const ancestor = Util.getAncestor(targetFlatDataSource, node, {
-      ...TREE_UTIL_CONFIG,
-      keyAttr: rowKey,
-    });
-
-    let targetSelectedKeys: any[];
-
-    if (selected) {
-      const selectedKeys = [
-        ...selectedRowKeys,
-        ...[record[rowKey], ...descendants?.map((t) => t[rowKey])],
-      ];
-
-      // 处理祖先
-      for (let i = 0; i < ancestor.length; i++) {
-        const _node = ancestor[i];
-
-        // 获取一个祖先的子孙
-        const _ancestorKeys = Util.getDescendants(targetFlatDataSource, _node, {
-          ...TREE_UTIL_CONFIG,
-          keyAttr: rowKey,
-        }).map((t) => t[rowKey]);
-
-        if (_ancestorKeys.every((key) => selectedKeys.includes(key))) {
-          selectedKeys.push(_node[rowKey]);
-        } else {
-          break;
-        }
-      }
-
-      targetSelectedKeys = selectedKeys;
-    }
-    //
-    else {
-      const mode = this.getRowSelectionMode();
-
-      const removeKeys = [
-        record[rowKey],
-        ...descendants?.map((t) => t[rowKey]),
-        ...ancestor.map((t) => t[rowKey]),
-      ];
-
-      targetSelectedKeys =
-        mode === SearchTable.ROW_SELECTION_NORMAL_MODE
-          ? difference(selectedRowKeys, removeKeys)
-          : removeKeys;
-    }
-
-    const targetSelectedRows = targetSelectedKeys.map((key) =>
-      targetFlatDataSource.find((n) => n[rowKey] === key),
-    );
-
-    const rowSelectionConfig = this.getRowSelectionConfig();
-
-    const result1 = rowSelectionConfig.onCheckedStrategyVirtualSelect(targetSelectedRows, selected);
-
-    const result2 = rowSelectionConfig.onVirtualChange(targetSelectedKeys, targetSelectedRows);
-
-    return result1 ?? result2;
-  }
+  // /**
+  //  * strategyCheckItemVirtualChecked
+  //  * @param {{
+  //  *   checked:boolean;
+  //  *   record:any;
+  //  *   dataSource?:any[];
+  //  *   flatDataSource?:any[];
+  //  * }} params
+  //  * @return {Promise<void>}
+  //  */
+  // strategyCheckItemVirtualChecked({
+  //   checked,
+  //   record,
+  //   dataSource,
+  //   flatDataSource,
+  // }: {
+  //   checked: boolean;
+  //   record: any;
+  //   dataSource?: any[];
+  //   flatDataSource?: any[];
+  // }): {
+  //   selectedRowKeys: any[];
+  //   selectedRows: any[];
+  // } | null {
+  //   if (!record) return null;
+  //
+  //   const selected = checked;
+  //
+  //   const rowKey = this.getRowKey();
+  //
+  //   // 所有选择的key
+  //   const { selectedRowKeys: selectedAllRowKeys = [] } = this.state;
+  //
+  //   const targetDataSource = dataSource ?? (this.getDataSource() as any[]);
+  //
+  //   const targetFlatDataSource =
+  //     flatDataSource ?? Util.treeToArray(targetDataSource, TREE_UTIL_CONFIG, rowKey);
+  //
+  //   const keys = targetFlatDataSource.map((t) => t[rowKey]);
+  //
+  //   // 当前页选择的key
+  //   const selectedRowKeys = difference(selectedAllRowKeys, difference(selectedAllRowKeys, keys));
+  //
+  //   const node = targetFlatDataSource.find((n) => n[rowKey] === record[rowKey]);
+  //
+  //   if (!node) return null;
+  //
+  //   // 向下是子孙
+  //   const descendants = Util.getDescendants(targetFlatDataSource, node, {
+  //     ...TREE_UTIL_CONFIG,
+  //     keyAttr: rowKey,
+  //   });
+  //
+  //   // 向上是祖先
+  //   const ancestor = Util.getAncestor(targetFlatDataSource, node, {
+  //     ...TREE_UTIL_CONFIG,
+  //     keyAttr: rowKey,
+  //   });
+  //
+  //   let targetSelectedKeys: any[];
+  //
+  //   if (selected) {
+  //     const selectedKeys = [
+  //       ...selectedRowKeys,
+  //       ...[record[rowKey], ...descendants?.map((t) => t[rowKey])],
+  //     ];
+  //
+  //     // 处理祖先
+  //     for (let i = 0; i < ancestor.length; i++) {
+  //       const _node = ancestor[i];
+  //
+  //       // 获取一个祖先的子孙
+  //       const _ancestorKeys = Util.getDescendants(targetFlatDataSource, _node, {
+  //         ...TREE_UTIL_CONFIG,
+  //         keyAttr: rowKey,
+  //       }).map((t) => t[rowKey]);
+  //
+  //       if (_ancestorKeys.every((key) => selectedKeys.includes(key))) {
+  //         selectedKeys.push(_node[rowKey]);
+  //       } else {
+  //         break;
+  //       }
+  //     }
+  //
+  //     targetSelectedKeys = selectedKeys;
+  //   }
+  //   //
+  //   else {
+  //     const mode = this.getRowSelectionMode();
+  //
+  //     const removeKeys = [
+  //       record[rowKey],
+  //       ...descendants?.map((t) => t[rowKey]),
+  //       ...ancestor.map((t) => t[rowKey]),
+  //     ];
+  //
+  //     targetSelectedKeys =
+  //       mode === SearchTable.ROW_SELECTION_NORMAL_MODE
+  //         ? difference(selectedRowKeys, removeKeys)
+  //         : removeKeys;
+  //   }
+  //
+  //   const targetSelectedRows = targetSelectedKeys.map((key) =>
+  //     targetFlatDataSource.find((n) => n[rowKey] === key),
+  //   );
+  //
+  //   const rowSelectionConfig = this.getRowSelectionConfig();
+  //
+  //   const result1 = rowSelectionConfig.onCheckedStrategyVirtualSelect(targetSelectedRows, selected);
+  //
+  //   const result2 = rowSelectionConfig.onVirtualChange(targetSelectedKeys, targetSelectedRows);
+  //
+  //   return result1 ?? result2;
+  // }
 
   /**
    * strategyCheckItemChecked
@@ -1359,6 +1505,7 @@ abstract class SearchTable<
       const rowSelectionConfig = this.getRowSelectionConfig();
 
       Promise.all([
+        // @ts-ignore
         rowSelectionConfig.onCheckedStrategySelect(
           //
           node as any,
@@ -1393,7 +1540,7 @@ abstract class SearchTable<
   renderCheckedStrategyCheckItem(record: Record<string, string>, rowIndex: number) {
     const { selectedRowKeys = [] } = this.state;
 
-    const rowKey = this.getRowKey() ?? 'id';
+    const rowKey = this.getRowKey();
 
     const flatDataSource = Util.treeToArray(
       this.getDataSource() as any[],
@@ -1879,7 +2026,7 @@ abstract class SearchTable<
    * @return {string}
    */
   getChildrenColumnName(): string {
-    return this.getExpandable()?.childrenColumnName ?? 'children';
+    return (this.getExpandable() as ExpandableConfig<any>)?.childrenColumnName ?? 'children';
   }
 
   /**

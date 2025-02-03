@@ -172,7 +172,7 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      * @description 设置数据
      * @param data
      */
-    setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<void>;
+    setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<any[]>;
     /**
      * getTotal
      * @description - Table数据的总条数
@@ -290,6 +290,11 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      */
     fetchData(): Promise<any>;
     /**
+     * beforeFetchData
+     * @description fetchData之后的处理
+     */
+    beforeFetchData(): Promise<void>;
+    /**
      * afterFetchData
      * @description fetchData之后的处理
      * @param {} result {code: data:}
@@ -403,6 +408,13 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
         record: any;
     }): ReactElement;
     /**
+     * isCanAsync
+     * @description 如果是异步加载的时候当前节点是否允许异步加载
+     * @param {any} record
+     * @return {boolean}
+     */
+    isCanAsync(record: any): boolean;
+    /**
      * expandIcon
      * @description 处理Tree异步加载的图标
      * @param expanded
@@ -413,7 +425,7 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
         expanded: any;
         onExpand: any;
         record: any;
-    }): ReactElement<any, string | React.JSXElementConstructor<any>>;
+    }): ReactElement<any, string | React.JSXElementConstructor<any>> | null;
 }
 /**
  * SearchTableImplementFactory

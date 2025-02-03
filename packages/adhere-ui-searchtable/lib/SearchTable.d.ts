@@ -111,7 +111,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * setData
      * @description 设置表格数据
      */
-    abstract setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<void>;
+    abstract setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<any[]>;
     /**
      * getColumns
      * @description 获取表格列的信息
@@ -204,18 +204,24 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     effectWithExpandedRowKeys(nextProps: SearchTableProps): void;
     /**
-     * syncCheckedStrategy
-     * @description 主要是对
-     * @param {{
-     *   selectedRowKeys: any[]
-     *   dataSource: any[]
-     * }} params
+     * syncCheckedStrategyWithShowChild
+     * @param {any[]} dataSource
      * @return {Promise<void>}
      */
-    syncCheckedStrategy({ selectedRowKeys, dataSource, }: {
-        selectedRowKeys: any[];
-        dataSource: any[];
-    }): Promise<void>;
+    syncCheckedStrategyWithShowChild(dataSource: any[]): Promise<void>;
+    /**
+     * syncCheckedStrategyWithShowAll
+     * @param {any[]} dataSource
+     * @return {Promise<void>}
+     */
+    syncCheckedStrategyWithShowAll(dataSource: any[]): Promise<void>;
+    /**
+     * syncCheckedStrategy
+     * @description 同步
+     * @param {any[]} dataSource
+     * @return {Promise<void>}
+     */
+    syncCheckedStrategy(dataSource: any[]): Promise<void>;
     /**
      * searchTableResizableEffectLayout
      * @protected
@@ -381,25 +387,6 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @description 渲染CheckedStrategy的CheckAll(全选)
      */
     renderCheckedStrategyCheckAll(): React.JSX.Element;
-    /**
-     * strategyCheckItemVirtualChecked
-     * @param {{
-     *   checked:boolean;
-     *   record:any;
-     *   dataSource?:any[];
-     *   flatDataSource?:any[];
-     * }} params
-     * @return {Promise<void>}
-     */
-    strategyCheckItemVirtualChecked({ checked, record, dataSource, flatDataSource, }: {
-        checked: boolean;
-        record: any;
-        dataSource?: any[];
-        flatDataSource?: any[];
-    }): {
-        selectedRowKeys: any[];
-        selectedRows: any[];
-    } | null;
     /**
      * strategyCheckItemChecked
      * @param {{

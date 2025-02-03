@@ -1,6 +1,6 @@
 import { Ajax } from '@baifendian/adhere';
 
-import { fetchData, fetchTreeData } from '../mock';
+import { fetchData, fetchSListData, fetchSSQData, fetchTreeData } from '../mock';
 
 const request = new Ajax('');
 
@@ -57,6 +57,42 @@ export const fetchTreeList = (() => {
     call: (params) => {
       return request.get({
         path: fetchTreeData(params),
+        mock: true,
+        loading: {
+          show: false,
+        },
+      }).promise;
+    },
+    defaultResult: () => ({
+      total: 0,
+      list: [],
+    }),
+  };
+})();
+
+export const fetchSSQList = (() => {
+  return {
+    call: (params) => {
+      return request.get({
+        path: fetchSSQData(params),
+        mock: true,
+        loading: {
+          show: false,
+        },
+      }).promise;
+    },
+    defaultResult: () => ({
+      total: 0,
+      list: [],
+    }),
+  };
+})();
+
+export const fetchSList = (() => {
+  return {
+    call: (params) => {
+      return request.get({
+        path: fetchSListData(params),
         mock: true,
         loading: {
           show: false,

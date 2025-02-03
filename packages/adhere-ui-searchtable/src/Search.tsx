@@ -6,6 +6,7 @@ import React, { ReactElement, ReactNode, RefObject, createRef } from 'react';
 
 import { InfoCircleOutlined } from '@ant-design/icons';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
+import type { ListExpandable } from '@baifendian/adhere-ui-searchlist/es/types';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -186,9 +187,9 @@ abstract class Search<
    *
    * getExpandable
    * @description 表格Tree展开对象
-   * @return {ExpandableConfig<any>}
+   * @return {ExpandableConfig<any> | null | undefined}
    */
-  abstract getExpandable(): ExpandableConfig<any>;
+  abstract getExpandable(): ExpandableConfig<any> | ListExpandable | null | undefined;
 
   /**
    * clear

@@ -82,7 +82,7 @@ export class SearchTableStateImplement<
    * @description 设置数据
    * @param data
    */
-  setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<void> {
+  setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<any[]> {
     return new Promise((resolve) => {
       let targetDataSource;
 
@@ -101,12 +101,12 @@ export class SearchTableStateImplement<
             [this.getServiceName()]: listData,
           },
           () => {
-            resolve();
+            resolve(listData?.[this.getFetchListPropName()]?.[this.getDataKey()]);
           },
         );
       }
 
-      resolve();
+      return Promise.resolve([]);
     });
   }
 

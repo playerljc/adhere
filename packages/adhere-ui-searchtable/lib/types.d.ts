@@ -262,6 +262,7 @@ export interface SearchProps extends SuspenseProps {
     firstLoading: ReactElement;
     isShowExpandSearch: boolean;
     defaultExpandSearchCollapse: boolean;
+    defaultSelectedRowKeys?: string[];
     fitBody: boolean;
     autoFixed: boolean;
     bodyClassName: string;
@@ -476,12 +477,12 @@ export interface DragSortColumnProps extends ColumnTypeExt {
     className?: string;
 }
 export type TableRowSelectionExt<T> = TableRowSelection<T> & {
-    onCheckedStrategySelect: (record: Record<string, any>, changeRows: any[], selected: boolean) => Promise<void>;
-    onCheckedStrategyVirtualSelect: (changeRows: any[], selected: boolean) => {
+    onCheckedStrategySelect?: (record: Record<string, any>, changeRows: any[], selected: boolean) => Promise<void>;
+    onCheckedStrategyVirtualSelect?: (changeRows: any[], selected: boolean) => {
         selectedRowKeys: any[];
         selectedRows: any[];
     } | null;
-    onVirtualChange: (selectedRowKeys: any[], selectedRows: any[]) => {
+    onVirtualChange?: (selectedRowKeys: any[], selectedRows: any[]) => {
         selectedRowKeys: any[];
         selectedRows: any[];
     } | null;

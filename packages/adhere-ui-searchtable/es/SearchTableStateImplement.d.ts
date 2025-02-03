@@ -22,7 +22,7 @@ export declare class SearchTableStateImplement<P extends SearchTableStateImpleme
      * @description 设置数据
      * @param data
      */
-    setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<void>;
+    setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<any[]>;
     /**
      * getTotal
      * @description 获取列表总的数据树

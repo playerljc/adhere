@@ -376,6 +376,8 @@ export interface SearchProps extends SuspenseProps {
   isShowExpandSearch: boolean;
   // 展开和收缩的默认状态
   defaultExpandSearchCollapse: boolean;
+  // defaultSelectedRowKeys
+  defaultSelectedRowKeys?: string[];
   // 撑开search
   // fitSearch: boolean;
   // 撑开表格
@@ -640,19 +642,19 @@ export interface DragSortColumnProps extends ColumnTypeExt {
 }
 
 export type TableRowSelectionExt<T> = TableRowSelection<T> & {
-  onCheckedStrategySelect: (
+  onCheckedStrategySelect?: (
     record: Record<string, any>,
     changeRows: any[],
     selected: boolean,
   ) => Promise<void>;
-  onCheckedStrategyVirtualSelect: (
+  onCheckedStrategyVirtualSelect?: (
     changeRows: any[],
     selected: boolean,
   ) => {
     selectedRowKeys: any[];
     selectedRows: any[];
   } | null;
-  onVirtualChange: (
+  onVirtualChange?: (
     selectedRowKeys: any[],
     selectedRows: any[],
   ) => {

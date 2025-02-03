@@ -6,6 +6,7 @@ import type {
   TablePaginationConfig,
 } from 'antd/lib/table/interface';
 import classNames from 'classnames';
+import sortBy from 'lodash.sortby';
 import PropTypes from 'prop-types';
 import type { ExpandableConfig } from 'rc-table/lib/interface';
 import type { ReactElement, ReactNode, RefObject } from 'react';
@@ -54,7 +55,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
       searchParams: {
         ...this.getParams(),
       },
-      selectedRowKeys: [],
+      selectedRowKeys: this.props?.defaultSelectedRowKeys ?? [],
       selectedRows: [],
       // 正在进行异步加载的keys
       loadDataKeys: [],
@@ -309,7 +310,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @description 设置数据
    * @param data
    */
-  setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<void> {
+  setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<any[]> {
     let targetDataSource;
 
     if (Util.isArray(data)) {
@@ -322,13 +323,17 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
       const listData = cloneDeep(this.state[this.getServiceName()]);
       listData[this.getFetchListPropName()][this.getDataKey()] = targetDataSource;
 
-      return this.props.dispatch({
-        type: `${this.getServiceName()}/receive`,
-        ...listData,
-      });
+      return this.props
+        .dispatch({
+          type: `${this.getServiceName()}/receive`,
+          ...listData,
+        })
+        .then(() => {
+          return listData?.[this.getFetchListPropName()]?.[this.getDataKey()];
+        });
     }
 
-    return Promise.resolve();
+    return Promise.resolve([]);
   }
 
   /**
@@ -587,10 +592,37 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @return {Promise<any>}
    */
   fetchData(): Promise<any> {
-    return this.fetchDataExecute(this.getSearchParams()).then((result) => {
-      this.afterFetchData(result);
+    return new Promise((resolve) => {
+      this.beforeFetchData().then(() => {
+        this.fetchDataExecute(this.getSearchParams()).then((result) => {
+          this.afterFetchData(result);
 
-      return result;
+          resolve(result);
+        });
+      });
+    });
+  }
+
+  /**
+   * beforeFetchData
+   * @description fetchData之后的处理
+   */
+  beforeFetchData(): Promise<void> {
+    return new Promise((resolve) => {
+      if (this.isUseLoadData()) {
+        this.setState(
+          {
+            loadDataKeys: [],
+            loadDataSuccessKeys: [],
+            expandedRowKeys: [],
+          },
+          () => {
+            resolve();
+          },
+        );
+      } else {
+        resolve();
+      }
     });
   }
 
@@ -600,11 +632,16 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @param {} result {code: data:}
    */
   afterFetchData(result: any) {
-    if (this.isUseCheckedStrategy()) {
-      this.syncCheckedStrategy({
-        selectedRowKeys: this.state.selectedRowKeys,
-        dataSource: result[this.getFetchDataResultDataKey()][this.getDataKey()],
-      });
+    if (
+      this.isUseCheckedStrategy() &&
+      // this.getCheckedStrategy() === SearchTable.CHECKED_STRATEGY_SHOW_CHILD &&
+      'defaultSelectedRowKeys' in this.props &&
+      Array.isArray(this.props.defaultSelectedRowKeys) &&
+      !!this.props.defaultSelectedRowKeys.length &&
+      JSON.stringify(sortBy(this.state.selectedRowKeys)) ===
+        JSON.stringify(sortBy(this.props.defaultSelectedRowKeys))
+    ) {
+      this.syncCheckedStrategy(result[this.getFetchDataResultDataKey()][this.getDataKey()]);
     }
   }
 
@@ -809,28 +846,48 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
      * afterLoadDataWithSuccess
      * @description 异步加载成功
      * @param {any[]} childrenData 加载完的children数据
+     * @param {any[]} dataSource
      */
-    function afterLoadDataWithSuccess(childrenData: any[]) {
-      _self.setState((state: any) => {
-        state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
+    function afterLoadDataWithSuccess(childrenData: any[], dataSource: any[]) {
+      const syncCondition =
+        _self.isUseCheckedStrategy() &&
+        'defaultSelectedRowKeys' in _self.props &&
+        Array.isArray(_self.props.defaultSelectedRowKeys) &&
+        !!_self.props.defaultSelectedRowKeys.length &&
+        JSON.stringify(sortBy(_self.state.selectedRowKeys)) ===
+          JSON.stringify(sortBy(_self.props.defaultSelectedRowKeys));
 
-        state.loadDataSuccessKeys.push(key);
+      _self.setState(
+        (state: any) => {
+          state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
 
-        // 获取当前节点的选中状态
-        const currentNodeChecked = state.selectedRowKeys.includes(record[rowKey]);
-        // 如果是选中状态
-        // 则需要将孩子也选中
-        if (currentNodeChecked) {
-          state.selectedRowKeys = [
-            ...state.selectedRowKeys,
-            ...childrenData.map((t: any) => t[rowKey]),
-          ];
+          state.loadDataSuccessKeys.push(key);
 
-          state.selectedRows = [...state.selectedRows, ...childrenData];
-        }
+          if (!syncCondition) {
+            console.log('syncCondition');
+            // 获取当前节点的选中状态
+            const currentNodeChecked = state.selectedRowKeys.includes(record[rowKey]);
+            // 如果是选中状态
+            // 则需要将孩子也选中
+            if (currentNodeChecked) {
+              state.selectedRowKeys = [
+                ...state.selectedRowKeys,
+                ...childrenData.map((t: any) => t[rowKey]),
+              ];
 
-        return JSON.parse(JSON.stringify(state));
-      });
+              state.selectedRows = [...state.selectedRows, ...childrenData];
+            }
+          }
+
+          return JSON.parse(JSON.stringify(state));
+        },
+        () => {
+          if (syncCondition) {
+            console.log('syncCheckedStrategy', dataSource);
+            _self.syncCheckedStrategy(dataSource);
+          }
+        },
+      );
     }
 
     /**
@@ -850,7 +907,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     // 使用了动态加载
     const { loadDataKeys, loadDataSuccessKeys } = this.state;
 
-    const rowKey = this.getRowKey() ?? 'id';
+    const rowKey = this.getRowKey();
 
     const key = record[rowKey];
 
@@ -873,6 +930,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     // @ts-ignore
     this.loadData(record)
       ?.then((childrenData) => {
+        debugger;
         // 更新当前近节点的children数据
         this.setData((preData) => {
           const _targetRecord = Util.findNodeByKey(preData as any[], key, {
@@ -887,8 +945,8 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
           return [...preData];
         })
-          .then(() => {
-            afterLoadDataWithSuccess(childrenData);
+          .then((dataSource) => {
+            afterLoadDataWithSuccess(childrenData, dataSource);
           })
           .catch(() => {
             afterLoadDataWithFail();
@@ -954,6 +1012,16 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   }
 
   /**
+   * isCanAsync
+   * @description 如果是异步加载的时候当前节点是否允许异步加载
+   * @param {any} record
+   * @return {boolean}
+   */
+  isCanAsync(record: any): boolean {
+    return true;
+  }
+
+  /**
    * expandIcon
    * @description 处理Tree异步加载的图标
    * @param expanded
@@ -961,7 +1029,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @param record
    */
   expandIcon({ expanded, onExpand, record }) {
-    const rowKey = this.getRowKey() ?? 'id';
+    const rowKey = this.getRowKey();
 
     const key = record[rowKey];
 
@@ -975,8 +1043,9 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
     // 闭合应该是展开(+)图表
     if (!expanded) {
+      // 这块也可能不是+，如果不能继续异步加载的话
       // +
-      return this.renderExpandIcon({ onExpand, record });
+      return this.isCanAsync(record) ? this.renderExpandIcon({ onExpand, record }) : null;
     }
 
     // 展开应该是(-)图标

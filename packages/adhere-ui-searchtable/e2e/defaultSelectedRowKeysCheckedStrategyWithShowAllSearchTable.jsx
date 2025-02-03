@@ -7,7 +7,7 @@ import { fetchSSQData } from './mock';
 import './serviceRegister';
 
 const { City, County } = Mock;
-const { ProSearchRowDragSortStateTable, Table, SearchTableStateImplementFactory, DragSortColumn } =
+const { ProSearchRowDragSortStateTable, SearchTableStateImplementFactory, DragSortColumn } =
   SearchTable;
 
 const serviceName = 'user';
@@ -88,6 +88,10 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
     return true;
   }
 
+  getCheckedStrategy() {
+    return SearchTable.Table.CHECKED_STRATEGY_SHOW_ALL;
+  }
+
   getRowSelectionMode() {
     return SearchTable.Table.ROW_SELECTION_CONTINUOUS_MODE;
   }
@@ -130,5 +134,5 @@ const Wrap = SearchTableStateImplementFactory({
 })(RowDragSort);
 
 export default (props) => {
-  return <Wrap {...props} defaultSelectedRowKeys={County['330100000000'].map(({ id }) => id)} />;
+  return <Wrap {...props} defaultSelectedRowKeys={City['210000000000'].map(({ id }) => id)} />;
 };

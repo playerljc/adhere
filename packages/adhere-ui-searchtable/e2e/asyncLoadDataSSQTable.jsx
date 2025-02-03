@@ -1,13 +1,17 @@
+import faker from 'faker';
 import React from 'react';
 
+import { Resource } from '@baifendian/adhere';
 import Mock from '@baifendian/adhere-mock';
+import city from '@baifendian/adhere-mock/src/City';
+import Util from '@baifendian/adhere-util';
 
 import SearchTable from '../src/index';
-import { fetchSSQData } from './mock';
 import './serviceRegister';
 
-const { City, County } = Mock;
-const { ProSearchRowDragSortStateTable, Table, SearchTableStateImplementFactory, DragSortColumn } =
+const { Province, City, County } = Mock;
+
+const { ProSearchRowDragSortStateTable, SearchTableStateImplementFactory, DragSortColumn } =
   SearchTable;
 
 const serviceName = 'user';
@@ -18,17 +22,6 @@ const serviceName = 'user';
  * @classdesc RowDragSort
  */
 class RowDragSort extends ProSearchRowDragSortStateTable {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      ...this.state,
-      // selectedRowKeys: City['330000000000'].map(({ id }) => id),
-      // selectedRowKeys: ['210102000000'],
-      selectedRowKeys: props.defaultSelectedRowKeys,
-    };
-  }
-
   getComponentId() {
     return 'RowDragSort';
   }
@@ -38,7 +31,7 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
   }
 
   getFetchListPropName() {
-    return 'fetchSSQData';
+    return 'fetchSList';
   }
 
   getOrderFieldValue() {
@@ -92,25 +85,28 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
     return SearchTable.Table.ROW_SELECTION_CONTINUOUS_MODE;
   }
 
-  // loadData(record) {
-  //   return new Promise((resolve, reject) => {
-  //     setTimeout(() => {
-  //       resolve(
-  //         Array.from({ length: 6 }).map((_, i) => ({
-  //           id: faker.random.uuid(),
-  //           name: faker.internet.userName(),
-  //           sex: `${Util.generatorRandom(0, 1)}`,
-  //           homeTown: faker.address.city(),
-  //           address: faker.address.city(),
-  //           birthday: new Date().getTime(),
-  //           deptName: faker.company.companyName(),
-  //           height: faker.random.number(),
-  //           width: faker.random.number(),
-  //         })),
-  //       );
-  //     }, 1000);
-  //   });
-  // }
+  getCheckedStrategy() {
+    return SearchTable.Table.CHECKED_STRATEGY_SHOW_ALL;
+  }
+
+  isCanAsync(record) {
+    const keys = Object.keys(County).reduce((keys, key) => {
+      keys.push(...County[key].map((t) => t.id));
+      return keys;
+    }, []);
+
+    return !keys.includes(record.id);
+  }
+
+  loadData(record) {
+    const id = record.id;
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(City[id] ? City[id] : County[id]);
+      }, 1000);
+    });
+  }
 }
 
 RowDragSort.propTypes = {};
@@ -130,5 +126,5 @@ const Wrap = SearchTableStateImplementFactory({
 })(RowDragSort);
 
 export default (props) => {
-  return <Wrap {...props} defaultSelectedRowKeys={County['330100000000'].map(({ id }) => id)} />;
+  return <Wrap {...props} defaultSelectedRowKeys={City['210000000000'].map(({ id }) => id)} />;
 };
