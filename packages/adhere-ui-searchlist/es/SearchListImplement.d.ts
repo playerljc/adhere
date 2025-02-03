@@ -1,7 +1,7 @@
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { ListItemProps } from 'antd/es/list';
-import { TableRowSelection } from 'antd/es/table/interface';
 import React, { ReactElement, ReactNode, RefObject } from 'react';
+import type { TableRowSelectionExt } from '@baifendian/adhere-ui-searchtable/es/types';
 import SearchList from './SearchList';
 import type { ISearchListImplement, ListExpandable, SearchListImplementFactoryFunction, SearchListImplementProps, SearchListImplementState, SearchListProps, SearchListState } from './types';
 export declare const selectorPrefix = "adhere-ui-search-table-implement";
@@ -121,7 +121,7 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
      * @description - 获取表格行选择对象
      * @return {TableRowSelection<object>}
      */
-    getRowSelection(): TableRowSelection<object>;
+    getRowSelection(): TableRowSelectionExt<object>;
     /**
      * renderSearchForm
      * @override

@@ -2,13 +2,13 @@ import { Avatar, Card, Checkbox, List } from 'antd';
 import { CardProps } from 'antd/es/card';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { ListItemMetaProps, ListItemProps } from 'antd/es/list';
-import { TableRowSelection } from 'antd/es/table/interface';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { ReactElement, ReactNode, RefObject, createRef, forwardRef } from 'react';
 
 import { DownOutlined, RightOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import type { TableRowSelectionExt } from '@baifendian/adhere-ui-searchtable/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 
@@ -264,40 +264,40 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @description - 获取表格行选择对象
    * @return {TableRowSelection<object>}
    */
-  getRowSelection(): TableRowSelection<object> {
-    const filter = (selected: boolean, records: any[]): void => {
-      const rowKey = this.getRowKey();
-
-      if (selected) {
-        // add
-
-        // @ts-ignore
-        this.setState({
-          selectedRowKeys: [
-            // @ts-ignore
-            ...(this.state.selectedRowKeys || []),
-            ...records.map((r) => r[rowKey]),
-          ],
-          // @ts-ignore
-          selectedRows: [...(this.state.selectedRows || []), ...records],
-        });
-      } else {
-        // remove
-
-        // @ts-ignore
-        this.setState({
-          // @ts-ignore
-          selectedRows: (this.state.selectedRows || []).filter(
-            (row) => !records.find((r) => r[rowKey] === row[rowKey]),
-          ),
-
-          // @ts-ignore
-          selectedRowKeys: (this.state.selectedRowKeys || []).filter(
-            (key) => !records.find((r) => r[rowKey] === key),
-          ),
-        });
-      }
-    };
+  getRowSelection(): TableRowSelectionExt<object> {
+    // const filter = (selected: boolean, records: any[]): void => {
+    //   const rowKey = this.getRowKey();
+    //
+    //   if (selected) {
+    //     // add
+    //
+    //     // @ts-ignore
+    //     this.setState({
+    //       selectedRowKeys: [
+    //         // @ts-ignore
+    //         ...(this.state.selectedRowKeys || []),
+    //         ...records.map((r) => r[rowKey]),
+    //       ],
+    //       // @ts-ignore
+    //       selectedRows: [...(this.state.selectedRows || []), ...records],
+    //     });
+    //   } else {
+    //     // remove
+    //
+    //     // @ts-ignore
+    //     this.setState({
+    //       // @ts-ignore
+    //       selectedRows: (this.state.selectedRows || []).filter(
+    //         (row) => !records.find((r) => r[rowKey] === row[rowKey]),
+    //       ),
+    //
+    //       // @ts-ignore
+    //       selectedRowKeys: (this.state.selectedRowKeys || []).filter(
+    //         (key) => !records.find((r) => r[rowKey] === key),
+    //       ),
+    //     });
+    //   }
+    // };
 
     return {
       // @ts-ignore

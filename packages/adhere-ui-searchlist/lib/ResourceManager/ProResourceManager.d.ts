@@ -1,4 +1,3 @@
-import React from 'react';
 export declare const SearchAndPaginParamsMemo: any;
 /**
  * ProResourceManager
@@ -31,7 +30,7 @@ declare const ProResourceManager: {
                 startName?: undefined;
                 endName?: undefined;
             };
-            render: (value: any, record: any) => React.JSX.Element;
+            render: (value: any, record: any) => import("react").JSX.Element;
             align?: undefined;
             width?: undefined;
         } | {
@@ -49,7 +48,7 @@ declare const ProResourceManager: {
                 startName?: undefined;
                 endName?: undefined;
             };
-            render: (value: any) => React.JSX.Element;
+            render: (value: any) => import("react").JSX.Element;
         } | {
             title: string;
             dataIndex: string;
@@ -65,7 +64,7 @@ declare const ProResourceManager: {
                 startName?: undefined;
                 endName?: undefined;
             };
-            render: (value: any) => React.JSX.Element | "-";
+            render: (value: any) => import("react").JSX.Element | "-";
         } | {
             title: string;
             dataIndex: string;
@@ -81,11 +80,11 @@ declare const ProResourceManager: {
                 endName: string;
                 dictName?: undefined;
             };
-            render: (value: any) => React.JSX.Element;
+            render: (value: any) => import("react").JSX.Element;
         })[];
         renderGridViewCard({ record }: {
             record: any;
-        }): React.ReactNode;
+        }): import("react").ReactNode;
     };
     [x: string]: any;
     displayName: string;
