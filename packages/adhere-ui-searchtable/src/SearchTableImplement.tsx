@@ -632,17 +632,26 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @param {} result {code: data:}
    */
   afterFetchData(result: any) {
-    if (
+    if (this.isCanCheckedStrategySync()) {
+      this.syncCheckedStrategy(result[this.getFetchDataResultDataKey()][this.getDataKey()]);
+    }
+  }
+
+  /**
+   * isCanCheckedStrategySync
+   * @description 是否可以进行sync操作
+   * @return {boolean}
+   */
+  isCanCheckedStrategySync(): boolean {
+    return (
       this.isUseCheckedStrategy() &&
-      // this.getCheckedStrategy() === SearchTable.CHECKED_STRATEGY_SHOW_CHILD &&
       'defaultSelectedRowKeys' in this.props &&
       Array.isArray(this.props.defaultSelectedRowKeys) &&
       !!this.props.defaultSelectedRowKeys.length &&
+      !!this.state.selectedRowKeys.length &&
       JSON.stringify(sortBy(this.state.selectedRowKeys)) ===
         JSON.stringify(sortBy(this.props.defaultSelectedRowKeys))
-    ) {
-      this.syncCheckedStrategy(result[this.getFetchDataResultDataKey()][this.getDataKey()]);
-    }
+    );
   }
 
   /**
@@ -849,13 +858,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
      * @param {any[]} dataSource
      */
     function afterLoadDataWithSuccess(childrenData: any[], dataSource: any[]) {
-      const syncCondition =
-        _self.isUseCheckedStrategy() &&
-        'defaultSelectedRowKeys' in _self.props &&
-        Array.isArray(_self.props.defaultSelectedRowKeys) &&
-        !!_self.props.defaultSelectedRowKeys.length &&
-        JSON.stringify(sortBy(_self.state.selectedRowKeys)) ===
-          JSON.stringify(sortBy(_self.props.defaultSelectedRowKeys));
+      const isCanSync = _self.isCanCheckedStrategySync();
 
       _self.setState(
         (state: any) => {
@@ -863,8 +866,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
           state.loadDataSuccessKeys.push(key);
 
-          if (!syncCondition) {
-            console.log('syncCondition');
+          if (!isCanSync) {
             // 获取当前节点的选中状态
             const currentNodeChecked = state.selectedRowKeys.includes(record[rowKey]);
             // 如果是选中状态
@@ -882,8 +884,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
           return JSON.parse(JSON.stringify(state));
         },
         () => {
-          if (syncCondition) {
-            console.log('syncCheckedStrategy', dataSource);
+          if (isCanSync) {
             _self.syncCheckedStrategy(dataSource);
           }
         },

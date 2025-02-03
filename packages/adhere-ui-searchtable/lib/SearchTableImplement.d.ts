@@ -301,6 +301,12 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      */
     afterFetchData(result: any): void;
     /**
+     * isCanCheckedStrategySync
+     * @description 是否可以进行sync操作
+     * @return {boolean}
+     */
+    isCanCheckedStrategySync(): boolean;
+    /**
      * sync
      * @description 同步
      * @return Promise<any>
