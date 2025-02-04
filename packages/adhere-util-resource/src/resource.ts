@@ -1,4 +1,3 @@
-// import Util from '@baifendian/adhere-util';
 import Dict from '@baifendian/adhere-util-dict';
 
 import FormConfig from './dict/dict.form.config.js';
