@@ -1,20 +1,8 @@
 import type { ReactElement, ReactNode } from 'react';
 
 export interface IDict {
-  initStatic: () => {};
-  initRemote: () => {};
-}
-
-export interface DictObj {
-  handlers: any;
-  value: any;
-  init: InitFunc;
-  React: DictReactComponentObj;
-  useDict: (dictName: string) => StateData;
-}
-
-export interface InitFunc {
-  (dictArray: IDict[], config: IConfig): void;
+  initStatic: () => void;
+  initRemote: () => void;
 }
 
 export interface IConfig {
@@ -59,3 +47,27 @@ export interface UseDictOptions {
   functionArgs?: any[];
   isUseMemo?: boolean;
 }
+
+export type ModuleDictExpansion<T> = (handlerOptions: T) => T;
+
+export type ModuleDictExpansions<T> = ModuleDictExpansion<T>[];
+
+export type LabelValue = {
+  label: string;
+  value: string | number | symbol;
+};
+
+export interface HandlerTargetValue extends Function {
+  isUseMemo?: boolean;
+}
+
+export type HandlerTarget = Partial<{
+  [key: string]: HandlerTargetValue;
+}>;
+
+export type Target<T> = Partial<{
+  [key: string]: {
+    value: any;
+    refresh: () => T;
+  };
+}>;

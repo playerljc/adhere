@@ -95,9 +95,9 @@ const FunctionComponent: (
     }));
 
     const fetchData = () => {
-      Dict.handlers[key].isUseMemo = isUseMemo || false;
+      Dict.handlers[key]!.isUseMemo = isUseMemo || false;
 
-      const result = Dict.value[key].value(...(args || []));
+      const result = Dict.value[key]?.value(...(args || []));
 
       // 返回的Promise
       if (result.then) {
@@ -173,7 +173,7 @@ const PromiseComponent: (
     }, [firstLoading, renderNormalLoading, renderEmpty, isEmpty]);
 
     const fetchData = () =>
-      Dict.value[key].value
+      Dict.value[key]?.value
         .then((res) => {
           setData({
             data: res,
@@ -213,7 +213,7 @@ const PromiseComponent: (
 const NoPromiseComponent: (key: string) => FC<DictNoPromiseComponentProps> =
   (key: string) =>
   ({ children, isEmpty, renderEmpty }) => {
-    const data = Dict.value[key].value;
+    const data = Dict.value[key]?.value;
 
     if (data === null || data === undefined || isEmpty?.(data)) {
       if (renderEmpty) {
@@ -274,7 +274,7 @@ const ComponentMap = new Map<string, (key: string) => any>([
 ]);
 
 const Component: (key: string) => ForwardRefRenderFunction<any, any> = (key) => (props, ref) => {
-  const value = Dict.value[key].value;
+  const value = Dict.value[key]?.value;
 
   let Component;
 
@@ -285,7 +285,7 @@ const Component: (key: string) => ForwardRefRenderFunction<any, any> = (key) => 
   // isNotFunction
   else {
     // isNotPromise
-    if (!value.then) {
+    if (!value?.then) {
       Component = ComponentMap.get('NotPromise')?.(key);
     }
     // Promise
@@ -316,9 +316,9 @@ export function set(key: string) {
  * @return { data: any, isPending: boolean, isValidate: boolean, refresh:Function }
  */
 export const useDict = (dictName: string, _options?: UseDictOptions) => {
-  const value = Dict.value[dictName].value;
+  const value = Dict.value[dictName]?.value;
 
-  const refresh = Dict.value[dictName].refresh;
+  const refresh = Dict.value[dictName]?.refresh as UseDictState['refresh'];
 
   const options = _options ?? {};
 
@@ -332,7 +332,7 @@ export const useDict = (dictName: string, _options?: UseDictOptions) => {
   const getData = useCallback(() => {
     // isFunction
     if (Util.isFunction(value)) {
-      Dict.handlers[dictName].isUseMemo = !!options?.isUseMemo;
+      Dict.handlers[dictName]!.isUseMemo = !!options?.isUseMemo;
 
       const result = value(options?.functionArgs ?? []);
 

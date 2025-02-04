@@ -1,9 +1,18 @@
+import Util from '@baifendian/adhere-util';
+
 import DictReactComponent, { set, useDict } from './react';
-import type { DictObj, IConfig } from './types';
+import type {
+  HandlerTarget,
+  IConfig,
+  IDict,
+  LabelValue,
+  ModuleDictExpansions,
+  Target,
+} from './types';
 
-const target = {};
+const target: Target<any> = {};
 
-const handlerTarget = {};
+const handlerTarget: HandlerTarget = {};
 
 const funParams = new Map();
 
@@ -39,7 +48,6 @@ function diffParams(preArgArray: any[], curArgArray: any[]): boolean {
  * CreateFunProxy
  * @param {Function} fun
  * @param {String} property
- * @return {Proxy}
  */
 function CreateFunProxy(fun: Function, property: string) {
   return new Proxy(fun, {
@@ -76,16 +84,15 @@ function CreateFunProxy(fun: Function, property: string) {
 /**
  * initValue
  * @param p
- * @param params
  */
-function initValue(p, params) {
-  const handler = Dict.handlers[p];
+function initValue(p: string) {
+  const handler = Dict.handlers[p]!;
 
   let value: any = null;
 
   // 返回值 - 一般都不是函数
   try {
-    value = handler(params);
+    value = handler();
   } catch (error) {
     throw new Error(`${p} dict does not exist`);
   }
@@ -95,57 +102,196 @@ function initValue(p, params) {
     // 函数单独的缓存开关
     if ('isUseMemo' in handler) {
       if (handler.isUseMemo) {
-        // console.log('handler.isUseMemo', p);
         value = CreateFunProxy(value, p);
       }
     } else {
       // 总体的缓存开关
       if ('isUseMemo' in config) {
         if (config.isUseMemo) {
-          // console.log('config.isUseMemo', p);
           value = CreateFunProxy(value, p);
         }
       }
     }
   }
 
-  // console.log('noMemo', p);
   return value;
 }
 
-// /**
-//  * isLabelValueBeanArray
-//  * @description 是否是labelValueBean的数组
-//  * @param originValue {any[]}
-//  * @return {boolean}
-//  */
-// function isLabelValueBeanArray(originValue) {
-//   if (Array.isArray(originValue)) {
-//     return originValue.every((t) => typeof t === 'object' && 'label' in t && 'value' in t);
-//   }
-//
-//   return false;
-// }
+/**
+ * genDictFullName
+ * @param {string} name
+ * @return {string}
+ */
+function genDictFullName(name: string): string {
+  return `${Util.uuid()}_${name}`;
+}
 
-// /**
-//  * genLabelValueBeanMap
-//  * @description 将labelValueBean数组转换成map
-//  * @param originValue {{label: string; value: any}[]}
-//  * @return {Map<string,any>}
-//  */
-// function genLabelValueBeanMap(originValue) {
-//   return originValue.reduce((map, { label, value }) => {
-//     map.set(value, label);
-//     return map;
-//   }, new Map());
-// }
+/**
+ * genModuleDict
+ * @param handlerOptions
+ * @param {boolean} isUseMemo
+ */
+export function genModuleDict<
+  T extends {
+    [key: string]: {
+      isStatic?: boolean;
+      handler: H;
+    };
+  },
+  H extends () => ReturnType<H>,
+>(handlerOptions: T, isUseMemo?: boolean) {
+  const moduleDictExpansions: ModuleDictExpansions<Partial<T>> = [
+    // 如果是静态数据，对labelValue数据进行扩展，扩展出labelValue的Map形式，外部的handler不能使用解构出来的values和names
+    (_handlerOptions) =>
+      Object.keys(_handlerOptions).reduce((hos, name) => {
+        const entry = _handlerOptions[name] as {
+          isStatic?: boolean;
+          handler: H;
+        };
 
-const Dict: DictObj = {
+        // 如果是静态的
+        if (!!entry?.isStatic) {
+          const value = entry.handler();
+
+          // 是否是labelValue的数组
+          if (isLabelValueBeanArray(value)) {
+            const labelValueMapName = `${name}Map`;
+
+            hos[labelValueMapName] = {
+              isStatic: true,
+              handler: () => genLabelValueBeanMap(value as LabelValue[]),
+            };
+          }
+        }
+
+        return hos;
+      }, {}),
+  ];
+
+  // 扩展字典
+  const targetHandlerOptions: T = moduleDictExpansions.reduce<T>(
+    (_handlerOptions, expansion) => {
+      return {
+        ..._handlerOptions,
+        ...expansion(_handlerOptions),
+      };
+    },
+    {
+      ...handlerOptions,
+    },
+  );
+
+  // 生成
+  const { names, values, staticDicts, remoteDicts } = Object.keys(targetHandlerOptions).reduce<{
+    names: { [key: string]: ReturnType<typeof genDictFullName> };
+    values: Partial<{
+      [K in keyof T]: { value: ReturnType<T[K]['handler']> };
+    }>;
+    staticDicts: Function[];
+    remoteDicts: Function[];
+  }>(
+    ({ names, values, staticDicts, remoteDicts }, name) => {
+      const entry = targetHandlerOptions[name];
+
+      // 生成字典实际的名称
+      const dictName = genDictFullName(name);
+
+      // 字典名称访问器
+      names[name] = dictName;
+
+      // 创建字典
+      const handler = () => {
+        Dict.handlers[dictName] = targetHandlerOptions[name].handler;
+      };
+      if (!!entry?.isStatic) {
+        staticDicts.push(handler);
+      } else {
+        remoteDicts.push(handler);
+      }
+
+      // 字典值的访问器
+      Object.defineProperty(values, name, {
+        get() {
+          return Dict.value[dictName];
+        },
+      });
+
+      return {
+        names,
+        values,
+        staticDicts,
+        remoteDicts,
+      };
+    },
+    {
+      names: {},
+      values: {},
+      staticDicts: [],
+      remoteDicts: [],
+    },
+  );
+
+  // 初始化字典
+  Dict.init(
+    [
+      {
+        initStatic: () => {
+          staticDicts.forEach((handler) => handler());
+        },
+        initRemote: () => {
+          remoteDicts.forEach((handler) => handler());
+        },
+      },
+    ],
+    {
+      isUseMemo: !!isUseMemo,
+    },
+  );
+
+  return {
+    names,
+    values,
+  };
+}
+
+/**
+ * isLabelValueBeanArray
+ * @description 是否是labelValueBean的数组
+ * @param originValue any
+ * @return {boolean}
+ */
+function isLabelValueBeanArray(originValue: any): boolean {
+  if (Array.isArray(originValue)) {
+    return (originValue as Partial<LabelValue>[]).every(
+      (t) =>
+        typeof t === 'object' &&
+        'label' in t &&
+        'value' in t &&
+        ['string'].includes(typeof t.label) &&
+        ['string', 'number', 'symbol'].includes(typeof t.value),
+    );
+  }
+
+  return false;
+}
+
+/**
+ * genLabelValueBeanMap
+ * @description 将labelValueBean数组转换成map
+ */
+function genLabelValueBeanMap<T extends LabelValue>(originValue: T[]) {
+  return originValue.reduce<Map<T['value'], T['label']>>((map, { label, value }) => {
+    map.set(value, label);
+    return map;
+  }, new Map());
+}
+
+const Dict = {
   /**
    * handler - 字典的定义对象
    */
-  handlers: new Proxy(handlerTarget, {
-    set(target: Object, property, value, receiver) {
+  handlers: new Proxy<HandlerTarget>(handlerTarget, {
+    set(target, property, value, receiver) {
       const result = Reflect.set(target, property, value, receiver);
 
       // 原始值
@@ -169,12 +315,12 @@ const Dict: DictObj = {
    * value - 字典的使用对象
    */
   value: new Proxy(target, {
-    get(target: Object, property: string, receiver) {
+    get(target, property: string, receiver) {
       // 如果p属性没在t中
       if (!(property in target)) {
         receiver[property] = {
           // 给例如SystemXXX赋值，property是SystemXXX
-          value: initValue(property, null),
+          value: initValue(property),
           refresh() {
             // receiver[property].value = initValue(property, params);
             delete receiver[property];
@@ -198,10 +344,10 @@ const Dict: DictObj = {
    * @param {IConfig} _config 字典的配置
    * @return {void}
    */
-  init: (dictArray = [], _config: IConfig = defaultConfig) => {
+  init: (dictArray: IDict[] = [], _config: IConfig = defaultConfig): void => {
     config = _config;
 
-    (dictArray || []).forEach((dict) => {
+    (dictArray ?? []).forEach((dict) => {
       if (dict) {
         dict?.initStatic?.();
         dict?.initRemote?.();
@@ -216,6 +362,10 @@ const Dict: DictObj = {
    * useDict - 字典的hook
    */
   useDict,
+  /**
+   * genModuleDict - 字典生成器
+   */
+  genModuleDict,
 };
 
 export default Dict;
