@@ -121,7 +121,7 @@ export default function <P, S>(SuperClass) {
           render: (value, record) => (
             <Space size={25}>
               <span className={`${selectorPrefix}-resource-table-file-column-icon`}>
-                {Dict.value.AdhereSearchListResourceManagerIconMap.value.get(
+                {Dict.value.AdhereSearchListResourceManagerIconMap?.value.get(
                   record.type || 'other',
                 )}
               </span>
@@ -144,7 +144,7 @@ export default function <P, S>(SuperClass) {
           },
           render: (value) => (
             <span>
-              {Dict.value.AdhereSearchListResourceManagerLabelValueMap.value.get(value || 'other')}
+              {Dict.value.AdhereSearchListResourceManagerLabelValueMap?.value.get(value || 'other')}
             </span>
           ),
         },
@@ -205,7 +205,7 @@ export default function <P, S>(SuperClass) {
               </div>
             )}
             <div className={`${selectorPrefix}-grid-view-item-icon`}>
-              {Dict.value.AdhereSearchListResourceManagerIconMap.value.get(record.type || 'other')}
+              {Dict.value.AdhereSearchListResourceManagerIconMap?.value.get(record.type || 'other')}
             </div>
             <div className={`${selectorPrefix}-grid-view-item-name`} title={record.name}>
               {record.name}
