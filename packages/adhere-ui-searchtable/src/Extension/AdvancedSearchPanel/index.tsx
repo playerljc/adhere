@@ -76,9 +76,12 @@ const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
                 noMatch={() => renderTitleLabel?.()}
               >
                 {() => (
-                  <Space.Group direction="horizontal" size={2}>
-                    <FilterOutlined />
-                    <strong>{Intl.v('高级搜索')}</strong>
+                  <Space.Group direction="horizontal" size={5}>
+                    <FilterOutlined className={`${_selectorPrefix}-title-icon`} />
+
+                    <strong className={`${_selectorPrefix}-title-text`}>
+                      {Intl.v('高级搜索')}
+                    </strong>
                   </Space.Group>
                 )}
               </ConditionalRender>
@@ -93,16 +96,22 @@ const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
                   <ConditionalRender
                     conditional={collapse}
                     noMatch={() => (
-                      <Space.Group direction="horizontal" size={2}>
-                        <RightCircleOutlined />
-                        <strong>{Intl.v('展开')}</strong>
+                      <Space.Group direction="horizontal" size={5}>
+                        <RightCircleOutlined className={`${_selectorPrefix}-collapse-icon`} />
+
+                        <strong className={`${_selectorPrefix}-collapse-text`}>
+                          {Intl.v('展开')}
+                        </strong>
                       </Space.Group>
                     )}
                   >
                     {() => (
-                      <Space.Group direction="horizontal" size={2}>
-                        <LeftCircleOutlined />
-                        <strong>{Intl.v('收起')}</strong>
+                      <Space.Group direction="horizontal" size={5}>
+                        <LeftCircleOutlined className={`${_selectorPrefix}-collapse-icon`} />
+
+                        <strong className={`${_selectorPrefix}-collapse-text`}>
+                          {Intl.v('收起')}
+                        </strong>
                       </Space.Group>
                     )}
                   </ConditionalRender>
