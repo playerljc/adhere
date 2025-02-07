@@ -46,6 +46,12 @@ const { names, values } = genModuleDict({
         b: 2,
       }),
   },
+  dict6: {
+    isStatic: true,
+    handler: function ({ names, values }) {
+      return [...[{ label: '1', value: 1 }], ...values.dict2.value];
+    },
+  },
 });
 
 export { names, values };

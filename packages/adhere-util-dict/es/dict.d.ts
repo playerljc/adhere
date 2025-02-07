@@ -1,18 +1,20 @@
 import type { IConfig, IDict } from './types';
+type TV<H> = {
+    isStatic?: boolean;
+    handler: H;
+    isImmediateAccess?: boolean;
+};
 /**
  * genModuleDict
  * @param handlerOptions
  * @param {boolean} isUseMemo
  */
 export declare function genModuleDict<T extends {
-    [key: string]: {
-        isStatic?: boolean;
-        handler: H;
-    };
-}, H extends () => ReturnType<H>>(handlerOptions: T, isUseMemo?: boolean): {
-    names: {
+    [key: string]: TV<H>;
+}, H extends (...args: any[]) => ReturnType<H>>(handlerOptions: T, isUseMemo?: boolean): {
+    names: Partial<{
         [key: string]: string;
-    };
+    }>;
     values: Partial<{ [K in keyof T]: {
         value: ReturnType<T[K]["handler"]>;
     }; }>;

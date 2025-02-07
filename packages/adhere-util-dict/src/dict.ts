@@ -1,14 +1,7 @@
 import Util from '@baifendian/adhere-util';
 
 import DictReactComponent, { set, useDict } from './react';
-import type {
-  HandlerTarget,
-  IConfig,
-  IDict,
-  LabelValue,
-  ModuleDictExpansions,
-  Target,
-} from './types';
+import type { HandlerTarget, IConfig, IDict, LabelValue, Target } from './types';
 
 const target: Target<any> = {};
 
@@ -91,11 +84,15 @@ function initValue(p: string) {
   let value: any = null;
 
   // 返回值 - 一般都不是函数
-  try {
-    value = handler();
-  } catch (error) {
+  if (!handler) {
     throw new Error(`${p} dict does not exist`);
   }
+
+  // try {
+  value = handler();
+  // } catch (error) {
+  //   throw new Error(`${p} dict does not exist`);
+  // }
 
   // 如果value是函数则默认是缓存的
   if (value instanceof Function) {
@@ -126,6 +123,29 @@ function genDictFullName(name: string): string {
   return `${Util.uuid()}_${name}`;
 }
 
+type NS = Partial<{ [key: string]: ReturnType<typeof genDictFullName> }>;
+
+type VS<
+  T extends Record<
+    string,
+    {
+      handler: H;
+    }
+  >,
+  H extends (...args: any[]) => ReturnType<H>,
+> = Partial<{
+  [K in keyof T]: { value: ReturnType<T[K]['handler']> };
+}>;
+
+type TV<H> = {
+  // 是否是静态字典
+  isStatic?: boolean;
+  // 字典代码的句柄函数
+  handler: H;
+  // 是否立即访问(仅对值不是函数类型的起作用)
+  isImmediateAccess?: boolean;
+};
+
 /**
  * genModuleDict
  * @param handlerOptions
@@ -133,64 +153,54 @@ function genDictFullName(name: string): string {
  */
 export function genModuleDict<
   T extends {
-    [key: string]: {
-      isStatic?: boolean;
-      handler: H;
-    };
+    [key: string]: TV<H>;
   },
-  H extends () => ReturnType<H>,
+  H extends (...args: any[]) => ReturnType<H>,
 >(handlerOptions: T, isUseMemo?: boolean) {
-  const moduleDictExpansions: ModuleDictExpansions<Partial<T>> = [
+  const moduleDictExpansions: Array<
+    (args: { entry: TV<H>; name: string; names: NS; values: VS<T, H> }) => void
+  > = [
     // 如果是静态数据，对labelValue数据进行扩展，扩展出labelValue的Map形式，外部的handler不能使用解构出来的values和names
-    (_handlerOptions) =>
-      Object.keys(_handlerOptions).reduce((hos, name) => {
-        const entry = _handlerOptions[name] as {
-          isStatic?: boolean;
-          handler: H;
-        };
+    ({ name, entry, names, values }) => {
+      // 如果是静态的
+      if (!!entry?.isStatic) {
+        const value = entry.handler({ names, values });
 
-        // 如果是静态的
-        if (!!entry?.isStatic) {
-          const value = entry.handler();
+        // 是否是labelValue的数组
+        if (isLabelValueBeanArray(value)) {
+          const labelValueMapName = `${name}Map`;
+          const dictName = genDictFullName(labelValueMapName);
+          names[labelValueMapName] = dictName;
 
-          // 是否是labelValue的数组
-          if (isLabelValueBeanArray(value)) {
-            const labelValueMapName = `${name}Map`;
+          // 字典值的访问器
+          Object.defineProperty(values, labelValueMapName, {
+            get() {
+              return Dict.value[dictName];
+            },
+          });
 
-            hos[labelValueMapName] = {
-              isStatic: true,
-              handler: () => genLabelValueBeanMap(value as LabelValue[]),
-            };
+          // 创建字典
+          Dict.handlers[dictName] = () =>
+            genLabelValueBeanMap(entry.handler({ names, values }) as LabelValue[]);
+
+          // 如果是立即访问
+          if (!!entry?.isImmediateAccess) {
+            values[labelValueMapName]?.value;
           }
         }
-
-        return hos;
-      }, {}),
+      }
+    },
   ];
 
   // 扩展字典
-  const targetHandlerOptions: T = moduleDictExpansions.reduce<T>(
-    (_handlerOptions, expansion) => {
-      return {
-        ..._handlerOptions,
-        ...expansion(_handlerOptions),
-      };
-    },
-    {
-      ...handlerOptions,
-    },
-  );
+  const targetHandlerOptions: T = handlerOptions;
 
   // 生成
-  const { names, values, staticDicts, remoteDicts } = Object.keys(targetHandlerOptions).reduce<{
-    names: { [key: string]: ReturnType<typeof genDictFullName> };
-    values: Partial<{
-      [K in keyof T]: { value: ReturnType<T[K]['handler']> };
-    }>;
-    staticDicts: Function[];
-    remoteDicts: Function[];
+  const { names, values } = Object.keys(targetHandlerOptions).reduce<{
+    names: NS;
+    values: VS<T, H>;
   }>(
-    ({ names, values, staticDicts, remoteDicts }, name) => {
+    ({ names, values }, name) => {
       const entry = targetHandlerOptions[name];
 
       // 生成字典实际的名称
@@ -199,16 +209,6 @@ export function genModuleDict<
       // 字典名称访问器
       names[name] = dictName;
 
-      // 创建字典
-      const handler = () => {
-        Dict.handlers[dictName] = targetHandlerOptions[name].handler;
-      };
-      if (!!entry?.isStatic) {
-        staticDicts.push(handler);
-      } else {
-        remoteDicts.push(handler);
-      }
-
       // 字典值的访问器
       Object.defineProperty(values, name, {
         get() {
@@ -216,18 +216,29 @@ export function genModuleDict<
         },
       });
 
+      // 创建字典
+      Dict.handlers[dictName] = () => targetHandlerOptions[name].handler({ names, values });
+
+      // 对静态字典进行扩展
+      if (!!entry?.isStatic) {
+        moduleDictExpansions.forEach((moduleDictExpansion) =>
+          moduleDictExpansion({ name, entry, names, values }),
+        );
+      }
+
+      // 如果是立即访问
+      if (!!entry?.isImmediateAccess) {
+        values[name]?.value;
+      }
+
       return {
         names,
         values,
-        staticDicts,
-        remoteDicts,
       };
     },
     {
       names: {},
       values: {},
-      staticDicts: [],
-      remoteDicts: [],
     },
   );
 
@@ -235,12 +246,8 @@ export function genModuleDict<
   Dict.init(
     [
       {
-        initStatic: () => {
-          staticDicts.forEach((handler) => handler());
-        },
-        initRemote: () => {
-          remoteDicts.forEach((handler) => handler());
-        },
+        initStatic: () => {},
+        initRemote: () => {},
       },
     ],
     {
