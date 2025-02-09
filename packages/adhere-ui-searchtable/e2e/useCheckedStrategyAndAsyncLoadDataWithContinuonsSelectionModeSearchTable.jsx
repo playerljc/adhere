@@ -1,13 +1,13 @@
 import faker from 'faker';
 import React from 'react';
 
-import { DateDisplay, Resource } from '@baifendian/adhere';
+import { Resource } from '@baifendian/adhere';
 import Util from '@baifendian/adhere-util';
 
 import SearchTable from '../src/index';
 import './serviceRegister';
 
-const { ProSearchRowDragSortStateTable, Table, SearchTableStateImplementFactory, DragSortColumn } =
+const { ProSearchRowDragSortStateTable, SearchTableStateImplementFactory, DragSortColumn } =
   SearchTable;
 
 const serviceName = 'user';

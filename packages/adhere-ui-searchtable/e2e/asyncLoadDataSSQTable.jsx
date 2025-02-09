@@ -1,15 +1,11 @@
-import faker from 'faker';
 import React from 'react';
 
-import { Resource } from '@baifendian/adhere';
 import Mock from '@baifendian/adhere-mock';
-import city from '@baifendian/adhere-mock/src/City';
-import Util from '@baifendian/adhere-util';
 
 import SearchTable from '../src/index';
 import './serviceRegister';
 
-const { Province, City, County } = Mock;
+const { City, County } = Mock;
 
 const { ProSearchRowDragSortStateTable, SearchTableStateImplementFactory, DragSortColumn } =
   SearchTable;

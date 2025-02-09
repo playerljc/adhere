@@ -1,14 +1,19 @@
 import faker from 'faker';
 import React from 'react';
 
-import { DateDisplay, Resource } from '@baifendian/adhere';
+import { Resource } from '@baifendian/adhere';
 import Util from '@baifendian/adhere-util';
 
 import SearchTable from '../src/index';
 import './serviceRegister';
 
-const { ProSearchRowDragSortStateTable, SearchTableStateImplementFactory, DragSortColumn } =
-  SearchTable;
+const {
+  ProSearchRowDragSortStateTable,
+  ProSearchRowDragSortTable,
+  SearchTableStateImplementFactory,
+  SearchTableImplementFactory,
+  DragSortColumn,
+} = SearchTable;
 
 const serviceName = 'user';
 
@@ -17,7 +22,7 @@ const serviceName = 'user';
  * @class RowDragSort
  * @classdesc RowDragSort
  */
-class RowDragSort extends ProSearchRowDragSortStateTable {
+class RowDragSort extends ProSearchRowDragSortTable {
   getComponentId() {
     return 'RowDragSort';
   }
@@ -191,11 +196,15 @@ requireComponent.keys().forEach((fileName) => {
   models.push(model.default());
 });
 
-const Wrap = SearchTableStateImplementFactory({
+// const Wrap = SearchTableStateImplementFactory({
+//   serviceNames: [serviceName],
+//   middleWares: [],
+//   reducer: null,
+//   models,
+// })(RowDragSort);
+
+const Wrap = SearchTableImplementFactory({
   serviceNames: [serviceName],
-  middleWares: [],
-  reducer: null,
-  models,
 })(RowDragSort);
 
 export default Wrap;

@@ -2045,6 +2045,356 @@ abstract class SearchTable<
   }
 
   /**
+   * isRootRecordById
+   * @description 是否是root数据
+   */
+  isRootRecordById(id: string): boolean {
+    const dataSource = this.getDataSource();
+
+    const rowKey = this.getRowKey();
+
+    return dataSource.map((record) => record[rowKey]).includes(id);
+  }
+
+  /**
+   * getRecordById
+   * @description 获取record
+   * @param {string} id
+   */
+  getRecordById(id: string) {
+    return Util.findNodeByKey(this.getDataSource() as any[], id, {
+      keyAttr: this.getRowKey(),
+      childrenKey: this.getChildrenColumnName(),
+    });
+  }
+
+  /**
+   * getParentRecordById
+   * @description 根据id获取父record
+   * @param {string} id
+   */
+  getParentRecordById(id: string) {
+    return Util.findParentNodeByKey(this.getDataSource() as any[], id, {
+      keyAttr: this.getRowKey(),
+      childrenKey: this.getChildrenColumnName(),
+    });
+  }
+
+  /**
+   * getPidById
+   * @description 获取pid
+   * @param {string} id
+   */
+  getPidById(id: string): string | undefined {
+    return this.getParentRecordById(id)?.[this.getRowKey()];
+  }
+
+  /**
+   * appendData
+   */
+  appendData<T extends object>(data: T | T[]) {
+    return new Promise<void>((resolve) => {
+      this.setData((preDataSource) => {
+        if (Array.isArray(data)) {
+          return cloneDeep([...preDataSource, ...data]);
+        }
+
+        return cloneDeep([...preDataSource, data]);
+      }).then(() => {
+        resolve();
+      });
+    });
+  }
+  appendDataById<T extends object>(pId: string, data: T | T[]) {
+    const rowKey = this.getRowKey();
+
+    return new Promise<void>((resolve) => {
+      this.setData((preData) => {
+        const targetRecord = Util.findNodeByKey(preData as any[], pId, {
+          keyAttr: rowKey,
+          childrenKey: this.getChildrenColumnName(),
+        });
+
+        const childrenColumnName = this.getChildrenColumnName();
+
+        if (targetRecord) {
+          if (!targetRecord[childrenColumnName]) {
+            targetRecord[childrenColumnName] = [];
+          }
+
+          if (Array.isArray(data)) {
+            targetRecord[childrenColumnName] = [...targetRecord[childrenColumnName], ...data];
+          } else {
+            targetRecord[childrenColumnName] = [...targetRecord[childrenColumnName], data];
+          }
+
+          return cloneDeep(preData);
+        }
+
+        return preData;
+      }).then(() => {
+        resolve();
+      });
+    });
+  }
+
+  /**
+   * prependData
+   * @param data
+   */
+  prependData<T extends object>(data: T | T[]) {
+    return new Promise<void>((resolve) => {
+      this.setData((preDataSource) => {
+        if (Array.isArray(data)) {
+          return cloneDeep([...data, ...preDataSource]);
+        }
+
+        return cloneDeep([data, ...preDataSource]);
+      }).then(() => {
+        resolve();
+      });
+    });
+  }
+  prependDataById<T extends object>(pId: string, data: T | T[]) {
+    const rowKey = this.getRowKey();
+
+    return new Promise<void>((resolve) => {
+      this.setData((preData) => {
+        const targetRecord = Util.findNodeByKey(preData as any[], pId, {
+          keyAttr: rowKey,
+          childrenKey: this.getChildrenColumnName(),
+        });
+
+        const childrenColumnName = this.getChildrenColumnName();
+
+        if (targetRecord) {
+          if (!targetRecord[childrenColumnName]) {
+            targetRecord[childrenColumnName] = [];
+          }
+
+          if (Array.isArray(data)) {
+            targetRecord[childrenColumnName] = [...data, ...targetRecord[childrenColumnName]];
+          } else {
+            targetRecord[childrenColumnName] = [data, ...targetRecord[childrenColumnName]];
+          }
+
+          return cloneDeep(preData);
+        }
+
+        return preData;
+      }).then(() => {
+        resolve();
+      });
+    });
+  }
+
+  /**
+   * insertData
+   * @param id
+   * @param data
+   */
+  insertData<T extends object>(id: string, data: T | T[]) {
+    const rowKey = this.getRowKey();
+
+    return new Promise<void>((resolve) => {
+      this.setData((preDataSource) => {
+        const index = preDataSource.findIndex((record) => record[rowKey] === id);
+
+        if (Array.isArray(data)) {
+          preDataSource.splice(index, 0, ...data);
+        } else {
+          preDataSource.splice(index, 0, data);
+        }
+
+        return cloneDeep(preDataSource);
+      }).then(() => {
+        resolve();
+      });
+    });
+  }
+  insertDataById<T extends object>(pId: string, id: string, data: T | T[]) {
+    const rowKey = this.getRowKey();
+
+    return new Promise<void>((resolve) => {
+      this.setData((preData) => {
+        const targetRecord = Util.findNodeByKey(preData as any[], pId, {
+          keyAttr: rowKey,
+          childrenKey: this.getChildrenColumnName(),
+        });
+
+        const childrenColumnName = this.getChildrenColumnName();
+
+        if (targetRecord) {
+          if (!targetRecord[childrenColumnName]) {
+            targetRecord[childrenColumnName] = [];
+          }
+
+          const index = targetRecord[childrenColumnName].findIndex(
+            (record) => record[rowKey] === id,
+          );
+
+          if (Array.isArray(data)) {
+            targetRecord[childrenColumnName].splice(index, 0, ...data);
+          } else {
+            targetRecord[childrenColumnName].splice(index, 0, data);
+          }
+
+          return cloneDeep(preData);
+        }
+
+        return preData;
+      }).then(() => {
+        resolve();
+      });
+    });
+  }
+
+  /**
+   * replaceData
+   */
+  replaceData<T extends object>(id: string, data: T | T[]) {
+    const rowKey = this.getRowKey();
+
+    return new Promise<void>((resolve) => {
+      this.setData((preDataSource) => {
+        const index = preDataSource.findIndex((record) => record[rowKey] === id);
+
+        if (Array.isArray(data)) {
+          preDataSource.splice(index, 1, ...data);
+        } else {
+          preDataSource.splice(index, 1, data);
+        }
+
+        return cloneDeep(preDataSource);
+      }).then(() => {
+        resolve();
+      });
+    });
+  }
+  replaceDataById<T extends object>(pId: string, id: string, data: T | T[]) {
+    const rowKey = this.getRowKey();
+
+    return new Promise<void>((resolve) => {
+      this.setData((preData) => {
+        const targetRecord = Util.findNodeByKey(preData as any[], pId, {
+          keyAttr: rowKey,
+          childrenKey: this.getChildrenColumnName(),
+        });
+
+        const childrenColumnName = this.getChildrenColumnName();
+
+        if (targetRecord) {
+          if (!targetRecord[childrenColumnName]) {
+            targetRecord[childrenColumnName] = [];
+          }
+
+          const index = targetRecord[childrenColumnName].findIndex(
+            (record) => record[rowKey] === id,
+          );
+
+          if (Array.isArray(data)) {
+            targetRecord[childrenColumnName].splice(index, 1, ...data);
+          } else {
+            targetRecord[childrenColumnName].splice(index, 1, data);
+          }
+
+          return cloneDeep(preData);
+        }
+
+        return preData;
+      }).then(() => {
+        resolve();
+      });
+    });
+  }
+
+  /**
+   * removeData
+   * @param id
+   */
+  removeData(id: string) {
+    return new Promise<void>((resolve) => {
+      const rowKey = this.getRowKey();
+
+      const childrenColumnName = this.getChildrenColumnName();
+
+      this.setData((preData) => {
+        function loop(dataSource: any[]) {
+          const index = dataSource.findIndex((record) => record[rowKey] === id);
+
+          if (index! == -1) {
+            dataSource.splice(index, 1);
+          } else {
+            loop(dataSource[childrenColumnName] ?? []);
+          }
+        }
+
+        loop(preData);
+
+        return cloneDeep(preData);
+      }).then(() => {
+        resolve();
+      });
+    });
+  }
+  removeChildrenData(pId: string) {
+    const rowKey = this.getRowKey();
+
+    return new Promise<void>((resolve) => {
+      this.setData((preData) => {
+        const targetRecord = Util.findNodeByKey(preData as any[], pId, {
+          keyAttr: rowKey,
+          childrenKey: this.getChildrenColumnName(),
+        });
+
+        const childrenColumnName = this.getChildrenColumnName();
+
+        if (targetRecord) {
+          if (targetRecord[childrenColumnName]) {
+            delete targetRecord[childrenColumnName];
+
+            return cloneDeep(preData);
+          }
+
+          return preData;
+        }
+
+        return preData;
+      }).then(() => {
+        resolve();
+      });
+    });
+  }
+  clearChildrenData(pId: string) {
+    const rowKey = this.getRowKey();
+
+    return new Promise<void>((resolve) => {
+      this.setData((preData) => {
+        const targetRecord = Util.findNodeByKey(preData as any[], pId, {
+          keyAttr: rowKey,
+          childrenKey: this.getChildrenColumnName(),
+        });
+
+        const childrenColumnName = this.getChildrenColumnName();
+
+        if (targetRecord) {
+          if (targetRecord[childrenColumnName]) {
+            targetRecord[childrenColumnName] = [];
+
+            return cloneDeep(preData);
+          }
+
+          return preData;
+        }
+
+        return preData;
+      }).then(() => {
+        resolve();
+      });
+    });
+  }
+
+  /**
    * getSelectedRowKeys
    * @description 获取selectedRowKeys
    * @return {any[]}

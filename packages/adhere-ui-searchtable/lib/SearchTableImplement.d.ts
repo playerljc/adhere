@@ -379,7 +379,7 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      * @description 在其中处理Tree数据的异步加载操作使用loadData方法
      * @param params
      */
-    onExpand(...params: any[]): void;
+    onExpand(...params: any[]): void | Promise<void>;
     /**
      * renderLoadingIcon
      * @description 渲染loading图标
@@ -432,6 +432,12 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
         onExpand: any;
         record: any;
     }): ReactElement<any, string | React.JSXElementConstructor<any>> | null;
+    /**
+     * reloadData
+     * @description 重新加载节点的数据
+     * @param {string} id 节点的id
+     */
+    reloadData(id: string): Promise<void>;
 }
 /**
  * SearchTableImplementFactory

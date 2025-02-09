@@ -1,8 +1,6 @@
 import lodashClone from 'lodash.clone';
 import lodashCloneDeep from 'lodash.clonedeep';
 
-import Util from '@baifendian/adhere-util';
-
 /**
  * findRecord
  * @description 在dataResource中查找rowKey是id的record

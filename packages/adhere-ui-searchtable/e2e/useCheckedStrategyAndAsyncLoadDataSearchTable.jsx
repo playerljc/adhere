@@ -1,7 +1,7 @@
 import faker from 'faker';
 import React from 'react';
 
-import { DateDisplay, Resource } from '@baifendian/adhere';
+import { Resource } from '@baifendian/adhere';
 import Util from '@baifendian/adhere-util';
 
 import SearchTable from '../src/index';

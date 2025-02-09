@@ -6,7 +6,7 @@ import SearchTable from '../src/index';
 import { fetchSSQData } from './mock';
 import './serviceRegister';
 
-const { City, County } = Mock;
+const { County } = Mock;
 const { ProSearchRowDragSortStateTable, Table, SearchTableStateImplementFactory, DragSortColumn } =
   SearchTable;
 

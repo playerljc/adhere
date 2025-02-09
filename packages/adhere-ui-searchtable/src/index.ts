@@ -46,6 +46,7 @@ import SearchTableImplementFactory, { SearchTableImplement } from './SearchTable
 import SearchTableStateImplementFactory, {
   SearchTableStateImplement,
 } from './SearchTableStateImplement';
+import { cloneDeep } from './Util';
 
 export default {
   Search,
@@ -97,4 +98,5 @@ export default {
   EditableRowControl,
   EditableTableControl,
   SearchAndPaginParams,
+  cloneDeep,
 };

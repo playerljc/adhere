@@ -544,6 +544,59 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     isUseTreeData(): boolean;
     /**
+     * isRootRecordById
+     * @description 是否是root数据
+     */
+    isRootRecordById(id: string): boolean;
+    /**
+     * getRecordById
+     * @description 获取record
+     * @param {string} id
+     */
+    getRecordById(id: string): import("@baifendian/adhere-util/es/types").IAntdTreeNode | import("@baifendian/adhere-util/es/types").IAntdTreeSelectNode | null;
+    /**
+     * getParentRecordById
+     * @description 根据id获取父record
+     * @param {string} id
+     */
+    getParentRecordById(id: string): import("@baifendian/adhere-util/es/types").IAntdTreeNode | import("@baifendian/adhere-util/es/types").IAntdTreeSelectNode | null | undefined;
+    /**
+     * getPidById
+     * @description 获取pid
+     * @param {string} id
+     */
+    getPidById(id: string): string | undefined;
+    /**
+     * appendData
+     */
+    appendData<T extends object>(data: T | T[]): Promise<void>;
+    appendDataById<T extends object>(pId: string, data: T | T[]): Promise<void>;
+    /**
+     * prependData
+     * @param data
+     */
+    prependData<T extends object>(data: T | T[]): Promise<void>;
+    prependDataById<T extends object>(pId: string, data: T | T[]): Promise<void>;
+    /**
+     * insertData
+     * @param id
+     * @param data
+     */
+    insertData<T extends object>(id: string, data: T | T[]): Promise<void>;
+    insertDataById<T extends object>(pId: string, id: string, data: T | T[]): Promise<void>;
+    /**
+     * replaceData
+     */
+    replaceData<T extends object>(id: string, data: T | T[]): Promise<void>;
+    replaceDataById<T extends object>(pId: string, id: string, data: T | T[]): Promise<void>;
+    /**
+     * removeData
+     * @param id
+     */
+    removeData(id: string): Promise<void>;
+    removeChildrenData(pId: string): Promise<void>;
+    clearChildrenData(pId: string): Promise<void>;
+    /**
      * getSelectedRowKeys
      * @description 获取selectedRowKeys
      * @return {any[]}

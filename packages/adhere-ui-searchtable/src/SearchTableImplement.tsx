@@ -320,17 +320,21 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     }
 
     if (targetDataSource) {
-      const listData = cloneDeep(this.state[this.getServiceName()]);
+      const listData = cloneDeep(
+        this.state[this.getServiceName()] ?? {
+          [this.getFetchListPropName()]: {
+            [this.getDataKey()]: [],
+          },
+        },
+      );
       listData[this.getFetchListPropName()][this.getDataKey()] = targetDataSource;
 
-      return this.props
-        .dispatch({
-          type: `${this.getServiceName()}/receive`,
-          ...listData,
-        })
-        .then(() => {
-          return listData?.[this.getFetchListPropName()]?.[this.getDataKey()];
-        });
+      this.props.dispatch({
+        type: `${this.getServiceName()}/receive`,
+        ...listData,
+      });
+
+      return Promise.resolve(listData?.[this.getFetchListPropName()]?.[this.getDataKey()]);
     }
 
     return Promise.resolve([]);
@@ -373,11 +377,20 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     };
 
     // Tree展开列放置的索引位置，设置展开列在第几个位置上（索引从0开始）
-    if (this.isUseCheckedStrategy() && this.isShowNumber()) {
+    if (this.isUseCheckedStrategy()) {
       expandable = {
         ...expandable,
         expandIconColumnIndex: 1,
       };
+    } else {
+      if (this.isUseLoadData()) {
+        if (!!this.getRowSelection()) {
+          expandable = {
+            ...expandable,
+            expandIconColumnIndex: 2,
+          };
+        }
+      }
     }
 
     // 如果使用异步加载，自定义expandIcon方法
@@ -819,7 +832,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @description 在其中处理Tree数据的异步加载操作使用loadData方法
    * @param params
    */
-  onExpand(...params) {
+  onExpand(...params): void | Promise<void> {
     const [expanded, record] = params;
 
     // 关闭
@@ -845,9 +858,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
       _self.setState((state: any) => {
         state.loadDataKeys.push(key);
 
-        return {
-          ...state,
-        };
+        return cloneDeep(state);
       });
     }
 
@@ -858,37 +869,42 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
      * @param {any[]} dataSource
      */
     function afterLoadDataWithSuccess(childrenData: any[], dataSource: any[]) {
-      const isCanSync = _self.isCanCheckedStrategySync();
+      return new Promise<void>((resolve) => {
+        const isCanSync = _self.isCanCheckedStrategySync();
 
-      _self.setState(
-        (state: any) => {
-          state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
+        _self.setState(
+          (state: any) => {
+            state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
 
-          state.loadDataSuccessKeys.push(key);
+            state.loadDataSuccessKeys.push(key);
 
-          if (!isCanSync) {
-            // 获取当前节点的选中状态
-            const currentNodeChecked = state.selectedRowKeys.includes(record[rowKey]);
-            // 如果是选中状态
-            // 则需要将孩子也选中
-            if (currentNodeChecked) {
-              state.selectedRowKeys = [
-                ...state.selectedRowKeys,
-                ...childrenData.map((t: any) => t[rowKey]),
-              ];
+            if (!isCanSync) {
+              // 获取当前节点的选中状态
+              const currentNodeChecked = state.selectedRowKeys.includes(record[rowKey]);
+              // 如果是选中状态
+              // 则需要将孩子也选中
+              if (currentNodeChecked) {
+                state.selectedRowKeys = [
+                  ...state.selectedRowKeys,
+                  ...childrenData.map((t: any) => t[rowKey]),
+                ];
 
-              state.selectedRows = [...state.selectedRows, ...childrenData];
+                state.selectedRows = [...state.selectedRows, ...childrenData];
+              }
             }
-          }
 
-          return JSON.parse(JSON.stringify(state));
-        },
-        () => {
-          if (isCanSync) {
-            _self.syncCheckedStrategy(dataSource);
-          }
-        },
-      );
+            // console.log('===state', state);
+            return cloneDeep(state);
+          },
+          () => {
+            if (isCanSync) {
+              _self.syncCheckedStrategy(dataSource);
+            }
+
+            resolve();
+          },
+        );
+      });
     }
 
     /**
@@ -896,12 +912,17 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
      * @description 异步加载失败
      */
     function afterLoadDataWithFail() {
-      _self.setState((state: any) => {
-        state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
+      return new Promise<void>((resolve) => {
+        _self.setState(
+          (state: any) => {
+            state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
 
-        return {
-          ...state,
-        };
+            return cloneDeep(state);
+          },
+          () => {
+            resolve();
+          },
+        );
       });
     }
 
@@ -928,34 +949,59 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     beforeLoadData();
 
     // 使用loadData进行异步加载
-    // @ts-ignore
-    this.loadData(record)
-      ?.then((childrenData) => {
-        debugger;
-        // 更新当前近节点的children数据
-        this.setData((preData) => {
-          const _targetRecord = Util.findNodeByKey(preData as any[], key, {
-            keyAttr: rowKey,
-          });
+    return new Promise((resolve, reject) => {
+      // @ts-ignore
+      this.loadData(record)
+        ?.then((childrenData) => {
+          // console.log('=======childrenData', childrenData);
 
-          const childrenColumnName = this.getChildrenColumnName();
+          // 更新当前近节点的children数据
+          this.setData((preData) => {
+            const _targetRecord = Util.findNodeByKey(preData as any[], key, {
+              keyAttr: rowKey,
+              childrenKey: this.getChildrenColumnName(),
+            });
 
-          if (_targetRecord) {
-            _targetRecord[childrenColumnName] = childrenData;
-          }
+            const childrenColumnName = this.getChildrenColumnName();
 
-          return [...preData];
-        })
-          .then((dataSource) => {
-            afterLoadDataWithSuccess(childrenData, dataSource);
+            if (_targetRecord) {
+              _targetRecord[childrenColumnName] = childrenData;
+            }
+
+            // console.log('======preData', preData);
+
+            return [...preData];
           })
-          .catch(() => {
-            afterLoadDataWithFail();
-          });
-      })
-      .catch(() => {
-        afterLoadDataWithFail();
-      });
+            .then((dataSource) => {
+              // console.log('======dataSource', dataSource);
+              afterLoadDataWithSuccess(childrenData, dataSource)
+                .then(() => {
+                  resolve();
+                })
+                .catch(() => {
+                  reject();
+                });
+            })
+            .catch(() => {
+              afterLoadDataWithFail()
+                .then(() => {
+                  resolve();
+                })
+                .catch(() => {
+                  reject();
+                });
+            });
+        })
+        .catch(() => {
+          afterLoadDataWithFail()
+            .then(() => {
+              resolve();
+            })
+            .catch(() => {
+              reject();
+            });
+        });
+    });
 
     // 正在进行异步加载的keys
     // loadDataKeys: [];
@@ -1051,6 +1097,41 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
     // 展开应该是(-)图标
     return this.renderCollapseIcon({ onExpand, record });
+  }
+
+  /**
+   * reloadData
+   * @description 重新加载节点的数据
+   * @param {string} id 节点的id
+   */
+  reloadData(id: string) {
+    return new Promise<void>((resolve) => {
+      this.setState(
+        (state: any) => {
+          state.expandedRowKeys = state.expandedRowKeys.filter((key) => key !== id);
+          state.loadDataSuccessKeys = state.loadDataSuccessKeys.filter((key) => key !== id);
+          state.loadDataKeys = state.loadDataKeys.filter((key) => key !== id);
+
+          return cloneDeep(state);
+        },
+        () => {
+          const record = this.getRecordById(id);
+
+          (this.onExpand(true, record) as Promise<void>).then(() => {
+            this.setState(
+              (state: any) => {
+                state.expandedRowKeys = [...state.expandedRowKeys, id];
+
+                return cloneDeep(state);
+              },
+              () => {
+                resolve();
+              },
+            );
+          });
+        },
+      );
+    });
   }
 }
 

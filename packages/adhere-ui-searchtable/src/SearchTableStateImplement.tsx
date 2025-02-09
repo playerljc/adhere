@@ -93,7 +93,13 @@ export class SearchTableStateImplement<
       }
 
       if (targetDataSource) {
-        const listData = cloneDeep(this.state[this.getServiceName()]);
+        const listData = cloneDeep(
+          this.state[this.getServiceName()] ?? {
+            [this.getFetchListPropName()]: {
+              [this.getDataKey()]: [],
+            },
+          },
+        );
         listData[this.getFetchListPropName()][this.getDataKey()] = targetDataSource;
 
         this.setState(
