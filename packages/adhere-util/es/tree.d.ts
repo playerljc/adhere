@@ -25,9 +25,11 @@ export interface TreeUtilType {
     }, filter?: (nodeData: any) => boolean) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
     findNodeByKey: (treeData: (IAntdTreeNode | IAntdTreeSelectNode)[], val: any, config: {
         keyAttr: string;
+        childrenKey?: string;
     }) => IAntdTreeNode | IAntdTreeSelectNode | null;
     findParentNodeByKey: (treeData: (IAntdTreeNode | IAntdTreeSelectNode)[], val: any, config: {
         keyAttr: string;
+        childrenKey?: string;
     }) => IAntdTreeNode | IAntdTreeSelectNode | null | undefined;
     transformTreeData: (treeData: any[], childrenAttr: string, onCallback: (node: any) => IAntdTreeNode | IAntdTreeSelectNode) => (IAntdTreeNode | IAntdTreeSelectNode)[];
     getLeafNodesByIndex: (nodes: {

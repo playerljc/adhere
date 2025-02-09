@@ -64,13 +64,13 @@ export interface TreeUtilType {
   findNodeByKey: (
     treeData: (IAntdTreeNode | IAntdTreeSelectNode)[],
     val: any,
-    config: { keyAttr: string },
+    config: { keyAttr: string; childrenKey?: string },
   ) => IAntdTreeNode | IAntdTreeSelectNode | null;
 
   findParentNodeByKey: (
     treeData: (IAntdTreeNode | IAntdTreeSelectNode)[],
     val: any,
-    config: { keyAttr: string },
+    config: { keyAttr: string; childrenKey?: string },
   ) => IAntdTreeNode | IAntdTreeSelectNode | null | undefined;
 
   transformTreeData: (
@@ -435,6 +435,8 @@ const TreeUtil: TreeUtilType = {
    * @param config
    */
   findNodeByKey(treeData, val, config) {
+    const childrenKey = config.childrenKey ?? 'children';
+
     function findLoop(
       data: (IAntdTreeNode | IAntdTreeSelectNode)[],
     ): IAntdTreeNode | IAntdTreeSelectNode | null {
@@ -447,10 +449,10 @@ const TreeUtil: TreeUtilType = {
         } else {
           if (
             'children' in data[i] &&
-            Array.isArray(data[i].children) &&
-            data[i]?.children?.length
+            Array.isArray(data[i][childrenKey]) &&
+            data[i]?.[childrenKey]?.length
           ) {
-            result = findLoop(data[i].children as (IAntdTreeNode | IAntdTreeSelectNode)[]);
+            result = findLoop(data[i][childrenKey] as (IAntdTreeNode | IAntdTreeSelectNode)[]);
             if (result) break;
           }
         }
@@ -468,8 +470,12 @@ const TreeUtil: TreeUtilType = {
    * @param val
    * @param config
    */
-  findParentNodeByKey(treeData, val, { keyAttr }) {
+  findParentNodeByKey(treeData, val, config) {
     let parentNode;
+
+    const keyAttr = config?.keyAttr;
+
+    const childrenKey = config?.childrenKey ?? 'children';
 
     function loop(_parentNode, _nodes) {
       for (let i = 0; i < _nodes.length; i++) {
@@ -479,7 +485,7 @@ const TreeUtil: TreeUtilType = {
           parentNode = _parentNode;
           break;
         } else {
-          loop(_node, _node.children ?? []);
+          loop(_node, _node[childrenKey] ?? []);
 
           if (parentNode) {
             break;

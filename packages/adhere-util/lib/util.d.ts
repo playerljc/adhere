@@ -98,9 +98,11 @@ declare const _default: {
     }, filter?: (nodeData: any) => boolean) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
     findNodeByKey: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], val: any, config: {
         keyAttr: string;
+        childrenKey?: string;
     }) => import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode | null;
     findParentNodeByKey: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], val: any, config: {
         keyAttr: string;
+        childrenKey?: string;
     }) => import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode | null | undefined;
     transformTreeData: (treeData: any[], childrenAttr: string, onCallback: (node: any) => import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode) => (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[];
     getLeafNodesByIndex: (nodes: {
