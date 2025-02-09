@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-util-intl": "^2.11.0",
-    "antd-mobile": "^5.37.1",
+    "antd-mobile": "^5.38.1",
     "antd-mobile-icons": "^0.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.2.0"

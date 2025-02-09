@@ -34,10 +34,10 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "ahooks": "^3.8.1",
-    "antd-mobile": "^5.37.1",
+    "ahooks": "^3.8.4",
+    "antd-mobile": "^5.38.1",
     "classnames": "^2.5.1",
-    "dayjs": "^1.11.12",
+    "dayjs": "^1.11.13",
     "react": "^18.3.1",
     "react-dom": "^18.2.0"
   },

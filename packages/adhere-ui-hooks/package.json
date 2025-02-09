@@ -32,7 +32,7 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "ahooks": "^3.8.1",
+    "ahooks": "^3.8.4",
     "react": "^18.3.1",
     "react-dom": "^18.2.0",
     "use-immer": "^0.10.0"

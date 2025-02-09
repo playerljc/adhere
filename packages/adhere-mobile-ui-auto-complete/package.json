@@ -36,7 +36,7 @@
   "dependencies": {
     "@baifendian/adhere-mobile-ui-tree": "^2.11.0",
     "@baifendian/adhere-util-intl": "^2.11.0",
-    "antd-mobile": "^5.37.1",
+    "antd-mobile": "^5.38.1",
     "antd-mobile-icons": "^0.3.0",
     "classnames": "^2.5.1",
     "react": "^18.3.1",
