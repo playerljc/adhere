@@ -12,7 +12,7 @@ import Intl from '@baifendian/adhere-util-intl';
 import ListDensitySetting from './Extension/ListDensitySetting';
 import type { Metas, SearchListProps, SearchListState } from './types';
 
-const { Search, ReloadTable, ExportExcel } = SearchTable;
+const { Search, ReloadTable, ExportExcel, cloneDeep } = SearchTable;
 
 export const selectorPrefix = 'adhere-ui-search-table';
 
@@ -66,6 +66,12 @@ abstract class SearchList<
    * @return {object[]}
    */
   abstract getData(): object[];
+
+  /**
+   * setData
+   * @description 设置表格数据
+   */
+  abstract setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<any[]>;
 
   /**
    * getMetas
@@ -415,6 +421,131 @@ abstract class SearchList<
       },
       ...pagination,
     };
+  }
+
+  /**
+   * getDataSource
+   * @description 获取Table的数据
+   * @return {Record<string, any>[]}
+   */
+  getDataSource(): Record<string, any>[] {
+    return this.getData() ?? [];
+  }
+
+  /**
+   * getRecordById
+   * @description 获取record
+   * @param {string} id
+   */
+  getRecordById(id: string) {
+    const rowKey = this.getRowKey();
+    const dataSource = this.getDataSource();
+
+    return dataSource.find((record) => record[rowKey] === id);
+  }
+
+  /**
+   * appendData
+   */
+  appendData<T extends object>(data: T | T[]) {
+    return new Promise<void>((resolve) => {
+      this.setData((preDataSource) => {
+        if (Array.isArray(data)) {
+          return cloneDeep([...preDataSource, ...data]);
+        }
+
+        return cloneDeep([...preDataSource, data]);
+      }).then(() => {
+        resolve();
+      });
+    });
+  }
+
+  /**
+   * prependData
+   * @param data
+   */
+  prependData<T extends object>(data: T | T[]) {
+    return new Promise<void>((resolve) => {
+      this.setData((preDataSource) => {
+        if (Array.isArray(data)) {
+          return cloneDeep([...data, ...preDataSource]);
+        }
+
+        return cloneDeep([data, ...preDataSource]);
+      }).then(() => {
+        resolve();
+      });
+    });
+  }
+
+  /**
+   * insertData
+   * @param id
+   * @param data
+   */
+  insertData<T extends object>(id: string, data: T | T[]) {
+    const rowKey = this.getRowKey();
+
+    return new Promise<void>((resolve) => {
+      this.setData((preDataSource) => {
+        const index = preDataSource.findIndex((record) => record[rowKey] === id);
+
+        if (Array.isArray(data)) {
+          preDataSource.splice(index, 0, ...data);
+        } else {
+          preDataSource.splice(index, 0, data);
+        }
+
+        return cloneDeep(preDataSource);
+      }).then(() => {
+        resolve();
+      });
+    });
+  }
+
+  /**
+   * replaceData
+   */
+  replaceData<T extends object>(id: string, data: T | T[]) {
+    const rowKey = this.getRowKey();
+
+    return new Promise<void>((resolve) => {
+      this.setData((preDataSource) => {
+        const index = preDataSource.findIndex((record) => record[rowKey] === id);
+
+        if (Array.isArray(data)) {
+          preDataSource.splice(index, 1, ...data);
+        } else {
+          preDataSource.splice(index, 1, data);
+        }
+
+        return cloneDeep(preDataSource);
+      }).then(() => {
+        resolve();
+      });
+    });
+  }
+
+  /**
+   * removeData
+   * @param id
+   */
+  removeData(id: string) {
+    return new Promise<void>((resolve) => {
+      const rowKey = this.getRowKey();
+
+      this.setData((preData) => {
+        preData.splice(
+          preData.findIndex((record) => record[rowKey] === id),
+          1,
+        );
+
+        return cloneDeep(preData);
+      }).then(() => {
+        resolve();
+      });
+    });
   }
 
   /**

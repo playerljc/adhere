@@ -109,6 +109,12 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
      */
     getData(): object[];
     /**
+     * setData
+     * @description 设置数据
+     * @param data
+     */
+    setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<any[]>;
+    /**
      * getTotal
      * @description - Table数据的总条数
      * @override
@@ -169,9 +175,21 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
     getSearchParams(): any;
     getMetas(): {};
     /**
+     * beforeFetchData
+     * @description fetchData之后的处理
+     */
+    beforeFetchData(): Promise<void>;
+    /**
+     * afterFetchData
+     * @description fetchData之后的处理
+     * @param {} result {code: data:}
+     */
+    afterFetchData(result: any): void;
+    /**
      * fetchData
      * @description - 加载数据
      * @override
+     * @return {Promise<any>}
      */
     fetchData(): Promise<any>;
     /**

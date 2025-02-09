@@ -42,6 +42,11 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
      */
     abstract getData(): object[];
     /**
+     * setData
+     * @description 设置表格数据
+     */
+    abstract setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<any[]>;
+    /**
      * getMetas
      * @description 列表项配置
      * @return {Metas<any>}
@@ -152,6 +157,42 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
         onChange: (page: any, limit: any) => void;
         onShowSizeChange: (page: any, limit: any) => void;
     };
+    /**
+     * getDataSource
+     * @description 获取Table的数据
+     * @return {Record<string, any>[]}
+     */
+    getDataSource(): Record<string, any>[];
+    /**
+     * getRecordById
+     * @description 获取record
+     * @param {string} id
+     */
+    getRecordById(id: string): Record<string, any> | undefined;
+    /**
+     * appendData
+     */
+    appendData<T extends object>(data: T | T[]): Promise<void>;
+    /**
+     * prependData
+     * @param data
+     */
+    prependData<T extends object>(data: T | T[]): Promise<void>;
+    /**
+     * insertData
+     * @param id
+     * @param data
+     */
+    insertData<T extends object>(id: string, data: T | T[]): Promise<void>;
+    /**
+     * replaceData
+     */
+    replaceData<T extends object>(id: string, data: T | T[]): Promise<void>;
+    /**
+     * removeData
+     * @param id
+     */
+    removeData(id: string): Promise<void>;
     /**
      * renderBody
      * @return {ReactNode}

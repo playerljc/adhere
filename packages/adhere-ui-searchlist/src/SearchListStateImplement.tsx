@@ -1,5 +1,7 @@
 import React, { forwardRef } from 'react';
 
+import SearchTable from '@baifendian/adhere-ui-searchtable';
+import Util from '@baifendian/adhere-util';
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 import { createState } from '@ctsj/state/lib/react';
 
@@ -12,6 +14,8 @@ import type {
 } from './types';
 
 export const selectorPrefix = 'adhere-ui-search-state-table-implement';
+
+const { cloneDeep } = SearchTable;
 
 /**
  * SearchListStateImplement
@@ -75,6 +79,45 @@ export class SearchListStateImplement<
   getData(): object[] {
     // @ts-ignore
     return this.state[this.getServiceName()][this.getFetchListPropName()][this.getDataKey()];
+  }
+
+  /**
+   * setData
+   * @description 设置数据
+   * @param data
+   */
+  setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<any[]> {
+    return new Promise((resolve) => {
+      let targetDataSource;
+
+      if (Util.isArray(data)) {
+        targetDataSource = data;
+      } else if (Util.isFunction(data)) {
+        targetDataSource = (data as Function)(this.getData());
+      }
+
+      if (targetDataSource) {
+        const listData = cloneDeep(
+          this.state[this.getServiceName()] ?? {
+            [this.getFetchListPropName()]: {
+              [this.getDataKey()]: [],
+            },
+          },
+        );
+        listData[this.getFetchListPropName()][this.getDataKey()] = targetDataSource;
+
+        this.setState(
+          {
+            [this.getServiceName()]: listData,
+          },
+          () => {
+            resolve(listData?.[this.getFetchListPropName()]?.[this.getDataKey()]);
+          },
+        );
+      }
+
+      return Promise.resolve([]);
+    });
   }
 
   /**

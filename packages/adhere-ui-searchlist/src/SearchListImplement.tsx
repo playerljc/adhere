@@ -8,7 +8,9 @@ import React, { ReactElement, ReactNode, RefObject, createRef, forwardRef } from
 
 import { DownOutlined, RightOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import SearchTable from '@baifendian/adhere-ui-searchtable';
 import type { TableRowSelectionExt } from '@baifendian/adhere-ui-searchtable/es/types';
+import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 
@@ -23,6 +25,8 @@ import type {
   SearchListState,
 } from './types';
 import { Metas } from './types';
+
+const { cloneDeep } = SearchTable;
 
 export const selectorPrefix = 'adhere-ui-search-table-implement';
 
@@ -248,6 +252,41 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   }
 
   /**
+   * setData
+   * @description 设置数据
+   * @param data
+   */
+  setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<any[]> {
+    let targetDataSource;
+
+    if (Util.isArray(data)) {
+      targetDataSource = data;
+    } else if (Util.isFunction(data)) {
+      targetDataSource = (data as Function)(this.getData());
+    }
+
+    if (targetDataSource) {
+      const listData = cloneDeep(
+        this.state[this.getServiceName()] ?? {
+          [this.getFetchListPropName()]: {
+            [this.getDataKey()]: [],
+          },
+        },
+      );
+      listData[this.getFetchListPropName()][this.getDataKey()] = targetDataSource;
+
+      this.props.dispatch({
+        type: `${this.getServiceName()}/receive`,
+        ...listData,
+      });
+
+      return Promise.resolve(listData?.[this.getFetchListPropName()]?.[this.getDataKey()]);
+    }
+
+    return Promise.resolve([]);
+  }
+
+  /**
    * getTotal
    * @description - Table数据的总条数
    * @override
@@ -427,12 +466,38 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   }
 
   /**
+   * beforeFetchData
+   * @description fetchData之后的处理
+   */
+  beforeFetchData(): Promise<void> {
+    return new Promise((resolve) => {
+      resolve();
+    });
+  }
+
+  /**
+   * afterFetchData
+   * @description fetchData之后的处理
+   * @param {} result {code: data:}
+   */
+  afterFetchData(result: any) {}
+
+  /**
    * fetchData
    * @description - 加载数据
    * @override
+   * @return {Promise<any>}
    */
   fetchData(): Promise<any> {
-    return this.fetchDataExecute(this.getSearchParams());
+    return new Promise((resolve) => {
+      this.beforeFetchData().then(() => {
+        this.fetchDataExecute(this.getSearchParams()).then((result) => {
+          this.afterFetchData(result);
+
+          resolve(result);
+        });
+      });
+    });
   }
 
   /**
