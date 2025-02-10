@@ -267,9 +267,10 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
 
     if (targetDataSource) {
       const listData = cloneDeep(
-        this.state[this.getServiceName()] ?? {
+        this.props[this.getServiceName()] ?? {
           [this.getFetchListPropName()]: {
             [this.getDataKey()]: [],
+            [this.getTotalKey()]: 0,
           },
         },
       );

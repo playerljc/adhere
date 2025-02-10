@@ -101,6 +101,7 @@ export class SearchListStateImplement<
           this.state[this.getServiceName()] ?? {
             [this.getFetchListPropName()]: {
               [this.getDataKey()]: [],
+              [this.getTotalKey()]: 0,
             },
           },
         );
