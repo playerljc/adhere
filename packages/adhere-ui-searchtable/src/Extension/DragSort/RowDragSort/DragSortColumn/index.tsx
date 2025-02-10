@@ -73,7 +73,7 @@ function DragSortColumn(columnConfig?: DragSortColumnProps) {
     // @ts-ignore
     render: (...params) => <DragHandler render={render} className={className} {...params} />,
     ...rest,
-  };
+  } as DragSortColumnProps;
 }
 
 export default DragSortColumn;

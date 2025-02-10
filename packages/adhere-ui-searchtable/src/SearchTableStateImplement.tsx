@@ -97,6 +97,7 @@ export class SearchTableStateImplement<
           this.state[this.getServiceName()] ?? {
             [this.getFetchListPropName()]: {
               [this.getDataKey()]: [],
+              [this.getTotalKey()]: 0,
             },
           },
         );

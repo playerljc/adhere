@@ -321,9 +321,10 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
     if (targetDataSource) {
       const listData = cloneDeep(
-        this.state[this.getServiceName()] ?? {
+        this.props[this.getServiceName()] ?? {
           [this.getFetchListPropName()]: {
             [this.getDataKey()]: [],
+            [this.getTotalKey()]: 0,
           },
         },
       );

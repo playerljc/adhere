@@ -451,12 +451,12 @@ abstract class SearchTable<
    * @return {Promise<void>}
    */
   async syncCheckedStrategyWithShowAll(dataSource: any[]): Promise<void> {
-    console.log('syncCheckedStrategyWithShowAll');
+    // console.log('syncCheckedStrategyWithShowAll');
     const rowKey = this.getRowKey();
 
     const flatDataSource = Util.treeToArray(dataSource, TREE_UTIL_CONFIG, rowKey);
     const flatDataSourceKeys = flatDataSource.map((record) => record[rowKey]);
-    console.log('flatDataSourceKeys', flatDataSourceKeys);
+    // console.log('flatDataSourceKeys', flatDataSourceKeys);
     const { defaultSelectedRowKeys } = this.props;
     // 筛选出需要矫正的keys
     const asyncPageKeys = defaultSelectedRowKeys.filter((key: any) =>
@@ -512,8 +512,8 @@ abstract class SearchTable<
     const { selectedRowKeys, selectedRows } = this.state;
 
     // 祖先节点都不在selectedRowKeys中的时候
-    console.log('selectedKeys', selectedKeys);
-    console.log('selectedRowKeys', selectedRowKeys);
+    // console.log('selectedKeys', selectedKeys);
+    // console.log('selectedRowKeys', selectedRowKeys);
     if (!selectedKeys.every((key) => selectedRowKeys.includes(key))) {
       console.log('set');
       this.setState({
