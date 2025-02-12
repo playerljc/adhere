@@ -1,0 +1,2 @@
+"use strict";var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}},adhere_util_1=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.getValue=void 0,__importDefault(require("@baifendian/adhere-util")));function getValue(e,t){return adhere_util_1.default.isNumber(t)?null!=e&&e.isUseMedia?adhere_util_1.default.pxToRem(t,null==e?void 0:e.designWidth):"".concat(t,"px"):t}exports.getValue=getValue;
+//# sourceMappingURL=Util.js.map

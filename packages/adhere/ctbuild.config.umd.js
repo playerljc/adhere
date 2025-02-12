@@ -10,11 +10,11 @@ module.exports = {
 
     webpackConfig.externals = { ...defaultExternals };
 
-    webpackConfig.resolve.alias.react = path.join(__dirname, 'node_modules', 'react');
+    // webpackConfig.resolve.alias.react = path.join(__dirname, 'node_modules', 'react');
 
-    webpackConfig.resolve.alias['react-dom'] = path.join(__dirname, 'node_modules', 'react-dom');
+    // webpackConfig.resolve.alias['react-dom'] = path.join(__dirname, 'node_modules', 'react-dom');
 
-    webpackConfig.module.rules[0].use[1].query.plugins.push([
+    webpackConfig.module.rules[0].use[1].options.plugins.push([
       '@babel/plugin-transform-modules-commonjs',
       { strictMode: false },
     ]);

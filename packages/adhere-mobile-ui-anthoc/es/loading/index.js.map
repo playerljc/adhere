@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["loading/index.js"],"sourcesContent":["import Loading from './Loading';\nexport default Loading;"],"names":["Loading"],"mappings":"OAAOA,YAAa,2BACLA"}

@@ -29,10 +29,10 @@ declare class BMap extends React.Component<IBMapProps, IBMapState> {
     /**
      * renderLoading
      */
-    protected renderLoading(): JSX.Element;
+    protected renderLoading(): React.JSX.Element;
     /**
      * render
      */
-    protected render(): JSX.Element;
+    protected render(): React.JSX.Element;
 }
 export default BMap;

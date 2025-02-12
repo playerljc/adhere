@@ -27,6 +27,12 @@ export interface OverlayProps extends SlideLayoutProps {
     direction?: 'left' | 'right' | 'top' | 'bottom';
 }
 /**
+ * SlideLayoutHandle
+ */
+export interface SlideLayoutHandle {
+    getEl: () => HTMLElement | null;
+}
+/**
  * PushProps
  * @interface PushProps
  */

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["qrcode/index.js"],"sourcesContent":["import QRCode from './QRCode';\nexport default QRCode;"],"names":["QRCode"],"mappings":"OAAOA,WAAY,0BACJA"}

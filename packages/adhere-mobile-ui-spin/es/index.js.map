@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Spin from './Spin';\nexport default Spin;"],"names":["Spin"],"mappings":"OAAOA,SAAU,wBACFA"}

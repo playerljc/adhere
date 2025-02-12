@@ -1,3 +1,3 @@
-import type { ConditionalRenderFunction, ConditionalRenderProps } from './types';
-declare const ConditionalRender: ConditionalRenderFunction<ConditionalRenderProps>;
+import type { ConditionalRenderComponent } from './types';
+declare const ConditionalRender: ConditionalRenderComponent;
 export default ConditionalRender;

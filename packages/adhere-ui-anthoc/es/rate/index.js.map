@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["rate/index.js"],"sourcesContent":["import Rate from './Rate';\nexport default Rate;"],"names":["Rate"],"mappings":"OAAOA,SAAU,wBACFA"}

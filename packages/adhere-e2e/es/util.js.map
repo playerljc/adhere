@@ -1,0 +1,1 @@
+{"version":3,"file":"util.js","sources":["util.js"],"sourcesContent":["export function getEvnVars() {\n  return CustomEvnVars;\n}\nexport function isUseMedia() {\n  return getEvnVars().media === 'true';\n}"],"names":["getEvnVars","CustomEvnVars","isUseMedia","media"],"mappings":"AAAO,SAASA,aACd,OAAOC,aACT,CACO,SAASC,aACd,MAA8B,SAAvBF,WAAW,EAAEG,KACtB,QALgBH,WAGAE,UAEhB"}

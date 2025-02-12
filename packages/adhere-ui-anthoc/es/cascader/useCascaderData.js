@@ -1,0 +1,2 @@
+import{useCallback}from"react";import Util from"@baifendian/adhere-util";var useCascaderData=function(t){var e=t.options,r=t.treeDataSimpleMode,l=t.config,t=useCallback(function(){var t;return Util.arrayToAntdTreeSelect(e,{keyAttr:null!=(t=null==l?void 0:l.keyAttr)?t:"value",titleAttr:null!=(t=null==l?void 0:l.titleAttr)?t:"title",rootParentId:null!=(t=null==l?void 0:l.rootParentId)?t:0,parentIdAttr:null!=(t=null==l?void 0:l.parentIdAttr)?t:"pId"})},[e]);return r?t():e};export default useCascaderData;
+//# sourceMappingURL=useCascaderData.js.map

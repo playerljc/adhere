@@ -1,8 +1,9 @@
 import { Form } from 'antd';
 import type { FormInstance } from 'antd/es/form';
-import React, { ReactElement, createContext } from 'react';
+import type { ReactElement } from 'react';
+import React, { createContext } from 'react';
 
-import { TableRowComponentReducer } from '../../types';
+import type { TableRowComponentReducer } from '../../types';
 
 export const EditableContext = createContext<FormInstance<any> | null>(null);
 

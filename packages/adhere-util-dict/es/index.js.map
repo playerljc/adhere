@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Dict from './dict';\r\nexport default Dict;\r\n"],"names":["Dict"],"mappings":"OAAOA,SAAU,wBACFA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Dict from './dict';\nexport default Dict;\n"],"names":["Dict"],"mappings":"OAAOA,SAAU,wBACFA"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["statistic/index.js"],"sourcesContent":["import Statistic from './Statistic';\nexport default Statistic;"],"names":["Statistic"],"mappings":"OAAOA,cAAe,6BACPA"}

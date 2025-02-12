@@ -39,7 +39,7 @@ declare const _default: {
      * @param obj
      * @return {boolean}
      */
-    isArray(obj: any): boolean;
+    isArray(obj: any): obj is any[];
     /**
      * isFunction - 判断函数
      * @param obj
@@ -55,8 +55,15 @@ declare const _default: {
     /**
      * isRef - 是否是引用类型
      * @param obj
+     * @return {boolean}
      */
     isRef(obj: any): boolean;
+    /**
+     * isPromise - 是否是Promise
+     * @param obj
+     * @return {boolean}
+     */
+    isPromise(obj: any): any;
     /**
      * chainCallAssignment - 对象的链式赋值
      * obj.a.b.c.d.x.x.x = value
@@ -84,10 +91,11 @@ declare const _default: {
      * toCamelCase - 用连接符链接的字符串转换成驼峰写法
      * 例：abc-def AbcDef
      * @param str - string 用连接符节点的字符串
+     * @param split - string 分割的字符
      * @param toUpperCase - boolean 是否转换成大写
      * @return {String}
      */
-    toCamelCase(str: any, toUpperCase?: boolean): any;
+    toCamelCase(str: any, split?: string, toUpperCase?: boolean): any;
     /**
      * isKebabCase - 是否是烤肉串形式的名字
      * @param name - string 名称
@@ -102,10 +110,18 @@ declare const _default: {
     isPascalCase(name: any): boolean;
     /**
      * pascalCaseToKebabCase 驼峰转xxx-xxx-xxx
-     * @param name - string pascalCase的字符串
+     * @param _str - string pascalCase的字符串
+     * @param symbol 分隔符
      * @return {string}
      */
-    pascalCaseToKebabCase(name: any): any;
+    pascalCaseToKebabCase(_str: any, symbol?: string): any;
+    /**
+     * pascalCaseToKebabCase 驼峰转xxx-xxx-xxx
+     * @param name
+     * @param symbol 分隔符
+     * @return {string}
+     */
+    pascalCaseToKebabCase2(name: any, symbol?: string): any;
     /**
      * execExpression - 执行表达式
      * @param context - {Object} 执行的上下文
@@ -156,5 +172,17 @@ declare const _default: {
      * @return object
      */
     omitObject(obj: object): object;
+    /**
+     * capitalized
+     * @description 首字母大写
+     * @param str
+     */
+    capitalized(str: string): string;
+    /**
+     * lowercaseInitial
+     * @description 首字母小写
+     * @param str
+     */
+    lowercaseInitial(str: string): string;
 };
 export default _default;

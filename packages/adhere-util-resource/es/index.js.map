@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Resource from './resource';\r\nexport default Resource;\r\n"],"names":["Resource"],"mappings":"OAAOA,aAAc,4BACNA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Resource from './resource';\nexport default Resource;\n"],"names":["Resource"],"mappings":"OAAOA,aAAc,4BACNA"}

@@ -1,15 +1,14 @@
-import { Radio } from 'antd';
-import React, { useState } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
 
-import { ConfigProvider, Intl, TableGridLayout } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
-const { Label, Value } = TableGridLayout;
+import P1 from './examples/p1';
+import P2 from './examples/p2';
 
 export default () => {
-  const [lang, setLang] = useState('zh_CN');
-
   function boxPanelConfig() {
     return [
       {
@@ -23,71 +22,24 @@ export default () => {
             info: '基本使用',
           },
         },
-        codeText: ``,
+        codeText: P1CodeText,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <Radio.Group
-              value={lang}
-              onChange={(e) => setLang(e.target.value)}
-              options={[
-                { label: '中文', value: 'zh_CN' },
-                { label: '英文', value: 'en_US' },
-                { label: '葡语', value: 'pt_PT' },
-              ]}
-            />
-
-            <ConfigProvider
-              intl={{
-                lang,
-                locales: {
-                  en_US: require('@/locales/en_US').default,
-                  zh_CN: require('@/locales/zh_CN').default,
-                  pt_PT: require('@/locales/pt_PT').default,
-                },
-              }}
-            >
-              {() => (
-                <TableGridLayout
-                  data={[
-                    {
-                      name: 'g1',
-                      width: '100%',
-                      columnCount: 3,
-                      colgroup: [, 'auto', , 'auto', , 'auto'],
-                      data: [
-                        {
-                          key: 'UserName',
-                          label: <Label>{Intl.v('姓名')}：</Label>,
-                          value: <Value>张三</Value>,
-                        },
-                        {
-                          key: 'Telephone',
-                          label: <Label>{Intl.v('性别')}：</Label>,
-                          value: <Value>男</Value>,
-                        },
-                        {
-                          key: 'Live',
-                          label: <Label>{Intl.v('出生年月')}：</Label>,
-                          value: <Value>2020-10-09</Value>,
-                        },
-                        {
-                          key: 'Address',
-                          label: <Label>{Intl.v('详细地址')}：</Label>,
-                          value: (
-                            <Value>
-                              No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
-                            </Value>
-                          ),
-                        },
-                      ],
-                    },
-                  ]}
-                />
-              )}
-            </ConfigProvider>
-          </>
-        ),
+        renderChildren: () => <P1 />,
+      },
+      {
+        id: `p2`,
+        name: `theme`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'theme',
+            info: '切换主题颜色',
+          },
+        },
+        codeText: P2CodeText,
+        type: 'PlayGround',
+        renderChildren: () => <P2 />,
       },
     ];
   }
@@ -122,6 +74,32 @@ export default () => {
                   locales: {},
                   prefix: 'local',
                 }`,
+              },
+              {
+                params: 'className',
+                desc: 'wrapperClassName',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: 'style',
+                type: 'CSSProperties',
+                defaultVal: '',
+              },
+              {
+                params: 'theme',
+                desc: '主题',
+                type: `{
+                  [prop: string]: string
+                }`,
+                defaultVal: '',
+              },
+              {
+                params: 'onIntlInit',
+                desc: '国际化初始化完成',
+                type: `() => void`,
+                defaultVal: '',
               },
               {
                 params: 'children',

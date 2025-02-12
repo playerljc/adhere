@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["floating-bubble/index.js"],"sourcesContent":["import FloatingBubble from './FloatingBubble';\nexport default FloatingBubble;"],"names":["FloatingBubble"],"mappings":"OAAOA,mBAAoB,kCACZA"}

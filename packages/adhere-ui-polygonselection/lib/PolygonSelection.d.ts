@@ -6,6 +6,7 @@ import { IAction, IActionData, IListeners, IPolygonSelection, IStyle, SelectType
  * @classdesc - PolygonSelection
  */
 declare class PolygonSelection extends Emitter.Events implements IPolygonSelection {
+    static Cropping: import("./types").CroppingComponent;
     protected el: HTMLElement | null;
     protected listeners: IListeners | null | undefined;
     protected curAction: IAction | null;
@@ -132,6 +133,14 @@ declare class PolygonSelection extends Emitter.Events implements IPolygonSelecti
      * @description 清除assist的canvas
      */
     clearAssistDraw(): void;
+    /**
+     * clearHistoryData
+     */
+    clearHistoryData(): void;
+    /**
+     * clearCanvasAll
+     */
+    clearCanvasAll(): void;
     /**
      * setFrontCanvas
      * @description 置顶

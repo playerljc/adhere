@@ -2,9 +2,9 @@ import Util from '@baifendian/adhere-util';
 
 import Geometry from '../geom/Geometry';
 import LineStringGeometry from '../geom/LineStringGeometry';
-import MulitLineStringGeometry from '../geom/MulitLineStringGeometry';
-import MulitPointGeometry from '../geom/MulitPointGeometry';
-import MulitPolygonGeometry from '../geom/MulitPolygonGeometry';
+import MultiLineStringGeometry from '../geom/MultiLineStringGeometry';
+import MultiPointGeometry from '../geom/MultiPointGeometry';
+import MultiPolygonGeometry from '../geom/MultiPolygonGeometry';
 import PointGeometry from '../geom/PointGeometry';
 import PolygonGeometry from '../geom/PolygonGeometry';
 import {
@@ -14,9 +14,9 @@ import {
   IGeoJSONFeatureCollection,
   IGeometry,
   ILineStringGeometry,
-  IMulitLineStringGeometry,
-  IMulitPointGeometry,
-  IMulitPolygonGeometry,
+  IMultiLineStringGeometry,
+  IMultiPointGeometry,
+  IMultiPolygonGeometry,
   IPointGeometry,
   IPolygonGeometry,
 } from '../types';
@@ -62,7 +62,7 @@ export default {
         feature.setId(Util.uuid());
         features.push(feature);
       } else if (node.type === GeoJSONType.MultiPoint) {
-        const geom = new MulitPointGeometry(
+        const geom = new MultiPointGeometry(
           node.coordinates.map((coordinate) => ({
             lng: coordinate[0],
             lat: coordinate[1],
@@ -86,7 +86,7 @@ export default {
         feature.setId(Util.uuid());
         features.push(feature);
       } else if (node.type === GeoJSONType.MultiLineString) {
-        const geom = new MulitLineStringGeometry(
+        const geom = new MultiLineStringGeometry(
           node.coordinates.map((coordinate) => ({
             point1: {
               lng: coordinate[0][0],
@@ -112,7 +112,7 @@ export default {
         feature.setId(Util.uuid());
         features.push(feature);
       } else if (node.type === GeoJSONType.MultiPolygon) {
-        const geom = new MulitPolygonGeometry(
+        const geom = new MultiPolygonGeometry(
           node.coordinates.map((coordinate) =>
             coordinate.map((p) => ({
               lng: p[0],
@@ -160,11 +160,11 @@ export default {
     function getCoordinatesByType(geometry: IGeometry): Array<any> {
       const mapping = new Map<string, Function>([
         [GeoJSONType.Point, getPointCoordinates],
-        [GeoJSONType.MultiPoint, getMulitPointCoordinates],
+        [GeoJSONType.MultiPoint, getMultiPointCoordinates],
         [GeoJSONType.LineString, getLineStringCoordinates],
-        [GeoJSONType.MultiLineString, getMulitLineStringCoordinates],
+        [GeoJSONType.MultiLineString, getMultiLineStringCoordinates],
         [GeoJSONType.Polygon, getPolygonCoordinates],
-        [GeoJSONType.MultiPolygon, getMulitPolygonCoordinates],
+        [GeoJSONType.MultiPolygon, getMultiPolygonCoordinates],
       ]);
 
       const type = geometry.getType();
@@ -177,7 +177,7 @@ export default {
       return [coordinates.lng, coordinates.lat];
     }
 
-    function getMulitPointCoordinates(geometry: IMulitPointGeometry): Array<number[]> {
+    function getMultiPointCoordinates(geometry: IMultiPointGeometry): Array<number[]> {
       const coordinates = geometry.getCoordinates();
       return coordinates.map((coordinate) => [coordinate.lng, coordinate.lat]);
     }
@@ -190,8 +190,8 @@ export default {
       ];
     }
 
-    function getMulitLineStringCoordinates(
-      geometry: IMulitLineStringGeometry,
+    function getMultiLineStringCoordinates(
+      geometry: IMultiLineStringGeometry,
     ): Array<Array<number[]>> {
       const coordinates = geometry.getCoordinates();
       return coordinates.map((coordinate) => [
@@ -205,7 +205,7 @@ export default {
       return coordinates.map((coordinate) => [coordinate.lng, coordinate.lat]);
     }
 
-    function getMulitPolygonCoordinates(geometry: IMulitPolygonGeometry): Array<Array<number[]>> {
+    function getMultiPolygonCoordinates(geometry: IMultiPolygonGeometry): Array<Array<number[]>> {
       const coordinates = geometry.getCoordinates();
       return coordinates.map((coordinate) => coordinate.map((p) => [p.lng, p.lat]));
     }

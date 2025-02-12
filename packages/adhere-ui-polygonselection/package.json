@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-polygonselection",
-  "version": "1.0.24",
+  "version": "2.11.0",
   "description": "多边形选区",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -14,6 +14,7 @@
   "author": "playerljc",
   "main": "lib/index.js",
   "module": "es/index.js",
+  "typings": "es/index.d.ts",
   "files": [
     "lib",
     "es",
@@ -21,29 +22,41 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "startapp": "cross-env environment=dev mode=development ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
-    "buildpackage:cjs": "ctbuild buildpackagets",
-    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.module.json -o es",
-    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
+    "buildpackage:cjs": "ctbuild buildpackagets-babel -c ctbuild.package.ts.cjs.config.js -o lib",
+    "postbuildpackage:cjs": "tsc --declaration -p ./ --emitDeclarationOnly --outDir lib",
+    "buildpackage:esm": "ctbuild buildpackagets-babel -c ctbuild.package.ts.esm.config.js -o es",
+    "postbuildpackage:esm": "tsc --declaration -p ./ --emitDeclarationOnly --outDir es",
+    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename AdherePolygonSelection --define alias=@,evnVars=true",
-    "generatorchangelog": "bd changelog/CHANGELOG.html"
-  },
-  "resolutions": {
-    "graceful-fs": "4.2.2"
+    "e2e": "cross-env e2e",
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "upgrade": "yarn upgrade",
+    "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^1.0.24",
-    "@baifendian/adhere-util-emitter": "^1.0.24",
-    "@turf/turf": "^6.5.0"
+    "@baifendian/adhere-ui-flexlayout": "^2.11.0",
+    "@baifendian/adhere-ui-messagedialog": "^2.11.0",
+    "@baifendian/adhere-util": "^2.11.0",
+    "@baifendian/adhere-util-emitter": "^2.11.0",
+    "@baifendian/adhere-util-intl": "^2.11.0",
+    "@turf/turf": "^6.5.0",
+    "ahooks": "^3.8.4",
+    "antd": "^5.23.4",
+    "classnames": "^2.5.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.7.4",
-    "@ctsj/build": "^4.0.19",
+    "@babel/runtime": "^7.25.6",
+    "@baifendian/adhere-e2e": "^2.11.0",
+    "@ctsj/build": "^6.3.0",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
     "npm-run-all": "^4.1.5",
-    "typescript": "^4.9.4"
+    "typescript": "^5.6.2"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "82dd90c3c70139436586014e7e1827dadd6784a2"
+  "gitHead": "60cc2100010e6e8d5fc53eb5b5ed013bcffba3d7"
 }

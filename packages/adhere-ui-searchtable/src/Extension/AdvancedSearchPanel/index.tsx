@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import classNames from 'classnames';
-import React, { FC, useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
+import React, { memo, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import {
   FilterOutlined,
@@ -11,6 +11,7 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import SlideLayout from '@baifendian/adhere-ui-slidelayout';
 import Space from '@baifendian/adhere-ui-space';
@@ -18,13 +19,13 @@ import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { selectorPrefix } from '../../SearchTable';
-import { AdvancedSearchPanelProps } from '../../types';
+import type { AdvancedSearchPanelProps } from '../../types';
 
 const { VerticalFlexLayout, ScrollLayout } = FlexLayout;
 const { renderGridSearchFormGroup } = TableGridLayout;
 const { Overlay } = SlideLayout;
 
-const _selectorPrefix = `${selectorPrefix}-advancedsearchpanel`;
+const _selectorPrefix = `${selectorPrefix}-advanced-search-panel`;
 
 /**
  * AdvancedSearchPanel
@@ -32,7 +33,7 @@ const _selectorPrefix = `${selectorPrefix}-advancedsearchpanel`;
  * @return {React.ReactPortal}
  * @constructor
  */
-const AdvancedSearchPanel: FC<AdvancedSearchPanelProps> = (props) => {
+const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
   const {
     advancedSearchConfig: {
       advancedSearch: { getPopupContainer, ...overlayProps },
@@ -52,14 +53,17 @@ const AdvancedSearchPanel: FC<AdvancedSearchPanelProps> = (props) => {
 
   const [collapse, setCollapse] = useState(overlayProps.collapse);
 
+  const overlayRef = useRef();
+
   useEffect(() => {
     setCollapse(overlayProps.collapse);
   }, [overlayProps.collapse]);
 
-  return ReactDOM.createPortal(
+  return createPortal(
     <Overlay
+      ref={overlayRef}
       {...(overlayProps as any)}
-      className={classNames(`${_selectorPrefix}`, overlayProps.className || '')}
+      className={classNames(`${_selectorPrefix}`, overlayProps.className ?? '')}
       collapse={collapse}
     >
       <VerticalFlexLayout
@@ -72,9 +76,12 @@ const AdvancedSearchPanel: FC<AdvancedSearchPanelProps> = (props) => {
                 noMatch={() => renderTitleLabel?.()}
               >
                 {() => (
-                  <Space.Group direction="horizontal" size={2}>
-                    <FilterOutlined />
-                    <strong>{Intl.v('高级搜索')}</strong>
+                  <Space.Group direction="horizontal" size={5}>
+                    <FilterOutlined className={`${_selectorPrefix}-title-icon`} />
+
+                    <strong className={`${_selectorPrefix}-title-text`}>
+                      {Intl.v('高级搜索')}
+                    </strong>
                   </Space.Group>
                 )}
               </ConditionalRender>
@@ -89,16 +96,22 @@ const AdvancedSearchPanel: FC<AdvancedSearchPanelProps> = (props) => {
                   <ConditionalRender
                     conditional={collapse}
                     noMatch={() => (
-                      <Space.Group direction="horizontal" size={2}>
-                        <RightCircleOutlined />
-                        <strong>{Intl.v('展开')}</strong>
+                      <Space.Group direction="horizontal" size={5}>
+                        <RightCircleOutlined className={`${_selectorPrefix}-collapse-icon`} />
+
+                        <strong className={`${_selectorPrefix}-collapse-text`}>
+                          {Intl.v('展开')}
+                        </strong>
                       </Space.Group>
                     )}
                   >
                     {() => (
-                      <Space.Group direction="horizontal" size={2}>
-                        <LeftCircleOutlined />
-                        <strong>{Intl.v('收起')}</strong>
+                      <Space.Group direction="horizontal" size={5}>
+                        <LeftCircleOutlined className={`${_selectorPrefix}-collapse-icon`} />
+
+                        <strong className={`${_selectorPrefix}-collapse-text`}>
+                          {Intl.v('收起')}
+                        </strong>
                       </Space.Group>
                     )}
                   </ConditionalRender>
@@ -110,12 +123,22 @@ const AdvancedSearchPanel: FC<AdvancedSearchPanelProps> = (props) => {
         renderMain={
           <div className={`${_selectorPrefix}-main`}>
             <div className={`${_selectorPrefix}-scroll`}>
-              <ScrollLayout scrollY>
-                {renderGridSearchFormGroup(
+              <ScrollLayout scrollY className={`${_selectorPrefix}-scroll-innner`}>
+                {
                   // @ts-ignore
-                  showStrategy === 'all' ? groupData : remainingGroupData,
-                  tableGridLayoutConfig,
-                )}
+                  props?.children?.({ ...props }) ?? (
+                    <ConfigProvider.Context.Consumer>
+                      {({ media }) =>
+                        renderGridSearchFormGroup(
+                          // @ts-ignore
+                          showStrategy === 'all' ? groupData : remainingGroupData,
+                          tableGridLayoutConfig,
+                          media,
+                        )
+                      }
+                    </ConfigProvider.Context.Consumer>
+                  )
+                }
               </ScrollLayout>
             </div>
 
@@ -145,8 +168,9 @@ const AdvancedSearchPanel: FC<AdvancedSearchPanelProps> = (props) => {
     </Overlay>,
     getPopupContainer(),
   );
-};
+});
 
+// @ts-ignore
 AdvancedSearchPanel.defaultProps = {
   groupData: [],
   tableGridLayoutConfig: {
@@ -190,4 +214,6 @@ AdvancedSearchPanel.defaultProps = {
   },
 };
 
-export default React.memo(AdvancedSearchPanel);
+AdvancedSearchPanel.displayName = 'AdvancedSearchPanel';
+
+export default AdvancedSearchPanel;

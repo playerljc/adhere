@@ -1,12 +1,15 @@
 import Base from './base';
 import clientDetection from './clientDetection';
+import Collection from './collection';
 import Color from './color';
 import Date from './date';
 import Dom from './dom';
 import Encrypt from './encrypt';
 import Format from './format';
+import Gcoord from './gcoord';
 import Geometry from './geometry';
 import Math from './math';
+import Size from './size';
 import SystemManager from './systemmanager';
 import Tree from './tree';
 import Url from './url';
@@ -27,4 +30,7 @@ export default {
   ...Date,
   ...Encrypt,
   ...Format,
+  ...Size,
+  ...Gcoord,
+  ...Collection,
 };

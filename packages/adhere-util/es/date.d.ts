@@ -27,5 +27,22 @@ declare const DateUtil: {
      * @return number
      */
     getTimezone(): number;
+    /**
+     * formatMilliseconds
+     * @description format毫秒数
+     * @param {number} milliseconds 毫秒数
+     * @return {
+     *   days: number;
+     *   hours: number;
+     *   minutes: number;
+     *   remainingSeconds: number;
+     * }
+     */
+    formatMilliseconds(milliseconds: number): {
+        days: number;
+        hours: number;
+        minutes: number;
+        remainingSeconds: number;
+    };
 };
 export default DateUtil;

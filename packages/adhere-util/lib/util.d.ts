@@ -1,4 +1,24 @@
 declare const _default: {
+    processAsyncQueue(tasks?: import("./types").ProcessAsyncQueueItem[]): Promise<void>;
+    CRSTypes: typeof import("gcoord").CRSTypes;
+    transform: <T extends import("gcoord").GeoJSON | import("gcoord").Position>(input: T | string, crsFrom: import("gcoord").CRSTypes, crsTo: import("gcoord").CRSTypes) => T;
+    WGS84: import("gcoord").CRSTypes.WGS84;
+    WGS1984: import("gcoord").CRSTypes.WGS84;
+    EPSG4326: import("gcoord").CRSTypes.WGS84;
+    GCJ02: import("gcoord").CRSTypes.GCJ02;
+    AMap: import("gcoord").CRSTypes.GCJ02;
+    BD09: import("gcoord").CRSTypes.BD09;
+    BD09LL: import("gcoord").CRSTypes.BD09;
+    Baidu: import("gcoord").CRSTypes.BD09;
+    BMap: import("gcoord").CRSTypes.BD09;
+    BD09MC: import("gcoord").CRSTypes.BD09MC;
+    BD09Meter: import("gcoord").CRSTypes.BD09MC;
+    EPSG3857: import("gcoord").CRSTypes.EPSG3857;
+    EPSG900913: import("gcoord").CRSTypes.EPSG3857;
+    EPSG102100: import("gcoord").CRSTypes.EPSG3857;
+    WebMercator: import("gcoord").CRSTypes.EPSG3857;
+    WM: import("gcoord").CRSTypes.EPSG3857;
+    prettyBytes(number: any, options?: import("./types").PrettyBytesOptions): string;
     prettierJSON(_jsonStr?: string): string;
     compressJSON(_jsonStr?: string): string;
     prettierXML(_xmlStr?: string): any;
@@ -11,7 +31,7 @@ declare const _default: {
     compressSQL(_sqlStr?: string): any;
     jsonToXML(_jsonStr?: string): any;
     xmlToJSON(_xmlStr?: string, prettier?: boolean): string;
-    base46Encode(str: string): any;
+    base64Encode(str: string): any;
     base64Decode(_base64Str: string): string;
     chineseToUTF8(_chineseStr?: string): string;
     UTF8ToChinese(_utf8Str: string): string;
@@ -27,76 +47,92 @@ declare const _default: {
     hashEncryptToSHA3_348(_value?: string): string;
     hashEncryptToSHA3_512(_value?: string): string;
     hashEncryptToRIPEMD160(_value?: string): string;
-    symmetricEncryptToAES(_value?: string, _pwd?: string): any;
-    symmetricEncryptToDES(_value?: string, _pwd?: string): any;
-    symmetricEncryptToRC4(_value?: string, _pwd?: string): any;
-    symmetricEncryptToRabbit(_value?: string, _pwd?: string): any;
-    symmetricEncryptToTripleDes(_value?: string, _pwd?: string): any;
-    symmetricDecryptToAES(_value?: string, _pwd?: string): any;
-    symmetricDecryptToDES(_value?: string, _pwd?: string): any;
-    symmetricDecryptToRC4(_value?: string, _pwd?: string): any;
-    symmetricDecryptToRabbit(_value?: string, _pwd?: string): any;
-    symmetricDecryptToTripleDes(_value?: string, _pwd?: string): any;
+    symmetricEncryptToAES(_value?: string, _pwd?: string, options?: any): any;
+    symmetricEncryptToDES(_value?: string, _pwd?: string, options?: any): any;
+    symmetricEncryptToRC4(_value?: string, _pwd?: string, options?: any): any;
+    symmetricEncryptToRabbit(_value?: string, _pwd?: string, options?: any): any;
+    symmetricEncryptToTripleDes(_value?: string, _pwd?: string, options?: any): any;
+    symmetricDecryptToAES(_value?: string, _pwd?: string, options?: any): any;
+    symmetricDecryptToDES(_value?: string, _pwd?: string, options?: any): any;
+    symmetricDecryptToRC4(_value?: string, _pwd?: string, options?: any): any;
+    symmetricDecryptToRabbit(_value?: string, _pwd?: string, options?: any): any;
+    symmetricDecryptToTripleDes(_value?: string, _pwd?: string, options?: any): any;
+    dataUrlToBlob(dataUrl: string): Blob | null;
     toTimestampByFormatStrAndTimeZone(str: string, timezone: string): number;
     toStrByTimestampAndTimeZone(_timestamp: string, timezone: string): string;
     getCurrentTimestamp(): number;
     getTimezone(): number;
+    formatMilliseconds(milliseconds: number): {
+        days: number;
+        hours: number;
+        minutes: number;
+        remainingSeconds: number;
+    };
+    parse(path?: string, config?: import("./types").IUrlConfig): object | null;
+    stringify(record: object, config?: import("./types").IUrlConfig): string;
+    getPathName(publicPath?: string, router?: "hash" | "browser"): string;
+    getSearch(router?: "hash" | "browser"): string | undefined;
+    getFullPath(): string;
     treeToArray: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], config: {
         parentIdAttr: string;
         rootParentId: string | number;
-    }) => {
+    }, keyAttr?: string) => {
         [props: string]: any;
-        children?: any[] | undefined;
-        key?: string | number | undefined;
+        children?: any[];
+        key: string;
     }[];
     arrayToAntdTree: (arr: {
         [props: string]: any;
-        children?: any[] | undefined;
-        isLeaf?: boolean | undefined;
+        children?: any[];
+        isLeaf?: boolean;
         properties?: any;
-    }[], config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Pick<import("./types").IAntdTreeNode, "title" | "key" | "isLeaf" | "children" | "properties">)[];
-    arrayToAntdTreeSelect: (arr: any[], config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Pick<import("./types").IAntdTreeNode, "title" | "key" | "isLeaf" | "children" | "properties">)[];
-    getAncestor: (data: any[], node: any, config: Pick<import("./types").IFlatTreeArrNode, "keyAttr" | "parentIdAttr" | "rootParentId">) => any[];
-    getDescendants: (data: any[], node: any, config: Pick<import("./types").IFlatTreeArrNode, "keyAttr" | "parentIdAttr" | "rootParentId">) => any[];
+    }[], config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
+    arrayToAntdTreeSelect: (arr: any[], config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
+    getAncestor: (data: any[], node: any, config: Omit<import("./types").IFlatTreeArrNode, "titleAttr">) => any[];
+    getDescendants: (data: any[], node: any, config: Omit<import("./types").IFlatTreeArrNode, "titleAttr">) => any[];
     filterTreeByFlatData: (treeFlatNodes: any[], kw: string, config: import("./types").IFlatTreeArrNode & {
         filterAttr: string;
-    }) => (import("./types").IFlatTreeArrNode & Pick<import("./types").IAntdTreeNode, "title" | "key" | "isLeaf" | "children" | "properties">)[];
+    }, filter?: (nodeData: any) => boolean) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
     filterTree: (treeNodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], kw: string, config: import("./types").IFlatTreeArrNode & {
         filterAttr: string;
-    }) => (import("./types").IFlatTreeArrNode & Pick<import("./types").IAntdTreeNode, "title" | "key" | "isLeaf" | "children" | "properties">)[];
+    }, filter?: (nodeData: any) => boolean) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
     findNodeByKey: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], val: any, config: {
         keyAttr: string;
+        childrenKey?: string;
     }) => import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode | null;
+    findParentNodeByKey: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], val: any, config: {
+        keyAttr: string;
+        childrenKey?: string;
+    }) => import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode | null | undefined;
     transformTreeData: (treeData: any[], childrenAttr: string, onCallback: (node: any) => import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode) => (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[];
     getLeafNodesByIndex: (nodes: {
         [props: string]: any;
-    }[], childrenAttr?: string | undefined, indexAttr?: string | undefined) => {
+    }[], childrenAttr?: string, indexAttr?: string) => {
         [props: string]: any;
     }[];
     getLeafNodes: (nodes: {
         [props: string]: any;
-    }[], childrenAttr?: string | undefined) => {
+    }[], childrenAttr?: string) => {
         [props: string]: any;
     }[];
     getLeafNodeByFlatData: (arr: any[], config: import("./types").IFlatTreeArrNode) => {
         [props: string]: any;
     }[];
-    getLeafNodeByFlatDataToIndex: (arr: any[], indexAttr?: string | undefined) => {
+    getLeafNodeByFlatDataToIndex: (arr: any[], indexAttr?: string) => {
         [props: string]: any;
     }[];
-    getTreeLevel: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[]) => number;
-    getTreeLevelByIndex: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], indexAttr?: string | undefined) => number;
+    getTreeLevel: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], keyAttr?: string) => number;
+    getTreeLevelByIndex: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], indexAttr: string, keyAttr: string) => number;
     getTreeLevelToFlat: (flatArr: any[], config: import("./types").IFlatTreeArrNode) => number;
     getTreeLevelByIndexToFlat: (flatArr: any[], config: import("./types").IFlatTreeArrNode, indexAttr: string) => number;
-    completionIncompleteFlatArr: (treeFlatNodes: any[], incompleteTreeFlatNodes: any, config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Pick<import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode, "key" | "isLeaf" | "children" | "properties">)[];
-    excludeAntdTreeNodes: (nodes: import("./types").IAntdTreeNode[], excludeKeys: string[]) => (import("./types").IFlatTreeArrNode & Pick<import("./types").IAntdTreeNode, "title" | "key" | "isLeaf" | "children" | "properties">)[];
-    excludeAntdSelectTreeNodes: (nodes: import("./types").IAntdTreeSelectNode[], excludeKeys: string[]) => (import("./types").IFlatTreeArrNode & Pick<import("./types").IAntdTreeSelectNode, "label" | "key" | "isLeaf" | "children" | "properties">)[];
-    getLang(): string;
-    setLang(lang?: string): void;
-    getDatePickerFormat(): string;
-    casUrl({ baseUrl, enterUrl }: {
+    getNodeLevel: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], node: import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode, keyAttr: string) => number;
+    completionIncompleteFlatArr: (treeFlatNodes: any[], incompleteTreeFlatNodes: any, config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode, "value">)[];
+    excludeAntdTreeNodes: (nodes: import("./types").IAntdTreeNode[], excludeKeys: string[], keyAttr?: string) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
+    excludeAntdSelectTreeNodes: (nodes: import("./types").IAntdTreeSelectNode[], excludeKeys: string[], keyAttr?: string) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeSelectNode, "value">)[];
+    casUrl({ baseUrl, enterUrl, defaultLocal }: {
         baseUrl: any;
         enterUrl: any;
+        defaultLocal: any;
     }): string;
     casLogoutUrl({ baseUrl, enterUrl, params }: {
         baseUrl: any;
@@ -133,6 +169,23 @@ declare const _default: {
         height: number;
         radius: number;
     }, onDraw: (ctx: CanvasRenderingContext2D) => {}): void;
+    calculateNewElementsInfo({ elementsInfo, widthOrigin, heightOrigin, widthNew, heightNew, }: {
+        elementsInfo: {
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+        }[];
+        widthOrigin: number;
+        heightOrigin: number;
+        widthNew: number;
+        heightNew: number;
+    }): {
+        newX: number;
+        newY: number;
+        newWidth: number;
+        newHeight: number;
+    }[];
     toPoint(percent: string): number;
     toPercent(point: number): string;
     straightLineIntersection(p1: import("./types").IPoint, p2: import("./types").IPoint, p3: import("./types").IPoint, p4: import("./types").IPoint): import("./types").IPoint;
@@ -146,7 +199,7 @@ declare const _default: {
         p2: import("./types").IPoint;
     }): number;
     clientToCtxPoint({ event, rect }: {
-        event: MouseEvent;
+        event: MouseEvent | TouchEvent;
         rect: DOMRect;
     }): import("./types").IPoint;
     isPointInCircle(point: import("./types").IPoint, circle: import("./types").ICircle): boolean;
@@ -168,12 +221,14 @@ declare const _default: {
     angleToRadian(angle: any): number;
     distance(value: number, unit: "kilometer"): number;
     getCirclePoint(center: import("./types").IPoint, raduis: number, angle: number): import("./types").IPoint;
-    getOvalPoint(center: import("./types").IPoint, raduisX: number, radiusY: number, angle: number): import("./types").IPoint;
+    getOvalPoint(center: import("./types").IPoint, radiusX: number, radiusY: number, angle: number): import("./types").IPoint;
+    pxToRemNumber(px: number, base: number): number;
+    pxToRem(px: number, base: number, media?: import("@baifendian/adhere-ui-configprovider/es/types").ConfigProviderProps["media"]): string;
     isTextNode(el: Node): boolean;
     isCommentNode(el: Node): boolean;
     isElementNode(el: Node): boolean;
     createElement(htmlStr: string): HTMLElement;
-    getTopDom(target: any, selector: string): HTMLElement | null;
+    getTopDom(source: HTMLElement, selector: string | string[]): HTMLElement | null;
     on(el: any, tag: string, type: string, handler: Function, capture?: boolean): void;
     off(el: HTMLElement, tag: string, type: string, handler: Function): void;
     addClass(el: any, classes?: string): void;
@@ -211,29 +266,50 @@ declare const _default: {
         right: number;
         bottom: number;
     };
-    isIframeEmbed(): boolean;
-    addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean | undefined) => Function;
+    isIframeEmbed(): boolean | null;
+    addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean) => Function;
     clickInRange(params: {
         el: HTMLElement;
         rootEl: HTMLElement;
-        bodyClickHandler?: Function | undefined;
+        bodyClickHandler?: Function;
     }): Function;
+    includeHTML(attr: string | undefined, onLoadError: () => string): Promise<string>;
+    setCursorToEnd(element: HTMLElement): void;
+    setCursorPositionToNode(node: Node, offset: number): void;
+    setCursorPosition(element: HTMLElement, offset: number): void;
+    getCurrentElementWithCursor(): Node | null;
+    getCurrentParentElementWithCursor(): Node | null;
+    getCursorIndex(): number;
+    getCursorRectByDocument(): DOMRect | null;
+    getTransformValues(element: HTMLElement): {
+        translateX: number;
+        translateY: number;
+        scaleX: number;
+        scaleY: number;
+        rotate: number;
+    };
+    getZoom(): number;
+    getScrollbarWidth(): number;
+    getMaximizedViewportSize(): {
+        width: number;
+        height: number;
+    };
+    getProportionalSize(origin: number, designWidth?: number): number;
     rgbRandom(): string;
     color16Random(): string;
     colorToRgb(color: string): number[];
-    rgbToColor(r: string | number, g: string | number, b: string | number): string;
-    isEmpty(value: any): boolean; /**
-     * 函数节流
-     */
+    rgbToColor(r: number | string, g: number | string, b: number | string): string;
+    isEmpty(value: any): boolean;
     isNumber(val: any): boolean;
     isBoolean(val: any): boolean;
     isString(val: any): boolean;
     isSymbol(val: any): boolean;
     isPrimitive(val: any): boolean;
-    isArray(obj: any): boolean;
+    isArray(obj: any): obj is any[];
     isFunction(obj: any): boolean;
     isObject(obj: any): boolean;
     isRef(obj: any): boolean;
+    isPromise(obj: any): any;
     chainCallAssignment({ obj, chainStr, value }: {
         obj: any;
         chainStr: any;
@@ -243,10 +319,11 @@ declare const _default: {
         obj: any;
         chainStr: any;
     }): any;
-    toCamelCase(str: any, toUpperCase?: boolean): any;
+    toCamelCase(str: any, split?: string, toUpperCase?: boolean): any;
     isKebabCase(name: any): boolean;
     isPascalCase(name: any): boolean;
-    pascalCaseToKebabCase(name: any): any;
+    pascalCaseToKebabCase(_str: any, symbol?: string): any;
+    pascalCaseToKebabCase2(name: any, symbol?: string): any;
     execExpression(context: any, expressionStr: any, data: any): any;
     getCookie(name?: string): string;
     noop(): Function;
@@ -255,5 +332,7 @@ declare const _default: {
     getPropertyVisitPathStr(target: any, key: any): string;
     convertBase64UrlToBlob(data: string): Blob | null;
     omitObject(obj: object): object;
+    capitalized(str: string): string;
+    lowercaseInitial(str: string): string;
 };
 export default _default;

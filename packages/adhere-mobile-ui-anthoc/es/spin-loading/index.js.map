@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["spin-loading/index.js"],"sourcesContent":["import SpinLoading from './SpinLoading';\nexport default SpinLoading;"],"names":["SpinLoading"],"mappings":"OAAOA,gBAAiB,+BACTA"}

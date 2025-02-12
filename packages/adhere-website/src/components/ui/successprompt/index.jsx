@@ -1,13 +1,16 @@
-import { Button } from 'antd';
-import React from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
 
-import { SuccessPrompt } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
   FunctionPropsSection,
   Section,
 } from '@/lib/PlaygroundPage';
+
+import P1 from './examples/p1';
+import P2 from './examples/p2';
 
 export default () => {
   function boxPanelConfig() {
@@ -19,35 +22,28 @@ export default () => {
         scope: { React },
         cardProps: {
           description: {
-            title: '基本使用',
-            info: '基本使用',
+            title: '使用message',
+            info: 'openSuccessMessage',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { SuccessPrompt } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      SuccessPrompt.openSuccessMessage('操作成功');
-    }}
-  >
-    显示成功提示
-  </Button>
-    `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              SuccessPrompt.openSuccessMessage('操作成功');
-            }}
-          >
-            显示成功提示
-          </Button>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
+      },
+      {
+        id: `p2`,
+        name: `使用Dialog`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '使用Dialog',
+            info: 'openSuccessDialog',
+          },
+        },
+        type: 'PlayGround',
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
     ];
   }
@@ -70,19 +66,77 @@ export default () => {
             title: '方法',
             data: [
               {
-                name: 'SuccessPrompt',
+                name: 'openSuccessMessage',
                 desc: '显示成功提示',
                 modifier: 'global',
                 params: [
                   {
-                    name: 'text',
+                    name: 'content',
                     desc: '提示的文本',
-                    type: 'string | React.ReactElement',
+                    type: 'JointContent',
+                    defaultVal: '',
+                    required: 'false',
+                  },
+                  {
+                    name: 'duration',
+                    desc: '显示的时间',
+                    type: 'number | VoidFunction',
+                    defaultVal: '',
+                    required: 'false',
+                  },
+                  {
+                    name: 'onClose',
+                    desc: '关闭的事件',
+                    type: 'VoidFunction',
+                    defaultVal: '',
+                    required: 'false',
+                  },
+                ],
+                returnType: 'MessageType',
+                returnDesc: '',
+              },
+              {
+                name: 'openSuccessDialog',
+                desc: '显示成功提示',
+                modifier: 'global',
+                params: [
+                  {
+                    name: 'title',
+                    desc: '提示的标题',
+                    type: 'React.ReactNode',
+                    defaultVal: '',
+                    required: 'false',
+                  },
+                  {
+                    name: 'content',
+                    desc: '提示的内容',
+                    type: 'React.ReactNode',
+                    defaultVal: '',
+                    required: 'false',
+                  },
+                  {
+                    name: 'mask',
+                    desc: '是否显示遮罩',
+                    type: 'boolean',
+                    defaultVal: '',
+                    required: 'false',
+                  },
+                  {
+                    name: 'maskClosable',
+                    desc: '遮罩是否可以点击',
+                    type: 'boolean',
                     defaultVal: '',
                     required: 'true',
                   },
+                  {
+                    name: 'duration',
+                    desc: '持续的时间',
+                    type: 'number',
+                    defaultVal: '3000',
+                    required: 'false',
+                  },
                 ],
-                returnType: 'void',
+                returnType: 'MessageType',
                 returnDesc: '',
               },
             ],

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-import PlaygroundMulit from '@/lib/PlaygroundMulit';
+import PlaygroundMulti from '@/lib/PlaygroundMulti';
 
 import HeatMapLayer from './HeatMapLayer';
 
@@ -10,7 +10,7 @@ const indexJsCodeText = `
  import React, { useEffect, useRef } from 'react';
  import HeatMapLayer from './HeatMapLayer';
  import styles from './index.less';
- 
+
  function Heat() {
    const ref = useRef();
 
@@ -29,10 +29,10 @@ const indexJsCodeText = `
 
     map.addOverlay(new HeatMapLayer(map));
   }, []);
-  
+
   return <div className={styles.Wrap} ref={ref} />;
  }
- 
+
  export default Heat;
 `;
 
@@ -95,7 +95,7 @@ function Heat() {
   }, []);
 
   return (
-    <PlaygroundMulit
+    <PlaygroundMulti
       config={[
         {
           title: 'index.jsx',
@@ -118,7 +118,7 @@ function Heat() {
       ]}
     >
       <div className={styles.Wrap} ref={ref} />
-    </PlaygroundMulit>
+    </PlaygroundMulti>
   );
 }
 

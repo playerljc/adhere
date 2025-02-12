@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["badge/index.js"],"sourcesContent":["import Badge from './Badge';\nexport default Badge;"],"names":["Badge"],"mappings":"OAAOA,UAAW,yBACHA"}

@@ -1,5 +1,5 @@
 import { DatePicker, Input, InputNumber, Select } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -69,7 +69,7 @@ class TableImpl extends TableImplement {
   }
 
   getData() {
-    return this.state.dataSource.list;
+    return this.state?.dataSource?.list;
   }
 
   getPagination() {
@@ -111,7 +111,7 @@ class TableImpl extends TableImplement {
         sorter: true,
         sortOrder: this.sortOrder('birthday'),
         render: (val) =>
-          val ? moment(val).format(Resource.Dict.value.ResourceMomentFormat10.value()) : '',
+          val ? dayjs(val).format(Resource.Dict.value.ResourceMomentFormat10.value()) : '',
       },
       {
         title: '所在部门',
@@ -195,8 +195,8 @@ class TableImpl extends TableImplement {
                     <RangePicker
                       style={{ width: '90%' }}
                       value={[this.state.startTime, this.state.endTime]}
-                      onChange={(moments) => {
-                        this.onDateTimeRangeChange(['startTime', 'endTime'], moments);
+                      onChange={(dayjss) => {
+                        this.onDateTimeRangeChange(['startTime', 'endTime'], dayjss);
                       }}
                       getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
                     />
@@ -309,10 +309,9 @@ class TableImpl extends TableImplement {
             this.request
               .get({
                 mock: true,
-                // eslint-disable-next-line global-require
                 path: require('./mock.js').default.data,
               })
-              .then((result) => {
+              .promise.then((result) => {
                 this.setState(
                   {
                     dataSource: {

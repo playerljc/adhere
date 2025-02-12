@@ -1,0 +1,29 @@
+.adhere-mobile-ui-prsl-item {
+  display: flex;
+
+  > .adhere-mobile-ui-prsl-item-extra {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    margin-right: 10px;
+    margin-left: 5px;
+  }
+
+  > .adhere-mobile-ui-prsl-item-main {
+    flex: 1;
+    min-width: 0;
+
+    > .adm-list-item {
+      > .adm-list-item-content {
+        > .adm-list-item-content-main {
+          flex: 1;
+          min-width: 0;
+        }
+
+        > .adm-list-item-content-arrow {
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+}

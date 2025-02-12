@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["tour/index.js"],"sourcesContent":["import Tour from './Tour';\nexport default Tour;"],"names":["Tour"],"mappings":"OAAOA,SAAU,wBACFA"}

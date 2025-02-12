@@ -17,7 +17,7 @@ yarn add @baifendian/adhere-util-resource
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/util/resource](http://49.232.163.126:8083/adhere/util/resource)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/util/resource](https://playerljc.github.io/adhere/index.html#/adhere/adhere/util/resource)
 
 
 

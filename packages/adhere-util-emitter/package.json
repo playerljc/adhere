@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-emitter",
-  "version": "1.0.24",
+  "version": "2.11.0",
   "description": "观察者模式",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -14,6 +14,7 @@
   "author": "playerljc",
   "main": "lib/index.js",
   "module": "es/index.js",
+  "typings": "es/index.d.ts",
   "files": [
     "lib",
     "es",
@@ -21,23 +22,23 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "buildpackage:cjs": "ctbuild buildpackagets",
-    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.module.json -o es",
-    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
+    "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
+    "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
+    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename AdhereEmitter --define alias=@,evnVars=true",
-    "generatorchangelog": "bd changelog/CHANGELOG.html"
-  },
-  "resolutions": {
-    "graceful-fs": "4.2.2"
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "upgrade": "yarn upgrade",
+    "upgrade-interactive": "yarn upgrade-interactive"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.7.4",
-    "@ctsj/build": "^4.0.19",
+    "@babel/runtime": "^7.25.6",
+    "@baifendian/adhere-e2e": "^2.11.0",
+    "@ctsj/build": "^6.3.0",
     "npm-run-all": "^4.1.5",
-    "typescript": "^4.9.4"
+    "typescript": "^5.6.2"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "f900c4df542ad64a8fb084c88eb306c2254d066b"
+  "gitHead": "dac49fef4e4aa284bc4e41a5a17bbe9f27faecb3"
 }

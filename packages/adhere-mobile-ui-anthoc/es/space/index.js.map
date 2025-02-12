@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["space/index.js"],"sourcesContent":["import Space from './Space';\nexport default Space;"],"names":["Space"],"mappings":"OAAOA,UAAW,yBACHA"}

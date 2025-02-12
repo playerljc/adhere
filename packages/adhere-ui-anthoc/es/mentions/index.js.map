@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["mentions/index.js"],"sourcesContent":["import Mentions from './Mentions';\nexport default Mentions;"],"names":["Mentions"],"mappings":"OAAOA,aAAc,4BACNA"}

@@ -1,5 +1,4 @@
-import React, { FC } from 'react';
-import { FunctionProps } from './types';
-declare const FunctionProps: FC<FunctionProps>;
-declare const _default: React.NamedExoticComponent<FunctionProps>;
-export default _default;
+import React from 'react';
+import type { FunctionProps } from './types';
+declare const FunctionProps: React.NamedExoticComponent<FunctionProps>;
+export default FunctionProps;

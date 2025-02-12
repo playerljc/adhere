@@ -1,7 +1,8 @@
-import { Button } from 'antd';
-import React, { useRef } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
 
-import { GlobalIndicator } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -9,10 +10,11 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-export default () => {
-  const ref = useRef();
-  let handler = null;
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
 
+export default () => {
   function boxPanelConfig() {
     return [
       {
@@ -26,39 +28,9 @@ export default () => {
             info: '基本使用',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { GlobalIndicator } from '@baifendian/adhere';
-
-  <Button
-    onClick={() => {
-      setTimeout(() => {
-        // eslint-disable-next-line no-use-before-define
-        GlobalIndicator.hide(el);
-      }, 2000);
-
-      const el = GlobalIndicator.show(document.body, '全局的遮罩');
-    }}
-  >
-    显示遮罩
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            onClick={() => {
-              setTimeout(() => {
-                // eslint-disable-next-line no-use-before-define
-                GlobalIndicator.hide(el);
-              }, 2000);
-
-              const el = GlobalIndicator.show(document.body, '全局的遮罩');
-            }}
-          >
-            显示遮罩
-          </Button>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -71,74 +43,24 @@ export default () => {
             info: '使用parent属性遮罩局部元素',
           },
         },
-        codeText: `
-  import React, { useRef } from 'react';
-  import { Button } from 'antd';
-  import { GlobalIndicator } from '@baifendian/adhere';
-
-  let handler = null;
-  const ref = useRef();
-
-  <div>
-    <div
-      ref={ref}
-      style={{ position: 'relative', width: 200, height: 200, wordBreak: 'break-all' }}
-    >
-      In the process of internal desktop applications development, many different design specs
-      and implementations would be involved, which might cause designers and developers
-      difficulties and duplication and reduce the efficiency of development.
-    </div>
-    <div>
-      <Button
-        type="primary"
-        onClick={() => {
-          handler = GlobalIndicator.show(ref.current, '处理中...');
-        }}
-      >
-        显示
-      </Button>
-
-      <Button
-        onClick={() => {
-          GlobalIndicator.hide(handler);
-        }}
-      >
-        取消
-      </Button>
-    </div>
-  </div>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div>
-            <div
-              ref={ref}
-              style={{ position: 'relative', width: 200, height: 200, wordBreak: 'break-all' }}
-            >
-              In the process of internal desktop applications development, many different design
-              specs and implementations would be involved, which might cause designers and
-              developers difficulties and duplication and reduce the efficiency of development.
-            </div>
-            <div>
-              <Button
-                type="primary"
-                onClick={() => {
-                  handler = GlobalIndicator.show(ref.current, '处理中...');
-                }}
-              >
-                显示
-              </Button>
-
-              <Button
-                onClick={() => {
-                  GlobalIndicator.hide(handler);
-                }}
-              >
-                取消
-              </Button>
-            </div>
-          </div>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
+      },
+      {
+        id: `p3`,
+        name: `各种大小`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '各种大小',
+            info: '各种大小',
+          },
+        },
+        type: 'PlayGround',
+        codeText: P3CodeText,
+        renderChildren: () => <P3 />,
       },
     ];
   }
@@ -184,6 +106,13 @@ export default () => {
                     defaultVal: '19999',
                     required: 'false',
                   },
+                  {
+                    name: 'size',
+                    desc: '大小',
+                    type: 'default | small | large',
+                    defaultVal: 'default',
+                    required: 'false',
+                  },
                 ],
                 returnType: 'HtmlElement',
                 returnDesc: '返回遮罩的Html对象',
@@ -201,6 +130,14 @@ export default () => {
                     required: 'true',
                   },
                 ],
+                returnType: '',
+                returnDesc: '',
+              },
+              {
+                name: 'hideAll',
+                desc: '取消所有遮罩',
+                modifier: 'public',
+                params: [],
                 returnType: '',
                 returnDesc: '',
               },

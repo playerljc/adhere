@@ -1,13 +1,15 @@
-import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
+import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import classNames from 'classnames';
-import React, { FC, ReactNode, useCallback, useContext } from 'react';
+import type { FC, ReactNode } from 'react';
+import React, { useCallback, useContext } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Intl from '@baifendian/adhere-util-intl';
 
-import SearchEditableTable from '../../../Editable/SearchEditableTable';
-import SearchTable, { SearchTableContext, selectorPrefix } from '../../../SearchTable';
-import { EditorTableControlProps } from '../../../types';
+import type SearchEditableTable from '../../../Editable/SearchEditableTable';
+import type SearchTable from '../../../SearchTable';
+import { SearchTableContext, selectorPrefix } from '../../../SearchTable';
+import type { EditorTableControlProps } from '../../../types';
 
 /**
  * EditableTableControl
@@ -56,11 +58,10 @@ const EditableTableControl: FC<EditorTableControlProps> = ({
 
   const validateFieldsSuccess = useCallback((values) => {
     if (onSave) {
-      onSave(values.dataSource).then(() => updateEditorCellTableData(values.dataSource));
-      return;
+      return onSave(values.dataSource).then(() => updateEditorCellTableData(values.dataSource));
     }
 
-    updateEditorCellTableData(values.dataSource);
+    return updateEditorCellTableData(values.dataSource);
   }, []);
 
   const _onEditor = useCallback(() => {
@@ -79,16 +80,22 @@ const EditableTableControl: FC<EditorTableControlProps> = ({
       ?.updateEditorData(changeData)
       ?.then(() => reset());
 
-  const updateTableEdit = () =>
+  const updateTableEdit = () => {
+    // @ts-ignore
+    context?.context?.setFieldValues?.(context?.context?.getData());
+
+    // @ts-ignore
     context?.context?.setState({
       isTableEditor: true,
     });
+  };
 
   /**
    * reset
    * @description 取消
    */
   const reset = () =>
+    // @ts-ignore
     context?.context?.setState({
       isTableEditor: false,
     });
@@ -96,7 +103,7 @@ const EditableTableControl: FC<EditorTableControlProps> = ({
   return (
     <div
       className={classNames(`${selectorPrefix}-editor-table-control`, className)}
-      style={styles || {}}
+      style={styles ?? {}}
     >
       <ConditionalRender
         conditional={!context?.context.state.isTableEditor}
@@ -106,9 +113,9 @@ const EditableTableControl: FC<EditorTableControlProps> = ({
             <div
               className={`${selectorPrefix}-editor-table-control-save-cancel-item`}
               onClick={() =>
-                context?.editable?.tableEditable?.form
-                  ?.validateFields()
-                  ?.then?.((values) => validateFieldsSuccess(values))
+                context?.editable?.tableEditable?.form?.validateFields()?.then?.((values) => {
+                  return validateFieldsSuccess(values);
+                })
               }
             >
               <ConditionalRender conditional={!renderSave} noMatch={() => renderSave?.()}>
@@ -143,5 +150,7 @@ const EditableTableControl: FC<EditorTableControlProps> = ({
     </div>
   );
 };
+
+EditableTableControl.displayName = 'EditableTableControl';
 
 export default EditableTableControl;

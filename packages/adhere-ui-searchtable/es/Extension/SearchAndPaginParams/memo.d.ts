@@ -10,6 +10,7 @@ export declare class Memo {
         components: any;
     } | undefined;
     findIndexByPath(path: any): number;
+    deleteByPath(_path: string): void;
     deleteByIndex(index: any): {
         path: string;
         components: any;

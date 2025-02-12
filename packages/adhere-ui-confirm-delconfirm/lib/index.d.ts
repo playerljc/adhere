@@ -1,2 +1,2 @@
-import DelConform from './delconfirm';
+import DelConform from './DelConfirm';
 export default DelConform;

@@ -1,8 +1,8 @@
-import { arrayMoveImmutable } from 'array-move';
-import cloneDeep from 'lodash.clonedeep';
-
+// import { arrayMoveImmutable } from 'array-move';
 import { SearchTableStateImplement } from '../../SearchTableStateImplement';
-import { SearchTableImplementState, SearchTableStateImplementProps } from '../../types';
+import { cloneDeep } from '../../Util';
+import { findRecord, swap } from '../../Util';
+import type { SearchTableImplementState, SearchTableStateImplementProps } from '../../types';
 import SearchRowDragSortFactory from './SearchRowDragSortFactory';
 
 /**
@@ -15,25 +15,35 @@ class SearchRowDragSortStateTable extends SearchRowDragSortFactory<
 >(SearchTableStateImplement) {
   /**
    * moveRow
-   * @param dragIndex
-   * @param hoverIndex
+   * @param {any} dragRecord
+   * @param {any} hoverRecord
    * @return Promise<void>
    */
-  moveRow(dragIndex: number, hoverIndex: number): Promise<void> {
+  moveRow(dragRecord: any, hoverRecord: any): Promise<void> {
     return new Promise((resolve) => {
       const listData = cloneDeep(this.state[this.getServiceName()]);
       const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];
-      listData[this.getFetchListPropName()][this.getDataKey()] = arrayMoveImmutable(
+
+      const rowKey = this.getRowKey();
+      const _dragRecord = findRecord(dataSource, rowKey, dragRecord[rowKey]);
+      const _hoverRecord = findRecord(dataSource, rowKey, hoverRecord[rowKey]);
+
+      swap(_dragRecord, _hoverRecord);
+
+      listData[this.getFetchListPropName()][this.getDataKey()] = [...dataSource];
+      /*arrayMoveImmutable(
         dataSource,
         dragIndex,
         hoverIndex,
-      );
+      );*/
 
       this.setState(
         {
           [this.getServiceName()]: listData,
         },
-        () => resolve(),
+        () => {
+          resolve();
+        },
       );
     });
   }

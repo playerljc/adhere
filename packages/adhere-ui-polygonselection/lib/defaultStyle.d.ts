@@ -1,13 +1,14 @@
+/**
+ * 几何图形默认的样式
+ */
 declare const _default: {
     fillStyle: string;
     strokeStyle: string;
     lineWidth: number;
-    lineCap: string;
-    lineJoin: string;
+    lineCap: CanvasLineCap;
+    lineJoin: CanvasLineJoin;
     lineDash: never[];
     lineDashOffset: number;
+    globalAlpha: number;
 };
-/**
- * 几何图形默认的样式
- */
 export default _default;

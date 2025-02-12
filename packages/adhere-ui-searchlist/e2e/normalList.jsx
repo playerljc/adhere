@@ -1,0 +1,134 @@
+import React from 'react';
+
+import SearchList from '../src/index';
+import './serviceRegister';
+
+const { ProSearchStateList, SearchListStateImplementFactory } = SearchList;
+
+const serviceName = 'user';
+
+/**
+ * ProSearchStateListImpl
+ * @class ProSearchStateListImpl
+ * @classdesc ProSearchStateListImpl
+ */
+class ProSearchStateListImpl extends ProSearchStateList {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      ...this.state,
+      expandedRowKeys: [],
+    };
+  }
+
+  getLimit() {
+    return 5;
+  }
+
+  getComponentId() {
+    return 'ProSearchStateListImpl';
+  }
+
+  getServiceName() {
+    return serviceName;
+  }
+
+  getFetchListPropName() {
+    return 'fetchList';
+  }
+
+  getDataKey() {
+    return 'list';
+  }
+
+  getTotalKey() {
+    return 'total';
+  }
+
+  getRowSelection() {
+    return null;
+  }
+
+  renderSearchFooterItems(defaultItems) {
+    return super.renderSearchFooterItems([
+      {
+        key: 'editorTable1',
+        value: <span>编辑</span>,
+      },
+      {
+        key: 'editorTable1',
+        value: <span>编辑</span>,
+      },
+      {
+        key: 'editorTable1',
+        value: <span>编辑</span>,
+      },
+      ...defaultItems,
+    ]);
+  }
+
+  getColumns() {
+    return [
+      {
+        dataIndex: 'title',
+        key: 'title',
+        title: '标题',
+        $search: {
+          visible: true,
+          type: 'input',
+        },
+      },
+      {
+        dataIndex: 'subTitle',
+        key: 'subTitle',
+        title: '副标题',
+        $search: {
+          visible: true,
+          type: 'input',
+        },
+      },
+      {
+        dataIndex: 'content',
+        key: 'content',
+        title: '副标题',
+        $search: {
+          visible: true,
+          type: 'textArea',
+        },
+      },
+    ];
+  }
+}
+
+ProSearchStateListImpl.propTypes = {};
+
+const models = [];
+const requireComponent = require.context('./model', false, /.*\.(js)$/);
+requireComponent.keys().forEach((fileName) => {
+  const model = requireComponent(fileName);
+  models.push(model.default());
+});
+
+const Wrap = SearchListStateImplementFactory({
+  serviceNames: [serviceName],
+  middleWares: [],
+  reducer: null,
+  models,
+})(ProSearchStateListImpl);
+
+export default (props) => (
+  <Wrap
+    bodyStyle={{ padding: '20px 30px' }}
+    antdListProps={
+      {
+        // itemLayout: 'vertical',
+        // grid: { gutter: 16, column: 4 },
+        // renderItem: () => {
+        //   return <div>Custom</div>;
+        // },
+      }
+    }
+    {...props}
+  />
+);

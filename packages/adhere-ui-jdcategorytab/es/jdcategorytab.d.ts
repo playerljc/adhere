@@ -1,3 +1,3 @@
-import type { JdCategoryTabHOCFunction, JdCategoryTabProps, JdCategoryTabRefHandle } from './types';
-declare const JdCategoryTabHOC: JdCategoryTabHOCFunction<JdCategoryTabRefHandle, JdCategoryTabProps>;
-export default JdCategoryTabHOC;
+import type { JdCategoryTabComponent } from './types';
+declare const JdCategoryTab: JdCategoryTabComponent;
+export default JdCategoryTab;

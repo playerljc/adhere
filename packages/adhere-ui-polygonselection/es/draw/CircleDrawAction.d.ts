@@ -53,10 +53,7 @@ declare class CircleDrawAction extends DrawAction {
      * @param ctx
      * @param data
      */
-    static drawHistoryPath(ctx: CanvasRenderingContext2D, data: {
-        center: IPoint;
-        radius: number;
-    }): void;
+    static drawHistoryPath(ctx: CanvasRenderingContext2D, data: any): void;
     /**
      * start
      * @param style

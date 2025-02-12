@@ -1,4 +1,4 @@
-import { ColumnEditableConfig, ColumnTypeExt, FormItemType, RowEditableConfig } from '../types';
+import type { ColumnEditableConfig, ColumnTypeExt, FormItemType, RowEditableConfig } from '../types';
 export default function <P, S>(SuperClass: any): {
     new (props: any): {
         [x: string]: any;

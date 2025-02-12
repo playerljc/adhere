@@ -1,4 +1,13 @@
-import type { CSSProperties, ReactElement } from 'react';
+import type { CSSProperties, NamedExoticComponent, ReactElement, ReactNode } from 'react';
+
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
+
+import Label from './Label';
+import Value from './Value';
+
+export type DensityType = 'default' | 'middle' | 'small' | undefined;
+
+export type LayoutType = 'vertical' | 'horizontal';
 
 /**
  * RowCountRef
@@ -34,9 +43,11 @@ export interface RenderGridSearchForm {
   (params: {
     data: DataItem;
     rowCountRef?: RowCountRef;
-    layout?: 'horizontal' | 'vertical';
-    density?: string;
-    parity?: boolean;
+    layout?: LayoutType;
+    density?: DensityType;
+    // parity?: boolean;
+    mode?: TableGridLayoutProps['mode'];
+    media?: ConfigProviderProps['media'];
   }): ReactElement;
 }
 
@@ -58,6 +69,7 @@ export interface DataItem {
     require?: boolean;
     label: any;
     value: any;
+    show?: boolean;
   }[];
 }
 
@@ -70,12 +82,16 @@ export interface TableGridLayoutProps {
   innerClassName?: string;
   innerStyle?: CSSProperties;
   data?: DataItem[];
-  //
   className?: string;
   style?: CSSProperties;
-  layout: 'horizontal' | 'vertical';
-  density?: string;
-  parity?: boolean;
+  layout: LayoutType;
+  density?: DensityType;
+  // parity?: boolean;
+  // 模式
+  //    normal 缺省
+  //    parity奇偶不同色
+  //    bordered label有背景色
+  mode?: 'normal' | 'parity' | 'bordered';
 }
 
 /**
@@ -97,7 +113,7 @@ export interface RenderDetail {
   // 总行数
   rowCount: number;
   // 渲染时候的布局
-  layout: 'horizontal' | 'vertical';
+  layout: LayoutType;
   // 细节
   detail: {
     // 组名称
@@ -108,3 +124,16 @@ export interface RenderDetail {
     detail: GroupRenderDetail;
   }[];
 }
+
+export type TableGridLayoutComponent = NamedExoticComponent<TableGridLayoutProps> & {
+  propTypes: object;
+  defaultProps: object;
+  Label: typeof Label;
+  Value: typeof Value;
+  renderGridSearchFormGroup(
+    data?: DataItem[],
+    props?: Omit<TableGridLayoutProps, 'data'>,
+    media?: ConfigProviderProps['media'],
+  ): ReactNode;
+  getRenderDetail(data: DataItem[], props: Omit<TableGridLayoutProps, 'data'>): RenderDetail;
+};

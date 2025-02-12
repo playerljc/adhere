@@ -92,7 +92,7 @@ class StartGeometry extends Geometry implements IStartGeometry {
 
     const targetStyle = {
       ...GeometryStyle,
-      ...(style || {}),
+      ...(style ?? {}),
     };
 
     ctx.beginPath();

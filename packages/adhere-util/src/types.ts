@@ -11,8 +11,8 @@ export interface ICircle {
 export interface IAntdTreeNode {
   key: string;
   title?: string;
-  value: string;
-  isLeaf: boolean;
+  value?: string;
+  isLeaf?: boolean;
   children?: IAntdTreeNode[];
   properties?: any;
 }
@@ -20,8 +20,8 @@ export interface IAntdTreeNode {
 export interface IAntdTreeSelectNode {
   key: string;
   label?: string;
-  value: string;
-  isLeaf: boolean;
+  value?: string;
+  isLeaf?: boolean;
   children?: IAntdTreeNode[];
   properties?: any;
 }
@@ -51,4 +51,34 @@ export interface IUrlConfig {
   isEncode: boolean;
   // 是否decode
   isDecode: boolean;
+}
+
+/**
+ * PrettyBytesOptions
+ */
+export interface PrettyBytesOptions {
+  signed?: boolean;
+  bits?: boolean;
+  binary?: boolean;
+  locale?: boolean | string;
+  minimumFractionDigits?: number;
+  maximumFractionDigits?: number;
+  space?: boolean;
+}
+
+/**
+ * ProcessAsyncQueueItem
+ * @description 异步执行队列的任务项
+ */
+export interface ProcessAsyncQueueItem {
+  // func函数的参数
+  argv?: any[];
+  // 任务要执行的函数
+  run: (...argv: any[]) => Promise<any>;
+  // run方法执行的上下文
+  context?: any;
+  // run方法成功后的回调
+  success?: (params?: any) => void;
+  // run方法失败后的回调
+  fail?: (error?: any) => void;
 }

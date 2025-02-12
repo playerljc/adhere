@@ -6,6 +6,7 @@ import {
   ConditionalRender,
   DateDisplay,
   DelConfirm,
+  FieldGeneratorToDict,
   Resource,
   SearchTable,
   WarnPrompt,
@@ -59,6 +60,47 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
   }
 
   /**
+   * hasAdvancedSearchPanel
+   * @description 是否有高级搜索按钮
+   * @returns {boolean}
+   */
+  // hasAdvancedSearch() {
+  //   return false;
+  // }
+
+  /**
+   * getGridSearchFormGroupParams
+   * @description 获取GridSearchFormGroup的参数
+   * @return {Array}
+   */
+  // getGridSearchFormGroupParams() {
+  //   return [
+  //     [
+  //       {
+  //         name: 'g1',
+  //         // 一行显示的列数
+  //         columnCount: 3,
+  //         // 各个列的宽度
+  //         colgroup: [, 'auto', , 'auto', , 'auto'],
+  //         data: this.getGridSearchFormGroupDataByColumnConfig(),
+  //       },
+  //     ],
+  //     {},
+  //     {
+  //       // 一共多少行
+  //       rowCount: Number.MAX_VALUE,
+  //       // renderTitleLabel: () => <div>搜索</div>,
+  //       // // 渲染高级查询面板的Collapse
+  //       // renderCollapse: (collapse) => <div>收起</div>,
+  //       // // 渲染高级查询面板显示的按钮
+  //       // renderSearchButton: (callback) => <div onClick={() => callback()}>高级搜索</div>,
+  //       // // 高级查询面板查询按钮的插入位置 (defaultItems) => {}
+  //       // insertSearchButton: null,
+  //     },
+  //   ];
+  // }
+
+  /**
    * Table的列
    * @override
    * @return {*[]}
@@ -83,10 +125,25 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         width: 150,
         render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
         $search: {
-          type: 'select',
+          type: 'dict',
           visible: true,
-          dictName: 'SystemTestSexSelect',
-          sort: 1,
+          dictName: `SystemTestSex${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
+        },
+      },
+      {
+        title: '出生年月',
+        dataIndex: 'birthday',
+        key: 'birthday',
+        align: 'center',
+        width: 200,
+        sorter: true,
+        sortOrder: this.sortOrder('birthday'),
+        render: (val) => <DateDisplay.DateDisplay10 value={val} />,
+        $search: {
+          type: 'rangePicker',
+          visible: true,
+          startName: 'birthDayStart',
+          endName: 'birthDayEnd',
         },
       },
       {
@@ -133,25 +190,9 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         $search: {
           type: 'input',
           visible: true,
-          // valueAttrs: {
-          //   colSpan: 5,
-          // },
-        },
-      },
-      {
-        title: '出生年月',
-        dataIndex: 'birthday',
-        key: 'birthday',
-        align: 'center',
-        width: 200,
-        sorter: true,
-        sortOrder: this.sortOrder('birthday'),
-        render: (val) => <DateDisplay.DateDisplay10 value={val} />,
-        $search: {
-          type: 'rangePicker',
-          visible: true,
-          startName: 'birthDayStart',
-          endName: 'birthDayEnd',
+          valueAttrs: {
+            colSpan: 5,
+          },
         },
       },
       {

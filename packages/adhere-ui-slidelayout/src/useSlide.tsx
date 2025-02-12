@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 
-import { createMask } from './slidelayout';
+import { createMask } from './SlideLayout';
 import type { OverlayProps } from './types';
 
 export default (
@@ -81,7 +81,9 @@ export default (
     }
   }
 
-  useEffect(() => setCollapse(props.collapse as boolean), [props.collapse]);
+  useEffect(() => {
+    setCollapse(props.collapse as boolean);
+  }, [props.collapse]);
 
   useLayoutEffect(() => {
     if (mask) {
@@ -94,6 +96,17 @@ export default (
     }
 
     initial();
+
+    return () => {
+      if (maskEl.current) {
+        try {
+          maskEl.current?.parentElement?.removeChild(maskEl?.current);
+        } catch (e) {}
+
+        // @ts-ignore
+        maskEl.current = null;
+      }
+    };
   }, []);
 
   useLayoutEffect(() => {

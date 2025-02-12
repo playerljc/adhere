@@ -1,0 +1,2 @@
+import _InputNumber from"antd/es/input-number";import{createFactory}from"../util";import InputNegativeNumberInteger from"./InputNegativeNumberInteger";import InputPositiveNumberInteger from"./InputPositiveNumberInteger";var InputNumberIntegerHOC=createFactory(_InputNumber,{precision:0});InputNumberIntegerHOC.displayName="InputNumberInteger",InputNumberIntegerHOC.InputNegativeNumberInteger=InputNegativeNumberInteger,InputNumberIntegerHOC.InputPositiveNumberInteger=InputPositiveNumberInteger;export default InputNumberIntegerHOC;
+//# sourceMappingURL=InputNumberInteger.js.map

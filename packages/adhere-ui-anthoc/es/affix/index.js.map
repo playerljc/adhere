@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["affix/index.js"],"sourcesContent":["import Affix from './Affix';\nexport default Affix;"],"names":["Affix"],"mappings":"OAAOA,UAAW,yBACHA"}

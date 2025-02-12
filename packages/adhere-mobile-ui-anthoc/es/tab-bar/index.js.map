@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["tab-bar/index.js"],"sourcesContent":["import TabBar from './TabBar';\nexport default TabBar;"],"names":["TabBar"],"mappings":"OAAOA,WAAY,0BACJA"}

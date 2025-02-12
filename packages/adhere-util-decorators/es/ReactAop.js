@@ -1,2 +1,2 @@
-import"core-js/modules/es.array.slice.js";export default function(a,c){return function(r,l,t){var e=t.value;return t.value=function(){var r=null;try{var l=!0;(l=a?a.call(this):l)&&(r=e.apply(this,Array.prototype.slice.call(arguments))),c&&c.call(this)}catch(r){console.error(r)}return r},t}}
+export default function(e,n){return function(r,t,l){var a=l.value;return l.value=function(){var r=null;try{var t=!0;(t=e?e.call(this):t)&&(r=a.apply(this,Array.prototype.slice.call(arguments))),n&&n.call(this)}catch(r){console.error(r)}return r},l}}
 //# sourceMappingURL=ReactAop.js.map

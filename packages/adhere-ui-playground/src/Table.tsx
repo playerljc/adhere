@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, memo } from 'react';
+import React, { memo } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -7,7 +7,7 @@ import { TableProps } from './types';
 
 const selectorPrefix = 'adhere-ui-playground-table';
 
-const Table: FC<TableProps> = (props) => {
+const Table = memo<TableProps>((props) => {
   const {
     className = '',
     style = {},
@@ -36,8 +36,8 @@ const Table: FC<TableProps> = (props) => {
             return (
               <th
                 {...thProps}
-                className={classNames(`${selectorPrefix}-header-column`, className || '')}
-                style={{ textAlign: align || 'left', ...(style || {}) }}
+                className={classNames(`${selectorPrefix}-header-column`, className ?? '')}
+                style={{ textAlign: align || 'left', ...(style ?? {}) }}
               >
                 {column.title || '-'}
               </th>
@@ -82,17 +82,19 @@ const Table: FC<TableProps> = (props) => {
   }
 
   return (
-    <div className={classNames(`${selectorPrefix}`, className || '')} style={style || {}}>
+    <div className={classNames(`${selectorPrefix}`, className ?? '')} style={style ?? {}}>
       <table
-        className={classNames(`${selectorPrefix}-inner`, tableClassName || '')}
-        style={tableStyle || {}}
+        className={classNames(`${selectorPrefix}-inner`, tableClassName ?? '')}
+        style={tableStyle ?? {}}
       >
         {renderHeader()}
         {renderBody()}
       </table>
     </div>
   );
-};
+});
+
+Table.displayName = 'Table';
 
 // /**
 //  * Table
@@ -243,4 +245,4 @@ const Table: FC<TableProps> = (props) => {
 //   rowKey: PropTypes.string,
 // };
 
-export default memo(Table);
+export default Table;

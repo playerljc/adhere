@@ -169,7 +169,7 @@ export default () => {
             `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
       },
       {
         id: `p2`,
@@ -206,7 +206,7 @@ export default () => {
         `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
       },
       {
         id: `p3`,
@@ -1283,7 +1283,7 @@ export default () => {
             `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
       },
       {
         id: `p4`,
@@ -1338,7 +1338,7 @@ export default () => {
           `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
       },
       {
         id: `p5`,
@@ -3389,7 +3389,7 @@ export default () => {
           `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
       },
       {
         id: `p6`,
@@ -3452,7 +3452,7 @@ export default () => {
           `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
       },
     ];
   }

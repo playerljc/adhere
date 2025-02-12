@@ -1,0 +1,1 @@
+{"version":3,"file":"SortableItem.js","sources":["DND/SortableItem.js"],"sourcesContent":["import { SortableElement } from 'react-sortable-hoc';\nexport default SortableElement(function (_a) {\n  var children = _a.children;\n  return children;\n});"],"names":["SortableElement","_a","children"],"mappings":"OAASA,eAA2C,KAApB,oCACjBA,gBAAgB,SAAUC,GAEvC,OADeA,EAAGC,QAEpB,CAAC"}

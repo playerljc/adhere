@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import type { Component } from 'react';
 /**
  * MultiExtendFactory
  * @description 实现多继承

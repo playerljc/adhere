@@ -1,18 +1,10 @@
-import { Button, Radio } from 'antd';
-import React from 'react';
+import MenuDataCodeText from '!!raw-loader!./MenuData';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
 
-import {
-  ArrowDownOutlined,
-  ArrowUpOutlined,
-  ArrowsAltOutlined,
-  DeleteOutlined,
-  DownloadOutlined,
-  EditOutlined,
-  FileAddOutlined,
-  FolderAddOutlined,
-  FolderOutlined,
-} from '@ant-design/icons';
-import { ContextMenu } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -21,247 +13,16 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-/**
- * 上下文菜单数据
- * @return - {Array}
- */
-const contextMenuData = [
-  {
-    name: 'add',
-    id: 'add',
-    icon: <FolderAddOutlined />,
-    separation: false,
-    attribute: {},
-    children: [
-      {
-        name: 'folder',
-        id: 'folder',
-        icon: <FolderOutlined />,
-        separation: false,
-        attribute: {},
-        children: [],
-      },
-      {
-        name: 'Add page above',
-        id: 'addpageabove',
-        icon: <FileAddOutlined />,
-        separation: false,
-        attribute: {},
-        children: [],
-      },
-      {
-        name: 'Add page below',
-        id: 'addpagebelow',
-        icon: <FileAddOutlined />,
-        separation: false,
-        attribute: {},
-        children: [],
-      },
-      {
-        name: 'subpage',
-        id: 'subpage',
-        icon: <FileAddOutlined />,
-        separation: false,
-        attribute: {},
-        children: [],
-      },
-    ],
-  },
-  {
-    name: 'move',
-    id: 'move',
-    icon: <ArrowsAltOutlined />,
-    separation: false,
-    attribute: {},
-    children: [
-      {
-        name: 'Move up',
-        id: 'moveup',
-        icon: 'fa fa-long-arrow-alt-up',
-        separation: false,
-        attribute: {},
-        children: [],
-      },
-      {
-        name: 'Move down',
-        id: 'movedown',
-        icon: <ArrowUpOutlined />,
-        separation: false,
-        attribute: {},
-        children: [],
-      },
-      {
-        name: 'upgrade',
-        id: 'upgrade',
-        icon: <ArrowDownOutlined />,
-        separation: false,
-        attribute: {},
-        children: [],
-      },
-      {
-        name: 'downgrade',
-        id: 'downgrade',
-        icon: <DownloadOutlined />,
-        separation: false,
-        attribute: {},
-        children: [],
-      },
-    ],
-  },
-  {
-    name: 'delete',
-    id: 'delete',
-    icon: <DeleteOutlined />,
-    separation: false,
-    attribute: {},
-    children: [],
-  },
-  {
-    name: 'rename',
-    id: 'rename',
-    icon: <EditOutlined />,
-    separation: false,
-    attribute: {},
-    children: [],
-  },
-];
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
 
 export default () => {
   function boxPanelConfig() {
     return [
       {
         id: `p1`,
-        name: `菜单的数据`,
-        mode: 'code',
-        scope: { React },
-        cardProps: {
-          description: {
-            title: '菜单的数据',
-            info: '菜单的数据',
-          },
-        },
-        codeText: `
-  import {
-    FolderAddOutlined,
-    FileAddOutlined,
-    ArrowsAltOutlined,
-    ArrowDownOutlined,
-    ArrowUpOutlined,
-    DownloadOutlined,
-    DeleteOutlined,
-    EditOutlined,
-    FolderOutlined,
-  } from '@ant-design/icons';
-
- /**
-  * 上下文菜单数据
-  * @return - {Array}
-  */
-  const contextMenuData = [
-  {
-    name: 'add',
-    id: 'add',
-    icon: <FolderAddOutlined />,
-    separation: false,
-    attribute: {},
-    children: [
-      {
-        name: 'folder',
-        id: 'folder',
-        icon: <FolderOutlined />,
-        separation: false,
-        attribute: {},
-        children: [],
-      },
-      {
-        name: 'Add page above',
-        id: 'addpageabove',
-        icon: <FileAddOutlined />,
-        separation: false,
-        attribute: {},
-        children: [],
-      },
-      {
-        name: 'Add page below',
-        id: 'addpagebelow',
-        icon: <FileAddOutlined />,
-        separation: false,
-        attribute: {},
-        children: [],
-      },
-      {
-        name: 'subpage',
-        id: 'subpage',
-        icon: <FileAddOutlined />,
-        separation: false,
-        attribute: {},
-        children: [],
-      },
-    ],
-  },
-  {
-    name: 'move',
-    id: 'move',
-    icon: <ArrowsAltOutlined />,
-    separation: false,
-    attribute: {},
-    children: [
-      {
-        name: 'Move up',
-        id: 'moveup',
-        icon: 'fa fa-long-arrow-alt-up',
-        separation: false,
-        attribute: {},
-        children: [],
-      },
-      {
-        name: 'Move down',
-        id: 'movedown',
-        icon: <ArrowUpOutlined />,
-        separation: false,
-        attribute: {},
-        children: [],
-      },
-      {
-        name: 'upgrade',
-        id: 'upgrade',
-        icon: <ArrowDownOutlined />,
-        separation: false,
-        attribute: {},
-        children: [],
-      },
-      {
-        name: 'downgrade',
-        id: 'downgrade',
-        icon: <DownloadOutlined />,
-        separation: false,
-        attribute: {},
-        children: [],
-      },
-    ],
-  },
-  {
-    name: 'delete',
-    id: 'delete',
-    icon: <DeleteOutlined />,
-    separation: false,
-    attribute: {},
-    children: [],
-  },
-  {
-    name: 'rename',
-    id: 'rename',
-    icon: <EditOutlined />,
-    separation: false,
-    attribute: {},
-    children: [],
-  },
-  ];
-      `,
-        type: 'PlayGround',
-      },
-      {
-        id: `p2`,
         name: `基本使用`,
         mode: 'code',
         scope: { React },
@@ -271,59 +32,24 @@ export default () => {
             info: '基本使用',
           },
         },
-        codeText: `
-  import { ContextMenu } from '@baifendian/adhere';
-  import { Button } from 'antd';
-
-  <Button
-    type="primary"
-    onClick={(e) => {
-      ContextMenu.open([].concat(contextMenuData), {
-        width: 200,
-        x: e.clientX,
-        y: e.clientY,
-        maskClosable: true,
-        handler: (id, attribute) => {
-          // folder 添加目录
-          // addpageabove 向上添加页面
-          // addpagebelow 向下添加页面
-          // subpage 添加子页面
-          // delete 删除
-          // rename 重命名
-        },
-      });
-    }}
-  >
-    点击弹出
-  </Button>
-      `,
-        type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={(e) => {
-              ContextMenu.open([].concat(contextMenuData), {
-                width: 200,
-                x: e.clientX,
-                y: e.clientY,
-                maskClosable: true,
-                handler: (id, attribute) => {
-                  // folder 添加目录
-                  // addpageabove 向上添加页面
-                  // addpagebelow 向下添加页面
-                  // subpage 添加子页面
-                  // delete 删除
-                  // rename 重命名
-                },
-              });
-            }}
-          >
-            点击弹出
-          </Button>
-        ),
+        active: 'p1.jsx',
+        config: [
+          {
+            key: 'p1.jsx',
+            title: 'p1.jsx',
+            codeText: P1CodeText,
+          },
+          {
+            key: 'MenuData.jsx',
+            title: 'MenuData.jsx',
+            codeText: MenuDataCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P1 />,
       },
       {
-        id: `p3`,
+        id: `p2`,
         name: `右键弹出`,
         mode: 'code',
         scope: { React },
@@ -333,63 +59,24 @@ export default () => {
             info: '右键弹出',
           },
         },
-        codeText: `
- import { ContextMenu } from '@baifendian/adhere';
- import { Button } from 'antd';
-
- <Button
-    type="primary"
-    onContextMenu={(e) => {
-      e.preventDefault();
-
-      ContextMenu.open([].concat(contextMenuData), {
-        width: 200,
-        x: e.clientX,
-        y: e.clientY,
-        maskClosable: true,
-        handler: (id, attribute) => {
-          // folder 添加目录
-          // addpageabove 向上添加页面
-          // addpagebelow 向下添加页面
-          // subpage 添加子页面
-          // delete 删除
-          // rename 重命名
-        },
-      });
-    }}
-  >
-    右键弹出
-  </Button>
-      `,
-        type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onContextMenu={(e) => {
-              e.preventDefault();
-
-              ContextMenu.open([].concat(contextMenuData), {
-                width: 200,
-                x: e.clientX,
-                y: e.clientY,
-                maskClosable: true,
-                handler: (id, attribute) => {
-                  // folder 添加目录
-                  // addpageabove 向上添加页面
-                  // addpagebelow 向下添加页面
-                  // subpage 添加子页面
-                  // delete 删除
-                  // rename 重命名
-                },
-              });
-            }}
-          >
-            右键弹出
-          </Button>
-        ),
+        active: 'p2.jsx',
+        config: [
+          {
+            key: 'p2.jsx',
+            title: 'p2.jsx',
+            codeText: P2CodeText,
+          },
+          {
+            key: 'MenuData.jsx',
+            title: 'MenuData.jsx',
+            codeText: MenuDataCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P2 />,
       },
       {
-        id: `p4`,
+        id: `p3`,
         name: `多项按钮`,
         mode: 'code',
         scope: { React },
@@ -399,66 +86,36 @@ export default () => {
             info: '多项按钮',
           },
         },
-        codeText: `
- import { ContextMenu } from '@baifendian/adhere';
- import { Radio } from 'antd';
-
- <Radio.Group
-    value="large"
-    onChange={(e) => {
-      e.preventDefault();
-
-      ContextMenu.open([].concat(contextMenuData), {
-        width: 200,
-        x: e.nativeEvent.clientX,
-        y: e.nativeEvent.clientY,
-        maskClosable: true,
-        handler: (id, attribute) => {
-          // folder 添加目录
-          // addpageabove 向上添加页面
-          // addpagebelow 向下添加页面
-          // subpage 添加子页面
-          // delete 删除
-          // rename 重命名
-          alert("id:"+id+"attribute:"+attribute);
+        active: 'p3.jsx',
+        config: [
+          {
+            key: 'p3.jsx',
+            title: 'p3.jsx',
+            codeText: P3CodeText,
+          },
+          {
+            key: 'MenuData.jsx',
+            title: 'MenuData.jsx',
+            codeText: MenuDataCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P3 />,
+      },
+      {
+        id: 'p4',
+        name: '扇形菜单',
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '扇形菜单',
+            info: '扇形菜单',
+          },
         },
-      });
-    }}
-  >
-    <Radio.Button value="file">File</Radio.Button>
-    <Radio.Button value="edit">Edit</Radio.Button>
-    <Radio.Button value="view">View</Radio.Button>
-  </Radio.Group>
-      `,
+        codeText: P4CodeText,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Radio.Group
-            value="large"
-            onChange={(e) => {
-              e.preventDefault();
-
-              ContextMenu.open([].concat(contextMenuData), {
-                width: 200,
-                x: e.nativeEvent.clientX,
-                y: e.nativeEvent.clientY,
-                maskClosable: true,
-                handler: (id, attribute) => {
-                  // folder 添加目录
-                  // addpageabove 向上添加页面
-                  // addpagebelow 向下添加页面
-                  // subpage 添加子页面
-                  // delete 删除
-                  // rename 重命名
-                  alert(`${id},${attribute}`);
-                },
-              });
-            }}
-          >
-            <Radio.Button value="file">File</Radio.Button>
-            <Radio.Button value="edit">Edit</Radio.Button>
-            <Radio.Button value="view">View</Radio.Button>
-          </Radio.Group>
-        ),
+        renderChildren: () => <P4 />,
       },
     ];
   }
@@ -594,6 +251,104 @@ export default () => {
               },
             ],
           },
+          {
+            border: true,
+            title: 'Point',
+            data: [
+              {
+                params: 'x',
+                desc: '菜单显示的x坐标，现对于视口',
+                type: 'number',
+                defaultVal: '',
+              },
+              {
+                params: 'y',
+                desc: '菜单显示的y坐标，现对于视口',
+                type: 'number',
+                defaultVal: '',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'CircularMenuConfig',
+            data: [
+              {
+                params: 'totalAngle',
+                desc: '角度',
+                type: 'number',
+                defaultVal: '',
+              },
+              {
+                params: 'spaceDeg',
+                desc: '菜单项之间的间距',
+                type: '0 | 1 | 2 | 3 | 4 | 5',
+                defaultVal: '',
+              },
+              {
+                params: 'background',
+                desc: '背景颜色',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'backgroundHover',
+                desc: 'hover颜色',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'pageBackground',
+                desc: '页面颜色',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'diameter',
+                desc: '',
+                type: 'number',
+                defaultVal: '',
+              },
+              {
+                params: 'position',
+                desc: '',
+                type: `'top' | 'left' | 'right' | 'bottom'`,
+                defaultVal: '',
+              },
+              {
+                params: 'start',
+                desc: '',
+                type: `number`,
+                defaultVal: '',
+              },
+              {
+                params: 'horizontal',
+                desc: '',
+                type: `boolean`,
+                defaultVal: '',
+              },
+              {
+                params: 'hideAfterClick',
+                desc: '',
+                type: `boolean`,
+                defaultVal: '',
+              },
+              {
+                params: 'menus',
+                desc: '菜单的数据',
+                type: `
+                Array<{
+                  title?: string;
+                  icon?: string;
+                  href?: { url: string; blank: boolean } | string;
+                  click?: Function;
+                  disabled?: boolean;
+                }>
+                `,
+                defaultVal: '[]',
+              },
+            ],
+          },
         ]}
       />
 
@@ -642,6 +397,47 @@ export default () => {
                 ],
                 returnType: '',
                 returnDesc: '',
+              },
+              {
+                name: 'openCircular',
+                desc: '打开扇形菜单',
+                modifier: 'public',
+                params: [
+                  {
+                    name: 'config',
+                    desc: '配置',
+                    type: 'CircularMenuConfig',
+                    defaultVal: '',
+                    required: '',
+                  },
+                  {
+                    name: 'point',
+                    desc: '触发位置',
+                    type: 'Point',
+                    defaultVal: '',
+                    required: '',
+                  },
+                ],
+              },
+              {
+                name: 'hideCircular',
+                desc: '关闭扇形菜单',
+                modifier: 'public',
+                params: [],
+              },
+              {
+                name: 'stylesCircular',
+                desc: '设置扇形菜单的样式',
+                modifier: 'public',
+                params: [
+                  {
+                    name: 'properties',
+                    desc: '样式的属性集合',
+                    type: 'object',
+                    defaultVal: '',
+                    required: '',
+                  },
+                ],
               },
             ],
           },

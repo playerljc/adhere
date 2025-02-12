@@ -1,2 +1,2 @@
-import AdapterScreen from"./adapterscreen";export default AdapterScreen;
+import AdapterScreen from"./AdapterScreen";export default AdapterScreen;
 //# sourceMappingURL=index.js.map

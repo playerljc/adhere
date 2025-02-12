@@ -1,8 +1,3 @@
-import { DelConfirmFunction, DelConfirmProps } from './types';
-/**
- * DelConform
- * @param props
- * @constructor
- */
-declare const DelConform: DelConfirmFunction<DelConfirmProps>;
+import type { DelConfirmComponent } from './types';
+declare const DelConform: DelConfirmComponent;
 export default DelConform;

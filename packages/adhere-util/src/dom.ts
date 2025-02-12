@@ -2,7 +2,7 @@ import ClientDetectionUtil from './clientDetection';
 
 const eventListenerHandlers = new Map();
 
-export default {
+const DomUtil = {
   /**--------------------------dom-start-------------------------**/
   /**
    * isTextNode - 是否是文本节点
@@ -39,21 +39,23 @@ export default {
     return el.firstElementChild as HTMLElement;
   },
   /**
-   * getTopDom - 已target为开始向上查找元素
-   * @param {HtmlElement} target
-   * @param {string} selector
+   * getTopDom - 已source为开始向上查找元素
+   * @param {HtmlElement} source
+   * @param {string | string[]} selector
    * @return {HtmlElement}
    */
-  getTopDom(target, selector: string): null | HTMLElement {
-    if (!target || !selector) return null;
+  getTopDom(source: HTMLElement, selector: string | string[]): HTMLElement | null {
+    if (!source || !selector || (Array.isArray(selector) && !selector.length)) return null;
 
-    if (target.className.indexOf(selector) !== -1) {
-      return target;
+    const classNames = typeof selector === 'string' ? [selector] : selector;
+
+    if (classNames.every((name) => source.classList.contains(name))) {
+      return source;
     }
 
-    let parentDom = target;
-    while ((parentDom = parentDom.parentNode)) {
-      if (parentDom.className.indexOf(selector) !== -1) {
+    let parentDom: HTMLElement | null = source;
+    while ((parentDom = parentDom?.parentElement)) {
+      if (classNames.every((name) => parentDom?.classList?.contains?.(name))) {
         break;
       } else if (parentDom === document.body) break;
     }
@@ -197,7 +199,7 @@ export default {
   prepend(el, children) {
     let childrenEl;
     if (children instanceof String) {
-      childrenEl = this.createElement(children as string);
+      childrenEl = DomUtil.createElement(children as string);
     } else {
       childrenEl = children;
     }
@@ -515,5 +517,277 @@ export default {
       document.body.removeEventListener('click', onBodyClickHandler);
     };
   },
+  /**
+   * includeHTML
+   * @description 使用ajax方式引入html
+   * @param {string} attr 属性
+   * @param {string} onLoadError
+   */
+  includeHTML(attr: string = 'w3-include-html', onLoadError: () => string) {
+    return new Promise<string>((contextResolve) => {
+      const defaultAttr = 'w3-include-html';
+
+      function load(el, file) {
+        return new Promise<string>((_resolve, _reject) => {
+          const xhr = new XMLHttpRequest();
+
+          xhr.onreadystatechange = function () {
+            if (this.readyState == 4) {
+              if (this.status == 200) {
+                el.innerHTML = this.responseText;
+                _resolve('');
+              }
+              if (this.status == 404) {
+                el.innerHTML = onLoadError?.() ?? 'Page not found.';
+                _reject('');
+              }
+              el.removeAttribute(attr ?? defaultAttr);
+            }
+          };
+          xhr.open('GET', file, true);
+          xhr.send();
+        });
+      }
+
+      const loop = (_attr, _onLoadError) => {
+        const allEls = document.querySelectorAll(`[${attr ?? defaultAttr}]`);
+
+        if (!allEls.length) {
+          contextResolve('');
+          return;
+        }
+
+        const tasks: Promise<string>[] = [];
+
+        for (let i = 0; i < allEls.length; i++) {
+          const el = allEls[i];
+
+          const file = el.getAttribute(attr ?? defaultAttr);
+
+          tasks.push(load(el, file));
+        }
+
+        if (tasks.length) {
+          Promise.all(tasks).then(() => {
+            loop(_attr, _onLoadError);
+          });
+        }
+      };
+
+      loop(attr, onLoadError);
+    });
+  },
+  /**
+   * setCursorToEnd
+   * @description 将光标设置到内容末尾
+   * @param {HTMLElement} element
+   */
+  setCursorToEnd(element: HTMLElement) {
+    const range = document.createRange();
+    const selection = window.getSelection();
+    range.selectNodeContents(element);
+    range.collapse(false); // 将光标设置到末尾
+    selection?.removeAllRanges?.();
+    selection?.addRange?.(range);
+  },
+  /**
+   * setCursorPositionToNode
+   * @description 设置Node的光标位置
+   * @param {Node} node
+   * @param {number} offset
+   */
+  setCursorPositionToNode(node: Node, offset: number) {
+    const range = document.createRange();
+    range?.setStart?.(node, offset);
+    range?.collapse?.(true);
+
+    const sel = window.getSelection();
+    sel?.removeAllRanges?.();
+    sel?.addRange?.(range);
+  },
+  /**
+   * setCursorPosition
+   * @description 设置光标的位置
+   * @param {HTMLElement} element
+   * @param {number} offset
+   */
+  setCursorPosition(element: HTMLElement, offset: number) {
+    const range = document.createRange();
+    range.setStart(element.childNodes[0], offset);
+    range.collapse(true);
+
+    const sel = window.getSelection();
+    sel?.removeAllRanges?.();
+    sel?.addRange?.(range);
+  },
+  /**
+   * getCurrentElementWithCursor
+   * @description 获取光标输入的的element
+   * @return {Node | null}
+   */
+  getCurrentElementWithCursor(): Node | null {
+    const selection = window.getSelection();
+    if (selection && selection?.rangeCount > 0) {
+      const range = selection?.getRangeAt?.(0);
+      return range?.startContainer /*.parentElement*/;
+    }
+    return null;
+  },
+  /**
+   * getCurrentParentElementWithCursor
+   * @description 获取光标输入的parentElement
+   * @return {Node | null}
+   */
+  getCurrentParentElementWithCursor(): Node | null {
+    const currentElement = DomUtil.getCurrentElementWithCursor();
+    if (currentElement) {
+      return currentElement.parentElement;
+    }
+
+    return null;
+  },
+  /**
+   * getCursorIndex
+   * @description 获取光标的索引
+   * @return {number}
+   */
+  getCursorIndex(): number {
+    const selection = window.getSelection();
+    if (selection && selection?.rangeCount > 0) {
+      const range = selection?.getRangeAt?.(0);
+      const preSelectionRange = range?.cloneRange?.();
+      preSelectionRange?.selectNodeContents(range?.startContainer);
+      preSelectionRange?.setEnd(range?.startContainer, range?.startOffset);
+      return preSelectionRange?.toString?.()?.length;
+    }
+    return -1;
+  },
+  /**
+   * getCursorRectByDocument
+   * @description 获取光标在文档中的位置
+   * @return {DOMRect | null}
+   */
+  getCursorRectByDocument(): DOMRect | null {
+    if (window.getSelection) {
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        return range?.getBoundingClientRect?.();
+      }
+    }
+
+    return null;
+  },
+  /**
+   * getTransformValues
+   * @description
+   * @param {HTMLElement} element
+   * @return {
+   *
+   * }
+   */
+  getTransformValues(element: HTMLElement) {
+    const style = window.getComputedStyle(element);
+    const transform = style.transform;
+
+    // 矩阵解析
+    const mat = transform.match(/^matrix\((.+)\)$/);
+    if (mat) {
+      const values = mat[1].split(', ').map(parseFloat);
+      return {
+        translateX: values[4],
+        translateY: values[5],
+        scaleX: Math.sqrt(values[0] * values[0] + values[1] * values[1]),
+        scaleY: Math.sqrt(values[2] * values[2] + values[3] * values[3]),
+        rotate: Math.atan2(values[1], values[0]) * (180 / Math.PI),
+        // 这里的旋转角度是以度数返回的
+      };
+    }
+    // 如果没有应用 transform 或格式不是 matrix，可以返回一个默认或空对象
+    return {
+      translateX: 0,
+      translateY: 0,
+      scaleX: 1,
+      scaleY: 1,
+      rotate: 0,
+    };
+  },
+  getZoom() {
+    let ratio = window.devicePixelRatio;
+
+    if (ratio) {
+      ratio = Math.round(ratio * 100);
+    }
+
+    return 100 / Number(ratio);
+  },
+  /**
+   * getScrollbarWidth
+   * @description 获取滚动条的宽度
+   * @return {number}
+   */
+  getScrollbarWidth(): number {
+    // Create a temporary div container and append it into the body
+    const container = document.createElement('div');
+    // Force scrollbars
+    container.style.overflow = 'scroll';
+    container.style.visibility = 'hidden';
+    container.style.position = 'absolute';
+    container.style.top = '-9999px';
+    document.body.appendChild(container);
+
+    // Create a temporary inner element and append it into the container
+    const inner = document.createElement('div');
+    container.appendChild(inner);
+
+    // Calculate the scrollbar width
+    const scrollbarWidth = container.offsetWidth - inner.offsetWidth;
+
+    // Remove the temporary elements from the DOM
+    document.body.removeChild(container);
+
+    return scrollbarWidth;
+  },
+  /**
+   * getMaximizedViewportSize
+   * @return {{width: number; height: number}}
+   */
+  getMaximizedViewportSize(): { width: number; height: number } {
+    // 获取当前窗口的视口宽度和高度
+    const currentWidth = window.innerWidth;
+    const currentHeight = window.innerHeight;
+
+    // 获取当前窗口的外部宽度和高度
+    const outerWidth = window.outerWidth;
+    const outerHeight = window.outerHeight;
+
+    // 获取可用屏幕宽度和高度
+    const availWidth = screen.availWidth;
+    const availHeight = screen.availHeight;
+
+    // 计算窗口边框、标题栏等非视口部分的宽度和高度
+    const borderWidth = outerWidth - currentWidth;
+    const borderHeight = outerHeight - currentHeight;
+
+    // 计算最大化窗口的视口宽度和高度
+    const maximizedWidth = availWidth - borderWidth;
+    const maximizedHeight = availHeight - borderHeight;
+
+    return {
+      width: maximizedWidth,
+      height: maximizedHeight,
+    };
+  },
+  /**
+   * getProportionalSize
+   * @param {number} origin 原始大小
+   * @param {number} designWidth 设计稿大小
+   * @return {number}
+   */
+  getProportionalSize(origin: number, designWidth: number = 1920) {
+    return (document.documentElement.clientWidth * origin) / designWidth;
+  },
   /**--------------------------dom-end-------------------------**/
 };
+
+export default DomUtil;

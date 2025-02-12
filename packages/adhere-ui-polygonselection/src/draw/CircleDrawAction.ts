@@ -7,7 +7,7 @@ import {
   ICircleData,
   IPoint,
   IStyle,
-  SelectType,
+  SelectType
 } from '../types';
 import DrawAction from './DrawAction';
 
@@ -57,7 +57,7 @@ class CircleDrawAction extends DrawAction {
 
     if (!context || !ctx || !centerPoint) return;
 
-    const canvasEl = context.getCanvasEl();
+    const canvasEl = context?.getCanvasEl();
 
     if (!canvasEl) return;
 
@@ -68,9 +68,9 @@ class CircleDrawAction extends DrawAction {
 
     if (!targetPoint) return;
 
-    context.clearDraw();
+    context?.clearDraw();
 
-    context.drawHistoryData();
+    context?.drawHistoryData();
 
     ctx.beginPath();
 
@@ -79,10 +79,11 @@ class CircleDrawAction extends DrawAction {
     ctx.lineWidth = style.lineWidth;
     ctx.lineJoin = style.lineJoin;
     ctx.lineCap = style.lineCap;
-    ctx.setLineDash(style.lineDash);
+    style.lineDash && ctx.setLineDash(style.lineDash);
     ctx.lineDashOffset = style.lineDashOffset;
     ctx.strokeStyle = style.strokeStyle;
     ctx.fillStyle = style.fillStyle;
+    ctx.globalAlpha = style.globalAlpha;
 
     ctx.ellipse(
       centerPoint?.x || 0,
@@ -93,6 +94,8 @@ class CircleDrawAction extends DrawAction {
       0,
       2 * Math.PI,
     );
+
+    ctx.closePath();
 
     ctx.stroke();
     ctx.fill();
@@ -134,6 +137,20 @@ class CircleDrawAction extends DrawAction {
     this.isMove = true;
 
     this.draw(e);
+
+    this.trigger(ActionEvents.Drawing, {
+      selectType: SelectType.Circle,
+      actionType: ActionType.Draw,
+      data: {
+        id: BaseUtil.uuid(),
+        type: SelectType.Circle,
+        data: {
+          center: this.centerPoint as IPoint,
+          radius: this.radius,
+        },
+        style: this.style,
+      },
+    });
   }
 
   /**
@@ -155,24 +172,7 @@ class CircleDrawAction extends DrawAction {
   static draw(ctx: CanvasRenderingContext2D, data: ICircleData): void {
     if (!ctx || !data) return;
 
-    if (data.style) {
-      // 设置上下文属性
-      ctx.lineWidth = data.style.lineWidth;
-      ctx.lineJoin = data.style.lineJoin;
-      ctx.lineCap = data.style.lineCap;
-      ctx.setLineDash(data.style.lineDash);
-      ctx.lineDashOffset = data.style.lineDashOffset;
-      ctx.strokeStyle = data.style.strokeStyle;
-      ctx.fillStyle = data.style.fillStyle;
-      ctx.globalAlpha = data.style.globalAlpha || 1;
-    }
-
-    this.drawHistoryPath(ctx, data.data as { center: IPoint; radius: number });
-
-    // 描边
-    ctx.stroke();
-    // 填充
-    ctx.fill();
+    this.drawHistoryPath(ctx, data /*data.data as { center: IPoint; radius: number }*/);
   }
 
   /**
@@ -182,22 +182,38 @@ class CircleDrawAction extends DrawAction {
    */
   static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
-    data: {
+    data /*{
       center: IPoint;
       radius: number;
-    },
+    }*/,
   ): void {
     ctx.beginPath();
 
+    if (data.style) {
+      // 设置上下文属性
+      ctx.lineWidth = data.style.lineWidth;
+      ctx.lineJoin = data.style.lineJoin;
+      ctx.lineCap = data.style.lineCap;
+      data.style.lineDash && ctx.setLineDash(data.style.lineDash);
+      ctx.lineDashOffset = data.style.lineDashOffset;
+      ctx.strokeStyle = data.style.strokeStyle;
+      ctx.fillStyle = data.style.fillStyle;
+      ctx.globalAlpha = data.style.globalAlpha ?? 1;
+    }
+
     ctx.ellipse(
-      data.center.x,
-      data.center.y,
-      data.radius,
-      data.radius,
+      data.data.center.x,
+      data.data.center.y,
+      data.data.radius,
+      data.data.radius,
       (45 * Math.PI) / 180,
       0,
       2 * Math.PI,
     );
+
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
   }
 
   /**
@@ -209,7 +225,7 @@ class CircleDrawAction extends DrawAction {
 
     const { context } = this;
 
-    const canvasEl = context.getCanvasEl();
+    const canvasEl = context?.getCanvasEl?.();
 
     if (!canvasEl) return;
 
@@ -218,7 +234,7 @@ class CircleDrawAction extends DrawAction {
     style && (this.style = style);
 
     // 触发开始之前事件
-    this.trigger(ActionEvents.BeforeStart, {
+    this.trigger(ActionEvents.DrawBeforeStart, {
       selectType: SelectType.Circle,
       actionType: ActionType.Draw,
     });
@@ -230,7 +246,7 @@ class CircleDrawAction extends DrawAction {
     this.status = ActionStatus.Running;
 
     // 触发开始事件
-    this.trigger(ActionEvents.Start, {
+    this.trigger(ActionEvents.DrawStart, {
       selectType: SelectType.Circle,
       actionType: ActionType.Draw,
     });
@@ -280,7 +296,7 @@ class CircleDrawAction extends DrawAction {
 
     this.isMove = false;
 
-    this.trigger(ActionEvents.End, {
+    this.trigger(ActionEvents.DrawEnd, {
       selectType: SelectType.Circle,
       actionType: ActionType.Draw,
       data,

@@ -1,0 +1,20 @@
+import SearchTable from '@baifendian/adhere-ui-searchtable';
+
+import ProListFactory from './ProListFactory';
+import { SearchListImplement } from './SearchListImplement';
+
+const {
+  SearchAndPaginParams: { MemoManager },
+} = SearchTable;
+
+export const SearchAndPaginParamsMemo: any = MemoManager.create();
+
+/**
+ * ProSearchList
+ * @classdesc 高级查询列表
+ */
+const ProSearchList = ProListFactory(SearchListImplement, SearchAndPaginParamsMemo);
+
+ProSearchList.displayName = 'ProSearchList';
+
+export default ProSearchList;

@@ -1,4 +1,4 @@
-import intl from 'react-intl-universal';
+import { ReactIntlUniversalMessageDescriptor } from 'react-intl-universal';
 /**
  * getLocal
  * @description 生成k,v的对象
@@ -12,21 +12,24 @@ export declare function getLocal(prefix: string | undefined, data: Array<string>
  * @return object
  */
 export declare function getLocales(): object;
+export interface Init {
+    prefix: string;
+    currentLocale: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
+    mainLanguage: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
+    locales: {
+        [key: string]: string[];
+    };
+    extraLibLocales?: {
+        [key: string]: string[];
+    };
+}
 declare const _default: {
     /**
      * init
      * @param {String} - prefix
-     * @param {String} - currentLocale
-     * @param {Object} - locales
-     * @param {Object} - ...other
      * @param reload 是否是重新载入
      */
-    init({ prefix, currentLocale, locales, mainLanguage, ...other }: {
-        prefix: string;
-        currentLocale: 'en_US' | 'zh_CN' | 'pt_PT';
-        locales: any;
-        mainLanguage: string;
-    }, reload?: boolean): Promise<any>;
+    init({ prefix, currentLocale, mainLanguage, locales, extraLibLocales, ...rest }: Init, reload?: boolean): Promise<any>;
     /**
      * isInit
      * @description 是否进行了初始化
@@ -38,41 +41,41 @@ declare const _default: {
      * @param key
      * @param variables
      */
-    v(key: string, variables?: object | null | undefined): string;
+    v(key: string, variables?: object | null): string;
     /**
      * v - 以中文获取国际化后的html
      * @param key
      * @param options
      */
-    vHtml(key: string, options?: object | null | undefined): any;
+    vHtml(key: string, options?: object | null): string;
     /**
      * get
      * @param key
      * @param variables
      */
-    get(key: string, variables?: object | null | undefined): string;
+    get(key: string, variables?: object | null): string;
     /**
      * getHTML
      * @param key
      * @param options
      */
-    getHTML(key: string, options?: object | null | undefined): string;
-    /**
-     * getInitOptions
-     */
-    getInitOptions(): intl.ReactIntlUniversalOptions;
+    getHTML(key: string, options?: object | null): string;
     /**
      * formatMessage
      * @param options
      * @param variables
      */
-    formatMessage(options: any, variables?: object | null | undefined): string;
+    formatMessage(options: ReactIntlUniversalMessageDescriptor, variables?: object | null): string;
     /**
      * formatHTMLMessage
      * @param options
      * @param variables
      */
-    formatHTMLMessage(options: any, variables?: object | null | undefined): string;
+    formatHTMLMessage(options: ReactIntlUniversalMessageDescriptor, variables?: object | null): string;
+    /**
+     * getInitOptions
+     */
+    getInitOptions(): import("react-intl-universal").ReactIntlUniversalOptions;
     /**
      * load - Load more locales after init
      * @param locales

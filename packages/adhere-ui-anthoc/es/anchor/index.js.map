@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["anchor/index.js"],"sourcesContent":["import Anchor from './Anchor';\nexport default Anchor;"],"names":["Anchor"],"mappings":"OAAOA,WAAY,0BACJA"}

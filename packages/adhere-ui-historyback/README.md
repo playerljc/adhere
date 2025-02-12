@@ -21,5 +21,5 @@ yarn add adhere-ui-historyback
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/historyback](http://49.232.163.126:8083/adhere/ui/historyback)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/historyback](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/historyback)
 

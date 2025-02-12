@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE } from '../Constent';
+import { ERROR_MESSAGE } from '../Constant';
 import Request from '../Request';
 import Response from '../Response';
 import type { SendOptions } from '../types';
@@ -38,7 +38,7 @@ class Fetch {
       const request = new Request({
         pathname,
         headers: {
-          ...(options?.headers || {}),
+          ...(options?.headers ?? {}),
           origin: this.origin,
           referer: this.source instanceof Window ? (this.source as Window).location.href : '',
         },
@@ -48,31 +48,39 @@ class Fetch {
       });
 
       const onMessage = (evt) => {
-        const response = new Response(evt.data);
-        response.setRequestId(evt.data.requestId);
+        try {
+          const response = new Response(JSON.parse(evt.data));
+          // response.setRequestId(evt.data.requestId);
 
-        if (
-          evt.origin !== targetOrigin ||
-          evt.source !== targetWindow ||
-          request.getRequestId() !== response.getRequestId()
-        ) {
-          return;
+          if (
+            evt.origin !== targetOrigin ||
+            evt.source !== targetWindow ||
+            request.getRequestId() !== response.getRequestId()
+          ) {
+            return;
+          }
+
+          this.source.removeEventListener('message', onMessage);
+
+          if (response.getStatusCode() === 500) {
+            reject(response);
+            return;
+          }
+
+          resolve(response);
+        } catch (e) {
+          console.warn(e);
         }
-
-        this.source.removeEventListener('message', onMessage);
-
-        if (response.getStatusCode() === 500) {
-          reject(response);
-          return;
-        }
-
-        resolve(response);
       };
 
       this.source.addEventListener('message', onMessage);
 
-      // @ts-ignore
-      targetWindow.postMessage(request, targetOrigin);
+      try {
+        // @ts-ignore
+        targetWindow.postMessage(JSON.stringify(request), targetOrigin);
+      } catch (e) {
+        console.error(e);
+      }
     });
   }
 

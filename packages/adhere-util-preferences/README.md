@@ -19,4 +19,4 @@ yarn add @baifendian/adhere-util-preferences
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/util/preferences](http://49.232.163.126:8083/adhere/util/preferences)
+[http://playerljc.github.io/adhere/index.html#/adhere/adhere/util/preferences](http://playerljc.github.io/adhere/index.html#/adhere/adhere/util/preferences)

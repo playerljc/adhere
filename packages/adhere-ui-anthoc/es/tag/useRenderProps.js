@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(n){for(var e,r=1,t=arguments.length;r<t;r++)for(var s in e=arguments[r])Object.prototype.hasOwnProperty.call(e,s)&&(n[s]=e[s]);return n}).apply(this,arguments)},useTagRenderProps=function(r,t){return function(n){var e=n.value,n=__assign({value:e,onChange:n.onChange,options:null!=(e=n.options)?e:[]},null!=r?r:{});return t&&(n.mode=t),n}};export default useTagRenderProps;
+//# sourceMappingURL=useRenderProps.js.map

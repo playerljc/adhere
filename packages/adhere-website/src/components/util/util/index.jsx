@@ -3010,6 +3010,28 @@ export default () => {
               },
             ],
           },
+          {
+            title: '集合相关',
+            border: true,
+            data: [
+              {
+                name: 'processAsyncQueue',
+                desc: '异步执行的队列',
+                modifier: 'public',
+                params: [
+                  {
+                    name: 'tasks',
+                    desc: '执行的任务',
+                    type: 'ProcessAsyncQueueItem[]',
+                    defaultVal: '',
+                    required: '',
+                  },
+                ],
+                returnType: 'Promise<any>',
+                returnDesc: '',
+              },
+            ],
+          },
         ]}
       />
     </PlayGroundPage>

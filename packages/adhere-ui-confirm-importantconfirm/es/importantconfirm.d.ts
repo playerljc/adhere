@@ -1,3 +1,3 @@
-import { ImportantConfirmFunction, ImportantConfirmProps } from './types';
-declare const ImportantConfirm: ImportantConfirmFunction<ImportantConfirmProps>;
+import type { ImportantConfirmComponent } from './types';
+declare const ImportantConfirm: ImportantConfirmComponent;
 export default ImportantConfirm;

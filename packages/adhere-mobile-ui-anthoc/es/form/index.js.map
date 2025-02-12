@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["form/index.js"],"sourcesContent":["import Form from './Form';\nexport default Form;"],"names":["Form"],"mappings":"OAAOA,SAAU,wBACFA"}

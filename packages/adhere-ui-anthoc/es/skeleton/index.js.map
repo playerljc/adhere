@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["skeleton/index.js"],"sourcesContent":["import Skeleton from './Skeleton';\nexport default Skeleton;"],"names":["Skeleton"],"mappings":"OAAOA,aAAc,4BACNA"}

@@ -1,4 +1,4 @@
-import { TableCellComponentReducer } from '../../../types';
+import type { TableCellComponentReducer } from '../../../types';
 /**
  * DragSortCell
  * @description 单元格编辑

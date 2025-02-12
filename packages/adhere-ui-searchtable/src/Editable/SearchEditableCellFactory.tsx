@@ -1,7 +1,12 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import React from 'react';
 
-import { ColumnEditableConfig, ColumnTypeExt, FormItemType, RowEditableConfig } from '../types';
+import type {
+  ColumnEditableConfig,
+  ColumnTypeExt,
+  FormItemType,
+  RowEditableConfig,
+} from '../types';
 
 export default function <P, S>(SuperClass) {
   return class extends SuperClass<P, S> {
@@ -18,22 +23,22 @@ export default function <P, S>(SuperClass) {
         ({ record, dataIndex }) => {
           let value = record?.[dataIndex as string];
           return Array.isArray(value) && value.length === 2
-            ? [moment(value[0]), moment(value[1])]
-            : [moment(), moment()];
+            ? [dayjs(value[0]), dayjs(value[1])]
+            : [dayjs(), dayjs()];
         },
       ],
       [
         'datePicker',
         ({ record, dataIndex }) => {
           let value = record?.[dataIndex as string];
-          return moment(value);
+          return dayjs(value);
         },
       ],
       [
         'timePicker',
         ({ record, dataIndex }) => {
           let value = record?.[dataIndex as string];
-          return moment(value);
+          return dayjs(value);
         },
       ],
     ]);

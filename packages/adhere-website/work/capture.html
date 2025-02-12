@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script src="./libs/echarts.min.js"></script>
+    <script src="./libs/html2canvas.min.js"></script>
+    <script>
+      const containers = [];
+
+      function draw(captureData) {
+        const body = document.body;
+
+        const df = document.createDocumentFragment();
+
+        captureData.forEach(() => {
+          const container = document.createElement('div');
+          container.style.height = '500px';
+
+          containers.push(container);
+
+          df.appendChild(container);
+        });
+
+        body.appendChild(df);
+
+        captureData.forEach((option, _index) => {
+          const myChart = echarts.init(containers[_index]);
+
+          myChart.setOption(option);
+        });
+      }
+
+      function captureTask(el) {
+        return new Promise((resolve) => {
+          html2canvas(el, {
+            scale: 3,
+            allowTaint: true,
+          }).then((canvas) => {
+            resolve({
+              type: 'chart',
+              url: canvas.toDataURL(),
+            });
+          });
+        });
+      }
+
+      function capture() {
+        Promise.all(containers.map((el) => captureTask(el))).then((result) => {
+          console.log('result', result);
+          // closeWindow();
+        });
+      }
+
+      function closeWindow() {
+        // 重置window.opener用来获取打开当前窗口的窗口引用,这里置为null,避免IE下弹出关闭页面确认框
+        window.opener = null;
+        // JS重写当前页面
+        window.open('', '_self', '');
+        // 顺理成章的关闭当前被重写的窗口
+        window.close();
+      }
+
+      // 可以截屏了
+      window.addEventListener('message', (e) => {
+        // console.log(e.data,'父页面发送来的数据');
+        const data = e.data;
+        if (typeof data !== 'object') return;
+
+        if (!data.captureData) return;
+
+        console.log('data.captureData', data.captureData);
+        // 绘制数据
+        draw(data.captureData);
+
+        setTimeout(() => {
+          // 截屏
+          capture();
+        }, 1000)
+      });
+
+      // 向父页面发送加载完成
+      window.addEventListener('load', () => {
+        window.opener.postMessage({
+          captureType: 'load',
+        });
+      });
+    </script>
+  </head>
+  <body></body>
+</html>

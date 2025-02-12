@@ -1,0 +1,2 @@
+export default{processAsyncQueue:function(n){var l=0,e=null!=n?n:[];return function o(){return new Promise(function(u,c){var n,t;l>=e.length?u():(t=e[l++])?t.run.apply(null!=(n=null==t?void 0:t.context)?n:t.run,null!=(n=null==t?void 0:t.argv)?n:[]).then(function(n){var l;null!=(l=null==t?void 0:t.success)&&l.call(t,n),o().then(function(){u()}).catch(function(n){c(n)})}).catch(function(n){var l;null!=(l=null==t?void 0:t.fail)&&l.call(t,n),c(n)}):c()})}()}};
+//# sourceMappingURL=collection.js.map

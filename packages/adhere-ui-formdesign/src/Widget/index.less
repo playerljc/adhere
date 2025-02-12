@@ -1,0 +1,58 @@
+@import './LayoutWidget';
+@import './FlowLayout';
+@import './DropHelp';
+@import './WidgetDNDHelp';
+@import './LayoutWidgetDNDHelp';
+@import './WidgetHoverHighlightHelp';
+@import './LayoutWidgetHoverHighlightHelp';
+@import './Input';
+
+.adhere-ui-form-design-widget {
+  display: flex;
+
+  &.adhere-ui-form-design-widget-label--wrap {
+    flex-direction: column;
+
+    > .adhere-ui-form-design-widget-label {
+      margin: 0;
+    }
+  }
+
+  > .adhere-ui-form-design-widget-label {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    margin-right: 20px;
+    margin-bottom: 24px;
+
+    &.adhere-ui-form-design-widget-require {
+      &::before {
+        display: inline-block;
+        margin-right: 5px;
+        color: red;
+        content: '*';
+      }
+    }
+
+    &.adhere-ui-form-design-widget-tooltip-label {
+      margin-bottom: 0;
+    }
+  }
+
+  > .adhere-ui-form-design-widget-value {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .adhere-ui-form-design-widget-tooltip {
+    margin: 10px 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+}
+
+.adhere-ui-form-design-dnd-widget {
+  position: relative;
+  padding: 5px;
+}

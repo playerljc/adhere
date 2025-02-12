@@ -8,8 +8,8 @@ import Draw from 'ol/interaction/Draw.js';
 import Modify from 'ol/interaction/Modify';
 import { Heatmap as HeatMapLayer, Vector as VectorLayer } from 'ol/layer.js';
 import { Vector as VectorSource } from 'ol/source.js';
-import GeoLayer from './geolayer';
-import WindLayer from './windlayer';
+import GeoLayer from './GeoLayer';
+import WindLayer from './WindLayer';
 declare const _default: {
     SHOWBASESTATION_MINZOOM: number;
     /**
@@ -66,8 +66,8 @@ declare const _default: {
      * @param zIndex
      */
     addVectorLayer(map: any, zIndex: any): {
-        vectorLayer: VectorLayer<VectorSource<import("ol/geom/Geometry").default>>;
-        vectorSource: VectorSource<import("ol/geom/Geometry").default>;
+        vectorLayer: VectorLayer<VectorSource<import("ol/geom").Geometry>>;
+        vectorSource: VectorSource<import("ol/geom").Geometry>;
     };
     /**
      * createHeatMapLayer - 创建一个热力层
@@ -75,7 +75,7 @@ declare const _default: {
      */
     createHeatMapLayer(layoutConfig: any): {
         layer: HeatMapLayer;
-        vectorSource: VectorSource<import("ol/geom/Geometry").default>;
+        vectorSource: VectorSource<import("ol/geom").Geometry>;
     };
     /**
      * drawCircle - 创建一个圆形
@@ -252,13 +252,15 @@ declare const _default: {
      * @param color
      * @param lineCap
      * @param lineJoin
+     * @param lineDash
      */
-    drawLine({ points, width, color, lineCap, lineJoin }: {
+    drawLine({ points, width, color, lineCap, lineJoin, lineDash }: {
         points: any;
         width: any;
         color: any;
         lineCap?: string | undefined;
         lineJoin?: string | undefined;
+        lineDash: any;
     }): Feature<LineString>;
     /**
      * createInteraction
@@ -355,12 +357,16 @@ declare const _default: {
      * @param points
      * @param color
      * @param icon
+     * @param anchor
+     * @param offset
      * @return {Array}
      */
-    addArrowsSource({ points, color, icon }: {
+    addArrowsSource({ points, color, icon, anchor, offset }: {
         points: any;
         color: any;
         icon: any;
+        anchor: any;
+        offset: any;
     }): never[];
     /**
      * addArrowsOverlay
@@ -467,5 +473,11 @@ declare const _default: {
     color16(): string;
     getLineColor(index: any): string;
     downLoadMap(map: any): void;
+    /**
+     * getRadius
+     * @param center 4326的点 [xxx.xx,xxx.xx]
+     * @param radius 半径(米/M)
+     */
+    getRadius(center: any, radius: any): number;
 };
 export default _default;

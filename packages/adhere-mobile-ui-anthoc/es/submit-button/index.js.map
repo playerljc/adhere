@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["submit-button/index.js"],"sourcesContent":["import SubmitButton from './SubmitButton';\nexport default SubmitButton;"],"names":["SubmitButton"],"mappings":"OAAOA,iBAAkB,gCACVA"}

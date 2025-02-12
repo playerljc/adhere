@@ -1,7 +1,8 @@
-declare const _default: (history: any, routePath?: string) => void;
+import { HistoryFunction } from './types';
+declare const History: HistoryFunction;
 /**
  * historyBack 历史回退
  * @param history {History}
  * @param routePath {string}
  */
-export default _default;
+export default History;

@@ -1,4 +1,4 @@
-declare const _default: {
+declare const DomUtil: {
     /**--------------------------dom-start-------------------------**/
     /**
      * isTextNode - 是否是文本节点
@@ -25,12 +25,12 @@ declare const _default: {
      */
     createElement(htmlStr: string): HTMLElement;
     /**
-     * getTopDom - 已target为开始向上查找元素
-     * @param {HtmlElement} target
-     * @param {string} selector
+     * getTopDom - 已source为开始向上查找元素
+     * @param {HtmlElement} source
+     * @param {string | string[]} selector
      * @return {HtmlElement}
      */
-    getTopDom(target: any, selector: string): null | HTMLElement;
+    getTopDom(source: HTMLElement, selector: string | string[]): HTMLElement | null;
     /**
      * on - 注册事件
      * @param el
@@ -176,14 +176,14 @@ declare const _default: {
      * isIframeEmbed - 是否是iframe嵌入
      * @return {boolean}
      */
-    isIframeEmbed(): boolean;
+    isIframeEmbed(): boolean | null;
     /**
      * addClickListener - 支持PC和移动端的点击事件
      * @param el
      * @param handler
      * @param capture
      */
-    addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean | undefined) => Function;
+    addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean) => Function;
     /**
      * clickInRange
      * @description 再点击区域内执行点击操作，超出的区域执行bodyClickHandler的操作
@@ -195,5 +195,93 @@ declare const _default: {
         rootEl: HTMLElement;
         bodyClickHandler?: Function;
     }): Function;
+    /**
+     * includeHTML
+     * @description 使用ajax方式引入html
+     * @param {string} attr 属性
+     * @param {string} onLoadError
+     */
+    includeHTML(attr: string | undefined, onLoadError: () => string): Promise<string>;
+    /**
+     * setCursorToEnd
+     * @description 将光标设置到内容末尾
+     * @param {HTMLElement} element
+     */
+    setCursorToEnd(element: HTMLElement): void;
+    /**
+     * setCursorPositionToNode
+     * @description 设置Node的光标位置
+     * @param {Node} node
+     * @param {number} offset
+     */
+    setCursorPositionToNode(node: Node, offset: number): void;
+    /**
+     * setCursorPosition
+     * @description 设置光标的位置
+     * @param {HTMLElement} element
+     * @param {number} offset
+     */
+    setCursorPosition(element: HTMLElement, offset: number): void;
+    /**
+     * getCurrentElementWithCursor
+     * @description 获取光标输入的的element
+     * @return {Node | null}
+     */
+    getCurrentElementWithCursor(): Node | null;
+    /**
+     * getCurrentParentElementWithCursor
+     * @description 获取光标输入的parentElement
+     * @return {Node | null}
+     */
+    getCurrentParentElementWithCursor(): Node | null;
+    /**
+     * getCursorIndex
+     * @description 获取光标的索引
+     * @return {number}
+     */
+    getCursorIndex(): number;
+    /**
+     * getCursorRectByDocument
+     * @description 获取光标在文档中的位置
+     * @return {DOMRect | null}
+     */
+    getCursorRectByDocument(): DOMRect | null;
+    /**
+     * getTransformValues
+     * @description
+     * @param {HTMLElement} element
+     * @return {
+     *
+     * }
+     */
+    getTransformValues(element: HTMLElement): {
+        translateX: number;
+        translateY: number;
+        scaleX: number;
+        scaleY: number;
+        rotate: number;
+    };
+    getZoom(): number;
+    /**
+     * getScrollbarWidth
+     * @description 获取滚动条的宽度
+     * @return {number}
+     */
+    getScrollbarWidth(): number;
+    /**
+     * getMaximizedViewportSize
+     * @return {{width: number; height: number}}
+     */
+    getMaximizedViewportSize(): {
+        width: number;
+        height: number;
+    };
+    /**
+     * getProportionalSize
+     * @param {number} origin 原始大小
+     * @param {number} designWidth 设计稿大小
+     * @return {number}
+     */
+    getProportionalSize(origin: number, designWidth?: number): number;
 };
-export default _default;
+export default DomUtil;

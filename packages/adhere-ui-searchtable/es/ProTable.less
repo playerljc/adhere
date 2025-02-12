@@ -1,6 +1,4 @@
-@import '~@baifendian/adhere-ui-css/lib/vars';
-
-.adhere-ui-searchtable-protable-headeritem {
+.adhere-ui-search-table-protable-headeritem {
   &:not(:last-child) {
     margin-right: 10px;
   }
@@ -12,14 +10,24 @@
   }
 }
 
-.adhere-ui-searchtable-protable-gridsearchformgroupwrap {
+.adhere-ui-search-table-protable-grid-search-form-group-wrap {
   width: 100%;
-  margin-bottom: 20px;
+  //margin-bottom: 20px;
+
+  > .adhere-ui-table-grid-layout-inner-wrap {
+    > .adhere-ui-table-grid-layout-table {
+      > .adhere-ui-table-grid-layout-table-row {
+        > .adhere-ui-table-grid-layout-table-row-value {
+          white-space: normal;
+        }
+      }
+    }
+  }
 }
 
-.adhere-ui-searchtable-protable-headersearchwrap {
-  > .adhere-ui-searchtable-protable-headersearchwrap-main {
-    padding: 5px 5px 10px 5px;
+.adhere-ui-search-table-protable-headersearchwrap {
+  > .adhere-ui-search-table-protable-headersearchwrap-main {
+    padding: 5px 5px 10px;
 
     .ant-select,
     .ant-picker,
@@ -28,10 +36,10 @@
     }
   }
 
-  > .adhere-ui-searchtable-protable-headersearchwrap-footer {
+  > .adhere-ui-search-table-protable-headersearchwrap-footer {
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    border-top: 1px solid @adhere-border-color;
+    border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
   }
 }

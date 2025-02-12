@@ -1,13 +1,14 @@
+/**
+ * 修改的时候控制点的样式
+ */
 declare const _default: {
     fillStyle: string;
     strokeStyle: string;
     lineWidth: number;
-    lineCap: string;
-    lineJoin: string;
+    lineCap: CanvasLineCap;
+    lineJoin: CanvasLineJoin;
     lineDash: number[];
     lineDashOffset: number;
+    globalAlpha: number;
 };
-/**
- * 修改的时候控制点的样式
- */
 export default _default;

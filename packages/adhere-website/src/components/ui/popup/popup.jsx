@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useRef, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 
 import { Popup } from '@baifendian/adhere';
 
@@ -16,6 +16,14 @@ const PopupInner = React.forwardRef((props, ref) => {
     },
   }));
 
+  useEffect(() => {
+    const popup = props.getPopup();
+    if (popup) {
+      popupRef.current = popup;
+      setId(popup.getId());
+    }
+  }, [props.getPopup()]);
+
   return (
     <div className={styles.Wrap}>
       <div className={styles.Fixed}>
@@ -30,11 +38,11 @@ const PopupInner = React.forwardRef((props, ref) => {
               onBeforeClose: () => Promise.resolve(),
               onAfterClose: () => Popup.destroy(popup),
               onDestroy: () => {},
-              children: <PopupInner ref={tref} />,
+              children: <PopupInner ref={tref} getPopup={() => popup} />,
               zIndex: 9999,
             });
 
-            tref.current.setPopup(popup);
+            // tref.current.setPopup(popup);
 
             popup.show();
           }}
@@ -102,6 +110,14 @@ const PopupClosePreInner = React.forwardRef((props, ref) => {
     },
   }));
 
+  useEffect(() => {
+    const popup = props.getPopup();
+    if (popup) {
+      popupRef.current = popup;
+      setId(popup.getId());
+    }
+  }, [props.getPopup()]);
+
   return (
     <div className={styles.Wrap}>
       <div className={styles.Fixed}>
@@ -116,11 +132,11 @@ const PopupClosePreInner = React.forwardRef((props, ref) => {
               onBeforeClose: () => Promise.resolve(),
               onAfterClose: () => Popup.destroy(popup),
               onDestroy: () => {},
-              children: <PopupClosePreInner ref={tref} />,
+              children: <PopupClosePreInner ref={tref} getPopup={() => popup} />,
               zIndex: 9999,
             });
 
-            tref.current.setPopup(popup);
+            // tref.current.setPopup(popup);
 
             popup.showClosePrePopup();
           }}

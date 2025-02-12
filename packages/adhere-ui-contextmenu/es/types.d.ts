@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactElement } from 'react';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
 export interface MenuRefHandle {
     mount: () => void;
 }
@@ -46,3 +46,42 @@ export interface MenuData {
     separation?: boolean;
     children?: MenuData[];
 }
+export type ContextMenuComponent = {
+    setRenderToWrapper: (renderToWrapper: (children: () => ReactNode) => ReactNode) => void;
+    open: (data: MenuData[], config: Config) => HTMLDivElement;
+    close: (el: HTMLDivElement) => void;
+    openCircular: (config: CircularMenuConfig, point: Point) => void;
+    hideCircular: () => void;
+    stylesCircular: (properties: object) => void;
+};
+export type Point = {
+    x: number;
+    y: number;
+};
+export type CircularMenuConfig = {
+    totalAngle?: number;
+    spaceDeg?: 0 | 1 | 2 | 3 | 4 | 5;
+    background?: string;
+    backgroundHover?: string;
+    pageBackground?: string;
+    diameter?: number;
+    position?: 'top' | 'left' | 'right' | 'bottom';
+    start?: number;
+    horizontal?: boolean;
+    hideAfterClick?: boolean;
+    menus?: Array<{
+        title?: string;
+        icon?: string;
+        href?: {
+            url: string;
+            blank: boolean;
+        } | string;
+        click?: Function;
+        disabled?: boolean;
+    }>;
+};
+export type CircularMenuIns = {
+    show?: (point: [number, number]) => void;
+    hide?: () => void;
+    styles?: (properties: object) => void;
+};

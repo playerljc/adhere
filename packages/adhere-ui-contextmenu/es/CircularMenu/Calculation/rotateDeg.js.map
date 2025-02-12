@@ -1,0 +1,1 @@
+{"version":3,"file":"rotateDeg.js","sources":["CircularMenu/Calculation/rotateDeg.js"],"sourcesContent":["export default function rotateDeg(i) {\n    return this.startDeg + this.rotateUnit * i;\n}\n"],"names":["rotateDeg","i","this","startDeg","rotateUnit"],"mappings":"eAAe,SAASA,UAAUC,GAC9B,OAAOC,KAAKC,SAAWD,KAAKE,WAAaH,CAC7C"}

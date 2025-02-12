@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-import PlaygroundMulit from '@/lib/PlaygroundMulit';
+import PlaygroundMulti from '@/lib/PlaygroundMulti';
 
 import BMapWindLayer from './windlayer';
 
@@ -10,10 +10,10 @@ const indexJsCodeText = `
  import React, { useEffect, useRef } from 'react';
  import BMapWindLayer from './windlayer';
  import styles from './index.less';
- 
+
  function Wind() {
    const ref = useRef();
-   
+
    useEffect(() => {
     const map = new BMap.Map(ref.current); // 创建Map实例
     map.centerAndZoom(new BMap.Point(116.404, 39.915), 11); // 初始化地图,设置中心点坐标和地图级别
@@ -29,10 +29,10 @@ const indexJsCodeText = `
 
     map.addOverlay(new BMapWindLayer());
   }, []);
-  
+
   return <div className={styles.Wrap} ref={ref} />;
  }
- 
+
  export default Wind;
 `;
 
@@ -46,9 +46,9 @@ const indexLessCodeText = `
 const windLayerCodeText = `
   import { WindLayer } from 'bmap-wind';
   import defaultData from './windData.json';
-  
+
   const DEFAULT_DATA = defaultData;
-  
+
   const DEFAULT_CONFIG = {
     windOptions: {
       colorScale: [
@@ -76,7 +76,7 @@ const windLayerCodeText = `
     },
     zIndex: 1,
   };
-  
+
   /**
    * BMapWindLayer
    * @class BMapWindLayer
@@ -87,7 +87,7 @@ const windLayerCodeText = `
       super(data || DEFAULT_DATA, config || DEFAULT_CONFIG);
     }
   }
-  
+
   export default BMapWindLayer;
 `;
 
@@ -116,7 +116,7 @@ function Wind() {
   }, []);
 
   return (
-    <PlaygroundMulit
+    <PlaygroundMulti
       config={[
         {
           title: 'index.jsx',
@@ -139,7 +139,7 @@ function Wind() {
       ]}
     >
       <div className={styles.Wrap} ref={ref} />
-    </PlaygroundMulit>
+    </PlaygroundMulti>
   );
 }
 

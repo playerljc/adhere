@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["input-number-decimal2/index.js"],"sourcesContent":["import InputNumberDecimal2 from './InputNumberDecimal2';\nexport default InputNumberDecimal2;"],"names":["InputNumberDecimal2"],"mappings":"OAAOA,wBAAyB,uCACjBA"}

@@ -2,7 +2,7 @@ import React from 'react';
 
 import SearchEditableStateTable from '../../Editable/SearchEditableStateTable';
 import { SearchTableStateImplement } from '../../SearchTableStateImplement';
-import { SearchTableImplementState, SearchTableStateImplementProps } from '../../types';
+import type { SearchTableImplementState, SearchTableStateImplementProps } from '../../types';
 import RowDragSortMultiExtend from './RowDragSortMultiExtend';
 import SearchRowDragSortStateTable from './SearchRowDragSortStateTable';
 
@@ -46,8 +46,23 @@ const SearchEditableTableRowDragSortStateTable = RowDragSortMultiExtend<
       // @ts-ignore
       return SearchRowDragSortStateTable.prototype.moveRow.apply(this, params).then(() => {
         // @ts-ignore
-        this.setFieldValues();
+        this.setFieldValues(this.getData());
       });
+    },
+    /**
+     * onExpandedRowsChange
+     * @param expandedRows
+     */
+    onExpandedRowsChange(expandedRows) {
+      return SearchEditableStateTable.prototype.onExpandedRowsChange
+        .call(this, expandedRows)
+        .then(() => {
+          // @ts-ignore
+          if (this.state.isTableEditor) {
+            // @ts-ignore
+            this.setFieldValues(this.getData());
+          }
+        });
     },
     fetchData() {
       return SearchEditableStateTable.prototype.fetchData.call(this);

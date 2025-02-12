@@ -1,2 +1,2 @@
-"use strict";function default_1(l){return function(e,r,t){var u=t.value;return t.value=function(){var e=null;try{e=u.apply(this,Array.prototype.slice.call(arguments))}catch(e){l&&l.call(this,e)}return e},t}}require("core-js/modules/es.object.define-property.js"),require("core-js/modules/es.array.slice.js"),Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=default_1;
+function default_1(u){return function(e,t,r){var l=r.value;return r.value=function(){var e=null;try{e=l.apply(this,Array.prototype.slice.call(arguments))}catch(e){u&&u.call(this,e)}return e},r}}Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=default_1;
 //# sourceMappingURL=ReactAutoTryCatch.js.map

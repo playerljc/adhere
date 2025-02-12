@@ -1,137 +1,219 @@
-import { ConfigProvider } from 'antd';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { useUpdateEffect } from 'ahooks';
+import { App } from 'antd';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom/client';
 
-import { ConfigProvider as AdhereConfigProvider, Resource, Util } from '@baifendian/adhere';
+import {
+  StyleProvider,
+  legacyLogicalPropertiesTransformer,
+  px2remTransformer,
+} from '@ant-design/cssinjs';
+import {
+  AdapterScreen,
+  ConfigProvider as AdhereConfigProvider,
+  ContextMenu,
+  DateDisplay,
+  Dict,
+  Emitter,
+  MessageDialog,
+  Notification,
+  Popup,
+  Preferences,
+  Resource,
+  Util,
+} from '@baifendian/adhere';
+import { ConfigProvider } from '@baifendian/adhere-ui-anthoc';
 
 import DictConfig from '@/config/dict/dict.config';
 import Router from '@/lib/Router';
+import themeToken, { getThemeValue, selectTheme } from '@/lib/Theme/Util';
 
-// import 'antd/dist/antd.less';
+import SelfUtil from './util';
+
 import 'nprogress/nprogress.css';
 
+import '@baifendian/adhere-ui-anthoc/lib/index.less';
 import '@baifendian/adhere/lib/css.less';
 
-import './index.less';
+import styles from './index.less';
 
 // 配置字典
 DictConfig();
 
-// 获取当前语言
-const lang = Util.getLang();
+// 调用initial之前的设置
+(function () {
+  [
+    // dayjs的设置
+    () => {
+      dayjs.extend(utc);
+      dayjs.extend(timezone);
+    },
+  ].forEach((r) => r());
+})();
 
-Router().then((routerConfig) => {
-  ReactDOM.render(
-    <ConfigProvider locale={Resource.Dict.value.LocalsAntd.value[lang]}>
-      <AdhereConfigProvider
-        intl={{
-          lang,
-          locales: {
-            en_US: require('./locales/en_US').default,
-            zh_CN: require('./locales/zh_CN').default,
-            pt_PT: require('./locales/pt_PT').default,
-          },
-        }}
-      >
-        {() => routerConfig}
-      </AdhereConfigProvider>
-    </ConfigProvider>,
-    document.getElementById('app'),
-  );
-});
+if (SelfUtil.isUseMedia()) {
+  // 适配REM
+  AdapterScreen.flexible();
 
-// Resource.Dict.value.LocalsMoment.value[lang]();
+  // 适配minSize
+  AdapterScreen.setPageMinSizeToCSS(document.getElementById('app'));
+}
 
-// 初始化国际化
-// Intl.init({
-//   currentLocale: lang,
-// }).then(() => {
-//   Router().then((routerConfig) => {
-//     ReactDOM.render(
-//       <ConfigProvider locale={Resource.Dict.value.LocalsAntd.value[lang]}>
-//         {routerConfig}
-//       </ConfigProvider>,
-//       document.getElementById('app'),
-//     );
-//   });
-// });
+let root;
+let RouterConfig;
+let lang;
+let direction;
 
-// import React, { createRef } from 'react';
-// import ReactDOM from 'react-dom';
-// import { Select } from 'antd';
-// import Mark from 'mark.js';
-//
-// class Search extends React.Component {
-//   constructor(props) {
-//     super(props);
-//
-//     this.ref = createRef();
-//
-//     this.instance = null;
-//
-//     this.visible = false;
-//
-//     this.state = {
-//       searchVal: '',
-//     };
-//   }
-//
-//   render() {
-//     return (
-//       <Select
-//         style={{ width: 240 }}
-//         getPopupContainer={(e) => e.parentElement}
-//         showSearch
-//         defaultActiveFirstOption={false}
-//         autoClearSearchValue={false}
-//         showArrow={false}
-//         filterOption={false}
-//         bordered={false}
-//         searchValue={this.state.searchVal}
-//         onSearch={(val) => {
-//           this.setState({
-//             searchVal: this.visible ? val : this.state.searchVal,
-//           }, () => {
-//             if (this.ref.current && !this.instance) {
-//               this.instance = new Mark(this.ref.current);
-//             }
-//
-//             if (this.instance) {
-//               this.instance.unmark();
-//               this.instance.mark(this.state.searchVal);
-//             }
-//           });
-//         }}
-//         dropdownRender={() => {
-//           return (
-//             <div ref={this.ref}>
-//               <ul>
-//                 <li>111</li>
-//                 <li>111</li>
-//                 <li>111</li>
-//                 <li>111</li>
-//                 <li>111</li>
-//                 <li>111</li>
-//                 <li>111</li>
-//                 <li>111</li>
-//                 <li>111</li>
-//                 <li>111</li>
-//                 <li>111</li>
-//                 <li>111</li>
-//               </ul>
-//             </div>
-//           );
-//         }}
-//         onDropdownVisibleChange={(e) => {
-//           this.visible = e;
-//
-//           if (this.ref.current && !this.instance) {
-//             this.instance = new Mark(this.ref.current);
-//           }
-//         }}
-//       />
-//     );
-//   }
-// }
-//
-// ReactDOM.render(<Search />, document.getElementById('app'));
+/**
+ * Application
+ * @return {JSX.Element}
+ * @constructor
+ */
+function Application() {
+  const themeValue = getThemeValue();
+
+  const colorPrimary = themeToken.getCommonPrimaryColor();
+
+  const media = {
+    isUseMedia: SelfUtil.isUseMedia(),
+    designWidth: 192,
+  };
+
+  const antDesignConfigProviderProps = {
+    direction,
+    theme: {
+      token: {
+        colorPrimary,
+        colorLink: colorPrimary,
+      },
+      algorithm: themeValue.algorithm,
+    },
+    locale: Resource.Dict.value.LocalsAntd.value[lang],
+  };
+
+  const styleProviderProps = {
+    transformers: [
+      legacyLogicalPropertiesTransformer,
+      media.isUseMedia &&
+        px2remTransformer({
+          rootValue: 192,
+        }),
+    ].filter((c) => !!c),
+  };
+
+  const adhereProviderProps = {
+    theme: {
+      colorPrimary,
+      colorTextBase: themeValue.mapToken.colorTextBase,
+      colorBgBase: themeValue.mapToken.colorBgBase,
+      colorBorderBase: themeValue.mapToken.colorBorder,
+      colorSplitBase: themeValue.mapToken.colorSplit,
+      fontSizeBase: `${Util.pxToRem(themeValue.mapToken.fontSize, media.designWidth, media)}`,
+      borderRadiusBase: `${Util.pxToRem(
+        themeValue.mapToken.borderRadius,
+        media.designWidth,
+        media,
+      )}`,
+      lineWidth: `${Util.pxToRem(themeValue.mapToken.lineWidth, media.designWidth, media)}`,
+      lintType: themeValue.mapToken.lineType,
+    },
+    intl: {
+      lang,
+      locales: Array.from(Object.values(Dict.value.SystemLang.value)).reduce((pre, cur) => {
+        pre[cur.code] = cur.module;
+        return pre;
+      }, {}),
+    },
+    onIntlInit: () => {
+      Router().then((routerConfig) => {
+        RouterConfig = routerConfig;
+        render();
+      });
+    },
+    media,
+  };
+
+  function renderToFragmentWrapper(children) {
+    return (
+      <ConfigProvider {...antDesignConfigProviderProps}>
+        <StyleProvider {...styleProviderProps}>
+          <AdhereConfigProvider {...adhereProviderProps} onIntlInit={() => {}} isUseWrapper={false}>
+            {children}
+          </AdhereConfigProvider>
+        </StyleProvider>
+      </ConfigProvider>
+    );
+  }
+
+  function renderToWrapper(children) {
+    return (
+      <ConfigProvider {...antDesignConfigProviderProps}>
+        <StyleProvider {...styleProviderProps}>
+          <App className={styles.App}>
+            <AdhereConfigProvider {...adhereProviderProps}>{children}</AdhereConfigProvider>
+          </App>
+        </StyleProvider>
+      </ConfigProvider>
+    );
+  }
+
+  useUpdateEffect(() => {
+    MessageDialog.setRenderToWrapper(renderToFragmentWrapper);
+    Popup.setRenderToWrapper(renderToFragmentWrapper);
+    ContextMenu.setRenderToWrapper(renderToFragmentWrapper);
+    Notification.setRenderToWrapper(renderToFragmentWrapper);
+  });
+
+  useEffect(() => {
+    function SystemThemeChange() {
+      render();
+    }
+
+    Emitter.on('SystemThemeChange', SystemThemeChange);
+
+    return () => {
+      Emitter.remove('SystemThemeChange', SystemThemeChange);
+    };
+  }, []);
+
+  return renderToWrapper(() => RouterConfig);
+}
+
+/**
+ * render
+ * @description render
+ */
+function render() {
+  root.render(<Application />);
+}
+
+(function () {
+  // 设置方向
+  SelfUtil.initDirection();
+
+  // 设置缺省主题
+  selectTheme(Preferences.getStringByLocal('theme') ?? 'default');
+
+  // 初始化方向[ltr | rtl]
+  SelfUtil.initDirection();
+
+  // 获取方向
+  direction = SelfUtil.getDirection();
+
+  // 获取当前语言
+  lang = SelfUtil.getLang();
+
+  // 初始化dayjs的国际化
+  DateDisplay.setGlobalLocal(Dict.value.SystemLang.value[lang].dayjsCode);
+
+  // 设置root
+  root = ReactDOM.createRoot(document.getElementById('app'));
+
+  // render
+  render();
+})();
+
+export { render };

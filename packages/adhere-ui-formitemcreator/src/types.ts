@@ -1,29 +1,8 @@
 import type { ColProps, ColSize } from 'antd/lib/col';
 import type { FormItemProps } from 'antd/lib/form/FormItem';
 import type { RowProps } from 'antd/lib/row';
-import { NamedExoticComponent } from 'react';
+import type { NamedExoticComponent } from 'react';
 import type { ReactElement } from 'react';
-
-export interface FormItemCreatorFunction<P> extends NamedExoticComponent<P> {
-  TEXT: symbol;
-  INPUT: symbol;
-  SEARCH: symbol;
-  PASSWORD: symbol;
-  TEXTAREA: symbol;
-  NUMBER: symbol;
-  RADIO: symbol;
-  CHECKBOX: symbol;
-  DATEPICKER: symbol;
-  RANGEPICKER: symbol;
-  TIMEPICKER: symbol;
-  SWITCH: symbol;
-  SELECT: symbol;
-  SLIDER: symbol;
-  RATE: symbol;
-  UPLOAD: symbol;
-  TAG: symbol;
-  DEFINE: symbol;
-}
 
 /**
  * FormItemCreatorProps
@@ -62,3 +41,24 @@ export interface TagItemProps {
   longLimit?: number;
   addTagInner?: string | ReactElement;
 }
+
+export type FormItemCreatorComponent = NamedExoticComponent<FormItemCreatorProps> & {
+  TEXT: symbol;
+  INPUT: symbol;
+  SEARCH: symbol;
+  PASSWORD: symbol;
+  TEXTAREA: symbol;
+  NUMBER: symbol;
+  RADIO: symbol;
+  CHECKBOX: symbol;
+  DATEPICKER: symbol;
+  RANGEPICKER: symbol;
+  TIMEPICKER: symbol;
+  SWITCH: symbol;
+  SELECT: symbol;
+  SLIDER: symbol;
+  RATE: symbol;
+  UPLOAD: symbol;
+  TAG: symbol;
+  DEFINE: symbol;
+};

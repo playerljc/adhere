@@ -1,10 +1,9 @@
 {
-  "useWorkspaces": true,
   "npmClient": "yarn",
   "command": {
     "bootstrap": {
       "npmClientArgs": ["--no-package-lock"]
     }
   },
-  "version": "1.0.26"
+  "version": "2.11.0"
 }

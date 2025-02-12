@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["water-mark/index.js"],"sourcesContent":["import WaterMark from './WaterMark';\nexport default WaterMark;"],"names":["WaterMark"],"mappings":"OAAOA,cAAe,6BACPA"}

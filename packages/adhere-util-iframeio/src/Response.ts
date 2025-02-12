@@ -20,12 +20,18 @@ class Response {
 
   constructor(options: ResponseOptions) {
     this.requestId = options.requestId;
-    this.headers = options.headers || {};
+    this.headers = options.headers ?? {};
     this.statusCode = options.statusCode || 0;
     this.stateMessage = options.stateMessage || '';
     this.body = options.body;
   }
 
+  /**
+   * setHeader
+   * @description 设置header
+   * @param {string} key
+   * @param {string} value
+   */
   setHeader(key: string, value: string) {
     this.headers[key] = value;
   }
@@ -50,18 +56,34 @@ class Response {
     return this.requestId;
   }
 
+  /**
+   * setBody
+   * @param {any} body
+   */
   setBody(body) {
     this.body = body;
   }
 
+  /**
+   * setStatusCode
+   * @param {number} statusCode
+   */
   setStatusCode(statusCode) {
     this.statusCode = statusCode;
   }
 
+  /**
+   * setStatusMessage
+   * @param {string} statusMessage
+   */
   setStatusMessage(statusMessage) {
     this.stateMessage = statusMessage;
   }
 
+  /**
+   * setRequestId
+   * @param {string} requestId
+   */
   setRequestId(requestId) {
     this.requestId = requestId;
   }

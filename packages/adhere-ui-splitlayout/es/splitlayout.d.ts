@@ -1,4 +1,3 @@
-import React from 'react';
-import { SplitLayoutProps } from './types';
-declare const _default: React.NamedExoticComponent<SplitLayoutProps>;
-export default _default;
+import type { SplitLayoutComponent } from './types';
+declare const SplitLayout: SplitLayoutComponent;
+export default SplitLayout;

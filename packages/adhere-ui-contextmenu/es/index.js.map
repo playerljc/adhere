@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ContextMenu from './ContextMenu';\r\nexport default ContextMenu;\r\n"],"names":["ContextMenu"],"mappings":"OAAOA,gBAAiB,+BACTA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ContextMenu from './ContextMenu';\nexport default ContextMenu;\n"],"names":["ContextMenu"],"mappings":"OAAOA,gBAAiB,+BACTA"}

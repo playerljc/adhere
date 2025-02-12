@@ -1,6 +1,6 @@
 import Util from '@baifendian/adhere-util';
 
-import { ERROR_MESSAGE, OK_MESSAGE } from '../Constent';
+import { ERROR_MESSAGE, OK_MESSAGE } from '../Constant';
 import Context from '../Context';
 import Request from '../Request';
 import Response from '../Response';
@@ -35,19 +35,25 @@ class Server {
    * @param evt
    */
   private onMessage(evt) {
-    // 略掉不是白名单中的请求，或没有request的请求
-    if (
-      !this.whitelist.includes(evt.origin) ||
-      !evt.source ||
-      Util.isEmpty(evt.data) ||
-      !Util.isObject(evt.data) ||
-      !('requestId' in evt.data) ||
-      Util.isEmpty(evt.data.requestId)
-    ) {
-      return;
-    }
+    try {
+      const data = JSON.parse(evt.data);
 
-    this.service(evt);
+      // 略掉不是白名单中的请求，或没有request的请求
+      if (
+        !this.whitelist.includes(evt.origin) ||
+        !evt.source ||
+        Util.isEmpty(data) ||
+        !Util.isObject(data) ||
+        !('requestId' in data) ||
+        Util.isEmpty(data.requestId)
+      ) {
+        return;
+      }
+
+      this.service(evt, data);
+    } catch (e) {
+      console.warn(e);
+    }
   }
 
   /**
@@ -65,13 +71,14 @@ class Server {
   /**
    * service
    * @description 具体的请求处理
-   * @param evt
+   * @param {MessageEvent} evt
+   * @param {any} data
    * @private
    */
-  private service(evt: MessageEvent) {
+  private service(evt: MessageEvent, data: any) {
     // 设置request的statusCode和statusMessage
-    const request = new Request(evt.data);
-    request.setRequestId(evt.data.requestId);
+    const request = new Request(data);
+    request.setRequestId(data.requestId);
     request.setStatusCode(200);
     request.setStatusMessage(OK_MESSAGE);
 
@@ -101,8 +108,12 @@ class Server {
 
     this.middleWareQueueReduce(context).then(() => {
       // 返回响应
-      // @ts-ignore
-      evt?.source?.postMessage?.(context.response, evt.origin);
+      try {
+        // @ts-ignore
+        evt?.source?.postMessage?.(JSON.stringify(context.response), evt.origin);
+      } catch (e) {
+        console.log(e);
+      }
     });
   }
 

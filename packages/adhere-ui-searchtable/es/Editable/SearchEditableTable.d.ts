@@ -1,8 +1,7 @@
-import { SearchEditorTableState, SearchTableImplementProps } from '../types';
 declare const SearchEditableTable_base: {
     new (props: any): {
         [x: string]: any;
-        formRef: import("react").RefObject<import("antd/es/form").FormInstance<any> | null>;
+        formRef: import("react").RefObject<import("antd").FormInstance<any> | null>;
         onTableRowComponentReducers(columns: import("../types").ColumnTypeExt[]): string[];
         onTableCellComponentReducers(columns: import("../types").ColumnTypeExt[]): string[];
         rowEditableReducer(params: {
@@ -22,9 +21,10 @@ declare const SearchEditableTable_base: {
             record: any;
             editorConfig: any;
         }): void;
-        setFieldValues(): void;
+        onExpandedRowsChange(expandedRows: any): any;
+        setFieldValues(dataSource: any): void;
         fetchData(): any;
-        render(): import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>>;
+        render(): import("react").ReactElement;
     };
     [x: string]: any;
 };
@@ -33,7 +33,7 @@ declare const SearchEditableTable_base: {
  * @class
  * @classdesc 可编辑的表格(表格进行整体编辑)
  */
-declare class SearchEditableTable<P extends SearchTableImplementProps, S extends SearchEditorTableState> extends SearchEditableTable_base {
+declare class SearchEditableTable extends SearchEditableTable_base {
     /**
      * updateEditorData
      * @description 更新可编辑的所有单元格

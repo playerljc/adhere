@@ -1,0 +1,83 @@
+@import '~@baifendian/adhere-ui-scrollload/es/index.less';
+@import '~@baifendian/adhere-ui-popup/es/index.less';
+@import '~@baifendian/adhere-mobile-ui-anthoc/es/index.less';
+
+@import './PRSLItem';
+@import './Toolbar';
+@import './SearchKeyWord';
+@import './Action';
+@import './Selection';
+@import './DND';
+
+.adhere-mobile-ui-prsl {
+  display: flex;
+  flex-direction: column;
+
+  > .adhere-mobile-ui-prsl-first-loading {
+    padding: 15px;
+  }
+
+  > .adhere-mobile-ui-prsl-header {
+    display: flex;
+    flex-shrink: 0;
+
+    > .adhere-mobile-ui-prsl-header-main {
+      flex: 1;
+      min-width: 0;
+    }
+
+    > .adhere-mobile-ui-prsl-header-extra {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      padding-right: 15px;
+    }
+  }
+
+  > .adhere-mobile-ui-prsl-inner {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+
+    > .adhere-mobile-ui-prsl-inner-before,
+    > .adhere-mobile-ui-prsl-inner-after {
+      flex-shrink: 0;
+    }
+
+    > .adm-pull-to-refresh {
+      flex: 1;
+      min-height: 0;
+
+      > .adm-pull-to-refresh-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        > .adhere-mobile-ui-prsl-scroll-before {
+          flex-shrink: 0;
+        }
+
+        > .adhere-mobile-ui-prsl-scroll-load {
+          flex: 1;
+          min-height: 0;
+
+          .adm-list-item-content-main {
+            min-width: 0;
+          }
+        }
+
+        > .adhere-mobile-ui-prsl-scroll {
+          flex: 1;
+          min-height: 0;
+          overflow-y: auto;
+        }
+
+        > .adhere-mobile-ui-prsl-scroll-after {
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+}

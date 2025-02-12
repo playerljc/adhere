@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["splitter/index.js"],"sourcesContent":["import Splitter from './Splitter';\nexport default Splitter;"],"names":["Splitter"],"mappings":"OAAOA,aAAc,4BACNA"}

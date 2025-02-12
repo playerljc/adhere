@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+
+    <style>
+      .editable {
+        width: 300px;
+        min-height: 100px;
+        padding: 10px;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="editable" contenteditable="true" id="myEditableDiv">这是一个可编辑的 div。</div>
+
+    <script>
+      // 在可编辑 div 内追加 HTML 内容
+      const editableDiv = document.getElementById('myEditableDiv');
+      editableDiv.innerHTML += '<b>加粗文本</b>';
+
+      // 将光标设置到内容末尾
+      function setCursorToEnd(element) {
+        const range = document.createRange();
+        const selection = window.getSelection();
+        range.selectNodeContents(element);
+        range.collapse(false); // 将光标设置到末尾
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+
+      setCursorToEnd(editableDiv);
+    </script>
+  </body>
+</html>

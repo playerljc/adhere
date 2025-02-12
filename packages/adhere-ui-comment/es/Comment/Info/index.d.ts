@@ -1,4 +1,10 @@
 import React from 'react';
-import { NodeProps } from '../../types';
-declare const _default: React.NamedExoticComponent<NodeProps>;
-export default _default;
+import type { NodeProps } from '../../types';
+/**
+ * CommentInfo
+ * @param props
+ * @constructor
+ * @classdesc 评论节点
+ */
+declare const CommentInfo: React.NamedExoticComponent<NodeProps>;
+export default CommentInfo;

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script>
+      let targetWindow;
+
+      window.addEventListener('message', (e) => {
+        // if (e.origin == "子页面地址") {
+        //   targetWindow.postMessage("发给子页面的数据", "*");
+        // }
+        console.log('===', e.data);
+        if (typeof e.data !== 'object') return;
+
+        if (e.data.captureType !== 'load') return;
+
+        // 接收到了下载页面的load事件
+        // 发出截屏指令，并传传递图表数据
+        targetWindow.postMessage(
+          {
+            captureData: Array.from({ length: 36 }).map(() => ({
+              title: {
+                text: 'ECharts Getting Started Example',
+              },
+              tooltip: {},
+              legend: {
+                data: ['sales'],
+              },
+              xAxis: {
+                data: ['Shirts', 'Cardigans', 'Chiffons', 'Pants', 'Heels', 'Socks'],
+              },
+              yAxis: {},
+              series: [
+                {
+                  name: 'sales',
+                  type: 'bar',
+                  data: [5, 20, 36, 10, 10, 20],
+                },
+              ],
+            }))
+          },
+          '*',
+        );
+      });
+
+      window.onload = function () {
+        const a = document.getElementById('download');
+
+        a.addEventListener('click', () => {
+          targetWindow = window.open(
+            'http://localhost:63342/adhere/packages/adhere-website/work/capture.html',
+            '_blank',
+          );
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <a id="download">下载</a>
+  </body>
+</html>

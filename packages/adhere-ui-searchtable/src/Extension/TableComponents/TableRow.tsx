@@ -1,8 +1,11 @@
-import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
-import React, { FC, ReactElement, ReactNode, useContext } from 'react';
+import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
+import classNames from 'classnames';
+import type { FC, ReactElement, ReactNode } from 'react';
+import React, { useContext } from 'react';
 
-import SearchTable, { SearchTableContext } from '../../SearchTable';
-import { TableRowComponentProps } from '../../types';
+import type SearchTable from '../../SearchTable';
+import { SearchTableContext } from '../../SearchTable';
+import type { TableRowComponentProps } from '../../types';
 import useRowDragSortRow from '../DragSort/RowDragSort/DragSortRow';
 import useEditableRow from '../EditableCell/EditableRow';
 import useEditableTableRow from '../EditableCell/EditableTableRow';
@@ -37,8 +40,25 @@ const TableRow: FC<TableRowComponentProps> = ({
     };
   } | null>(SearchTableContext);
 
+  const { selectedRowKeys } = context?.context.state as any;
+  // 表格是否使用CheckedStrategy模式
+  const isUseCheckedStrategy = context?.context.isUseCheckedStrategy();
+  const recordPrimaryValue = record[rowKey];
+
   // 默认的row组件是一个tr
-  const trREL = <tr {...(restProps || {})} />;
+  const trREL = (
+    <tr
+      {...(restProps ?? {})}
+      className={classNames(
+        restProps.className,
+        // 如果使用CheckedStrategy模式选中后需要加入'ant-table-row-selected'样式
+        {
+          'ant-table-row-selected':
+            isUseCheckedStrategy && selectedRowKeys.includes(recordPrimaryValue),
+        },
+      )}
+    />
+  );
 
   const reducerArgv = {
     rowIndex,
@@ -77,5 +97,7 @@ const TableRow: FC<TableRowComponentProps> = ({
     },
   ).value as any;
 };
+
+TableRow.displayName = 'TableRow';
 
 export default TableRow;

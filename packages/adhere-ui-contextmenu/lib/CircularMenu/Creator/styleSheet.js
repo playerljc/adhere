@@ -1,0 +1,2 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var UID={_current:0,getNew:function(){return this._current++,this._current}};function default_1(e,t,n,r){var u="sheetStyles",d=document.head||document.getElementsByTagName("head")[0],s=document.getElementById(u)||document.createElement("style"),u=(s.id=u,"s-S"+UID.getNew());return e.className+=" "+u,s.innerHTML+=" ."+u+(r?":"+r:"")+"{"+t+":"+n+"}",d.appendChild(s),this}exports.default=default_1;
+//# sourceMappingURL=styleSheet.js.map

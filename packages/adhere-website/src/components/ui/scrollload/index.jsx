@@ -1,7 +1,9 @@
-import { Avatar, Empty, List, Spin } from 'antd';
-import React, { useEffect, useState } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
 
-import { ScrollLoad } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -10,74 +12,16 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-const globalData = [];
-globalData.length = 10;
-globalData.fill(1);
-
-let page = 1;
-
-let callbackHandler = null;
-
-let ref1Status = ScrollLoad.NORMAL;
-let ref2Status = ScrollLoad.NORMAL;
-let ref3Status = ScrollLoad.NORMAL;
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
 
 export default () => {
-  const [data, setData] = useState(getData());
-
   function boxPanelConfig() {
     return [
       {
         id: `p1`,
-        name: `公共代码`,
-        mode: 'code',
-        scope: { React },
-        cardProps: {
-          description: {
-            title: '公共代码',
-            info: '公共代码',
-          },
-        },
-        codeText: `
-  const globalData = [];
-  globalData.length = 10;
-  globalData.fill(1);
-
-  let page = 1;
-
-  let callbackHandler = null;
-
-  let ref1Status = ScrollLoad.NORMAL;
-  let ref2Status = ScrollLoad.NORMAL;
-  let ref3Status = ScrollLoad.NORMAL;
-
-  // eslint-disable-next-line no-use-before-define,no-shadow
-  const [data, setData] = useState(getData());
-
-  useEffect(() => {
-    if (callbackHandler) {
-      callbackHandler(ScrollLoad.NORMAL);
-      callbackHandler = null;
-    }
-  }, [data]);
-
-  function getData() {
-    const result = [];
-    result.length = page * 10;
-    result.fill(0);
-
-    // eslint-disable-next-line no-plusplus
-    page++;
-
-    return result.map((t, index) => ({
-      title: "Ant Design Title" + (index + 1) ,
-    }));
-  }
-        `,
-        type: 'PlayGround',
-      },
-      {
-        id: `p2`,
         name: `基本使用`,
         mode: 'code',
         scope: { React },
@@ -87,67 +31,12 @@ export default () => {
             info: '基本使用',
           },
         },
-        codeText: `
-  import { List, Avatar } from 'antd';
-  import { ScrollLoad } from '@baifendian/adhere';
-
-  <ScrollLoad
-    style={{ width: 400, height: 600 }}
-    onScrollBottom={(callback) => {
-      setTimeout(() => {
-        callbackHandler = callback;
-        setData(getData());
-      }, 2000);
-    }}
-  >
-    <List
-      itemLayout="horizontal"
-      dataSource={data}
-      renderItem={(item) => (
-        <List.Item>
-          <List.Item.Meta
-            avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            }
-            title={<a href="https://ant.design">{item.title}</a>}
-            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-          />
-        </List.Item>
-      )}
-    />
-  </ScrollLoad>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <ScrollLoad
-            style={{ width: 400, height: 600 }}
-            onScrollBottom={(callback) => {
-              setTimeout(() => {
-                callbackHandler = callback;
-                setData(getData());
-              }, 2000);
-            }}
-          >
-            <List
-              itemLayout="horizontal"
-              dataSource={data}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    }
-                    title={<a href="https://ant.design">{item.title}</a>}
-                    description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                  />
-                </List.Item>
-              )}
-            />
-          </ScrollLoad>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
-        id: `p3`,
+        id: `p2`,
         name: `没有数据的显示`,
         mode: 'code',
         scope: { React },
@@ -157,86 +46,12 @@ export default () => {
             info: '没有数据的显示',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { List, Avatar } from 'antd';
-  import { ScrollLoad } from '@baifendian/adhere';
-
-  <ScrollLoad
-    style={{ width: 400, height: 600 }}
-    onScrollBottom={(callback) => {
-      if (ref1Status === ScrollLoad.EMPTY) {
-        callback(ScrollLoad.EMPTY);
-      }
-
-      setTimeout(() => {
-        callback(ScrollLoad.EMPTY);
-        ref1Status = ScrollLoad.EMPTY;
-      }, 2000);
-    }}
-    onEmptyClick={() => {
-      alert('点击了');
-    }}
-  >
-    <List
-      itemLayout="horizontal"
-      dataSource={globalData.map((t, index) => ({
-        title: "Ant Design Title" + (index + 1),
-      }))}
-      renderItem={(item) => (
-        <List.Item>
-          <List.Item.Meta
-            avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            }
-            title={<a href="https://ant.design">{item.title}</a>}
-            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-          />
-        </List.Item>
-      )}
-    />
-  </ScrollLoad>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <ScrollLoad
-            style={{ width: 400, height: 600 }}
-            onScrollBottom={(callback) => {
-              if (ref1Status === ScrollLoad.EMPTY) {
-                callback(ScrollLoad.EMPTY);
-              }
-
-              setTimeout(() => {
-                callback(ScrollLoad.EMPTY);
-                ref1Status = ScrollLoad.EMPTY;
-              }, 2000);
-            }}
-            onEmptyClick={() => {
-              alert('点击了');
-            }}
-          >
-            <List
-              itemLayout="horizontal"
-              dataSource={globalData.map((t, index) => ({
-                title: `Ant Design Title${index + 1}`,
-              }))}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    }
-                    title={<a href="https://ant.design">{item.title}</a>}
-                    description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                  />
-                </List.Item>
-              )}
-            />
-          </ScrollLoad>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
       {
-        id: `p4`,
+        id: `p3`,
         name: `错误的显示`,
         mode: 'code',
         scope: { React },
@@ -246,86 +61,12 @@ export default () => {
             info: '错误的显示',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { List, Avatar } from 'antd';
-  import { ScrollLoad } from '@baifendian/adhere';
-
-  <ScrollLoad
-    style={{ width: 400, height: 600 }}
-    onScrollBottom={(callback) => {
-      if (ref2Status === ScrollLoad.ERROR) {
-        callback(ScrollLoad.ERROR);
-      }
-
-      setTimeout(() => {
-        callback(ScrollLoad.ERROR);
-        ref2Status = ScrollLoad.ERROR;
-      }, 2000);
-    }}
-    onErrorClick={() => {
-      alert('点击了');
-    }}
-  >
-    <List
-      itemLayout="horizontal"
-      dataSource={globalData.map((t, index) => ({
-        title: "Ant Design Title"+(index + 1),
-      }))}
-      renderItem={(item) => (
-        <List.Item>
-          <List.Item.Meta
-            avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            }
-            title={<a href="https://ant.design">{item.title}</a>}
-            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-          />
-        </List.Item>
-      )}
-    />
-  </ScrollLoad>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <ScrollLoad
-            style={{ width: 400, height: 600 }}
-            onScrollBottom={(callback) => {
-              if (ref2Status === ScrollLoad.ERROR) {
-                callback(ScrollLoad.ERROR);
-              }
-
-              setTimeout(() => {
-                callback(ScrollLoad.ERROR);
-                ref2Status = ScrollLoad.ERROR;
-              }, 2000);
-            }}
-            onErrorClick={() => {
-              alert('点击了');
-            }}
-          >
-            <List
-              itemLayout="horizontal"
-              dataSource={globalData.map((t, index) => ({
-                title: `Ant Design Title${index + 1}`,
-              }))}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    }
-                    title={<a href="https://ant.design">{item.title}</a>}
-                    description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                  />
-                </List.Item>
-              )}
-            />
-          </ScrollLoad>
-        ),
+        codeText: P3CodeText,
+        renderChildren: () => <P3 />,
       },
       {
-        id: `p5`,
+        id: `p4`,
         name: `自定义loading和empty`,
         mode: 'code',
         scope: { React },
@@ -335,104 +76,12 @@ export default () => {
             info: '自定义loading和empty',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { List, Avatar } from 'antd';
-  import { ScrollLoad } from '@baifendian/adhere';
-
-  <ScrollLoad
-    style={{ width: 400, height: 400 }}
-    onScrollBottom={(callback) => {
-      if (ref3Status === ScrollLoad.EMPTY) {
-        callback(ScrollLoad.EMPTY);
-      }
-
-      setTimeout(() => {
-        callback(ScrollLoad.EMPTY);
-        ref3Status = ScrollLoad.EMPTY;
-      }, 2000);
-    }}
-    renderLoading={() => <Spin tip="loading..." style={{ width: '100%' }} />}
-    renderEmpty={() => <Empty />}
-  >
-    <List
-      itemLayout="horizontal"
-      dataSource={globalData.map((t, index) => ({
-        title: "Ant Design Title" + (index + 1),
-      }))}
-      renderItem={(item) => (
-        <List.Item>
-          <List.Item.Meta
-            avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            }
-            title={<a href="https://ant.design">{item.title}</a>}
-            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-          />
-        </List.Item>
-      )}
-    />
-  </ScrollLoad>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <ScrollLoad
-            style={{ width: 400, height: 400 }}
-            onScrollBottom={(callback) => {
-              if (ref3Status === ScrollLoad.EMPTY) {
-                callback(ScrollLoad.EMPTY);
-              }
-
-              setTimeout(() => {
-                callback(ScrollLoad.EMPTY);
-                ref3Status = ScrollLoad.EMPTY;
-              }, 2000);
-            }}
-            renderLoading={() => <Spin tip="loading..." style={{ width: '100%' }} />}
-            renderEmpty={() => <Empty />}
-          >
-            <List
-              itemLayout="horizontal"
-              dataSource={globalData.map((t, index) => ({
-                title: `Ant Design Title${index + 1}`,
-              }))}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    }
-                    title={<a href="https://ant.design">{item.title}</a>}
-                    description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                  />
-                </List.Item>
-              )}
-            />
-          </ScrollLoad>
-        ),
+        codeText: P4CodeText,
+        renderChildren: () => <P4 />,
       },
     ];
   }
-
-  function getData() {
-    const result = [];
-    result.length = page * 10;
-    result.fill(0);
-
-    // eslint-disable-next-line no-plusplus
-    page++;
-
-    return result.map((t, index) => ({
-      title: `Ant Design Title ${index + 1}`,
-    }));
-  }
-
-  useEffect(() => {
-    if (callbackHandler) {
-      callbackHandler(ScrollLoad.NORMAL);
-      callbackHandler = null;
-    }
-  }, [data]);
 
   return (
     <PlayGroundPage>

@@ -1,2 +1,2 @@
-import ImportantConfirm from"./importantconfirm";export default ImportantConfirm;
+import ImportantConfirm from"./ImportantConfirm";export default ImportantConfirm;
 //# sourceMappingURL=index.js.map

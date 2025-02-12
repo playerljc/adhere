@@ -83,6 +83,9 @@ export const FontSizeSetting = lazy(() =>
 export const SearchTable = lazy(() =>
   import(/* webpackChunkName: "searchtable" */ '@/components/ui/searchtable'),
 );
+export const SearchList = lazy(() =>
+  import(/* webpackChunkName: "searchlist" */ '@/components/ui/searchlist'),
+);
 export const FormItemCreator = lazy(() =>
   import(/* webpackChunkName: "formitemcreator" */ '@/components/ui/formitemcreator'),
 );
@@ -140,10 +143,36 @@ export const ConfigProvider = lazy(() =>
   import(/* webpackChunkName: "configprovider" */ '@/components/ui/configprovider'),
 );
 
-export const AntdFormItem = lazy(() =>
-  import(/* webpackChunkName: "antdformitem" */ '@/components/ui/antdformitem'),
+export const AntHOC = lazy(() => import(/* webpackChunkName: "anthoc" */ '@/components/ui/anthoc'));
+
+export const FieldGeneratorToDict = lazy(() =>
+  import(/* webpackChunkName: "fieldgeneratortodict" */ '@/components/ui/fieldgeneratortodict'),
 );
 
-export const ReactQuillSandbox = lazy(() =>
-  import(/* webpackChunkName: "reactquillsandbox" */ '@/components/ui/reactquillsandbox'),
+export const RichTextSandBox = lazy(() =>
+  import(/* webpackChunkName: "richtextsandbox" */ '@/components/ui/richtextsandbox'),
+);
+
+export const Ellipsis = lazy(() =>
+  import(/* webpackChunkName: "ellipsis" */ '@/components/ui/ellipsis'),
+);
+
+export const Expression = lazy(() =>
+  import(/* webpackChunkName: "expression" */ '@/components/ui/expression'),
+);
+
+export const AutoComplete = lazy(() =>
+  import(/* webpackChunkName: "autocomplete" */ '@/components/ui/autocomplete'),
+);
+
+export const QuickRangeDate = lazy(() =>
+  import(/* webpackChunkName: "quickrangedate" */ '@/components/ui/quickrangedate'),
+);
+
+export const CurrencySymbol = lazy(() =>
+  import(/* webpackChunkName: "currencysymbol" */ '@/components/ui/currencysymbol'),
+);
+
+export const MagicPanel = lazy(() =>
+  import(/* webpackChunkName: "magicpanel" */ '@/components/ui/magicpanel'),
 );

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["steps/index.js"],"sourcesContent":["import Steps from './Steps';\nimport StepsSwiper from './StepsSwiper';\nSteps.StepsSwiper = StepsSwiper;\nexport default Steps;"],"names":["Steps","StepsSwiper"],"mappings":"OAAOA,UAAW,iBACXC,gBAAiB,gBACxBD,MAAMC,YAAcA,2BACLD"}

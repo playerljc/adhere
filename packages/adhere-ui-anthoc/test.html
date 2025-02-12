@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!--
+ Tutorial.
+ Check available devices.
+-->
+<html>
+  <head>
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <meta charset="UTF-8" />
+    <title>Online customer service</title>
+    <!-- If the co-browsing function is required, introduce the cobrowse.js and cobrowseCommon.js components. Replace
+ 10.101.2.7 with the IP address and port number of the CEC, or directly with the domain name of the CEC. -->
+    <script
+      type="text/javascript"
+      src="https://10.101.2.7/service-cloud/resource.root/cobrowse/sdk/cobrowse.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://10.101.2.7/service-cloud/webclient/chat_client/js/cobrowseCommon.js"
+    ></script>
+    <script type="text/javascript" src="js/jquery-1.8.0.js"></script>
+    <script type="text/javascript" src="js/axios.min.js"></script>
+  </head>
+  <body>
+    <!-- Check that browser is not IE -->
+    <script>
+      var ua = window.navigator.userAgent;
+      if (ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0) {
+        alert('Internet Explorer is not supported. Please use Chrome or Firefox');
+      }
+    </script>
+
+    <script>
+      function thirdValidate(thirdUserData) {
+        let timestamp = new Date().getTime();
+        let serviceUrl =
+          $ContextPath + '/webclient/chat_client/js/newThirdPartyClient.js?' + '&t=' + timestamp;
+        // Request newThirdPartyClient.js.
+        var request = $.ajax({
+          url: serviceUrl,
+          type: 'POST',
+          data: JSON.stringify(thirdUserData),
+          crossDomain: true,
+          dataType: 'text',
+          xhrFields: { withCredentials: true },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log(XMLHttpRequest.status);
+            console.log(XMLHttpRequest.readyState);
+            console.log(textStatus);
+          },
+          success: function (data) {
+            importScript(data);
+          },
+        });
+      }
+
+      function applyChatWindow() {
+        thirdUserData['timestamp'] = timestamp;
+        // Request the JavaScript file from the Service Cloud.
+        axios({
+          method: 'post',
+          url: serviceUrl,
+          data: JSON.stringify(thirdUserData),
+          withCredentials: true,
+        })
+          // Define JavaScript file variables and write them to the current web page.
+          .then((resp) => {
+            if (resp && resp.status === 200) {
+              let str =
+                'var configId = "' +
+                thirdUserData.channelConfigId +
+                '";var userId = "' +
+                thirdUserData.thirdUserId +
+                '";var userName = "' +
+                thirdUserData.thirdUserName +
+                '";var tenantSpaceId = "' +
+                thirdUserData.tenantSpaceId +
+                '";var locale = "' +
+                thirdUserData.locale +
+                '";var token="' +
+                thirdUserData.thirdUserToken +
+                '";';
+
+              importScript(str + resp.data);
+            } else {
+              this.$alert('Link failed!');
+              console.log(resp.status);
+              console.log(resp);
+            }
+          });
+      }
+
+      // Define the $aicc_ContextPath variable. The variable name must be $aicc_ContextPath, and the value is https://10.101.2.7/service-cloud/ or https://Domain name/service-cloud/.
+      const $ContextPath = 'https://10.101.2.7/service-cloud';
+      // Construct request parameters.
+      let timestamp = new Date().getTime();
+      let serviceUrl = $ContextPath + '/webclient/chat_client/js/thirdPartyClient.js?' + '&t=' + timestamp;
+      // The following variables need to be defined before being used. In this demo, the variables are defined when axios.js is introduced. For details about the parameters, see Table 1
+
+      let thirdUserData = {};
+      thirdUserData['thirdUserToken'] = 'XXXXXXXX';
+      thirdUserData['thirdUserName'] = 'XXXXXXXX';
+      thirdUserData['thirdUserId'] = 'XXXXXXXX';
+      thirdUserData['tenantSpaceId'] = 'XXXXXXXX';
+      thirdUserData['channelConfigId'] = 'XXXXXXXX';
+      thirdUserData['locale'] = 'xx';
+
+      const importScript = (function (oHead) {
+        function loadError(oError) {
+          throw new URIError('The script ' + oError.target.src + ' is not accessible.');
+        }
+
+        return function (sSrc, fOnload) {
+          const oScript = document.createElement('script');
+          oScript.type = 'text\/javascript';
+          oScript.onerror = loadError;
+          if (fOnload) {
+            oScript.onload = fOnload;
+          }
+          oHead.appendChild(oScript);
+          oScript.innerHTML = sSrc;
+        };
+      })(document.head || document.getElementsByTagName('body')[0]);
+
+      applyChatWindow();
+    </script>
+    <!-- HTML components of simple GUI -->
+    <div id="status_line"></div>
+  </body>
+</html>

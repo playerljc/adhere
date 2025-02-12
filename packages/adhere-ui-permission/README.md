@@ -5,7 +5,7 @@
 - 可以自定义无权限的 UI
 
 # ✨ 特性
-- 支持 react(17.x)
+- 支持 react(18.x)
 - 支持国际化
 - 支持修改主题
 - 支持动态引入(babel-plugin-import)
@@ -23,4 +23,4 @@ yarn add @baifendian/adhere-ui-permission
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/permission](http://49.232.163.126:8083/adhere/ui/permission)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/permission](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/permission)

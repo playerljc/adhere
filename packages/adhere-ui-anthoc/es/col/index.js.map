@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["col/index.js"],"sourcesContent":["import Col from './Col';\nexport default Col;"],"names":["Col"],"mappings":"OAAOA,QAAS,uBACDA"}

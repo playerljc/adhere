@@ -84,9 +84,18 @@ export default {
   /**
    * isRef - 是否是引用类型
    * @param obj
+   * @return {boolean}
    */
   isRef(obj) {
     return this.isArray(obj) || this.isObject(obj);
+  },
+  /**
+   * isPromise - 是否是Promise
+   * @param obj
+   * @return {boolean}
+   */
+  isPromise(obj) {
+    return obj && typeof obj.then === 'function';
   },
   /**
    * chainCallAssignment - 对象的链式赋值
@@ -154,12 +163,13 @@ export default {
    * toCamelCase - 用连接符链接的字符串转换成驼峰写法
    * 例：abc-def AbcDef
    * @param str - string 用连接符节点的字符串
+   * @param split - string 分割的字符
    * @param toUpperCase - boolean 是否转换成大写
    * @return {String}
    */
-  toCamelCase(str, toUpperCase = false) {
+  toCamelCase(str, split = '_', toUpperCase = false) {
     const result = str
-      .split('-')
+      .split(split)
       .map((item) => item.charAt(0).toUpperCase() + item.substring(1))
       .join('');
     return !toUpperCase ? `${result.charAt(0).toLowerCase()}${result.substring(1)}` : result;
@@ -182,12 +192,25 @@ export default {
   },
   /**
    * pascalCaseToKebabCase 驼峰转xxx-xxx-xxx
-   * @param name - string pascalCase的字符串
+   * @param _str - string pascalCase的字符串
+   * @param symbol 分隔符
    * @return {string}
    */
-  pascalCaseToKebabCase(name) {
+  pascalCaseToKebabCase(_str, symbol = '-') {
+    // const result = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2');
+    // return (result.startsWith('-') ? result.substring(1) : result).toLowerCase();
+    const cells = _str.match(/([A-Z]+(?=[A-Z]|$))|([A-Z]?[^A-Z]+)/g) || [];
+    return cells.map((c) => c.toLowerCase()).join(symbol);
+  },
+  /**
+   * pascalCaseToKebabCase 驼峰转xxx-xxx-xxx
+   * @param name
+   * @param symbol 分隔符
+   * @return {string}
+   */
+  pascalCaseToKebabCase2(name, symbol = '-') {
     const result = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2');
-    return (result.startsWith('-') ? result.substring(1) : result).toLowerCase();
+    return (result.startsWith(symbol) ? result.substring(1) : result).toLowerCase();
   },
   /**
    * execExpression - 执行表达式
@@ -353,7 +376,7 @@ export default {
    */
   omitObject(obj: object): object {
     // eslint-disable-next-line no-param-reassign
-    obj = obj || {};
+    obj = obj ?? {};
 
     const res = {};
 
@@ -371,6 +394,22 @@ export default {
     });
 
     return res;
+  },
+  /**
+   * capitalized
+   * @description 首字母大写
+   * @param str
+   */
+  capitalized(str: string) {
+    return `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
+  },
+  /**
+   * lowercaseInitial
+   * @description 首字母小写
+   * @param str
+   */
+  lowercaseInitial(str: string) {
+    return `${str.charAt(0).toLowerCase()}${str.substring(1)}`;
   },
   /**----------------------------基本end---------------------------**/
 };

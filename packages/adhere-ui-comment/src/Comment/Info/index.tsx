@@ -1,7 +1,7 @@
-import React, { FC, memo } from 'react';
+import React, { memo } from 'react';
 
 import Node from '../../Components/Node';
-import { NodeProps } from '../../types';
+import type { NodeProps } from '../../types';
 
 /**
  * CommentInfo
@@ -9,10 +9,12 @@ import { NodeProps } from '../../types';
  * @constructor
  * @classdesc 评论节点
  */
-const CommentInfo: FC<NodeProps> = (props) => (
+const CommentInfo = memo<NodeProps>((props) => (
   <Node {...props} isReply={false}>
     {(record) => props?.children?.(record)}
   </Node>
-);
+));
 
-export default memo(CommentInfo);
+CommentInfo.displayName = 'CommentInfo';
+
+export default CommentInfo;

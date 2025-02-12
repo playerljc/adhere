@@ -1,28 +1,15 @@
 declare const _default: {
     /**
-     * getLang
-     * @return {String}
-     */
-    getLang(): string;
-    /**
-     * setLang
-     * @param lang
-     */
-    setLang(lang?: string): void;
-    /**
-     * getDatePickerFormat
-     * @return {string}
-     */
-    getDatePickerFormat(): string;
-    /**
      * 401 casUrl
      * @param baseUrl
      * @param enterUrl
+     * @param defaultLocal
      * @return {string}
      */
-    casUrl({ baseUrl, enterUrl }: {
+    casUrl({ baseUrl, enterUrl, defaultLocal }: {
         baseUrl: any;
         enterUrl: any;
+        defaultLocal: any;
     }): string;
     /**
      * casLogoutUrl

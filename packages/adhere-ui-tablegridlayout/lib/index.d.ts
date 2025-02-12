@@ -1,2 +1,2 @@
-import TableGridLayout from './tablegridlayout';
+import TableGridLayout from './TableGridLayout';
 export default TableGridLayout;

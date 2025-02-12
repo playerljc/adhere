@@ -1,6 +1,22 @@
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
+import P5CodeText from '!!raw-loader!./examples/p5';
+import P6CodeText from '!!raw-loader!./examples/p6';
+import P7CodeText from '!!raw-loader!./examples/p7';
+
 import React from 'react';
 
 import PlayGroundPage, { CodeBoxSection, Section } from '@/lib/PlaygroundPage';
+
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
+import P5 from './examples/p5';
+import P6 from './examples/p6';
+import P7 from './examples/p7';
 
 export default () => {
   function boxPanelConfig() {
@@ -16,16 +32,9 @@ export default () => {
             info: 'ReactErrorBoundaries - class组件的使用',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Decorators } from '@baifendian/adhere';
-
-  @Decorators.ReactErrorBoundaries
-  class MyComponent extends React.Component {
-
-  }
-      `,
         type: 'PlayGround',
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -38,17 +47,9 @@ export default () => {
             info: 'ReactErrorBoundaries - 函数组件的使用',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Decorators } from '@baifendian/adhere';
-
-  function MyComponent() {
-
-  }
-
-  export default Decorators.ReactErrorBoundaries(MyComponent);
-      `,
         type: 'PlayGround',
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
       {
         id: `p3`,
@@ -61,20 +62,9 @@ export default () => {
             info: 'ReactErrorBoundaries - 定义全局缺省的错误UI',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Decorators } from '@baifendian/adhere';
-
-  function MyComponent() {
-
-  }
-
-  // 设置全局缺省UI
-  Decorators.ReactErrorBoundaries.setDefaultErrorUI(<div>error</div>);
-
-  export default Decorators.ReactErrorBoundaries(MyComponent);
-      `,
         type: 'PlayGround',
+        codeText: P3CodeText,
+        renderChildren: () => <P3 />,
       },
       {
         id: `p4`,
@@ -87,20 +77,9 @@ export default () => {
             info: 'ReactErrorBoundaries - 自定义组件的错误UI(1)',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Decorators } from '@baifendian/adhere';
-
-  function MyComponent() {
-
-  }
-
-  // 自定义组件发生错误时候显示的UI(类组件也是一样)
-  MyComponent.getReactErrorBoundariesErrorUI = () => <div>error</div>
-
-  export default Decorators.ReactErrorBoundaries(MyComponent);
-      `,
         type: 'PlayGround',
+        codeText: P4CodeText,
+        renderChildren: () => <P4 />,
       },
       {
         id: `p5`,
@@ -113,19 +92,9 @@ export default () => {
             info: 'ReactErrorBoundaries - 自定义组件的错误UI(2)',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Decorators } from '@baifendian/adhere';
-
-  @Decorators.ReactErrorBoundaries
-  class MyComponent() extends React.Component {
-    // 自定义组件发生错误时候显示的UI(类组件也是一样)
-    getReactErrorBoundariesErrorUI = () => <div>error</div>
-  }
-
-  export default MyComponent;
-      `,
         type: 'PlayGround',
+        codeText: P5CodeText,
+        renderChildren: () => <P5 />,
       },
       {
         id: `p6`,
@@ -138,23 +107,9 @@ export default () => {
             info: 'ReactAutoTryCatch',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Decorators } from '@baifendian/adhere';
-
-  class MyComponent extends React.Component {
-    // 这里只能使用function，不能使用箭头函数，可以再function过去到this
-    @Decorators.ReactAutoTryCatch(function(e){
-       console.error(e);
-    })
-    display(name) {
-       return name;
-    }
-  }
-
-  export default MyComponent;
-      `,
         type: 'PlayGround',
+        codeText: P6CodeText,
+        renderChildren: () => <P6 />,
       },
       {
         id: `p7`,
@@ -167,25 +122,9 @@ export default () => {
             info: 'ReactAop',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Decorators } from '@baifendian/adhere';
-
-  class MyComponent extends React.Component {
-    // 这里只能使用function，不能使用箭头函数，可以再function过去到this
-    @Decorators.ReactAop(function(){
-       console.log('start');
-    }, function(){
-       console.log('end');
-    })
-    display(name) {
-       return name;
-    }
-  }
-
-  export default MyComponent;
-      `,
         type: 'PlayGround',
+        codeText: P7CodeText,
+        renderChildren: () => <P7 />,
       },
     ];
   }

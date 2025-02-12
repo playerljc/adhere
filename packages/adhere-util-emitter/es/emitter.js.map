@@ -1,1 +1,1 @@
-{"version":3,"file":"emitter.js","sources":["emitter.js"],"sourcesContent":["import Events from './events';\r\nvar Emitter = new Events();\r\nexport default Emitter;\r\n"],"names":["Events","Emitter"],"mappings":"OAAOA,WAAY,WACnB,IAAIC,QAAU,IAAID,sBACHC"}
+{"version":3,"file":"emitter.js","sources":["emitter.js"],"sourcesContent":["import Events from './events';\nvar Emitter = new Events();\nexport default Emitter;\n"],"names":["Events","Emitter"],"mappings":"OAAOA,WAAY,WACnB,IAAIC,QAAU,IAAID,sBACHC"}

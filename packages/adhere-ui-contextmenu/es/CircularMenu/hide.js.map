@@ -1,0 +1,1 @@
+{"version":3,"file":"hide.js","sources":["CircularMenu/hide.js"],"sourcesContent":["import classed from './classed';\nexport default function () {\n    classed(this._container, 'opened-nav', false);\n    return this;\n}\n"],"names":["classed","this","_container"],"mappings":"OAAOA,YAAa,2BACL,WAEX,OADAA,QAAQC,KAAKC,WAAY,aAAc,CAAA,CAAK,EACrCD,IACX"}

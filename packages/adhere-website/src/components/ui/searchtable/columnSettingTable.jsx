@@ -10,7 +10,7 @@ import styles from './fixedTableSpaceBetweenTable.less';
  * @classdesc
  */
 class ColumnSettingTable extends Table {
-  renderTableHeader() {
+  renderSearchHeader() {
     return (
       <div className={styles.Header}>
         <h3>查询表格</h3>

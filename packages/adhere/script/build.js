@@ -17,6 +17,7 @@ const indexJsExportContent = ['export { \r\n'];
 const type = args.getArg('module');
 
 const namedMap = new Map([
+  ['@baifendian/adhere-ui-auto-complete', 'AutoComplete'],
   ['@baifendian/adhere-ui-conditionalrender', 'ConditionalRender'],
   ['@baifendian/adhere-ui-confirm-delconfirm', 'DelConfirm'],
   ['@baifendian/adhere-ui-confirm-importantconfirm', 'ImportantConfirm'],
@@ -48,6 +49,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-contextmenu', 'ContextMenu'],
   ['@baifendian/adhere-ui-fontsizesetting', 'FontSizeSetting'],
   ['@baifendian/adhere-ui-searchtable', 'SearchTable'],
+  ['@baifendian/adhere-ui-searchlist', 'SearchList'],
   // ['@baifendian/adhere-ui-g6', 'G6'],
   ['@baifendian/adhere-ui-formitemcreator', 'FormItemCreator'],
   ['@baifendian/adhere-ui-tablelist', 'TableList'],
@@ -66,8 +68,13 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-bmap', 'BMap'],
   ['@baifendian/adhere-ui-forceupdate', 'ForceUpdate'],
   ['@baifendian/adhere-ui-configprovider', 'ConfigProvider'],
-  ['@baifendian/adhere-ui-antdformitem', 'AntdFormItem'],
-  ['@baifendian/adhere-ui-reactquill-sandbox', 'ReactQuillSandbox'],
+  ['@baifendian/adhere-ui-fieldgeneratortodict', 'FieldGeneratorToDict'],
+  ['@baifendian/adhere-ui-ellipsis', 'Ellipsis'],
+  ['@baifendian/adhere-ui-expression', 'Expression'],
+  ['@baifendian/adhere-ui-quick-range-date', 'QuickRangeDate'],
+  ['@baifendian/adhere-ui-currency-symbol', 'CurrencySymbol'],
+  ['@baifendian/adhere-ui-echarts', 'ECharts'],
+  ['@baifendian/adhere-ui-magic-panel', 'MagicPanel'],
   ['@baifendian/adhere-util', 'Util'],
   ['@baifendian/adhere-util-communication-ajax', 'Ajax'],
   ['@baifendian/adhere-util-decorators', 'Decorators'],
@@ -84,16 +91,33 @@ const namedMap = new Map([
   ['@baifendian/adhere-util-validator', 'Validator'],
   ['@baifendian/adhere-util-reactutil', 'ReactUtil'],
   ['@baifendian/adhere-util-iframeio', 'IframeIO'],
+  ['@baifendian/adhere-mobile-ui-auto-complete', 'MobileAutoComplete'],
+  ['@baifendian/adhere-mobile-ui-confirm-delconfirm', 'MobileDelConfirm'],
+  ['@baifendian/adhere-mobile-ui-confirm-importantconfirm', 'MobileImportantConfirm'],
+  ['@baifendian/adhere-mobile-ui-globalindicator', 'MobileGlobalIndicator'],
+  ['@baifendian/adhere-mobile-ui-prompt-errorprompt', 'MobileErrorPrompt'],
+  ['@baifendian/adhere-mobile-ui-prompt-successprompt', 'MobileSuccessPrompt'],
+  ['@baifendian/adhere-mobile-ui-prompt-warnprompt', 'MobileWarnPrompt'],
+  ['@baifendian/adhere-mobile-ui-tabs', 'MobileTabs'],
+  ['@baifendian/adhere-mobile-ui-time-picker-view', 'MobileTimePickerView'],
+  ['@baifendian/adhere-mobile-ui-prsl', 'MobilePRSL'],
+  ['@baifendian/adhere-mobile-ui-quick-range-date', 'MobileQuickRangeDate'],
+  ['@baifendian/adhere-mobile-ui-popovermenu', 'MobilePopoverMenu'],
+  ['@baifendian/adhere-mobile-ui-spin', 'MobileSpin'],
+  ['@baifendian/adhere-mobile-ui-tree', 'MobileTree'],
 ]);
 
 /**
  * pascalCaseToKebabCase
- * @param name
  * @return {string}
+ * @param _str
+ * @param symbol
  */
-function pascalCaseToKebabCase(name) {
-  const result = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2');
-  return (result.startsWith('-') ? result.substring(1) : result).toLowerCase();
+function pascalCaseToKebabCase(_str, symbol = '-') {
+  /*const result = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2');
+  return (result.startsWith('-') ? result.substring(1) : result).toLowerCase();*/
+  const cells = _str.match(/([A-Z]+(?=[A-Z]|$))|([A-Z]?[^A-Z]+)/g) || [];
+  return cells.map((c) => c.toLowerCase()).join(symbol);
 }
 
 // let dependenciesAll = {};
@@ -168,7 +192,7 @@ for (const packageName in dependencies) {
 
       result.forEach((fileName) => {
         const stat = fs.statSync(path.join(cssPackagePath, fileName));
-        if (stat.isFile()) {
+        if (stat.isFile() && fileName !== 'index.js') {
           const content = fs.readFileSync(path.join(cssPackagePath, fileName));
           fs.writeFileSync(path.join(contextPath, fileName), content);
         }

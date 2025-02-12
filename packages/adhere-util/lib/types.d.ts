@@ -9,16 +9,16 @@ export interface ICircle {
 export interface IAntdTreeNode {
     key: string;
     title?: string;
-    value: string;
-    isLeaf: boolean;
+    value?: string;
+    isLeaf?: boolean;
     children?: IAntdTreeNode[];
     properties?: any;
 }
 export interface IAntdTreeSelectNode {
     key: string;
     label?: string;
-    value: string;
-    isLeaf: boolean;
+    value?: string;
+    isLeaf?: boolean;
     children?: IAntdTreeNode[];
     properties?: any;
 }
@@ -39,4 +39,27 @@ export interface IUrlConfig {
     ignoreInvalid: boolean;
     isEncode: boolean;
     isDecode: boolean;
+}
+/**
+ * PrettyBytesOptions
+ */
+export interface PrettyBytesOptions {
+    signed?: boolean;
+    bits?: boolean;
+    binary?: boolean;
+    locale?: boolean | string;
+    minimumFractionDigits?: number;
+    maximumFractionDigits?: number;
+    space?: boolean;
+}
+/**
+ * ProcessAsyncQueueItem
+ * @description 异步执行队列的任务项
+ */
+export interface ProcessAsyncQueueItem {
+    argv?: any[];
+    run: (...argv: any[]) => Promise<any>;
+    context?: any;
+    success?: (params?: any) => void;
+    fail?: (error?: any) => void;
 }

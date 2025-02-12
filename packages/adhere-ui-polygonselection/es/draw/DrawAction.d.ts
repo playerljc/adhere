@@ -7,8 +7,16 @@ import { IAction, IPolygonSelection, IStyle } from '../types';
  */
 declare abstract class DrawAction extends Emitter.Events implements IAction {
     protected context: IPolygonSelection | null;
-    protected style: IStyle;
     protected status: number;
+    style: IStyle;
+    anchorStyle: IStyle;
+    moveGemStyle: IStyle;
+    getAnchorStyle(): IStyle;
+    getStyle(): IStyle;
+    getMoveGemStyle(): IStyle;
+    setAnchorStyle(style: Partial<IStyle> | undefined): void;
+    setStyle(style: Partial<IStyle> | undefined): void;
+    setMoveGemStyle(style: Partial<IStyle> | undefined): void;
     /**
      * destroy
      */

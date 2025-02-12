@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["avatar/index.js"],"sourcesContent":["import Avatar from './Avatar';\nexport default Avatar;"],"names":["Avatar"],"mappings":"OAAOA,WAAY,0BACJA"}

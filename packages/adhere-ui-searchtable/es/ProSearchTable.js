@@ -1,2 +1,2 @@
-import{MemoManager}from"./Extension/SearchAndPaginParams";import ProTableFactory from"./ProTableFactory";import{SearchTableImplement}from"./SearchTableImplement";var SearchAndPaginParamsMemo=MemoManager.create();export default ProTableFactory(SearchTableImplement,SearchAndPaginParamsMemo);export{SearchAndPaginParamsMemo};
+import{MemoManager}from"./Extension/SearchAndPaginParams";import ProTableFactory from"./ProTableFactory";import{SearchTableImplement}from"./SearchTableImplement";var SearchAndPaginParamsMemo=MemoManager.create(),ProSearchTable=ProTableFactory(SearchTableImplement,SearchAndPaginParamsMemo);ProSearchTable.displayName="ProSearchTable";export default ProSearchTable;export{SearchAndPaginParamsMemo};
 //# sourceMappingURL=ProSearchTable.js.map

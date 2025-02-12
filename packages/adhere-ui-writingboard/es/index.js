@@ -1,2 +1,2 @@
-import WritingBoard from"./writingboard";export default WritingBoard;
+import WritingBoard from"./WritingBoard";export default WritingBoard;
 //# sourceMappingURL=index.js.map

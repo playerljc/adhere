@@ -1,0 +1,2 @@
+var UID={_current:0,getNew:function(){return this._current++,this._current}};export default function(e,t,n,r){var u="sheetStyles",a=document.head||document.getElementsByTagName("head")[0],c=document.getElementById(u)||document.createElement("style"),u=(c.id=u,"s-S"+UID.getNew());return e.className+=" "+u,c.innerHTML+=" ."+u+(r?":"+r:"")+"{"+t+":"+n+"}",a.appendChild(c),this}
+//# sourceMappingURL=styleSheet.js.map

@@ -1,0 +1,27 @@
+:global {
+  #app {
+    &.mobile {
+      position: absolute;
+      left: 0;
+      box-sizing: border-box;
+      width: 100%;
+      min-width: auto;
+      height: 100%;
+      min-height: auto;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      color: var(--adhere-color-text);
+      font-size: var(--adhere-font-size-base);
+      background-color: var(--adhere-color-bg-base);
+      border: 0;
+      overflow-scrolling: touch;
+    }
+  }
+
+  // 没有滚动条但是还能滚动
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}

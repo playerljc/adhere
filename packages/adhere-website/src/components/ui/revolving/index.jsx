@@ -1,7 +1,12 @@
-import { Button } from 'antd';
-import React, { useRef } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
+import P5CodeText from '!!raw-loader!./examples/p5';
+import P6CodeText from '!!raw-loader!./examples/p6';
+import P7CodeText from '!!raw-loader!./examples/p7';
 
-import { Revolving, Space } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -10,9 +15,15 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-export default () => {
-  const ref = useRef();
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
+import P5 from './examples/p5';
+import P6 from './examples/p6';
+import P7 from './examples/p7';
 
+export default () => {
   function boxPanelConfig() {
     return [
       {
@@ -26,37 +37,9 @@ export default () => {
             info: 'direction - left',
           },
         },
-        codeText: `
-  import { Revolving, Space } from '@baifendian/adhere';
-
-  <Revolving direction="left">
-    <Revolving.Item>Slide 1</Revolving.Item>
-    <Revolving.Item>Slide 2</Revolving.Item>
-    <Revolving.Item>Slide 3</Revolving.Item>
-    <Revolving.Item>Slide 4</Revolving.Item>
-    <Revolving.Item>Slide 5</Revolving.Item>
-    <Revolving.Item>Slide 6</Revolving.Item>
-    <Revolving.Item>Slide 7</Revolving.Item>
-    <Revolving.Item>Slide 8</Revolving.Item>
-    <Revolving.Item>Slide 9</Revolving.Item>
-    <Revolving.Item>Slide 10</Revolving.Item>
-  </Revolving>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Revolving direction="left">
-            <Revolving.Item>Slide 1</Revolving.Item>
-            <Revolving.Item>Slide 2</Revolving.Item>
-            <Revolving.Item>Slide 3</Revolving.Item>
-            <Revolving.Item>Slide 4</Revolving.Item>
-            <Revolving.Item>Slide 5</Revolving.Item>
-            <Revolving.Item>Slide 6</Revolving.Item>
-            <Revolving.Item>Slide 7</Revolving.Item>
-            <Revolving.Item>Slide 8</Revolving.Item>
-            <Revolving.Item>Slide 9</Revolving.Item>
-            <Revolving.Item>Slide 10</Revolving.Item>
-          </Revolving>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -69,37 +52,9 @@ export default () => {
             info: 'direction - right',
           },
         },
-        codeText: `
-  import { Revolving, Space } from '@baifendian/adhere';
-
-  <Revolving direction="right">
-    <Revolving.Item>Slide 1</Revolving.Item>
-    <Revolving.Item>Slide 2</Revolving.Item>
-    <Revolving.Item>Slide 3</Revolving.Item>
-    <Revolving.Item>Slide 4</Revolving.Item>
-    <Revolving.Item>Slide 5</Revolving.Item>
-    <Revolving.Item>Slide 6</Revolving.Item>
-    <Revolving.Item>Slide 7</Revolving.Item>
-    <Revolving.Item>Slide 8</Revolving.Item>
-    <Revolving.Item>Slide 9</Revolving.Item>
-    <Revolving.Item>Slide 10</Revolving.Item>
-  </Revolving>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Revolving direction="right">
-            <Revolving.Item>Slide 1</Revolving.Item>
-            <Revolving.Item>Slide 2</Revolving.Item>
-            <Revolving.Item>Slide 3</Revolving.Item>
-            <Revolving.Item>Slide 4</Revolving.Item>
-            <Revolving.Item>Slide 5</Revolving.Item>
-            <Revolving.Item>Slide 6</Revolving.Item>
-            <Revolving.Item>Slide 7</Revolving.Item>
-            <Revolving.Item>Slide 8</Revolving.Item>
-            <Revolving.Item>Slide 9</Revolving.Item>
-            <Revolving.Item>Slide 10</Revolving.Item>
-          </Revolving>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
       {
         id: `p3`,
@@ -112,37 +67,9 @@ export default () => {
             info: 'direction - top',
           },
         },
-        codeText: `
-  import { Revolving, Space } from '@baifendian/adhere';
-
-  <Revolving direction="top" style={{ height: 50 }}>
-    <Revolving.Item>Slide 1</Revolving.Item>
-    <Revolving.Item>Slide 2</Revolving.Item>
-    <Revolving.Item>Slide 3</Revolving.Item>
-    <Revolving.Item>Slide 4</Revolving.Item>
-    <Revolving.Item>Slide 5</Revolving.Item>
-    <Revolving.Item>Slide 6</Revolving.Item>
-    <Revolving.Item>Slide 7</Revolving.Item>
-    <Revolving.Item>Slide 8</Revolving.Item>
-    <Revolving.Item>Slide 9</Revolving.Item>
-    <Revolving.Item>Slide 10</Revolving.Item>
-  </Revolving>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Revolving direction="top" style={{ height: 50 }}>
-            <Revolving.Item>Slide 1</Revolving.Item>
-            <Revolving.Item>Slide 2</Revolving.Item>
-            <Revolving.Item>Slide 3</Revolving.Item>
-            <Revolving.Item>Slide 4</Revolving.Item>
-            <Revolving.Item>Slide 5</Revolving.Item>
-            <Revolving.Item>Slide 6</Revolving.Item>
-            <Revolving.Item>Slide 7</Revolving.Item>
-            <Revolving.Item>Slide 8</Revolving.Item>
-            <Revolving.Item>Slide 9</Revolving.Item>
-            <Revolving.Item>Slide 10</Revolving.Item>
-          </Revolving>
-        ),
+        codeText: P3CodeText,
+        renderChildren: () => <P3 />,
       },
       {
         id: `p4`,
@@ -155,37 +82,9 @@ export default () => {
             info: 'direction - bottom',
           },
         },
-        codeText: `
-  import { Revolving, Space } from '@baifendian/adhere';
-
-  <Revolving direction="bottom" style={{ height: 50 }}>
-    <Revolving.Item>Slide 1</Revolving.Item>
-    <Revolving.Item>Slide 2</Revolving.Item>
-    <Revolving.Item>Slide 3</Revolving.Item>
-    <Revolving.Item>Slide 4</Revolving.Item>
-    <Revolving.Item>Slide 5</Revolving.Item>
-    <Revolving.Item>Slide 6</Revolving.Item>
-    <Revolving.Item>Slide 7</Revolving.Item>
-    <Revolving.Item>Slide 8</Revolving.Item>
-    <Revolving.Item>Slide 9</Revolving.Item>
-    <Revolving.Item>Slide 10</Revolving.Item>
-  </Revolving>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Revolving direction="bottom" style={{ height: 50 }}>
-            <Revolving.Item>Slide 1</Revolving.Item>
-            <Revolving.Item>Slide 2</Revolving.Item>
-            <Revolving.Item>Slide 3</Revolving.Item>
-            <Revolving.Item>Slide 4</Revolving.Item>
-            <Revolving.Item>Slide 5</Revolving.Item>
-            <Revolving.Item>Slide 6</Revolving.Item>
-            <Revolving.Item>Slide 7</Revolving.Item>
-            <Revolving.Item>Slide 8</Revolving.Item>
-            <Revolving.Item>Slide 9</Revolving.Item>
-            <Revolving.Item>Slide 10</Revolving.Item>
-          </Revolving>
-        ),
+        codeText: P4CodeText,
+        renderChildren: () => <P4 />,
       },
       {
         id: `p5`,
@@ -198,37 +97,9 @@ export default () => {
             info: 'speed - 过度时间',
           },
         },
-        codeText: `
-  import { Revolving, Space } from '@baifendian/adhere';
-
-  <Revolving direction="bottom" speed={1000 * 3} style={{ height: 50 }}>
-    <Revolving.Item>Slide 1</Revolving.Item>
-    <Revolving.Item>Slide 2</Revolving.Item>
-    <Revolving.Item>Slide 3</Revolving.Item>
-    <Revolving.Item>Slide 4</Revolving.Item>
-    <Revolving.Item>Slide 5</Revolving.Item>
-    <Revolving.Item>Slide 6</Revolving.Item>
-    <Revolving.Item>Slide 7</Revolving.Item>
-    <Revolving.Item>Slide 8</Revolving.Item>
-    <Revolving.Item>Slide 9</Revolving.Item>
-    <Revolving.Item>Slide 10</Revolving.Item>
-  </Revolving>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Revolving direction="bottom" speed={1000 * 3} style={{ height: 50 }}>
-            <Revolving.Item>Slide 1</Revolving.Item>
-            <Revolving.Item>Slide 2</Revolving.Item>
-            <Revolving.Item>Slide 3</Revolving.Item>
-            <Revolving.Item>Slide 4</Revolving.Item>
-            <Revolving.Item>Slide 5</Revolving.Item>
-            <Revolving.Item>Slide 6</Revolving.Item>
-            <Revolving.Item>Slide 7</Revolving.Item>
-            <Revolving.Item>Slide 8</Revolving.Item>
-            <Revolving.Item>Slide 9</Revolving.Item>
-            <Revolving.Item>Slide 10</Revolving.Item>
-          </Revolving>
-        ),
+        codeText: P5CodeText,
+        renderChildren: () => <P5 />,
       },
       {
         id: `p6`,
@@ -241,37 +112,9 @@ export default () => {
             info: 'delay - 转换时间',
           },
         },
-        codeText: `
-  import { Revolving, Space } from '@baifendian/adhere';
-
-  <Revolving direction="bottom" delay={1000 * 3} style={{ height: 50 }}>
-    <Revolving.Item>Slide 1</Revolving.Item>
-    <Revolving.Item>Slide 2</Revolving.Item>
-    <Revolving.Item>Slide 3</Revolving.Item>
-    <Revolving.Item>Slide 4</Revolving.Item>
-    <Revolving.Item>Slide 5</Revolving.Item>
-    <Revolving.Item>Slide 6</Revolving.Item>
-    <Revolving.Item>Slide 7</Revolving.Item>
-    <Revolving.Item>Slide 8</Revolving.Item>
-    <Revolving.Item>Slide 9</Revolving.Item>
-    <Revolving.Item>Slide 10</Revolving.Item>
-  </Revolving>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Revolving direction="bottom" delay={1000 * 3} style={{ height: 50 }}>
-            <Revolving.Item>Slide 1</Revolving.Item>
-            <Revolving.Item>Slide 2</Revolving.Item>
-            <Revolving.Item>Slide 3</Revolving.Item>
-            <Revolving.Item>Slide 4</Revolving.Item>
-            <Revolving.Item>Slide 5</Revolving.Item>
-            <Revolving.Item>Slide 6</Revolving.Item>
-            <Revolving.Item>Slide 7</Revolving.Item>
-            <Revolving.Item>Slide 8</Revolving.Item>
-            <Revolving.Item>Slide 9</Revolving.Item>
-            <Revolving.Item>Slide 10</Revolving.Item>
-          </Revolving>
-        ),
+        codeText: P6CodeText,
+        renderChildren: () => <P6 />,
       },
       {
         id: `p7`,
@@ -284,87 +127,9 @@ export default () => {
             info: 'api控制',
           },
         },
-        codeText: `
-  import React, { useRef } from 'react';
-  import { Button } from 'antd';
-  import { Revolving, Space } from '@baifendian/adhere';
-
-  const ref = useRef();
-
-  <div style={{ display: 'flex', alignItems: 'center' }}>
-    <Space.Group direction="horizontal">
-      <Button
-        type="primary"
-        onClick={() => {
-          ref.current.start();
-        }}
-      >
-        start
-      </Button>
-      <Button
-        onClick={() => {
-          ref.current.stop();
-        }}
-      >
-        stop
-      </Button>
-    </Space.Group>
-  </div>
-
-  <Space direction="vertical" />
-
-  <Revolving direction="bottom" delay={1000 * 3} style={{ height: 50 }} ref={ref}>
-    <Revolving.Item>Slide 1</Revolving.Item>
-    <Revolving.Item>Slide 2</Revolving.Item>
-    <Revolving.Item>Slide 3</Revolving.Item>
-    <Revolving.Item>Slide 4</Revolving.Item>
-    <Revolving.Item>Slide 5</Revolving.Item>
-    <Revolving.Item>Slide 6</Revolving.Item>
-    <Revolving.Item>Slide 7</Revolving.Item>
-    <Revolving.Item>Slide 8</Revolving.Item>
-    <Revolving.Item>Slide 9</Revolving.Item>
-    <Revolving.Item>Slide 10</Revolving.Item>
-  </Revolving>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Space.Group direction="horizontal">
-                <Button
-                  type="primary"
-                  onClick={() => {
-                    ref.current.start();
-                  }}
-                >
-                  start
-                </Button>
-                <Button
-                  onClick={() => {
-                    ref.current.stop();
-                  }}
-                >
-                  stop
-                </Button>
-              </Space.Group>
-            </div>
-
-            <Space direction="vertical" />
-
-            <Revolving direction="bottom" delay={1000 * 3} style={{ height: 50 }} ref={ref}>
-              <Revolving.Item>Slide 1</Revolving.Item>
-              <Revolving.Item>Slide 2</Revolving.Item>
-              <Revolving.Item>Slide 3</Revolving.Item>
-              <Revolving.Item>Slide 4</Revolving.Item>
-              <Revolving.Item>Slide 5</Revolving.Item>
-              <Revolving.Item>Slide 6</Revolving.Item>
-              <Revolving.Item>Slide 7</Revolving.Item>
-              <Revolving.Item>Slide 8</Revolving.Item>
-              <Revolving.Item>Slide 9</Revolving.Item>
-              <Revolving.Item>Slide 10</Revolving.Item>
-            </Revolving>
-          </>
-        ),
+        codeText: P7CodeText,
+        renderChildren: () => <P7 />,
       },
     ];
   }

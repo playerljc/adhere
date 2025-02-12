@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["page-indicator/index.js"],"sourcesContent":["import PageIndicator from './PageIndicator';\nexport default PageIndicator;"],"names":["PageIndicator"],"mappings":"OAAOA,kBAAmB,iCACXA"}

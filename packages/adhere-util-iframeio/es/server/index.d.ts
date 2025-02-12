@@ -26,7 +26,8 @@ declare class Server {
     /**
      * service
      * @description 具体的请求处理
-     * @param evt
+     * @param {MessageEvent} evt
+     * @param {any} data
      * @private
      */
     private service;

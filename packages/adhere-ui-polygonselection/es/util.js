@@ -1,2 +1,2 @@
 export default{getRectLeftTopPoint:function(t){var x=t.startPoint,t=t.targetPoint;return t.x<=x.x&&t.y<=x.y?t:t.x<=x.x&&t.y>=x.y?{x:t.x,y:x.y}:t.x>=x.x&&t.y<=x.y?{x:x.x,y:t.y}:t.x>=x.x&&t.y>=x.y?x:null},triangle:function(t){var x,y=t.startPoint,t=t.targetPoint,n=this.getRectLeftTopPoint({startPoint:y,targetPoint:t});return n?(x=Math.abs(t.x-y.x),t=Math.abs(t.y-y.y),[{x:n.x,y:n.y+t},{x:n.x+x/2,y:n.y},{x:n.x+x,y:n.y+t}]):[]}};
-//# sourceMappingURL=util.js.map
+//# sourceMappingURL=Util.js.map

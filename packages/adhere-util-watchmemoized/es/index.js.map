@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import WatchMemoized from './watchmemoized';\r\nexport default WatchMemoized;\r\n"],"names":["WatchMemoized"],"mappings":"OAAOA,kBAAmB,iCACXA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import WatchMemoized from './watchmemoized';\nexport default WatchMemoized;\n"],"names":["WatchMemoized"],"mappings":"OAAOA,kBAAmB,iCACXA"}

@@ -1,7 +1,6 @@
 import MathUtil from '@baifendian/adhere-util';
 import * as turf from '@turf/turf';
 
-import defaultMoveGemStyle from '../defaultMoveGemStyle';
 import DiamondDrawAction from '../draw/DiamondDrawAction';
 import { IDiamondData, IPoint, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
@@ -109,6 +108,7 @@ class DiamondModifyAction extends ModifyAction {
         2 * Math.PI,
       );
 
+      ctx.closePath();
       ctx.stroke();
       ctx.fill();
     }
@@ -124,6 +124,7 @@ class DiamondModifyAction extends ModifyAction {
     ctx.lineTo(leftTopPoint.x, leftTopPoint.y + height);
     ctx.lineTo(leftTopPoint.x, leftTopPoint.y);
 
+    ctx.closePath();
     ctx.stroke();
   }
 
@@ -579,10 +580,10 @@ class DiamondModifyAction extends ModifyAction {
    * @param targetPoint
    */
   // @ts-ignore
-  drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): void {
-    if (!this.context || !this.data || !startPoint || !targetPoint) return;
+  drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): IDiamondData | null {
+    if (!this.context || !this.data || !startPoint || !targetPoint) return null;
 
-    const srcData = { ...(this.data.data as IDiamondData) };
+    const srcData = JSON.parse(JSON.stringify(this.data.data as IDiamondData));
     srcData.data = {
       ...srcData.data,
       leftTopPoint: {
@@ -597,16 +598,20 @@ class DiamondModifyAction extends ModifyAction {
       srcData.data.leftTopPoint.x += offsetX;
       srcData.data.leftTopPoint.y += offsetY;
 
-      if (srcData.style) {
-        srcData.style.globalAlpha = defaultMoveGemStyle.globalAlpha;
-        srcData.style.strokeStyle = defaultMoveGemStyle.strokeStyle;
-        srcData.style.lineWidth = defaultMoveGemStyle.lineWidth;
-        srcData.style.lineDash = defaultMoveGemStyle.lineDash;
-        srcData.style.lineDashOffset = defaultMoveGemStyle.lineDashOffset;
-      }
+      const style = { ...this.moveGemStyle, ...(srcData.style ?? {}) };
+      srcData.style.lineWidth = style.lineWidth;
+      srcData.style.lineJoin = style.lineJoin;
+      srcData.style.lineCap = style.lineCap;
+      srcData.lineDash = style.lineDash;
+      srcData.style.lineDashOffset = style.lineDashOffset;
+      srcData.style.strokeStyle = style.strokeStyle;
+      srcData.style.fillStyle = style.fillStyle;
+      srcData.style.globalAlpha = style.globalAlpha ?? 1;
 
       DiamondDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }
+
+    return srcData;
   }
 
   destroy() {

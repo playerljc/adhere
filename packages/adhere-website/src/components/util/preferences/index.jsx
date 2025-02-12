@@ -1,13 +1,14 @@
-import { Button } from 'antd';
-import React from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
 
-import { Preferences } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
   FunctionPropsSection,
   Section,
 } from '@/lib/PlaygroundPage';
+
+import P1 from './examples/p1';
 
 export default () => {
   function boxPanelConfig() {
@@ -23,42 +24,9 @@ export default () => {
             info: '基本的使用',
           },
         },
-        codeText: `
-  import { Preferences } from '@baifendian/adhere';
-
-  Preferences.putStringByLocal('a', 'a');
-  Preferences.putObjectByLocal('b', { a: 1, b: 2 });
-
-  Preferences.putStringBySession('a', 'a');
-  Preferences.putObjectBySession('b', { a: 1, b: 2 });
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <Button
-              type="primary"
-              onClick={() => {
-                Preferences.putStringByLocal('a', 'a');
-                Preferences.putObjectByLocal('b', { a: 1, b: 2 });
-
-                Preferences.putStringBySession('a', 'a');
-                Preferences.putObjectBySession('b', { a: 1, b: 2 });
-
-                const el = document.getElementById('PreferencesConsole');
-
-                el.innerHTML = `
-              ${Preferences.getStringByLocal('a')}</br>
-              ${JSON.stringify(Preferences.getObjectByLocal('b'))}</br>
-              ${Preferences.getStringBySession('a')}</br>
-              ${JSON.stringify(Preferences.getObjectBySession('b'))}</br>
-            `;
-              }}
-            >
-              放入和拿出
-            </Button>
-            <p id="PreferencesConsole" />
-          </>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
     ];
   }

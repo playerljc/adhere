@@ -1,32 +1,58 @@
 import { Ajax } from '@baifendian/adhere';
 
-const request = new Ajax('');
+import { fetchData, fetchSSQListData, fetchTreeListData } from '../mock';
 
-const data = require('../mock.js').default;
+const request = new Ajax('');
 
 export const fetchList = (() => {
   return {
-    call: ({ page, limit }) => {
-      const clone = JSON.parse(JSON.stringify(data));
-
-      const res = {
-        code: 200,
-        data: {
-          list: clone.data.list.slice((page - 1) * limit, page * limit),
-          totalCount: clone.data.total,
-        },
-      };
-
+    call: (params) => {
       return request.get({
-        path: res,
+        path: fetchData(params),
         mock: true,
         loading: {
           show: false,
         },
-      });
+      }).promise;
     },
     defaultResult: () => ({
-      totalCount: 0,
+      total: 0,
+      list: [],
+    }),
+  };
+})();
+
+export const fetchTreeList = (() => {
+  return {
+    call: (params) => {
+      return request.get({
+        path: fetchTreeListData(params),
+        mock: true,
+        loading: {
+          show: false,
+        },
+      }).promise;
+    },
+    defaultResult: () => ({
+      total: 0,
+      list: [],
+    }),
+  };
+})();
+
+export const fetchSSQList = (() => {
+  return {
+    call: (params) => {
+      return request.get({
+        path: fetchSSQListData(params),
+        mock: true,
+        loading: {
+          show: false,
+        },
+      }).promise;
+    },
+    defaultResult: () => ({
+      total: 0,
       list: [],
     }),
   };

@@ -1,450 +1,85 @@
+import CroppingCodeText from '!!raw-loader!./cropping';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import ImageSelectCodeText from '!!raw-loader!./imageselect';
+
 import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
   FunctionPropsSection,
+  PropsSection,
   Section,
 } from '@/lib/PlaygroundPage';
 
-import ImageSelect from './imageselect';
+import P1 from './examples/p1';
+import P2 from './examples/p2';
 
-const jsCodeSrc = `
-import React, { useEffect, useRef } from 'react';
-import { Button, Table, message } from 'antd';
-import {
-  PolygonSelection as PolygonSelectionModule,
-  Preferences,
-  MessageDialog,
-  Split,
-} from '@baifendian/adhere';
-
-import styles from './imageselect.less';
-
-const {
-  PolygonSelection,
-  PolygonDrawAction,
-  CircleDrawAction,
-  RectangleDrawAction,
-  TriangleDrawAction,
-  DiamondDrawAction,
-  StartDrawAction,
-  FreeDrawAction,
-  CircleModifyAction,
-  DiamondModifyAction,
-  PolygonModifyAction,
-  RectangleModifyAction,
-  TriangleModifyAction,
-  StartModifyAction,
-  Types: { PolygonSelectionActions, ActionEvents },
-} = PolygonSelectionModule;
-
-export default () => {
-  const autoRef = useRef();
-  const polygonSelection = useRef(null);
-  const imgCanvasRef = useRef();
-
-  // ActionType
-  const typeActionMap = new Map([
-    ['Polygon', PolygonModifyAction],
-    ['Circle', CircleModifyAction],
-    ['Rectangle', RectangleModifyAction],
-    ['Triangle', TriangleModifyAction],
-    ['Diamond', DiamondModifyAction],
-    ['Start', StartModifyAction],
-  ]);
-
-  useEffect(() => {
-    // 初始化polygonSelection
-    polygonSelection.current = new PolygonSelection(autoRef.current, [], {
-      [PolygonSelectionActions.CanvasMount]: () => {
-        // 初始化image显示的画布
-        imgCanvasRef.current = document.createElement('canvas');
-        imgCanvasRef.current.style.position = 'absolute';
-        imgCanvasRef.current.style.left = '0';
-        imgCanvasRef.current.style.top = '0';
-        imgCanvasRef.current.style.width = '100%';
-        imgCanvasRef.current.style.height = '100%';
-        imgCanvasRef.current.style.zIndex = '0';
-        imgCanvasRef.current.width = autoRef.current.offsetWidth;
-        imgCanvasRef.current.height = autoRef.current.offsetHeight;
-        autoRef.current.appendChild(imgCanvasRef.current);
-      },
-    });
-
-    // 点击了画布中的几何图形
-    polygonSelection.current.on(PolygonSelectionActions.CanvasClickGeometry, (data) => {
-      const Component = typeActionMap.get(data.type);
-
-      const action = new Component({
-        selectType: data.type,
-        actionType: 'Draw',
-        data,
-      });
-
-      action.on(ActionEvents.End, () => {
-        action.start();
-      });
-
-      polygonSelection.current.changeAction(action);
-
-      action.start();
-    });
-
-    // 点击了画布的空位置
-    polygonSelection.current.on(PolygonSelectionActions.CanvasClickEmpty, () => {
-      console.log('clickEmpty');
-      polygonSelection.current.clearDraw();
-      polygonSelection.current.clearAssistDraw();
-      polygonSelection.current.drawHistoryData();
-    });
-
-    // 打开文件
-    const fileEl = document.getElementById('file');
-    fileEl.addEventListener('change', () => {
-      const file = fileEl.files[0];
-
-      const read = new FileReader();
-      read.onloadend = (e) => {
-        const img = new Image();
-
-        img.onload = () => {
-          const ctx = imgCanvasRef.current.getContext('2d');
-          ctx.clearRect(0, 0, img.width, img.height);
-          ctx.drawImage(img, 0, 0, img.width, img.height);
-        };
-
-        img.src = e.target.result;
-      };
-      read.readAsDataURL(file);
-    });
-  }, []);
-
-  return (
-    <div className={styles.Wrap}>
-      <div className={styles.Fixed}>
-        <ul>
-          <li>
-            <input
-              id="file"
-              accept="image/gif,image/jpeg,image/png,image/bmp"
-              type="file"
-              style={{ display: 'none' }}
-            />
-            <Button
-              type="primary"
-              onClick={() => {
-                const fileEl = document.getElementById('file');
-                const event = document.createEvent('MouseEvents');
-                event.initEvent('click', true, true);
-                fileEl.dispatchEvent(event);
-              }}
-            >
-              打开
-            </Button>
-          </li>
-          <li>
-            <Button
-              type="primary"
-              onClick={() => {
-                // 画布的数据
-                const canvasData = polygonSelection.current.getHistoryData();
-
-                if (!canvasData || !canvasData.length) {
-                  message.warn('画布上没有可以保存的数据！');
-                  return;
-                }
-
-                MessageDialog.InputPrompt({
-                  title: '数据名称',
-                  config: {
-                    label: '数据名称',
-                    initialValue: '',
-                  },
-                  width: 300,
-                  zIndex: 1000,
-                  local: 'zh_CN',
-                  onSuccess: (value) => {
-                    return new Promise((resolve) => {
-                      const localData = Preferences.getObjectByLocal('polygonSelectionData') || [];
-
-                      // 添加画布数据
-                      localData.push({
-                        id: new Date().getTime(),
-                        name: value,
-                        data: canvasData,
-                      });
-
-                      Preferences.putObjectByLocal('polygonSelectionData', localData);
-                      message.success('保存成功！');
-                      resolve();
-                    });
-                  },
-                });
-              }}
-            >
-              保存数据
-            </Button>
-          </li>
-          <li>
-            <Button
-              type="primary"
-              onClick={() => {
-                const localData = Preferences.getObjectByLocal('polygonSelectionData') || [];
-
-                const columns = [
-                  {
-                    title: '名称',
-                    dataIndex: 'name',
-                    key: 'name',
-                  },
-                  {
-                    title: '操作',
-                    dataIndex: 'option',
-                    key: 'option',
-                    render: (text, record) => {
-                      return (
-                        <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
-                          <a
-                            href="#"
-                            onClick={() => {
-                              const index = localData.findIndex((data) => data.id === record.id);
-                              if (index !== -1) {
-                                localData.splice(index, 1);
-                                Preferences.putObjectByLocal('polygonSelectionData', localData);
-                                message.success('删除成功！');
-                                // MessageDialog.close(el);
-                                close();
-                              }
-                            }}
-                          >
-                            删除
-                          </a>
-                          <Split direction="horizontal" />
-                          <a
-                            href="#"
-                            onClick={() => {
-                              message.success('操作成功！');
-                              // MessageDialog.close(el);
-                              close();
-                              const { data } = record;
-                              polygonSelection.current.setHistoryData(data);
-                              polygonSelection.current.clearDraw();
-                              polygonSelection.current.drawHistoryData();
-                            }}
-                          >
-                            打开
-                          </a>
-                        </div>
-                      );
-                    },
-                  },
-                ];
-
-                const { close } = MessageDialog.Modal({
-                  config: {
-                    title: '设置数据',
-                  },
-                  defaultCloseBtn: false,
-                  children: (
-                    <div style={{ width: '100%' }}>
-                      <Table
-                        rowKey="id"
-                        columns={columns}
-                        dataSource={localData}
-                        pagination={false}
-                      />
-                    </div>
-                  ),
-                });
-              }}
-            >
-              设置数据
-            </Button>
-          </li>
-        </ul>
-
-        <ul>
-          <li>
-            <Button
-              type="primary"
-              onClick={() => {
-                const action = new CircleDrawAction();
-                action.on(ActionEvents.End, (data) => {
-                  action.start();
-                });
-                polygonSelection.current.changeAction(action);
-                action.start();
-              }}
-            >
-              圆形
-            </Button>
-          </li>
-          <li>
-            <Button
-              type="primary"
-              onClick={() => {
-                const action = new RectangleDrawAction();
-                action.on(ActionEvents.End, (data) => {
-                  action.start();
-                });
-                polygonSelection.current.changeAction(action);
-                action.start();
-              }}
-            >
-              矩形
-            </Button>
-          </li>
-          <li>
-            <Button
-              type="primary"
-              onClick={() => {
-                const action = new DiamondDrawAction();
-                action.on(ActionEvents.End, (data) => {
-                  action.start();
-                });
-                polygonSelection.current.changeAction(action);
-                action.start();
-              }}
-            >
-              菱形
-            </Button>
-          </li>
-          <li>
-            <Button
-              type="primary"
-              onClick={() => {
-                const action = new TriangleDrawAction();
-                action.on(ActionEvents.End, (data) => {
-                  action.start();
-                });
-                polygonSelection.current.changeAction(action);
-                action.start();
-              }}
-            >
-              三角形
-            </Button>
-          </li>
-          <li>
-            <Button
-              type="primary"
-              onClick={() => {
-                const action = new StartDrawAction();
-                action.on(ActionEvents.End, (data) => {
-                  action.start();
-                });
-                polygonSelection.current.changeAction(action);
-                action.start();
-              }}
-            >
-              五角星
-            </Button>
-          </li>
-          <li>
-            <Button
-              type="primary"
-              onClick={() => {
-                const action = new PolygonDrawAction();
-                action.on(ActionEvents.End, (data) => {
-                  action.start();
-                });
-                polygonSelection.current.changeAction(action);
-                action.start();
-              }}
-            >
-              多边形
-            </Button>
-          </li>
-          <li>
-            <Button
-              type="primary"
-              onClick={() => {
-                const action = new FreeDrawAction();
-                action.on(ActionEvents.End, () => {
-                  action.start();
-                });
-                polygonSelection.current.changeAction(action);
-                action.start();
-              }}
-            >
-              自由绘制
-            </Button>
-          </li>
-        </ul>
-      </div>
-      <div className={styles.Auto} ref={autoRef}></div>
-    </div>
-  );
-};
-
-`;
-
-const cssCodeSrc = `
-.Wrap {
-  display: flex;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.Fixed {
-  flex-shrink: 0;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-
-  > ul {
-    margin: 0;
-    padding: 20px;
-    list-style: none;
-
-    &:not(:last-child) {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
-    > li {
-      &:not(:last-child) {
-        margin-bottom: 20px;
-      }
-
-      :global(> .ant-btn) {
-        width: 100%;
-      }
-    }
-  }
-}
-
-.Auto {
-  position: relative;
-  flex-grow: 1;
-  min-width: 0;
-}
-
-`;
+import CroppingLessCodeText from '!!raw-loader!./cropping.less';
+import ImageSelectLessCodeText from '!!raw-loader!./imageselect.less';
 
 export default () => {
   function boxPanelConfig() {
     return [
       {
         id: `p1`,
-        name: `图片截取`,
+        name: `基本使用`,
         cardProps: {
           description: {
-            title: '图片截取',
-            info: '图片截取',
+            title: '基本使用',
+            info: '基本使用',
           },
         },
+        active: 'p1.jsx',
         config: [
           {
-            title: 'imageselect.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: jsCodeSrc,
+            key: 'p1.jsx',
+            title: 'p1.jsx',
+            codeText: P1CodeText,
           },
           {
+            key: 'imageselect.jsx',
+            title: 'imageselect.jsx',
+            codeText: ImageSelectCodeText,
+          },
+          {
+            key: 'imageselect.less',
             title: 'imageselect.less',
-            mode: 'code',
-            scope: { React },
-            codeText: cssCodeSrc,
+            codeText: ImageSelectLessCodeText,
           },
         ],
-        type: 'PlayGroundMulit',
-        renderChildren: () => <ImageSelect />,
+        type: 'PlayGroundTab',
+        renderChildren: () => <P1 />,
+      },
+      {
+        id: 'p2',
+        name: '图片裁剪',
+        cardProps: {
+          description: {
+            title: '图片裁剪',
+            info: '图片裁剪',
+          },
+        },
+        active: 'p2.jsx',
+        config: [
+          {
+            key: 'p2.jsx',
+            title: 'p2.jsx',
+            codeText: P2CodeText,
+          },
+          {
+            key: 'cropping.jsx',
+            title: 'cropping.jsx',
+            codeText: CroppingCodeText,
+          },
+          {
+            key: 'cropping.less',
+            title: 'cropping.less',
+            codeText: CroppingLessCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P2 />,
       },
     ];
   }
@@ -461,10 +96,163 @@ export default () => {
           <li>- 五角星区域</li>
           <li>- 三角形区域</li>
           <li>- 自由绘制区域</li>
+          <li>- 图片裁剪</li>
         </ul>
       </Section>
 
       <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />
+
+      <PropsSection
+        title="Props"
+        config={[
+          {
+            border: true,
+            title: 'Cropping',
+            data: [
+              {
+                params: 'className',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '',
+                type: 'CSSProperties',
+                defaultVal: '',
+              },
+              {
+                params: 'maskClassName',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'maskStyle',
+                desc: '',
+                type: 'CSSProperties',
+                defaultVal: '',
+              },
+              {
+                params: 'mask',
+                desc: '',
+                type: 'ReactNode',
+                defaultVal: '',
+              },
+              {
+                params: 'modalProps',
+                desc: '',
+                type: 'ModalProps',
+                defaultVal: '',
+              },
+              {
+                params: 'coreProps',
+                desc: '',
+                type: 'CroppingCoreProps',
+                defaultVal: '',
+              },
+              {
+                params: 'value',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'onChange',
+                desc: '',
+                type: '(base64?: string) => void',
+                defaultVal: '',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'CroppingCore',
+            data: [
+              {
+                params: 'className',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '',
+                type: 'CSSProperties',
+                defaultVal: '',
+              },
+              {
+                params: 'wrapProps',
+                desc: '',
+                type: 'CroppingCoreWrapProps',
+                defaultVal: '',
+              },
+              {
+                params: 'toolProps',
+                desc: '',
+                type: 'CroppingCoreToolProps',
+                defaultVal: '',
+              },
+              {
+                params: 'areaProps',
+                desc: '',
+                type: 'CroppingCoreAreaProps',
+                defaultVal: '',
+              },
+              {
+                params: 'minHeight',
+                desc: '',
+                type: 'number',
+                defaultVal: '',
+              },
+              {
+                params: 'toolBarConfig',
+                desc: '',
+                type: `
+                  {
+                    direction?: string | 'left' | 'right' | 'top' | 'bottom';
+                    open?: {
+                      render?: (handle?: Function) => ReactNode;
+                      sort?: number;
+                    };
+                    rectangle?: {
+                      render?: (handle?: Function) => ReactNode;
+                      hide?: boolean;
+                      sort?: number;
+                    };
+                    circle?: {
+                      render?: (handle?: Function) => ReactNode;
+                      hide?: boolean;
+                      sort?: number;
+                    };
+                    start: {
+                      render?: (handle?: Function) => ReactNode;
+                      hide?: boolean;
+                      sort?: number;
+                    };
+                    triangle: {
+                      render?: (handle?: Function) => ReactNode;
+                      hide?: boolean;
+                      sort?: number;
+                    };
+                    diamond: {
+                      render?: (handle?: Function) => ReactNode;
+                      hide?: boolean;
+                      sort?: number;
+                    };
+                    polygon: {
+                      render?: (handle?: Function) => ReactNode;
+                      hide?: boolean;
+                      sort?: number;
+                    };
+                  }
+                `,
+                defaultVal: '',
+              },
+            ],
+          },
+        ]}
+      />
 
       <FunctionPropsSection
         title="Api"

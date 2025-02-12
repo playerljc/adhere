@@ -1,2 +1,2 @@
-import Split from"./split";export default Split;
+import Split from"./Split";export default Split;
 //# sourceMappingURL=index.js.map

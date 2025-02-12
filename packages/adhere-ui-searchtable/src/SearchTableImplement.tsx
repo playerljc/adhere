@@ -1,18 +1,25 @@
-import {
+import type {
   ColumnType,
   FilterValue,
   SorterResult,
   TableCurrentDataSource,
   TablePaginationConfig,
-  TableRowSelection,
 } from 'antd/lib/table/interface';
+import classNames from 'classnames';
+import sortBy from 'lodash.sortby';
 import PropTypes from 'prop-types';
-import React, { ReactElement, RefObject, createRef, forwardRef } from 'react';
+import type { ExpandableConfig } from 'rc-table/lib/interface';
+import type { ReactElement, ReactNode, RefObject } from 'react';
+import React, { createRef, forwardRef } from 'react';
 
+import { LoadingOutlined } from '@ant-design/icons';
+import Util from '@baifendian/adhere-util';
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 
 import SearchTable, { defaultProps, propTypes } from './SearchTable';
-import {
+import { cloneDeep } from './Util';
+import type { TableRowSelectionExt } from './types';
+import type {
   ColumnTypeExt,
   ISearchTableImplement,
   SearchTableImplementFactoryFunction,
@@ -22,7 +29,7 @@ import {
   SearchTableState,
 } from './types';
 
-export const selectorPrefix = 'adhere-ui-searchtableimplement';
+export const selectorPrefix = 'adhere-ui-search-table-implement';
 
 /**
  * SearchTableImplement
@@ -33,12 +40,14 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   extends SearchTable<SearchTableImplementProps, SearchTableImplementState>
   implements ISearchTableImplement
 {
+  static displayName = 'SearchTableImplement';
+
   innerWrapRef: RefObject<HTMLDivElement> = createRef();
 
   constructor(props) {
     super(props);
 
-    Object.assign(this.state, {
+    Object.assign(this.state!, {
       ...this.getParams(),
       [this.getOrderFieldProp()]: this.getOrderFieldValue(),
       [this.getOrderProp()]: this.getOrderPropValue() || 'descend',
@@ -46,15 +55,20 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
       searchParams: {
         ...this.getParams(),
       },
-      selectedRowKeys: [],
+      selectedRowKeys: this.props?.defaultSelectedRowKeys ?? [],
       selectedRows: [],
+      // 正在进行异步加载的keys
+      loadDataKeys: [],
+      // 异步加载数据完成的keys
+      loadDataSuccessKeys: [],
     });
   }
 
   componentDidMount() {
-    super.componentDidMount();
+    // @ts-ignore
+    super.componentDidMount?.();
 
-    const { getTableWrapperInstance } = this.props;
+    const { getTableWrapperInstance } = this.props!;
 
     if (getTableWrapperInstance) {
       getTableWrapperInstance(this.innerWrapRef);
@@ -65,6 +79,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getFetchListPropName
    * @override
    * @description - 获取调用列表接口的函数名
+   * @return {string}
    */
   getFetchListPropName(): string {
     return '';
@@ -74,7 +89,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getFetchListPropNameToFirstUpper
    * @override
    * @description - 获取调用列表接口的函数名首字母大写
-   * @return string
+   * @return {string}
    */
   getFetchListPropNameToFirstUpper(): string {
     const fetchListPropName = this.getFetchListPropName();
@@ -86,14 +101,14 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     return fetchListPropName;
   }
 
-  // ------------ 不需要重写(override)的方法 start ------------------
   /**
    * onSelectChange
    * @description - onSelectChange
-   * @param property
-   * @param v
+   * @param {string} property
+   * @param {string} v
    */
   onSelectChange = (property: string, v: string): void => {
+    // @ts-ignore
     this.setState({
       [property]: v,
     });
@@ -102,34 +117,50 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   /**
    * onInputChange
    * @description - onInputChange
-   * @param property
-   * @param e
+   * @param {string} property
+   * @param {any} e
    */
   onInputChange = (property: string, e): void => {
+    // @ts-ignore
     this.setState({
-      [property]: e.target.value.trim(),
+      [property]: e.target.value,
     });
   };
 
   /**
    * onDateTimeRangeChange
    * @description - onDateTimeRangeChange
-   * @param propertys
-   * @param moments
+   * @param {string[]} propertys
+   * @param {any[]} dayjs
    */
-  onDateTimeRangeChange = (propertys: Array<string>, moments: Array<any>) => {
+  onDateTimeRangeChange = (propertys: string[], dayjs: any[]) => {
+    // @ts-ignore
     this.setState({
-      [propertys[0]]: moments && moments.length ? moments[0] : null,
-      [propertys[1]]: moments && moments.length ? moments[1] : null,
+      [propertys[0]]: dayjs && dayjs.length ? dayjs[0] : null,
+      [propertys[1]]: dayjs && dayjs.length ? dayjs[1] : null,
     });
   };
 
-  // ------------ 不需要重写(override)的方法 end ------------------
+  /**
+   * onRowSelectionChange
+   */
+  onRowSelectionChange() {}
+
+  /**
+   * onRowSelectionSelect
+   */
+  onRowSelectionSelect() {}
+
+  /**
+   * onRowSelectionSelectAll
+   */
+  onRowSelectionSelectAll() {}
 
   /**
    * getParams
    * @override
    * @description - 获取查询参数对象
+   * @return {any}
    */
   getParams(): object {
     return {};
@@ -139,6 +170,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getServiceName
    * @override
    * @description - 获取接口服务的model名称
+   * @return {string}
    */
   getServiceName(): string {
     return '';
@@ -148,6 +180,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getFetchDataParams
    * @override
    * @description - 获取调用数据接口的参数
+   * @return {object}
    */
   getFetchDataParams(): object {
     return {};
@@ -164,35 +197,62 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   }
 
   /**
+   * isUseCheckedStrategy
+   * @description 是否使用CheckAll列设置
+   * @override
+   * @return {boolean}
+   */
+  isUseCheckedStrategy(): boolean {
+    return false;
+  }
+
+  /**
+   * getCheckedStrategy
+   * @description CheckAll列的选择规则
+   * @override
+   * @return {symbol}
+   */
+  getCheckedStrategy(): symbol {
+    return SearchTable.CHECKED_STRATEGY_SHOW_CHILD;
+  }
+
+  /**
    * getNumberGeneratorRule
    * @override
    * @description - 表格序号列的生成规则
+   * @return {symbol}
    */
-  getNumberGeneratorRule(): Symbol {
+  getNumberGeneratorRule(): symbol {
     return SearchTable.NUMBER_GENERATOR_RULE_CONTINUITY;
   }
 
   /**
-   * getNumberGeneratorRule
-   * @description 获取符号列的生成规则
+   * getRowSelectionMode
+   * @override
+   * @description 获取全选的生模式
+   * @return {symbol}
    */
-  getRowSelectionMode(): Symbol {
+  getRowSelectionMode(): symbol {
     return SearchTable.ROW_SELECTION_NORMAL_MODE;
   }
 
   /**
-   * getTableNumberColumnWidth
+   * getTableNumberColumnProps
+   * @description 设置序号列的props
    * @override
-   * @description - 表格序号列的宽度
+   * @return {object}
    */
-  getTableNumberColumnWidth(): number {
-    return 80;
+  getTableNumberColumnProps(): object {
+    return {};
   }
 
   /**
-   * getTableNumberColumnProps
+   * getTableCheckAllColumnProps
+   * @description 设置全选列的props
+   * @override
+   * @return {object}
    */
-  getTableNumberColumnProps(): object {
+  getTableCheckAllColumnProps(): object {
     return {};
   }
 
@@ -200,6 +260,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getRowKey
    * @override
    * @description - 数据的主键
+   * @return {string}
    */
   getRowKey(): string {
     return 'id';
@@ -209,15 +270,26 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getDataKey
    * @description - 获取数据的key
    * @protected
+   * @return {string}
    */
   getDataKey(): string {
     return 'list';
   }
 
   /**
+   * getFetchDataResultDataKey
+   * @description fetchData返回的结果中数据的key
+   * @return {string}
+   */
+  getFetchDataResultDataKey(): string {
+    return 'data';
+  }
+
+  /**
    * getTotalKey
    * @description - 获取total的key
    * @protected
+   * @return {string}
    */
   getTotalKey(): string {
     return 'totalCount';
@@ -227,86 +299,153 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getData
    * @description - Table的数据(Table的dataSource字段)
    * @override
-   * @return {Array}
+   * @return {object[]}
    */
-  getData(): Array<object> {
-    return this.props[this.getServiceName()][this.getFetchListPropName()][this.getDataKey()];
+  getData(): object[] {
+    return this.props?.[this.getServiceName()]?.[this.getFetchListPropName()]?.[this.getDataKey()];
+  }
+
+  /**
+   * setData
+   * @description 设置数据
+   * @param data
+   */
+  setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<any[]> {
+    let targetDataSource;
+
+    if (Util.isArray(data)) {
+      targetDataSource = data;
+    } else if (Util.isFunction(data)) {
+      targetDataSource = (data as Function)(this.getData());
+    }
+
+    if (targetDataSource) {
+      const listData = cloneDeep(
+        this.props[this.getServiceName()] ?? {
+          [this.getFetchListPropName()]: {
+            [this.getDataKey()]: [],
+            [this.getTotalKey()]: 0,
+          },
+        },
+      );
+      listData[this.getFetchListPropName()][this.getDataKey()] = targetDataSource;
+
+      this.props.dispatch({
+        type: `${this.getServiceName()}/receive`,
+        ...listData,
+      });
+
+      return Promise.resolve(listData?.[this.getFetchListPropName()]?.[this.getDataKey()]);
+    }
+
+    return Promise.resolve([]);
   }
 
   /**
    * getTotal
    * @description - Table数据的总条数
    * @override
+   * @return {number}
    */
   getTotal(): number {
-    return this.props[this.getServiceName()][this.getFetchListPropName()][this.getTotalKey()];
+    return this.props?.[this.getServiceName()]?.[this.getFetchListPropName()]?.[this.getTotalKey()];
   }
 
   /**
    * getRowSelection
    * @override
    * @description - 获取表格行选择对象
+   * @return {TableRowSelectionExt<object>}
    */
-  getRowSelection(): TableRowSelection<object> {
-    const filter = (selected: boolean, records: Array<any>): void => {
-      const rowKey = this.getRowKey();
+  getRowSelection(): TableRowSelectionExt<object> | null {
+    if (this.isUseCheckedStrategy()) {
+      return null;
+    }
 
-      if (selected) {
-        // add
+    return this.getRowSelectionConfig();
+  }
 
-        this.setState({
-          selectedRowKeys: [
-            ...(this.state.selectedRowKeys || []),
-            ...records.map((r) => r[rowKey]),
-          ],
-          selectedRows: [...(this.state.selectedRows || []), ...records],
-        });
-      } else {
-        // remove
+  /**
+   * getExpandable
+   * @description 获取展开的配置对象
+   */
+  getExpandable(): ExpandableConfig<any> {
+    let expandable: ExpandableConfig<any> = {
+      expandedRowKeys: this.state.expandedRowKeys,
+      indentSize: this.getIndentSize(),
+      onExpandedRowsChange: (...params) => this.onExpandedRowsChange(...params),
+      onExpand: (...params) => this?.onExpand(...params),
+    };
 
-        this.setState({
-          selectedRows: (this.state.selectedRows || []).filter(
-            (row) => !records.find((r) => r[rowKey] === row[rowKey]),
-          ),
-
-          selectedRowKeys: (this.state.selectedRowKeys || []).filter(
-            (key) => !records.find((r) => r[rowKey] === key),
-          ),
-        });
+    // Tree展开列放置的索引位置，设置展开列在第几个位置上（索引从0开始）
+    if (this.isUseCheckedStrategy()) {
+      expandable = {
+        ...expandable,
+        expandIconColumnIndex: 1,
+      };
+    } else {
+      if (this.isUseLoadData()) {
+        if (!!this.getRowSelection()) {
+          expandable = {
+            ...expandable,
+            expandIconColumnIndex: 2,
+          };
+        }
       }
+    }
+
+    // 如果使用异步加载，自定义expandIcon方法
+    if (this.isUseLoadData() && 'expandIcon' in this) {
+      expandable = {
+        ...expandable,
+        expandIcon: (...params) => this?.expandIcon(...params),
+      };
+    }
+
+    expandable = {
+      ...expandable,
+      ...(this.props.antdTableProps ?? {}).expandable,
     };
 
-    return {
-      selectedRowKeys: this.state.selectedRowKeys,
-      onChange: (selectedRowKeys: Array<any>, selectedRows: Array<any>) => {
-        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_CONTINUOUS_MODE) return;
+    return expandable;
+  }
 
-        // 如果是缺省模式(不能跨页选取)
+  /**
+   * getTableNumberColumnWidth
+   * @override
+   * @description - 表格序号列的宽度
+   * @return {number | string}
+   */
+  getTableNumberColumnWidth(): number | string {
+    // 动态计算序号列的宽度
+    if (this.isUseLoadData() || this.isUseTreeData()) {
+      // 如果开启了异步加载模式
+      const indentSize = this.getIndentSize() ?? 15;
 
-        this.setState({
-          selectedRowKeys,
-          selectedRows,
-        });
-      },
-      onSelect: (record, selected) => {
-        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) return;
+      const { expandedRowKeys } = this.state;
 
-        filter(selected, [record]);
-      },
-      onSelectAll: (selected, selectedRows, changeRows) => {
-        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) return;
+      return 80 + expandedRowKeys.length * indentSize;
+    }
 
-        filter(selected, changeRows);
-      },
-    };
+    return 80;
+  }
+
+  /**
+   * getTableCheckAllColumnWidth
+   * @description 获取全选列的宽度
+   * @return {number | string}
+   */
+  getTableCheckAllColumnWidth(): number | string {
+    return 50;
   }
 
   /**
    * renderSearchForm
    * @override
    * @description - 渲染Table查询的表单
+   * @return {ReactNode}
    */
-  renderSearchForm(): ReactElement | null {
+  renderSearchForm(): ReactNode {
     return null;
   }
 
@@ -314,11 +453,12 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * renderInner
    * @override
    * @description - 渲染主体
+   * @return {ReactElement | null}
    */
-  renderInner(): ReactElement | null {
+  renderInner() {
     const innerJSX = super.renderInner();
     return (
-      <div ref={this.innerWrapRef} className={`${selectorPrefix}-tablewrapper`}>
+      <div ref={this.innerWrapRef} className={`${selectorPrefix}-table-wrapper`}>
         {innerJSX}
       </div>
     );
@@ -328,8 +468,9 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * renderSearchFooterItems
    * @description - 渲染表格的工具栏
    * @override
+   * @return {any[]}
    */
-  renderSearchFooterItems(): Array<any> {
+  renderSearchFooterItems(): any[] {
     return [];
   }
 
@@ -337,6 +478,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getOrderFieldProp
    * @description - 获取排序字段
    * @override
+   * @return {string}
    */
   getOrderFieldProp(): string {
     return 'orderField';
@@ -347,6 +489,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @description - 获取默认排序字段的值
    * @override
    * @protected
+   * @return {string}
    */
   getOrderFieldValue(): string {
     return '';
@@ -355,6 +498,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   /**
    * getOrderProp
    * @description - 获取排序方式
+   * @return {string}
    */
   getOrderProp(): string {
     return 'order';
@@ -365,18 +509,21 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @override
    * @description - 获取默认排序方式
    * @protected
+   * @return {'descend' | 'ascend'}
    */
   getOrderPropValue(): 'descend' | 'ascend' {
     return 'descend';
   }
 
   /**
-   * clear
+   * clearSearch
    * @description - 清空查询条件
    * @override
+   * @return {Promise<void>}
    */
-  clear(): Promise<void> {
+  clearSearch(): Promise<void> {
     return new Promise<void>((resolve) => {
+      // @ts-ignore
       this.setState(
         {
           ...this.getParams(),
@@ -388,6 +535,29 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
           },
           selectedRowKeys: [],
           selectedRows: [],
+          expandedRowKeys: [],
+          loadDataKeys: [],
+          loadDataSuccessKeys: [],
+        },
+        () => {
+          resolve();
+        },
+      );
+    });
+  }
+
+  /**
+   * clearPaging
+   * @description 清除分页信息
+   * @return {Promise<any>}
+   */
+  clearPaging(): Promise<void> {
+    return new Promise((resolve) => {
+      // @ts-ignore
+      this.setState(
+        {
+          page: 1,
+          limit: this.getLimit(),
         },
         () => {
           resolve();
@@ -400,20 +570,22 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * showLoading
    * @description - 是否显示遮罩
    * @override
+   * @return {boolean}
    */
   showLoading(): boolean {
-    return this.props.loading[`${this.getServiceName()}/${this.getFetchListPropName()}`];
+    return this.props?.loading?.[`${this.getServiceName()}/${this.getFetchListPropName()}`];
   }
 
   /**
    * getSearchParams
    * @description - 获取查询参数
    * @protected
+   * @return {any}
    */
   getSearchParams(): any {
-    const { page, limit, searchParams } = this.state;
+    const { page, limit, searchParams } = this.state!;
 
-    const order = this.state[this.getOrderProp()];
+    const order = this.state?.[this.getOrderProp()];
 
     return {
       ...{
@@ -421,8 +593,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
         limit,
         ...searchParams,
         [this.getOrderProp()]: order === 'descend' ? 'desc' : 'asc',
-
-        [this.getOrderFieldProp()]: this.state[this.getOrderFieldProp()],
+        [this.getOrderFieldProp()]: this.state?.[this.getOrderFieldProp()],
         ...this.getFetchDataParams(),
       },
     };
@@ -432,19 +603,115 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * fetchData
    * @description - 加载数据
    * @override
+   * @return {Promise<any>}
    */
   fetchData(): Promise<any> {
-    return this.fetchDataExecute(this.getSearchParams());
+    return new Promise((resolve) => {
+      this.beforeFetchData().then(() => {
+        this.fetchDataExecute(this.getSearchParams()).then((result) => {
+          this.afterFetchData(result);
+
+          resolve(result);
+        });
+      });
+    });
+  }
+
+  /**
+   * beforeFetchData
+   * @description fetchData之后的处理
+   */
+  beforeFetchData(): Promise<void> {
+    return new Promise((resolve) => {
+      if (this.isUseLoadData()) {
+        this.setState(
+          {
+            loadDataKeys: [],
+            loadDataSuccessKeys: [],
+            expandedRowKeys: [],
+          },
+          () => {
+            resolve();
+          },
+        );
+      } else {
+        resolve();
+      }
+    });
+  }
+
+  /**
+   * afterFetchData
+   * @description fetchData之后的处理
+   * @param {} result {code: data:}
+   */
+  afterFetchData(result: any) {
+    if (this.isCanCheckedStrategySync()) {
+      this.syncCheckedStrategy(result[this.getFetchDataResultDataKey()][this.getDataKey()]);
+    }
+  }
+
+  /**
+   * isCanCheckedStrategySync
+   * @description 是否可以进行sync操作
+   * @return {boolean}
+   */
+  isCanCheckedStrategySync(): boolean {
+    return (
+      this.isUseCheckedStrategy() &&
+      'defaultSelectedRowKeys' in this.props &&
+      Array.isArray(this.props.defaultSelectedRowKeys) &&
+      !!this.props.defaultSelectedRowKeys.length &&
+      !!this.state.selectedRowKeys.length &&
+      JSON.stringify(sortBy(this.state.selectedRowKeys)) ===
+        JSON.stringify(sortBy(this.props.defaultSelectedRowKeys))
+    );
+  }
+
+  /**
+   * sync
+   * @description 同步
+   * @return Promise<any>
+   */
+  sync(): Promise<any> {
+    return new Promise((resolve) => {
+      const page = this.state?.page as number;
+
+      if (page === 1) {
+        this.fetchData().then((res) => resolve(res));
+      } else {
+        const res = this.fetchData().then((_res) => {
+          const data = _res?.data?.[this.getDataKey()] || [];
+
+          if (data.length) {
+            resolve(res);
+          } else {
+            // @ts-ignore
+            this.setState(
+              {
+                page: page - 1,
+              },
+              () => {
+                this.fetchData().then((res) => resolve(res));
+              },
+            );
+          }
+        });
+      }
+    });
   }
 
   /**
    * fetchDataExecute
    * @description - 真正的执行获取列表数据的接口
-   * @param searchParams
+   * @param {object} searchParams
    * @protected
+   * @return {Promise<any>}
    */
   fetchDataExecute(searchParams: object): Promise<any> {
-    return this.props[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
+    // console.log('searchParams', searchParams);
+
+    return this.props?.[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
       searchParams,
     );
   }
@@ -453,38 +720,49 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * onSearch
    * @description - 点击查询
    * @override
+   * @return {Promise<void>}
    */
-  onSearch(): Promise<void> {
+  onSearch(): Promise<any> {
     const keys = Object.keys(this.getParams());
     const params = {};
     keys.forEach((key) => {
-      params[key] = this.state[key];
+      params[key] = this.state?.[key];
     });
 
-    return new Promise<void>((resolve) => {
+    return new Promise<any>((resolve) => {
+      // @ts-ignore
       this.setState(
         {
           searchParams: {
             ...params,
-
-            [this.getOrderFieldProp()]: this.state[this.getOrderFieldProp()],
-
-            [this.getOrderProp()]: this.state[this.getOrderProp()],
+            [this.getOrderFieldProp()]: this.state?.[this.getOrderFieldProp()],
+            [this.getOrderProp()]: this.state?.[this.getOrderProp()],
           },
         },
         () => {
-          this.fetchData().then(() => {
-            resolve();
+          this.fetchData().then((res) => {
+            resolve(res);
           });
         },
       );
     });
   }
 
-  getColumns(): Array<ColumnType<object>> {
+  /**
+   * getColumns
+   * @return {ColumnType<object>[]}
+   */
+  getColumns(): ColumnType<object>[] {
     return [];
   }
 
+  /**
+   * onSubTableChange
+   * @param {TablePaginationConfig} pagination
+   * @param {Record<string, FilterValue | null>} filters
+   * @param {SorterResult<object> | SorterResult<object>[]} sorter
+   * @param {TableCurrentDataSource<object> | undefined} extra
+   */
   onSubTableChange(
     pagination: TablePaginationConfig,
     filters: Record<string, FilterValue | null>,
@@ -492,28 +770,369 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     extra?: TableCurrentDataSource<object> | undefined,
   ): void {}
 
-  renderSearchFormAfter(): ReactElement | null {
+  /**
+   * renderSearchFormAfter
+   * @return {ReactNode}
+   */
+  renderSearchFormAfter(): ReactNode {
     return null;
   }
 
-  renderSearchFormBefore(): ReactElement | null {
+  /**
+   * renderSearchFormBefore
+   * @return {ReactNode}
+   */
+  renderSearchFormBefore(): ReactNode {
     return null;
   }
 
-  renderTableFooter(): ReactElement | null {
+  /**
+   * renderSearchFooter
+   * @return {ReactNode}
+   */
+  renderSearchFooter(): ReactNode {
     return null;
   }
 
-  renderTableHeader(): ReactElement | null {
+  /**
+   * renderSearchHeader
+   * @return {ReactNode}
+   */
+  renderSearchHeader(): ReactNode {
     return null;
   }
 
+  renderSearchFormToolBarDefaultPanel(): ReactNode {
+    return null;
+  }
+
+  renderSearchFormToolBarItems(defaultItems: ReactElement[]): ReactNode[] {
+    return defaultItems;
+  }
+
+  /**
+   * onTableRowComponentReducers
+   * @param {ColumnTypeExt[]} columns
+   * @return {string[]}
+   */
   onTableRowComponentReducers(columns: ColumnTypeExt[]): string[] {
     return this.tableRowComponentReducers;
   }
 
+  /**
+   * onTableCellComponentReducers
+   * @param {ColumnTypeExt[]} columns
+   * @return {string[]}
+   */
   onTableCellComponentReducers(columns: ColumnTypeExt[]): string[] {
     return this.tableCellComponentReducers;
+  }
+
+  /**
+   * onExpand
+   * @description 在其中处理Tree数据的异步加载操作使用loadData方法
+   * @param params
+   */
+  onExpand(...params): void | Promise<void> {
+    const [expanded, record] = params;
+
+    // 关闭
+    if (!expanded) {
+      super.onExpand(...params);
+      return;
+    }
+
+    // 不是动态加载
+    if (!this.isUseLoadData()) {
+      super.onExpand(...params);
+
+      return;
+    }
+
+    const _self = this;
+
+    /**
+     * beforeLoadData
+     * @description 异步加载之前的操作
+     */
+    function beforeLoadData() {
+      _self.setState((state: any) => {
+        state.loadDataKeys.push(key);
+
+        return cloneDeep(state);
+      });
+    }
+
+    /**
+     * afterLoadDataWithSuccess
+     * @description 异步加载成功
+     * @param {any[]} childrenData 加载完的children数据
+     * @param {any[]} dataSource
+     */
+    function afterLoadDataWithSuccess(childrenData: any[], dataSource: any[]) {
+      return new Promise<void>((resolve) => {
+        const isCanSync = _self.isCanCheckedStrategySync();
+
+        _self.setState(
+          (state: any) => {
+            state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
+
+            state.loadDataSuccessKeys.push(key);
+
+            if (!isCanSync) {
+              // 获取当前节点的选中状态
+              const currentNodeChecked = state.selectedRowKeys.includes(record[rowKey]);
+              // 如果是选中状态
+              // 则需要将孩子也选中
+              if (currentNodeChecked) {
+                state.selectedRowKeys = [
+                  ...state.selectedRowKeys,
+                  ...childrenData.map((t: any) => t[rowKey]),
+                ];
+
+                state.selectedRows = [...state.selectedRows, ...childrenData];
+              }
+            }
+
+            // console.log('===state', state);
+            return cloneDeep(state);
+          },
+          () => {
+            if (isCanSync) {
+              _self.syncCheckedStrategy(dataSource);
+            }
+
+            resolve();
+          },
+        );
+      });
+    }
+
+    /**
+     * afterLoadDataWithFail
+     * @description 异步加载失败
+     */
+    function afterLoadDataWithFail() {
+      return new Promise<void>((resolve) => {
+        _self.setState(
+          (state: any) => {
+            state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
+
+            return cloneDeep(state);
+          },
+          () => {
+            resolve();
+          },
+        );
+      });
+    }
+
+    // 使用了动态加载
+    const { loadDataKeys, loadDataSuccessKeys } = this.state;
+
+    const rowKey = this.getRowKey();
+
+    const key = record[rowKey];
+
+    // 如果已经加载过则略过
+    if (loadDataSuccessKeys.includes(key)) {
+      // console.log('如果已经加载过则略过');
+      return;
+    }
+
+    // 还没有决议
+    if (loadDataKeys.includes(key)) {
+      // console.log('还没有决议');
+      return;
+    }
+
+    // 开始异步加载
+    beforeLoadData();
+
+    // 使用loadData进行异步加载
+    return new Promise((resolve, reject) => {
+      // @ts-ignore
+      this.loadData(record)
+        ?.then((childrenData) => {
+          // console.log('=======childrenData', childrenData);
+
+          // 更新当前近节点的children数据
+          this.setData((preData) => {
+            const _targetRecord = Util.findNodeByKey(preData as any[], key, {
+              keyAttr: rowKey,
+              childrenKey: this.getChildrenColumnName(),
+            });
+
+            const childrenColumnName = this.getChildrenColumnName();
+
+            if (_targetRecord) {
+              _targetRecord[childrenColumnName] = childrenData;
+            }
+
+            // console.log('======preData', preData);
+
+            return [...preData];
+          })
+            .then((dataSource) => {
+              // console.log('======dataSource', dataSource);
+              afterLoadDataWithSuccess(childrenData, dataSource)
+                .then(() => {
+                  resolve();
+                })
+                .catch(() => {
+                  reject();
+                });
+            })
+            .catch(() => {
+              afterLoadDataWithFail()
+                .then(() => {
+                  resolve();
+                })
+                .catch(() => {
+                  reject();
+                });
+            });
+        })
+        .catch(() => {
+          afterLoadDataWithFail()
+            .then(() => {
+              resolve();
+            })
+            .catch(() => {
+              reject();
+            });
+        });
+    });
+
+    // 正在进行异步加载的keys
+    // loadDataKeys: [];
+
+    // 异步加载数据完成的keys
+    // loadDataSuccessKeys: [];
+  }
+
+  /**
+   * renderLoadingIcon
+   * @description 渲染loading图标
+   * @param onExpand
+   * @param record
+   * @return {ReactElement}
+   */
+  renderLoadingIcon({ onExpand, record }): ReactElement {
+    return (
+      <LoadingOutlined
+        className={classNames(`${selectorPrefix}-load-data-icon`)}
+        onClick={(e) => onExpand(record, e)}
+      />
+    );
+  }
+
+  /**
+   * renderExpandIcon
+   * @description 渲染展开图标
+   * @param onExpand
+   * @param record
+   * @return {ReactElement}
+   */
+  renderExpandIcon({ onExpand, record }): ReactElement {
+    return (
+      <button
+        className="ant-table-row-expand-icon ant-table-row-expand-icon-collapsed"
+        onClick={(e) => onExpand(record, e)}
+      />
+    );
+  }
+
+  /**
+   * renderCollapseIcon
+   * @description 渲染闭合图标
+   * @param onExpand
+   * @param record
+   * @return {ReactElement}
+   */
+  renderCollapseIcon({ onExpand, record }): ReactElement {
+    return (
+      <button
+        className="ant-table-row-expand-icon ant-table-row-expand-icon-expanded"
+        onClick={(e) => onExpand(record, e)}
+      />
+    );
+  }
+
+  /**
+   * isCanAsync
+   * @description 如果是异步加载的时候当前节点是否允许异步加载
+   * @param {any} record
+   * @return {boolean}
+   */
+  isCanAsync(record: any): boolean {
+    return true;
+  }
+
+  /**
+   * expandIcon
+   * @description 处理Tree异步加载的图标
+   * @param expanded
+   * @param onExpand
+   * @param record
+   */
+  expandIcon({ expanded, onExpand, record }) {
+    const rowKey = this.getRowKey();
+
+    const key = record[rowKey];
+
+    const { loadDataKeys } = this.state;
+
+    // 这块是正在执行异步加载所以是loading图标
+    if (loadDataKeys.includes(key)) {
+      // loading
+      return this.renderLoadingIcon({ onExpand, record });
+    }
+
+    // 闭合应该是展开(+)图表
+    if (!expanded) {
+      // 这块也可能不是+，如果不能继续异步加载的话
+      // +
+      return this.isCanAsync(record) ? this.renderExpandIcon({ onExpand, record }) : null;
+    }
+
+    // 展开应该是(-)图标
+    return this.renderCollapseIcon({ onExpand, record });
+  }
+
+  /**
+   * reloadData
+   * @description 重新加载节点的数据
+   * @param {string} id 节点的id
+   */
+  reloadData(id: string) {
+    return new Promise<void>((resolve) => {
+      this.setState(
+        (state: any) => {
+          state.expandedRowKeys = state.expandedRowKeys.filter((key) => key !== id);
+          state.loadDataSuccessKeys = state.loadDataSuccessKeys.filter((key) => key !== id);
+          state.loadDataKeys = state.loadDataKeys.filter((key) => key !== id);
+
+          return cloneDeep(state);
+        },
+        () => {
+          const record = this.getRecordById(id);
+
+          (this.onExpand(true, record) as Promise<void>).then(() => {
+            this.setState(
+              (state: any) => {
+                state.expandedRowKeys = [...state.expandedRowKeys, id];
+
+                return cloneDeep(state);
+              },
+              () => {
+                resolve();
+              },
+            );
+          });
+        },
+      );
+    });
   }
 }
 
@@ -529,9 +1148,11 @@ SearchTableImplement.propTypes = {
 /**
  * SearchTableImplementFactory
  * @description 创建SearchTableImplementFactory
- * @param serviceNames
- * @param mapStateToProps
- * @param mapDispatchToProps
+ * @param {
+ *     serviceNames:string[];
+ *     mapStateToProps: (props?: any) => any,
+ *     mapDispatchToProps: (props?: any) => any,
+ * } params
  * @constructor
  */
 const SearchTableImplementFactory: SearchTableImplementFactoryFunction<any, any> = ({
@@ -564,12 +1185,14 @@ const SearchTableImplementFactory: SearchTableImplementFactoryFunction<any, any>
         // @ts-ignore
         <Component
           ref={ref}
-          className={`${selectorPrefix}-wrap`}
           isShowExpandSearch
           defaultExpandSearchCollapse={false}
           fixedHeaderAutoTable
           fixedTableSpaceBetween
           {...props}
+          // @ts-ignore
+          className={classNames(`${selectorPrefix}-wrap`, props.className ?? '')}
+          style={props.style ?? {}}
         />
       )),
     );

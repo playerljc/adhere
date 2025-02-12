@@ -44,7 +44,7 @@ class RadiusRectGeometry extends RectGeometry {
   }) {
     const targetStyle = {
       ...GeometryStyle,
-      ...(style || {}),
+      ...(style ?? {}),
     };
 
     ctx.save();

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["auto-center/index.js"],"sourcesContent":["import AutoCenter from './AutoCenter';\nexport default AutoCenter;"],"names":["AutoCenter"],"mappings":"OAAOA,eAAgB,8BACRA"}

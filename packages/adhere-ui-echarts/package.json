@@ -1,0 +1,51 @@
+{
+  "name": "@baifendian/adhere-ui-echarts",
+  "version": "2.11.0",
+  "description": "echarts相关操作和字典",
+  "homepage": "https://github.com/playerljc/adhere",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "typings": "es/index.d.ts",
+  "files": [
+    "lib",
+    "es",
+    "umd",
+    "echarts"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
+    "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
+    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
+    "buildumd": "ctbuild buildumd --config ctbuild.config.umd.js --packagename AdhereEcharts --define alias=@,evnVars=true",
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "e2e": "cross-env mobile=false e2e",
+    "upgrade": "yarn upgrade",
+    "upgrade-interactive": "yarn upgrade-interactive"
+  },
+  "dependencies": {
+    "echarts": "^5.5.0",
+    "lodash.merge": "^4.6.2"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.25.6",
+    "@baifendian/adhere-e2e": "^2.11.0",
+    "@ctsj/build": "^6.3.0",
+    "echarts-for-react": "^3.0.2",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.6.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "60cc2100010e6e8d5fc53eb5b5ed013bcffba3d7"
+}

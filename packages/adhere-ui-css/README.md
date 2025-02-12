@@ -11,7 +11,7 @@
 # ✨ 特性
 - 支持less
 - 支持less变量
-- ant-design(4.x)
+- ant-design(5.x)
 
 # 🖥 兼容环境
 - 现代浏览器，IE11
@@ -26,5 +26,5 @@ yarn add @baifendian/adhere-ui-css
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/css](http://49.232.163.126:8083/adhere/ui/css)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/css](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/css)
 

@@ -1,8 +1,11 @@
-import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
-import React, { ReactElement, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
+import type { ReactElement, ReactNode } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 
-import SearchTable, { SearchTableContext } from '../../SearchTable';
-import { ColumnEditableConfig, TableCellComponentReducer } from '../../types';
+import type SearchTable from '../../SearchTable';
+import { SearchTableContext } from '../../SearchTable';
+import { createChildren } from '../../Util';
+import type { ColumnEditableConfig, TableCellComponentReducer } from '../../types';
 import EditableTableCellEdit from './Edit/EditableTableCellEdit';
 import EditableCellView from './View';
 
@@ -34,7 +37,7 @@ const EditableTableCell: TableCellComponentReducer = (props) => {
    * @description 实际的单元格配置
    */
   const editableConfig: ColumnEditableConfig = useMemo(
-    () => ({ ...defaultConfig, ...(column?.$editable || {}) }),
+    () => ({ ...defaultConfig, ...(column?.$editable ?? {}) }),
     [column, column?.dataIndex],
   );
 
@@ -87,35 +90,47 @@ const EditableTableCell: TableCellComponentReducer = (props) => {
 
     // 始终保持编辑状态
     else if (editableConfig.useKeepEdit) {
-      res = React.cloneElement(tdREL, tdREL.props, [
-        <EditableTableCellEdit
-          {...props}
-          editableConfig={editableConfig}
-          onTriggerChange={() => setStatus('view')}
-        />,
-      ]);
+      res = React.cloneElement(
+        tdREL,
+        tdREL.props,
+        createChildren(
+          tdREL,
+          <EditableTableCellEdit
+            {...props}
+            editableConfig={editableConfig}
+            onTriggerChange={() => setStatus('view')}
+          />,
+        ),
+      );
     }
 
     // 查看状态
     else if (status === 'view') {
-      res = React.cloneElement(tdREL, tdREL.props, [
+      res = React.cloneElement(
+        tdREL,
+        tdREL.props,
         <EditableCellView
           {...props}
           editableConfig={editableConfig}
           onTriggerChange={() => setStatus('edit')}
         />,
-      ]);
+      );
     }
 
     // 编辑状态
     else if (status === 'edit') {
-      res = React.cloneElement(tdREL, tdREL.props, [
-        <EditableTableCellEdit
-          {...props}
-          editableConfig={editableConfig}
-          onTriggerChange={() => setStatus('view')}
-        />,
-      ]);
+      res = React.cloneElement(
+        tdREL,
+        tdREL.props,
+        createChildren(
+          tdREL,
+          <EditableTableCellEdit
+            {...props}
+            editableConfig={editableConfig}
+            onTriggerChange={() => setStatus('view')}
+          />,
+        ),
+      );
     }
 
     return res;

@@ -1,14 +1,14 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { FC, memo } from 'react';
+import React, { memo } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
-import { CardProps } from './types';
+import type { CardProps } from './types';
 
 const selectorPrefix = 'adhere-ui-playground-card';
 
-const Card: FC<CardProps> = (props) => {
+const Card = memo<CardProps>((props) => {
   const {
     className = '',
     style = {},
@@ -26,12 +26,12 @@ const Card: FC<CardProps> = (props) => {
   } = props;
 
   return (
-    <div className={classNames(selectorPrefix, className || '')} style={style || {}}>
+    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
       <ConditionalRender conditional={!!title || !!extra}>
         {() => (
           <div
-            className={classNames(`${selectorPrefix}-header`, headerClassName || '')}
-            style={headerStyle || {}}
+            className={classNames(`${selectorPrefix}-header`, headerClassName ?? '')}
+            style={headerStyle ?? {}}
           >
             <ConditionalRender conditional={!!title}>
               {() => <div className={`${selectorPrefix}-header-title`}>{title}</div>}
@@ -47,8 +47,8 @@ const Card: FC<CardProps> = (props) => {
       <ConditionalRender conditional={!!children}>
         {() => (
           <div
-            className={classNames(`${selectorPrefix}-body`, bodyClassName || '')}
-            style={bodyStyle || {}}
+            className={classNames(`${selectorPrefix}-body`, bodyClassName ?? '')}
+            style={bodyStyle ?? {}}
           >
             {children}
           </div>
@@ -78,8 +78,8 @@ const Card: FC<CardProps> = (props) => {
       <ConditionalRender conditional={!!actions}>
         {() => (
           <ul
-            className={classNames(`${selectorPrefix}-action`, actionClassName || '')}
-            style={actionStyle || {}}
+            className={classNames(`${selectorPrefix}-action`, actionClassName ?? '')}
+            style={actionStyle ?? {}}
           >
             {(actions || []).map((action, index) => (
               <li key={`${index + 1}`} className={`${selectorPrefix}-action-item`}>
@@ -91,7 +91,9 @@ const Card: FC<CardProps> = (props) => {
       </ConditionalRender>
     </div>
   );
-};
+});
+
+Card.displayName = 'Card';
 
 // /**
 //  * Card
@@ -218,4 +220,4 @@ export const cardPropTypes = {
 
 // Card.propTypes = cardPropTypes;
 
-export default memo(Card);
+export default Card;

@@ -1,4 +1,10 @@
 import React from 'react';
-import { OverlayProps } from './types';
-declare const _default: React.NamedExoticComponent<OverlayProps>;
-export default _default;
+import { OverlayProps, SlideLayoutHandle } from './types';
+/**
+ * Overlay
+ * @param props
+ * @param ref
+ * @constructor
+ */
+declare const Overlay: React.NamedExoticComponent<OverlayProps & React.RefAttributes<SlideLayoutHandle>>;
+export default Overlay;

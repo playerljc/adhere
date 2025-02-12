@@ -1,11 +1,14 @@
+/**
+ * 移动的元素样式
+ */
 declare const _default: {
+    fillStyle: string;
     strokeStyle: string;
     lineWidth: number;
     lineDash: number[];
     lineDashOffset: number;
+    lineCap: CanvasLineCap;
+    lineJoin: CanvasLineJoin;
     globalAlpha: number;
 };
-/**
- * 移动的元素样式
- */
 export default _default;

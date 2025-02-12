@@ -1,4 +1,4 @@
-import { ColumnTypeExt, RowConfig, RowEditableConfig } from '../types';
+import type { ColumnTypeExt, RowConfig, RowEditableConfig } from '../types';
 export default function <P, S>(SuperClass: any): {
     new (props: any): {
         [x: string]: any;

@@ -1,2 +1,2 @@
-import SliderScale from './sliderscale';
+import SliderScale from './SliderScale';
 export default SliderScale;

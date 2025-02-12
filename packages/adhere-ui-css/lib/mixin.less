@@ -26,6 +26,7 @@
  */
 .adhere-hover-overflow-auto() {
   overflow: hidden;
+
   &:hover {
     overflow: auto;
   }
@@ -44,9 +45,6 @@
   不能选取
  */
 .adhere-no-select() {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 }
 
@@ -149,4 +147,209 @@
  */
 .adhere-text-lowercase {
   text-transform: lowercase;
+}
+
+.adhere-display-flex {
+  display: flex;
+}
+
+.adhere-flex-row {
+  flex-direction: row;
+}
+
+.adhere-flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.adhere-flex-col {
+  flex-direction: column;
+}
+
+.adhere-flex-col-reverse {
+  flex-direction: column-reverse;
+}
+
+.adhere-justify-start {
+  justify-content: start;
+}
+
+.adhere-justify-end {
+  justify-content: end;
+}
+
+// 块级元素水平居中
+.adhere-justify-center {
+  justify-content: center;
+}
+
+.adhere-justify-between {
+  justify-content: space-between;
+}
+
+.adhere-justify-around {
+  justify-content: space-around;
+}
+
+.adhere-justify-evenly {
+  justify-content: space-evenly;
+}
+
+.adhere-justify-stretch {
+  justify-content: stretch;
+}
+
+.adhere-items-start {
+  align-items: flex-start;
+}
+
+.adhere-items-end {
+  align-items: flex-end;
+}
+
+// 块级元素垂直居中
+.adhere-items-center {
+  align-items: center;
+}
+
+.adhere-items-baseline {
+  align-items: baseline;
+}
+
+.adhere-items-stretch {
+  align-items: stretch;
+}
+
+// 固定
+.adhere-flex-fixed {
+  flex-shrink: 0;
+}
+
+// 最小是剩余，肯能比剩余还大
+.adhere-flex-auto {
+  flex-grow: 1;
+}
+
+// width剩余
+.adhere-flex-w-auto {
+  flex: 1;
+  min-width: 0;
+}
+
+// height剩余
+.adhere-flex-h-auto {
+  flex: 1;
+  min-height: 0;
+}
+
+// auto部分最大是剩余
+.adhere-flex-auto-normal {
+  flex: 0 1 auto;
+}
+
+.adhere-display-inline-flex {
+  display: inline-flex;
+}
+
+.adhere-text-left {
+  text-align: left;
+}
+
+// 行级元素水平居中
+.adhere-text-center {
+  text-align: center;
+}
+
+.adhere-text-right {
+  text-align: right;
+}
+
+.adhere-text-start {
+  text-align: start;
+}
+
+.adhere-text-end {
+  text-align: end;
+}
+
+// 块级元素水平居中
+.adhere-m-h-auto(@size: 0) {
+  margin: @size auto;
+}
+
+// 行级元素垂直居中(定高)
+.adhere-inline-v-center(@height: 0) {
+  height: @height;
+  line-height: @height;
+}
+
+.adhere-fill-h {
+  height: 100%;
+}
+
+.adhere-fill-w {
+  width: 100%;
+}
+
+.adhere-scroll {
+  height: 100%;
+  overflow: auto;
+}
+
+.adhere-scroll-x {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.adhere-scroll-y {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.adhere-fit-h {
+  display: flex;
+}
+
+.adhere-fit-w {
+  display: flex;
+  flex-direction: column;
+}
+
+// 穿透点击
+.adhere-penetrate {
+  pointer-events: none;
+}
+
+// 不穿透点击
+.adhere-no-penetrate {
+  pointer-events: auto;
+}
+
+.adhere-hide {
+  display: none;
+}
+
+.adhere-visible {
+  visibility: visible;
+}
+
+.adhere-hidden {
+  visibility: hidden;
+}
+
+.adhere-va-center {
+  vertical-align: middle;
+}
+
+// 任意元素水平居中
+.adhere-ele-w-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+// 任意元素垂直居中
+.adhere-ele-h-center {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }

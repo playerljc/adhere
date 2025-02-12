@@ -1,2 +1,2 @@
-import MessageDialog from './messagedialog';
+import MessageDialog from './MessageDialog';
 export default MessageDialog;

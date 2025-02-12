@@ -1,2 +1,2 @@
-import Suspense from './suspense';
+import Suspense from './SuspenseImpl';
 export default Suspense;

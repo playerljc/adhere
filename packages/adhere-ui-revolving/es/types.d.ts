@@ -1,12 +1,15 @@
-import type { CSSProperties, FC, ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
-export interface RevolvingHOCFunction<T, P> extends ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>> {
-    Item: FC<RevolvingItemProps>;
-}
+import type { PropsWithoutRef, ReactNode, RefAttributes } from 'react';
+import type { CSSProperties, NamedExoticComponent } from 'react';
+import type { SwiperOptions } from 'swiper/types';
+export type RevolvingComponent = NamedExoticComponent<PropsWithoutRef<RevolvingProps> & RefAttributes<RevolvingRefHandle>> & {};
 export interface RevolvingRefHandle {
     start: () => void;
     stop: () => void;
     isRunning: () => boolean;
 }
+export type RevolvingItem = RevolvingItemProps & {
+    key: string;
+};
 /**
  * RevolvingProps
  * @interface RevolvingProps
@@ -22,10 +25,11 @@ export interface RevolvingProps {
     loop?: boolean;
     stopOnLastSlide?: boolean;
     listeners?: object;
-    children?: any;
+    items?: RevolvingItem[];
+    swiperConfig?: SwiperOptions;
 }
 export interface RevolvingItemProps {
     className?: string;
     style?: CSSProperties;
-    children?: any;
+    children?: ReactNode;
 }

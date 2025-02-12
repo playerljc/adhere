@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["tag/index.js"],"sourcesContent":["import Tag from './Tag';\nexport default Tag;"],"names":["Tag"],"mappings":"OAAOA,QAAS,uBACDA"}

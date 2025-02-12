@@ -10,7 +10,7 @@
 - 提供基于openlayer的常用api封装
 
 # ✨ 特性
-- 支持 react(17.x)
+- 支持 react(18.x)
 - ol(6.x)
 - 支持国际化
 - 支持修改主题
@@ -29,5 +29,5 @@ yarn add adhere-ui-olmap
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/olmap](http://49.232.163.126:8083/adhere/ui/olmap)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/olmap](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/olmap)
 

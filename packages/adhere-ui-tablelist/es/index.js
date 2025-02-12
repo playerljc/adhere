@@ -1,2 +1,2 @@
-import TableList from"./tablelist";export default TableList;
+import TableList from"./TableList";export default TableList;
 //# sourceMappingURL=index.js.map

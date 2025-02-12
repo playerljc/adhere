@@ -1,13 +1,16 @@
-import { FC, ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
+import { NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import type { CSSProperties, ReactElement } from 'react';
+
+import Item from './Item';
 
 /**
  * StickupLayoutHOCType
  */
-export interface StickupLayoutHOCFunction<T, P>
-  extends ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>> {
-  Item: FC<StickupLayoutItemProps>;
-}
+export type StickupLayoutComponent = NamedExoticComponent<
+  PropsWithoutRef<StickupLayoutProps> & RefAttributes<StickupLayoutHandle>
+> & {
+  Item: typeof Item;
+};
 
 /**
  * StickupLayoutProps

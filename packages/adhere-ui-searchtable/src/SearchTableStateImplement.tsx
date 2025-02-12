@@ -1,10 +1,13 @@
+import classNames from 'classnames';
 import React, { forwardRef } from 'react';
 
+import Util from '@baifendian/adhere-util';
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 import { createState } from '@ctsj/state/lib/react';
 
 import { defaultProps, propTypes } from './SearchTable';
 import { SearchTableImplement } from './SearchTableImplement';
+import { cloneDeep } from './Util';
 import type {
   SearchTableImplementState,
   SearchTableStateImplementFactoryFunction,
@@ -22,6 +25,8 @@ export class SearchTableStateImplement<
   P extends SearchTableStateImplementProps,
   S extends SearchTableImplementState,
 > extends SearchTableImplement<SearchTableStateImplementProps, SearchTableImplementState> {
+  static displayName = 'SearchTableStateImplement';
+
   private unsubscribe: Function;
 
   constructor(props) {
@@ -57,6 +62,7 @@ export class SearchTableStateImplement<
   }
 
   componentWillUnmount() {
+    // @ts-ignore
     super.componentWillUnmount?.();
 
     this.unsubscribe();
@@ -65,36 +71,80 @@ export class SearchTableStateImplement<
   /**
    * getData
    * @description 获取列表的数据
+   * @return {object[]}
    */
   getData(): object[] {
-    return this.state[this.getServiceName()][this.getFetchListPropName()][this.getDataKey()];
+    return this.state?.[this.getServiceName()]?.[this.getFetchListPropName()]?.[this.getDataKey()];
+  }
+
+  /**
+   * setData
+   * @description 设置数据
+   * @param data
+   */
+  setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<any[]> {
+    return new Promise((resolve) => {
+      let targetDataSource;
+
+      if (Util.isArray(data)) {
+        targetDataSource = data;
+      } else if (Util.isFunction(data)) {
+        targetDataSource = (data as Function)(this.getData());
+      }
+
+      if (targetDataSource) {
+        const listData = cloneDeep(
+          this.state[this.getServiceName()] ?? {
+            [this.getFetchListPropName()]: {
+              [this.getDataKey()]: [],
+              [this.getTotalKey()]: 0,
+            },
+          },
+        );
+        listData[this.getFetchListPropName()][this.getDataKey()] = targetDataSource;
+
+        this.setState(
+          {
+            [this.getServiceName()]: listData,
+          },
+          () => {
+            resolve(listData?.[this.getFetchListPropName()]?.[this.getDataKey()]);
+          },
+        );
+      }
+
+      return Promise.resolve([]);
+    });
   }
 
   /**
    * getTotal
    * @description 获取列表总的数据树
+   * @return {number}
    */
   getTotal(): number {
-    return this.state[this.getServiceName()][this.getFetchListPropName()][this.getTotalKey()];
-  }
-
-  /**
-   * showLoading
-   * @description loading
-   */
-  showLoading(): boolean {
-    return this.state.loading[`${this.getServiceName()}/${this.getFetchListPropName()}`];
+    return this.state?.[this.getServiceName()]?.[this.getFetchListPropName()]?.[this.getTotalKey()];
   }
 
   /**
    * fetchDataExecute
    * @description 调用列表数据接口
-   * @param searchParams
+   * @param {any} searchParams
+   * @return {Promise<any>}
    */
-  fetchDataExecute(searchParams?: object): Promise<any> {
-    return this.state[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
+  fetchDataExecute(searchParams?: any): Promise<any> {
+    return this.state?.[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
       searchParams,
     );
+  }
+
+  /**
+   * showLoading
+   * @description loading
+   * @return {boolean}
+   */
+  showLoading(): boolean {
+    return this.state?.loading?.[`${this.getServiceName()}/${this.getFetchListPropName()}`];
   }
 }
 
@@ -123,13 +173,14 @@ const SearchTableStateImplementFactory: SearchTableStateImplementFactoryFunction
       // @ts-ignore
       <Component
         ref={ref}
-        className={`${selectorPrefix}-wrap`}
         isShowExpandSearch
         defaultExpandSearchCollapse={false}
         openSearchParamsMemory={false}
         fixedHeaderAutoTable
         fixedTableSpaceBetween
         {...props}
+        className={classNames(`${selectorPrefix}-wrap`, props.className ?? '')}
+        style={props.style ?? {}}
         $state={{
           serviceNames,
           middleWares,

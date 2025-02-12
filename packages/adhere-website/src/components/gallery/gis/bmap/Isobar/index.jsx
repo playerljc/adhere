@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-import PlaygroundMulit from '@/lib/PlaygroundMulit';
+import PlaygroundMulti from '@/lib/PlaygroundMulti';
 
 import LsobarLayer from './LsobarLayer';
 
@@ -10,7 +10,7 @@ const indexJsCodeText = `
  import React, { useEffect, useRef } from 'react';
  import LsobarLayer from './LsobarLayer';
  import styles from './index.less';
- 
+
  function Isobar() {
   const ref = useRef();
 
@@ -29,10 +29,10 @@ const indexJsCodeText = `
 
     map.addOverlay(new LsobarLayer(map));
   }, []);
-  
+
   return <div className={styles.Wrap} ref={ref} />;
  }
- 
+
  export default Isobar;
 `;
 
@@ -3720,7 +3720,7 @@ function Isobar() {
   }, []);
 
   return (
-    <PlaygroundMulit
+    <PlaygroundMulti
       config={[
         {
           title: 'index.jsx',
@@ -3749,7 +3749,7 @@ function Isobar() {
       ]}
     >
       <div className={styles.Wrap} ref={ref} />
-    </PlaygroundMulit>
+    </PlaygroundMulti>
   );
 }
 

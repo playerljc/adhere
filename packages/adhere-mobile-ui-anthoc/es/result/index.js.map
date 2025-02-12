@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["result/index.js"],"sourcesContent":["import Result from './Result';\nexport default Result;"],"names":["Result"],"mappings":"OAAOA,WAAY,0BACJA"}

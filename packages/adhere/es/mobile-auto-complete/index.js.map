@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["mobile-auto-complete/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-mobile-ui-auto-complete/es';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,+DACHA"}

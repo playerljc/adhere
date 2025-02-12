@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["popconfirm/index.js"],"sourcesContent":["import Popconfirm from './Popconfirm';\nexport default Popconfirm;"],"names":["Popconfirm"],"mappings":"OAAOA,eAAgB,8BACRA"}

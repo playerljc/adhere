@@ -1,16 +1,17 @@
 import { IAntdTreeNode, IAntdTreeSelectNode, IFlatTreeArrNode } from './types';
 
-interface TreeUtilType {
+export interface TreeUtilType {
   treeToArray: (
     treeData: (IAntdTreeNode | IAntdTreeSelectNode)[],
     config: {
       parentIdAttr: string;
       rootParentId: string | number;
     },
+    keyAttr?: string,
   ) => {
     [props: string]: any;
     children?: any[];
-    key?: string | number;
+    key: string;
   }[];
 
   arrayToAntdTree: (
@@ -50,19 +51,27 @@ interface TreeUtilType {
     treeFlatNodes: any[],
     kw: string,
     config: IFlatTreeArrNode & { filterAttr: string },
+    filter?: (nodeData) => boolean,
   ) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
 
   filterTree: (
     treeNodes: (IAntdTreeNode | IAntdTreeSelectNode)[],
     kw: string,
     config: IFlatTreeArrNode & { filterAttr: string },
+    filter?: (nodeData) => boolean,
   ) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
 
   findNodeByKey: (
     treeData: (IAntdTreeNode | IAntdTreeSelectNode)[],
     val: any,
-    config: { keyAttr: string },
+    config: { keyAttr: string; childrenKey?: string },
   ) => IAntdTreeNode | IAntdTreeSelectNode | null;
+
+  findParentNodeByKey: (
+    treeData: (IAntdTreeNode | IAntdTreeSelectNode)[],
+    val: any,
+    config: { keyAttr: string; childrenKey?: string },
+  ) => IAntdTreeNode | IAntdTreeSelectNode | null | undefined;
 
   transformTreeData: (
     treeData: any[],
@@ -103,11 +112,12 @@ interface TreeUtilType {
     [props: string]: any;
   }[];
 
-  getTreeLevel: (nodes: (IAntdTreeNode | IAntdTreeSelectNode)[]) => number;
+  getTreeLevel: (nodes: (IAntdTreeNode | IAntdTreeSelectNode)[], keyAttr?: string) => number;
 
   getTreeLevelByIndex: (
     nodes: (IAntdTreeNode | IAntdTreeSelectNode)[],
-    indexAttr?: string,
+    indexAttr: string,
+    keyAttr: string,
   ) => number;
 
   getTreeLevelToFlat: (flatArr: any[], config: IFlatTreeArrNode) => number;
@@ -116,6 +126,12 @@ interface TreeUtilType {
     flatArr: any[],
     config: IFlatTreeArrNode,
     indexAttr: string,
+  ) => number;
+
+  getNodeLevel: (
+    nodes: (IAntdTreeNode | IAntdTreeSelectNode)[],
+    node: IAntdTreeNode | IAntdTreeSelectNode,
+    keyAttr: string,
   ) => number;
 
   completionIncompleteFlatArr: (
@@ -127,11 +143,13 @@ interface TreeUtilType {
   excludeAntdTreeNodes: (
     nodes: IAntdTreeNode[],
     excludeKeys: string[],
+    keyAttr?: string,
   ) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
 
   excludeAntdSelectTreeNodes: (
     nodes: IAntdTreeSelectNode[],
     excludeKeys: string[],
+    keyAttr?: string,
   ) => (IFlatTreeArrNode & Omit<IAntdTreeSelectNode, 'value'>)[];
 }
 
@@ -141,8 +159,9 @@ const TreeUtil: TreeUtilType = {
    * @description tree数据转换成Array
    * @param treeData
    * @param config
+   * @param keyAttr
    */
-  treeToArray(treeData, config) {
+  treeToArray(treeData, config, keyAttr = 'key') {
     // key: string;
     // title: string;
     // isLeaf: boolean;
@@ -163,14 +182,14 @@ const TreeUtil: TreeUtilType = {
         });
 
         if (item.children && Array.isArray(item.children) && item.children.length) {
-          loop(context, item.children, item.key);
+          loop(context, item.children, item[keyAttr ?? 'key']);
         }
       }
     }
 
     loop(result, treeData, rootParentId);
 
-    return result;
+    return result.map(({ children, ...rest }) => rest) as any[];
   },
   /**
    * arrayToAntdTree - array转换成Tree
@@ -202,7 +221,7 @@ const TreeUtil: TreeUtilType = {
           ...item,
           title: item[titleAttr],
           key: item[keyAttr],
-          isLeaf: true,
+          // isLeaf: true,
           children: [],
           properties: { ...item },
         }));
@@ -214,7 +233,9 @@ const TreeUtil: TreeUtilType = {
      */
     function Recursion(node) {
       node.children = findNodesByParentId(arr, node.properties[keyAttr]);
-      node.isLeaf = !node.children.length;
+
+      node.isLeaf = 'isLeaf' in node ? node.isLeaf : !node.children.length;
+
       if (node.isLeaf) {
         delete node.children;
       }
@@ -239,13 +260,13 @@ const TreeUtil: TreeUtilType = {
    */
   arrayToAntdTreeSelect(arr, config) {
     const { keyAttr, titleAttr, rootParentId, parentIdAttr } = config;
+
     /**
      * findNodesByParentId
      * @param arr
      * @param parentId
      * @return {*}
      */
-
     function findNodesByParentId(arr: IFlatTreeArrNode[], parentId: string | number) {
       return arr
         .filter((item) => item[parentIdAttr] == parentId)
@@ -254,7 +275,7 @@ const TreeUtil: TreeUtilType = {
           key: item[keyAttr],
           title: item[titleAttr],
           value: item[keyAttr],
-          isLeaf: true,
+          // isLeaf: true,
           children: [],
           properties: { ...item },
         }));
@@ -266,7 +287,9 @@ const TreeUtil: TreeUtilType = {
      */
     function Recursion(node) {
       node.children = findNodesByParentId(arr, node.properties[keyAttr]);
-      node.isLeaf = !node.children.length;
+
+      node.isLeaf = 'isLeaf' in node ? node.isLeaf : !node.children.length;
+
       if (node.isLeaf) {
         delete node.children;
       }
@@ -355,19 +378,24 @@ const TreeUtil: TreeUtilType = {
    * @param treeFlatNodes
    * @param kw
    * @param config
+   * @param filter
    */
-  filterTreeByFlatData(this: TreeUtilType, treeFlatNodes, kw, config) {
+  filterTreeByFlatData(this: TreeUtilType, treeFlatNodes, kw, config, filter) {
     const { filterAttr, ...arrayToAntdTreeConfig } = config;
 
-    if (kw) {
-      const arr = treeFlatNodes.filter((node) => {
-        return node[config.filterAttr].indexOf(kw) !== -1;
-      });
+    if (filter) {
+      const arr = treeFlatNodes.filter((node) => filter?.(node));
 
       return this.completionIncompleteFlatArr(treeFlatNodes, arr, config);
-    } else {
-      return this.arrayToAntdTree(treeFlatNodes, arrayToAntdTreeConfig);
     }
+
+    if (kw) {
+      const arr = treeFlatNodes.filter((node) => node[config.filterAttr].indexOf(kw) !== -1);
+
+      return this.completionIncompleteFlatArr(treeFlatNodes, arr, config);
+    }
+
+    return this.arrayToAntdTree(treeFlatNodes, arrayToAntdTreeConfig);
   },
   /**
    * filterTree
@@ -375,8 +403,9 @@ const TreeUtil: TreeUtilType = {
    * @param treeNodes
    * @param kw
    * @param config
+   * @param filter
    */
-  filterTree(this: TreeUtilType, treeNodes, kw, config) {
+  filterTree(this: TreeUtilType, treeNodes, kw, config, filter) {
     const { filterAttr, ...arrayToAntdTreeConfig } = config;
 
     const treeFlatNodes = this.treeToArray(treeNodes, {
@@ -384,15 +413,19 @@ const TreeUtil: TreeUtilType = {
       rootParentId: config.rootParentId,
     });
 
-    if (kw) {
-      const arr = treeFlatNodes.filter((node) => {
-        return node[config.filterAttr].indexOf(kw) !== -1;
-      });
+    if (filter) {
+      const arr = treeFlatNodes.filter((node) => filter?.(node));
 
       return this.completionIncompleteFlatArr(treeFlatNodes, arr, config);
-    } else {
-      return this.arrayToAntdTree(treeFlatNodes, arrayToAntdTreeConfig);
     }
+
+    if (kw) {
+      const arr = treeFlatNodes.filter((node) => node[config.filterAttr].indexOf(kw) !== -1);
+
+      return this.completionIncompleteFlatArr(treeFlatNodes, arr, config);
+    }
+
+    return this.arrayToAntdTree(treeFlatNodes, arrayToAntdTreeConfig);
   },
   /**
    * findNodeByKey
@@ -402,6 +435,8 @@ const TreeUtil: TreeUtilType = {
    * @param config
    */
   findNodeByKey(treeData, val, config) {
+    const childrenKey = config.childrenKey ?? 'children';
+
     function findLoop(
       data: (IAntdTreeNode | IAntdTreeSelectNode)[],
     ): IAntdTreeNode | IAntdTreeSelectNode | null {
@@ -414,10 +449,10 @@ const TreeUtil: TreeUtilType = {
         } else {
           if (
             'children' in data[i] &&
-            Array.isArray(data[i].children) &&
-            data[i]?.children?.length
+            Array.isArray(data[i][childrenKey]) &&
+            data[i]?.[childrenKey]?.length
           ) {
-            result = findLoop(data[i].children as (IAntdTreeNode | IAntdTreeSelectNode)[]);
+            result = findLoop(data[i][childrenKey] as (IAntdTreeNode | IAntdTreeSelectNode)[]);
             if (result) break;
           }
         }
@@ -427,6 +462,41 @@ const TreeUtil: TreeUtilType = {
     }
 
     return findLoop(treeData);
+  },
+  /**
+   * findParentNodeByKey
+   * @description 根据key查找parentNode
+   * @param treeData
+   * @param val
+   * @param config
+   */
+  findParentNodeByKey(treeData, val, config) {
+    let parentNode;
+
+    const keyAttr = config?.keyAttr;
+
+    const childrenKey = config?.childrenKey ?? 'children';
+
+    function loop(_parentNode, _nodes) {
+      for (let i = 0; i < _nodes.length; i++) {
+        const _node = _nodes[i];
+
+        if (_node[keyAttr] === val) {
+          parentNode = _parentNode;
+          break;
+        } else {
+          loop(_node, _node[childrenKey] ?? []);
+
+          if (parentNode) {
+            break;
+          }
+        }
+      }
+    }
+
+    loop(parentNode, treeData);
+
+    return parentNode;
   },
   /**
    * transformTreeData
@@ -458,17 +528,21 @@ const TreeUtil: TreeUtilType = {
    * @description 获取叶子节点
    */
   getLeafNodes(nodes = [], childrenAttr = 'children') {
-    function loop(treeNodes, childrenAttr) {
+    function loop(treeNodes: any[], childrenAttr: string): any[] {
       let result: any[] = [];
 
       for (let i = 0; i < treeNodes.length; i++) {
         const node = treeNodes[i];
 
-        if (childrenAttr in node && Array.isArray(node[childrenAttr])) {
-          // 有孩子
-          result = [...result, ...loop(node[childrenAttr], childrenAttr)];
+        if (
+          childrenAttr in node &&
+          Array.isArray(node[childrenAttr]) &&
+          node[childrenAttr].length > 0
+        ) {
+          // 递归子节点
+          result.push(...loop(node[childrenAttr], childrenAttr));
         } else {
-          // 没有孩子就是叶子节点
+          // 叶子节点
           result.push(node);
         }
       }
@@ -476,7 +550,7 @@ const TreeUtil: TreeUtilType = {
       return result;
     }
 
-    return loop(nodes || [], childrenAttr || 'children');
+    return loop(nodes, childrenAttr);
   },
   /**
    * getLeafNodesByIndex
@@ -534,18 +608,24 @@ const TreeUtil: TreeUtilType = {
    * getTreeLevel
    * @description 获取树的层级
    */
-  getTreeLevel(this: TreeUtilType, nodes = []) {
-    const flat = this.treeToArray(nodes, {
-      parentIdAttr: 'pid',
-      rootParentId: -1,
-    });
+  getTreeLevel(this: TreeUtilType, nodes = [], keyAttr = 'key') {
+    const flat = this.treeToArray(
+      nodes,
+      {
+        parentIdAttr: 'pid',
+        rootParentId: -1,
+      },
+      keyAttr,
+    );
 
-    const leafNodes = this.getLeafNodeByFlatData(flat, {
-      keyAttr: 'key',
-      titleAttr: 'key',
+    const config = {
+      keyAttr,
+      titleAttr: keyAttr,
       parentIdAttr: 'pid',
       rootParentId: -1,
-    });
+    };
+
+    const leafNodes = this.getLeafNodeByFlatData(flat, config);
 
     const levels: number[] = [];
 
@@ -553,9 +633,9 @@ const TreeUtil: TreeUtilType = {
       const leafNode = leafNodes[i];
 
       let level = 1;
-      let pid = leafNode.pid;
+      let pid = leafNode[config.parentIdAttr];
       while (pid !== -1) {
-        pid = flat.find((node) => node.key === pid)?.pid;
+        pid = flat.find((node) => node[keyAttr] === pid)?.[config.parentIdAttr];
         level++;
       }
 
@@ -568,11 +648,13 @@ const TreeUtil: TreeUtilType = {
    * getTreeLevelByIndex
    * @description 获取树的层级通过索引
    */
-  getTreeLevelByIndex(this: TreeUtilType, nodes = [], indexAttr = 'isLeaf') {
-    const flat = this.treeToArray(nodes, {
+  getTreeLevelByIndex(this: TreeUtilType, nodes = [], indexAttr = 'isLeaf', keyAttr = 'key') {
+    const config = {
       parentIdAttr: 'pid',
       rootParentId: -1,
-    });
+    };
+
+    const flat = this.treeToArray(nodes, config);
 
     const leafNodes = this.getLeafNodeByFlatDataToIndex(flat, indexAttr);
 
@@ -582,9 +664,9 @@ const TreeUtil: TreeUtilType = {
       const leafNode = leafNodes[i];
 
       let level = 1;
-      let pid = leafNode.pid;
+      let pid = leafNode[config.parentIdAttr];
       while (pid !== -1) {
-        pid = flat.find((node) => node.key === pid)?.pid;
+        pid = flat.find((node) => node[keyAttr] === pid)?.[config.parentIdAttr];
         level++;
       }
 
@@ -606,9 +688,9 @@ const TreeUtil: TreeUtilType = {
       const leafNode = leafNodes[i];
 
       let level = 1;
-      let pid = leafNode.pid;
+      let pid = leafNode[config.parentIdAttr];
       while (pid !== -1) {
-        pid = flatArr.find((node) => node[config.keyAttr] === pid)?.pid;
+        pid = flatArr.find((node) => node[config.keyAttr] === pid)?.[config.parentIdAttr];
         level++;
       }
 
@@ -630,9 +712,9 @@ const TreeUtil: TreeUtilType = {
       const leafNode = leafNodes[i];
 
       let level = 1;
-      let pid = leafNode.pid;
+      let pid = leafNode[config.parentIdAttr];
       while (pid !== -1) {
-        pid = flatArr.find((node) => node[config.keyAttr] === pid)?.pid;
+        pid = flatArr.find((node) => node[config.keyAttr] === pid)?.[config.parentIdAttr];
         level++;
       }
 
@@ -642,16 +724,44 @@ const TreeUtil: TreeUtilType = {
     return Math.max(...levels);
   },
   /**
+   * getNodeLevel
+   * @description 获取节点所在的level
+   * @param nodes
+   * @param node
+   * @param keyAttr
+   */
+  getNodeLevel(this: TreeUtilType, nodes, node, keyAttr = 'key') {
+    let currentLevel = -1;
+
+    let treeLevel = this.getTreeLevel(nodes, keyAttr);
+
+    let children: any[] = nodes;
+
+    for (let i = 0; i < treeLevel; i++) {
+      if (children.find((t) => t[keyAttr] === node[keyAttr])) {
+        currentLevel = i + 1;
+        break;
+      } else {
+        children = children.map((t) => t.children || []).flat();
+      }
+    }
+
+    return currentLevel;
+  },
+  /**
    * excludeAntdTreeNodes
    * @description 排除指定节点后形成一棵树
    * @param nodes
    * @param excludeKeys
+   * @param keyAttr
    */
-  excludeAntdTreeNodes(this: TreeUtilType, nodes, excludeKeys) {
-    const flatArr = this.treeToArray(nodes, {
+  excludeAntdTreeNodes(this: TreeUtilType, nodes, excludeKeys, keyAttr = 'key') {
+    const config = {
       parentIdAttr: 'pid',
       rootParentId: -1,
-    });
+    };
+
+    const flatArr = this.treeToArray(nodes, config, keyAttr);
 
     let _excludeKeys: string[] = [];
 
@@ -662,10 +772,12 @@ const TreeUtil: TreeUtilType = {
 
     _excludeKeys = [..._excludeKeys, ...excludeKeys];
 
-    const omitArr = flatArr.filter((node) => !_excludeKeys.includes(node.key as string));
+    const omitArr = flatArr.filter((node) => !_excludeKeys.includes(node[keyAttr] as string));
 
     function loop(excludeKey) {
-      const childrenKeys = flatArr.filter((t) => t.pid === excludeKey).map((t) => t.key);
+      const childrenKeys = flatArr
+        .filter((t) => t[config.parentIdAttr] === excludeKey)
+        .map((t) => t[keyAttr]);
 
       let excludeKeys: string[] = childrenKeys as string[];
 
@@ -678,10 +790,10 @@ const TreeUtil: TreeUtilType = {
     }
 
     return this.completionIncompleteFlatArr(flatArr, omitArr, {
-      keyAttr: 'key',
+      keyAttr,
       titleAttr: 'title',
-      parentIdAttr: 'pid',
-      rootParentId: -1,
+      parentIdAttr: config.parentIdAttr,
+      rootParentId: config.rootParentId,
     });
   },
   /**
@@ -689,12 +801,15 @@ const TreeUtil: TreeUtilType = {
    * @description 排除指定节点后形成一棵树
    * @param nodes
    * @param excludeKeys
+   * @param keyAttr
    */
-  excludeAntdSelectTreeNodes(this: TreeUtilType, nodes, excludeKeys) {
-    const flatArr = this.treeToArray(nodes, {
+  excludeAntdSelectTreeNodes(this: TreeUtilType, nodes, excludeKeys, keyAttr = 'key') {
+    const config = {
       parentIdAttr: 'pid',
       rootParentId: -1,
-    });
+    };
+
+    const flatArr = this.treeToArray(nodes, config, keyAttr);
 
     let _excludeKeys: string[] = [];
 
@@ -705,10 +820,12 @@ const TreeUtil: TreeUtilType = {
 
     _excludeKeys = [..._excludeKeys, ...excludeKeys];
 
-    const omitArr = flatArr.filter((node) => !_excludeKeys.includes(node.key as string));
+    const omitArr = flatArr.filter((node) => !_excludeKeys.includes(node[keyAttr] as string));
 
     function loop(excludeKey) {
-      const childrenKeys = flatArr.filter((t) => t.pid === excludeKey).map((t) => t.key);
+      const childrenKeys = flatArr
+        .filter((t) => t[config.parentIdAttr] === excludeKey)
+        .map((t) => t[keyAttr]);
 
       let excludeKeys: string[] = childrenKeys as string[];
 
@@ -721,10 +838,10 @@ const TreeUtil: TreeUtilType = {
     }
 
     return this.completionIncompleteFlatArr(flatArr, omitArr, {
-      keyAttr: 'key',
+      keyAttr,
       titleAttr: 'title',
-      parentIdAttr: 'pid',
-      rootParentId: -1,
+      parentIdAttr: config.parentIdAttr,
+      rootParentId: config.rootParentId,
     });
   },
 };

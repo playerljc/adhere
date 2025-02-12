@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["upload/index.js"],"sourcesContent":["import Upload from './Upload';\nexport default Upload;"],"names":["Upload"],"mappings":"OAAOA,WAAY,0BACJA"}

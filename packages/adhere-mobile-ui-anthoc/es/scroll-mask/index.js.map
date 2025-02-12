@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["scroll-mask/index.js"],"sourcesContent":["import ScrollMask from './ScrollMask';\nexport default ScrollMask;"],"names":["ScrollMask"],"mappings":"OAAOA,eAAgB,8BACRA"}

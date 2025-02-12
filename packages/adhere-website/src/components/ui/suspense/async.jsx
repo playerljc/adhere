@@ -6,8 +6,8 @@ import { Hooks, Space, Suspense } from '@baifendian/adhere';
 
 const { useSetState } = Hooks;
 
-export default () => {
-  const [data, setData] = useSetState([]);
+export default (props) => {
+  const [dataRef, setData] = useSetState([]);
 
   const ref = useRef();
 
@@ -63,7 +63,12 @@ export default () => {
   }
 
   return (
-    <Suspense.ASync ref={ref} fetchData={fetchData} isEmpty={() => data.length === 0}>
+    <Suspense.ASync
+      ref={ref}
+      fetchData={fetchData}
+      isEmpty={() => dataRef.current.length === 0}
+      {...props}
+    >
       <Space.Group direction="horizontal">
         <Button type="primary" onClick={() => ref.current.reset().then(() => fetchData())}>
           重置
@@ -72,7 +77,7 @@ export default () => {
           加载数据
         </Button>
       </Space.Group>
-      <Table rowKey="id" columns={getColumns()} dataSource={data} pagination={false} />
+      <Table rowKey="id" columns={getColumns()} dataSource={dataRef.current} pagination={false} />
     </Suspense.ASync>
   );
 };

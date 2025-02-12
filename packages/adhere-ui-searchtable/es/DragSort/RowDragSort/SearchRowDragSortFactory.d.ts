@@ -1,5 +1,5 @@
-import { ReactElement } from 'react';
-import { ColumnRowDragSortConfig, ColumnTypeExt, RowConfig, RowDragSortConfig } from '../../types';
+import type { ReactElement } from 'react';
+import type { ColumnRowDragSortConfig, ColumnTypeExt, RowConfig, RowDragSortConfig } from '../../types';
 export default function <P, S>(SuperClass: any): {
     new (props: any): {
         [x: string]: any;

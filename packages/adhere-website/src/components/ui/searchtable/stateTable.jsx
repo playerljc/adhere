@@ -1,5 +1,5 @@
 import { DatePicker, Input, InputNumber, Select } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -100,8 +100,8 @@ class StateTable extends TableStateImplement {
                     <RangePicker
                       style={{ width: '90%' }}
                       value={[this.state.startTime, this.state.endTime]}
-                      onChange={(moments) => {
-                        this.onDateTimeRangeChange(['startTime', 'endTime'], moments);
+                      onChange={(dayjss) => {
+                        this.onDateTimeRangeChange(['startTime', 'endTime'], dayjss);
                       }}
                       getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
                     />
@@ -230,7 +230,7 @@ class StateTable extends TableStateImplement {
         sorter: true,
         sortOrder: this.sortOrder('birthday'),
         render: (val) =>
-          val ? moment(val).format(Resource.Dict.value.ResourceMomentFormat10.value()) : '',
+          val ? dayjs(val).format(Resource.Dict.value.ResourceMomentFormat10.value()) : '',
       },
       {
         title: '所在部门',

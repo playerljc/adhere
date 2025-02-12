@@ -101,7 +101,7 @@ class CircleGeometry extends Geometry implements ICircleGeometry {
     // 绘制圆形
     ctx.beginPath();
 
-    const targetStyle = { ...GeometryStyle, ...(style || {}) };
+    const targetStyle = { ...GeometryStyle, ...(style ?? {}) };
 
     ctx.lineWidth = targetStyle.lineWidth;
     ctx.lineJoin = targetStyle.lineJoin;

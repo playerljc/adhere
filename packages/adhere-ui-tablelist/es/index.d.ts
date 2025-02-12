@@ -1,2 +1,2 @@
-import TableList from './tablelist';
+import TableList from './TableList';
 export default TableList;

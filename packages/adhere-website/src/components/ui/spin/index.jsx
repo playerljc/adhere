@@ -1,13 +1,14 @@
-import { Button } from 'antd';
-import React, { useState } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
 
-import { Spin } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
-export default () => {
-  const [show, setShow] = useState(false);
+import P1 from './examples/p1';
+import P2 from './examples/p2';
 
+export default () => {
   function boxPanelConfig() {
     return [
       {
@@ -21,67 +22,24 @@ export default () => {
             info: '基本使用',
           },
         },
-        codeText: `
-  import React, { useState } from 'react';
-  import { Button } from 'antd';
-  import { Spin } from '@baifendian/adhere';
-
-  <div>
-    <div style={{ position: 'relative', width: 200, height: 200, wordBreak: 'break-all' }}>
-      In the process of internal desktop applications development, many different design specs
-      and implementations would be involved, which might cause designers and developers
-      difficulties and duplication and reduce the efficiency of development.
-      <Spin text="处理中..." spinning={show} />
-    </div>
-    <div>
-      <Button
-        type="primary"
-        onClick={() => {
-          setShow(true);
-        }}
-      >
-        显示
-      </Button>
-
-      <Button
-        onClick={() => {
-          setShow(false);
-        }}
-      >
-        取消
-      </Button>
-    </div>
-  </div>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div>
-            <div style={{ position: 'relative', width: 200, height: 200, wordBreak: 'break-all' }}>
-              In the process of internal desktop applications development, many different design
-              specs and implementations would be involved, which might cause designers and
-              developers difficulties and duplication and reduce the efficiency of development.
-              <Spin text="处理中..." spinning={show} />
-            </div>
-            <div>
-              <Button
-                type="primary"
-                onClick={() => {
-                  setShow(true);
-                }}
-              >
-                显示
-              </Button>
-
-              <Button
-                onClick={() => {
-                  setShow(false);
-                }}
-              >
-                取消
-              </Button>
-            </div>
-          </div>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
+      },
+      {
+        id: `p2`,
+        name: `各种尺寸`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '各种尺寸',
+            info: '各种尺寸',
+          },
+        },
+        type: 'PlayGround',
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
     ];
   }
@@ -119,6 +77,12 @@ export default () => {
                 desc: '遮罩的层级',
                 type: 'number',
                 defaultVal: '19999',
+              },
+              {
+                params: 'size',
+                desc: '大小',
+                type: 'default | small | large',
+                defaultVal: 'default',
               },
             ],
           },

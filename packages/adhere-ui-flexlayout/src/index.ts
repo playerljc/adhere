@@ -1,3 +1,3 @@
-import FlexLayout from './flexlayout';
+import FlexLayout from './FlexLayout';
 
 export default FlexLayout;

@@ -63,11 +63,7 @@ declare class StartDrawAction extends DrawAction {
      * @param ctx
      * @param data
      */
-    static drawHistoryPath(ctx: CanvasRenderingContext2D, data: {
-        center: IPoint;
-        outRadius: number;
-        innerRadius: number;
-    }): void;
+    static drawHistoryPath(ctx: CanvasRenderingContext2D, data: any): void;
     /**
      * start
      * @param style

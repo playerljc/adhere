@@ -1,9 +1,11 @@
 import { Form } from 'antd';
-import { FormInstance } from 'antd/es/form';
-import React, { ReactElement, createRef } from 'react';
+import type { FormInstance } from 'antd/es/form';
+import type { ReactElement } from 'react';
+import React, { createRef } from 'react';
 
 import { SearchTableContext, selectorPrefix } from '../SearchTable';
-import { ColumnTypeExt, RowConfig, RowEditableConfig } from '../types';
+import { findRecord } from '../Util';
+import type { ColumnTypeExt, RowConfig, RowEditableConfig } from '../types';
 
 export default function <P, S>(SuperClass) {
   return class extends SuperClass<P, S> {
@@ -98,30 +100,59 @@ export default function <P, S>(SuperClass) {
     }
 
     /**
+     * onExpandedRowsChange
+     * @param expandedRows
+     */
+    onExpandedRowsChange(expandedRows) {
+      return super.onExpandedRowsChange(expandedRows).then(() => {
+        if (this.state.isTableEditor) {
+          this.setFieldValues(this.getData());
+        }
+      });
+    }
+
+    /**
      * setFieldValues
      */
-    setFieldValues() {
-      const dataSource = this.getData();
+    setFieldValues(dataSource) {
+      // const dataSource = this.getData();
       const columns = this.getTableColumns();
 
-      this.formRef?.current?.setFieldValue?.(
-        'dataSource',
-        (dataSource || []).map((_record) =>
-          (columns || []).reduce(
-            (_r, { dataIndex, $editable }) => {
-              if (dataIndex in _record && $editable && 'type' in $editable) {
-                _r[dataIndex] = this.valueToFormItemValue({
-                  type: $editable.type,
-                  record: _record,
-                  dataIndex,
-                });
-              }
-              return _r;
-            },
-            { [this.getRowKey()]: _record[this.getRowKey()] },
-          ),
-        ),
-      );
+      let fields: any = [];
+
+      const createFields = (_record) =>
+        (columns || []).reduce(
+          (_r, { dataIndex, $editable }) => {
+            if (dataIndex in _record && $editable && 'type' in $editable) {
+              _r[dataIndex] = this.valueToFormItemValue({
+                type: $editable.type,
+                record: _record,
+                dataIndex,
+              });
+            }
+            return _r;
+          },
+          { [this.getRowKey()]: _record[this.getRowKey()] },
+        );
+
+      const { expandedRowKeys } = this.state;
+      const rowKey = this.getRowKey();
+
+      if (!!expandedRowKeys.length) {
+        const displayEls = this.tableWrapRef?.current?.querySelectorAll?.(
+          '.ant-table-wrapper tr[data-row-key]',
+        );
+
+        fields = Array.from<HTMLElement>(displayEls).map((el) => {
+          const id = el.dataset['rowKey'];
+          const _record = findRecord(dataSource, rowKey, id);
+          return createFields(_record);
+        });
+      } else {
+        fields = dataSource.map((_record) => createFields(_record));
+      }
+
+      this.formRef?.current?.setFieldValue?.('dataSource', fields);
     }
 
     /**
@@ -129,7 +160,7 @@ export default function <P, S>(SuperClass) {
      */
     fetchData() {
       return super.fetchData().then((res) => {
-        this.setFieldValues();
+        this.setFieldValues(res.data[this.getDataKey()]);
 
         this.setState({
           isTableEditor: false,

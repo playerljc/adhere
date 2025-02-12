@@ -1,3 +1,15 @@
+import type { ModalProps } from 'antd/lib/modal/interface';
+import { PropsWithoutRef, RefAttributes } from 'react';
+import type { CSSProperties, NamedExoticComponent, ReactNode } from 'react';
+
+import type {
+  CenterProps,
+  TBLRCLayoutProps,
+  TBLRProps,
+} from '@baifendian/adhere-ui-flexlayout/es/types';
+
+import CroppingCore from './cropping/CroppingCore';
+
 /**
  * Action的状态
  */
@@ -16,9 +28,34 @@ export enum ActionStatus {
  * Action的事件
  */
 export enum ActionEvents {
-  BeforeStart = 'BeforeStart',
-  Start = 'Start',
-  End = 'End',
+  // 绘制开始前
+  DrawBeforeStart = 'DrawBeforeStart',
+  // 绘制开始
+  DrawStart = 'DrawStart',
+  // 绘制中
+  Drawing = 'Drawing',
+  // 绘制结束
+  DrawEnd = 'DrawEnd',
+
+  // 移动开始前
+  MoveBeforeStart = 'MoveBeforeStart',
+  // 移动开始
+  MoveStart = 'MoveStart',
+  // 移动中
+  Moving = 'Moving',
+  // 移动结束
+  MoveEnd = 'MoveEnd',
+
+  // 修改开始前
+  ModifyBeforeStart = 'ModifyBeforeStart',
+  // 修改开始
+  ModifyStart = 'ModifyStart',
+  // 修改中
+  Modifying = 'Modifying',
+  // 修改结束
+  ModifyEnd = 'ModifyEnd',
+
+  // 销毁
   Destroy = 'Destroy',
 }
 
@@ -26,6 +63,19 @@ export enum ActionEvents {
  * IAction - 一个Action对象
  */
 export interface IAction {
+  // 绘制样式
+  style: IStyle;
+  // 修改的时候控制点的样式
+  anchorStyle: IStyle;
+  // 移动的元素样式
+  moveGemStyle: IStyle;
+
+  setStyle: (style?: Partial<IStyle>) => void;
+  getStyle: () => IStyle;
+  setAnchorStyle: (style?: Partial<IStyle>) => void;
+  getAnchorStyle: () => IStyle;
+  setMoveGemStyle: (style?: Partial<IStyle>) => void;
+  getMoveGemStyle: () => IStyle;
   // 获取状态
   getStatus: () => number;
   // 开始
@@ -36,6 +86,8 @@ export interface IAction {
   destroy: () => void;
   // 设置上下文对象
   setContext: (context: IPolygonSelection) => void;
+
+  on(type: string | symbol, handler: Function, makStackSize?: number);
 }
 
 /**
@@ -44,6 +96,7 @@ export interface IAction {
 export interface IListeners {
   [propName: string]: () => void;
 }
+
 /**
  * IActionData - Action的数据
  */
@@ -53,6 +106,30 @@ export interface IActionData {
   data: any;
   style?: IStyle;
 }
+
+export type RectangleData = {
+  leftTopPoint: IPoint;
+  width: number;
+  height: number;
+};
+
+export type CircleData = {
+  center: IPoint;
+  radius: number;
+};
+
+export type OutCircleData = {
+  // 圆的中心点
+  center: IPoint;
+  // 外半径
+  outRadius: number;
+  // 内半径(外半径的一半)
+  innerRadius: number;
+};
+
+export type Points = {
+  points: IPoint[];
+};
 
 /**
  * IPolygonData - Polygon的数据
@@ -67,10 +144,7 @@ export interface IPolygonData extends IActionData {
  */
 export interface ICircleData extends IActionData {
   type: SelectType.Circle;
-  data: {
-    center: IPoint;
-    radius: number;
-  };
+  data: CircleData;
 }
 
 /**
@@ -78,11 +152,7 @@ export interface ICircleData extends IActionData {
  */
 export interface IRectangleData extends IActionData {
   type: SelectType.Rectangle;
-  data: {
-    leftTopPoint: IPoint;
-    width: number;
-    height: number;
-  };
+  data: RectangleData;
 }
 
 /**
@@ -90,9 +160,7 @@ export interface IRectangleData extends IActionData {
  */
 export interface ITriangleData extends IActionData {
   type: SelectType.Triangle;
-  data: {
-    points: IPoint[];
-  };
+  data: Points;
 }
 
 /**
@@ -101,11 +169,7 @@ export interface ITriangleData extends IActionData {
 export interface IDiamondData extends IActionData {
   type: SelectType.Diamond;
   // 矩形的数据
-  data: {
-    leftTopPoint: IPoint;
-    width: number;
-    height: number;
-  };
+  data: RectangleData;
 }
 
 /**
@@ -123,14 +187,7 @@ export interface IFreeData extends IActionData {
  */
 export interface IStartData extends IActionData {
   type?: SelectType.Start;
-  data: {
-    // 圆的中心点
-    center: IPoint;
-    // 外半径
-    outRadius: number;
-    // 内半径(外半径的一半)
-    innerRadius: number;
-  };
+  data: OutCircleData;
 }
 
 /**
@@ -206,6 +263,7 @@ export enum PolygonSelectionActions {
  */
 export interface IPolygonSelection {
   trigger: (type: string, params?: any | null | undefined) => void;
+  on(type: string | symbol, handler: Function, makStackSize?: number): void;
   getWidth: () => number;
   getHeight: () => number;
   getCtx: () => CanvasRenderingContext2D | null;
@@ -227,6 +285,8 @@ export interface IPolygonSelection {
   destroy: () => void;
   clearDraw: () => void;
   clearAssistDraw: () => void;
+  clearHistoryData: () => void;
+  clearCanvasAll: () => void;
 }
 
 /**
@@ -275,3 +335,80 @@ export enum ActionType {
   Modify = 'Modify',
   Move = 'Move',
 }
+
+export interface CroppingProps {
+  className?: string;
+  style?: CSSProperties;
+  maskClassName?: string;
+  maskStyle?: CSSProperties;
+  mask?: ReactNode;
+  modalProps?: ModalProps;
+  coreProps?: CroppingCoreProps;
+  value?: string;
+  onChange?: (base64?: string) => void;
+}
+
+export interface CroppingHandle {}
+
+export type CroppingCoreWrapProps = Pick<
+  TBLRCLayoutProps,
+  Exclude<'lProps' | 'cProps', keyof TBLRCLayoutProps>
+>;
+export type CroppingCoreToolProps = Partial<TBLRProps>;
+export type CroppingCoreAreaProps = Partial<CenterProps>;
+
+export interface CroppingCoreProps {
+  className?: string;
+  style?: CSSProperties;
+  wrapProps?: CroppingCoreWrapProps;
+  toolProps?: CroppingCoreToolProps;
+  areaProps?: CroppingCoreAreaProps;
+  minHeight?: number;
+  toolBarConfig?: {
+    direction?: string | 'left' | 'right' | 'top' | 'bottom';
+    open?: {
+      render?: (handle?: Function) => ReactNode;
+      sort?: number;
+    };
+    rectangle?: {
+      render?: (handle?: Function) => ReactNode;
+      hide?: boolean;
+      sort?: number;
+    };
+    circle?: {
+      render?: (handle?: Function) => ReactNode;
+      hide?: boolean;
+      sort?: number;
+    };
+    start: {
+      render?: (handle?: Function) => ReactNode;
+      hide?: boolean;
+      sort?: number;
+    };
+    triangle: {
+      render?: (handle?: Function) => ReactNode;
+      hide?: boolean;
+      sort?: number;
+    };
+    diamond: {
+      render?: (handle?: Function) => ReactNode;
+      hide?: boolean;
+      sort?: number;
+    };
+    polygon: {
+      render?: (handle?: Function) => ReactNode;
+      hide?: boolean;
+      sort?: number;
+    };
+  };
+}
+
+export interface CroppingCoreHandle {
+  save?: () => string;
+}
+
+export type CroppingComponent = NamedExoticComponent<
+  PropsWithoutRef<CroppingProps> & RefAttributes<CroppingHandle>
+> & {
+  CroppingCore: typeof CroppingCore;
+};

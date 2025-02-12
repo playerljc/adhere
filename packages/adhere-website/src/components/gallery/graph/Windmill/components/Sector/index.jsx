@@ -1,4 +1,4 @@
-import moment from 'dayjs';
+import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 
 import { statusColor, statusIcon, statusTexts, timeIcon } from '../../config';
@@ -106,10 +106,10 @@ const Sector = ({
                   {/* eslint-disable-next-line */}
                   {detail.status === 1
                     ? detail.startTime
-                      ? moment(detail.startTime).format('YYYY-MM-DD')
+                      ? dayjs(detail.startTime).format('YYYY-MM-DD')
                       : '--'
                     : detail.endTime
-                    ? moment(detail.endTime).format('YYYY-MM-DD')
+                    ? dayjs(detail.endTime).format('YYYY-MM-DD')
                     : '--'}
                   {detail.status === 1 && '(申报)'}
                 </span>

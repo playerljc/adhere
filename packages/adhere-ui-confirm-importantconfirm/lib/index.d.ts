@@ -1,2 +1,2 @@
-import ImportantConfirm from './importantconfirm';
+import ImportantConfirm from './ImportantConfirm';
 export default ImportantConfirm;

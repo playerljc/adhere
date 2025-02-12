@@ -1,3 +1,3 @@
-import StickupLayout from './stickuplayout';
+import StickupLayout from './StickUpLayout';
 
 export default StickupLayout;

@@ -1,2 +1,2 @@
-import ImageLazy from './imagelazy';
+import ImageLazy from './ImageLazy';
 export default ImageLazy;

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["dot-loading/index.js"],"sourcesContent":["import DotLoading from './DotLoading';\nexport default DotLoading;"],"names":["DotLoading"],"mappings":"OAAOA,eAAgB,8BACRA"}

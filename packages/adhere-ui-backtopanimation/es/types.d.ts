@@ -3,12 +3,12 @@ import type { CSSProperties } from 'react';
  * BackTopAnimationProps
  * @interface BackTopAnimationProps
  */
-export declare type BackTopAnimationProps = {
+export type BackTopAnimationProps = {
     className?: string;
     style?: CSSProperties;
     zIndex?: string | number;
     duration?: number;
-    getContainer: () => HTMLElement;
+    getContainer: () => HTMLElement | null | undefined;
     onTrigger: () => Promise<void>;
     onScrollTop?: (scrollTopVal: number) => void;
 };

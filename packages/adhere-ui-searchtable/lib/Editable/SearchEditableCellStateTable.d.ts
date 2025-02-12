@@ -1,5 +1,5 @@
-import moment from 'moment';
-import { SearchTableImplementState, SearchTableStateImplementProps } from '../types';
+import dayjs from 'dayjs';
+import type { SearchTableImplementState, SearchTableStateImplementProps } from '../types';
 declare const SearchEditableCellStateTable_base: {
     new (props: any): {
         [x: string]: any;
@@ -30,7 +30,7 @@ declare const SearchEditableCellStateTable_base: {
             columns: import("../types").ColumnTypeExt[];
         }): import("../types").ColumnTypeExt;
         valueToFormItemValue({ type, record, dataIndex, }: {
-            type: string;
+            type: import("../types").FormItemType;
             record: {
                 [prop: string]: any;
             };
@@ -63,6 +63,16 @@ declare class SearchEditableCellStateTable<P extends SearchTableStateImplementPr
         value: any;
     }): Promise<void>;
     /**
+     * updateEditorCellsDate
+     * @description 修改cells的值
+     * @param values
+     */
+    updateEditorCellsDate(values: {
+        record: any;
+        dataIndex: any;
+        value: any;
+    }[]): Promise<void>;
+    /**
      * updateEditorCellDateData
      * @description 更新日期类型可编辑单元格的数据
      * @param record
@@ -75,7 +85,7 @@ declare class SearchEditableCellStateTable<P extends SearchTableStateImplementPr
             [props: string]: any;
         };
         dataIndex: string;
-        value: moment.Moment | null;
+        value: dayjs.Dayjs | null;
     }): Promise<void>;
 }
 export default SearchEditableCellStateTable;

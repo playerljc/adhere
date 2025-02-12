@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import pathToRegexp from 'path-to-regexp';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Footer from '@/lib/Footer';
 
+import { getPathName } from "../Router/path";
 import styles from './index.less';
 
 const { SubMenu } = Menu;
@@ -103,7 +103,8 @@ class BasicLayout extends React.Component {
    * @param routes
    */
   static loopRoutes({ defaultOpenKeys, defaultSelectedKeys, routes }) {
-    const { pathname } = window.location;
+    const pathname = getPathName();
+
     for (let i = 0; i < routes.length; i++) {
       const route = routes[i];
       if (pathname.indexOf(route.path) !== -1) {
@@ -354,7 +355,7 @@ class BasicLayout extends React.Component {
     const { name } = this.props;
     const { routes } = this.state;
 
-    const selectKey = window.location.pathname;
+    const selectKey = getPathName()/*window.location.pathname;*/
 
     const path = [];
     BasicLayout.getPathBySelectKey({
@@ -390,7 +391,7 @@ class BasicLayout extends React.Component {
    * @param pathname
    * @return {{defaultOpenKeys: [], defaultSelectedKeys: []}}
    */
-  getDefaultKeys(pathname = window.location.pathname) {
+  getDefaultKeys(pathname = getPathName()/*window.location.pathname*/) {
     const { routes = [] } = this.props;
     const defaultSelectedKeys = [];
     const defaultOpenKeys = [];
@@ -412,7 +413,7 @@ class BasicLayout extends React.Component {
    * getDefault
    * @return {{selectedKeys: ([]|*[]), openKeys: ([]|*[])}}
    */
-  getKeys(pathname = window.location.pathname) {
+  getKeys(pathname = getPathName()/*window.location.pathname*/) {
     const { defaultSelectedKeys, defaultOpenKeys } = this.getDefaultKeys(pathname);
 
     const { selectedKeys, openKeys } = this.state;
@@ -430,21 +431,24 @@ class BasicLayout extends React.Component {
     return (
       <div className={styles.BasicLayout}>
         <div
-          className={classNames(styles.Fixed, styles.Sider, isMenuCollapse ? styles.Collapse : '')}
+          className={classNames(styles.MenuWrapper, styles.Sider, {
+            [styles.Collapse]: isMenuCollapse
+          })}
         >
           {this.renderMenu({
             defaultSelectedKeys: selectedKeys,
             defaultOpenKeys: openKeys,
           })}
         </div>
-        <div className={styles.Auto}>
+
+        <div className={styles.Body}>
           {this.renderBreadcrumb({
             defaultSelectedKeys: selectedKeys,
             defaultOpenKeys: openKeys,
           })}
-          <div className={styles.Auto}>{this.props.children}</div>
-          <div className={styles.FooterWrap}>
-            <Footer />
+
+          <div className={styles.Main}>
+            {this.props.children}
           </div>
         </div>
       </div>

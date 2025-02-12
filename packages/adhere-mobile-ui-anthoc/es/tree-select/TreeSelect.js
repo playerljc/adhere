@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(e){for(var r,t=1,a=arguments.length;t<a;t++)for(var i in r=arguments[t])Object.prototype.hasOwnProperty.call(r,i)&&(e[i]=r[i]);return e}).apply(this,arguments)};import Tree from"@baifendian/adhere-mobile-ui-tree";import{createFactory}from"../util";var TreeSelectHOC=createFactory(Tree.TreeSelect,{},function(e){return __assign({},e)});TreeSelectHOC.displayName="TreeSelect";export default TreeSelectHOC;
+//# sourceMappingURL=TreeSelect.js.map

@@ -1,2 +1,2 @@
-import ForceUpdate from"./forceupdate";export default ForceUpdate;
+import ForceUpdate from"./ForceUpdate";export default ForceUpdate;
 //# sourceMappingURL=index.js.map

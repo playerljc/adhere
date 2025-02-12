@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script>
+      let i = 0;
+
+      function P1() {
+        return Promise.resolve('');
+      }
+
+      P1().then(() => console.log('wq-1', ++i));
+
+      P1().then(() => console.log('wq-2', ++i));
+
+      setTimeout(() => {
+          console.log('hq-1', ++i);
+
+          P1().then(() => console.log('wq-3', ++i));
+          P1().then(() => console.log('wq-4', ++i));
+          P1().then(() => console.log('wq-5', ++i));
+          P1().then(() => console.log('wq-6', ++i));
+          P1().then(() => console.log('wq-7', ++i));
+      }, 1000);
+
+      setTimeout(() => {
+          console.log('hq-2', ++i);
+      }, 1000);
+
+      setTimeout(() => {}, 1000);
+
+      console.log('stack-1', ++i);
+
+      console.log('stack-2', ++i);
+    </script>
+  </head>
+  <body></body>
+</html>

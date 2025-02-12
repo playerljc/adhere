@@ -1,4 +1,4 @@
-import { openErrorDialog, openErrorMessage } from './errorprompt';
+import { openErrorDialog, openErrorMessage } from './ErrorPrompt';
 
 export default {
   openErrorDialog,

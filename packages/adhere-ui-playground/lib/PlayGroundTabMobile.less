@@ -1,0 +1,80 @@
+.adhere-ui-playground-mobile {
+  display: flex;
+  width: 100%;
+
+  .adhere-ui-playground-mobile-display-qr-code-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 19999;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+  }
+
+  > .adhere-ui-playground-mobile-body {
+    flex: 1;
+    min-width: 0;
+    margin-right: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+  }
+
+  > .adhere-ui-playground-mobile-display {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    border-right: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+
+    > .adhere-ui-playground-mobile-display-inner {
+      flex: 1;
+      min-height: 0;
+
+      > iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+    }
+
+    > .adhere-ui-playground-mobile-display-actions {
+      display: flex;
+      flex-shrink: 0;
+      justify-content: flex-end;
+      padding: 7px;
+      border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+
+      > .adhere-ui-playground-mobile-display-action {
+        position: relative;
+        font-size: 20px;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        &:not(:last-child) {
+          margin-right: 15px;
+        }
+
+        > .adhere-ui-playground-mobile-display-qr-code {
+          position: absolute;
+          top: 0;
+          left: 50%;
+          z-index: 19999;
+          width: 120px;
+          height: 120px;
+          padding: 8px 12px;
+          background-color: #fff;
+          border-radius: 8px;
+          box-shadow: 0 0 30px 0 rgb(51 51 51 / 20%);
+          transform: translateX(-50%) translateY(-100%);
+
+          > img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+}

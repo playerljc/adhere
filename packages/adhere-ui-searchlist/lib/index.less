@@ -1,0 +1,163 @@
+@import '~@baifendian/adhere-ui-searchtable/es/index.less';
+@import '~@baifendian/adhere-ui-css/es/mixin';
+
+@import './Extension/ListDensitySetting/Setting';
+@import './ResourceManager/index';
+
+.adhere-ui-search-table-wrap {
+  > .adhere-ui-suspense {
+    overflow-y: hidden;
+
+    .adhere-ui-search-table {
+      &.fixed-list-space-between {
+        > .adhere-ui-search-table-auto-wrapper {
+          overflow-y: hidden;
+
+          > .adhere-ui-search-table-table-wrapper {
+            > .ant-list {
+              display: flex;
+              flex-direction: column;
+              height: 100%;
+
+              > .ant-list-header {
+                flex-shrink: 0;
+              }
+
+              > .ant-spin-nested-loading {
+                flex-grow: 1;
+                min-height: 0;
+
+                > .ant-spin-container {
+                  width: 100%;
+                  height: 100%;
+                  overflow-x: hidden;
+                  overflow-y: auto;
+                }
+              }
+
+              > .ant-list-pagination {
+                flex-shrink: 0;
+                margin-top: 24px;
+                margin-bottom: 24px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.adhere-ui-search-table-implement-list-meta-title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  > .adhere-ui-search-table-implement-list-meta-title {
+    margin-right: 16px;
+    word-break: break-all;
+    cursor: pointer;
+  }
+}
+
+//.adhere-ui-search-table-implement-list-rowSelection-wrap {
+//  display: flex;
+//
+//  &.adhere-ui-search-table-implement-list-rowSelection-active {
+//    background-color: rgba(@adhere-primary-color, 0.6);
+//  }
+//
+//  > .adhere-ui-search-table-implement-list-rowSelection-checkbox {
+//    flex-shrink: 0;
+//    margin-right: 16px;
+//  }
+//
+//  > .adhere-ui-search-table-implement-list-rowSelection-body {
+//    flex-grow: 1;
+//    min-width: 0;
+//  }
+//}
+
+.adhere-ui-search-table-implement-list-item-vertical,
+.adhere-ui-search-table-implement-list-item-horizontal {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+
+  &.split {
+    border-block-end: var(--adhere-line-width) var(--adhere-line-type) rgb(5 5 5 / 6%);
+  }
+
+  .adhere-ui-search-table-implement-list-item-vertical-body,
+  .adhere-ui-search-table-implement-list-item-horizontal-body {
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  .adhere-ui-search-table-implement-list-item-vertical-body {
+    display: block;
+  }
+
+  .adhere-ui-search-table-implement-list-item-horizontal-body {
+    display: flex;
+  }
+}
+
+.adhere-ui-search-table-implement-list-item {
+  width: 100%;
+}
+
+.adhere-ui-search-table-implement-list-selection {
+  background-color: rgba(var(--adhere-color-primary-rgb), 0.3);
+}
+
+.adhere-ui-search-table-implement-list-item-content {
+  &.horizontal {
+    max-width: 50%;
+    overflow: hidden;
+    .adhere-word-break();
+  }
+}
+
+.adhere-ui-search-table-implement-list-row-selection-checkbox-wrap {
+  flex-shrink: 0;
+  margin: 0 20px;
+}
+
+.adhere-ui-search-table-implement-list-expandable-trigger {
+  margin-right: 20px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.adhere-ui-search-table-implement-list-number-wrap {
+  flex-shrink: 0;
+  margin: 0 20px;
+
+  .adhere-ui-search-table-implement-list-number {
+    color: var(--adhere-color-text-secondary);
+    font-weight: bold;
+    font-size: 16px;
+  }
+}
+
+.adhere-ui-search-table-implement-list-row-selection-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 12px 24px;
+  background-color: rgb(61 62 64 / 2%);
+  border-radius: var(--adhere-border-radius-base);
+
+  > .adhere-ui-search-table-implement-list-row-selection-header-cancel {
+    color: var(--adhere-color-primary);
+  }
+}
+
+.adhere-ui-search-table-implement-list-card-title {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}

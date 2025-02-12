@@ -11,6 +11,12 @@ declare class Response {
     private stateMessage;
     private body;
     constructor(options: ResponseOptions);
+    /**
+     * setHeader
+     * @description 设置header
+     * @param {string} key
+     * @param {string} value
+     */
     setHeader(key: string, value: string): void;
     getHeaders(): {
         [x: string]: string;
@@ -19,9 +25,25 @@ declare class Response {
     getStatusCode(): stateCode;
     getStatusMessage(): string;
     getRequestId(): string;
+    /**
+     * setBody
+     * @param {any} body
+     */
     setBody(body: any): void;
+    /**
+     * setStatusCode
+     * @param {number} statusCode
+     */
     setStatusCode(statusCode: any): void;
+    /**
+     * setStatusMessage
+     * @param {string} statusMessage
+     */
     setStatusMessage(statusMessage: any): void;
+    /**
+     * setRequestId
+     * @param {string} requestId
+     */
     setRequestId(requestId: any): void;
 }
 export default Response;

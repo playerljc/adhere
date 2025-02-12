@@ -1,3 +1,4 @@
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
 import { ICircle, IPoint } from './types';
 declare const _default: {
     /**--------------------------math-start----------------------**/
@@ -48,7 +49,7 @@ declare const _default: {
      * @return {x:number,y:number}
      */
     clientToCtxPoint({ event, rect }: {
-        event: MouseEvent;
+        event: MouseEvent | TouchEvent;
         rect: DOMRect;
     }): IPoint;
     /**
@@ -93,14 +94,14 @@ declare const _default: {
      * @param axis - 'cartesian' | 'geographic'
      * @return number | undefined
      */
-    slope(fromPoint: IPoint, toPoint: IPoint, axis?: 'cartesian' | 'geographic'): number | undefined;
+    slope(fromPoint: IPoint, toPoint: IPoint, axis?: "cartesian" | "geographic"): number | undefined;
     /**
      * slopToRadian - 获取两点斜率的弧度
      * @param fromPoint
      * @param toPoint
      * @param axis cartesian(平面) | geographic(地理)
      */
-    slopToRadian(fromPoint: IPoint, toPoint: IPoint, axis?: 'cartesian' | 'geographic'): number;
+    slopToRadian(fromPoint: IPoint, toPoint: IPoint, axis?: "cartesian" | "geographic"): number;
     /**
      * slopToAngle - 获取两点斜率的角度
      * @param fromPoint
@@ -108,7 +109,7 @@ declare const _default: {
      * @param axis
      * @return number - 角度
      */
-    slopToAngle(fromPoint: IPoint, toPoint: IPoint, axis?: 'cartesian' | 'geographic'): number;
+    slopToAngle(fromPoint: IPoint, toPoint: IPoint, axis?: "cartesian" | "geographic"): number;
     /**
      * radianToAngle - 弧度转换成角度
      * @param radian - 弧度
@@ -127,7 +128,7 @@ declare const _default: {
      * @param unit - 单位
      * @return 转换后的数值
      */
-    distance(value: number, unit: 'kilometer'): number;
+    distance(value: number, unit: "kilometer"): number;
     /**
      * getCirclePoint
      * @description - 获取圆上任意一点
@@ -140,10 +141,25 @@ declare const _default: {
      * getOvalPoint
      * @description - 获取椭圆上任意一点
      * @param center
-     * @param raduisX
+     * @param radiusX
      * @param radiusY
      * @param angle
      */
-    getOvalPoint(center: IPoint, raduisX: number, radiusY: number, angle: number): IPoint;
+    getOvalPoint(center: IPoint, radiusX: number, radiusY: number, angle: number): IPoint;
+    /**
+     * pxToRemNumber
+     * @param {number} px
+     * @param {number} base
+     * @return {number}
+     */
+    pxToRemNumber(px: number, base: number): number;
+    /**
+     * pxToRem
+     * @param {number} px
+     * @param {number} base
+     * @param media
+     * @return {string}
+     */
+    pxToRem(px: number, base: number, media?: ConfigProviderProps["media"]): string;
 };
 export default _default;

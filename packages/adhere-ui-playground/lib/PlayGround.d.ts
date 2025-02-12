@@ -1,3 +1,4 @@
+import React from 'react';
 import APlayGround from './APlayGround';
 /**
  * PlayGround
@@ -5,11 +6,12 @@ import APlayGround from './APlayGround';
  * @classdesc PlayGround
  */
 declare class PlayGround extends APlayGround {
+    static displayName: string;
     /**
      * renderCodeView - 代码展示视图
      * @return {*}
      */
-    protected renderCodeView(): JSX.Element;
+    protected renderCodeView(): React.JSX.Element;
     /**
      * getClipboardText
      */

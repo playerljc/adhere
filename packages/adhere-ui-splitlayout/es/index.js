@@ -1,2 +1,2 @@
-import SplitLayout from"./splitlayout";export default SplitLayout;
+import SplitLayout from"./SplitLayout";export default SplitLayout;
 //# sourceMappingURL=index.js.map

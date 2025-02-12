@@ -1,0 +1,2 @@
+"use strict";var __importDefault=this&&this.__importDefault||function(t){return t&&t.__esModule?t:{default:t}},style_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./style")));function default_1(t){if(!(!t instanceof Object))for(var e in t)t.hasOwnProperty(e)&&(0,style_1.default)(this._container,e,t[e]);return this}exports.default=default_1;
+//# sourceMappingURL=styles.js.map

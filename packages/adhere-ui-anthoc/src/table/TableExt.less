@@ -1,0 +1,71 @@
+.adhere-ui-anthoc-table {
+  position: relative;
+  height: 100%;
+
+  &.adhere-ui-anthoc-table-fixed-table-space-between {
+    .ant-table-wrapper {
+      height: 100%;
+
+      > .ant-spin-nested-loading {
+        > .ant-spin-container {
+          display: flex;
+          flex-direction: column;
+
+          > .ant-table {
+            flex-grow: 1;
+            min-height: 0;
+
+            > .ant-table-container {
+              display: flex;
+              flex-direction: column;
+              height: 100%;
+
+              > .ant-table-header {
+                flex-shrink: 0;
+              }
+
+              > .ant-table-body {
+                flex-grow: 1;
+                min-height: 0;
+                max-height: initial !important;
+                overflow-y: auto !important;
+
+                > table {
+                  > .ant-table-tbody {
+                    > .ant-table-row {
+                      > .ant-table-cell {
+                        &.ant-table-cell-with-append {
+                          //display: flex;
+                          //align-items: center;
+                          > .ant-table-row-expand-icon {
+                            &.ant-table-row-expand-icon-collapsed {
+                              margin-top: 0;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .ant-table-wrapper {
+    > .ant-spin-nested-loading {
+      > .ant-spin-container {
+        > .ant-table-empty {
+          > .ant-table-container {
+            > .ant-table-body {
+              max-height: initial !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

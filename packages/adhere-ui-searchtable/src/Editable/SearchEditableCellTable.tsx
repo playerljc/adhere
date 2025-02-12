@@ -1,8 +1,8 @@
-import cloneDeep from 'lodash.clonedeep';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import { SearchTableImplement } from '../SearchTableImplement';
-import { SearchTableImplementProps, SearchTableImplementState } from '../types';
+import { cloneDeep, findRecord } from '../Util';
+import type { SearchTableImplementProps, SearchTableImplementState } from '../types';
 import SearchEditableCellFactory from './SearchEditableCellFactory';
 
 /**
@@ -43,17 +43,49 @@ class SearchEditableCellTable<
       const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];
       const rowKey = this.getRowKey();
 
-      const recordItem = dataSource.find((t) => t[rowKey] === record[rowKey]);
+      const recordItem = findRecord(dataSource, rowKey, record[rowKey]);
       if (recordItem) {
         recordItem[dataIndex] = value;
 
         this.props
           .dispatch({
             type: `${this.getServiceName()}/receive`,
-            [this.getServiceName()]: listData,
+            // [this.getServiceName()]: listData,
+            ...listData,
           })
           .then(() => resolve());
       } else resolve();
+    });
+  }
+
+  /**
+   * updateEditorCellsDate
+   * @description 修改cells的值
+   * @param values
+   */
+  updateEditorCellsDate(values: { record; dataIndex; value }[]): Promise<void> {
+    return new Promise((resolve) => {
+      const listData = cloneDeep(this.props[this.getServiceName()]);
+      const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];
+      const rowKey = this.getRowKey();
+
+      values.forEach(({ value, dataIndex, record }) => {
+        const recordItem = findRecord(dataSource, rowKey, record[rowKey]);
+        if (recordItem) {
+          if (dayjs.isDayjs(value)) {
+            recordItem[dataIndex] = value.valueOf();
+          } else {
+            recordItem[dataIndex] = value;
+          }
+        }
+      });
+
+      this.props
+        .dispatch({
+          type: `${this.getServiceName()}/receive`,
+          ...listData,
+        })
+        .then(() => resolve());
     });
   }
 
@@ -72,30 +104,32 @@ class SearchEditableCellTable<
   }: {
     record: { [props: string]: any };
     dataIndex: string;
-    value: moment.Moment | null;
+    value: dayjs.Dayjs | null;
   }): Promise<void> {
-    return new Promise((resolve) => {
-      if (record[dataIndex] === value?.valueOf()) {
-        resolve();
-        return;
-      }
-
-      const listData = cloneDeep(this.props[this.getServiceName()]);
-      const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];
-      const rowKey = this.getRowKey();
-
-      const recordItem = dataSource.find((t) => t[rowKey] === record[rowKey]);
-      if (recordItem) {
-        recordItem[dataIndex] = value?.valueOf();
-
-        this.props
-          .dispatch({
-            type: `${this.getServiceName()}/receive`,
-            [this.getServiceName()]: listData,
-          })
-          .then(() => resolve());
-      } else resolve();
-    });
+    return this.updateEditorCellDate({ record, dataIndex, value: value?.valueOf() });
+    // return new Promise((resolve) => {
+    //   if (record[dataIndex] === value?.valueOf()) {
+    //     resolve();
+    //     return;
+    //   }
+    //
+    //   const listData = cloneDeep(this.props[this.getServiceName()]);
+    //   const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];
+    //   const rowKey = this.getRowKey();
+    //
+    //   const recordItem = dataSource.find((t) => t[rowKey] === record[rowKey]);
+    //   if (recordItem) {
+    //     recordItem[dataIndex] = value?.valueOf();
+    //
+    //     this.props
+    //       .dispatch({
+    //         type: `${this.getServiceName()}/receive`,
+    //         // [this.getServiceName()]: listData,
+    //         ...listData,
+    //       })
+    //       .then(() => resolve());
+    //   } else resolve();
+    // });
   }
 }
 

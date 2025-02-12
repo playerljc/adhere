@@ -9,7 +9,1793 @@
   </head>
 
   <body>
-    <h1>1.0.26</h1>
+    <h1>2.11.0</h1>
+    <hr />
+    <div>2024-05-11</div>
+    <ul>
+      <li>
+        <h3>adhere-mobile-ui-spin</h3>
+        <ul>
+          <li>加入adhere-mobile-ui-spin组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-mobile-ui-prompt-warnprompt</h3>
+        <ul>
+          <li>加入adhere-mobile-ui-prompt-warnprompt组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-mobile-ui-prompt-successprompt</h3>
+        <ul>
+          <li>加入adhere-mobile-ui-prompt-successprompt组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-mobile-ui-prompt-errorprompt</h3>
+        <ul>
+          <li>加入adhere-mobile-ui-prompt-errorprompt组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-mobile-ui-tabs</h3>
+        <ul>
+          <li>加入adhere-mobile-ui-tabs组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-mobile-ui-time-picker-view</h3>
+        <ul>
+          <li>加入adhere-mobile-ui-time-picker-view组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-mobile-ui-anthoc</h3>
+        <ul>
+          <li>加入adhere-mobile-ui-anthoc组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-mobile-ui-auto-complete</h3>
+        <ul>
+          <li>加入adhere-mobile-ui-auto-complete组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-auto-complete</h3>
+        <ul>
+          <li>加入adhere-ui-auto-complete组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-mobile-ui-prsl</h3>
+        <ul>
+          <li>加入adhere-mobile-ui-prsl组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-quick-range-date</h3>
+        <ul>
+          <li>加入adhere-ui-quick-range-date组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-mobile-ui-popovermenu</h3>
+        <ul>
+          <li>加入adhere-mobile-ui-popovermenu组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-mobile-ui-quick-range-date</h3>
+        <ul>
+          <li>加入adhere-mobile-ui-quick-range-date组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-currency-symbol</h3>
+        <ul>
+          <li>加入adhere-ui-currency-symbol组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>拖拽排序加入可以在列上加入自定义句柄</li>
+          <li>$search中的输入框去掉trim</li>
+          <li>$search中加入isShowLabelSymbol配置项对ProSearchTable的label符号进行控制</li>
+          <li>加入REM适配</li>
+          <li>加入导出excel功能</li>
+          <li>查询区域加入工具栏</li>
+          <li>操作工具栏和查询工具栏分离</li>
+          <li>查询工具栏加入收起功能</li>
+          <li>OptionsWrap加入收起功能</li>
+          <li>缺省的工具按钮修改</li>
+          <li>列头和查询文字支持tip显示</li>
+          <li>
+            修改renderSearchToolBar变为renderTitle，renderSearchBarExtra，renderSearchBarActions
+          </li>
+          <li>可以自定义高级查询面板，高级查询优化</li>
+          <li>使用fetchData的方法都变成Promise</li>
+          <li>可编辑单元格和可编辑的Table单元格中$editable的rules和props支持函数形式</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-anthoc</h3>
+        <ul>
+          <li>Form中加入对FormItem加入getErrorContainer自定义错误输出</li>
+          <li>Form中加入NestingFormItem组件</li>
+          <li>Form的Validate的rules加入required设置</li>
+          <li>修复CheckAll不返回children的默认值设置</li>
+          <li>ConfigProvider加入router、publicPath参数的传递</li>
+          <li>CheckboxGroup加入spaceProps属性的设置</li>
+          <li>
+            ArrayEntityValueHOC、TreeEntityValueHOC加入isUsePrimaryValue(是否使用原始值)的判断
+          </li>
+          <li>tree加入了AutoComplete、table加入了TreeAutoComplete</li>
+          <li>tree-select加入数据源组件</li>
+          <li>加入Calendar的ValueHOC</li>
+          <li>加入ListPagingEntityValueHOC</li>
+          <li>加入一系列EntityValueHOC</li>
+          <li>List和Table的Paging加入SuspenseAsync的包裹</li>
+          <li>加入AutoCompleteSelectInput</li>
+          <li>加入Tag的AutoComplete</li>
+          <li>带有全选按钮可以自定义全选按钮的位置</li>
+          <li>hoc文件结构调整</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>加入getSaerch、getPathname方法</li>
+          <li>encrypt函数加入options</li>
+          <li>加入dom尺寸计算方法</li>
+          <li>clientToCtxPoint去掉使用zoom计算</li>
+          <li>加入pxToRem方法</li>
+          <li>修复math中的clientToCtxPoint方法适配zoom</li>
+          <li>加入getTransformValues方法</li>
+          <li>treeToArray方法排除children属性</li>
+          <li>加入isPromise方法</li>
+          <li>修改getTopDom方法的BUG，selector支持数组形式</li>
+          <li>加入gcoord</li>
+          <li>getTopDom方法修改</li>
+          <li>加入pascalCaseToKebabCase2</li>
+          <li>pascalCaseToKebabCase方法修改</li>
+          <li>将未导出的ts定义进行导出</li>
+          <li>修复tree中的若干方法的细节</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-searchlist</h3>
+        <ul>
+          <li>使用fetchData的方法都变成Promise</li>
+          <li>修改文件名的大小写</li>
+          <li>综合修改 1.修复已知BUG 2.适配adhere-ui-searchtable的修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-fieldgeneratortodict</h3>
+        <ul>
+          <li>优化组件实现，加入了直接使用预定义名称使用的方式，减少拼接</li>
+          <li>加入一系列ValueEntityHOC</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-messagedialog</h3>
+        <ul>
+          <li>Trigger加入defaultCloseBtn配置</li>
+          <li>修改Trigger修改props不刷新的问题</li>
+          <li>加入allowMultipleInstances参数控制是否允许多实例共存</li>
+          <li>Mobile的适配</li>
+          <li>修复MaximizeModal组件最大化和最小化的样式问题</li>
+          <li>加入renderToWrapper方法</li>
+          <li>加入disable设置和update刷新方法</li>
+          <li>加入是否允许多实例共存的设置</li>
+          <li>加入Trigger和TriggerPrompt组件</li>
+          <li>加入disabled设置和update刷新方法</li>
+          <li>Modal和MaximizeModal的返回值中加入setConfig方法</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-suspense</h3>
+        <ul>
+          <li>加入onFirstFetchDataBefore和onFirstFetchDataAfter方法</li>
+          <li>加入onFirstFetchDataBefore和onFirstFetchDataAfter方法</li>
+          <li>Asyc和Sync在Impl中实现，加入Impl实现</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-popup</h3>
+        <ul>
+          <li>Action为空不渲染wrapper</li>
+          <li>移动端适配</li>
+          <li>加入对closeAction的控制</li>
+          <li>加入renderToWrapper方法</li>
+          <li>加入Trigger和TriggerPrompt组件</li>
+          <li>加入disabled设置和update刷新方法</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-scrollload</h3>
+        <ul>
+          <li>加入HIDE_EMPTY做性能优化</li>
+          <li>加入disabled设置</li>
+          <li>加入getScrollContainer方法</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-autocomplete</h3>
+        <ul>
+          <li>TreeAutoComplete加入不筛选的属性</li>
+          <li>重构最终数据源的计算</li>
+          <li>修改初始化没有下拉数据的BUG</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-flexlayout</h3>
+        <ul>
+          <li>Auto加入isUseNormal属性</li>
+          <li>加入isUseNormal属性</li>
+          <li>加入REM适配</li>
+          <li>展开和收起(trigger)内部实现修改</li>
+          <li>加入展开和收起功能(trigger)</li>
+          <li>加入LCRLayout、TCBLayout</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-communication-ajax</h3>
+        <ul>
+          <li>loading适配移动端</li>
+          <li>修改FormData值是数组情况</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-configprovider</h3>
+        <ul>
+          <li>加入router、publicPath参数的注入</li>
+          <li>加入media配置项控制是否支持REM</li>
+          <li>加入Wrapper元素用来存放css变量</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-css</h3>
+        <ul>
+          <li>加入adhere-box-shadow-primary变量</li>
+          <li>加入REM适配</li>
+          <li>加入DPR变量</li>
+          <li>init方法修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-intl</h3>
+        <ul>
+          <li>国际化方法加入description方法</li>
+          <li>序号词条翻译修改</li>
+          <li>加入quick-range-date的词条</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-olmap</h3>
+        <ul>
+          <li>文件大小写修改为帕斯卡命名规则</li>
+          <li>OLMap组件的fitZoom参数默认值修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-playground</h3>
+        <ul>
+          <li>Anchors修改</li>
+          <li>SimpleTabs，CodeTabPanel加入className和style参数</li>
+          <li>加入PlayGroundTabMobile组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-watchmemoized</h3>
+        <ul>
+          <li>浅比较修改为Object.is</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-splitlayout</h3>
+        <ul>
+          <li>TRBLC结构调整</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-comment</h3>
+        <ul>
+          <li>使用ScrollLoad的优化</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-contextmenu</h3>
+        <ul>
+          <li>加入renderToWrapper方法</li>
+          <li>加入扇形菜单</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-resource</h3>
+        <ul>
+          <li>dict.locals.config.js加入AntDesignMobile的国际化</li>
+          <li>dict.locals.config.js加入可以动态添加和删除的方法</li>
+          <li>dict.moment.config.js中加入时间国际化formats和本地化formats</li>
+          <li>dict.locals.config.js加入可以动态添加和删除的方法</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-datedisplay</h3>
+        <ul>
+          <li>加入本地化显示的组件</li>
+          <li>优化内部函数，去掉一些无用函数</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-hooks</h3>
+        <ul>
+          <li>加入use</li>
+          <li>useLatestState和useSetState修改为使用ref</li>
+          <li>加入useLatestState的hook</li>
+          <li>加入usePropToState的hook</li>
+          <li>加入useTriggerQuery</li>
+          <li>加入useSafeRef的hook</li>
+          <li>加入useLatestState的hook</li>
+          <li>加入usePropToState的hook</li>
+          <li>加入useSafeRef</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-adapterscreen</h3>
+        <ul>
+          <li>加入flexible方法适配REM</li>
+          <li>加入devicePixelRatio的适配</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-css</h3>
+        <ul>
+          <li>加入adhere-box-shadow-primary变量</li>
+          <li>加入REM适配</li>
+          <li>加入DPR变量</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-tablegridlayout</h3>
+        <ul>
+          <li>加入mode属性</li>
+          <li>奇偶颜色互换位置</li>
+          <li>加入REM适配</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-space</h3>
+        <ul>
+          <li>间距BUG修改</li>
+          <li>加入REM适配</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-split</h3>
+        <ul>
+          <li>间距BUG修改</li>
+          <li>加入REM适配</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-stickuplayout</h3>
+        <ul>
+          <li>加入resize适配</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.28</h1>
+    <hr />
+    <div>2023-09-28</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>修复$hide的列没有传递参数给接口的问题</li>
+          <li>有查询条件的列头图标高亮</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.27</h1>
+    <hr />
+    <div>2023-09-24</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-space</h3>
+        <ul>
+          <li>修复Rendered more hooks than during the previous render错误</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-split</h3>
+        <ul>
+          <li>修复Rendered more hooks than during the previous render错误</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.26</h1>
+    <hr />
+    <div>2023-09-23</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-space</h3>
+        <ul>
+          <li>去掉无用的console.log输出</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-intl</h3>
+        <ul>
+          <li>去掉无用的console.log输出</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.25</h1>
+    <hr />
+    <div>2023-09-23</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>去掉无用的console.log输出</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.24</h1>
+    <hr />
+    <div>2023-09-23</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-fieldgeneratortodict</h3>
+        <ul>
+          <li>Sync组件renderEmpty属性默认值修复</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.23</h1>
+    <hr />
+    <div>2023-09-23</div>
+    <ul>
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>tree.ts加入findParentNodeByKey方法</li>
+          <li>casUrl加入defaultLocal参数</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-searchable</h3>
+        <ul>
+          <li>getPagination加入pageSizeOptions参数</li>
+          <li>rowSelection的onChange事件对外提供结构</li>
+          <li>修复$hide判断条件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-suspense</h3>
+        <ul>
+          <li>Sync修改数据改变的判断逻辑</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-space</h3>
+        <ul>
+          <li>Group中处理undefined和null的情况</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-split</h3>
+        <ul>
+          <li>Group中处理undefined和null的情况</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-intl</h3>
+        <ul>
+          <li>外部可以替换lib的国际化词条</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-searchlist</h3>
+        <ul>
+          <li>修复分页BUG</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.22</h1>
+    <hr />
+    <div>2023-09-02</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-fieldgeneratortodict</h3>
+        <ul>
+          <li>Select的onChange加入dataSource参数</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.21</h1>
+    <hr />
+    <div>2023-08-29</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-messagedialog</h3>
+        <ul>
+          <li>重新构建解决文件名称大小写问题</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.20</h1>
+    <hr />
+    <div>2023-08-28</div>
+    <ul>
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>toCamelCase方法加入split参数</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.19</h1>
+    <hr />
+    <div>2023-08-26</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-fieldgeneratortodict</h3>
+        <ul>
+          <li>TreeSelect和Cascader加入flat数据的支持</li>
+          <li>修复TreeSelect异步加载生成器BUG和Cascader异步加载生成器的BUG</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>修复tree的arrayToAntdTree方法</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.18</h1>
+    <hr />
+    <div>2023-08-23</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-fieldgeneratortodict</h3>
+        <ul>
+          <li>修复TreeSelect异步加载生成器BUG</li>
+          <li>加入Cascader异步加载生成器</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-resource</h3>
+        <ul>
+          <li>dict.gis.config.js加入Dict.handlers.ResourceGisDefaultExtent</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.17</h1>
+    <hr />
+    <div>2023-08-20</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-playground</h3>
+        <ul>
+          <li>修复PlayGroundMulit.less样式</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-dict</h3>
+        <ul>
+          <li>加入必要的异常处理</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.16</h1>
+    <hr />
+    <div>2023-08-20</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-suspense</h3>
+        <ul>
+          <li>修复未引入@baifendian/adhere-ui-spin样式的错误</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.15</h1>
+    <hr />
+    <div>2023-08-19</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-globalindicator</h3>
+        <ul>
+          <li>使用spin.js重构</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-spin</h3>
+        <ul>
+          <li>使用spin.js重构</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-suspense</h3>
+        <ul>
+          <li>默认renderNormalLoading使用adhere-ui-spin实现</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.14</h1>
+    <hr />
+    <div>2023-08-18</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-tablegridlayout</h3>
+        <ul>
+          <li>加入REM适配</li>
+          <li>加入show属性控制显隐</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.13</h1>
+    <hr />
+    <div>2023-08-17</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-dict</h3>
+        <ul>
+          <li>加入useDict</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.12</h1>
+    <hr />
+    <div>2023-08-17</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-suspense</h3>
+        <ul>
+          <li>加入renderNormalLoading设置</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-fieldgeneratortodict</h3>
+        <ul>
+          <li>Suspense.Sync加入renderNormalLoading</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-dict</h3>
+        <ul>
+          <li>返回值结构调整为data,isPending,isValidate,加入renderNormalLoading设置</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.11</h1>
+    <hr />
+    <div>2023-08-15</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-revoiving</h3>
+        <ul>
+          <li>Swiper升级到最新版本</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-swipeout</h3>
+        <ul>
+          <li>Swiper升级到最新版本</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.10</h1>
+    <hr />
+    <div>2023-08-15</div>
+    <ul>
+      <li>
+        <h3>antd升级到最新版本</h3>
+      </li>
+    </ul>
+
+    <h1>2.10.9</h1>
+    <hr />
+    <div>2023-08-14</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-revoiving</h3>
+        <ul>
+          <li>加入Swiper的config</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-ajax</h3>
+        <ul>
+          <li>修复出现异常的时候进行reject的操作</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.8</h1>
+    <hr />
+    <div>2023-08-10</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-tablegridlayout</h3>
+        <ul>
+          <li>加入方向样式</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.7</h1>
+    <hr />
+    <div>2023-08-09</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-fieldgeneratortodict</h3>
+        <ul>
+          <li>动态、静态字典内部加载数据策略修改</li>
+          <li>组件上加入了refresh刷新字典的方法</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-polygonselection</h3>
+        <ul>
+          <li>cropping样式修改</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.6</h1>
+    <hr />
+    <div>2023-08-08</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-writingboard</h3>
+        <ul>
+          <li>同步adhere-ui-flexlayout的修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-polygonselection</h3>
+        <ul>
+          <li>同步adhere-ui-flexlayout的修改</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.5</h1>
+    <hr />
+    <div>2023-08-07</div>
+    <ul>
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>加入formatMilliseconds方法</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-flexlayout</h3>
+        <ul>
+          <li>render修改为childre</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-splitlayout</h3>
+        <ul>
+          <li>TRBLC结构调整</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-messagedialog</h3>
+        <ul>
+          <li>加入MaximizeModal</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-fieldgeneratortodict</h3>
+        <ul>
+          <li>根据原始字典生成各种形式的组件，无需像之前一样定义出所有字典</li>
+          <li>加入onDataSourceChange事件</li>
+          <li>加入TreeSelect的异步加载</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.4</h1>
+    <hr />
+    <div>2023-07-27</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>$search类型加入sort字段定义</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.3</h1>
+    <hr />
+    <div>2023-07-22</div>
+    <ul>
+      <li>
+        <h3>adhere-util-intl</h3>
+        <ul>
+          <li>词条错误修复</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-util-ajax</h3>
+        <ul>
+          <li>getSendParams默认返回值修改</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-ui-messagedialog</h3>
+        <ul>
+          <li>modal的props参数传递顺序修改</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-ui-richtext-sandbox</h3>
+        <ul>
+          <li>WangEditor加入查看的样式</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.2</h1>
+    <hr />
+    <div>2023-07-16</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>修复分页快速导航回车触发2次查询BUG</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-ui-flexlayout</h3>
+        <ul>
+          <li>加入Split配置</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-ui-splitlayout</h3>
+        <ul>
+          <li>加入可以Split的TRBLC</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>修复base64Decode的BUG</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.1</h1>
+    <hr />
+    <div>2023-07-10</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>修复sync</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.10.0</h1>
+    <hr />
+    <div>2023-07-09</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-expression</h3>
+        <ul>
+          <li>加入adhere-ui-expression组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>column中headerCellAlign支持排序单独列头</li>
+          <li>ProTableFactory中列头筛选BUG修改</li>
+          <li>EditableCellView的样式BUG修正</li>
+          <li>DragSortRow修改，TreeData样式的修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>加入Range相关dom方法，修改includeHTML方法</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-fieldgeneratortodict</h3>
+        <ul>
+          <li>TransferFormItem加入Suspense.Sync</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-ajax</h3>
+        <ul>
+          <li>get | post | path | put | delete的返回值修改，返回xhr对象加以更精细的控制</li>
+          <li>发送请求参数加入需要进行JSON.stringify的时候加入customSendJSONStringify进行自定</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-adapterscreen</h3>
+        <ul>
+          <li>重构</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.9.5</h1>
+    <hr />
+    <div>2023-06-18</div>
+    <ul>
+      <li>
+        <h3>adhere</h3>
+        <ul>
+          <li>修复less中的@import引起的vite无法解析错误</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.9.4</h1>
+    <hr />
+    <div>2023-06-15</div>
+    <ul>
+      <li>
+        <h3>adhere-util-dict</h3>
+        <ul>
+          <li>修复refresh的BUG</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>dom加入includeHTML方法</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.9.3</h1>
+    <hr />
+    <div>2023-06-11</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-anthoc</h3>
+        <ul>
+          <li>Form加入ValidatorRules属性</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.9.2</h1>
+    <hr />
+    <div>2023-06-08</div>
+    <ul>
+      <li>
+        <h3>adhere-util-communication-ajax</h3>
+        <ul>
+          <li>FormData加入支持传入fileName参数</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>加入dataUrlToBlob方法</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.9.1</h1>
+    <hr />
+    <div>2023-06-07</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-datedisplay</h3>
+        <ul>
+          <li>加入toString方法</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-ui-ellipsis</h3>
+        <ul>
+          <li>修复样式错误</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.9.0</h1>
+    <hr />
+    <div>2023-06-07</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-datedisplay</h3>
+        <ul>
+          <li>加入全局设置locale,自定义本地化格式</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-ui-imagelazy</h3>
+        <ul>
+          <li>加入图片加载错误的处理</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-ui-ellipsis</h3>
+        <ul>
+          <li>加入adhere-ui-ellipsis组件</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>分页加入showSizeChanger属性</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.8.1</h1>
+    <hr />
+    <div>2023-06-03</div>
+    <ul>
+      <li>
+        <h3>adhere</h3>
+        <ul>
+          <li>依赖项缺失修改</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.8.0</h1>
+    <hr />
+    <div>2023-06-01</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-css</h3>
+        <ul>
+          <li>加入使用css变量管理主题的动态切换</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-ui-configprovider</h3>
+        <ul>
+          <li>加入theme参数支持动态切换主题</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.7.10</h1>
+    <hr />
+    <div>2023-06-01</div>
+    <ul>
+      <li>
+        <h3>adhere-util-dict</h3>
+        <ul>
+          <li>props传值修改</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.7.9</h1>
+    <hr />
+    <div>2023-05-30</div>
+    <ul>
+      <li>
+        <h3>adhere-util-dict</h3>
+        <ul>
+          <li>react字典组件加入reload方法</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.7.8</h1>
+    <hr />
+    <div>2023-05-28</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-flexlayout</h3>
+        <ul>
+          <li>Label和Value加入ref获取Root的EL元素</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-ui-adthoc</h3>
+        <ul>
+          <li>加入color-picker</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-ui-searchlist</h3>
+        <ul>
+          <li>加入回车搜索</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>加入回车搜索</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-util-dict</h3>
+        <ul>
+          <li>修复react字典组件</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-ui-suspense</h3>
+        <ul>
+          <li>ts类型修复</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.7.7</h1>
+    <hr />
+    <div>2023-05-24</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-flexlayout</h3>
+        <ul>
+          <li>auto样式错误修复</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-ui-imagelazy</h3>
+        <ul>
+          <li>丰富props属性</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-util-dict</h3>
+        <ul>
+          <li>修复react组件update的BUG</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.7.6</h1>
+    <hr />
+    <div>2023-05-19</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>修复TableGridLayout在Firefox下样式显示异常的错误</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.7.5</h1>
+    <hr />
+    <div>2023-05-17</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-configprovider</h3>
+        <ul>
+          <li>加入onIntlInit事件</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.7.4</h1>
+    <hr />
+    <div>2023-05-17</div>
+    <ul>
+      <li>
+        <h3>adhere-util-intl</h3>
+        <ul>
+          <li>修复词条去重后的BUG</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.7.3</h1>
+    <hr />
+    <div>2023-05-17</div>
+    <ul>
+      <li>
+        <h3>adhere-util-resource</h3>
+        <ul>
+          <li>引入阿拉伯语种的错误</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-util-intl</h3>
+        <ul>
+          <li>加入ar_EG国际化词条</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.7.2</h1>
+    <hr />
+    <div>2023-05-17</div>
+    <ul>
+      <li>
+        <h3>adhere-util-resource</h3>
+        <ul>
+          <li>locals中加入了新的语种</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.7.1</h1>
+    <hr />
+    <div>2023-05-15</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-fieldgeneratortodict</h3>
+        <ul>
+          <li>修复AutoCompleteFormItem默认值为空的BUG</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.7.0</h1>
+    <hr />
+    <div>2023-05-15</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-polygonselection</h3>
+        <ul>
+          <li>加入图片剪裁组件(Cropping)</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.6.1</h1>
+    <hr />
+    <div>2023-05-12</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>修复页面查询条件缓存</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-polygonselection</h3>
+        <ul>
+          <li>BUG修改</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.6.0</h1>
+    <hr />
+    <div>2023-05-08</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-writingboard</h3>
+        <ul>
+          <li>加入signature组件</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.5.7</h1>
+    <hr />
+    <div>2023-05-05</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>高级搜索控件加入popUpDefaultProps</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.5.6</h1>
+    <hr />
+    <div>2023-05-05</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-richtext-sandbox</h3>
+        <ul>
+          <li>WangEditor的BUG修改</li>
+          <li>WangEditor加入国际化</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-configprovider</h3>
+        <ul>
+          <li>加入国际化的Context</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.5.5</h1>
+    <hr />
+    <div>2023-05-04</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-richtext-sandbox</h3>
+        <ul>
+          <li>重构，变为可以对任何富文本进行sandbox</li>
+          <li>分离react-quill编辑器</li>
+          <li>分离wang-editor编辑器</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-configprovider</h3>
+        <ul>
+          <li>加入国际化的Context</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.5.4</h1>
+    <hr />
+    <div>2023-04-30</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-flexlayout</h3>
+        <ul>
+          <li>TRBLC布局滚动问题适配</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.5.3</h1>
+    <hr />
+    <div>2023-04-28</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-flexlayout</h3>
+        <ul>
+          <li>修复TRBLC布局出现滚动的BUG</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.5.2</h1>
+    <hr />
+    <div>2023-04-27</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-flexlayout</h3>
+        <ul>
+          <li>修复TRBLC布局出现滚动的BUG</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.5.1</h1>
+    <hr />
+    <div>2023-04-27</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-flexlayout</h3>
+        <ul>
+          <li>栅格系统BUG修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>列表名称传值修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-slidelayout</h3>
+        <ul>
+          <li>修复初始化关闭样式为生效BUG</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.5.0</h1>
+    <hr />
+    <div>2023-04-25</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-flexlayout</h3>
+        <ul>
+          <li>栅格系统BUG修改</li>
+          <li>加入TRBLC布局</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.4.3</h1>
+    <hr />
+    <div>2023-04-25</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>修改高级搜索的样式</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-slidelayout</h3>
+        <ul>
+          <li>加入收起后hide操作</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.4.2</h1>
+    <hr />
+    <div>2023-04-22</div>
+    <ul>
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>Url的parse修改</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.4.1</h1>
+    <hr />
+    <div>2023-04-22</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-flexlayout</h3>
+        <ul>
+          <li>HorizontalFlexLayout样式修改,加入flex-wrap: nowrap;</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.4.0</h1>
+    <hr />
+    <div>2023-04-17</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>column中设置align的bug修改</li>
+          <li>支持tree展示的相关设置</li>
+          <li>查询和Editor中表单控件渲染逻辑修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-flexlayout</h3>
+        <ul>
+          <li>纵向栅格支持</li>
+          <li>栅格系统优化</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.3.0</h1>
+    <hr />
+    <div>2023-04-12</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>加入clearAll方法</li>
+          <li>clear方法修改为clearSearch和clearPaging方法</li>
+          <li>props加入默认值</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-searchlist</h3>
+        <ul>
+          <li>加入clearAll方法</li>
+          <li>props加入默认值</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-iframeio</h3>
+        <ul>
+          <li>加入先序列化操作</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.2.0</h1>
+    <hr />
+    <div>2023-04-09</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-anthoc</h3>
+        <ul>
+          <li>加入adhere-ui-anthoc组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-fieldgeneratortodict</h3>
+        <ul>
+          <li>加入adhere-ui-fieldgeneratortodict组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>Search布局的修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>加入和size相关的方法</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-intl</h3>
+        <ul>
+          <li>加入searchlist组件的词条</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-globalindicator</h3>
+        <ul>
+          <li>加入hideAll方法，细节的调整</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-searchlist</h3>
+        <ul>
+          <li>加入ResourceManager</li>
+          <li>细节的调整</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-flexlayout</h3>
+        <ul>
+          <li>加入栅格系统</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3><del>adhere-ui-antdformitem</del></h3>
+        <ul>
+          <li>
+            <del>删除此组件，拆解成anthoc和fieldgeneratortodict两个组件</del>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.1.1</h1>
+    <hr />
+    <div>2023-04-01</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-searchlist</h3>
+        <ul>
+          <li>加入adhere-ui-searchlist组件</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.1.0</h1>
+    <hr />
+    <div>2023-04-01</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-searchlist</h3>
+        <ul>
+          <li>Search布局修改</li>
+          <li>Search布局样式调整</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>分离出Search接口</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-intl</h3>
+        <ul>
+          <li>加入新词条</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.0.7</h1>
+    <hr />
+    <div>2023-03-23</div>
+    <ul>
+      <li>
+        <h3>adhere-util-dist</h3>
+        <ul>
+          <li>set方法bug修改</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.0.6</h1>
+    <hr />
+    <div>2023-03-22</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>加入sync方法</li>
+          <li>renderInner中的逻辑修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-split</h3>
+        <ul>
+          <li>Group中的Fragment拉平</li>
+          <li>加入响应式</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-space</h3>
+        <ul>
+          <li>Group中的Fragment拉平</li>
+          <li>加入响应式</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-dict</h3>
+        <ul>
+          <li>加入Dict对应的React组件</li>
+          <li>已知问题修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-suspense</h3>
+        <ul>
+          <li>sync判断逻辑修改</li>
+          <li>Promise加入返回值的泛型</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-antdformitem</h3>
+        <ul>
+          <li>加入Tag生成器</li>
+          <li>加入Menu生成器</li>
+          <li>加入Dropdown生成器</li>
+          <li>加入Breadcrumb生成器</li>
+          <li>加入Segmented生成器</li>
+          <li>加入Timeline生成器</li>
+          <li>加入Mentions生成器</li>
+          <li>加入Steps生成器</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.0.5</h1>
+    <hr />
+    <div>2023-03-06</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>全局状态管理下BUG的修改</li>
+          <li>点击两次触发编辑的BUG</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>去掉adhere-util-watchmemoized的依赖</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>2.0.4</h1>
     <hr />
     <div>2023-02-27</div>
     <ul>
@@ -29,7 +1815,7 @@
       </li>
     </ul>
 
-    <h1>1.0.25</h1>
+    <h1>2.0.3</h1>
     <hr />
     <div>2023-01-31</div>
     <ul>
@@ -50,7 +1836,7 @@
       </li>
     </ul>
 
-    <h1>1.0.24</h1>
+    <h1>2.0.2</h1>
     <hr />
     <div>2023-01-29</div>
     <ul>
@@ -64,12 +1850,12 @@
       <li>
         <h3>adhere-ui-searchtable</h3>
         <ul>
-          <li>高级搜索触发条件的修改</li>
+          <li>高级搜索触发条件修改</li>
         </ul>
       </li>
     </ul>
 
-    <h1>1.0.23</h1>
+    <h1>2.0.1</h1>
     <hr />
     <div>2023-01-21</div>
     <ul>
@@ -92,6 +1878,19 @@
         <ul>
           <li>BUG修改</li>
         </ul>
+      </li>
+    </ul>
+
+    <h1>2.0.0</h1>
+    <hr />
+    <div>2023-01-04</div>
+    <ul>
+      <li>
+        <h3>react升级到18</h3>
+      </li>
+
+      <li>
+        <h3>antd升级到5.x</h3>
       </li>
     </ul>
 

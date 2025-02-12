@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import { ITemplateProps } from './types';
 
@@ -14,6 +14,7 @@ const selectorPrefix = 'adhere-ui-template';
 class Template extends React.Component<ITemplateProps> {
   static defaultProps: any;
   static propTypes: any;
+  el: HTMLDivElement | null | undefined;
 
   componentDidMount() {}
 

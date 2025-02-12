@@ -1,2 +1,2 @@
-import ConditionalRender from './conditionalrender';
+import ConditionalRender from './ConditionalRender';
 export default ConditionalRender;

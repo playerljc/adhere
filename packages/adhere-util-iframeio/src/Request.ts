@@ -24,7 +24,7 @@ class Request {
 
   constructor(options: RequestOptions) {
     this.pathname = options.pathname;
-    this.headers = options.headers || {};
+    this.headers = options.headers ?? {};
     this.statusCode = options.statusCode || 0;
     this.stateMessage = options.stateMessage || '';
     this.body = options.body;

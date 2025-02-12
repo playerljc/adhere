@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["collapse/index.js"],"sourcesContent":["import Collapse from './Collapse';\nexport default Collapse;"],"names":["Collapse"],"mappings":"OAAOA,aAAc,4BACNA"}

@@ -1,7 +1,6 @@
-import { Button, Table } from 'antd';
-import React, { useRef } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
 
-import { AdapterScreen } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -9,41 +8,43 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-const dataSource = [
-  {
-    key: '1',
-    name: '胡彦斌',
-    age: 32,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '2',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-];
+import P1 from './examples/p1';
 
-const columns = [
-  {
-    title: '姓名',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: '年龄',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: '住址',
-    dataIndex: 'address',
-    key: 'address',
-  },
-];
+// const dataSource = [
+//   {
+//     key: '1',
+//     name: '胡彦斌',
+//     age: 32,
+//     address: '西湖区湖底公园1号',
+//   },
+//   {
+//     key: '2',
+//     name: '胡彦祖',
+//     age: 42,
+//     address: '西湖区湖底公园1号',
+//   },
+// ];
+
+// const columns = [
+//   {
+//     title: '姓名',
+//     dataIndex: 'name',
+//     key: 'name',
+//   },
+//   {
+//     title: '年龄',
+//     dataIndex: 'age',
+//     key: 'age',
+//   },
+//   {
+//     title: '住址',
+//     dataIndex: 'address',
+//     key: 'address',
+//   },
+// ];
 
 export default () => {
-  const ref = useRef();
+  // const ref = useRef();
 
   function boxPanelConfig() {
     return [
@@ -58,33 +59,11 @@ export default () => {
             info: '基本使用',
           },
         },
-        codeText: `
-  import { AdapterScreen } from '@baifendian/adhere';
-  import React from 'react';
-  import { Button } from 'antd';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      const handler = AdapterScreen();
-    }}
-  >
-    控制整体页面的缩放
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              const handler = AdapterScreen();
-            }}
-          >
-            控制整体页面的缩放
-          </Button>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
-      {
+      /*{
         id: `p2`,
         name: `传递不同的元素`,
         mode: 'code',
@@ -128,7 +107,7 @@ export default () => {
             <Table dataSource={dataSource} columns={columns} />
           </div>
         ),
-      },
+      },*/
     ];
   }
 

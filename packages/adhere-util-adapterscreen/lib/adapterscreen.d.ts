@@ -1,6 +1,6 @@
-declare const _default: (el?: HTMLElement) => () => void;
+import { IAdapterScreen } from './type';
 /**
- * AdapterScreen
- * @param el
+ * adapterScreen
  */
-export default _default;
+declare const adapterScreen: IAdapterScreen;
+export default adapterScreen;

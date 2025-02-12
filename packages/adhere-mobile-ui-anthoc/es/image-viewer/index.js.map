@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["image-viewer/index.js"],"sourcesContent":["import ImageViewer from './ImageViewer';\nexport default ImageViewer;"],"names":["ImageViewer"],"mappings":"OAAOA,gBAAiB,+BACTA"}

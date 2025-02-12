@@ -1,8 +1,9 @@
 import type { FormInstance } from 'antd/es/form';
+import type { TableProps } from 'antd/es/table/InternalTable';
 import type { Rule } from 'antd/lib/form/index';
-import type { TableProps } from 'antd/lib/table/Table';
 import type {
-  ColumnType, // FilterValue,
+  ColumnType,
+  TableRowSelection, // FilterValue,
   // SorterResult,
   // TableCurrentDataSource,
   // TablePaginationConfig,
@@ -18,52 +19,54 @@ import type {
   RefAttributes,
   RefObject,
 } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
 
 import type SearchTableImplement from './SearchTableImplement';
 import type { SearchTableStateImplement } from './SearchTableStateImplement';
 
+// 控件的类型
 export type FormItemType =
+  // | 'select'
+  // | 'multiSelect'
+  // | 'checkAllMultiSelect'
+  // | 'autoCompleteSelect'
+  // | 'autoCompleteSelectMulti'
+  // | 'autoCompleteSelectCheckAllMulti'
+  // | 'radioHorizontal'
+  // | 'radioButton'
+  // | 'radioSelect'
+  // | 'radioCustom'
+  // | 'checkBoxHorizontal'
+  // | 'checkBoxCheckAllHorizontal'
+  // | 'checkboxSelect'
+  // | 'checkBoxCheckAllSelect'
+  // | 'checkBoxCustom'
+  // | 'checkBoxCheckAllCustom'
+  // | 'transferSelect'
+  // | 'tableSelect'
+  // | 'tableMultiSelect'
+  // | 'tablePagingSelect'
+  // | 'tablePagingMultiSelect'
+  // | 'listSelect'
+  // | 'listMultiSelect'
+  // | 'listPagingSelect'
+  // | 'listPagingMultiSelect'
+  // | 'treeSelect'
+  // | 'treeMultiSelect'
+  // | 'treeSelectLeaf'
+  // | 'treeMultiSelectLeaf'
+  // | 'cascaderSelect'
+  // | 'cascaderMultiSelect'
+  // | 'cascaderSelectLeaf'
+  // | 'cascaderMultiSelectLeaf'
   | 'input'
   | 'textArea'
   | 'inputNumber'
   | 'inputNumberDecimal1'
   | 'inputNumberDecimal2'
   | 'inputNumberInteger'
-  | 'select'
-  | 'multiSelect'
-  | 'checkAllMultiSelect'
-  | 'autoCompleteSelect'
-  | 'autoCompleteSelectMulti'
-  | 'autoCompleteSelectCheckAllMulti'
-  | 'radioHorizontal'
-  | 'radioButton'
-  | 'radioSelect'
-  | 'radioCustom'
-  | 'checkBoxHorizontal'
-  | 'checkBoxCheckAllHorizontal'
-  | 'checkboxSelect'
-  | 'checkBoxCheckAllSelect'
-  | 'checkBoxCustom'
-  | 'checkBoxCheckAllCustom'
-  | 'transferSelect'
-  | 'tableSelect'
-  | 'tableMultiSelect'
-  | 'tablePagingSelect'
-  | 'tablePagingMultiSelect'
-  | 'listSelect'
-  | 'listMultiSelect'
-  | 'listPagingSelect'
-  | 'listPagingMultiSelect'
-  | 'treeSelect'
-  | 'treeMultiSelect'
-  | 'treeSelectLeaf'
-  | 'treeMultiSelectLeaf'
-  | 'cascaderSelect'
-  | 'cascaderMultiSelect'
-  | 'cascaderSelectLeaf'
-  | 'cascaderMultiSelectLeaf'
   | 'datePicker'
   | 'timePicker'
   | 'rangePicker'
@@ -71,6 +74,9 @@ export type FormItemType =
   | 'sliderRange'
   | 'rate'
   | 'switch'
+  // 字典类型
+  | 'dict'
+  // 自定义类型
   | 'custom'
   | string;
 
@@ -79,7 +85,8 @@ export type FormItemType =
  * @description 列的查询设置
  */
 export interface ColumnSearchConfig {
-  type: FormItemType;
+  // 编辑控件的类型
+  type: FormItemType | string;
   // 是否显示
   visible?: boolean;
   // 是否显示在列头上
@@ -90,6 +97,8 @@ export interface ColumnSearchConfig {
   labelAttrs?: any;
   // TableGridLayout的Value的attrs
   valueAttrs?: any;
+  // 查询项的排序
+  sort?: boolean;
   // 权限码
   authority?: string[];
   // 渲染无权限的UI
@@ -98,6 +107,7 @@ export interface ColumnSearchConfig {
   dataIndex?: string; //column.dataIndex;
   // 如果有此属性则不用column的title
   title?: ReactNode; //column.title;
+  titleToolTip?: string;
   // dist渲染的组件的字典名称(适用于FormItemGeneratorToDict)
   dictName?: string;
   // children自定义的渲染，适用于FormItemGeneratorToDict的自定义children时候使用
@@ -108,6 +118,8 @@ export interface ColumnSearchConfig {
   startName?: string;
   // 时间区间控件的endName
   endName?: string;
+  // 是否显示label后面的：
+  isShowLabelSymbol?: boolean;
 }
 
 export interface ColumnParams {
@@ -163,11 +175,17 @@ export interface RowEditableConfig {
  * RowDragSortConfig
  */
 export interface RowDragSortConfig {
-  type?: string;
-  dropOverDownwardClassName?: string;
-  dropOverUpwardClasName?: string;
-  dropConfig?: { [prop: string]: any };
-  dragConfig?: { [prop: string]: any };
+  override?: {
+    type?: string;
+    dropOverDownwardClassName?: string;
+    dropOverUpwardClasName?: string;
+    dragConfig?: (defaultDragConfig?: any) => { [prop: string]: any };
+    dropConfig?: (defaultDropConfig?: any) => { [prop: string]: any };
+  };
+  dropHooks?: {
+    collect?: (monitor?: any) => any;
+    drop?: (params?: { sourceRecord: any; targetRecord: any; item: any }) => Promise<void>;
+  };
 }
 
 /**
@@ -250,7 +268,7 @@ export interface FormItemGeneratorConfig {
   // dist渲染的组件的字典名称(适用于FormItemGeneratorToDict)
   dictName?: string;
   // children自定义的渲染，适用于FormItemGeneratorToDict的自定义children时候使用
-  renderChildren?: (params?: any) => ReactNode | null;
+  // renderChildren?: (params?: any) => ReactNode | null;
   // 表单的实例
   form?: FormInstance<any> | null;
   // 行的索引值
@@ -265,7 +283,7 @@ export interface FormItemGeneratorConfig {
  */
 export interface ColumnEditableConfig {
   // 单元格是否是可编辑的单元格
-  editable: boolean;
+  editable: boolean | ((record: { [prop: string]: any }, rowIndex: number) => boolean);
   // 缺省的状态
   defaultStatus?: 'view' | 'edit' | string;
   // 编辑控件的类型
@@ -291,7 +309,7 @@ export interface ColumnEditableConfig {
   // formItem的Props
   formItemProps?: any;
   // 组件的props定义
-  props?: any;
+  props?: ((params: ColumnParams) => any) | object;
   // 是否使用句柄来切换状态 view的时候有一个句柄点击后变成编辑状态，编辑的时候有2个句柄，save和cancel，如果设置为false，则关于句柄的事件将不会触发
   useTrigger?: boolean;
   // 渲染查看的句柄
@@ -301,7 +319,7 @@ export interface ColumnEditableConfig {
   // 渲染取消的句柄
   renderCancelTrigger?: (params: ColumnParams) => ReactNode;
   // FormItem的rules
-  rules?: Rule[];
+  rules?: ((params: ColumnParams) => Rule[]) | Rule[];
   // 如果有此属性，则不用column的dataIndex
   dataIndex?: DataIndex;
   // dist渲染的组件的字典名称(适用于FormItemGeneratorToDict)
@@ -323,6 +341,10 @@ export interface ColumnRowDragSortConfig {}
  * @description Column列的扩展设置
  */
 export interface ColumnTypeExt extends ColumnType<any> {
+  // 列头的提示信息，同时也是此列筛选项label的提示信息
+  $tip?: ReactNode;
+  // 自定义渲染tip
+  renderTip?: (tip: ReactNode) => ReactNode;
   // 列的权限设置，有权限才显示，没权限不显示
   $authorized?: () => boolean;
   // 列头是否可以拖动
@@ -335,51 +357,73 @@ export interface ColumnTypeExt extends ColumnType<any> {
   $editable?: ColumnEditableConfig;
   // 行拖动排序
   $rowDragSort?: ColumnRowDragSortConfig;
+  // 列头的对其方式
+  headerCellAlign?: 'left' | 'center' | 'right';
+  // 列头属性设置
+  // onHeaderCell?: () => any;
+}
+
+/**
+ * SearchProps
+ */
+export interface SearchProps extends SuspenseProps {
+  className?: string;
+  style?: CSSProperties;
+  searchClassName: string;
+  searchStyle: CSSProperties;
+  firstLoading: ReactElement;
+  // 是否有展开和收缩的功能
+  isShowExpandSearch: boolean;
+  // 展开和收缩的默认状态
+  defaultExpandSearchCollapse: boolean;
+  // defaultSelectedRowKeys
+  defaultSelectedRowKeys?: string[];
+  // 撑开search
+  // fitSearch: boolean;
+  // 撑开表格
+  fitBody: boolean;
+  // 是否是查询固定，表格自适应
+  autoFixed: boolean;
+  bodyClassName: string;
+  bodyStyle: CSSProperties;
+  title: string;
+  // 使用的路由系统
+  router: 'browser' | 'hash';
+  // publicPath
+  publicPath: string;
+}
+
+/**
+ * SearchState
+ */
+export interface SearchState extends SuspenseState {
+  expand?: boolean;
+  prePage?: number | undefined;
+  page?: number;
+  limit?: number;
 }
 
 /**
  * SearchTableProps
  * @interface SearchTableProps
  */
-export interface SearchTableProps extends SuspenseProps {
-  className?: string;
-  style?: CSSProperties;
-  tableClassName: string;
-  tableStyle: CSSProperties;
-  searchClassName: string;
-  searchStyle: CSSProperties;
-  firstLoading: ReactElement;
+export interface SearchTableProps extends SearchProps {
   // antdTable的Props
   antdTableProps: TableProps<any>;
-  // 是否有展开和收缩的功能
-  isShowExpandSearch: boolean;
-  // 展开和收缩的默认状态
-  defaultExpandSearchCollapse: boolean;
-  // 撑开search
-  fitSearch: boolean;
-  // 撑开表格
-  fitTable: boolean;
-  // 是否是查询固定，表格自适应
-  autoFixed: boolean;
   // 锁定列头，表格滚动
   fixedHeaderAutoTable: boolean;
   // 两端固定(表格的头始终在上方，分页始终在下方)
   fixedTableSpaceBetween: boolean;
-  // 是否显示列设置
-  showColumnSetting: boolean;
 }
 
 /**
  * SearchTableState
  * @interface SearchTableState
  */
-export interface SearchTableState extends SuspenseState {
+export interface SearchTableState extends SearchState {
   [props: string]: any;
-  page?: number;
-  limit?: number;
-  expand?: boolean;
   scrollY?: number;
-  columnSetting?: Array<ColumnType<any> & { sort: number; display: boolean }>;
+  columnSetting?: (ColumnType<any> & { sort: number; display: boolean })[];
   tableDensity?: TableDensity;
 }
 
@@ -387,12 +431,12 @@ export interface ISearchTableImplement {
   /**
    * showLoading - 是否显示遮罩
    */
-  showLoading(): boolean;
+  showLoading: () => boolean;
 
   /**
    * fetchData - 加载数据
    */
-  fetchData(): void;
+  fetchData: () => void;
 }
 
 /**
@@ -504,6 +548,15 @@ export interface AdvancedSearchPanelProps {
   onSearch: Function;
   onReset: Function;
   onCollapse: Function;
+  children?: (params: {
+    groupData: AdvancedSearchPanelGroupData[];
+    tableGridLayoutConfig: AdvancedSearchPanelTableGridLayoutConfig;
+    remainingGroupData: AdvancedSearchPanelGroupData[];
+    advancedSearchConfig: AdvancedSearchPanelSearchConfig;
+    onSearch: Function;
+    onReset: Function;
+    onCollapse: Function;
+  }) => ReactNode;
 }
 
 export interface SearchTableImplementFactoryFunction<T, P> {
@@ -529,6 +582,46 @@ export interface SearchTableStateImplementFactoryFunction<T, P> {
   ) => ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>;
 }
 
+export interface TableDensitySettingProps {
+  density: TableDensity;
+  onReset: (...args: any[]) => any;
+  onChange: (...args: any[]) => any;
+  renderDensitySettingBtn?: () => ReactNode;
+}
+
+export interface ColumnSettingProps {
+  columns: ColumnTypeExt[];
+  onShowColumns: (...args: any[]) => any;
+  onReset: (...args: any[]) => any;
+  onDisplayColumn: (...args: any[]) => any;
+  onSortEnd: (...args: any[]) => any;
+  renderColumnSettingBtn?: () => ReactNode;
+}
+
+export interface ExportExcelProps {
+  title: string;
+  getDataSource: () => any[];
+  getColumns: () => ColumnTypeExt[];
+  renderExportExcelBtn?: (onExportExcel: () => void) => ReactNode;
+}
+
+export interface ReloadTableProps {
+  onReload: () => void;
+  showLoading: boolean;
+  renderReloadBtn?: ({
+    showLoading,
+    onReload,
+  }: {
+    showLoading: boolean;
+    onReload: () => void;
+  }) => ReactNode;
+}
+
+export interface ColumnTipTitleProps {
+  tip: ReactNode;
+  title: ReactNode;
+}
+
 /**
  * TableDensity
  */
@@ -537,3 +630,35 @@ export enum TableDensity {
   MIDDLE = 'middle',
   SMALL = 'small',
 }
+
+export interface DragSortRowContextProps {
+  dragResult: ReturnType<typeof useDrag>;
+  dropResult: ReturnType<typeof useDrop>;
+  setCanDrag: (canDrag: boolean) => void;
+}
+
+export interface DragSortColumnProps extends ColumnTypeExt {
+  className?: string;
+}
+
+export type TableRowSelectionExt<T> = TableRowSelection<T> & {
+  onCheckedStrategySelect?: (
+    record: Record<string, any>,
+    changeRows: any[],
+    selected: boolean,
+  ) => Promise<void>;
+  onCheckedStrategyVirtualSelect?: (
+    changeRows: any[],
+    selected: boolean,
+  ) => {
+    selectedRowKeys: any[];
+    selectedRows: any[];
+  } | null;
+  onVirtualChange?: (
+    selectedRowKeys: any[],
+    selectedRows: any[],
+  ) => {
+    selectedRowKeys: any[];
+    selectedRows: any[];
+  } | null;
+};

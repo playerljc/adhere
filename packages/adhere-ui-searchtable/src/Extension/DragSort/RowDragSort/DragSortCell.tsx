@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { TableCellComponentReducer } from '../../../types';
+import type { TableCellComponentReducer } from '../../../types';
 
 /**
  * DragSortCell
@@ -19,7 +17,7 @@ const DragSortCell: TableCellComponentReducer = (/*props*/) => {
   //  * @description 实际的单元格配置
   //  */
   // const rowDragSortConfig: ColumnRowDragSortConfig = useMemo(
-  //   () => ({ ...defaultConfig, ...(column?.$rowDragSort || {}) }),
+  //   () => ({ ...defaultConfig, ...(column?.$rowDragSort ?? {}) }),
   //   [column, column?.dataIndex],
   // );
   //

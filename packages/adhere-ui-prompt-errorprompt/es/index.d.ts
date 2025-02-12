@@ -1,8 +1,5 @@
 declare const _default: {
-    openErrorDialog: (props?: import("antd").ModalProps | undefined) => {
-        destroy: () => void;
-        update: (configUpdate: import("antd").ModalFuncProps | ((prevConfig: import("antd").ModalFuncProps) => import("antd").ModalFuncProps)) => void;
-    };
-    openErrorMessage: (content?: import("react").ReactNode | import("antd").MessageArgsProps, duration?: (number | (() => void)) | undefined, onClose?: import("antd/lib/message").ConfigOnClose | undefined) => import("antd/lib/message").MessageType;
+    openErrorDialog: import("./types").ErrorDialog;
+    openErrorMessage: (content?: import("./types").JointContent, duration?: import("./types").duration | undefined, onClose?: VoidFunction | undefined) => import("antd/es/message/interface").MessageType;
 };
 export default _default;

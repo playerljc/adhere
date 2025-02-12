@@ -18,6 +18,12 @@ export default {
       [120.33419, 31.74221],
     ];
 
+    // 最大最小范围
+    Dict.handlers.ResourceGisDefaultExtent = () => [
+      [-180, -90],
+      [180, 90],
+    ];
+
     // 常州市新北区中心点
     Dict.handlers.ResourceGisXinbeiquCenterPoint = () => [119.879673, 31.933156];
   },

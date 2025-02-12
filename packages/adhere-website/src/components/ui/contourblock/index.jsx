@@ -1,8 +1,12 @@
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p1';
+
 import React from 'react';
 
-import { ContourBlock } from '@baifendian/adhere';
-
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
+
+import P1 from './examples/p1';
+import P2 from './examples/p2';
 
 export default () => {
   return (
@@ -25,24 +29,9 @@ export default () => {
                 info: '基本使用',
               },
             },
-            codeText: `
-  import React from 'react';
-  import { ContourBlock } from '@baifendian/adhere';
-
-  export default () => {
-    return (
-      <div style={{ width: 200, height: 300 }}>
-        <ContourBlock style={{ border: '1px solid #ccc' }} />
-      </div>
-    );
-  }
-            `,
+            codeText: P1CodeText,
             type: 'PlayGround',
-            renderChildren: () => (
-              <div style={{ width: 200, height: 300 }}>
-                <ContourBlock style={{ border: '1px solid #ccc' }} />
-              </div>
-            ),
+            renderChildren: () => <P1 />,
           },
           {
             id: `p2`,
@@ -55,38 +44,9 @@ export default () => {
                 info: '画廊',
               },
             },
-            codeText: `
-  import React from 'react';
-  import { ContourBlock } from '@baifendian/adhere';
-
-  export default () => {
-    return (
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {Array.from({ length: 30 }).map((t, index) => (
-          <ContourBlock key={index} style={{ width: '25%' }}>
-            <img
-              src="https://t7.baidu.com/it/u=2168645659,3174029352&fm=193&f=GIF"
-              alt=""
-            />
-          </ContourBlock>
-        ))}
-      </div>
-    );
-  }
-            `,
+            codeText: P2CodeText,
             type: 'PlayGround',
-            renderChildren: () => (
-              <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                {Array.from({ length: 30 }).map((t, index) => (
-                  <ContourBlock key={index} style={{ width: '25%' }}>
-                    <img
-                      src="https://t7.baidu.com/it/u=2168645659,3174029352&fm=193&f=GIF"
-                      alt=""
-                    />
-                  </ContourBlock>
-                ))}
-              </div>
-            ),
+            renderChildren: () => <P2 />,
           },
         ]}
       />

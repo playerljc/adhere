@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["safe-area/index.js"],"sourcesContent":["import SafeArea from './SafeArea';\nexport default SafeArea;"],"names":["SafeArea"],"mappings":"OAAOA,aAAc,4BACNA"}

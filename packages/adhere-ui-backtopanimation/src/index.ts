@@ -1,3 +1,3 @@
-import BackTopAnimation from './backtopanimation';
+import BackTopAnimation from './BackTopAnimation';
 
 export default BackTopAnimation;

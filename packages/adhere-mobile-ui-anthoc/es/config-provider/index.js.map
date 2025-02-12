@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["config-provider/index.js"],"sourcesContent":["import ConfigProvider from './ConfigProvider';\nexport default ConfigProvider;"],"names":["ConfigProvider"],"mappings":"OAAOA,mBAAoB,kCACZA"}

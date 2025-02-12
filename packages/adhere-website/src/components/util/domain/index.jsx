@@ -1,7 +1,7 @@
-import { Button } from 'antd';
-import React, { useRef } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
 
-import { Domain } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -9,7 +9,8 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-import styles from './index.less';
+import P1 from './examples/p1';
+import P2 from './examples/p2';
 
 export default () => {
   function boxPanelConfig() {
@@ -25,59 +26,9 @@ export default () => {
             info: '基本操作(run方法)',
           },
         },
-        codeText: `
-  import React,{useRef} from 'react';
-  import { Button } from 'antd';
-  import { Domain } from '@baifendian/adhere';
-
-  const console1Ref = useRef();
-
-  <Button
-    type="primary"
-    onClick={() => {
-      const d = Domain.create();
-
-      d.on('error', function (e) {
-        const content = console1Ref.current.innerHTML;
-        console1Ref.current.innerHTML = \`\${content}\${content ? '</br>' : ''}\${e.toString()}\`;
-        console1Ref.current.scrollTop = console1Ref.current.scrollHeight - console1Ref.current.offsetHeight;
-      });
-
-      d.run(function () {
-        noexists();
-      });
-    }}
-  >
-    运行
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <Button
-              type="primary"
-              onClick={() => {
-                const d = Domain.create();
-
-                d.on('error', function (e) {
-                  const content = console1Ref.current.innerHTML;
-                  console1Ref.current.innerHTML = `${content}${
-                    content ? `</br>` : ''
-                  }${e.toString()}`;
-                  console1Ref.current.scrollTop =
-                    console1Ref.current.scrollHeight - console1Ref.current.offsetHeight;
-                });
-
-                d.run(function () {
-                  noexists();
-                });
-              }}
-            >
-              运行
-            </Button>
-            <div className={styles.Console} ref={console1Ref}></div>
-          </>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -90,79 +41,12 @@ export default () => {
             info: '基本操作(bind方法)',
           },
         },
-        codeText: `
-  import React,{useRef} from 'react';
-  import { Button } from 'antd';
-  import { Domain } from '@baifendian/adhere';
-
-  const console2Ref = useRef();
-
-  <Button
-    type="primary"
-    onClick={() => {
-      const d = Domain.create();
-
-      d.on('error', function (e) {
-        const content = console1Ref.current.innerHTML;
-        console2Ref.current.innerHTML = \`\${content}\${content ? '</br>' : ''}\${e.toString()}\`;
-        console2Ref.current.scrollTop = console2Ref.current.scrollHeight - console2Ref.current.offsetHeight;
-      });
-
-      function run() {
-        return new Promise(
-          d.bind((resolve) => {
-            noexists();
-            resolve();
-          }),
-        );
-      }
-
-      run();
-    }}
-  >
-    运行
-  </Button>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <Button
-              type="primary"
-              onClick={() => {
-                const d = Domain.create();
-
-                d.on('error', function (e) {
-                  const content = console2Ref.current.innerHTML;
-                  console2Ref.current.innerHTML = `${content}${
-                    content ? `</br>` : ''
-                  }${e.toString()}`;
-                  console2Ref.current.scrollTop =
-                    console2Ref.current.scrollHeight - console2Ref.current.offsetHeight;
-                });
-
-                function run() {
-                  return new Promise(
-                    d.bind((resolve) => {
-                      noexists();
-                      resolve();
-                    }),
-                  );
-                }
-
-                run();
-              }}
-            >
-              运行
-            </Button>
-            <div className={styles.Console} ref={console2Ref}></div>
-          </>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
     ];
   }
-
-  const console1Ref = useRef();
-  const console2Ref = useRef();
 
   return (
     <PlayGroundPage>

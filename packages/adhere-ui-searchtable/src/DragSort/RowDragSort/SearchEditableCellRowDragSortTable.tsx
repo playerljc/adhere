@@ -2,7 +2,7 @@ import React from 'react';
 
 import SearchEditableCellTable from '../../Editable/SearchEditableCellTable';
 import { SearchTableImplement } from '../../SearchTableImplement';
-import { SearchTableImplementProps, SearchTableImplementState } from '../../types';
+import type { SearchTableImplementProps, SearchTableImplementState } from '../../types';
 import RowDragSortMultiExtend from './RowDragSortMultiExtend';
 import SearchRowDragSortStateTable from './SearchRowDragSortStateTable';
 import SearchRowDragSortTable from './SearchRowDragSortTable';
@@ -22,10 +22,14 @@ const SearchEditableCellRowDragSortTable = RowDragSortMultiExtend<
       if (this.state.activeValue) {
         return {
           dragConfig: {
-            canDrag: () => false,
+            canDrag: () => {
+              return false;
+            },
           },
           dropConfig: {
-            canDrop: () => false,
+            canDrop: () => {
+              return false;
+            },
           },
         };
       }

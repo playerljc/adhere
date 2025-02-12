@@ -1,0 +1,2 @@
+import{useRef}from"react";function useItemsRef(){var r=useRef(null);function t(){return r.current||(r.current=new Map),r.current}return{get:function(e){var r=t();return null==r?void 0:r.get(e)},set:function(e,r){var n;return r?null==(n=t())?void 0:n.set(e,r):(null!=(n=t())&&n.delete(e),t())},getKeys:function(){var e;return null==(e=r.current)?void 0:e.keys()},getRefs:function(){var e;return null==(e=r.current)?void 0:e.values()}}}export default useItemsRef;
+//# sourceMappingURL=useItemsRef.js.map

@@ -1,0 +1,2 @@
+"use strict";var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}},Book_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./Book"))),City_1=__importDefault(require("./City")),County_1=__importDefault(require("./County")),Province_1=__importDefault(require("./Province"));exports.default={Book:Book_1.default,Province:Province_1.default,County:County_1.default,City:City_1.default};
+//# sourceMappingURL=index.js.map

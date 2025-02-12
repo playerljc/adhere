@@ -1,4 +1,1011 @@
-# 1.0.26
+# 2.11.0
+
+***
+
+2024-05-11
+
+* **adhere-mobile-ui-spin**
+  - 加入adhere-mobile-ui-spin组件
+* **adhere-mobile-ui-prompt-warnprompt**
+  - 加入adhere-mobile-ui-prompt-warnprompt组件
+* **adhere-mobile-ui-prompt-successprompt**
+  - 加入adhere-mobile-ui-prompt-successprompt组件
+* **adhere-mobile-ui-prompt-errorprompt**
+  - 加入adhere-mobile-ui-prompt-errorprompt组件
+* **adhere-mobile-ui-tabs**
+  - 加入adhere-mobile-ui-tabs组件
+* **adhere-mobile-ui-time-picker-view**
+  - 加入adhere-mobile-ui-time-picker-view组件
+* **adhere-mobile-ui-anthoc**
+  - 加入adhere-mobile-ui-anthoc组件
+* **adhere-mobile-ui-auto-complete**
+  - 加入adhere-mobile-ui-auto-complete组件
+* **adhere-ui-auto-complete**
+  - 加入adhere-ui-auto-complete组件
+* **adhere-mobile-ui-prsl**
+  - 加入adhere-mobile-ui-prsl组件
+* **adhere-ui-quick-range-date**
+  - 加入adhere-ui-quick-range-date组件
+* **adhere-mobile-ui-popovermenu**
+  - 加入adhere-mobile-ui-popovermenu组件
+* **adhere-mobile-ui-quick-range-date**
+  - 加入adhere-mobile-ui-quick-range-date组件
+* **adhere-ui-currency-symbol**
+  - 加入adhere-ui-currency-symbol组件
+* **adhere-ui-searchtable**
+  - 拖拽排序加入可以在列上加入自定义句柄
+  - $search中的输入框去掉trim
+  - $search中加入isShowLabelSymbol配置项对ProSearchTable的label符号进行控制
+  - 加入REM适配
+  - 加入导出excel功能
+  - 查询区域加入工具栏
+  - 操作工具栏和查询工具栏分离
+  - 查询工具栏加入收起功能
+  - OptionsWrap加入收起功能
+  - 缺省的工具按钮修改
+  - 列头和查询文字支持tip显示
+  - 修改renderSearchToolBar变为renderTitle，renderSearchBarExtra，renderSearchBarActions
+  - 可以自定义高级查询面板，高级查询优化
+  - 使用fetchData的方法都变成Promise
+  - 可编辑单元格和可编辑的Table单元格中$editable的rules和props支持函数形式
+* **adhere-ui-anthoc**
+  - Form中加入对FormItem加入getErrorContainer自定义错误输出
+  - Form中加入NestingFormItem组件
+  - Form的Validate的rules加入required设置
+  - 修复CheckAll不返回children的默认值设置
+  - ConfigProvider加入router、publicPath参数的传递
+  - CheckboxGroup加入spaceProps属性的设置
+  - ArrayEntityValueHOC、TreeEntityValueHOC加入isUsePrimaryValue(是否使用原始值)的判断
+  - tree加入了AutoComplete、table加入了TreeAutoComplete
+  - tree-select加入数据源组件
+  - 加入Calendar的ValueHOC
+  - 加入ListPagingEntityValueHOC
+  - 加入一系列EntityValueHOC
+  - List和Table的Paging加入SuspenseAsync的包裹
+  - 加入AutoCompleteSelectInput
+  - 加入Tag的AutoComplete
+  - 带有全选按钮可以自定义全选按钮的位置
+  - hoc文件结构调整
+* **adhere-util**
+  - 加入getSaerch、getPathname方法
+  - encrypt函数加入options
+  - 加入dom尺寸计算方法
+  - clientToCtxPoint去掉使用zoom计算
+  - 加入pxToRem方法
+  - 修复math中的clientToCtxPoint方法适配zoom
+  - 加入getTransformValues方法
+  - treeToArray方法排除children属性
+  - 加入isPromise方法
+  - 修改getTopDom方法的BUG，selector支持数组形式
+  - 加入gcoord
+  - getTopDom方法修改
+  - 加入pascalCaseToKebabCase2
+  - pascalCaseToKebabCase方法修改
+  - 将未导出的ts定义进行导出
+  - 修复tree中的若干方法的细节
+* **adhere-ui-searchlist**
+  - 使用fetchData的方法都变成Promise
+  - 修改文件名的大小写
+  - 综合修改 1.修复已知BUG 2.适配adhere-ui-searchtable的修改
+* **adhere-ui-fieldgeneratortodict**
+  - 优化组件实现，加入了直接使用预定义名称使用的方式，减少拼接
+  - 加入一系列ValueEntityHOC
+* **adhere-ui-messagedialog**
+  - Trigger加入defaultCloseBtn配置
+  - 修改Trigger修改props不刷新的问题
+  - 加入allowMultipleInstances参数控制是否允许多实例共存
+  - Mobile的适配
+  - 修复MaximizeModal组件最大化和最小化的样式问题
+  - 加入renderToWrapper方法
+  - 加入disable设置和update刷新方法
+  - 加入是否允许多实例共存的设置
+  - 加入Trigger和TriggerPrompt组件
+  - 加入disabled设置和update刷新方法
+  - Modal和MaximizeModal的返回值中加入setConfig方法
+* **adhere-ui-suspense**
+  - 加入onFirstFetchDataBefore和onFirstFetchDataAfter方法
+  - 加入onFirstFetchDataBefore和onFirstFetchDataAfter方法
+  - Asyc和Sync在Impl中实现，加入Impl实现
+* **adhere-ui-popup**
+  - Action为空不渲染wrapper
+  - 移动端适配
+  - 加入对closeAction的控制
+  - 加入renderToWrapper方法
+  - 加入Trigger和TriggerPrompt组件
+  - 加入disabled设置和update刷新方法
+* **adhere-ui-scrollload**
+  - 加入HIDE_EMPTY做性能优化
+  - 加入disabled设置
+  - 加入getScrollContainer方法
+* **adhere-ui-autocomplete**
+  - TreeAutoComplete加入不筛选的属性
+  - 重构最终数据源的计算
+  - 修改初始化没有下拉数据的BUG
+* **adhere-ui-flexlayout**
+  - Auto加入isUseNormal属性
+  - 加入isUseNormal属性
+  - 加入REM适配
+  - 展开和收起(trigger)内部实现修改
+  - 加入展开和收起功能(trigger)
+  - 加入LCRLayout、TCBLayout
+* **adhere-util-communication-ajax**
+  - loading适配移动端
+  - 修改FormData值是数组情况
+* **adhere-ui-configprovider**
+  - 加入router、publicPath参数的注入
+  - 加入media配置项控制是否支持REM
+  - 加入Wrapper元素用来存放css变量
+* **adhere-ui-css**
+  - 加入adhere-box-shadow-primary变量
+  - 加入REM适配
+  - 加入DPR变量
+  - init方法修改
+* **adhere-util-intl**
+  - 国际化方法加入description方法
+  - 序号词条翻译修改
+  - 加入quick-range-date的词条
+* **adhere-ui-olmap**
+  - 文件大小写修改为帕斯卡命名规则
+  - OLMap组件的fitZoom参数默认值修改
+* **adhere-ui-playground**
+  - Anchors修改
+  - SimpleTabs，CodeTabPanel加入className和style参数
+  - 加入PlayGroundTabMobile组件
+* **adhere-util-watchmemoized**
+  - 浅比较修改为Object.is
+* **adhere-ui-splitlayout**
+  - TRBLC结构调整
+* **adhere-ui-comment**
+  - 使用ScrollLoad的优化
+* **adhere-ui-contextmenu**
+  - 加入renderToWrapper方法
+  - 加入扇形菜单
+* **adhere-util-resource**
+  - dict.locals.config.js加入AntDesignMobile的国际化
+  - dict.locals.config.js加入可以动态添加和删除的方法
+  - dict.moment.config.js中加入时间国际化formats和本地化formats
+  - dict.locals.config.js加入可以动态添加和删除的方法
+* **adhere-ui-datedisplay**
+  - 加入本地化显示的组件
+  - 优化内部函数，去掉一些无用函数
+* **adhere-ui-hooks**
+  - 加入use
+  - useLatestState和useSetState修改为使用ref
+  - 加入useLatestState的hook
+  - 加入usePropToState的hook
+  - 加入useTriggerQuery
+  - 加入useSafeRef的hook
+  - 加入useLatestState的hook
+  - 加入usePropToState的hook
+  - 加入useSafeRef
+* **adhere-util-adapterscreen**
+  - 加入flexible方法适配REM
+  - 加入devicePixelRatio的适配
+* **adhere-ui-css**
+  - 加入adhere-box-shadow-primary变量
+  - 加入REM适配
+  - 加入DPR变量
+* **adhere-ui-tablegridlayout**
+  - 加入mode属性
+  - 奇偶颜色互换位置
+  - 加入REM适配
+* **adhere-ui-space**
+  - 间距BUG修改
+  - 加入REM适配
+* **adhere-ui-split**
+  - 间距BUG修改
+  - 加入REM适配
+* **adhere-ui-stickuplayout**
+  - 加入resize适配
+
+# 2.10.28
+
+***
+
+2023-09-28
+
+* **adhere-ui-searchtable**
+  - 修复$hide的列没有传递参数给接口的问题
+  - 有查询条件的列头图标高亮
+
+# 2.10.27
+
+***
+
+2023-09-24
+
+* **adhere-ui-space**
+  - 修复Rendered more hooks than during the previous render错误
+* **adhere-util-split**
+  - 修复Rendered more hooks than during the previous render错误
+
+# 2.10.26
+
+***
+
+2023-09-23
+
+* **adhere-ui-space**
+  - 去掉无用的console.log输出
+* **adhere-util-intl**
+  - 去掉无用的console.log输出
+
+# 2.10.25
+
+***
+
+2023-09-23
+
+* **adhere-ui-searchtable**
+  - 去掉无用的console.log输出
+
+# 2.10.24
+
+***
+
+2023-09-23
+
+* **adhere-ui-fieldgeneratortodict**
+  - Sync组件renderEmpty属性默认值修复
+
+# 2.10.23
+
+***
+
+2023-09-23
+
+* **adhere-util**
+  - tree.ts加入findParentNodeByKey方法
+  - casUrl加入defaultLocal参数
+* **adhere-ui-searchable**
+  - getPagination加入pageSizeOptions参数
+  - rowSelection的onChange事件对外提供结构
+  - 修复$hide判断条件
+* **adhere-ui-suspense**
+  - Sync修改数据改变的判断逻辑
+* **adhere-ui-space**
+  - Group中处理undefined和null的情况
+* **adhere-ui-split**
+  - Group中处理undefined和null的情况
+* **adhere-util-intl**
+  - 外部可以替换lib的国际化词条
+* **adhere-ui-searchlist**
+  - 修复分页BUG
+
+# 2.10.22
+
+***
+
+2023-09-02
+
+* **adhere-ui-fieldgeneratortodict**
+  - Select的onChange加入dataSource参数
+
+# 2.10.21
+
+***
+
+2023-08-29
+
+* **adhere-ui-messagedialog**
+  - 重新构建解决文件名称大小写问题
+
+# 2.10.20
+
+***
+
+2023-08-28
+
+* **adhere-util**
+  - toCamelCase方法加入split参数
+
+# 2.10.19
+
+***
+
+2023-08-26
+
+* **adhere-ui-fieldgeneratortodict**
+  - TreeSelect和Cascader加入flat数据的支持
+  - 修复TreeSelect异步加载生成器BUG和Cascader异步加载生成器的BUG
+* **adhere-util**
+  - 修复tree的arrayToAntdTree方法
+
+# 2.10.18
+
+***
+
+2023-08-23
+
+* **adhere-ui-fieldgeneratortodict**
+  - 修复TreeSelect异步加载生成器BUG
+  - 加入Cascader异步加载生成器
+* **adhere-util-resource**
+  - dict.gis.config.js加入Dict.handlers.ResourceGisDefaultExtent
+
+# 2.10.17
+
+***
+
+2023-08-20
+
+* **adhere-ui-playground**
+  - 修复PlayGroundMulit.less样式
+* **adhere-util-dict**
+  - 加入必要的异常处理
+
+# 2.10.16
+
+***
+
+2023-08-20
+
+* **adhere-ui-suspense**
+  - 修复未引入@baifendian/adhere-ui-spin样式的错误
+
+# 2.10.15
+
+***
+
+2023-08-19
+
+* **adhere-ui-globalindicator**
+  - 使用spin.js重构
+* **adhere-ui-spin**
+  - 使用spin.js重构
+* **adhere-ui-suspense**
+  - 默认renderNormalLoading使用adhere-ui-spin实现
+
+# 2.10.14
+
+***
+
+2023-08-18
+
+* **adhere-ui-tablegridlayout**
+  - 加入REM适配
+  - 加入show属性控制显隐
+
+# 2.10.13
+
+***
+
+2023-08-17
+
+* **adhere-ui-dict**
+  - 加入useDict
+
+# 2.10.12
+
+***
+
+2023-08-17
+
+* **adhere-ui-suspense**
+  - 加入renderNormalLoading设置
+* **adhere-ui-fieldgeneratortodict**
+  - Suspense.Sync加入renderNormalLoading
+* **adhere-ui-dict**
+  - 返回值结构调整为data,isPending,isValidate,加入renderNormalLoading设置
+
+# 2.10.11
+
+***
+
+2023-08-15
+
+* **adhere-ui-revoiving**
+  - Swiper升级到最新版本
+* **adhere-ui-swipeout**
+  - Swiper升级到最新版本
+
+# 2.10.10
+
+***
+
+2023-08-15
+
+* **antd升级到最新版本*
+
+# 2.10.9
+
+***
+
+2023-08-14
+
+* **adhere-ui-revoiving**
+  - 加入Swiper的config
+* **adhere-ui-ajax**
+  - 修复出现异常的时候进行reject的操作
+
+# 2.10.8
+
+***
+
+2023-08-10
+
+* **adhere-ui-tablegridlayout**
+  - 加入方向样式
+
+# 2.10.7
+
+***
+
+2023-08-09
+
+* **adhere-ui-fieldgeneratortodict**
+  - 动态、静态字典内部加载数据策略修改
+  - 组件上加入了refresh刷新字典的方法
+* **adhere-ui-polygonselection**
+  - cropping样式修改
+
+# 2.10.6
+
+***
+
+2023-08-08
+
+* **adhere-ui-writingboard**
+  - 同步adhere-ui-flexlayout的修改
+* **adhere-ui-polygonselection**
+  - 同步adhere-ui-flexlayout的修改
+
+# 2.10.5
+
+***
+
+2023-08-07
+
+* **adhere-util**
+  - 加入formatMilliseconds方法
+* **adhere-ui-flexlayout**
+  - render修改为childre
+* **adhere-ui-splitlayout**
+  - TRBLC结构调整
+* **adhere-ui-messagedialog**
+  - 加入MaximizeModal
+* **adhere-ui-fieldgeneratortodict**
+  - 根据原始字典生成各种形式的组件，无需像之前一样定义出所有字典
+  - 加入onDataSourceChange事件
+  - 加入TreeSelect的异步加载
+
+# 2.10.4
+
+***
+
+2023-07-27
+
+* **adhere-ui-searchtable**
+  - $search类型加入sort字段定义
+
+# 2.10.3
+
+***
+
+2023-07-22
+
+* **adhere-util-intl**
+  - 词条错误修复
+* **adhere-util-ajax**
+  - getSendParams默认返回值修改
+* **adhere-ui-messagedialog**
+  - modal的props参数传递顺序修改
+* **adhere-ui-richtext-sandbox**
+  - WangEditor加入查看的样式
+
+# 2.10.2
+
+***
+
+2023-07-16
+
+* **adhere-ui-searchtable**
+  - 修复分页快速导航回车触发2次查询BUG
+* **adhere-ui-flexlayout**
+  - 加入Split配置
+* **adhere-ui-splitlayout**
+  - 加入可以Split的TRBLC
+* **adhere-util**
+  - 修复base64Decode的BUG
+
+# 2.10.1
+
+***
+
+2023-07-10
+
+* **adhere-ui-searchtable**
+  - 修复sync
+
+# 2.10.0
+
+***
+
+2023-07-09
+
+* **adhere-ui-expression**
+  - 加入adhere-ui-expression组件
+* **adhere-ui-searchtable**
+  - column中headerCellAlign支持排序单独列头
+  - ProTableFactory中列头筛选BUG修改
+  - EditableCellView的样式BUG修正
+  - DragSortRow修改，TreeData样式的修改
+* **adhere-util**
+  - 加入Range相关dom方法，修改includeHTML方法
+* **adhere-ui-fieldgeneratortodict**
+  - TransferFormItem加入Suspense.Sync
+* **adhere-ui-ajax**
+  - get | post | path | put | delete的返回值修改，返回xhr对象加以更精细的控制
+  - 发送请求参数加入需要进行JSON.stringify的时候加入customSendJSONStringify进行自定
+* **adhere-util-adapterscreen**
+  - 重构
+
+# 2.9.5
+
+***
+
+2023-06-18
+
+* **adhere**
+  - 修复less中的@import引起的vite无法解析错误
+
+# 2.9.4
+
+***
+
+2023-06-15
+
+* **adhere-util-dict**
+  - 修复refresh的BUG
+* **adhere-util**
+  - dom加入includeHTML方法
+
+# 2.9.3
+
+***
+
+2023-06-11
+
+* **adhere-ui-anthoc**
+  - Form加入ValidatorRules属性
+
+# 2.9.2
+
+***
+
+2023-06-08
+
+* **adhere-util-communication-ajax**
+  - FormData加入支持传入fileName参数
+* **adhere-util**
+  - 加入dataUrlToBlob方法
+
+# 2.9.1
+
+***
+
+2023-06-07
+
+* **adhere-ui-datedisplay**
+  - 加入toString方法
+* **adhere-ui-ellipsis**
+  - 修复样式错误
+
+# 2.9.0
+
+***
+
+2023-06-07
+
+* **adhere-ui-datedisplay**
+  - 加入全局设置locale,自定义本地化格式
+* **adhere-ui-imagelazy**
+  - 加入图片加载错误的处理
+* **adhere-ui-ellipsis**
+  - 加入adhere-ui-ellipsis组件
+* **adhere-ui-searchtable**
+  - 分页加入showSizeChanger属性
+
+# 2.8.1
+
+***
+
+2023-06-03
+
+* **adhere**
+  - 依赖项缺失修改
+
+# 2.8.0
+
+***
+
+2023-06-01
+
+* **adhere-ui-css**
+  - 加入使用css变量管理主题的动态切换
+* **adhere-ui-configprovider**
+  - 加入theme参数支持动态切换主题
+
+# 2.7.10
+
+***
+
+2023-06-01
+
+* **adhere-util-dict**
+  - props传值修改
+
+# 2.7.9
+
+***
+
+2023-05-30
+
+* **adhere-util-dict**
+  - react字典组件加入reload方法
+
+# 2.7.8
+
+***
+
+2023-05-28
+
+* **adhere-ui-flexlayout**
+  - Label和Value加入ref获取Root的EL元素
+* **adhere-ui-adthoc**
+  - 加入color-picker
+* **adhere-ui-searchlist**
+  - 加入回车搜索
+* **adhere-ui-searchtable**
+  - 加入回车搜索
+* **adhere-util-dict**
+  - 修复react字典组件
+* **adhere-ui-suspense**
+  - ts类型修复
+
+# 2.7.7
+
+***
+
+2023-05-24
+
+* **adhere-ui-flexlayout**
+  - auto样式错误修复
+* **adhere-ui-imagelazy**
+  - 丰富props属性
+* **adhere-util-dict**
+  - 修复react组件update的BUG
+
+# 2.7.6
+
+***
+
+2023-05-19
+
+* **adhere-ui-searchtable**
+  - 修复TableGridLayout在Firefox下样式显示异常的错误
+
+# 2.7.5
+
+***
+
+2023-05-17
+
+* **adhere-ui-configprovider**
+  - 加入onIntlInit事件
+
+# 2.7.4
+
+***
+
+2023-05-17
+
+* **adhere-util-intl**
+  - 修复词条去重后的BUG
+
+# 2.7.3
+
+***
+
+2023-05-17
+
+* **adhere-util-resource**
+  - 引入阿拉伯语种的错误
+* **adhere-util-intl**
+  - 加入ar_EG国际化词条
+
+# 2.7.2
+
+***
+
+2023-05-17
+
+* **adhere-util-resource**
+  - locals中加入了新的语种
+
+# 2.7.1
+
+***
+
+2023-05-15
+
+* **adhere-ui-fieldgeneratortodict**
+  - 修复AutoCompleteFormItem默认值为空的BUG
+
+# 2.7.0
+
+***
+
+2023-05-15
+
+* **adhere-ui-polygonselection**
+  - 加入图片剪裁组件(Cropping)
+
+# 2.6.1
+
+***
+
+2023-05-12
+
+* **adhere-ui-searchtable**
+  - 修复页面查询条件缓存
+* **adhere-ui-polygonselection**
+  - BUG修改
+
+# 2.6.0
+
+***
+
+2023-05-08
+
+* **adhere-ui-writingboard**
+  - 加入signature组件
+
+# 2.5.7
+
+***
+
+2023-05-05
+
+* **adhere-ui-searchtable**
+  - 高级搜索控件加入popUpDefaultProps
+
+# 2.5.6
+
+***
+
+2023-05-05
+
+* **adhere-ui-richtext-sandbox**
+  - WangEditor的BUG修改
+  - WangEditor加入国际化
+* **adhere-ui-configprovider**
+  - 加入国际化的Context
+
+# 2.5.5
+
+***
+
+2023-05-04
+
+* **adhere-ui-richtext-sandbox**
+  - 重构，变为可以对任何富文本进行sandbox
+  - 分离react-quill编辑器
+  - 分离wang-editor编辑器
+* **adhere-ui-configprovider**
+  - 加入国际化的Context
+
+# 2.5.4
+
+***
+
+2023-04-30
+
+* **adhere-ui-flexlayout**
+  - TRBLC布局滚动问题适配
+
+# 2.5.3
+
+***
+
+2023-04-28
+
+* **adhere-ui-flexlayout**
+  - 修复TRBLC布局出现滚动的BUG
+
+# 2.5.2
+
+***
+
+2023-04-27
+
+* **adhere-ui-flexlayout**
+  - 修复TRBLC布局出现滚动的BUG
+
+# 2.5.1
+
+***
+
+2023-04-27
+
+* **adhere-ui-flexlayout**
+  - 栅格系统BUG修改
+* **adhere-ui-searchtable**
+  - 列表名称传值修改
+* **adhere-ui-slidelayout**
+  - 修复初始化关闭样式为生效BUG
+
+# 2.5.0
+
+***
+
+2023-04-25
+
+* **adhere-ui-flexlayout**
+  - 栅格系统BUG修改
+  - 加入TRBLC布局
+
+# 2.4.3
+
+***
+
+2023-04-25
+
+* **adhere-ui-searchtable**
+  - 修改高级搜索的样式
+* **adhere-ui-slidelayout**
+  - 加入收起后hide操作
+
+# 2.4.2
+
+***
+
+2023-04-22
+
+* **adhere-util**
+  - Url的parse修改
+
+# 2.4.1
+
+***
+
+2023-04-22
+
+* **adhere-ui-flexlayout**
+  - HorizontalFlexLayout样式修改,加入flex-wrap: nowrap;
+
+# 2.4.0
+
+***
+
+2023-04-17
+
+* **adhere-ui-searchtable**
+  - column中设置align的bug修改
+  - 支持tree展示的相关设置
+  - 查询和Editor中表单控件渲染逻辑修改
+* **adhere-ui-flexlayout**
+  - 纵向栅格支持
+  - 栅格系统优化
+
+# 2.3.0
+
+***
+
+2023-04-12
+
+* **adhere-ui-searchtable**
+  - 加入clearAll方法
+  - clear方法修改为clearSearch和clearPaging方法
+  - props加入默认值
+* **adhere-ui-searchlist**
+  - 加入clearAll方法
+  - props加入默认值
+* **adhere-util-iframeio**
+  - 加入先序列化操作
+
+# 2.2.0
+
+***
+
+2023-04-09
+
+* **adhere-ui-anthoc**
+  - 加入adhere-ui-anthoc组件
+* **adhere-ui-fieldgeneratortodict**
+  - 加入adhere-ui-fieldgeneratortodict组件
+* **adhere-ui-searchtable**
+  - Search布局的修改
+* **adhere-util**
+  - 加入和size相关的方法
+* **adhere-util-intl**
+  - 加入searchlist组件的词条
+* **adhere-ui-globalindicator**
+  - 加入hideAll方法，细节的调整
+* **adhere-ui-searchlist**
+  - 加入ResourceManager
+  - 细节的调整
+* **adhere-ui-flexlayout**
+  - 加入栅格系统
+* **~~adhere-ui-antdformitem~~**
+  - ~~删除此组件，拆解成anthoc和fieldgeneratortodict两个组件~~
+
+# 2.1.1
+
+***
+
+2023-04-01
+
+* **adhere-ui-searchlist**
+  - 加入adhere-ui-searchlist组件
+
+# 2.1.0
+
+***
+
+2023-04-01
+
+* **adhere-ui-searchlist**
+  - Search布局修改
+  - Search布局样式调整
+* **adhere-ui-searchtable**
+  - 分离出Search接口
+* **adhere-ui-intl**
+  - 加入新词条
+
+# 2.0.7
+
+***
+
+2023-03-23
+
+* **adhere-util-dist**
+  - set方法bug修改
+
+# 2.0.6
+
+***
+
+2023-03-22
+
+* **adhere-ui-searchtable**
+  - 加入sync方法
+  - renderInner中的逻辑修改
+* **adhere-ui-split**
+  - Group中的Fragment拉平
+  - 加入响应式
+* **adhere-ui-space**
+  - Group中的Fragment拉平
+  - 加入响应式
+* **adhere-util-dict**
+  - 加入Dict对应的React组件
+  - 已知问题修改
+* **adhere-ui-suspense**
+  - sync判断逻辑修改
+  - Promise加入返回值的泛型
+* **adhere-ui-antdformitem**
+  - 加入Tag生成器
+  - 加入Menu生成器
+  - 加入Dropdown生成器
+  - 加入Breadcrumb生成器
+  - 加入Segmented生成器
+  - 加入Timeline生成器
+  - 加入Mentions生成器
+  - 加入Steps生成器
+
+# 2.0.5
+
+***
+
+2023-03-06
+
+* **adhere-ui-searchtable**
+  - 全局状态管理下BUG的修改
+  - 点击两次触发编辑的BUG
+* **adhere-util**
+  - 去掉adhere-util-watchmemoized的依赖
+
+# 2.0.4
 
 ***
 
@@ -10,7 +1017,7 @@
 * **adhere-util-resource**
   - 去掉request.context的Api
 
-# 1.0.25
+# 2.0.3
 
 ***
 
@@ -23,7 +1030,7 @@
   - 组件的抽取
   - 生成器组件查询逻辑的修改
 
-# 1.0.24
+# 2.0.2
 
 ***
 
@@ -32,9 +1039,9 @@
 * **公共**
   - 已知问题修改
 * **adhere-ui-searchtable**
-  - 高级搜索触发条件的修改
+  - 高级搜索触发条件修改
 
-# 1.0.23
+# 2.0.1
 
 ***
 
@@ -46,6 +1053,15 @@
   - BUG修改
 * **adhere-ui-searchtable**
   - BUG修改
+
+# 2.0.0
+
+***
+
+2023-01-04
+
+* **react升级到18**
+* **antd升级到5.x*
 
 # 1.0.22
 

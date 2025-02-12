@@ -1,0 +1,2 @@
+import _SwipeAction from"antd-mobile/es/components/swipe-action";import React from"react";var COLORS=["danger","primary","success"],ActionSwiper=function(t){var e=t.children,t=t.config;return React.createElement(_SwipeAction,{rightActions:t.map(function(e,t){return{key:e.key,text:e.text,onClick:function(t){t.stopPropagation(),e.disabled||null!=(t=e.onClick)&&t.call(e)},color:e.disabled?"light":COLORS[t%COLORS.length]}})},e)};export default ActionSwiper;
+//# sourceMappingURL=ActionSwiper.js.map

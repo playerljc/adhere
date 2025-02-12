@@ -55,7 +55,7 @@ abstract class Geometry implements IGeometry {
 
     ctx.save();
 
-    const targetTextStyle = { ...TextStyle, ...(textStyle || {}) };
+    const targetTextStyle = { ...TextStyle, ...(textStyle ?? {}) };
     ctx.font = targetTextStyle.font;
     ctx.textAlign = targetTextStyle.textAlign;
     ctx.textBaseline = targetTextStyle.textBaseline;
@@ -63,7 +63,7 @@ abstract class Geometry implements IGeometry {
     ctx.strokeStyle = targetTextStyle.strokeStyle;
     ctx.fillStyle = targetTextStyle.fillStyle;
 
-    const targetStyle: IGeometryStyle = { ...GeometryStyle, ...(style || {}) };
+    const targetStyle: IGeometryStyle = { ...GeometryStyle, ...(style ?? {}) };
     ctx.lineWidth = targetStyle.lineWidth;
     ctx.lineJoin = targetStyle.lineJoin;
     ctx.lineCap = targetStyle.lineCap;

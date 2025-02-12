@@ -1,8 +1,10 @@
 exports.defaultExternals = {
   antd: 'antd',
+  'antd-mobile': 'ant-mobile',
   react: 'React',
+  'react-dom/client': 'ReactDOM',
   'react-dom': 'ReactDOM',
-  moment: 'moment',
+  'react-dom/server': 'ReactDOM',
 };
 
 exports.externals = function (externals) {

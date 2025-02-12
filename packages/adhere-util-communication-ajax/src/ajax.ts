@@ -1,10 +1,20 @@
 import { notification } from 'antd';
 
+import MobileGlobalIndicator from '@baifendian/adhere-mobile-ui-globalindicator';
 import GlobalIndicator from '@baifendian/adhere-ui-globalindicator';
 import Util from '@baifendian/adhere-util';
-import intl from '@baifendian/adhere-util-intl';
+import Intl from '@baifendian/adhere-util-intl';
 
-import type { IConfig, ISendArg, ISendPrepareArg, Method } from './types';
+import type {
+  IConfig,
+  ISendArg,
+  ISendPrepareArg,
+  Method,
+  Prepare,
+  RequestInterceptor,
+  ResponseInterceptor,
+  SendResult,
+} from './types';
 
 // 是否触发过402
 let trigger402 = false;
@@ -12,8 +22,89 @@ let trigger402 = false;
 // notification的节流时间(毫秒)
 const notificationThrottlingTime = 300;
 
-let errorInfoHandler;
-let warnInfoHandler;
+let errorInfoHandler: string | number | NodeJS.Timeout | null | undefined;
+let warnInfoHandler: string | number | NodeJS.Timeout | null | undefined;
+
+/**
+ * Interceptors
+ * @description 拦截器
+ */
+class Interceptors {
+  // 请求拦截器容器
+  protected requestInterceptors = new Set<RequestInterceptor>();
+
+  // 响应拦截器容器
+  protected responseInterceptors = new Set<ResponseInterceptor>();
+
+  /**
+   * addRequest
+   * @description 添加一个请求拦截器
+   * @param handler
+   */
+  addRequest(handler: RequestInterceptor | RequestInterceptor[]) {
+    if (Array.isArray(handler)) {
+      (handler as RequestInterceptor[]).forEach((_handler) => {
+        this.requestInterceptors.add(_handler);
+      });
+
+      return this.requestInterceptors;
+    }
+
+    return this.requestInterceptors.add(handler as RequestInterceptor);
+  }
+
+  /**
+   * addResponse
+   * @description 添加一个响应拦截器
+   * @param handler
+   */
+  addResponse(handler: ResponseInterceptor) {
+    if (Array.isArray(handler)) {
+      (handler as ResponseInterceptor[]).forEach((_handler) => {
+        this.responseInterceptors.add(_handler);
+      });
+
+      return this.responseInterceptors;
+    }
+
+    return this.responseInterceptors.add(handler as ResponseInterceptor);
+  }
+
+  /**
+   * remove
+   * @description 删除拦截器
+   * @param handler
+   */
+  remove(handler: RequestInterceptor | ResponseInterceptor) {
+    if (this.requestInterceptors.has(handler as RequestInterceptor)) {
+      this.requestInterceptors.delete(handler as RequestInterceptor);
+    } else if (this.responseInterceptors.has(handler as ResponseInterceptor)) {
+      this.responseInterceptors.delete(handler as ResponseInterceptor);
+    }
+  }
+
+  /**
+   * requestReducer
+   * @description 对请求参数进行拦截器处理
+   * @param params
+   */
+  requestReducer(params: ISendArg) {
+    return Array.from(this.requestInterceptors).reduce((result, interceptor) => {
+      return interceptor(result);
+    }, params);
+  }
+
+  /**
+   * responseReducer
+   * @description 对响应参数进行拦截器处理
+   * @param params
+   */
+  responseReducer(params: Parameters<ResponseInterceptor>[0]) {
+    return Array.from(this.responseInterceptors).reduce((result, interceptor) => {
+      return interceptor(result);
+    }, params);
+  }
+}
 
 /**
  * Ajax
@@ -73,6 +164,9 @@ class Ajax {
 
   static CONTENT_TYPE_TEXT_PLAIN = 'text/plain';
 
+  // 真正的烂机器
+  static interceptors = new Interceptors();
+
   protected baseURL: string;
 
   protected systemManagerBaseURL: string;
@@ -90,7 +184,7 @@ class Ajax {
 
     this.systemManagerBaseURL = systemManagerBaseURL || '';
 
-    this.config = config || {};
+    this.config = config ?? {};
   }
 
   /**
@@ -98,9 +192,11 @@ class Ajax {
    * @param data
    * @param arg
    */
-  get({ data, ...arg }: ISendArg) {
-    return new Promise((resolve, reject) => {
-      const { xhr } = sendPrepare.call(
+  get(this: Ajax, { data, ...arg }: ISendArg): SendResult {
+    let prepare: Prepare = {};
+
+    const promise = new Promise((resolve, reject) => {
+      prepare = sendPrepare.call(
         this,
         {
           // 默认的
@@ -117,17 +213,24 @@ class Ajax {
         },
       );
 
+      const { xhr } = prepare;
+
       if (xhr) {
         xhr.send(null);
       }
     });
+
+    return {
+      ...prepare,
+      promise,
+    };
   }
 
   /**
    * post
    * @param params
    */
-  post(params: ISendArg) {
+  post(this: Ajax, params: ISendArg): SendResult {
     return complexRequest.call(this, 'post', params);
   }
 
@@ -135,7 +238,7 @@ class Ajax {
    * path
    * @param params
    */
-  path(params: ISendArg) {
+  path(this: Ajax, params: ISendArg): SendResult {
     return complexRequest.call(this, 'path', params);
   }
 
@@ -143,7 +246,7 @@ class Ajax {
    * put
    * @param params
    */
-  put(params: ISendArg) {
+  put(this: Ajax, params: ISendArg): SendResult {
     return complexRequest.call(this, 'put', params);
   }
 
@@ -151,7 +254,7 @@ class Ajax {
    * delete
    * @param params
    */
-  delete(params: ISendArg) {
+  delete(this: Ajax, params: ISendArg): SendResult {
     return complexRequest.call(this, 'delete', params);
   }
 }
@@ -161,7 +264,7 @@ class Ajax {
  * @param title
  * @param message
  */
-function errorInfo(title, message) {
+function errorInfo(title: string, message: string) {
   if (errorInfoHandler) {
     clearTimeout(errorInfoHandler);
     errorInfoHandler = null;
@@ -180,14 +283,14 @@ function errorInfo(title, message) {
  * @param title
  * @param message
  */
-function warnInfo(title, message) {
+function warnInfo(title: string, message: string) {
   if (warnInfoHandler) {
     clearTimeout(warnInfoHandler);
     warnInfoHandler = null;
   }
 
   warnInfoHandler = setTimeout(() => {
-    notification.warn({
+    notification.warning({
       message: title,
       description: message,
     });
@@ -216,15 +319,15 @@ function getDefaultConfig(this: Ajax): IConfig {
     onProgress: () => {},
     // 超时
     onTimeout: () => {
-      warnInfo(intl.v('提示'), intl.v('请求超时'));
+      warnInfo(Intl.v('提示'), Intl.v('请求超时'));
     },
     // 取消
     onAbort: () => {
-      warnInfo(intl.v('提示'), intl.v('请求终止'));
+      warnInfo(Intl.v('提示'), Intl.v('请求终止'));
     },
     // 发生错误
     onError: () => {
-      errorInfo(intl.v('提示'), intl.v('请求发生错误'));
+      errorInfo(Intl.v('提示'), Intl.v('请求发生错误'));
     },
     // 拦截器
     interceptor: ({ status }) => {
@@ -236,7 +339,7 @@ function getDefaultConfig(this: Ajax): IConfig {
           deal402.call(this);
           break;
         default:
-          errorInfo(intl.v('提示'), intl.v('已提出请求，但未收到任何回复'));
+          errorInfo(Intl.v('提示'), Intl.v('已提出请求，但未收到任何回复'));
           break;
       }
     },
@@ -249,6 +352,8 @@ function getDefaultConfig(this: Ajax): IConfig {
       text: '',
       // 遮罩的元素
       el: document.body,
+      zIndex: 19999,
+      size: 'default',
     },
     onBeforeResponse: () => {},
     dataKey: 'data',
@@ -264,14 +369,30 @@ function getDefaultConfig(this: Ajax): IConfig {
  * initXhrEvents - 初始化XHR的事件
  * @param xhr
  * @param events
+ * @param reject
  */
-function initXhrEvents(xhr, events) {
+function initXhrEvents({ xhr, events, reject }) {
   const { onTimeout, onLoadsStart, onProgress, onAbort, onError, onLoad, onLoadend } = events;
 
-  // events
-
   if (onTimeout) {
-    xhr.addEventListener('timeout', onTimeout);
+    xhr.addEventListener('timeout', function (...params: any) {
+      onTimeout(...(params ?? {}));
+      reject(...(params ?? {}));
+    });
+  }
+
+  if (onAbort) {
+    xhr.addEventListener('abort', function (...params: any) {
+      onAbort(...(params ?? {}));
+      reject(...(params ?? {}));
+    });
+  }
+
+  if (onError) {
+    xhr.addEventListener('error', function (...params: any) {
+      onError(...(params ?? {}));
+      reject(...(params ?? {}));
+    });
   }
 
   if (onLoadsStart) {
@@ -280,14 +401,6 @@ function initXhrEvents(xhr, events) {
 
   if (onProgress) {
     xhr.addEventListener('progress', onProgress);
-  }
-
-  if (onAbort) {
-    xhr.addEventListener('abort', onAbort);
-  }
-
-  if (onError) {
-    xhr.addEventListener('error', onError);
   }
 
   if (onLoad) {
@@ -301,19 +414,21 @@ function initXhrEvents(xhr, events) {
 
 /**
  * resolveData - onreadystatechange中resolve的数据
- * @param show
- * @param data
- * @param indicator
- * @param xhr
+ * @param params
  */
-function resolveData({ show, data, indicator, xhr }): {
+function resolveData(params): {
   data: any;
   xhr: XMLHttpRequest;
   hideIndicator?: () => void;
 } {
+  // 调用response拦截器
+  const { show, terminal, data, indicator, xhr } = Ajax.interceptors.responseReducer(params);
+
+  const targetGlobalIndicator = getGlobalIndicator(terminal);
+
   return {
     ...{ xhr, data },
-    ...(show ? { hideIndicator: () => GlobalIndicator.hide(indicator) } : {}),
+    ...(show ? { hideIndicator: () => targetGlobalIndicator.hide(indicator) } : {}),
   };
 }
 
@@ -323,6 +438,7 @@ function resolveData({ show, data, indicator, xhr }): {
  * @param interceptor
  * @param show
  * @param indicator
+ * @param terminal
  * @param messageKey
  * @param codeKey
  * @param codeSuccess
@@ -333,12 +449,14 @@ function resolveData({ show, data, indicator, xhr }): {
 function onreadystatechange({
   xhr,
   interceptor,
-  loading: { show, indicator },
+  loading: { show, indicator, terminal },
   business: { messageKey, codeKey, codeSuccess, showWarn },
   resolve,
   reject,
 }) {
   // const { status, readyState, statusText, response, responseText } = xhr;
+
+  const targetGlobalIndicator = getGlobalIndicator(terminal);
 
   // readyState === 4
   if (xhr.readyState === Ajax.READY_STATE_DONE) {
@@ -353,16 +471,17 @@ function onreadystatechange({
         const jsonObj = JSON.parse(xhr.responseText);
 
         if (showWarn && codeKey in jsonObj && jsonObj[codeKey] !== codeSuccess) {
-          warnInfo(intl.v('提示'), jsonObj[messageKey]);
+          warnInfo(Intl.v('提示'), jsonObj[messageKey]);
         }
 
-        resolve(resolveData({ show, data: jsonObj, indicator, xhr }));
+        resolve(resolveData({ show, terminal, data: jsonObj, indicator, xhr }));
       }
       // response ContentType是xml
       else if ([Ajax.CONTENT_TYPE_TEXT_XML, Ajax.CONTENT_TYPE_TEXT_XML].includes(contentType)) {
         resolve(
           resolveData({
             show,
+            terminal,
             data: xhr.responseXML,
             indicator,
             xhr,
@@ -374,6 +493,7 @@ function onreadystatechange({
         resolve(
           resolveData({
             show,
+            terminal,
             data: xhr.response,
             indicator,
             xhr,
@@ -396,17 +516,17 @@ function onreadystatechange({
       });
 
       // catch
-      if (xhr.status)
-        reject({
-          status: xhr.status,
-          statusText: xhr.statusText,
-          response: xhr.response,
-          responseText: xhr.responseText,
-        });
+      // if (xhr.status)
+      reject({
+        status: xhr.status,
+        statusText: xhr.statusText,
+        response: xhr.response,
+        responseText: xhr.responseText,
+      });
 
       // 取消遮罩
       if (show && indicator) {
-        GlobalIndicator.hide(indicator);
+        targetGlobalIndicator.hide(indicator);
       }
     }
   }
@@ -429,6 +549,16 @@ function isMultipartFormData(data: any) {
 }
 
 /**
+ * getGlobalIndicator
+ * @param terminal
+ */
+function getGlobalIndicator(terminal: string) {
+  if (terminal === 'pc') return GlobalIndicator;
+
+  return MobileGlobalIndicator;
+}
+
+/**
  * sendPrepare - send前的准备
  */
 function sendPrepare(
@@ -436,7 +566,13 @@ function sendPrepare(
   {
     // 当前方法独有
     method,
+    ...params
+  }: ISendPrepareArg,
+  { resolve, reject },
+): Prepare {
+  let indicator;
 
+  const {
     // get|post|path|put|delete方法独有
     path,
     headers,
@@ -455,21 +591,31 @@ function sendPrepare(
 
     // curConfig
     ...curConfig // timeout && withCredentials && events
-  }: ISendPrepareArg,
-  { resolve, reject },
-): {
-  xhr: XMLHttpRequest | null;
-  contentType: string | null;
-} {
-  let indicator;
+  } =
+    // 调用request拦截器
+    Ajax.interceptors.requestReducer(params);
 
-  const defaultLoadingText = `${intl.v('加载中')}...`;
+  const defaultLoadingText = `${Intl.v('加载中')}...`;
 
-  const { show = false, text = defaultLoadingText, el = document.body } = loading!;
+  const {
+    show = false,
+    text = defaultLoadingText,
+    el = document.body,
+    zIndex = 19999,
+    size = 'default',
+    terminal = 'pc',
+  } = loading!;
+
+  const targetGlobalIndicator = getGlobalIndicator(terminal);
 
   // 显示loading
   if (show) {
-    indicator = GlobalIndicator.show(el || document.body, text || defaultLoadingText);
+    indicator = targetGlobalIndicator.show(
+      el || document.body,
+      text || defaultLoadingText,
+      zIndex,
+      size,
+    );
   }
 
   // 如果是mock数据
@@ -479,7 +625,7 @@ function sendPrepare(
         resolve({
           data: path,
           hideIndicator: () => {
-            GlobalIndicator.hide(indicator);
+            targetGlobalIndicator.hide(indicator as any);
           },
         });
       } else {
@@ -535,7 +681,7 @@ function sendPrepare(
   } else {
     // 用户没有设置header
     // 会根据data初始化heeader
-    if (!Util.isEmpty(data) && Util.isRef(data) && method !== ('get' || 'GET')) {
+    if (!Util.isEmpty(data) && Util.isRef(data) && !['get', 'GET'].includes(method)) {
       if (!isMultipartFormData(data)) {
         // console.log('默认设置Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
         contentType = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
@@ -552,7 +698,7 @@ function sendPrepare(
   // }
 
   // events
-  initXhrEvents(xhr, events);
+  initXhrEvents({ xhr, events, reject });
 
   // onreadystatechange
   xhr.onreadystatechange = onreadystatechange.bind(this, {
@@ -560,6 +706,7 @@ function sendPrepare(
     interceptor,
     loading: {
       show,
+      terminal,
       indicator,
     },
     business: {
@@ -584,8 +731,9 @@ function sendPrepare(
  * getSendParams
  * @param data
  * @param contentType
+ * @param customSendJSONStringify
  */
-function getSendParams({ data, contentType = '' }) {
+function getSendParams({ data, contentType = '', customSendJSONStringify }) {
   // 四种Content-Type的处理(也就是send的参数)
 
   // application/json
@@ -604,6 +752,9 @@ function getSendParams({ data, contentType = '' }) {
    */
   if (contentType.startsWith(Ajax.CONTENT_TYPE_APPLICATION_JSON) && Util.isRef(data)) {
     // console.log('数据需要被转换成JSON字符串', JSON.stringify(data));
+    if (customSendJSONStringify) {
+      return JSON.stringify(data, customSendJSONStringify);
+    }
     return JSON.stringify(data);
   }
 
@@ -634,7 +785,40 @@ function getSendParams({ data, contentType = '' }) {
     const formData = new FormData(data.form);
 
     Array.from(Object.keys(data.data)).forEach(function (k) {
-      formData.append(k, data.data[k]);
+      // 获取值
+      const value = data.data[k];
+
+      // 如果值是函数
+      if (value instanceof Function) {
+        formData.append(k, value());
+      }
+      // 如果值是数组
+      else if (Array.isArray(value)) {
+        value.forEach((_value) => {
+          formData.append(k, _value);
+        });
+      }
+      // 正常的情况
+      else {
+        formData.append(k, value);
+      }
+      // let target = value;
+
+      // // 如果值是函数
+      // if (value instanceof Function) {
+      //   target = value();
+      // }
+      //
+      // let params = [k];
+      //
+      // if (Array.isArray(target)) {
+      //   params = [...params, ...target];
+      // } else {
+      //   params = [...params, target];
+      // }
+      //
+      // // @ts-ignore
+      // formData.append(...params);
       // console.log(k, data.data[k]);
     });
 
@@ -646,10 +830,15 @@ function getSendParams({ data, contentType = '' }) {
    */
   if (contentType.startsWith(Ajax.CONTENT_TYPE_TEXT_PLAIN)) {
     if (Util.isString(data)) return data;
-    if (Util.isObject(data)) return JSON.stringify(data);
+    if (Util.isObject(data)) {
+      if (customSendJSONStringify) {
+        return JSON.stringify(data, customSendJSONStringify);
+      }
+      return JSON.stringify(data);
+    }
   }
 
-  return data.toString();
+  return data?.toString?.();
 }
 
 /**
@@ -657,9 +846,11 @@ function getSendParams({ data, contentType = '' }) {
  * @param method
  * @param params
  */
-function complexRequest(this: Ajax, method: Method, params: ISendArg) {
-  return new Promise((resolve, reject) => {
-    const { xhr, contentType } = sendPrepare.call(
+function complexRequest(this: Ajax, method: Method, params: ISendArg): SendResult {
+  let prepare: Prepare = {};
+
+  const promise = new Promise((resolve, reject) => {
+    prepare = sendPrepare.call(
       this,
       {
         // 缺省的
@@ -676,15 +867,23 @@ function complexRequest(this: Ajax, method: Method, params: ISendArg) {
       },
     );
 
+    const { xhr, contentType } = prepare;
+
     if (xhr) {
       xhr.send(
         getSendParams.call(this, {
           data: params.data,
           contentType: contentType!,
+          customSendJSONStringify: params.customSendJSONStringify,
         }),
       );
     }
   });
+
+  return {
+    ...prepare,
+    promise,
+  };
 }
 
 /**
@@ -704,6 +903,7 @@ function deal401(this: Ajax) {
   window.location.href = Util.casUrl({
     baseUrl: this.systemManagerBaseURL,
     enterUrl: window.location.href,
+    defaultLocal: 'zh_CN',
   });
 }
 

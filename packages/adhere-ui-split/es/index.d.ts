@@ -1,2 +1,2 @@
-import Split from './split';
+import Split from './Split';
 export default Split;

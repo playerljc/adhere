@@ -1,8 +1,12 @@
-import { FormInstance } from 'antd/es/form';
+import type { FormInstance } from 'antd/es/form';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 
-import SearchTable, { SearchTableContext } from '../../SearchTable';
-import { ColumnEditableConfig, TableCellComponentReducer } from '../../types';
+import Util from '@baifendian/adhere-util';
+
+import type SearchTable from '../../SearchTable';
+import { SearchTableContext } from '../../SearchTable';
+import { createChildren } from '../../Util';
+import type { ColumnEditableConfig, TableCellComponentReducer } from '../../types';
 import EditableCellEdit from './Edit/EditableCellEdit';
 import EditableCellView from './View';
 
@@ -11,7 +15,7 @@ import EditableCellView from './View';
  * @description 单元格编辑
  */
 const EditableCell: TableCellComponentReducer = (props) => {
-  const { column } = props;
+  const { column, rowIndex, record } = props;
 
   /**
    * defaultConfig
@@ -34,7 +38,7 @@ const EditableCell: TableCellComponentReducer = (props) => {
    * @description 实际的单元格配置
    */
   const editableConfig: ColumnEditableConfig = useMemo(
-    () => ({ ...defaultConfig, ...(column?.$editable || {}) }),
+    () => ({ ...defaultConfig, ...(column?.$editable ?? {}) }),
     [column, column?.dataIndex],
   );
 
@@ -72,53 +76,72 @@ const EditableCell: TableCellComponentReducer = (props) => {
   return (tdREL) => {
     let res = tdREL;
 
+    let editable;
+
+    if (Util.isFunction(editableConfig.editable)) {
+      editable = (editableConfig.editable as Function)(record, rowIndex);
+    } else {
+      editable = editableConfig.editable;
+    }
+
     // 单元格不是可编辑的单元格
-    if (!editableConfig.editable) {
-      // @ts-ignore
+    if (!editable) {
       res = tdREL;
     }
     // 始终保持编辑状态
     else if (editableConfig.useKeepEdit) {
-      res = React.cloneElement(tdREL, tdREL.props, [
-        <EditableCellEdit
-          {...props}
-          editableConfig={editableConfig}
-          onTriggerChange={() => {
-            // @ts-ignore
-            context?.context?.setActiveValue?.('');
-            setStatus('view');
-          }}
-        />,
-      ]);
+      res = React.cloneElement(
+        tdREL,
+        tdREL.props,
+        createChildren(
+          tdREL,
+          <EditableCellEdit
+            {...props}
+            editableConfig={editableConfig}
+            onTriggerChange={() => {
+              // @ts-ignore
+              // context?.context?.setActiveValue?.('');
+              setStatus('view');
+            }}
+          />,
+        ),
+      );
     }
     // 查看状态
     else if (status === 'view') {
-      res = React.cloneElement(tdREL, tdREL.props, [
+      res = React.cloneElement(
+        tdREL,
+        tdREL.props,
         <EditableCellView
           {...props}
           editableConfig={editableConfig}
           onTriggerChange={() => {
-            context?.context
-              // @ts-ignore
-              ?.setActiveValue?.(props.record[props.column.dataIndex as string]);
+            // context?.context
+            //   // @ts-ignore
+            //   ?.setActiveValue?.(props.record[props.column.dataIndex as string]);
             setStatus('edit');
           }}
         />,
-      ]);
+      );
     }
     // 编辑状态
     else if (status === 'edit') {
-      res = React.cloneElement(tdREL, tdREL.props, [
-        <EditableCellEdit
-          {...props}
-          editableConfig={editableConfig}
-          onTriggerChange={() => {
-            // @ts-ignore
-            context?.context?.setActiveValue?.('');
-            setStatus('view');
-          }}
-        />,
-      ]);
+      res = React.cloneElement(
+        tdREL,
+        tdREL.props,
+        createChildren(
+          tdREL,
+          <EditableCellEdit
+            {...props}
+            editableConfig={editableConfig}
+            onTriggerChange={() => {
+              // @ts-ignore
+              // context?.context?.setActiveValue?.('');
+              setStatus('view');
+            }}
+          />,
+        ),
+      );
     }
 
     return res;

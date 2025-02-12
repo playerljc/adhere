@@ -52,6 +52,7 @@ class App extends React.PureComponent {
         <div className={styles.Fixed}>
           <Header />
         </div>
+
         <div className={styles.Auto}>{children}</div>
       </div>
     );

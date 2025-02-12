@@ -21,7 +21,7 @@ yarn add @baifendian/adhere-util-watchmemoized
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/util/watchmemoized](http://49.232.163.126:8083/adhere/util/watchmemoized)
+[http://playerljc.github.io/adhere/index.html#/adhere/adhere/util/watchmemoized](http://playerljc.github.io/adhere/index.html#/adhere/adhere/util/watchmemoized)
 
 
 

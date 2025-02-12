@@ -156,7 +156,7 @@ export default () => {
               ],
             },
           ],
-          type: 'PlayGroundMulit',
+          type: 'PlayGroundMulti',
           renderChildren: () => (
             <DelConfirm
               success={() => {
@@ -257,7 +257,7 @@ export default () => {
         <ul style={{ listStyle: 'disc', marginLeft: 20 }}>
           <li>PlayGround - React的代码单文件展示</li>
           <li>PlayGroundTab - React的多标签文件展示</li>
-          <li>PlayGroundMulit - React的代码多文件展示</li>
+          <li>PlayGroundMulti - React的代码多文件展示</li>
           <li>PlayGroundPage - React的整体代码展示(包括代码组和导航等)</li>
           <li>Props - React组件的Props说明</li>
           <li>FunctionProps - 类方法说明</li>
@@ -407,7 +407,7 @@ export default () => {
           },
           {
             border: true,
-            title: 'PlayGroundMulit',
+            title: 'PlayGroundMulti',
             data: [
               {
                 params: 'id',
@@ -807,7 +807,7 @@ export default () => {
               {
                 params: 'config',
                 desc: '',
-                type: 'Array<ICodeBoxPlayGroundProps | ICodeBoxPlayGroundMulitProps>',
+                type: 'Array<ICodeBoxPlayGroundProps | ICodeBoxPlayGroundMultiProps>',
                 defaultVal: '[]',
               },
             ],
@@ -832,13 +832,13 @@ export default () => {
           },
           {
             border: true,
-            title: 'ICodeBoxPlayGroundMulitProps',
+            title: 'ICodeBoxPlayGroundMultiProps',
             data: [
               {
                 params: 'type',
                 desc: '',
                 type: 'string',
-                defaultVal: 'PlayGroundMulit',
+                defaultVal: 'PlayGroundMulti',
               },
               {
                 params: 'renderWrap',

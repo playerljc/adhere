@@ -10,4 +10,8 @@ export const SearchAndPaginParamsMemo: any = MemoManager.create();
  * ProSearchStateTable
  * @classdesc 高级查询表格
  */
-export default ProTableFactory(SearchTableStateImplement, SearchAndPaginParamsMemo);
+const ProSearchStateTable = ProTableFactory(SearchTableStateImplement, SearchAndPaginParamsMemo);
+
+ProSearchStateTable.displayName = 'ProSearchStateTable';
+
+export default ProSearchStateTable;

@@ -1,18 +1,21 @@
-import { FC, NamedExoticComponent } from 'react';
+import { CSSProperties, NamedExoticComponent } from 'react';
+import SplitGroup from './Group';
 /**
  * SplitFunction
  */
-export interface SplitFunction<P> extends NamedExoticComponent<P> {
-    Group: FC<SplitGroupProps>;
-}
+export type SplitComponent = NamedExoticComponent<SplitProps> & {
+    Group: typeof SplitGroup;
+};
 /**
  * SplitProps
  * @interface SplitProps
  */
 export interface SplitProps {
     className?: string;
+    style?: CSSProperties;
     direction?: 'vertical' | 'horizontal';
     size?: string | number;
+    horizontalFit?: boolean;
 }
 /**
  * SplitGroupProps

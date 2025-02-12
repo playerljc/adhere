@@ -1,7 +1,7 @@
-import cloneDeep from 'lodash.clonedeep';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
-import { SearchEditorRowTableState, SearchTableStateImplementProps } from '../types';
+import { cloneDeep, findRecord } from '../Util';
+import type { SearchEditorRowTableState, SearchTableStateImplementProps } from '../types';
 import SearchEditableCellStateTable from './SearchEditableCellStateTable';
 import SearchEditableRowFactory from './SearchEditableRowFactory';
 
@@ -36,11 +36,11 @@ class SearchEditableRowStateTable extends SearchEditableRowFactory<
 
       keys.forEach((dataIndex) => {
         let value = values[dataIndex];
-        if (value instanceof moment) {
+        if (dayjs.isDayjs(value)) {
           value = value.valueOf();
         }
 
-        const recordItem = dataSource.find((t) => t[rowKey] === record[rowKey]);
+        const recordItem = findRecord(dataSource, rowKey, record[rowKey]);
         if (recordItem) {
           recordItem[dataIndex] = value;
         }

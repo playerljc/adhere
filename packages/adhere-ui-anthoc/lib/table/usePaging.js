@@ -1,0 +1,2 @@
+Object.defineProperty(exports,"__esModule",{value:!0});var usePaging=function(e){var n=e.totalCount,a=e.paging,t=e.onPagingChange,i=e.onPagingShowSizeChange,e=e.defaultLimit,g=[10,20,50,100];return g.includes(e)||g.push(e),{current:a.page,pageSize:a.limit,total:n,showSizeChanger:!0,onChange:t,onShowSizeChange:i,pageSizeOptions:g.sort(function(e,n){return e-n})}};exports.default=usePaging;
+//# sourceMappingURL=usePaging.js.map

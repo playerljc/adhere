@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["swiper/index.js"],"sourcesContent":["import Swiper from './Swiper';\nexport default Swiper;"],"names":["Swiper"],"mappings":"OAAOA,WAAY,0BACJA"}

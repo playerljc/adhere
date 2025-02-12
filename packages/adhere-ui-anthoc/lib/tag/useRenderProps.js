@@ -1,0 +1,2 @@
+var __assign=function(){return(__assign=Object.assign||function(e){for(var n,r=1,o=arguments.length;r<o;r++)for(var t in n=arguments[r])Object.prototype.hasOwnProperty.call(n,t)&&(e[t]=n[t]);return e}).apply(this,arguments)},useTagRenderProps=(Object.defineProperty(exports,"__esModule",{value:!0}),function(r,o){return function(e){var n=e.value,e=__assign({value:n,onChange:e.onChange,options:null!=(n=e.options)?n:[]},null!=r?r:{});return o&&(e.mode=o),e}});exports.default=useTagRenderProps;
+//# sourceMappingURL=useRenderProps.js.map

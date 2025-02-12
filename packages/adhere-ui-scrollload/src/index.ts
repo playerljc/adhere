@@ -1,3 +1,3 @@
-import ScrollLoad from './scrollload';
+import ScrollLoad from './ScrollLoad';
 
 export default ScrollLoad;

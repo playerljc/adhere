@@ -10,7 +10,7 @@ import styles from './fixedTableSpaceBetweenTable.less';
  * @classdesc
  */
 class TableDensitySetting extends Table {
-  renderTableHeader() {
+  renderSearchHeader() {
     return (
       <div className={styles.Header}>
         <h3>查询表格</h3>

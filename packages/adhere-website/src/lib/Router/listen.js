@@ -54,7 +54,9 @@ export default {
     }
   },
   on(handler) {
-    Emitter.on(type, handler);
+    Emitter.on(type, (e) => {
+      handler(e, _history);
+    });
   },
   remove(handler) {
     Emitter.remove(type, handler);

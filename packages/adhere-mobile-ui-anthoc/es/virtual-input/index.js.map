@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["virtual-input/index.js"],"sourcesContent":["import VirtualInput from './VirtualInput';\nexport default VirtualInput;"],"names":["VirtualInput"],"mappings":"OAAOA,iBAAkB,gCACVA"}

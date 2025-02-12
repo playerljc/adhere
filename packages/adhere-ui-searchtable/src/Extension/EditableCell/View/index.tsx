@@ -1,5 +1,6 @@
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import type { FC } from 'react';
+import React from 'react';
 
 import { EditOutlined } from '@ant-design/icons';
 
@@ -18,6 +19,7 @@ const EditableCellView: FC<EditableCellViewProps> = (props) => {
 
   // 不使用句柄则返回原始组件
   if (!useTrigger) {
+    // @ts-ignore
     return <>{restProps?.children}</>;
   }
 
@@ -48,19 +50,22 @@ const EditableCellView: FC<EditableCellViewProps> = (props) => {
   }
 
   return (
-    <div className={`${selectorPrefix}-editablecell-view`}>
+    <div className={`${selectorPrefix}-editable-cell-view`}>
       <div
         className={classNames(
-          `${selectorPrefix}-editablecell-view-inner`,
+          `${selectorPrefix}-editable-cell-view-inner`,
           'ellipsis' in column && column.ellipsis
-            ? `${selectorPrefix}-editablecell-view-inner-ellipsis`
+            ? `${selectorPrefix}-editable-cell-view-inner-ellipsis`
             : '',
         )}
       >
-        {restProps?.children}
+        {
+          // @ts-ignore
+          restProps?.children
+        }
       </div>
-      <div className={`${selectorPrefix}-editablecell-view-trigger`}>
-        <div className={`${selectorPrefix}-editablecell-view-trigger-inner`} onClick={onTrigger}>
+      <div className={`${selectorPrefix}-editable-cell-view-trigger`}>
+        <div className={`${selectorPrefix}-editable-cell-view-trigger-inner`} onClick={onTrigger}>
           {!!renderToEditTrigger &&
             renderToEditTrigger?.({
               value: record?.[dataIndex as string],
@@ -74,5 +79,7 @@ const EditableCellView: FC<EditableCellViewProps> = (props) => {
     </div>
   );
 };
+
+EditableCellView.displayName = 'EditableCellView';
 
 export default EditableCellView;

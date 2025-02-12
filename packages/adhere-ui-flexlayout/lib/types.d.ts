@@ -1,32 +1,94 @@
-import { FC, NamedExoticComponent } from 'react';
+import { NamedExoticComponent, PropsWithoutRef, ReactNode, RefAttributes } from 'react';
 import type { CSSProperties, Context, ReactElement } from 'react';
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
+import Auto from './Auto';
+import BackLayout from './BackLayout';
+import { FlexContext } from './Context';
+import Fixed from './Fixed';
+import HorizontalFlexLayout from './HorizontalFlexLayout';
+import ScrollLayout, { ScrollLayoutContext, useScrollLayout } from './ScrollLayout';
+import SpaceAround from './SpaceAround';
+import SpaceBetween from './SpaceBetween';
+import CBLayout from './TRBLC/CBLayout';
+import CBRLayout from './TRBLC/CBRLayout';
+import CRBLayout from './TRBLC/CRBLayout';
+import CRLayout from './TRBLC/CRLayout';
+import LBCLayout from './TRBLC/LBCLayout';
+import LCBLayout from './TRBLC/LCBLayout';
+import LCLayout from './TRBLC/LCLayout';
+import LCRBLayout from './TRBLC/LCRBLayout';
+import LCRLayout from './TRBLC/LCRLayout';
+import LRTCBLayout from './TRBLC/LRTCBLayout';
+import LTCBLayout from './TRBLC/LTCBLayout';
+import LTCLayout from './TRBLC/LTCLayout';
+import TBLCRLayout from './TRBLC/TBLCRLayout';
+import TCBLayout from './TRBLC/TCBLayout';
+import TCBRLayout from './TRBLC/TCBRLayout';
+import TCLayout from './TRBLC/TCLayout';
+import TCRLayout from './TRBLC/TCRLayout';
+import TLCLayout from './TRBLC/TLCLayout';
+import TLRCLayout from './TRBLC/TLRCLayout';
+import TRCLayout from './TRBLC/TRCLayout';
+import ToolBarLayout from './ToolBarLayout';
+import VerticalFlexLayout from './VerticalFlexLayout';
 export interface ContextType {
     direction: 'vertical' | 'horizontal';
+    gutter?: number | number[];
+    children?: ReactNode[];
 }
 export interface FlexLayoutFunction<P> extends NamedExoticComponent<P> {
-    Fixed: FC<FixedProps>;
-    Auto: FC<AutoProps>;
+    Fixed: typeof Fixed;
+    Auto: typeof Auto;
     Context: Context<ContextType>;
-    HorizontalFlexLayout: FC<HorizontalFlexLayoutProps>;
-    VerticalFlexLayout: FC<VerticalFlexLayoutProps>;
-    ToolBarLayout: FC<ToolBarLayoutProps>;
-    BackLayout: FC<BackLayoutProps>;
-    ScrollLayout: FC<ScrollLayoutProps>;
+    HorizontalFlexLayout: typeof HorizontalFlexLayout;
+    VerticalFlexLayout: typeof VerticalFlexLayout;
+    ToolBarLayout: typeof ToolBarLayout;
+    BackLayout: typeof BackLayout;
+    ScrollLayout: typeof ScrollLayout;
+    SpaceAround: typeof SpaceAround;
+    SpaceBetween: typeof SpaceBetween;
     useScrollLayout: () => ScrollLayoutContextType;
     ScrollLayoutContext: Context<ScrollLayoutContextType>;
     selectorPrefix: string;
+    TRBLC: {
+        CBLayout: typeof CBLayout;
+        CBRLayout: typeof CBRLayout;
+        CRBLayout: typeof CRBLayout;
+        CRLayout: typeof CRLayout;
+        LBCLayout: typeof LBCLayout;
+        LCBLayout: typeof LCBLayout;
+        LCLayout: typeof LCLayout;
+        LCRBLayout: typeof LCRBLayout;
+        LRTCBLayout: typeof LRTCBLayout;
+        LTCBLayout: typeof LTCBLayout;
+        LTCLayout: typeof LTCLayout;
+        TBLCRLayout: typeof TBLCRLayout;
+        TCBRLayout: typeof TCBRLayout;
+        TCLayout: typeof TCLayout;
+        TCRLayout: typeof TCRLayout;
+        TLCLayout: typeof TLCLayout;
+        TLRCLayout: typeof TLRCLayout;
+        TRCLayout: typeof TRCLayout;
+    };
 }
 export interface FlexLayoutProps {
     className?: string;
     style?: CSSProperties;
     direction?: 'vertical' | 'horizontal';
     children?: any;
+    gutter?: number | number[];
 }
 export interface FixedProps {
     className?: string;
     style?: CSSProperties;
     fit?: boolean;
     children?: any;
+    span?: number;
+    collapseDirection?: 'L' | 'R' | 'T' | 'B';
+    collapsedSize?: number | string;
+    defaultCollapsible?: boolean;
+    trigger?: (collapsed: boolean, defaultTrigger: ReactNode) => ReactNode;
+    onCollapse?: (collapsed: boolean) => void;
 }
 export interface AutoProps {
     className?: string;
@@ -34,6 +96,7 @@ export interface AutoProps {
     autoFixed?: boolean;
     fit?: boolean;
     children?: any;
+    isUseNormal?: boolean;
 }
 export interface VerticalFlexLayoutProps {
     className?: string;
@@ -138,7 +201,7 @@ export interface BackLayoutProps {
     enforceBackPath?: string;
     isShowBack?: boolean;
     history?: any;
-    backTitle?: string | ReactElement;
+    backTitle?: ReactNode;
     children?: any;
 }
 export interface ScrollLayoutProps {
@@ -148,5 +211,84 @@ export interface ScrollLayoutProps {
     children?: any;
 }
 export interface ScrollLayoutContextType {
-    getEl: () => HTMLElement | null;
+    getEl: () => HTMLElement | null | undefined;
+}
+export interface getGridStyleParams {
+    gutter?: number | number[];
+    children?: any;
+    span?: number | null;
+    direction: 'vertical' | 'horizontal';
+    media: ConfigProviderProps['media'];
+}
+export interface TBLRProps extends FixedProps {
+    children: ReactNode;
+}
+export interface CenterProps extends AutoProps {
+    children: ReactNode;
+}
+export interface TBLRCLayoutProps extends FlexLayoutProps {
+    wrapClassName?: string;
+    wrapStyle?: CSSProperties;
+    tProps?: TBLRProps;
+    tSplit?: ReactNode;
+    bProps?: TBLRProps;
+    bSplit?: ReactNode;
+    lProps?: TBLRProps;
+    lSplit?: ReactNode;
+    rProps?: TBLRProps;
+    rSplit?: ReactNode;
+    cProps?: CenterProps;
+    autoWrapProps?: AutoProps;
+    autoInnerProps?: FlexLayoutProps;
+}
+export type FlexLayoutComponent = NamedExoticComponent<PropsWithoutRef<FlexLayoutProps> & RefAttributes<any>> & {
+    selectorPrefix: string;
+    Context: typeof FlexContext;
+    Fixed: typeof Fixed;
+    Auto: typeof Auto;
+    HorizontalFlexLayout: typeof HorizontalFlexLayout;
+    VerticalFlexLayout: typeof VerticalFlexLayout;
+    ToolBarLayout: typeof ToolBarLayout;
+    BackLayout: typeof BackLayout;
+    ScrollLayout: typeof ScrollLayout;
+    SpaceAround: typeof SpaceAround;
+    SpaceBetween: typeof SpaceBetween;
+    useScrollLayout: typeof useScrollLayout;
+    ScrollLayoutContext: typeof ScrollLayoutContext;
+    TRBLC: {
+        CBLayout: typeof CBLayout;
+        CBRLayout: typeof CBRLayout;
+        CRBLayout: typeof CRBLayout;
+        CRLayout: typeof CRLayout;
+        LBCLayout: typeof LBCLayout;
+        LCBLayout: typeof LCBLayout;
+        LCLayout: typeof LCLayout;
+        LCRLayout: typeof LCRLayout;
+        LCRBLayout: typeof LCRBLayout;
+        LRTCBLayout: typeof LRTCBLayout;
+        LTCBLayout: typeof LTCBLayout;
+        LTCLayout: typeof LTCLayout;
+        TBLCRLayout: typeof TBLCRLayout;
+        TCBRLayout: typeof TCBRLayout;
+        TCLayout: typeof TCLayout;
+        TCRLayout: typeof TCRLayout;
+        TLCLayout: typeof TLCLayout;
+        TLRCLayout: typeof TLRCLayout;
+        TRCLayout: typeof TRCLayout;
+        TCBLayout: typeof TCBLayout;
+    };
+};
+export type SpaceBetweenComponent = NamedExoticComponent<InternalSpaceBetweenProps>;
+export type SpaceAroundComponent = NamedExoticComponent<InternalSpaceAroundProps>;
+export interface InternalSpaceBetweenProps {
+    className?: string;
+    style?: CSSProperties;
+    direction: FlexLayoutProps['direction'];
+    children?: any;
+}
+export interface InternalSpaceAroundProps {
+    className?: string;
+    style?: CSSProperties;
+    direction: FlexLayoutProps['direction'];
+    children?: any;
 }

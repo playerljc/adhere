@@ -1,20 +1,14 @@
-@import '~antd/es/popover/style/index.less';
-//@import '~antd/es/dropdown/style/index.less';
-@import '~@baifendian/adhere-ui-css/es/vars.less';
+@adhere-ui-search-table-table-density-setting-body-li-hover-color: #ccc;
 
-@adhere-ui-searchtable-table-density-setting-body-li-hover-color: #ccc;
-
-.adhere-ui-searchtable-table-density-setting {
-  background-color: #fff;
-
-  > .adhere-ui-searchtable-table-density-setting-header {
+.adhere-ui-search-table-table-density-setting {
+  > .adhere-ui-search-table-table-density-setting-header {
     display: flex;
     justify-content: flex-end;
     padding: 10px 20px;
-    border-bottom: 1px solid @adhere-border-color;
+    border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
   }
 
-  > .adhere-ui-searchtable-table-density-setting-body {
+  > .adhere-ui-search-table-table-density-setting-body {
     > ul {
       margin: 0;
       padding: 0;
@@ -25,12 +19,12 @@
         text-align: center;
 
         &.active {
-          background-color: rgba(@adhere-primary-color, 0.3);
+          background-color: rgba(var(--adhere-color-primary-rgb), 0.3);
         }
 
         &:hover {
           background-color: rgba(
-            @adhere-ui-searchtable-table-density-setting-body-li-hover-color,
+            @adhere-ui-search-table-table-density-setting-body-li-hover-color,
             0.3
           );
           cursor: pointer;

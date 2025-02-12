@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -7,7 +7,7 @@ import { CollapseProps } from './types';
 
 const selectorPrefix = 'adhere-ui-playground-collapse';
 
-const Collapse: FC<CollapseProps> = (props) => {
+const Collapse = memo<CollapseProps>((props) => {
   const {
     headerClassName = '',
     headerStyle = {},
@@ -27,7 +27,9 @@ const Collapse: FC<CollapseProps> = (props) => {
     setCollapse(!collapse);
   }
 
-  useEffect(() => setCollapse(props.defaultCollapse || false), [props.defaultCollapse]);
+  useEffect(() => {
+    setCollapse(props.defaultCollapse || false);
+  }, [props.defaultCollapse]);
 
   return (
     <div
@@ -41,9 +43,9 @@ const Collapse: FC<CollapseProps> = (props) => {
         className={classNames(
           `${selectorPrefix}-header`,
           border ? `${selectorPrefix}-header-border` : '',
-          headerClassName || '',
+          headerClassName ?? '',
         )}
-        style={headerStyle || {}}
+        style={headerStyle ?? {}}
         onClickCapture={onClickHeader}
       >
         <div className={`${selectorPrefix}-header-collapse`}>
@@ -69,10 +71,10 @@ const Collapse: FC<CollapseProps> = (props) => {
             className={classNames(
               `${selectorPrefix}-body`,
               border ? `${selectorPrefix}-body-border` : '',
-              bodyClassName || '',
+              bodyClassName ?? '',
               !!title || !!extra ? `${selectorPrefix}-body-exists-header` : '',
             )}
-            style={bodyStyle || {}}
+            style={bodyStyle ?? {}}
           >
             {children}
           </div>
@@ -80,7 +82,9 @@ const Collapse: FC<CollapseProps> = (props) => {
       </ConditionalRender>
     </div>
   );
-};
+});
+
+Collapse.displayName = 'Collapse';
 
 // /**
 //  * Collapse
@@ -219,4 +223,4 @@ const Collapse: FC<CollapseProps> = (props) => {
 //   fixedHeaderScrollBody: PropTypes.bool,
 // };
 
-export default memo(Collapse);
+export default Collapse;

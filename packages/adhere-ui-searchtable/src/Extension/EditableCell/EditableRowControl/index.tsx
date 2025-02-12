@@ -1,13 +1,15 @@
-import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
+import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import classNames from 'classnames';
-import React, { FC, ReactNode, useCallback, useContext } from 'react';
+import type { FC, ReactNode } from 'react';
+import React, { useCallback, useContext } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Intl from '@baifendian/adhere-util-intl';
 
-import SearchEditableRowTable from '../../../Editable/SearchEditableRowTable';
-import SearchTable, { SearchTableContext, selectorPrefix } from '../../../SearchTable';
-import { EditorRowControlProps } from '../../../types';
+import type SearchEditableRowTable from '../../../Editable/SearchEditableRowTable';
+import type SearchTable from '../../../SearchTable';
+import { SearchTableContext, selectorPrefix } from '../../../SearchTable';
+import type { EditorRowControlProps } from '../../../types';
 import { EditableContext } from '../EditableRow';
 
 /**
@@ -65,11 +67,10 @@ const EditableRowControl: FC<EditorRowControlProps> = ({
 
   const validateFieldsSuccess = useCallback((values) => {
     if (onSave) {
-      onSave(values).then(() => updateEditorCellRowData(values));
-      return;
+      return onSave(values).then(() => updateEditorCellRowData(values));
     }
 
-    updateEditorCellRowData(values);
+    return updateEditorCellRowData(values);
   }, []);
 
   const _onEditor = useCallback(() => {
@@ -89,11 +90,13 @@ const EditableRowControl: FC<EditorRowControlProps> = ({
       ?.then(() => reset());
 
   const reset = () =>
+    // @ts-ignore
     context?.context?.setState({
       editorRowId: '',
     });
 
   const updateRowEdit = () =>
+    // @ts-ignore
     context?.context?.setState({
       editorRowId: record[rowKey],
     });
@@ -101,7 +104,7 @@ const EditableRowControl: FC<EditorRowControlProps> = ({
   return (
     <div
       className={classNames(`${selectorPrefix}-editor-row-control`, className)}
-      style={styles || {}}
+      style={styles ?? {}}
     >
       <ConditionalRender
         conditional={editorRowId !== record[rowKey]}
@@ -139,5 +142,7 @@ const EditableRowControl: FC<EditorRowControlProps> = ({
     </div>
   );
 };
+
+EditableRowControl.displayName = 'EditableRowControl';
 
 export default EditableRowControl;

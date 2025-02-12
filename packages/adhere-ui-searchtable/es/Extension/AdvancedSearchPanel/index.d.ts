@@ -1,4 +1,10 @@
 import React from 'react';
-import { AdvancedSearchPanelProps } from '../../types';
-declare const _default: React.NamedExoticComponent<AdvancedSearchPanelProps>;
-export default _default;
+import type { AdvancedSearchPanelProps } from '../../types';
+/**
+ * AdvancedSearchPanel
+ * @param props
+ * @return {React.ReactPortal}
+ * @constructor
+ */
+declare const AdvancedSearchPanel: React.NamedExoticComponent<AdvancedSearchPanelProps>;
+export default AdvancedSearchPanel;

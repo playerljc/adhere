@@ -1,27 +1,33 @@
-import type { CSSProperties, ReactElement } from 'react';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
 export interface ISuspense {
     fetchData?: fetchData;
     showLoading: showLoading;
     renderInner: renderInner;
     isFirst: boolean;
     isFirstLoading: boolean;
+    onFirstFetchDataBefore?: () => Promise<any>;
+    onFirstFetchDataAfter?: (res?: any) => Promise<any>;
 }
 export interface SuspenseProps {
     className?: string;
     style?: CSSProperties;
     reset: boolean;
     firstLoading: ReactElement;
+    renderNormalLoading?: (params: {
+        children: ReactNode;
+        loading: boolean;
+    }) => ReactNode;
 }
 export interface SuspenseState {
 }
 export interface ISuspenseSync {
     isLoading: boolean;
-    reset: Function;
+    reset: () => Promise<any>;
 }
 export interface SuspenseSyncProps extends SuspenseProps {
     data: any;
     isEmpty: () => boolean;
-    renderEmpty?: Function;
+    renderEmpty?: () => ReactNode;
     children?: any;
 }
 export interface SuspenseSyncState extends SuspenseState {
@@ -29,9 +35,9 @@ export interface SuspenseSyncState extends SuspenseState {
 }
 export interface SuspenseASyncProps extends SuspenseProps {
     isEmpty: () => boolean;
-    renderEmpty?: Function;
-    children?: Function;
-    fetchData?: Function;
+    renderEmpty?: () => ReactNode;
+    children?: ReactNode;
+    fetchData?: (params?: any) => Promise<any>;
 }
 export interface SuspenseASyncState extends SuspenseState {
     loading: boolean;
@@ -43,5 +49,5 @@ export interface showLoading {
     (): boolean;
 }
 export interface renderInner {
-    (): ReactElement | null;
+    (): ReactNode;
 }

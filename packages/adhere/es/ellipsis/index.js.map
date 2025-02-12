@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["ellipsis/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-ellipsis/es';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,mDACHA"}

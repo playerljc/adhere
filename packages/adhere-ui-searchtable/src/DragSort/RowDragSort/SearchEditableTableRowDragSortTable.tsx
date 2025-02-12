@@ -2,7 +2,7 @@ import React from 'react';
 
 import SearchEditableTable from '../../Editable/SearchEditableTable';
 import { SearchTableImplement } from '../../SearchTableImplement';
-import { SearchTableImplementProps, SearchTableImplementState } from '../../types';
+import type { SearchTableImplementProps, SearchTableImplementState } from '../../types';
 import RowDragSortMultiExtend from './RowDragSortMultiExtend';
 import SearchRowDragSortTable from './SearchRowDragSortTable';
 
@@ -31,6 +31,21 @@ const SearchEditableTableRowDragSortTable = RowDragSortMultiExtend<
 
       return SearchRowDragSortTable.prototype.onDragSortRow.call(this, params);
     },
+    /**
+     * onExpandedRowsChange
+     * @param expandedRows
+     */
+    onExpandedRowsChange(expandedRows) {
+      return SearchRowDragSortTable.prototype.onExpandedRowsChange
+        .call(this, expandedRows)
+        .then(() => {
+          // @ts-ignore
+          if (this.state.isTableEditor) {
+            // @ts-ignore
+            this.setFieldValues(this.getData());
+          }
+        });
+    },
     render() {
       const searchRowDragSortTableREL = SearchRowDragSortTable.prototype.render.call(this);
       const searchEditableTableREL = SearchEditableTable.prototype.render.call(this);
@@ -45,7 +60,7 @@ const SearchEditableTableRowDragSortTable = RowDragSortMultiExtend<
       // @ts-ignore
       return SearchRowDragSortTable.prototype.moveRow.apply(this, params).then(() => {
         // @ts-ignore
-        this.setFieldValues();
+        this.setFieldValues(this.getData());
       });
     },
     fetchData() {

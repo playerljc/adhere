@@ -20,7 +20,7 @@ declare class AnimationManager {
     preActiveId: string | undefined;
     pref: any;
     lines: any[] | undefined;
-    handler: any;
+    handler: number | null | undefined;
     stopTask(): false | undefined;
     stop(): void;
 }

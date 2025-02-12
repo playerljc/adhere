@@ -1,5 +1,6 @@
-import intl from 'react-intl-universal';
+import intl, { ReactIntlUniversalMessageDescriptor } from 'react-intl-universal';
 
+import ar_EG from './locales/ar_EG';
 import en_US from './locales/en_US';
 import pt_PT from './locales/pt_PT';
 import zh_CN from './locales/zh_CN';
@@ -19,10 +20,10 @@ let mainLocales = {};
  * initIntlMap - 初始化以中文为key,intl.get()为值的Map
  * @param zh_CN
  */
-function initIntlMap(zh_CN) {
-  const propertys = Object.getOwnPropertyNames(zh_CN);
+function initIntlMap(zh_CN: { [x: string]: string | number }) {
+  const properties = Object.getOwnPropertyNames(zh_CN);
 
-  propertys.forEach((p) => {
+  properties.forEach((p) => {
     // 中文key 国际化值为值
     intlMap[zh_CN[p]] = intl.get(p);
 
@@ -43,8 +44,7 @@ function initIntlMap(zh_CN) {
  * @param data
  */
 export function getLocal(prefix: string = 'local', data: Array<string>): object {
-  // 先去重
-  const result = [...Array.from(new Set(data))];
+  const result = [...data];
 
   const local = {};
 
@@ -74,28 +74,34 @@ export function getLocales(): object {
   return { ...mainLocales };
 }
 
+export interface Init {
+  prefix: string;
+  currentLocale: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
+  mainLanguage: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
+  locales: {
+    [key: string]: string[];
+  };
+  // 对adhere的国际化扩展
+  extraLibLocales?: {
+    [key: string]: string[];
+  };
+}
+
 export default {
   /**
    * init
    * @param {String} - prefix
-   * @param {String} - currentLocale
-   * @param {Object} - locales
-   * @param {Object} - ...other
    * @param reload 是否是重新载入
    */
   init(
     {
       prefix = 'local',
       currentLocale = 'zh_CN',
-      locales = {},
       mainLanguage = 'zh_CN',
-      ...other
-    }: {
-      prefix: string;
-      currentLocale: 'en_US' | 'zh_CN' | 'pt_PT';
-      locales: any;
-      mainLanguage: string;
-    },
+      locales = {},
+      extraLibLocales = {},
+      ...rest
+    }: Init,
     reload: boolean = false,
   ): Promise<any> {
     if (!reload && isInit) {
@@ -104,58 +110,69 @@ export default {
       });
     }
 
-    // 系统的国际化资源
-    const finallyLocales = {
-      en_US,
-      zh_CN,
-      pt_PT,
+    // 库的国际化资源
+    const libLocales = {
+      en_US: [...en_US],
+      zh_CN: [...zh_CN],
+      pt_PT: [...pt_PT],
+      ar_EG: [...ar_EG],
+      // 还需要加入
+      ...extraLibLocales,
     };
 
-    const finallyLocalesKeys = Object.keys(finallyLocales);
-    const localesKeys = Object.keys(locales || {});
+    const duplicateIndex: number[] = [];
 
-    let masterLocales;
-    let slaveLocales;
+    libLocales[mainLanguage].forEach((_word: string, _index: number) => {
+      if (locales[mainLanguage].includes(_word)) {
+        duplicateIndex.push(_index);
+      }
+    });
 
-    if (finallyLocalesKeys.length > localesKeys.length) {
-      masterLocales = finallyLocales;
-      slaveLocales = locales || {};
-    } else if (finallyLocalesKeys.length <= localesKeys.length) {
-      masterLocales = locales || {};
-      slaveLocales = finallyLocales;
-    }
+    // 如果用户重写了国际化，使用用户的
+    const libLocaleKeys = Object.keys(libLocales);
+    libLocaleKeys.forEach((_libLocaleKey) => {
+      libLocales[_libLocaleKey] = libLocales[_libLocaleKey].filter(
+        (_t: any, _index: number) => !duplicateIndex.includes(_index),
+      );
+    });
 
-    // 总的国际化资源(系统的国际化资源 merge 用户的国际化资源)
+    // 最终的国际化资源
+    const targetLocales = libLocaleKeys.reduce((_targetLocales, _currentLibLocalKey) => {
+      _targetLocales[_currentLibLocalKey] = [
+        ...(libLocales[_currentLibLocalKey] ?? []),
+        ...(locales[_currentLibLocalKey] ?? []),
+      ];
+
+      return _targetLocales;
+    }, {});
 
     // 整合用户的locales
-    for (const p in masterLocales) {
+    libLocaleKeys.forEach((_libLocalKey) => {
       // 每一种语言都需要处理成k,v对象
-      const all = [...masterLocales[p], ...(slaveLocales[p] || [])];
+      const local = targetLocales[_libLocalKey];
 
       const stringItems: string[] = [];
-      const objEntrys: any = [];
+      const objEntry: any[] = [];
 
-      all.forEach((item) => {
-        if (typeof item === 'string') stringItems.push(item);
-        else objEntrys.push(item);
+      local.forEach((_item: string) => {
+        if (typeof _item === 'string') stringItems.push(_item);
+        else objEntry.push(_item);
       });
 
-      mainLocales[p] = getLocal(prefix, Array.from(new Set(stringItems)));
+      mainLocales[_libLocalKey] = getLocal(prefix, stringItems);
 
-      objEntrys.forEach((entry) => {
-        const keys = Object.keys(entry);
-
-        keys.forEach((key) => {
-          mainLocales[p][key] = entry[key];
+      objEntry.forEach((_entry) => {
+        Object.keys(_entry).forEach((_key) => {
+          mainLocales[_libLocalKey][_key] = _entry[_key];
         });
       });
-    }
+    });
 
     return intl
       .init({
         currentLocale,
         locales: mainLocales,
-        ...other,
+        ...rest,
       })
       .then(() => {
         // @ts-ignore
@@ -197,7 +214,7 @@ export default {
    * @param key
    * @param options
    */
-  vHtml(key: string, options?: object | null) {
+  vHtml(key: string, options?: object | null): string {
     if (!isInit) return '';
 
     if (options) {
@@ -226,18 +243,11 @@ export default {
   },
 
   /**
-   * getInitOptions
-   */
-  getInitOptions() {
-    return intl.getInitOptions();
-  },
-
-  /**
    * formatMessage
    * @param options
    * @param variables
    */
-  formatMessage(options, variables?: object | null) {
+  formatMessage(options: ReactIntlUniversalMessageDescriptor, variables?: object | null): string {
     return intl.formatMessage(options, variables);
   },
 
@@ -246,14 +256,24 @@ export default {
    * @param options
    * @param variables
    */
-  formatHTMLMessage(options, variables?: object | null) {
+  formatHTMLMessage(
+    options: ReactIntlUniversalMessageDescriptor,
+    variables?: object | null,
+  ): string {
     return intl.formatHTMLMessage(options, variables);
   },
+
+  /**
+   * getInitOptions
+   */
+  getInitOptions() {
+    return intl.getInitOptions();
+  },
+
   /**
    * load - Load more locales after init
    * @param locales
    */
-
   load(locales: { [key: string]: any }) {
     intl.load(locales);
   },

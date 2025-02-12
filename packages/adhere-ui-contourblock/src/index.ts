@@ -1,3 +1,3 @@
-import ContourBlock from './contourblock';
+import ContourBlock from './ContourBlock';
 
 export default ContourBlock;

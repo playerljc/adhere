@@ -30,6 +30,13 @@ export interface OverlayProps extends SlideLayoutProps {
 }
 
 /**
+ * SlideLayoutHandle
+ */
+export interface SlideLayoutHandle {
+  getEl: () => HTMLElement | null;
+}
+
+/**
  * PushProps
  * @interface PushProps
  */

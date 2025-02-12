@@ -1,17 +1,12 @@
-@import '~antd/es/popover/style/index.less';
-@import '~@baifendian/adhere-ui-css/es/vars.less';
-
-.adhere-ui-searchtable-column-setting {
-  background-color: #fff;
-
-  > .adhere-ui-searchtable-column-setting-header {
+.adhere-ui-search-table-column-setting {
+  > .adhere-ui-search-table-column-setting-header {
     display: flex;
     justify-content: space-between;
     padding: 10px 20px;
-    border-bottom: 1px solid @adhere-border-color;
+    border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
   }
 
-  > .adhere-ui-searchtable-column-setting-body {
+  > .adhere-ui-search-table-column-setting-body {
     > ul {
       margin: 0;
       padding: 0;
@@ -23,7 +18,7 @@
         padding: 5px 10px 5px 0;
 
         &:hover {
-          background-color: rgba(@adhere-primary-color, 0.3);
+          background-color: rgba(var(--adhere-color-primary-rgb), 0.3);
         }
 
         > img {
@@ -39,13 +34,13 @@
   }
 }
 
-.adhere-ui-searchtable-sortableHelper {
+.adhere-ui-search-table-sortableHelper {
   z-index: 19999;
   display: flex;
   align-items: center;
   padding: 5px 10px;
-  background-color: rgba(@adhere-primary-color, 0.3);
-  border: 1px solid @adhere-primary-color;
+  background-color: rgba(var(--adhere-color-primary-rgb), 0.3);
+  border: 1px solid var(--adhere-color-primary);
 
   > span {
     margin-right: 10px;

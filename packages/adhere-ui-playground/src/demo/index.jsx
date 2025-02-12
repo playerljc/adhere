@@ -164,7 +164,7 @@ const Com = () => {
               ],
             },
           ],
-          type: 'PlayGroundMulit',
+          type: 'PlayGroundMulti',
           renderChildren: () => (
             <DelConfirm
               success={() => {

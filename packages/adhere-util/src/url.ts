@@ -1,10 +1,9 @@
-import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
-
+// import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 import { IUrlConfig } from './types';
 
-const { memoized } = WatchMemoized;
+// const { memoized } = WatchMemoized;
 
-const defaultConfig: IUrlConfig = {
+export const defaultConfig: IUrlConfig = {
   ignoreInvalid: true,
   isDecode: true,
   isEncode: true,
@@ -39,7 +38,7 @@ const methods = {
       const t = strs[i].split('=');
 
       const key = config.isDecode ? window.decodeURIComponent(t[0]).trim() : t[0].trim();
-      const value = config.isDecode ? window.decodeURIComponent(t[0]).trim() : t[1].trim();
+      const value = config.isDecode ? window.decodeURIComponent(t[1]).trim() : t[1].trim();
 
       if (!config.ignoreInvalid) {
         obj[key] = value;
@@ -60,7 +59,7 @@ const methods = {
    * @return string
    */
   stringify(record: object, config: IUrlConfig = { ...defaultConfig }): string {
-    const keys = Object.keys(record || {});
+    const keys = Object.keys(record ?? {});
 
     const getStr: string[] = [];
 
@@ -78,12 +77,68 @@ const methods = {
 
     return `?${getStr.join('&')}`;
   },
+
+  /**
+   * getPathName
+   * @description 不同路由模式下获取pathname的方法
+   * @return {string}
+   */
+  getPathName(publicPath: string = '/', router: 'hash' | 'browser' = 'browser') {
+    const routerMode = router || 'browser';
+
+    let pathname = '';
+
+    if (routerMode === 'browser') {
+      pathname = window.location.pathname;
+    } else if (routerMode === 'hash') {
+      const hash = window.location.hash;
+      if (hash.lastIndexOf('?') !== -1) {
+        pathname = hash.substring(1, hash.lastIndexOf('?'));
+      } else {
+        pathname = hash.substring(1);
+      }
+    }
+
+    if (publicPath !== '/') {
+      pathname = pathname.replace(`${publicPath}/`, '');
+    }
+
+    return pathname;
+  },
+  /**
+   * getSearch
+   * @description 不同路由模式下获取search的方法
+   * @return {string}
+   */
+  getSearch(router: 'hash' | 'browser' = 'browser') {
+    const routerMode = router || 'browser';
+
+    if (routerMode === 'browser') {
+      return window.location.search;
+    } else if (routerMode === 'hash') {
+      const hash = window.location.hash;
+
+      const index = hash.lastIndexOf('?');
+      if (index !== -1) {
+        return hash.substring(index);
+      }
+
+      return '';
+    }
+  },
+  /**
+   * getFullPath
+   * @return {`${string}${string}`}
+   */
+  getFullPath() {
+    return `${methods.getPathName()}${methods.getSearch()}`;
+  },
 };
 
-const memoizedMethods = {};
+// const memoizedMethods = {};
+//
+// for (const p in methods) {
+//   memoizedMethods[p] = memoized.createMemoFun(methods[p]);
+// }
 
-for (const p in methods) {
-  memoizedMethods[p] = memoized.createMemoFun(methods[p]);
-}
-
-export default memoizedMethods;
+export default methods;

@@ -1,2 +1,2 @@
-import{openSuccessDialog,openSuccessMessage}from"./successprompt";export default{openSuccessMessage:openSuccessMessage,openSuccessDialog:openSuccessDialog};
+import{openSuccessDialog,openSuccessMessage}from"./SuccessPrompt";export default{openSuccessMessage:openSuccessMessage,openSuccessDialog:openSuccessDialog};
 //# sourceMappingURL=index.js.map

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["empty/index.js"],"sourcesContent":["import Empty from './Empty';\nexport default Empty;"],"names":["Empty"],"mappings":"OAAOA,UAAW,yBACHA"}

@@ -1,4 +1,10 @@
 import React from 'react';
-import { RevealProps } from './types';
-declare const _default: React.NamedExoticComponent<RevealProps>;
-export default _default;
+import { RevealProps, SlideLayoutHandle } from './types';
+/**
+ * Reveal
+ * @param props
+ * @param ref
+ * @constructor
+ */
+declare const Reveal: React.NamedExoticComponent<RevealProps & React.RefAttributes<SlideLayoutHandle>>;
+export default Reveal;

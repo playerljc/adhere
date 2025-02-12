@@ -1,13 +1,16 @@
 import { Form } from 'antd';
-import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
-import moment from 'moment';
-import React, { FC, ReactNode, useContext, useEffect } from 'react';
+import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
+import dayjs from 'dayjs';
+import type { FC, ReactNode } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import Util from '@baifendian/adhere-util';
 
-import SearchTable, { SearchTableContext, selectorPrefix } from '../../../SearchTable';
-import { EditableCellEditProps } from '../../../types';
+import type SearchTable from '../../../SearchTable';
+import { SearchTableContext, selectorPrefix } from '../../../SearchTable';
+import type { EditableCellEditProps } from '../../../types';
 import { EditableContext } from '../EditableRow';
 import EventTypes from '../EventTypes';
 import FormItemGenerator from './FormItemGenerator';
@@ -116,7 +119,7 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
    * @description 更新单元格的值
    */
   function updateEditorCellData() {
-    if (value instanceof moment) {
+    if (dayjs.isDayjs(value)) {
       // @ts-ignore
       return context?.context?.updateEditorCellDateData({
         record,
@@ -137,13 +140,17 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
    * renderFormItem
    */
   function renderFormItem() {
-    let formItemNodeProps = {
+    const childrenProps = Util.isFunction(props.editableConfig.props)
+      ? (props.editableConfig.props as Function)({ record, dataIndex, rowIndex }) ?? {}
+      : props.editableConfig.props ?? {};
+
+    const formItemNodeProps = {
       autoFocus: !useKeepEdit,
-      ...props.editableConfig.props,
-      ...EventTypes.reduce<{ [prop: string]: Function }>((eventCombination, eventType) => {
+      ...childrenProps,
+      ...EventTypes.reduce<Record<string, Function>>((eventCombination, eventType) => {
         eventCombination[eventType] = (e: any) => {
-          if (props.editableConfig.props[eventType]) {
-            props.editableConfig.props[eventType](e, {
+          if (childrenProps[eventType]) {
+            childrenProps[eventType](e, {
               form,
               dataIndex,
               rowIndex,
@@ -159,24 +166,37 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
       type,
       props: formItemNodeProps,
       dictName: props.editableConfig.dictName,
-      renderChildren: props.editableConfig.renderChildren,
+      // renderChildren: props.editableConfig.renderChildren,
       form,
       dataIndex,
       rowIndex,
     });
 
-    return render
-      ? render({
-          value: record?.[dataIndex as string],
-          record,
-          dataIndex,
-          rowIndex,
-          form,
-          updateEditorCellData: () => updateEditorCellData(),
-          children: formItemNode,
-        })
-      : formItemNode;
+    return (
+      render?.({
+        value: record?.[dataIndex as string],
+        record,
+        dataIndex,
+        rowIndex,
+        form,
+        updateEditorCellData: () => updateEditorCellData(),
+        children: formItemNode,
+      }) ?? formItemNode
+    );
   }
+
+  const targetRules = useMemo(() => {
+    if (Util.isFunction(rules)) {
+      return (rules as Function)({
+        record,
+        value,
+        rowIndex,
+        dataIndex,
+      });
+    }
+
+    return rules;
+  }, [rules, record, value, rowIndex, dataIndex]);
 
   useEffect(() => {
     form?.setFieldValue(
@@ -203,15 +223,25 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
   // }, [record?.[dataIndex as string]]);
 
   return (
-    <div className={`${selectorPrefix}-editablecell-edit`}>
-      <div className={`${selectorPrefix}-editablecell-edit-inner`}>
+    <div className={`${selectorPrefix}-editable-cell-edit`}>
+      <div className={`${selectorPrefix}-editable-cell-edit-inner`}>
         <Form.Item
           // initialValue={record[dataIndex as string]}
           name={dataIndex as string}
-          rules={rules}
-          {...(formItemProps || {})}
+          rules={targetRules ?? []}
+          {...(formItemProps ?? {})}
         >
-          {type !== 'custom'
+          {type !== 'custom' && renderFormItem()}
+          {type === 'custom' &&
+            render?.({
+              value: record?.[dataIndex as string],
+              record,
+              dataIndex,
+              rowIndex,
+              form,
+              updateEditorCellData: () => updateEditorCellData(),
+            })}
+          {/*{type !== 'custom'
             ? renderFormItem()
             : render?.({
                 value: record?.[dataIndex as string],
@@ -220,16 +250,16 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
                 rowIndex,
                 form,
                 updateEditorCellData: () => updateEditorCellData(),
-              })}
+              })}*/}
         </Form.Item>
       </div>
 
       <ConditionalRender conditional={!!useTrigger && !useKeepEdit}>
         {() => (
-          <div className={`${selectorPrefix}-editablecell-edit-trigger`}>
-            <div className={`${selectorPrefix}-editablecell-edit-trigger-inner`}>
+          <div className={`${selectorPrefix}-editable-cell-edit-trigger`}>
+            <div className={`${selectorPrefix}-editable-cell-edit-trigger-inner`}>
               <div
-                className={`${selectorPrefix}-editablecell-edit-trigger-save`}
+                className={`${selectorPrefix}-editable-cell-edit-trigger-save`}
                 onClick={onSaveTrigger}
               >
                 {!!renderSaveTrigger &&
@@ -243,7 +273,7 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
               </div>
 
               <div
-                className={`${selectorPrefix}-editablecell-edit-trigger-cancel`}
+                className={`${selectorPrefix}-editable-cell-edit-trigger-cancel`}
                 onClick={onCancelTrigger}
               >
                 {!!renderCancelTrigger &&
@@ -262,5 +292,7 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
     </div>
   );
 };
+
+EditableCellEdit.displayName = 'EditableCellEdit';
 
 export default EditableCellEdit;

@@ -1,15 +1,29 @@
-const path = require('path');
-
 const modifyVars = require('./themes/default/vars');
+
+function isDev(mode) {
+  return mode === 'development';
+}
+
+function isProd(mode) {
+  return mode === 'production';
+}
+
+function chunkNameJs(arg) {
+  const name = arg.chunk.name ? '[name]' : 'system';
+  return isProd() ? `${name}.[chunkhash].bundle.js` : `${name}.[contenthash].bundle.js`;
+}
+
+function chunkNameCSS(arg) {
+  const name = arg.chunk.name ? '[name]' : 'system';
+  return isProd() ? `${name}.[chunkhash].css` : `${name}.[contenthash].css`;
+}
 
 module.exports = {
   getTheme() {
     return modifyVars;
   },
-  getConfig({ webpackConfig }) {
-    // cssModules处理中添加
-    // if (webpackConfig.mode === 'development') {
-    // eslint-disable-next-line no-param-reassign
+  getConfig({ webpack, webpackConfig, plugins }) {
+    const publicPath = process.env.publicPath || '/';
 
     // TODO:umd  umd时候需要打开
     // webpackConfig.externals = {
@@ -20,35 +34,33 @@ module.exports = {
     //   'moment':'moment',
     // };
 
-    webpackConfig.devtool = 'cheap-module-eval-source-map';
+    if (isDev(process.env.mode)) {
+      if (publicPath !== '/') {
+        webpackConfig.devServer.historyApiFallback = {
+          index: `/${publicPath}/index.html`,
+        };
+      }
+    }
 
-    // webpackConfig.resolve.alias['@baifendian/adhere/lib/search-table'] = path.join(
-    //   __dirname,
-    //   '../',
-    //   'adhere-ui-searchtable',
-    //   'src',
-    // );
+    if (publicPath !== '/') {
+      webpackConfig.output.publicPath = `/${publicPath}/`;
+    }
 
-    // eslint-disable-next-line no-param-reassign
-    // TODO:umd umd的时候需要注释掉
-    // webpackConfig.resolve.alias.ol = path.join(
-    //   __dirname,
-    //   '../../node_modules/@baifendian/adhere-ui-olmap/node_modules/ol',
-    // );
+    webpackConfig.output.filename = chunkNameJs;
 
-    // eslint-disable-next-line no-param-reassign
-    // webpackConfig.resolve.alias.swiper = path.join(
-    //   __dirname,
-    //   '../../node_modules/@baifendian/adhere-ui-revolving/node_modules/swiper',
-    // );
+    webpackConfig.output.chunkFilename = webpackConfig.output.filename;
 
-    // webpackConfig.resolve.alias['algebra.js'] = path.join(
-    //   __dirname,
-    //   'node_modules/@baifendian/adhere/node_modules/@baifendian/adhere-ui-olmap/node_modules/algebra.js',
-    // );
+    webpackConfig.externals = {
+      '@/constent': 'Constent',
+    };
 
-    // 第三方库的引用是从文件当前目录开始搜索
-    // webpackConfig.resolve.modules.unshift(path.join(__dirname, '../../node_modules'));
+    // 这块只有需要主题切换的时候才能用到
+    const MiniCssExtractPluginIndex = isProd(webpackConfig.mode) ? 3 : 2;
+    webpackConfig.plugins[MiniCssExtractPluginIndex] = new plugins.MiniCssExtractPlugin({
+      filename: chunkNameCSS,
+      chunkFilename: chunkNameCSS,
+      ignoreOrder: true,
+    });
 
     // 这个文件不在src里也不在node_modules里，只在link的时候才会遇到这个问题(原因是node_modules里的包是link过来的)
     webpackConfig.module.rules[webpackConfig.module.rules.length - 1].exclude = [
@@ -62,30 +74,37 @@ module.exports = {
       /packages[\\/]adhere[\\/]es[\\/].*[\\/]style[\\/]index\.less/,
       /packages[\\/]adhere[\\/]es[\\/].*\.less/,
       /packages[\\/]adhere-.{1,}[\\/]es[\\/].*\.less/,
-      // /packages[\\/]adhere-ui-searchtable[\\/]src[\\/]style[\\/]index.less/,
     );
-    // }
 
-    // 加入markdown的解析
-    webpackConfig.module.rules.push({
-      test: /\.md$/,
-      use: 'raw-loader',
-    });
+    // 变量的引入
+    webpackConfig.plugins.push(
+      new webpack.DefinePlugin({
+        CustomEvnVars: {
+          mode: JSON.stringify(process.env.mode),
+          environment: JSON.stringify(process.env.environment),
+          publicPath: JSON.stringify(process.env.publicPath),
+          router: JSON.stringify(process.env.router),
+          media: JSON.stringify(process.env.media),
+        },
+      }),
+    );
 
     webpackConfig.module.rules[2].include.push(/ol.css/, /swiper.css/, /nprogress.css/);
 
-    // webpackConfig.module.rules[0].include = [path.join(__dirname, 'src')];
+    webpackConfig.module.rules[3].use.push({
+      loader: '@ctsj/less-media-query-loader',
+    });
 
     // TODO:umd umd的时候需要注释掉
     // babel-plugin-import的配置
     const { use } = webpackConfig.module.rules[0];
 
     // 在使用babel-plugin-import的时候让adhere也执行
-    webpackConfig.module.rules[0].include = [path.join(__dirname, 'src'), /packages[\\/]adhere-/];
-    delete webpackConfig.module.rules[0].exclude;
-
-    webpackConfig.module.rules[1].include = [path.join(__dirname, 'src'), /packages[\\/]adhere-/];
-    delete webpackConfig.module.rules[1].exclude;
+    // webpackConfig.module.rules[0].include = [path.join(__dirname, 'src'), /packages[\\/]adhere-/];
+    // delete webpackConfig.module.rules[0].exclude;
+    //
+    // webpackConfig.module.rules[1].include = [path.join(__dirname, 'src'), /packages[\\/]adhere-/];
+    // delete webpackConfig.module.rules[1].exclude;
 
     const babelLoaderConfig = use.find((loaderConfig) => {
       if (typeof loaderConfig === 'string') return false;
@@ -106,37 +125,47 @@ module.exports = {
             libraryDirectory: 'es',
             transformToDefaultImport: true,
             style: true,
-            // styleLibraryDirectory: 'es'
           },
           'adhere',
         ],
         [
           'import',
           {
-            libraryName: 'antd',
+            libraryName: '@baifendian/adhere-ui-anthoc',
             libraryDirectory: 'es',
-            // styleLibraryDirectory: 'es',
+            transformToDefaultImport: true,
             style: true,
           },
-          'ant',
+          'adhere-ui-anthoc',
+        ],
+        [
+          'import',
+          {
+            libraryName: '@baifendian/adhere-ui-richtext-sandbox',
+            libraryDirectory: 'es',
+            transformToDefaultImport: true,
+            style: true,
+          },
+          'adhere-ui-richtext-sandbox',
+        ],
+        [
+          'import',
+          {
+            libraryName: '@ant-design/icons',
+            libraryDirectory: 'es/icons',
+            camel2DashComponentName: false,
+            style: false,
+          },
+          '@ant-design/icons',
         ],
       );
     }
 
     if (webpackConfig.mode === 'production') {
+      webpackConfig.optimization.concatenateModules = false;
       webpackConfig.optimization.splitChunks = {
-        // chunks: 'all',
-        // minSize: 30000,
-        // maxSize: 0,
-        // minChunks: 1,
-        // maxAsyncRequests: 5,
-        // maxInitialRequests: 3,
-        // automaticNameDelimiter: '~',
-        // automaticNameMaxLength: 30,
-        // name: true,
         chunks: 'all',
         minSize: 20000,
-        maxSize: 0,
         minChunks: 1,
         maxAsyncRequests: 30,
         maxInitialRequests: 30,
@@ -184,7 +213,7 @@ module.exports = {
             enforce: true,
           },
           static: {
-            test: /[\\/]node_modules[\\/](lodash|_lodash|js-md5|_js-md5|classnames|_classnames|uuid|_uuid|qs|_qs|moment|axios|_axios|_cookie_js|_moment|swiper|_swiper)/,
+            test: /[\\/]node_modules[\\/](lodash|_lodash|js-md5|_js-md5|classnames|_classnames|uuid|_uuid|qs|_qs|dayjs|axios|_axios|_cookie_js|_dayjs|swiper|_swiper)/,
             priority: 1,
             enforce: true,
           },

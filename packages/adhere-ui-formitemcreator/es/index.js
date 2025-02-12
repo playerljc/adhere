@@ -1,2 +1,2 @@
-import FormItemCreator from"./formitemcreator";export default FormItemCreator;
+import FormItemCreator from"./FormItemCreator";export default FormItemCreator;
 //# sourceMappingURL=index.js.map

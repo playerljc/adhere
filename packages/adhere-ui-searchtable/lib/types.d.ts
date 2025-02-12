@@ -1,33 +1,37 @@
 import type { FormInstance } from 'antd/es/form';
+import type { TableProps } from 'antd/es/table/InternalTable';
 import type { Rule } from 'antd/lib/form/index';
-import type { TableProps } from 'antd/lib/table/Table';
-import type { ColumnType } from 'antd/lib/table/interface';
+import type { ColumnType, TableRowSelection } from 'antd/lib/table/interface';
 import type { DataIndex } from 'rc-table/lib/interface';
 import type { CSSProperties, ForwardRefExoticComponent, PropsWithoutRef, ReactElement, ReactNode, RefAttributes, RefObject } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
 import type SearchTableImplement from './SearchTableImplement';
 import type { SearchTableStateImplement } from './SearchTableStateImplement';
-export declare type FormItemType = 'input' | 'textArea' | 'inputNumber' | 'inputNumberDecimal1' | 'inputNumberDecimal2' | 'inputNumberInteger' | 'select' | 'multiSelect' | 'checkAllMultiSelect' | 'autoCompleteSelect' | 'autoCompleteSelectMulti' | 'autoCompleteSelectCheckAllMulti' | 'radioHorizontal' | 'radioButton' | 'radioSelect' | 'radioCustom' | 'checkBoxHorizontal' | 'checkBoxCheckAllHorizontal' | 'checkboxSelect' | 'checkBoxCheckAllSelect' | 'checkBoxCustom' | 'checkBoxCheckAllCustom' | 'transferSelect' | 'tableSelect' | 'tableMultiSelect' | 'tablePagingSelect' | 'tablePagingMultiSelect' | 'listSelect' | 'listMultiSelect' | 'listPagingSelect' | 'listPagingMultiSelect' | 'treeSelect' | 'treeMultiSelect' | 'treeSelectLeaf' | 'treeMultiSelectLeaf' | 'cascaderSelect' | 'cascaderMultiSelect' | 'cascaderSelectLeaf' | 'cascaderMultiSelectLeaf' | 'datePicker' | 'timePicker' | 'rangePicker' | 'slider' | 'sliderRange' | 'rate' | 'switch' | 'custom' | string;
+export type FormItemType = 'input' | 'textArea' | 'inputNumber' | 'inputNumberDecimal1' | 'inputNumberDecimal2' | 'inputNumberInteger' | 'datePicker' | 'timePicker' | 'rangePicker' | 'slider' | 'sliderRange' | 'rate' | 'switch' | 'dict' | 'custom' | string;
 /**
  * ColumnSearchConfig
  * @description 列的查询设置
  */
 export interface ColumnSearchConfig {
-    type: FormItemType;
+    type: FormItemType | string;
     visible?: boolean;
     showColumnHeader?: boolean;
     props?: any;
     labelAttrs?: any;
     valueAttrs?: any;
+    sort?: boolean;
     authority?: string[];
     renderNoAuthority?: (params?: any) => ReactNode | null;
     dataIndex?: string;
     title?: ReactNode;
+    titleToolTip?: string;
     dictName?: string;
     renderChildren?: (params?: any) => ReactNode | null;
     render?: () => ReactNode | null;
     startName?: string;
     endName?: string;
+    isShowLabelSymbol?: boolean;
 }
 export interface ColumnParams {
     value: string;
@@ -82,14 +86,24 @@ export interface RowEditableConfig {
  * RowDragSortConfig
  */
 export interface RowDragSortConfig {
-    type?: string;
-    dropOverDownwardClassName?: string;
-    dropOverUpwardClasName?: string;
-    dropConfig?: {
-        [prop: string]: any;
+    override?: {
+        type?: string;
+        dropOverDownwardClassName?: string;
+        dropOverUpwardClasName?: string;
+        dragConfig?: (defaultDragConfig?: any) => {
+            [prop: string]: any;
+        };
+        dropConfig?: (defaultDropConfig?: any) => {
+            [prop: string]: any;
+        };
     };
-    dragConfig?: {
-        [prop: string]: any;
+    dropHooks?: {
+        collect?: (monitor?: any) => any;
+        drop?: (params?: {
+            sourceRecord: any;
+            targetRecord: any;
+            item: any;
+        }) => Promise<void>;
     };
 }
 /**
@@ -175,7 +189,6 @@ export interface FormItemGeneratorConfig {
     type?: FormItemType | string;
     props?: any;
     dictName?: string;
-    renderChildren?: (params?: any) => ReactNode | null;
     form?: FormInstance<any> | null;
     dataIndex?: DataIndex;
     rowIndex?: number;
@@ -185,7 +198,9 @@ export interface FormItemGeneratorConfig {
  * @description 可编辑的单元格
  */
 export interface ColumnEditableConfig {
-    editable: boolean;
+    editable: boolean | ((record: {
+        [prop: string]: any;
+    }, rowIndex: number) => boolean);
     defaultStatus?: 'view' | 'edit' | string;
     type?: FormItemType | string;
     render?: (params: {
@@ -205,12 +220,12 @@ export interface ColumnEditableConfig {
     }) => Promise<void>;
     onBeforeCancel?: (params: ColumnParams) => Promise<void>;
     formItemProps?: any;
-    props?: any;
+    props?: ((params: ColumnParams) => any) | object;
     useTrigger?: boolean;
     renderToEditTrigger?: (params: ColumnParams) => ReactNode;
     renderSaveTrigger?: (params: ColumnParams) => ReactNode;
     renderCancelTrigger?: (params: ColumnParams) => ReactNode;
-    rules?: Rule[];
+    rules?: ((params: ColumnParams) => Rule[]) | Rule[];
     dataIndex?: DataIndex;
     dictName?: string;
     renderChildren?: (params?: any) => ReactNode | null;
@@ -226,60 +241,76 @@ export interface ColumnRowDragSortConfig {
  * @description Column列的扩展设置
  */
 export interface ColumnTypeExt extends ColumnType<any> {
+    $tip?: ReactNode;
+    renderTip?: (tip: ReactNode) => ReactNode;
     $authorized?: () => boolean;
     $resizable?: boolean;
     $hide?: boolean;
     $search?: ColumnSearchConfig;
     $editable?: ColumnEditableConfig;
     $rowDragSort?: ColumnRowDragSortConfig;
+    headerCellAlign?: 'left' | 'center' | 'right';
+}
+/**
+ * SearchProps
+ */
+export interface SearchProps extends SuspenseProps {
+    className?: string;
+    style?: CSSProperties;
+    searchClassName: string;
+    searchStyle: CSSProperties;
+    firstLoading: ReactElement;
+    isShowExpandSearch: boolean;
+    defaultExpandSearchCollapse: boolean;
+    defaultSelectedRowKeys?: string[];
+    fitBody: boolean;
+    autoFixed: boolean;
+    bodyClassName: string;
+    bodyStyle: CSSProperties;
+    title: string;
+    router: 'browser' | 'hash';
+    publicPath: string;
+}
+/**
+ * SearchState
+ */
+export interface SearchState extends SuspenseState {
+    expand?: boolean;
+    prePage?: number | undefined;
+    page?: number;
+    limit?: number;
 }
 /**
  * SearchTableProps
  * @interface SearchTableProps
  */
-export interface SearchTableProps extends SuspenseProps {
-    className?: string;
-    style?: CSSProperties;
-    tableClassName: string;
-    tableStyle: CSSProperties;
-    searchClassName: string;
-    searchStyle: CSSProperties;
-    firstLoading: ReactElement;
+export interface SearchTableProps extends SearchProps {
     antdTableProps: TableProps<any>;
-    isShowExpandSearch: boolean;
-    defaultExpandSearchCollapse: boolean;
-    fitSearch: boolean;
-    fitTable: boolean;
-    autoFixed: boolean;
     fixedHeaderAutoTable: boolean;
     fixedTableSpaceBetween: boolean;
-    showColumnSetting: boolean;
 }
 /**
  * SearchTableState
  * @interface SearchTableState
  */
-export interface SearchTableState extends SuspenseState {
+export interface SearchTableState extends SearchState {
     [props: string]: any;
-    page?: number;
-    limit?: number;
-    expand?: boolean;
     scrollY?: number;
-    columnSetting?: Array<ColumnType<any> & {
+    columnSetting?: (ColumnType<any> & {
         sort: number;
         display: boolean;
-    }>;
+    })[];
     tableDensity?: TableDensity;
 }
 export interface ISearchTableImplement {
     /**
      * showLoading - 是否显示遮罩
      */
-    showLoading(): boolean;
+    showLoading: () => boolean;
     /**
      * fetchData - 加载数据
      */
-    fetchData(): void;
+    fetchData: () => void;
 }
 /**
  * SearchTableImplementProps
@@ -370,6 +401,15 @@ export interface AdvancedSearchPanelProps {
     onSearch: Function;
     onReset: Function;
     onCollapse: Function;
+    children?: (params: {
+        groupData: AdvancedSearchPanelGroupData[];
+        tableGridLayoutConfig: AdvancedSearchPanelTableGridLayoutConfig;
+        remainingGroupData: AdvancedSearchPanelGroupData[];
+        advancedSearchConfig: AdvancedSearchPanelSearchConfig;
+        onSearch: Function;
+        onReset: Function;
+        onCollapse: Function;
+    }) => ReactNode;
 }
 export interface SearchTableImplementFactoryFunction<T, P> {
     (params: {
@@ -388,6 +428,38 @@ export interface SearchTableStateImplementFactoryFunction<T, P> {
         mapDispatchToProps?: (dispatch?: any) => any;
     }): (Component: typeof SearchTableStateImplement) => ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>;
 }
+export interface TableDensitySettingProps {
+    density: TableDensity;
+    onReset: (...args: any[]) => any;
+    onChange: (...args: any[]) => any;
+    renderDensitySettingBtn?: () => ReactNode;
+}
+export interface ColumnSettingProps {
+    columns: ColumnTypeExt[];
+    onShowColumns: (...args: any[]) => any;
+    onReset: (...args: any[]) => any;
+    onDisplayColumn: (...args: any[]) => any;
+    onSortEnd: (...args: any[]) => any;
+    renderColumnSettingBtn?: () => ReactNode;
+}
+export interface ExportExcelProps {
+    title: string;
+    getDataSource: () => any[];
+    getColumns: () => ColumnTypeExt[];
+    renderExportExcelBtn?: (onExportExcel: () => void) => ReactNode;
+}
+export interface ReloadTableProps {
+    onReload: () => void;
+    showLoading: boolean;
+    renderReloadBtn?: ({ showLoading, onReload, }: {
+        showLoading: boolean;
+        onReload: () => void;
+    }) => ReactNode;
+}
+export interface ColumnTipTitleProps {
+    tip: ReactNode;
+    title: ReactNode;
+}
 /**
  * TableDensity
  */
@@ -396,3 +468,22 @@ export declare enum TableDensity {
     MIDDLE = "middle",
     SMALL = "small"
 }
+export interface DragSortRowContextProps {
+    dragResult: ReturnType<typeof useDrag>;
+    dropResult: ReturnType<typeof useDrop>;
+    setCanDrag: (canDrag: boolean) => void;
+}
+export interface DragSortColumnProps extends ColumnTypeExt {
+    className?: string;
+}
+export type TableRowSelectionExt<T> = TableRowSelection<T> & {
+    onCheckedStrategySelect?: (record: Record<string, any>, changeRows: any[], selected: boolean) => Promise<void>;
+    onCheckedStrategyVirtualSelect?: (changeRows: any[], selected: boolean) => {
+        selectedRowKeys: any[];
+        selectedRows: any[];
+    } | null;
+    onVirtualChange?: (selectedRowKeys: any[], selectedRows: any[]) => {
+        selectedRowKeys: any[];
+        selectedRows: any[];
+    } | null;
+};

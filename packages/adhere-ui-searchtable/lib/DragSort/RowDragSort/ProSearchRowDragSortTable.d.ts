@@ -1,4 +1,3 @@
-import React from 'react';
 export declare const SearchAndPaginParamsMemo: any;
 /**
  * ProSearchRowDragSortTable
@@ -11,7 +10,7 @@ declare const _default: {
         onSubTableChange(pagination: any, filters: any, sorter: any): void;
         onSearchPanelCollapseBefore(): void;
         unMountSearchAndPaginParamsDeal(): void;
-        initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+        initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
         hasAdvancedSearch(): boolean;
         hasNumberColumnFixed(): boolean;
         hasOptionColumnFixed(): boolean;
@@ -25,42 +24,45 @@ declare const _default: {
         getFetchDataParams(): {};
         getColumns(columns: any): any;
         getTableColumns(): any;
+        getTableColumnSearchHeaderIcon(column: import("../../types").ColumnTypeExt): import("react").JSX.Element;
         getOptionsColumnDataIndex(): string;
         getLinkColumnDataIndex(): string;
         getPagination(): any;
-        getGridSearchFormGroupParams(): ({
-            name: string;
+        getGridSearchFormColgroup(): {
             columnCount: number;
             colgroup: (string | undefined)[];
-            data: {
-                key: number;
-                sort?: number | undefined;
-                label: React.ReactNode;
-                value: React.ReactNode;
-            }[];
-        }[] | {
-            rowCount?: undefined;
-        } | {
+        };
+        getGridSearchFormRowCount(): number;
+        getGridSearchFormProps(): {
             rowCount: number;
-        })[];
+        };
+        getGridSearchFormGroupParams(): {}[];
+        getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
         getGridSearchFormGroupDataByColumnConfig(): {
             key: number;
-            sort?: number | undefined;
-            label: React.ReactNode;
-            value: React.ReactNode;
+            sort?: number;
+            label: import("react").ReactNode;
+            value: import("react").ReactNode | null;
         }[];
         assignSearchConfig(searchConfig: any, column: any): any;
-        renderSearchForm(): JSX.Element;
+        renderSearchBarCollapseControl(): any;
+        renderSearchForm(): import("react").JSX.Element | null;
+        renderSearchFormToolBarItems(_defaultItems: any): any[];
+        renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
         renderSearchFooterItems(_defaultItems: any): any[];
+        getSearchFooterItemsEllipsisCount(): number;
+        isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
         renderSearchFooterItemsImpl(defaultItems: any): any[];
         renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
             searchConfig: any;
             column: any;
             dataIndex: any;
-        }): React.ReactNode;
-        renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): JSX.Element;
+        }): import("react").ReactNode;
+        renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+        renderAdvancedSearchPanel(params: any): null;
         renderOptionColumn(defaultItems: any, params: any): any;
     };
     [x: string]: any;
+    displayName: string;
 };
 export default _default;

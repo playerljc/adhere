@@ -1,7 +1,7 @@
-import cloneDeep from 'lodash.clonedeep';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
-import { SearchEditorTableState, SearchTableImplementProps } from '../types';
+import { cloneDeep, findRecord } from '../Util';
+import type { SearchEditorTableState, SearchTableImplementProps } from '../types';
 import SearchEditableCellTable from './SearchEditableCellTable';
 import SearchEditableFactory from './SearchEditableFactory';
 
@@ -10,12 +10,10 @@ import SearchEditableFactory from './SearchEditableFactory';
  * @class
  * @classdesc 可编辑的表格(表格进行整体编辑)
  */
-class SearchEditableTable<
-  P extends SearchTableImplementProps,
-  S extends SearchEditorTableState,
-> extends SearchEditableFactory<SearchTableImplementProps, SearchEditorTableState>(
-  SearchEditableCellTable,
-) {
+class SearchEditableTable extends SearchEditableFactory<
+  SearchTableImplementProps,
+  SearchEditorTableState
+>(SearchEditableCellTable) {
   /**
    * updateEditorData
    * @description 更新可编辑的所有单元格
@@ -32,11 +30,11 @@ class SearchEditableTable<
 
         keys.forEach((dataIndex) => {
           let value = record[dataIndex];
-          if (value instanceof moment) {
+          if (dayjs.isDayjs(value)) {
             value = value.valueOf();
           }
 
-          const recordItem = dataSource.find((t) => t[rowKey] === record[rowKey]);
+          const recordItem = findRecord(dataSource, rowKey, record[rowKey]);
           if (recordItem) {
             recordItem[dataIndex] = value;
           }
@@ -46,7 +44,8 @@ class SearchEditableTable<
       this.props
         .dispatch({
           type: `${this.getServiceName()}/receive`,
-          [this.getServiceName()]: listData,
+          // [this.getServiceName()]: listData,
+          ...listData,
         })
         .then(() => resolve());
     });

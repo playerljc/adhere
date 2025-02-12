@@ -1,3 +1,3 @@
-import FontSizeSetting from './fontsizesetting';
+import FontSizeSetting from './FontSizeSetting';
 
 export default FontSizeSetting;

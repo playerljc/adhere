@@ -1,0 +1,935 @@
+import { FormProps, FormRule } from 'antd';
+import type {
+  CheckListProps as AntMobileCheckListProps,
+  CheckboxProps as AntMobileCheckbox,
+  CheckboxGroupProps as AntMobileCheckboxGroupProps,
+  RadioGroupProps as AntMobileRadioGroupProps,
+  RadioProps as AntMobileRadioProps,
+  CalendarPickerViewProps,
+  CascaderViewProps,
+  CheckListItemProps,
+  DatePickerViewProps,
+  DialogProps,
+  Form,
+  InputProps,
+  ListItemProps,
+  ListProps,
+  ModalProps,
+  PopupProps,
+  PullToRefreshProps,
+  SearchBarProps,
+  SelectorOption,
+  SelectorProps,
+  SpaceProps,
+} from 'antd-mobile';
+import type { CascaderOption } from 'antd-mobile/es/components/cascader-view';
+import type { CheckListValue } from 'antd-mobile/es/components/check-list';
+import type { Action } from 'antd-mobile/es/components/modal';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
+import { Context } from 'react';
+
+import type { AutoCompleteProps as AdhereMobileAutoCompleteProps } from '@baifendian/adhere-mobile-ui-auto-complete/es/types';
+import type { TimePickerViewProps } from '@baifendian/adhere-mobile-ui-time-picker-view/es/types';
+import type { TreeSelectProps } from '@baifendian/adhere-mobile-ui-tree/es/types';
+import type {
+  ScrollLoadProps,
+  ScrollLoadRefHandle,
+} from '@baifendian/adhere-ui-scrollload/es/types';
+
+import RangeCalendarDialog from './calendar-dialog/RangeCalendarDialog';
+import RangeCalendarModal from './calendar-modal/RangeCalendarModal';
+import RangeCalendarPopup from './calendar-popup/RangeCalendarPopup';
+import AsyncCascaderView from './cascader-view/AsyncCascaderView';
+import FilterCascaderView from './cascader-view/FilterCascaderView';
+import AutoCompleteCheckList from './check-list/AutoCompleteCheckList';
+import AutoCompleteCheckboxCheckList from './check-list/AutoCompleteCheckboxCheckList';
+import AutoCompletePagingCheckList from './check-list/AutoCompletePagingCheckList';
+import AutoCompletePagingCheckboxCheckList from './check-list/AutoCompletePagingCheckboxCheckList';
+import CheckAllCheckList from './check-list/CheckAllCheckList';
+import CheckboxCheckAllCheckList from './check-list/CheckboxCheckAllCheckList';
+import CheckboxCheckList from './check-list/CheckboxCheckList';
+import FilterCheckAllCheckList from './check-list/FilterCheckAllCheckList';
+import FilterCheckList from './check-list/FilterCheckList';
+import FilterCheckboxCheckAllCheckList from './check-list/FilterCheckboxCheckAllCheckList';
+import FilterCheckboxCheckList from './check-list/FilterCheckboxCheckList';
+import FilterPagingCheckList from './check-list/FilterPagingCheckList';
+import FilterPagingCheckboxCheckList from './check-list/FilterPagingCheckboxCheckList';
+import PagingCheckList from './check-list/PagingCheckList';
+import PagingCheckboxCheckList from './check-list/PagingCheckboxCheckList';
+import AutoCompleteCheckbox from './checkbox/AutoCompleteCheckbox';
+import AutoCompletePagingCheckbox from './checkbox/AutoCompletePagingCheckbox';
+import CheckAllCheckbox from './checkbox/CheckAllCheckbox';
+import CheckboxGroup from './checkbox/CheckboxGroup';
+import FilterCheckAllCheckbox from './checkbox/FilterCheckAllCheckbox';
+import FilterCheckbox from './checkbox/FilterCheckbox';
+import FilterPagingCheckbox from './checkbox/FilterPagingCheckbox';
+import PagingCheckbox from './checkbox/PagingCheckbox';
+import DialogTrigger from './dialog/Trigger';
+import DialogTriggerPrompt from './dialog/TriggerPrompt';
+import CustomWrapperFormItem from './form/CustomWrapperFormItem';
+import FormItem from './form/FormItem';
+import NestingFormItem from './form/NestingFormItem';
+import InputMultipleDialog from './input-multiple/InputMultipleDialog';
+import DataSourceList from './list/DataSourceList';
+import ModalTrigger from './modal/Trigger';
+import ModalTriggerPrompt from './modal/TriggerPrompt';
+import PopupTrigger from './popup/Trigger';
+import PopupTriggerPrompt from './popup/TriggerPrompt';
+import AutoCompletePagingRadio from './radio/AutoCompletePagingRadio';
+import AutoCompleteRadio from './radio/AutoCompleteRadio';
+import FilterPagingRadio from './radio/FilterPagingRadio';
+import FilterRadio from './radio/FilterRadio';
+import PagingRadio from './radio/PagingRadio';
+import RadioGroup from './radio/RadioGroup';
+import AutoCompletePagingSelector from './selector/AutoCompletePagingSelector';
+import AutoCompleteSelector from './selector/AutoCompleteSelector';
+import CheckAllSelector from './selector/CheckAllSelector';
+import FilterCheckAllSelector from './selector/FilterCheckAllSelector';
+import FilterPagingSelector from './selector/FilterPagingSelector';
+import FilterSelector from './selector/FilterSelector';
+import PagingSelector from './selector/PagingSelector';
+import AsyncTreeLeafSelect from './tree-select/AsyncTreeLeafSelect';
+import AsyncTreeSelect from './tree-select/AsyncTreeSelect';
+import AsyncTreeShowAllSelect from './tree-select/AsyncTreeShowAllSelect';
+import AsyncTreeShowChildSelect from './tree-select/AsyncTreeShowChildSelect';
+import AutoCompleteTreeLeafSelect from './tree-select/AutoCompleteTreeLeafSelect';
+import AutoCompleteTreeSelect from './tree-select/AutoCompleteTreeSelect';
+import AutoCompleteTreeShowAllSelect from './tree-select/AutoCompleteTreeShowAllSelect';
+import AutoCompleteTreeShowChildSelect from './tree-select/AutoCompleteTreeShowChildSelect';
+import TreeLeafSelect from './tree-select/TreeLeafSelect';
+import TreeShowAllSelect from './tree-select/TreeShowAllSelect';
+import TreeShowChildSelect from './tree-select/TreeShowChildSelect';
+import { createFactory } from './util';
+
+type BaseType = {
+  className?: string;
+  style?: CSSProperties;
+};
+
+export type AntMobileCheckboxItem = AntMobileCheckbox & {
+  title?: string;
+};
+
+export type AntMobileRadioItem = AntMobileRadioProps & {
+  title?: string;
+};
+
+export type CheckListProps = AntMobileCheckListProps & {
+  options?: CheckListItemProps[];
+};
+
+export type CheckboxGroupProps = AntMobileCheckboxGroupProps & {
+  spaceClassName?: string;
+  spaceStyle?: CSSProperties;
+  spaceProps?: SpaceProps;
+  options?: AntMobileCheckboxItem[];
+};
+
+export type RadioGroupProps = AntMobileRadioGroupProps & {
+  spaceClassName?: string;
+  spaceStyle?: CSSProperties;
+  spaceProps?: SpaceProps;
+  options?: AntMobileRadioItem[];
+};
+
+export type DisplayNameInternal<T> = T & {
+  displayName: string;
+};
+
+type checkAllLabelFun = (value: CheckListValue[]) => ReactNode;
+
+export type CheckAllWrapperStyleProps = {
+  checkAllWrapperClassName?: string;
+  checkAllWrapperStyle?: CSSProperties;
+  checkAllBodyWrapperClassName?: string;
+  checkAllBodyWrapperStyle?: CSSProperties;
+  // 自定义渲染
+  renderCheckAll?: (checkAllOrigin: ReactElement, childrenOrigin: ReactNode) => ReactElement;
+  // CheckboxAll的label
+  checkAllLabel?: ReactNode | checkAllLabelFun;
+};
+
+type CheckAllChangeFun = CheckAllWrapperProps['onCheckAllChange'];
+
+export type CheckAllCheckListProps = CheckAllWrapperStyleProps &
+  CheckListProps & {
+    onCheckAllChange?: CheckAllChangeFun;
+  };
+
+export type CheckAllCheckboxProps = CheckAllWrapperStyleProps &
+  CheckboxGroupProps & {
+    onCheckAllChange?: CheckAllChangeFun;
+  };
+
+export type CheckAllSelectorProps = CheckAllWrapperStyleProps & SelectorProps<any>; /*& {
+    onCheckAllChange?: CheckAllChangeFun;
+  };*/
+
+export type CheckAllWrapperProps = {
+  value?: CheckListValue[];
+  options?: CheckListValue[];
+  onCheckAllChange?: (
+    checkedValue: CheckListValue[],
+    checked: boolean,
+    changeValue: CheckListValue[],
+  ) => void;
+  children?: ReactNode;
+};
+
+export type FilterOption<Option> = (inputValue: string, option: Option) => boolean;
+
+type filterProps<Option> = SearchBarProps & {
+  optionFilterProp?: string;
+  filterOption?: FilterOption<Option> | boolean;
+};
+
+type FilterProps<Option> = {
+  filterWrapperClassName?: string;
+  filterWrapperStyle?: CSSProperties;
+  bodyWrapperClassName?: string;
+  bodyWrapperStyle?: CSSProperties;
+  filterProps: filterProps<Option>;
+  renderEmpty?: () => ReactNode;
+};
+
+export type FilterCheckListProps = BaseType & CheckListProps & FilterProps<CheckListItemProps>;
+
+export type FilterCheckboxProps = BaseType &
+  CheckboxGroupProps &
+  FilterProps<AntMobileCheckboxItem>;
+
+export type FilterRadioProps = BaseType & RadioGroupProps & FilterProps<AntMobileRadioItem>;
+
+export type FilterSelectorProps = BaseType &
+  SelectorProps<any> &
+  FilterProps<SelectorOption<any>> & {
+    selectorClassName?: string;
+    selectorStyle?: CSSProperties;
+  };
+
+export type FilterCheckAllCheckListProps = BaseType &
+  CheckAllCheckListProps &
+  FilterProps<CheckListItemProps> & {
+    checkListClassName?: string;
+    checkListStyle?: CSSProperties;
+  };
+
+export type FilterCheckAllCheckboxProps = BaseType &
+  CheckAllCheckboxProps &
+  FilterProps<AntMobileCheckboxItem>;
+
+export type FilterCheckAllSelectorProps = BaseType &
+  CheckAllSelectorProps &
+  FilterProps<SelectorOption<any>> & {
+    selectorClassName?: string;
+    selectorStyle?: CSSProperties;
+  };
+
+export type ListCheckAllProps = CheckAllWrapperStyleProps &
+  CheckAllWrapperProps & {
+    selectorPrefix: string;
+    childrenOrigin: ReactElement;
+  };
+
+export type ListFilterProps<Option> = {
+  options: Option[];
+  filterProps: filterProps<Option>;
+  children: (options: Option[], filterValue: string) => ReactElement;
+  wrapperClassName?: string;
+  filterWrapperClassName?: string;
+  bodyWrapperClassName?: string;
+  wrapperStyle?: CSSProperties;
+  filterWrapperStyle?: CSSProperties;
+  bodyWrapperStyle?: CSSProperties;
+  renderEmpty?: FilterProps<Option>['renderEmpty'];
+};
+
+export type TreeFilterProps = Omit<ListFilterProps<any>, 'options'> & {
+  treeData?:
+    | CascaderOption[]
+    | (Omit<CascaderOption, 'children'> & {
+        pId: string | number;
+      })[];
+  treeDataSimpleMode?: boolean;
+};
+
+export type CheckListHOCComponent = ReturnType<typeof createFactory<CheckListProps>> & {
+  CheckAllCheckList: typeof CheckAllCheckList;
+  FilterCheckList: typeof FilterCheckList;
+  FilterCheckAllCheckList: typeof FilterCheckAllCheckList;
+  CheckboxCheckAllCheckList: typeof CheckboxCheckAllCheckList;
+  CheckboxCheckList: typeof CheckboxCheckList;
+  FilterCheckboxCheckAllCheckList: typeof FilterCheckboxCheckAllCheckList;
+  FilterCheckboxCheckList: typeof FilterCheckboxCheckList;
+  AutoCompleteCheckList: typeof AutoCompleteCheckList;
+  AutoCompleteCheckboxCheckList: typeof AutoCompleteCheckboxCheckList;
+  PagingCheckList: typeof PagingCheckList;
+  PagingCheckboxCheckList: typeof PagingCheckboxCheckList;
+  FilterPagingCheckList: typeof FilterPagingCheckList;
+  FilterPagingCheckboxCheckList: typeof FilterPagingCheckboxCheckList;
+  AutoCompletePagingCheckList: typeof AutoCompletePagingCheckList;
+  AutoCompletePagingCheckboxCheckList: typeof AutoCompletePagingCheckboxCheckList;
+};
+
+export type CheckboxHOCComponent = ReturnType<typeof createFactory<CheckboxGroupProps>> & {
+  CheckAllCheckbox: typeof CheckAllCheckbox;
+  FilterCheckbox: typeof FilterCheckbox;
+  FilterCheckAllCheckbox: typeof FilterCheckAllCheckbox;
+  CheckboxGroup: typeof CheckboxGroup;
+  AutoCompleteCheckbox: typeof AutoCompleteCheckbox;
+  PagingCheckbox: typeof PagingCheckbox;
+  FilterPagingCheckbox: typeof FilterPagingCheckbox;
+  AutoCompletePagingCheckbox: typeof AutoCompletePagingCheckbox;
+};
+
+export type ModalHOCComponent = ReturnType<typeof createFactory<ModalProps>> & {
+  ModalTriggerContext: Context<ModalTriggerContext>;
+  Trigger: typeof ModalTrigger;
+  TriggerPrompt: typeof ModalTriggerPrompt;
+};
+
+export type DialogHOCComponent = ReturnType<typeof createFactory<DialogProps>> & {
+  Context: Context<DialogTriggerContext>;
+  Trigger: typeof DialogTrigger;
+  TriggerPrompt: typeof DialogTriggerPrompt;
+};
+
+export type PopupShowProps = Omit<PopupProps, 'visible' | 'destroyOnClose' | 'forceRender'> & {
+  title?: ReactNode;
+  header?: ReactNode;
+  actions?: ModalProps['actions'];
+  closeOnAction?: boolean;
+};
+
+export type PopupShowHandler =
+  | {
+      close: () => void;
+      setConfig: (callback: (originProps: PopupShowProps) => PopupShowProps) => void;
+    }
+  | undefined;
+
+export type PopupHOCComponent = ReturnType<typeof createFactory<PopupProps>> & {
+  show: (props: PopupShowProps) => PopupShowHandler;
+  clear: () => void;
+  Context: Context<PopupTriggerContext>;
+  Trigger: typeof PopupTrigger;
+  TriggerPrompt: typeof PopupTriggerPrompt;
+};
+
+export type SelectorHOCComponent = ReturnType<typeof createFactory<SelectorProps<any>>> & {
+  CheckAllSelector: typeof CheckAllSelector;
+  FilterSelector: typeof FilterSelector;
+  FilterCheckAllSelector: typeof FilterCheckAllSelector;
+  AutoCompleteSelector: typeof AutoCompleteSelector;
+  PagingSelector: typeof PagingSelector;
+  FilterPagingSelector: typeof FilterPagingSelector;
+  AutoCompletePagingSelector: typeof AutoCompletePagingSelector;
+};
+
+export type RadioHOCComponent = ReturnType<typeof createFactory<RadioGroupProps>> & {
+  FilterRadio: typeof FilterRadio;
+  RadioGroup: typeof RadioGroup;
+  AutoCompleteRadio: typeof AutoCompleteRadio;
+  PagingRadio: typeof PagingRadio;
+  FilterPagingRadio: typeof FilterPagingRadio;
+  AutoCompletePagingRadio: typeof AutoCompletePagingRadio;
+};
+
+export type CheckboxCheckListProps = BaseType &
+  CheckListProps & {
+    checkListClassName?: string;
+    checkListStyle?: CSSProperties;
+  };
+
+export type CheckboxCheckAllCheckListProps = CheckboxCheckListProps & CheckAllCheckListProps;
+
+export type FilterCheckboxCheckListProps = CheckboxCheckListProps & FilterCheckListProps;
+
+export type FilterCheckboxCheckAllCheckListProps = CheckboxCheckListProps &
+  FilterCheckAllCheckListProps;
+
+export type AutoCompleteCheckListProps = AdhereMobileAutoCompleteProps & {
+  checkListProps?: CheckListProps;
+};
+
+export type AutoCompleteCheckboxCheckListProps = AdhereMobileAutoCompleteProps & {
+  checkListProps?: CheckboxCheckListProps;
+};
+
+export type AutoCompleteCheckboxProps = AdhereMobileAutoCompleteProps & {
+  checkboxGroupProps?: CheckboxGroupProps;
+};
+
+export type AutoCompleteRadioProps = AdhereMobileAutoCompleteProps & {
+  radioGroupProps?: RadioGroupProps;
+};
+
+export type AutoCompleteSelectorProps = AdhereMobileAutoCompleteProps & {
+  selectorProps?: SelectorProps<any>;
+};
+
+export type AutoCompleteProps = AdhereMobileAutoCompleteProps;
+
+export type PRSLProps = {
+  className?: string;
+  style?: CSSProperties;
+  scrollLoadProps?: ScrollLoadProps;
+  pullToRefreshProps?: PullToRefreshProps;
+  isLoading: boolean;
+  firstLoading?: () => ReactNode;
+  loading?: () => ReactNode;
+  onRefreshBefore?: () => Promise<void>;
+  onRefresh: () => void;
+  onLoadMore: ScrollLoadProps['onScrollBottom'];
+  children?: any;
+  pages: number;
+};
+
+export type PRSLHandle = {
+  getScrollEl: () => HTMLElement;
+  hideAll: ScrollLoadRefHandle['hideAll'];
+};
+
+export type PagingProps<Option> = Omit<
+  PRSLProps,
+  'hasMore' | 'isLoading' | 'onLoadMore' | 'onRefresh'
+> & {
+  // 本地数据
+  options?: Option[];
+  // 默认分页
+  defaultPaging?: {
+    page: number;
+    limit: number;
+    // 数据总数(只有在远程加载数据时才需要)
+    total?: number;
+  };
+  children?: any;
+  // 是否本地加载数据
+  isLocal?: boolean;
+  // 异步加载数据的函数
+  onLoad?: (
+    page: number,
+    limit: number,
+  ) => Promise<{
+    total: number;
+    data: Option[];
+  }>;
+  // 数据源变化时的回调
+  onDataSourceChange?: (page: number, dataSource: Option[]) => void;
+};
+
+export type PagingCheckListProps = CheckListProps & {
+  pagingProps: PagingProps<CheckListItemProps>;
+};
+
+export type PagingCheckboxCheckListProps = CheckboxCheckListProps & {
+  pagingProps: PagingProps<CheckListItemProps>;
+};
+
+export type PagingCheckboxProps = CheckboxGroupProps & {
+  pagingProps: PagingProps<AntMobileCheckboxItem>;
+};
+
+export type PagingRadioProps = RadioGroupProps & {
+  pagingProps: PagingProps<AntMobileRadioItem>;
+};
+
+export type PagingSelectorProps = SelectorProps<any> & {
+  pagingProps: PagingProps<SelectorOption<any>>;
+};
+
+export type FilterPagingCheckListProps = FilterCheckListProps & PagingCheckListProps;
+
+export type FilterPagingCheckboxCheckListProps = FilterCheckboxCheckListProps &
+  PagingCheckboxCheckListProps;
+
+export type FilterPagingCheckboxProps = FilterCheckboxProps & PagingCheckboxProps;
+
+export type FilterPagingRadioProps = FilterRadioProps & PagingRadioProps;
+
+export type FilterPagingSelectorProps = FilterSelectorProps & PagingSelectorProps;
+
+export type AutoCompletePagingProps = Omit<AutoCompleteProps, 'loadData'> & {
+  loadData?: (
+    kw: string | undefined,
+    page?: number,
+    limit?: number,
+  ) => Promise<{
+    total: number;
+    data: any[];
+  }>;
+  onDataSourceChange?: (page: number, dataSource: any[]) => void;
+};
+
+export type AutoCompletePagingCheckListProps = AutoCompletePagingProps & {
+  pagingCheckListProps: Omit<PagingCheckListProps, 'value' | 'onChange' | 'options'>;
+};
+
+export type AutoCompletePagingCheckboxCheckListProps = AutoCompletePagingProps & {
+  pagingCheckboxCheckListProps: Omit<
+    PagingCheckboxCheckListProps,
+    'value' | 'onChange' | 'options'
+  >;
+};
+
+export type AutoCompletePagingCheckboxProps = AutoCompletePagingProps & {
+  pagingCheckboxProps: Omit<PagingCheckboxProps, 'value' | 'onChange' | 'options'>;
+};
+
+export type AutoCompletePagingRadioProps = AutoCompletePagingProps & {
+  pagingRadioProps: Omit<PagingRadioProps, 'value' | 'onChange' | 'options'>;
+};
+
+export type AutoCompletePagingSelectorProps = AutoCompletePagingProps & {
+  pagingSelectorProps: Omit<PagingSelectorProps, 'value' | 'onChange' | 'options'>;
+};
+
+export type PopoverTriggerProps = BaseType & {
+  value?: any;
+  disabled?: boolean;
+  renderTrigger?: (changeValue: any) => ReactNode;
+  renderPopover?: () => void;
+  beforeTrigger?: () => Promise<void>;
+};
+
+export type ModalTriggerProps<Value> = Omit<ModalProps, 'content' | 'actions'> & {
+  value?: Value;
+  onChange?: (_value: Value) => void;
+  actions?: (Omit<Action, 'onClick'> & {
+    onClick?: () => Promise<Value>;
+  })[];
+  disabled?: boolean;
+  children?: ReactElement;
+  popoverTriggerProps?: Omit<PopoverTriggerProps, 'renderPopover'>;
+};
+
+export type ModalTriggerContext = {
+  close: () => void;
+};
+
+export type ModalTriggerPromptProps<Value> = Omit<ModalTriggerProps<Value>, 'actions'> & {
+  submitAction?: Omit<Action, 'onClick'> & {
+    onClick?: () => Promise<Value>;
+  };
+};
+
+export type DialogTriggerProps<Value> = Omit<DialogProps, 'content' | 'actions'> & {
+  showCloseButton?: boolean;
+  closeActionText?: ReactNode;
+  closeActionKey?: string;
+  value?: Value;
+  onChange?: (_value: Value) => void;
+  actions?: (Omit<Action, 'onClick'> & {
+    onClick?: () => Promise<Value>;
+  })[];
+  disabled?: boolean;
+  children?: ReactElement;
+  popoverTriggerProps?: Omit<PopoverTriggerProps, 'renderPopover'>;
+};
+
+export type DialogTriggerContext = {
+  close: () => void;
+};
+
+export type DialogTriggerPromptProps<Value> = Omit<DialogTriggerProps<Value>, 'actions'> & {
+  submitAction?: Omit<Action, 'onClick'> & {
+    onClick?: () => Promise<Value>;
+  };
+};
+
+export type PopupTriggerProps<Value> = Omit<PopupShowProps, 'children' | 'actions'> & {
+  popupClassName?: string;
+  popupStyle?: CSSProperties;
+  value?: Value;
+  onChange?: (_value: Value) => void;
+  actions?: (Omit<Action, 'onClick'> & {
+    onClick?: () => Promise<Value>;
+  })[];
+  disabled?: boolean;
+  children?: ReactElement;
+  popoverTriggerProps?: Omit<PopoverTriggerProps, 'renderPopover'>;
+};
+
+export type PopupTriggerContext = {
+  close: () => void;
+};
+
+export type PopupTriggerPromptProps<Value> = Omit<PopupTriggerProps<Value>, 'actions'> & {
+  submitAction?: Omit<Action, 'onClick'> & {
+    onClick?: () => Promise<Value>;
+  };
+};
+
+export type DateTimeViewProps = DatePickerViewProps | TimePickerViewProps | CalendarPickerViewProps;
+
+export type DateTimePopoverProps<T extends DateTimeViewProps> = T & {
+  placeholder?: string;
+  okLabel?: ReactNode;
+  cancelLabel?: ReactNode;
+  clearLabel?: ReactNode;
+  locale?: string;
+  renderDisplay?: (value: T['value'], locale: string) => ReactNode;
+  allowClearValue?: boolean;
+};
+
+export type DateModalProps = DateTimePopoverProps<DatePickerViewProps> & {
+  modalTriggerProps?: Omit<
+    ModalTriggerProps<DatePickerViewProps['value']>,
+    'value' | 'onChange' | 'actions'
+  >;
+};
+
+export type TimeModalProps = DateTimePopoverProps<TimePickerViewProps> & {
+  modalTriggerProps?: Omit<
+    ModalTriggerProps<TimePickerViewProps['value']>,
+    'value' | 'onChange' | 'actions'
+  >;
+};
+
+export type CalendarModalProps = DateTimePopoverProps<CalendarPickerViewProps> & {
+  modalTriggerProps?: Omit<
+    ModalTriggerProps<CalendarPickerViewProps['value']>,
+    'value' | 'onChange' | 'actions'
+  >;
+};
+
+export type TimeDialogProps = DateTimePopoverProps<TimePickerViewProps> & {
+  dialogTriggerProps?: Omit<
+    DialogTriggerProps<TimePickerViewProps['value']>,
+    'value' | 'onChange' | 'actions'
+  >;
+};
+
+export type DateDialogProps = DateTimePopoverProps<DatePickerViewProps> & {
+  dialogTriggerProps?: Omit<
+    DialogTriggerProps<DatePickerViewProps['value']>,
+    'value' | 'onChange' | 'actions'
+  >;
+};
+
+export type CalendarDialogProps = DateTimePopoverProps<CalendarPickerViewProps> & {
+  dialogTriggerProps?: Omit<
+    DialogTriggerProps<CalendarPickerViewProps['value']>,
+    'value' | 'onChange' | 'actions'
+  >;
+};
+
+export type DatePopupProps = DateTimePopoverProps<DatePickerViewProps> & {
+  popupTriggerProps?: Omit<
+    PopupTriggerProps<DatePickerViewProps['value']>,
+    'value' | 'onChange' | 'actions'
+  >;
+};
+
+export type CalendarPopupProps = DateTimePopoverProps<CalendarPickerViewProps> & {
+  popupTriggerProps?: Omit<
+    PopupTriggerProps<CalendarPickerViewProps['value']>,
+    'value' | 'onChange' | 'actions'
+  >;
+};
+
+export type TimePopupProps = DateTimePopoverProps<TimePickerViewProps> & {
+  popupTriggerProps?: Omit<
+    PopupTriggerProps<TimePickerViewProps['value']>,
+    'value' | 'onChange' | 'actions'
+  >;
+};
+
+export type UseDateTimerPopover<T extends DateTimeViewProps, Value> = (
+  props: Pick<
+    DateTimePopoverProps<T>,
+    'allowClearValue' | 'placeholder' | 'okLabel' | 'cancelLabel' | 'clearLabel'
+  > & {
+    popoverTriggerClassName?: string;
+    popoverTriggerStyle?: CSSProperties;
+    value?: Value;
+    defaultValue?: Value;
+    formatValue: ReactNode;
+  },
+) => {
+  key: Symbol;
+  setInternalValue: (value: DateTimePopoverProps<T>['value']) => void;
+  actions: (Omit<Action, 'onClick'> & {
+    onClick?: () => Promise<Value>;
+  })[];
+  popoverTriggerProps: {
+    className: string;
+    style: CSSProperties;
+    renderTrigger: PopoverTriggerProps['renderTrigger'];
+  };
+};
+
+export type UseDatePopover<Value> = DateTimePopoverProps<DatePickerViewProps> &
+  Omit<Parameters<UseDateTimerPopover<DatePickerViewProps, Value>>[0], 'formatValue'>;
+
+export type UseTimePopover<Value> = DateTimePopoverProps<TimePickerViewProps> &
+  Omit<Parameters<UseDateTimerPopover<TimePickerViewProps, Value>>[0], 'formatValue'>;
+
+export type UseCalendarPopover<Value> = DateTimePopoverProps<CalendarPickerViewProps> &
+  Omit<Parameters<UseDateTimerPopover<CalendarPickerViewProps, Value>>[0], 'formatValue'>;
+
+export type RangeCalendarModalProps = Omit<CalendarModalProps, 'selectionMode'>;
+export type RangeCalendarDialogProps = Omit<CalendarDialogProps, 'selectionMode'>;
+export type RangeCalendarPopupProps = Omit<CalendarPopupProps, 'selectionMode'>;
+
+export type CalendarModalHOCComponent = ReturnType<typeof createFactory<CalendarModalProps>> & {
+  RangeCalendarModal: typeof RangeCalendarModal;
+};
+export type CalendarDialogHOCComponent = ReturnType<typeof createFactory<CalendarDialogProps>> & {
+  RangeCalendarModal: typeof RangeCalendarDialog;
+};
+export type CalendarPopupHOCComponent = ReturnType<typeof createFactory<CalendarPopupProps>> & {
+  RangeCalendarModal: typeof RangeCalendarPopup;
+};
+
+export type DateTimestampValueHOCProps = Omit<
+  DatePickerViewProps | DateModalProps | DateDialogProps | DatePopupProps,
+  'defaultValue' | 'value' | 'onChange'
+> & {
+  defaultValue?: number | null;
+  value?: number | null;
+  onChange?: (data: number | null | undefined) => void;
+  // value的类型
+  type?: 'milliseconds' | 'seconds';
+  children: ReactElement;
+};
+
+export type DateFormatValueHOCProps = Omit<
+  DatePickerViewProps | DateModalProps | DateDialogProps | DatePopupProps,
+  'value' | 'onChange' | 'defaultValue'
+> & {
+  defaultValue?: string | null;
+  value?: string | null;
+  onChange?: (data: string | null | undefined) => void;
+  children: ReactElement;
+  format?: string;
+};
+
+export type TimeTimestampValueHOCProps = Omit<
+  TimePickerViewProps | TimeModalProps | TimeDialogProps | TimePopupProps,
+  'defaultValue' | 'value' | 'onChange'
+> & {
+  defaultValue?: number | null;
+  value?: number | null;
+  onChange?: (data: number | null | undefined) => void;
+  // value的类型
+  type?: 'milliseconds' | 'seconds';
+  children: ReactElement;
+};
+
+export type TimeFormatValueHOCProps = Omit<
+  TimePickerViewProps | TimeModalProps | TimeDialogProps | TimePopupProps,
+  'value' | 'onChange' | 'defaultValue'
+> & {
+  defaultValue?: string | null;
+  value?: string | null;
+  onChange?: (data: string | null | undefined) => void;
+  children: ReactElement;
+  format?: string;
+};
+
+export type CalendarFormatValueHOCProps = Omit<
+  CalendarPickerViewProps | CalendarModalProps | CalendarDialogProps | CalendarPopupProps,
+  'defaultValue' | 'value' | 'onChange'
+> & {
+  defaultValue?: string[] | string | null;
+  value?: string[] | string | null;
+  onChange?: (data: [string, string] | string | null | undefined) => void;
+  children: ReactElement;
+  format?: string;
+};
+
+export type CalendarTimestampValueHOCProps = Omit<
+  CalendarPickerViewProps | CalendarModalProps | CalendarDialogProps | CalendarPopupProps,
+  'defaultValue' | 'value' | 'onChange'
+> & {
+  defaultValue?: number[] | number | null;
+  value?: number[] | number | null;
+  onChange?: (data: [number, number] | number | null | undefined) => void;
+  // value的类型
+  type?: ['milliseconds' | 'seconds', 'milliseconds' | 'seconds'] | 'milliseconds' | 'seconds';
+  children: ReactElement;
+};
+
+export type InternalCascaderViewProps = Omit<CascaderViewProps, 'options'> & {
+  treeDataSimpleMode?: boolean;
+  options: (
+    | CascaderOption
+    | (Omit<CascaderOption, 'children'> & {
+        pId: string | number;
+      })
+  )[];
+};
+
+export type FilterCascaderViewProps = BaseType &
+  InternalCascaderViewProps & {
+    treeDataSimpleMode?: boolean;
+    renderLabel?: (
+      option:
+        | CascaderOption
+        | (Omit<CascaderOption, 'children'> & {
+            pId: string | number;
+          }),
+      filterValue: string,
+    ) => ReactNode;
+  } & FilterProps<
+    | CascaderOption
+    | (Omit<CascaderOption, 'children'> & {
+        pId: string | number;
+      })
+  >;
+
+export type CascaderViewHOCComponent = ReturnType<
+  typeof createFactory<InternalCascaderViewProps>
+> & {
+  FilterCascaderView: typeof FilterCascaderView;
+  AsyncCascaderView: typeof AsyncCascaderView;
+};
+
+export type AsyncCascaderViewProps = Omit<InternalCascaderViewProps, 'options'> & {
+  options: InternalCascaderViewProps['options'] & {
+    isLoaded?: boolean;
+  };
+  // 是否每次都异步加载数据
+  isEveryAsync?: boolean;
+  // 异步加载数据的函数
+  loadData?: (
+    defaultId: string | number | undefined,
+    cascadeParams?: any,
+  ) => Promise<InternalCascaderViewProps['options']>;
+  onDataSourceChange?: (treeData: InternalCascaderViewProps['options']) => void;
+};
+
+export type DataSourceListProps = ListProps & {
+  wrapperClassName?: string;
+  wrapperStyle?: CSSProperties;
+  dataSource?: (Omit<ListItemProps, 'onClick' | 'children'> & {
+    key: string | number;
+  })[];
+  renderItem?: (item: Omit<ListItemProps, 'onClick' | 'children'>) => ReactNode;
+  onClick?: (item: Omit<ListItemProps, 'onClick' | 'children'>) => void;
+};
+
+export type ListHOCComponent = ReturnType<typeof createFactory<ListProps>> & {
+  DataSourceList: typeof DataSourceList;
+};
+
+export type ValueHOCProps = BaseType & {
+  defaultFormItemValue?: any;
+  value?: any;
+  onChange?: (...params: any[]) => any;
+  children?: any;
+  [key: string]: any;
+};
+
+export type ValueHOCHandle = {
+  getValue: () => any;
+};
+
+export type FormHOCComponent = typeof Form & {
+  defaultProps?: Partial<FormProps>;
+} & {
+  ValidatorRules: FormValidatorRulesType;
+  NestingFormItem: typeof NestingFormItem;
+  CustomWrapperFormItem: typeof CustomWrapperFormItem;
+  Item: typeof FormItem;
+};
+
+export type FormValidatorRulesType = {
+  [prop: string]: (argv?: { params?: any; invalidMessage?: string }) => FormRule;
+};
+
+export interface InternalNestingFormItemProps {
+  className?: string;
+  style?: CSSProperties;
+  formProps?: FormProps;
+  value?: any;
+  onChange?: (value?: any) => void;
+  children?: ReactNode;
+}
+
+export interface InternalNestingFormItemHandle {
+  validateFields: () => Promise<any>;
+}
+
+export interface CustomWrapperFormItemProps {
+  children?: (params: { value: any; onChange: (value?: any) => void }) => ReactNode;
+  value?: any;
+  onChange: (value?: any) => void;
+}
+
+export interface InputMultipleProps<T> {
+  className?: string;
+  style?: CSSProperties;
+  selectorWrapperClassName?: string;
+  selectorWrapperStyle?: CSSProperties;
+  inputProps?: InputProps;
+  selectorProps?:
+    | FilterCheckAllSelectorProps
+    | FilterSelectorProps
+    | CheckAllSelectorProps
+    | SelectorProps<T>;
+  renderAdd?: () => ReactNode;
+  renderClear?: () => ReactNode;
+  isCheckAll?: boolean;
+  isFilter?: boolean;
+  options?: SelectorProps<T>['options'];
+  value?: SelectorProps<T>['value'];
+  onChange?: SelectorProps<T>['onChange'];
+}
+
+export type InputMultipleDialogProps<T> = InputMultipleProps<T> & {
+  triggerProps: DialogTriggerPromptProps<T>;
+};
+
+export type InputMultipleHOCComponent = ReturnType<
+  typeof createFactory<InputMultipleProps<string>>
+> & {
+  Dialog: typeof InputMultipleDialog;
+};
+
+export type TreeSelectHOCComponent = ReturnType<typeof createFactory<TreeSelectProps>> & {
+  TreeLeafSelect: typeof TreeLeafSelect;
+  AutoCompleteTreeLeafSelect: typeof AutoCompleteTreeLeafSelect;
+  AsyncTreeShowAllSelect: typeof AsyncTreeShowAllSelect;
+  AutoCompleteTreeShowAllSelect: typeof AutoCompleteTreeShowAllSelect;
+  AsyncTreeLeafSelect: typeof AsyncTreeLeafSelect;
+  AsyncTreeSelect: typeof AsyncTreeSelect;
+  TreeShowChildSelect: typeof TreeShowChildSelect;
+  AsyncTreeShowChildSelect: typeof AsyncTreeShowChildSelect;
+  AutoCompleteTreeShowChildSelect: typeof AutoCompleteTreeShowChildSelect;
+  TreeShowAllSelect: typeof TreeShowAllSelect;
+  AutoCompleteTreeSelect: typeof AutoCompleteTreeSelect;
+};
+
+export type UseTreeSelectLeaf = (
+  treeData: TreeSelectProps['treeData'],
+) => TreeSelectProps['treeData'];
+
+/**
+ * UseAsyncTreeSelect
+ */
+export interface UseAsyncTreeSelect {
+  (arg: {
+    cascadeParams: any;
+    onDataSourceChange?: (treeData: TreeSelectProps['treeData']) => void;
+    fetchBranch?: (
+      value: TreeSelectProps['value'],
+      cascadeParams: string | number,
+    ) => Promise<TreeSelectProps['treeData']>;
+    fetchData: (
+      defaultId: string | number,
+      cascadeParams?: any,
+    ) => Promise<TreeSelectProps['treeData']>;
+    defaultId: string | number;
+    value: TreeSelectProps['value'];
+  }): {
+    treeData: TreeSelectProps['treeData'];
+    onLoadData: any;
+    onChange: (onChange: TreeSelectProps['onChange'], ...treeOnChangeParams: any[]) => any;
+  };
+}
+
+export type AsyncTreeSelectProps = TreeSelectProps;
+
+export type AsyncTreeLeafSelectProps = AsyncTreeSelectProps;
