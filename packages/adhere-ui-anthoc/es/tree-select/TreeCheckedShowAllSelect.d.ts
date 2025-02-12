@@ -7,6 +7,6 @@ import type { DisplayNameInternal } from '../types';
  * @param props
  * @constructor
  */
-declare const InternalTreeCheckedShowAllSelect: React.NamedExoticComponent<TreeSelectProps<any, import("rc-tree-select/lib/TreeSelect").DefaultOptionType>>;
+declare const InternalTreeCheckedShowAllSelect: React.NamedExoticComponent<TreeSelectProps<any, import("rc-tree-select/lib/interface").DataNode>>;
 declare const TreeCheckedShowAllSelect: DisplayNameInternal<typeof InternalTreeCheckedShowAllSelect>;
 export default TreeCheckedShowAllSelect;
