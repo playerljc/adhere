@@ -23,9 +23,9 @@ class ProSearchStateListImpl extends ProResourceStateManager {
     };
   }
 
-  getComponentId() {
-    return 'ProSearchStateListImpl';
-  }
+  // getComponentId() {
+  //   return 'ProSearchStateListImpl';
+  // }
 
   getServiceName() {
     return serviceName;

@@ -26,9 +26,9 @@ class ProSearchStateListImpl extends ProSearchStateList {
     return 5;
   }
 
-  getComponentId() {
-    return 'ProSearchStateListImpl';
-  }
+  // getComponentId() {
+  //   return 'ProSearchStateListImpl';
+  // }
 
   getServiceName() {
     return serviceName;
