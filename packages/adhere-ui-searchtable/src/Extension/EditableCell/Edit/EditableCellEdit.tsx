@@ -170,6 +170,7 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
       form,
       dataIndex,
       rowIndex,
+      FieldGeneratorToDict: context?.context?.props?.FieldGeneratorToDict,
     });
 
     return (

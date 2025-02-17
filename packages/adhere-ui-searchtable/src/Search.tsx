@@ -8,6 +8,7 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import type { ListExpandable } from '@baifendian/adhere-ui-searchlist/es/types';
 import Suspense from '@baifendian/adhere-ui-suspense';
+import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { selectorPrefix } from './SearchTable';
@@ -110,65 +111,6 @@ abstract class Search<
   abstract renderSearchBarActions(): ReactNode;
 
   /**
-   * renderTitle
-   */
-  renderTitle(): ReactElement {
-    const { title, titleToolTip = '' } = this.props;
-
-    return (
-      <div className={`${selectorPrefix}-search-tool-bar-title-inner`}>
-        <div className={`${selectorPrefix}-search-tool-bar-title-content`}>{title}</div>
-        <div className={`${selectorPrefix}-search-tool-bar-title-info`}>
-          <Tooltip title={typeof title === 'string' ? title : titleToolTip}>
-            <InfoCircleOutlined />
-          </Tooltip>
-        </div>
-      </div>
-    );
-  }
-
-  /**
-   * renderSearchBarExtra
-   */
-  renderSearchBarExtra(): ReactNode {
-    return null;
-  }
-
-  /**
-   * renderSearchToolBar
-   * @description 渲染查询工具栏
-   * @return {ReactNode}
-   */
-  renderSearchToolBar(): ReactNode {
-    return (
-      <>
-        {this.props.title && !!this.renderTitle && !!this.renderTitle?.() && (
-          <div className={classNames(`${selectorPrefix}-search-tool-bar-title`)}>
-            {this.renderTitle()}
-          </div>
-        )}
-
-        {((!!this.renderSearchBarExtra && !!this.renderSearchBarExtra?.()) ||
-          (!!this.renderSearchBarActions && !!this.renderSearchBarActions?.())) && (
-          <div className={classNames(`${selectorPrefix}-search-tool-bar-auto`)}>
-            {!!this.renderSearchBarExtra && !!this.renderSearchBarExtra?.() && (
-              <div className={classNames(`${selectorPrefix}-search-tool-bar-extra`)}>
-                {this.renderSearchBarExtra()}
-              </div>
-            )}
-
-            {!!this.renderSearchBarActions && !!this.renderSearchBarActions?.() && (
-              <div className={classNames(`${selectorPrefix}-search-tool-bar-actions`)}>
-                {this.renderSearchBarActions()}
-              </div>
-            )}
-          </div>
-        )}
-      </>
-    );
-  }
-
-  /**
    * renderBody
    * @description 渲染查询主体
    * @return {ReactNode}
@@ -235,6 +177,65 @@ abstract class Search<
   }
 
   /**
+   * renderTitle
+   */
+  renderTitle(): ReactElement {
+    const { title, titleToolTip = '' } = this.props;
+
+    return (
+      <div className={`${selectorPrefix}-search-tool-bar-title-inner`}>
+        <div className={`${selectorPrefix}-search-tool-bar-title-content`}>{title}</div>
+        <div className={`${selectorPrefix}-search-tool-bar-title-info`}>
+          <Tooltip title={typeof title === 'string' ? title : titleToolTip}>
+            <InfoCircleOutlined />
+          </Tooltip>
+        </div>
+      </div>
+    );
+  }
+
+  /**
+   * renderSearchBarExtra
+   */
+  renderSearchBarExtra(): ReactNode {
+    return null;
+  }
+
+  /**
+   * renderSearchToolBar
+   * @description 渲染查询工具栏
+   * @return {ReactNode}
+   */
+  renderSearchToolBar(): ReactNode {
+    return (
+      <>
+        {this.props.title && !!this.renderTitle && !!this.renderTitle?.() && (
+          <div className={classNames(`${selectorPrefix}-search-tool-bar-title`)}>
+            {this.renderTitle()}
+          </div>
+        )}
+
+        {((!!this.renderSearchBarExtra && !!this.renderSearchBarExtra?.()) ||
+          (!!this.renderSearchBarActions && !!this.renderSearchBarActions?.())) && (
+          <div className={classNames(`${selectorPrefix}-search-tool-bar-auto`)}>
+            {!!this.renderSearchBarExtra && !!this.renderSearchBarExtra?.() && (
+              <div className={classNames(`${selectorPrefix}-search-tool-bar-extra`)}>
+                {this.renderSearchBarExtra()}
+              </div>
+            )}
+
+            {!!this.renderSearchBarActions && !!this.renderSearchBarActions?.() && (
+              <div className={classNames(`${selectorPrefix}-search-tool-bar-actions`)}>
+                {this.renderSearchBarActions()}
+              </div>
+            )}
+          </div>
+        )}
+      </>
+    );
+  }
+
+  /**
    * getPagination
    * @description 获取分页信息
    * @return {TablePaginationConfig}
@@ -287,6 +288,14 @@ abstract class Search<
       showQuickJumper: true,
       showSizeChanger: true,
     };
+  }
+
+  /**
+   * getComponentId
+   * @description 获取componentId
+   */
+  getComponentId() {
+    return Util.uuid();
   }
 
   /**

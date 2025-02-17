@@ -275,6 +275,8 @@ export interface FormItemGeneratorConfig {
   dataIndex?: DataIndex;
   // 列的索引值
   rowIndex?: number;
+  // 生成器对象
+  FieldGeneratorToDict?: any;
 }
 
 /**
@@ -391,6 +393,7 @@ export interface SearchProps extends SuspenseProps {
   router: 'browser' | 'hash';
   // publicPath
   publicPath: string;
+  FieldGeneratorToDict?: any;
 }
 
 /**

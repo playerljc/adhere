@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 
 import e2e from '@baifendian/adhere-e2e';
+import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 import { createLoggerMiddleware } from '@ctsj/state/lib/middleware';
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 import { Provider } from '@ctsj/state/lib/react';
@@ -60,7 +61,7 @@ const store = createStore(null, {}, applyMiddleware(createLoggerMiddleware(), sa
 registerModels();
 
 const ProSearchStateTableImpl = lazy(() =>
-  import(/* webpackChunkName: "conditionalrender" */ './asyncLoadDataTable.jsx'),
+  import(/* webpackChunkName: "conditionalrender" */ './asyncLoadDataSSQTable.jsx'),
 );
 
 e2e.PC({
@@ -68,7 +69,7 @@ e2e.PC({
     <Provider store={store}>
       <div style={{ height: 1000 }}>
         <Suspense fallback={<div>loading</div>}>
-          <ProSearchStateTableImpl pagination={true} />
+          <ProSearchStateTableImpl pagination={true} FieldGeneratorToDict={FieldGeneratorToDict} />
         </Suspense>
       </div>
     </Provider>

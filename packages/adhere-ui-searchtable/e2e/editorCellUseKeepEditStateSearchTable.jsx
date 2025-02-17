@@ -50,9 +50,9 @@ class EditableCellUseKeepEditStateSearchTable extends ProEditableCellSearchState
     this.localAddDataMap = new Map();
   }
 
-  getComponentId() {
-    return 'EditableCellUseKeepEditStateSearchTable';
-  }
+  // getComponentId() {
+  //   return 'EditableCellUseKeepEditStateSearchTable';
+  // }
 
   getServiceName() {
     return serviceName;

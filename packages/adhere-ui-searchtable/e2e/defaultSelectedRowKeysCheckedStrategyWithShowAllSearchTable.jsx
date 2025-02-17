@@ -29,9 +29,9 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
     };
   }
 
-  getComponentId() {
-    return 'RowDragSort';
-  }
+  // getComponentId() {
+  //   return 'RowDragSort';
+  // }
 
   getServiceName() {
     return serviceName;

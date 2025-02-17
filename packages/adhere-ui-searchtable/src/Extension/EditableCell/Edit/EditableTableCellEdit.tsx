@@ -129,6 +129,7 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
       form: context?.editable?.tableEditable?.form,
       dataIndex,
       rowIndex,
+      FieldGeneratorToDict: context?.context?.props?.FieldGeneratorToDict,
     }); /*render
       ? render({
           value: record?.[dataIndex as string],

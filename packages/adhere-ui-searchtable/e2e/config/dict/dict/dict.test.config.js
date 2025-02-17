@@ -1,4 +1,5 @@
-import faker from 'faker';
+// import faker from 'faker';
+import Mockjs from 'mockjs';
 
 import Dict from '@baifendian/adhere-util-dict';
 
@@ -190,16 +191,16 @@ export default {
     // Table
     Dict.handlers.SystemTestTable = () =>
       Array.from({ length: 10 }).map((t, index) => ({
-        id: faker.random.uuid(),
+        id: Mockjs.mock('@guid'),
         isMore: !!Math.floor((Math.random() * 10) % 2),
-        name: faker.internet.userName(),
+        name: Mockjs.mock('@name'),
         sex: `${(index + 1) % 2}`,
-        birthDay: faker.time.recent(),
-        deptName: faker.company.companyName(),
-        height: faker.random.number(),
-        width: faker.random.number(),
-        hometown: faker.address.city(),
-        address: faker.address.streetAddress(),
+        birthDay: new Date().getTime(),
+        deptName: Mockjs.mock('@name'),
+        height: Mockjs.mock('@integer'),
+        width: Mockjs.mock('@integer'),
+        hometown: Mockjs.mock('@name'),
+        address: Mockjs.mock('@name'),
       }));
 
     Dict.handlers.SystemTestTablePagination = () => (paging) => {
@@ -220,14 +221,14 @@ export default {
             .map((t, index) => ({
               id: (current - 1) * pageSize + (index + 1),
               isMore: !!Math.floor((Math.random() * 10) % 2),
-              name: faker.internet.userName(),
+              name: Mockjs.mock('@name'),
               sex: `${(index + 1) % 2}`,
-              birthDay: faker.time.recent(),
-              deptName: faker.company.companyName(),
-              height: faker.random.number(),
-              width: faker.random.number(),
-              hometown: faker.address.city(),
-              address: faker.address.streetAddress(),
+              birthDay: new Date().getTime(),
+              deptName: Mockjs.mock('@name'),
+              height: Mockjs.mock('@integer'),
+              width: Mockjs.mock('@integer'),
+              hometown: Mockjs.mock('@name'),
+              address: Mockjs.mock('@name'),
             })),
         },
         resMsg: '',
@@ -311,16 +312,16 @@ export default {
     // List
     Dict.handlers.SystemTestList = () =>
       Array.from({ length: 5 }).map((t, index) => ({
-        id: faker.random.uuid(),
+        id: Mockjs.mock('@guid'),
         isMore: !!Math.floor((Math.random() * 10) % 2),
-        name: faker.internet.userName(),
+        name: Mockjs.mock('@name'),
         sex: `${(index + 1) % 2}`,
-        birthDay: faker.time.recent(),
-        deptName: faker.company.companyName(),
-        height: faker.random.number(),
-        width: faker.random.number(),
-        hometown: faker.address.city(),
-        address: faker.address.streetAddress(),
+        birthDay: new Date().getTime(),
+        deptName: Mockjs.mock('@name'),
+        height: Mockjs.mock('@integer'),
+        width: Mockjs.mock('@integer'),
+        hometown: Mockjs.mock('@name'),
+        address: Mockjs.mock('@name'),
       }));
 
     Dict.handlers.SystemTestListPagination = () => (paging) => {
@@ -341,14 +342,14 @@ export default {
             .map((t, index) => ({
               id: (current - 1) * pageSize + (index + 1),
               isMore: !!Math.floor((Math.random() * 10) % 2),
-              name: faker.internet.userName(),
+              name: Mockjs.mock('@name'),
               sex: `${(index + 1) % 2}`,
-              birthDay: faker.time.recent(),
-              deptName: faker.company.companyName(),
-              height: faker.random.number(),
-              width: faker.random.number(),
-              hometown: faker.address.city(),
-              address: faker.address.streetAddress(),
+              birthDay: new Date().getTime(),
+              deptName: Mockjs.mock('@name'),
+              height: Mockjs.mock('@integer'),
+              width: Mockjs.mock('@integer'),
+              hometown: Mockjs.mock('@name'),
+              address: Mockjs.mock('@name'),
             })),
         },
         resMsg: '',

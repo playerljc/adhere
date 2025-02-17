@@ -192,6 +192,7 @@ export interface FormItemGeneratorConfig {
     form?: FormInstance<any> | null;
     dataIndex?: DataIndex;
     rowIndex?: number;
+    FieldGeneratorToDict?: any;
 }
 /**
  * ColumnEditableConfig
@@ -270,6 +271,7 @@ export interface SearchProps extends SuspenseProps {
     title: string;
     router: 'browser' | 'hash';
     publicPath: string;
+    FieldGeneratorToDict?: any;
 }
 /**
  * SearchState

@@ -11,7 +11,8 @@ declare const _default: {
      * @param form 表单的form实例
      * @param dataIndex
      * @param rowIndex
+     * @param FieldGeneratorToDict
      */
-    render({ type, props, dictName, form, dataIndex, rowIndex, }: FormItemGeneratorConfig): ReactNode;
+    render({ type, props, dictName, FieldGeneratorToDict, }: FormItemGeneratorConfig): ReactNode;
 };
 export default _default;

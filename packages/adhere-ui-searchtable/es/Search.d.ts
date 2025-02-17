@@ -77,20 +77,6 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      */
     abstract renderSearchBarActions(): ReactNode;
     /**
-     * renderTitle
-     */
-    renderTitle(): ReactElement;
-    /**
-     * renderSearchBarExtra
-     */
-    renderSearchBarExtra(): ReactNode;
-    /**
-     * renderSearchToolBar
-     * @description 渲染查询工具栏
-     * @return {ReactNode}
-     */
-    renderSearchToolBar(): ReactNode;
-    /**
      * renderBody
      * @description 渲染查询主体
      * @return {ReactNode}
@@ -148,6 +134,20 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
         limit?: number;
     };
     /**
+     * renderTitle
+     */
+    renderTitle(): ReactElement;
+    /**
+     * renderSearchBarExtra
+     */
+    renderSearchBarExtra(): ReactNode;
+    /**
+     * renderSearchToolBar
+     * @description 渲染查询工具栏
+     * @return {ReactNode}
+     */
+    renderSearchToolBar(): ReactNode;
+    /**
      * getPagination
      * @description 获取分页信息
      * @return {TablePaginationConfig}
@@ -161,6 +161,11 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
         showQuickJumper: boolean;
         showSizeChanger: boolean;
     };
+    /**
+     * getComponentId
+     * @description 获取componentId
+     */
+    getComponentId(): string;
     /**
      * getLimit
      * @description limit参数

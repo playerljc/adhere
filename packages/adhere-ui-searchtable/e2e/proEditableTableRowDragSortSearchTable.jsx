@@ -344,9 +344,9 @@ const List = SearchTableImplementFactory({
       return false;
     }
 
-    getComponentId() {
-      return 'RowDragSort';
-    }
+    // getComponentId() {
+    //   return 'RowDragSort';
+    // }
 
     getServiceName() {
       return serviceName;

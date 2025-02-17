@@ -10,8 +10,8 @@ import {
   RangePicker,
   TimePicker,
 } from '@baifendian/adhere-ui-anthoc';
-import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 
+// import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 import type { FormItemGeneratorConfig } from '../../../types';
 
 // const { FormItemGeneratorToDict } = FieldGeneratorToDict;
@@ -28,15 +28,17 @@ export default {
    * @param form 表单的form实例
    * @param dataIndex
    * @param rowIndex
+   * @param FieldGeneratorToDict
    */
   render({
     type,
     // renderChildren,
     props,
     dictName,
-    form,
-    dataIndex,
-    rowIndex,
+    // form,
+    // dataIndex,
+    // rowIndex,
+    FieldGeneratorToDict,
   }: FormItemGeneratorConfig) {
     const defaultProps = {
       autoFocus: true,

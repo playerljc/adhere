@@ -18,7 +18,7 @@ import {
 } from '@baifendian/adhere-ui-anthoc';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
-import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
+// import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
 import Util from '@baifendian/adhere-util';
@@ -1389,9 +1389,11 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         return searchConfig?.render?.({ searchConfig, column, dataIndex });
       };
       const renderDict = ({ searchConfig, column, dataIndex }) => {
-        const Component = FieldGeneratorToDict.Components[searchConfig.dictName];
+        const Component = this?.props?.FieldGeneratorToDict?.Components?.[searchConfig.dictName];
 
-        // popUp控件的缺省popps
+        if (!Component) return null;
+
+        // popUp控件的缺省props
         const popUpDefaultProps = {
           dropdownStyle: {
             zIndex: 1051,

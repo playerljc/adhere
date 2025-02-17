@@ -19,9 +19,9 @@ const serviceName = 'user';
  * @classdesc RowDragSort
  */
 class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
-  getComponentId() {
-    return 'RowDragSort';
-  }
+  // getComponentId() {
+  //   return 'RowDragSort';
+  // }
 
   getServiceName() {
     return serviceName;

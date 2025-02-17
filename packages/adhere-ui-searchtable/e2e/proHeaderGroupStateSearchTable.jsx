@@ -15,9 +15,9 @@ const serviceName = 'user';
  * @classdesc ProSearchStateTableImpl
  */
 class ProSearchStateTableImpl extends ProSearchStateTable {
-  getComponentId() {
-    return 'ProSearchStateTableImpl';
-  }
+  // getComponentId() {
+  //   return 'ProSearchStateTableImpl';
+  // }
 
   getServiceName() {
     return serviceName;

@@ -16,9 +16,9 @@ const serviceName = 'user';
  * @classdesc ProSearchStateTableImpl
  */
 class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
-  getComponentId() {
-    return 'ProSearchStateTableImpl';
-  }
+  // getComponentId() {
+  //   return 'ProSearchStateTableImpl';
+  // }
 
   getServiceName() {
     return serviceName;
