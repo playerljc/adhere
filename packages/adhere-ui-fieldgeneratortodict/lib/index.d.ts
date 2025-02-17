@@ -336,6 +336,16 @@ declare const _default: {
             readonly VerticalCheckAllSelect: "InputMultipleDynamicVerticalCheckAllSelect";
             readonly HorizontalCheckAllSelect: "InputMultipleDynamicHorizontalCheckAllSelect";
         };
+        readonly SearchTable: {
+            readonly Standard: "SearchTableStandard";
+            readonly EditorCell: "SearchTableEditorCell";
+            readonly EditorRow: "SearchTableEditorRow";
+            readonly EditorTable: "SearchTableEditorTable";
+            readonly RowDragSort: "SearchTableRowDragSort";
+            readonly EditorCellRowDragSort: "SearchTableEditorCellRowDragSort";
+            readonly EditorRowDragSort: "SearchTableEditorRowDragSort";
+            readonly EditorTableRowDragSort: "SearchTableEditorTableRowDragSort";
+        };
         readonly MobileInputMultiple: {
             readonly Standard: "MobileInputMultipleStandard";
             readonly CheckAll: "MobileInputMultipleCheckAll";
@@ -565,7 +575,7 @@ declare const _default: {
         [x: string]: import("react").ForwardRefExoticComponent<Omit<any, "ref"> & import("react").RefAttributes<import("./types").DictRefreshWrapperFunction>>;
     };
     genDictComponentName: (dictName: string, componentName: string) => string;
-    getDictComponent: <P>(dictName: string, componentName: string) => import("react").ForwardRefExoticComponent<import("react").PropsWithoutRef<P> & import("react").RefAttributes<import("./types").DictRefreshWrapperFunction>> | null;
+    getDictComponent: <P>(dictName: string, componentName: string) => any;
     validatorMulti: (message: any) => {
         validator(_: any, value: any): Promise<void>;
     };

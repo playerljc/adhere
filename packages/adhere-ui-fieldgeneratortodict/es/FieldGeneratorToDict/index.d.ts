@@ -1,4 +1,4 @@
-import type { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
+import type { ForwardRefExoticComponent, RefAttributes } from 'react';
 import type { DictRefreshWrapperFunction } from '../types';
 import ArrayEntityValueHOC from './ArrayEntityValueHOC';
 import AsyncTreeEntityValueHOC from './AsyncTreeEntityValueHOC';
@@ -22,6 +22,7 @@ import './fields/MobileRadio';
 import './fields/MobileSelector';
 import './fields/MobileTreeSelect';
 import './fields/Radio';
+import './fields/SearchTable';
 import './fields/Segmented';
 import './fields/Select';
 import './fields/Steps';
@@ -53,7 +54,7 @@ declare const genDictComponentName: (dictName: string, componentName: string) =>
  * @param componentName - 组件名 (如: SelectFormItem)，可通过 Components 获取
  * @returns
  */
-declare const getDictComponent: <P>(dictName: string, componentName: string) => ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<DictRefreshWrapperFunction>> | null;
+declare const getDictComponent: <P>(dictName: string, componentName: string) => any;
 export { Components, ItemNames, getDictComponent, genDictComponentName, ArrayEntityValueHOC, TreeEntityValueHOC, AsyncTreeEntityValueHOC, };
 declare const ProxyComponent: {
     [x: string]: ForwardRefExoticComponent<Omit<any, "ref"> & RefAttributes<DictRefreshWrapperFunction>>;

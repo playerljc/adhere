@@ -1,12 +1,12 @@
 import type { FC } from 'react';
-import type { DictComponentProps } from '../types';
+import { DictComponentProps, SearchFactory } from '../types';
 /**
  * setItem
  * @param {string} itemName - 组件名称
  * @param {string} functionName - 功能名称
  * @param {(originDictName: string, dictName?: string) => any)} handler
  */
-export declare function setItem<T, D>(itemName: string, functionName: string, handler: (originDictName: string, dictName?: string) => FC<DictComponentProps<T, D>>): void;
+export declare function setItem<T, D>(itemName: string, functionName: string, handler: (originDictName: string, dictName?: string) => FC<DictComponentProps<T, D>> | SearchFactory<T, D>): void;
 /**
  * getItem
  * @param {string} itemName - 组件名
@@ -17,7 +17,7 @@ export declare function getItem<P>({ itemName, functionName, dictName, }: {
     itemName: string;
     functionName: string;
     dictName: string;
-}): import("react").ForwardRefExoticComponent<import("react").PropsWithoutRef<P> & import("react").RefAttributes<import("../types").DictRefreshWrapperFunction>> | null;
+}): any;
 /**
  * ItemFactory
  * // p = 字典名(业务名 + 组件名) + 功能名
@@ -28,5 +28,5 @@ declare function ItemFactory<P>({ itemName, functionName, dictName, }: {
     itemName: string;
     functionName: string;
     dictName: string;
-}): import("react").ForwardRefExoticComponent<import("react").PropsWithoutRef<P> & import("react").RefAttributes<import("../types").DictRefreshWrapperFunction>> | null;
+}): any;
 export default ItemFactory;

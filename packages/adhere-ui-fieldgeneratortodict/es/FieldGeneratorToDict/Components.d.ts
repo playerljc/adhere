@@ -346,6 +346,16 @@ declare const Components: {
         readonly VerticalCheckAllSelect: "InputMultipleDynamicVerticalCheckAllSelect";
         readonly HorizontalCheckAllSelect: "InputMultipleDynamicHorizontalCheckAllSelect";
     };
+    readonly SearchTable: {
+        readonly Standard: "SearchTableStandard";
+        readonly EditorCell: "SearchTableEditorCell";
+        readonly EditorRow: "SearchTableEditorRow";
+        readonly EditorTable: "SearchTableEditorTable";
+        readonly RowDragSort: "SearchTableRowDragSort";
+        readonly EditorCellRowDragSort: "SearchTableEditorCellRowDragSort";
+        readonly EditorRowDragSort: "SearchTableEditorRowDragSort";
+        readonly EditorTableRowDragSort: "SearchTableEditorTableRowDragSort";
+    };
     readonly MobileInputMultiple: {
         readonly Standard: "MobileInputMultipleStandard";
         readonly CheckAll: "MobileInputMultipleCheckAll";

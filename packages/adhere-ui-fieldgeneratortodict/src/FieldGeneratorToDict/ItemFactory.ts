@@ -1,8 +1,10 @@
 import type { FC } from 'react';
+// import * as ReactIs from 'react-is';
+import React from 'react';
 
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
-import type { DictComponentProps } from '../types';
+import { DictComponentProps, SearchFactory } from '../types';
 import DictRefreshHOC from './DictRefreshHOC';
 import { getOriginDictNameByItemName } from './Util';
 
@@ -19,7 +21,10 @@ const map = new Map<string, (dictName: string) => any>();
 export function setItem<T, D>(
   itemName: string,
   functionName: string,
-  handler: (originDictName: string, dictName?: string) => FC<DictComponentProps<T, D>>,
+  handler: (
+    originDictName: string,
+    dictName?: string,
+  ) => FC<DictComponentProps<T, D>> | SearchFactory<T, D>,
 ) {
   map.set(`${itemName}${functionName}`, handler);
 }
@@ -43,9 +48,18 @@ export function getItem<P>({
 
   if (!name) return null;
 
-  return DictRefreshHOC<P>(
-    memoized.createMemoFun(map.get(`${itemName}${functionName}`) as Function)?.(name, dictName),
+  const item = memoized.createMemoFun(map.get(`${itemName}${functionName}`) as Function)?.(
+    name,
+    dictName,
   );
+
+  if (React.isValidElement(item)) {
+    return DictRefreshHOC<P>(
+      memoized.createMemoFun(map.get(`${itemName}${functionName}`) as Function)?.(name, dictName),
+    );
+  }
+
+  return item;
 }
 
 /**

@@ -1,6 +1,5 @@
 import { Avatar } from 'antd';
 import { Image } from 'antd-mobile';
-import faker from 'faker';
 import Mock from 'mockjs';
 import React from 'react';
 
@@ -54,16 +53,16 @@ const PCCFlat = [
 ];
 
 const userList = Array.from({ length: 10 }).map((t, index) => ({
-  id: faker.random.uuid(),
+  id: Mock.mock('@guid'),
   isMore: !!Math.floor((Math.random() * 10) % 2),
-  name: faker.internet.userName(),
+  name: Mock.mock('@name'),
   sex: `${(index + 1) % 2}`,
-  birthDay: faker.time.recent(),
-  deptName: faker.company.companyName(),
-  height: faker.random.number(),
-  width: faker.random.number(),
-  hometown: faker.address.city(),
-  address: faker.address.streetAddress(),
+  birthDay: new Date().getTime(),
+  deptName: Mock.mock('@name'),
+  height: Mock.mock('@integer'),
+  width: Mock.mock('@integer'),
+  hometown: Mock.mock('@name'),
+  address: Mock.mock('@name'),
 }));
 
 const ssqCascade = [
@@ -194,6 +193,17 @@ const FLAT_TABLE_TREE_DATA = Util.treeToArray(
 
 export default {
   initStatic() {
+    Dict.handlers.SystemTestSex = () => [
+      {
+        label: '男',
+        value: '1',
+      },
+      {
+        label: '女',
+        value: '0',
+      },
+    ];
+
     Dict.handlers.SystemBookCatalog = () =>
       [
         {
@@ -1233,6 +1243,35 @@ export default {
           });
         }, 1000);
       });
+    };
+
+    Dict.handlers.SystemTable = () => {
+      const dataSource = Array.from({ length: 100 }).map((t) => ({
+        id: Mock.mock('@guid'),
+        name: Mock.mock('@name'),
+        sex: `${Util.generatorRandom(0, 1)}`,
+        homeTown: Mock.mock('@name'),
+        address: Mock.mock('@name'),
+        birthday: new Date().getTime(),
+        deptName: Mock.mock('@name'),
+        height: Mock.mock('@integer'),
+        width: Mock.mock('@integer'),
+      }));
+
+      return ({ cascadeParams, params }) => {
+        const { page, limit } = params;
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve({
+              resCode: 0,
+              data: {
+                total: dataSource.length,
+                records: dataSource.slice((page - 1) * limit, page * limit),
+              },
+            });
+          }, 300);
+        });
+      };
     };
 
     Dict.handlers.SystemListStatic = () =>

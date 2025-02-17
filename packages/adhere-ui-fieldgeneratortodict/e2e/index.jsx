@@ -70,13 +70,17 @@ import MobileTreeSelectShowAll from './MobileTreeSelect/MobileTreeSelectShowAll'
 import MobileTreeSelectShowChild from './MobileTreeSelect/MobileTreeSelectShowChild';
 import MobileTreeSelectStandard from './MobileTreeSelect/MobileTreeSelectStandard';
 
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 
 import e2e from '@baifendian/adhere-e2e';
-import Dict from '@baifendian/adhere-util-dict';
+import { createLoggerMiddleware } from '@ctsj/state/lib/middleware';
+import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
+import { Provider } from '@ctsj/state/lib/react';
+import { applyMiddleware, createStore } from '@ctsj/state/lib/state';
 
 import DictConfig from '@/dict/dict.config';
 
+import FieldGeneratorToDict from '../src/index';
 import AutoCompleteTest from './AutoComplete/SelectInput';
 import BreadcrumbTest from './Breadcrumb/SuspenseStandard';
 import CascaderAsyncEntityValueHOC from './Cascader/CascaderAsyncEntityValueHOC';
@@ -139,13 +143,32 @@ import TreeFlatEntityValueHOC from './Tree/TreeFlatEntityValueHOC';
 import TreeFlatMultiEntityValueHOC from './Tree/TreeFlatMultiEntityValueHOC';
 import TreeLeafEntityValueHOC from './Tree/TreeLeafEntityValueHOC';
 import TreeMultiEntityValueHOC from './Tree/TreeMultiEntityValueHOC';
+import sage from './saga';
 
 import '../src/index.less';
 
+// 设置Saga实例
+ServiceRegister.setSage(sage);
+
 DictConfig();
 
+// store初始化
+const store = createStore(null, {}, applyMiddleware(createLoggerMiddleware(), sage));
+
+const SearchTable = lazy(() =>
+  import(/* webpackChunkName: "searchtable" */ './SearchTable/EditorCell'),
+);
+
 e2e.PC({
-  children: <TagTest />,
+  children: (
+    <Provider store={store}>
+      <div style={{ height: 1000 }}>
+        <Suspense fallback={<div>loading</div>}>
+          <SearchTable />
+        </Suspense>
+      </div>
+    </Provider>
+  ),
 });
 
 // e2e.Mobile({

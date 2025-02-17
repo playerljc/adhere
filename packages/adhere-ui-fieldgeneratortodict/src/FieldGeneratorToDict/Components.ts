@@ -388,6 +388,19 @@ const Components = {
   },
   /* ------ InputMultiple end ------ */
 
+  /* ------ SearchTable start ------ */
+  SearchTable: {
+    Standard: 'SearchTableStandard',
+    EditorCell: 'SearchTableEditorCell',
+    EditorRow: 'SearchTableEditorRow',
+    EditorTable: 'SearchTableEditorTable',
+    RowDragSort: 'SearchTableRowDragSort',
+    EditorCellRowDragSort: 'SearchTableEditorCellRowDragSort',
+    EditorRowDragSort: 'SearchTableEditorRowDragSort',
+    EditorTableRowDragSort: 'SearchTableEditorTableRowDragSort',
+  },
+  /* ------ SearchTable end ------ */
+
   /* ------ MobileInputMultiple start ------ */
   MobileInputMultiple: {
     Standard: 'MobileInputMultipleStandard',

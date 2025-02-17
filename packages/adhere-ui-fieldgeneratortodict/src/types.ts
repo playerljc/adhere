@@ -243,15 +243,28 @@ export type UseDictParams<D> = {
 };
 
 export type DictComponentProps<T, D> = Omit<T, 'options' | 'dataSource' | 'treeData' | 'items'> & {
-  cascadeParams?: object;
-  onDataSourceChange?: (
+  cascadeParams: object;
+  onDataSourceChange: (
     dataSource: D,
-    extra?: {
+    extra: {
       type: 'paging';
       info: { page: number; limit: number } | { pid: number | string | symbol };
     },
   ) => void;
 };
+
+export type SearchFactory<T, H> = (params: {
+  override: T;
+  sage: any;
+  responseBusiness?: {
+    codeKey: string;
+    codeSuccess: string | number;
+    codeSuccessKey: string | number;
+    dataKey: string;
+    messageKey: string;
+  };
+  defaultResult?: any;
+}) => H;
 
 export type SuspenseProps = Omit<SuspenseSyncProps, 'isEmpty'> & {
   isEmpty: (data: any) => boolean;

@@ -31,7 +31,7 @@ import { deepDep } from './Util';
  * @param {Function} onDataSourceChange dataSource改变
  */
 export function useDict<D>({ dictName, cascadeParams, onDataSourceChange }: UseDictParams<D>): D {
-  const dictValue = Dict.value[dictName].value;
+  const dictValue = Dict.value[dictName]?.value;
 
   // @ts-ignore
   const [dataSource, setDataSource] = useState<D>([]);
@@ -74,7 +74,7 @@ export function useDynamicDict<D>({
   // @ts-ignore
   const [dataSource, setDataSource] = useState<D>([]);
 
-  const dictValue = Dict.value[dictName].value;
+  const dictValue = Dict.value[dictName]?.value;
 
   function loadData() {
     if (dictValue instanceof Function) {
@@ -115,7 +115,7 @@ export function useAutoCompleteDict<D>({
   cascadeParams,
   onDataSourceChange,
 }: UseDictParams<D>): { options: any[]; loadData: AutoCompleteProps['loadData'] } {
-  const dictValue = Dict.value[dictName].value;
+  const dictValue = Dict.value[dictName]?.value;
 
   // @ts-ignore
   const [dataSource, setDataSource] = useState<D>([]);
@@ -158,7 +158,7 @@ export function useTreeAutoCompleteDict<D>({
   treeData: TreeAutoCompleteProps['treeData'] | MobileTreeAutoCompleteProps['searchDataSource'];
   loadData: TreeAutoCompleteProps['loadData'] | MobileTreeAutoCompleteProps['loadData'];
 } {
-  const dictValue = Dict.value[dictName].value;
+  const dictValue = Dict.value[dictName]?.value;
 
   // @ts-ignore
   const [dataSource, setDataSource] = useState<D>([]);
@@ -199,7 +199,7 @@ export function usePaging<D>({
   cascadeParams,
   onDataSourceChange,
 }: UseDictParams<D>): PagingWrapperProps<any>['loadData'] {
-  const dictValue = Dict.value[dictName].value;
+  const dictValue = Dict.value[dictName]?.value;
 
   // @ts-ignore
   return useCallback(
@@ -231,7 +231,7 @@ export function useAutoCompletePaging<D>({
   totalCount: number;
   data: any[];
 }> {
-  const dictValue = Dict.value[dictName].value;
+  const dictValue = Dict.value[dictName]?.value;
 
   return useCallback<any>(
     (page, limit, kw) =>
@@ -255,7 +255,7 @@ export function useAsyncTree<D>({
   | AsyncCascaderProps['fetchData']
   | MobileAsyncTreeLeafSelectProps['loadData']
   | MobileAsyncTreeSelectProps['loadData'] {
-  const dictValue = Dict.value[dictName].value;
+  const dictValue = Dict.value[dictName]?.value;
 
   return useCallback<any>(dictValue, [dictName]);
 }
@@ -268,7 +268,7 @@ export function useAsyncTree<D>({
 export function useMobileAsyncTree({ dictName, treeDataSimpleMode }) {
   const [treeData, setTreeData] = useState([]);
 
-  const dictValue = Dict.value[dictName].value;
+  const dictValue = Dict.value[dictName]?.value;
 
   /**
    * normalData
