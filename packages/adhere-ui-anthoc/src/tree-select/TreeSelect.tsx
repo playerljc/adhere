@@ -33,7 +33,7 @@ const TreeSelectHOC: TreeSelectHOCComponent = ({
   ...restProps
 }) => {
   const targetDefaultValue = useMemo(
-    () => () =>
+    () =>
       isHideInvalidValue
         ? getTreeValue({ value: defaultValue, treeData, treeDataSimpleMode })
         : defaultValue,
@@ -41,7 +41,7 @@ const TreeSelectHOC: TreeSelectHOCComponent = ({
   );
 
   const targetValue = useMemo(
-    () => () => isHideInvalidValue ? getTreeValue({ value, treeData, treeDataSimpleMode }) : value,
+    () => (isHideInvalidValue ? getTreeValue({ value, treeData, treeDataSimpleMode }) : value),
     [value, treeData, treeDataSimpleMode, isHideInvalidValue],
   );
 

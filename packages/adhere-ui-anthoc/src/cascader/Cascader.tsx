@@ -27,13 +27,12 @@ const CascaderHOC: CascaderHOCComponent = ({
   ...restProps
 }) => {
   const targetDefaultValue = useMemo(
-    () => () =>
-      isHideInvalidValue ? getCascaderValue({ value: defaultValue, options }) : defaultValue,
+    () => (isHideInvalidValue ? getCascaderValue({ value: defaultValue, options }) : defaultValue),
     [defaultValue, options, isHideInvalidValue],
   );
 
   const targetValue = useMemo(
-    () => () => isHideInvalidValue ? getCascaderValue({ value, options }) : value,
+    () => (isHideInvalidValue ? getCascaderValue({ value, options }) : value),
     [value, options, isHideInvalidValue],
   );
 
