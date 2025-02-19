@@ -272,6 +272,10 @@ export interface SearchProps extends SuspenseProps {
     router: 'browser' | 'hash';
     publicPath: string;
     FieldGeneratorToDict?: any;
+    isUseSearchWrapperGap?: boolean;
+    isUseSearchFormToolBarGap?: boolean;
+    searchFormToolBarClassName?: string;
+    searchToolbarClassName?: string;
 }
 /**
  * SearchState

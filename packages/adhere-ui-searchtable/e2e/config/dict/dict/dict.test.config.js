@@ -273,6 +273,41 @@ export default {
       },
     ];
 
+    Dict.handlers.SystemTestTree = () => [
+      {
+        value: 'zhejiang',
+        title: 'Zhejiang',
+        children: [
+          {
+            value: 'hangzhou',
+            title: 'Hangzhou',
+            children: [
+              {
+                value: 'xihu',
+                title: 'West Lake',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        value: 'jiangsu',
+        title: 'Jiangsu',
+        children: [
+          {
+            value: 'nanjing',
+            title: 'Nanjing',
+            children: [
+              {
+                value: 'zhonghuamen',
+                title: 'Zhong Hua Men',
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
     Dict.handlers.SystemTestDynamicCascader = () =>
       Promise.resolve([
         {

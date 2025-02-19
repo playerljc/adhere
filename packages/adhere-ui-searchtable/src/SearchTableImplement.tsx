@@ -1181,20 +1181,22 @@ const SearchTableImplementFactory: SearchTableImplementFactoryFunction<any, any>
 
   return (Component) =>
     ServiceRegister.connect(serviceNames || [])(_mapStateToProps, _mapDispatchToProps)(
-      forwardRef<any, any>((props, ref) => (
-        // @ts-ignore
-        <Component
-          ref={ref}
-          isShowExpandSearch
-          defaultExpandSearchCollapse={false}
-          fixedHeaderAutoTable
-          fixedTableSpaceBetween
-          {...props}
+      forwardRef<any, any>((props, ref) => {
+        return (
           // @ts-ignore
-          className={classNames(`${selectorPrefix}-wrap`, props.className ?? '')}
-          style={props.style ?? {}}
-        />
-      )),
+          <Component
+            ref={ref}
+            isShowExpandSearch
+            defaultExpandSearchCollapse={false}
+            fixedHeaderAutoTable
+            fixedTableSpaceBetween
+            {...props}
+            // @ts-ignore
+            className={classNames(`${selectorPrefix}-wrap`, props.className ?? '')}
+            style={props.style ?? {}}
+          />
+        );
+      }),
     );
 };
 

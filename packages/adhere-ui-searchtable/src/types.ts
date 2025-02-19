@@ -393,7 +393,12 @@ export interface SearchProps extends SuspenseProps {
   router: 'browser' | 'hash';
   // publicPath
   publicPath: string;
+  // 字典生成器句柄
   FieldGeneratorToDict?: any;
+  isUseSearchWrapperGap?: boolean;
+  isUseSearchFormToolBarGap?: boolean;
+  searchFormToolBarClassName?: string;
+  searchToolbarClassName?: string;
 }
 
 /**

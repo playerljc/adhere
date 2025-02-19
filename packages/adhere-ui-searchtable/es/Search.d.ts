@@ -184,6 +184,11 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      * @return {Promise<void>}
      */
     onClear(): Promise<any>;
+    isUseSearchWrapperGap(): any;
+    isUseSearchFormToolBarGap(): any;
+    getSearchFormToolBarClassName(): any;
+    getSearchToolbarClassName(): any;
+    getBodyClassName(): any;
     /**
      * renderInner
      * @description

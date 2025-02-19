@@ -327,6 +327,31 @@ abstract class Search<
     });
   }
 
+  isUseSearchWrapperGap() {
+    const { isUseSearchWrapperGap = true } = this.props;
+    return isUseSearchWrapperGap;
+  }
+
+  isUseSearchFormToolBarGap() {
+    const { isUseSearchFormToolBarGap = true } = this.props;
+    return isUseSearchFormToolBarGap;
+  }
+
+  getSearchFormToolBarClassName() {
+    const { searchFormToolBarClassName } = this.props;
+    return searchFormToolBarClassName;
+  }
+
+  getSearchToolbarClassName() {
+    const { searchToolbarClassName } = this.props;
+    return searchToolbarClassName;
+  }
+
+  getBodyClassName() {
+    const { bodyClassName } = this.props;
+    return bodyClassName;
+  }
+
   /**
    * renderInner
    * @description
@@ -337,13 +362,18 @@ abstract class Search<
   renderInner(bodyWrapRef?: any, className?: string) {
     const {
       style,
-      bodyClassName,
       bodyStyle,
       searchClassName,
       searchStyle,
       fitBody = true,
       autoFixed = true,
     } = this.props;
+
+    const isUseSearchWrapperGap = this.isUseSearchWrapperGap();
+    const isUseSearchFormToolBarGap = this.isUseSearchFormToolBarGap();
+    const bodyClassName = this.getBodyClassName();
+    const searchFormToolBarClassName = this.getSearchFormToolBarClassName();
+    const searchToolbarClassName = this.getSearchToolbarClassName();
 
     const { expand = false } = this.state;
 
@@ -366,7 +396,13 @@ abstract class Search<
           (!!this.renderSearchToolBar && !!this.renderSearchToolBar?.()) ||
           (!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.())) && (
           <Fixed
-            className={classNames(`${selectorPrefix}-search-wrapper`, searchClassName)}
+            className={classNames(
+              `${selectorPrefix}-search-wrapper`,
+              {
+                [`${selectorPrefix}-search-wrapper-gap`]: isUseSearchWrapperGap,
+              },
+              searchClassName,
+            )}
             style={{ ...(searchStyle ?? {}) }}
           >
             {!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.() && (
@@ -393,7 +429,15 @@ abstract class Search<
               !!this.renderSearchForm?.() &&
               !!this.renderSearchFormToolBar &&
               !!this.renderSearchFormToolBar?.() && (
-                <Fixed className={classNames(`${selectorPrefix}-search-form-tool-bar`)}>
+                <Fixed
+                  className={classNames(
+                    `${selectorPrefix}-search-form-tool-bar`,
+                    {
+                      [`${selectorPrefix}-search-form-tool-bar-gap`]: isUseSearchFormToolBarGap,
+                    },
+                    searchFormToolBarClassName,
+                  )}
+                >
                   {this.renderSearchFormToolBar()}
                 </Fixed>
               )}
@@ -402,9 +446,13 @@ abstract class Search<
             {!!this.renderSearchToolBar && !!this.renderSearchToolBar?.() && (
               <Fixed
                 data-title={this.props.title}
-                className={classNames(`${selectorPrefix}-search-tool-bar`, {
-                  [`${selectorPrefix}-search-form-expand`]: expand,
-                })}
+                className={classNames(
+                  `${selectorPrefix}-search-tool-bar`,
+                  {
+                    [`${selectorPrefix}-search-form-expand`]: expand,
+                  },
+                  searchToolbarClassName,
+                )}
               >
                 {this.renderSearchToolBar()}
               </Fixed>
