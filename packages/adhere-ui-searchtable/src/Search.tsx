@@ -347,6 +347,11 @@ abstract class Search<
     return searchToolbarClassName;
   }
 
+  getSearchFormExpandClassName() {
+    const { searchFormExpandClassName } = this.props;
+    return searchFormExpandClassName;
+  }
+
   getBodyClassName() {
     const { bodyClassName } = this.props;
     return bodyClassName;
@@ -374,6 +379,7 @@ abstract class Search<
     const bodyClassName = this.getBodyClassName();
     const searchFormToolBarClassName = this.getSearchFormToolBarClassName();
     const searchToolbarClassName = this.getSearchToolbarClassName();
+    const searchFormExpandClassName = this.getSearchFormExpandClassName();
 
     const { expand = false } = this.state;
 
@@ -416,9 +422,9 @@ abstract class Search<
               <Fixed
                 // @ts-ignore
                 ref={this.searchFormRef}
-                className={classNames({
-                  [`${selectorPrefix}-search-form`]: true,
+                className={classNames(`${selectorPrefix}-search-form`, {
                   [`${selectorPrefix}-search-form-expand`]: expand,
+                  [searchFormExpandClassName]: !!searchFormExpandClassName && expand,
                 })}
               >
                 {this.renderSearchForm()}

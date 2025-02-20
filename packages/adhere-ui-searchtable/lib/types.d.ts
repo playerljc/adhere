@@ -276,6 +276,7 @@ export interface SearchProps extends SuspenseProps {
     isUseSearchFormToolBarGap?: boolean;
     searchFormToolBarClassName?: string;
     searchToolbarClassName?: string;
+    searchFormExpandClassName?: string;
 }
 /**
  * SearchState

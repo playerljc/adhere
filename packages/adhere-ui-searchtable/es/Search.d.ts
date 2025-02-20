@@ -188,6 +188,7 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
     isUseSearchFormToolBarGap(): any;
     getSearchFormToolBarClassName(): any;
     getSearchToolbarClassName(): any;
+    getSearchFormExpandClassName(): any;
     getBodyClassName(): any;
     /**
      * renderInner
