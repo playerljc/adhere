@@ -36,6 +36,7 @@ export type TreeAutoCompleteProps = IAutoComplete &
     //   key: any;
     //   value: TreeSelectProps['treeData'];
     // };
+    isUsePath?: boolean;
     children?: (arg: {
       originNode?: ReactElement;
       value?: TreeSelectProps['value'];

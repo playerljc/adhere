@@ -31,7 +31,8 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
     defaultTreeData,
     emptyContent,
     children,
-    treeDataSimpleMode = false,
+    treeDataSimpleMode,
+    isUsePath,
     ...treeSelectProps
   }) => {
     const [paths, setPaths] = useState<object>({});
@@ -93,6 +94,13 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
       }
     }
 
+    const isUsePathTarget = useMemo(() => {
+      if (isUsePath === undefined) return true;
+      return isUsePath;
+    }, [isUsePath]);
+
+    const targetTreeDataSimpleMode = useMemo(() => !!treeDataSimpleMode, [treeDataSimpleMode]);
+
     const onInput = useCallback(
       debounce((e) => {
         const currentTime = Date.now();
@@ -132,7 +140,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
 
     const flatTreeData = useMemo(
       () =>
-        treeDataSimpleMode
+        targetTreeDataSimpleMode
           ? treeData
           : Util.treeToArray(
               treeData as any[],
@@ -142,7 +150,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
               },
               treeTransformConfig.keyAttr,
             ),
-      [treeData],
+      [targetTreeDataSimpleMode, treeData],
     );
 
     const flatPathData = useMemo(
@@ -159,10 +167,12 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
      */
     const targetTreeData = useMemo<any[]>(() => {
       // treeData
-      if (!treeDataSimpleMode) {
-        let _allFlatTreeData = [...(flatTreeData ?? []), ...(flatPathData ?? [])].filter(
-          (t) => !!t,
-        );
+      if (!targetTreeDataSimpleMode) {
+        const composeTreeData = isUsePathTarget
+          ? [...(flatTreeData ?? []), ...(flatPathData ?? [])]
+          : flatTreeData ?? [];
+
+        let _allFlatTreeData = composeTreeData.filter((t) => !!t);
 
         const allFlatTreeDataKeys = _allFlatTreeData.map(({ value }) => value);
 
@@ -173,14 +183,18 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
         );
 
         return Util.completionIncompleteFlatArr(
-          [...(flatTreeData ?? []), ...(flatPathData ?? [])],
+          composeTreeData,
           _allFlatTreeData,
           treeTransformConfig,
         );
       }
       // flatTreeData
       else {
-        let _allFlatTreeData = [...(treeData ?? []), ...(flatPathData ?? [])].filter((t) => !!t);
+        const composeTreeData = isUsePathTarget
+          ? [...(treeData ?? []), ...(flatPathData ?? [])]
+          : treeData ?? [];
+
+        let _allFlatTreeData = composeTreeData.filter((t) => !!t);
 
         const allFlatTreeDataKeys = _allFlatTreeData.map(({ value }) => value);
 
@@ -188,7 +202,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
 
         return Util.treeToArray(
           Util.completionIncompleteFlatArr(
-            [...(treeData ?? []), ...(flatPathData ?? [])],
+            composeTreeData,
             distinctKeys.map((_value) =>
               _allFlatTreeData.find((_option) => _option.value === _value),
             ),
@@ -201,10 +215,16 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
           treeTransformConfig.keyAttr,
         );
       }
-    }, [treeData, flatTreeData, paths, treeSelectProps.value]);
+    }, [
+      treeData,
+      flatTreeData,
+      isUsePathTarget,
+      flatPathData,
+      /*treeSelectProps.value,*/ targetTreeDataSimpleMode,
+    ]);
 
     const targetFlatTreeData = useMemo(() => {
-      return !!treeDataSimpleMode
+      return targetTreeDataSimpleMode
         ? targetTreeData
         : Util.treeToArray(
             targetTreeData,
@@ -214,13 +234,13 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
             },
             treeTransformConfig.keyAttr,
           );
-    }, [treeDataSimpleMode, targetTreeData]);
+    }, [targetTreeDataSimpleMode, targetTreeData]);
 
     const allTreeData = useMemo(() => {
       let _treeFlatData = targetTreeData ?? [];
       let _defaultTreeFlatData = defaultTreeData ?? [];
 
-      if (!treeDataSimpleMode) {
+      if (!targetTreeDataSimpleMode) {
         // 拉平
         _treeFlatData = Util.treeToArray(
           _treeFlatData,
@@ -247,19 +267,19 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
         treeTransformConfig.keyAttr,
       );
 
-      if (!treeDataSimpleMode) {
+      if (!targetTreeDataSimpleMode) {
         // 转换成treeData
         return Util.arrayToAntdTreeSelect(flatAllData, treeTransformConfig);
       }
 
       return flatAllData;
-    }, [treeDataSimpleMode, defaultTreeData, targetTreeData]);
+    }, [targetTreeDataSimpleMode, defaultTreeData, targetTreeData]);
 
     const childrenTreeData = useMemo(() => {
       let _treeFlatData = targetTreeData ?? [];
       let _allTreeFlatData = allTreeData ?? [];
 
-      if (!treeDataSimpleMode) {
+      if (!targetTreeDataSimpleMode) {
         // 拉平
         _treeFlatData = Util.treeToArray(_treeFlatData, treeTransformConfig);
         _allTreeFlatData = Util.treeToArray(_allTreeFlatData, treeTransformConfig);
@@ -270,13 +290,13 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
         optionKeys.includes(nodeData[treeTransformConfig.keyAttr]),
       );
 
-      if (!treeDataSimpleMode) {
+      if (!targetTreeDataSimpleMode) {
         // 转换成treeData
         return Util.arrayToAntdTreeSelect(flatTreeData, treeTransformConfig);
       }
 
       return flatTreeData;
-    }, [treeDataSimpleMode, targetTreeData, allTreeData]);
+    }, [targetTreeDataSimpleMode, targetTreeData, allTreeData]);
 
     useUpdateEffect(() => {
       const pathsKeys = Object.keys(paths);
@@ -294,7 +314,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
           ...getPathsByValues(values),
         });
       }
-    }, [treeSelectProps.defaultValue, treeSelectProps.value, paths, targetFlatTreeData]);
+    }, [treeSelectProps.defaultValue, treeSelectProps.value, paths]);
 
     return (
       <div className={classNames(selectorPrefix, classNameWrap ?? '')} style={styleWrap ?? {}}>
@@ -316,7 +336,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
             return !!childrenTreeData?.length
               ? children?.({
                   originNode,
-                  treeDataSimpleMode,
+                  treeDataSimpleMode: targetTreeDataSimpleMode,
                   value: treeSelectProps.value,
                   onChange: (...params) => onSelectChange(...params),
                   treeData: childrenTreeData ?? [],
@@ -325,9 +345,9 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
               : empty;
           }}
           onDropdownVisibleChange={setOpen}
-          {...treeSelectProps}
           treeCheckable={false}
-          treeDataSimpleMode={!!treeDataSimpleMode}
+          {...treeSelectProps}
+          treeDataSimpleMode={targetTreeDataSimpleMode}
           onChange={(...params) => onSelectChange(...params)}
         />
       </div>

@@ -1,5 +1,5 @@
 // import { TreeSelect } from 'antd';
-import { Table } from 'antd';
+import { Table, TreeSelect } from 'antd';
 import React, { useState } from 'react';
 
 import Util from '@baifendian/adhere-util';
@@ -161,10 +161,10 @@ export default () => {
       onChange={(_value) => {
         setValue(_value);
       }}
+      // showCheckedStrategy={TreeSelect.SHOW_ALL}
+      // treeCheckable
     >
       {({ value: _value, onChange: _onChange, treeData: _treeData, loading }) => {
-        console.log('_value', _value);
-
         return (
           <Table
             loading={loading}
@@ -183,6 +183,7 @@ export default () => {
             pagination={false}
             rowSelection={{
               type: 'checkbox',
+              checkStrictly: false,
               selectedRowKeys: _value,
               onSelect: function (record, selected, selectedRows) {
                 _onChange(
