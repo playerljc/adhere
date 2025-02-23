@@ -1,4 +1,8 @@
+import difference from 'lodash.difference';
+// import differenceby from 'lodash.differenceby';
 import React, { memo } from 'react';
+
+import Util from '@baifendian/adhere-util';
 
 import type { CheckboxTableProps, DisplayNameInternal } from '../types';
 import Table from './Table';
@@ -22,15 +26,30 @@ const InternalCheckboxTable = memo<CheckboxTableProps>(
           type: 'checkbox',
           selectedRowKeys: value ?? [],
           onSelect: function (record, selected, selectedRows) {
+            const selectedRowKeys = selectedRows.filter((t) => !!t).map((t) => t.value);
+
+            let targetKeys;
+
             if (selected) {
-              const selectedRowKeys = selectedRows.filter((t) => !!t).map((t) => t.value);
-              onChange?.(Array.from(new Set([...(value ?? []), ...selectedRowKeys])), []);
+              targetKeys = Array.from(new Set([...(value ?? []), ...selectedRowKeys]));
             } else {
-              onChange?.(
-                (value ?? []).filter((t) => t !== record.id),
-                [],
+              targetKeys = difference(
+                value ?? [],
+                difference(
+                  Util.treeToArray(
+                    options as any[],
+                    {
+                      parentIdAttr: 'pid',
+                      rootParentId: '-1',
+                    },
+                    'id',
+                  ).map((t) => t.id),
+                  selectedRowKeys,
+                ),
               );
             }
+
+            onChange?.(targetKeys, []);
           },
           onSelectAll: (selected, selectedRows, changeRows) => {
             if (selected) {

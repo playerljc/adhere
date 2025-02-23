@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import List from '../../src/list';
 
 const data = Array.from({ length: 100 }).map(() => {
-  const label = Mock.mock('@cname');
+  const label = Mock.mock('@name');
   const value = Mock.mock('@guid');
 
   return {
@@ -34,7 +34,7 @@ export default () => {
       mode="multiple"
       placeholder="AutoCompleteListPagingSelect"
       style={{ width: 600 }}
-      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+      // dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
       pagingProps={{

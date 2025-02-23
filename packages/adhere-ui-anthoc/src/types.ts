@@ -331,6 +331,7 @@ export type CheckboxTreeTableProps = Omit<TableProps<any>, 'onChange'> & {
   value?: CheckboxTableProps['value'];
   options?: CheckboxTableProps['dataSource'];
   onChange?: TreeSelectProps['onChange'];
+  checkStrictly?: boolean;
 };
 
 export type RadioPagingTableProps = RadioTableProps & PagingProps;
@@ -683,6 +684,7 @@ export type AutoCompleteTableSelectProps = AutoCompleteProps & {
 export type AutoCompleteTreeTableSelectProps = TreeAutoCompleteProps & {
   treeDataSimpleModeConfig?: IFlatTreeArrNode;
   tableProps?: TableSelectProps['tableProps'];
+  checkStrictly?: boolean;
 };
 
 export type AutoCompleteListPagingSelectProps = AutoCompleteProps & {
@@ -702,6 +704,7 @@ export type AutoCompleteTreeTablePagingSelectProps = TreeAutoCompleteProps & {
   tablePagingProps?:
     | Omit<CheckboxPagingTreeTableProps, 'value' | 'onChange'>
     | Omit<RadioPagingTreeTableProps, 'value' | 'onChange'>;
+  checkStrictly?: boolean;
 };
 
 export type AutoCompleteTagSelectProps = AutoCompleteProps & {

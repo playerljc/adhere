@@ -12,7 +12,8 @@ export default () => {
     <List.AutoCompleteListSelect
       placeholder="AutoCompleteListSelect"
       style={{ width: 600 }}
-      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+      mode="multiple"
+      // dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       options={options}
       onChange={setValue}

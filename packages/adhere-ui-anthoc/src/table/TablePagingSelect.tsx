@@ -1,6 +1,6 @@
-import { useMount } from 'ahooks';
+import { useMount, useUpdateEffect } from 'ahooks';
 import uniqBy from 'lodash.uniqby';
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 
 import DropdownRenderSelect from '../select/DropdownRenderSelect';
 import type { DisplayNameInternal, TablePagingSelectProps } from '../types';
@@ -33,15 +33,34 @@ const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
       ...pagingProps,
     });
 
+    const [selectedRows, setSelectedRows] = useState<any[]>(defaultOptions ?? []);
+
+    useUpdateEffect(() => {
+      setSelectedRows(defaultOptions ?? []);
+    }, [defaultOptions]);
+
     const allOptions = useMemo(
-      () => uniqBy([...(defaultOptions ?? []), ...(options ?? [])], 'value'),
-      [defaultOptions, options],
+      () => uniqBy([...(options ?? []), ...selectedRows], 'value'),
+      [options, selectedRows],
     );
 
-    const targetOptions = useMemo(() => {
-      const optionKeys = options.map(({ value }) => value);
-      return allOptions.filter(({ value }) => optionKeys.includes(value));
-    }, [options, allOptions]);
+    const targetOptions = useMemo(
+      () => (allOptions ?? []).slice(0, defaultPageSize),
+      [defaultPageSize, allOptions],
+    );
+
+    const onChange = (_values) => {
+      setSelectedRows((_selectedRows) => {
+        if (!_values.length) return [];
+
+        const rows = _values
+          .map((_value) => options.find((t) => t.value === _value))
+          .filter((t) => !!t);
+        return uniqBy([...selectedRows, ...rows], 'value');
+      });
+
+      props?.onChange?.(_values);
+    };
 
     useMount(() => {
       fetchData();
@@ -59,6 +78,7 @@ const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
             limit: defaultPageSize,
           });
         }}
+        onChange={onChange}
       >
         {({ originNode, ...rest }) => {
           const tableProps = renderProps({

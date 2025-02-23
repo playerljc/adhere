@@ -20,7 +20,9 @@ const dataSource = Array.from({ length: 100 }).map(() => {
 });
 
 export default () => {
-  const [value, setValue] = useState([dataSource[0].value, dataSource[6].value]);
+  const [value, setValue] = useState([
+    /*dataSource[0].value, dataSource[6].value*/
+  ]);
 
   function loadData(page, limit) {
     console.log('paging', page, limit);
@@ -38,7 +40,7 @@ export default () => {
       mode="multiple"
       style={{ width: 600 }}
       placeholder="RadioPagingList"
-      defaultOptions={[dataSource[0], dataSource[6]]}
+      // defaultOptions={[dataSource[0], dataSource[6]]}
       value={value}
       onChange={setValue}
       pagingProps={{

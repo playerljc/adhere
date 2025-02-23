@@ -62,13 +62,20 @@ const InternalAutoCompleteListPagingSelect = memo<AutoCompleteListPagingSelectPr
           });
         }}
       >
-        {({ originNode, loading, ...rest }) => (
-          <>
-            {loading && fetchLoading}
-            {!loading && isMultiple && <CheckboxPagingList {...renderProps(rest)} />}
-            {!loading && !isMultiple && <RadioPagingList {...renderProps(rest)} />}
-          </>
-        )}
+        {({ originNode, loading, ...rest }) => {
+          const listProps = renderProps({
+            ...rest,
+            options,
+          });
+
+          return (
+            <>
+              {loading && fetchLoading}
+              {!loading && isMultiple && <CheckboxPagingList {...listProps} />}
+              {!loading && !isMultiple && <RadioPagingList {...listProps} />}
+            </>
+          );
+        }}
       </Component>
     );
   },

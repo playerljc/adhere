@@ -5,7 +5,7 @@ import { PagingEntityValueHOC } from '../../src/index';
 import Table from '../../src/table';
 
 const dataSource = Array.from({ length: 100 }).map((_, _index) => {
-  const label = Mock.mock('@name');
+  const label = `1${Mock.mock('@name')}`;
   const value = `${_index + 1}`; // Mock.mock('@guid');
 
   return {
@@ -41,7 +41,7 @@ export default () => {
       <Table.AutoCompleteTablePagingSelect
         placeholder="AutoCompleteTablePagingSelect"
         style={{ width: 600 }}
-        dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+        // dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
         defaultOptions={[dataSource[0]]}
         mode="multiple"
         pagingProps={{

@@ -1,3 +1,4 @@
+import { TreeSelect } from 'antd';
 import React, { memo, useMemo } from 'react';
 
 import Util from '@baifendian/adhere-util';
@@ -18,13 +19,29 @@ import useTreeRender from './useTreeRenderProps';
  * @constructor
  */
 const InternalAutoCompleteTreeTableSelect = memo<AutoCompleteTreeTableSelectProps>(
-  ({ tableProps, treeDataSimpleModeConfig, ...props }) => {
+  ({ tableProps, treeDataSimpleModeConfig, checkStrictly, ...props }) => {
     const isMultiple = useMemo(() => 'multiple' in props && props.multiple, [props.multiple]);
 
     const isTreeDataSimpleMode = useMemo(
       () => !!props.treeDataSimpleMode,
       [props.treeDataSimpleMode],
     );
+
+    const targetCheckStrictly = useMemo(() => {
+      if (checkStrictly === undefined) return true;
+
+      return checkStrictly;
+    }, [checkStrictly]);
+
+    const showCheckedStrategy = useMemo(() => {
+      if (targetCheckStrictly) return TreeSelect.SHOW_CHILD;
+
+      return TreeSelect.SHOW_ALL;
+    }, [targetCheckStrictly]);
+
+    const treeCheckable = useMemo(() => {
+      return !targetCheckStrictly;
+    }, [targetCheckStrictly]);
 
     const renderProps = useTreeRender(tableProps);
 
@@ -36,7 +53,7 @@ const InternalAutoCompleteTreeTableSelect = memo<AutoCompleteTreeTableSelectProp
     );
 
     return (
-      <Component {...props}>
+      <Component {...props} treeCheckable={treeCheckable} showCheckedStrategy={showCheckedStrategy}>
         {({ originNode, loading, ...rest }) => {
           const { treeData, ...tablePropsRest } = rest;
 
@@ -57,7 +74,9 @@ const InternalAutoCompleteTreeTableSelect = memo<AutoCompleteTreeTableSelectProp
           return (
             <>
               {loading && fetchLoading}
-              {!loading && isMultiple && <CheckboxTreeTable {...tableProps} />}
+              {!loading && isMultiple && (
+                <CheckboxTreeTable checkStrictly={targetCheckStrictly} {...tableProps} />
+              )}
               {!loading && !isMultiple && <RadioTreeTable {...tableProps} />}
             </>
           );

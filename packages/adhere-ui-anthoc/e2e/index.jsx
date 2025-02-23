@@ -22,7 +22,14 @@ import InputNegativeNumberInteger from './InputNumber/InputNegativeNumberInteger
 import InputPositiveNumberDecimal1 from './InputNumber/InputPositiveNumberDecimal1';
 import InputPositiveNumberDecimal2 from './InputNumber/InputPositiveNumberDecimal2';
 import InputPositiveNumberInteger from './InputNumber/InputPositiveNumberInteger';
+import AutoCompleteCheckAllListSelect from './List/AutoCompleteCheckAllListSelect';
+import AutoCompleteListPagingSelect from './List/AutoCompleteListPagingSelect.tsx';
+import AutoCompleteListSelect from './List/AutoCompleteListSelect.tsx';
+import CheckAllListSelect from './List/CheckAllListSelect.tsx';
 import ListTest from './List/CheckboxListPaging';
+import CheckboxListPaging from './List/CheckboxListPaging.tsx';
+import CheckboxListPagingSelect from './List/CheckboxListPagingSelect';
+import CheckboxListSelect from './List/CheckboxListSelect';
 import PagingEntityValueHOC from './PagingEntityValueHOC';
 import RadioTest from './Radio/AutoCompleteButtonRadioSelect.tsx';
 import RangePickerValueHOCInFormTest from './RangePickerValueHOCInFormTest';
@@ -32,10 +39,15 @@ import SelectTest from './Select/AutoCompleteCheckAllMultipleSelect';
 import CheckAllMultipleSelect from './Select/CheckAllMultipleSelect';
 import Select from './Select/Select';
 import StepsSwiper from './Steps/StepsSwiper';
+import AutoCompleteTablePagingSelect from './Table/AutoCompleteTablePagingSelect.tsx';
+import AutoCompleteTableSelect from './Table/AutoCompleteTableSelect.tsx';
 import AutoCompleteTableSelectValueHOC from './Table/AutoCompleteTableSelectValueHOC.tsx';
 import AutoCompleteTreeTablePagingSelect from './Table/AutoCompleteTreeTablePagingSelect';
-// import AutoCompleteTablePagingSelect from './Table/AutoCompleteTreeTablePagingSelect.tsx';
 import TableTest from './Table/AutoCompleteTreeTablePagingSelectValueHOC.jsx';
+import AutoCompleteTreeTableSelect from './Table/AutoCompleteTreeTableSelect.jsx';
+import CheckboxTablePaging from './Table/CheckboxTablePaging';
+import CheckboxTablePagingSelect from './Table/CheckboxTablePagingSelect.tsx';
+import CheckboxTableSelect from './Table/CheckboxTableSelect.tsx';
 import TagTest from './Tag/HorizontalCheckableTagGroup';
 import TimePickerValueHOCInFormTest from './TimePickerValueHOCInFormTest';
 import TimePickerValueHOCTest from './TimePickerValueHOCTest';
@@ -52,5 +64,6 @@ import AntHOC from './test';
 import '../src/index.less';
 
 e2e.PC({
-  children: <TransferSelect />,
+  // children: <TransferSelect />,
+  children: <CheckboxTablePagingSelect />,
 });

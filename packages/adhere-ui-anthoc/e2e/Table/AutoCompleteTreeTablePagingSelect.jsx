@@ -54,7 +54,8 @@ const FLAT_TREE_DATA = Util.treeToArray(
 );
 
 export default () => {
-  const [value, setValue] = useState([TREE_DATA[0].children[0].children[0]]);
+  const [value, setValue] = useState([]);
+  // const [value, setValue] = useState([TREE_DATA[0].children[0].children[0]]);
   // const [value, setValue] = useState([FLAT_TREE_DATA[2].value]);
 
   function loadData(page, limit, _kw) {
@@ -117,71 +118,73 @@ export default () => {
           rootParentId: '',
         });
 
+        const data = targetTreeData.slice((page - 1) * limit, page * limit);
+        console.log('data=====', data);
+
         resolve({
           totalCount: targetTreeData.length,
-          data: targetTreeData.slice((page - 1) * limit, page * limit),
+          data,
         });
       }, 100);
     });
   }
 
   return (
-    <TreeEntityValueHOC value={value} onChange={setValue}>
-      <Table.AutoCompleteTreeTablePagingSelect
-        defaultTreeData={[
+    <Table.AutoCompleteTreeTablePagingSelect
+      // defaultTreeData={[
+      //   {
+      //     ...TREE_DATA[0],
+      //     children: [
+      //       {
+      //         ...TREE_DATA[0].children[0],
+      //         children: [TREE_DATA[0].children[0].children[0]],
+      //       },
+      //     ],
+      //   },
+      // ]}
+      // defaultTreeData={[FLAT_TREE_DATA[0], FLAT_TREE_DATA[1], FLAT_TREE_DATA[2]]}
+      // treeDataSimpleMode
+      placeholder="AutoCompleteTreeTablePagingSelect"
+      style={{ width: 800 }}
+      // dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+      multiple
+      value={value}
+      onChange={setValue}
+      checkStrictly={false}
+      pagingProps={{
+        loadData,
+        defaultLimit: 5,
+      }}
+      tablePagingProps={{
+        rowKey: 'id',
+        columns: [
           {
-            ...TREE_DATA[0],
-            children: [
-              {
-                ...TREE_DATA[0].children[0],
-                children: [TREE_DATA[0].children[0].children[0]],
-              },
-            ],
+            title: '名称',
+            key: 'name',
+            dataIndex: 'name',
           },
-        ]}
-        // defaultTreeData={[FLAT_TREE_DATA[0], FLAT_TREE_DATA[1], FLAT_TREE_DATA[2]]}
-        // treeDataSimpleMode
-        placeholder="AutoCompleteTreeTablePagingSelect"
-        style={{ width: 800 }}
-        // dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
-        multiple
-        // value={value}
-        // onChange={setValue}
-        pagingProps={{
-          loadData,
-          defaultLimit: 5,
-        }}
-        tablePagingProps={{
-          rowKey: 'id',
-          columns: [
-            {
-              title: '名称',
-              key: 'name',
-              dataIndex: 'name',
-            },
-            {
-              title: '地址',
-              key: 'address',
-              dataIndex: 'address',
-            },
-            {
-              title: '籍贯',
-              key: 'nativePlace',
-              dataIndex: 'nativePlace',
-            },
-            {
-              title: '身高',
-              key: 'height',
-              dataIndex: 'height',
-            },
-            {
-              title: '体重',
-              key: 'width',
-              dataIndex: 'width',
-            },
-          ],
-        }}
-      />
-    </TreeEntityValueHOC>
+          {
+            title: '地址',
+            key: 'address',
+            dataIndex: 'address',
+          },
+          {
+            title: '籍贯',
+            key: 'nativePlace',
+            dataIndex: 'nativePlace',
+          },
+          {
+            title: '身高',
+            key: 'height',
+            dataIndex: 'height',
+          },
+          {
+            title: '体重',
+            key: 'width',
+            dataIndex: 'width',
+          },
+        ],
+      }}
+    />
   );
 };

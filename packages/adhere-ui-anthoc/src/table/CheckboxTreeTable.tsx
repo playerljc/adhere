@@ -1,4 +1,7 @@
-import React, { memo } from 'react';
+import difference from 'lodash.difference';
+import React, { memo, useMemo } from 'react';
+
+import Util from '@baifendian/adhere-util';
 
 import type { CheckboxTreeTableProps, DisplayNameInternal } from '../types';
 import Table from './Table';
@@ -13,25 +16,46 @@ import Table from './Table';
  * @constructor
  */
 const InternalCheckboxTreeTable = memo<CheckboxTreeTableProps>(
-  ({ value = [], onChange, options, ...tableProps }) => {
+  ({ value = [], onChange, options, checkStrictly, ...tableProps }) => {
+    const targetCheckStrictly = useMemo(() => {
+      if (checkStrictly === undefined) return true;
+
+      return checkStrictly;
+    }, [checkStrictly]);
+
     return (
       <Table
         dataSource={options}
         rowKey="id"
         rowSelection={{
+          checkStrictly: targetCheckStrictly,
           type: 'checkbox',
           selectedRowKeys: value ?? [],
           onSelect: (record, selected, selectedRows) => {
-            let changeSelectedRowKeys;
+            const selectedRowKeys = selectedRows.filter((t) => !!t).map((t) => t.value);
+
+            let targetKeys;
 
             if (selected) {
-              const selectedRowKeys = selectedRows.filter((t) => !!t).map((t) => t.value);
-              changeSelectedRowKeys = Array.from(new Set([...(value ?? []), ...selectedRowKeys]));
+              targetKeys = Array.from(new Set([...(value ?? []), ...selectedRowKeys]));
             } else {
-              changeSelectedRowKeys = (value ?? []).filter((t) => t !== record.id);
+              targetKeys = difference(
+                value,
+                difference(
+                  Util.treeToArray(
+                    options as any[],
+                    {
+                      parentIdAttr: 'pid',
+                      rootParentId: '-1',
+                    },
+                    'id',
+                  ).map((t) => t.id),
+                  selectedRowKeys,
+                ),
+              );
             }
 
-            onChange?.(changeSelectedRowKeys, [], {
+            onChange?.(targetKeys, [], {
               selected,
               // @ts-ignore
               triggerNode: {

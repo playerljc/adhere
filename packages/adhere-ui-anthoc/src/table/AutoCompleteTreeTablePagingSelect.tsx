@@ -1,4 +1,4 @@
-import uniqBy from 'lodash.uniqby';
+import { TreeSelect } from 'antd';
 import React, { memo, useMemo } from 'react';
 
 import Util from '@baifendian/adhere-util';
@@ -19,8 +19,31 @@ import usePagingTreeRenderProps from './usePagingTreeRenderProps';
  * @constructor
  */
 const InternalAutoCompleteTreeTablePagingSelect = memo<AutoCompleteTreeTablePagingSelectProps>(
-  ({ pagingProps, tablePagingProps, treeDataSimpleModeConfig, defaultTreeData, ...props }) => {
+  ({
+    pagingProps,
+    tablePagingProps,
+    treeDataSimpleModeConfig,
+    defaultTreeData,
+    checkStrictly,
+    ...props
+  }) => {
     const fetchLoading = useAutoCompleteFetchLoading(props.renderLoading);
+
+    const targetCheckStrictly = useMemo(() => {
+      if (checkStrictly === undefined) return true;
+
+      return checkStrictly;
+    }, [checkStrictly]);
+
+    const showCheckedStrategy = useMemo(() => {
+      if (targetCheckStrictly) return TreeSelect.SHOW_CHILD;
+
+      return TreeSelect.SHOW_ALL;
+    }, [targetCheckStrictly]);
+
+    const treeCheckable = useMemo(() => {
+      return !targetCheckStrictly;
+    }, [targetCheckStrictly]);
 
     const targetTreeDataSimpleModeConfig = useMemo(
       () => ({
@@ -119,6 +142,8 @@ const InternalAutoCompleteTreeTablePagingSelect = memo<AutoCompleteTreeTablePagi
     return (
       <Component
         {...props}
+        showCheckedStrategy={showCheckedStrategy}
+        treeCheckable={treeCheckable}
         treeData={treeData}
         defaultTreeData={defaultTreeData}
         onSearch={setInputValue}
@@ -143,9 +168,11 @@ const InternalAutoCompleteTreeTablePagingSelect = memo<AutoCompleteTreeTablePagi
         {({ originNode, loading, ...rest }) => {
           const { treeData: _omitTreeData, ...tablePropsRest } = rest;
 
+          const targetTreeData = (_omitTreeData ?? []).slice(0, defaultPageSize);
+
           const options = isTreeDataSimpleMode
-            ? Util.arrayToAntdTreeSelect(_omitTreeData ?? [], targetTreeDataSimpleModeConfig)
-            : _omitTreeData;
+            ? Util.arrayToAntdTreeSelect(targetTreeData ?? [], targetTreeDataSimpleModeConfig)
+            : targetTreeData;
 
           const tableProps = renderProps({
             options,
@@ -155,7 +182,9 @@ const InternalAutoCompleteTreeTablePagingSelect = memo<AutoCompleteTreeTablePagi
           return (
             <>
               {loading && fetchLoading}
-              {!loading && isMultiple && <CheckboxPagingTreeTable {...tableProps} />}
+              {!loading && isMultiple && (
+                <CheckboxPagingTreeTable checkStrictly={targetCheckStrictly} {...tableProps} />
+              )}
               {!loading && !isMultiple && <RadioPagingTreeTable {...tableProps} />}
             </>
           );

@@ -129,9 +129,10 @@ export default () => {
     <Table.AutoCompleteTreeTableSelect
       placeholder="AutoCompleteTreeTableSelect"
       style={{ width: 800 }}
-      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+      // dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       multiple
       treeDataSimpleMode
+      checkStrictly={false}
       value={value}
       onChange={setValue}
       loadData={(_kw) => {
