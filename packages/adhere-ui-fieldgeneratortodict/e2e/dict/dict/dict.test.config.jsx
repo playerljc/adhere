@@ -1246,17 +1246,122 @@ export default {
     };
 
     Dict.handlers.SystemTable = () => {
-      const dataSource = Array.from({ length: 100 }).map((t) => ({
-        id: Mock.mock('@guid'),
-        name: Mock.mock('@name'),
-        sex: `${Util.generatorRandom(0, 1)}`,
-        homeTown: Mock.mock('@name'),
-        address: Mock.mock('@name'),
-        birthday: new Date().getTime(),
-        deptName: Mock.mock('@name'),
-        height: Mock.mock('@integer'),
-        width: Mock.mock('@integer'),
-      }));
+      const dataSource = Array.from({ length: 100 }).map((t) => {
+        const value = Mock.mock('@guid');
+        const label = Mock.mock('@name');
+
+        return {
+          label,
+          value,
+          id: value,
+          name: label,
+          sex: `${Util.generatorRandom(0, 1)}`,
+          homeTown: Mock.mock('@name'),
+          address: Mock.mock('@name'),
+          birthday: new Date().getTime(),
+          deptName: Mock.mock('@name'),
+          height: Mock.mock('@integer'),
+          width: Mock.mock('@integer'),
+        };
+      });
+
+      return (argv) => {
+        // 是异步加载
+        if (argv.isAsync) {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve(
+                Array.from({ length: 5 }).map(() => {
+                  const value = Mock.mock('@guid');
+                  const label = Mock.mock('@name');
+
+                  return {
+                    label,
+                    value,
+                    id: value,
+                    name: label,
+                    sex: `${Util.generatorRandom(0, 1)}`,
+                    homeTown: Mock.mock('@name'),
+                    address: Mock.mock('@name'),
+                    birthday: new Date().getTime(),
+                    deptName: Mock.mock('@name'),
+                    height: Mock.mock('@integer'),
+                    width: Mock.mock('@integer'),
+                  };
+                }),
+              );
+            }, 1000);
+          });
+        }
+        // 列表的数据
+        else {
+          const { cascadeParams, params } = argv;
+
+          const { page, limit } = params;
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve({
+                resCode: 0,
+                data: {
+                  total: dataSource.length,
+                  records: dataSource.slice((page - 1) * limit, page * limit),
+                },
+              });
+            }, 300);
+          });
+        }
+      };
+    };
+
+    Dict.handlers.SystemTreeTable = () => {
+      const _level = 3;
+
+      function genChildren(length, level) {
+        return Array.from({ length }).map((t) => {
+          const value = Mock.mock('@guid');
+          const title = Mock.mock('@name');
+
+          const record = {
+            value,
+            title,
+            id: value,
+            name: title,
+            sex: `${Util.generatorRandom(0, 1)}`,
+            homeTown: Mock.mock('@name'),
+            address: Mock.mock('@name'),
+            birthday: new Date().getTime(),
+            deptName: Mock.mock('@name'),
+            height: Mock.mock('@integer'),
+            width: Mock.mock('@integer'),
+          };
+
+          if (_level !== level) {
+            record.children = genChildren(2, level + 1);
+          }
+
+          return record;
+        });
+      }
+
+      const dataSource = Array.from({ length: 100 }).map(() => {
+        const value = Mock.mock('@guid');
+        const title = Mock.mock('@name');
+
+        return {
+          value,
+          title,
+          id: value,
+          name: title,
+          sex: `${Util.generatorRandom(0, 1)}`,
+          homeTown: Mock.mock('@name'),
+          address: Mock.mock('@name'),
+          birthday: new Date().getTime(),
+          deptName: Mock.mock('@name'),
+          height: Mock.mock('@integer'),
+          width: Mock.mock('@integer'),
+          children: genChildren(2, 2),
+        };
+      });
 
       return ({ cascadeParams, params }) => {
         const { page, limit } = params;

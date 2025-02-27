@@ -156,17 +156,15 @@ DictConfig();
 const store = createStore(null, {}, applyMiddleware(createLoggerMiddleware(), sage));
 
 const SearchTable = lazy(() =>
-  import(/* webpackChunkName: "searchtable" */ './SearchTable/EditorCell'),
+  import(/* webpackChunkName: "searchtable" */ './SearchTable/AsyncMultipleSelect.jsx'),
 );
 
 e2e.PC({
   children: (
     <Provider store={store}>
-      <div style={{ height: 1000 }}>
-        <Suspense fallback={<div>loading</div>}>
-          <SearchTable />
-        </Suspense>
-      </div>
+      <Suspense fallback={<div>loading</div>}>
+        <SearchTable />
+      </Suspense>
     </Provider>
   ),
 });

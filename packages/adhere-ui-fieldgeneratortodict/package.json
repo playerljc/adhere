@@ -51,6 +51,7 @@
     "antd": "^5.23.4",
     "lodash.clonedeep": "^4.5.0",
     "lodash.debounce": "^4.0.8",
+    "lodash.merge": "^4.6.2",
     "react": "^18.3.1",
     "react-dom": "^18.2.0"
   },

@@ -191,6 +191,16 @@ declare const _default: {
             readonly Paging: "TableACPaging";
             readonly MultiPaging: "TableACMultiPaging";
         };
+        readonly TableTreeSelect: {
+            readonly Standard: "TableTreeSelectStandard";
+            readonly Multi: "TableTreeSelectMulti";
+            readonly Paging: "TableTreeSelectPaging";
+            readonly MultiPaging: "TableTreeSelectMultiPaging";
+        };
+        readonly TableTreeSelectDynamic: {
+            readonly Standard: "TableTreeSelectDynamicStandard";
+            readonly Multi: "TableTreeSelectDynamicMulti";
+        };
         readonly TableTreeAC: {
             readonly Standard: "TableTreeACStandard";
             readonly Multi: "TableTreeACMulti";
@@ -345,6 +355,15 @@ declare const _default: {
             readonly EditorCellRowDragSort: "SearchTableEditorCellRowDragSort";
             readonly EditorRowDragSort: "SearchTableEditorRowDragSort";
             readonly EditorTableRowDragSort: "SearchTableEditorTableRowDragSort";
+            readonly SingleSelect: "SearchTableSingleSelect";
+            readonly MultipleSelect: "SearchTableMultipleSelect";
+            readonly ContinuousMultipleSelect: "SearchTableContinuousMultipleSelect";
+            readonly TreeSingleSelect: "SearchTableTreeSingleSelect";
+            readonly TreeMultipleSelect: "SearchTableTreeMultipleSelect";
+            readonly TreeContinuousMultipleSelect: "SearchTableTreeContinuousMultipleSelect";
+            readonly AsyncSingleSelect: "SearchTableAsyncSingleSelect";
+            readonly AsyncMultipleSelect: "SearchTableAsyncMultipleSelect";
+            readonly AsyncContinuousMultipleSelect: "SearchTableAsyncContinuousMultipleSelect";
         };
         readonly MobileInputMultiple: {
             readonly Standard: "MobileInputMultipleStandard";

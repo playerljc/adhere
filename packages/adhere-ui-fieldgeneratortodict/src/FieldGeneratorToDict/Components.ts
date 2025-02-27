@@ -223,6 +223,16 @@ const Components = {
     Paging: 'TableACPaging',
     MultiPaging: 'TableACMultiPaging',
   },
+  TableTreeSelect: {
+    Standard: 'TableTreeSelectStandard',
+    Multi: 'TableTreeSelectMulti',
+    Paging: 'TableTreeSelectPaging',
+    MultiPaging: 'TableTreeSelectMultiPaging',
+  },
+  TableTreeSelectDynamic: {
+    Standard: 'TableTreeSelectDynamicStandard',
+    Multi: 'TableTreeSelectDynamicMulti',
+  },
   TableTreeAC: {
     Standard: 'TableTreeACStandard',
     Multi: 'TableTreeACMulti',
@@ -398,6 +408,17 @@ const Components = {
     EditorCellRowDragSort: 'SearchTableEditorCellRowDragSort',
     EditorRowDragSort: 'SearchTableEditorRowDragSort',
     EditorTableRowDragSort: 'SearchTableEditorTableRowDragSort',
+    // 这些是选取功能(不带editor和drag)
+    SingleSelect: 'SearchTableSingleSelect',
+    MultipleSelect: 'SearchTableMultipleSelect',
+    ContinuousMultipleSelect: 'SearchTableContinuousMultipleSelect',
+    TreeSingleSelect: 'SearchTableTreeSingleSelect',
+    TreeMultipleSelect: 'SearchTableTreeMultipleSelect',
+    TreeContinuousMultipleSelect: 'SearchTableTreeContinuousMultipleSelect',
+    // async(只有tree才有)
+    AsyncSingleSelect: 'SearchTableAsyncSingleSelect',
+    AsyncMultipleSelect: 'SearchTableAsyncMultipleSelect',
+    AsyncContinuousMultipleSelect: 'SearchTableAsyncContinuousMultipleSelect',
   },
   /* ------ SearchTable end ------ */
 

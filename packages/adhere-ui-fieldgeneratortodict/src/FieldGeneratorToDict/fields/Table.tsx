@@ -10,6 +10,8 @@ import type {
   TablePagingProps,
   TablePagingSelectProps,
   TableSelectProps,
+  TreeTablePagingSelectProps,
+  TreeTableSelectProps,
 } from '@baifendian/adhere-ui-anthoc/es/types';
 
 import type { SuspenseComponentProps } from '../../types';
@@ -413,7 +415,125 @@ setItem<AutoCompleteTablePagingSelectProps, AutoCompleteTablePagingSelectProps['
 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * TableTreeSelectStandard
+ */
+setItem<TreeTableSelectProps, TreeTableSelectProps['treeData']>(
+  'TableTreeSelect',
+  'Standard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const treeData = useDict<TreeTableSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
 
+      return <Table.TreeTableSelect {...props} treeData={treeData} />;
+    },
+);
+
+/**
+ * TableTreeSelectMulti
+ */
+setItem<TreeTableSelectProps, TreeTableSelectProps['treeData']>(
+  'TableTreeSelect',
+  'Multi',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const treeData = useDict<TreeTableSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return <Table.TreeTableSelect {...props} multiple treeData={treeData} />;
+    },
+);
+
+/**
+ * TableTreeSelectDynamicStandard
+ */
+setItem<TreeTableSelectProps, TreeTableSelectProps['treeData']>(
+  'TableTreeSelectDynamic',
+  'Standard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const treeData = useDynamicDict<TreeTableSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return <Table.TreeTableSelect {...props} treeData={treeData} />;
+    },
+);
+
+/**
+ * TableTreeSelectDynamicMulti
+ */
+setItem<TreeTableSelectProps, TreeTableSelectProps['treeData']>(
+  'TableTreeSelectDynamic',
+  'Multi',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const treeData = useDynamicDict<TreeTableSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return <Table.TreeTableSelect {...props} multiple treeData={treeData} />;
+    },
+);
+
+/**
+ * TableTreeSelectPaging
+ */
+setItem<TreeTablePagingSelectProps, TreeTablePagingSelectProps['treeData']>(
+  'TableTreeSelect',
+  'Paging',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const loadData = usePaging<TreeTablePagingSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      const pagingProps = {
+        ...(props.pagingProps ?? {}),
+        loadData,
+      };
+
+      return <Table.TreeTablePagingSelect {...props} pagingProps={pagingProps} />;
+    },
+);
+
+/**
+ * TableTreeSelectMultiPaging
+ */
+setItem<TreeTablePagingSelectProps, TreeTablePagingSelectProps['treeData']>(
+  'TableTreeSelect',
+  'MultiPaging',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const loadData = usePaging<TreeTablePagingSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      const pagingProps = {
+        ...(props.pagingProps ?? {}),
+        loadData,
+      };
+
+      return <Table.TreeTablePagingSelect {...props} pagingProps={pagingProps} multiple />;
+    },
+);
+
+//////////////////////////////////////////////////////////////////////////////////////////
 /**
  * TableTreeACStandard
  */
