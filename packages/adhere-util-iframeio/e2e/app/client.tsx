@@ -168,6 +168,9 @@ export default function () {
     reader.readAsArrayBuffer(file);
   }
 
+  /**
+   * onIframeLoad
+   */
   function onIframeLoad() {
     setIframeReady(true);
   }
