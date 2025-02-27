@@ -21,7 +21,9 @@ const dataSource = Array.from({ length: 100 }).map((_, _index) => {
 });
 
 export default () => {
-  const [value, setValue] = useState([dataSource[0]]);
+  const [value, setValue] = useState([
+    /*dataSource[0]*/
+  ]);
 
   function loadData(page, limit, _kw) {
     console.log(page, limit, _kw);
@@ -41,8 +43,8 @@ export default () => {
       <Table.AutoCompleteTablePagingSelect
         placeholder="AutoCompleteTablePagingSelect"
         style={{ width: 600 }}
-        // dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
-        defaultOptions={[dataSource[0]]}
+        dropdownStyle={{ width: 1000 }}
+        // defaultOptions={[dataSource[0]]}
         mode="multiple"
         pagingProps={{
           loadData,

@@ -41,10 +41,6 @@ const InternalAutoCompleteTreeTablePagingSelect = memo<AutoCompleteTreeTablePagi
       return TreeSelect.SHOW_ALL;
     }, [targetCheckStrictly]);
 
-    const treeCheckable = useMemo(() => {
-      return !targetCheckStrictly;
-    }, [targetCheckStrictly]);
-
     const targetTreeDataSimpleModeConfig = useMemo(
       () => ({
         keyAttr: treeDataSimpleModeConfig?.keyAttr ?? 'value',
@@ -71,6 +67,10 @@ const InternalAutoCompleteTreeTablePagingSelect = memo<AutoCompleteTreeTablePagi
       treeDataSimpleMode: props.treeDataSimpleMode,
       ...pagingProps,
     });
+
+    const treeCheckable = useMemo(() => {
+      return isMultiple ? !targetCheckStrictly : false;
+    }, [targetCheckStrictly]);
 
     const Component = useMemo(
       () => (isMultiple ? AutoCompleteTreeMultiSelect : AutoCompleteTreeSelect),
@@ -141,7 +141,6 @@ const InternalAutoCompleteTreeTablePagingSelect = memo<AutoCompleteTreeTablePagi
 
     return (
       <Component
-        {...props}
         showCheckedStrategy={showCheckedStrategy}
         treeCheckable={treeCheckable}
         treeData={treeData}
@@ -164,15 +163,16 @@ const InternalAutoCompleteTreeTablePagingSelect = memo<AutoCompleteTreeTablePagi
             setTimeout(() => resolve(), 300);
           });
         }}
+        {...props}
       >
         {({ originNode, loading, ...rest }) => {
           const { treeData: _omitTreeData, ...tablePropsRest } = rest;
 
-          const targetTreeData = (_omitTreeData ?? []).slice(0, defaultPageSize);
+          const _treeData = isTreeDataSimpleMode
+            ? Util.arrayToAntdTreeSelect(_omitTreeData ?? [], targetTreeDataSimpleModeConfig)
+            : _omitTreeData;
 
-          const options = isTreeDataSimpleMode
-            ? Util.arrayToAntdTreeSelect(targetTreeData ?? [], targetTreeDataSimpleModeConfig)
-            : targetTreeData;
+          const options = (_treeData ?? []).slice(0, defaultPageSize);
 
           const tableProps = renderProps({
             options,

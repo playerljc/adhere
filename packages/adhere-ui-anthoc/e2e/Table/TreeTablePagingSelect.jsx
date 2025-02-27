@@ -58,29 +58,12 @@ export default () => {
   // const [value, setValue] = useState([TREE_DATA[0].children[0].children[0]]);
   // const [value, setValue] = useState([FLAT_TREE_DATA[2].value]);
 
-  function loadData(page, limit, _kw) {
+  function loadData(page, limit) {
     return new Promise((resolve) => {
       // 拉平
-      if (!_kw) {
-        resolve({
-          totalCount: 0,
-          data: [],
-        });
-        return;
-      }
-
       setTimeout(() => {
-        const result = FLAT_TREE_DATA.filter((_node) => _node.title.indexOf(_kw) !== -1);
-
-        const targetTreeData = Util.completionIncompleteFlatArr(FLAT_TREE_DATA, result, {
-          keyAttr: 'value',
-          titleAttr: 'title',
-          parentIdAttr: 'pId',
-          rootParentId: '',
-        });
-
         const data = Util.treeToArray(
-          targetTreeData.slice((page - 1) * limit, page * limit),
+          TREE_DATA.slice((page - 1) * limit, page * limit),
           {
             parentIdAttr: 'pId',
             rootParentId: '',
@@ -89,50 +72,27 @@ export default () => {
         );
 
         resolve({
-          totalCount: targetTreeData.length,
+          totalCount: TREE_DATA.length,
           data,
         });
       }, 100);
       // ----------------------------------------------
 
       // 正常
-      // if (!_kw) {
-      //   resolve({
-      //     totalCount: 0,
-      //     data: [],
-      //   });
-      //   return;
-      // }
-      //
       // setTimeout(() => {
-      //   const flatTreeData = Util.treeToArray(
-      //     TREE_DATA,
-      //     { parentIdAttr: 'pId', rootParentId: '' },
-      //     'value',
-      //   );
-      //
-      //   const result = flatTreeData.filter((_node) => _node.title.indexOf(_kw) !== -1);
-      //
-      //   const targetTreeData = Util.completionIncompleteFlatArr(flatTreeData, result, {
-      //     keyAttr: 'value',
-      //     titleAttr: 'title',
-      //     parentIdAttr: 'pId',
-      //     rootParentId: '',
-      //   });
-      //
-      //   const data = targetTreeData.slice((page - 1) * limit, page * limit);
+      //   const data = TREE_DATA.slice((page - 1) * limit, page * limit);
       //
       //   resolve({
-      //     totalCount: targetTreeData.length,
+      //     totalCount: TREE_DATA.length,
       //     data,
       //   });
       // }, 100);
-      // --------------------------------------
+      // -------------------------------------------------------
     });
   }
 
   return (
-    <Table.AutoCompleteTreeTablePagingSelect
+    <Table.TreeTablePagingSelect
       // defaultTreeData={[
       //   {
       //     ...TREE_DATA[0],
@@ -145,10 +105,12 @@ export default () => {
       //   },
       // ]}
       // defaultTreeData={[FLAT_TREE_DATA[0], FLAT_TREE_DATA[1], FLAT_TREE_DATA[2]]}
-      placeholder="AutoCompleteTreeTablePagingSelect"
+      // treeDataSimpleMode
+      placeholder="TreeTablePagingSelect"
       style={{ width: 800 }}
+      // dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       dropdownStyle={{ width: 1000 }}
-      // multiple
+      multiple
       value={value}
       onChange={setValue}
       treeDataSimpleMode

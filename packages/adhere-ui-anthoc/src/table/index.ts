@@ -11,6 +11,8 @@ import TableExt from './TableExt';
 import TablePaging from './TablePaging';
 import TablePagingSelect from './TablePagingSelect';
 import TableSelect from './TableSelect';
+import TreeTablePagingSelect from './TreeTablePagingSelect';
+import TreeTableSelect from './TreeTableSelect';
 
 Table.AutoCompleteTablePagingSelect = AutoCompleteTablePagingSelect;
 Table.AutoCompleteTreeTablePagingSelect = AutoCompleteTreeTablePagingSelect;
@@ -23,6 +25,8 @@ Table.RadioTable = RadioTable;
 Table.CheckboxTable = CheckboxTable;
 Table.RadioTreeTable = RadioTreeTable;
 Table.CheckboxTreeTable = CheckboxTreeTable;
+Table.TreeTableSelect = TreeTableSelect;
+Table.TreeTablePagingSelect = TreeTablePagingSelect;
 Table.TableExt = TableExt;
 
 export default Table;

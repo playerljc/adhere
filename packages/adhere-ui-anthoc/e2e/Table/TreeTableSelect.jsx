@@ -74,6 +74,15 @@ const TREE_DATA = [
   },
 ];
 
+const FLAT_TREE_DATA = Util.treeToArray(
+  TREE_DATA,
+  {
+    parentIdAttr: 'pId',
+    rootParentId: 0,
+  },
+  'id',
+);
+
 const defaultTreeData = {
   key: 'leaf2',
   value: [
@@ -99,15 +108,6 @@ const defaultTreeData = {
   ],
 };
 
-const FLAT_TREE_DATA = Util.treeToArray(
-  TREE_DATA,
-  {
-    parentIdAttr: 'pId',
-    rootParentId: 0,
-  },
-  'id',
-);
-
 const flatDefaultTreeData = {
   key: 'leaf2',
   value: Util.treeToArray(
@@ -121,72 +121,19 @@ const flatDefaultTreeData = {
 };
 
 export default () => {
-  const [treeData, setTreeData] = useState([]);
-
   const [value, setValue] = useState(undefined);
 
   return (
-    <Table.AutoCompleteTreeTableSelect
-      placeholder="AutoCompleteTreeTableSelect"
-      style={{ width: 800 }}
+    <Table.TreeTableSelect
+      placeholder="TreeTableSelect"
+      style={{ width: 600 }}
       dropdownStyle={{ width: 1000 }}
       multiple
       // treeDataSimpleMode
       checkStrictly={false}
       value={value}
       onChange={setValue}
-      loadData={(_kw) => {
-        return new Promise((resolve) => {
-          if (!_kw) {
-            setTreeData([]);
-            resolve();
-            return;
-          }
-
-          setTimeout(() => {
-            // ------------------正常------------------
-            const flatTreeData = Util.treeToArray(
-              TREE_DATA,
-              { parentIdAttr: 'pId', rootParentId: '' },
-              'value',
-            );
-
-            const result = flatTreeData.filter((_node) => _node.title.indexOf(_kw) !== -1);
-
-            const targetTreeData = Util.completionIncompleteFlatArr(flatTreeData, result, {
-              keyAttr: 'value',
-              titleAttr: 'title',
-              parentIdAttr: 'pId',
-              rootParentId: '',
-            });
-            // ------------------正常------------------
-
-            // ------------------flat-----------------------
-            // const result = FLAT_TREE_DATA.filter((_node) => _node.title.indexOf(_kw) !== -1);
-            //
-            // const targetTreeData = Util.treeToArray(
-            //   Util.completionIncompleteFlatArr(FLAT_TREE_DATA, result, {
-            //     keyAttr: 'id',
-            //     titleAttr: 'title',
-            //     parentIdAttr: 'pId',
-            //     rootParentId: 0,
-            //   }),
-            //   {
-            //     keyAttr: 'id',
-            //     titleAttr: 'title',
-            //     parentIdAttr: 'pId',
-            //     rootParentId: 0,
-            //   },
-            // );
-            // ------------------flat-----------------------
-
-            setTreeData(targetTreeData);
-
-            resolve();
-          }, 100);
-        });
-      }}
-      treeData={treeData}
+      treeData={TREE_DATA}
       tableProps={{
         rowKey: 'id',
         columns: [

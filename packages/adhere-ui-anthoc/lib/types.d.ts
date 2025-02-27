@@ -80,6 +80,8 @@ import TableExt from './table/TableExt';
 import TablePaging from './table/TablePaging';
 import TablePagingSelect from './table/TablePagingSelect';
 import TableSelect from './table/TableSelect';
+import TreeTablePagingSelect from './table/TreeTablePagingSelect';
+import TreeTableSelect from './table/TreeTableSelect';
 import AutoCompleteCheckAllTagSelect from './tag/AutoCompleteCheckAllTagSelect';
 import AutoCompleteTagSelect from './tag/AutoCompleteTagSelect';
 import CheckAllTagSelect from './tag/CheckAllTagSelect';
@@ -103,6 +105,7 @@ import AutoCompleteTreeLeafSelect from './tree-select/AutoCompleteTreeLeafSelect
 import AutoCompleteTreeMultiLeafSelect from './tree-select/AutoCompleteTreeMultiLeafSelect';
 import AutoCompleteTreeMultiSelect from './tree-select/AutoCompleteTreeMultiSelect';
 import AutoCompleteTreeSelect from './tree-select/AutoCompleteTreeSelect';
+import TreeDropdownRenderSelect from './tree-select/DropdownRenderSelect';
 import TreeCheckedShowAllSelect from './tree-select/TreeCheckedShowAllSelect';
 import TreeCheckedShowChildSelect from './tree-select/TreeCheckedShowChildSelect';
 import TreeCheckedShowParentSelect from './tree-select/TreeCheckedShowParentSelect';
@@ -152,11 +155,23 @@ export type CheckAllSelectProps = DropdownWrapperStyleProps & CheckAllWrapperSty
 export type DropdownRenderSelectProps = Omit<SelectProps, 'children'> & {
     defaultInputValue?: string;
     emptyContent?: ReactElement;
+    shouldRenderEmptyData?: boolean;
     children?: (arg: {
         originNode?: ReactElement;
         value?: SelectProps['value'];
         onChange?: SelectProps['onChange'];
         options?: SelectProps['options'];
+    }) => ReactElement;
+};
+export type TreeDropdownRenderSelectProps = Omit<TreeSelectProps, 'children'> & {
+    shouldRenderEmptyData?: boolean;
+    emptyContent?: ReactElement;
+    isUsePath?: boolean;
+    children?: (arg: {
+        originNode?: ReactElement;
+        value?: TreeSelectProps['value'];
+        onChange?: TreeSelectProps['onChange'];
+        treeData?: TreeSelectProps['treeData'];
     }) => ReactElement;
 };
 export type CustomCheckAllCheckboxProps = CheckAllWrapperStyleProps & DropdownWrapperStyleProps & CustomCheckboxProps;
@@ -486,8 +501,13 @@ export type AutoCompleteTableSelectProps = AutoCompleteProps & {
 };
 export type AutoCompleteTreeTableSelectProps = TreeAutoCompleteProps & {
     treeDataSimpleModeConfig?: IFlatTreeArrNode;
-    tableProps?: TableSelectProps['tableProps'];
     checkStrictly?: boolean;
+    tableProps?: TableSelectProps['tableProps'];
+};
+export type TreeTableSelectProps = TreeDropdownRenderSelectProps & {
+    treeDataSimpleModeConfig?: IFlatTreeArrNode;
+    checkStrictly?: boolean;
+    tableProps?: TableSelectProps['tableProps'];
 };
 export type AutoCompleteListPagingSelectProps = AutoCompleteProps & {
     pagingProps: PagingWrapperProps<any>;
@@ -502,6 +522,13 @@ export type AutoCompleteTreeTablePagingSelectProps = TreeAutoCompleteProps & {
     pagingProps: PagingWrapperProps<any>;
     tablePagingProps?: Omit<CheckboxPagingTreeTableProps, 'value' | 'onChange'> | Omit<RadioPagingTreeTableProps, 'value' | 'onChange'>;
     checkStrictly?: boolean;
+};
+export type TreeTablePagingSelectProps = TreeDropdownRenderSelectProps & {
+    treeDataSimpleModeConfig?: IFlatTreeArrNode;
+    pagingProps: PagingWrapperProps<any>;
+    tablePagingProps?: Omit<CheckboxPagingTreeTableProps, 'value' | 'onChange'> | Omit<RadioPagingTreeTableProps, 'value' | 'onChange'>;
+    checkStrictly?: boolean;
+    defaultOptions?: any[];
 };
 export type AutoCompleteTagSelectProps = AutoCompleteProps & {
     tagProps?: TagSelectProps['tagProps'];
@@ -615,6 +642,8 @@ export type TableHOCComponent = ReturnType<typeof createFactory<TableProps<any>>
     RadioTreeTable: typeof RadioTreeTable;
     CheckboxTable: typeof CheckboxTable;
     CheckboxTreeTable: typeof CheckboxTreeTable;
+    TreeTableSelect: typeof TreeTableSelect;
+    TreeTablePagingSelect: typeof TreeTablePagingSelect;
     TableExt: typeof TableExt;
 };
 export type TagHOCComponent = ReturnType<typeof createFactory<TagProps>> & {
@@ -651,6 +680,7 @@ export type TreeSelectHOCComponent = ReturnType<typeof createFactory<TreeSelectP
     AutoCompleteTreeMultiLeafSelect: typeof AutoCompleteTreeMultiLeafSelect;
     AutoCompleteTreeMultiSelect: typeof AutoCompleteTreeMultiSelect;
     AutoCompleteTreeSelect: typeof AutoCompleteTreeSelect;
+    DropdownRenderSelect: typeof TreeDropdownRenderSelect;
 };
 export type CascaderHOCComponent = ReturnType<typeof createFactory<CascaderProps>> & {
     AsyncCascader: typeof AsyncCascader;

@@ -3,22 +3,13 @@ import React, { memo, useMemo } from 'react';
 
 import Util from '@baifendian/adhere-util';
 
-import AutoCompleteTreeMultiSelect from '../tree-select/AutoCompleteTreeMultiSelect';
-import AutoCompleteTreeSelect from '../tree-select/AutoCompleteTreeSelect';
-import type { AutoCompleteTreeTableSelectProps, DisplayNameInternal } from '../types';
-import useAutoCompleteFetchLoading from '../useAutoCompleteFetchLoading';
+import TreeDropdownRenderSelect from '../tree-select/DropdownRenderSelect';
+import type { DisplayNameInternal, TreeTableSelectProps } from '../types';
 import CheckboxTreeTable from './CheckboxTreeTable';
 import RadioTreeTable from './RadioTreeTable';
 import useTreeRender from './useTreeRenderProps';
 
-/**
- * AutoCompleteTreeTableSelect
- * @description ListSelect，单选或多选
- * @param listProps
- * @param props
- * @constructor
- */
-const InternalAutoCompleteTreeTableSelect = memo<AutoCompleteTreeTableSelectProps>(
+const InternalTreeTableSelect = memo<TreeTableSelectProps>(
   ({ tableProps, treeDataSimpleModeConfig, checkStrictly, ...props }) => {
     const isMultiple = useMemo(() => 'multiple' in props && props.multiple, [props.multiple]);
 
@@ -45,16 +36,13 @@ const InternalAutoCompleteTreeTableSelect = memo<AutoCompleteTreeTableSelectProp
 
     const renderProps = useTreeRender(tableProps);
 
-    const fetchLoading = useAutoCompleteFetchLoading(props.renderLoading);
-
-    const Component = useMemo(
-      () => (isMultiple ? AutoCompleteTreeMultiSelect : AutoCompleteTreeSelect),
-      [isMultiple],
-    );
-
     return (
-      <Component treeCheckable={treeCheckable} showCheckedStrategy={showCheckedStrategy} {...props}>
-        {({ originNode, loading, ...rest }) => {
+      <TreeDropdownRenderSelect
+        treeCheckable={treeCheckable}
+        showCheckedStrategy={showCheckedStrategy}
+        {...props}
+      >
+        {({ originNode, ...rest }) => {
           const { treeData, ...tablePropsRest } = rest;
 
           const options = isTreeDataSimpleMode
@@ -73,22 +61,21 @@ const InternalAutoCompleteTreeTableSelect = memo<AutoCompleteTreeTableSelectProp
 
           return (
             <>
-              {loading && fetchLoading}
-              {!loading && isMultiple && (
+              {isMultiple && (
                 <CheckboxTreeTable checkStrictly={targetCheckStrictly} {...tableProps} />
               )}
-              {!loading && !isMultiple && <RadioTreeTable {...tableProps} />}
+              {!isMultiple && <RadioTreeTable {...tableProps} />}
             </>
           );
         }}
-      </Component>
+      </TreeDropdownRenderSelect>
     );
   },
 );
 
-const AutoCompleteTreeTableSelect = InternalAutoCompleteTreeTableSelect as DisplayNameInternal<
-  typeof InternalAutoCompleteTreeTableSelect
+const TreeTableSelect = InternalTreeTableSelect as DisplayNameInternal<
+  typeof InternalTreeTableSelect
 >;
-AutoCompleteTreeTableSelect.displayName = 'AutoCompleteTreeTableSelect';
+TreeTableSelect.displayName = 'TreeTableSelect';
 
-export default AutoCompleteTreeTableSelect;
+export default TreeTableSelect;

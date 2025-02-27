@@ -17,7 +17,14 @@ import Select from './Select';
  * @constructor
  */
 const InternalDropdownRenderSelect = memo<DropdownRenderSelectProps>(
-  ({ children, options, defaultInputValue, emptyContent, ...props }) => {
+  ({
+    children,
+    options,
+    defaultInputValue,
+    emptyContent,
+    shouldRenderEmptyData = false,
+    ...props
+  }) => {
     const isMultiple = 'mode' in props && props.mode === 'multiple';
 
     /**
@@ -55,21 +62,27 @@ const InternalDropdownRenderSelect = memo<DropdownRenderSelectProps>(
       (_originNode) => {
         currentOriginNode.current = _originNode;
 
+        const renderChildrenParams = {
+          originNode: _originNode,
+          value: props.value,
+          onChange: (...arg: [any, ...any[]]) => {
+            onSelectChange(arg[0]);
+            props.onChange?.(...arg);
+          },
+          options: filterOptions,
+        };
+
+        if (shouldRenderEmptyData) {
+          return children?.(renderChildrenParams) ?? _originNode;
+        }
+
         dropdownRenderElement.current = !!filterOptions?.length
-          ? children?.({
-              originNode: _originNode,
-              value: props.value,
-              onChange: (...arg) => {
-                onSelectChange(arg[0]);
-                props.onChange?.(...arg);
-              },
-              options: filterOptions,
-            }) ?? _originNode
+          ? children?.(renderChildrenParams) ?? _originNode
           : emptyContent ?? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
 
         return dropdownRenderElement.current;
       },
-      [children, filterOptions, props.value, props.onChange],
+      [children, emptyContent, filterOptions, props.value, props.onChange],
     );
 
     useUpdateEffect(() => {

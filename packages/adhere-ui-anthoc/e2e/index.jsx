@@ -48,6 +48,8 @@ import AutoCompleteTreeTableSelect from './Table/AutoCompleteTreeTableSelect.jsx
 import CheckboxTablePaging from './Table/CheckboxTablePaging';
 import CheckboxTablePagingSelect from './Table/CheckboxTablePagingSelect.tsx';
 import CheckboxTableSelect from './Table/CheckboxTableSelect.tsx';
+import TreeTablePagingSelect from './Table/TreeTablePagingSelect.jsx';
+import TreeTableSelect from './Table/TreeTableSelect';
 import TagTest from './Tag/HorizontalCheckableTagGroup';
 import TimePickerValueHOCInFormTest from './TimePickerValueHOCInFormTest';
 import TimePickerValueHOCTest from './TimePickerValueHOCTest';
@@ -65,5 +67,5 @@ import '../src/index.less';
 
 e2e.PC({
   // children: <TransferSelect />,
-  children: <CheckboxTablePagingSelect />,
+  children: <TreeTableSelect />,
 });

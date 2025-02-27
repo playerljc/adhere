@@ -12,6 +12,7 @@ import AutoCompleteTreeLeafSelect from './AutoCompleteTreeLeafSelect';
 import AutoCompleteTreeMultiLeafSelect from './AutoCompleteTreeMultiLeafSelect';
 import AutoCompleteTreeMultiSelect from './AutoCompleteTreeMultiSelect';
 import AutoCompleteTreeSelect from './AutoCompleteTreeSelect';
+import DropdownRenderSelect from './DropdownRenderSelect';
 import TreeCheckedShowAllSelect from './TreeCheckedShowAllSelect';
 import TreeCheckedShowChildSelect from './TreeCheckedShowChildSelect';
 import TreeCheckedShowParentSelect from './TreeCheckedShowParentSelect';
@@ -37,5 +38,6 @@ TreeSelect.AutoCompleteTreeLeafSelect = AutoCompleteTreeLeafSelect;
 TreeSelect.AutoCompleteTreeMultiLeafSelect = AutoCompleteTreeMultiLeafSelect;
 TreeSelect.AutoCompleteTreeMultiSelect = AutoCompleteTreeMultiSelect;
 TreeSelect.AutoCompleteTreeSelect = AutoCompleteTreeSelect;
+TreeSelect.DropdownRenderSelect = DropdownRenderSelect;
 
 export default TreeSelect;

@@ -28,7 +28,7 @@ export default () => {
     <Table.AutoCompleteTableSelect
       placeholder="AutoCompleteTableSelect"
       style={{ width: 600 }}
-      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+      dropdownStyle={{ width: 1000 }}
       mode="multiple"
       value={value}
       options={options}
