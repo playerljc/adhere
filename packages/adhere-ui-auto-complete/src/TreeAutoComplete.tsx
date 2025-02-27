@@ -59,9 +59,19 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
       const _targetValues = Array.isArray(_values) ? _values : [_values];
 
       return _targetValues.reduce((result, _id) => {
-        const node = targetFlatTreeData.find((t) => t.value === _id);
+        const node = targetFlatTreeData.find((t) => t[treeTransformConfig.keyAttr] === _id);
 
-        result[_id] = [...Util.getAncestor(targetFlatTreeData, node, treeTransformConfig), node];
+        const brotherNodes = targetFlatTreeData.filter(
+          (t) =>
+            t[treeTransformConfig.keyAttr] !== _id &&
+            t[treeTransformConfig.parentIdAttr] === node[treeTransformConfig.parentIdAttr],
+        );
+
+        result[_id] = [
+          ...Util.getAncestor(targetFlatTreeData, node, treeTransformConfig),
+          ...brotherNodes,
+          node,
+        ];
 
         return result;
       }, {});
@@ -92,6 +102,21 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
         // 单选
         setOpen(false);
       }
+    }
+
+    function dropdownRender(originNode) {
+      if (fetching) return fetchLoading;
+
+      return !!childrenTreeData?.length
+        ? children?.({
+            originNode,
+            treeDataSimpleMode: targetTreeDataSimpleMode,
+            value: treeSelectProps.value,
+            onChange: (...params) => onSelectChange(...params),
+            treeData: childrenTreeData ?? [],
+            loading: fetching,
+          }) ?? originNode
+        : empty;
     }
 
     const isUsePathTarget = useMemo(() => {
@@ -174,12 +199,12 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
 
         let _allFlatTreeData = composeTreeData.filter((t) => !!t);
 
-        const allFlatTreeDataKeys = _allFlatTreeData.map(({ value }) => value);
+        const allFlatTreeDataKeys = _allFlatTreeData.map((t) => t[treeTransformConfig.keyAttr]);
 
         const distinctKeys = Array.from(new Set(allFlatTreeDataKeys));
 
         _allFlatTreeData = distinctKeys.map((_value) =>
-          _allFlatTreeData.find((_option) => _option.value === _value),
+          _allFlatTreeData.find((_option) => _option[treeTransformConfig.keyAttr] === _value),
         );
 
         return Util.completionIncompleteFlatArr(
@@ -196,7 +221,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
 
         let _allFlatTreeData = composeTreeData.filter((t) => !!t);
 
-        const allFlatTreeDataKeys = _allFlatTreeData.map(({ value }) => value);
+        const allFlatTreeDataKeys = _allFlatTreeData.map((t) => t[treeTransformConfig.keyAttr]);
 
         const distinctKeys = Array.from(new Set(allFlatTreeDataKeys));
 
@@ -204,7 +229,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
           Util.completionIncompleteFlatArr(
             composeTreeData,
             distinctKeys.map((_value) =>
-              _allFlatTreeData.find((_option) => _option.value === _value),
+              _allFlatTreeData.find((_option) => _option[treeTransformConfig.keyAttr] === _value),
             ),
             treeTransformConfig,
           ),
@@ -215,13 +240,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
           treeTransformConfig.keyAttr,
         );
       }
-    }, [
-      treeData,
-      flatTreeData,
-      isUsePathTarget,
-      flatPathData,
-      /*treeSelectProps.value,*/ targetTreeDataSimpleMode,
-    ]);
+    }, [treeData, flatTreeData, isUsePathTarget, flatPathData, targetTreeDataSimpleMode]);
 
     const targetFlatTreeData = useMemo(() => {
       return targetTreeDataSimpleMode
@@ -330,20 +349,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
           // @ts-ignore
           onInput={onInput}
           onClear={onClear}
-          dropdownRender={(originNode) => {
-            if (fetching) return fetchLoading;
-
-            return !!childrenTreeData?.length
-              ? children?.({
-                  originNode,
-                  treeDataSimpleMode: targetTreeDataSimpleMode,
-                  value: treeSelectProps.value,
-                  onChange: (...params) => onSelectChange(...params),
-                  treeData: childrenTreeData ?? [],
-                  loading: fetching,
-                }) ?? originNode
-              : empty;
-          }}
+          dropdownRender={dropdownRender}
           onDropdownVisibleChange={setOpen}
           treeCheckable={false}
           {...treeSelectProps}
