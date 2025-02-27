@@ -25,7 +25,7 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
   }
 
   getFetchListPropName() {
-    return 'fetchList';
+    return 'fetchTreeList';
   }
 
   getOrderFieldValue() {
