@@ -40,7 +40,6 @@
     "@baifendian/adhere-ui-configprovider": "^2.11.0",
     "@baifendian/adhere-ui-css": "^2.11.0",
     "@baifendian/adhere-ui-ellipsis": "^2.11.0",
-    "@baifendian/adhere-ui-fieldgeneratortodict": "^2.11.0",
     "@baifendian/adhere-ui-flexlayout": "^2.11.0",
     "@baifendian/adhere-ui-globalindicator": "^2.11.0",
     "@baifendian/adhere-ui-prompt-errorprompt": "^2.11.0",
