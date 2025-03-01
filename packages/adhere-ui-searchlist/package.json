@@ -40,7 +40,6 @@
     "@baifendian/adhere-ui-contourblock": "^2.11.0",
     "@baifendian/adhere-ui-css": "^2.11.0",
     "@baifendian/adhere-ui-datedisplay": "^2.11.0",
-    "@baifendian/adhere-ui-fieldgeneratortodict": "^2.11.0",
     "@baifendian/adhere-ui-searchtable": "^2.11.0",
     "@baifendian/adhere-util": "^2.11.0",
     "@baifendian/adhere-util-dict": "^2.11.0",

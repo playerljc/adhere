@@ -17,6 +17,8 @@ export interface SearchListProps extends SearchProps {
   fixedSelectionHeaderAutoList: boolean;
   // 两端固定(列表主体始终在上方，分页始终在下方)
   fixedListSpaceBetween: boolean;
+  // 字典生成器句柄
+  FieldGeneratorToDict?: any;
 }
 
 /**

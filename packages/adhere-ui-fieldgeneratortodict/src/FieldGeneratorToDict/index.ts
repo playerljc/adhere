@@ -24,6 +24,7 @@ import './fields/MobileRadio';
 import './fields/MobileSelector';
 import './fields/MobileTreeSelect';
 import './fields/Radio';
+import './fields/SearchList';
 import './fields/SearchTable';
 import './fields/Segmented';
 import './fields/Select';

@@ -274,3 +274,18 @@ export type SuspenseProps = Omit<SuspenseSyncProps, 'isEmpty'> & {
 export type SuspenseComponentProps<T> = T & {
   suspenseProps: Omit<SuspenseProps, 'data'>;
 };
+
+export interface CreateServiceParams {
+  serviceName: string;
+  dictName: string;
+  responseBusiness?: XhrResponseBusiness;
+  defaultResult?: Record<string, any>;
+}
+
+export interface XhrResponseBusiness {
+  codeKey: string;
+  codeSuccess: number;
+  codeSuccessKey: number;
+  dataKey: string;
+  messageKey: string;
+}

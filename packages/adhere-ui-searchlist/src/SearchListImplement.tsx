@@ -1,7 +1,8 @@
-import { Avatar, Card, Checkbox, List } from 'antd';
-import { CardProps } from 'antd/es/card';
-import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { Avatar, Card, Checkbox, List, Radio } from 'antd';
+import type { CardProps } from 'antd/es/card';
+import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { ListItemMetaProps, ListItemProps } from 'antd/es/list';
+import type { RadioChangeEvent } from 'antd/es/radio';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { ReactElement, ReactNode, RefObject, createRef, forwardRef } from 'react';
@@ -30,30 +31,28 @@ const { cloneDeep } = SearchTable;
 
 export const selectorPrefix = 'adhere-ui-search-table-implement';
 
-const defaultMetas: any = {
-  ...{
-    title: {
-      dataIndex: 'title',
-    },
-    subTitle: {
-      dataIndex: 'subTitle',
-    },
-    description: {
-      dataIndex: 'description',
-    },
-    avatar: {
-      dataIndex: 'avatar',
-    },
-    actions: {
-      dataIndex: 'actions',
-      cardActionProps: 'actions',
-    },
-    content: {
-      dataIndex: 'content',
-    },
-    extra: {
-      dataIndex: 'extra',
-    },
+const DEFAULT_METAS: Metas<any> = {
+  title: {
+    dataIndex: 'title',
+  },
+  subTitle: {
+    dataIndex: 'subTitle',
+  },
+  description: {
+    dataIndex: 'description',
+  },
+  avatar: {
+    dataIndex: 'avatar',
+  },
+  actions: {
+    dataIndex: 'actions',
+    cardActionProps: 'actions',
+  },
+  content: {
+    dataIndex: 'content',
+  },
+  extra: {
+    dataIndex: 'extra',
   },
 };
 
@@ -68,7 +67,6 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   constructor(props) {
     super(props);
 
-    // @ts-ignore
     Object.assign(this.state, {
       ...this.getParams(),
       // 查询参数
@@ -83,10 +81,8 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   }
 
   componentDidMount() {
-    // @ts-ignore
     super.componentDidMount();
 
-    // @ts-ignore
     const { getListWrapperInstance } = this.props;
 
     if (getListWrapperInstance) {
@@ -127,7 +123,6 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @param {string} v
    */
   onSelectChange = (property: string, v: string): void => {
-    // @ts-ignore
     this.setState({
       [property]: v,
     });
@@ -140,7 +135,6 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @param {any} e
    */
   onInputChange = (property: string, e): void => {
-    // @ts-ignore
     this.setState({
       [property]: e.target.value,
     });
@@ -153,7 +147,6 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @param {any[]} dayjs
    */
   onDateTimeRangeChange = (propertys: string[], dayjs: any[]) => {
-    // @ts-ignore
     this.setState({
       [propertys[0]]: dayjs && dayjs.length ? dayjs[0] : null,
       [propertys[1]]: dayjs && dayjs.length ? dayjs[1] : null,
@@ -241,13 +234,21 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   }
 
   /**
+   * getFetchDataResultDataKey
+   * @description fetchData返回的结果中数据的key
+   * @return {string}
+   */
+  getFetchDataResultDataKey(): string {
+    return 'data';
+  }
+
+  /**
    * getData
    * @description - Table的数据(Table的dataSource字段)
    * @override
    * @return {object[]}
    */
   getData(): object[] {
-    // @ts-ignore
     return this.props[this.getServiceName()][this.getFetchListPropName()][this.getDataKey()];
   }
 
@@ -294,7 +295,6 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @return {number}
    */
   getTotal(): number {
-    // @ts-ignore
     return this.props[this.getServiceName()][this.getFetchListPropName()][this.getTotalKey()];
   }
 
@@ -340,10 +340,9 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
     // };
 
     return {
-      // @ts-ignore
+      type: 'checkbox',
       selectedRowKeys: this.state.selectedRowKeys,
       onChange: (selectedRowKeys: any[], selectedRows: any[]) => {
-        // @ts-ignore
         this.setState({
           selectedRowKeys,
           selectedRows,
@@ -394,7 +393,6 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    */
   clearSearch(): Promise<void> {
     return new Promise<void>((resolve) => {
-      // @ts-ignore
       this.setState(
         {
           ...this.getParams(),
@@ -419,11 +417,9 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    */
   clearPaging(): Promise<void> {
     return new Promise((resolve) => {
-      // @ts-ignore
       this.setState(
         {
           page: 1,
-          // @ts-ignore
           limit: this.getLimit(),
         },
         () => {
@@ -439,7 +435,6 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @override
    */
   showLoading(): boolean {
-    // @ts-ignore
     return this.props.loading[`${this.getServiceName()}/${this.getFetchListPropName()}`];
   }
 
@@ -449,7 +444,6 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @protected
    */
   getSearchParams(): any {
-    // @ts-ignore
     const { page, limit, searchParams } = this.state;
 
     return {
@@ -508,7 +502,6 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    */
   sync(): Promise<any> {
     return new Promise((resolve) => {
-      // @ts-ignore
       const page = this.state.page as number;
 
       if (page === 1) {
@@ -520,7 +513,6 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
           if (data.length) {
             resolve(res);
           } else {
-            // @ts-ignore
             this.setState(
               {
                 page: page - 1,
@@ -542,7 +534,6 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @protected
    */
   fetchDataExecute(searchParams: object): Promise<any> {
-    // @ts-ignore
     return this.props[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
       searchParams,
     );
@@ -557,12 +548,10 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
     const keys = Object.keys(this.getParams());
     const params = {};
     keys.forEach((key) => {
-      // @ts-ignore
       params[key] = this.state[key];
     });
 
     return new Promise<void>((resolve) => {
-      // @ts-ignore
       this.setState(
         {
           searchParams: {
@@ -584,12 +573,12 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @param {CheckboxChangeEvent} e
    * @param {any} record
    */
-  selectCheckBoxChange(e: CheckboxChangeEvent, record: any) {
+  selectCheckBoxChange(e: CheckboxChangeEvent | RadioChangeEvent, record: any) {
     const rowSelection = this.getRowSelection();
 
     const rowKey = this.getRowKey();
     const checked = e.target.checked;
-    // @ts-ignore
+    //
     const originSelectedRowKeys: any[] = [...(this.state.selectedRowKeys || [])];
     const data = this.getData();
     const id = record[rowKey];
@@ -613,7 +602,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
       const rowSelection = this.getRowSelection();
 
       rowSelection?.onChange?.([], [], {
-        type: 'multiple',
+        type: rowSelection.type === 'checkbox' ? 'multiple' : 'single',
       });
 
       resolve();
@@ -627,17 +616,30 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @return {ReactNode}
    */
   renderItemSelection(record: any): ReactNode {
-    // @ts-ignore
+    //
     const checked = this.state.selectedRowKeys?.includes(record[this.getRowKey()]);
+
+    const { type } = this.getRowSelection();
 
     return (
       <div className={`${selectorPrefix}-list-row-selection-checkbox`}>
-        <Checkbox
-          checked={checked}
-          onChange={(e) => {
-            this.selectCheckBoxChange(e, record);
-          }}
-        />
+        {type === 'checkbox' && (
+          <Checkbox
+            checked={checked}
+            onChange={(e) => {
+              this.selectCheckBoxChange(e, record);
+            }}
+          />
+        )}
+
+        {type === 'radio' && (
+          <Radio
+            checked={checked}
+            onChange={(e) => {
+              this.selectCheckBoxChange(e, record);
+            }}
+          />
+        )}
       </div>
     );
   }
@@ -650,7 +652,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    */
   renderSmallNormalItem(record: any, rowIndex: number): ReactNode {
     const metas: Metas<any> = {
-      ...defaultMetas,
+      ...DEFAULT_METAS,
       ...(this.getMetas() ?? {}),
     };
 
@@ -696,14 +698,14 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    */
   renderNormalItem(record: any, rowIndex: number): ReactNode {
     const metas: Metas<any> = {
-      ...defaultMetas,
+      ...DEFAULT_METAS,
       ...(this.getMetas() ?? {}),
     };
 
-    // @ts-ignore
+    //
     const direction = !('itemLayout' in this.props.antdListProps)
       ? 'horizontal'
-      : // @ts-ignore
+      : //
         this.props.antdListProps.itemLayout;
 
     const avatar =
@@ -776,7 +778,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @return {ReactNode}
    */
   renderNumberColumn(record, rowIndex): ReactNode {
-    // @ts-ignore
+    //
     const { page = 0, limit = 10 } = this.state;
 
     // 序号列
@@ -814,7 +816,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
     const listProps: ListItemProps = {};
 
     const metas: Metas<any> = {
-      ...defaultMetas,
+      ...DEFAULT_METAS,
       ...(this.getMetas() ?? {}),
     };
 
@@ -845,7 +847,6 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
 
     return classNames({
       [`${selectorPrefix}-list-selection`]:
-        // @ts-ignore
         !!rowSelection && this.state.selectedRowKeys?.includes?.(id),
     });
   }
@@ -903,7 +904,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
     const className = classNames(
       {
         [`${selectorPrefix}-list-item-vertical`]: true,
-        // @ts-ignore
+        //
         split: !('split' in this.props.antdListProps) || !!this.props.antdListProps.split,
       },
       this.getSelectionClassName(id),
@@ -946,7 +947,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    */
   renderCard({ record, rowIndex, grid }): ReactNode {
     const metas: Metas<any> = {
-      ...defaultMetas,
+      ...DEFAULT_METAS,
       ...(this.getMetas() ?? {}),
     };
 
@@ -1063,10 +1064,10 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @param children
    */
   renderExpandable({ record, rowIndex, collapseChildren, children }) {
-    // @ts-ignore
+    //
     const direction = !('itemLayout' in this.props.antdListProps)
       ? 'horizontal'
-      : // @ts-ignore
+      : //
         this.props.antdListProps.itemLayout;
 
     const id = record[this.getRowKey()];
@@ -1074,7 +1075,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
     const className = classNames(
       {
         [`${selectorPrefix}-list-item-${direction}`]: true,
-        // @ts-ignore
+        //
         split: !('split' in this.props.antdListProps) || !!this.props.antdListProps.split,
       },
       this.getSelectionClassName(id),
@@ -1198,7 +1199,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
     const {
       antdListProps: { itemLayout, grid },
     } =
-      // @ts-ignore
+      //
       this.props;
 
     const expandable = this.getExpandable();
@@ -1247,7 +1248,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
       <div className={`${selectorPrefix}-list-row-selection-header`}>
         <div className={`${selectorPrefix}-list-row-selection-header-info`}>
           {Intl.v('已选择{count}项', {
-            // @ts-ignore
+            //
             count: this.state.selectedRowKeys?.length,
           })}
         </div>
@@ -1274,7 +1275,6 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
 
     // 如果是选取模式则header上显示选取信息
     if (rowSelection) {
-      // @ts-ignore
       if (!!this.state.selectedRowKeys?.length) {
         return this.renderSelectionListHeader();
       }

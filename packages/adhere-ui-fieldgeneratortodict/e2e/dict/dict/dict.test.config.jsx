@@ -1313,6 +1313,42 @@ export default {
       };
     };
 
+    Dict.handlers.SystemList = () => {
+      const dataSource = Array.from({ length: 100 }).map((t) => {
+        const value = Mock.mock('@guid');
+        const label = Mock.mock('@name');
+
+        return {
+          label,
+          value,
+          id: value,
+          title: Mock.mock('@title'),
+          subTitle: Mock.mock('@title'),
+          description: Mock.mock('@sentence'),
+          content: Mock.mock('@paragraph'),
+          avatar: 'https://avatar.iran.liara.run/public',
+        };
+      });
+
+      return (argv) => {
+        const { cascadeParams, params } = argv;
+
+        const { page, limit } = params;
+
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve({
+              resCode: 0,
+              data: {
+                total: dataSource.length,
+                records: dataSource.slice((page - 1) * limit, page * limit),
+              },
+            });
+          }, 300);
+        });
+      };
+    };
+
     Dict.handlers.SystemTreeTable = () => {
       const _level = 3;
 

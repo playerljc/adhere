@@ -1,4 +1,5 @@
 import React from 'react';
+import type { XhrResponseBusiness } from '../../../types';
 interface SearchTableClassFactoryParams {
     SuperClass: any;
     sage: any;
@@ -9,13 +10,6 @@ interface SearchTableClassFactoryParams {
     selectionMode?: 'single' | 'multiple';
     rowSelectionMode?: 'normal' | 'continuous';
     showCheckedStrategy?: symbol;
-}
-interface XhrResponseBusiness {
-    codeKey: string;
-    codeSuccess: number;
-    codeSuccessKey: number;
-    dataKey: string;
-    messageKey: string;
 }
 interface CreateSearchTableSelectParams {
     dictName: string;

@@ -375,6 +375,11 @@ declare const Components: {
         readonly AsyncMultipleSelect: "SearchTableAsyncMultipleSelect";
         readonly AsyncContinuousMultipleSelect: "SearchTableAsyncContinuousMultipleSelect";
     };
+    readonly SearchList: {
+        readonly Standard: "SearchListStandard";
+        readonly SingleSelect: "SearchListSingleSelect";
+        readonly MultipleSelect: "SearchListMultipleSelect";
+    };
     readonly MobileInputMultiple: {
         readonly Standard: "MobileInputMultipleStandard";
         readonly CheckAll: "MobileInputMultipleCheckAll";

@@ -216,6 +216,12 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
      * @return {ReactElement}
      */
     render(): ReactElement;
+    /**
+     * getSelectedRowKeys
+     * @description 获取selectedRowKeys
+     * @return {any[]}
+     */
+    getSelectedRowKeys(): any[];
 }
 export declare const defaultProps: {
     antdListProps: {};

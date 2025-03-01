@@ -422,6 +422,14 @@ const Components = {
   },
   /* ------ SearchTable end ------ */
 
+  /* ------ SearchList start ------ */
+  SearchList: {
+    Standard: 'SearchListStandard',
+    SingleSelect: 'SearchListSingleSelect',
+    MultipleSelect: 'SearchListMultipleSelect',
+  },
+  /* ------ SearchList end ------ */
+
   /* ------ MobileInputMultiple start ------ */
   MobileInputMultiple: {
     Standard: 'MobileInputMultipleStandard',

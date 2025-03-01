@@ -1,3 +1,4 @@
+import type { CreateServiceParams } from '../types';
 /**
  * deepDep - deepDep
  * @param {any} dep
@@ -16,3 +17,13 @@ export declare const deepDep: (dep: any) => string;
  * @return {string} originDictName
  */
 export declare const getOriginDictNameByItemName: (targetDictName: string, dictItemName: string) => string;
+/**
+ * createService
+ */
+export declare function createService(params: CreateServiceParams): void;
+/**
+ * createModel
+ * @param {string} serviceName
+ * @param {any} saga
+ */
+export declare function createModel(serviceName: string, saga: any): any;

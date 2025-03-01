@@ -1,5 +1,6 @@
-import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { ListItemProps } from 'antd/es/list';
+import type { RadioChangeEvent } from 'antd/es/radio';
 import React, { ReactElement, ReactNode, RefObject } from 'react';
 import type { TableRowSelectionExt } from '@baifendian/adhere-ui-searchtable/es/types';
 import SearchList from './SearchList';
@@ -101,6 +102,12 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
      * @return {string}
      */
     getTotalKey(): string;
+    /**
+     * getFetchDataResultDataKey
+     * @description fetchData返回的结果中数据的key
+     * @return {string}
+     */
+    getFetchDataResultDataKey(): string;
     /**
      * getData
      * @description - Table的数据(Table的dataSource字段)
@@ -217,7 +224,7 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
      * @param {CheckboxChangeEvent} e
      * @param {any} record
      */
-    selectCheckBoxChange(e: CheckboxChangeEvent, record: any): void;
+    selectCheckBoxChange(e: CheckboxChangeEvent | RadioChangeEvent, record: any): void;
     /**
      * unSelectedAll
      * @description 取消所有选取

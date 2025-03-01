@@ -10,7 +10,9 @@ import type { DropdownRenderSelectProps } from '@baifendian/adhere-ui-anthoc/es/
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 import Util from '@baifendian/adhere-util';
 import Dict from '@baifendian/adhere-util-dict';
-import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
+
+import type { XhrResponseBusiness } from '../../../types';
+import { createModel, createService } from '../../Util';
 
 const {
   Table,
@@ -24,13 +26,6 @@ const {
   ProSearchStateTable,
   SearchTableStateImplementFactory,
 } = SearchTable;
-
-interface CreateServiceParams {
-  serviceName: string;
-  dictName: string;
-  responseBusiness?: XhrResponseBusiness;
-  defaultResult?: Record<string, any>;
-}
 
 interface SearchTableClassFactoryParams {
   SuperClass: any;
@@ -46,14 +41,6 @@ interface SearchTableClassFactoryParams {
   showCheckedStrategy?: symbol;
 }
 
-interface XhrResponseBusiness {
-  codeKey: string;
-  codeSuccess: number;
-  codeSuccessKey: number;
-  dataKey: string;
-  messageKey: string;
-}
-
 interface CreateSearchTableSelectParams {
   dictName: string;
   params: any;
@@ -62,68 +49,6 @@ interface CreateSearchTableSelectParams {
 }
 
 interface CreateSearchTreeTableSelectParams extends CreateSearchTableSelectParams {}
-
-/**
- * createService
- */
-function createService(params: CreateServiceParams) {
-  const { serviceName, dictName } = params;
-
-  const xhrResponseBusiness: XhrResponseBusiness = {
-    codeKey: 'resCode',
-    codeSuccess: 0,
-    codeSuccessKey: 0,
-    dataKey: 'data',
-    messageKey: 'resMsg',
-    ...(params?.responseBusiness ?? {}),
-  };
-
-  const fetchList = (() => {
-    return {
-      call: ({ cascadeParams, onDataSourceChange, ...params }) => {
-        const dictValue = Dict.value[dictName]?.value;
-
-        if (dictValue instanceof Function) {
-          return dictValue({
-            cascadeParams,
-            params,
-          });
-        }
-
-        return dictValue;
-      },
-      defaultResult: () =>
-        params?.defaultResult ?? {
-          total: 0,
-          records: [],
-        },
-    };
-  })();
-
-  const Service = {
-    ...xhrResponseBusiness,
-    name: serviceName,
-  };
-
-  // 创建Services
-  ServiceRegister.addConfig(Service.name, {
-    fetchList,
-    default: Service,
-  });
-}
-
-/**
- * createModel
- * @param {string} serviceName
- * @param {any} saga
- */
-function createModel(serviceName: string, saga: any) {
-  const Model = Object.assign(ServiceRegister.model(serviceName), {});
-
-  saga.model(Model);
-
-  return Model;
-}
 
 /**
  * searchTableClassFactory
@@ -245,7 +170,7 @@ function searchTableClassFactory({
      */
     fetchData() {
       return super.fetchData().then((res) => {
-        this.props.onDataSourceChange({
+        this.props?.onDataSourceChange?.({
           dataSource: res[this.getFetchDataResultDataKey()][this.getDataKey()],
           extra: {
             type: 'paging',

@@ -99,22 +99,18 @@ abstract class SearchList<
   constructor(props) {
     super(props);
 
-    // @ts-ignore
     this.state = {
       prePage: 1,
       page: 1,
-      // @ts-ignore
       limit: this.getLimit(),
       expand: props.defaultExpandSearchCollapse,
     };
 
-    // @ts-ignore
     Object.assign(this.state, {
       // 表格密度设置
       listDensity: this.getListDensity(),
     });
 
-    // @ts-ignore
     this.onClear = this.onClear.bind(this);
     this.onBodyKeyup = this.onBodyKeyup.bind(this);
   }
@@ -164,7 +160,6 @@ abstract class SearchList<
    */
   search() {
     return new Promise<void>((resolve) => {
-      // @ts-ignore
       this.setState(
         {
           page: 1,
@@ -223,16 +218,13 @@ abstract class SearchList<
   renderTableDensitySetting(): ReactElement {
     return (
       <ListDensitySetting
-        // @ts-ignore
         density={this.state.listDensity}
         onChange={(density) => {
-          // @ts-ignore
           this.setState({
             listDensity: density,
           });
         }}
         onReset={(density) => {
-          // @ts-ignore
           this.setState({
             listDensity: density,
           });
@@ -279,7 +271,6 @@ abstract class SearchList<
             className={`${selectorPrefix}-search-footer-item-expand-search-up-btn`}
             onClick={() => {
               this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
-              // @ts-ignore
               this.setState(
                 {
                   expand: true,
@@ -300,7 +291,6 @@ abstract class SearchList<
             onClick={() => {
               this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
 
-              // @ts-ignore
               this.setState(
                 {
                   expand: false,
@@ -323,7 +313,6 @@ abstract class SearchList<
    * @return {ReactNode}
    */
   renderSearchFormToolBar(): ReactNode {
-    // @ts-ignore
     const { isShowExpandSearch } = this.props;
 
     const defaultItems = [
@@ -394,27 +383,23 @@ abstract class SearchList<
 
     return {
       onChange: (page, limit) => {
-        // @ts-ignore
         this.setState(
           {
             page,
             limit,
           },
           () => {
-            // @ts-ignore
             this.fetchData();
           },
         );
       },
       onShowSizeChange: (page, limit) => {
-        // @ts-ignore
         this.setState(
           {
             page,
             limit,
           },
           () => {
-            // @ts-ignore
             this.fetchData();
           },
         );
@@ -553,16 +538,13 @@ abstract class SearchList<
    * @return {ReactNode}
    */
   renderBody() {
-    // @ts-ignore
     const { antdListProps } = this.props;
 
-    // @ts-ignore
     const { listDensity } = this.state;
 
     const listProps = {
       rowKey: this.getRowKey(),
-      dataSource: this.getData(),
-      // @ts-ignore
+      dataSource: this.getDataSource(),
       pagination: this.getPagination(),
       renderItem: (record, rowIndex) => this.renderItem(record, rowIndex),
       header: this.renderListHeader(),
@@ -579,7 +561,6 @@ abstract class SearchList<
    * @return {ReactElement | null}
    */
   renderInner() {
-    // @ts-ignore
     const { fixedListSpaceBetween = true } = this.props;
 
     return super.renderInner(
@@ -614,6 +595,17 @@ abstract class SearchList<
         {this.renderChildren()}
       </SearchListContext.Provider>
     );
+  }
+
+  /**
+   * getSelectedRowKeys
+   * @description 获取selectedRowKeys
+   * @return {any[]}
+   */
+  getSelectedRowKeys(): any[] {
+    const { selectedRowKeys } = this.state;
+
+    return selectedRowKeys;
   }
 }
 

@@ -12,6 +12,7 @@ export interface SearchListProps extends SearchProps {
     antdListProps: ListProps<any>;
     fixedSelectionHeaderAutoList: boolean;
     fixedListSpaceBetween: boolean;
+    FieldGeneratorToDict?: any;
 }
 /**
  * SearchListState
