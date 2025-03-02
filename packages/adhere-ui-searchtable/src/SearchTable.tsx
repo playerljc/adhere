@@ -1,4 +1,5 @@
-import { Button, Checkbox, Table } from 'antd';
+import { Button, Checkbox, Switch, Table } from 'antd';
+import type { SwitchProps } from 'antd';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
 import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import type { TableProps } from 'antd/es/table/InternalTable';
@@ -1836,6 +1837,70 @@ abstract class SearchTable<
           </a>
         )}
       </ConditionalRender>
+    );
+  }
+
+  /**
+   * renderSwitch
+   * @description 将column渲染成Switch组件
+   * @param {
+   * {
+   *  record:object;
+   *  dataIndex:string;
+   *  switchProps:SwitchProps;
+   *  onChange?: (
+   *    checked: boolean,
+   *    event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLButtonElement>,
+   *    ) => Promise<void>;
+   */
+  renderSwitch({
+    record,
+    dataIndex,
+    switchProps,
+    onChange,
+  }: {
+    record: object;
+    dataIndex: string;
+    switchProps?: SwitchProps;
+    onChange?: (
+      checked: boolean,
+      event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLButtonElement>,
+    ) => Promise<void>;
+  }) {
+    const originValue = record[dataIndex];
+
+    return (
+      <Switch
+        checked={originValue}
+        onChange={(checked, e) => {
+          this.setData((dataSource) => {
+            const key = this.getRowKey();
+            const item = dataSource.find((t) => t[key] === record[key]);
+
+            if (item) {
+              item[dataIndex] = checked;
+            }
+
+            return [...dataSource];
+          }).then(() => {
+            if (onChange) {
+              onChange(checked, e).catch(() => {
+                this.setData((dataSource) => {
+                  const key = this.getRowKey();
+                  const item = dataSource.find((t) => t[key] === record[key]);
+
+                  if (item) {
+                    item[dataIndex] = originValue;
+                  }
+
+                  return [...dataSource];
+                });
+              });
+            }
+          });
+        }}
+        {...switchProps}
+      />
     );
   }
 
