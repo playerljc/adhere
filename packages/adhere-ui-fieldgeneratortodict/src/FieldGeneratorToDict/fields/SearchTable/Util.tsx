@@ -7,28 +7,29 @@ import React, { useMemo, useState } from 'react';
 
 import { Select, TreeSelect } from '@baifendian/adhere-ui-anthoc';
 import type { DropdownRenderSelectProps } from '@baifendian/adhere-ui-anthoc/es/types';
-import SearchTable from '@baifendian/adhere-ui-searchtable';
+// import SearchTable from '@baifendian/adhere-ui-searchtable';
 import Util from '@baifendian/adhere-util';
 import Dict from '@baifendian/adhere-util-dict';
 
 import type { XhrResponseBusiness } from '../../../types';
 import { createModel, createService } from '../../Util';
 
-const {
-  Table,
-  ProSearchEditableCellRowDragSortStateTable,
-  ProSearchEditableRowDragSortStateTable,
-  ProSearchEditableTableRowDragSortStateTable,
-  ProSearchRowDragSortStateTable,
-  ProEditableCellSearchStateTable,
-  ProEditableRowSearchStateTable,
-  ProEditableSearchStateTable,
-  ProSearchStateTable,
-  SearchTableStateImplementFactory,
-} = SearchTable;
+// const {
+//   Table,
+//   ProSearchEditableCellRowDragSortStateTable,
+//   ProSearchEditableRowDragSortStateTable,
+//   ProSearchEditableTableRowDragSortStateTable,
+//   ProSearchRowDragSortStateTable,
+//   ProEditableCellSearchStateTable,
+//   ProEditableRowSearchStateTable,
+//   ProEditableSearchStateTable,
+//   ProSearchStateTable,
+//   SearchTableStateImplementFactory,
+// } = SearchTable;
 
 interface SearchTableClassFactoryParams {
   SuperClass: any;
+  SearchClass: any;
   sage: any;
   override: Record<string, Function>;
   dictName: string;
@@ -71,6 +72,7 @@ function searchTableClassFactory({
   defaultResult,
   selectionMode = 'multiple',
   rowSelectionMode = 'normal',
+  SearchClass: { Table, SearchTableStateImplementFactory },
 }: SearchTableClassFactoryParams) {
   const serviceName = Util.uuid();
 
@@ -266,6 +268,9 @@ export const SELECT_TABLE_OVERRIDE = {
       colgroup: [, 'auto', , 'auto'],
     };
   },
+  getGridSearchFormRowCount() {
+    return Number.MAX_VALUE;
+  },
   isUseCheckedStrategy() {
     return false;
   },
@@ -286,89 +291,105 @@ export const TREE_SELECT_TABLE_OVERRIDE = ({ selectionMode, showCheckedStrategy 
 
 /**
  * standardSearchTableClassFactory
+ * @param SearchClass
  * @param params
  */
-export function standardSearchTableClassFactory(params) {
+export function standardSearchTableClassFactory({ SearchClass, ...params }) {
   return searchTableClassFactory({
-    ...params,
-    SuperClass: ProSearchStateTable,
+    ...(params as any),
+    SuperClass: SearchClass.ProSearchStateTable,
+    SearchClass,
   });
 }
 
 /**
  * editorCellSearchTableClassFactory
+ * @param SearchClass
  * @param params
  */
-export function editorCellSearchTableClassFactory(params) {
+export function editorCellSearchTableClassFactory({ SearchClass, ...params }) {
   return searchTableClassFactory({
-    ...params,
-    SuperClass: ProEditableCellSearchStateTable,
+    ...(params as any),
+    SuperClass: SearchClass.ProEditableCellSearchStateTable,
+    SearchClass,
   });
 }
 
 /**
  * editorRowSearchTableClassFactory
+ * @param SearchClass
  * @param params
  */
-export function editorRowSearchTableClassFactory(params) {
+export function editorRowSearchTableClassFactory({ SearchClass, ...params }) {
   return searchTableClassFactory({
-    ...params,
-    SuperClass: ProEditableRowSearchStateTable,
+    ...(params as any),
+    SuperClass: SearchClass.ProEditableRowSearchStateTable,
+    SearchClass,
   });
 }
 
 /**
  * editorTableSearchTableClassFactory
+ * @param SearchClass
  * @param params
  */
-export function editorTableSearchTableClassFactory(params) {
+export function editorTableSearchTableClassFactory({ SearchClass, ...params }) {
   return searchTableClassFactory({
-    ...params,
-    SuperClass: ProEditableSearchStateTable,
+    ...(params as any),
+    SuperClass: SearchClass.ProEditableSearchStateTable,
+    SearchClass,
   });
 }
 
 /**
  * rowDragSortSearchTableClassFactory
+ * @param SearchClass
  * @param params
  */
-export function rowDragSortSearchTableClassFactory(params) {
+export function rowDragSortSearchTableClassFactory({ SearchClass, ...params }) {
   return searchTableClassFactory({
-    ...params,
-    SuperClass: ProSearchRowDragSortStateTable,
+    ...(params as any),
+    SuperClass: SearchClass.ProSearchRowDragSortStateTable,
+    SearchClass,
   });
 }
 
 /**
  * editorCellRowDragSortSearchTableClassFactory
+ * @param SearchClass
  * @param params
  */
-export function editorCellRowDragSortSearchTableClassFactory(params) {
+export function editorCellRowDragSortSearchTableClassFactory({ SearchClass, ...params }) {
   return searchTableClassFactory({
-    ...params,
-    SuperClass: ProSearchEditableCellRowDragSortStateTable,
+    ...(params as any),
+    SuperClass: SearchClass.ProSearchEditableCellRowDragSortStateTable,
+    SearchClass,
   });
 }
 
 /**
  * editorRowDragSortSearchTableClassFactory
+ * @param SearchClass
  * @param params
  */
-export function editorRowDragSortSearchTableClassFactory(params) {
+export function editorRowDragSortSearchTableClassFactory({ SearchClass, ...params }) {
   return searchTableClassFactory({
-    ...params,
-    SuperClass: ProSearchEditableRowDragSortStateTable,
+    ...(params as any),
+    SuperClass: SearchClass.ProSearchEditableRowDragSortStateTable,
+    SearchClass,
   });
 }
 
 /**
  * editorTableRowDragSortSearchTableClassFactory
+ * @param SearchClass
  * @param params
  */
-export function editorTableRowDragSortSearchTableClassFactory(params) {
+export function editorTableRowDragSortSearchTableClassFactory({ SearchClass, ...params }) {
   return searchTableClassFactory({
-    ...params,
-    SuperClass: ProSearchEditableTableRowDragSortStateTable,
+    ...(params as any),
+    SuperClass: SearchClass.ProSearchEditableTableRowDragSortStateTable,
+    SearchClass,
   });
 }
 
@@ -445,6 +466,11 @@ export function createSearchTableSelect({
               onDataSourceChange={({ dataSource }) => {
                 setOptions(dataSource);
               }}
+              FieldGeneratorToDict={params?.FieldGeneratorToDict}
+              // isShowExpandSearch
+              // defaultExpandSearchCollapse
+              // fitBody
+              // autoFixed
               {...rest}
               {...tableProps}
             />
@@ -469,7 +495,8 @@ export function createSearchTreeTableSelect({
   selectionMode,
   rowSelectionMode,
 }: CreateSearchTreeTableSelectParams) {
-  const showCheckedStrategy = params.showCheckedStrategy ?? Table.CHECKED_STRATEGY_SHOW_ALL;
+  const showCheckedStrategy =
+    params.showCheckedStrategy ?? params.SearchTable.Table.CHECKED_STRATEGY_SHOW_ALL;
 
   const isMulti = selectionMode === 'multiple';
 
@@ -491,8 +518,8 @@ export function createSearchTreeTableSelect({
     const [treeData, setTreeData] = useState([]);
 
     const showCheckedStrategyMap = new Map([
-      [Table.CHECKED_STRATEGY_SHOW_ALL, AntdTreeSelect.SHOW_ALL],
-      [Table.CHECKED_STRATEGY_SHOW_CHILD, AntdTreeSelect.SHOW_CHILD],
+      [params.SearchTable.Table.CHECKED_STRATEGY_SHOW_ALL, AntdTreeSelect.SHOW_ALL],
+      [params.SearchTable.Table.CHECKED_STRATEGY_SHOW_CHILD, AntdTreeSelect.SHOW_CHILD],
     ]);
 
     return (
@@ -507,6 +534,7 @@ export function createSearchTreeTableSelect({
         {({ originNode, ...rest }) => {
           return (
             <InternalSearchTable
+              FieldGeneratorToDict={params?.FieldGeneratorToDict}
               {...rest}
               {...tableProps}
               cascadeParams={cascadeParams}
@@ -534,7 +562,8 @@ export function createAsyncSearchTableSelect({
   selectionMode,
   rowSelectionMode,
 }: CreateSearchTableSelectParams) {
-  const showCheckedStrategy = params.showCheckedStrategy ?? Table.CHECKED_STRATEGY_SHOW_ALL;
+  const showCheckedStrategy =
+    params.showCheckedStrategy ?? params.SearchTable.Table.CHECKED_STRATEGY_SHOW_ALL;
 
   const isMulti = selectionMode === 'multiple';
 
@@ -578,8 +607,8 @@ export function createAsyncSearchTableSelect({
     const [treeData, setTreeData] = useState([]);
 
     const showCheckedStrategyMap = new Map([
-      [Table.CHECKED_STRATEGY_SHOW_ALL, AntdTreeSelect.SHOW_ALL],
-      [Table.CHECKED_STRATEGY_SHOW_CHILD, AntdTreeSelect.SHOW_CHILD],
+      [params.SearchTable.Table.CHECKED_STRATEGY_SHOW_ALL, AntdTreeSelect.SHOW_ALL],
+      [params.SearchTable.Table.CHECKED_STRATEGY_SHOW_CHILD, AntdTreeSelect.SHOW_CHILD],
     ]);
 
     return (
@@ -594,6 +623,7 @@ export function createAsyncSearchTableSelect({
         {({ originNode, ...rest }) => {
           return (
             <InternalSearchTable
+              FieldGeneratorToDict={params?.FieldGeneratorToDict}
               {...rest}
               {...tableProps}
               cascadeParams={cascadeParams}

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import SearchTable from '@baifendian/adhere-ui-searchtable';
+
 import FieldGeneratorToDict from '../../src/index';
 import sage from '../saga';
 
@@ -240,6 +242,7 @@ const DictComponent = FieldGeneratorToDict.Components[
       ]);
     },
   },
+  SearchClass: SearchTable,
   sage,
 });
 

@@ -39,8 +39,6 @@
     "@baifendian/adhere-ui-conditionalrender": "^2.11.0",
     "@baifendian/adhere-ui-forceupdate": "^2.11.0",
     "@baifendian/adhere-ui-hooks": "^2.11.0",
-    "@baifendian/adhere-ui-searchlist": "^2.11.0",
-    "@baifendian/adhere-ui-searchtable": "^2.11.0",
     "@baifendian/adhere-ui-suspense": "^2.11.0",
     "@baifendian/adhere-util": "^2.11.0",
     "@baifendian/adhere-util-dict": "^2.11.0",

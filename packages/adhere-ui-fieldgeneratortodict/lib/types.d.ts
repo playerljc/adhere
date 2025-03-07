@@ -30,6 +30,8 @@ export type DictComponentProps<T, D> = Omit<T, 'options' | 'dataSource' | 'treeD
 export type SearchFactory<T, H> = (params: {
     override: T;
     sage: any;
+    SearchClass: any;
+    FieldGeneratorToDict: any;
     responseBusiness?: {
         codeKey: string;
         codeSuccess: string | number;

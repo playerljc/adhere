@@ -1,5 +1,7 @@
 import React from 'react';
 
+import SearchList from '@baifendian/adhere-ui-searchlist';
+
 import FieldGeneratorToDict from '../../src/index';
 import sage from '../saga';
 
@@ -43,6 +45,7 @@ const DictComponent = FieldGeneratorToDict.Components[
       ]);
     },
   },
+  SearchClass: SearchList,
   sage,
 });
 

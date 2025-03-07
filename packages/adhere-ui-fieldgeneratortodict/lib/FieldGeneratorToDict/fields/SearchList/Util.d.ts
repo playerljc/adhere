@@ -2,6 +2,7 @@ import React from 'react';
 import type { XhrResponseBusiness } from '../../../types';
 interface SearchListClassFactoryParams {
     SuperClass: any;
+    SearchClass: any;
     sage: any;
     override: Record<string, Function>;
     dictName: string;
@@ -26,12 +27,17 @@ export declare const SELECT_LIST_OVERRIDE: {
         columnCount: number;
         colgroup: (string | undefined)[];
     };
+    getGridSearchFormRowCount(): number;
 };
 /**
  * standardSearchListClassFactory
+ * @param SearchClass
  * @param params
  */
-export declare function standardSearchListClassFactory(params: any): React.ForwardRefExoticComponent<Omit<any, "ref"> & React.RefAttributes<any>>;
+export declare function standardSearchListClassFactory({ SearchClass, ...params }: {
+    [x: string]: any;
+    SearchClass: any;
+}): any;
 /**
  * createSearchListSelect
  * @param dictName

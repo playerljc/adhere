@@ -24,7 +24,7 @@ setItem('SearchTable', 'Standard', (dictName) => (params) => {
     ...params,
   });
 
-  return (props) => <SearchTable {...props} />;
+  return (props) => <SearchTable FieldGeneratorToDict={params?.FieldGeneratorToDict} {...props} />;
 });
 
 /**
@@ -36,7 +36,7 @@ setItem('SearchTable', 'EditorCell', (dictName) => (params) => {
     ...params,
   });
 
-  return (props) => <SearchTable {...props} />;
+  return (props) => <SearchTable FieldGeneratorToDict={params?.FieldGeneratorToDict} {...props} />;
 });
 
 /**
@@ -48,7 +48,7 @@ setItem('SearchTable', 'EditorRow', (dictName) => (params) => {
     ...params,
   });
 
-  return (props) => <SearchTable {...props} />;
+  return (props) => <SearchTable FieldGeneratorToDict={params?.FieldGeneratorToDict} {...props} />;
 });
 
 /**
@@ -60,7 +60,7 @@ setItem('SearchTable', 'EditorTable', (dictName) => (params) => {
     ...params,
   });
 
-  return (props) => <SearchTable {...props} />;
+  return (props) => <SearchTable FieldGeneratorToDict={params?.FieldGeneratorToDict} {...props} />;
 });
 
 /**
@@ -72,7 +72,7 @@ setItem('SearchTable', 'RowDragSort', (dictName) => (params) => {
     ...params,
   });
 
-  return (props) => <SearchTable {...props} />;
+  return (props) => <SearchTable FieldGeneratorToDict={params?.FieldGeneratorToDict} {...props} />;
 });
 
 /**
@@ -84,7 +84,7 @@ setItem('SearchTable', 'EditorCellRowDragSort', (dictName) => (params) => {
     ...params,
   });
 
-  return (props) => <SearchTable {...props} />;
+  return (props) => <SearchTable FieldGeneratorToDict={params?.FieldGeneratorToDict} {...props} />;
 });
 
 /**
@@ -96,7 +96,7 @@ setItem('SearchTable', 'EditorRowDragSort', (dictName) => (params) => {
     ...params,
   });
 
-  return (props) => <SearchTable {...props} />;
+  return (props) => <SearchTable FieldGeneratorToDict={params?.FieldGeneratorToDict} {...props} />;
 });
 
 /**
@@ -108,7 +108,7 @@ setItem('SearchTable', 'EditorTableRowDragSort', (dictName) => (params) => {
     ...params,
   });
 
-  return (props) => <SearchTable {...props} />;
+  return (props) => <SearchTable FieldGeneratorToDict={params?.FieldGeneratorToDict} {...props} />;
 });
 
 // ---------------------------------------------------------------------------

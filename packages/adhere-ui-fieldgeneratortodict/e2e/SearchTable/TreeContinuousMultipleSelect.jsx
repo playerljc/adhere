@@ -80,6 +80,7 @@ const DictComponent = FieldGeneratorToDict.Components[
       ]);
     },
   },
+  SearchClass: SearchTable,
   // showCheckedStrategy: SearchTable.Table.CHECKED_STRATEGY_SHOW_CHILD,
   sage,
 });

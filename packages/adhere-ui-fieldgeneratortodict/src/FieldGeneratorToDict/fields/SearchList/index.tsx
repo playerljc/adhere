@@ -12,7 +12,7 @@ setItem('SearchList', 'Standard', (dictName) => (params) => {
     ...params,
   });
 
-  return (props) => <SearchList {...props} />;
+  return (props) => <SearchList FieldGeneratorToDict={params?.FieldGeneratorToDict} {...props} />;
 });
 
 /**

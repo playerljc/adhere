@@ -2,6 +2,7 @@ import React from 'react';
 import type { XhrResponseBusiness } from '../../../types';
 interface SearchTableClassFactoryParams {
     SuperClass: any;
+    SearchClass: any;
     sage: any;
     override: Record<string, Function>;
     dictName: string;
@@ -31,6 +32,7 @@ export declare const SELECT_TABLE_OVERRIDE: {
         columnCount: number;
         colgroup: (string | undefined)[];
     };
+    getGridSearchFormRowCount(): number;
     isUseCheckedStrategy(): boolean;
 };
 /**
@@ -50,47 +52,80 @@ export declare const TREE_SELECT_TABLE_OVERRIDE: ({ selectionMode, showCheckedSt
         columnCount: number;
         colgroup: (string | undefined)[];
     };
+    getGridSearchFormRowCount(): number;
 };
 /**
  * standardSearchTableClassFactory
+ * @param SearchClass
  * @param params
  */
-export declare function standardSearchTableClassFactory(params: any): React.ForwardRefExoticComponent<Omit<any, "ref"> & React.RefAttributes<any>>;
+export declare function standardSearchTableClassFactory({ SearchClass, ...params }: {
+    [x: string]: any;
+    SearchClass: any;
+}): any;
 /**
  * editorCellSearchTableClassFactory
+ * @param SearchClass
  * @param params
  */
-export declare function editorCellSearchTableClassFactory(params: any): React.ForwardRefExoticComponent<Omit<any, "ref"> & React.RefAttributes<any>>;
+export declare function editorCellSearchTableClassFactory({ SearchClass, ...params }: {
+    [x: string]: any;
+    SearchClass: any;
+}): any;
 /**
  * editorRowSearchTableClassFactory
+ * @param SearchClass
  * @param params
  */
-export declare function editorRowSearchTableClassFactory(params: any): React.ForwardRefExoticComponent<Omit<any, "ref"> & React.RefAttributes<any>>;
+export declare function editorRowSearchTableClassFactory({ SearchClass, ...params }: {
+    [x: string]: any;
+    SearchClass: any;
+}): any;
 /**
  * editorTableSearchTableClassFactory
+ * @param SearchClass
  * @param params
  */
-export declare function editorTableSearchTableClassFactory(params: any): React.ForwardRefExoticComponent<Omit<any, "ref"> & React.RefAttributes<any>>;
+export declare function editorTableSearchTableClassFactory({ SearchClass, ...params }: {
+    [x: string]: any;
+    SearchClass: any;
+}): any;
 /**
  * rowDragSortSearchTableClassFactory
+ * @param SearchClass
  * @param params
  */
-export declare function rowDragSortSearchTableClassFactory(params: any): React.ForwardRefExoticComponent<Omit<any, "ref"> & React.RefAttributes<any>>;
+export declare function rowDragSortSearchTableClassFactory({ SearchClass, ...params }: {
+    [x: string]: any;
+    SearchClass: any;
+}): any;
 /**
  * editorCellRowDragSortSearchTableClassFactory
+ * @param SearchClass
  * @param params
  */
-export declare function editorCellRowDragSortSearchTableClassFactory(params: any): React.ForwardRefExoticComponent<Omit<any, "ref"> & React.RefAttributes<any>>;
+export declare function editorCellRowDragSortSearchTableClassFactory({ SearchClass, ...params }: {
+    [x: string]: any;
+    SearchClass: any;
+}): any;
 /**
  * editorRowDragSortSearchTableClassFactory
+ * @param SearchClass
  * @param params
  */
-export declare function editorRowDragSortSearchTableClassFactory(params: any): React.ForwardRefExoticComponent<Omit<any, "ref"> & React.RefAttributes<any>>;
+export declare function editorRowDragSortSearchTableClassFactory({ SearchClass, ...params }: {
+    [x: string]: any;
+    SearchClass: any;
+}): any;
 /**
  * editorTableRowDragSortSearchTableClassFactory
+ * @param SearchClass
  * @param params
  */
-export declare function editorTableRowDragSortSearchTableClassFactory(params: any): React.ForwardRefExoticComponent<Omit<any, "ref"> & React.RefAttributes<any>>;
+export declare function editorTableRowDragSortSearchTableClassFactory({ SearchClass, ...params }: {
+    [x: string]: any;
+    SearchClass: any;
+}): any;
 /**
  * createSearchTableSelect
  * @param dictName

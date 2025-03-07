@@ -6,16 +6,17 @@ import React, { useMemo, useState } from 'react';
 
 import { Select } from '@baifendian/adhere-ui-anthoc';
 import type { DropdownRenderSelectProps } from '@baifendian/adhere-ui-anthoc/es/types';
-import SearchList from '@baifendian/adhere-ui-searchlist';
+// import SearchList from '@baifendian/adhere-ui-searchlist';
 import Util from '@baifendian/adhere-util';
 
 import type { XhrResponseBusiness } from '../../../types';
 import { createModel, createService } from '../../Util';
 
-const { ProSearchStateList, SearchListStateImplementFactory } = SearchList;
+// const { ProSearchStateList, SearchListStateImplementFactory } = SearchList;
 
 interface SearchListClassFactoryParams {
   SuperClass: any;
+  SearchClass: any;
   sage: any;
   override: Record<string, Function>;
   dictName: string;
@@ -51,6 +52,7 @@ function searchListClassFactory({
   responseBusiness,
   defaultResult,
   selectionMode = 'multiple',
+  SearchClass: { SearchListStateImplementFactory },
 }: SearchListClassFactoryParams) {
   const serviceName = Util.uuid();
 
@@ -78,14 +80,11 @@ function searchListClassFactory({
       // super.componentDidUpdate(prevProps, prevState, snapshot);
 
       if (!isEqual(sortby(prevState.selectedRowKeys), sortby(this.state.selectedRowKeys))) {
-        console.log('this.getChangeValue()===', this.getChangeValue(), this.props?.onChange);
         this.props?.onChange?.(this.getChangeValue());
       }
 
       if (isMulti) {
         if (!isEqual(sortby(prevProps.value ?? []), sortby(this.props.value ?? []))) {
-          console.log('this.props.value', this.props.value);
-
           this.setState({
             selectedRowKeys: this.props.value,
           });
@@ -212,16 +211,21 @@ export const SELECT_LIST_OVERRIDE = {
       colgroup: [, 'auto', , 'auto'],
     };
   },
+  getGridSearchFormRowCount() {
+    return Number.MAX_VALUE;
+  },
 };
 
 /**
  * standardSearchListClassFactory
+ * @param SearchClass
  * @param params
  */
-export function standardSearchListClassFactory(params) {
+export function standardSearchListClassFactory({ SearchClass, ...params }) {
   return searchListClassFactory({
-    ...params,
-    SuperClass: ProSearchStateList,
+    ...(params as any),
+    SuperClass: SearchClass.ProSearchStateList,
+    SearchClass,
   });
 }
 
@@ -312,6 +316,7 @@ export function createSearchListSelect({
               onDataSourceChange={({ dataSource }) => {
                 setOptions(dataSource);
               }}
+              FieldGeneratorToDict={params?.FieldGeneratorToDict}
               {...rest}
               {...listProps}
             />

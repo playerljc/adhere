@@ -161,6 +161,7 @@ const DictComponent = FieldGeneratorToDict.Components[
       ]);
     },
   },
+  SearchClass: SearchTable,
   sage,
 });
 

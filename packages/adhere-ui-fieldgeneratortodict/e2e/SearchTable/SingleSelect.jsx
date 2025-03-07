@@ -1,5 +1,7 @@
 import React from 'react';
 
+import SearchTable from '@baifendian/adhere-ui-searchtable';
+
 import FieldGeneratorToDict from '../../src/index';
 import sage from '../saga';
 
@@ -27,6 +29,16 @@ const DictComponent = FieldGeneratorToDict.Components[
             key: 'sex',
             $tip: '性别',
             width: 150,
+            $search: {
+              visible: true,
+              type: 'dict',
+              dictName: `SystemTestSex${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
+              props: {
+                dropdownStyle: {
+                  zIndex: 19999,
+                },
+              },
+            },
           },
           {
             title: '身高',
@@ -36,6 +48,10 @@ const DictComponent = FieldGeneratorToDict.Components[
             width: 150,
             sorter: true,
             sortOrder: this.sortOrder('height'),
+            $search: {
+              type: 'input',
+              visible: true,
+            },
           },
           {
             title: '体重',
@@ -45,6 +61,10 @@ const DictComponent = FieldGeneratorToDict.Components[
             width: 150,
             sorter: true,
             sortOrder: this.sortOrder('width'),
+            $search: {
+              type: 'input',
+              visible: true,
+            },
           },
           {
             title: '籍贯',
@@ -52,6 +72,10 @@ const DictComponent = FieldGeneratorToDict.Components[
             key: 'homeTown',
             ellipsis: true,
             width: 200,
+            $search: {
+              type: 'input',
+              visible: true,
+            },
           },
           // {
           //   title: '出生年月',
@@ -73,11 +97,17 @@ const DictComponent = FieldGeneratorToDict.Components[
             dataIndex: 'address',
             key: 'address',
             width: 300,
+            $search: {
+              type: 'input',
+              visible: true,
+            },
           },
         ],
       ]);
     },
   },
+  SearchClass: SearchTable,
+  FieldGeneratorToDict,
   sage,
 });
 
