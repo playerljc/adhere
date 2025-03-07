@@ -1389,7 +1389,13 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         return searchConfig?.render?.({ searchConfig, column, dataIndex });
       };
       const renderDict = ({ searchConfig, column, dataIndex }) => {
-        const Component = this?.props?.FieldGeneratorToDict?.Components?.[searchConfig.dictName];
+        let Component = this?.props?.FieldGeneratorToDict?.Components?.[searchConfig.dictName];
+
+        if (!Component) return null;
+
+        if ('searchFieldGeneratorProps' in searchConfig) {
+          Component = Component(searchConfig.searchFieldGeneratorProps);
+        }
 
         if (!Component) return null;
 

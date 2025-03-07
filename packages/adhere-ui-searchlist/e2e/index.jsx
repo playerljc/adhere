@@ -13,9 +13,7 @@ DictConfig();
   import(/!* webpackChunkName: "conditionalrender" *!/ './ProStateSearchList.jsx'),
 );*/
 
-const List = lazy(() =>
-  import(/* webpackChunkName: "conditionalrender" */ './ProStateSearchList.jsx'),
-);
+const List = lazy(() => import(/* webpackChunkName: "conditionalrender" */ './normalList'));
 
 e2e.PC({
   children: (

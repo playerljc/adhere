@@ -166,6 +166,7 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
       type,
       props: formItemNodeProps,
       dictName: props.editableConfig.dictName,
+      searchFieldGeneratorProps: props.editableConfig.searchFieldGeneratorProps,
       // renderChildren: props.editableConfig.renderChildren,
       form,
       dataIndex,

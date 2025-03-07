@@ -27,6 +27,18 @@ export interface ColumnSearchConfig {
     title?: ReactNode;
     titleToolTip?: string;
     dictName?: string;
+    searchFieldGeneratorProps?: {
+        override: object;
+        sage: any;
+        responseBusiness?: {
+            codeKey: string;
+            codeSuccess: string | number;
+            codeSuccessKey: string | number;
+            dataKey: string;
+            messageKey: string;
+        };
+        defaultResult?: any;
+    };
     renderChildren?: (params?: any) => ReactNode | null;
     render?: () => ReactNode | null;
     startName?: string;
@@ -189,6 +201,7 @@ export interface FormItemGeneratorConfig {
     type?: FormItemType | string;
     props?: any;
     dictName?: string;
+    searchFieldGeneratorProps?: ColumnSearchConfig['searchFieldGeneratorProps'];
     form?: FormInstance<any> | null;
     dataIndex?: DataIndex;
     rowIndex?: number;
@@ -229,6 +242,7 @@ export interface ColumnEditableConfig {
     rules?: ((params: ColumnParams) => Rule[]) | Rule[];
     dataIndex?: DataIndex;
     dictName?: string;
+    searchFieldGeneratorProps?: ColumnSearchConfig['searchFieldGeneratorProps'];
     renderChildren?: (params?: any) => ReactNode | null;
     useKeepEdit?: boolean;
 }

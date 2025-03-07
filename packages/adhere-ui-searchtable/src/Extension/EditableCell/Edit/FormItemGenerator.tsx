@@ -35,6 +35,7 @@ export default {
     // renderChildren,
     props,
     dictName,
+    searchFieldGeneratorProps,
     // form,
     // dataIndex,
     // rowIndex,
@@ -116,7 +117,11 @@ export default {
     const renderDict = () => {
       if (!dictName) return null;
 
-      const Component = FieldGeneratorToDict.Components[dictName];
+      let Component = FieldGeneratorToDict.Components[dictName];
+
+      if (searchFieldGeneratorProps) {
+        Component = Component(searchFieldGeneratorProps);
+      }
 
       // if (dictName?.indexOf('CustomFormItem') !== -1) {
       //   return (

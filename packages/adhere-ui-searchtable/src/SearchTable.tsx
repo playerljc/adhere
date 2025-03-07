@@ -305,6 +305,8 @@ abstract class SearchTable<
     changeRows: object[],
   ): void;
 
+  switchColumnElRef = React.createRef<HTMLDivElement | undefined>();
+
   constructor(props) {
     super(props);
 
@@ -1845,8 +1847,12 @@ abstract class SearchTable<
    * @description 将column渲染成Switch组件
    * @param {
    * {
-   *  record:object;
-   *  dataIndex:string;
+   *  className?: string;
+   *  record: object;
+   *  dataIndex: strinng;
+   *  defaultValue: boolean;
+   *  onOriginValue: any;
+   *  offOriginValue: any;
    *  switchProps:SwitchProps;
    *  onChange?: (
    *    checked: boolean,
@@ -1854,53 +1860,71 @@ abstract class SearchTable<
    *    ) => Promise<void>;
    */
   renderSwitch({
+    className,
     record,
     dataIndex,
-    switchProps,
+    defaultValue,
+    onOriginValue,
+    offOriginValue,
+    switchProps = {},
     onChange,
   }: {
+    className?: string;
     record: object;
     dataIndex: string;
+    defaultValue: boolean;
+    onOriginValue: any;
+    offOriginValue: any;
     switchProps?: SwitchProps;
     onChange?: (
       checked: boolean,
       event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLButtonElement>,
+      switchColumnElRef: HTMLElement,
     ) => Promise<void>;
   }) {
-    const originValue = record[dataIndex];
+    const valueMap = new Map([
+      [true, onOriginValue],
+      [false, offOriginValue],
+    ]);
+
+    const rowKey = this.getRowKey();
 
     return (
-      <Switch
-        checked={originValue}
-        onChange={(checked, e) => {
-          this.setData((dataSource) => {
-            const key = this.getRowKey();
-            const item = dataSource.find((t) => t[key] === record[key]);
+      <div
+        className={classNames(`${selectorPrefix}-switch-column`, className)}
+        // @ts-ignore
+        ref={this.switchColumnElRef}
+      >
+        <Switch
+          checked={defaultValue}
+          onChange={(checked, e) => {
+            this.setData((dataSource) => {
+              const _record = dataSource.find((t) => t[rowKey] === record[rowKey]);
 
-            if (item) {
-              item[dataIndex] = checked;
-            }
+              if (_record) {
+                _record[dataIndex] = valueMap.get(checked);
+              }
 
-            return [...dataSource];
-          }).then(() => {
-            if (onChange) {
-              onChange(checked, e).catch(() => {
-                this.setData((dataSource) => {
-                  const key = this.getRowKey();
-                  const item = dataSource.find((t) => t[key] === record[key]);
+              return [...dataSource];
+            }).then(() => {
+              if (onChange) {
+                onChange(checked, e, this.switchColumnElRef.current as HTMLElement)?.catch?.(() => {
+                  this.setData((dataSource) => {
+                    const item = dataSource.find((t) => t[rowKey] === record[rowKey]);
 
-                  if (item) {
-                    item[dataIndex] = originValue;
-                  }
+                    if (item) {
+                      item[dataIndex] = valueMap.get(defaultValue);
+                    }
 
-                  return [...dataSource];
+                    return [...dataSource];
+                  });
                 });
-              });
-            }
-          });
-        }}
-        {...switchProps}
-      />
+              }
+            });
+          }}
+          {...switchProps}
+        />
+      </div>
     );
   }
 

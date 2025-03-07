@@ -110,6 +110,19 @@ export interface ColumnSearchConfig {
   titleToolTip?: string;
   // dist渲染的组件的字典名称(适用于FormItemGeneratorToDict)
   dictName?: string;
+  // 如果字典类型是Search类型的参数
+  searchFieldGeneratorProps?: {
+    override: object;
+    sage: any;
+    responseBusiness?: {
+      codeKey: string;
+      codeSuccess: string | number;
+      codeSuccessKey: string | number;
+      dataKey: string;
+      messageKey: string;
+    };
+    defaultResult?: any;
+  };
   // children自定义的渲染，适用于FormItemGeneratorToDict的自定义children时候使用
   renderChildren?: (params?: any) => ReactNode | null;
   // 自定义组件的渲染
@@ -267,6 +280,7 @@ export interface FormItemGeneratorConfig {
   props?: any;
   // dist渲染的组件的字典名称(适用于FormItemGeneratorToDict)
   dictName?: string;
+  searchFieldGeneratorProps?: ColumnSearchConfig['searchFieldGeneratorProps'];
   // children自定义的渲染，适用于FormItemGeneratorToDict的自定义children时候使用
   // renderChildren?: (params?: any) => ReactNode | null;
   // 表单的实例
@@ -326,6 +340,7 @@ export interface ColumnEditableConfig {
   dataIndex?: DataIndex;
   // dist渲染的组件的字典名称(适用于FormItemGeneratorToDict)
   dictName?: string;
+  searchFieldGeneratorProps?: ColumnSearchConfig['searchFieldGeneratorProps'];
   // children自定义的渲染，适用于FormItemGeneratorToDict的自定义children时候使用
   renderChildren?: (params?: any) => ReactNode | null;
   // 是否一直保持编辑状态，也就是说view和edit都显示的是控件，如果设置为true则相当于设置了useTrigger是false，useTrigger的设置将失效

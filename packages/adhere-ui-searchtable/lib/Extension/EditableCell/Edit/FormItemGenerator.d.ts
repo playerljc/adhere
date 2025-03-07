@@ -13,6 +13,6 @@ declare const _default: {
      * @param rowIndex
      * @param FieldGeneratorToDict
      */
-    render({ type, props, dictName, FieldGeneratorToDict, }: FormItemGeneratorConfig): ReactNode;
+    render({ type, props, dictName, searchFieldGeneratorProps, FieldGeneratorToDict, }: FormItemGeneratorConfig): ReactNode;
 };
 export default _default;

@@ -1,3 +1,4 @@
+import type { SwitchProps } from 'antd';
 import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig } from 'antd/es/table/interface';
 import PropTypes from 'prop-types';
@@ -192,6 +193,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * onRowSelectionSelectAll
      */
     abstract onRowSelectionSelectAll(selected: boolean, selectedRows: object[], changeRows: object[]): void;
+    switchColumnElRef: RefObject<HTMLDivElement | undefined>;
     constructor(props: any);
     componentDidMount(): void;
     componentWillUnmount(): void;
@@ -491,6 +493,33 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * renderSearchBarCollapseControl
      */
     renderSearchBarCollapseControl(): React.JSX.Element;
+    /**
+     * renderSwitch
+     * @description 将column渲染成Switch组件
+     * @param {
+     * {
+     *  className?: string;
+     *  record: object;
+     *  dataIndex: strinng;
+     *  defaultValue: boolean;
+     *  onOriginValue: any;
+     *  offOriginValue: any;
+     *  switchProps:SwitchProps;
+     *  onChange?: (
+     *    checked: boolean,
+     *    event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLButtonElement>,
+     *    ) => Promise<void>;
+     */
+    renderSwitch({ className, record, dataIndex, defaultValue, onOriginValue, offOriginValue, switchProps, onChange, }: {
+        className?: string;
+        record: object;
+        dataIndex: string;
+        defaultValue: boolean;
+        onOriginValue: any;
+        offOriginValue: any;
+        switchProps?: SwitchProps;
+        onChange?: (checked: boolean, event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLButtonElement>, switchColumnElRef: HTMLElement) => Promise<void>;
+    }): React.JSX.Element;
     /**
      * renderSearchFormToolBar
      * @description 渲染查询表单的工具栏

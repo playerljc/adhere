@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import type { ExpandableConfig } from 'rc-table/lib/interface';
 import React, { ReactElement, ReactNode, RefObject } from 'react';
-import type { ListExpandable } from '@baifendian/adhere-ui-searchlist/es/types';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import { SearchProps, SearchState, TableRowSelectionExt } from './types';
 /**
@@ -95,7 +94,10 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      * @description 表格Tree展开对象
      * @return {ExpandableConfig<any> | null | undefined}
      */
-    abstract getExpandable(): ExpandableConfig<any> | ListExpandable | null | undefined;
+    abstract getExpandable(): ExpandableConfig<any> | {
+        expandedRowKeys: string[];
+        onExpandedRowsChange: (expandedRowKeys: string[]) => void;
+    } | null | undefined;
     /**
      * clear
      * @description 清除查询操作
