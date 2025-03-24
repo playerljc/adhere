@@ -1,2 +1,78 @@
-var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(e){for(var n,t=1,r=arguments.length;t<r;t++)for(var o in n=arguments[t])Object.prototype.hasOwnProperty.call(n,o)&&(e[o]=n[o]);return e}).apply(this,arguments)};import WangEditorCssStr from"./lib/wang-editor-css";import WangEditorViewCssStr from"./lib/wang-editor-view-css";import{useUpdateEffect}from"ahooks";import classNames from"classnames";import React,{forwardRef,memo,useContext,useEffect,useImperativeHandle,useLayoutEffect,useMemo,useRef}from"react";import ConfigProvider from"@baifendian/adhere-ui-configprovider";import ReactDOMStr from"../common-lib/react-dom.production.min";import ReactStr from"../common-lib/react.production.min";import WangEditorStr from"./lib/wang-editor-5.1.23";import WangEditorReactStr from"./lib/wang-editor-react-1.0.6";var selectorPrefix="adhere-ui-richtext-wangeditor-sandbox",editorId="wangEditorWrap",InternalWangEditorSandbox=memo(forwardRef(function(l,d){var e=l.wrapStyle,n=l.wrapClassName,c=l.wangEditorStyle,t=l.toolBarProps,u=l.editorProps,r=useRef(null),s=useRef(null),f=useRef(!1),m=useRef(l.value),g=useRef(null),b=useRef(!1),p=useContext(ConfigProvider.Context),v=useMemo(function(){return new Map([["zh_CN","zh-CN"],["en_US","en"]])},[]),h=useMemo(function(){return{defaultConfig:{},mode:"default"}},[]),R=useMemo(function(){return{defaultConfig:{},mode:"default"}},[]);function w(){var e=(e=window.devicePixelRatio)&&Math.round(100*e);return 100/Number(e)}function y(){return new Promise(function(e){var n;if(!("readOnly"in l&&l.readOnly))return new Promise(function(e){var n,t,r,o,a,i=null==(o=null==s?void 0:s.current)?void 0:o.contentDocument,c=null==(o=null==s?void 0:s.current)?void 0:o.contentWindow;i&&c&&(n=i.getElementById(editorId),t=(o=i.styleSheets[0]).cssRules[3],o=o.cssRules[4],r="\n            display: flex;\n            flex-direction: column;\n            width: 100%;\n            height: 100%;\n            overflow: hidden;\n            box-sizing: border-box;\n          ",a="\n            flex-shrink: 0;\n          ","bordered"in l&&!l.bordered?(t.style.cssText=r,o.style.cssText=a):(t.style.cssText="\n              ".concat(r,"\n              border: 1px solid #ccc;\n            "),o.style.cssText="\n              ".concat(a,"\n              border-bottom: 1px solid #ccc;\n            ")),(0,(null==c?void 0:c.wangEditor).i18nChangeLanguage)(v.get(l.lang||(null==(t=p.intl)?void 0:t.lang)||"zh_CN")),o=(r=c.WangEditorForReact).Editor,a=r.Toolbar,c.ReactDOM.render(React.createElement(React.Fragment,null,React.createElement(a,__assign({editor:g.current},h,null!=(t=l.toolBarProps)?t:{})),React.createElement(o,__assign({ref:d},R,null!=(r=l.editorProps)?r:{},{onCreated:function(e){g.current=e,y().then(function(){null!=u&&u.onCreated&&u.onCreated(e)})},value:m.current,onChange:function(e){b.current?l.onChange&&l.onChange(e.getHtml()):b.current=!0}}))),n,function(){f.current=!0,e({document:i,window:c,wrap:n})}))});(n=null==(n=null==s?void 0:s.current)?void 0:n.contentDocument)&&(n.getElementById(editorId).innerHTML=l.value,r.current)&&(r.current.style.height="".concat(n.documentElement.offsetHeight/w(),"px")),e()})}return useImperativeHandle(d,function(){return{getEditor:function(){return g.current},getWangEditor:function(){var e;return null==(e=null==(e=null==s?void 0:s.current)?void 0:e.contentWindow)?void 0:e.wangEditor}}}),useLayoutEffect(function(){var e;function n(){return y()}null!=(e=null==s?void 0:s.current)&&e.addEventListener("load",n);var t=URL.createObjectURL(new Blob([ReactStr],{type:"text/javascript"})),r=URL.createObjectURL(new Blob([ReactDOMStr],{type:"text/javascript"})),o=URL.createObjectURL(new Blob([WangEditorStr],{type:"text/javascript"})),a=URL.createObjectURL(new Blob([WangEditorReactStr],{type:"text/javascript"})),i=URL.createObjectURL(new Blob(['\n        <!DOCTYPE html>\n        <head>\n          <meta charset="UTF-8" />\n          <title></title>\n          <style>\n            html, body {\n              margin: 0;\n              padding: 0;\n            }\n\n            html.editor {\n              width: 100%;\n              height: 100%;\n            }\n\n            html.editor > body {\n              width: 100%;\n              height: 100%;\n            }\n\n            html.editor > body > #'.concat(editorId," {\n            }\n            \n            html > body > #").concat(editorId," > [data-w-e-toolbar=true] {\n            }\n            \n            html > body > #").concat(editorId," > [data-w-e-textarea=true] {\n              flex-grow: 1;\n              min-height: 0;\n            }\n\n            ::-webkit-scrollbar-thumb {\n              background-color: rgba(0, 0, 0, 0.1);\n              border-radius: 4px;\n            }\n            *::-webkit-scrollbar-track {\n              background-color: rgba(0, 0, 0, 0.1);\n            }\n            ::-webkit-scrollbar {\n              width: 10px;\n              height: 10px;\n            }\n            \n            ").concat(WangEditorCssStr,"\n            ").concat("readOnly"in l||l.readOnly?WangEditorViewCssStr:"","\n            \n            body {\n              zoom: ").concat(w(),';\n            }\n          </style>\n          <script src="').concat(t,'"><\/script>\n          <script src="').concat(r,'"><\/script>\n          <script src="').concat(o,'"><\/script>\n          <script src="').concat(a,'"><\/script>\n        </head>\n        <html lang="en" class="').concat(classNames({editor:!("readOnly"in l&&l.readOnly)}),'">\n        <body>\n          <div id="').concat(editorId,'" class="editor-content-view" style="').concat(null!=c?c:"",'"></div>\n        </body>\n        </html>\n        ')],{type:"text/html"}));return s.current.src=i,function(){var e;null!=(e=null==s?void 0:s.current)&&e.removeEventListener("load",n),URL.revokeObjectURL(i),URL.revokeObjectURL(t),URL.revokeObjectURL(r),URL.revokeObjectURL(o),URL.revokeObjectURL(a)}},[]),useEffect(function(){return function(){null!==g.current&&(g.current.destroy(),g.current=null,y())}},[g]),useUpdateEffect(function(){m.current=l.value,f.current&&y().then(function(){})},[l.value]),useUpdateEffect(function(){f.current&&y().then(function(){})},[t,u]),React.createElement("div",{ref:r,className:classNames("".concat(selectorPrefix),null!=n?n:""),style:null!=e?e:{}},React.createElement("iframe",{ref:s,className:"".concat(selectorPrefix,"-frame")}))})),WangEditorSandbox=InternalWangEditorSandbox;WangEditorSandbox.displayName="WangEditorSandbox",WangEditorSandbox.AntdFormRequireValidator=function(a,i){return{validator:function(e,n,t){var r,o;null!=(o=null==(r=null==a?void 0:a())?void 0:r.isEmpty)&&o.call(r)?t(i):t()}}};export default WangEditorSandbox;
+import WangEditorCssStr from"./lib/wang-editor-css";import WangEditorViewCssStr from"./lib/wang-editor-view-css";import{useUpdateEffect}from"ahooks";import classNames from"classnames";import React,{forwardRef,memo,useContext,useEffect,useImperativeHandle,useLayoutEffect,useMemo,useRef}from"react";import ConfigProvider from"@baifendian/adhere-ui-configprovider";import ReactDOMStr from"../common-lib/react-dom.production.min";import ReactStr from"../common-lib/react.production.min";import WangEditorStr from"./lib/wang-editor-5.1.23";import WangEditorReactStr from"./lib/wang-editor-react-1.0.6";let selectorPrefix="adhere-ui-richtext-wangeditor-sandbox",editorId="wangEditorWrap",InternalWangEditorSandbox=memo(forwardRef((c,l)=>{let{wrapStyle:e,wrapClassName:t,wangEditorStyle:i,toolBarProps:r,editorProps:s}=c,o=useRef(null),u=useRef(null),m=useRef(!1),f=useRef(c.value),g=useRef(null),b=useRef(!1),p=useContext(ConfigProvider.Context),h=useMemo(()=>new Map([["zh_CN","zh-CN"],["en_US","en"]]),[]),R=useMemo(()=>({defaultConfig:{},mode:"default"}),[]),w=useMemo(()=>({defaultConfig:{},mode:"default"}),[]);function d(){let e=window.devicePixelRatio;return e=e&&Math.round(100*e),100/Number(e)}function E(){return new Promise(e=>{var t;if(!("readOnly"in c&&c.readOnly))return new Promise(t=>{let r=u?.current?.contentDocument,o=u?.current?.contentWindow;if(r&&o){let e=r.getElementById(editorId);var n=r.styleSheets[0],a=n.cssRules[3],n=n.cssRules[4],i=`
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
+          `,d=`
+            flex-shrink: 0;
+          `,a=("bordered"in c&&!c.bordered?(a.style.cssText=i,n.style.cssText=d):(a.style.cssText=`
+              ${i}
+              border: 1px solid #ccc;
+            `,n.style.cssText=`
+              ${d}
+              border-bottom: 1px solid #ccc;
+            `),o?.wangEditor).i18nChangeLanguage,{WangEditorForReact:{Editor:i,Toolbar:n},ReactDOM:d}=(a(h.get(c.lang||p.intl?.lang||"zh_CN")),o);d.render(React.createElement(React.Fragment,null,React.createElement(n,{editor:g.current,...R,...c.toolBarProps??{}}),React.createElement(i,{ref:l,...w,...c.editorProps??{},onCreated:e=>{g.current=e,E().then(()=>{s?.onCreated&&s.onCreated(e)})},value:f.current,onChange:e=>{b.current?c.onChange&&c.onChange(e.getHtml()):b.current=!0}})),e,()=>{m.current=!0,t({document:r,window:o,wrap:e})})}});(t=u?.current?.contentDocument)&&(t.getElementById(editorId).innerHTML=c.value,o.current)&&(o.current.style.height=t.documentElement.offsetHeight/d()+"px"),e()})}return useImperativeHandle(l,()=>({getEditor(){return g.current},getWangEditor(){return u?.current?.contentWindow?.wangEditor}})),useLayoutEffect(()=>{function e(){return E()}u?.current?.addEventListener("load",e);let t=URL.createObjectURL(new Blob([ReactStr],{type:"text/javascript"})),r=URL.createObjectURL(new Blob([ReactDOMStr],{type:"text/javascript"})),o=URL.createObjectURL(new Blob([WangEditorStr],{type:"text/javascript"})),n=URL.createObjectURL(new Blob([WangEditorReactStr],{type:"text/javascript"})),a=URL.createObjectURL(new Blob([`
+        <!DOCTYPE html>
+        <head>
+          <meta charset="UTF-8" />
+          <title></title>
+          <style>
+            html, body {
+              margin: 0;
+              padding: 0;
+            }
+
+            html.editor {
+              width: 100%;
+              height: 100%;
+            }
+
+            html.editor > body {
+              width: 100%;
+              height: 100%;
+            }
+
+            html.editor > body > #${editorId} {
+            }
+            
+            html > body > #${editorId} > [data-w-e-toolbar=true] {
+            }
+            
+            html > body > #${editorId} > [data-w-e-textarea=true] {
+              flex-grow: 1;
+              min-height: 0;
+            }
+
+            ::-webkit-scrollbar-thumb {
+              background-color: rgba(0, 0, 0, 0.1);
+              border-radius: 4px;
+            }
+            *::-webkit-scrollbar-track {
+              background-color: rgba(0, 0, 0, 0.1);
+            }
+            ::-webkit-scrollbar {
+              width: 10px;
+              height: 10px;
+            }
+            
+            ${WangEditorCssStr}
+            ${"readOnly"in c||c.readOnly?WangEditorViewCssStr:""}
+            
+            body {
+              zoom: ${d()};
+            }
+          </style>
+          <script src="${t}"></script>
+          <script src="${r}"></script>
+          <script src="${o}"></script>
+          <script src="${n}"></script>
+        </head>
+        <html lang="en" class="${classNames({editor:!("readOnly"in c&&c.readOnly)})}">
+        <body>
+          <div id="${editorId}" class="editor-content-view" style="${i??""}"></div>
+        </body>
+        </html>
+        `],{type:"text/html"}));return u.current.src=a,()=>{u?.current?.removeEventListener("load",e),URL.revokeObjectURL(a),URL.revokeObjectURL(t),URL.revokeObjectURL(r),URL.revokeObjectURL(o),URL.revokeObjectURL(n)}},[]),useEffect(()=>()=>{null!==g.current&&(g.current.destroy(),g.current=null,E())},[g]),useUpdateEffect(()=>{f.current=c.value,m.current&&E().then(()=>{})},[c.value]),useUpdateEffect(()=>{m.current&&E().then(()=>{})},[r,s]),React.createElement("div",{ref:o,className:classNames(""+selectorPrefix,t??""),style:e??{}},React.createElement("iframe",{ref:u,className:selectorPrefix+"-frame"}))})),WangEditorSandbox=InternalWangEditorSandbox;WangEditorSandbox.displayName="WangEditorSandbox",WangEditorSandbox.AntdFormRequireValidator=(o,n)=>({validator:(e,t,r)=>{o?.()?.isEmpty?.()?r(n):r()}});export default WangEditorSandbox;
 //# sourceMappingURL=WangEditorSandbox.js.map

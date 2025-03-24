@@ -3,8 +3,9 @@
   "compilerOptions": {
     "declarationDir": "./es",
     "outDir": "./es",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "target": "ESNext"
   },
-  "exclude": ["node_modules","src/heatmap.js"],
+  "exclude": ["node_modules", "src/heatmap.js"],
   "include": ["src/**/*"]
 }

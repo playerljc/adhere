@@ -70,7 +70,7 @@ Object.keys(Resource.Dict.handlers)
       split2?: string;
       errorUI?: ReactNode | null;
     }>(({ value, split1 = '-', split2 = ':', errorUI = null }) => {
-      const dict = Resource.Dict.value[key].value;
+      const dict = Resource.Dict.value[key]?.value;
 
       return (
         <ConditionalRender conditional={!!value} noMatch={() => errorUI}>
@@ -80,7 +80,7 @@ Object.keys(Resource.Dict.handlers)
     });
 
     Components[`DateDisplay${name}`].toString = ({ value, split1 = '-', split2 = ':' }) => {
-      const dict = Resource.Dict.value[key].value;
+      const dict = Resource.Dict.value[key]?.value;
 
       return !!value
         ? dayjs(value).format(dict instanceof Function ? dict(split1, split2) : dict)
@@ -171,6 +171,7 @@ localization.reduce((result, local) => {
   result[`DateDisplay${local.replace(' ', '')}`] = memo<{
     value: any;
     locale?: string;
+    // @ts-ignore
   }>((props) => <Components.DateDisplay {...props} format={local} />);
 
   return result;

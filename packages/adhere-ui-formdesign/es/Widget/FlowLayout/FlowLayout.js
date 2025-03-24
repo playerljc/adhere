@@ -1,0 +1,2 @@
+import React,{memo,useMemo}from"react";import{selectorPrefix}from"../../FormDesign/FormDesign";import FlowLayoutItem from"./FlowLayoutItem";let selectorSuffix="-widget-flow-layout",FlowLayout=e=>{let t=e.widgets;e=useMemo(()=>t.map(e=>React.createElement(FlowLayoutItem,{key:e.getId()},e.render())),[t]);return React.createElement("div",{className:""+selectorPrefix+selectorSuffix},e)};export default memo(FlowLayout);
+//# sourceMappingURL=FlowLayout.js.map

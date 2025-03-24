@@ -1,2 +1,65 @@
-var __extends=this&&this.__extends||function(){var r=function(t,o){return(r=Object.setPrototypeOf||({__proto__:[]}instanceof Array?function(t,o){t.__proto__=o}:function(t,o){for(var e in o)Object.prototype.hasOwnProperty.call(o,e)&&(t[e]=o[e])}))(t,o)};return function(t,o){if("function"!=typeof o&&null!==o)throw new TypeError("Class extends value "+String(o)+" is not a constructor or null");function e(){this.constructor=t}r(t,o),t.prototype=null===o?Object.create(o):(e.prototype=o.prototype,new e)}}(),__spreadArray=this&&this.__spreadArray||function(t,o,e){if(e||2===arguments.length)for(var r,n=0,i=o.length;n<i;n++)!r&&n in o||((r=r||Array.prototype.slice.call(o,0,n))[n]=o[n]);return t.concat(r||Array.prototype.slice.call(o))};import*as turf from"@turf/turf";import{GeometryType,VectorActions}from"../types";import Geometry from"./Geometry";import PointGeometry from"./PointGeometry";var MultiPointGeometry=function(e){function t(t){var o=e.call(this)||this;return o.coordinates=t,o}return __extends(t,e),t.prototype.setCoordinates=function(t){this.coordinates=t,null!=(t=null==(t=null==this?void 0:this.getLayer())?void 0:t.getEmitter())&&t.trigger(VectorActions.UPDATE)},t.prototype.getCoordinates=function(){return __spreadArray([],this.coordinates,!0)},t.prototype.getType=function(){return GeometryType.MultiPoint},t.prototype.getCenterCoordinate=function(t){t.ctx,t.style,t.isScale;var t=this.coordinates,o=this.getMap(),t=turf.featureCollection(t.map(function(t){t=o.pointToPixel(new BMap.Point(t.lng,t.lat));return turf.point([t.x,t.y])})),t=turf.center(t);return{x:t.geometry.coordinates[0],y:t.geometry.coordinates[1]}},t.prototype.draw=function(o,e){var t=this.coordinates,r=this.getMap();t.forEach(function(t){PointGeometry.drawPoint({ctx:o,style:e,coordinates:t,map:r})})},t.prototype.isPixelInGeometry=function(o,e){var r=this;return this.coordinates.some(function(t){return PointGeometry.isPixelInGeometry({coordinates:t,map:r.getMap(),pixel:o,style:e})})},t}(Geometry);export default MultiPointGeometry;
-//# sourceMappingURL=MultiPointGeometry.js.map
+import * as turf from '@turf/turf';
+import { GeometryType, VectorActions, } from '../types';
+import Geometry from './Geometry';
+import PointGeometry from './PointGeometry';
+/**
+ * MultiPointGeometry
+ * @class MultiPointGeometry
+ * @classdesc MultiPointGeometry - 多个点
+ */
+class MultiPointGeometry extends Geometry {
+    coordinates;
+    constructor(coordinates) {
+        super();
+        this.coordinates = coordinates;
+    }
+    setCoordinates(coordinates) {
+        this.coordinates = coordinates;
+        this?.getLayer()?.getEmitter()?.trigger(VectorActions.UPDATE);
+    }
+    getCoordinates() {
+        return [...this.coordinates];
+    }
+    getType() {
+        return GeometryType.MultiPoint;
+    }
+    getCenterCoordinate({ ctx, style, isScale, }) {
+        const { coordinates } = this;
+        const map = this.getMap();
+        const features = turf.featureCollection(coordinates.map((p) => {
+            const pixel = map.pointToPixel(
+            // @ts-ignore
+            new BMap.Point(p.lng, p.lat));
+            return turf.point([pixel.x, pixel.y]);
+        }));
+        const center = turf.center(features);
+        return {
+            x: center.geometry.coordinates[0],
+            y: center.geometry.coordinates[1],
+        };
+    }
+    draw(ctx, style) {
+        const { coordinates } = this;
+        const map = this.getMap();
+        coordinates.forEach((coordinate) => {
+            PointGeometry.drawPoint({ ctx, style, coordinates: coordinate, map });
+        });
+    }
+    /**
+     * isPixelInGeometry
+     * @param pixel
+     * @param style
+     * @return boolean
+     */
+    isPixelInGeometry(pixel, style) {
+        return this.coordinates.some((coordinate) => {
+            return PointGeometry.isPixelInGeometry({
+                coordinates: coordinate,
+                map: this.getMap(),
+                pixel,
+                style,
+            });
+        });
+    }
+}
+export default MultiPointGeometry;

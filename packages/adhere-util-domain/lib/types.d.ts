@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import EventEmitter from 'events';
 export interface IDomain {
     add: (emitter: EventEmitter) => void;

@@ -257,6 +257,7 @@ export type SearchFactory<T, H> = (params: {
   override: T;
   sage: any;
   SearchClass: any;
+  SuperClass?: any;
   FieldGeneratorToDict: any;
   responseBusiness?: {
     codeKey: string;

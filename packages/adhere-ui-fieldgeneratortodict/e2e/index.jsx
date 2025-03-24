@@ -156,7 +156,7 @@ DictConfig();
 const store = createStore(null, {}, applyMiddleware(createLoggerMiddleware(), sage));
 
 const SearchTable = lazy(() =>
-  import(/* webpackChunkName: "searchtable" */ './SearchList/SingleSelect.jsx'),
+  import(/* webpackChunkName: "searchtable" */ './SearchTable/SingleSelect.jsx'),
 );
 
 e2e.PC({

@@ -1,2 +1,533 @@
-var __spreadArray=this&&this.__spreadArray||function(t,o,e){if(e||2===arguments.length)for(var i,r=0,a=o.length;r<a;r++)!i&&r in o||((i=i||Array.prototype.slice.call(o,0,r))[r]=o[r]);return t.concat(i||Array.prototype.slice.call(o))};import MathUtil from"@baifendian/adhere-util";import*as turf from"@turf/turf";import{TrajectoryStatus}from"../../types";var Trajectory=function(){function t(t){var o=t.context,e=t.id,i=t.coordinates,r=t.renderPosition,a=t.renderStep,s=t.renderCap,t=t.duration;this.id="",this.context=null,this.coordinates=[],this.duration=0,this.status=TrajectoryStatus.UnInit,this.boutTotal=0,this.bout=1,this.loopHeader=-1,this.loopPointEntitys=[],this.stepEntityIndexes=[],this.preLoopPixel=null,this.arrowMarker=null,this.context=o,this.id=e,this.coordinates=i,this.duration=t,this.renderPosition=r,this.renderStep=a,this.renderCap=s}return t.prototype.drawDefaultPosition=function(t,o){var e,i=this.context;i&&(e=i.getCtx())&&(i=i.pointToPixel({x:t.lng,y:t.lat}),e.beginPath(),e.strokeStyle="red",e.fillStyle="#fff",e.lineWidth=3,e.ellipse(i.x,i.y,6,6,45*Math.PI/180,0,2*Math.PI),e.stroke(),e.fill(),e.beginPath(),e.font="8px sans-serif",e.textAlign="center",e.textBaseline="middle",e.fillStyle="#000",e.fillText("".concat(o+1),i.x,i.y,10))},t.prototype.createDefaultCap=function(){var t;if(this.context)return t=new BMap.Icon("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjMxNDU2MzQ2NjYxIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjQxMzYiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTc4OC40OCA1MTJMMzEyLjMyIDc4Ni45MjM1MlYyMzcuMDk2OTZ6IiBwLWlkPSI0MTM3IiBmaWxsPSIjRkZBNTAwIj48L3BhdGg+PC9zdmc+",new BMap.Size(16,16)),new BMap.Marker(new BMap.Point(90,90),{icon:t})},t.prototype.updateCap=function(t){var o,e,i=this,r=i.preLoopPixel,a=i.context,i=i.arrowMarker;a&&r&&i&&(a=a.pixelToPoint(t),o=t.x-r.x,e=t.y-r.y,Math.atan2(e,o),Math.PI,e=MathUtil.slopToAngle(r,t,"geographic"),i.setPosition(new BMap.Point(a.x,a.y)),i.setRotation(e))},t.prototype.drawPosition=function(){var e,i=this,t=this,r=t.renderPosition,o=t.coordinates,t=t.context;t&&(e=t.getCtx())&&o.forEach(function(t,o){r?r({ctx:e,coordinate:t}):i.drawDefaultPosition(t,o)})},t.prototype.drawTrajectory=function(){this.drawPosition(),this.prepareLoopData();for(var t=1;t<this.boutTotal;t++)this.loopBout(t);this.drawLastFrame(),this.finishDeal()},t.prototype.drawLastFrame=function(){var t=this,o=t.loopPointEntitys,e=t.context,i=t.renderStep;t.renderCap;e&&(t=e.getCtx())&&(o=o[o.length-1],e=e.pointToPixel({x:o.point.lng,y:o.point.lat}),t.beginPath(),i?i(t,e):(this.setDrawLoopStyle(),t.lineTo(e.x,e.y),t.stroke(),this.preLoopPixel=null),this.updateCap(e))},t.prototype.setDrawLoopStyle=function(){var t=this.context;t&&(t=t.getCtx())&&(t.strokeStyle="orange",t.lineWidth=3)},t.prototype.finishDeal=function(){var t=this.context;t&&(t=t.getMap())&&(-1!==this.loopHeader&&"undefined"!=typeof window&&window.cancelAnimationFrame(this.loopHeader),this.loopHeader=-1,this.bout=1,this.boutTotal=0,this.loopPointEntitys=[],this.stepEntityIndexes=[],this.preLoopPixel=null,this.arrowMarker&&t.removeOverlay(this.arrowMarker),this.arrowMarker=null)},t.prototype.loopBout=function(t){var o=this,e=o.context,i=o.loopPointEntitys,r=o.stepEntityIndexes,a=o.renderStep,s=o.renderCap;if(e){var n=e.getCtx();if(n)for(var u=e.getMap(),o=1===t?0:r[t-2],p=r[t-1],l=o;l<p;l++){var h=i[l].point,h=e.pointToPixel({x:h.lng,y:h.lat});this.preLoopPixel?this.updateCap(h):(this.arrowMarker=s?s():this.createDefaultCap(),u.addOverlay(this.arrowMarker)),a?a(n,h):this.preLoopPixel?(n.lineTo(h.x,h.y),n.stroke(),n.beginPath(),this.setDrawLoopStyle(),n.moveTo(h.x,h.y)):(n.beginPath(),this.setDrawLoopStyle(),n.moveTo(h.x,h.y),this.preLoopPixel=h)}}},t.prototype.loop=function(){var o=this;"undefined"!=typeof window&&(this.loopHeader=window.requestAnimationFrame(function(){var t;o.status===TrajectoryStatus.Pause?o.loop():(t=o.context)&&t.getCtx()&&(o.loopBout(o.bout),o.bout++,o.bout>=o.boutTotal?(o.drawLastFrame(),o.finishDeal(),o.status=TrajectoryStatus.End):o.loop())}))},t.prototype.prepareLoopData=function(){for(var e=this,t=this.duration,i=this.coordinates,r=[],o=(i.reduce(function(t,o,e){e=0===e?0:turf.convertLength(turf.distance(turf.point([i[e-1].lng,i[e-1].lat]),turf.point([o.lng,o.lat]),{units:"kilometers"}),"kilometers","meters");return r.push({point:o,distance:t+e,isStep:!1}),t+e},0),turf.lineString(i.map(function(t){return[t.lng,t.lat]}))),a=turf.convertLength(turf.length(o,{units:"kilometers"}),"kilometers","meters"),s=(this.boutTotal=60*t,a/this.boutTotal),n=[],u=0;u<this.boutTotal;u++){var p=(u+1)*s,l=turf.along(o,turf.convertLength(p,"meters","kilometers"),{units:"kilometers"});n.push({point:{lng:l.geometry.coordinates[0],lat:l.geometry.coordinates[1]},distance:p,isStep:!0})}this.loopPointEntitys=__spreadArray(__spreadArray([],r,!0),n,!0),this.loopPointEntitys.sort(function(t,o){return t.distance>o.distance?1:t.distance<o.distance?-1:0}),this.stepEntityIndexes=[],this.loopPointEntitys.forEach(function(t,o){t.isStep&&e.stepEntityIndexes.push(o)})},t.prototype.init=function(){this.status===TrajectoryStatus.UnInit&&(this.drawPosition(),this.status=TrajectoryStatus.Init)},t.prototype.start=function(){var t=this.context;t&&t.getCtx()&&[TrajectoryStatus.Init,TrajectoryStatus.End,TrajectoryStatus.Pause].includes(this.status)&&([TrajectoryStatus.Pause,TrajectoryStatus.End].includes(this.status)&&(TrajectoryStatus.Pause===this.status&&this.finishDeal(),t.clear(),t.drawHistory()),this.status=TrajectoryStatus.Running,this.prepareLoopData(),this.loop())},t.prototype.pause=function(){this.status=TrajectoryStatus.Pause},t.prototype.resume=function(){this.status=TrajectoryStatus.Running},t.prototype.finish=function(){this.context&&![TrajectoryStatus.End,TrajectoryStatus.Destroy].includes(this.status)&&(this.finishDeal(),this.status=TrajectoryStatus.End)},t.prototype.destroy=function(){var t;this.status!==TrajectoryStatus.Destroy&&(t=this.context)&&(this.finishDeal(),t.clear(),this.status=TrajectoryStatus.Destroy,t.removeTrajectoryById(this.id))},t.prototype.getId=function(){return this.id},t.prototype.getStatus=function(){return this.status},t.prototype.drawHistory=function(){var t=this.status;if(TrajectoryStatus.Init===t?this.drawPosition():TrajectoryStatus.End===t&&this.drawTrajectory(),[TrajectoryStatus.Pause,TrajectoryStatus.Running].includes(t)){this.drawPosition();for(var o=1;o<this.bout;o++)this.loopBout(o)}},t}();export default Trajectory;
-//# sourceMappingURL=Trajectory.js.map
+import MathUtil from '@baifendian/adhere-util';
+import * as turf from '@turf/turf';
+import { TrajectoryStatus, } from '../../types';
+/**
+ * Trajectory
+ * @class Trajectory
+ * @classdesc 一个轨迹
+ */
+class Trajectory {
+    // 主键
+    id = '';
+    // 上下文
+    context = null;
+    // 轨迹的数据
+    coordinates = [];
+    // 完成轨迹播放的时长(单位秒)
+    duration = 0;
+    // 用户自定义绘制point
+    renderPosition;
+    // 用户自定义绘制每一个步骤
+    renderStep;
+    // 用户自定义绘制轨迹的箭头
+    renderCap;
+    // 状态
+    status = TrajectoryStatus.UnInit;
+    // 总的回合数
+    boutTotal = 0;
+    // 已经进行的回合数
+    bout = 1;
+    // loop的句柄
+    loopHeader = -1;
+    // loop的数据
+    loopPointEntitys = [];
+    // step的数组
+    stepEntityIndexes = [];
+    // 之前的loopPixel
+    preLoopPixel = null;
+    // 箭头的mark
+    arrowMarker = null;
+    constructor({ context, id, coordinates, renderPosition, renderStep, renderCap, duration, }) {
+        this.context = context;
+        this.id = id;
+        this.coordinates = coordinates;
+        this.duration = duration;
+        this.renderPosition = renderPosition;
+        this.renderStep = renderStep;
+        this.renderCap = renderCap;
+    }
+    /**
+     * drawDefaultPosition
+     * @description - 默认的点位绘制
+     * @protected
+     * @param coordinate
+     * @param index
+     */
+    drawDefaultPosition(coordinate, index) {
+        const { context } = this;
+        if (!context)
+            return;
+        const ctx = context.getCtx();
+        if (!ctx)
+            return;
+        // 需要转换
+        const pixel = context.pointToPixel({ x: coordinate.lng, y: coordinate.lat });
+        // 绘制圆圈
+        ctx.beginPath();
+        ctx.strokeStyle = 'red';
+        ctx.fillStyle = '#fff';
+        ctx.lineWidth = 3;
+        ctx.ellipse(pixel.x, pixel.y, 6, 6, (45 * Math.PI) / 180, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.fill();
+        // 绘制文字
+        ctx.beginPath();
+        ctx.font = '8px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#000';
+        ctx.fillText(`${index + 1}`, pixel.x, pixel.y, 10);
+    }
+    /**
+     * createDefaultCap
+     * @description - 创建缺省的箭头
+     * @protected
+     // * @param toPixel
+     */
+    createDefaultCap( /*toPixel: IPixel*/) {
+        const { context } = this;
+        if (!context)
+            return;
+        // const map = context.getMap();
+        // const prePoint = context.pixelToPoint(preLoopPixel);
+        // const point = context.pixelToPoint(toPixel);
+        // const angle = MathUtil.radianToAngle(MathUtil.slope(preLoopPixel, toPixel));
+        // const angle1 =
+        //   (Math.atan2(preLoopPixel.y - toPixel.y, preLoopPixel.x - toPixel.x) * 180) / Math.PI;
+        // const a1 = turf.point([prePoint.x, prePoint.y], { 'marker-color': '#F00' });
+        // const a2 = turf.point([point.x, point.y], { 'marker-color': '#F00' });
+        // console.log('angle', angle1, angle);
+        // console.log('rhumbBearing', turf.rhumbBearing(a1, a2));
+        // console.log('bearing', turf.bearing(a1, a2));
+        // @ts-ignore
+        const myIcon = new BMap.Icon('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjMxNDU2MzQ2NjYxIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjQxMzYiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTc4OC40OCA1MTJMMzEyLjMyIDc4Ni45MjM1MlYyMzcuMDk2OTZ6IiBwLWlkPSI0MTM3IiBmaWxsPSIjRkZBNTAwIj48L3BhdGg+PC9zdmc+', 
+        // @ts-ignore
+        new BMap.Size(16, 16));
+        // @ts-ignore
+        // const pt = new BMap.Point(point.x, point.y);
+        // @ts-ignore
+        return new BMap.Marker(new BMap.Point(90, 90), {
+            icon: myIcon,
+            // rotation: angle,
+        });
+    }
+    /**
+     * updateCap
+     * @param toPixel
+     * @protected
+     * @description - 更新arrow的位置和旋转角度
+     */
+    updateCap(toPixel) {
+        const { preLoopPixel, context, arrowMarker } = this;
+        if (!context || !preLoopPixel || !arrowMarker)
+            return;
+        const toPoint = context.pixelToPoint(toPixel);
+        const dx = toPixel.x - preLoopPixel.x;
+        const dy = toPixel.y - preLoopPixel.y;
+        const rotation = Math.atan2(dy, dx);
+        const degrees1 = rotation * (180 / Math.PI);
+        const degrees = MathUtil.slopToAngle(preLoopPixel, toPixel, 'geographic');
+        // const angle = MathUtil.radianToAngle(MathUtil.slope(preLoopPixel, toPixel));
+        // @ts-ignore
+        arrowMarker.setPosition(new BMap.Point(toPoint.x, toPoint.y));
+        arrowMarker.setRotation(degrees);
+        // const angle1 =
+        //   (Math.atan2(preLoopPixel.y - toPixel.y, preLoopPixel.x - toPixel.x) * 180) / Math.PI;
+        // const a1 = turf.point([prePoint.x, prePoint.y], { 'marker-color': '#F00' });
+        // const a2 = turf.point([point.x, point.y], { 'marker-color': '#F00' });
+        // console.log('angle', angle1, angle);
+        // console.log('rhumbBearing', turf.rhumbBearing(a1, a2));
+        // console.log('bearing', turf.bearing(a1, a2));
+    }
+    /**
+     * drawPosition
+     * @description - 绘制位置节点
+     * @protected
+     */
+    drawPosition() {
+        const { renderPosition, coordinates, context } = this;
+        if (!context)
+            return;
+        const ctx = context.getCtx();
+        if (!ctx)
+            return;
+        coordinates.forEach((coordinate, index) => {
+            // 用户自定义绘制
+            if (renderPosition) {
+                renderPosition({ ctx, coordinate });
+            }
+            // 默认绘制
+            else {
+                this.drawDefaultPosition(coordinate, index);
+            }
+        });
+    }
+    /**
+     * drawTrajectory
+     * @description - 绘制历史轨迹
+     * @protected
+     */
+    drawTrajectory() {
+        this.drawPosition();
+        this.prepareLoopData();
+        for (let i = 1; i < this.boutTotal; i++) {
+            this.loopBout(i);
+        }
+        this.drawLastFrame();
+        this.finishDeal();
+    }
+    /**
+     * drawLastFrame
+     * @description - 绘制最后一帧
+     * @protected
+     */
+    drawLastFrame() {
+        const { loopPointEntitys, context, renderStep, renderCap } = this;
+        if (!context)
+            return;
+        const ctx = context.getCtx();
+        if (!ctx)
+            return;
+        const lastPoint = loopPointEntitys[loopPointEntitys.length - 1];
+        const lastPixel = context.pointToPixel({ x: lastPoint.point.lng, y: lastPoint.point.lat });
+        ctx.beginPath();
+        if (renderStep) {
+            renderStep(ctx, lastPixel);
+        }
+        else {
+            this.setDrawLoopStyle();
+            ctx.lineTo(lastPixel.x, lastPixel.y);
+            ctx.stroke();
+            this.preLoopPixel = null;
+        }
+        this.updateCap(lastPixel);
+    }
+    /**
+     * setDrawLoopStyle
+     * @description - 设置loop绘制的上下文样式
+     * @protected
+     */
+    setDrawLoopStyle() {
+        const { context } = this;
+        if (!context)
+            return;
+        const ctx = context.getCtx();
+        if (!ctx)
+            return;
+        ctx.strokeStyle = 'orange';
+        ctx.lineWidth = 3;
+        // ctx.lineCap = 'round';
+    }
+    /**
+     * finishDeal
+     * @protected - End后的清理工作
+     * @protected
+     */
+    finishDeal() {
+        const { context } = this;
+        if (!context)
+            return;
+        const map = context.getMap();
+        if (!map)
+            return;
+        if (this.loopHeader !== -1) {
+            typeof window !== 'undefined' && window.cancelAnimationFrame(this.loopHeader);
+        }
+        this.loopHeader = -1;
+        this.bout = 1;
+        this.boutTotal = 0;
+        this.loopPointEntitys = [];
+        this.stepEntityIndexes = [];
+        this.preLoopPixel = null;
+        if (this.arrowMarker) {
+            map.removeOverlay(this.arrowMarker);
+        }
+        this.arrowMarker = null;
+    }
+    /**
+     * loopBout
+     * @description - 绘制一个回合
+     * @param bout
+     * @protected
+     */
+    loopBout(bout) {
+        const { context, loopPointEntitys, stepEntityIndexes, renderStep, renderCap } = this;
+        if (!context)
+            return;
+        const ctx = context.getCtx();
+        if (!ctx)
+            return;
+        const map = context.getMap();
+        // 先执行一次
+        const curStartStepIndex = bout === 1 ? 0 : stepEntityIndexes[bout - 2];
+        const curEndStepIndex = stepEntityIndexes[bout - 1];
+        for (let i = curStartStepIndex; i < curEndStepIndex; i++) {
+            const { point } = loopPointEntitys[i];
+            const pixel = context.pointToPixel({ x: point.lng, y: point.lat });
+            if (this.preLoopPixel) {
+                this.updateCap(pixel);
+            }
+            else {
+                // 创建
+                if (renderCap) {
+                    this.arrowMarker = renderCap();
+                }
+                else {
+                    this.arrowMarker = this.createDefaultCap();
+                }
+                map.addOverlay(this.arrowMarker);
+            }
+            if (renderStep) {
+                renderStep(ctx, pixel);
+            }
+            else {
+                if (!this.preLoopPixel) {
+                    ctx.beginPath();
+                    this.setDrawLoopStyle();
+                    ctx.moveTo(pixel.x, pixel.y);
+                    this.preLoopPixel = pixel;
+                }
+                else {
+                    ctx.lineTo(pixel.x, pixel.y);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    this.setDrawLoopStyle();
+                    ctx.moveTo(pixel.x, pixel.y);
+                    // 0 1 2 3 4 5
+                }
+            }
+        }
+    }
+    /**
+     * loop
+     * @description - loop的迭代
+     * @protected
+     */
+    loop() {
+        // 2 5
+        // 0 1   (2)     3 4    (5)
+        if (typeof window === 'undefined')
+            return;
+        this.loopHeader = window.requestAnimationFrame(() => {
+            // 暂停则不执行其他操作
+            if (this.status === TrajectoryStatus.Pause) {
+                this.loop();
+                return;
+            }
+            const { context } = this;
+            if (!context)
+                return;
+            const ctx = context.getCtx();
+            if (!ctx)
+                return;
+            this.loopBout(this.bout);
+            // 回合++
+            this.bout++;
+            // 结束了
+            if (this.bout >= this.boutTotal) {
+                // 绘制最后一个点
+                this.drawLastFrame();
+                this.finishDeal();
+                this.status = TrajectoryStatus.End;
+                return;
+            }
+            else {
+                this.loop();
+            }
+        });
+    }
+    /**
+     * prepareLoopData
+     * @description - 准备loop的数据
+     * @protected
+     */
+    prepareLoopData() {
+        // 计算沿线的点
+        /**
+         * 整体的思路
+         * 1. 将所有原始点生成一个结构 {
+         *   point: {x,y},
+         *   distance: 沿线的距离(第一个点为0)单位为m
+         *   isStep: boolean(是否为步进的点) false
+         * }
+         *
+         * 2.总的距离 / (duration * 60) 获取步进
+         * 计算每一次的步进 生成 {
+         *   point: {x,y},
+         *   distance: 沿线的距离(第一个点为0)单位为m
+         *   isStep: boolean(是否为步进的点) true
+         * }
+         *
+         * 3.将1,2按照distance从小到大整合到一起
+         *
+         * 4.开始播放
+         */
+        const { duration, coordinates } = this;
+        // 1.origin
+        const origin = [];
+        coordinates.reduce((total, coordinate, index) => {
+            const distance = index === 0
+                ? 0
+                : turf.convertLength(turf.distance(turf.point([coordinates[index - 1].lng, coordinates[index - 1].lat]), turf.point([coordinate.lng, coordinate.lat]), {
+                    units: 'kilometers',
+                }), 'kilometers', 'meters');
+            origin.push({
+                point: coordinate,
+                distance: total + distance,
+                isStep: false,
+            });
+            return total + distance;
+        }, 0);
+        // 2.target
+        const line = turf.lineString(coordinates.map((coordinate) => [coordinate.lng, coordinate.lat]));
+        // 总长(m)
+        const length = turf.convertLength(turf.length(line, { units: 'kilometers' }), 'kilometers', 'meters');
+        // 总的回合数
+        this.boutTotal = duration * 60;
+        // 步进(m)
+        const step = length / this.boutTotal;
+        // target
+        const target = [];
+        for (let i = 0; i < this.boutTotal; i++) {
+            // 每一步的距离
+            const stepDistance = (i + 1) * step;
+            const turfPoint = turf.along(line, turf.convertLength(stepDistance, 'meters', 'kilometers'), {
+                units: 'kilometers',
+            });
+            target.push({
+                point: { lng: turfPoint.geometry.coordinates[0], lat: turfPoint.geometry.coordinates[1] },
+                distance: stepDistance,
+                isStep: true,
+            });
+        }
+        // 3.sortMerge(按距离从小到大进行排序)
+        this.loopPointEntitys = [...origin, ...target];
+        this.loopPointEntitys.sort((p1, p2) => {
+            if (p1.distance > p2.distance)
+                return 1;
+            else if (p1.distance < p2.distance)
+                return -1;
+            else
+                return 0;
+        });
+        this.stepEntityIndexes = [];
+        this.loopPointEntitys.forEach((pointEntity, index) => {
+            if (pointEntity.isStep) {
+                this.stepEntityIndexes.push(index);
+            }
+        });
+    }
+    /**
+     * init
+     * @description - 初始化轨迹
+     */
+    init() {
+        if (this.status !== TrajectoryStatus.UnInit)
+            return;
+        // 初始化就是先把轨迹点绘制上
+        this.drawPosition();
+        // 修改状态为初始化完成
+        this.status = TrajectoryStatus.Init;
+    }
+    /**
+     * start
+     * @description - 开始
+     */
+    start() {
+        const { context } = this;
+        if (!context)
+            return;
+        const ctx = context.getCtx();
+        if (!ctx)
+            return;
+        if (![TrajectoryStatus.Init, TrajectoryStatus.End, TrajectoryStatus.Pause].includes(this.status)) {
+            return;
+        }
+        if ([TrajectoryStatus.Pause, TrajectoryStatus.End].includes(this.status)) {
+            if (TrajectoryStatus.Pause === this.status) {
+                this.finishDeal();
+            }
+            context.clear();
+            // 画历史
+            context.drawHistory();
+        }
+        // 修改状态为运行状态
+        this.status = TrajectoryStatus.Running;
+        // 准备loop数据
+        this.prepareLoopData();
+        // execute
+        this.loop();
+    }
+    /**
+     * pause
+     * @description - 暂停
+     */
+    pause() {
+        this.status = TrajectoryStatus.Pause;
+    }
+    /**
+     * resume
+     * @description -恢复
+     */
+    resume() {
+        this.status = TrajectoryStatus.Running;
+    }
+    /**
+     * finish
+     * @description - 结束
+     */
+    finish() {
+        const { context } = this;
+        if (!context)
+            return;
+        if ([TrajectoryStatus.End, TrajectoryStatus.Destroy].includes(this.status))
+            return;
+        // 如果没画完画完
+        this.finishDeal();
+        this.status = TrajectoryStatus.End;
+    }
+    /**
+     * description
+     * @description - 销毁
+     */
+    destroy() {
+        if (this.status === TrajectoryStatus.Destroy)
+            return;
+        const { context } = this;
+        if (!context)
+            return;
+        this.finishDeal();
+        context.clear();
+        // 画历史
+        // context.drawHistory();
+        this.status = TrajectoryStatus.Destroy;
+        context.removeTrajectoryById(this.id);
+    }
+    getId() {
+        return this.id;
+    }
+    getStatus() {
+        return this.status;
+    }
+    /**
+     * drawHistory
+     * @description - 绘制clear之后的历史轨迹
+     */
+    drawHistory() {
+        const { status } = this;
+        if (TrajectoryStatus.Init === status) {
+            this.drawPosition();
+        }
+        else if (TrajectoryStatus.End === status) {
+            this.drawTrajectory();
+        }
+        if ([TrajectoryStatus.Pause, TrajectoryStatus.Running].includes(status)) {
+            this.drawPosition();
+            // 绘制历史
+            for (let i = 1; i < this.bout; i++) {
+                this.loopBout(i);
+            }
+        }
+    }
+}
+export default Trajectory;

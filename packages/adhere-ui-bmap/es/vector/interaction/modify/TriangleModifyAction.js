@@ -1,2 +1,675 @@
-var __extends=this&&this.__extends||function(){var a=function(t,o){return(a=Object.setPrototypeOf||({__proto__:[]}instanceof Array?function(t,o){t.__proto__=o}:function(t,o){for(var i in o)Object.prototype.hasOwnProperty.call(o,i)&&(t[i]=o[i])}))(t,o)};return function(t,o){if("function"!=typeof o&&null!==o)throw new TypeError("Class extends value "+String(o)+" is not a constructor or null");function i(){this.constructor=t}a(t,o),t.prototype=null===o?Object.create(o):(i.prototype=o.prototype,new i)}}(),__assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var o,i=1,a=arguments.length;i<a;i++)for(var n in o=arguments[i])Object.prototype.hasOwnProperty.call(o,n)&&(t[n]=o[n]);return t}).apply(this,arguments)},__spreadArray=this&&this.__spreadArray||function(t,o,i){if(i||2===arguments.length)for(var a,n=0,e=o.length;n<e;n++)!a&&n in o||((a=a||Array.prototype.slice.call(o,0,n))[n]=o[n]);return t.concat(a||Array.prototype.slice.call(o))};import MathUtil from"@baifendian/adhere-util";import*as turf from"@turf/turf";import defaultMoveGemStyle from"../DefaultMoveGemStyle";import TriangleDrawAction from"../draw/TriangleDrawAction";import{SelectType}from"../types";import ModifyAction from"./ModifyAction";var TriangleModifyAction=function(o){function t(t){t=o.call(this,t)||this;return t.rectangleAnchorPoints=[],t.indexToModifyHandlerMapping=new Map([[0,t.modifyDataByLeftTop],[1,t.modifyDataByCenterTop],[2,t.modifyDataByRightTop],[3,t.modifyDataByRightCenter],[4,t.modifyDataByRightBottom],[5,t.modifyDataByCenterBottom],[6,t.modifyDataByLeftBottom],[7,t.modifyDataByLeftCenter]]),t.ResizeCursorMapping=new Map([[0,"nwse-resize"],[1,"ns-resize"],[2,"nesw-resize"],[3,"ew-resize"],[4,"nwse-resize"],[5,"ns-resize"],[6,"nesw-resize"],[7,"ew-resize"]]),t}return __extends(t,o),t.prototype.setCursor=function(){throw new Error("Method not implemented.")},t.prototype.drawAnchors=function(){if(this.context){var t=this.context.getCtx();if(t){var o=TriangleDrawAction.transformOriginToReal(this.context,null==(o=null==(o=null==this?void 0:this.data)?void 0:o.data)?void 0:o.data).points;if(o&&o.length){var i={x:o[0].x,y:o[1].y},a=o[2].x-o[0].x,o=o[2].y-o[1].y,n=a/2,e=o/2;this.rectangleAnchorPoints=[__assign({},i),{x:i.x+n,y:i.y},{x:i.x+a,y:i.y},{x:i.x+a,y:i.y+e},{x:i.x+a,y:i.y+o},{x:i.x+n,y:i.y+o},{x:i.x,y:i.y+o},{x:i.x,y:i.y+e}];for(var r=0;r<this.rectangleAnchorPoints.length;r++){var s=this.rectangleAnchorPoints[r];t.beginPath(),this.setAnchorCircleStyle(),t.ellipse(s.x,s.y,this.anchorRadius,this.anchorRadius,45*Math.PI/180,0,2*Math.PI),t.stroke(),t.fill()}t.beginPath(),this.setAnchorLineStyle(),t.moveTo(i.x,i.y),t.lineTo(i.x+a,i.y),t.lineTo(i.x+a,i.y+o),t.lineTo(i.x,i.y+o),t.lineTo(i.x,i.y),t.stroke()}}}},t.prototype.getPointInAnchor=function(t){if(!this.data)return null;for(var o=null,i=-1,a=0;a<this.rectangleAnchorPoints.length;a++){var n=this.rectangleAnchorPoints[a],e=this.anchorRadius+this.anchorLineWidth;if(MathUtil.isPointInCircle(t,{center:n,radius:e})){o=n,i=a;break}}return o&&-1!==i?{point:o,index:i}:null},t.prototype.setResizeCursorByIndex=function(t){var o,i;this.context&&(o=this.context.getCanvasEl(),i=this.context.getAssistCanvasEl(),o)&&i&&(o.style.cursor=i.style.cursor=this.ResizeCursorMapping.get(t))},t.prototype.drawModify=function(t){var o,i=this.context,a=null==i?void 0:i.getCtx();i&&a&&this.data&&this.startPoint&&(a=i.getHistoryDataById(this.data.data.id))&&(o=this.indexToModifyHandlerMapping.get(this.startIndex))&&o.call(this,t)&&(this.data.data=__assign({},a),i.clearDraw(),i.drawHistoryData(),this.drawAnchors())},t.prototype.drawMove=function(t,o){var i,a,n=this.context,e=null==n?void 0:n.getCtx();n&&e&&this.data&&(e=n.getHistoryDataById(this.data.data.id))&&(t=n.pixelToPoint(t),o=n.pixelToPoint(o),i=o.x-t.x,a=o.y-t.y,e.data.points.forEach(function(t){t.x+=i,t.y+=a}),this.data.data=__assign({},e),n.clearDraw(),n.drawHistoryData(),this.drawAnchors())},t.prototype.getSelectType=function(){return SelectType.Triangle},t.prototype.getBox=function(){var t,o,i=this.context;return i&&this.data&&(t=i.getHistoryDataById(this.data.data.id))&&(i=TriangleDrawAction.transformOriginToReal(i,t.data).points)&&i.length?(t={x:i[0].x,y:i[1].y},o=i[2].x-i[0].x,i=i[2].y-i[1].y,{leftTop:__assign({},t),rightTop:{x:t.x+o,y:t.y},rightBottom:{x:t.x+o,y:t.y+i},leftBottom:{x:t.x,y:t.y+i}}):null},t.prototype.modifyDataByLeftTop=function(t){var o,i,a=this.context,n=null==a?void 0:a.getCtx();return!!(a&&n&&this.data&&this.startPoint)&&!!(n=a.getHistoryDataById(this.data.data.id))&&!(!(i=n.data.points)||!i.length||!(i=this.getBox())||t.x>i.rightTop.x||t.y>i.rightBottom.y||(o=i.rightTop.x-t.x,i=i.rightBottom.y-t.y,n.data.points=TriangleDrawAction.transformRealToOrigin(a,{points:[{x:t.x,y:t.y+i},{x:t.x+o/2,y:t.y},{x:t.x+o,y:t.y+i}]}).points,0))},t.prototype.modifyDataByCenterTop=function(t){var o,i,a,n=this.context,e=null==n?void 0:n.getCtx();return!!(n&&e&&this.data&&this.startPoint)&&!!(e=n.getHistoryDataById(this.data.data.id))&&!(!(a=e.data.points)||!a.length||!(a=this.getBox())||t.y>a.leftBottom.y||(o={x:a.leftTop.x,y:t.y},i=a.rightTop.x-a.leftTop.x,a=a.rightBottom.y-t.y,e.data.points=TriangleDrawAction.transformRealToOrigin(n,{points:[{x:o.x,y:o.y+a},{x:o.x+i/2,y:o.y},{x:o.x+i,y:o.y+a}]}).points,0))},t.prototype.modifyDataByRightTop=function(t){var o,i,a,n=this.context,e=null==n?void 0:n.getCtx();return!!(n&&e&&this.data&&this.startPoint)&&!!(e=n.getHistoryDataById(this.data.data.id))&&!(!(a=e.data.points)||!a.length||!(a=this.getBox())||t.x<a.leftTop.x||t.y>a.leftBottom.y||(o={x:a.leftTop.x,y:t.y},i=t.x-a.leftTop.x,a=a.rightBottom.y-t.y,e.data.points=TriangleDrawAction.transformRealToOrigin(n,{points:[{x:o.x,y:o.y+a},{x:o.x+i/2,y:o.y},{x:o.x+i,y:o.y+a}]}).points,0))},t.prototype.modifyDataByRightCenter=function(t){var o,i,a=this.context,n=null==a?void 0:a.getCtx();return!!(a&&n&&this.data&&this.startPoint)&&!!(n=a.getHistoryDataById(this.data.data.id))&&!(!(i=n.data.points)||!i.length||!(i=this.getBox())||t.x<i.leftTop.x||(o={x:i.leftTop.x,y:i.leftTop.y},t=t.x-i.leftTop.x,i=i.rightBottom.y-i.rightTop.y,n.data.points=TriangleDrawAction.transformRealToOrigin(a,{points:[{x:o.x,y:o.y+i},{x:o.x+t/2,y:o.y},{x:o.x+t,y:o.y+i}]}).points,0))},t.prototype.modifyDataByRightBottom=function(t){var o,i,a,n=this.context,e=null==n?void 0:n.getCtx();return!!(n&&e&&this.data&&this.startPoint)&&!!(e=n.getHistoryDataById(this.data.data.id))&&!(!(o=e.data.points)||!o.length||!(o=this.getBox())||t.x<o.leftTop.x||t.y<o.leftTop.y||(i=__assign({},o.leftTop),a=t.x-o.leftTop.x,t=t.y-o.leftTop.y,e.data.points=TriangleDrawAction.transformRealToOrigin(n,{points:[{x:i.x,y:i.y+t},{x:i.x+a/2,y:i.y},{x:i.x+a,y:i.y+t}]}).points,0))},t.prototype.modifyDataByCenterBottom=function(t){var o,i,a,n=this.context,e=null==n?void 0:n.getCtx();return!!(n&&e&&this.data&&this.startPoint)&&!!(e=n.getHistoryDataById(this.data.data.id))&&!(!(o=e.data.points)||!o.length||!(o=this.getBox())||t.y<o.leftTop.y||(i=__assign({},o.leftTop),a=o.rightTop.x-o.leftTop.x,t=t.y-o.leftTop.y,e.data.points=TriangleDrawAction.transformRealToOrigin(n,{points:[{x:i.x,y:i.y+t},{x:i.x+a/2,y:i.y},{x:i.x+a,y:i.y+t}]}).points,0))},t.prototype.modifyDataByLeftBottom=function(t){var o,i,a,n=this.context,e=null==n?void 0:n.getCtx();return!!(n&&e&&this.data&&this.startPoint)&&!!(e=n.getHistoryDataById(this.data.data.id))&&!(!(o=e.data.points)||!o.length||!(o=this.getBox())||t.x>o.rightBottom.x||t.y<o.rightTop.y||(i={x:t.x,y:o.leftTop.y},a=o.rightBottom.x-t.x,t=t.y-o.rightTop.y,e.data.points=TriangleDrawAction.transformRealToOrigin(n,{points:[{x:i.x,y:i.y+t},{x:i.x+a/2,y:i.y},{x:i.x+a,y:i.y+t}]}).points,0))},t.prototype.modifyDataByLeftCenter=function(t){var o,i,a=this.context,n=null==a?void 0:a.getCtx();return!!(a&&n&&this.data&&this.startPoint)&&!!(n=a.getHistoryDataById(this.data.data.id))&&!(!(i=n.data.points)||!i.length||!(i=this.getBox())||t.x>i.rightBottom.x||(o={x:t.x,y:i.leftTop.y},t=i.rightBottom.x-t.x,i=i.rightBottom.y-i.rightTop.y,n.data.points=TriangleDrawAction.transformRealToOrigin(a,{points:[{x:o.x,y:o.y+i},{x:o.x+t/2,y:o.y},{x:o.x+t,y:o.y+i}]}).points,0))},t.prototype.isCanMove=function(t){var o,i;return!!this.data&&((i=TriangleDrawAction.transformOriginToReal(this.context,{points:__spreadArray([],(null==(i=null==(i=null==(i=null==this?void 0:this.data)?void 0:i.data)?void 0:i.data)?void 0:i.points)||[],!0)}).points).push(i[0]),o=turf.point([t.x,t.y]),i=turf.polygon([i.map(function(t){return[t.x,t.y]})]),turf.booleanPointInPolygon(o,i))&&!this.getPointInAnchor(t)},t.prototype.drawMoveGeometry=function(){this.context&&this.data&&TriangleDrawAction.draw(this.context,this.context.getAssistCtx(),this.data)},t.prototype.drawMoveGeometry=function(t,o){var i,a,n;this.context&&this.data&&t&&o&&((i=__assign({},this.data.data)).data=__assign(__assign({},i.data),{points:i.data.points.map(function(t){return __assign({},t)})}),t=this.context.pixelToPoint(t),o=this.context.pixelToPoint(o),a=o.x-t.x,n=o.y-t.y,i.data)&&i.data.points&&i.data.points.length&&(i.data.points.forEach(function(t){t.x+=a,t.y+=n}),i.style&&(i.style.globalAlpha=defaultMoveGemStyle.globalAlpha,i.style.strokeStyle=defaultMoveGemStyle.strokeStyle,i.style.lineWidth=defaultMoveGemStyle.lineWidth,i.style.lineDash=defaultMoveGemStyle.lineDash,i.style.lineDashOffset=defaultMoveGemStyle.lineDashOffset),TriangleDrawAction.draw(this.context,this.context.getAssistCtx(),i))},t.prototype.destroy=function(){this.startIndex=-1,o.prototype.destroy.call(this)},t}(ModifyAction);export default TriangleModifyAction;
-//# sourceMappingURL=TriangleModifyAction.js.map
+import MathUtil from '@baifendian/adhere-util';
+import * as turf from '@turf/turf';
+import defaultMoveGemStyle from '../DefaultMoveGemStyle';
+import TriangleDrawAction from '../draw/TriangleDrawAction';
+import { SelectType } from '../types';
+import ModifyAction from './ModifyAction';
+/**
+ * TriangleModifyAction
+ * @class TriangleModifyAction
+ * @classdesc - 三角形修改
+ * @remark:
+ */
+class TriangleModifyAction extends ModifyAction {
+    setCursor() {
+        throw new Error('Method not implemented.');
+    }
+    rectangleAnchorPoints = [];
+    indexToModifyHandlerMapping = new Map([
+        [0, this.modifyDataByLeftTop],
+        [1, this.modifyDataByCenterTop],
+        [2, this.modifyDataByRightTop],
+        [3, this.modifyDataByRightCenter],
+        [4, this.modifyDataByRightBottom],
+        [5, this.modifyDataByCenterBottom],
+        [6, this.modifyDataByLeftBottom],
+        [7, this.modifyDataByLeftCenter],
+    ]);
+    ResizeCursorMapping = new Map([
+        [0, 'nwse-resize'],
+        [1, 'ns-resize'],
+        [2, 'nesw-resize'],
+        [3, 'ew-resize'],
+        [4, 'nwse-resize'],
+        [5, 'ns-resize'],
+        [6, 'nesw-resize'],
+        [7, 'ew-resize'],
+    ]);
+    constructor(data) {
+        super(data);
+    }
+    /**
+     * drawAnchors
+     * circle有4个anchor，上，下，左，右
+     */
+    drawAnchors() {
+        if (!this.context)
+            return;
+        const ctx = this.context.getCtx();
+        if (!ctx)
+            return;
+        const { points } = TriangleDrawAction.transformOriginToReal(this.context, this?.data?.data?.data);
+        if (!points || !points.length)
+            return;
+        // points三个点分别为左下，上中，右下
+        // 绘制矩形和八个控制点
+        const leftTopPoint = {
+            x: points[0].x,
+            y: points[1].y,
+        };
+        const width = points[2].x - points[0].x;
+        const height = points[2].y - points[1].y;
+        const widthHalf = width / 2;
+        const heightHalf = height / 2;
+        this.rectangleAnchorPoints = [
+            {
+                ...leftTopPoint,
+            },
+            {
+                x: leftTopPoint.x + widthHalf,
+                y: leftTopPoint.y,
+            },
+            {
+                x: leftTopPoint.x + width,
+                y: leftTopPoint.y,
+            },
+            {
+                x: leftTopPoint.x + width,
+                y: leftTopPoint.y + heightHalf,
+            },
+            {
+                x: leftTopPoint.x + width,
+                y: leftTopPoint.y + height,
+            },
+            {
+                x: leftTopPoint.x + widthHalf,
+                y: leftTopPoint.y + height,
+            },
+            {
+                x: leftTopPoint.x,
+                y: leftTopPoint.y + height,
+            },
+            {
+                x: leftTopPoint.x,
+                y: leftTopPoint.y + heightHalf,
+            },
+        ];
+        // 4个角,4条边中心点 顺时针绘制
+        for (let i = 0; i < this.rectangleAnchorPoints.length; i++) {
+            const point = this.rectangleAnchorPoints[i];
+            ctx.beginPath();
+            this.setAnchorCircleStyle();
+            ctx.ellipse(point.x, point.y, this.anchorRadius, this.anchorRadius, (45 * Math.PI) / 180, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fill();
+        }
+        // 矩形绘制
+        ctx.beginPath();
+        this.setAnchorLineStyle();
+        ctx.moveTo(leftTopPoint.x, leftTopPoint.y);
+        ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y);
+        ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y + height);
+        ctx.lineTo(leftTopPoint.x, leftTopPoint.y + height);
+        ctx.lineTo(leftTopPoint.x, leftTopPoint.y);
+        ctx.stroke();
+    }
+    /**
+     * getPointInAnchor
+     * @param targetPixel
+     * @return IPoint | null
+     */
+    getPointInAnchor(targetPixel) {
+        if (!this.data)
+            return null;
+        let point = null;
+        let index = -1;
+        for (let i = 0; i < this.rectangleAnchorPoints.length; i++) {
+            const center = this.rectangleAnchorPoints[i];
+            const radius = this.anchorRadius + this.anchorLineWidth;
+            if (MathUtil.isPointInCircle(targetPixel, { center, radius })) {
+                point = center;
+                index = i;
+                break;
+            }
+        }
+        if (point && index !== -1) {
+            return {
+                point,
+                index,
+            };
+        }
+        return null;
+    }
+    /**
+     * setResizeCursorByIndex
+     * @param index
+     */
+    setResizeCursorByIndex(index) {
+        if (!this.context)
+            return;
+        const canvasEl = this.context.getCanvasEl();
+        const assistCanvasEl = this.context.getAssistCanvasEl();
+        if (!canvasEl || !assistCanvasEl)
+            return;
+        canvasEl.style.cursor = assistCanvasEl.style.cursor = this.ResizeCursorMapping.get(index);
+    }
+    /**
+     * drawModify
+     * @param targetPixel
+     */
+    drawModify(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return;
+        // 判断index 0 1 2 3 4 5 6 7的情况下各自怎么修改leftTopPoint,width,height
+        const handler = this.indexToModifyHandlerMapping.get(this.startIndex);
+        if (!handler)
+            return;
+        const result = handler.call(this, targetPixel);
+        if (!result)
+            return;
+        this.data.data = {
+            ...data,
+        };
+        context.clearDraw();
+        context.drawHistoryData();
+        this.drawAnchors();
+    }
+    /**
+     * drawMove
+     * @param startPixel
+     * @param targetPixel
+     */
+    drawMove(startPixel, targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data)
+            return;
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return;
+        const startPoint = context.pixelToPoint(startPixel);
+        const targetPoint = context.pixelToPoint(targetPixel);
+        const offsetX = targetPoint.x - startPoint.x;
+        const offsetY = targetPoint.y - startPoint.y;
+        // historyData是原始数据，修改修改的是原始数据
+        data.data.points.forEach((point) => {
+            point.x += offsetX;
+            point.y += offsetY;
+        });
+        this.data.data = {
+            ...data,
+        };
+        context.clearDraw();
+        context.drawHistoryData();
+        this.drawAnchors();
+    }
+    /**
+     * getSelectType
+     */
+    getSelectType() {
+        return SelectType.Triangle;
+    }
+    /**
+     * getBox
+     */
+    getBox() {
+        const { context } = this;
+        if (!context || !this.data)
+            return null;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return null;
+        const { points } = TriangleDrawAction.transformOriginToReal(context, data.data);
+        if (!points || !points.length)
+            return null;
+        const leftTopPoint = {
+            x: points[0].x,
+            y: points[1].y,
+        };
+        const width = points[2].x - points[0].x;
+        const height = points[2].y - points[1].y;
+        return {
+            leftTop: { ...leftTopPoint },
+            rightTop: { x: leftTopPoint.x + width, y: leftTopPoint.y },
+            rightBottom: { x: leftTopPoint.x + width, y: leftTopPoint.y + height },
+            leftBottom: { x: leftTopPoint.x, y: leftTopPoint.y + height },
+        };
+    }
+    /**
+     * modifyDataByLeftTop
+     * @param targetPixel
+     */
+    modifyDataByLeftTop(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return false;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return false;
+        const { points } = data.data;
+        if (!points || !points.length)
+            return false;
+        // 计算出四个角的坐标
+        const box = this.getBox();
+        if (!box)
+            return false;
+        // 范围限制
+        if (targetPixel.x > box.rightTop.x || targetPixel.y > box.rightBottom.y)
+            return false;
+        const leftTopPoint = targetPixel;
+        const width = box.rightTop.x - targetPixel.x;
+        const height = box.rightBottom.y - targetPixel.y;
+        // 修改
+        data.data.points = TriangleDrawAction.transformRealToOrigin(context, {
+            points: [
+                {
+                    x: leftTopPoint.x,
+                    y: leftTopPoint.y + height,
+                },
+                {
+                    x: leftTopPoint.x + width / 2,
+                    y: leftTopPoint.y,
+                },
+                {
+                    x: leftTopPoint.x + width,
+                    y: leftTopPoint.y + height,
+                },
+            ],
+        }).points;
+        return true;
+    }
+    /**
+     * modifyDataByCenterTop
+     * @param targetPixel
+     */
+    modifyDataByCenterTop(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return false;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return false;
+        const { points } = data.data;
+        if (!points || !points.length)
+            return false;
+        // 计算出四个角的坐标
+        const box = this.getBox();
+        if (!box)
+            return false;
+        // 范围限制
+        if (targetPixel.y > box.leftBottom.y)
+            return false;
+        // 修改
+        const leftTopPoint = {
+            x: box.leftTop.x,
+            y: targetPixel.y,
+        };
+        const width = box.rightTop.x - box.leftTop.x;
+        const height = box.rightBottom.y - targetPixel.y;
+        // 修改
+        data.data.points = TriangleDrawAction.transformRealToOrigin(context, {
+            points: [
+                {
+                    x: leftTopPoint.x,
+                    y: leftTopPoint.y + height,
+                },
+                {
+                    x: leftTopPoint.x + width / 2,
+                    y: leftTopPoint.y,
+                },
+                {
+                    x: leftTopPoint.x + width,
+                    y: leftTopPoint.y + height,
+                },
+            ],
+        }).points;
+        return true;
+    }
+    /**
+     * modifyDataByRightTop
+     * @param targetPixel
+     */
+    modifyDataByRightTop(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return false;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return false;
+        const { points } = data.data;
+        if (!points || !points.length)
+            return false;
+        // 计算出四个角的坐标
+        const box = this.getBox();
+        if (!box)
+            return false;
+        // 范围限制
+        if (targetPixel.x < box.leftTop.x || targetPixel.y > box.leftBottom.y)
+            return false;
+        // 修改
+        const leftTopPoint = {
+            x: box.leftTop.x,
+            y: targetPixel.y,
+        };
+        const width = targetPixel.x - box.leftTop.x;
+        const height = box.rightBottom.y - targetPixel.y;
+        data.data.points = TriangleDrawAction.transformRealToOrigin(context, {
+            points: [
+                {
+                    x: leftTopPoint.x,
+                    y: leftTopPoint.y + height,
+                },
+                {
+                    x: leftTopPoint.x + width / 2,
+                    y: leftTopPoint.y,
+                },
+                {
+                    x: leftTopPoint.x + width,
+                    y: leftTopPoint.y + height,
+                },
+            ],
+        }).points;
+        return true;
+    }
+    /**
+     * modifyDataByRightCenter
+     * @param targetPixel
+     */
+    modifyDataByRightCenter(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return false;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return false;
+        const { points } = data.data;
+        if (!points || !points.length)
+            return false;
+        // 计算出四个角的坐标
+        const box = this.getBox();
+        if (!box)
+            return false;
+        // 范围限制
+        if (targetPixel.x < box.leftTop.x)
+            return false;
+        const leftTopPoint = {
+            x: box.leftTop.x,
+            y: box.leftTop.y,
+        };
+        const width = targetPixel.x - box.leftTop.x;
+        const height = box.rightBottom.y - box.rightTop.y;
+        // 修改
+        data.data.points = TriangleDrawAction.transformRealToOrigin(context, {
+            points: [
+                {
+                    x: leftTopPoint.x,
+                    y: leftTopPoint.y + height,
+                },
+                {
+                    x: leftTopPoint.x + width / 2,
+                    y: leftTopPoint.y,
+                },
+                {
+                    x: leftTopPoint.x + width,
+                    y: leftTopPoint.y + height,
+                },
+            ],
+        }).points;
+        return true;
+    }
+    /**
+     * modifyDataByRightBottom
+     * @param targetPixel
+     */
+    modifyDataByRightBottom(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return false;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return false;
+        const { points } = data.data;
+        if (!points || !points.length)
+            return false;
+        // 计算出四个角的坐标
+        const box = this.getBox();
+        if (!box)
+            return false;
+        // 范围限制
+        if (targetPixel.x < box.leftTop.x || targetPixel.y < box.leftTop.y)
+            return false;
+        const leftTopPoint = { ...box.leftTop };
+        const width = targetPixel.x - box.leftTop.x;
+        const height = targetPixel.y - box.leftTop.y;
+        // 修改
+        data.data.points = TriangleDrawAction.transformRealToOrigin(context, {
+            points: [
+                {
+                    x: leftTopPoint.x,
+                    y: leftTopPoint.y + height,
+                },
+                {
+                    x: leftTopPoint.x + width / 2,
+                    y: leftTopPoint.y,
+                },
+                {
+                    x: leftTopPoint.x + width,
+                    y: leftTopPoint.y + height,
+                },
+            ],
+        }).points;
+        return true;
+    }
+    /**
+     * modifyDataByCenterBottom
+     * @param targetPixel
+     */
+    modifyDataByCenterBottom(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return false;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return false;
+        const { points } = data.data;
+        if (!points || !points.length)
+            return false;
+        // 计算出四个角的坐标
+        const box = this.getBox();
+        if (!box)
+            return false;
+        // 范围限制
+        if (targetPixel.y < box.leftTop.y)
+            return false;
+        const leftTopPoint = { ...box.leftTop };
+        const width = box.rightTop.x - box.leftTop.x;
+        const height = targetPixel.y - box.leftTop.y;
+        // 修改
+        data.data.points = TriangleDrawAction.transformRealToOrigin(context, {
+            points: [
+                {
+                    x: leftTopPoint.x,
+                    y: leftTopPoint.y + height,
+                },
+                {
+                    x: leftTopPoint.x + width / 2,
+                    y: leftTopPoint.y,
+                },
+                {
+                    x: leftTopPoint.x + width,
+                    y: leftTopPoint.y + height,
+                },
+            ],
+        }).points;
+        return true;
+    }
+    /**
+     * modifyDataByLeftBottom
+     * @param targetPixel
+     */
+    modifyDataByLeftBottom(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return false;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return false;
+        const { points } = data.data;
+        if (!points || !points.length)
+            return false;
+        // 计算出四个角的坐标
+        const box = this.getBox();
+        if (!box)
+            return false;
+        // 范围限制
+        if (targetPixel.x > box.rightBottom.x || targetPixel.y < box.rightTop.y)
+            return false;
+        const leftTopPoint = {
+            x: targetPixel.x,
+            y: box.leftTop.y,
+        };
+        const width = box.rightBottom.x - targetPixel.x;
+        const height = targetPixel.y - box.rightTop.y;
+        // 修改
+        data.data.points = TriangleDrawAction.transformRealToOrigin(context, {
+            points: [
+                {
+                    x: leftTopPoint.x,
+                    y: leftTopPoint.y + height,
+                },
+                {
+                    x: leftTopPoint.x + width / 2,
+                    y: leftTopPoint.y,
+                },
+                {
+                    x: leftTopPoint.x + width,
+                    y: leftTopPoint.y + height,
+                },
+            ],
+        }).points;
+        return true;
+    }
+    /**
+     * modifyDataByLeftCenter
+     * @param targetPixel
+     */
+    modifyDataByLeftCenter(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return false;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return false;
+        const { points } = data.data;
+        if (!points || !points.length)
+            return false;
+        // 计算出四个角的坐标
+        const box = this.getBox();
+        if (!box)
+            return false;
+        // 范围限制
+        if (targetPixel.x > box.rightBottom.x)
+            return false;
+        const leftTopPoint = {
+            x: targetPixel.x,
+            y: box.leftTop.y,
+        };
+        const width = box.rightBottom.x - targetPixel.x;
+        const height = box.rightBottom.y - box.rightTop.y;
+        // 修改
+        data.data.points = TriangleDrawAction.transformRealToOrigin(context, {
+            points: [
+                {
+                    x: leftTopPoint.x,
+                    y: leftTopPoint.y + height,
+                },
+                {
+                    x: leftTopPoint.x + width / 2,
+                    y: leftTopPoint.y,
+                },
+                {
+                    x: leftTopPoint.x + width,
+                    y: leftTopPoint.y + height,
+                },
+            ],
+        }).points;
+        return true;
+    }
+    isCanMove(targetPoint) {
+        if (!this.data)
+            return false;
+        const points = TriangleDrawAction.transformOriginToReal(this.context, {
+            points: [...(this?.data?.data?.data?.points || [])],
+        }).points;
+        points.push(points[0]);
+        const pt = turf.point([targetPoint.x, targetPoint.y]);
+        const poly = turf.polygon([points.map((point) => [point.x, point.y])]);
+        return turf.booleanPointInPolygon(pt, poly) && !this.getPointInAnchor(targetPoint);
+    }
+    /**
+     * drawMoveGeometry
+     * @description 绘制移动时的几何图形
+     */
+    // @ts-ignore
+    drawMoveGeometry() {
+        if (!this.context || !this.data)
+            return;
+        TriangleDrawAction.draw(this.context, this.context.getAssistCtx(), this.data);
+    }
+    // @ts-ignore
+    drawMoveGeometry(startPixel, targetPixel) {
+        if (!this.context || !this.data || !startPixel || !targetPixel)
+            return;
+        const srcData = { ...this.data.data };
+        srcData.data = {
+            ...srcData.data,
+            points: srcData.data.points.map((point) => ({ ...point })),
+        };
+        const startPoint = this.context.pixelToPoint(startPixel);
+        const targetPoint = this.context.pixelToPoint(targetPixel);
+        const offsetX = targetPoint.x - startPoint.x;
+        const offsetY = targetPoint.y - startPoint.y;
+        if (srcData.data && srcData.data.points && srcData.data.points.length) {
+            srcData.data.points.forEach((point) => {
+                point.x += offsetX;
+                point.y += offsetY;
+            });
+            if (srcData.style) {
+                srcData.style.globalAlpha = defaultMoveGemStyle.globalAlpha;
+                srcData.style.strokeStyle = defaultMoveGemStyle.strokeStyle;
+                srcData.style.lineWidth = defaultMoveGemStyle.lineWidth;
+                srcData.style.lineDash = defaultMoveGemStyle.lineDash;
+                srcData.style.lineDashOffset = defaultMoveGemStyle.lineDashOffset;
+            }
+            TriangleDrawAction.draw(this.context, this.context.getAssistCtx(), srcData);
+        }
+    }
+    destroy() {
+        this.startIndex = -1;
+        super.destroy();
+    }
+}
+export default TriangleModifyAction;

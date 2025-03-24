@@ -76,6 +76,7 @@ declare const Options: {
     };
     readonly gaugeOption: () => {
         type: string;
+        radius: string;
     };
     readonly barChart: (series?: BarSeriesOption[]) => any;
     readonly barChartToStack: (stack: string | string[], series?: BarSeriesOption[]) => any;

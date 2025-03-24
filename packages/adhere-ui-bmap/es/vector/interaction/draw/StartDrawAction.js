@@ -1,2 +1,355 @@
-var __extends=this&&this.__extends||function(){var i=function(t,e){return(i=Object.setPrototypeOf||({__proto__:[]}instanceof Array?function(t,e){t.__proto__=e}:function(t,e){for(var n in e)Object.prototype.hasOwnProperty.call(e,n)&&(t[n]=e[n])}))(t,e)};return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Class extends value "+String(e)+" is not a constructor or null");function n(){this.constructor=t}i(t,e),t.prototype=null===e?Object.create(e):(n.prototype=e.prototype,new n)}}();import BaseUtil from"@baifendian/adhere-util";import*as turf from"@turf/turf";import{ActionEvents,ActionStatus,ActionType,SelectType}from"../types";import DrawAction from"./DrawAction";var StartDrawAction=function(i){function l(){var t=i.call(this)||this;return t.centerPoint=null,t.outRadius=0,t.innerRadius=0,t.isMove=!1,t.onCanvasMouseDown=t.onCanvasMouseDown.bind(t),t.onCanvasMouseMove=t.onCanvasMouseMove.bind(t),t.onCanvasMouseUp=t.onCanvasMouseUp.bind(t),t}return __extends(l,i),l.booleanPointInData=function(t,e,n){for(var t=l.transformOriginToReal(t,n.data),i=t.center,o=t.outRadius,s=t.innerRadius,n=turf.point([e.x,e.y]),a=72,r=[],u=0;u<5;u++)r.push({x:Math.cos((18+u*a)/180*Math.PI)*o+i.x,y:-Math.sin((18+u*a)/180*Math.PI)*o+i.y}),r.push({x:Math.cos((54+u*a)/180*Math.PI)*s+i.x,y:-Math.sin((54+u*a)/180*Math.PI)*s+i.y});t=r.map(function(t){return[t.x,t.y]}),t.push(t[0]),e=turf.polygon([t]);return turf.booleanPointInPolygon(n,e)},l.drawStart=function(t){var e=t.context,n=t.ctx,t=t.data;if(t&&n){for(var i=t.style,e=l.transformOriginToReal(e,t.data),o=e.center,s=e.outRadius,a=e.innerRadius,r=(n.save(),n.beginPath(),72),u=0;u<5;u++)i&&(n.lineWidth=i.lineWidth,n.lineJoin=i.lineJoin,n.lineCap=i.lineCap,n.setLineDash(i.lineDash),n.lineDashOffset=i.lineDashOffset,n.strokeStyle=i.strokeStyle,n.fillStyle=i.fillStyle),n.lineTo(Math.cos((18+u*r)/180*Math.PI)*s+o.x,-Math.sin((18+u*r)/180*Math.PI)*s+o.y),n.lineTo(Math.cos((54+u*r)/180*Math.PI)*a+o.x,-Math.sin((54+u*r)/180*Math.PI)*a+o.y);n.stroke(),n.fill(),n.restore()}},l.prototype.draw=function(t){var e,n=this.context,i=this.centerPoint,o=null==n?void 0:n.getCtx();n&&i&&o&&(e=n.getCanvasEl())&&this.centerPoint&&(t=BaseUtil.clientToCtxPoint({event:t,rect:null==e?void 0:e.getBoundingClientRect()}),n.clearDraw(),n.drawHistoryData(),this.outRadius=BaseUtil.getDistanceByBetweenPoint({p1:i,p2:t}),this.innerRadius=this.outRadius/2,l.drawStart({context:n,ctx:o,data:{data:l.transformRealToOrigin(n,{center:this.centerPoint,outRadius:this.outRadius,innerRadius:this.innerRadius}),style:this.style}}))},l.draw=function(t,e,n){e&&n&&(n.style&&(e.lineWidth=n.style.lineWidth,e.lineJoin=n.style.lineJoin,e.lineCap=n.style.lineCap,e.setLineDash(n.style.lineDash),e.lineDashOffset=n.style.lineDashOffset,e.strokeStyle=n.style.strokeStyle,e.fillStyle=n.style.fillStyle,e.globalAlpha=n.style.globalAlpha||1),this.drawHistoryPath(t,e,n.data),e.stroke(),e.fill())},l.drawHistoryPath=function(t,e,n){n&&l.drawStart({context:t,ctx:e,data:{data:n}})},l.prototype.onCanvasMouseDown=function(t){var e;this.context&&(e=this.context.getCanvasEl())&&(this.centerPoint=BaseUtil.clientToCtxPoint({event:t,rect:null==e?void 0:e.getBoundingClientRect()}),null!=e&&e.addEventListener("mousemove",this.onCanvasMouseMove),null!=e&&e.addEventListener("mouseup",this.onCanvasMouseUp),t.stopPropagation())},l.prototype.onCanvasMouseMove=function(t){this.context&&(this.isMove=!0,this.draw(t),t.stopPropagation())},l.prototype.onCanvasMouseUp=function(t){this.isMove&&(this.end(t),t.stopPropagation())},l.transformOriginToReal=function(t,e){return{center:t.pointToPixel(e.center),outRadius:t.actualToDistance(e.outRadius),innerRadius:t.actualToDistance(e.innerRadius)}},l.transformRealToOrigin=function(t,e){return{center:t.pixelToPoint(e.center),outRadius:t.distanceToActual(e.outRadius),innerRadius:t.distanceToActual(e.innerRadius)}},l.prototype.getSelectType=function(){return SelectType.Start},l.prototype.start=function(t){var e;this.context&&![ActionStatus.Running,ActionStatus.Destroy].includes(this.status)&&(e=this.context.getCanvasEl())&&(i.prototype.start.call(this,t),t&&(this.style=t),this.trigger(ActionEvents.BeforeStart,{selectType:this.getSelectType(),actionType:ActionType.Draw}),null!=e&&e.addEventListener("mousedown",this.onCanvasMouseDown),this.status=ActionStatus.Running,this.trigger(ActionEvents.Start,{selectType:this.getSelectType(),actionType:ActionType.Draw}))},l.prototype.end=function(t){var e,n=this.context;n&&(e=n.getCanvasEl())&&this.centerPoint&&this.outRadius&&this.innerRadius&&(null!=e&&e.removeEventListener("mousedown",this.onCanvasMouseDown),null!=e&&e.removeEventListener("mousemove",this.onCanvasMouseMove),null!=e&&e.removeEventListener("mouseup",this.onCanvasMouseUp),t&&this.draw(t),this.status=ActionStatus.End,e={id:BaseUtil.uuid(),type:this.getSelectType(),data:l.transformRealToOrigin(n,{center:this.centerPoint,outRadius:this.outRadius,innerRadius:this.innerRadius}),style:this.style},n.addHistoryData(e),this.centerPoint=null,this.outRadius=0,this.innerRadius=0,this.isMove=!1,this.trigger(ActionEvents.End,{selectType:this.getSelectType(),actionType:ActionType.Draw,data:e})),i.prototype.end.call(this,t)},l.prototype.destroy=function(){var t,e=this.context;e&&(t=e.getCanvasEl())&&(this.status===ActionStatus.Running&&(e.clearDraw(),e.drawHistoryData()),null!=t&&t.removeEventListener("mousedown",this.onCanvasMouseDown),null!=t&&t.removeEventListener("mousemove",this.onCanvasMouseMove),null!=t&&t.removeEventListener("mouseup",this.onCanvasMouseUp),this.centerPoint=null,this.outRadius=0,this.innerRadius=0,this.isMove=!1,this.status=ActionStatus.Destroy,this.trigger(ActionEvents.Destroy,{selectType:this.getSelectType(),actionType:ActionType.Draw})),i.prototype.destroy.call(this)},l}(DrawAction);export default StartDrawAction;
-//# sourceMappingURL=StartDrawAction.js.map
+import BaseUtil from '@baifendian/adhere-util';
+import * as turf from '@turf/turf';
+import { ActionEvents, ActionStatus, ActionType, SelectType, } from '../types';
+import DrawAction from './DrawAction';
+/**
+ * StartDrawAction
+ * @class
+ * @classdesc - 五角星选取
+ * @remark: - 一个start - end的周期中只能绘制一个五角星
+ */
+class StartDrawAction extends DrawAction {
+    // 中心点
+    centerPoint = null;
+    // 外圆半径
+    outRadius = 0;
+    // 内圆半径
+    innerRadius = 0;
+    isMove = false;
+    /**
+     * context
+     */
+    constructor() {
+        super();
+        this.onCanvasMouseDown = this.onCanvasMouseDown.bind(this);
+        this.onCanvasMouseMove = this.onCanvasMouseMove.bind(this);
+        this.onCanvasMouseUp = this.onCanvasMouseUp.bind(this);
+    }
+    /**
+     * booleanPointInData
+     * @description 判断点是否在
+     * @param context
+     * @param point
+     * @param data
+     */
+    static booleanPointInData(context, point, data) {
+        const { 
+        // 圆的中心点
+        center, 
+        // 外半径
+        outRadius, 
+        // 内半径(外半径的一半)
+        innerRadius, } = StartDrawAction.transformOriginToReal(context, data.data);
+        const pt = turf.point([point.x, point.y]);
+        const startCount = 5;
+        const spend = 360 / startCount;
+        const min = 90 - spend;
+        const max = spend - min;
+        const points = [];
+        for (let i = 0; i < startCount; i++) {
+            points.push({
+                x: Math.cos(((min + i * spend) / 180) * Math.PI) * outRadius + center.x,
+                y: -Math.sin(((min + i * spend) / 180) * Math.PI) * outRadius + center.y,
+            });
+            points.push({
+                x: Math.cos(((max + i * spend) / 180) * Math.PI) * innerRadius + center.x,
+                y: -Math.sin(((max + i * spend) / 180) * Math.PI) * innerRadius + center.y,
+            });
+        }
+        const polygon = points.map((point) => [point.x, point.y]);
+        polygon.push(polygon[0]);
+        const poly = turf.polygon([polygon]);
+        return turf.booleanPointInPolygon(pt, poly);
+    }
+    /**
+     * drawStart
+     * @param context
+     * @param ctx
+     * @param data
+     */
+    static drawStart({ context, ctx, data, }) {
+        if (!data || !ctx)
+            return;
+        const { style } = data;
+        const { center, outRadius, innerRadius } = StartDrawAction.transformOriginToReal(context, data.data);
+        ctx.save();
+        ctx.beginPath();
+        const startCount = 5;
+        const spend = 360 / startCount;
+        const min = 90 - spend;
+        const max = spend - min;
+        for (let i = 0; i < startCount; i++) {
+            if (style) {
+                ctx.lineWidth = style.lineWidth;
+                ctx.lineJoin = style.lineJoin;
+                ctx.lineCap = style.lineCap;
+                ctx.setLineDash(style.lineDash);
+                ctx.lineDashOffset = style.lineDashOffset;
+                ctx.strokeStyle = style.strokeStyle;
+                ctx.fillStyle = style.fillStyle;
+            }
+            ctx.lineTo(Math.cos(((min + i * spend) / 180) * Math.PI) * outRadius + center.x, -Math.sin(((min + i * spend) / 180) * Math.PI) * outRadius + center.y);
+            ctx.lineTo(Math.cos(((max + i * spend) / 180) * Math.PI) * innerRadius + center.x, -Math.sin(((max + i * spend) / 180) * Math.PI) * innerRadius + center.y);
+        }
+        ctx.stroke();
+        ctx.fill();
+        ctx.restore();
+    }
+    /**
+     * draw
+     * @param e
+     */
+    draw(e) {
+        const { context, centerPoint } = this;
+        const ctx = context?.getCtx();
+        if (!context || !centerPoint || !ctx)
+            return;
+        const canvasEl = context.getCanvasEl();
+        if (!canvasEl || !this.centerPoint)
+            return;
+        const targetPoint = BaseUtil.clientToCtxPoint({
+            event: e,
+            rect: canvasEl?.getBoundingClientRect(),
+        });
+        context.clearDraw();
+        context.drawHistoryData();
+        this.outRadius = BaseUtil.getDistanceByBetweenPoint({ p1: centerPoint, p2: targetPoint });
+        this.innerRadius = this.outRadius / 2;
+        // 坐标， 实际距离
+        StartDrawAction.drawStart({
+            context,
+            ctx,
+            data: {
+                data: StartDrawAction.transformRealToOrigin(context, {
+                    // 像素
+                    center: this.centerPoint,
+                    // 图上距离
+                    outRadius: this.outRadius,
+                    // 图上距离
+                    innerRadius: this.innerRadius,
+                }),
+                style: this.style,
+            },
+        });
+    }
+    /**
+     * draw
+     * @description
+     * @param context
+     * @param ctx
+     * @param data
+     */
+    static draw(context, ctx, data) {
+        if (!ctx || !data)
+            return;
+        if (data.style) {
+            // 设置上下文属性
+            ctx.lineWidth = data.style.lineWidth;
+            ctx.lineJoin = data.style.lineJoin;
+            ctx.lineCap = data.style.lineCap;
+            ctx.setLineDash(data.style.lineDash);
+            ctx.lineDashOffset = data.style.lineDashOffset;
+            ctx.strokeStyle = data.style.strokeStyle;
+            ctx.fillStyle = data.style.fillStyle;
+            ctx.globalAlpha = data.style.globalAlpha || 1;
+        }
+        this.drawHistoryPath(context, ctx, data.data);
+        // 描边
+        ctx.stroke();
+        // 填充
+        ctx.fill();
+    }
+    /**
+     * drawHistoryPath - 绘制历史数据
+     * @param context
+     * @param ctx
+     * @param data
+     */
+    static drawHistoryPath(context, ctx, data) {
+        if (!data)
+            return;
+        StartDrawAction.drawStart({
+            context,
+            ctx,
+            data: {
+                data,
+            },
+        });
+    }
+    /**
+     * onCanvasMouseDown
+     * @param e
+     */
+    onCanvasMouseDown(e) {
+        if (!this.context)
+            return;
+        const canvasEl = this.context.getCanvasEl();
+        if (!canvasEl)
+            return;
+        this.centerPoint = BaseUtil.clientToCtxPoint({
+            event: e,
+            rect: canvasEl?.getBoundingClientRect(),
+        });
+        canvasEl?.addEventListener('mousemove', this.onCanvasMouseMove);
+        canvasEl?.addEventListener('mouseup', this.onCanvasMouseUp);
+        e.stopPropagation();
+    }
+    /**
+     * onCanvasMouseMove
+     * @param e
+     */
+    onCanvasMouseMove(e) {
+        const { context } = this;
+        if (!context)
+            return;
+        this.isMove = true;
+        this.draw(e);
+        e.stopPropagation();
+    }
+    /**
+     * onCanvasMouseUp
+     * @param e
+     */
+    onCanvasMouseUp(e) {
+        if (!this.isMove)
+            return;
+        this.end(e);
+        e.stopPropagation();
+    }
+    /**
+     * transformOriginToReal - 原始数据转换成实际数据
+     * @param context
+     * @param data
+     */
+    static transformOriginToReal(context, data) {
+        return {
+            // 圆的中心点
+            center: context.pointToPixel(data.center),
+            // 外半径
+            outRadius: context.actualToDistance(data.outRadius),
+            // 内半径(外半径的一半);
+            innerRadius: context.actualToDistance(data.innerRadius),
+        };
+    }
+    /**
+     * transformRealToOrigin - 实际数据转换成原始数据
+     * @param context
+     * @param data
+     */
+    static transformRealToOrigin(context, data) {
+        return {
+            // 圆的中心点
+            center: context.pixelToPoint(data.center),
+            // 外半径
+            outRadius: context.distanceToActual(data.outRadius),
+            // 内半径(外半径的一半);
+            innerRadius: context.distanceToActual(data.innerRadius),
+        };
+    }
+    getSelectType() {
+        return SelectType.Start;
+    }
+    /**
+     * start
+     * @param style
+     */
+    start(style) {
+        if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status))
+            return;
+        const { context } = this;
+        const canvasEl = context.getCanvasEl();
+        if (!canvasEl)
+            return;
+        super.start(style);
+        style && (this.style = style);
+        // 触发开始之前事件
+        this.trigger(ActionEvents.BeforeStart, {
+            selectType: this.getSelectType(),
+            actionType: ActionType.Draw,
+        });
+        // 注册事件
+        canvasEl?.addEventListener('mousedown', this.onCanvasMouseDown);
+        // 修改状态
+        this.status = ActionStatus.Running;
+        // 触发开始事件
+        this.trigger(ActionEvents.Start, {
+            selectType: this.getSelectType(),
+            actionType: ActionType.Draw,
+        });
+    }
+    /**
+     * end
+     */
+    end(e) {
+        const { context } = this;
+        if (!context) {
+            super.end(e);
+            return;
+        }
+        const canvasEl = context.getCanvasEl();
+        if (!canvasEl || !this.centerPoint || !this.outRadius || !this.innerRadius) {
+            super.end(e);
+            return;
+        }
+        canvasEl?.removeEventListener('mousedown', this.onCanvasMouseDown);
+        canvasEl?.removeEventListener('mousemove', this.onCanvasMouseMove);
+        canvasEl?.removeEventListener('mouseup', this.onCanvasMouseUp);
+        e && this.draw(e);
+        this.status = ActionStatus.End;
+        const data = {
+            id: BaseUtil.uuid(),
+            type: this.getSelectType(),
+            data: StartDrawAction.transformRealToOrigin(context, {
+                center: this.centerPoint,
+                outRadius: this.outRadius,
+                innerRadius: this.innerRadius,
+            }),
+            style: this.style,
+        };
+        context.addHistoryData(data);
+        this.centerPoint = null;
+        this.outRadius = 0;
+        this.innerRadius = 0;
+        this.isMove = false;
+        this.trigger(ActionEvents.End, {
+            selectType: this.getSelectType(),
+            actionType: ActionType.Draw,
+            data,
+        });
+        super.end(e);
+    }
+    /**
+     * destroy
+     */
+    destroy() {
+        const { context } = this;
+        if (!context) {
+            super.destroy();
+            return;
+        }
+        const canvasEl = context.getCanvasEl();
+        if (!canvasEl) {
+            super.destroy();
+            return;
+        }
+        // 如果是运行状态则删除之前的绘制
+        if (this.status === ActionStatus.Running) {
+            context.clearDraw();
+            context.drawHistoryData();
+        }
+        canvasEl?.removeEventListener('mousedown', this.onCanvasMouseDown);
+        canvasEl?.removeEventListener('mousemove', this.onCanvasMouseMove);
+        canvasEl?.removeEventListener('mouseup', this.onCanvasMouseUp);
+        this.centerPoint = null;
+        this.outRadius = 0;
+        this.innerRadius = 0;
+        this.isMove = false;
+        this.status = ActionStatus.Destroy;
+        this.trigger(ActionEvents.Destroy, {
+            selectType: this.getSelectType(),
+            actionType: ActionType.Draw,
+        });
+        super.destroy();
+    }
+}
+export default StartDrawAction;

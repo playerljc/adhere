@@ -1,2 +1,187 @@
-var __extends=this&&this.__extends||function(){var e=function(t,o){return(e=Object.setPrototypeOf||({__proto__:[]}instanceof Array?function(t,o){t.__proto__=o}:function(t,o){for(var n in o)Object.prototype.hasOwnProperty.call(o,n)&&(t[n]=o[n])}))(t,o)};return function(t,o){if("function"!=typeof o&&null!==o)throw new TypeError("Class extends value "+String(o)+" is not a constructor or null");function n(){this.constructor=t}e(t,o),t.prototype=null===o?Object.create(o):(n.prototype=o.prototype,new n)}}(),__assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var o,n=1,e=arguments.length;n<e;n++)for(var a in o=arguments[n])Object.prototype.hasOwnProperty.call(o,a)&&(t[a]=o[a]);return t}).apply(this,arguments)},__spreadArray=this&&this.__spreadArray||function(t,o,n){if(n||2===arguments.length)for(var e,a=0,i=o.length;a<i;a++)!e&&a in o||((e=e||Array.prototype.slice.call(o,0,a))[a]=o[a]);return t.concat(e||Array.prototype.slice.call(o))};import MathUtil from"@baifendian/adhere-util";import*as turf from"@turf/turf";import defaultMoveGemStyle from"../DefaultMoveGemStyle";import PolygonDrawAction from"../draw/PolygonDrawAction";import{SelectType}from"../types";import ModifyAction from"./ModifyAction";var PolygonModifyAction=function(o){function t(t){t=o.call(this,t)||this;return t.startIndex=-1,t}return __extends(t,o),t.prototype.drawAnchors=function(){var t;if(this.context){var o=this.context.getCtx();if(o)for(var n=PolygonDrawAction.transformOriginToReal(this.context,(null==(t=null==(t=null==this?void 0:this.data)?void 0:t.data)?void 0:t.data)||[]),e=0;e<n.length;e++){var a=n[e];o.beginPath(),this.setAnchorCircleStyle(),o.ellipse(a.x,a.y,this.anchorRadius,this.anchorRadius,45*Math.PI/180,0,2*Math.PI),o.stroke(),o.fill()}}},t.prototype.getPointInAnchor=function(t){if(!this.data)return null;for(var o=null,n=-1,e=PolygonDrawAction.transformOriginToReal(this.context,this.data.data.data),a=0;a<e.length;a++){var i=e[a],r=this.anchorRadius+this.anchorLineWidth;if(MathUtil.isPointInCircle(t,{center:i,radius:r})){o=i,n=a;break}}return o&&-1!==n?{point:o,index:n}:null},t.prototype.setResizeCursorByIndex=function(t){var o,n;this.context&&(o=this.context.getCanvasEl(),n=this.context.getAssistCanvasEl(),o)&&n&&(o.style.cursor=n.style.cursor="nesw-resize")},t.prototype.drawModify=function(t){var o=this.context,n=null==o?void 0:o.getCtx();o&&n&&this.data&&this.startPoint&&-1!==this.startIndex&&(n=o.getHistoryDataById(this.data.data.id))&&(n.data[this.startIndex]=o.pixelToPoint(t),this.data.data=__assign({},n),o.clearDraw(),o.drawHistoryData(),this.drawAnchors())},t.prototype.drawMove=function(t,o){var n,e,a=this.context,i=null==a?void 0:a.getCtx();a&&i&&this.data&&(i=a.getHistoryDataById(this.data.data.id))&&(t=a.pixelToPoint(t),o=a.pixelToPoint(o),n=o.x-t.x,e=o.y-t.y,i.data.forEach(function(t){t.x+=n,t.y+=e}),this.data.data=__assign({},i),a.clearDraw(),a.drawHistoryData(),this.drawAnchors())},t.prototype.getSelectType=function(){return SelectType.Polygon},t.prototype.isCanMove=function(t){var o,n;return!!this.data&&((n=PolygonDrawAction.transformOriginToReal(this.context,__spreadArray([],null==(n=null==(n=null==this?void 0:this.data)?void 0:n.data)?void 0:n.data,!0))).push(n[0]),o=turf.point([t.x,t.y]),n=turf.polygon([n.map(function(t){return[t.x,t.y]})]),turf.booleanPointInPolygon(o,n))&&!this.getPointInAnchor(t)},t.prototype.drawMoveGeometry=function(){this.context&&this.data&&PolygonDrawAction.draw(this.context,this.context.getAssistCtx(),this.data)},t.prototype.drawMoveGeometry=function(t,o){var n,e,a;this.context&&this.data&&t&&o&&((n=__assign({},this.data.data)).data=n.data.map(function(t){return __assign({},t)}),t=this.context.pixelToPoint(t),o=this.context.pixelToPoint(o),e=o.x-t.x,a=o.y-t.y,n.data)&&n.data.length&&(n.data.forEach(function(t){t.x+=e,t.y+=a}),n.style&&(n.style.globalAlpha=defaultMoveGemStyle.globalAlpha,n.style.strokeStyle=defaultMoveGemStyle.strokeStyle,n.style.lineWidth=defaultMoveGemStyle.lineWidth,n.style.lineDash=defaultMoveGemStyle.lineDash,n.style.lineDashOffset=defaultMoveGemStyle.lineDashOffset),PolygonDrawAction.draw(this.context,this.context.getAssistCtx(),n))},t.prototype.setCursor=function(){},t}(ModifyAction);export default PolygonModifyAction;
-//# sourceMappingURL=PolygonModifyAction.js.map
+import MathUtil from '@baifendian/adhere-util';
+import * as turf from '@turf/turf';
+import defaultMoveGemStyle from '../DefaultMoveGemStyle';
+import PolygonDrawAction from '../draw/PolygonDrawAction';
+import { SelectType } from '../types';
+import ModifyAction from './ModifyAction';
+/**
+ * PolygonModifyAction
+ * @class PolygonModifyAction
+ * @classdesc - 多边形修改
+ * @remark:
+ */
+class PolygonModifyAction extends ModifyAction {
+    startIndex = -1;
+    constructor(data) {
+        super(data);
+    }
+    /**
+     * drawAnchors
+     */
+    drawAnchors() {
+        if (!this.context)
+            return;
+        const ctx = this.context.getCtx();
+        if (!ctx)
+            return;
+        const data = PolygonDrawAction.transformOriginToReal(this.context, this?.data?.data?.data || []);
+        for (let i = 0; i < data.length; i++) {
+            const point = data[i];
+            ctx.beginPath();
+            this.setAnchorCircleStyle();
+            ctx.ellipse(point.x, point.y, this.anchorRadius, this.anchorRadius, (45 * Math.PI) / 180, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fill();
+        }
+    }
+    /**
+     * getPointInAnchor
+     * @param targetPoint
+     * @return IPoint | null
+     */
+    getPointInAnchor(targetPoint) {
+        if (!this.data)
+            return null;
+        let point = null;
+        let index = -1;
+        const data = PolygonDrawAction.transformOriginToReal(this.context, this.data.data.data);
+        for (let i = 0; i < data.length; i++) {
+            const center = data[i];
+            const radius = this.anchorRadius + this.anchorLineWidth;
+            if (MathUtil.isPointInCircle(targetPoint, { center, radius })) {
+                point = center;
+                index = i;
+                break;
+            }
+        }
+        if (point && index !== -1) {
+            return {
+                point,
+                index,
+            };
+        }
+        return null;
+    }
+    /**
+     * setResizeCursorByIndex
+     * @param index
+     */
+    setResizeCursorByIndex(index) {
+        if (!this.context)
+            return;
+        const canvasEl = this.context.getCanvasEl();
+        const assistCanvasEl = this.context.getAssistCanvasEl();
+        if (!canvasEl || !assistCanvasEl)
+            return;
+        canvasEl.style.cursor = assistCanvasEl.style.cursor = 'nesw-resize';
+    }
+    /**
+     * drawModify
+     * @param targetPixel
+     */
+    drawModify(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint || this.startIndex === -1)
+            return;
+        // canvasHistory需要修改.this.startPoint那个点去找到，替换成targetPoint的值
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return;
+        data.data[this.startIndex] = context.pixelToPoint(targetPixel);
+        this.data.data = {
+            ...data,
+        };
+        context.clearDraw();
+        context.drawHistoryData();
+        this.drawAnchors();
+    }
+    /**
+     * drawMove
+     * @param startPixel
+     * @param targetPixel
+     */
+    drawMove(startPixel, targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data)
+            return;
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return;
+        const startPoint = context.pixelToPoint(startPixel);
+        const targetPoint = context.pixelToPoint(targetPixel);
+        const offsetX = targetPoint.x - startPoint.x;
+        const offsetY = targetPoint.y - startPoint.y;
+        data.data.forEach((point) => {
+            point.x += offsetX;
+            point.y += offsetY;
+        });
+        this.data.data = {
+            ...data,
+        };
+        context.clearDraw();
+        context.drawHistoryData();
+        this.drawAnchors();
+    }
+    /**
+     * getSelectType
+     */
+    getSelectType() {
+        return SelectType.Polygon;
+    }
+    isCanMove(targetPoint) {
+        if (!this.data)
+            return false;
+        const points = PolygonDrawAction.transformOriginToReal(this.context, [
+            ...this?.data?.data?.data,
+        ]);
+        points.push(points[0]);
+        const pt = turf.point([targetPoint.x, targetPoint.y]);
+        const poly = turf.polygon([points.map((point) => [point.x, point.y])]);
+        return turf.booleanPointInPolygon(pt, poly) && !this.getPointInAnchor(targetPoint);
+    }
+    /**
+     * drawMoveGeometry
+     * @description 绘制移动时的几何图形
+     */
+    // @ts-ignore
+    drawMoveGeometry() {
+        if (!this.context || !this.data)
+            return;
+        PolygonDrawAction.draw(this.context, this.context.getAssistCtx(), this.data);
+    }
+    /**
+     * drawMoveGeometry
+     * @description 绘制移动时的几何图形
+     * @param startPixel
+     * @param targetPixel
+     */
+    // @ts-ignore
+    drawMoveGeometry(startPixel, targetPixel) {
+        if (!this.context || !this.data || !startPixel || !targetPixel)
+            return;
+        const srcData = { ...this.data.data };
+        srcData.data = srcData.data.map((point) => ({ ...point }));
+        const startPoint = this.context.pixelToPoint(startPixel);
+        const targetPoint = this.context.pixelToPoint(targetPixel);
+        const offsetX = targetPoint.x - startPoint.x;
+        const offsetY = targetPoint.y - startPoint.y;
+        if (srcData.data && srcData.data.length) {
+            srcData.data.forEach((point) => {
+                point.x += offsetX;
+                point.y += offsetY;
+            });
+            if (srcData.style) {
+                srcData.style.globalAlpha = defaultMoveGemStyle.globalAlpha;
+                srcData.style.strokeStyle = defaultMoveGemStyle.strokeStyle;
+                srcData.style.lineWidth = defaultMoveGemStyle.lineWidth;
+                srcData.style.lineDash = defaultMoveGemStyle.lineDash;
+                srcData.style.lineDashOffset = defaultMoveGemStyle.lineDashOffset;
+            }
+            PolygonDrawAction.draw(this.context, this.context.getAssistCtx(), srcData);
+        }
+    }
+    setCursor() { }
+}
+export default PolygonModifyAction;

@@ -1,2 +1,3 @@
-declare const QuickRangeDate: import("@baifendian/adhere-ui-quick-range-date/es/types").QuickRangeDateComponent;
+import type { QuickRangeDateComponent } from './types';
+declare const QuickRangeDate: QuickRangeDateComponent;
 export default QuickRangeDate;

@@ -6,7 +6,7 @@ import type { GlobalIndicator, Size } from './types';
 
 const selectorPrefix: string = 'adhere-ui-global-indicator';
 
-const MAX_ZINDEX = Resource.Dict.value.ResourceNormalMaxZIndex?.value;
+const MAX_ZINDEX = Resource?.Dict?.value?.ResourceNormalMaxZIndex?.value;
 
 const handlers = new Set<HTMLElement>();
 

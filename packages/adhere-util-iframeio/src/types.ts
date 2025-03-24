@@ -26,6 +26,7 @@ export type RequestOptions = {
   statusCode?: stateCode;
   stateMessage?: string;
   body?: any;
+  type: 'request';
 };
 
 export type ResponseOptions = {
@@ -36,4 +37,5 @@ export type ResponseOptions = {
   statusCode: stateCode;
   stateMessage: string;
   body: any;
+  type: 'response';
 };

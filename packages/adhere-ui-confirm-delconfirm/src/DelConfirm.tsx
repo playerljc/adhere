@@ -41,7 +41,8 @@ DelConform.open = ({ success, ...params }: OpenFunction) => {
     ...params,
     title: params.title || Intl.v('提示'),
     text: params.text || `${Intl.v('确定删除吗')}?`,
-    zIndex: 'zIndex' in params ? params.zIndex : Resource.Dict.value.ResourceNormalMaxZIndex.value,
+    zIndex:
+      'zIndex' in params ? params.zIndex : Resource?.Dict?.value?.ResourceNormalMaxZIndex?.value,
     onSuccess: () =>
       new Promise((resolve, reject) => {
         if (success) {

@@ -45,6 +45,7 @@ class Fetch {
         statusCode: 0,
         stateMessage: ERROR_MESSAGE,
         body: options?.data,
+        type: 'request',
       });
 
       const onMessage = (evt) => {
@@ -57,6 +58,10 @@ class Fetch {
             evt.source !== targetWindow ||
             request.getRequestId() !== response.getRequestId()
           ) {
+            return;
+          }
+
+          if ((response as any)?.type === 'request') {
             return;
           }
 

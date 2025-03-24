@@ -1,2 +1,2 @@
-export default{isTouch:function(){return"ontouchend"in document}};
+export default{isTouch(){return"ontouchend"in document}};
 //# sourceMappingURL=clientDetection.js.map

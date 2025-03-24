@@ -1,2 +1,126 @@
-var __extends=this&&this.__extends||function(){var r=function(t,e){return(r=Object.setPrototypeOf||({__proto__:[]}instanceof Array?function(t,e){t.__proto__=e}:function(t,e){for(var n in e)Object.prototype.hasOwnProperty.call(e,n)&&(t[n]=e[n])}))(t,e)};return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Class extends value "+String(e)+" is not a constructor or null");function n(){this.constructor=t}r(t,e),t.prototype=null===e?Object.create(e):(n.prototype=e.prototype,new n)}}(),__assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var e,n=1,r=arguments.length;n<r;n++)for(var o in e=arguments[n])Object.prototype.hasOwnProperty.call(e,o)&&(t[o]=e[o]);return t}).apply(this,arguments)},__spreadArray=this&&this.__spreadArray||function(t,e,n){if(n||2===arguments.length)for(var r,o=0,i=e.length;o<i;o++)!r&&o in e||((r=r||Array.prototype.slice.call(e,0,o))[o]=e[o]);return t.concat(r||Array.prototype.slice.call(e))};import Util from"@baifendian/adhere-util";import Emitter from"@baifendian/adhere-util-emitter";import{VectorActions,VectorEventActions}from"./types";var VectorLayer=function(r){function t(t,e){var n=this;return n.update=n.update.bind(n),(n=r.call(this,{update:n.update,paneName:e.paneName,zIndex:e.zIndex})||this).isLoad=!1,n.emitter=new Emitter.Events,n.map=t,n.config=__assign({},e),n.source=e.source,n.source&&n.source.setContext(n),n.onUpdate=n.onUpdate.bind(n),n.initEvents(),n}return __extends(t,r),t.prototype.getSource=function(){return this.source},t.prototype.getZIndex=function(){return this.config.zIndex},t.prototype.setSource=function(t){this.source=t,this.source&&this.source.setContext(this),this.update()},t.prototype.drawSource=function(){var t=this.source.getFeatures(),e=(t.sort(function(t,e){return t.getZIndex()>e.getZIndex()?1:t.getZIndex()<e.getZIndex()?-1:0}),this.canvas.getContext("2d"));e&&(t||[]).forEach(function(t){t.draw(e)})},t.prototype.firstLoad=function(){this.initCanvasEvents()},t.prototype.update=function(){var t=this.canvas.getContext("2d");t&&(this.isLoad||this.firstLoad(),this.isLoad=!0,t.clearRect(0,0,t.canvas.width,t.canvas.height),this.drawSource())},t.prototype.getMap=function(){return this.map},t.prototype.getEmitter=function(){return this.emitter},t.prototype.addEventListener=function(t,e){this.emitter.on(t,e)},t.prototype.removeEventListener=function(t,e){this.emitter.remove(t,e)},t.prototype.initCanvasEvents=function(){var n=this;this.canvas.addEventListener("click",function(t){var e=Util.clientToCtxPoint({event:t,rect:n.canvas.getBoundingClientRect()}),t=n.source.getFeatures().filter(function(t){return t.isPointInFeature(e,t.getStyle())});t.length?n.emitter.trigger(VectorEventActions.FEATURE_CLICK,{features:__spreadArray([],t,!0),pixel:e}):n.emitter.trigger(VectorEventActions.VECTOR_CLICK)})},t.prototype.initEvents=function(){this.emitter.on(VectorActions.UPDATE,this.onUpdate)},t.prototype.onUpdate=function(){this.update()},t}(BMap.CanvasLayer);export default VectorLayer;
-//# sourceMappingURL=VectorLayer.js.map
+import Util from '@baifendian/adhere-util';
+import Emitter from '@baifendian/adhere-util-emitter';
+import { VectorActions, VectorEventActions, } from './types';
+/**
+ * VectorLayer
+ * @class VectorLayer
+ * @classdesc 向量层，使用canvas进行绘制
+ */
+// @ts-ignore
+class VectorLayer extends BMap.CanvasLayer {
+    map;
+    config;
+    source;
+    isLoad = false;
+    emitter = new Emitter.Events();
+    // @ts-ignore
+    constructor(map, config) {
+        // @ts-ignore
+        this.update = this.update.bind(this);
+        super({
+            // @ts-ignore
+            update: this.update,
+            paneName: config.paneName,
+            zIndex: config.zIndex,
+        });
+        this.map = map;
+        this.config = { ...config };
+        this.source = config.source;
+        this.source && this.source.setContext(this);
+        this.onUpdate = this.onUpdate.bind(this);
+        this.initEvents();
+    }
+    getSource() {
+        return this.source;
+    }
+    getZIndex() {
+        return this.config.zIndex;
+    }
+    setSource(source) {
+        this.source = source;
+        this.source && this.source.setContext(this);
+        this.update();
+    }
+    /**
+     * drawSource
+     */
+    drawSource() {
+        // 绘制source中的数据
+        const { source } = this;
+        const features = source.getFeatures();
+        // 绘制的时候按照feature的zIndex从小到大进行排序
+        features.sort((f1, f2) => {
+            if (f1.getZIndex() > f2.getZIndex())
+                return 1;
+            else if (f1.getZIndex() < f2.getZIndex())
+                return -1;
+            else
+                return 0;
+        });
+        // @ts-ignore
+        const ctx = this.canvas.getContext('2d');
+        if (!ctx)
+            return;
+        (features || []).forEach((feature) => {
+            feature.draw(ctx);
+        });
+    }
+    firstLoad() {
+        this.initCanvasEvents();
+    }
+    update() {
+        // console.log('update');
+        // @ts-ignore
+        const ctx = this.canvas.getContext('2d');
+        if (!ctx) {
+            return;
+        }
+        if (!this.isLoad) {
+            this.firstLoad();
+        }
+        this.isLoad = true;
+        // console.log('clear');
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        this.drawSource();
+    }
+    getMap() {
+        return this.map;
+    }
+    getEmitter() {
+        return this.emitter;
+    }
+    addEventListener(type, handler) {
+        this.emitter.on(type, handler);
+    }
+    removeEventListener(type, handler) {
+        this.emitter.remove(type, handler);
+    }
+    initCanvasEvents() {
+        // @ts-ignore
+        this.canvas.addEventListener('click', (e) => {
+            const pixel = Util.clientToCtxPoint({
+                event: e,
+                // @ts-ignore
+                rect: this.canvas.getBoundingClientRect(),
+            });
+            const features = this.source.getFeatures();
+            const hitFeatures = features.filter((f) => f.isPointInFeature(pixel, f.getStyle()));
+            if (hitFeatures.length) {
+                this.emitter.trigger(VectorEventActions.FEATURE_CLICK, {
+                    features: [...hitFeatures],
+                    pixel,
+                });
+            }
+            else {
+                this.emitter.trigger(VectorEventActions.VECTOR_CLICK);
+            }
+        });
+    }
+    initEvents() {
+        this.emitter.on(VectorActions.UPDATE, this.onUpdate);
+    }
+    onUpdate() {
+        this.update();
+    }
+}
+export default VectorLayer;

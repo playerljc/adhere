@@ -217,11 +217,11 @@ class OlMap extends React.Component<OLMapProps, any> {
 OlMap.defaultProps = {
   type: Constant.MAP_TYPE_ADMINISTRATIVE,
   mapConfig: {},
-  maxZoom: Resource.Dict.value.ResourceGisMapMaxZoom.value,
-  zoom: Resource.Dict.value.ResourceGisMapMaxZoom.value,
-  minZoom: Resource.Dict.value.ResourceGisMapMinZoom.value,
-  center: Resource.Dict.value.ResourceGisXinbeiquCenterPoint.value,
-  extent: Resource.Dict.value.ResourceGisXinbeiquMapExtent.value,
+  maxZoom: Resource.Dict.value.ResourceGisMapMaxZoom?.value,
+  zoom: Resource.Dict.value.ResourceGisMapMaxZoom?.value,
+  minZoom: Resource.Dict.value.ResourceGisMapMinZoom?.value,
+  center: Resource.Dict.value.ResourceGisXinbeiquCenterPoint?.value,
+  extent: Resource.Dict.value.ResourceGisXinbeiquMapExtent?.value,
   layers: undefined,
 };
 

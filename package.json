@@ -17,7 +17,7 @@
     "publish:alpha": "lerna publish --dist-tag alpha",
     "changelog": "lerna version --conventional-commits",
     "release": "lerna version --conventional-commits --create-release github",
-    "buildpackages": "lerna run buildpackage",
+    "buildpackages": "lerna run buildpackage --ignore adhere-ui-formdesign",
     "buildumd": "node scripts/buildumd.js",
     "generatorchangelog": "lerna run generatorchangelog",
     "gen-in-test": "node scripts/IntTest.js",

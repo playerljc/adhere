@@ -21,8 +21,8 @@ class GeoLayer extends VectorLayer<any> {
   constructor(geoJsonObject, onStyle, zIndex) {
     const geoSource = new VectorSource({
       features: new GeoJSON({
-        dataProjection: Resource.Dict.value.ResourceGisEpsg4326.value,
-        featureProjection: Resource.Dict.value.ResourceGisEpsg3857.value,
+        dataProjection: Resource?.Dict?.value?.ResourceGisEpsg4326?.value,
+        featureProjection: Resource?.Dict?.value?.ResourceGisEpsg3857?.value,
       }).readFeatures(geoJsonObject),
     });
 

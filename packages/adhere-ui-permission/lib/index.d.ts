@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { PermissionFun } from './Permission';
 declare const PermissionComponent: {
     Permission: import("react").FC<import("./types").PermissionProps>;

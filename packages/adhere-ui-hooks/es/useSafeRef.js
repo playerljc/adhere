@@ -1,2 +1,2 @@
-export default function useSafeRef(e,u){return null!=(e=e.current)?e:u}
+export default function useSafeRef(e,r){return e.current??r}
 //# sourceMappingURL=useSafeRef.js.map

@@ -1,2 +1,375 @@
-var __extends=this&&this.__extends||function(){var i=function(t,e){return(i=Object.setPrototypeOf||({__proto__:[]}instanceof Array?function(t,e){t.__proto__=e}:function(t,e){for(var n in e)Object.prototype.hasOwnProperty.call(e,n)&&(t[n]=e[n])}))(t,e)};return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Class extends value "+String(e)+" is not a constructor or null");function n(){this.constructor=t}i(t,e),t.prototype=null===e?Object.create(e):(n.prototype=e.prototype,new n)}}(),__spreadArray=this&&this.__spreadArray||function(t,e,n){if(n||2===arguments.length)for(var i,o=0,s=e.length;o<s;o++)!i&&o in e||((i=i||Array.prototype.slice.call(e,0,o))[o]=e[o]);return t.concat(i||Array.prototype.slice.call(e))};import BaseUtil from"@baifendian/adhere-util";import*as turf from"@turf/turf";import{ActionEvents,ActionStatus,ActionType,SelectType}from"../types";import DrawAction from"./DrawAction";var PolygonDrawAction=function(i){function o(){var t=i.call(this)||this;return t.startPoint=null,t.pointStack=[],t.isMove=!1,t.onCanvasClick=t.onCanvasClick.bind(t),t.onCanvasMousemove=t.onCanvasMousemove.bind(t),t.onCanvasDbClick=t.onCanvasDbClick.bind(t),t}return __extends(o,i),o.booleanPointInData=function(t,e,n){n=__spreadArray([],n.data,!0),n.push(n[0]),n=o.transformOriginToReal(t,n),t=turf.point([e.x,e.y]),e=turf.polygon([n.map(function(t){return[t.x,t.y]})]);return turf.booleanPointInPolygon(t,e)},o.draw=function(t,e,n){e&&n&&(n.style&&(e.lineWidth=n.style.lineWidth,e.lineJoin=n.style.lineJoin,e.lineCap=n.style.lineCap,e.setLineDash(n.style.lineDash),e.lineDashOffset=n.style.lineDashOffset,e.strokeStyle=n.style.strokeStyle,e.fillStyle=n.style.fillStyle,e.globalAlpha=n.style.globalAlpha||1),this.drawHistoryPath(t,e,n.data),e.stroke(),e.fill())},o.drawHistoryPath=function(t,n,e){void 0===e&&(e=[]),n.save(),n.beginPath(),(o.transformOriginToReal(t,e)||[]).forEach(function(t,e){0===e?n.moveTo(t.x,t.y):n.lineTo(t.x,t.y)}),n.closePath(),n.stroke(),n.fill(),n.restore()},o.transformOriginToReal=function(e,t){return t.map(function(t){return e.pointToPixel(t)})},o.transformRealToOrigin=function(e,t){return t.map(function(t){return e.pixelToPoint(t)})},o.prototype.fill=function(){if(this.context){var t=this.pointStack,e=this.context.getCtx();if(e&&!(t.length<=1)){e.save(),e.beginPath();for(var n=0;n<t.length;n++){var i=t[n];0===n?e.moveTo(i.x,i.y):e.lineTo(i.x,i.y)}e.closePath(),e.fillStyle=this.style.fillStyle,e.fill(),e.restore()}}},o.prototype.drawLine=function(t,e){var n,i=this.context;i&&(n=this.style,i=i.getCtx())&&(i.beginPath(),i.moveTo(t.x,t.y),i.lineTo(e.x,e.y),i.strokeStyle=n.strokeStyle,i.fillStyle=n.fillStyle,i.lineWidth=n.lineWidth,i.lineCap=n.lineCap,i.lineJoin=n.lineJoin,i.lineDashOffset=n.lineDashOffset,i.setLineDash(n.lineDash),i.stroke())},o.prototype.drawStack=function(){var t=this.pointStack;if(!(t.length<=1))for(var e=0;this.drawLine(t[e],t[e+1]),++e!==t.length-1;);},o.prototype.getCanvasClick=function(){return this.onCanvasClick},o.prototype.getCanvasMousemove=function(){return this.onCanvasMousemove},o.prototype.getCanvasDbClick=function(){return this.onCanvasDbClick},o.prototype.onCanvasClick=function(t){if(this.context){var e=this.context.getCanvasEl();if(e&&!(2<=t.detail)){if(this.startPoint){var n=BaseUtil.clientToCtxPoint({event:t,rect:null==e?void 0:e.getBoundingClientRect()});this.drawLine(this.startPoint,n),this.startPoint=n,this.startPoint&&this.pointStack.push(this.startPoint)}else{if(null!=e&&e.addEventListener("mousemove",this.getCanvasMousemove()),null!=e&&e.addEventListener("dblclick",this.getCanvasDbClick()),this.startPoint=BaseUtil.clientToCtxPoint({event:t,rect:null==e?void 0:e.getBoundingClientRect()}),!this.startPoint)return;this.pointStack.push(this.startPoint),this.trigger(ActionEvents.Start,{selectType:this.getSelectType(),actionType:ActionType.Draw})}t.stopPropagation()}}},o.prototype.onCanvasMousemove=function(t){var e,n=this.context,i=this.startPoint;n&&i&&(e=n.getCanvasEl())&&(this.isMove=!0,n.clearDraw(),n.drawHistoryData(),this.drawStack(),this.drawLine(i,BaseUtil.clientToCtxPoint({event:t,rect:null==e?void 0:e.getBoundingClientRect()})),t.stopPropagation())},o.prototype.onCanvasDbClick=function(t){this.isMove&&(this.end(),t.stopPropagation())},o.prototype.getSelectType=function(){return SelectType.Polygon},o.prototype.start=function(t){var e=this.context,n=this.status;e&&![ActionStatus.Running,ActionStatus.Destroy].includes(n)&&e&&(n=e.getCanvasEl())&&(i.prototype.start.call(this,t),t&&(this.style=t),this.trigger(ActionEvents.BeforeStart,{selectType:this.getSelectType(),actionType:ActionType.Draw}),null!=n&&n.addEventListener("mouseup",this.getCanvasClick()),this.status=ActionStatus.Running)},o.prototype.end=function(){var t=this.context;if(t){var e,n=t.getCanvasEl();if(n)return null!=n&&n.removeEventListener("mouseup",this.getCanvasClick()),null!=n&&n.removeEventListener("mousemove",this.getCanvasMousemove()),null!=n&&n.removeEventListener("dblclick",this.getCanvasDbClick()),t.clearDraw(),t.drawHistoryData(),this.fill(),this.status=ActionStatus.End,e={id:n=BaseUtil.uuid(),type:this.getSelectType(),data:o.transformRealToOrigin(t,this.pointStack),style:this.style},this.startPoint=null,this.pointStack=[],this.isMove=!1,t.addHistoryData(e),this.trigger(ActionEvents.End,{selectType:this.getSelectType(),actionType:ActionType.Draw,data:e}),i.prototype.end.call(this),n}i.prototype.end.call(this)},o.prototype.destroy=function(){var t,e=this.context;e&&(t=e.getCanvasEl())&&(this.status===ActionStatus.Running&&(e.clearDraw(),e.drawHistoryData()),null!=t&&t.removeEventListener("mouseup",this.onCanvasClick),null!=t&&t.removeEventListener("mousemove",this.onCanvasMousemove),null!=t&&t.removeEventListener("dblclick",this.onCanvasDbClick),this.startPoint=null,this.pointStack=[],this.isMove=!1,this.status=ActionStatus.Destroy,this.trigger(ActionEvents.Destroy,{selectType:this.getSelectType(),actionType:ActionType.Draw})),i.prototype.destroy.call(this)},o}(DrawAction);export default PolygonDrawAction;
-//# sourceMappingURL=PolygonDrawAction.js.map
+import BaseUtil from '@baifendian/adhere-util';
+import * as turf from '@turf/turf';
+import { ActionEvents, ActionStatus, ActionType, SelectType, } from '../types';
+import DrawAction from './DrawAction';
+/**
+ * PolygonAction
+ * @class PolygonAction
+ * @classdesc  - 多边形选取
+ * @remark: 一个start - end的周期中只能绘制一个多边形
+ */
+class PolygonDrawAction extends DrawAction {
+    // 开始点
+    startPoint = null;
+    // 点的集合
+    pointStack = [];
+    isMove = false;
+    /**
+     * constructor
+     */
+    constructor() {
+        super();
+        this.onCanvasClick = this.onCanvasClick.bind(this);
+        this.onCanvasMousemove = this.onCanvasMousemove.bind(this);
+        this.onCanvasDbClick = this.onCanvasDbClick.bind(this);
+    }
+    /**
+     * booleanPointInData
+     * @description 判断点是否在
+     * @param context
+     * @param point
+     * @param data
+     */
+    static booleanPointInData(context, point, data) {
+        let points = [...data.data];
+        points.push(points[0]);
+        points = PolygonDrawAction.transformOriginToReal(context, points);
+        const pt = turf.point([point.x, point.y]);
+        const poly = turf.polygon([points.map((point) => [point.x, point.y])]);
+        return turf.booleanPointInPolygon(pt, poly);
+    }
+    /**
+     * draw
+     * @description
+     * @param context
+     * @param ctx
+     * @param data
+     */
+    static draw(context, ctx, data) {
+        if (!ctx || !data)
+            return;
+        if (data.style) {
+            // 设置上下文属性
+            ctx.lineWidth = data.style.lineWidth;
+            ctx.lineJoin = data.style.lineJoin;
+            ctx.lineCap = data.style.lineCap;
+            ctx.setLineDash(data.style.lineDash);
+            ctx.lineDashOffset = data.style.lineDashOffset;
+            ctx.strokeStyle = data.style.strokeStyle;
+            ctx.fillStyle = data.style.fillStyle;
+            ctx.globalAlpha = data.style.globalAlpha || 1;
+        }
+        this.drawHistoryPath(context, ctx, data.data);
+        // 描边
+        ctx.stroke();
+        // 填充
+        ctx.fill();
+    }
+    /**
+     * drawHistoryPath - 绘制历史数据
+     * @param context
+     * @param ctx
+     * @param data
+     */
+    static drawHistoryPath(context, ctx, data = []) {
+        ctx.save();
+        ctx.beginPath();
+        const realData = PolygonDrawAction.transformOriginToReal(context, data);
+        (realData || []).forEach((point, index) => {
+            if (index === 0) {
+                ctx.moveTo(point.x, point.y);
+            }
+            else {
+                ctx.lineTo(point.x, point.y);
+            }
+        });
+        ctx.closePath();
+        // 描边
+        ctx.stroke();
+        // 填充
+        ctx.fill();
+        ctx.restore();
+    }
+    /**
+     * transformOriginToReal - 原始数据转换成实际数据
+     * @param context
+     * @param data
+     */
+    static transformOriginToReal(context, data) {
+        return data.map((point) => context.pointToPixel(point));
+    }
+    /**
+     * transformRealToOrigin - 实际数据转换成原始数据
+     * @param context
+     * @param data
+     */
+    static transformRealToOrigin(context, data) {
+        return data.map((point) => context.pixelToPoint(point));
+    }
+    /**
+     * fill
+     */
+    fill() {
+        if (!this.context)
+            return;
+        const { pointStack } = this;
+        const ctx = this.context.getCtx();
+        if (!ctx)
+            return;
+        if (pointStack.length <= 1)
+            return;
+        ctx.save();
+        ctx.beginPath();
+        for (let i = 0; i < pointStack.length; i++) {
+            const point = pointStack[i];
+            if (i === 0) {
+                ctx.moveTo(point.x, point.y);
+            }
+            else {
+                ctx.lineTo(point.x, point.y);
+            }
+        }
+        ctx.closePath();
+        ctx.fillStyle = this.style.fillStyle;
+        ctx.fill();
+        ctx.restore();
+    }
+    /**
+     * drawLine
+     * @param sP
+     * @param eP
+     */
+    drawLine(sP, eP) {
+        const { context } = this;
+        if (!context)
+            return;
+        const { style } = this;
+        const ctx = context.getCtx();
+        if (!ctx)
+            return;
+        ctx.beginPath();
+        ctx.moveTo(sP.x, sP.y);
+        ctx.lineTo(eP.x, eP.y);
+        ctx.strokeStyle = style.strokeStyle;
+        ctx.fillStyle = style.fillStyle;
+        ctx.lineWidth = style.lineWidth;
+        ctx.lineCap = style.lineCap;
+        ctx.lineJoin = style.lineJoin;
+        ctx.lineDashOffset = style.lineDashOffset;
+        ctx.setLineDash(style.lineDash);
+        ctx.stroke();
+    }
+    /**
+     * drawStack
+     */
+    drawStack() {
+        const { pointStack } = this;
+        if (pointStack.length <= 1)
+            return;
+        let index = 0;
+        do {
+            this.drawLine(pointStack[index], pointStack[index + 1]);
+            index++;
+        } while (index !== pointStack.length - 1);
+    }
+    getCanvasClick() {
+        return this.onCanvasClick;
+    }
+    getCanvasMousemove() {
+        return this.onCanvasMousemove;
+    }
+    getCanvasDbClick() {
+        return this.onCanvasDbClick;
+    }
+    /**
+     * onCanvasClick
+     * @param e
+     */
+    onCanvasClick(e) {
+        // console.log('多边形Click');
+        if (!this.context) {
+            return;
+        }
+        const canvasEl = this.context.getCanvasEl();
+        if (!canvasEl) {
+            return;
+        }
+        if (e.detail >= 2) {
+            return;
+        }
+        // 第一次
+        if (!this.startPoint) {
+            canvasEl?.addEventListener('mousemove', this.getCanvasMousemove());
+            canvasEl?.addEventListener('dblclick', this.getCanvasDbClick());
+            this.startPoint = BaseUtil.clientToCtxPoint({
+                event: e,
+                rect: canvasEl?.getBoundingClientRect(),
+            });
+            if (!this.startPoint)
+                return;
+            this.pointStack.push(this.startPoint);
+            // 触发开始事件
+            this.trigger(ActionEvents.Start, {
+                selectType: this.getSelectType(),
+                actionType: ActionType.Draw,
+            });
+        }
+        // 不是第一次
+        else {
+            // 画一条直线
+            // 当前点
+            const targetPoint = BaseUtil.clientToCtxPoint({
+                event: e,
+                rect: canvasEl?.getBoundingClientRect(),
+            });
+            this.drawLine(this.startPoint, targetPoint);
+            this.startPoint = targetPoint;
+            if (this.startPoint) {
+                this.pointStack.push(this.startPoint);
+            }
+        }
+        e.stopPropagation();
+    }
+    /**
+     * onCanvasMousemove
+     * @param e
+     */
+    onCanvasMousemove(e) {
+        const { context, startPoint } = this;
+        if (!context)
+            return;
+        if (!startPoint)
+            return;
+        const canvasEl = context.getCanvasEl();
+        if (!canvasEl)
+            return;
+        this.isMove = true;
+        // 如果有startPoint,擦除绘制直线
+        context.clearDraw();
+        // 绘制历史数据
+        context.drawHistoryData();
+        // 绘制stack数据
+        this.drawStack();
+        // drawLine
+        this.drawLine(startPoint, BaseUtil.clientToCtxPoint({
+            event: e,
+            rect: canvasEl?.getBoundingClientRect(),
+        }));
+        e.stopPropagation();
+    }
+    /**
+     * onCanvasDbClick - 结束绘制
+     */
+    onCanvasDbClick(e) {
+        if (!this.isMove)
+            return;
+        this.end();
+        e.stopPropagation();
+    }
+    /**
+     * getSelectType
+     * @return SelectType
+     */
+    getSelectType() {
+        return SelectType.Polygon;
+    }
+    /**
+     * start - 开始
+     * @param style
+     */
+    start(style) {
+        const { context, status } = this;
+        if (!context || [ActionStatus.Running, ActionStatus.Destroy].includes(status))
+            return;
+        if (!context)
+            return;
+        const canvasEl = context.getCanvasEl();
+        if (!canvasEl)
+            return;
+        super.start(style);
+        style && (this.style = style);
+        // 触发开始之前事件
+        this.trigger(ActionEvents.BeforeStart, {
+            selectType: this.getSelectType(),
+            actionType: ActionType.Draw,
+        });
+        // 注册事件
+        canvasEl?.addEventListener('mouseup', this.getCanvasClick());
+        // 修改状态
+        this.status = ActionStatus.Running;
+    }
+    /**
+     * end - 结束
+     */
+    end() {
+        // 结束
+        const { context } = this;
+        if (!context) {
+            super.end();
+            return;
+        }
+        const canvasEl = context.getCanvasEl();
+        if (!canvasEl) {
+            super.end();
+            return;
+        }
+        canvasEl?.removeEventListener('mouseup', this.getCanvasClick());
+        canvasEl?.removeEventListener('mousemove', this.getCanvasMousemove());
+        canvasEl?.removeEventListener('dblclick', this.getCanvasDbClick());
+        context.clearDraw();
+        context.drawHistoryData();
+        this.fill();
+        this.status = ActionStatus.End;
+        const id = BaseUtil.uuid();
+        const data = {
+            id,
+            type: this.getSelectType(),
+            data: PolygonDrawAction.transformRealToOrigin(context, this.pointStack),
+            style: this.style,
+        };
+        this.startPoint = null;
+        this.pointStack = [];
+        this.isMove = false;
+        context.addHistoryData(data);
+        this.trigger(ActionEvents.End, {
+            selectType: this.getSelectType(),
+            actionType: ActionType.Draw,
+            data,
+        });
+        super.end();
+        return id;
+    }
+    /**
+     * destroy
+     */
+    destroy() {
+        const { context } = this;
+        if (!context) {
+            super.destroy();
+            return;
+        }
+        const canvasEl = context.getCanvasEl();
+        if (!canvasEl) {
+            super.destroy();
+            return;
+        }
+        // 如果是运行状态则删除之前的绘制
+        if (this.status === ActionStatus.Running) {
+            context.clearDraw();
+            context.drawHistoryData();
+        }
+        canvasEl?.removeEventListener('mouseup', this.onCanvasClick);
+        canvasEl?.removeEventListener('mousemove', this.onCanvasMousemove);
+        canvasEl?.removeEventListener('dblclick', this.onCanvasDbClick);
+        this.startPoint = null;
+        this.pointStack = [];
+        this.isMove = false;
+        this.status = ActionStatus.Destroy;
+        this.trigger(ActionEvents.Destroy, {
+            selectType: this.getSelectType(),
+            actionType: ActionType.Draw,
+        });
+        super.destroy();
+    }
+}
+export default PolygonDrawAction;

@@ -112,7 +112,7 @@ const DictComponent = FieldGeneratorToDict.Components[
 });
 
 export default () => {
-  const [value, setValue] = React.useState([]);
+  const [value, setValue] = React.useState('11212');
 
   return (
     <DictComponent
@@ -121,6 +121,7 @@ export default () => {
       dropdownStyle={{ width: 1000, padding: '20px 20px 0 20px' }}
       value={value}
       onChange={(v) => {
+        debugger;
         setValue(v);
       }}
     />

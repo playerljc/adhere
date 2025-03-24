@@ -1,0 +1,2 @@
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var WidgetProperty=(()=>{function e(e,t,r,o){this.key=e,this.name=t,this.value=r,this.required=o}return e.prototype.getKey=function(){return this.key},e.prototype.getName=function(){return this.name},e.prototype.getValue=function(){return this.value},e.prototype.getRequired=function(){return this.required},e})(),_default=exports.default=WidgetProperty;
+//# sourceMappingURL=WidgetProperty.js.map

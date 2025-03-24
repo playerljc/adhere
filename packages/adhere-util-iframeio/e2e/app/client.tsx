@@ -7,7 +7,7 @@ import { v4 } from 'uuid';
 import Iframe from '../../src/index';
 
 // @ts-ignore
-import styles from './client.less';
+import './client.less';
 
 type UpLoadItem = {
   file: any;
@@ -176,9 +176,9 @@ export default function () {
   }
 
   return (
-    <div className={styles.Wrap}>
+    <div className="Wrap">
       {iframeReady && (
-        <div className={styles.Inner}>
+        <div className="Inner">
           <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
             <div
               onClick={() => {
@@ -246,13 +246,13 @@ export default function () {
         </div>
       )}
 
-      <div className={styles.IframeWrap}>
+      <div className="IframeWrap">
         <h1 style={{ textAlign: 'center' }}>Iframe</h1>
         <iframe
           name="server"
           // @ts-ignore
           ref={iframeRef}
-          className={styles.Iframe}
+          className="Iframe"
           src="/server"
           onLoad={onIframeLoad}
         />

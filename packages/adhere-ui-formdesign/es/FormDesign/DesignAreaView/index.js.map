@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["FormDesign/DesignAreaView/index.js"],"sourcesContent":["import DesignAreaView from './DesignAreaView';\nexport default DesignAreaView;"],"names":["DesignAreaView"],"mappings":"OAAOA,mBAAoB,kCACZA"}

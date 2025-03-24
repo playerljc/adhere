@@ -1,3 +1,3 @@
-import React from 'react';
-declare const PopoverMenu: React.NamedExoticComponent<import("./types").PopoverMenuItemProps>;
+import type { PopoverMenuComponent } from './types';
+declare const PopoverMenu: PopoverMenuComponent;
 export default PopoverMenu;

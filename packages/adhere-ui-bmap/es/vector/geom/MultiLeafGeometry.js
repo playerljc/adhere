@@ -1,2 +1,75 @@
-var __extends=this&&this.__extends||function(){var o=function(t,e){return(o=Object.setPrototypeOf||({__proto__:[]}instanceof Array?function(t,e){t.__proto__=e}:function(t,e){for(var r in e)Object.prototype.hasOwnProperty.call(e,r)&&(t[r]=e[r])}))(t,e)};return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Class extends value "+String(e)+" is not a constructor or null");function r(){this.constructor=t}o(t,e),t.prototype=null===e?Object.create(e):(r.prototype=e.prototype,new r)}}(),__spreadArray=this&&this.__spreadArray||function(t,e,r){if(r||2===arguments.length)for(var o,n=0,i=e.length;n<i;n++)!o&&n in e||((o=o||Array.prototype.slice.call(e,0,n))[n]=e[n]);return t.concat(o||Array.prototype.slice.call(e))};import*as turf from"@turf/turf";import{GeometryType,VectorActions}from"../types";import Geometry from"./Geometry";import LeafGeometry from"./LeafGeometry";var MultiLeafGeometry=function(r){function t(t){var e=r.call(this)||this;return e.coordinates=t,e}return __extends(t,r),t.prototype.setCoordinates=function(t){this.coordinates=t,null!=(t=null==(t=null==this?void 0:this.getLayer())?void 0:t.getEmitter())&&t.trigger(VectorActions.UPDATE)},t.prototype.getCoordinates=function(){return __spreadArray([],this.coordinates,!0)},t.prototype.getType=function(){return GeometryType.MultiLeaf},t.prototype.getCenterCoordinate=function(t){t.ctx,t.style,t.isScale;var t=this.coordinates,e=[],r=this.getMap(),t=(t.forEach(function(t){t=r.pointToPixel(new BMap.Point(t.center.lng,t.center.lat));e.push(turf.point([t.x,t.y]))}),turf.featureCollection(e)),t=turf.center(t);return{x:t.geometry.coordinates[0],y:t.geometry.coordinates[1]}},t.prototype.draw=function(e,r){var t=this.coordinates,o=this.getMap();t.forEach(function(t){LeafGeometry.drawLeaf({ctx:e,style:r,coordinates:t,map:o,isScale:!0})})},t.prototype.isPixelInGeometry=function(e,r){var o=this;return this.coordinates.some(function(t){return LeafGeometry.isPixelInGeometry({coordinates:t,map:o.getMap(),pixel:e,style:r,isScale:!0})})},t}(Geometry);export default MultiLeafGeometry;
-//# sourceMappingURL=MultiLeafGeometry.js.map
+import * as turf from '@turf/turf';
+import { GeometryType, VectorActions, } from '../types';
+import Geometry from './Geometry';
+import LeafGeometry from './LeafGeometry';
+/**
+ * MultiLeafGeometry
+ * @class MultiLeafGeometry
+ * @classdesc MultiLeafGeometry - 多个n叶草
+ */
+class MultiLeafGeometry extends Geometry {
+    coordinates;
+    constructor(coordinates) {
+        super();
+        this.coordinates = coordinates;
+    }
+    setCoordinates(coordinates) {
+        this.coordinates = coordinates;
+        this?.getLayer()?.getEmitter()?.trigger(VectorActions.UPDATE);
+    }
+    getCoordinates() {
+        return [...this.coordinates];
+    }
+    getType() {
+        return GeometryType.MultiLeaf;
+    }
+    getCenterCoordinate({ ctx, style, isScale, }) {
+        const { coordinates } = this;
+        const points = [];
+        const map = this.getMap();
+        coordinates.forEach((p) => {
+            const pixel = map.pointToPixel(
+            // @ts-ignore
+            new BMap.Point(p.center.lng, p.center.lat));
+            // @ts-ignore
+            points.push(turf.point([pixel.x, pixel.y]));
+        });
+        const features = turf.featureCollection(points);
+        const center = turf.center(features);
+        return {
+            x: center.geometry.coordinates[0],
+            y: center.geometry.coordinates[1],
+        };
+    }
+    draw(ctx, style) {
+        const { coordinates } = this;
+        const map = this.getMap();
+        coordinates.forEach((coordinate) => {
+            LeafGeometry.drawLeaf({
+                ctx,
+                style,
+                coordinates: coordinate,
+                map,
+                isScale: true,
+            });
+        });
+    }
+    /**
+     * isPixelInGeometry
+     * @param pixel
+     * @param style
+     * @return boolean
+     */
+    isPixelInGeometry(pixel, style) {
+        return this.coordinates.some((coordinate) => {
+            return LeafGeometry.isPixelInGeometry({
+                coordinates: coordinate,
+                map: this.getMap(),
+                pixel,
+                style,
+                isScale: true,
+            });
+        });
+    }
+}
+export default MultiLeafGeometry;

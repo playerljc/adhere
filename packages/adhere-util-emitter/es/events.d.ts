@@ -75,7 +75,7 @@ declare class Events {
      * @param type
      * @param params
      */
-    dispatchEvent(el: HTMLElement | Document | undefined, type: string, params: CustomEventInit): void;
+    dispatchEvent(el: (HTMLElement | Document) | undefined, type: string, params: CustomEventInit): void;
 }
 /**
  * 消息通知

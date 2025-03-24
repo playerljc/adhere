@@ -1,2 +1,173 @@
-var __extends=this&&this.__extends||function(){var r=function(t,e){return(r=Object.setPrototypeOf||({__proto__:[]}instanceof Array?function(t,e){t.__proto__=e}:function(t,e){for(var o in e)Object.prototype.hasOwnProperty.call(e,o)&&(t[o]=e[o])}))(t,e)};return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Class extends value "+String(e)+" is not a constructor or null");function o(){this.constructor=t}r(t,e),t.prototype=null===e?Object.create(e):(o.prototype=e.prototype,new o)}}(),__assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var e,o=1,r=arguments.length;o<r;o++)for(var n in e=arguments[o])Object.prototype.hasOwnProperty.call(e,n)&&(t[n]=e[n]);return t}).apply(this,arguments)};import*as turf from"@turf/turf";import Util from"../../util";import GeometryStyle from"../style/GeometryStyle";import{GeometryType,VectorActions}from"../types";import Geometry from"./Geometry";var RectGeometry=function(o){function s(t){var e=o.call(this)||this;return e.coordinates=t,e}return __extends(s,o),s.prototype.setCoordinates=function(t){this.coordinates=t,null!=(t=null==this?void 0:this.getLayer())&&t.getEmitter().trigger(VectorActions.UPDATE)},s.prototype.getCoordinates=function(){return __assign({},this.coordinates)},s.prototype.getType=function(){return GeometryType.Rect},s.getCenterCoordinate=function(t){t.ctx;var e=t.coordinates,o=t.map,t=(t.style,t.isScale),r=e.leftTop,n=e.width,e=e.height,r=o.pointToPixel(new BMap.Point(r.lng,r.lat)),o=Util.getScale(o),i=n,s=e,t=(t&&(i=o*n,s=o*e),turf.featureCollection([turf.point([r.x,r.y]),turf.point([r.x+i,r.y]),turf.point([r.x+i,r.y+s]),turf.point([r.x,r.y+s])])),n=turf.center(t);return{x:n.geometry.coordinates[0],y:n.geometry.coordinates[1]}},s.prototype.getCenterCoordinate=function(t){var e=t.ctx,o=t.style,t=t.isScale;return s.getCenterCoordinate({coordinates:this.coordinates,ctx:e,map:this.getMap(),style:o,isScale:t})},s.drawRect=function(t){var e=t.ctx,o=t.style,r=t.coordinates,n=t.map,t=t.isScale,o=(e.save(),__assign(__assign({},GeometryStyle),null!=o?o:{})),o=(e.beginPath(),e.lineWidth=o.lineWidth,e.lineJoin=o.lineJoin,e.lineCap=o.lineCap,e.setLineDash(o.lineDash),e.lineDashOffset=o.lineDashOffset,e.strokeStyle=o.strokeStyle,e.fillStyle=o.fillStyle,r.leftTop),i=r.width,r=r.height,o=n.pointToPixel(new BMap.Point(o.lng,o.lat)),n=Util.getScale(n),s=i,a=r;t&&(s=n*i,a=n*r),e.rect(o.x,o.y,s,a),e.stroke(),e.fill(),e.restore()},s.prototype.draw=function(t,e){s.drawRect({ctx:t,style:e,coordinates:this.coordinates,map:this.getMap(),isScale:!0})},s.isPixelInGeometry=function(t){var e=t.coordinates,o=t.map,r=t.style,n=t.pixel,t=t.isScale,i=document.createElement("canvas").getContext("2d");return!!i&&(s.drawRect({ctx:i,coordinates:e,style:r,map:o,isScale:t}),i.isPointInPath(n.x,n.y))},s.prototype.isPixelInGeometry=function(t,e){return s.isPixelInGeometry({coordinates:this.coordinates,map:this.getMap(),style:e,isScale:!0,pixel:t})},s}(Geometry);export default RectGeometry;
-//# sourceMappingURL=RectGeometry.js.map
+import * as turf from '@turf/turf';
+import Util from '../../util';
+import GeometryStyle from '../style/GeometryStyle';
+import { GeometryType, VectorActions, } from '../types';
+import Geometry from './Geometry';
+/**
+ * RectGeometry
+ * @class RectGeometry
+ * @classdesc RectGeometry - 矩形
+ */
+class RectGeometry extends Geometry {
+    coordinates;
+    constructor(coordinates) {
+        super();
+        this.coordinates = coordinates;
+    }
+    setCoordinates(coordinates) {
+        this.coordinates = coordinates;
+        this?.getLayer()?.getEmitter().trigger(VectorActions.UPDATE);
+    }
+    getCoordinates() {
+        return { ...this.coordinates };
+    }
+    getType() {
+        return GeometryType.Rect;
+    }
+    static getCenterCoordinate({ ctx, coordinates, map, style, isScale, }) {
+        const { leftTop, width, height } = coordinates;
+        // @ts-ignore
+        const leftTopPixel = map.pointToPixel(new BMap.Point(leftTop.lng, leftTop.lat));
+        // 比例尺
+        const scale = Util.getScale(map);
+        let realWidth = width;
+        let realHeight = height;
+        if (isScale) {
+            realWidth = scale * width;
+            realHeight = scale * height;
+        }
+        const features = turf.featureCollection([
+            turf.point([leftTopPixel.x, leftTopPixel.y]),
+            turf.point([leftTopPixel.x + realWidth, leftTopPixel.y]),
+            turf.point([leftTopPixel.x + realWidth, leftTopPixel.y + realHeight]),
+            turf.point([leftTopPixel.x, leftTopPixel.y + realHeight]),
+        ]);
+        const center = turf.center(features);
+        return {
+            x: center.geometry.coordinates[0],
+            y: center.geometry.coordinates[1],
+        };
+    }
+    getCenterCoordinate({ ctx, style, isScale, }) {
+        return RectGeometry.getCenterCoordinate({
+            coordinates: this.coordinates,
+            ctx,
+            map: this.getMap(),
+            style,
+            isScale,
+        });
+    }
+    /**
+     * drawRect
+     * @param ctx
+     * @param style
+     * @param coordinates
+     * @param isScale
+     * @param map
+     */
+    static drawRect({ ctx, style, coordinates, map, isScale, }) {
+        ctx.save();
+        const targetStyle = {
+            ...GeometryStyle,
+            ...(style ?? {}),
+        };
+        ctx.beginPath();
+        ctx.lineWidth = targetStyle.lineWidth;
+        ctx.lineJoin = targetStyle.lineJoin;
+        ctx.lineCap = targetStyle.lineCap;
+        ctx.setLineDash(targetStyle.lineDash);
+        ctx.lineDashOffset = targetStyle.lineDashOffset;
+        ctx.strokeStyle = targetStyle.strokeStyle;
+        ctx.fillStyle = targetStyle.fillStyle;
+        const { leftTop, width, height } = coordinates;
+        // @ts-ignore
+        const pixel = map.pointToPixel(new BMap.Point(leftTop.lng, leftTop.lat));
+        // 比例尺
+        const scale = Util.getScale(map);
+        // 实际的宽度(图上距离)
+        let realWidth = width;
+        // 实际的高度(图上距离)
+        let realHeight = height;
+        if (isScale) {
+            realWidth = scale * width;
+            realHeight = scale * height;
+        }
+        ctx.rect(pixel.x, pixel.y, realWidth, realHeight);
+        ctx.stroke();
+        ctx.fill();
+        ctx.restore();
+    }
+    /**
+     * draw - 绘制
+     * @param ctx
+     * @param style
+     */
+    draw(ctx, style) {
+        RectGeometry.drawRect({
+            ctx,
+            style,
+            coordinates: this.coordinates,
+            map: this.getMap(),
+            isScale: true,
+        });
+    }
+    static isPixelInGeometry({ coordinates, map, style, pixel, isScale, }) {
+        // const { leftTop, width, height } = coordinates;
+        //
+        // const scale = Util.getScale(map);
+        //
+        // // @ts-ignore
+        // const leftTopPixel = map.pointToPixel(new BMap.Point(leftTop.lng, leftTop.lat));
+        //
+        // let realWidth = width;
+        // let realHeight = height;
+        //
+        // if (isScale) {
+        //   realWidth = scale * width;
+        //   realHeight = scale * height;
+        // }
+        //
+        // const point = turf.point([pixel.x, pixel.y]);
+        //
+        // const poly = turf.polygon([
+        //   [
+        //     [leftTopPixel.x, leftTopPixel.y],
+        //     [leftTopPixel.x + realWidth, leftTopPixel.y],
+        //     [leftTopPixel.x + realWidth, leftTopPixel.y + realHeight],
+        //     [leftTopPixel.x, leftTopPixel.y + realHeight],
+        //     [leftTopPixel.x, leftTopPixel.y],
+        //   ],
+        // ]);
+        //
+        // return turf.booleanPointInPolygon(point, poly);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (!ctx)
+            return false;
+        RectGeometry.drawRect({
+            ctx,
+            coordinates,
+            // @ts-ignore
+            style,
+            map,
+            isScale,
+        });
+        return ctx.isPointInPath(pixel.x, pixel.y);
+    }
+    /**
+     * isPixelInGeometry
+     * @param pixel
+     * @param style
+     * @return boolean
+     */
+    isPixelInGeometry(pixel, style) {
+        return RectGeometry.isPixelInGeometry({
+            coordinates: this.coordinates,
+            map: this.getMap(),
+            style,
+            isScale: true,
+            pixel,
+        });
+    }
+}
+export default RectGeometry;

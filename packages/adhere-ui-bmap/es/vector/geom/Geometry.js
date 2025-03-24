@@ -1,2 +1,48 @@
-var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var e,n=1,i=arguments.length;n<i;n++)for(var o in e=arguments[n])Object.prototype.hasOwnProperty.call(e,o)&&(t[o]=e[o]);return t}).apply(this,arguments)};import GeometryStyle from"../style/GeometryStyle";import TextStyle from"../style/TextStyle";var Geometry=function(){function t(){this.context=null}return t.prototype.setContext=function(t){this.context=t},t.prototype.getContext=function(){return this.context},t.prototype.drawText=function(t){var e=t.ctx,n=t.text,i=t.style,t=t.textStyle,t=(e.beginPath(),e.save(),__assign(__assign({},TextStyle),null!=t?t:{})),t=(e.font=t.font,e.textAlign=t.textAlign,e.textBaseline=t.textBaseline,e.direction=t.direction,e.strokeStyle=t.strokeStyle,e.fillStyle=t.fillStyle,__assign(__assign({},GeometryStyle),null!=i?i:{})),t=(e.lineWidth=t.lineWidth,e.lineJoin=t.lineJoin,e.lineCap=t.lineCap,e.setLineDash(t.lineDash),e.lineDashOffset=t.lineDashOffset,e.strokeStyle=t.strokeStyle,this.getCenterCoordinate({ctx:e,style:i,isScale:!0}));e.fillText(n||"",t.x,t.y),e.restore()},t.prototype.getMap=function(){var t;return null==(t=null==this?void 0:this.getLayer())?void 0:t.getMap()},t.prototype.getLayer=function(){var t=this.getContext();return t?t.getContext().getContext():null},t}();export default Geometry;
-//# sourceMappingURL=Geometry.js.map
+import GeometryStyle from '../style/GeometryStyle';
+import TextStyle from '../style/TextStyle';
+/**
+ * Geometry
+ * @class Geometry
+ * @classdesc Geometry
+ */
+class Geometry {
+    context = null;
+    setContext(context) {
+        this.context = context;
+    }
+    getContext() {
+        return this.context;
+    }
+    drawText({ ctx, text, style, textStyle, }) {
+        // draw文字
+        ctx.beginPath();
+        ctx.save();
+        const targetTextStyle = { ...TextStyle, ...(textStyle ?? {}) };
+        ctx.font = targetTextStyle.font;
+        ctx.textAlign = targetTextStyle.textAlign;
+        ctx.textBaseline = targetTextStyle.textBaseline;
+        ctx.direction = targetTextStyle.direction;
+        ctx.strokeStyle = targetTextStyle.strokeStyle;
+        ctx.fillStyle = targetTextStyle.fillStyle;
+        const targetStyle = { ...GeometryStyle, ...(style ?? {}) };
+        ctx.lineWidth = targetStyle.lineWidth;
+        ctx.lineJoin = targetStyle.lineJoin;
+        ctx.lineCap = targetStyle.lineCap;
+        ctx.setLineDash(targetStyle.lineDash);
+        ctx.lineDashOffset = targetStyle.lineDashOffset;
+        ctx.strokeStyle = targetStyle.strokeStyle;
+        const centerPixel = this.getCenterCoordinate({ ctx, style, isScale: true });
+        ctx.fillText(text || '', centerPixel.x, centerPixel.y);
+        ctx.restore();
+    }
+    getMap() {
+        return this?.getLayer()?.getMap();
+    }
+    getLayer() {
+        const context = this.getContext();
+        if (!context)
+            return null;
+        return context.getContext().getContext();
+    }
+}
+export default Geometry;

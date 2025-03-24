@@ -1,2 +1,75 @@
-var __extends=this&&this.__extends||function(){var o=function(t,r){return(o=Object.setPrototypeOf||({__proto__:[]}instanceof Array?function(t,r){t.__proto__=r}:function(t,r){for(var e in r)Object.prototype.hasOwnProperty.call(r,e)&&(t[e]=r[e])}))(t,r)};return function(t,r){if("function"!=typeof r&&null!==r)throw new TypeError("Class extends value "+String(r)+" is not a constructor or null");function e(){this.constructor=t}o(t,r),t.prototype=null===r?Object.create(r):(e.prototype=r.prototype,new e)}}(),__spreadArray=this&&this.__spreadArray||function(t,r,e){if(e||2===arguments.length)for(var o,n=0,i=r.length;n<i;n++)!o&&n in r||((o=o||Array.prototype.slice.call(r,0,n))[n]=r[n]);return t.concat(o||Array.prototype.slice.call(r))};import*as turf from"@turf/turf";import{GeometryType,VectorActions}from"../types";import Geometry from"./Geometry";import StartGeometry from"./StartGeometry";var MultiStartGeometry=function(e){function t(t){var r=e.call(this)||this;return r.coordinates=t,r}return __extends(t,e),t.prototype.setCoordinates=function(t){this.coordinates=t,null!=(t=null==this?void 0:this.getLayer())&&t.getEmitter().trigger(VectorActions.UPDATE)},t.prototype.getCoordinates=function(){return __spreadArray([],this.coordinates,!0)},t.prototype.getType=function(){return GeometryType.MultiStart},t.prototype.getCenterCoordinate=function(t){t.ctx,t.style,t.isScale;var t=this.coordinates,r=[],e=this.getMap(),t=(t.forEach(function(t){t=e.pointToPixel(new BMap.Point(t.center.lng,t.center.lat));r.push(turf.point([t.x,t.y]))}),turf.featureCollection(r)),t=turf.center(t);return{x:t.geometry.coordinates[0],y:t.geometry.coordinates[1]}},t.prototype.draw=function(r,e){var t=this.coordinates,o=this.getMap();t.forEach(function(t){StartGeometry.drawStart({ctx:r,style:e,coordinates:t,map:o,isScale:!0})})},t.prototype.isPixelInGeometry=function(r,e){var o=this;return this.coordinates.some(function(t){return StartGeometry.isPixelInGeometry({coordinates:t,map:o.getMap(),pixel:r,style:e,isScale:!0})})},t}(Geometry);export default MultiStartGeometry;
-//# sourceMappingURL=MultiStartGeometry.js.map
+import * as turf from '@turf/turf';
+import { GeometryType, VectorActions, } from '../types';
+import Geometry from './Geometry';
+import StartGeometry from './StartGeometry';
+/**
+ * MultiStartGeometry
+ * @class MultiStartGeometry
+ * @classdesc MultiStartGeometry - 多个五角星
+ */
+class MultiStartGeometry extends Geometry {
+    coordinates;
+    constructor(coordinates) {
+        super();
+        this.coordinates = coordinates;
+    }
+    setCoordinates(coordinates) {
+        this.coordinates = coordinates;
+        this?.getLayer()?.getEmitter().trigger(VectorActions.UPDATE);
+    }
+    getCoordinates() {
+        return [...this.coordinates];
+    }
+    getType() {
+        return GeometryType.MultiStart;
+    }
+    getCenterCoordinate({ ctx, style, isScale, }) {
+        const { coordinates } = this;
+        const points = [];
+        const map = this.getMap();
+        coordinates.forEach((p) => {
+            const pixel = map.pointToPixel(
+            // @ts-ignore
+            new BMap.Point(p.center.lng, p.center.lat));
+            // @ts-ignore
+            points.push(turf.point([pixel.x, pixel.y]));
+        });
+        const features = turf.featureCollection(points);
+        const center = turf.center(features);
+        return {
+            x: center.geometry.coordinates[0],
+            y: center.geometry.coordinates[1],
+        };
+    }
+    draw(ctx, style) {
+        const { coordinates } = this;
+        const map = this.getMap();
+        coordinates.forEach((coordinate) => {
+            StartGeometry.drawStart({
+                ctx,
+                style,
+                coordinates: coordinate,
+                map,
+                isScale: true,
+            });
+        });
+    }
+    /**
+     * isPixelInGeometry
+     * @param pixel
+     * @param style
+     * @return boolean
+     */
+    isPixelInGeometry(pixel, style) {
+        return this.coordinates.some((coordinate) => {
+            return StartGeometry.isPixelInGeometry({
+                coordinates: coordinate,
+                map: this.getMap(),
+                pixel,
+                style,
+                isScale: true,
+            });
+        });
+    }
+}
+export default MultiStartGeometry;

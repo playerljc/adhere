@@ -1,2 +1,2 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var Permission_1=require("./Permission"),PermissionComponent={Permission:Permission_1.Permission,setPermission:Permission_1.setPermission,checkPermission:Permission_1.checkPermission,getPermission:Permission_1.getPermission,PermissionFun:Permission_1.PermissionFun};exports.default=PermissionComponent;
+Object.defineProperty(exports,"__esModule",{value:!0});var Permission_1=require("./Permission"),PermissionComponent={Permission:Permission_1.Permission,setPermission:Permission_1.setPermission,checkPermission:Permission_1.checkPermission,getPermission:Permission_1.getPermission,PermissionFun:Permission_1.PermissionFun};exports.default=PermissionComponent;
 //# sourceMappingURL=index.js.map

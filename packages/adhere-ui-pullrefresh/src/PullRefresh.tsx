@@ -42,7 +42,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
       renderCanLabel = () => Intl.v('松开刷新'),
       renderLoadingAnimation = 'la-ball-circus la-dark',
       isShowUpdateTime = true,
-      updateTimeFormat = Resource.Dict.value.ResourceMomentFormat18.value(),
+      updateTimeFormat = Resource.Dict.value.ResourceMomentFormat18?.value(),
       children,
     } = props;
     const update = useUpdate();

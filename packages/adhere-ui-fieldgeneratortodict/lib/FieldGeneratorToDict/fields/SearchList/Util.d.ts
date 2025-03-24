@@ -32,11 +32,13 @@ export declare const SELECT_LIST_OVERRIDE: {
 /**
  * standardSearchListClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export declare function standardSearchListClassFactory({ SearchClass, ...params }: {
+export declare function standardSearchListClassFactory({ SearchClass, SuperClass, ...params }: {
     [x: string]: any;
     SearchClass: any;
+    SuperClass: any;
 }): any;
 /**
  * createSearchListSelect

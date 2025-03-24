@@ -22,6 +22,7 @@ function Compose(middleWares: MiddleWare[]) {
        */
       const loop = (): unknown => {
         // 迭代完成了
+
         if (index + 1 >= middleWares.length) {
           Promise.all(middleWareQueueResults.filter((t) => t instanceof Promise)).then(() => {
             // 真正的迭代完成

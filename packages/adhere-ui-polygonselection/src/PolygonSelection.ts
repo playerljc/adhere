@@ -194,6 +194,7 @@ class PolygonSelection extends Emitter.Events implements IPolygonSelection {
   protected adapterCanvas() {
     const { canvasEl, assistCanvasEl, el } = this;
 
+    // @ts-ignore
     if (!el ?? !canvasEl ?? !assistCanvasEl) return;
 
     canvasEl.width = el?.offsetWidth ?? 0;

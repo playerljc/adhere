@@ -1,2 +1,14 @@
-export default{fillStyle:"rgb(91,155,213,1)",strokeStyle:"rgba(0,0,0,.8)",lineWidth:1,lineCap:"round",lineJoin:"round",lineDash:[],lineDashOffset:-1};
-//# sourceMappingURL=DefaultStyle.js.map
+/**
+ * 几何图形默认的样式
+ */
+export default {
+    fillStyle: 'rgb(91,155,213,1)',
+    // 描边颜色
+    strokeStyle: 'rgba(0,0,0,.8)',
+    // 描边大小
+    lineWidth: 1,
+    lineCap: 'round',
+    lineJoin: 'round',
+    lineDash: [],
+    lineDashOffset: -1,
+};

@@ -8,7 +8,7 @@ export const DEFAULT_ZINDEX = 999;
 
 export const THROTTLE_TIME = 200;
 
-export const LOCAL = Resource.Dict.value.LocalsAntd.value;
+export const LOCAL = Resource?.Dict?.value?.LocalsAntd?.value;
 
 export const PROMPT_LAYOUT = {
   labelCol: { span: 6 },

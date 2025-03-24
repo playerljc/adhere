@@ -1,2 +1,2 @@
-import React from"react";var TabContext=React.createContext({activeKey:""});export{TabContext};
+import React from"react";let TabContext=React.createContext({activeKey:""});export{TabContext};
 //# sourceMappingURL=Context.js.map

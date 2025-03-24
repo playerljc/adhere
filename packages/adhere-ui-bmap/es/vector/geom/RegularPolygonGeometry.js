@@ -1,2 +1,151 @@
-var __extends=this&&this.__extends||function(){var n=function(t,e){return(n=Object.setPrototypeOf||({__proto__:[]}instanceof Array?function(t,e){t.__proto__=e}:function(t,e){for(var o in e)Object.prototype.hasOwnProperty.call(e,o)&&(t[o]=e[o])}))(t,e)};return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Class extends value "+String(e)+" is not a constructor or null");function o(){this.constructor=t}n(t,e),t.prototype=null===e?Object.create(e):(o.prototype=e.prototype,new o)}}(),__assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var e,o=1,n=arguments.length;o<n;o++)for(var r in e=arguments[o])Object.prototype.hasOwnProperty.call(e,r)&&(t[r]=e[r]);return t}).apply(this,arguments)};import Util from"../../util";import GeometryStyle from"../style/GeometryStyle";import{GeometryType,VectorActions}from"../types";import Geometry from"./Geometry";var RegularPolygonGeometry=function(o){function s(t){var e=o.call(this)||this;return e.coordinates=t,e}return __extends(s,o),s.prototype.setCoordinates=function(t){this.coordinates=t,null!=(t=null==this?void 0:this.getLayer())&&t.getEmitter().trigger(VectorActions.UPDATE)},s.prototype.getCoordinates=function(){return __assign({},this.coordinates)},s.prototype.getType=function(){return GeometryType.RegularPolygon},s.getCenterCoordinate=function(t){t.ctx;var e=t.coordinates,o=t.map,t=(t.style,t.isScale,o.pointToPixel(new BMap.Point(e.center.lng,e.center.lat)));return __assign({},t)},s.prototype.getCenterCoordinate=function(t){var e=t.ctx,o=t.style,t=t.isScale;return s.getCenterCoordinate({coordinates:this.coordinates,ctx:e,map:this.getMap(),style:o,isScale:t})},s.drawRegularPolygon=function(t){for(var e=t.ctx,o=t.style,n=t.coordinates,r=t.map,t=t.isScale,o=(e.save(),__assign(__assign({},GeometryStyle),null!=o?o:{})),i=(e.beginPath(),e.lineWidth=o.lineWidth,e.lineJoin=o.lineJoin,e.lineCap=o.lineCap,e.setLineDash(o.lineDash),e.lineDashOffset=o.lineDashOffset,e.strokeStyle=o.strokeStyle,e.fillStyle=o.fillStyle,n.n),o=n.center,n=n.size,s=n,a=(t&&(s=Util.getScale(r)*n),r.pointToPixel(new BMap.Point(o.lng,o.lat))),l=2*Math.PI/i,c=0;c<i;c++){var y=Math.cos(c*l),p=Math.sin(c*l);e.lineTo(y*s+a.x,p*s+a.y)}e.closePath(),e.stroke(),e.fill(),e.restore()},s.prototype.draw=function(t,e){s.drawRegularPolygon({ctx:t,style:e,coordinates:this.coordinates,map:this.getMap(),isScale:!0})},s.isPixelInGeometry=function(t){var e=t.coordinates,o=t.map,n=t.pixel,r=t.style,t=t.isScale,i=document.createElement("canvas").getContext("2d");return!!i&&(s.drawRegularPolygon({ctx:i,coordinates:e,style:r,map:o,isScale:t}),i.isPointInPath(n.x,n.y))},s.prototype.isPixelInGeometry=function(t,e){return s.isPixelInGeometry({coordinates:this.coordinates,map:this.getMap(),style:e,isScale:!0,pixel:t})},s}(Geometry);export default RegularPolygonGeometry;
-//# sourceMappingURL=RegularPolygonGeometry.js.map
+import Util from '../../util';
+import GeometryStyle from '../style/GeometryStyle';
+import { GeometryType, VectorActions, } from '../types';
+import Geometry from './Geometry';
+/**
+ * RegularPolygonGeometry
+ * @class RegularPolygonGeometry
+ * @classdesc RegularPolygonGeometry - 正多边形
+ */
+class RegularPolygonGeometry extends Geometry {
+    coordinates;
+    constructor(coordinates) {
+        super();
+        this.coordinates = coordinates;
+    }
+    setCoordinates(coordinates) {
+        this.coordinates = coordinates;
+        this?.getLayer()?.getEmitter().trigger(VectorActions.UPDATE);
+    }
+    getCoordinates() {
+        return { ...this.coordinates };
+    }
+    getType() {
+        return GeometryType.RegularPolygon;
+    }
+    static getCenterCoordinate({ ctx, coordinates, map, style, isScale, }) {
+        const centerPixel = map.pointToPixel(
+        // @ts-ignore
+        new BMap.Point(coordinates.center.lng, coordinates.center.lat));
+        return { ...centerPixel };
+    }
+    getCenterCoordinate({ ctx, style, isScale, }) {
+        return RegularPolygonGeometry.getCenterCoordinate({
+            coordinates: this.coordinates,
+            ctx,
+            map: this.getMap(),
+            style,
+            isScale,
+        });
+    }
+    static drawRegularPolygon({ ctx, style, coordinates, map, isScale, }) {
+        ctx.save();
+        const targetStyle = {
+            ...GeometryStyle,
+            ...(style ?? {}),
+        };
+        ctx.beginPath();
+        ctx.lineWidth = targetStyle.lineWidth;
+        ctx.lineJoin = targetStyle.lineJoin;
+        ctx.lineCap = targetStyle.lineCap;
+        ctx.setLineDash(targetStyle.lineDash);
+        ctx.lineDashOffset = targetStyle.lineDashOffset;
+        ctx.strokeStyle = targetStyle.strokeStyle;
+        ctx.fillStyle = targetStyle.fillStyle;
+        const { n, center, size } = coordinates;
+        let curSize = size;
+        if (isScale) {
+            // 比例尺
+            const scale = Util.getScale(map);
+            curSize = scale * size;
+        }
+        // @ts-ignore
+        const pixel = map.pointToPixel(new BMap.Point(center.lng, center.lat));
+        const degree = (2 * Math.PI) / n;
+        for (let i = 0; i < n; i++) {
+            const x = Math.cos(i * degree);
+            const y = Math.sin(i * degree);
+            ctx.lineTo(x * curSize + pixel.x, y * curSize + pixel.y);
+        }
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+        ctx.restore();
+    }
+    /**
+     * draw - 绘制一个多边形
+     * @param ctx
+     * @param style
+     */
+    draw(ctx, style) {
+        RegularPolygonGeometry.drawRegularPolygon({
+            ctx,
+            style,
+            coordinates: this.coordinates,
+            map: this.getMap(),
+            isScale: true,
+        });
+    }
+    static isPixelInGeometry({ coordinates, map, pixel, style, isScale, }) {
+        // const { n, center, size } = coordinates;
+        //
+        // const scale = Util.getScale(map);
+        // const points: IPixel[] = [];
+        //
+        // let curSize = size;
+        // if (isScale) {
+        //   curSize = scale * size;
+        // }
+        //
+        // // @ts-ignore
+        // const centerPixel = map.pointToPixel(new BMap.Point(center.lng, center.lat));
+        //
+        // const degree = (2 * Math.PI) / n;
+        //
+        // for (let i = 0; i < n; i++) {
+        //   const x = Math.cos(i * degree);
+        //   const y = Math.sin(i * degree);
+        //   points.push({
+        //     x: x * curSize + centerPixel.x,
+        //     y: y * curSize + centerPixel.y,
+        //   });
+        // }
+        //
+        // const polygon = points.map((point) => [point.x, point.y]);
+        // polygon.push(polygon[0]);
+        //
+        // const point = turf.point([pixel.x, pixel.y]);
+        // const poly = turf.polygon([polygon]);
+        //
+        // return turf.booleanPointInPolygon(point, poly);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (!ctx)
+            return false;
+        RegularPolygonGeometry.drawRegularPolygon({
+            ctx,
+            coordinates,
+            // @ts-ignore
+            style,
+            map,
+            isScale,
+        });
+        return ctx.isPointInPath(pixel.x, pixel.y);
+    }
+    /**
+     * isPixelInGeometry
+     * @param pixel
+     * @param style
+     * @return boolean
+     */
+    isPixelInGeometry(pixel, style) {
+        return RegularPolygonGeometry.isPixelInGeometry({
+            coordinates: this.coordinates,
+            map: this.getMap(),
+            style,
+            isScale: true,
+            pixel,
+        });
+    }
+}
+export default RegularPolygonGeometry;

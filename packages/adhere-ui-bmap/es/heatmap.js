@@ -1,2 +1,1544 @@
-function create(){var l,a={defaultRadius:40,defaultRenderer:"canvas2d",defaultGradient:{.45:"rgb(0,0,255)",.55:"rgb(0,255,255)",.65:"rgb(0,255,0)",.95:"yellow",1:"rgb(255,0,0)"},defaultMaxOpacity:1,defaultMinOpacity:0,defaultBlur:.85,defaultXField:"x",defaultYField:"y",defaultValueField:"value",plugins:{}},i=(l=a.defaultRadius,t.prototype={_organiseData:function(t,e){var a=t[this._xField],i=t[this._yField],n=this._radi,s=this._data,r=this._max,h=this._min,o=t[this._valueField]||1,t=t.radius||this._cfgRadius||l;return s[a]||(s[a]=[],n[a]=[]),s[a][i]?s[a][i]+=o:(s[a][i]=o,n[a][i]=t),s[a][i]>r?(e?this.setDataMax(s[a][i]):this._max=s[a][i],!1):{x:a,y:i,value:o,radius:t,min:h,max:r}},_unOrganizeData:function(){var t,e=[],a=this._data,i=this._radi;for(t in a)for(var n in a[t])e.push({x:t,y:n,radius:i[t][n],value:a[t][n]});return{min:this._min,max:this._max,data:e}},_onExtremaChange:function(){this._coordinator.emit("extremachange",{min:this._min,max:this._max})},addData:function(){if(0<arguments[0].length)for(var t=arguments[0],e=t.length;e--;)this.addData.call(this,t[e]);else{var a=this._organiseData(arguments[0],!0);a&&this._coordinator.emit("renderpartial",{min:this._min,max:this._max,data:[a]})}return this},setData:function(t){var e=t.data,a=e.length;this._data=[],this._radi=[];for(var i=0;i<a;i++)this._organiseData(e[i],!1);return this._max=t.max,this._min=t.min||0,this._onExtremaChange(),this._coordinator.emit("renderall",this._getInternalData()),this},removeData:function(){},setDataMax:function(t){return this._max=t,this._onExtremaChange(),this._coordinator.emit("renderall",this._getInternalData()),this},setDataMin:function(t){return this._min=t,this._onExtremaChange(),this._coordinator.emit("renderall",this._getInternalData()),this},setCoordinator:function(t){this._coordinator=t},_getInternalData:function(){return{max:this._max,min:this._min,data:this._data,radi:this._radi}},getData:function(){return this._unOrganizeData()}},t);function t(t){this._coordinator={},this._data=[],this._radi=[],this._min=0,this._max=1,this._xField=t.xField||t.defaultXField,this._yField=t.yField||t.defaultYField,this._valueField=t.valueField||t.defaultValueField,t.radius&&(this._cfgRadius=t.radius)}s=function(t){var e,a=t.gradient||t.defaultGradient,t=document.createElement("canvas"),i=t.getContext("2d"),n=(t.width=256,t.height=1,i.createLinearGradient(0,0,256,1));for(e in a)n.addColorStop(e,a[e]);return i.fillStyle=n,i.fillRect(0,0,256,1),i.getImageData(0,0,256,1).data},n.prototype={renderPartial:function(t){this._drawAlpha(t),this._colorize()},renderAll:function(t){this._clear(),this._drawAlpha(function(t){for(var e=[],a=t.min,i=t.max,n=t.radi,t=t.data,s=Object.keys(t),r=s.length;r--;)for(var h=s[r],o=Object.keys(t[h]),l=o.length;l--;){var d=o[l],u=t[h][d],c=n[h][d];e.push({x:h,y:d,value:u,radius:c})}return{min:a,max:i,data:e}}(t)),this._colorize()},_updateGradient:function(t){this._palette=s(t)},updateConfig:function(t){t.gradient&&this._updateGradient(t),this._setStyles(t)},setDimensions:function(t,e){this._width=t,this._height=e,this.canvas.width=this.shadowCanvas.width=t,this.canvas.height=this.shadowCanvas.height=e},_clear:function(){this.shadowCtx.clearRect(0,0,this._width,this._height),this.ctx.clearRect(0,0,this._width,this._height)},_setStyles:function(t){this._blur=0==t.blur?0:t.blur||t.defaultBlur,t.backgroundColor&&(this.canvas.style.backgroundColor=t.backgroundColor),this._opacity=255*(t.opacity||0),this._maxOpacity=255*(t.maxOpacity||t.defaultMaxOpacity),this._minOpacity=255*(t.minOpacity||t.defaultMinOpacity),this._useGradientOpacity=!!t.useGradientOpacity},_drawAlpha:function(t){for(var e,a,i,n,s,r,h=this._min=t.min,o=this._max=t.max,l=(t=t.data||[]).length,d=1-this._blur;l--;){var u,c=t[l],_=c.x,p=c.y,f=c.radius,c=Math.min(c.value,o),_=_-f,p=p-f,m=this.shadowCtx;this._templates[f]?u=this._templates[f]:this._templates[f]=(e=f,a=d,r=s=n=i=void 0,i=document.createElement("canvas"),n=i.getContext("2d"),r=s=e,i.width=i.height=2*e,1==a?(n.beginPath(),n.arc(s,r,e,0,2*Math.PI,!1),n.fillStyle="rgba(0,0,0,1)",n.fill()):((a=n.createRadialGradient(s,r,e*a,s,r,e)).addColorStop(0,"rgba(0,0,0,1)"),a.addColorStop(1,"rgba(0,0,0,0)"),n.fillStyle=a,n.fillRect(0,0,2*e,2*e)),u=i),m.globalAlpha=(c-h)/(o-h),m.drawImage(u,_,p),_<this._renderBoundaries[0]&&(this._renderBoundaries[0]=_),p<this._renderBoundaries[1]&&(this._renderBoundaries[1]=p),_+2*f>this._renderBoundaries[2]&&(this._renderBoundaries[2]=_+2*f),p+2*f>this._renderBoundaries[3]&&(this._renderBoundaries[3]=p+2*f)}},_colorize:function(){for(var t=this._renderBoundaries[0],e=this._renderBoundaries[1],a=this._renderBoundaries[2]-t,i=this._renderBoundaries[3]-e,n=this._width,s=this._height,r=this._opacity,h=this._maxOpacity,o=this._minOpacity,l=this._useGradientOpacity,n=this.shadowCtx.getImageData(t=t<0?0:t,e=e<0?0:e,a=n<t+a?n-t:a,i=s<e+i?s-e:i),d=n.data,u=d.length,c=this._palette,_=3;_<u;_+=4){var p=d[_],f=4*p;f&&(p=0<r?r:p<h?p<o?o:p:h,d[_-3]=c[f],d[_-2]=c[1+f],d[_-1]=c[2+f],d[_]=l?c[3+f]:p)}this.ctx.putImageData(n,t,e),this._renderBoundaries=[1e3,1e3,0,0]},getValueAt:function(t){var t=this.shadowCtx.getImageData(t.x,t.y,1,1).data[3],e=this._max,a=this._min;return Math.abs(e-a)*(t/255)>>0},getDataURL:function(){return this.canvas.toDataURL()}};var s,e=n;function n(t){var e=t.element,a=this.shadowCanvas=document.createElement("canvas"),i=this.canvas=t.canvas||document.createElement("canvas"),n=(this._renderBoundaries=[1e4,1e4,0,0],getComputedStyle(t.element)||{});i.className="heatmap-canvas",this._width=i.width=a.width=+n.width.replace(/px/,""),this._height=i.height=a.height=+n.height.replace(/px/,""),this.shadowCtx=a.getContext("2d"),this.ctx=i.getContext("2d"),i.style.cssText=a.style.cssText="position:absolute;left:0;top:0;",e.style.position="relative",e.appendChild(i),this._palette=s(t),this._templates={},this._setStyles(t)}r=!1;var r,h,o,d=r="canvas2d"===a.defaultRenderer?e:r,u=function(){for(var t={},e=arguments.length,a=0;a<e;a++){var i,n=arguments[a];for(i in n)t[i]=n[i]}return t},c=(_.prototype={on:function(t,e,a){var i=this.cStore;i[t]||(i[t]=[]),i[t].push(function(t){return e.call(a,t)})},emit:function(t,e){var a=this.cStore;if(a[t])for(var i=a[t].length,n=0;n<i;n++)(0,a[t][n])(e)}},h=_,o=function(e){var t=e._renderer,a=e._coordinator,i=e._store;a.on("renderpartial",t.renderPartial,t),a.on("renderall",t.renderAll,t),a.on("extremachange",function(t){e._config.onExtremaChange&&e._config.onExtremaChange({min:t.min,max:t.max,gradient:e._config.gradient||e._config.defaultGradient})}),i.setCoordinator(a)},p.prototype={addData:function(){return this._store.addData.apply(this._store,arguments),this},removeData:function(){return this._store.removeData&&this._store.removeData.apply(this._store,arguments),this},setData:function(){return this._store.setData.apply(this._store,arguments),this},setDataMax:function(){return this._store.setDataMax.apply(this._store,arguments),this},setDataMin:function(){return this._store.setDataMin.apply(this._store,arguments),this},configure:function(t){return this._config=u(this._config,t),this._renderer.updateConfig(this._config),this._coordinator.emit("renderall",this._store._getInternalData()),this},repaint:function(){return this._coordinator.emit("renderall",this._store._getInternalData()),this},getData:function(){return this._store.getData()},getDataURL:function(){return this._renderer.getDataURL()},getValueAt:function(t){return this._store.getValueAt?this._store.getValueAt(t):this._renderer.getValueAt?this._renderer.getValueAt(t):null}},p);function _(){this.cStore={}}function p(){var t=this._config=u(a,arguments[0]||{});if(this._coordinator=new h,t.plugin){var e=t.plugin;if(!a.plugins[e])throw new Error("Plugin '"+e+"' not found. Maybe it was not registered.");e=a.plugins[e];this._renderer=new e.renderer(t),this._store=new e.store(t)}else this._renderer=new d(t),this._store=new i(t);o(this)}return{create:function(t){return new c(t)},register:function(t,e){a.plugins[t]=e}}}var h337=create(),BMapLib=window.BMapLib=BMapLib||{};!function(){var t=BMapLib.HeatmapOverlay=function(t){this.conf=t,this.conf.visible=void 0===t.visible||t.visible,this.heatmap=null,this.latlngs=[],this.bounds=null};function l(){var t=document.createElement("canvas");return t.getContext&&t.getContext("2d")}(t.prototype=new BMap.Overlay).initialize=function(t){this._map=t;var e,a=document.createElement("div");return a.style.position="absolute",a.style.top=0,a.style.left=0,a.style.border=0,a.style.width=this._map.getSize().width+"px",a.style.height=this._map.getSize().height+"px",this.conf.element=a,l()&&(t.getPanes().mapPane.appendChild(a),this.conf.valueField=this.conf.valueField||"count",this.heatmap=h337.create(this.conf),e=this,t.addEventListener("resize",function(t){t=t.size;a.style.width=t.width+"px",a.style.height=t.height+"px",e.heatmap._renderer.setDimensions(t.width,t.height),e.draw()}),this._div=a),a},t.prototype.draw=function(){if(l()){var t=this._map.getBounds();if(!t.equals(this.bounds)){this.bounds=t;var e=this._map.pointToOverlayPixel(t.getNorthEast()),a=this._map.pointToOverlayPixel(t.getSouthWest()),i=e.y,n=a.x,s=a.y-e.y,e=e.x-a.x;if(this.conf.element.style.left=n+"px",this.conf.element.style.top=i+"px",this.conf.element.style.width=e+"px",this.conf.element.style.height=s+"px",0<this.latlngs.length){this.heatmap.removeData();for(var r=this.latlngs.length,h={max:this.heatmap._store.getData().max,data:[]};r--;){var o=this.latlngs[r].latlng;t.containsPoint(o)&&(o=this._map.pointToOverlayPixel(o),n=this._map.pointToOverlayPixel(t.getSouthWest()).x,i=this._map.pointToOverlayPixel(t.getNorthEast()).y,o=new BMap.Pixel(o.x-n,o.y-i),o=this.pixelTransform(o),h.data.push({x:o.x,y:o.y,count:this.latlngs[r].c}))}this.conf.radiusChangeByZoom&&(this.heatmap._store._cfgRadius=this.conf.radiusChangeByZoom(this._map.getZoom())),this.heatmap.setData(h)}}}},t.prototype.pixelTransform=function(t){for(var e=this.heatmap.width,a=this.heatmap.height;t.x<0;)t.x+=e;for(;t.x>e;)t.x-=e;for(;t.y<0;)t.y+=a;for(;t.y>a;)t.y-=a;return t.x=t.x>>0,t.y=t.y>>0,t},t.prototype.setDataSet=function(t){if(this.data=t,l()){var e=this._map.getBounds(),a={max:t.max,data:[]},i=t.data,n=i.length;for(this.latlngs=[],this.heatmap.removeData(),this.conf.radiusChangeByZoom&&(this.heatmap._store._cfgRadius=this.conf.radiusChangeByZoom(this._map.getZoom()));n--;){var s,r,h=new BMap.Point(i[n].lng,i[n].lat);this.latlngs.push({latlng:h,c:i[n].count}),e.containsPoint(h)&&(h=this._map.pointToOverlayPixel(h),r=this._map.pointToOverlayPixel(e.getSouthWest()).x,s=this._map.pointToOverlayPixel(e.getNorthEast()).y,r=new BMap.Pixel(h.x-r,h.y-s),h=this.pixelTransform(r),a.data.push({x:h.x,y:h.y,count:i[n].count}))}this.heatmap.setData(a)}},t.prototype.addDataPoint=function(t,e,a){l()&&(this.data&&this.data.data&&this.data.data.push({lng:t,lat:e,count:a}),t=new BMap.Point(t,e),e=this.pixelTransform(this._map.pointToOverlayPixel(t)),this.heatmap.store.addDataPoint(e.x,e.y,a),this.latlngs.push({latlng:t,c:a}))},t.prototype.toggle=function(){l()&&(!0===this.conf.visible?this.conf.visible=!1:this.conf.visible=!0,this.conf.visible?this.conf.element.style.display="block":this.conf.element.style.display="none")},t.prototype.setOptions=function(t){if(l()){for(var e in t)"radius"==e&&(this.heatmap._store._cfgRadius=t[e]),"opacity"==e&&(t[e]=t[e]/100);this.heatmap.configure(t),this.data&&this.setDataSet(this.data)}}}();
-//# sourceMappingURL=heatmap.js.map
+
+/*
+ * heatmap.js v2.0.0 | JavaScript Heatmap Library
+ *
+ * Copyright 2008-2014 Patrick Wied <heatmapjs@patrick-wied.at> - All rights reserved.
+ * Dual licensed under MIT and Beerware license
+ *
+ * :: 2014-10-31 21:16
+ */
+// (function (/*name, context,*/ factory) {
+//   // // Supports UMD. AMD, CommonJS/Node.js and browser context
+//   // if (typeof module !== 'undefined' && module.exports) {
+//   //   module.exports = factory();
+//   // } else if (typeof define === 'function' && define.amd) {
+//   //   define(factory);
+//   // } else {
+//   //   context[name] = factory();
+//   // }
+//   // context[name] = factory();
+//   // window['h337'] = factory();
+// })(
+//   /*'h337', this, */
+//     function () {
+//     // Heatmap Config stores default values and will be merged with instance config
+//     let  HeatmapConfig = {
+//       defaultRadius: 40,
+//       defaultRenderer: 'canvas2d',
+//       defaultGradient: {
+//         0.45: 'rgb(0,0,255)',
+//         0.55: 'rgb(0,255,255)',
+//         0.65: 'rgb(0,255,0)',
+//         0.95: 'yellow',
+//         1.0: 'rgb(255,0,0)',
+//       },
+//       defaultMaxOpacity: 1,
+//       defaultMinOpacity: 0,
+//       defaultBlur: 0.85,
+//       defaultXField: 'x',
+//       defaultYField: 'y',
+//       defaultValueField: 'value',
+//       plugins: {},
+//     };
+//     let  Store = (function StoreClosure() {
+//       let  Store = function Store(config) {
+//         this._coordinator = {};
+//         this._data = [];
+//         this._radi = [];
+//         this._min = 0;
+//         this._max = 1;
+//         this._xField = config['xField'] || config.defaultXField;
+//         this._yField = config['yField'] || config.defaultYField;
+//         this._valueField = config['valueField'] || config.defaultValueField;
+//
+//         if (config['radius']) {
+//           this._cfgRadius = config['radius'];
+//         }
+//       };
+//
+//       let  defaultRadius = HeatmapConfig.defaultRadius;
+//
+//       Store.prototype = {
+//         // when forceRender = false -> called from setData, omits renderall event
+//         _organiseData: function (dataPoint, forceRender) {
+//           let  x = dataPoint[this._xField];
+//           let  y = dataPoint[this._yField];
+//           let  radi = this._radi;
+//           let  store = this._data;
+//           let  max = this._max;
+//           let  min = this._min;
+//           let  value = dataPoint[this._valueField] || 1;
+//           let  radius = dataPoint.radius || this._cfgRadius || defaultRadius;
+//
+//           if (!store[x]) {
+//             store[x] = [];
+//             radi[x] = [];
+//           }
+//
+//           if (!store[x][y]) {
+//             store[x][y] = value;
+//             radi[x][y] = radius;
+//           } else {
+//             store[x][y] += value;
+//           }
+//
+//           if (store[x][y] > max) {
+//             if (!forceRender) {
+//               this._max = store[x][y];
+//             } else {
+//               this.setDataMax(store[x][y]);
+//             }
+//             return false;
+//           } else {
+//             return {
+//               x: x,
+//               y: y,
+//               value: value,
+//               radius: radius,
+//               min: min,
+//               max: max,
+//             };
+//           }
+//         },
+//         _unOrganizeData: function () {
+//           let  unorganizedData = [];
+//           let  data = this._data;
+//           let  radi = this._radi;
+//
+//           for (let  x in data) {
+//             for (let  y in data[x]) {
+//               unorganizedData.push({
+//                 x: x,
+//                 y: y,
+//                 radius: radi[x][y],
+//                 value: data[x][y],
+//               });
+//             }
+//           }
+//           return {
+//             min: this._min,
+//             max: this._max,
+//             data: unorganizedData,
+//           };
+//         },
+//         _onExtremaChange: function () {
+//           this._coordinator.emit('extremachange', {
+//             min: this._min,
+//             max: this._max,
+//           });
+//         },
+//         addData: function () {
+//           if (arguments[0].length > 0) {
+//             let  dataArr = arguments[0];
+//             let  dataLen = dataArr.length;
+//             while (dataLen--) {
+//               this.addData.call(this, dataArr[dataLen]);
+//             }
+//           } else {
+//             // add to store
+//             let  organisedEntry = this._organiseData(arguments[0], true);
+//             if (organisedEntry) {
+//               this._coordinator.emit('renderpartial', {
+//                 min: this._min,
+//                 max: this._max,
+//                 data: [organisedEntry],
+//               });
+//             }
+//           }
+//           return this;
+//         },
+//         setData: function (data) {
+//           let  dataPoints = data.data;
+//           let  pointsLen = dataPoints.length;
+//
+//           // reset data arrays
+//           this._data = [];
+//           this._radi = [];
+//
+//           for (let  i = 0; i < pointsLen; i++) {
+//             this._organiseData(dataPoints[i], false);
+//           }
+//           this._max = data.max;
+//           this._min = data.min || 0;
+//
+//           this._onExtremaChange();
+//           this._coordinator.emit('renderall', this._getInternalData());
+//           return this;
+//         },
+//         removeData: function () {
+//           // TODO: implement
+//         },
+//         setDataMax: function (max) {
+//           this._max = max;
+//           this._onExtremaChange();
+//           this._coordinator.emit('renderall', this._getInternalData());
+//           return this;
+//         },
+//         setDataMin: function (min) {
+//           this._min = min;
+//           this._onExtremaChange();
+//           this._coordinator.emit('renderall', this._getInternalData());
+//           return this;
+//         },
+//         setCoordinator: function (coordinator) {
+//           this._coordinator = coordinator;
+//         },
+//         _getInternalData: function () {
+//           return {
+//             max: this._max,
+//             min: this._min,
+//             data: this._data,
+//             radi: this._radi,
+//           };
+//         },
+//         getData: function () {
+//           return this._unOrganizeData();
+//         } /*,
+//
+//       TODO: rethink.
+//
+//     getValueAt: function(point) {
+//       let  value;
+//       let  radius = 100;
+//       let  x = point.x;
+//       let  y = point.y;
+//       let  data = this._data;
+//
+//       if (data[x] && data[x][y]) {
+//         return data[x][y];
+//       } else {
+//         let  values = [];
+//         // radial search for datapoints based on default radius
+//         for(let  distance = 1; distance < radius; distance++) {
+//           let  neighbors = distance * 2 +1;
+//           let  startX = x - distance;
+//           let  startY = y - distance;
+//
+//           for(let  i = 0; i < neighbors; i++) {
+//             for (let  o = 0; o < neighbors; o++) {
+//               if ((i == 0 || i == neighbors-1) || (o == 0 || o == neighbors-1)) {
+//                 if (data[startY+i] && data[startY+i][startX+o]) {
+//                   values.push(data[startY+i][startX+o]);
+//                 }
+//               } else {
+//                 continue;
+//               }
+//             }
+//           }
+//         }
+//         if (values.length > 0) {
+//           return Math.max.apply(Math, values);
+//         }
+//       }
+//       return false;
+//     }*/,
+//       };
+//
+//       return Store;
+//     })();
+//
+//     let  Canvas2dRenderer = (function Canvas2dRendererClosure() {
+//       let  _getColorPalette = function (config) {
+//         let  gradientConfig = config.gradient || config.defaultGradient;
+//         let  paletteCanvas = document.createElement('canvas');
+//         let  paletteCtx = paletteCanvas.getContext('2d');
+//
+//         paletteCanvas.width = 256;
+//         paletteCanvas.height = 1;
+//
+//         let  gradient = paletteCtx.createLinearGradient(0, 0, 256, 1);
+//         for (let  key in gradientConfig) {
+//           gradient.addColorStop(key, gradientConfig[key]);
+//         }
+//
+//         paletteCtx.fillStyle = gradient;
+//         paletteCtx.fillRect(0, 0, 256, 1);
+//
+//         return paletteCtx.getImageData(0, 0, 256, 1).data;
+//       };
+//
+//       let  _getPointTemplate = function (radius, blurFactor) {
+//         let  tplCanvas = document.createElement('canvas');
+//         let  tplCtx = tplCanvas.getContext('2d');
+//         let  x = radius;
+//         let  y = radius;
+//         tplCanvas.width = tplCanvas.height = radius * 2;
+//
+//         if (blurFactor == 1) {
+//           tplCtx.beginPath();
+//           tplCtx.arc(x, y, radius, 0, 2 * Math.PI, false);
+//           tplCtx.fillStyle = 'rgba(0,0,0,1)';
+//           tplCtx.fill();
+//         } else {
+//           let  gradient = tplCtx.createRadialGradient(x, y, radius * blurFactor, x, y, radius);
+//           gradient.addColorStop(0, 'rgba(0,0,0,1)');
+//           gradient.addColorStop(1, 'rgba(0,0,0,0)');
+//           tplCtx.fillStyle = gradient;
+//           tplCtx.fillRect(0, 0, 2 * radius, 2 * radius);
+//         }
+//
+//         return tplCanvas;
+//       };
+//
+//       let  _prepareData = function (data) {
+//         let  renderData = [];
+//         let  min = data.min;
+//         let  max = data.max;
+//         let  radi = data.radi;
+//         let  data = data.data;
+//
+//         let  xValues = Object.keys(data);
+//         let  xValuesLen = xValues.length;
+//
+//         while (xValuesLen--) {
+//           let  xValue = xValues[xValuesLen];
+//           let  yValues = Object.keys(data[xValue]);
+//           let  yValuesLen = yValues.length;
+//           while (yValuesLen--) {
+//             let  yValue = yValues[yValuesLen];
+//             let  value = data[xValue][yValue];
+//             let  radius = radi[xValue][yValue];
+//             renderData.push({
+//               x: xValue,
+//               y: yValue,
+//               value: value,
+//               radius: radius,
+//             });
+//           }
+//         }
+//
+//         return {
+//           min: min,
+//           max: max,
+//           data: renderData,
+//         };
+//       };
+//
+//       function Canvas2dRenderer(config) {
+//         let  container = config.element;
+//         let  shadowCanvas = (this.shadowCanvas = document.createElement('canvas'));
+//         let  canvas = (this.canvas = config.canvas || document.createElement('canvas'));
+//         let  renderBoundaries = (this._renderBoundaries = [10000, 10000, 0, 0]);
+//
+//         let  computed = getComputedStyle(config.element) || {};
+//
+//         canvas.className = 'heatmap-canvas';
+//
+//         this._width = canvas.width = shadowCanvas.width = +computed.width.replace(/px/, '');
+//         this._height = canvas.height = shadowCanvas.height = +computed.height.replace(/px/, '');
+//
+//         this.shadowCtx = shadowCanvas.getContext('2d');
+//         this.ctx = canvas.getContext('2d');
+//
+//         // @TODO:
+//         // conditional wrapper
+//
+//         canvas.style.cssText = shadowCanvas.style.cssText = 'position:absolute;left:0;top:0;';
+//
+//         container.style.position = 'relative';
+//         container.appendChild(canvas);
+//
+//         this._palette = _getColorPalette(config);
+//         this._templates = {};
+//
+//         this._setStyles(config);
+//       }
+//
+//       Canvas2dRenderer.prototype = {
+//         renderPartial: function (data) {
+//           this._drawAlpha(data);
+//           this._colorize();
+//         },
+//         renderAll: function (data) {
+//           // reset render boundaries
+//           this._clear();
+//           this._drawAlpha(_prepareData(data));
+//           this._colorize();
+//         },
+//         _updateGradient: function (config) {
+//           this._palette = _getColorPalette(config);
+//         },
+//         updateConfig: function (config) {
+//           if (config['gradient']) {
+//             this._updateGradient(config);
+//           }
+//           this._setStyles(config);
+//         },
+//         setDimensions: function (width, height) {
+//           this._width = width;
+//           this._height = height;
+//           this.canvas.width = this.shadowCanvas.width = width;
+//           this.canvas.height = this.shadowCanvas.height = height;
+//         },
+//         _clear: function () {
+//           this.shadowCtx.clearRect(0, 0, this._width, this._height);
+//           this.ctx.clearRect(0, 0, this._width, this._height);
+//         },
+//         _setStyles: function (config) {
+//           this._blur = config.blur == 0 ? 0 : config.blur || config.defaultBlur;
+//
+//           if (config.backgroundColor) {
+//             this.canvas.style.backgroundColor = config.backgroundColor;
+//           }
+//
+//           this._opacity = (config.opacity || 0) * 255;
+//           this._maxOpacity = (config.maxOpacity || config.defaultMaxOpacity) * 255;
+//           this._minOpacity = (config.minOpacity || config.defaultMinOpacity) * 255;
+//           this._useGradientOpacity = !!config.useGradientOpacity;
+//         },
+//         _drawAlpha: function (data) {
+//           let  min = (this._min = data.min);
+//           let  max = (this._max = data.max);
+//           let  data = data.data || [];
+//           let  dataLen = data.length;
+//           // on a point basis?
+//           let  blur = 1 - this._blur;
+//
+//           while (dataLen--) {
+//             let  point = data[dataLen];
+//
+//             let  x = point.x;
+//             let  y = point.y;
+//             let  radius = point.radius;
+//             // if value is bigger than max
+//             // use max as value
+//             let  value = Math.min(point.value, max);
+//             let  rectX = x - radius;
+//             let  rectY = y - radius;
+//             let  shadowCtx = this.shadowCtx;
+//
+//             let  tpl;
+//             if (!this._templates[radius]) {
+//               this._templates[radius] = tpl = _getPointTemplate(radius, blur);
+//             } else {
+//               tpl = this._templates[radius];
+//             }
+//             // value from minimum / value range
+//             // => [0, 1]
+//             shadowCtx.globalAlpha = (value - min) / (max - min);
+//
+//             shadowCtx.drawImage(tpl, rectX, rectY);
+//
+//             // update renderBoundaries
+//             if (rectX < this._renderBoundaries[0]) {
+//               this._renderBoundaries[0] = rectX;
+//             }
+//             if (rectY < this._renderBoundaries[1]) {
+//               this._renderBoundaries[1] = rectY;
+//             }
+//             if (rectX + 2 * radius > this._renderBoundaries[2]) {
+//               this._renderBoundaries[2] = rectX + 2 * radius;
+//             }
+//             if (rectY + 2 * radius > this._renderBoundaries[3]) {
+//               this._renderBoundaries[3] = rectY + 2 * radius;
+//             }
+//           }
+//         },
+//         _colorize: function () {
+//           let  x = this._renderBoundaries[0];
+//           let  y = this._renderBoundaries[1];
+//           let  width = this._renderBoundaries[2] - x;
+//           let  height = this._renderBoundaries[3] - y;
+//           let  maxWidth = this._width;
+//           let  maxHeight = this._height;
+//           let  opacity = this._opacity;
+//           let  maxOpacity = this._maxOpacity;
+//           let  minOpacity = this._minOpacity;
+//           let  useGradientOpacity = this._useGradientOpacity;
+//
+//           if (x < 0) {
+//             x = 0;
+//           }
+//           if (y < 0) {
+//             y = 0;
+//           }
+//           if (x + width > maxWidth) {
+//             width = maxWidth - x;
+//           }
+//           if (y + height > maxHeight) {
+//             height = maxHeight - y;
+//           }
+//
+//           let  img = this.shadowCtx.getImageData(x, y, width, height);
+//           let  imgData = img.data;
+//           let  len = imgData.length;
+//           let  palette = this._palette;
+//
+//           for (let  i = 3; i < len; i += 4) {
+//             let  alpha = imgData[i];
+//             let  offset = alpha * 4;
+//
+//             if (!offset) {
+//               continue;
+//             }
+//
+//             let  finalAlpha;
+//             if (opacity > 0) {
+//               finalAlpha = opacity;
+//             } else {
+//               if (alpha < maxOpacity) {
+//                 if (alpha < minOpacity) {
+//                   finalAlpha = minOpacity;
+//                 } else {
+//                   finalAlpha = alpha;
+//                 }
+//               } else {
+//                 finalAlpha = maxOpacity;
+//               }
+//             }
+//
+//             imgData[i - 3] = palette[offset];
+//             imgData[i - 2] = palette[offset + 1];
+//             imgData[i - 1] = palette[offset + 2];
+//             imgData[i] = useGradientOpacity ? palette[offset + 3] : finalAlpha;
+//           }
+//
+//           img.data = imgData;
+//           this.ctx.putImageData(img, x, y);
+//
+//           this._renderBoundaries = [1000, 1000, 0, 0];
+//         },
+//         getValueAt: function (point) {
+//           let  value;
+//           let  shadowCtx = this.shadowCtx;
+//           let  img = shadowCtx.getImageData(point.x, point.y, 1, 1);
+//           let  data = img.data[3];
+//           let  max = this._max;
+//           let  min = this._min;
+//
+//           value = (Math.abs(max - min) * (data / 255)) >> 0;
+//
+//           return value;
+//         },
+//         getDataURL: function () {
+//           return this.canvas.toDataURL();
+//         },
+//       };
+//
+//       return Canvas2dRenderer;
+//     })();
+//
+//     let  Renderer = (function RendererClosure() {
+//       let  rendererFn = false;
+//
+//       if (HeatmapConfig['defaultRenderer'] === 'canvas2d') {
+//         rendererFn = Canvas2dRenderer;
+//       }
+//
+//       return rendererFn;
+//     })();
+//
+//     let  Util = {
+//       merge: function () {
+//         let  merged = {};
+//         let  argsLen = arguments.length;
+//         for (let  i = 0; i < argsLen; i++) {
+//           let  obj = arguments[i];
+//           for (let  key in obj) {
+//             merged[key] = obj[key];
+//           }
+//         }
+//         return merged;
+//       },
+//     };
+//     // Heatmap Constructor
+//     let  Heatmap = (function HeatmapClosure() {
+//       let  Coordinator = (function CoordinatorClosure() {
+//         function Coordinator() {
+//           this.cStore = {};
+//         }
+//
+//         Coordinator.prototype = {
+//           on: function (evtName, callback, scope) {
+//             let  cStore = this.cStore;
+//
+//             if (!cStore[evtName]) {
+//               cStore[evtName] = [];
+//             }
+//             cStore[evtName].push(function (data) {
+//               return callback.call(scope, data);
+//             });
+//           },
+//           emit: function (evtName, data) {
+//             let  cStore = this.cStore;
+//             if (cStore[evtName]) {
+//               let  len = cStore[evtName].length;
+//               for (let  i = 0; i < len; i++) {
+//                 let  callback = cStore[evtName][i];
+//                 callback(data);
+//               }
+//             }
+//           },
+//         };
+//
+//         return Coordinator;
+//       })();
+//
+//       let  _connect = function (scope) {
+//         let  renderer = scope._renderer;
+//         let  coordinator = scope._coordinator;
+//         let  store = scope._store;
+//
+//         coordinator.on('renderpartial', renderer.renderPartial, renderer);
+//         coordinator.on('renderall', renderer.renderAll, renderer);
+//         coordinator.on('extremachange', function (data) {
+//           scope._config.onExtremaChange &&
+//             scope._config.onExtremaChange({
+//               min: data.min,
+//               max: data.max,
+//               gradient: scope._config['gradient'] || scope._config['defaultGradient'],
+//             });
+//         });
+//         store.setCoordinator(coordinator);
+//       };
+//
+//       function Heatmap() {
+//         let  config = (this._config = Util.merge(HeatmapConfig, arguments[0] || {}));
+//         this._coordinator = new Coordinator();
+//         if (config['plugin']) {
+//           let  pluginToLoad = config['plugin'];
+//           if (!HeatmapConfig.plugins[pluginToLoad]) {
+//             throw new Error(
+//               "Plugin '" + pluginToLoad + "' not found. Maybe it was not registered.",
+//             );
+//           } else {
+//             let  plugin = HeatmapConfig.plugins[pluginToLoad];
+//             // set plugin renderer and store
+//             this._renderer = new plugin.renderer(config);
+//             this._store = new plugin.store(config);
+//           }
+//         } else {
+//           this._renderer = new Renderer(config);
+//           this._store = new Store(config);
+//         }
+//         _connect(this);
+//       }
+//
+//       // @TODO:
+//       // add API documentation
+//       Heatmap.prototype = {
+//         addData: function () {
+//           this._store.addData.apply(this._store, arguments);
+//           return this;
+//         },
+//         removeData: function () {
+//           this._store.removeData && this._store.removeData.apply(this._store, arguments);
+//           return this;
+//         },
+//         setData: function () {
+//           this._store.setData.apply(this._store, arguments);
+//           return this;
+//         },
+//         setDataMax: function () {
+//           this._store.setDataMax.apply(this._store, arguments);
+//           return this;
+//         },
+//         setDataMin: function () {
+//           this._store.setDataMin.apply(this._store, arguments);
+//           return this;
+//         },
+//         configure: function (config) {
+//           this._config = Util.merge(this._config, config);
+//           this._renderer.updateConfig(this._config);
+//           this._coordinator.emit('renderall', this._store._getInternalData());
+//           return this;
+//         },
+//         repaint: function () {
+//           this._coordinator.emit('renderall', this._store._getInternalData());
+//           return this;
+//         },
+//         getData: function () {
+//           return this._store.getData();
+//         },
+//         getDataURL: function () {
+//           return this._renderer.getDataURL();
+//         },
+//         getValueAt: function (point) {
+//           if (this._store.getValueAt) {
+//             return this._store.getValueAt(point);
+//           } else if (this._renderer.getValueAt) {
+//             return this._renderer.getValueAt(point);
+//           } else {
+//             return null;
+//           }
+//         },
+//       };
+//
+//       return Heatmap;
+//     })();
+//
+//     // core
+//     let  heatmapFactory = {
+//       create: function (config) {
+//         return new Heatmap(config);
+//       },
+//       register: function (pluginKey, plugin) {
+//         HeatmapConfig.plugins[pluginKey] = plugin;
+//       },
+//     };
+//
+//     return heatmapFactory;
+//   },
+// );
+/*==============================以上部分为heatmap.js的核心代码,只负责热力图的展现====================================*/
+/*==============================以下部分为专为百度地图打造的覆盖物===================================================*/
+/**
+ * @fileoverview 百度地图的热力图功能,对外开放。
+ * 主要基于http://www.patrick-wied.at/static/heatmapjs/index.html 修改而得
+
+ * 主入口类是<a href="symbols/BMapLib.Heatmap.html">Heatmap</a>，
+ * 基于Baidu Map API 2.0。
+ *
+ * @author Baidu Map Api Group
+ * @version 1.0
+ */
+function create() {
+    // Heatmap Config stores default values and will be merged with instance config
+    var HeatmapConfig = {
+        defaultRadius: 40,
+        defaultRenderer: 'canvas2d',
+        defaultGradient: {
+            0.45: 'rgb(0,0,255)',
+            0.55: 'rgb(0,255,255)',
+            0.65: 'rgb(0,255,0)',
+            0.95: 'yellow',
+            1.0: 'rgb(255,0,0)',
+        },
+        defaultMaxOpacity: 1,
+        defaultMinOpacity: 0,
+        defaultBlur: 0.85,
+        defaultXField: 'x',
+        defaultYField: 'y',
+        defaultValueField: 'value',
+        plugins: {},
+    };
+    var Store = (function StoreClosure() {
+        var Store = function Store(config) {
+            this._coordinator = {};
+            this._data = [];
+            this._radi = [];
+            this._min = 0;
+            this._max = 1;
+            this._xField = config['xField'] || config.defaultXField;
+            this._yField = config['yField'] || config.defaultYField;
+            this._valueField = config['valueField'] || config.defaultValueField;
+            if (config['radius']) {
+                this._cfgRadius = config['radius'];
+            }
+        };
+        var defaultRadius = HeatmapConfig.defaultRadius;
+        Store.prototype = {
+            // when forceRender = false -> called from setData, omits renderall event
+            _organiseData: function (dataPoint, forceRender) {
+                var x = dataPoint[this._xField];
+                var y = dataPoint[this._yField];
+                var radi = this._radi;
+                var store = this._data;
+                var max = this._max;
+                var min = this._min;
+                var value = dataPoint[this._valueField] || 1;
+                var radius = dataPoint.radius || this._cfgRadius || defaultRadius;
+                if (!store[x]) {
+                    store[x] = [];
+                    radi[x] = [];
+                }
+                if (!store[x][y]) {
+                    store[x][y] = value;
+                    radi[x][y] = radius;
+                }
+                else {
+                    store[x][y] += value;
+                }
+                if (store[x][y] > max) {
+                    if (!forceRender) {
+                        this._max = store[x][y];
+                    }
+                    else {
+                        this.setDataMax(store[x][y]);
+                    }
+                    return false;
+                }
+                else {
+                    return {
+                        x: x,
+                        y: y,
+                        value: value,
+                        radius: radius,
+                        min: min,
+                        max: max,
+                    };
+                }
+            },
+            _unOrganizeData: function () {
+                var unorganizedData = [];
+                var data = this._data;
+                var radi = this._radi;
+                for (var x in data) {
+                    for (var y in data[x]) {
+                        unorganizedData.push({
+                            x: x,
+                            y: y,
+                            radius: radi[x][y],
+                            value: data[x][y],
+                        });
+                    }
+                }
+                return {
+                    min: this._min,
+                    max: this._max,
+                    data: unorganizedData,
+                };
+            },
+            _onExtremaChange: function () {
+                this._coordinator.emit('extremachange', {
+                    min: this._min,
+                    max: this._max,
+                });
+            },
+            addData: function () {
+                if (arguments[0].length > 0) {
+                    var dataArr = arguments[0];
+                    var dataLen = dataArr.length;
+                    while (dataLen--) {
+                        this.addData.call(this, dataArr[dataLen]);
+                    }
+                }
+                else {
+                    // add to store
+                    var organisedEntry = this._organiseData(arguments[0], true);
+                    if (organisedEntry) {
+                        this._coordinator.emit('renderpartial', {
+                            min: this._min,
+                            max: this._max,
+                            data: [organisedEntry],
+                        });
+                    }
+                }
+                return this;
+            },
+            setData: function (data) {
+                var dataPoints = data.data;
+                var pointsLen = dataPoints.length;
+                // reset data arrays
+                this._data = [];
+                this._radi = [];
+                for (var i = 0; i < pointsLen; i++) {
+                    this._organiseData(dataPoints[i], false);
+                }
+                this._max = data.max;
+                this._min = data.min || 0;
+                this._onExtremaChange();
+                this._coordinator.emit('renderall', this._getInternalData());
+                return this;
+            },
+            removeData: function () {
+                // TODO: implement
+            },
+            setDataMax: function (max) {
+                this._max = max;
+                this._onExtremaChange();
+                this._coordinator.emit('renderall', this._getInternalData());
+                return this;
+            },
+            setDataMin: function (min) {
+                this._min = min;
+                this._onExtremaChange();
+                this._coordinator.emit('renderall', this._getInternalData());
+                return this;
+            },
+            setCoordinator: function (coordinator) {
+                this._coordinator = coordinator;
+            },
+            _getInternalData: function () {
+                return {
+                    max: this._max,
+                    min: this._min,
+                    data: this._data,
+                    radi: this._radi,
+                };
+            },
+            getData: function () {
+                return this._unOrganizeData();
+            } /*,
+      
+            TODO: rethink.
+      
+          getValueAt: function(point) {
+            var   value;
+            var   radius = 100;
+            var   x = point.x;
+            var   y = point.y;
+            var   data = this._data;
+      
+            if (data[x] && data[x][y]) {
+              return data[x][y];
+            } else {
+              var   values = [];
+              // radial search for datapoints based on default radius
+              for(var   distance = 1; distance < radius; distance++) {
+                var   neighbors = distance * 2 +1;
+                var   startX = x - distance;
+                var   startY = y - distance;
+      
+                for(var   i = 0; i < neighbors; i++) {
+                  for (var   o = 0; o < neighbors; o++) {
+                    if ((i == 0 || i == neighbors-1) || (o == 0 || o == neighbors-1)) {
+                      if (data[startY+i] && data[startY+i][startX+o]) {
+                        values.push(data[startY+i][startX+o]);
+                      }
+                    } else {
+                      continue;
+                    }
+                  }
+                }
+              }
+              if (values.length > 0) {
+                return Math.max.apply(Math, values);
+              }
+            }
+            return false;
+          }*/,
+        };
+        return Store;
+    })();
+    var Canvas2dRenderer = (function Canvas2dRendererClosure() {
+        var _getColorPalette = function (config) {
+            var gradientConfig = config.gradient || config.defaultGradient;
+            var paletteCanvas = document.createElement('canvas');
+            var paletteCtx = paletteCanvas.getContext('2d');
+            paletteCanvas.width = 256;
+            paletteCanvas.height = 1;
+            var gradient = paletteCtx.createLinearGradient(0, 0, 256, 1);
+            for (var key in gradientConfig) {
+                gradient.addColorStop(key, gradientConfig[key]);
+            }
+            paletteCtx.fillStyle = gradient;
+            paletteCtx.fillRect(0, 0, 256, 1);
+            return paletteCtx.getImageData(0, 0, 256, 1).data;
+        };
+        var _getPointTemplate = function (radius, blurFactor) {
+            var tplCanvas = document.createElement('canvas');
+            var tplCtx = tplCanvas.getContext('2d');
+            var x = radius;
+            var y = radius;
+            tplCanvas.width = tplCanvas.height = radius * 2;
+            if (blurFactor == 1) {
+                tplCtx.beginPath();
+                tplCtx.arc(x, y, radius, 0, 2 * Math.PI, false);
+                tplCtx.fillStyle = 'rgba(0,0,0,1)';
+                tplCtx.fill();
+            }
+            else {
+                var gradient = tplCtx.createRadialGradient(x, y, radius * blurFactor, x, y, radius);
+                gradient.addColorStop(0, 'rgba(0,0,0,1)');
+                gradient.addColorStop(1, 'rgba(0,0,0,0)');
+                tplCtx.fillStyle = gradient;
+                tplCtx.fillRect(0, 0, 2 * radius, 2 * radius);
+            }
+            return tplCanvas;
+        };
+        var _prepareData = function (data) {
+            var renderData = [];
+            var min = data.min;
+            var max = data.max;
+            var radi = data.radi;
+            var data = data.data;
+            var xValues = Object.keys(data);
+            var xValuesLen = xValues.length;
+            while (xValuesLen--) {
+                var xValue = xValues[xValuesLen];
+                var yValues = Object.keys(data[xValue]);
+                var yValuesLen = yValues.length;
+                while (yValuesLen--) {
+                    var yValue = yValues[yValuesLen];
+                    var value = data[xValue][yValue];
+                    var radius = radi[xValue][yValue];
+                    renderData.push({
+                        x: xValue,
+                        y: yValue,
+                        value: value,
+                        radius: radius,
+                    });
+                }
+            }
+            return {
+                min: min,
+                max: max,
+                data: renderData,
+            };
+        };
+        function Canvas2dRenderer(config) {
+            var container = config.element;
+            var shadowCanvas = (this.shadowCanvas = document.createElement('canvas'));
+            var canvas = (this.canvas = config.canvas || document.createElement('canvas'));
+            var renderBoundaries = (this._renderBoundaries = [10000, 10000, 0, 0]);
+            var computed = getComputedStyle(config.element) || {};
+            canvas.className = 'heatmap-canvas';
+            this._width = canvas.width = shadowCanvas.width = +computed.width.replace(/px/, '');
+            this._height = canvas.height = shadowCanvas.height = +computed.height.replace(/px/, '');
+            this.shadowCtx = shadowCanvas.getContext('2d');
+            this.ctx = canvas.getContext('2d');
+            // @TODO:
+            // conditional wrapper
+            canvas.style.cssText = shadowCanvas.style.cssText = 'position:absolute;left:0;top:0;';
+            container.style.position = 'relative';
+            container.appendChild(canvas);
+            this._palette = _getColorPalette(config);
+            this._templates = {};
+            this._setStyles(config);
+        }
+        Canvas2dRenderer.prototype = {
+            renderPartial: function (data) {
+                this._drawAlpha(data);
+                this._colorize();
+            },
+            renderAll: function (data) {
+                // reset render boundaries
+                this._clear();
+                this._drawAlpha(_prepareData(data));
+                this._colorize();
+            },
+            _updateGradient: function (config) {
+                this._palette = _getColorPalette(config);
+            },
+            updateConfig: function (config) {
+                if (config['gradient']) {
+                    this._updateGradient(config);
+                }
+                this._setStyles(config);
+            },
+            setDimensions: function (width, height) {
+                this._width = width;
+                this._height = height;
+                this.canvas.width = this.shadowCanvas.width = width;
+                this.canvas.height = this.shadowCanvas.height = height;
+            },
+            _clear: function () {
+                this.shadowCtx.clearRect(0, 0, this._width, this._height);
+                this.ctx.clearRect(0, 0, this._width, this._height);
+            },
+            _setStyles: function (config) {
+                this._blur = config.blur == 0 ? 0 : config.blur || config.defaultBlur;
+                if (config.backgroundColor) {
+                    this.canvas.style.backgroundColor = config.backgroundColor;
+                }
+                this._opacity = (config.opacity || 0) * 255;
+                this._maxOpacity = (config.maxOpacity || config.defaultMaxOpacity) * 255;
+                this._minOpacity = (config.minOpacity || config.defaultMinOpacity) * 255;
+                this._useGradientOpacity = !!config.useGradientOpacity;
+            },
+            _drawAlpha: function (data) {
+                var min = (this._min = data.min);
+                var max = (this._max = data.max);
+                var data = data.data || [];
+                var dataLen = data.length;
+                // on a point basis?
+                var blur = 1 - this._blur;
+                while (dataLen--) {
+                    var point = data[dataLen];
+                    var x = point.x;
+                    var y = point.y;
+                    var radius = point.radius;
+                    // if value is bigger than max
+                    // use max as value
+                    var value = Math.min(point.value, max);
+                    var rectX = x - radius;
+                    var rectY = y - radius;
+                    var shadowCtx = this.shadowCtx;
+                    var tpl;
+                    if (!this._templates[radius]) {
+                        this._templates[radius] = tpl = _getPointTemplate(radius, blur);
+                    }
+                    else {
+                        tpl = this._templates[radius];
+                    }
+                    // value from minimum / value range
+                    // => [0, 1]
+                    shadowCtx.globalAlpha = (value - min) / (max - min);
+                    shadowCtx.drawImage(tpl, rectX, rectY);
+                    // update renderBoundaries
+                    if (rectX < this._renderBoundaries[0]) {
+                        this._renderBoundaries[0] = rectX;
+                    }
+                    if (rectY < this._renderBoundaries[1]) {
+                        this._renderBoundaries[1] = rectY;
+                    }
+                    if (rectX + 2 * radius > this._renderBoundaries[2]) {
+                        this._renderBoundaries[2] = rectX + 2 * radius;
+                    }
+                    if (rectY + 2 * radius > this._renderBoundaries[3]) {
+                        this._renderBoundaries[3] = rectY + 2 * radius;
+                    }
+                }
+            },
+            _colorize: function () {
+                var x = this._renderBoundaries[0];
+                var y = this._renderBoundaries[1];
+                var width = this._renderBoundaries[2] - x;
+                var height = this._renderBoundaries[3] - y;
+                var maxWidth = this._width;
+                var maxHeight = this._height;
+                var opacity = this._opacity;
+                var maxOpacity = this._maxOpacity;
+                var minOpacity = this._minOpacity;
+                var useGradientOpacity = this._useGradientOpacity;
+                if (x < 0) {
+                    x = 0;
+                }
+                if (y < 0) {
+                    y = 0;
+                }
+                if (x + width > maxWidth) {
+                    width = maxWidth - x;
+                }
+                if (y + height > maxHeight) {
+                    height = maxHeight - y;
+                }
+                var img = this.shadowCtx.getImageData(x, y, width, height);
+                var imgData = img.data;
+                var len = imgData.length;
+                var palette = this._palette;
+                for (var i = 3; i < len; i += 4) {
+                    var alpha = imgData[i];
+                    var offset = alpha * 4;
+                    if (!offset) {
+                        continue;
+                    }
+                    var finalAlpha;
+                    if (opacity > 0) {
+                        finalAlpha = opacity;
+                    }
+                    else {
+                        if (alpha < maxOpacity) {
+                            if (alpha < minOpacity) {
+                                finalAlpha = minOpacity;
+                            }
+                            else {
+                                finalAlpha = alpha;
+                            }
+                        }
+                        else {
+                            finalAlpha = maxOpacity;
+                        }
+                    }
+                    imgData[i - 3] = palette[offset];
+                    imgData[i - 2] = palette[offset + 1];
+                    imgData[i - 1] = palette[offset + 2];
+                    imgData[i] = useGradientOpacity ? palette[offset + 3] : finalAlpha;
+                }
+                // img.data = imgData;
+                this.ctx.putImageData(img, x, y);
+                this._renderBoundaries = [1000, 1000, 0, 0];
+            },
+            getValueAt: function (point) {
+                var value;
+                var shadowCtx = this.shadowCtx;
+                var img = shadowCtx.getImageData(point.x, point.y, 1, 1);
+                var data = img.data[3];
+                var max = this._max;
+                var min = this._min;
+                value = (Math.abs(max - min) * (data / 255)) >> 0;
+                return value;
+            },
+            getDataURL: function () {
+                return this.canvas.toDataURL();
+            },
+        };
+        return Canvas2dRenderer;
+    })();
+    var Renderer = (function RendererClosure() {
+        var rendererFn = false;
+        if (HeatmapConfig['defaultRenderer'] === 'canvas2d') {
+            rendererFn = Canvas2dRenderer;
+        }
+        return rendererFn;
+    })();
+    var Util = {
+        merge: function () {
+            var merged = {};
+            var argsLen = arguments.length;
+            for (var i = 0; i < argsLen; i++) {
+                var obj = arguments[i];
+                for (var key in obj) {
+                    merged[key] = obj[key];
+                }
+            }
+            return merged;
+        },
+    };
+    // Heatmap Constructor
+    var Heatmap = (function HeatmapClosure() {
+        var Coordinator = (function CoordinatorClosure() {
+            function Coordinator() {
+                this.cStore = {};
+            }
+            Coordinator.prototype = {
+                on: function (evtName, callback, scope) {
+                    var cStore = this.cStore;
+                    if (!cStore[evtName]) {
+                        cStore[evtName] = [];
+                    }
+                    cStore[evtName].push(function (data) {
+                        return callback.call(scope, data);
+                    });
+                },
+                emit: function (evtName, data) {
+                    var cStore = this.cStore;
+                    if (cStore[evtName]) {
+                        var len = cStore[evtName].length;
+                        for (var i = 0; i < len; i++) {
+                            var callback = cStore[evtName][i];
+                            callback(data);
+                        }
+                    }
+                },
+            };
+            return Coordinator;
+        })();
+        var _connect = function (scope) {
+            var renderer = scope._renderer;
+            var coordinator = scope._coordinator;
+            var store = scope._store;
+            coordinator.on('renderpartial', renderer.renderPartial, renderer);
+            coordinator.on('renderall', renderer.renderAll, renderer);
+            coordinator.on('extremachange', function (data) {
+                scope._config.onExtremaChange &&
+                    scope._config.onExtremaChange({
+                        min: data.min,
+                        max: data.max,
+                        gradient: scope._config['gradient'] || scope._config['defaultGradient'],
+                    });
+            });
+            store.setCoordinator(coordinator);
+        };
+        function Heatmap() {
+            var config = (this._config = Util.merge(HeatmapConfig, arguments[0] || {}));
+            this._coordinator = new Coordinator();
+            if (config['plugin']) {
+                var pluginToLoad = config['plugin'];
+                if (!HeatmapConfig.plugins[pluginToLoad]) {
+                    throw new Error("Plugin '" + pluginToLoad + "' not found. Maybe it was not registered.");
+                }
+                else {
+                    var plugin = HeatmapConfig.plugins[pluginToLoad];
+                    // set plugin renderer and store
+                    this._renderer = new plugin.renderer(config);
+                    this._store = new plugin.store(config);
+                }
+            }
+            else {
+                this._renderer = new Renderer(config);
+                this._store = new Store(config);
+            }
+            _connect(this);
+        }
+        // @TODO:
+        // add API documentation
+        Heatmap.prototype = {
+            addData: function () {
+                this._store.addData.apply(this._store, arguments);
+                return this;
+            },
+            removeData: function () {
+                this._store.removeData && this._store.removeData.apply(this._store, arguments);
+                return this;
+            },
+            setData: function () {
+                this._store.setData.apply(this._store, arguments);
+                return this;
+            },
+            setDataMax: function () {
+                this._store.setDataMax.apply(this._store, arguments);
+                return this;
+            },
+            setDataMin: function () {
+                this._store.setDataMin.apply(this._store, arguments);
+                return this;
+            },
+            configure: function (config) {
+                this._config = Util.merge(this._config, config);
+                this._renderer.updateConfig(this._config);
+                this._coordinator.emit('renderall', this._store._getInternalData());
+                return this;
+            },
+            repaint: function () {
+                this._coordinator.emit('renderall', this._store._getInternalData());
+                return this;
+            },
+            getData: function () {
+                return this._store.getData();
+            },
+            getDataURL: function () {
+                return this._renderer.getDataURL();
+            },
+            getValueAt: function (point) {
+                if (this._store.getValueAt) {
+                    return this._store.getValueAt(point);
+                }
+                else if (this._renderer.getValueAt) {
+                    return this._renderer.getValueAt(point);
+                }
+                else {
+                    return null;
+                }
+            },
+        };
+        return Heatmap;
+    })();
+    // core
+    var heatmapFactory = {
+        create: function (config) {
+            return new Heatmap(config);
+        },
+        register: function (pluginKey, plugin) {
+            HeatmapConfig.plugins[pluginKey] = plugin;
+        },
+    };
+    return heatmapFactory;
+}
+var h337 = create();
+/**
+ * @namespace BMap的所有library类均放在BMapLib命名空间下
+ */
+var BMapLib = (window.BMapLib = BMapLib || {});
+(function () {
+    /**
+     * @exports HeatmapOverlay as BMapLib.HeatmapOverlay
+     */
+    var HeatmapOverlay = 
+    /**
+     * 热力图的覆盖物
+     * @class 热力图的覆盖物
+     * 实例化该类后，使用map.addOverlay即可以添加热力图
+     *
+     * @constructor
+     * @param {Json Object} opts 可选的输入参数，非必填项。可输入选项包括：<br />
+     * {"<b>radius</b>" : {String} 热力图的半径,
+     * <br />"<b>visible</b>" : {Number} 热力图是否显示,
+     * <br />"<b>gradient</b>" : {JSON} 热力图的渐变区间,
+     * <br />"<b>opacity</b>" : {Number} 热力的透明度,
+     *
+     * @example <b>参考示例：</b><br />
+     * var   map = new BMap.Map("container");<br />map.centerAndZoom(new BMap.Point(116.404, 39.915), 15);<br />var   heatmapOverlay = new BMapLib.HeatmapOverlay({"radius":10, "visible":true, "opacity":70});<br />heatmapOverlay.setDataSet(data);//data是热力图的详细数据
+     */
+    (BMapLib.HeatmapOverlay = function (opts) {
+        this.conf = opts;
+        this.conf.visible = opts.visible === undefined ? true : opts.visible;
+        this.heatmap = null;
+        this.latlngs = [];
+        this.bounds = null;
+    });
+    HeatmapOverlay.prototype = new BMap.Overlay();
+    HeatmapOverlay.prototype.initialize = function (map) {
+        this._map = map;
+        var el = document.createElement('div');
+        el.style.position = 'absolute';
+        el.style.top = 0;
+        el.style.left = 0;
+        el.style.border = 0;
+        el.style.width = this._map.getSize().width + 'px';
+        el.style.height = this._map.getSize().height + 'px';
+        this.conf.element = el;
+        if (!isSupportCanvas()) {
+            // 判断是否支持Canvas.
+            return el;
+        }
+        map.getPanes().mapPane.appendChild(el);
+        this.conf.valueField = this.conf.valueField || 'count';
+        // if (typeof module !== 'undefined' && module.exports) {
+        //   this.heatmap = module.exports.create(this.conf);
+        // } else {
+        this.heatmap = h337.create(this.conf);
+        // }
+        var that = this;
+        map.addEventListener('resize', function (e) {
+            var size = e.size;
+            el.style.width = size.width + 'px';
+            el.style.height = size.height + 'px';
+            that.heatmap._renderer.setDimensions(size.width, size.height);
+            that.draw();
+        });
+        this._div = el;
+        return el;
+    };
+    HeatmapOverlay.prototype.draw = function () {
+        if (!isSupportCanvas()) {
+            //判断是否支持Canvas.
+            return;
+        }
+        var currentBounds = this._map.getBounds();
+        if (currentBounds.equals(this.bounds)) {
+            return;
+        }
+        this.bounds = currentBounds;
+        var ne = this._map.pointToOverlayPixel(currentBounds.getNorthEast()), sw = this._map.pointToOverlayPixel(currentBounds.getSouthWest()), topY = ne.y, leftX = sw.x, h = sw.y - ne.y, w = ne.x - sw.x;
+        this.conf.element.style.left = leftX + 'px';
+        this.conf.element.style.top = topY + 'px';
+        this.conf.element.style.width = w + 'px';
+        this.conf.element.style.height = h + 'px';
+        //this.heatmap.store.get("heatmap").resize();
+        if (this.latlngs.length > 0) {
+            this.heatmap.removeData();
+            var len = this.latlngs.length;
+            var d = {
+                max: this.heatmap._store.getData().max,
+                data: [],
+            };
+            while (len--) {
+                var latlng = this.latlngs[len].latlng;
+                if (!currentBounds.containsPoint(latlng)) {
+                    continue;
+                }
+                var divPixel = this._map.pointToOverlayPixel(latlng), leftX = this._map.pointToOverlayPixel(currentBounds.getSouthWest()).x, topY = this._map.pointToOverlayPixel(currentBounds.getNorthEast()).y, screenPixel = new BMap.Pixel(divPixel.x - leftX, divPixel.y - topY);
+                var roundedPoint = this.pixelTransform(screenPixel);
+                d.data.push({
+                    x: roundedPoint.x,
+                    y: roundedPoint.y,
+                    count: this.latlngs[len].c,
+                });
+            }
+            if (this.conf.radiusChangeByZoom) {
+                this.heatmap._store._cfgRadius = this.conf.radiusChangeByZoom(this._map.getZoom());
+            }
+            this.heatmap.setData(d);
+        }
+    };
+    //内部使用的坐标转化
+    HeatmapOverlay.prototype.pixelTransform = function (p) {
+        var w = this.heatmap.width, h = this.heatmap.height;
+        while (p.x < 0) {
+            p.x += w;
+        }
+        while (p.x > w) {
+            p.x -= w;
+        }
+        while (p.y < 0) {
+            p.y += h;
+        }
+        while (p.y > h) {
+            p.y -= h;
+        }
+        p.x = p.x >> 0;
+        p.y = p.y >> 0;
+        return p;
+    };
+    /**
+     * 设置热力图展现的详细数据, 实现之后,即可以立刻展现
+     * @param {Json Object } data
+     * {"<b>max</b>" : {Number} 权重的最大值,
+     * <br />"<b>data</b>" : {Array} 坐标详细数据,格式如下 <br/>
+     * {"lng":116.421969,"lat":39.913527,"count":3}, 其中<br/>
+     * lng lat分别为经纬度, count权重值
+     */
+    HeatmapOverlay.prototype.setDataSet = function (data) {
+        this.data = data;
+        if (!isSupportCanvas()) {
+            //判断是否支持Canvas.
+            return;
+        }
+        var currentBounds = this._map.getBounds();
+        var mapdata = {
+            max: data.max,
+            data: [],
+        };
+        var d = data.data, dlen = d.length;
+        this.latlngs = [];
+        this.heatmap.removeData();
+        if (this.conf.radiusChangeByZoom) {
+            this.heatmap._store._cfgRadius = this.conf.radiusChangeByZoom(this._map.getZoom());
+        }
+        while (dlen--) {
+            var latlng = new BMap.Point(d[dlen].lng, d[dlen].lat);
+            this.latlngs.push({
+                latlng: latlng,
+                c: d[dlen].count,
+            });
+            if (!currentBounds.containsPoint(latlng)) {
+                continue;
+            }
+            var divPixel = this._map.pointToOverlayPixel(latlng), leftX = this._map.pointToOverlayPixel(currentBounds.getSouthWest()).x, topY = this._map.pointToOverlayPixel(currentBounds.getNorthEast()).y, screenPixel = new BMap.Pixel(divPixel.x - leftX, divPixel.y - topY);
+            var point = this.pixelTransform(screenPixel);
+            mapdata.data.push({
+                x: point.x,
+                y: point.y,
+                count: d[dlen].count,
+            });
+        }
+        this.heatmap.setData(mapdata);
+    };
+    /**
+     * 添加热力图的详细坐标点
+     * @param {Number} lng 经度坐标
+     * @param {Number} lat 纬度坐标
+     * @param {Number} count 权重
+     */
+    HeatmapOverlay.prototype.addDataPoint = function (lng, lat, count) {
+        if (!isSupportCanvas()) {
+            return;
+        }
+        if (this.data && this.data.data) {
+            this.data.data.push({
+                lng: lng,
+                lat: lat,
+                count: count,
+            });
+        }
+        var latlng = new BMap.Point(lng, lat), point = this.pixelTransform(this._map.pointToOverlayPixel(latlng));
+        this.heatmap.store.addDataPoint(point.x, point.y, count);
+        this.latlngs.push({
+            latlng: latlng,
+            c: count,
+        });
+    };
+    /**
+     * 更改热力图的展现或者关闭
+     */
+    HeatmapOverlay.prototype.toggle = function () {
+        if (!isSupportCanvas()) {
+            //判断是否支持Canvas.
+            return;
+        }
+        if (this.conf.visible === true) {
+            this.conf.visible = false;
+        }
+        else {
+            this.conf.visible = true;
+        }
+        if (this.conf.visible) {
+            this.conf.element.style.display = 'block';
+        }
+        else {
+            this.conf.element.style.display = 'none';
+        }
+    };
+    /**
+     * 设置热力图展现的配置
+     * @param {Json Object} options 可选的输入参数，非必填项。可输入选项包括：<br />
+     * {"<b>radius</b>" : {String} 热力图的半径,
+     * <br />"<b>visible</b>" : {Number} 热力图是否显示,
+     * <br />"<b>gradient</b>" : {JSON} 热力图的渐变区间,
+     * <br />"<b>opacity</b>" : {Number} 热力的透明度,}
+     */
+    HeatmapOverlay.prototype.setOptions = function (options) {
+        if (!isSupportCanvas()) {
+            // 判断是否支持Canvas.
+            return;
+        }
+        for (var key in options) {
+            if (key == 'radius') {
+                this.heatmap._store._cfgRadius = options[key];
+            }
+            if (key == 'opacity') {
+                options[key] = options[key] / 100;
+            }
+        }
+        this.heatmap.configure(options);
+        if (this.data) {
+            this.setDataSet(this.data); // 重新渲染
+        }
+    };
+    function isSupportCanvas() {
+        var elem = document.createElement('canvas');
+        return !!(elem.getContext && elem.getContext('2d'));
+    }
+})();

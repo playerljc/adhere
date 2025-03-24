@@ -1,2 +1,528 @@
-var __extends=this&&this.__extends||function(){var a=function(t,o){return(a=Object.setPrototypeOf||({__proto__:[]}instanceof Array?function(t,o){t.__proto__=o}:function(t,o){for(var i in o)Object.prototype.hasOwnProperty.call(o,i)&&(t[i]=o[i])}))(t,o)};return function(t,o){if("function"!=typeof o&&null!==o)throw new TypeError("Class extends value "+String(o)+" is not a constructor or null");function i(){this.constructor=t}a(t,o),t.prototype=null===o?Object.create(o):(i.prototype=o.prototype,new i)}}(),__assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var o,i=1,a=arguments.length;i<a;i++)for(var e in o=arguments[i])Object.prototype.hasOwnProperty.call(o,e)&&(t[e]=o[e]);return t}).apply(this,arguments)};import MathUtil from"@baifendian/adhere-util";import*as turf from"@turf/turf";import defaultMoveGemStyle from"../DefaultMoveGemStyle";import DiamondDrawAction from"../draw/DiamondDrawAction";import{SelectType}from"../types";import ModifyAction from"./ModifyAction";var DiamondModifyAction=function(o){function t(t){t=o.call(this,t)||this;return t.rectangleAnchorPoints=[],t.indexToModifyHandlerMapping=new Map([[0,t.modifyDataByLeftTop],[1,t.modifyDataByCenterTop],[2,t.modifyDataByRightTop],[3,t.modifyDataByRightCenter],[4,t.modifyDataByRightBottom],[5,t.modifyDataByCenterBottom],[6,t.modifyDataByLeftBottom],[7,t.modifyDataByLeftCenter]]),t.ResizeCursorMapping=new Map([[0,"nwse-resize"],[1,"ns-resize"],[2,"nesw-resize"],[3,"ew-resize"],[4,"nwse-resize"],[5,"ns-resize"],[6,"nesw-resize"],[7,"ew-resize"]]),t}return __extends(t,o),t.prototype.setCursor=function(){throw new Error("Method not implemented.")},t.prototype.drawAnchors=function(){if(this.context){var t=this.context.getCtx();if(t){var o=DiamondDrawAction.transformOriginToReal(this.context,null==(o=null==(o=null==this?void 0:this.data)?void 0:o.data)?void 0:o.data),i=o.leftTopPoint,a=o.width,o=o.height,e=a/2,n=o/2;this.rectangleAnchorPoints=[__assign({},i),{x:i.x+e,y:i.y},{x:i.x+a,y:i.y},{x:i.x+a,y:i.y+n},{x:i.x+a,y:i.y+o},{x:i.x+e,y:i.y+o},{x:i.x,y:i.y+o},{x:i.x,y:i.y+n}];for(var r=0;r<this.rectangleAnchorPoints.length;r++){var s=this.rectangleAnchorPoints[r];t.beginPath(),this.setAnchorCircleStyle(),t.ellipse(s.x,s.y,this.anchorRadius,this.anchorRadius,45*Math.PI/180,0,2*Math.PI),t.stroke(),t.fill()}t.beginPath(),this.setAnchorLineStyle(),t.moveTo(i.x,i.y),t.lineTo(i.x+a,i.y),t.lineTo(i.x+a,i.y+o),t.lineTo(i.x,i.y+o),t.lineTo(i.x,i.y),t.stroke()}}},t.prototype.getPointInAnchor=function(t){if(!this.data)return null;for(var o=null,i=-1,a=0;a<this.rectangleAnchorPoints.length;a++){var e=this.rectangleAnchorPoints[a],n=this.anchorRadius+this.anchorLineWidth;if(MathUtil.isPointInCircle(t,{center:e,radius:n})){o=e,i=a;break}}return o&&-1!==i?{point:o,index:i}:null},t.prototype.setResizeCursorByIndex=function(t){var o,i;this.context&&(o=this.context.getCanvasEl(),i=this.context.getAssistCanvasEl(),o)&&i&&(o.style.cursor=i.style.cursor=this.ResizeCursorMapping.get(t))},t.prototype.drawModify=function(t){var o,i=this.context,a=null==i?void 0:i.getCtx();i&&a&&this.data&&this.startPoint&&(a=i.getHistoryDataById(this.data.data.id))&&(o=this.indexToModifyHandlerMapping.get(this.startIndex))&&o.call(this,t)&&(this.data.data=__assign({},a),i.clearDraw(),i.drawHistoryData(),this.drawAnchors())},t.prototype.drawMove=function(t,o){var i,a=this.context,e=null==a?void 0:a.getCtx();a&&e&&this.data&&(e=a.getHistoryDataById(this.data.data.id))&&(t=a.pixelToPoint(t),i=(o=a.pixelToPoint(o)).x-t.x,o=o.y-t.y,e.data.leftTopPoint.x+=i,e.data.leftTopPoint.y+=o,this.data.data=__assign({},e),a.clearDraw(),a.drawHistoryData(),this.drawAnchors())},t.prototype.getSelectType=function(){return SelectType.Diamond},t.prototype.getBox=function(){var t,o=this.context,i=null==o?void 0:o.getCtx();return o&&i&&this.data&&(i=o.getHistoryDataById(this.data.data.id))?(i=(o=DiamondDrawAction.transformOriginToReal(o,i.data)).leftTopPoint,t=o.width,o=o.height,{leftTop:__assign({},i),rightTop:{x:i.x+t,y:i.y},rightBottom:{x:i.x+t,y:i.y+o},leftBottom:{x:i.x,y:i.y+o}}):null},t.prototype.modifyDataByLeftTop=function(t){var o,i=this.context,a=null==i?void 0:i.getCtx();return!(!(i&&a&&this.data&&this.startPoint)||!(a=i.getHistoryDataById(this.data.data.id))||!(o=this.getBox())||t.x>o.rightTop.x||t.y>o.rightBottom.y||(a.data.leftTopPoint=i.pixelToPoint(t),a.data.width=i.distanceToActual(o.rightTop.x-t.x),a.data.height=i.distanceToActual(o.rightBottom.y-t.y),0))},t.prototype.modifyDataByCenterTop=function(t){var o,i=this.context,a=null==i?void 0:i.getCtx();return!(!(i&&a&&this.data&&this.startPoint)||!(a=i.getHistoryDataById(this.data.data.id))||!(o=this.getBox())||t.y>o.leftBottom.y||(a.data.leftTopPoint=i.pixelToPoint({x:o.leftTop.x,y:t.y}),a.data.height=i.distanceToActual(o.rightBottom.y-t.y),0))},t.prototype.modifyDataByRightTop=function(t){var o,i=this.context,a=null==i?void 0:i.getCtx();return!(!(i&&a&&this.data&&this.startPoint)||!(a=i.getHistoryDataById(this.data.data.id))||!(o=this.getBox())||t.x<o.leftTop.x||t.y>o.leftBottom.y||(a.data.leftTopPoint=i.pixelToPoint({x:o.leftTop.x,y:t.y}),a.data.width=i.distanceToActual(t.x-o.leftTop.x),a.data.height=i.distanceToActual(o.rightBottom.y-t.y),0))},t.prototype.modifyDataByRightCenter=function(t){var o,i=this.context,a=null==i?void 0:i.getCtx();return!(!(i&&a&&this.data&&this.startPoint)||!(a=i.getHistoryDataById(this.data.data.id))||!(o=this.getBox())||t.x<o.leftTop.x||(a.data.width=i.distanceToActual(t.x-o.leftTop.x),0))},t.prototype.modifyDataByRightBottom=function(t){var o,i=this.context,a=null==i?void 0:i.getCtx();return!(!(i&&a&&this.data&&this.startPoint)||!(a=i.getHistoryDataById(this.data.data.id))||!(o=this.getBox())||t.x<o.leftTop.x||t.y<o.leftTop.y||(a.data.width=i.distanceToActual(t.x-o.leftTop.x),a.data.height=i.distanceToActual(t.y-o.leftTop.y),0))},t.prototype.modifyDataByCenterBottom=function(t){var o,i=this.context,a=null==i?void 0:i.getCtx();return!(!(i&&a&&this.data&&this.startPoint)||!(a=i.getHistoryDataById(this.data.data.id))||!(o=this.getBox())||t.y<o.leftTop.y||(a.data.height=i.distanceToActual(t.y-o.leftTop.y),0))},t.prototype.modifyDataByLeftBottom=function(t){var o,i,a=this.context,e=null==a?void 0:a.getCtx();return!(!(a&&e&&this.data&&this.startPoint)||!(e=a.getHistoryDataById(this.data.data.id))||(o=e.data.leftTopPoint,o=a.pointToPixel(o),!(i=this.getBox()))||(t.x>i.rightBottom.x||t.y<i.rightTop.y||(e.data.leftTopPoint=a.pixelToPoint({x:t.x,y:o.y}),e.data.width=a.distanceToActual(i.rightBottom.x-t.x),e.data.height=a.distanceToActual(t.y-i.rightTop.y),0)))},t.prototype.modifyDataByLeftCenter=function(t){var o,i,a=this.context,e=null==a?void 0:a.getCtx();return!(!(a&&e&&this.data&&this.startPoint)||!(e=a.getHistoryDataById(this.data.data.id))||(o=e.data.leftTopPoint,o=a.pointToPixel(o),!(i=this.getBox()))||(t.x>i.rightBottom.x||(e.data.leftTopPoint=a.pixelToPoint({x:t.x,y:o.y}),e.data.width=a.distanceToActual(i.rightBottom.x-t.x),0)))},t.prototype.isCanMove=function(t){var o,i,a,e,n,r;return!!this.data&&(o=(i=DiamondDrawAction.transformOriginToReal(this.context,null==(i=null==(i=null==this?void 0:this.data)?void 0:i.data)?void 0:i.data)).leftTopPoint,a=(r=i.width)/2,e=(i=i.height)/2,n=turf.point([t.x,t.y]),r=turf.polygon([[[o.x,o.y+e],[o.x+a,o.y],[o.x+r,o.y+e],[o.x+a,o.y+i],[o.x,o.y+e]]]),turf.booleanPointInPolygon(n,r))&&!this.getPointInAnchor(t)},t.prototype.drawMoveGeometry=function(){this.context&&this.data&&DiamondDrawAction.draw(this.context,this.context.getAssistCtx(),this.data)},t.prototype.drawMoveGeometry=function(t,o){var i,a;this.context&&this.data&&t&&o&&((i=__assign({},this.data.data)).data=__assign(__assign({},i.data),{leftTopPoint:__assign({},i.data.leftTopPoint)}),t=this.context.pixelToPoint(t),a=(o=this.context.pixelToPoint(o)).x-t.x,o=o.y-t.y,i.data)&&i.data.leftTopPoint&&(i.data.leftTopPoint.x+=a,i.data.leftTopPoint.y+=o,i.style&&(i.style.globalAlpha=defaultMoveGemStyle.globalAlpha,i.style.strokeStyle=defaultMoveGemStyle.strokeStyle,i.style.lineWidth=defaultMoveGemStyle.lineWidth,i.style.lineDash=defaultMoveGemStyle.lineDash,i.style.lineDashOffset=defaultMoveGemStyle.lineDashOffset),DiamondDrawAction.draw(this.context,this.context.getAssistCtx(),i))},t.prototype.destroy=function(){this.startIndex=-1,o.prototype.destroy.call(this)},t}(ModifyAction);export default DiamondModifyAction;
-//# sourceMappingURL=DiamondModifyAction.js.map
+import MathUtil from '@baifendian/adhere-util';
+import * as turf from '@turf/turf';
+import defaultMoveGemStyle from '../DefaultMoveGemStyle';
+import DiamondDrawAction from '../draw/DiamondDrawAction';
+import { SelectType } from '../types';
+import ModifyAction from './ModifyAction';
+/**
+ * DiamondModifyAction
+ * @class DiamondModifyAction
+ * @classdesc - 菱形修改
+ * @remark:
+ */
+class DiamondModifyAction extends ModifyAction {
+    setCursor() {
+        throw new Error('Method not implemented.');
+    }
+    rectangleAnchorPoints = [];
+    indexToModifyHandlerMapping = new Map([
+        [0, this.modifyDataByLeftTop],
+        [1, this.modifyDataByCenterTop],
+        [2, this.modifyDataByRightTop],
+        [3, this.modifyDataByRightCenter],
+        [4, this.modifyDataByRightBottom],
+        [5, this.modifyDataByCenterBottom],
+        [6, this.modifyDataByLeftBottom],
+        [7, this.modifyDataByLeftCenter],
+    ]);
+    ResizeCursorMapping = new Map([
+        [0, 'nwse-resize'],
+        [1, 'ns-resize'],
+        [2, 'nesw-resize'],
+        [3, 'ew-resize'],
+        [4, 'nwse-resize'],
+        [5, 'ns-resize'],
+        [6, 'nesw-resize'],
+        [7, 'ew-resize'],
+    ]);
+    constructor(data) {
+        super(data);
+    }
+    /**
+     * drawAnchors
+     * circle有4个anchor，上，下，左，右
+     */
+    drawAnchors() {
+        if (!this.context)
+            return;
+        const ctx = this.context.getCtx();
+        if (!ctx)
+            return;
+        const { leftTopPoint, width, height } = DiamondDrawAction.transformOriginToReal(this.context, this?.data?.data?.data);
+        const widthHalf = width / 2;
+        const heightHalf = height / 2;
+        this.rectangleAnchorPoints = [
+            {
+                ...leftTopPoint,
+            },
+            {
+                x: leftTopPoint.x + widthHalf,
+                y: leftTopPoint.y,
+            },
+            {
+                x: leftTopPoint.x + width,
+                y: leftTopPoint.y,
+            },
+            {
+                x: leftTopPoint.x + width,
+                y: leftTopPoint.y + heightHalf,
+            },
+            {
+                x: leftTopPoint.x + width,
+                y: leftTopPoint.y + height,
+            },
+            {
+                x: leftTopPoint.x + widthHalf,
+                y: leftTopPoint.y + height,
+            },
+            {
+                x: leftTopPoint.x,
+                y: leftTopPoint.y + height,
+            },
+            {
+                x: leftTopPoint.x,
+                y: leftTopPoint.y + heightHalf,
+            },
+        ];
+        // 4个角,4条边中心点 顺时针绘制
+        for (let i = 0; i < this.rectangleAnchorPoints.length; i++) {
+            const point = this.rectangleAnchorPoints[i];
+            ctx.beginPath();
+            this.setAnchorCircleStyle();
+            ctx.ellipse(point.x, point.y, this.anchorRadius, this.anchorRadius, (45 * Math.PI) / 180, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fill();
+        }
+        // 矩形绘制
+        ctx.beginPath();
+        this.setAnchorLineStyle();
+        ctx.moveTo(leftTopPoint.x, leftTopPoint.y);
+        ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y);
+        ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y + height);
+        ctx.lineTo(leftTopPoint.x, leftTopPoint.y + height);
+        ctx.lineTo(leftTopPoint.x, leftTopPoint.y);
+        ctx.stroke();
+    }
+    /**
+     * getPointInAnchor
+     * @param targetPoint
+     * @return IPoint | null
+     */
+    getPointInAnchor(targetPoint) {
+        if (!this.data)
+            return null;
+        let point = null;
+        let index = -1;
+        for (let i = 0; i < this.rectangleAnchorPoints.length; i++) {
+            const center = this.rectangleAnchorPoints[i];
+            const radius = this.anchorRadius + this.anchorLineWidth;
+            if (MathUtil.isPointInCircle(targetPoint, { center, radius })) {
+                point = center;
+                index = i;
+                break;
+            }
+        }
+        if (point && index !== -1) {
+            return {
+                point,
+                index,
+            };
+        }
+        return null;
+    }
+    /**
+     * setResizeCursorByIndex
+     * @param index
+     */
+    setResizeCursorByIndex(index) {
+        if (!this.context)
+            return;
+        const canvasEl = this.context.getCanvasEl();
+        const assistCanvasEl = this.context.getAssistCanvasEl();
+        if (!canvasEl || !assistCanvasEl)
+            return;
+        canvasEl.style.cursor = assistCanvasEl.style.cursor = this.ResizeCursorMapping.get(index);
+    }
+    /**
+     * drawModify
+     * @param targetPoint
+     */
+    drawModify(targetPoint) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return;
+        // 判断index 0 1 2 3 4 5 6 7的情况下各自怎么修改leftTopPoint,width,height
+        const handler = this.indexToModifyHandlerMapping.get(this.startIndex);
+        if (!handler)
+            return;
+        const result = handler.call(this, targetPoint);
+        if (!result)
+            return;
+        this.data.data = {
+            ...data,
+        };
+        context.clearDraw();
+        context.drawHistoryData();
+        this.drawAnchors();
+    }
+    /**
+     * drawMove
+     * @param startPixel
+     * @param targetPixel
+     */
+    drawMove(startPixel, targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data)
+            return;
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return;
+        const startPoint = context.pixelToPoint(startPixel);
+        const targetPoint = context.pixelToPoint(targetPixel);
+        const offsetX = targetPoint.x - startPoint.x;
+        const offsetY = targetPoint.y - startPoint.y;
+        data.data.leftTopPoint.x += offsetX;
+        data.data.leftTopPoint.y += offsetY;
+        this.data.data = {
+            ...data,
+        };
+        context.clearDraw();
+        context.drawHistoryData();
+        this.drawAnchors();
+    }
+    /**
+     * getSelectType
+     */
+    getSelectType() {
+        return SelectType.Diamond;
+    }
+    /**
+     * getBox
+     */
+    getBox() {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data)
+            return null;
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return null;
+        const { leftTopPoint, width, height } = DiamondDrawAction.transformOriginToReal(context, data.data);
+        return {
+            leftTop: { ...leftTopPoint },
+            rightTop: { x: leftTopPoint.x + width, y: leftTopPoint.y },
+            rightBottom: { x: leftTopPoint.x + width, y: leftTopPoint.y + height },
+            leftBottom: { x: leftTopPoint.x, y: leftTopPoint.y + height },
+        };
+    }
+    /**
+     *
+     * @param targetPixel
+     */
+    modifyDataByLeftTop(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return false;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return false;
+        // 计算出四个角的坐标
+        const box = this.getBox();
+        if (!box)
+            return false;
+        // 范围限制
+        if (targetPixel.x > box.rightTop.x || targetPixel.y > box.rightBottom.y)
+            return false;
+        // 修改
+        data.data.leftTopPoint = context.pixelToPoint(targetPixel);
+        data.data.width = context.distanceToActual(box.rightTop.x - targetPixel.x);
+        data.data.height = context.distanceToActual(box.rightBottom.y - targetPixel.y);
+        return true;
+    }
+    /**
+     * modifyDataByCenterTop
+     * @param targetPixel
+     */
+    modifyDataByCenterTop(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return false;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return false;
+        // const { width } = data.data;
+        // 计算出四个角的坐标
+        const box = this.getBox();
+        if (!box)
+            return false;
+        // 范围限制
+        if (targetPixel.y > box.leftBottom.y)
+            return false;
+        // 修改
+        data.data.leftTopPoint = context.pixelToPoint({
+            x: box.leftTop.x,
+            y: targetPixel.y,
+        });
+        // data.data.width = context.distanceToActual(width);
+        data.data.height = context.distanceToActual(box.rightBottom.y - targetPixel.y);
+        return true;
+    }
+    /**
+     * modifyDataByRightTop
+     * @param targetPixel
+     */
+    modifyDataByRightTop(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return false;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return false;
+        // 计算出四个角的坐标
+        const box = this.getBox();
+        if (!box)
+            return false;
+        // 范围限制
+        if (targetPixel.x < box.leftTop.x || targetPixel.y > box.leftBottom.y)
+            return false;
+        // 修改
+        data.data.leftTopPoint = context.pixelToPoint({
+            x: box.leftTop.x,
+            y: targetPixel.y,
+        });
+        data.data.width = context.distanceToActual(targetPixel.x - box.leftTop.x);
+        data.data.height = context.distanceToActual(box.rightBottom.y - targetPixel.y);
+        return true;
+    }
+    /**
+     * modifyDataByRightCenter
+     * @param targetPixel
+     */
+    modifyDataByRightCenter(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return false;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return false;
+        // const { leftTopPoint, height } = data.data;
+        // 计算出四个角的坐标
+        // 计算出四个角的坐标
+        const box = this.getBox();
+        if (!box)
+            return false;
+        // 范围限制
+        if (targetPixel.x < box.leftTop.x)
+            return false;
+        // 修改
+        // data.data.leftTopPoint = { ...leftTopPoint };
+        data.data.width = context.distanceToActual(targetPixel.x - box.leftTop.x);
+        // data.data.height = height;
+        return true;
+    }
+    /**
+     * modifyDataByRightBottom
+     * @param targetPixel
+     */
+    modifyDataByRightBottom(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return false;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return false;
+        // const { leftTopPoint } = data.data;
+        // 计算出四个角的坐标
+        // 计算出四个角的坐标
+        const box = this.getBox();
+        if (!box)
+            return false;
+        // 范围限制
+        if (targetPixel.x < box.leftTop.x || targetPixel.y < box.leftTop.y)
+            return false;
+        // 修改
+        // data.data.leftTopPoint = { ...leftTopPoint };
+        data.data.width = context.distanceToActual(targetPixel.x - box.leftTop.x);
+        data.data.height = context.distanceToActual(targetPixel.y - box.leftTop.y);
+        return true;
+    }
+    /**
+     * modifyDataByCenterBottom
+     * @param targetPixel
+     */
+    modifyDataByCenterBottom(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return false;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return false;
+        // const { leftTopPoint, width } = data.data;
+        // 计算出四个角的坐标
+        // 计算出四个角的坐标
+        const box = this.getBox();
+        if (!box)
+            return false;
+        // 范围限制
+        if (targetPixel.y < box.leftTop.y)
+            return false;
+        // 修改
+        // data.data.leftTopPoint = { ...leftTopPoint };
+        // data.data.width = width;
+        data.data.height = context.distanceToActual(targetPixel.y - box.leftTop.y);
+        return true;
+    }
+    /**
+     * modifyDataByLeftBottom
+     * @param targetPixel
+     */
+    modifyDataByLeftBottom(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return false;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return false;
+        const { leftTopPoint } = data.data;
+        const leftTopPixel = context.pointToPixel(leftTopPoint);
+        // 计算出四个角的坐标
+        // 计算出四个角的坐标
+        const box = this.getBox();
+        if (!box)
+            return false;
+        // 范围限制
+        if (targetPixel.x > box.rightBottom.x || targetPixel.y < box.rightTop.y)
+            return false;
+        // 修改
+        data.data.leftTopPoint = context.pixelToPoint({
+            x: targetPixel.x,
+            y: leftTopPixel.y,
+        });
+        data.data.width = context.distanceToActual(box.rightBottom.x - targetPixel.x);
+        data.data.height = context.distanceToActual(targetPixel.y - box.rightTop.y);
+        return true;
+    }
+    /**
+     * modifyDataByLeftCenter
+     * @param targetPixel
+     */
+    modifyDataByLeftCenter(targetPixel) {
+        const { context } = this;
+        const ctx = context?.getCtx();
+        if (!context || !ctx || !this.data || !this.startPoint)
+            return false;
+        // canvasHistory需要修改 需要修改半径
+        const data = context.getHistoryDataById(this.data.data.id);
+        if (!data)
+            return false;
+        const { leftTopPoint /*height*/ } = data.data;
+        const leftTopPixel = context.pointToPixel(leftTopPoint);
+        // 计算出四个角的坐标
+        // 计算出四个角的坐标
+        const box = this.getBox();
+        if (!box)
+            return false;
+        // 范围限制
+        if (targetPixel.x > box.rightBottom.x)
+            return false;
+        // 修改
+        data.data.leftTopPoint = context.pixelToPoint({
+            x: targetPixel.x,
+            y: leftTopPixel.y,
+        });
+        data.data.width = context.distanceToActual(box.rightBottom.x - targetPixel.x);
+        // data.data.height = height;
+        return true;
+    }
+    /**
+     * isCanMove
+     * @param targetPixel
+     */
+    isCanMove(targetPixel) {
+        if (!this.data)
+            return false;
+        const { leftTopPoint, width, height } = DiamondDrawAction.transformOriginToReal(this.context, this?.data?.data?.data);
+        const halfWidth = width / 2;
+        const halfHeight = height / 2;
+        const pt = turf.point([targetPixel.x, targetPixel.y]);
+        const poly = turf.polygon([
+            [
+                [leftTopPoint.x, leftTopPoint.y + halfHeight],
+                [leftTopPoint.x + halfWidth, leftTopPoint.y],
+                [leftTopPoint.x + width, leftTopPoint.y + halfHeight],
+                [leftTopPoint.x + halfWidth, leftTopPoint.y + height],
+                [leftTopPoint.x, leftTopPoint.y + halfHeight],
+            ],
+        ]);
+        return turf.booleanPointInPolygon(pt, poly) && !this.getPointInAnchor(targetPixel);
+    }
+    /**
+     * drawMoveGeometry
+     * @description 绘制移动时的几何图形
+     */
+    // @ts-ignore
+    drawMoveGeometry() {
+        if (!this.context || !this.data)
+            return;
+        DiamondDrawAction.draw(this.context, this.context.getAssistCtx(), this.data);
+    }
+    /**
+     * drawMoveGeometry
+     * @description 绘制移动时的几何图形
+     * @param startPixel
+     * @param targetPixel
+     */
+    // @ts-ignore
+    drawMoveGeometry(startPixel, targetPixel) {
+        if (!this.context || !this.data || !startPixel || !targetPixel)
+            return;
+        const srcData = { ...this.data.data };
+        srcData.data = {
+            ...srcData.data,
+            leftTopPoint: {
+                ...srcData.data.leftTopPoint,
+            },
+        };
+        const startPoint = this.context.pixelToPoint(startPixel);
+        const targetPoint = this.context.pixelToPoint(targetPixel);
+        const offsetX = targetPoint.x - startPoint.x;
+        const offsetY = targetPoint.y - startPoint.y;
+        if (srcData.data && srcData.data.leftTopPoint) {
+            srcData.data.leftTopPoint.x += offsetX;
+            srcData.data.leftTopPoint.y += offsetY;
+            if (srcData.style) {
+                srcData.style.globalAlpha = defaultMoveGemStyle.globalAlpha;
+                srcData.style.strokeStyle = defaultMoveGemStyle.strokeStyle;
+                srcData.style.lineWidth = defaultMoveGemStyle.lineWidth;
+                srcData.style.lineDash = defaultMoveGemStyle.lineDash;
+                srcData.style.lineDashOffset = defaultMoveGemStyle.lineDashOffset;
+            }
+            DiamondDrawAction.draw(this.context, this.context.getAssistCtx(), srcData);
+        }
+    }
+    destroy() {
+        this.startIndex = -1;
+        super.destroy();
+    }
+}
+export default DiamondModifyAction;

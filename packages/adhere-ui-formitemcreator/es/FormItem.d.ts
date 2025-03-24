@@ -3,7 +3,7 @@ import type { CheckboxGroupProps, CheckboxProps } from 'antd/es/checkbox';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import type { TextAreaProps } from 'antd/es/input/TextArea';
 import type { OptionProps } from 'antd/es/select';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import type { TagItemProps } from './types';
 declare const _default: {
     renderText: React.NamedExoticComponent<InputProps>;
@@ -15,15 +15,15 @@ declare const _default: {
     renderRadio: React.NamedExoticComponent<RadioGroupProps>;
     renderCheckbox: React.NamedExoticComponent<CheckboxProps | CheckboxGroupProps<any>>;
     renderSelect: React.NamedExoticComponent<SelectProps<any, import("rc-select/lib/Select").DefaultOptionType> & {
-        optGroup: OptionProps[];
-        renderOption: (v: OptionProps) => React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+        optGroup: Array<OptionProps>;
+        renderOption: (v: OptionProps) => ReactElement;
         autoComplete: boolean;
     }>;
     renderDatePicker: React.NamedExoticComponent<DatePickerProps>;
     renderRangePicker: React.NamedExoticComponent<RangePickerProps>;
     renderTimePicker: React.NamedExoticComponent<TimePickerProps>;
     renderSwitch: React.NamedExoticComponent<SwitchProps>;
-    renderTreeSelect: React.NamedExoticComponent<TreeSelectProps<any, import("rc-tree-select/lib/TreeSelect").DefaultOptionType>>;
+    renderTreeSelect: React.NamedExoticComponent<TreeSelectProps<any, import("rc-tree-select/lib/interface").DataNode>>;
     renderSlider: React.NamedExoticComponent<SliderSingleProps>;
     renderRate: React.NamedExoticComponent<RateProps>;
     renderTag: React.NamedExoticComponent<TagItemProps>;

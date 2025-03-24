@@ -1,2 +1,2 @@
-import{SortableElement}from"react-sortable-hoc";export default SortableElement(function(e){return e.children});
+import{SortableElement}from"react-sortable-hoc";export default SortableElement(e=>{e=e.children;return e});
 //# sourceMappingURL=SortableItem.js.map

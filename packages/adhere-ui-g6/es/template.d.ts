@@ -11,6 +11,6 @@ declare class Template extends React.Component<ITemplateProps> {
     el: HTMLDivElement | null | undefined;
     componentDidMount(): void;
     componentWillReceiveProps(nextProps: Readonly<ITemplateProps>, nextContext: any): void;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Template;

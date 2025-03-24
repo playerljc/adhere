@@ -1,4 +1,4 @@
-declare type browser = {
+type browser = {
     browser: string;
     device: string;
     engine: string;
@@ -7,6 +7,16 @@ declare type browser = {
     osVersion: string;
     version: string;
 };
+/**
+ * {
+ *  browser: "Chrome"
+    device: "PC"
+    engine: "Blink"
+    language: "zh_CN"
+    os: "Windows"
+    osVersion: "10.0"
+    version: "94.0.4606.81"
+ */
 declare const _default: {
     getInstance(): browser;
     browser(): string;
@@ -90,14 +100,4 @@ declare const _default: {
     iSOSChromeOS(): boolean;
     iSOSWebOS(): boolean;
 };
-/**
- * {
- *  browser: "Chrome"
-    device: "PC"
-    engine: "Blink"
-    language: "zh_CN"
-    os: "Windows"
-    osVersion: "10.0"
-    version: "94.0.4606.81"
- */
 export default _default;

@@ -7,7 +7,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Iframe from '../../src/index';
 
 // @ts-ignore
-import styles from './server.less';
+import './server.less';
 
 type FileUpLoad = {
   // 段大小
@@ -47,6 +47,7 @@ export default function () {
        * /display
        */
       .controller('/display', (ctx, next) => {
+        debugger;
         const body = ctx.request.getBody();
         setDisplayValue(body);
         ctx.response.setStatusCode(200);
@@ -57,6 +58,7 @@ export default function () {
        * /getDoc
        */
       .controller('/task/getDoc', (ctx, next) => {
+        debugger;
         // @ts-ignore
         ctx.response.setBody(ref.current.outerHTML);
         ctx.response.setStatusCode(200);
@@ -67,6 +69,7 @@ export default function () {
        * uploadImg
        */
       .controller('/uploadImg', (ctx, next) => {
+        debugger;
         const body = ctx.request.getBody();
         setImage(body);
         ctx.response.setStatusCode(200);
@@ -170,7 +173,7 @@ export default function () {
 
   return (
     // @ts-ignore
-    <div className={styles.Wrap} ref={ref}>
+    <div className="Wrap" ref={ref}>
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
         <Card title="将输入框值设置到iframe里">
           <div>{displayValue}</div>
@@ -193,7 +196,7 @@ export default function () {
 
                 return (
                   <li
-                    className={t.status === 'success' ? styles.Hover : null}
+                    className={t.status === 'success' ? 'Hover' : null}
                     key={t.fileId}
                     onClick={() => {
                       if (t.status === 'success') {

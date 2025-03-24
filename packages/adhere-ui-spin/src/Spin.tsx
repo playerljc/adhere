@@ -13,7 +13,7 @@ const Spin = memo<SpinProps>((props) => {
   const {
     spinning = false,
     text = '',
-    zIndex = Resource.Dict.value.ResourceNormalMaxZIndex.value,
+    zIndex = Resource.Dict.value.ResourceNormalMaxZIndex?.value,
     size = 'default',
   } = props;
 

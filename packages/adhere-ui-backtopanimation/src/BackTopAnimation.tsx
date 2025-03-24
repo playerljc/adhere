@@ -16,7 +16,7 @@ const BackTopAnimation = memo<BackTopAnimationProps>((props) => {
   const {
     className,
     style,
-    zIndex = Resource.Dict.value.ResourceNormalMaxZIndex.value,
+    zIndex = Resource?.Dict?.value?.ResourceNormalMaxZIndex?.value,
     getContainer,
     onScrollTop,
     duration = 300,

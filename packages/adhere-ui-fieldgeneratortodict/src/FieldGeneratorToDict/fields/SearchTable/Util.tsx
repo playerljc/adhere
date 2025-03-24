@@ -92,7 +92,7 @@ function searchTableClassFactory({
 
       this.state = {
         ...this.state,
-        selectedRowKeys: props.value ?? [],
+        selectedRowKeys: props.value ? [props.value].flat() : [],
       };
     }
 
@@ -292,12 +292,13 @@ export const TREE_SELECT_TABLE_OVERRIDE = ({ selectionMode, showCheckedStrategy 
 /**
  * standardSearchTableClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export function standardSearchTableClassFactory({ SearchClass, ...params }) {
+export function standardSearchTableClassFactory({ SearchClass, SuperClass, ...params }) {
   return searchTableClassFactory({
     ...(params as any),
-    SuperClass: SearchClass.ProSearchStateTable,
+    SuperClass: SuperClass ?? SearchClass.ProSearchStateTable,
     SearchClass,
   });
 }
@@ -305,12 +306,13 @@ export function standardSearchTableClassFactory({ SearchClass, ...params }) {
 /**
  * editorCellSearchTableClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export function editorCellSearchTableClassFactory({ SearchClass, ...params }) {
+export function editorCellSearchTableClassFactory({ SearchClass, SuperClass, ...params }) {
   return searchTableClassFactory({
     ...(params as any),
-    SuperClass: SearchClass.ProEditableCellSearchStateTable,
+    SuperClass: SuperClass ?? SearchClass.ProEditableCellSearchStateTable,
     SearchClass,
   });
 }
@@ -318,12 +320,13 @@ export function editorCellSearchTableClassFactory({ SearchClass, ...params }) {
 /**
  * editorRowSearchTableClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export function editorRowSearchTableClassFactory({ SearchClass, ...params }) {
+export function editorRowSearchTableClassFactory({ SearchClass, SuperClass, ...params }) {
   return searchTableClassFactory({
     ...(params as any),
-    SuperClass: SearchClass.ProEditableRowSearchStateTable,
+    SuperClass: SuperClass ?? SearchClass.ProEditableRowSearchStateTable,
     SearchClass,
   });
 }
@@ -331,12 +334,13 @@ export function editorRowSearchTableClassFactory({ SearchClass, ...params }) {
 /**
  * editorTableSearchTableClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export function editorTableSearchTableClassFactory({ SearchClass, ...params }) {
+export function editorTableSearchTableClassFactory({ SearchClass, SuperClass, ...params }) {
   return searchTableClassFactory({
     ...(params as any),
-    SuperClass: SearchClass.ProEditableSearchStateTable,
+    SuperClass: SuperClass ?? SearchClass.ProEditableSearchStateTable,
     SearchClass,
   });
 }
@@ -344,12 +348,13 @@ export function editorTableSearchTableClassFactory({ SearchClass, ...params }) {
 /**
  * rowDragSortSearchTableClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export function rowDragSortSearchTableClassFactory({ SearchClass, ...params }) {
+export function rowDragSortSearchTableClassFactory({ SearchClass, SuperClass, ...params }) {
   return searchTableClassFactory({
     ...(params as any),
-    SuperClass: SearchClass.ProSearchRowDragSortStateTable,
+    SuperClass: SuperClass ?? SearchClass.ProSearchRowDragSortStateTable,
     SearchClass,
   });
 }
@@ -357,12 +362,17 @@ export function rowDragSortSearchTableClassFactory({ SearchClass, ...params }) {
 /**
  * editorCellRowDragSortSearchTableClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export function editorCellRowDragSortSearchTableClassFactory({ SearchClass, ...params }) {
+export function editorCellRowDragSortSearchTableClassFactory({
+  SearchClass,
+  SuperClass,
+  ...params
+}) {
   return searchTableClassFactory({
     ...(params as any),
-    SuperClass: SearchClass.ProSearchEditableCellRowDragSortStateTable,
+    SuperClass: SuperClass ?? SearchClass.ProSearchEditableCellRowDragSortStateTable,
     SearchClass,
   });
 }
@@ -370,12 +380,13 @@ export function editorCellRowDragSortSearchTableClassFactory({ SearchClass, ...p
 /**
  * editorRowDragSortSearchTableClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export function editorRowDragSortSearchTableClassFactory({ SearchClass, ...params }) {
+export function editorRowDragSortSearchTableClassFactory({ SearchClass, SuperClass, ...params }) {
   return searchTableClassFactory({
     ...(params as any),
-    SuperClass: SearchClass.ProSearchEditableRowDragSortStateTable,
+    SuperClass: SuperClass ?? SearchClass.ProSearchEditableRowDragSortStateTable,
     SearchClass,
   });
 }
@@ -383,12 +394,17 @@ export function editorRowDragSortSearchTableClassFactory({ SearchClass, ...param
 /**
  * editorTableRowDragSortSearchTableClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export function editorTableRowDragSortSearchTableClassFactory({ SearchClass, ...params }) {
+export function editorTableRowDragSortSearchTableClassFactory({
+  SearchClass,
+  SuperClass,
+  ...params
+}) {
   return searchTableClassFactory({
     ...(params as any),
-    SuperClass: SearchClass.ProSearchEditableTableRowDragSortStateTable,
+    SuperClass: SuperClass ?? SearchClass.ProSearchEditableTableRowDragSortStateTable,
     SearchClass,
   });
 }

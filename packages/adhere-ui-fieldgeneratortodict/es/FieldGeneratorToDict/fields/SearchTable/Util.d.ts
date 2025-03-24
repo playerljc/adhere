@@ -57,74 +57,90 @@ export declare const TREE_SELECT_TABLE_OVERRIDE: ({ selectionMode, showCheckedSt
 /**
  * standardSearchTableClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export declare function standardSearchTableClassFactory({ SearchClass, ...params }: {
+export declare function standardSearchTableClassFactory({ SearchClass, SuperClass, ...params }: {
     [x: string]: any;
     SearchClass: any;
+    SuperClass: any;
 }): any;
 /**
  * editorCellSearchTableClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export declare function editorCellSearchTableClassFactory({ SearchClass, ...params }: {
+export declare function editorCellSearchTableClassFactory({ SearchClass, SuperClass, ...params }: {
     [x: string]: any;
     SearchClass: any;
+    SuperClass: any;
 }): any;
 /**
  * editorRowSearchTableClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export declare function editorRowSearchTableClassFactory({ SearchClass, ...params }: {
+export declare function editorRowSearchTableClassFactory({ SearchClass, SuperClass, ...params }: {
     [x: string]: any;
     SearchClass: any;
+    SuperClass: any;
 }): any;
 /**
  * editorTableSearchTableClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export declare function editorTableSearchTableClassFactory({ SearchClass, ...params }: {
+export declare function editorTableSearchTableClassFactory({ SearchClass, SuperClass, ...params }: {
     [x: string]: any;
     SearchClass: any;
+    SuperClass: any;
 }): any;
 /**
  * rowDragSortSearchTableClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export declare function rowDragSortSearchTableClassFactory({ SearchClass, ...params }: {
+export declare function rowDragSortSearchTableClassFactory({ SearchClass, SuperClass, ...params }: {
     [x: string]: any;
     SearchClass: any;
+    SuperClass: any;
 }): any;
 /**
  * editorCellRowDragSortSearchTableClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export declare function editorCellRowDragSortSearchTableClassFactory({ SearchClass, ...params }: {
+export declare function editorCellRowDragSortSearchTableClassFactory({ SearchClass, SuperClass, ...params }: {
     [x: string]: any;
     SearchClass: any;
+    SuperClass: any;
 }): any;
 /**
  * editorRowDragSortSearchTableClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export declare function editorRowDragSortSearchTableClassFactory({ SearchClass, ...params }: {
+export declare function editorRowDragSortSearchTableClassFactory({ SearchClass, SuperClass, ...params }: {
     [x: string]: any;
     SearchClass: any;
+    SuperClass: any;
 }): any;
 /**
  * editorTableRowDragSortSearchTableClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export declare function editorTableRowDragSortSearchTableClassFactory({ SearchClass, ...params }: {
+export declare function editorTableRowDragSortSearchTableClassFactory({ SearchClass, SuperClass, ...params }: {
     [x: string]: any;
     SearchClass: any;
+    SuperClass: any;
 }): any;
 /**
  * createSearchTableSelect

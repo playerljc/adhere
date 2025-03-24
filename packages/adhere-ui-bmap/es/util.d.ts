@@ -13,11 +13,11 @@ declare const _default: {
      * @return
      */
     fillCityBoundary(cityName: any, style: {
-        fillColor: 'rgba(0,0,0,.1)';
+        fillColor: "rgba(0,0,0,.1)";
         fillOpacity: 0.7;
         strokeWeight: 1;
         strokeOpacity: 0.2;
-        strokeColor: '#ddd';
+        strokeColor: "#ddd";
     }, map: any): Promise<BMap.Polygon>;
     /**
      * fit - 根据数据fit适应的zoom上

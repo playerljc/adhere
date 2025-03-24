@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["FormDesign/FooterBar/index.js"],"sourcesContent":["import FooterBar from './FooterBar';\nexport default FooterBar;"],"names":["FooterBar"],"mappings":"OAAOA,cAAe,6BACPA"}

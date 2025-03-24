@@ -1,2 +1,2 @@
-var Context=(()=>{function e(e){this.request=e.request,this.response=e.response}return e.prototype.getRequest=function(){return this.request},e.prototype.getResponse=function(){return this.response},e})();export default Context;
+class Context{request;response;constructor(e){this.request=e.request,this.response=e.response}getRequest(){return this.request}getResponse(){return this.response}}export default Context;
 //# sourceMappingURL=Context.js.map

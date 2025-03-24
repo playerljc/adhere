@@ -1,0 +1,2 @@
+
+//# sourceMappingURL=FooterBarTypes.js.map

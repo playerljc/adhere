@@ -21,6 +21,7 @@ export type RequestOptions = {
     statusCode?: stateCode;
     stateMessage?: string;
     body?: any;
+    type: 'request';
 };
 export type ResponseOptions = {
     requestId: string;
@@ -30,4 +31,5 @@ export type ResponseOptions = {
     statusCode: stateCode;
     stateMessage: string;
     body: any;
+    type: 'response';
 };

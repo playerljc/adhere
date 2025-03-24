@@ -1,2 +1,16 @@
-var AnchorStyle={fillStyle:"#fff",strokeStyle:"#fff",lineWidth:1,lineCap:"round",lineJoin:"round",lineDash:[5,4,3],lineDashOffset:-1,globalAlpha:1};export default AnchorStyle;
-//# sourceMappingURL=AnchorStyle.js.map
+/**
+ * 修改的时候控制点的样式
+ */
+const AnchorStyle = {
+    fillStyle: '#fff',
+    // 描边颜色
+    strokeStyle: '#fff',
+    // 描边大小
+    lineWidth: 1,
+    lineCap: 'round',
+    lineJoin: 'round',
+    lineDash: [5, 4, 3],
+    lineDashOffset: -1,
+    globalAlpha: 1,
+};
+export default AnchorStyle;

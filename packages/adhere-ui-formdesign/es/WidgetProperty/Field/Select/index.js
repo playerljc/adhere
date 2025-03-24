@@ -1,0 +1,2 @@
+import React from"react";import WidgetPropertyField from"../WidgetPropertyField";import SelectComponent from"./SelectComponent";class SelectPropertyField extends WidgetPropertyField{render(){var{key:e,name:r,required:t,type:o,props:p}=this;return super.render(React.createElement(SelectComponent,{...{key:e,name:r,required:t,type:o,props:p}}))}}export default SelectPropertyField;
+//# sourceMappingURL=index.js.map

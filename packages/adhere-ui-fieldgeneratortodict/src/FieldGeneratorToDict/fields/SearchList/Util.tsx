@@ -72,7 +72,7 @@ function searchListClassFactory({
 
       this.state = {
         ...this.state,
-        selectedRowKeys: props.value ?? [],
+        selectedRowKeys: props.value ? [props.value].flat() : [],
       };
     }
 
@@ -219,12 +219,13 @@ export const SELECT_LIST_OVERRIDE = {
 /**
  * standardSearchListClassFactory
  * @param SearchClass
+ * @param SuperClass
  * @param params
  */
-export function standardSearchListClassFactory({ SearchClass, ...params }) {
+export function standardSearchListClassFactory({ SearchClass, SuperClass, ...params }) {
   return searchListClassFactory({
     ...(params as any),
-    SuperClass: SearchClass.ProSearchStateList,
+    SuperClass: SuperClass ?? SearchClass.ProSearchStateList,
     SearchClass,
   });
 }

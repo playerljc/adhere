@@ -38,7 +38,8 @@ ImportantConfirm.open = ({ success, ...params }: OpenFunction) => {
     ...params,
     title: params.title || Intl.v('提示'),
     text: params.text || `${Intl.v('真的要执行此操作吗')}?`,
-    zIndex: 'zIndex' in params ? params.zIndex : Resource.Dict.value.ResourceNormalMaxZIndex.value,
+    zIndex:
+      'zIndex' in params ? params.zIndex : Resource?.Dict?.value?.ResourceNormalMaxZIndex?.value,
     icon: <img src={icon} alt="" width={32} />,
     onSuccess: () =>
       new Promise((resolve, reject) => {

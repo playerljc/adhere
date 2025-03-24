@@ -92,7 +92,7 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
 
   useUpdateEffect(() => {
     initIntl().then(() => {
-      Resource.Dict.value.LocalsMoment.value[lang]();
+      Resource?.Dict?.value?.LocalsMoment?.value[lang]();
 
       forceUpdate();
     });
@@ -100,7 +100,7 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
 
   useLayoutEffect(() => {
     initIntl().then(() => {
-      Resource.Dict.value.LocalsMoment.value[lang]();
+      Resource?.Dict?.value?.LocalsMoment?.value[lang]();
 
       setIntlInit(true);
 

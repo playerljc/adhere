@@ -1,5 +1,4 @@
-import Util from '@baifendian/adhere-util';
-
+// import Util from '@baifendian/adhere-util';
 import { ERROR_MESSAGE, OK_MESSAGE } from '../Constant';
 import Context from '../Context';
 import Request from '../Request';
@@ -42,11 +41,19 @@ class Server {
       if (
         !this.whitelist.includes(evt.origin) ||
         !evt.source ||
-        Util.isEmpty(data) ||
-        !Util.isObject(data) ||
+        data === null ||
+        data === undefined ||
+        data === '' ||
+        typeof data !== 'object' ||
         !('requestId' in data) ||
-        Util.isEmpty(data.requestId)
+        data.requestId === null ||
+        data.requestId === undefined ||
+        data.requestId === ''
       ) {
+        return;
+      }
+
+      if (data.type === 'response') {
         return;
       }
 
@@ -103,6 +110,7 @@ class Server {
           referer: this.source instanceof Window ? (this.source as Window).location.href : '',
         },
         body: null,
+        type: 'response',
       }),
     });
 

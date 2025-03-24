@@ -1,2 +1,2 @@
-var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(e){for(var o,t=1,n=arguments.length;t<n;t++)for(var a in o=arguments[t])Object.prototype.hasOwnProperty.call(o,a)&&(e[a]=o[a]);return e}).apply(this,arguments)};import React,{memo}from"react";import CodeBoxPanel from"../CodeBoxPanel";var CodeBoxSection=memo(function(e){return React.createElement(CodeBoxPanel,__assign({},e))});CodeBoxSection.displayName="CodeBoxSection";export default CodeBoxSection;
+import React,{memo}from"react";import CodeBoxPanel from"../CodeBoxPanel";let CodeBoxSection=memo(e=>React.createElement(CodeBoxPanel,{...e}));CodeBoxSection.displayName="CodeBoxSection";export default CodeBoxSection;
 //# sourceMappingURL=CodeBoxSection.js.map

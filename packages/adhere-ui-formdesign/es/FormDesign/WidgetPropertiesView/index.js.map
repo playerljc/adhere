@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["FormDesign/WidgetPropertiesView/index.js"],"sourcesContent":["import WidgetPropertiesView from './WidgetPropertiesView';\nexport default WidgetPropertiesView;"],"names":["WidgetPropertiesView"],"mappings":"OAAOA,yBAA0B,wCAClBA"}

@@ -1,2 +1,43 @@
-var __extends=this&&this.__extends||function(){var n=function(t,e){return(n=Object.setPrototypeOf||({__proto__:[]}instanceof Array?function(t,e){t.__proto__=e}:function(t,e){for(var r in e)Object.prototype.hasOwnProperty.call(e,r)&&(t[r]=e[r])}))(t,e)};return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Class extends value "+String(e)+" is not a constructor or null");function r(){this.constructor=t}n(t,e),t.prototype=null===e?Object.create(e):(r.prototype=e.prototype,new r)}}(),__assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var e,r=1,n=arguments.length;r<n;r++)for(var o in e=arguments[r])Object.prototype.hasOwnProperty.call(e,o)&&(t[o]=e[o]);return t}).apply(this,arguments)},__rest=this&&this.__rest||function(t,e){var r={};for(o in t)Object.prototype.hasOwnProperty.call(t,o)&&e.indexOf(o)<0&&(r[o]=t[o]);if(null!=t&&"function"==typeof Object.getOwnPropertySymbols)for(var n=0,o=Object.getOwnPropertySymbols(t);n<o.length;n++)e.indexOf(o[n])<0&&Object.prototype.propertyIsEnumerable.call(t,o[n])&&(r[o[n]]=t[o[n]]);return r};import Feature from"./Feature";import TextStyle from"./style/TextStyle";import{VectorActions}from"./types";var InnerTextFeature=function(n){function t(t){var e=this,r=(t.text,t.textStyle,__rest(t,["text","textStyle"]));return(e=n.call(this,r)||this).text=t.text,e.textStyle=t.textStyle,e}return __extends(t,n),t.prototype.getText=function(){return this.text},t.prototype.getTextStyle=function(){return this.textStyle},t.prototype.setText=function(t){this.text=t,null!=(t=null==(t=null==this?void 0:this.getLayer())?void 0:t.getEmitter())&&t.trigger(VectorActions.UPDATE)},t.prototype.setTextStyle=function(t){this.textStyle=t,null!=(t=null==(t=null==this?void 0:this.getLayer())?void 0:t.getEmitter())&&t.trigger(VectorActions.UPDATE)},t.prototype.draw=function(t){n.prototype.draw.call(this,t),this.geometry.drawText({ctx:t,text:this.text,style:this.style,textStyle:this.textStyle||__assign({},TextStyle)})},t}(Feature);export default InnerTextFeature;
-//# sourceMappingURL=InnerTextFeature.js.map
+import Feature from './Feature';
+import TextStyle from './style/TextStyle';
+import { VectorActions } from './types';
+/**
+ * InnerTextFeature
+ * @class InnerTextFeature
+ * @classdesc 包含文本的要素
+ */
+class InnerTextFeature extends Feature {
+    text;
+    textStyle;
+    constructor(params) {
+        const { text, textStyle, ...superParams } = params;
+        // @ts-ignore
+        super(superParams);
+        this.text = params.text;
+        this.textStyle = params.textStyle;
+    }
+    getText() {
+        return this.text;
+    }
+    getTextStyle() {
+        return this.textStyle;
+    }
+    setText(text) {
+        this.text = text;
+        this?.getLayer()?.getEmitter()?.trigger(VectorActions.UPDATE);
+    }
+    setTextStyle(style) {
+        this.textStyle = style;
+        this?.getLayer()?.getEmitter()?.trigger(VectorActions.UPDATE);
+    }
+    draw(ctx) {
+        super.draw(ctx);
+        this.geometry.drawText({
+            ctx,
+            text: this.text,
+            style: this.style,
+            textStyle: this.textStyle || { ...TextStyle },
+        });
+    }
+}
+export default InnerTextFeature;

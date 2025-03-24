@@ -1,2 +1,199 @@
-import Util from"@baifendian/adhere-util";import LineStringGeometry from"../geom/LineStringGeometry";import MultiLineStringGeometry from"../geom/MultiLineStringGeometry";import MultiPointGeometry from"../geom/MultiPointGeometry";import MultiPolygonGeometry from"../geom/MultiPolygonGeometry";import PointGeometry from"../geom/PointGeometry";import PolygonGeometry from"../geom/PolygonGeometry";import{GeoJSONType}from"../types";export default{parse:function(e,r){var t=[];return function t(o,e,n){var i=null;o.type===GeoJSONType.Point?((i=e(new PointGeometry({lng:o.coordinates[0],lat:o.coordinates[1]}))).setId(Util.uuid()),n.push(i)):o.type===GeoJSONType.MultiPoint?((i=e(new MultiPointGeometry(o.coordinates.map(function(e){return{lng:e[0],lat:e[1]}})))).setId(Util.uuid()),n.push(i)):o.type===GeoJSONType.LineString?((i=e(new LineStringGeometry({point1:{lng:o.coordinates[0][0],lat:o.coordinates[0][1]},point2:{lng:o.coordinates[1][0],lat:o.coordinates[1][1]}}))).setId(Util.uuid()),n.push(i)):o.type===GeoJSONType.MultiLineString?((i=e(new MultiLineStringGeometry(o.coordinates.map(function(e){return{point1:{lng:e[0][0],lat:e[0][1]},point2:{lng:e[1][0],lat:e[1][1]}}})))).setId(Util.uuid()),n.push(i)):o.type===GeoJSONType.Polygon?((i=e(new PolygonGeometry(o.coordinates.map(function(e){return{lng:e[0],lat:e[1]}})))).setId(Util.uuid()),n.push(i)):o.type===GeoJSONType.MultiPolygon?((i=e(new MultiPolygonGeometry(o.coordinates.map(function(e){return e.map(function(e){return{lng:e[0],lat:e[1]}})})))).setId(Util.uuid()),n.push(i)):o.type===GeoJSONType.GeometryCollection?o.geometries.forEach(function(e){t(e,r,n)}):o.type===GeoJSONType.Feature?t(o.geometry,function(e){return(e=r(e)).setId(o.id),e.setProperties(o.properties),e},n):o.type===GeoJSONType.FeatureCollection&&o.features.forEach(function(e){t(e,r,n)})}(e,r,t),t},stringify:function(e){function i(e){e=e.getCoordinates();return[e.lng,e.lat]}function r(e){return e.getCoordinates().map(function(e){return[e.lng,e.lat]})}function u(e){e=e.getCoordinates();return[[e.point1.lng,e.point1.lat],[e.point2.lng,e.point2.lat]]}function p(e){return e.getCoordinates().map(function(e){return[[e.point1.lng,e.point1.lat],[e.point2.lng,e.point2.lat]]})}function l(e){return e.getCoordinates().map(function(e){return[e.lng,e.lat]})}function y(e){return e.getCoordinates().map(function(e){return e.map(function(e){return[e.lng,e.lat]})})}var t,a={type:GeoJSONType.FeatureCollection,features:[]},g=[];for(t in GeoJSONType)g.push(t);return e.forEach(function(e){var t,o,n=e.getGeometry().getType();g.includes(n)&&a.features.push({type:GeoJSONType.Feature,geometry:{type:n,coordinates:(n=e.getGeometry(),t=new Map([[GeoJSONType.Point,i],[GeoJSONType.MultiPoint,r],[GeoJSONType.LineString,u],[GeoJSONType.MultiLineString,p],[GeoJSONType.Polygon,l],[GeoJSONType.MultiPolygon,y]]),o=n.getType(),t.get(o)(n))},id:e.getId(),properties:e.getProperties()})}),a}};
-//# sourceMappingURL=GeoJSONFormat.js.map
+import Util from '@baifendian/adhere-util';
+import LineStringGeometry from '../geom/LineStringGeometry';
+import MultiLineStringGeometry from '../geom/MultiLineStringGeometry';
+import MultiPointGeometry from '../geom/MultiPointGeometry';
+import MultiPolygonGeometry from '../geom/MultiPolygonGeometry';
+import PointGeometry from '../geom/PointGeometry';
+import PolygonGeometry from '../geom/PolygonGeometry';
+import { GeoJSONType, } from '../types';
+export default {
+    /**
+     * parse - GeoJSON转IFeature[]
+     * @param geoJSON
+     * @param onForeachGeom
+     */
+    parse(geoJSON, onForeachGeom) {
+        /**
+         * Recursion
+         * @param node
+         * @param handler
+         * @param features
+         * @constructor
+         */
+        function Recursion(node, handler, features) {
+            let feature = null;
+            /**
+             * Point
+             * MultiPoint
+             * LineString
+             * MultiLineString
+             * Polygon
+             * MultiPolygon
+             * GeometryCollection
+             * Feature
+             * FeatureCollection
+             */
+            if (node.type === GeoJSONType.Point) {
+                const geom = new PointGeometry({
+                    lng: node.coordinates[0],
+                    lat: node.coordinates[1],
+                });
+                feature = handler(geom);
+                feature.setId(Util.uuid());
+                features.push(feature);
+            }
+            else if (node.type === GeoJSONType.MultiPoint) {
+                const geom = new MultiPointGeometry(node.coordinates.map((coordinate) => ({
+                    lng: coordinate[0],
+                    lat: coordinate[1],
+                })));
+                feature = handler(geom);
+                feature.setId(Util.uuid());
+                features.push(feature);
+            }
+            else if (node.type === GeoJSONType.LineString) {
+                const geom = new LineStringGeometry({
+                    point1: {
+                        lng: node.coordinates[0][0],
+                        lat: node.coordinates[0][1],
+                    },
+                    point2: {
+                        lng: node.coordinates[1][0],
+                        lat: node.coordinates[1][1],
+                    },
+                });
+                feature = handler(geom);
+                feature.setId(Util.uuid());
+                features.push(feature);
+            }
+            else if (node.type === GeoJSONType.MultiLineString) {
+                const geom = new MultiLineStringGeometry(node.coordinates.map((coordinate) => ({
+                    point1: {
+                        lng: coordinate[0][0],
+                        lat: coordinate[0][1],
+                    },
+                    point2: {
+                        lng: coordinate[1][0],
+                        lat: coordinate[1][1],
+                    },
+                })));
+                feature = handler(geom);
+                feature.setId(Util.uuid());
+                features.push(feature);
+            }
+            else if (node.type === GeoJSONType.Polygon) {
+                const geom = new PolygonGeometry(node.coordinates.map((coordinate) => ({
+                    lng: coordinate[0],
+                    lat: coordinate[1],
+                })));
+                feature = handler(geom);
+                feature.setId(Util.uuid());
+                features.push(feature);
+            }
+            else if (node.type === GeoJSONType.MultiPolygon) {
+                const geom = new MultiPolygonGeometry(node.coordinates.map((coordinate) => coordinate.map((p) => ({
+                    lng: p[0],
+                    lat: p[1],
+                }))));
+                feature = handler(geom);
+                feature.setId(Util.uuid());
+                features.push(feature);
+            }
+            else if (node.type === GeoJSONType.GeometryCollection) {
+                node.geometries.forEach((geom) => {
+                    Recursion(geom, onForeachGeom, features);
+                });
+            }
+            else if (node.type === GeoJSONType.Feature) {
+                Recursion(node.geometry, (g) => {
+                    const f = onForeachGeom(g);
+                    f.setId(node.id);
+                    f.setProperties(node.properties);
+                    return f;
+                }, features);
+            }
+            else if (node.type === GeoJSONType.FeatureCollection) {
+                node.features.forEach((feature) => {
+                    Recursion(feature, onForeachGeom, features);
+                });
+            }
+        }
+        const features = [];
+        Recursion(geoJSON, onForeachGeom, features);
+        return features;
+    },
+    /**
+     * stringify - features转GeoJSON
+     * @param features
+     * @return GeoJSONNode
+     */
+    stringify(features) {
+        function getCoordinatesByType(geometry) {
+            const mapping = new Map([
+                [GeoJSONType.Point, getPointCoordinates],
+                [GeoJSONType.MultiPoint, getMultiPointCoordinates],
+                [GeoJSONType.LineString, getLineStringCoordinates],
+                [GeoJSONType.MultiLineString, getMultiLineStringCoordinates],
+                [GeoJSONType.Polygon, getPolygonCoordinates],
+                [GeoJSONType.MultiPolygon, getMultiPolygonCoordinates],
+            ]);
+            const type = geometry.getType();
+            // @ts-ignore
+            return mapping.get(type)(geometry);
+        }
+        function getPointCoordinates(geometry) {
+            const coordinates = geometry.getCoordinates();
+            return [coordinates.lng, coordinates.lat];
+        }
+        function getMultiPointCoordinates(geometry) {
+            const coordinates = geometry.getCoordinates();
+            return coordinates.map((coordinate) => [coordinate.lng, coordinate.lat]);
+        }
+        function getLineStringCoordinates(geometry) {
+            const coordinates = geometry.getCoordinates();
+            return [
+                [coordinates.point1.lng, coordinates.point1.lat],
+                [coordinates.point2.lng, coordinates.point2.lat],
+            ];
+        }
+        function getMultiLineStringCoordinates(geometry) {
+            const coordinates = geometry.getCoordinates();
+            return coordinates.map((coordinate) => [
+                [coordinate.point1.lng, coordinate.point1.lat],
+                [coordinate.point2.lng, coordinate.point2.lat],
+            ]);
+        }
+        function getPolygonCoordinates(geometry) {
+            const coordinates = geometry.getCoordinates();
+            return coordinates.map((coordinate) => [coordinate.lng, coordinate.lat]);
+        }
+        function getMultiPolygonCoordinates(geometry) {
+            const coordinates = geometry.getCoordinates();
+            return coordinates.map((coordinate) => coordinate.map((p) => [p.lng, p.lat]));
+        }
+        let geoJSON = {
+            type: GeoJSONType.FeatureCollection,
+            features: [],
+        };
+        const filterType = [];
+        for (const key in GeoJSONType) {
+            filterType.push(key);
+        }
+        features.forEach((feature) => {
+            const type = feature.getGeometry().getType();
+            if (filterType.includes(type)) {
+                geoJSON.features.push({
+                    type: GeoJSONType.Feature,
+                    geometry: {
+                        // @ts-ignore
+                        type,
+                        coordinates: getCoordinatesByType(feature.getGeometry()),
+                    },
+                    id: feature.getId(),
+                    properties: feature.getProperties(),
+                });
+            }
+        });
+        return geoJSON;
+    },
+};

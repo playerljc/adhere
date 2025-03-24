@@ -27,7 +27,7 @@ import GeoLayer from './GeoLayer';
 import * as TitleLayer from './TitleLayer';
 import WindLayer from './WindLayer';
 
-const EARTH_RADIUS = Resource.Dict.value.ResourceGisEarthRadius.value; // 单位M
+const EARTH_RADIUS = Resource.Dict.value.ResourceGisEarthRadius?.value; // 单位M
 
 const DEFAULT_COLOE = '#1788F3';
 
@@ -47,8 +47,8 @@ function getMinZoom(target) {
 function transformLonLat(point: Array<number>) {
   return transform(
     point,
-    Resource.Dict.value.ResourceGisEpsg3857.value,
-    Resource.Dict.value.ResourceGisEpsg4326.value,
+    Resource.Dict.value.ResourceGisEpsg3857?.value,
+    Resource.Dict.value.ResourceGisEpsg4326?.value,
   );
 }
 
@@ -64,9 +64,9 @@ export default {
       fitZoom,
       zoom = getMinZoom(config.target) || 3,
       minZoom = getMinZoom(config.target) || 3,
-      maxZoom = Resource.Dict.value.ResourceGisMapMaxZoom.value,
-      center = Resource.Dict.value.ResourceGisXinbeiquCenterPoint.value,
-      extent = Resource.Dict.value.ResourceGisXinbeiquMapExtent.value,
+      maxZoom = Resource.Dict.value.ResourceGisMapMaxZoom?.value,
+      center = Resource.Dict.value.ResourceGisXinbeiquCenterPoint?.value,
+      extent = Resource.Dict.value.ResourceGisXinbeiquMapExtent?.value,
       layers = [TitleLayer.getOSMTileLayer()],
     } = Config;
 
@@ -81,7 +81,7 @@ export default {
         new ScaleLine(),
         new MousePosition({
           coordinateFormat: createStringXY(5),
-          projection: Resource.Dict.value.ResourceGisEpsg4326.value,
+          projection: Resource.Dict.value.ResourceGisEpsg4326?.value,
         }),
       ]),
       pixelRatio: 1,
@@ -92,8 +92,8 @@ export default {
         zoom,
         extent: transformExtent(
           boundingExtent(extent),
-          Resource.Dict.value.ResourceGisEpsg4326.value,
-          Resource.Dict.value.ResourceGisEpsg3857.value,
+          Resource.Dict.value.ResourceGisEpsg4326?.value,
+          Resource.Dict.value.ResourceGisEpsg3857?.value,
         ),
         // zoom: 13,
         // projection : 'EPSG:3857',
@@ -325,7 +325,7 @@ export default {
     color = 'rgba(23,136,243,.2)',
     strokeColor = DEFAULT_COLOE,
     strokeWidth = 2,
-    zIndex = Resource.Dict.value.ResourceNormalMaxZIndex.value,
+    zIndex = Resource.Dict.value.ResourceNormalMaxZIndex?.value,
     id = v4(),
     propertys = {},
   }) {
@@ -366,7 +366,7 @@ export default {
     color = 'rgba(23,136,243,.2)',
     strokeColor = DEFAULT_COLOE,
     strokeWidth = 2,
-    zIndex = Resource.Dict.value.ResourceNormalMaxZIndex.value,
+    zIndex = Resource.Dict.value.ResourceNormalMaxZIndex?.value,
     id = v4(),
     propertys = {},
   }) {
@@ -421,7 +421,7 @@ export default {
     propertys = {},
   }) {
     const point = new Feature({
-      zIndex: Resource.Dict.value.ResourceNormalMaxZIndex.value,
+      zIndex: Resource.Dict.value.ResourceNormalMaxZIndex?.value,
       geometry: new Point(pos),
       ...propertys,
     });
@@ -481,7 +481,7 @@ export default {
     ...others
   }) {
     const point = new Feature({
-      zIndex: Resource.Dict.value.ResourceNormalMaxZIndex.value,
+      zIndex: Resource.Dict.value.ResourceNormalMaxZIndex?.value,
       geometry: new Point(pos),
       ...propertys,
     });
@@ -552,7 +552,7 @@ export default {
     propertys = {},
   }) {
     const point = new Feature({
-      zIndex: Resource.Dict.value.ResourceNormalMaxZIndex.value,
+      zIndex: Resource.Dict.value.ResourceNormalMaxZIndex?.value,
       geometry: new Point(pos),
       ...propertys,
     });
@@ -1149,8 +1149,8 @@ export default {
     for (let i = 0; i < points.length; i++) {
       const lonlat = transform(
         points[i],
-        Resource.Dict.value.ResourceGisEpsg3857.value,
-        Resource.Dict.value.ResourceGisEpsg4326.value,
+        Resource.Dict.value.ResourceGisEpsg3857?.value,
+        Resource.Dict.value.ResourceGisEpsg4326?.value,
       );
       // @ts-ignore
       lons.push(lonlat[0]);
@@ -1174,8 +1174,8 @@ export default {
     for (let i = 0; i < points.length; i++) {
       const lonlat = transform(
         points[i],
-        Resource.Dict.value.ResourceGisEpsg4326.value,
-        Resource.Dict.value.ResourceGisEpsg3857.value,
+        Resource.Dict.value.ResourceGisEpsg4326?.value,
+        Resource.Dict.value.ResourceGisEpsg3857?.value,
       );
       // @ts-ignore
       lons.push(lonlat[0]);

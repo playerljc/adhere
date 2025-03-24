@@ -1,0 +1,2 @@
+import React from"react";import WidgetPropertyField from"../WidgetPropertyField";import RequiredComponent from"./RequiredComponent";class RequiredPropertyField extends WidgetPropertyField{render(){var{key:e,name:r,required:t,type:o,props:d}=this;return super.render(React.createElement(RequiredComponent,{...{key:e,name:r,required:t,type:o,props:d}}))}}export default RequiredPropertyField;
+//# sourceMappingURL=index.js.map

@@ -1,2 +1,245 @@
-var __extends=this&&this.__extends||function(){var i=function(t,e){return(i=Object.setPrototypeOf||({__proto__:[]}instanceof Array?function(t,e){t.__proto__=e}:function(t,e){for(var n in e)Object.prototype.hasOwnProperty.call(e,n)&&(t[n]=e[n])}))(t,e)};return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Class extends value "+String(e)+" is not a constructor or null");function n(){this.constructor=t}i(t,e),t.prototype=null===e?Object.create(e):(n.prototype=e.prototype,new n)}}(),__assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var e,n=1,i=arguments.length;n<i;n++)for(var o in e=arguments[n])Object.prototype.hasOwnProperty.call(e,o)&&(t[o]=e[o]);return t}).apply(this,arguments)};import MathUtil from"@baifendian/adhere-util";import Util from"../../util";import GeometryStyle from"../style/GeometryStyle";import TextStyle from"../style/TextStyle";import{GeometryType,VectorActions}from"../types";import Geometry from"./Geometry";var SIZE=new Map([["small",3],["normal",10],["large",20]]),LineStringGeometry=function(n){function a(t){var e=n.call(this)||this;return e.coordinates=t,e}return __extends(a,n),a.drawStartArrow=function(t){var e=t.ctx,n=t.style,i=t.coordinates,t=t.map,o=(e.save(),e.beginPath(),e.lineWidth=n.lineWidth,e.lineJoin=n.lineJoin,e.lineCap=n.lineCap,e.setLineDash(n.lineDash),e.lineDashOffset=n.lineDashOffset,e.strokeStyle=n.strokeStyle,e.fillStyle=n.fillStyle,t.pointToPixel(new BMap.Point(i.point1.lng,i.point1.lat))),t=t.pointToPixel(new BMap.Point(i.point2.lng,i.point2.lat)),i=Util.getArrowPoints({from:t,to:o,scale:1,width:SIZE.get(n.arrow.size)}),t=i.A,o=i.B,n=i.C;e.moveTo(t.x,t.y),e.lineTo(o.x,o.y),e.lineTo(n.x,n.y),e.closePath(),e.stroke(),e.fill(),e.restore()},a.drawEndArrow=function(t){var e=t.ctx,n=t.style,i=t.coordinates,t=t.map,o=(e.save(),e.beginPath(),e.lineWidth=n.lineWidth,e.lineJoin=n.lineJoin,e.lineCap=n.lineCap,e.setLineDash(n.lineDash),e.lineDashOffset=n.lineDashOffset,e.strokeStyle=n.strokeStyle,e.fillStyle=n.fillStyle,t.pointToPixel(new BMap.Point(i.point1.lng,i.point1.lat))),t=t.pointToPixel(new BMap.Point(i.point2.lng,i.point2.lat)),i=Util.getArrowPoints({from:o,to:t,scale:1,width:SIZE.get(n.arrow.size)}),o=i.A,t=i.B,n=i.C;e.moveTo(o.x,o.y),e.lineTo(t.x,t.y),e.lineTo(n.x,n.y),e.closePath(),e.stroke(),e.fill(),e.restore()},a.drawLineString=function(t){var e=t.ctx,n=t.style,i=t.coordinates,t=t.map,o=(e.save(),__assign(__assign(__assign({},GeometryStyle),null!=n?n:{}),{arrow:{draw:!1,direction:"end",type:"normal",size:"normal"}})),r=(e.beginPath(),e.lineWidth=o.lineWidth,e.lineJoin=o.lineJoin,e.lineCap=o.lineCap,e.setLineDash(o.lineDash),e.lineDashOffset=o.lineDashOffset,e.strokeStyle=o.strokeStyle,i.point1),l=i.point2,r=t.pointToPixel(new BMap.Point(r.lng,r.lat)),l=t.pointToPixel(new BMap.Point(l.lng,l.lat));e.moveTo(r.x,r.y),e.lineTo(l.x,l.y),e.stroke(),e.restore(),n.arrow.draw&&("start"===n.arrow.direction?a.drawStartArrow({ctx:e,style:o,coordinates:i,map:t}):"end"===n.arrow.direction?a.drawEndArrow({ctx:e,style:o,coordinates:i,map:t}):"bothEnds"===n.arrow.direction&&(a.drawStartArrow({ctx:e,style:o,coordinates:i,map:t}),a.drawEndArrow({ctx:e,style:o,coordinates:i,map:t})))},a.prototype.setCoordinates=function(t){this.coordinates=t,null!=(t=null==(t=null==this?void 0:this.getLayer())?void 0:t.getEmitter())&&t.trigger(VectorActions.UPDATE)},a.prototype.getCoordinates=function(){return __assign({},this.coordinates)},a.prototype.getType=function(){return GeometryType.LineString},a.getCenterCoordinate=function(t){t.ctx;var e=t.coordinates,n=t.map,t=(t.style,t.isScale,e.point1),e=e.point2,t=n.pointToPixel(new BMap.Point(t.lng,t.lat)),n=n.pointToPixel(new BMap.Point(e.lng,e.lat));return MathUtil.midpoint(t,n)},a.prototype.getCenterCoordinate=function(t){var e=t.ctx,n=t.style,t=t.isScale;return a.getCenterCoordinate({ctx:e,coordinates:this.coordinates,map:this.getMap(),style:n,isScale:t})},a.prototype.draw=function(t,e){a.drawLineString({ctx:t,style:e,coordinates:this.coordinates,map:this.getMap()})},a.prototype.drawText=function(t){var e=t.ctx,n=t.text,i=t.style,t=t.textStyle,o=(e.save(),e.beginPath(),this.getMap()),r=this.getCenterCoordinate({ctx:e,style:i,isScale:!0}),r=(e.translate(r.x,r.y),this.coordinates),l=r.point1,r=r.point2,l=o.pointToPixel(new BMap.Point(l.lng,l.lat)),o=o.pointToPixel(new BMap.Point(r.lng,r.lat)),r=MathUtil.slopToRadian(l,o),l=(e.rotate(r),__assign(__assign({},TextStyle),null!=t?t:{})),o=(e.font=l.font,e.textAlign=l.textAlign,e.textBaseline=l.textBaseline,e.direction=l.direction,e.strokeStyle=l.strokeStyle,e.fillStyle=l.fillStyle,__assign(__assign({},GeometryStyle),null!=i?i:{}));e.lineWidth=o.lineWidth,e.lineJoin=o.lineJoin,e.lineCap=o.lineCap,e.setLineDash(o.lineDash),e.lineDashOffset=o.lineDashOffset,e.strokeStyle=o.strokeStyle,e.fillText(n||"",0,0),e.restore()},a.isPixelInGeometry=function(t){var e=t.pixel,n=(t.style,t.coordinates),t=t.map,i=document.createElement("canvas").getContext("2d");if(!i)return!1;i.beginPath();var o=n.point1,n=n.point2,o=t.pointToPixel(new BMap.Point(o.lng,o.lat)),t=t.pointToPixel(new BMap.Point(n.lng,n.lat));return i.moveTo(o.x,o.y),i.lineTo(t.x,t.y),i.isPointInPath(e.x,e.y)},a.prototype.isPixelInGeometry=function(t,e){return a.isPixelInGeometry({pixel:t,style:e,coordinates:this.coordinates,map:this.getMap()})},a}(Geometry);export default LineStringGeometry;
-//# sourceMappingURL=LineStringGeometry.js.map
+import MathUtil from '@baifendian/adhere-util';
+import Util from '../../util';
+import GeometryStyle from '../style/GeometryStyle';
+import TextStyle from '../style/TextStyle';
+import { GeometryType, VectorActions, } from '../types';
+import Geometry from './Geometry';
+const SIZE = new Map([
+    ['small', 3],
+    ['normal', 10],
+    ['large', 20],
+]);
+/**
+ * LineStringGeometry
+ * @class LineStringGeometry
+ * @classdesc LineStringGeometry - 直线
+ */
+class LineStringGeometry extends Geometry {
+    coordinates;
+    constructor(coordinates) {
+        super();
+        this.coordinates = coordinates;
+    }
+    /**
+     * drawStartArrow
+     * @param ctx
+     * @param style
+     * @param coordinates
+     * @param map
+     */
+    static drawStartArrow({ ctx, style, coordinates, map, }) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.lineWidth = style.lineWidth;
+        ctx.lineJoin = style.lineJoin;
+        ctx.lineCap = style.lineCap;
+        ctx.setLineDash(style.lineDash);
+        ctx.lineDashOffset = style.lineDashOffset;
+        ctx.strokeStyle = style.strokeStyle;
+        ctx.fillStyle = style.fillStyle;
+        // @ts-ignore
+        const pixel1 = map.pointToPixel(new BMap.Point(coordinates.point1.lng, coordinates.point1.lat));
+        // @ts-ignore
+        const pixel2 = map.pointToPixel(new BMap.Point(coordinates.point2.lng, coordinates.point2.lat));
+        const { A, B, C } = Util.getArrowPoints({
+            from: pixel2,
+            to: pixel1,
+            scale: 1,
+            width: SIZE.get(style.arrow.size),
+        });
+        ctx.moveTo(A.x, A.y);
+        ctx.lineTo(B.x, B.y);
+        ctx.lineTo(C.x, C.y);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+        ctx.restore();
+    }
+    /**
+     * drawEndArrow
+     * @param ctx
+     * @param style
+     * @param coordinates
+     * @param map
+     */
+    static drawEndArrow({ ctx, style, coordinates, map, }) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.lineWidth = style.lineWidth;
+        ctx.lineJoin = style.lineJoin;
+        ctx.lineCap = style.lineCap;
+        ctx.setLineDash(style.lineDash);
+        ctx.lineDashOffset = style.lineDashOffset;
+        ctx.strokeStyle = style.strokeStyle;
+        ctx.fillStyle = style.fillStyle;
+        // @ts-ignore
+        const pixel1 = map.pointToPixel(new BMap.Point(coordinates.point1.lng, coordinates.point1.lat));
+        // @ts-ignore
+        const pixel2 = map.pointToPixel(new BMap.Point(coordinates.point2.lng, coordinates.point2.lat));
+        const { A, B, C } = Util.getArrowPoints({
+            from: pixel1,
+            to: pixel2,
+            scale: 1,
+            width: SIZE.get(style.arrow.size),
+        });
+        ctx.moveTo(A.x, A.y);
+        ctx.lineTo(B.x, B.y);
+        ctx.lineTo(C.x, C.y);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+        ctx.restore();
+    }
+    /**
+     * drawLineString
+     * @param ctx
+     * @param style
+     * @param coordinates
+     * @param map
+     */
+    static drawLineString({ ctx, style, coordinates, map, }) {
+        ctx.save();
+        const targetStyle = {
+            ...GeometryStyle,
+            ...(style ?? {}),
+            arrow: {
+                draw: false,
+                direction: 'end',
+                type: 'normal',
+                size: 'normal',
+            },
+        };
+        // 绘制直线
+        ctx.beginPath();
+        ctx.lineWidth = targetStyle.lineWidth;
+        ctx.lineJoin = targetStyle.lineJoin;
+        ctx.lineCap = targetStyle.lineCap;
+        ctx.setLineDash(targetStyle.lineDash);
+        ctx.lineDashOffset = targetStyle.lineDashOffset;
+        ctx.strokeStyle = targetStyle.strokeStyle;
+        const { point1, point2 } = coordinates;
+        // @ts-ignore
+        const pixel1 = map.pointToPixel(new BMap.Point(point1.lng, point1.lat));
+        // @ts-ignore
+        const pixel2 = map.pointToPixel(new BMap.Point(point2.lng, point2.lat));
+        ctx.moveTo(pixel1.x, pixel1.y);
+        ctx.lineTo(pixel2.x, pixel2.y);
+        ctx.stroke();
+        ctx.restore();
+        // 在绘制箭头
+        if (style.arrow.draw) {
+            if (style.arrow.direction === 'start') {
+                LineStringGeometry.drawStartArrow({ ctx, style: targetStyle, coordinates, map });
+            }
+            else if (style.arrow.direction === 'end') {
+                LineStringGeometry.drawEndArrow({ ctx, style: targetStyle, coordinates, map });
+            }
+            else if (style.arrow.direction === 'bothEnds') {
+                LineStringGeometry.drawStartArrow({ ctx, style: targetStyle, coordinates, map });
+                LineStringGeometry.drawEndArrow({ ctx, style: targetStyle, coordinates, map });
+            }
+        }
+    }
+    setCoordinates(coordinates) {
+        this.coordinates = coordinates;
+        this?.getLayer()?.getEmitter()?.trigger(VectorActions.UPDATE);
+    }
+    getCoordinates() {
+        return { ...this.coordinates };
+    }
+    getType() {
+        return GeometryType.LineString;
+    }
+    static getCenterCoordinate({ ctx, coordinates, map, style, isScale, }) {
+        const { point1, point2 } = coordinates;
+        const point1Pixel = map.pointToPixel(
+        // @ts-ignore
+        new BMap.Point(point1.lng, point1.lat));
+        const point2Pixel = map.pointToPixel(
+        // @ts-ignore
+        new BMap.Point(point2.lng, point2.lat));
+        return MathUtil.midpoint(point1Pixel, point2Pixel);
+    }
+    getCenterCoordinate({ ctx, style, isScale, }) {
+        return LineStringGeometry.getCenterCoordinate({
+            ctx,
+            coordinates: this.coordinates,
+            map: this.getMap(),
+            style,
+            isScale,
+        });
+    }
+    draw(ctx, style) {
+        LineStringGeometry.drawLineString({
+            ctx,
+            style,
+            coordinates: this.coordinates,
+            map: this.getMap(),
+        });
+    }
+    drawText({ ctx, text, style, textStyle, }) {
+        ctx.save();
+        ctx.beginPath();
+        // 先旋转在进行绘制
+        const map = this.getMap();
+        // 中心点
+        const centerPixel = this.getCenterCoordinate({ ctx, style, isScale: true });
+        // 平移到中心点
+        ctx.translate(centerPixel.x, centerPixel.y);
+        const { point1, point2 } = this.coordinates;
+        // @ts-ignore
+        const point1Pixel = map.pointToPixel(new BMap.Point(point1.lng, point1.lat));
+        // @ts-ignore
+        const point2Pixel = map.pointToPixel(new BMap.Point(point2.lng, point2.lat));
+        // 斜率的角度
+        const radian = MathUtil.slopToRadian(point1Pixel, point2Pixel);
+        // 旋转斜率的角度
+        ctx.rotate(radian);
+        const targetTextStyle = { ...TextStyle, ...(textStyle ?? {}) };
+        ctx.font = targetTextStyle.font;
+        ctx.textAlign = targetTextStyle.textAlign;
+        ctx.textBaseline = targetTextStyle.textBaseline;
+        ctx.direction = targetTextStyle.direction;
+        ctx.strokeStyle = targetTextStyle.strokeStyle;
+        ctx.fillStyle = targetTextStyle.fillStyle;
+        const targetStyle = { ...GeometryStyle, ...(style ?? {}) };
+        ctx.lineWidth = targetStyle.lineWidth;
+        ctx.lineJoin = targetStyle.lineJoin;
+        ctx.lineCap = targetStyle.lineCap;
+        ctx.setLineDash(targetStyle.lineDash);
+        ctx.lineDashOffset = targetStyle.lineDashOffset;
+        ctx.strokeStyle = targetStyle.strokeStyle;
+        ctx.fillText(text || '', 0, 0);
+        ctx.restore();
+    }
+    static isPixelInGeometry({ pixel, style, coordinates, map, }) {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (!ctx)
+            return false;
+        ctx.beginPath();
+        const { point1, point2 } = coordinates;
+        // @ts-ignore
+        const pixel1 = map.pointToPixel(new BMap.Point(point1.lng, point1.lat));
+        // @ts-ignore
+        const pixel2 = map.pointToPixel(new BMap.Point(point2.lng, point2.lat));
+        ctx.moveTo(pixel1.x, pixel1.y);
+        ctx.lineTo(pixel2.x, pixel2.y);
+        return ctx.isPointInPath(pixel.x, pixel.y);
+    }
+    /**
+     * isPixelInGeometry
+     * @param pixel
+     * @param style
+     * @return boolean
+     */
+    isPixelInGeometry(pixel, style) {
+        return LineStringGeometry.isPixelInGeometry({
+            pixel,
+            style,
+            coordinates: this.coordinates,
+            map: this.getMap(),
+        });
+    }
+}
+export default LineStringGeometry;
