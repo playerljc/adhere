@@ -1,2 +1,2 @@
-import{useRef}from"react";let useFirst=()=>{let r=useRef(!0);return[r.current,e=>{r.current=e}]};export default useFirst;
+import{useRef}from"react";var useFirst=function(){var e=useRef(!0);return[e.current,function(r){e.current=r}]};export default useFirst;
 //# sourceMappingURL=useFirst.js.map

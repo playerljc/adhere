@@ -1,2 +1,0 @@
-import React from"react";import WidgetPropertyField from"../WidgetPropertyField";import InputValidationTypeComponent from"./InputValidationTypeComponent";class InputValidationTypePropertyField extends WidgetPropertyField{render(){var{key:e,name:t,required:r,type:p,props:o}=this;return super.render(React.createElement(InputValidationTypeComponent,{...{key:e,name:t,required:r,type:p,props:o}}))}}export default InputValidationTypePropertyField;
-//# sourceMappingURL=index.js.map

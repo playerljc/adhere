@@ -1,2 +1,0 @@
-import{GroupType}from"../types/WidgetTypes";let widgetToolBoxGroup=new Map([[GroupType.LAYOUT,"布局字段"],[GroupType.CONTAINER,"容器字段"],[GroupType.BASE,"基础字段"],[GroupType.ADVANCED,"高级字段"]]);function registerGroup(e,o){widgetToolBoxGroup.set(e,o)}function getGroupNameByType(e){return widgetToolBoxGroup.get(e)}function getNames(){return Array.from(widgetToolBoxGroup.values())}function getTypes(){return Array.from(widgetToolBoxGroup.keys())}export{registerGroup,getGroupNameByType,getNames,getTypes};
-//# sourceMappingURL=WidgetToolBoxGroupManager.js.map

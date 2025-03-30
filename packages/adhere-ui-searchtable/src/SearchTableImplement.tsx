@@ -404,7 +404,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
     expandable = {
       ...expandable,
-      ...(this.props.antdTableProps ?? {}).expandable,
+      ...(this.props?.antdTableProps ?? {}).expandable,
     };
 
     return expandable;

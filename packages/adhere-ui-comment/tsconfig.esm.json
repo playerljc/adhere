@@ -5,7 +5,7 @@
     "outDir": "./es",
     "baseUrl": "./",
     "resolveJsonModule": true,
-    "target": "ESNext"
+
   },
   "exclude": ["node_modules", "src/demo"],
   "include": ["src/**/*"]

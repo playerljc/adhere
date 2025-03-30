@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sources":["FormDesign/WidgetToolBoxView/index.js"],"sourcesContent":["import WidgetToolBoxView from './WidgetToolBoxView';\nexport default WidgetToolBoxView;"],"names":["WidgetToolBoxView"],"mappings":"OAAOA,sBAAuB,qCACfA"}

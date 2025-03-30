@@ -1256,7 +1256,7 @@ export interface InternalNestingFormItemProps {
 }
 
 export interface InternalNestingFormItemHandle {
-  validateFields: () => Promise<string>;
+  validateFields: () => Promise<void>;
 }
 
 export interface CustomWrapperFormItemProps {

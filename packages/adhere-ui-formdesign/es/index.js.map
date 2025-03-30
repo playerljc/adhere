@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import FormDesign from './FormDesign';\nexport default {\n  FormDesign\n};"],"names":["FormDesign"],"mappings":"OAAOA,eAAgB,6BACR,CACbA,WAAAA,UACF"}

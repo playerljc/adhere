@@ -1,2 +1,0 @@
-import React from"react";import WidgetToolBoxDNDDragging from"./WidgetToolBoxDNDDragging";import WidgetToolBoxDNDInit from"./WidgetToolBoxDNDInit";let WidgetToolBox={renderInit:function(){let{renderInit:e,renderDragging:t,...o}=this;return React.createElement(WidgetToolBoxDNDInit,{...o})},renderDragging:function(){let{renderInit:e,renderDragging:t,...o}=this;return React.createElement(WidgetToolBoxDNDDragging,{...o})}};export default WidgetToolBox;
-//# sourceMappingURL=WidgetToolBox.js.map

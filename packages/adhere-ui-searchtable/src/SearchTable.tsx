@@ -315,7 +315,7 @@ abstract class SearchTable<
       page: 1,
       limit: this.getLimit(),
       expand: props.defaultExpandSearchCollapse,
-      expandedRowKeys: props.antdTableProps?.expandable?.expandedRowKeys || [],
+      expandedRowKeys: props?.antdTableProps?.expandable?.expandedRowKeys || [],
       scrollY: 0,
     };
 
@@ -372,11 +372,11 @@ abstract class SearchTable<
   effectWithExpandedRowKeys(nextProps: SearchTableProps) {
     if (
       JSON.stringify(sortBy(this.state.expandedRowKeys ?? [])) !==
-      JSON.stringify(sortBy(nextProps.antdTableProps?.expandable?.expandedRowKeys ?? []))
+      JSON.stringify(sortBy(nextProps?.antdTableProps?.expandable?.expandedRowKeys ?? []))
     ) {
       // @ts-ignore
       this.setState({
-        expandedRowKeys: nextProps.antdTableProps?.expandable?.expandedRowKeys,
+        expandedRowKeys: nextProps?.antdTableProps?.expandable?.expandedRowKeys,
       });
     }
   }
@@ -871,8 +871,8 @@ abstract class SearchTable<
         },
       );
 
-      if ((this.props.antdTableProps ?? {})?.expandable?.onExpandedRowsChange) {
-        this.props.antdTableProps?.expandable?.onExpandedRowsChange?.(expandedRowKeys);
+      if ((this.props?.antdTableProps ?? {})?.expandable?.onExpandedRowsChange) {
+        this.props?.antdTableProps?.expandable?.onExpandedRowsChange?.(expandedRowKeys);
       }
     });
   }
@@ -883,8 +883,8 @@ abstract class SearchTable<
    * @param params
    */
   onExpand(...params) {
-    if ((this.props.antdTableProps ?? {})?.expandable?.onExpand) {
-      this.props.antdTableProps?.expandable?.onExpand?.(...params);
+    if ((this.props?.antdTableProps ?? {})?.expandable?.onExpand) {
+      this.props?.antdTableProps?.expandable?.onExpand?.(...params);
     }
   }
 

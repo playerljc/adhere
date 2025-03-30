@@ -37,8 +37,17 @@ const InternalNestingFormItem = memo<
        * @description 对表单项进行校验
        * @return {Promise}
        */
-      function validateFields(): Promise<any> {
-        return form.validateFields();
+      function validateFields(): Promise<void> {
+        return new Promise((resolve, reject) => {
+          form
+            .validateFields()
+            .then(() => {
+              resolve();
+            })
+            .catch(() => {
+              reject();
+            });
+        });
         // .then(() => {
         //   return;
         // })

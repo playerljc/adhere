@@ -4,8 +4,10 @@
     "outDir": "./es",
     "declarationDir": "./es",
     "baseUrl": "./",
-    "target": "ESNext"
   },
-  "exclude": ["node_modules", "src/demo"],
+
+
+
+    "exclude": ["node_modules", "src/demo"],
   "include": ["src/**/*"]
 }

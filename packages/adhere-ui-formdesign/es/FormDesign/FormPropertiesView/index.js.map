@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sources":["FormDesign/FormPropertiesView/index.js"],"sourcesContent":["import FormPropertiesView from './FormPropertiesView';\nexport default FormPropertiesView;"],"names":["FormPropertiesView"],"mappings":"OAAOA,uBAAwB,sCAChBA"}

@@ -1,2 +1,0 @@
-import _defineProperty from"@babel/runtime/helpers/defineProperty";class WidgetProperty{constructor(e,r,t,i){_defineProperty(this,"key",void 0),_defineProperty(this,"name",void 0),_defineProperty(this,"required",void 0),_defineProperty(this,"value",void 0),this.key=e,this.name=r,this.value=t,this.required=i}getKey(){return this.key}getName(){return this.name}getValue(){return this.value}getRequired(){return this.required}}export default WidgetProperty;
-//# sourceMappingURL=WidgetProperty.js.map

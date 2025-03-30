@@ -1,2 +1,2 @@
-class Router{controllers=new Map;controller(t,o){return this.controllers.set(t,(r,e)=>{t===r.getRequest().getPathname()?o(r,e):e&&e()}),this}routers(){return Array.from(this.controllers.values())}}export default Router;
+var Router=(()=>{function t(){this.controllers=new Map}return t.prototype.controller=function(e,o){return this.controllers.set(e,function(t,r){e===t.getRequest().getPathname()?o(t,r):r&&r()}),this},t.prototype.routers=function(){return Array.from(this.controllers.values())},t})();export default Router;
 //# sourceMappingURL=index.js.map

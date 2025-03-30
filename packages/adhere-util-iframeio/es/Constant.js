@@ -1,2 +1,2 @@
-let OK_MESSAGE="ok",ERROR_MESSAGE="error";export{OK_MESSAGE,ERROR_MESSAGE};
+var OK_MESSAGE="ok",ERROR_MESSAGE="error";export{OK_MESSAGE,ERROR_MESSAGE};
 //# sourceMappingURL=Constant.js.map

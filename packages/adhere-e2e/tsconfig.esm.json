@@ -3,8 +3,7 @@
   "compilerOptions": {
     "declarationDir": "./es",
     "outDir": "./es",
-    "baseUrl": "./",
-    "target": "ESNext"
+    "baseUrl": "./"
   },
   "exclude": ["node_modules"],
   "include": ["src/**/*"]

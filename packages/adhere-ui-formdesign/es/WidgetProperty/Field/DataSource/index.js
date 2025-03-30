@@ -1,2 +1,0 @@
-import React from"react";import WidgetPropertyField from"../WidgetPropertyField";import DataSourceComponent from"./DataSourceComponent";class DataSourcePropertyField extends WidgetPropertyField{render(){var{key:e,name:r,required:t,type:o,props:a}=this;return super.render(React.createElement(DataSourceComponent,{...{key:e,name:r,required:t,type:o,props:a}}))}}export default DataSourcePropertyField;
-//# sourceMappingURL=index.js.map

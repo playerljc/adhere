@@ -1,2 +1,2 @@
-let antialiasing=3;function coverRadius(t,i){return Math.sqrt(t*t*2)*i+antialiasing}export default function(t){var t=2*t,i=-t/2;return{width:t+="px",height:t,marginLeft:i+="px",marginTop:i}}export{coverRadius};
+var antialiasing=3;function coverRadius(a,i){return Math.sqrt(a*a*2)*i+antialiasing}export default function(a){var a=2*a,i=-a/2;return{width:a+="px",height:a,marginLeft:i+="px",marginTop:i}}export{coverRadius};
 //# sourceMappingURL=coverSize.js.map

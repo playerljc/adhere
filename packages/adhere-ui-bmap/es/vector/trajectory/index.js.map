@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["vector/trajectory/index.js"],"sourcesContent":["import Trajectory from './playback/Trajectory';\nimport TrajectoryPlayBackLayer from './playback/TrajectoryPlayBackLayer';\nexport { Trajectory, TrajectoryPlayBackLayer };\n"],"names":["Trajectory","TrajectoryPlayBackLayer"],"mappings":"OAAOA,eAAgB,+BAChBC,4BAA6B,4CAC3BD,WAAYC,uBAAyB"}

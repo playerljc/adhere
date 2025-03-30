@@ -1,12 +1,2 @@
-import './heatmap';
-/**
- * HeatMapLayer
- * @class HeatMapLayer
- * @classdesc 热力图
- */
-// @ts-ignore
-class HeatMapLayer extends BMapLib.HeatmapOverlay {
-}
-{
-}
-export default HeatMapLayer;
+var __extends=this&&this.__extends||(()=>{var n=function(t,r){return(n=Object.setPrototypeOf||({__proto__:[]}instanceof Array?function(t,r){t.__proto__=r}:function(t,r){for(var e in r)Object.prototype.hasOwnProperty.call(r,e)&&(t[e]=r[e])}))(t,r)};return function(t,r){if("function"!=typeof r&&null!==r)throw new TypeError("Class extends value "+String(r)+" is not a constructor or null");function e(){this.constructor=t}n(t,r),t.prototype=null===r?Object.create(r):(e.prototype=r.prototype,new e)}})();import"./heatmap";var HeatMapLayer=(t=>{function r(){return null!==t&&t.apply(this,arguments)||this}return __extends(r,t),r})(BMapLib.HeatmapOverlay);export default HeatMapLayer;
+//# sourceMappingURL=heatmaplayer.js.map

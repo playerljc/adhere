@@ -1,2 +1,2 @@
-import React,{useEffect,useRef}from"react";export default function InputHOC(r){return e=>{var t=useRef(null);return useEffect(()=>{}),React.createElement(r,{ref:t,...e})}}
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var e,n=1,r=arguments.length;n<r;n++)for(var s in e=arguments[n])Object.prototype.hasOwnProperty.call(e,s)&&(t[s]=e[s]);return t}).apply(this,arguments)};import React,{useEffect,useRef}from"react";export default function InputHOC(n){return function(t){var e=useRef(null);return useEffect(function(){}),React.createElement(n,__assign({ref:e},t))}}
 //# sourceMappingURL=InputHOC.js.map

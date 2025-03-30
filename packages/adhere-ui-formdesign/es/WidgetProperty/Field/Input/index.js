@@ -1,2 +1,0 @@
-import React from"react";import WidgetPropertyField from"../WidgetPropertyField";import InputComponent from"./InputComponent";class InputPropertyField extends WidgetPropertyField{render(){var{key:e,name:r,required:t,type:p,props:o}=this;return super.render(React.createElement(InputComponent,{...{key:e,name:r,required:t,type:p,props:o}}))}}export default InputPropertyField;
-//# sourceMappingURL=index.js.map

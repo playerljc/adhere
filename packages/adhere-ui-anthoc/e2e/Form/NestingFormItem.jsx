@@ -46,7 +46,10 @@ export default () => {
           rules={[
             {
               validator: function () {
-                return obj1Ref.current.validateFields();
+                return obj1Ref.current
+                  .validateFields()
+                  .then(() => {})
+                  .catch((err) => {});
               },
             },
           ]}

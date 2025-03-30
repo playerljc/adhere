@@ -1,2 +1,0 @@
-import _Select from"antd/es/select";import React from"react";let SelectComponent=e=>{let{value:t,onChange:a,props:{value:l,dataSource:r,...n}}=e;return React.createElement(_Select,{defaultValue:l,value:t,onChange:a,...n},(r??[]).map(e=>{var{label:e,value:t}=e;return React.createElement(_Select.Option,{key:t,value:t},e)}))};export default SelectComponent;
-//# sourceMappingURL=SelectComponent.js.map

@@ -884,7 +884,7 @@ export interface InternalNestingFormItemProps {
     children?: ReactNode;
 }
 export interface InternalNestingFormItemHandle {
-    validateFields: () => Promise<string>;
+    validateFields: () => Promise<void>;
 }
 export interface CustomWrapperFormItemProps {
     children?: (params: {
