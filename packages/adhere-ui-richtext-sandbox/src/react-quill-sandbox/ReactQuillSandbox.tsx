@@ -53,6 +53,8 @@ const InternalReactQuillSandbox = memo<
 
     const frameRef = useRef<HTMLIFrameElement>(null);
 
+    const resizeObserverRef = useRef<ResizeObserver | null>(null);
+
     const isMount = useRef<boolean>(false);
 
     const value = useRef<string>(props.value as string);
@@ -117,9 +119,36 @@ const InternalReactQuillSandbox = memo<
       const wrap = document.getElementById(editorId) as HTMLDivElement;
       wrap.innerHTML = props.value as string;
 
-      if (wrapRef.current) {
-        wrapRef.current.style.height = `${document.documentElement.offsetHeight / getZoom()}px`;
-      }
+      // if (wrapRef.current) {
+      //   wrapRef.current.style.height = `${document.documentElement.offsetHeight / getZoom()}px`;
+      // }
+    }
+
+    function monitorHeightChange() {
+      const document = frameRef?.current?.contentDocument as Document;
+
+      if (!document) return;
+
+      const editEL = document.getElementById(editorId);
+
+      if (!editEL) return;
+
+      // 创建一个 ResizeObserver 实例
+      resizeObserverRef.current = new ResizeObserver((entries) => {
+        requestAnimationFrame(() => {
+          for (const entry of entries) {
+            if (entry.target === editEL) {
+              const newHeight = entry.contentRect.height;
+              if (wrapRef.current) {
+                wrapRef.current.style.height = `${newHeight + 60}px`;
+              }
+            }
+          }
+        });
+      });
+
+      // 开始观察 body 元素
+      resizeObserverRef.current.observe(editEL);
     }
 
     /**
@@ -134,6 +163,7 @@ const InternalReactQuillSandbox = memo<
       return new Promise<void>((resolve) => {
         // 只读模式
         if ('readOnly' in props && props.readOnly) {
+          monitorHeightChange();
           renderHTML();
           resolve();
           return;
@@ -254,7 +284,7 @@ const InternalReactQuillSandbox = memo<
             ${THEME_MAP.get('snow') as string}
             
             body {
-              zoom: ${getZoom()};
+              /*zoom: ${getZoom()};*/
             }
           </style>
           <script src="${propTypesUrl}"><\/script>
@@ -285,6 +315,10 @@ const InternalReactQuillSandbox = memo<
         URL.revokeObjectURL(reactDOMUrl);
         URL.revokeObjectURL(reactQuillUrl);
         URL.revokeObjectURL(propTypesUrl);
+
+        if (resizeObserverRef.current) {
+          resizeObserverRef.current.disconnect();
+        }
       };
     }, []);
 

@@ -47,6 +47,8 @@ const InternalWangEditorSandbox = memo<
 
     const frameRef = useRef<HTMLIFrameElement | null>(null);
 
+    const resizeObserverRef = useRef<ResizeObserver | null>(null);
+
     const isMount = useRef<boolean>(false);
 
     const value = useRef<string>(props.value as string);
@@ -214,9 +216,9 @@ const InternalWangEditorSandbox = memo<
       const wrap = document.getElementById(editorId) as HTMLDivElement;
       wrap.innerHTML = props.value as string;
 
-      if (wrapRef.current) {
-        wrapRef.current.style.height = `${document.documentElement.offsetHeight / getZoom()}px`;
-      }
+      // if (wrapRef.current) {
+      //   wrapRef.current.style.height = `${document.documentElement.offsetHeight / getZoom()}px`;
+      // }
     }
 
     function getZoom() {
@@ -227,6 +229,33 @@ const InternalWangEditorSandbox = memo<
       }
 
       return 100 / Number(ratio);
+    }
+
+    function monitorHeightChange() {
+      const document = frameRef?.current?.contentDocument as Document;
+
+      if (!document) return;
+
+      const editEL = document.getElementById(editorId);
+
+      if (!editEL) return;
+
+      // 创建一个 ResizeObserver 实例
+      resizeObserverRef.current = new ResizeObserver((entries) => {
+        requestAnimationFrame(() => {
+          for (const entry of entries) {
+            if (entry.target === editEL) {
+              const newHeight = entry.contentRect.height;
+              if (wrapRef.current) {
+                wrapRef.current.style.height = `${newHeight + 60}px`;
+              }
+            }
+          }
+        });
+      });
+
+      // 开始观察 body 元素
+      resizeObserverRef.current.observe(editEL);
     }
 
     /**
@@ -241,6 +270,7 @@ const InternalWangEditorSandbox = memo<
       return new Promise<void>((resolve) => {
         // 只读模式
         if ('readOnly' in props && props.readOnly) {
+          monitorHeightChange();
           renderHTML();
           resolve();
           return;
@@ -345,7 +375,7 @@ const InternalWangEditorSandbox = memo<
             ${'readOnly' in props || props.readOnly ? WangEditorViewCssStr : ''}
             
             body {
-              zoom: ${getZoom()};
+              /*zoom: ${getZoom()};*/
             }
           </style>
           <script src="${reactUrl}"><\/script>
@@ -376,6 +406,10 @@ const InternalWangEditorSandbox = memo<
         URL.revokeObjectURL(reactDOMUrl);
         URL.revokeObjectURL(wangEditorUrl);
         URL.revokeObjectURL(wangEditorReactUrl);
+
+        if (resizeObserverRef.current) {
+          resizeObserverRef.current.disconnect();
+        }
       };
     }, []);
 
