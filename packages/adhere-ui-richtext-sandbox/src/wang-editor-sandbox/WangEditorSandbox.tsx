@@ -41,7 +41,14 @@ const InternalWangEditorSandbox = memo<
   PropsWithoutRef<WangEditorSandboxProps> & RefAttributes<WangEditorSandboxHandler>
 >(
   forwardRef<WangEditorSandboxHandler, WangEditorSandboxProps>((props, ref): ReactElement => {
-    const { wrapStyle, wrapClassName, wangEditorStyle, toolBarProps, editorProps } = props;
+    const {
+      wrapStyle,
+      wrapClassName,
+      wangEditorStyle,
+      toolBarProps,
+      editorProps,
+      gap = 60,
+    } = props;
 
     const wrapRef = useRef<HTMLDivElement | null>(null);
 
@@ -64,14 +71,18 @@ const InternalWangEditorSandbox = memo<
      * langMap
      * @description 国际化的映射
      */
-    const langMap = useMemo<Map<string, string>>(
-      () =>
-        new Map<string, string>([
-          ['zh_CN', 'zh-CN'],
-          ['en_US', 'en'],
-        ]),
-      [],
-    );
+    const langMap = useMemo<Map<string, string>>(() => {
+      const map = new Map<string, string>([
+        ['zh_CN', 'zh-CN'],
+        ['en_US', 'en'],
+      ]);
+
+      Object.keys(props?.locales ?? []).forEach((key) => {
+        map.set(key, key);
+      });
+
+      return map;
+    }, [props?.locales]);
 
     const defaultToolBarConfig = useMemo<ToolBarProps>(
       () => ({
@@ -147,7 +158,16 @@ const InternalWangEditorSandbox = memo<
           // });
 
           // @ts-ignore
-          const { i18nChangeLanguage } = window?.wangEditor;
+          const { i18nAddResources, i18nChangeLanguage } = window?.wangEditor;
+
+          // 添加新的国际化
+          if (props.locales) {
+            Object.keys(props.locales).forEach((localeKey) => {
+              i18nAddResources(localeKey, props.locales?.[localeKey]);
+            });
+          }
+
+          // 切换国际化
           i18nChangeLanguage(langMap.get(props.lang || configProvider.intl?.lang || 'zh_CN'));
 
           const {
@@ -247,7 +267,7 @@ const InternalWangEditorSandbox = memo<
             if (entry.target === editEL) {
               const newHeight = entry.contentRect.height;
               if (wrapRef.current) {
-                wrapRef.current.style.height = `${newHeight + 60}px`;
+                wrapRef.current.style.height = `${newHeight + gap}px`;
               }
             }
           }

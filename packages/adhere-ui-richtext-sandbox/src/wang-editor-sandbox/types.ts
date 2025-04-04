@@ -38,9 +38,13 @@ export interface WangEditorSandboxProps {
   onChange?: (editor: IDomEditor) => void;
   toolBarProps?: ToolBarProps;
   editorProps?: EditorProps;
+  locales?: {
+    [key: string]: Record<string, string>;
+  };
   readOnly?: boolean;
-  lang?: 'zh_CN' | 'en_US';
+  lang?: 'zh_CN' | 'en_US' | 'pt_PT' | 'ar_EG';
   bordered?: boolean;
+  gap?: number;
 }
 
 export type WangEditorSandboxComponent = NamedExoticComponent<
