@@ -48,6 +48,7 @@ const FormItem: FC<FormItemProps> = ({
     <Form.Item
       noStyle={useCustomError}
       validateTrigger={targetValidateTrigger}
+      validateFirst
       {...(props ?? {})}
       className={classNames(props?.className, {
         [`${selectorPrefix}-fit`]: fit,
