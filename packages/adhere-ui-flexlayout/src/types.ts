@@ -109,6 +109,7 @@ export interface AutoProps {
   fit?: boolean;
   children?: any;
   isUseNormal?: boolean;
+  isUseMinFill?: boolean;
 }
 
 export interface VerticalFlexLayoutProps {

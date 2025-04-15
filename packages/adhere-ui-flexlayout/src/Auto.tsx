@@ -25,6 +25,7 @@ const Auto = memo<AutoProps>(
       autoFixed = true,
       fit = true,
       isUseNormal = false,
+      isUseMinFill = false,
       ...attrs
     } = props;
 
@@ -38,13 +39,19 @@ const Auto = memo<AutoProps>(
 
     const isUseGap = useGap(gutter);
 
+    let isUseFit = false;
+    if (!isUseNormal) {
+      isUseFit = fit;
+    }
+
     const classList = useMemo(
       () =>
         classNames(selectorPrefix, className, {
           [`${selectorPrefix}-auto-fixed`]: autoFixed,
-          [`${selectorPrefix}-fit`]: isUseNormal ? false : fit,
+          [`${selectorPrefix}-fit`]: isUseFit,
           [`${selectorPrefix}-gap`]: isUseGap,
-          'adhere-ui-flex-layout-normal': isUseNormal,
+          [`${selectorPrefix}-normal`]: isUseNormal,
+          [`${selectorPrefix}-min-fill`]: isUseMinFill,
         }),
       [className, autoFixed, fit, isUseGap],
     );
