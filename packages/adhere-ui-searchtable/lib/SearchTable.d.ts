@@ -109,6 +109,12 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     abstract getData(): object[];
     /**
+     * getTotal
+     * @description 获取数据总数
+     * @return {number}
+     */
+    abstract getTotal(): number;
+    /**
      * setData
      * @description 设置表格数据
      */

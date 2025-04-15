@@ -1,5 +1,5 @@
 import { Tooltip } from 'antd';
-import ExcelJS from 'exceljs';
+// import ExcelJS from 'exceljs';
 import FileSaver from 'file-saver';
 import React, { FC } from 'react';
 
@@ -233,29 +233,31 @@ function getTitleByTitle(title: any): string {
  * @param title
  */
 function exportExcel({ dataSource, columns, title }) {
-  const workbook = new ExcelJS.Workbook();
+  // const workbook = new ExcelJS.Workbook();
+  //
+  // const targetTitle = getTitleByTitle(title);
+  //
+  // const worksheet = workbook.addWorksheet(targetTitle);
+  //
+  // const leafNodes = Util.getLeafNodes(columns);
+  // const level = Util.getTreeLevel(columns, 'key');
+  //
+  // // 标题
+  // renderTitle({ worksheet, title: targetTitle, columnsLength: leafNodes.length });
+  //
+  // // 列
+  // renderColumns({ worksheet, leafNodes, columns, level });
+  //
+  // // 数据
+  // renderData({ worksheet, leafNodes, level, dataSource });
+  //
+  // // 列宽自适应
+  // columnsAdaption(worksheet);
+  //
+  // // 导出
+  // return download({ workbook, title: targetTitle });
 
-  const targetTitle = getTitleByTitle(title);
-
-  const worksheet = workbook.addWorksheet(targetTitle);
-
-  const leafNodes = Util.getLeafNodes(columns);
-  const level = Util.getTreeLevel(columns, 'key');
-
-  // 标题
-  renderTitle({ worksheet, title: targetTitle, columnsLength: leafNodes.length });
-
-  // 列
-  renderColumns({ worksheet, leafNodes, columns, level });
-
-  // 数据
-  renderData({ worksheet, leafNodes, level, dataSource });
-
-  // 列宽自适应
-  columnsAdaption(worksheet);
-
-  // 导出
-  return download({ workbook, title: targetTitle });
+  return Promise.resolve();
 }
 
 /**
