@@ -1,9 +1,10 @@
-import { Form } from 'antd';
+import { Form, type FormProps } from 'antd';
 import classNames from 'classnames';
 import React, { ReactNode, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import type { FC } from 'react';
 
 import type { FormItemProps } from '../types';
+import { createFactory } from '../util';
 
 const selectorPrefix = 'adhere-ui-anthoc-form-item';
 
@@ -41,18 +42,18 @@ const FormItem: FC<FormItemProps> = ({
       return '';
     }
 
-    return 'onChange';
+    return props?.validateTrigger ?? 'onChange';
   }, [children]);
 
   return (
     <Form.Item
       noStyle={useCustomError}
-      validateTrigger={targetValidateTrigger}
       validateFirst
       {...(props ?? {})}
       className={classNames(props?.className, {
         [`${selectorPrefix}-fit`]: fit,
       })}
+      validateTrigger={targetValidateTrigger}
     >
       <ErrorWrapper>
         {({ status, errors, ...rest }) => {
@@ -72,4 +73,4 @@ const FormItem: FC<FormItemProps> = ({
   );
 };
 
-export default FormItem;
+export default createFactory<FormItemProps>(FormItem, {});
