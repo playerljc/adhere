@@ -1,3 +1,5 @@
+@import '~@baifendian/adhere-ui-css/es/mixin';
+
 .adhere-ui-message-dialog-maximize-modal {
   //max-height: calc(100vh * var(--adhere-device-pixel-ratio));
   max-height: 100vh;
@@ -39,28 +41,30 @@
     > .adhere-ui-message-dialog-maximize-modal-header {
       display: flex;
       flex-shrink: 0;
-      padding: 20px;
+      padding-bottom: 20px;
+      gap: 20px;
 
       &.adhere-ui-message-dialog-maximize-modal-header-draggable {
         cursor: move;
       }
 
       > .adhere-ui-message-dialog-maximize-modal-header-title {
-        flex-shrink: 0;
+        flex: 1;
+        min-width: 0;
         margin: 0;
         color: var(--antd-color-text);
         font-weight: var(--antd-font-weight-strong);
         font-size: calc(var(--antd-font-size-l-g) * 1px);
         line-height: var(--antd-line-height);
-        word-wrap: break-word;
+        //word-wrap: break-word;
+        .adhere-text-inline-overflow();
       }
 
       > .adhere-ui-message-dialog-maximize-modal-header-actions {
         display: flex;
-        flex: 1;
+        flex-shrink: 0;
         align-items: center;
         justify-content: flex-end;
-        min-width: 0;
 
         > .adhere-ui-message-dialog-maximize-modal-header-action {
           font-size: 18px;

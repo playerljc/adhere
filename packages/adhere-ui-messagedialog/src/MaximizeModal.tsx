@@ -101,7 +101,9 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
             setDraggableDisabled(true);
           }}
         >
-          <div className={`${selectorPrefix}-header-title`}>{title}</div>
+          <div className={`${selectorPrefix}-header-title`} title={title as string}>
+            {title}
+          </div>
           <div className={`${selectorPrefix}-header-actions`}>
             <Space.Group direction="horizontal" size={5}>
               {isMaximize && (

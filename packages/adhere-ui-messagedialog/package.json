@@ -34,6 +34,7 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
+    "@baifendian/adhere-ui-css": "^2.11.0",
     "@baifendian/adhere-ui-formitemcreator": "^2.11.0",
     "@baifendian/adhere-ui-hooks": "^2.11.0",
     "@baifendian/adhere-ui-space": "^2.11.0",
