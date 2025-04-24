@@ -34,11 +34,12 @@
 
 /**
   文字换行
+  @param @shouldBreakAll 是否以字母作为换行依据，默认 false，以单词作为换行依据
  */
-.adhere-word-break() {
-  white-space: pre-wrap; // 只对中文起作用，强制换行
+.adhere-word-break(@shouldBreakAll: false) {
+  //white-space: pre-wrap; // 只对中文起作用，强制换行
   word-wrap: break-word; // 只对英文起作用，以单词作为换行依据
-  word-break: break-all; // 只对英文起作用，以字母作为换行依据
+  word-break: if(@shouldBreakAll, break-all, break-word); // 根据参数决定以字母还是单词作为换行依据
 }
 
 /**
