@@ -1019,7 +1019,6 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
       const gridSearchFormGroupParams: any[] = [...this.getGridSearchFormGroupParams()];
 
-      debugger;
       // 如果查询项 > 列数
       if (
         gridSearchFormGroupParams[0][0].data.length > gridSearchFormGroupParams[0][0].columnCount
