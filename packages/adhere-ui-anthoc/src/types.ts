@@ -22,15 +22,18 @@ import type {
 } from 'antd';
 import type { CheckboxGroupProps, CheckboxOptionType } from 'antd/es/checkbox';
 import type { RangePickerProps } from 'antd/es/date-picker';
+import useForm, { FormInstance } from 'antd/es/form/hooks/useForm';
 import type { RadioGroupProps } from 'antd/es/radio';
 import type { StepProps } from 'antd/es/steps';
 import type { CheckableTagProps } from 'antd/es/tag';
 import dayjs from 'dayjs';
-import type { CSSProperties, ReactElement, ReactNode } from 'react';
+import { ValidateFields } from 'rc-field-form/es/interface';
+import type { CSSProperties, NamedExoticComponent, ReactElement, ReactNode } from 'react';
 import type { SwiperOptions } from 'swiper/types';
 
 import type { TreeAutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
+import SpaceGroup from '@baifendian/adhere-ui-space/lib/Group';
 import ASync from '@baifendian/adhere-ui-suspense/es/Async';
 import type { SuspenseASyncProps } from '@baifendian/adhere-ui-suspense/es/types';
 import type { TreeUtilType } from '@baifendian/adhere-util/es/tree';
@@ -840,10 +843,20 @@ export type FormHOCComponent = ReturnType<typeof createFactory<FormProps>> & {
   Item: typeof FormItem;
 };
 
+export type FormComponent = NamedExoticComponent<FormProps> & {
+  useForm: <Values = any>(form?: FormInstance<Values>) => [FormInstance<Values>];
+};
+
 export interface FormItemProps extends AntFormItemProps {
   useCustomError?: boolean;
+  getErrorContainer?: () => HTMLElement | null | undefined;
   fit?: boolean;
 }
+
+export type FormInternalProps = FormProps & {
+  useForm: typeof useForm;
+  scrollMarginTop?: number;
+};
 
 export type ListHOCComponent = ReturnType<typeof createFactory<ListProps<any>>> & {
   AutoCompleteCheckAllListSelect: typeof AutoCompleteCheckAllListSelect;
@@ -1247,6 +1260,7 @@ export type AutoCompleteTreeMultiLeafSelectProps = TreeAutoCompleteProps & {
 };
 
 export interface InternalNestingFormItemProps {
+  id?: string;
   className?: string;
   style?: CSSProperties;
   formProps?: FormProps;
@@ -1260,9 +1274,10 @@ export interface InternalNestingFormItemHandle {
 }
 
 export interface CustomWrapperFormItemProps {
-  children?: (params: { value: any; onChange: (value?: any) => void }) => ReactNode;
+  children?: (params: { id: string; value: any; onChange: (value?: any) => void }) => ReactNode;
   value?: any;
   onChange: (value?: any) => void;
+  id: string;
 }
 
 export interface InputMultipleOptionsItem {
@@ -1379,3 +1394,7 @@ export interface RevolvingTableProps<T, U> {
   // 是否启用奇偶不同色
   parity?: boolean;
 }
+
+export type ProxyFormInstance<Values> = FormInstance & {
+  validateFieldsWithNesting?: ValidateFields<Values>;
+};

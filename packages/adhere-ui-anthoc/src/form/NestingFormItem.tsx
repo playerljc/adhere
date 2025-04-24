@@ -25,7 +25,7 @@ const InternalNestingFormItem = memo<
   PropsWithoutRef<InternalNestingFormItemProps> & RefAttributes<InternalNestingFormItemHandle>
 >(
   forwardRef<InternalNestingFormItemHandle, InternalNestingFormItemProps>(
-    ({ className, style, formProps, value, onChange, children }, ref) => {
+    ({ id, className, style, formProps, value, onChange, children }, ref) => {
       const [form] = Form.useForm();
 
       function onValuesChange(_, all) {
@@ -40,20 +40,14 @@ const InternalNestingFormItem = memo<
       function validateFields(): Promise<void> {
         return new Promise((resolve, reject) => {
           form
-            .validateFields()
+            .validateFieldsWithNesting()
             .then(() => {
               resolve();
             })
-            .catch(() => {
-              reject();
+            .catch((error) => {
+              reject(error);
             });
         });
-        // .then(() => {
-        //   return;
-        // })
-        // .catch((err: string | undefined) => {
-        //   return new Error(err);
-        // });
       }
 
       useMount(() => {
@@ -70,10 +64,12 @@ const InternalNestingFormItem = memo<
 
       return (
         <Form
+          id={id}
           ref={ref}
+          name={id}
+          form={form}
           className={classNames(selectorPrefix, className)}
           style={style ?? {}}
-          form={form}
           {...(formProps ?? {})}
           onValuesChange={onValuesChange}
         >

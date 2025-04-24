@@ -1,11 +1,13 @@
 import type { FormItemProps as AntFormItemProps, AutoCompleteProps as AntdAutoCompleteProps, CalendarProps, CascaderProps, CheckboxProps, DatePickerProps, FormProps, FormRule, InputProps, ListProps, PaginationProps, RadioProps, SelectProps, SpaceProps, StepsProps, TableProps, TagProps, TimePickerProps, TransferProps, TreeSelectProps } from 'antd';
 import type { CheckboxGroupProps, CheckboxOptionType } from 'antd/es/checkbox';
 import type { RangePickerProps } from 'antd/es/date-picker';
+import useForm, { FormInstance } from 'antd/es/form/hooks/useForm';
 import type { RadioGroupProps } from 'antd/es/radio';
 import type { StepProps } from 'antd/es/steps';
 import type { CheckableTagProps } from 'antd/es/tag';
 import dayjs from 'dayjs';
-import type { CSSProperties, ReactElement, ReactNode } from 'react';
+import { ValidateFields } from 'rc-field-form/es/interface';
+import type { CSSProperties, NamedExoticComponent, ReactElement, ReactNode } from 'react';
 import type { SwiperOptions } from 'swiper/types';
 import type { TreeAutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
@@ -603,10 +605,18 @@ export type FormHOCComponent = ReturnType<typeof createFactory<FormProps>> & {
     CustomWrapperFormItem: typeof CustomWrapperFormItem;
     Item: typeof FormItem;
 };
+export type FormComponent = NamedExoticComponent<FormProps> & {
+    useForm: <Values = any>(form?: FormInstance<Values>) => [FormInstance<Values>];
+};
 export interface FormItemProps extends AntFormItemProps {
     useCustomError?: boolean;
+    getErrorContainer?: () => HTMLElement | null | undefined;
     fit?: boolean;
 }
+export type FormInternalProps = FormProps & {
+    useForm: typeof useForm;
+    scrollMarginTop?: number;
+};
 export type ListHOCComponent = ReturnType<typeof createFactory<ListProps<any>>> & {
     AutoCompleteCheckAllListSelect: typeof AutoCompleteCheckAllListSelect;
     AutoCompleteListPagingSelect: typeof AutoCompleteListPagingSelect;
@@ -876,6 +886,7 @@ export type AutoCompleteTreeMultiLeafSelectProps = TreeAutoCompleteProps & {
     treeSelectProps?: TreeSelectProps;
 };
 export interface InternalNestingFormItemProps {
+    id?: string;
     className?: string;
     style?: CSSProperties;
     formProps?: FormProps;
@@ -888,11 +899,13 @@ export interface InternalNestingFormItemHandle {
 }
 export interface CustomWrapperFormItemProps {
     children?: (params: {
+        id: string;
         value: any;
         onChange: (value?: any) => void;
     }) => ReactNode;
     value?: any;
     onChange: (value?: any) => void;
+    id: string;
 }
 export interface InputMultipleOptionsItem {
     label: string;
@@ -980,3 +993,6 @@ export interface RevolvingTableProps<T, U> {
     size?: 'large' | 'middle' | 'small';
     parity?: boolean;
 }
+export type ProxyFormInstance<Values> = FormInstance & {
+    validateFieldsWithNesting?: ValidateFields<Values>;
+};

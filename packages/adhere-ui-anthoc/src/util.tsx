@@ -38,7 +38,7 @@ export function createFactory<P>(
       };
     }
 
-    const { children, getErrorContainer, ...rest } = props;
+    const { children, ...rest } = props;
 
     return <Component {...rest}>{children}</Component>;
   };

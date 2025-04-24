@@ -20,8 +20,14 @@ const InternalSubmitButton: FC<ButtonProps> = (props) => {
         props
           .onClick(e)
           // @ts-ignore
-          ?.then?.(() => setLoading(false))
+          ?.then?.(
+            () => setLoading(false),
+            () => {
+              setLoading(false);
+            },
+          )
           ?.catch?.(() => setLoading(false));
+        // ?.finally(() => setLoading(false));
       }}
     >
       {props.children}

@@ -11,8 +11,9 @@ const CustomWrapperFormItem: FC<CustomWrapperFormItemProps> = ({
   children,
   value,
   onChange,
+  id,
 }): ReactNode => {
-  return children?.({ value, onChange });
+  return children?.({ id, value, onChange });
 };
 
 export default CustomWrapperFormItem;

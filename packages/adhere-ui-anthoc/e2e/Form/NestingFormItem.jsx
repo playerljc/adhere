@@ -26,8 +26,8 @@ export default () => {
   }, []);
 
   return (
-    <div>
-      <Form form={form}>
+    <div style={{ /*height: 100,*/ overflowY: 'auto' }}>
+      <Form form={form} name="form" scrollToFirstError>
         <Form.Item
           name="name"
           label="姓名"
@@ -37,27 +37,27 @@ export default () => {
               message: '请输入姓名',
             },
           ]}
+          useCustomError
+          getErrorContainer={() => document.getElementById('error')}
         >
           <Input placeholder="name" />
         </Form.Item>
 
         <Form.Item
+          noStyle
           name="obj1"
           rules={[
             {
               validator: function () {
-                return obj1Ref.current
-                  .validateFields()
-                  .then(() => {})
-                  .catch((err) => {});
+                return obj1Ref.current.validateFields();
               },
             },
           ]}
         >
           <Form.NestingFormItem ref={obj1Ref}>
             <Form.Item
-              name="a"
-              label="a"
+              name="a1"
+              label="a1"
               rules={[
                 {
                   required: true,
@@ -65,12 +65,12 @@ export default () => {
                 },
               ]}
             >
-              <Input placeholder="a" />
+              <Input placeholder="a1" />
             </Form.Item>
 
             <Form.Item
-              name="b"
-              label="b"
+              name="b1"
+              label="b1"
               rules={[
                 {
                   required: true,
@@ -78,13 +78,15 @@ export default () => {
                 },
               ]}
             >
-              <Input placeholder="b" />
+              <Input placeholder="b1" />
             </Form.Item>
-            {/*<Form.Item
-              name="b"
+
+            <Form.Item
+              noStyle
+              name="o1"
               rules={[
                 {
-                  validator: () => {
+                  validator: function () {
                     return obj2Ref.current.validateFields();
                   },
                 },
@@ -92,32 +94,19 @@ export default () => {
             >
               <Form.NestingFormItem ref={obj2Ref}>
                 <Form.Item
-                  name="b.1"
-                  label="b.1"
+                  name="c1"
+                  label="c1"
                   rules={[
                     {
                       required: true,
-                      message: '请输入b.1',
+                      message: '请输入c1',
                     },
                   ]}
                 >
-                  <Input placeholder="b.1" />
-                </Form.Item>
-
-                <Form.Item
-                  name="b.2"
-                  label="b.2"
-                  rules={[
-                    {
-                      required: true,
-                      message: '请输入b.2',
-                    },
-                  ]}
-                >
-                  <Input placeholder="b.2" />
+                  <Input placeholder="c1" />
                 </Form.Item>
               </Form.NestingFormItem>
-            </Form.Item>*/}
+            </Form.Item>
           </Form.NestingFormItem>
         </Form.Item>
 
@@ -136,6 +125,7 @@ export default () => {
                 {fields.map((field) => {
                   return (
                     <Form.Item
+                      noStyle
                       key={field.key}
                       {...field}
                       rules={[
@@ -185,6 +175,44 @@ export default () => {
                             >
                               <Input />
                             </Form.Item>
+
+                            <Form.Item
+                              name="key3"
+                              noStyle
+                              rules={[
+                                {
+                                  validator: () => {
+                                    const map = getMap();
+                                    const ref = map.get(`${field.key}_key3`);
+                                    return ref.validateFields();
+                                  },
+                                },
+                              ]}
+                            >
+                              <Form.NestingFormItem
+                                ref={(node) => {
+                                  const map = getMap();
+                                  if (node) {
+                                    map.set(`${field.key}_key3`, node);
+                                  } else {
+                                    map.delete(`${field.key}_key3`);
+                                  }
+                                }}
+                              >
+                                <Form.Item
+                                  name="key3"
+                                  label="key3"
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: '请输入key3',
+                                    },
+                                  ]}
+                                >
+                                  <Input />
+                                </Form.Item>
+                              </Form.NestingFormItem>
+                            </Form.Item>
                           </FlexLayout.Auto>
 
                           <FlexLayout.Fixed>
@@ -225,6 +253,8 @@ export default () => {
           Submit
         </Button>
       </div>
+
+      <div id="error"></div>
     </div>
   );
 
