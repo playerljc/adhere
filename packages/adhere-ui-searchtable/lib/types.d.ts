@@ -251,6 +251,18 @@ export interface ColumnEditableConfig {
  */
 export interface ColumnRowDragSortConfig {
 }
+export interface ColumnWidthMaxContent {
+    minWidth?: number;
+    maxWidth?: number;
+    cellSpacing?: number;
+    cellFontSize?: number;
+    cellFontFamily?: string;
+    cellSpacingSpace?: number;
+    titleSpacing?: number;
+    titleFontSize?: number;
+    titleFontFamily?: string;
+    titleSpacingSpace?: number;
+}
 /**
  * ColumnTypeExt
  * @description Column列的扩展设置
@@ -265,6 +277,9 @@ export interface ColumnTypeExt extends ColumnType<any> {
     $editable?: ColumnEditableConfig;
     $rowDragSort?: ColumnRowDragSortConfig;
     headerCellAlign?: 'left' | 'center' | 'right';
+    width?: undefined | string | number | ColumnWidthMaxContent;
+    titleToString?: string;
+    renderToString?: (value: any) => string;
 }
 /**
  * SearchProps

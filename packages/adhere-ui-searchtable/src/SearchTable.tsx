@@ -1,4 +1,4 @@
-import { Button, Checkbox, Switch, Table } from 'antd';
+import { Button, Checkbox, Switch, Table, theme } from 'antd';
 import type { SwitchProps } from 'antd';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
 import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
@@ -13,6 +13,7 @@ import type {
 } from 'antd/es/table/interface';
 import classNames from 'classnames';
 import difference from 'lodash.difference';
+// import memoize from 'lodash.memoize';
 import sortBy from 'lodash.sortby';
 import uniq from 'lodash.uniq';
 import uniqBy from 'lodash.uniqby';
@@ -20,9 +21,12 @@ import PropTypes from 'prop-types';
 import { ExpandableConfig } from 'rc-table/lib/interface';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createContext, createRef } from 'react';
+import * as ReactIs from 'react-is';
 
-import { DownOutlined, SearchOutlined, UpOutlined } from '@ant-design/icons';
+import { DownOutlined, SearchOutlined, SyncOutlined, UpOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+import type { ConfigProviderContext } from '@baifendian/adhere-ui-configprovider/es/types';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -39,9 +43,10 @@ import TableRow from './Extension/TableComponents/TableRow';
 import TableDensitySetting from './Extension/TableDensitySetting';
 import Search, { defaultProps as searchDefaultProps, propTypes as searchPropTypes } from './Search';
 import { cloneDeep } from './Util';
-import type {
+import {
   CellConfigReducer,
   ColumnTypeExt,
+  ColumnWidthMaxContent,
   RowConfig,
   RowConfigReducer,
   SearchTableProps,
@@ -96,6 +101,10 @@ abstract class SearchTable<
   // static CHECKED_STRATEGY_SHOW_PARENT = Symbol();
   // 返回叶子节点的数据
   static CHECKED_STRATEGY_SHOW_CHILD = Symbol();
+
+  private _hackerElement: HTMLElement | undefined = undefined;
+
+  protected _context: ConfigProviderContext | undefined = undefined;
 
   protected tableWrapRef: RefObject<HTMLDivElement> = createRef();
 
@@ -340,6 +349,9 @@ abstract class SearchTable<
     this.onClear = this.onClear.bind(this);
     this.onExpandedRowsChange = this.onExpandedRowsChange.bind(this);
     this.onBodyKeyup = this.onBodyKeyup.bind(this);
+
+    // this.getWidthByHacker = memoize(this.getWidthByHacker, (obj) => JSON.stringify(obj));
+    // this.getWidth = memoize(this.getWidth, (obj) => JSON.stringify(obj));
   }
 
   componentDidMount() {
@@ -351,6 +363,14 @@ abstract class SearchTable<
   componentWillUnmount() {
     super.componentWillUnmount?.();
 
+    if (this._hackerElement) {
+      try {
+        document.body.removeChild(this._hackerElement);
+        this._hackerElement = undefined;
+      } catch (error) {
+        console.error(error);
+      }
+    }
     document.body.removeEventListener('keyup', this.onBodyKeyup);
   }
 
@@ -442,7 +462,6 @@ abstract class SearchTable<
 
     // 都不在selectedRowKeys中的时候
     if (!selectedKeys.every((key) => selectedRowKeys.includes(key))) {
-      console.log('set');
       this.setState({
         selectedRowKeys: [...selectedRowKeys, ...selectedKeys],
         selectedRows: [
@@ -525,7 +544,6 @@ abstract class SearchTable<
     // console.log('selectedKeys', selectedKeys);
     // console.log('selectedRowKeys', selectedRowKeys);
     if (!selectedKeys.every((key) => selectedRowKeys.includes(key))) {
-      console.log('set');
       this.setState({
         selectedRowKeys: [...selectedRowKeys, ...selectedKeys],
         selectedRows: [
@@ -931,6 +949,384 @@ abstract class SearchTable<
   }
 
   /**
+   * getCtx
+   * @private
+   */
+  private getHackerElement() {
+    // if (!this._ctx) {
+    //   this._ctx = document.createElement('canvas').getContext('2d') as CanvasRenderingContext2D;
+    // }
+    //
+    // return this._ctx;
+
+    if (!this._hackerElement) {
+      this._hackerElement = document.createElement('span');
+      this._hackerElement.style.visibility = 'visible';
+      this._hackerElement.style.position = 'fixed';
+      document.body.appendChild(this._hackerElement);
+    }
+
+    return this._hackerElement;
+  }
+
+  private getTitleText(columnConfig: ColumnTypeExt) {
+    if ('titleToString' in columnConfig) {
+      return columnConfig.titleToString as string;
+    }
+
+    return columnConfig.title as string;
+  }
+
+  private getCellText({
+    columnConfig,
+    record,
+  }: {
+    columnConfig: ColumnTypeExt;
+    record: Record<string, any>;
+  }) {
+    if ('renderToString' in columnConfig) {
+      return columnConfig?.renderToString?.(record[columnConfig.dataIndex] as any);
+    }
+
+    return record[columnConfig.dataIndex];
+  }
+
+  /**
+   * getWidthByHacker
+   * @param text
+   * @param font
+   * @param family
+   * @param spacing
+   * @param space
+   * @private
+   */
+  protected getWidthByHacker({
+    text,
+    font,
+    family,
+    spacing = 0,
+    space,
+  }: {
+    text: string;
+    font: number | string;
+    family: string;
+    spacing?: number;
+    space?: number;
+  }) {
+    // // 创建一个 canvas 元素
+    // const context = this.getCtx();
+    //
+    // if (!context) return 0;
+    //
+    // // 设置字体样式（必须）
+    // context.font = [`${font}px`, family].join(' ');
+    // // 测量文本
+    // const { actualBoundingBoxLeft, actualBoundingBoxRight } = context.measureText(text);
+    // return actualBoundingBoxLeft + actualBoundingBoxRight + 2 * spacing + 2 * (space as number);
+
+    const context = this.getHackerElement();
+
+    if (!context) return 0;
+
+    context.style.fontFamily = family;
+    context.style.fontSize = `${font}px`;
+    context.innerText = text;
+
+    return context.offsetWidth + 2 * spacing + 2 * (space as number);
+  }
+
+  /**
+   * pxToRem
+   * @param size
+   * @protected
+   */
+  protected pxToRem(size) {
+    if (Util.isNumber(size)) {
+      if (this?._context?.media?.isUseMedia) {
+        return Util.pxToRem(size as number, this?._context?.media?.designWidth as number);
+      }
+
+      return `${size}px`;
+    }
+
+    return size as string;
+  }
+
+  /**
+   * setColumnWidth
+   * @param columnConfig
+   * @private
+   */
+  protected setColumnWidth(columnConfig: ColumnTypeExt) {
+    if (typeof columnConfig.width === 'number') {
+      columnConfig.width = this.pxToRem(columnConfig.width);
+      return;
+    }
+
+    if (typeof columnConfig.width != 'object') {
+      return;
+    }
+
+    // max-content的实现
+    // /**
+    //  * 先判断可行性
+    //  */
+    // // Title是对象且没有字符串渲染
+    // if (
+    //   (ReactIs.isElement(columnConfig.title) ||
+    //     ReactIs.isFragment(columnConfig.title) ||
+    //     ReactIs.isPortal(columnConfig.title)) &&
+    //   !('titleToString' in columnConfig)
+    // ) {
+    //   delete columnConfig.width;
+    //   return;
+    // }
+    //
+    // const widthConfig = columnConfig.width as ColumnWidthMaxContent;
+    //
+    // /**
+    //  * 获取title宽度
+    //  * 获取数据的最大宽度
+    //  */
+    // const titleWidth = this.getWidthByHacker({
+    //   text: this.getTitleText(columnConfig),
+    //   font: widthConfig.titleFontSize ?? this.getDefaultColumnTitleFontSize(),
+    //   family: widthConfig.titleFontFamily ?? this.getDefaultColumnFontFamily(),
+    //   spacing: widthConfig.titleSpacing ?? this.getDefaultColumnSpacing(),
+    //   space: widthConfig.titleSpacingSpace ?? this.getDefaultColumnSpace(),
+    // });
+    //
+    // const dataSource = this.getDataSource();
+    // const cellsWidth = dataSource.map((record) =>
+    //   this.getWidthByHacker({
+    //     text: this.getCellText({ columnConfig, record }),
+    //     font: widthConfig.cellFontSize ?? this.getDefaultCellFontSize(),
+    //     family: widthConfig.cellFontFamily ?? this.getDefaultCellFontFamily(),
+    //     spacing: widthConfig.cellSpacing ?? this.getDefaultCellSpacing(),
+    //     space: widthConfig.cellSpacingSpace ?? this.getDefaultCellSpace(),
+    //   }),
+    // );
+    // const cellMaxWidth = Math.max(...cellsWidth);
+    //
+    // let _width = -1;
+    // let _isTriggerMaxWidth = false;
+    //
+    // if (cellMaxWidth <= titleWidth) {
+    //   if (widthConfig.minWidth && widthConfig.maxWidth) {
+    //     if (titleWidth <= widthConfig.minWidth) {
+    //       _width = widthConfig.minWidth;
+    //     } else if (titleWidth >= widthConfig.maxWidth) {
+    //       _width = widthConfig.maxWidth;
+    //     } else {
+    //       _width = titleWidth;
+    //     }
+    //   } else if (widthConfig.minWidth) {
+    //     if (titleWidth <= widthConfig.minWidth) {
+    //       _width = widthConfig.minWidth;
+    //     } else {
+    //       _width = titleWidth;
+    //     }
+    //   } else if (widthConfig.maxWidth) {
+    //     if (titleWidth >= widthConfig.maxWidth) {
+    //       _width = widthConfig.maxWidth;
+    //     } else {
+    //       _width = titleWidth;
+    //     }
+    //   } else {
+    //     _width = titleWidth;
+    //   }
+    //
+    //   if (_width !== -1) {
+    //     columnConfig.width = this.pxToRem(_width);
+    //   }
+    //
+    //   return;
+    // }
+    //
+    // const titleAndCellMaxWidth = Math.max(titleWidth, cellMaxWidth);
+    //
+    // if (widthConfig.minWidth && widthConfig.maxWidth) {
+    //   if (titleAndCellMaxWidth <= widthConfig.minWidth) {
+    //     _width = widthConfig.minWidth;
+    //   } else if (titleAndCellMaxWidth >= widthConfig.maxWidth) {
+    //     _width = widthConfig.maxWidth;
+    //     _isTriggerMaxWidth = true;
+    //   } else {
+    //     delete columnConfig.width;
+    //   }
+    // } else if (widthConfig.minWidth) {
+    //   if (titleAndCellMaxWidth <= widthConfig.minWidth) {
+    //     _width = widthConfig.minWidth;
+    //   } else {
+    //     delete columnConfig.width;
+    //   }
+    // } else if (widthConfig.maxWidth) {
+    //   if (titleAndCellMaxWidth >= widthConfig.maxWidth) {
+    //     _width = widthConfig.maxWidth;
+    //     _isTriggerMaxWidth = true;
+    //   } else {
+    //     delete columnConfig.width;
+    //   }
+    // } else {
+    //   delete columnConfig.width;
+    // }
+    //
+    // if (_width !== -1) {
+    //   columnConfig.width = this.pxToRem(_width);
+    // }
+    //
+    // if (_isTriggerMaxWidth) {
+    //   if ('render' in columnConfig) {
+    //     const render = columnConfig.render;
+    //
+    //     columnConfig.render = (...params) => {
+    //       return (
+    //         <div
+    //           style={{ width: widthConfig?.maxWidth as number }}
+    //           className={`${selectorPrefix}-overflow`}
+    //         >
+    //           {/*@ts-ignore*/}
+    //           {render?.(...params)}
+    //         </div>
+    //       );
+    //     };
+    //   } else {
+    //     columnConfig.render = (value) => {
+    //       return (
+    //         <div
+    //           style={{ width: widthConfig?.maxWidth as number }}
+    //           className={`${selectorPrefix}-overflow`}
+    //         >
+    //           {value}
+    //         </div>
+    //       );
+    //     };
+    //   }
+    // }
+    //
+    // return;
+
+    // ------------------------------------------ 自己判断的视线
+    /**
+     * 先判断可行性
+     */
+    // Title是对象且没有字符串渲染
+    if (
+      (ReactIs.isElement(columnConfig.title) ||
+        ReactIs.isFragment(columnConfig.title) ||
+        ReactIs.isPortal(columnConfig.title)) &&
+      !('titleToString' in columnConfig)
+    ) {
+      return undefined;
+    }
+
+    // 渲染是对象且没有字符串渲染
+
+    const widthConfig = columnConfig.width as ColumnWidthMaxContent;
+
+    /**
+     * 获取title宽度
+     * 获取数据的最大宽度
+     */
+    const titleWidth = this.getWidthByHacker({
+      text: this.getTitleText(columnConfig),
+      font: widthConfig.titleFontSize ?? this.getDefaultColumnTitleFontSize(),
+      family: widthConfig.titleFontFamily ?? this.getDefaultColumnFontFamily(),
+      spacing: widthConfig.titleSpacing ?? this.getDefaultColumnSpacing(),
+      space: widthConfig.titleSpacingSpace ?? this.getDefaultColumnSpace(),
+    });
+
+    const dataSource = this.getDataSource();
+    const cellsWidth = dataSource.map((record) =>
+      this.getWidthByHacker({
+        text: this.getCellText({ columnConfig, record }), //record[columnConfig.dataIndex],
+        font: widthConfig.cellFontSize ?? this.getDefaultCellFontSize(),
+        family: widthConfig.cellFontFamily ?? this.getDefaultCellFontFamily(),
+        spacing: widthConfig.cellSpacing ?? this.getDefaultCellSpacing(),
+        space: widthConfig.cellSpacingSpace ?? this.getDefaultCellSpace(),
+      }),
+    );
+
+    const cellMaxWidth = Math.max(...cellsWidth);
+
+    const titleAndCellMaxWidth = Math.max(titleWidth, cellMaxWidth);
+
+    let _width: number = -1;
+
+    if (widthConfig.minWidth && widthConfig.maxWidth) {
+      if (titleAndCellMaxWidth <= widthConfig.minWidth) {
+        _width = widthConfig.minWidth;
+      } else if (titleAndCellMaxWidth >= widthConfig.maxWidth) {
+        _width = widthConfig.maxWidth;
+      } else {
+        _width = titleAndCellMaxWidth;
+      }
+    } else if (widthConfig.minWidth) {
+      if (titleAndCellMaxWidth <= widthConfig.minWidth) {
+        _width = widthConfig.minWidth;
+      } else {
+        _width = titleAndCellMaxWidth;
+      }
+    } else if (widthConfig.maxWidth) {
+      if (titleAndCellMaxWidth >= widthConfig.maxWidth) {
+        _width = widthConfig.maxWidth;
+      } else {
+        _width = titleAndCellMaxWidth;
+      }
+    } else {
+      _width = titleAndCellMaxWidth;
+    }
+
+    if (_width !== -1) {
+      columnConfig.width = this.pxToRem(_width);
+    }
+  }
+
+  protected getDefaultColumnTitleFontSize(): number {
+    return theme.getDesignToken().fontSize;
+  }
+
+  protected getDefaultColumnFontFamily(): string {
+    return theme.getDesignToken().fontFamily;
+  }
+
+  protected getDefaultColumnSpacing(): number {
+    const spacingMap = new Map([
+      [TableDensity.DEFAULT, 15],
+      [TableDensity.MIDDLE, 8],
+      [TableDensity.SMALL, 8],
+    ]);
+
+    return spacingMap.get(this.state.tableDensity) ?? 0;
+  }
+
+  protected getDefaultColumnSpace(): number {
+    return this.getDefaultColumnTitleFontSize() * 3;
+  }
+
+  protected getDefaultCellFontSize(): number {
+    return theme.getDesignToken().fontSize;
+  }
+
+  protected getDefaultCellFontFamily(): string {
+    return theme.getDesignToken().fontFamily;
+  }
+
+  protected getDefaultCellSpace(): number {
+    return this.getDefaultCellFontSize() * 4;
+  }
+
+  protected getDefaultCellSpacing(): number {
+    const spacingMap = new Map([
+      [TableDensity.DEFAULT, 15],
+      [TableDensity.MIDDLE, 8],
+      [TableDensity.SMALL, 8],
+    ]);
+
+    return spacingMap.get(this.state.tableDensity) ?? 0;
+  }
+
+  /**
    * getTableColumnsAll
    */
   getTableColumnsAll(): any[] {
@@ -974,13 +1370,46 @@ abstract class SearchTable<
 
         return res.value;
       })
-      .map((column: ColumnTypeExt) => {
+      // width 功能
+      .map((columnConfig: ColumnTypeExt) => {
+        const self = this;
+
+        function loop(columns: ColumnTypeExt[]) {
+          return columns.map((_columnConfig) => {
+            if ('children' in _columnConfig && Array.isArray(_columnConfig.children)) {
+              _columnConfig.children = loop(_columnConfig.children as ColumnTypeExt[]);
+
+              return _columnConfig;
+            }
+
+            if ('width' in _columnConfig) {
+              self.setColumnWidth(_columnConfig);
+            }
+
+            return _columnConfig;
+          });
+        }
+
+        if ('children' in columnConfig && Array.isArray(columnConfig.children)) {
+          columnConfig.children = loop(columnConfig.children as ColumnTypeExt[]);
+
+          return columnConfig;
+        }
+
+        if ('width' in columnConfig) {
+          this.setColumnWidth(columnConfig);
+        }
+
+        return columnConfig;
+      })
+      // @ts-ignore
+      .map((columnConfig: ColumnTypeExt) => {
         return {
-          ...column,
+          ...columnConfig,
           // 每个单元格都会调用
           // 给TableCell传递的props参数
           onCell: (record, rowIndex) => {
-            const _column = cloneDeep(column);
+            const _column = cloneDeep(columnConfig);
 
             return {
               // 行的索引
@@ -1954,7 +2383,12 @@ abstract class SearchTable<
       >
         {Intl.v('查询')}
       </Button>,
-      <Button className={`${selectorPrefix}-search-footer-item`} key="reset" onClick={this.onClear}>
+      <Button
+        className={`${selectorPrefix}-search-footer-item`}
+        key="reset"
+        icon={<SyncOutlined />}
+        onClick={this.onClear}
+      >
         {Intl.v('重置')}
       </Button>,
       isShowExpandSearch && this.renderSearchBarCollapseControl(),
@@ -2060,6 +2494,12 @@ abstract class SearchTable<
       }
     }
 
+    if (!tableProps.scroll) {
+      tableProps.scroll = {};
+    }
+
+    // tableProps.scroll.x = 'max-content';
+
     this.tableRowComponentReducers = this.onTableRowComponentReducers(columns);
     this.tableCellComponentReducers = this.onTableCellComponentReducers(columns);
 
@@ -2096,13 +2536,20 @@ abstract class SearchTable<
    * @return {ReactElement}
    */
   render(): ReactElement {
+    const _self = this;
+
     return (
       <SearchTableContext.Provider
         value={{
           context: this,
         }}
       >
-        {this.renderChildren()}
+        <ConfigProvider.Context.Consumer>
+          {(context) => {
+            _self._context = context;
+            return this.renderChildren();
+          }}
+        </ConfigProvider.Context.Consumer>
       </SearchTableContext.Provider>
     );
   }

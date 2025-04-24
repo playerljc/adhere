@@ -1,17 +1,12 @@
 import React from 'react';
 
-import { DateDisplay, DelConfirm, Resource } from '@baifendian/adhere';
+import { DelConfirm } from '@baifendian/adhere';
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 
 import SearchTable from '../src/index';
 import './serviceRegister';
 
-const {
-  ProEditableCellSearchStateTable,
-  ProSearchStateTable,
-  OptionsWrap,
-  SearchTableStateImplementFactory,
-} = SearchTable;
+const { ProSearchStateTable, OptionsWrap, SearchTableStateImplementFactory } = SearchTable;
 
 const serviceName = 'user';
 
@@ -59,37 +54,11 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
   getColumns() {
     return super.getColumns([
       {
-        title: () => <div style={{ color: 'red' }}>姓名</div>,
+        title: '姓名',
         dataIndex: 'name',
         key: 'name',
-        width: 150,
+        width: {},
         align: 'left',
-        render: (val) => <div style={{ color: 'red' }}>{val}</div>,
-        $search: {
-          type: 'input',
-          visible: true,
-          title: () => <div style={{ color: 'red' }}>姓名111</div>,
-        },
-        $editable: {
-          editable: true,
-          type: 'input',
-          rules: [
-            {
-              required: true,
-              message: '请输入姓名',
-            },
-          ],
-          onSave: ({ value, record, dataIndex }) => {
-            return new Promise((resolve) => {
-              this.updateEditorCellDate({
-                record,
-                dataIndex,
-                value,
-              }).then(() => resolve());
-            });
-          },
-        },
-        $resizable: true,
       },
       {
         title: '性别',
@@ -97,7 +66,6 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         key: 'sex',
         $tip: '性别',
         width: 150,
-        // render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
         render: (v, record) =>
           this.renderSwitch({
             record,
@@ -115,161 +83,49 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
             isHideInvalidValue: false,
           },
         },
-        // $editable: {
-        //   editable: true,
-        //   type: 'select',
-        //   dictName: 'SystemTestSexSelect',
-        //   rules: [
-        //     {
-        //       required: true,
-        //       message: '请选择',
-        //     },
-        //   ],
-        //   onSave: ({ record, dataIndex, value }) => {
-        //     return new Promise((resolve) => {
-        //       this.updateEditorCellDate({
-        //         record,
-        //         dataIndex,
-        //         value,
-        //       }).then(() => resolve());
-        //     });
-        //   },
-        // },
       },
       {
         title: '身高',
         dataIndex: 'height',
         key: 'height',
         align: 'center',
-        width: 150,
+        width: {},
         sorter: true,
         sortOrder: this.sortOrder('height'),
         $search: {
           type: 'inputNumberDecimal2',
           visible: true,
         },
-        // $editable: {
-        //   editable: true,
-        //   type: 'inputNumberDecimal2',
-        //   rules: [
-        //     {
-        //       required: true,
-        //       message: '请输入身高',
-        //     },
-        //   ],
-        //   onSave: ({ record, dataIndex, value }) => {
-        //     return new Promise((resolve) => {
-        //       this.updateEditorCellDate({
-        //         record,
-        //         dataIndex,
-        //         value,
-        //       }).then(() => resolve());
-        //     });
-        //   },
-        // },
       },
       {
         title: '体重',
         dataIndex: 'width',
         key: 'width',
         align: 'center',
-        width: 150,
+        width: {},
         sorter: true,
         sortOrder: this.sortOrder('width'),
         $search: {
           type: 'inputNumberDecimal2',
           visible: true,
         },
-        // $editable: {
-        //   editable: true,
-        //   type: 'inputNumberDecimal2',
-        //   rules: [
-        //     {
-        //       required: true,
-        //       message: '请输入体重',
-        //     },
-        //   ],
-        //   onSave: ({ record, dataIndex, value }) => {
-        //     return new Promise((resolve) => {
-        //       this.updateEditorCellDate({
-        //         record,
-        //         dataIndex,
-        //         value,
-        //       }).then(() => resolve());
-        //     });
-        //   },
-        // },
       },
       {
         title: '籍贯',
         dataIndex: 'homeTown',
         key: 'homeTown',
         ellipsis: true,
-        width: 200,
+        width: {},
         $search: {
           type: 'input',
           visible: true,
         },
-        // $editable: {
-        //   editable: true,
-        //   type: 'input',
-        //   rules: [
-        //     {
-        //       required: true,
-        //       message: '请输入籍贯',
-        //     },
-        //   ],
-        //   onSave: ({ record, dataIndex, value }) => {
-        //     return new Promise((resolve) => {
-        //       this.updateEditorCellDate({
-        //         record,
-        //         dataIndex,
-        //         value,
-        //       }).then(() => resolve());
-        //     });
-        //   },
-        // },
       },
-      // {
-      //   title: '出生年月',
-      //   dataIndex: 'birthday',
-      //   key: 'birthday',
-      //   align: 'center',
-      //   width: 200,
-      //   sorter: true,
-      //   sortOrder: this.sortOrder('birthday'),
-      //   render: (val) => <DateDisplay.DateDisplay10 value={val} />,
-      //   $search: {
-      //     type: 'rangePicker',
-      //     visible: true,
-      //     startName: 'birthDayStart',
-      //     endName: 'birthDayEnd',
-      //   },
-      //   $editable: {
-      //     editable: true,
-      //     type: 'datePicker',
-      //     rules: [
-      //       {
-      //         required: true,
-      //         message: '请选择',
-      //       },
-      //     ],
-      //     onSave: ({ record, dataIndex, value }) => {
-      //       return new Promise((resolve) => {
-      //         this.updateEditorCellDateData({
-      //           record,
-      //           dataIndex,
-      //           value,
-      //         }).then(() => resolve());
-      //       });
-      //     },
-      //   },
-      // },
       {
         title: '现居住地',
         dataIndex: 'address',
         key: 'address',
-        width: 300,
+        width: {},
         $search: {
           type: 'input',
           visible: true,
@@ -277,31 +133,12 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
             colSpan: 5,
           },
         },
-        // $editable: {
-        //   editable: true,
-        //   type: 'input',
-        //   rules: [
-        //     {
-        //       required: true,
-        //       message: '请输入居住地',
-        //     },
-        //   ],
-        //   onSave: ({ record, dataIndex, value }) => {
-        //     return new Promise((resolve) => {
-        //       this.updateEditorCellDate({
-        //         record,
-        //         dataIndex,
-        //         value,
-        //       }).then(() => resolve());
-        //     });
-        //   },
-        // },
       },
       {
         title: '操作',
         dataIndex: this.getOptionsColumnDataIndex(),
         key: this.getOptionsColumnDataIndex(),
-        width: 260,
+        width: {},
         render: (v, record) => (
           <OptionsWrap style={{ justifyContent: 'center' }}>
             {this.renderOptionColumn(

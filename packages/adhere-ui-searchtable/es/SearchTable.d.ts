@@ -4,9 +4,10 @@ import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, Tab
 import PropTypes from 'prop-types';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React from 'react';
+import type { ConfigProviderContext } from '@baifendian/adhere-ui-configprovider/es/types';
 import ColumnResizable, { SearchTableResizableTitle } from './Extension/ColumnResizable';
 import Search from './Search';
-import type { CellConfigReducer, ColumnTypeExt, RowConfig, RowConfigReducer, SearchTableProps, SearchTableState, TableRowSelectionExt } from './types';
+import { CellConfigReducer, ColumnTypeExt, RowConfig, RowConfigReducer, SearchTableProps, SearchTableState, TableRowSelectionExt } from './types';
 import { TableDensity } from './types';
 export declare const selectorPrefix = "adhere-ui-search-table";
 export declare const SearchTableContext: React.Context<{
@@ -38,6 +39,8 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     static ROW_SELECTION_CONTINUOUS_MODE: symbol;
     static CHECKED_STRATEGY_SHOW_ALL: symbol;
     static CHECKED_STRATEGY_SHOW_CHILD: symbol;
+    private _hackerElement;
+    protected _context: ConfigProviderContext | undefined;
     protected tableWrapRef: RefObject<HTMLDivElement>;
     protected components: {
         header: {
@@ -339,6 +342,49 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @return {TableDensity}
      */
     getTableDensity(): TableDensity;
+    /**
+     * getCtx
+     * @private
+     */
+    private getHackerElement;
+    private getTitleText;
+    private getCellText;
+    /**
+     * getWidthByHacker
+     * @param text
+     * @param font
+     * @param family
+     * @param spacing
+     * @param space
+     * @private
+     */
+    protected getWidthByHacker({ text, font, family, spacing, space, }: {
+        text: string;
+        font: number | string;
+        family: string;
+        spacing?: number;
+        space?: number;
+    }): number;
+    /**
+     * pxToRem
+     * @param size
+     * @protected
+     */
+    protected pxToRem(size: any): string;
+    /**
+     * setColumnWidth
+     * @param columnConfig
+     * @private
+     */
+    protected setColumnWidth(columnConfig: ColumnTypeExt): undefined;
+    protected getDefaultColumnTitleFontSize(): number;
+    protected getDefaultColumnFontFamily(): string;
+    protected getDefaultColumnSpacing(): number;
+    protected getDefaultColumnSpace(): number;
+    protected getDefaultCellFontSize(): number;
+    protected getDefaultCellFontFamily(): string;
+    protected getDefaultCellSpace(): number;
+    protected getDefaultCellSpacing(): number;
     /**
      * getTableColumnsAll
      */

@@ -352,11 +352,28 @@ export interface ColumnEditableConfig {
  * ColumnRowDragSortConfig
  */
 export interface ColumnRowDragSortConfig {}
+export interface ColumnWidthMaxContent {
+  // 最小值
+  minWidth?: number;
+  // 最大值
+  maxWidth?: number;
+  // 单元格
+  cellSpacing?: number;
+  cellFontSize?: number;
+  cellFontFamily?: string;
+  cellSpacingSpace?: number;
+  // 列title
+  titleSpacing?: number;
+  titleFontSize?: number;
+  titleFontFamily?: string;
+  titleSpacingSpace?: number;
+}
 
 /**
  * ColumnTypeExt
  * @description Column列的扩展设置
  */
+// @ts-ignore
 export interface ColumnTypeExt extends ColumnType<any> {
   // 列头的提示信息，同时也是此列筛选项label的提示信息
   $tip?: ReactNode;
@@ -376,6 +393,10 @@ export interface ColumnTypeExt extends ColumnType<any> {
   $rowDragSort?: ColumnRowDragSortConfig;
   // 列头的对其方式
   headerCellAlign?: 'left' | 'center' | 'right';
+  // 宽度的设置
+  width?: undefined | string | number | ColumnWidthMaxContent;
+  titleToString?: string;
+  renderToString?: (value: any) => string;
   // 列头属性设置
   // onHeaderCell?: () => any;
 }
