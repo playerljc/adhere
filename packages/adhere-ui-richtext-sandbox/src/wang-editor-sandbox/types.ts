@@ -45,6 +45,10 @@ export interface WangEditorSandboxProps {
   lang?: 'zh_CN' | 'en_US' | 'pt_PT' | 'ar_EG';
   bordered?: boolean;
   gap?: number;
+  injectionScripts?: string[];
+  injectionScriptsByString?: string[];
+  injectionStyles?: string[];
+  injectionStylesByString?: string[];
 }
 
 export type WangEditorSandboxComponent = NamedExoticComponent<

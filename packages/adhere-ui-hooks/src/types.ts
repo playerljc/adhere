@@ -3,6 +3,7 @@ import useFirst from './useFirst';
 import useForceUpdate from './useForceUpdate';
 import useItemsRef from './useItemsRef';
 import useLatestState from './useLatestState';
+import useMediaQuery from './useMediaQuery';
 import usePrevious from './usePrevious';
 import usePropToState from './usePropToState';
 import useSetState from './useSetState';
@@ -36,4 +37,5 @@ export type HooksComponent = {
   usePropToState: typeof usePropToState;
   useLatestState: typeof useLatestState;
   useItemsRef: typeof useItemsRef;
+  useMediaQuery: typeof useMediaQuery;
 };

@@ -5,6 +5,7 @@ import useForm, { FormInstance } from 'antd/es/form/hooks/useForm';
 import type { RadioGroupProps } from 'antd/es/radio';
 import type { StepProps } from 'antd/es/steps';
 import type { CheckableTagProps } from 'antd/es/tag';
+import type { ColumnType } from 'antd/lib/table/interface';
 import dayjs from 'dayjs';
 import { ValidateFields } from 'rc-field-form/es/interface';
 import type { CSSProperties, NamedExoticComponent, ReactElement, ReactNode } from 'react';
@@ -933,11 +934,20 @@ export interface InputMultipleSelectProps extends Omit<InputMultipleProps, 'opti
 export type InputMultipleHOCComponent = ReturnType<typeof createFactory<InputMultipleProps>> & {
     Select: typeof Select;
 };
-export type TableExtProps = TableProps & {
+export type TableExtProps = Omit<TableProps, 'columns'> & {
     wrapperClassName?: string;
     wrapperStyle?: CSSProperties;
     fixedHeaderAutoTable?: boolean;
     fixedTableSpaceBetween?: boolean;
+    columns: TableProps['columns'];
+    defaultColumnTitleFontSize?: number;
+    defaultColumnFontFamily?: string;
+    defaultColumnSpacing?: number;
+    defaultColumnSpace?: number;
+    defaultCellFontSize?: number;
+    defaultCellFontFamily?: string;
+    defaultCellSpace?: number;
+    defaultCellSpacing?: number;
 };
 export type StepsSwiperItemProps = StepProps & {
     _visited?: boolean;
@@ -995,4 +1005,21 @@ export interface RevolvingTableProps<T, U> {
 }
 export type ProxyFormInstance<Values> = FormInstance & {
     validateFieldsWithNesting?: ValidateFields<Values>;
+};
+export interface ColumnWidthMaxContent {
+    minWidth?: number;
+    maxWidth?: number;
+    cellSpacing?: number;
+    cellFontSize?: number;
+    cellFontFamily?: string;
+    cellSpacingSpace?: number;
+    titleSpacing?: number;
+    titleFontSize?: number;
+    titleFontFamily?: string;
+    titleSpacingSpace?: number;
+}
+export type ColumnTypeExt = Omit<ColumnType<any>, 'width'> & {
+    width?: undefined | string | number | ColumnWidthMaxContent;
+    titleToString?: string;
+    renderToString?: (value: any) => string;
 };

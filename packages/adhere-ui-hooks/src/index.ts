@@ -4,6 +4,7 @@ import useFirst from './useFirst';
 import useForceUpdate from './useForceUpdate';
 import useItemsRef from './useItemsRef';
 import useLatestState from './useLatestState';
+import useMediaQuery from './useMediaQuery';
 import usePrevious from './usePrevious';
 import usePropToState from './usePropToState';
 import useSetState from './useSetState';
@@ -19,6 +20,7 @@ const Hooks: HooksComponent = {
   usePropToState,
   useLatestState,
   useItemsRef,
+  useMediaQuery,
 };
 
 export default Hooks;

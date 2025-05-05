@@ -26,6 +26,7 @@ import useForm, { FormInstance } from 'antd/es/form/hooks/useForm';
 import type { RadioGroupProps } from 'antd/es/radio';
 import type { StepProps } from 'antd/es/steps';
 import type { CheckableTagProps } from 'antd/es/tag';
+import type { ColumnType } from 'antd/lib/table/interface';
 import dayjs from 'dayjs';
 import { ValidateFields } from 'rc-field-form/es/interface';
 import type { CSSProperties, NamedExoticComponent, ReactElement, ReactNode } from 'react';
@@ -33,7 +34,6 @@ import type { SwiperOptions } from 'swiper/types';
 
 import type { TreeAutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
-import SpaceGroup from '@baifendian/adhere-ui-space/lib/Group';
 import ASync from '@baifendian/adhere-ui-suspense/es/Async';
 import type { SuspenseASyncProps } from '@baifendian/adhere-ui-suspense/es/types';
 import type { TreeUtilType } from '@baifendian/adhere-util/es/tree';
@@ -1317,11 +1317,20 @@ export type InputMultipleHOCComponent = ReturnType<typeof createFactory<InputMul
   Select: typeof Select;
 };
 
-export type TableExtProps = TableProps & {
+export type TableExtProps = Omit<TableProps, 'columns'> & {
   wrapperClassName?: string;
   wrapperStyle?: CSSProperties;
   fixedHeaderAutoTable?: boolean;
   fixedTableSpaceBetween?: boolean;
+  columns: TableProps['columns'];
+  defaultColumnTitleFontSize?: number;
+  defaultColumnFontFamily?: string;
+  defaultColumnSpacing?: number;
+  defaultColumnSpace?: number;
+  defaultCellFontSize?: number;
+  defaultCellFontFamily?: string;
+  defaultCellSpace?: number;
+  defaultCellSpacing?: number;
 };
 
 export type StepsSwiperItemProps = StepProps & {
@@ -1397,4 +1406,28 @@ export interface RevolvingTableProps<T, U> {
 
 export type ProxyFormInstance<Values> = FormInstance & {
   validateFieldsWithNesting?: ValidateFields<Values>;
+};
+
+export interface ColumnWidthMaxContent {
+  // 最小值
+  minWidth?: number;
+  // 最大值
+  maxWidth?: number;
+  // 单元格
+  cellSpacing?: number;
+  cellFontSize?: number;
+  cellFontFamily?: string;
+  cellSpacingSpace?: number;
+  // 列title
+  titleSpacing?: number;
+  titleFontSize?: number;
+  titleFontFamily?: string;
+  titleSpacingSpace?: number;
+}
+
+export type ColumnTypeExt = Omit<ColumnType<any>, 'width'> & {
+  // 宽度的设置
+  width?: undefined | string | number | ColumnWidthMaxContent;
+  titleToString?: string;
+  renderToString?: (value: any) => string;
 };

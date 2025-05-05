@@ -13,16 +13,19 @@ export default () => {
             title: '姓名',
             dataIndex: 'name',
             key: 'name',
+            width: {},
           },
           {
             title: '年龄',
             dataIndex: 'age',
             key: 'age',
+            width: {},
           },
           {
             title: '住址',
             dataIndex: 'address',
             key: 'address',
+            width: {},
           },
         ]}
         dataSource={Array.from({ length: 2 }).map((_, _index) => ({

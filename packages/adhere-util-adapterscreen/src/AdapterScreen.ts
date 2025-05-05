@@ -242,10 +242,9 @@ const adapterScreen: IAdapterScreen = {
   },
   /**
    * flexible
-   * @param {{minWidth: number; minHeight:number;availWidth?: number;}} minSize
    * @return {void}
    */
-  flexible(minSize?: { minWidth: number; minHeight: number; availWidth?: number }): void {
+  flexible(minSize, isUseMediaQuery = false): void {
     /**
      * setBodyFontSize
      * @description adjust body font size
@@ -264,9 +263,34 @@ const adapterScreen: IAdapterScreen = {
      * set 1rem = viewWidth / 10
      */
     function setRemUnit() {
-      // 使用window.screen.availWidth的目的是只有改变操作系统的分辨率才重新设置rem，如果是浏览器窗口的resize不重新计算rem
-      const rem = (minSize?.availWidth ?? window.screen.availWidth) / 10;
-      docEl.style.fontSize = rem + 'px';
+      let rootValue: number = 0;
+
+      if (isUseMediaQuery) {
+        const width = window.innerWidth;
+
+        // 移动端适配（设计稿750px）
+        if (adapterScreen.isPhoneSize()) {
+          rootValue = width / 7.5; // 750px设计稿 → 1rem=100px基准
+        }
+        // 平板适配（768-992px）
+        else if (adapterScreen.isPadSize()) {
+          rootValue = width / 10.24; // 1024px基准
+        }
+        // PC端适配（设计稿1920px）
+        else {
+          rootValue = width / 19.2; // 1920px设计稿 → 1rem=100px基准
+        }
+      } else {
+        const width = window.screen.availWidth;
+        // 使用window.screen.availWidth的目的是只有改变操作系统的分辨率才重新设置rem，如果是浏览器窗口的resize不重新计算rem
+        rootValue = (minSize?.availWidth ?? width) / 10;
+
+        if (dpr > 1) {
+          rootValue *= 1.13;
+        }
+      }
+
+      docEl.style.fontSize = rootValue + 'px';
     }
 
     /**
@@ -342,6 +366,21 @@ const adapterScreen: IAdapterScreen = {
         setMinSize();
       }
     });
+  },
+  isPhoneSize() {
+    const width = window.innerWidth;
+
+    return width <= 768;
+  },
+  isPadSize() {
+    const width = window.innerWidth;
+
+    return width > 768 && width <= 992;
+  },
+  isPCSize() {
+    const width = window.innerWidth;
+
+    return width > 992;
   },
   elRectification,
 };

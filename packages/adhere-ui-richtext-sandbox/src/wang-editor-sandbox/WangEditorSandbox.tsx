@@ -47,6 +47,10 @@ const InternalWangEditorSandbox = memo<
       wangEditorStyle,
       toolBarProps,
       editorProps,
+      injectionScripts,
+      injectionScriptsByString,
+      injectionStyles,
+      injectionStylesByString,
       gap = 60,
     } = props;
 
@@ -344,6 +348,22 @@ const InternalWangEditorSandbox = memo<
         new Blob([WangEditorReactStr], { type: 'text/javascript' }),
       );
 
+      const injectionScriptToString =
+        injectionScriptsByString
+          ?.map((string) => {
+            const url = URL.createObjectURL(new Blob([string], { type: 'text/javascript' }));
+            return `<script src="${url}"><\/script>`;
+          })
+          ?.join('') ?? '';
+
+      const injectionStyleToString =
+        injectionStylesByString
+          ?.map((string) => {
+            const url = URL.createObjectURL(new Blob([string], { type: 'text/css' }));
+            return `<link rel="stylesheet" href="${url}"/>`;
+          })
+          ?.join('') ?? '';
+
       const iframeUrl = URL.createObjectURL(
         new Blob(
           [
@@ -351,6 +371,7 @@ const InternalWangEditorSandbox = memo<
         <!DOCTYPE html>
         <head>
           <meta charset="UTF-8" />
+          <meta http-equiv="Content-Security-Policy" content="default-src'self'; blob:">
           <title></title>
           <style>
             html, body {
@@ -398,17 +419,27 @@ const InternalWangEditorSandbox = memo<
               /*zoom: ${getZoom()};*/
             }
           </style>
+          ${injectionStyleToString}
+          ${
+            injectionStyles?.map((href) => `<link rel="stylesheet" href="${href}" />`)?.join('') ??
+            ''
+          }
           <script src="${reactUrl}"><\/script>
           <script src="${reactDOMUrl}"><\/script>
           <script src="${wangEditorUrl}"><\/script>
           <script src="${wangEditorReactUrl}"><\/script>
+          ${injectionScripts?.map((href) => `<script src="${href}"></script>`)?.join('') ?? ''}
+          ${injectionScriptToString}
         </head>
+        
         <html lang="en" class="${classNames({
           editor: !('readOnly' in props) || !props.readOnly,
         })}">
-        <body>
-          <div id="${editorId}" class="editor-content-view" style="${wangEditorStyle ?? ''}"></div>
-        </body>
+          <body>
+            <div id="${editorId}" class="editor-content-view" style="${
+              wangEditorStyle ?? ''
+            }"></div>
+          </body>
         </html>
         `,
           ],

@@ -48,6 +48,7 @@ import AutoCompleteTreeTableSelect from './Table/AutoCompleteTreeTableSelect.jsx
 import CheckboxTablePaging from './Table/CheckboxTablePaging';
 import CheckboxTablePagingSelect from './Table/CheckboxTablePagingSelect.tsx';
 import CheckboxTableSelect from './Table/CheckboxTableSelect.tsx';
+import TableExt from './Table/TableExt';
 import TreeTablePagingSelect from './Table/TreeTablePagingSelect.jsx';
 import TreeTableSelect from './Table/TreeTableSelect';
 import TagTest from './Tag/HorizontalCheckableTagGroup';
@@ -67,5 +68,5 @@ import '../src/index.less';
 
 e2e.PC({
   // children: <TransferSelect />,
-  children: <NestingFormItem />,
+  children: <TableExt />,
 });
