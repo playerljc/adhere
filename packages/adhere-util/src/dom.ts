@@ -653,14 +653,32 @@ const DomUtil = {
    */
   getCursorIndex(): number {
     const selection = window.getSelection();
-    if (selection && selection?.rangeCount > 0) {
-      const range = selection?.getRangeAt?.(0);
-      const preSelectionRange = range?.cloneRange?.();
-      preSelectionRange?.selectNodeContents(range?.startContainer);
-      preSelectionRange?.setEnd(range?.startContainer, range?.startOffset);
-      return preSelectionRange?.toString?.()?.length;
+    if (!selection || selection.rangeCount === 0) {
+      return -1;
     }
-    return -1;
+
+    const range = selection.getRangeAt(0);
+    const { startContainer, startOffset } = range;
+
+    // 如果 startContainer 是文本节点，直接计算偏移量
+    if (startContainer.nodeType === Node.TEXT_NODE) {
+      return startOffset;
+    }
+
+    // 如果是元素节点，计算前面所有兄弟节点的文本总长度
+    let cursorIndex = 0;
+    const nodeIterator = document.createNodeIterator(startContainer, NodeFilter.SHOW_TEXT);
+
+    let currentNode: Node | null;
+    while ((currentNode = nodeIterator.nextNode())) {
+      if (currentNode === startContainer) {
+        cursorIndex += startOffset;
+        break;
+      }
+      cursorIndex += currentNode.textContent?.length || 0;
+    }
+
+    return cursorIndex;
   },
   /**
    * getCursorRectByDocument

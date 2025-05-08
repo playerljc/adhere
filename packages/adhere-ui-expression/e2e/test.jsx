@@ -13,6 +13,7 @@ export default () => {
   const [quickTipDataSource, setQuickTipDataSource] = useState([]);
 
   const onContinuousTextChange = debounce((text) => {
+    console.log('onContinuousTextChange', text);
     const kws = ['java', 'c++', 'javascript', 'react', 'vue', 'spring'];
 
     if (!text) {
@@ -48,6 +49,7 @@ export default () => {
       <Expression
         ref={ref}
         allowClear
+        disableQuickTip
         placeholder="请输入表达式"
         operatorClassName={() => 'blob'}
         textClassName={() => 'blob'}

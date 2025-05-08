@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React from 'react';
 import type { ConfigProviderContext } from '@baifendian/adhere-ui-configprovider/es/types';
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
 import ColumnResizable, { SearchTableResizableTitle } from './Extension/ColumnResizable';
 import Search from './Search';
 import { CellConfigReducer, ColumnTypeExt, RowConfig, RowConfigReducer, SearchTableProps, SearchTableState, TableRowSelectionExt } from './types';
@@ -112,11 +113,11 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     abstract getData(): object[];
     /**
-     * getTotal
-     * @description 获取数据总数
+     * getCurrent
+     * @description 获取当前页码
      * @return {number}
      */
-    abstract getTotal(): number;
+    abstract getCurrent(): number;
     /**
      * setData
      * @description 设置表格数据
@@ -358,7 +359,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @param space
      * @private
      */
-    protected getWidthByHacker({ text, font, family, spacing, space, }: {
+    getWidthByHacker({ text, font, family, spacing, space, }: {
         text: string;
         font: number | string;
         family: string;
@@ -372,11 +373,14 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     protected pxToRem(size: any): string;
     /**
-     * setColumnWidth
-     * @param columnConfig
+     * getColumnWidth
      * @private
      */
-    protected setColumnWidth(columnConfig: ColumnTypeExt): undefined;
+    getColumnWidth({ columnConfig, dataSource, media, }: {
+        columnConfig: ColumnTypeExt;
+        dataSource: any[];
+        media: ConfigProviderProps['media'];
+    }): string | undefined;
     protected getDefaultColumnTitleFontSize(): number;
     protected getDefaultColumnFontFamily(): string;
     protected getDefaultColumnSpacing(): number;

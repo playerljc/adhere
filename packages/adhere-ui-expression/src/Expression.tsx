@@ -36,7 +36,7 @@ const {
 const defaultTriggerCharCode = 32;
 
 // html的空格
-const htmlSpace = '&nbsp;';
+const htmlSpace = '&shy;'; /*'&nbsp;'*/
 
 // 弹层的宽度
 const modalWidth = 300;
@@ -93,6 +93,7 @@ const InternalExpression = memo<
         value,
         placeholder,
         triggerCharCode,
+        isUseTriggerCharCode = true,
         quickTipProp,
         quickTipDataSource,
         disableQuickTip,
@@ -188,6 +189,7 @@ const InternalExpression = memo<
         showQuickTip,
         hideQuickTip,
         clear,
+        onOperatorsClick,
       }));
 
       /**
@@ -227,7 +229,7 @@ const InternalExpression = memo<
        * @description 编辑器是否为空
        * @return {boolean}
        */
-      function isEditorEmpty() {
+      function isEditorEmpty(): boolean {
         return getEditorEl()?.innerHTML?.trim?.() === '';
       }
 
@@ -363,7 +365,7 @@ const InternalExpression = memo<
        * @param {string} text 元素的文本
        * @return {HTMLSpanElement}
        */
-      function createOperatorElement(text) {
+      function createOperatorElement(text: string): HTMLSpanElement {
         let targetOperatorClassName: string = '';
 
         if (isString(operatorClassName)) {
@@ -384,7 +386,7 @@ const InternalExpression = memo<
        * @description 是否是font元素
        * @return {boolean}
        */
-      function isFont() {
+      function isFont(): boolean {
         return editorRef?.current?.firstElementChild?.tagName?.toLowerCase?.() === 'font';
       }
 
@@ -393,7 +395,7 @@ const InternalExpression = memo<
        * @description 设置连续输入的字符
        * @param {string} text 当前输入的文本
        */
-      function setContinuousText(text) {
+      function setContinuousText(text: string) {
         if (
           !preCursorContextElement.current ||
           (preCursorContextElement.current === cursorContextElement.current &&
@@ -433,7 +435,7 @@ const InternalExpression = memo<
        * onEditorInput
        * @description 编辑框input
        */
-      function onEditorInput(e) {
+      function onEditorInput(e?: any) {
         if (comStart.current) return; // 中文输入过程中不截断
 
         if (cursorContextElement) {
@@ -450,7 +452,7 @@ const InternalExpression = memo<
           hidePlaceholder();
         }
 
-        const text = e.nativeEvent.data;
+        const text = e?.nativeEvent?.data;
 
         if (text !== null) {
           setContinuousText(text);
@@ -501,6 +503,8 @@ const InternalExpression = memo<
        * @return {boolean}
        */
       function onEditorKeyDown(e) {
+        if (!isUseTriggerCharCode) return false;
+
         // 默认空格
         if (e.keyCode === (triggerCharCode ?? defaultTriggerCharCode)) {
           hideQuickTip();
@@ -565,7 +569,7 @@ const InternalExpression = memo<
             const textElement = createTextElement(`${htmlSpace}${htmlSpace}`);
 
             // 如果是在editor的文本中进行的编辑
-            if (cursorContextParentElement.current === editor) {
+            if (cursorContextParentElement.current === editor || isEditorEmpty()) {
               const text = cursorContextElement?.current?.textContent;
               const startElement = createTextElement(text?.substring?.(0, cursorIndex.current + 1));
               const endElement = createTextElement(text?.substring?.(cursorIndex.current + 1));
@@ -580,9 +584,17 @@ const InternalExpression = memo<
                 endElement.textContent.length !== 0 && df.appendChild(endElement);
               }
 
-              editor?.replaceChild?.(df, cursorContextElement.current!);
+              try {
+                if (isEditorEmpty()) {
+                  editor?.appendChild?.(df);
+                } else {
+                  editor?.replaceChild?.(df, cursorContextElement.current!);
+                }
 
-              setCursorPosition(textElement, 1);
+                setCursorPosition(textElement, 1);
+              } catch (e) {
+                console.error(e);
+              }
             }
             // 如果是在text文本中进行的编辑
             else {
@@ -601,12 +613,16 @@ const InternalExpression = memo<
                 endElement.textContent.length !== 0 && df.appendChild(endElement);
               }
 
-              cursorContextParentElement?.current?.parentElement?.replaceChild?.(
-                df,
-                cursorContextParentElement.current as Node,
-              );
+              try {
+                cursorContextParentElement?.current?.parentElement?.replaceChild?.(
+                  df,
+                  cursorContextParentElement.current as Node,
+                );
 
-              setCursorPosition(textElement, 1);
+                setCursorPosition(textElement, 1);
+              } catch (e) {
+                console.error(e);
+              }
             }
           }
           // 其他符号
@@ -615,7 +631,7 @@ const InternalExpression = memo<
             const textElement = createTextElement(htmlSpace);
 
             // 如果是在editor的文本中进行的编辑
-            if (cursorContextParentElement.current === editor) {
+            if (cursorContextParentElement.current === editor || isEditorEmpty()) {
               // 光标所在的元素现在是text元素
               // let parentElement = getInsertParentElement();
               // parentElement.appendChild(operatorElement);
@@ -623,8 +639,10 @@ const InternalExpression = memo<
               // setCursorToEnd(parentElement);
 
               const text = cursorContextElement?.current?.textContent;
-              const startElement = createTextElement(text?.substring?.(0, cursorIndex.current + 1));
-              const endElement = createTextElement(text?.substring?.(cursorIndex.current + 1));
+              const startElement = createTextElement(
+                text?.substring?.(0, cursorIndex.current /* + 1*/),
+              );
+              const endElement = createTextElement(text?.substring?.(cursorIndex.current /* + 1*/));
 
               const df = document.createDocumentFragment();
               df.appendChild(startElement);
@@ -634,9 +652,17 @@ const InternalExpression = memo<
                 endElement.textContent.length !== 0 && df.appendChild(endElement);
               }
 
-              editor?.replaceChild(df, cursorContextElement.current!);
+              try {
+                if (isEditorEmpty()) {
+                  editor?.appendChild?.(df);
+                } else {
+                  editor?.replaceChild(df, cursorContextElement.current!);
+                }
 
-              setCursorPosition(textElement, 0);
+                setCursorPosition(textElement, 0);
+              } catch (e) {
+                console.error(e);
+              }
             }
             // 如果是在text文本中进行的编辑
             // @ts-ignore
@@ -653,14 +679,18 @@ const InternalExpression = memo<
                 endElement.textContent.length !== 0 && df.appendChild(endElement);
               }
 
-              cursorContextParentElement?.current?.parentElement?.replaceChild?.(
-                df,
-                cursorContextParentElement.current as Node,
-              );
+              try {
+                cursorContextParentElement?.current?.parentElement?.replaceChild?.(
+                  df,
+                  cursorContextParentElement.current as Node,
+                );
+              } catch (e) {}
 
               setCursorPosition(textElement, 0);
             }
           }
+
+          onEditorInput();
 
           onChange?.(editorRef?.current?.innerHTML);
         }
@@ -752,10 +782,12 @@ const InternalExpression = memo<
             contentEditable="true"
             onInput={onEditorInput}
             onKeyDown={onEditorKeyDown}
+            onKeyUp={onEditorInput}
             onBlur={onEditorBlur}
             onCompositionStart={onEditorCompositionStart}
             onCompositionEnd={onEditorCompositionEnd}
             onPaste={onEditorPaste}
+            onClick={onEditorInput}
           >
             {/*<span className="text" contentEditable="true"></span>*/}
           </div>
@@ -902,18 +934,17 @@ Expression.parse = (
 
 /**
  * validator
- * @return {{validator(*, *): (Promise<void>)}}
  */
-Expression.validator = () => ({
-  validator(_, value) {
+Expression.AntdFormRequireValidator = (tip) => ({
+  validator(rule, value, callback) {
     const context = document.createElement('div');
     context.innerHTML = value;
 
     if (context.innerText) {
-      return Promise.resolve();
+      callback();
+    } else {
+      callback(tip);
     }
-
-    return Promise.reject(new Error(Intl.v('请输入关键字')));
   },
 });
 

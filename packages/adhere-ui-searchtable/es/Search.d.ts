@@ -82,6 +82,12 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      */
     abstract renderBody(): ReactNode;
     /**
+     * getTotal
+     * @description 获取数据总数
+     * @return {number}
+     */
+    abstract getTotal(): number;
+    /**
      *
      * getRowSelection
      * @description 获取表格行选择对象
@@ -111,11 +117,11 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      */
     abstract clearPaging(): Promise<void>;
     /**
-     * getTotal
-     * @description 获取表格数据的总数
+     * getCurrent
+     * @description 获取当前的页码
      * @return {number}
      */
-    abstract getTotal(): number;
+    abstract getCurrent(): number;
     /**
      * onSearch
      * @description 进行查询

@@ -46,6 +46,10 @@ export interface ExpressionProps<T extends {
      */
     triggerCharCode?: number;
     /**
+     * 是否使用charCode触发运算符出现
+     */
+    isUseTriggerCharCode?: boolean;
+    /**
      * placeholder
      */
     placeholder?: string;
@@ -94,6 +98,7 @@ export interface ExpressionHandle {
     hideQuickTip(): void;
     hideOperators(): void;
     clear(): void;
+    onOperatorsClick(operator: string, operatorType: OperatorType): void;
 }
 export interface ViewProps extends EllipsisProps {
     wrapClassName?: string;
@@ -106,8 +111,8 @@ export type ExpressionComponent = NamedExoticComponent<PropsWithoutRef<Expressio
         nodeType: number;
         value: string | null;
     }) => string) => string;
-    validator: () => {
-        validator: (_: any, value: string) => Promise<any>;
+    AntdFormRequireValidator: (tip: string) => {
+        validator: (_: any, value: string, callback: (tip?: any) => {}) => void;
     };
     ElasticSearchOptions: typeof ElasticSearch;
     SqlOptions: typeof Sql;

@@ -1036,7 +1036,6 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         gridSearchFormGroupParams[2].rowCount = 1;
       }
 
-      debugger;
       // @ts-ignore
       return this.renderGridSearchFormGroup(...gridSearchFormGroupParams);
     }

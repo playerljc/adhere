@@ -296,6 +296,16 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   }
 
   /**
+   * getCurrentKey
+   * @description - 获取current的key
+   * @protected
+   * @return {string}
+   */
+  getCurrentKey(): string {
+    return 'current';
+  }
+
+  /**
    * getData
    * @description - Table的数据(Table的dataSource字段)
    * @override
@@ -303,6 +313,18 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    */
   getData(): object[] {
     return this.props?.[this.getServiceName()]?.[this.getFetchListPropName()]?.[this.getDataKey()];
+  }
+
+  /**
+   * getCurrent
+   * @description - Table的数据(Table的dataSource字段)
+   * @override
+   * @return {object[]}
+   */
+  getCurrent(): number {
+    return this.props?.[this.getServiceName()]?.[this.getFetchListPropName()]?.[
+      this.getCurrentKey()
+    ];
   }
 
   /**

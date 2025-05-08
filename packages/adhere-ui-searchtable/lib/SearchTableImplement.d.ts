@@ -161,12 +161,26 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      */
     getTotalKey(): string;
     /**
+     * getCurrentKey
+     * @description - 获取current的key
+     * @protected
+     * @return {string}
+     */
+    getCurrentKey(): string;
+    /**
      * getData
      * @description - Table的数据(Table的dataSource字段)
      * @override
      * @return {object[]}
      */
     getData(): object[];
+    /**
+     * getCurrent
+     * @description - Table的数据(Table的dataSource字段)
+     * @override
+     * @return {object[]}
+     */
+    getCurrent(): number;
     /**
      * setData
      * @description 设置数据

@@ -78,6 +78,18 @@ export class SearchTableStateImplement<
   }
 
   /**
+   * getCurrent
+   * @description - Table的数据(Table的dataSource字段)
+   * @override
+   * @return {object[]}
+   */
+  getCurrent(): number {
+    return this.state?.[this.getServiceName()]?.[this.getFetchListPropName()]?.[
+      this.getCurrentKey()
+    ];
+  }
+
+  /**
    * setData
    * @description 设置数据
    * @param data

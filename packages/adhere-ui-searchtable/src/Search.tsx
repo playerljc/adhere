@@ -117,6 +117,13 @@ abstract class Search<
   abstract renderBody(): ReactNode;
 
   /**
+   * getTotal
+   * @description 获取数据总数
+   * @return {number}
+   */
+  abstract getTotal(): number;
+
+  /**
    *
    * getRowSelection
    * @description 获取表格行选择对象
@@ -154,11 +161,11 @@ abstract class Search<
   abstract clearPaging(): Promise<void>;
 
   /**
-   * getTotal
-   * @description 获取表格数据的总数
+   * getCurrent
+   * @description 获取当前的页码
    * @return {number}
    */
-  abstract getTotal(): number;
+  abstract getCurrent(): number;
 
   /**
    * onSearch

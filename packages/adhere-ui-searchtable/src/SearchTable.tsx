@@ -13,7 +13,7 @@ import type {
 } from 'antd/es/table/interface';
 import classNames from 'classnames';
 import difference from 'lodash.difference';
-// import memoize from 'lodash.memoize';
+import memoize from 'lodash.memoize';
 import sortBy from 'lodash.sortby';
 import uniq from 'lodash.uniq';
 import uniqBy from 'lodash.uniqby';
@@ -27,6 +27,7 @@ import { DownOutlined, SearchOutlined, SyncOutlined, UpOutlined } from '@ant-des
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import type { ConfigProviderContext } from '@baifendian/adhere-ui-configprovider/es/types';
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -207,11 +208,11 @@ abstract class SearchTable<
   abstract getData(): object[];
 
   /**
-   * getTotal
-   * @description 获取数据总数
+   * getCurrent
+   * @description 获取当前页码
    * @return {number}
    */
-  abstract getTotal(): number;
+  abstract getCurrent(): number;
 
   /**
    * setData
@@ -350,8 +351,8 @@ abstract class SearchTable<
     this.onExpandedRowsChange = this.onExpandedRowsChange.bind(this);
     this.onBodyKeyup = this.onBodyKeyup.bind(this);
 
-    // this.getWidthByHacker = memoize(this.getWidthByHacker, (obj) => JSON.stringify(obj));
-    // this.getWidth = memoize(this.getWidth, (obj) => JSON.stringify(obj));
+    this.getWidthByHacker = memoize(this.getWidthByHacker, (obj) => JSON.stringify(obj));
+    this.getColumnWidth = memoize(this.getColumnWidth, (obj) => JSON.stringify(obj));
   }
 
   componentDidMount() {
@@ -1000,7 +1001,7 @@ abstract class SearchTable<
    * @param space
    * @private
    */
-  protected getWidthByHacker({
+  getWidthByHacker({
     text,
     font,
     family,
@@ -1053,18 +1054,30 @@ abstract class SearchTable<
   }
 
   /**
-   * setColumnWidth
-   * @param columnConfig
+   * getColumnWidth
    * @private
    */
-  protected setColumnWidth(columnConfig: ColumnTypeExt) {
+  getColumnWidth({
+    columnConfig,
+    dataSource,
+    media,
+  }: {
+    columnConfig: ColumnTypeExt;
+    dataSource: any[];
+    media: ConfigProviderProps['media'];
+  }) {
+    console.log('columnConfig.width===', columnConfig.width);
+
+    console.time('setColumnWidth');
     if (typeof columnConfig.width === 'number') {
       columnConfig.width = this.pxToRem(columnConfig.width);
-      return;
+      console.timeEnd('setColumnWidth');
+      return undefined;
     }
 
     if (typeof columnConfig.width != 'object') {
-      return;
+      console.timeEnd('setColumnWidth');
+      return undefined;
     }
 
     // max-content的实现
@@ -1217,9 +1230,11 @@ abstract class SearchTable<
         ReactIs.isPortal(columnConfig.title)) &&
       !('titleToString' in columnConfig)
     ) {
+      console.timeEnd('setColumnWidth');
       return undefined;
     }
 
+    console.log('columnConfig.width', columnConfig.width);
     // 渲染是对象且没有字符串渲染
 
     const widthConfig = columnConfig.width as ColumnWidthMaxContent;
@@ -1235,8 +1250,8 @@ abstract class SearchTable<
       spacing: widthConfig.titleSpacing ?? this.getDefaultColumnSpacing(),
       space: widthConfig.titleSpacingSpace ?? this.getDefaultColumnSpace(),
     });
+    console.log('titleWidth', titleWidth);
 
-    const dataSource = this.getDataSource();
     const cellsWidth = dataSource.map((record) =>
       this.getWidthByHacker({
         text: this.getCellText({ columnConfig, record }), //record[columnConfig.dataIndex],
@@ -1246,12 +1261,18 @@ abstract class SearchTable<
         space: widthConfig.cellSpacingSpace ?? this.getDefaultCellSpace(),
       }),
     );
+    console.log('cellsWidth', cellsWidth);
 
     const cellMaxWidth = Math.max(...cellsWidth);
 
     const titleAndCellMaxWidth = Math.max(titleWidth, cellMaxWidth);
 
+    console.log('cellMaxWidth', cellMaxWidth);
+
+    console.log('titleAndCellMaxWidth', titleAndCellMaxWidth);
+
     let _width: number = -1;
+    let targetWidth = '';
 
     if (widthConfig.minWidth && widthConfig.maxWidth) {
       if (titleAndCellMaxWidth <= widthConfig.minWidth) {
@@ -1277,9 +1298,16 @@ abstract class SearchTable<
       _width = titleAndCellMaxWidth;
     }
 
+    console.log('_width===', _width);
+
     if (_width !== -1) {
-      columnConfig.width = this.pxToRem(_width);
+      console.log('_width1===', this.pxToRem(_width));
+      /*columnConfig.width*/ targetWidth = this.pxToRem(_width);
     }
+
+    console.timeEnd('setColumnWidth');
+
+    return targetWidth;
   }
 
   protected getDefaultColumnTitleFontSize(): number {
@@ -1331,6 +1359,7 @@ abstract class SearchTable<
    */
   getTableColumnsAll(): any[] {
     const childrenColumnName = this.getChildrenColumnName();
+    const dataSource = this.getDataSource();
 
     // 对权限进行过滤
     const columns = this.getColumns()
@@ -1383,7 +1412,15 @@ abstract class SearchTable<
             }
 
             if ('width' in _columnConfig) {
-              self.setColumnWidth(_columnConfig);
+              const targetWidth = self.getColumnWidth({
+                columnConfig: _columnConfig,
+                dataSource,
+                media: self?._context?.media,
+              });
+
+              if (targetWidth !== undefined) {
+                _columnConfig.width = targetWidth;
+              }
             }
 
             return _columnConfig;
@@ -1397,7 +1434,15 @@ abstract class SearchTable<
         }
 
         if ('width' in columnConfig) {
-          this.setColumnWidth(columnConfig);
+          const targetWidth = this.getColumnWidth({
+            columnConfig,
+            dataSource,
+            media: this?._context?.media,
+          });
+
+          if (targetWidth !== undefined) {
+            columnConfig.width = targetWidth;
+          }
         }
 
         return columnConfig;
@@ -1479,7 +1524,12 @@ abstract class SearchTable<
             // 单独生成
             conditional={numberGeneratorRule === SearchTable.NUMBER_GENERATOR_RULE_ALONE}
             noMatch={() =>
-              this.renderTableNumberColumn((page - 1) * limit + (index + 1), {
+              /*this.renderTableNumberColumn((page - 1) * limit + (index + 1), {
+                value: v,
+                record: r,
+                index,
+              })*/
+              this.renderTableNumberColumn((this.getCurrent() - 1) * limit + (index + 1), {
                 value: v,
                 record: r,
                 index,
