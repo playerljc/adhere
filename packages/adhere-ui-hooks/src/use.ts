@@ -38,20 +38,27 @@ const use: Use = (p: (...args: any[]) => Promise<any>, defaultArgs) => {
    * @param {any[]} _defaultArgs
    */
   function executePromise(_defaultArgs: any[]) {
-    // @ts-ignore
-    p?.apply?.(this, _defaultArgs)
-      ?.then((res) => {
-        setResult({
-          data: res,
-          ...SUCCESS_STATUS,
-        });
-      })
-      .catch((err) => {
-        setResult({
-          data: err,
-          ...FAIL_STATUS,
-        });
-      });
+    return (
+      p
+        // @ts-ignore
+        ?.apply?.(this, _defaultArgs)
+        ?.then((res) => {
+          setResult({
+            data: res,
+            ...SUCCESS_STATUS,
+          });
+
+          return res;
+        })
+        .catch((err) => {
+          setResult({
+            data: err,
+            ...FAIL_STATUS,
+          });
+
+          throw err;
+        })
+    );
   }
 
   /**
@@ -66,7 +73,7 @@ const use: Use = (p: (...args: any[]) => Promise<any>, defaultArgs) => {
 
     setType('reset');
 
-    executePromise(args);
+    return executePromise(args);
   }
 
   /**
@@ -82,7 +89,7 @@ const use: Use = (p: (...args: any[]) => Promise<any>, defaultArgs) => {
 
     setType('reload');
 
-    executePromise(args);
+    return executePromise(args);
   }
 
   useMount(() => {
