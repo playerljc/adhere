@@ -1,5 +1,5 @@
 import { Button, Dropdown, Space } from 'antd';
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 
 import { DownOutlined } from '@ant-design/icons';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
@@ -73,6 +73,8 @@ export default (props) => {
     onClick: handleMenuClick,
   };
 
+  const [value, setValue] = useState('');
+
   return (
     <FlexLayout direction="horizontal" gutter={[0, 20]}>
       <FlexLayout.Fixed>
@@ -87,7 +89,23 @@ export default (props) => {
       </FlexLayout.Fixed>
 
       <FlexLayout.Auto>
-        <Expression ref={expressionRef} {...props} isUseTriggerCharCode={false} disableQuickTip />
+        <Expression
+          ref={expressionRef}
+          {...props}
+          isUseTriggerCharCode={false}
+          disableQuickTip
+          value={value}
+        />
+
+        <button
+          onClick={() => {
+            setValue(
+              `<span class=\\"text\\">2</span><span class=\\"operator\\" contenteditable=\\"false\\">{userName}</span><span class=\\"text\\">­</span>`,
+            );
+          }}
+        >
+          111
+        </button>
       </FlexLayout.Auto>
     </FlexLayout>
   );

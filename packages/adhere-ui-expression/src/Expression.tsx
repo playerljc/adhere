@@ -937,13 +937,17 @@ Expression.parse = (
  */
 Expression.AntdFormRequireValidator = (tip) => ({
   validator(rule, value, callback) {
-    const context = document.createElement('div');
-    context.innerHTML = value;
-
-    if (context.innerText) {
-      callback();
-    } else {
+    if (value === undefined || value === null || value === '') {
       callback(tip);
+    } else {
+      const context = document.createElement('div');
+      context.innerHTML = value;
+
+      if (context.innerText) {
+        callback();
+      } else {
+        callback(tip);
+      }
     }
   },
 });
