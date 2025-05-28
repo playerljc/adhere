@@ -22,7 +22,7 @@ const InternalDelConform = memo<DelConfirmProps>((props) => {
 
     const { children, ...params } = props;
 
-    DelConform.open({ ...params });
+    DelConform.open({ width: 350, ...params });
   }
 
   return (
