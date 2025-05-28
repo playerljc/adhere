@@ -326,6 +326,9 @@ const InternalWangEditorSandbox = memo<
         // @ts-ignore
         return frameRef?.current?.contentWindow?.wangEditor;
       },
+      getWindow() {
+        return frameRef?.current?.contentWindow as Window;
+      },
     }));
 
     /**
