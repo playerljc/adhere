@@ -19,7 +19,7 @@ export declare class SearchTableStateImplement<P extends SearchTableStateImpleme
     getData(): object[];
     /**
      * getCurrent
-     * @description - Table的数据(Table的dataSource字段)
+     * @description - 获取当前的页码
      * @override
      * @return {object[]}
      */

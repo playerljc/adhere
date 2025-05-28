@@ -981,12 +981,18 @@ abstract class SearchTable<
   private getCellText({
     columnConfig,
     record,
+    rowIndex,
   }: {
     columnConfig: ColumnTypeExt;
     record: Record<string, any>;
+    rowIndex: number;
   }) {
     if ('renderToString' in columnConfig) {
-      return columnConfig?.renderToString?.(record[columnConfig.dataIndex] as any);
+      return columnConfig?.renderToString?.(
+        record[columnConfig.dataIndex] as any,
+        record,
+        rowIndex,
+      );
     }
 
     return record[columnConfig.dataIndex];
@@ -1252,9 +1258,9 @@ abstract class SearchTable<
     });
     console.log('titleWidth', titleWidth);
 
-    const cellsWidth = dataSource.map((record) =>
+    const cellsWidth = dataSource.map((record, rowIndex) =>
       this.getWidthByHacker({
-        text: this.getCellText({ columnConfig, record }), //record[columnConfig.dataIndex],
+        text: this.getCellText({ columnConfig, record, rowIndex }), //record[columnConfig.dataIndex],
         font: widthConfig.cellFontSize ?? this.getDefaultCellFontSize(),
         family: widthConfig.cellFontFamily ?? this.getDefaultCellFontFamily(),
         spacing: widthConfig.cellSpacing ?? this.getDefaultCellSpacing(),

@@ -279,7 +279,7 @@ export interface ColumnTypeExt extends ColumnType<any> {
     headerCellAlign?: 'left' | 'center' | 'right';
     width?: undefined | string | number | ColumnWidthMaxContent;
     titleToString?: string;
-    renderToString?: (value: any) => string;
+    renderToString?: (value: any, record: any, rowIndex: number) => string;
 }
 /**
  * SearchProps

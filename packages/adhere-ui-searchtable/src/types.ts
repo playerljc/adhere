@@ -396,7 +396,7 @@ export interface ColumnTypeExt extends ColumnType<any> {
   // 宽度的设置
   width?: undefined | string | number | ColumnWidthMaxContent;
   titleToString?: string;
-  renderToString?: (value: any) => string;
+  renderToString?: (value: any, record: any, rowIndex: number) => string;
   // 列头属性设置
   // onHeaderCell?: () => any;
 }
