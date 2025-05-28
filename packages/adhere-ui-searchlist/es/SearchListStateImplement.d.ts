@@ -28,6 +28,11 @@ export declare class SearchListStateImplement<P extends SearchListStateImplement
      */
     getTotal(): number;
     /**
+     * getCurrent
+     * @description 获取当前页码
+     */
+    getCurrent(): any;
+    /**
      * showLoading
      * @description loading
      */

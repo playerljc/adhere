@@ -126,8 +126,15 @@ export class SearchListStateImplement<
    * @description 获取列表总的数据树
    */
   getTotal(): number {
-    // @ts-ignore
     return this.state[this.getServiceName()][this.getFetchListPropName()][this.getTotalKey()];
+  }
+
+  /**
+   * getCurrent
+   * @description 获取当前页码
+   */
+  getCurrent() {
+    return this.state[this.getServiceName()][this.getFetchListPropName()][this.getCurrentKey()];
   }
 
   /**

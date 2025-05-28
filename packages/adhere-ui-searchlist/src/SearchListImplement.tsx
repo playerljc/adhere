@@ -233,6 +233,10 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
     return 'totalCount';
   }
 
+  getCurrentKey() {
+    return 'current';
+  }
+
   /**
    * getFetchDataResultDataKey
    * @description fetchData返回的结果中数据的key
@@ -296,6 +300,14 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    */
   getTotal(): number {
     return this.props[this.getServiceName()][this.getFetchListPropName()][this.getTotalKey()];
+  }
+
+  /**
+   * getCurrent
+   * @description 获取当前页码
+   */
+  getCurrent() {
+    return this.props[this.getServiceName()][this.getFetchListPropName()][this.getCurrentKey()];
   }
 
   /**

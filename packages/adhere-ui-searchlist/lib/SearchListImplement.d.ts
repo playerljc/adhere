@@ -102,6 +102,7 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
      * @return {string}
      */
     getTotalKey(): string;
+    getCurrentKey(): string;
     /**
      * getFetchDataResultDataKey
      * @description fetchData返回的结果中数据的key
@@ -128,6 +129,11 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
      * @return {number}
      */
     getTotal(): number;
+    /**
+     * getCurrent
+     * @description 获取当前页码
+     */
+    getCurrent(): any;
     /**
      * getRowSelection
      * @override
