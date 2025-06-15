@@ -45,7 +45,7 @@
     "@baifendian/adhere-util-dict": "^2.11.0",
     "@baifendian/adhere-util-intl": "^2.11.0",
     "@ctsj/state": "^2.0.24",
-    "antd": "^5.23.4",
+    "antd": "^5.26.0",
     "classnames": "^2.5.1",
     "omit.js": "^2.0.2",
     "react": "^18.3.1",
