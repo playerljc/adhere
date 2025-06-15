@@ -334,18 +334,18 @@ export default {
       {
         label: 'Navigation One',
         key: 'mail',
-        icon: <MailOutlined />,
+        // icon: <MailOutlined />,
       },
       {
         label: 'Navigation Two',
         key: 'app',
-        icon: <AppstoreOutlined />,
+        // icon: <AppstoreOutlined />,
         disabled: true,
       },
       {
         label: 'Navigation Three - Submenu',
         key: 'SubMenu',
-        icon: <SettingOutlined />,
+        // icon: <SettingOutlined />,
         children: [
           {
             type: 'group',
@@ -378,11 +378,11 @@ export default {
         ],
       },
       {
-        label: (
-          <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-            Navigation Four - Link
-          </a>
-        ),
+        label:
+          // <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
+          //   Navigation Four - Link
+          // </a>
+          'Navigation Four - Link',
         key: 'alipay',
       },
     ];
@@ -443,29 +443,29 @@ export default {
     Dict.handlers.SystemDropNav = () => [
       {
         key: '1',
-        label: (
-          <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+        label:
+          /*<a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
             1st menu item
-          </a>
-        ),
+          </a>*/
+          '1st menu item',
       },
       {
         key: '2',
-        label: (
-          <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-            2nd menu item (disabled)
-          </a>
-        ),
-        icon: <SmileOutlined />,
+        label:
+          // <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+          //   2nd menu item (disabled)
+          // </a>
+          '2nd menu item (disabled)',
+        // icon: <SmileOutlined />,
         disabled: true,
       },
       {
         key: '3',
-        label: (
-          <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-            3rd menu item (disabled)
-          </a>
-        ),
+        label:
+          // <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+          //   3rd menu item (disabled)
+          // </a>
+          '3rd menu item (disabled)',
         disabled: true,
       },
       {
@@ -481,10 +481,10 @@ export default {
         title: 'Home',
       },
       {
-        title: <a href="">Application Center</a>,
+        title: 'Application Center',
       },
       {
-        title: <a href="">Application List</a>,
+        title: 'Application List',
       },
       {
         title: 'An Application',
@@ -495,30 +495,30 @@ export default {
     Dict.handlers.SystemSegNav = () => ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
     Dict.handlers.SystemObjArraySegNav = () => [
       {
-        label: (
-          <div style={{ padding: 4 }}>
-            <Avatar src="https://joesch.moe/api/v1/random" />
-            <div>User 1</div>
-          </div>
-        ),
+        label:
+          // <div style={{ padding: 4 }}>
+          //   <Avatar src="https://joesch.moe/api/v1/random" />
+          //   <div>User 1</div>
+          // </div>
+          'User ',
         value: 'user1',
       },
       {
-        label: (
-          <div style={{ padding: 4 }}>
-            <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-            <div>User 2</div>
-          </div>
-        ),
+        label:
+          // <div style={{ padding: 4 }}>
+          //   <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+          //   <div>User 2</div>
+          // </div>
+          'User 2',
         value: 'user2',
       },
       {
-        label: (
-          <div style={{ padding: 4 }}>
-            <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-            <div>User 3</div>
-          </div>
-        ),
+        label:
+          // <div style={{ padding: 4 }}>
+          //   <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+          //   <div>User 3</div>
+          // </div>
+          'User 3',
         value: 'user3',
       },
     ];
@@ -547,7 +547,7 @@ export default {
         color: 'green',
       },
       {
-        dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
+        // dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
         children: `Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.`,
       },
       {
@@ -558,7 +558,7 @@ export default {
         children: 'Create a services site 2015-09-01',
       },
       {
-        dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
+        // dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
         children: 'Technical testing 2015-09-01',
       },
     ];
@@ -573,47 +573,44 @@ export default {
       },
       {
         color: 'red',
-        children: (
-          <>
-            <p>Solve initial network problems 1</p>
-            <p>Solve initial network problems 2</p>
-            <p>Solve initial network problems 3 2015-09-01</p>
-          </>
-        ),
+        children: 'Create a services site 2015-09-01',
+        // <>
+        //   <p>Solve initial network problems 1</p>
+        //   <p>Solve initial network problems 2</p>
+        //   <p>Solve initial network problems 3 2015-09-01</p>
+        // </>
       },
       {
-        children: (
-          <>
-            <p>Technical testing 1</p>
-            <p>Technical testing 2</p>
-            <p>Technical testing 3 2015-09-01</p>
-          </>
-        ),
-      },
-      {
-        color: 'gray',
-        children: (
-          <>
-            <p>Technical testing 1</p>
-            <p>Technical testing 2</p>
-            <p>Technical testing 3 2015-09-01</p>
-          </>
-        ),
+        children: 'Create a services site 2015-09-01',
+        // <>
+        //   <p>Technical testing 1</p>
+        //   <p>Technical testing 2</p>
+        //   <p>Technical testing 3 2015-09-01</p>
+        // </>
       },
       {
         color: 'gray',
-        children: (
-          <>
-            <p>Technical testing 1</p>
-            <p>Technical testing 2</p>
-            <p>Technical testing 3 2015-09-01</p>
-          </>
-        ),
+        children: 'Create a services site 2015-09-01',
+        // <>
+        //   <p>Technical testing 1</p>
+        //   <p>Technical testing 2</p>
+        //   <p>Technical testing 3 2015-09-01</p>
+        // </>
+      },
+      {
+        color: 'gray',
+        children: 'Create a services site 2015-09-01',
+        // <>
+        //   <p>Technical testing 1</p>
+        //   <p>Technical testing 2</p>
+        //   <p>Technical testing 3 2015-09-01</p>
+        // </>
       },
       {
         color: '#00CCFF',
-        dot: <SmileOutlined />,
-        children: <p>Custom color testing</p>,
+        // dot: <SmileOutlined />,
+        // children: <p>Custom color testing</p>,
+        children: 'Create a services site 2015-09-01',
       },
     ];
 

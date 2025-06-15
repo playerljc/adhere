@@ -3,11 +3,11 @@ import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 
 import type { CreateServiceParams, XhrResponseBusiness } from '../types';
 
-/**
- * deepDep - deepDep
- * @param {any} dep
- */
-export const deepDep = (dep: any) => JSON.stringify(dep);
+// /**
+//  * deepDep - deepDep
+//  * @param {any} dep
+//  */
+// export const deepDep = (dep: any) => JSON.stringify(dep);
 
 /**
  * getOriginDictNameByItemName

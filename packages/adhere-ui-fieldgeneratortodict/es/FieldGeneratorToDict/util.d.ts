@@ -1,10 +1,5 @@
 import type { CreateServiceParams } from '../types';
 /**
- * deepDep - deepDep
- * @param {any} dep
- */
-export declare const deepDep: (dep: any) => string;
-/**
  * getOriginDictNameByItemName
  * @description 根据itemName获取实际的dictName
  * // 实际使用的名字(业务名 + 组件名 + 功能名)

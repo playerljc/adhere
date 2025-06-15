@@ -1,5 +1,5 @@
 import { useMount, useUpdateEffect } from 'ahooks';
-import closeDeep from 'lodash.clonedeep';
+import cloneDeep from 'lodash.clonedeep';
 import { useCallback, useState } from 'react';
 
 import type {
@@ -21,7 +21,6 @@ import Util from '@baifendian/adhere-util';
 import Dict from '@baifendian/adhere-util-dict';
 
 import type { UseDictParams } from '../types';
-import { deepDep } from './Util';
 
 /**
  * useDict
@@ -40,7 +39,7 @@ export function useDict<D>({ dictName, cascadeParams, onDataSourceChange }: UseD
     if (dictValue instanceof Function) {
       setDataSource(dictValue(cascadeParams));
     } else {
-      setDataSource(closeDeep(dictValue));
+      setDataSource(cloneDeep(dictValue));
     }
   }
 
@@ -50,7 +49,7 @@ export function useDict<D>({ dictName, cascadeParams, onDataSourceChange }: UseD
 
   useUpdateEffect(() => {
     loadData();
-  }, [deepDep(cascadeParams)]);
+  }, [cascadeParams]);
 
   useUpdateEffect(() => {
     onDataSourceChange?.(dataSource);
@@ -83,7 +82,7 @@ export function useDynamicDict<D>({
       });
     } else if (dictValue.then) {
       dictValue.then((res) => {
-        setDataSource(closeDeep(res));
+        setDataSource(cloneDeep(res));
       });
     }
   }
@@ -94,7 +93,7 @@ export function useDynamicDict<D>({
 
   useUpdateEffect(() => {
     loadData();
-  }, [deepDep(cascadeParams)]);
+  }, [cascadeParams]);
 
   useUpdateEffect(() => {
     onDataSourceChange?.(dataSource);
@@ -289,7 +288,7 @@ export function useMobileAsyncTree({ dictName, treeDataSimpleMode }) {
         item.children = resultTreeData ?? [];
       }
 
-      return JSON.parse(JSON.stringify(_treeData));
+      return cloneDeep(_treeData);
     });
   }
 
@@ -330,7 +329,7 @@ export function useMobileAsyncTree({ dictName, treeDataSimpleMode }) {
 
       const data = treeToArray(_treeData);
 
-      return JSON.parse(JSON.stringify(data));
+      return cloneDeep(data);
     });
   }
 
