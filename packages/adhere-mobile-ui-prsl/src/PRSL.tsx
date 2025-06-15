@@ -459,7 +459,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
             <div className={`${selectorPrefix}-load-more-loading-dot`}>
               <DotLoading color="primary" />
             </div>
-            <div>{`${Intl.v('数据加载中')}`}...</div>
+            <div>{`${Intl.get('data_loading')}`}...</div>
           </div>
         );
       }, []);
@@ -474,7 +474,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
                   forceUpdate();
                 }}
               >
-                {Intl.v('点击重试')}
+                {Intl.get('click_to_retry')}
               </Button>
             </ErrorBlock>
           )

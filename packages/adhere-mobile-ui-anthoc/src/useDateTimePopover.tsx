@@ -29,7 +29,9 @@ function useDateTimePopover<T extends DateTimeViewProps>({
 
   const placeholderElement = useMemo(() => {
     const defaultFormat = (
-      <div className={`${selectorPrefix}-placeholder`}>{placeholder ?? Intl.v('请选择')}</div>
+      <div className={`${selectorPrefix}-placeholder`}>
+        {placeholder ?? Intl.get('please_select')}
+      </div>
     );
 
     return (
@@ -45,13 +47,13 @@ function useDateTimePopover<T extends DateTimeViewProps>({
       [
         {
           key: 'submit',
-          text: okLabel ?? Intl.v('确定'),
+          text: okLabel ?? Intl.get('confirm'),
           primary: true,
           onClick: () => Promise.resolve(internalValue.current ?? new Date()),
         },
         allowClearValue && {
           key: 'clear',
-          text: clearLabel ?? Intl.v('清除'),
+          text: clearLabel ?? Intl.get('clear'),
           onClick: () => {
             setKey(`${Date.now()}`);
             return Promise.resolve(null);
@@ -59,7 +61,7 @@ function useDateTimePopover<T extends DateTimeViewProps>({
         },
         {
           key: 'close',
-          text: cancelLabel ?? Intl.v('关闭'),
+          text: cancelLabel ?? Intl.get('close'),
           onClick: () => {
             return Promise.resolve(value);
           },

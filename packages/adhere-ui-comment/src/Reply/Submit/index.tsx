@@ -134,7 +134,7 @@ const Reply = memo<ReplyProps>((props) => {
       <div className={`${selectorPrefix}-textarea-wrap`} ref={textAreaRef}>
         <TextArea
           className={`${selectorPrefix}-textarea`}
-          placeholder={Intl.v('请输入回复内容')}
+          placeholder={Intl.get('enter_reply')}
           autoFocus={true}
           value={valueRef.current}
           onChange={(e) => setValue(e.target.value)}
@@ -169,11 +169,11 @@ const Reply = memo<ReplyProps>((props) => {
             disabled={!valueRef.current}
             onClick={() => onResult?.(valueRef.current.trim())}
           >
-            {Intl.v('添加')}
+            {Intl.get('add')}
           </Button>
 
           <Button className={`${selectorPrefix}-toolbar-item`} onClick={() => onCancel?.()}>
-            {Intl.v('取消')}
+            {Intl.get('cancel')}
           </Button>
         </div>
       </div>

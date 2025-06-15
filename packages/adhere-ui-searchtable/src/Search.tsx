@@ -288,7 +288,7 @@ abstract class Search<
       //   );
       // },
       showTotal: (total /* [page, pageSize] */) => {
-        return Intl.v(`当前 {page}-{pageSize}/共 {total}条`, {
+        return Intl.get(`pagination_info`, {
           page: this.state.page,
           pageSize: this.state.limit,
           total,

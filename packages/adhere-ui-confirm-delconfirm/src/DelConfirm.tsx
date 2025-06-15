@@ -39,8 +39,8 @@ DelConform.displayName = 'DelConform';
 DelConform.open = ({ success, ...params }: OpenFunction) => {
   MessageDialog.Confirm({
     ...params,
-    title: params.title || Intl.v('提示'),
-    text: params.text || `${Intl.v('确定删除吗')}?`,
+    title: params.title || Intl.get('hint'),
+    text: params.text || `${Intl.get('confirm_delete')}?`,
     zIndex:
       'zIndex' in params ? params.zIndex : Resource?.Dict?.value?.ResourceNormalMaxZIndex?.value,
     onSuccess: () =>

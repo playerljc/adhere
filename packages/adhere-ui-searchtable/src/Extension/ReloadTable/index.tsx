@@ -9,7 +9,7 @@ import { ReloadTableProps } from '../../types';
 
 const ReloadTable: FC<ReloadTableProps> = ({ onReload, showLoading, renderReloadBtn }) => {
   return (
-    <Tooltip title={`${Intl.v('刷新')}`}>
+    <Tooltip title={`${Intl.get('refresh')}`}>
       {renderReloadBtn && renderReloadBtn({ showLoading, onReload })}
       {!renderReloadBtn && (
         <ReloadOutlined

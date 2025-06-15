@@ -41,8 +41,8 @@ const DelConform = InternalDelConform as DelConfirmComponent;
  */
 DelConform.open = (props) =>
   Dialog.confirm({
-    title: Intl.v('提示'),
-    content: `${Intl.v('确定删除吗')}?`,
+    title: Intl.get('hint'),
+    content: `${Intl.get('confirm_delete')}?`,
     ...(props ?? {}),
   });
 

@@ -31,7 +31,7 @@ export const ToolbarSelectAll = ({ selectAll, rowSelection, rowKey, dataSource, 
   }
 
   return (
-    <Tooltip title={Intl.v('全选')} placement="top" {...selectAll}>
+    <Tooltip title={Intl.get('select_all')} placement="top" {...selectAll}>
       {
         <Checkbox
           indeterminate={
@@ -47,7 +47,7 @@ export const ToolbarSelectAll = ({ selectAll, rowSelection, rowKey, dataSource, 
           }
           onChange={onChange}
         >
-          {selectAll.title || Intl.v('全选')}
+          {selectAll.title || Intl.get('select_all')}
         </Checkbox>
       }
     </Tooltip>
@@ -56,7 +56,7 @@ export const ToolbarSelectAll = ({ selectAll, rowSelection, rowKey, dataSource, 
 
 export const ToolbarReload = ({ reload, onSearch }) => {
   return (
-    <Tooltip title={Intl.v('刷新')} placement="top" {...reload}>
+    <Tooltip title={Intl.get('refresh')} placement="top" {...reload}>
       {reload.render || <ReloadOutlined onClick={() => onSearch()} />}
     </Tooltip>
   );
@@ -83,7 +83,7 @@ export const ToolbarSetting = ({
           checked={selectedColumnKeys?.length === columns?.length}
           onChange={(e) => onChange(e.target.checked ? columns.map((v: any) => v.key) : [])}
         >
-          {Intl.v('列展示')}
+          {Intl.get('column_display')}
         </Checkbox>
       </>
     );
@@ -131,7 +131,7 @@ export const ToolbarSetting = ({
       overlayClassName={`${selectorPrefix}-setting-overlay`}
       {...setting.Popover}
     >
-      <Tooltip title={Intl.v('设置')} placement="top" {...setting}>
+      <Tooltip title={Intl.get('settings')} placement="top" {...setting}>
         {setting.render || <SettingOutlined type="setting" />}
       </Tooltip>
     </Popover>

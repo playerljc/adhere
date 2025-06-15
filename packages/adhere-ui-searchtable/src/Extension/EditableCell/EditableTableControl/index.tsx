@@ -50,11 +50,11 @@ const EditableTableControl: FC<EditorTableControlProps> = ({
     };
   } | null>(SearchTableContext);
 
-  const renderDefaultSave = useCallback(() => <a>{Intl.v('保存')}</a>, []);
+  const renderDefaultSave = useCallback(() => <a>{Intl.get('save')}</a>, []);
 
-  const renderDefaultCancel = useCallback(() => <a>{Intl.v('取消')}</a>, []);
+  const renderDefaultCancel = useCallback(() => <a>{Intl.get('cancel')}</a>, []);
 
-  const renderDefaultEditorTable = useCallback(() => <a>{Intl.v('编辑表格')}</a>, []);
+  const renderDefaultEditorTable = useCallback(() => <a>{Intl.get('edit_table')}</a>, []);
 
   const validateFieldsSuccess = useCallback((values) => {
     if (onSave) {

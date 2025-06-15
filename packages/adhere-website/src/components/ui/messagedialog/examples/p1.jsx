@@ -12,7 +12,7 @@ export default () => {
       onClick={() => {
         MessageDialog.Confirm({
           title: '提示',
-          text: '确认要进行此操作码？',
+          text: '确认要进行此操作吗？',
           width: 300,
           zIndex: 1000,
           local: 'zh_CN',

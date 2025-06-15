@@ -41,7 +41,7 @@ const CheckAllWrapper: FC<CheckAllWrapperProps> = ({ value, onChange, options })
         }
       }}
     >
-      {Intl.v('全选')}
+      {Intl.get('select_all')}
     </Checkbox>
   );
 };

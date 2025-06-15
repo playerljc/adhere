@@ -144,7 +144,7 @@ class Util {
       pageSizeOptions: ['10', '20', '50'],
       showQuickJumper: true,
       showTotal: (total, [page, pageSize]) => {
-        return Intl.v(`当前 {page}-{pageSize}/共 {total}条`, {
+        return Intl.get('pagination_info', {
           page,
           pageSize,
           total,
@@ -200,7 +200,7 @@ class Util {
     // 如果showNumber 则添加序号列
     if (showNumber && !tableColumns.find((v) => v.key === 'xuhao')) {
       tableColumns.unshift({
-        title: Intl.v('序号'),
+        title: Intl.get('serial_number'),
         dataIndex: 'xuhao',
         key: 'xuhao',
         width: 80,

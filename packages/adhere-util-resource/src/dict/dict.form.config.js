@@ -5,19 +5,19 @@ export default {
   initStatic() {
     Dict.handlers.FormInputNumberRule = () => ({
       type: 'number',
-      message: Intl.v('输入的值在1~200之间'),
+      message: Intl.get('input_range_1_200'),
       min: 1,
       max: 200,
     });
 
     Dict.handlers.FormWhitespaceRule = () => ({
-      message: Intl.v('输入的内容前后不能有空格'),
+      message: Intl.get('input_no_spaces'),
       whitespace: true,
     });
 
     Dict.handlers.FormInputStringRule = () => ({
       type: 'string',
-      message: Intl.v('输入的内容在100个字符之内'),
+      message: Intl.get('input_limit_100_chars'),
       min: 1,
       max: 100,
     });

@@ -14,8 +14,8 @@ let handler;
  */
 export const openErrorDialog: ErrorDialog = ({ duration = 3000, ...props }) => {
   const result = Modal.error({
-    title: Intl.v('提示'),
-    content: Intl.v('系统异常'),
+    title: Intl.get('hint'),
+    content: Intl.get('system_exception'),
     mask: false,
     maskClosable: true,
     footer: null,
@@ -45,4 +45,4 @@ export const openErrorMessage = (
   content?: JointContent,
   duration?: duration,
   onClose?: VoidFunction,
-) => message.error(content ? content : Intl.v('系统异常'), duration, onClose);
+) => message.error(content ? content : Intl.get('system_exception'), duration, onClose);

@@ -14,7 +14,7 @@ let handler;
  */
 export const openWarnDialog: WarnDialog = ({ duration = 3000, ...props }) => {
   const result = Modal.warning({
-    title: Intl.v('提示'),
+    title: Intl.get('hint'),
     mask: false,
     maskClosable: true,
     footer: null,

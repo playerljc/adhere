@@ -1,5 +1,5 @@
 import Dict from '@baifendian/adhere-util-dict';
-import INTL from '@baifendian/adhere-util-intl';
+import Intl from '@baifendian/adhere-util-intl';
 
 export default {
   initStatic() {
@@ -27,15 +27,15 @@ export default {
     // 是/否Options
     Dict.handlers.ResourceNormalWhether = () => [
       {
-        label: INTL.v('全部'),
+        label: Intl.get('all'),
         value: '',
       },
       {
-        label: INTL.v('是'),
+        label: Intl.get('yes'),
         value: '1',
       },
       {
-        label: INTL.v('否'),
+        label: Intl.get('no'),
         value: '0',
       },
     ];
@@ -46,21 +46,21 @@ export default {
         [
           '',
           {
-            label: INTL.v('全部'),
+            label: Intl.get('all'),
             value: '',
           },
         ],
         [
           '1',
           {
-            label: INTL.v('是'),
+            label: Intl.get('yes'),
             value: '1',
           },
         ],
         [
           '0',
           {
-            label: INTL.v('否'),
+            label: Intl.get('no'),
             value: '0',
           },
         ],
@@ -69,15 +69,15 @@ export default {
     // 有无Options
     Dict.handlers.ResourceNormalIsThere = () => [
       {
-        label: INTL.v('全部'),
+        label: Intl.get('all'),
         value: '',
       },
       {
-        label: INTL.v('有'),
+        label: Intl.get('exist'),
         value: '1',
       },
       {
-        label: INTL.v('无'),
+        label: Intl.get('none'),
         value: '0',
       },
     ];
@@ -88,21 +88,21 @@ export default {
         [
           '',
           {
-            label: INTL.v('全部'),
+            label: Intl.get('all'),
             value: '',
           },
         ],
         [
           '1',
           {
-            label: INTL.v('有'),
+            label: Intl.get('exist'),
             value: '1',
           },
         ],
         [
           '0',
           {
-            label: INTL.v('无'),
+            label: Intl.get('none'),
             value: '0',
           },
         ],
@@ -111,15 +111,15 @@ export default {
     // 男女Options
     Dict.handlers.ResourceNormalSex = () => [
       {
-        label: INTL.v('全部'),
+        label: Intl.get('all'),
         value: '',
       },
       {
-        label: INTL.v('男'),
+        label: Intl.get('male'),
         value: '1',
       },
       {
-        label: INTL.v('女'),
+        label: Intl.get('female'),
         value: '0',
       },
     ];
@@ -130,21 +130,21 @@ export default {
         [
           '',
           {
-            label: INTL.v('全部'),
+            label: Intl.get('all'),
             value: '',
           },
         ],
         [
           '1',
           {
-            label: INTL.v('男'),
+            label: Intl.get('male'),
             value: '1',
           },
         ],
         [
           '0',
           {
-            label: INTL.v('女'),
+            label: Intl.get('female'),
             value: '0',
           },
         ],

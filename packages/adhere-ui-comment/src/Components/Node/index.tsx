@@ -92,7 +92,7 @@ const Node = memo<NodeProps>((props) => {
           )}
           onClick={() => setShowReply(true)}
         >
-          {Intl.v('回复')}
+          {Intl.get('reply')}
         </li>,
       );
     }

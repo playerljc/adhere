@@ -19,7 +19,7 @@ const InternalModalTriggerPrompt = memo<ModalTriggerPromptProps<any>>(
           ? [
               {
                 ...submitAction,
-                text: submitAction?.text ?? Intl.v('确定'),
+                text: submitAction?.text ?? Intl.get('confirm'),
               },
             ]
           : [],

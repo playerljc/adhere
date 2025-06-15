@@ -44,14 +44,14 @@ const InternalCropping = memo<PropsWithoutRef<CroppingProps> & RefAttributes<Cro
             onClick={() => {
               const dialog = MessageDialog.Modal({
                 config: {
-                  title: Intl.v('编辑'),
+                  title: Intl.get('edit'),
                   width: 1024,
                   maskClosable: false,
                   footer: [
                     <Button
                       key="submit"
                       type="primary"
-                      title={Intl.v('保存')}
+                      title={Intl.get('save')}
                       onClick={() => {
                         if (!coreRef.current) return;
 
@@ -63,7 +63,7 @@ const InternalCropping = memo<PropsWithoutRef<CroppingProps> & RefAttributes<Cro
                         }
                       }}
                     >
-                      {Intl.v('保存')}
+                      {Intl.get('save')}
                     </Button>,
                   ],
                   ...(modalProps ?? {}),
@@ -72,7 +72,7 @@ const InternalCropping = memo<PropsWithoutRef<CroppingProps> & RefAttributes<Cro
               });
             }}
           >
-            {mask || Intl.v('编辑')}
+            {mask || Intl.get('edit')}
           </div>
         ),
         [maskClassName, maskStyle, mask, value, onChange],

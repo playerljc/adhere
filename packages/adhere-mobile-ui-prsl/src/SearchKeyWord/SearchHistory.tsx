@@ -74,7 +74,7 @@ const SearchHistory: FC<SearchHistoryProps> = ({
         {!isEmpty() && (
           <>
             <div className={`${selectorPrefix}-title`}>
-              <span>{title ?? Intl.v('搜索历史')}</span>
+              <span>{title ?? Intl.get('搜索历史')}</span>
 
               <span
                 onClick={() => {

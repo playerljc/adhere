@@ -812,7 +812,7 @@ const InternalExpression = memo<
             })}
             ref={placeholderRef}
           >
-            {placeholder ?? Intl.v('请输入关键词')}
+            {placeholder ?? Intl.get('enter_keyword')}
           </div>
 
           {/*运算符*/}

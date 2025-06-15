@@ -30,7 +30,7 @@ const DNDManageButton = ({
             onChange(true);
           }}
         >
-          {dndLabel ?? Intl.v('排序')}
+          {dndLabel ?? Intl.get('sort')}
         </div>
       )}
 
@@ -43,7 +43,7 @@ const DNDManageButton = ({
               onFinish();
             }}
           >
-            {dndFinishLabel ?? Intl.v('完成')}
+            {dndFinishLabel ?? Intl.get('complete')}
           </div>
           <div
             className={`${selectorPrefix}-manager-item`}
@@ -52,7 +52,7 @@ const DNDManageButton = ({
               onCancel();
             }}
           >
-            {dndCancelLabel ?? Intl.v('取消')}
+            {dndCancelLabel ?? Intl.get('cancel')}
           </div>
         </>
       )}

@@ -44,15 +44,15 @@ export default () => {
     // 是/否Options
     Dict.handlers.ResourceNormalWhether = () => [
       {
-        label: INTL.v('全部'),
+        label: Intl.v('all'),
         value: '',
       },
       {
-        label: INTL.v('是'),
+        label: Intl.v('yes'),
         value: '1',
       },
       {
-        label: INTL.v('否'),
+        label: Intl.v('no'),
         value: '0',
       },
     ];
@@ -63,21 +63,21 @@ export default () => {
         [
           '',
           {
-            label: INTL.v('全部'),
+            label: Intl.v('all'),
             value: '',
           },
         ],
         [
           '1',
           {
-            label: INTL.v('是'),
+            label: Intl.v('yes'),
             value: '1',
           },
         ],
         [
           '0',
           {
-            label: INTL.v('否'),
+            label: Intl.v('no'),
             value: '0',
           },
         ],
@@ -86,15 +86,15 @@ export default () => {
     // 有无Options
     Dict.handlers.ResourceNormalIsThere = () => [
       {
-        label: INTL.v('全部'),
+        label: Intl.v('all'),
         value: '',
       },
       {
-        label: INTL.v('有'),
+        label: Intl.v('exist'),
         value: '1',
       },
       {
-        label: INTL.v('无'),
+        label: Intl.v('无'),
         value: '0',
       },
     ];
@@ -105,14 +105,14 @@ export default () => {
         [
           '',
           {
-            label: INTL.v('全部'),
+            label: Intl.v('all'),
             value: '',
           },
         ],
         [
           '1',
           {
-            label: INTL.v('有'),
+            label: Intl.v('exist'),
             value: '1',
           },
         ],
@@ -128,15 +128,15 @@ export default () => {
     // 男女Options
     Dict.handlers.ResourceNormalSex = () => [
       {
-        label: INTL.v('全部'),
+        label: Intl.v('all'),
         value: '',
       },
       {
-        label: INTL.v('男'),
+        label: Intl.v('male'),
         value: '1',
       },
       {
-        label: INTL.v('女'),
+        label: Intl.v('female'),
         value: '0',
       },
     ];
@@ -147,21 +147,21 @@ export default () => {
         [
           '',
           {
-            label: INTL.v('全部'),
+            label: Intl.v('all'),
             value: '',
           },
         ],
         [
           '1',
           {
-            label: INTL.v('男'),
+            label: Intl.v('male'),
             value: '1',
           },
         ],
         [
           '0',
           {
-            label: INTL.v('女'),
+            label: Intl.v('female'),
             value: '0',
           },
         ],
@@ -189,7 +189,7 @@ export default () => {
     Dict.handlers.FormInputNumberRule = () => ({
       whitespace: true,
       type: 'number',
-      message: Intl.v('输入的值在1~200之间'),
+      message: Intl.v('input_range_1_200'),
       min: 1,
       max: 200,
     });
@@ -197,7 +197,7 @@ export default () => {
     Dict.handlers.FormInputStringRule = () => ({
       whitespace: true,
       type: 'string',
-      message: Intl.v('输入的内容在100个字符之内'),
+      message: Intl.v('input_limit_100_chars'),
       min: 1,
       max: 100,
     });
@@ -241,7 +241,7 @@ export default () => {
           type: 'Feature',
           properties: {
             adcode: 320411,
-            name: Intl.v('新北区'),
+            name: Intl.v('district_xinbei'),
             center: [119.974654, 31.824664],
             centroid: [119.887323, 31.925024],
             childrenNum: 0,

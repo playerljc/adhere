@@ -37,19 +37,19 @@ const FontSizeSetting = memo<FontSizeSettingProps>((props) => {
       <div className={`${selectorPrefix}-range-wrap`}>
         <div className={`${selectorPrefix}-separated-tool`}>
           <div className={`${selectorPrefix}-separated`}>
-            <span>{Intl.v('小')}</span>
+            <span>{Intl.get('small')}</span>
           </div>
 
           <div className={`${selectorPrefix}-separated`}>
-            <span>{Intl.v('中')}</span>
+            <span>{Intl.get('medium')}</span>
           </div>
 
           <div className={`${selectorPrefix}-separated`}>
-            <span>{Intl.v('大')}</span>
+            <span>{Intl.get('large')}</span>
           </div>
 
           <div className={`${selectorPrefix}-separated`}>
-            <span>{Intl.v('特大')}</span>
+            <span>{Intl.get('extra_large')}</span>
           </div>
         </div>
 

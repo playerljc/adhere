@@ -38,19 +38,21 @@ const InternalMobileSignature = memo<
       const renderMask = useCallback(() => {
         return (
           <Modal.TriggerPrompt
-            title={Intl.v('编辑签名')}
+            title={Intl.get('edit_signature')}
             popoverTriggerProps={{
               renderTrigger: () =>
                 value ? (
                   <img src={value} alt="" />
                 ) : (
-                  <div className={classNames(`${selectorPrefix}-mask`)}>{Intl.v('编辑签名')}</div>
+                  <div className={classNames(`${selectorPrefix}-mask`)}>
+                    {Intl.get('edit_signature')}
+                  </div>
                 ),
             }}
             actions={[
               {
                 key: 'submit',
-                text: Intl.v('保存'),
+                text: Intl.get('save'),
                 primary: true,
                 onClick: () =>
                   new Promise((resolve) => {

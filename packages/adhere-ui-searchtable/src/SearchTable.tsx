@@ -1072,17 +1072,28 @@ abstract class SearchTable<
     dataSource: any[];
     media: ConfigProviderProps['media'];
   }) {
-    console.log('columnConfig.width===', columnConfig.width);
+    // console.log('columnConfig.width===', columnConfig.width);
 
-    console.time('setColumnWidth');
+    // console.time('setColumnWidth');
+    console.log('columnConfig', columnConfig, typeof columnConfig.width === 'number');
+
+    if (
+      !('width' in columnConfig) ||
+      columnConfig.width === undefined ||
+      columnConfig.width === null ||
+      columnConfig.width === ''
+    ) {
+      return undefined;
+    }
+
     if (typeof columnConfig.width === 'number') {
       columnConfig.width = this.pxToRem(columnConfig.width);
-      console.timeEnd('setColumnWidth');
+      // console.timeEnd('setColumnWidth');
       return undefined;
     }
 
     if (typeof columnConfig.width != 'object') {
-      console.timeEnd('setColumnWidth');
+      // console.timeEnd('setColumnWidth');
       return undefined;
     }
 
@@ -1240,11 +1251,13 @@ abstract class SearchTable<
       return undefined;
     }
 
-    console.log('columnConfig.width', columnConfig.width);
+    // console.log('columnConfig.width', columnConfig.width);
     // 渲染是对象且没有字符串渲染
 
     const widthConfig = columnConfig.width as ColumnWidthMaxContent;
 
+    // @ts-ignore
+    // console.log('columnConfig======', columnConfig);
     /**
      * 获取title宽度
      * 获取数据的最大宽度
@@ -1256,7 +1269,7 @@ abstract class SearchTable<
       spacing: widthConfig.titleSpacing ?? this.getDefaultColumnSpacing(),
       space: widthConfig.titleSpacingSpace ?? this.getDefaultColumnSpace(),
     });
-    console.log('titleWidth', titleWidth);
+    // console.log('titleWidth', titleWidth);
 
     const cellsWidth = dataSource.map((record, rowIndex) =>
       this.getWidthByHacker({
@@ -1267,15 +1280,15 @@ abstract class SearchTable<
         space: widthConfig.cellSpacingSpace ?? this.getDefaultCellSpace(),
       }),
     );
-    console.log('cellsWidth', cellsWidth);
+    // console.log('cellsWidth', cellsWidth);
 
     const cellMaxWidth = Math.max(...cellsWidth);
 
     const titleAndCellMaxWidth = Math.max(titleWidth, cellMaxWidth);
 
-    console.log('cellMaxWidth', cellMaxWidth);
+    // console.log('cellMaxWidth', cellMaxWidth);
 
-    console.log('titleAndCellMaxWidth', titleAndCellMaxWidth);
+    // console.log('titleAndCellMaxWidth', titleAndCellMaxWidth);
 
     let _width: number = -1;
     let targetWidth = '';
@@ -1304,14 +1317,14 @@ abstract class SearchTable<
       _width = titleAndCellMaxWidth;
     }
 
-    console.log('_width===', _width);
+    // console.log('_width===', _width);
 
     if (_width !== -1) {
       console.log('_width1===', this.pxToRem(_width));
       /*columnConfig.width*/ targetWidth = this.pxToRem(_width);
     }
 
-    console.timeEnd('setColumnWidth');
+    // console.timeEnd('setColumnWidth');
 
     return targetWidth;
   }
@@ -1520,7 +1533,7 @@ abstract class SearchTable<
 
     return {
       ...{
-        title: Intl.v('序号'),
+        title: Intl.get('serial_number'),
         dataIndex: '_number',
         key: '_number',
         align: 'center',
@@ -2306,7 +2319,7 @@ abstract class SearchTable<
               );
             }}
           >
-            <span>{Intl.v('展开')}</span>
+            <span>{Intl.get('expand')}</span>
             <DownOutlined />
           </a>
         )}
@@ -2326,7 +2339,7 @@ abstract class SearchTable<
               );
             }}
           >
-            <span>{Intl.v('收起')}</span>
+            <span>{Intl.get('collapse')}</span>
             <UpOutlined />
           </a>
         )}
@@ -2437,7 +2450,7 @@ abstract class SearchTable<
         icon={<SearchOutlined />}
         onClick={() => this.search()}
       >
-        {Intl.v('查询')}
+        {Intl.get('search')}
       </Button>,
       <Button
         className={`${selectorPrefix}-search-footer-item`}
@@ -2445,7 +2458,7 @@ abstract class SearchTable<
         icon={<SyncOutlined />}
         onClick={this.onClear}
       >
-        {Intl.v('重置')}
+        {Intl.get('reset')}
       </Button>,
       isShowExpandSearch && this.renderSearchBarCollapseControl(),
     ].filter((t) => !!t);

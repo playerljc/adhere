@@ -46,7 +46,7 @@ const ViewSettingItem: FC<ViewSettingProps> = ({
       key="view-setting-item"
       className={selectorPrefix}
       icon={<AppstoreOutline />}
-      label={Intl.v('视图')}
+      label={Intl.get('view')}
     />
   );
 
@@ -60,7 +60,7 @@ const ViewSettingItem: FC<ViewSettingProps> = ({
         {
           key: 'reset',
           type: 'primary',
-          children: Intl.v('重置'),
+          children: Intl.get('reset'),
           onClick: reset,
         },
       ];
@@ -70,7 +70,7 @@ const ViewSettingItem: FC<ViewSettingProps> = ({
       {
         key: 'reset',
         primary: true,
-        text: Intl.v('重置'),
+        text: Intl.get('reset'),
         onClick: reset,
       },
     ];

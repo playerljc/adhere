@@ -605,7 +605,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                               this.setState(state, () => this.onSearch().then(() => confirm()));
                             }}
                           >
-                            {Intl.v('重置')}
+                            {Intl.get('reset')}
                           </Button>
 
                           <Button
@@ -613,7 +613,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                             type="primary"
                             onClick={() => this.search().then(() => confirm())}
                           >
-                            {Intl.v('确定')}
+                            {Intl.get('confirm')}
                           </Button>
                         </div>
                       </div>
@@ -717,7 +717,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           let end = this.state.page * this.state.limit;
           end = total > end ? end : total;
 
-          return Intl.v(`当前 {page}-{pageSize}/共 {total}条`, {
+          return Intl.get('pagination_info', {
             page: start,
             pageSize: end,
             total,
@@ -983,7 +983,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                   })
                 }
               >
-                {Intl.v('高级搜索')}
+                {Intl.get('advanced_search')}
               </Button>
             )}
           </ConditionalRender>

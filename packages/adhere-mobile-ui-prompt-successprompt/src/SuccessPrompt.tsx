@@ -13,7 +13,7 @@ let handler;
 
 export const openSuccessMessage = (props?: ToastShowProps) =>
   Toast.show({
-    content: Intl.v('操作成功'),
+    content: Intl.get('operation_successful'),
     maskClickable: false,
     icon: 'success',
     ...(props ?? {}),
@@ -21,7 +21,7 @@ export const openSuccessMessage = (props?: ToastShowProps) =>
 
 export const openSuccessDialog: SuccessDialog = ({ duration = 3000, ...props }) => {
   const result = Modal.show({
-    title: Intl.v('提示'),
+    title: Intl.get('hint'),
     actions: [],
     closeOnMaskClick: true,
     ...(props ?? {}),
@@ -32,7 +32,7 @@ export const openSuccessDialog: SuccessDialog = ({ duration = 3000, ...props }) 
         </div>
 
         <div className={`${selectorPrefix}-dialog-content`}>
-          {props.content ?? Intl.v('操作成功')}
+          {props.content ?? Intl.get('operation_successful')}
         </div>
       </div>
     ),

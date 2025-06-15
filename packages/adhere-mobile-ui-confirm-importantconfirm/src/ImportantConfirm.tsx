@@ -41,13 +41,13 @@ const ImportantConform = InternalImportantConform as ImportantConfirmComponent;
 
 ImportantConform.open = (props) =>
   Dialog.confirm({
-    title: Intl.v('提示'),
+    title: Intl.get('hint'),
     ...(props ?? {}),
     content: (
       <div className={`${selectorPrefix}-content`}>
         <img src={icon} alt="" />
         <div className={`${selectorPrefix}-content-info`}>
-          {props.content ?? `${Intl.v('真的要执行此操作吗')}?`}
+          {props.content ?? `${Intl.get('confirm_action')}?`}
         </div>
       </div>
     ),

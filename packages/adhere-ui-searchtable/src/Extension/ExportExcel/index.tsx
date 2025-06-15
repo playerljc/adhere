@@ -276,7 +276,7 @@ const ExportExcel: FC<ExportExcelProps> = ({
   function onExportExcel() {
     const indicator = GlobalIndicator.show(
       document.body,
-      `${Intl.v('正在导出')}...`,
+      `${Intl.get('exporting')}...`,
       19999,
       'default',
     );
@@ -297,7 +297,7 @@ const ExportExcel: FC<ExportExcelProps> = ({
   }
 
   return (
-    <Tooltip title={`${Intl.v('导出excel')}`}>
+    <Tooltip title={`${Intl.get('export_excel')}`}>
       {renderExportExcelBtn && renderExportExcelBtn(onExportExcel)}
       {!renderExportExcelBtn && (
         <FileExcelOutlined

@@ -41,14 +41,14 @@ const InternalSignature = memo<PropsWithoutRef<SignatureProps> & RefAttributes<S
             onClick={() => {
               const dialog = MessageDialog.Modal({
                 config: {
-                  title: Intl.v('编辑签名'),
+                  title: Intl.get('edit_signature'),
                   width: '60%',
                   maskClosable: false,
                   footer: [
                     <Button
                       key="submit"
                       type="primary"
-                      title={Intl.v('保存')}
+                      title={Intl.get('save')}
                       onClick={() => {
                         if (!coreRef.current) return;
 
@@ -70,7 +70,7 @@ const InternalSignature = memo<PropsWithoutRef<SignatureProps> & RefAttributes<S
                         }
                       }}
                     >
-                      {Intl.v('保存')}
+                      {Intl.get('save')}
                     </Button>,
                   ],
                   ...(modalProps ?? {}),
@@ -79,7 +79,7 @@ const InternalSignature = memo<PropsWithoutRef<SignatureProps> & RefAttributes<S
               });
             }}
           >
-            {Intl.v('编辑签名')}
+            {Intl.get('edit_signature')}
           </div>
         );
       }, [coreProps, value, onChange]);

@@ -13,7 +13,7 @@ let handler;
 
 export const openErrorMessage = (props?: ToastShowProps) =>
   Toast.show({
-    content: Intl.v('系统异常'),
+    content: Intl.get('system_exception'),
     maskClickable: false,
     icon: 'fail',
     ...(props ?? {}),
@@ -21,7 +21,7 @@ export const openErrorMessage = (props?: ToastShowProps) =>
 
 export const openErrorDialog: ErrorDialog = ({ duration = 3000, ...props }) => {
   const result = Modal.show({
-    title: Intl.v('提示'),
+    title: Intl.get('hint'),
     actions: [],
     closeOnMaskClick: true,
     ...(props ?? {}),
@@ -32,7 +32,7 @@ export const openErrorDialog: ErrorDialog = ({ duration = 3000, ...props }) => {
         </div>
 
         <div className={`${selectorPrefix}-dialog-content`}>
-          {props.content ?? Intl.v('系统异常')}
+          {props.content ?? Intl.get('system_exception')}
         </div>
       </div>
     ),

@@ -21,7 +21,7 @@ let DEFAULT_ERROR_UI = (
       imageStyle={{
         height: 60,
       }}
-      description={Intl.v('糟糕！，出了些问题')}
+      description={Intl.get('error_occurred')}
     />
   </div>
 );

@@ -19,7 +19,7 @@ const ModalDialog = memo<ModalDialogProps>((props) => {
   function renderCloseBtn() {
     const props = {
       key: 'close',
-      title: Intl.v('取消'),
+      title: Intl.get('cancel'),
       type: 'default',
       onClick: () => close?.(),
     };
@@ -29,7 +29,7 @@ const ModalDialog = memo<ModalDialogProps>((props) => {
     }
 
     // @ts-ignore
-    return <Button {...props}>{Intl.v('取消')}</Button>;
+    return <Button {...props}>{Intl.get('cancel')}</Button>;
   }
 
   const footerNode = useMemo(() => {

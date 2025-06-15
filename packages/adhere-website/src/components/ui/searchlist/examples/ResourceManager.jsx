@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SearchList } from '@baifendian/adhere';
+import { FieldGeneratorToDict, SearchList } from '@baifendian/adhere';
 
 import '../ServiceRegister';
 
@@ -155,6 +155,7 @@ const Wrap = SearchListStateImplementFactory({
 
 export default (props) => (
   <Wrap
+    FieldGeneratorToDict={FieldGeneratorToDict}
     antdListProps={
       {
         // itemLayout: 'vertical',

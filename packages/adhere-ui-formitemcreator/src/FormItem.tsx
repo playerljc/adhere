@@ -8,15 +8,16 @@ import {
   Select,
   Slider,
   Switch,
+  Tag,
   TimePicker,
   TreeSelect,
   Upload,
-  Tag,
 } from 'antd';
 import type {
   DatePickerProps,
   InputNumberProps,
   InputProps,
+  InputRef,
   RadioGroupProps,
   RateProps,
   SelectProps,
@@ -25,15 +26,15 @@ import type {
   TimePickerProps,
   TreeSelectProps,
   UploadProps,
-  InputRef,
 } from 'antd';
 import type { CheckboxGroupProps, CheckboxProps } from 'antd/es/checkbox';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import type { TextAreaProps } from 'antd/es/input/TextArea';
 import type { OptionProps } from 'antd/es/select';
-import React, { FC, ReactElement, memo, useState, useEffect, useRef } from 'react';
+import React, { FC, ReactElement, memo, useEffect, useRef, useState } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
+
 import type { TagItemProps } from './types';
 
 const CheckboxGroup = Checkbox.Group;
@@ -47,7 +48,7 @@ const renderText = memo<InputProps>(({ ...rest }) => <Input {...rest} readOnly /
 
 // 输入框
 const renderInput = memo<InputProps>(
-  ({ type, maxLength = 100, placeholder = Intl.v('请输入'), ...rest }) => (
+  ({ type, maxLength = 100, placeholder = Intl.get('please_enter'), ...rest }) => (
     <Input
       autoComplete="off"
       type={type}
@@ -60,7 +61,7 @@ const renderInput = memo<InputProps>(
 
 // 搜索框
 const renderSearch = memo<InputProps>(
-  ({ maxLength = 800, placeholder = Intl.v('请输入'), ...rest }) => (
+  ({ maxLength = 800, placeholder = Intl.get('please_enter'), ...rest }) => (
     <Input.Search
       autoComplete="off"
       maxLength={maxLength || 800}
@@ -72,7 +73,7 @@ const renderSearch = memo<InputProps>(
 
 // 多行输入框
 const renderInputArea = memo<TextAreaProps>(
-  ({ maxLength = 500, rows = 4, placeholder = Intl.v('请输入'), ...rest }) => (
+  ({ maxLength = 500, rows = 4, placeholder = Intl.get('please_enter'), ...rest }) => (
     <TextArea
       autoComplete="off"
       maxLength={maxLength || 500}
@@ -85,7 +86,7 @@ const renderInputArea = memo<TextAreaProps>(
 
 // 密码输入框
 const renderPassword = memo<InputProps>(
-  ({ type, maxLength = 800, placeholder = Intl.v('请输入'), ...rest }) => (
+  ({ type, maxLength = 800, placeholder = Intl.get('please_enter'), ...rest }) => (
     <Input.Password
       autoComplete="off"
       type={type}
@@ -131,39 +132,54 @@ const renderSelect = memo<
     renderOption: (v: OptionProps) => ReactElement;
     autoComplete: boolean; // 非多选模式自动填充
   }
->(({ optGroup, options, placeholder = Intl.v('请选择'), renderOption, autoComplete, ...rest }) => {
-  const [searchValue, setSearchValue] = useState('');
+>(
+  ({
+    optGroup,
+    options,
+    placeholder = Intl.get('please_select'),
+    renderOption,
+    autoComplete,
+    ...rest
+  }) => {
+    const [searchValue, setSearchValue] = useState('');
 
-  const getOptions = (arr) => {
-    if (arr?.length && autoComplete && searchValue && !rest.mode) {
-      if (arr?.find(v => (v.value && v.value.toString() === searchValue) || (v.label && v.label.toString() === searchValue))) {
-        return arr;
+    const getOptions = (arr) => {
+      if (arr?.length && autoComplete && searchValue && !rest.mode) {
+        if (
+          arr?.find(
+            (v) =>
+              (v.value && v.value.toString() === searchValue) ||
+              (v.label && v.label.toString() === searchValue),
+          )
+        ) {
+          return arr;
+        }
+        return [...arr, { label: searchValue, value: searchValue }];
       }
-      return [...arr, { label: searchValue, value: searchValue }];
-    }
-    return arr;
-  }
-  const renderOptionItem = (arr) =>
-    (arr || []).map((v) => (
-      <Option value={v.value} key={v.value} disabled={v.disabled}>
-        {renderOption ? renderOption(v) : v.label}
-      </Option>
-    ));
+      return arr;
+    };
+    const renderOptionItem = (arr) =>
+      (arr || []).map((v) => (
+        <Option value={v.value} key={v.value} disabled={v.disabled}>
+          {renderOption ? renderOption(v) : v.label}
+        </Option>
+      ));
 
-  return (
-    <Select
-      placeholder={placeholder}
-      optionFilterProp="children"
-      onSearch={v => setSearchValue(v)}
-      {...rest}
-      showSearch={rest.showSearch || autoComplete}
-    >
-      {optGroup && optGroup.length
-        ? optGroup.map((e) => renderOptionItem(e))
-        : renderOptionItem(getOptions(options))}
-    </Select>
-  );
-});
+    return (
+      <Select
+        placeholder={placeholder}
+        optionFilterProp="children"
+        onSearch={(v) => setSearchValue(v)}
+        {...rest}
+        showSearch={rest.showSearch || autoComplete}
+      >
+        {optGroup && optGroup.length
+          ? optGroup.map((e) => renderOptionItem(e))
+          : renderOptionItem(getOptions(options))}
+      </Select>
+    );
+  },
+);
 
 // 日期范围选择框
 const renderRangePicker = memo<RangePickerProps>(({ ...rest }) => (
@@ -172,7 +188,7 @@ const renderRangePicker = memo<RangePickerProps>(({ ...rest }) => (
 ));
 
 // 日期选择框
-const renderDatePicker = memo<DatePickerProps>(({...rest }) => (
+const renderDatePicker = memo<DatePickerProps>(({ ...rest }) => (
   // @ts-ignore
   <DatePicker {...rest} />
 ));
@@ -229,7 +245,7 @@ const Tags: FC<TagItemProps> = (props) => {
     if (props.onChange) {
       props.onChange(tags);
     }
-  }, [tags])
+  }, [tags]);
 
   const handleInputConfirm = (isedit: boolean) => {
     if (isedit) {
@@ -248,11 +264,11 @@ const Tags: FC<TagItemProps> = (props) => {
   };
 
   const handleClose = (removedTag: string) => {
-    const newTags = tags.filter(tag => tag !== removedTag);
+    const newTags = tags.filter((tag) => tag !== removedTag);
     setTags(newTags);
   };
 
-  const renderTagInput = (val: string, isedit:boolean = false) => (
+  const renderTagInput = (val: string, isedit: boolean = false) => (
     <Input
       type="text"
       key={isedit ? val : ''}
@@ -261,7 +277,7 @@ const Tags: FC<TagItemProps> = (props) => {
       maxLength={100}
       className="form-item-tag-input"
       value={val}
-      onChange={e => isedit ? setEditInputValue(e.target.value) : setInputValue(e.target.value)}
+      onChange={(e) => (isedit ? setEditInputValue(e.target.value) : setInputValue(e.target.value))}
       onPressEnter={() => handleInputConfirm(isedit)}
       onBlur={() => handleInputConfirm(isedit)}
     />
@@ -278,7 +294,7 @@ const Tags: FC<TagItemProps> = (props) => {
         onClose={() => handleClose(tag)}
       >
         <span
-          onDoubleClick={e => {
+          onDoubleClick={(e) => {
             if (!disabled) {
               setEditInputIndex(index);
               setEditInputValue(tag);
@@ -289,28 +305,26 @@ const Tags: FC<TagItemProps> = (props) => {
           {isLongTag ? `${tag.slice(0, 20)}...` : tag}
         </span>
       </Tag>
-    )
-  }
+    );
+  };
 
-  const renderAdd = () => (
-    inputVisible ? renderTagInput(inputValue, false) : (
-      <Tag
-        className="form-item-tag-add"
-        onClick={() => setInputVisible(true)}
-      >
+  const renderAdd = () =>
+    inputVisible ? (
+      renderTagInput(inputValue, false)
+    ) : (
+      <Tag className="form-item-tag-add" onClick={() => setInputVisible(true)}>
         {addTagInner}
       </Tag>
-    )
-  );
+    );
 
   return (
     <div className="form-item-tag">
-      {
-        tags?.map((tag, index) => (index === editInputIndex ? renderTagInput(editInputValue, true) : renderTag(tag, index)))
-      }
-      { disabled ? '' : renderAdd() }
+      {tags?.map((tag, index) =>
+        index === editInputIndex ? renderTagInput(editInputValue, true) : renderTag(tag, index),
+      )}
+      {disabled ? '' : renderAdd()}
     </div>
-  )
+  );
 };
 const renderTag = memo<TagItemProps>((item) => <Tags {...item} />);
 

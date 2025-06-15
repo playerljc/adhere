@@ -109,11 +109,11 @@ class DistanceDrawAction extends PolygonDrawAction {
     let unitText = '';
     if (distance < 1000) {
       distanceText = `${distance.toFixed(2)}`;
-      unitText = Intl.v('米');
+      unitText = Intl.get('meter');
     } else {
       // @ts-ignore
       distanceText = `${MathUtil.distance(distance, 'kilometer').toFixed(2)}`;
-      unitText = Intl.v('公里');
+      unitText = Intl.get('kilometer');
     }
 
     const textFont = '10px sans-serif';
@@ -129,10 +129,10 @@ class DistanceDrawAction extends PolygonDrawAction {
     ctx.textBaseline = textBaseline;
     ctx.fillStyle = '#000';
     ctx.fillText(
-      `${Intl.v('总长')}：`,
+      `${Intl.get('total_length')}：`,
       textX - distanceTextHalfWidth,
       textY,
-      ctx.measureText(`${Intl.v('总长')}：`).width,
+      ctx.measureText(`${Intl.get('total_length')}：`).width,
     );
 
     // 数值
@@ -158,10 +158,10 @@ class DistanceDrawAction extends PolygonDrawAction {
     ctx.textBaseline = textBaseline;
     ctx.fillStyle = '#000';
     ctx.fillText(
-      Intl.v('单击确定地点，双击结束'),
+      Intl.get('click_to_set_location'),
       textX,
       toolTipPixel.y + (radiusRectHeight / 4) * 3 + 3,
-      ctx.measureText(Intl.v('单击确定地点，双击结束')).width,
+      ctx.measureText(Intl.get('click_to_set_location')).width,
     );
   }
 
@@ -310,7 +310,7 @@ class DistanceDrawAction extends PolygonDrawAction {
       let toolTip = '';
 
       if (pointIndex === 0) {
-        toolTip = Intl.v('起点');
+        toolTip = Intl.get('starting_point');
       } else {
         // 计算距离
         let distance = 0;
@@ -327,10 +327,12 @@ class DistanceDrawAction extends PolygonDrawAction {
         distance = context.distanceToActual(distance);
 
         if (distance < 1000) {
-          toolTip = `${distance.toFixed(2)}${Intl.v('米')}`;
+          toolTip = `${distance.toFixed(2)}${Intl.get('meter')}`;
         } else {
           // @ts-ignore
-          toolTip = `${MathUtil.distance(distance, 'kilometer').toFixed(2)}${Intl.v('公里')}`;
+          toolTip = `${MathUtil.distance(distance, 'kilometer').toFixed(2)}${Intl.get(
+            'kilometer',
+          )}`;
         }
       }
 

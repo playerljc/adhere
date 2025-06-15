@@ -40,7 +40,7 @@ const BackLayout = memo<BackLayoutProps>((props) => {
                 }
               }}
             >
-              {backTitle || Intl.v('返回')}
+              {backTitle || Intl.get('back')}
             </Button>
           )}
         </ConditionalRender>,

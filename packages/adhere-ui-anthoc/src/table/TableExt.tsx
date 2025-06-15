@@ -236,7 +236,7 @@ const TableExt: FC<TableExtProps> = ({
     record: Record<string, any>;
   }) {
     if ('renderToString' in columnConfig) {
-      return columnConfig?.renderToString?.(record[columnConfig.dataIndex] as any);
+      return columnConfig?.renderToString?.(record[columnConfig.dataIndex] as any, record, 0);
     }
 
     return record[columnConfig.dataIndex];

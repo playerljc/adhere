@@ -156,7 +156,7 @@ const InternalScrollLoad = memo<
           style={loadStyle ?? {}}
           ref={loadEl}
         >
-          {Intl.v('数据加载中')}
+          {Intl.get('data_loading')}
         </div>
       );
     }, [renderLoading, loadClassName, loadStyle]);
@@ -180,7 +180,7 @@ const InternalScrollLoad = memo<
           style={emptyStyle ?? {}}
           ref={emptyEl}
         >
-          ~{Intl.v('没有更多')}
+          ~{Intl.get('no_more')}
         </div>
       );
     }, [renderEmpty, emptyClassName, emptyStyle]);
@@ -204,7 +204,7 @@ const InternalScrollLoad = memo<
           style={errorStyle ?? {}}
           ref={errorEl}
         >
-          {Intl.v('出现错误')}
+          {Intl.get('error_occurred_ext1')}
         </div>
       );
     }, [renderError, errorClassName, errorStyle]);

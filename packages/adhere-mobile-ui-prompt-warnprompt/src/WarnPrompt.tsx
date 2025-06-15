@@ -13,7 +13,7 @@ let handler;
 
 export const openWarnMessage = (props?: ToastShowProps) =>
   Toast.show({
-    content: Intl.v('出现错误'),
+    content: Intl.get('error_occurred_ext1'),
     maskClickable: false,
     icon: <ExclamationCircleOutline />,
     ...(props ?? {}),
@@ -21,7 +21,7 @@ export const openWarnMessage = (props?: ToastShowProps) =>
 
 export const openWarnDialog: WarnDialog = ({ duration = 3000, ...props }) => {
   const result = Modal.show({
-    title: Intl.v('提示'),
+    title: Intl.get('hint'),
     actions: [],
     closeOnMaskClick: true,
     ...(props ?? {}),
@@ -32,7 +32,7 @@ export const openWarnDialog: WarnDialog = ({ duration = 3000, ...props }) => {
         </div>
 
         <div className={`${selectorPrefix}-dialog-content`}>
-          {props.content ?? Intl.v('出现错误')}
+          {props.content ?? Intl.get('error_occurred_ext1')}
         </div>
       </div>
     ),

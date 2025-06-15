@@ -319,15 +319,15 @@ function getDefaultConfig(this: Ajax): IConfig {
     onProgress: () => {},
     // 超时
     onTimeout: () => {
-      warnInfo(Intl.v('提示'), Intl.v('请求超时'));
+      warnInfo(Intl.get('hint'), Intl.get('request_timeout'));
     },
     // 取消
     onAbort: () => {
-      warnInfo(Intl.v('提示'), Intl.v('请求终止'));
+      warnInfo(Intl.get('hint'), Intl.get('request_aborted'));
     },
     // 发生错误
     onError: () => {
-      errorInfo(Intl.v('提示'), Intl.v('请求发生错误'));
+      errorInfo(Intl.get('hint'), Intl.get('request_error'));
     },
     // 拦截器
     interceptor: ({ status }) => {
@@ -339,7 +339,7 @@ function getDefaultConfig(this: Ajax): IConfig {
           deal402.call(this);
           break;
         default:
-          errorInfo(Intl.v('提示'), Intl.v('已提出请求，但未收到任何回复'));
+          errorInfo(Intl.get('hint'), Intl.get('request_no_response'));
           break;
       }
     },
@@ -471,7 +471,7 @@ function onreadystatechange({
         const jsonObj = JSON.parse(xhr.responseText);
 
         if (showWarn && codeKey in jsonObj && jsonObj[codeKey] !== codeSuccess) {
-          warnInfo(Intl.v('提示'), jsonObj[messageKey]);
+          warnInfo(Intl.get('hint'), jsonObj[messageKey]);
         }
 
         resolve(resolveData({ show, terminal, data: jsonObj, indicator, xhr }));
@@ -595,7 +595,7 @@ function sendPrepare(
     // 调用request拦截器
     Ajax.interceptors.requestReducer(params);
 
-  const defaultLoadingText = `${Intl.v('加载中')}...`;
+  const defaultLoadingText = `${Intl.get('loading')}...`;
 
   const {
     show = false,

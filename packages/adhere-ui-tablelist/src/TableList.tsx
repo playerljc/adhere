@@ -196,10 +196,10 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
           ) : (
             <div className="ant-form-btn-group">
               <Button onClick={() => this.onResetSearch()} size={size}>
-                {resetText || Intl.v('重置')}
+                {resetText || Intl.get('reset')}
               </Button>
               <Button type="primary" onClick={() => this.onSearch()} size={size}>
-                {searchText || Intl.v('搜索')}
+                {searchText || Intl.get('search')}
               </Button>
             </div>
           )}
@@ -227,7 +227,7 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
           {total ? (
             <span className={`${selectorPrefix}-toolbar-left-total`}>
               {total === true
-                ? Intl.vHtml('共 <em>{n}</em> 条', { n: pagination && pagination.total })
+                ? Intl.getHTML('total_count', { n: pagination && pagination.total })
                 : total}
             </span>
           ) : null}

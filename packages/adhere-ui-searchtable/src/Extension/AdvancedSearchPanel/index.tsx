@@ -80,7 +80,7 @@ const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
                     <FilterOutlined className={`${_selectorPrefix}-title-icon`} />
 
                     <strong className={`${_selectorPrefix}-title-text`}>
-                      {Intl.v('高级搜索')}
+                      {Intl.get('advanced_search')}
                     </strong>
                   </Space.Group>
                 )}
@@ -100,7 +100,7 @@ const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
                         <RightCircleOutlined className={`${_selectorPrefix}-collapse-icon`} />
 
                         <strong className={`${_selectorPrefix}-collapse-text`}>
-                          {Intl.v('展开')}
+                          {Intl.get('expand')}
                         </strong>
                       </Space.Group>
                     )}
@@ -110,7 +110,7 @@ const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
                         <LeftCircleOutlined className={`${_selectorPrefix}-collapse-icon`} />
 
                         <strong className={`${_selectorPrefix}-collapse-text`}>
-                          {Intl.v('收起')}
+                          {Intl.get('collapse')}
                         </strong>
                       </Space.Group>
                     )}
@@ -149,7 +149,7 @@ const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
                   icon={<SearchOutlined />}
                   onClick={() => onSearch().then(() => setCollapse(false))}
                 >
-                  {Intl.v('确定')}
+                  {Intl.get('confirm')}
                 </Button>
               </div>
 
@@ -158,7 +158,7 @@ const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
                   icon={<ReloadOutlined />}
                   onClick={() => onReset().then(() => setCollapse(false))}
                 >
-                  {Intl.v('重置')}
+                  {Intl.get('reset')}
                 </Button>
               </div>
             </footer>

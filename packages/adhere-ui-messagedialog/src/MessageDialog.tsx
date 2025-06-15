@@ -77,7 +77,7 @@ const MessageDialogFactory = {
           <Button
             key="submit"
             type="primary"
-            title={Intl.v('确定')}
+            title={Intl.get('confirm')}
             onClick={() => {
               if (onSuccess) {
                 onSuccess()
@@ -88,7 +88,7 @@ const MessageDialogFactory = {
               }
             }}
           >
-            {Intl.v('确定')}
+            {Intl.get('confirm')}
           </Button>,
         ],
       },
@@ -160,7 +160,7 @@ const MessageDialogFactory = {
           <Button
             key="submit"
             type="primary"
-            title={Intl.v('确定')}
+            title={Intl.get('confirm')}
             onClick={() => {
               if (onSuccess) {
                 ref.current!.validateFields().then((values) => {
@@ -171,7 +171,7 @@ const MessageDialogFactory = {
               }
             }}
           >
-            {Intl.v('确定')}
+            {Intl.get('confirm')}
           </Button>,
         ],
       },

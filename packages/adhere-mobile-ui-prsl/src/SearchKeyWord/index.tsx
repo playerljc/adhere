@@ -146,13 +146,13 @@ const SearchKeyWord = memo<SearchKeyWordProps>(
                 {...searchKeyWordBarProps}
               />
             )}
-            title={Intl.v('查询历史')}
+            title={Intl.get('search_history')}
             actions={[]}
           >
             <SearchHistory
-              title={Intl.v('查询历史')}
+              title={Intl.get('search_history')}
               searchKeyWordBarProps={{
-                placeholder: Intl.v('请输入关查询键字'),
+                placeholder: Intl.get('请输入关查询键字'),
               }}
               defaultSearchKeyWord={defaultSearchKeyWord ?? ''}
               onSearch={onSearch}

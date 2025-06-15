@@ -94,15 +94,15 @@ abstract class APlayGround<
         onClick={(e) => {
           this.getClipboardText(e).then((text) => {
             copy(text);
-            Message.success(Intl.v('复制成功'));
+            Message.success(Intl.get('copy_success'));
           });
         }}
       >
         <img
-          title={Intl.v('复制')}
+          title={Intl.get('copy')}
           className={`${selectPrefix}-action-btn`}
           src={Constant.CopyOutlined}
-          alt={Intl.v('复制')}
+          alt={Intl.get('copy')}
         />
       </div>
     );
@@ -121,10 +121,10 @@ abstract class APlayGround<
         noMatch={() => (
           <div onClick={() => this.setState({ expand: true })}>
             <img
-              title={Intl.v('收起')}
+              title={Intl.get('collapse')}
               className={`${selectPrefix}-action-btn`}
               src={Constant.DownSquareOutlined}
-              alt={Intl.v('收起')}
+              alt={Intl.get('collapse')}
             />
           </div>
         )}
@@ -132,10 +132,10 @@ abstract class APlayGround<
         {() => (
           <div onClick={() => this.setState({ expand: false })}>
             <img
-              title={Intl.v('展开')}
+              title={Intl.get('expand')}
               className={`${selectPrefix}-action-btn`}
               src={Constant.UpSquareOutlined}
-              alt={Intl.v('展开')}
+              alt={Intl.get('expand')}
             />
           </div>
         )}

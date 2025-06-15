@@ -110,7 +110,7 @@ const Signature = memo<PropsWithoutRef<SignatureCoreProps> & RefAttributes<Signa
                     }
                   }}
                 >
-                  {mode === Mode.FREE ? Intl.v('橡皮') : Intl.v('绘制')}
+                  {mode === Mode.FREE ? Intl.get('eraser') : Intl.get('draw')}
                 </Button>
               </Grid.Item>
               <Grid.Item>
@@ -124,7 +124,7 @@ const Signature = memo<PropsWithoutRef<SignatureCoreProps> & RefAttributes<Signa
                     }
                   }}
                 >
-                  {Intl.v('清除')}
+                  {Intl.get('clear')}
                 </Button>
               </Grid.Item>
             </Grid>

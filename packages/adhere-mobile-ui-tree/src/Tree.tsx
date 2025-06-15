@@ -403,7 +403,7 @@ const InternalTree = memo<TreeProps>(
           <div className={classNames(`${selectorPrefix}-wrapper`)}>
             <div className={classNames(`${selectorPrefix}-search`)}>
               <SearchBar
-                placeholder={Intl.v('请输入')}
+                placeholder={Intl.get('please_enter')}
                 showCancelButton
                 value={kw}
                 onChange={setKw}

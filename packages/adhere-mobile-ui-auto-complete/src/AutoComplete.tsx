@@ -161,7 +161,7 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
           style={searchBarStyle ?? {}}
         >
           <SearchBar
-            placeholder={placeholder ?? Intl.v('输入文字过滤选项')}
+            placeholder={placeholder ?? Intl.get('input_filter_text')}
             value={kw}
             onChange={onSearchChange}
             onSearch={onSearch}
@@ -189,7 +189,7 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
           >
             <div className={`${selectorPrefix}-result`}>
               <NoticeBar
-                content={Intl.vHtml('共 <em>{n}</em> 条', { n: dataSource.length })}
+                content={Intl.getHTML('total_count', { n: dataSource.length })}
                 color="info"
               />
 

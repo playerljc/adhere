@@ -19,7 +19,7 @@ const InternalPopupTriggerPrompt = memo<PopupTriggerPromptProps<any>>(
           ? [
               {
                 ...submitAction,
-                text: submitAction?.text ?? Intl.v('确定'),
+                text: submitAction?.text ?? Intl.get('confirm'),
               },
             ]
           : [],

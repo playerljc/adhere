@@ -1,9 +1,11 @@
 import { Button, Form } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { FormItemCreator } from '@baifendian/adhere';
 
 export default () => {
+  const [skip, setSkip] = useState(false);
+
   const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 12 },

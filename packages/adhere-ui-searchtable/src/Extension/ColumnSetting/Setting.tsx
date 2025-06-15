@@ -53,12 +53,12 @@ function ColumnSetting({ columns, onShowColumns, onReset, onDisplayColumn, onSor
               onShowColumns(e.target.checked);
             }}
           >
-            {Intl.v('列展示')}
+            {Intl.get('column_display')}
           </Checkbox>
         </div>
 
         <div>
-          <a onClick={onReset}>{Intl.v('重置')}</a>
+          <a onClick={onReset}>{Intl.get('reset')}</a>
         </div>
       </div>
 

@@ -30,7 +30,7 @@ const SelectionManageButton = ({
             onChange(true);
           }}
         >
-          {selectionLabel ?? Intl.v('管理')}
+          {selectionLabel ?? Intl.get('manage')}
         </div>
       )}
 
@@ -43,7 +43,7 @@ const SelectionManageButton = ({
               onFinish();
             }}
           >
-            {selectionFinishLabel ?? Intl.v('完成')}
+            {selectionFinishLabel ?? Intl.get('complete')}
           </div>
           <div
             className={`${selectorPrefix}-manager-item`}
@@ -52,7 +52,7 @@ const SelectionManageButton = ({
               onCancel();
             }}
           >
-            {selectionCancelLabel ?? Intl.v('取消')}
+            {selectionCancelLabel ?? Intl.get('cancel')}
           </div>
         </>
       )}

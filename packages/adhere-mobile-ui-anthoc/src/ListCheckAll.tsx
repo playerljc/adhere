@@ -32,7 +32,7 @@ const ListCheckAll: FC<ListCheckAllProps> = ({
       return checkAllLabel;
     }
 
-    return Intl.v('全选');
+    return Intl.get('select_all');
   }, [checkAllLabel]);
 
   const checkAllOrigin = useMemo(

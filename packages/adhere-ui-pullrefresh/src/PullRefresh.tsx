@@ -38,8 +38,8 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
       scrollClassName = '',
       scrollStyle = {},
       renderIcon,
-      renderLabel = () => Intl.v('下拉刷新'),
-      renderCanLabel = () => Intl.v('松开刷新'),
+      renderLabel = () => Intl.get('pull_down_to_refresh'),
+      renderCanLabel = () => Intl.get('release_to_refresh'),
       renderLoadingAnimation = 'la-ball-circus la-dark',
       isShowUpdateTime = true,
       updateTimeFormat = Resource.Dict.value.ResourceMomentFormat18?.value(),
@@ -120,7 +120,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
         <ConditionalRender conditional={isShowUpdateTime}>
           {() => (
             <p className={`${selectorPrefix}-trigger-update`}>
-              {Intl.v('更新时间')}：
+              {Intl.get('update_time')}：
               <span className={`${selectorPrefix}-trigger-update-label`}>
                 {dayjs(preUpdateTimeRef.current).format(updateTimeFormat)}
               </span>

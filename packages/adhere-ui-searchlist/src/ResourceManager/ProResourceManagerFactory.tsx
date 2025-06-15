@@ -108,7 +108,7 @@ export default function <P, S>(SuperClass) {
     getTableViewColumns() {
       return [
         {
-          title: Intl.v('文件名称'),
+          title: Intl.get('file_name'),
           dataIndex: 'name',
           key: 'name',
           sorter: true,
@@ -129,7 +129,7 @@ export default function <P, S>(SuperClass) {
           ),
         },
         {
-          title: Intl.v('类型'),
+          title: Intl.get('type'),
           dataIndex: 'resourceType',
           key: 'resourceType',
           align: 'center',
@@ -148,7 +148,7 @@ export default function <P, S>(SuperClass) {
           ),
         },
         {
-          title: Intl.v('文件大小'),
+          title: Intl.get('file_size'),
           dataIndex: 'size',
           key: 'size',
           align: 'center',
@@ -162,7 +162,7 @@ export default function <P, S>(SuperClass) {
           render: (value) => (value ? <span>{Util.prettyBytes(value)}</span> : '-'),
         },
         {
-          title: Intl.v('修改时间'),
+          title: Intl.get('modified_time'),
           dataIndex: 'modifyTime',
           key: 'modifyTime',
           align: 'center',

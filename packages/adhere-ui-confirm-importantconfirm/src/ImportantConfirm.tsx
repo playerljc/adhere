@@ -36,8 +36,8 @@ ImportantConfirm.displayName = 'ImportantConfirm';
 ImportantConfirm.open = ({ success, ...params }: OpenFunction) => {
   MessageDialog.Confirm({
     ...params,
-    title: params.title || Intl.v('提示'),
-    text: params.text || `${Intl.v('真的要执行此操作吗')}?`,
+    title: params.title || Intl.get('hint'),
+    text: params.text || `${Intl.get('confirm_action')}?`,
     zIndex:
       'zIndex' in params ? params.zIndex : Resource?.Dict?.value?.ResourceNormalMaxZIndex?.value,
     icon: <img src={icon} alt="" width={32} />,

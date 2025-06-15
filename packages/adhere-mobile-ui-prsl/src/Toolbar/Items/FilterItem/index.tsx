@@ -52,7 +52,7 @@ const FilterItem: FC<FilterItemProps> = ({
       key="filter-item"
       className={selectorPrefix}
       icon={<FilterOutline />}
-      label={Intl.v('筛选')}
+      label={Intl.get('filter')}
     />
   );
 
@@ -66,13 +66,13 @@ const FilterItem: FC<FilterItemProps> = ({
         {
           key: 'ok',
           type: 'primary',
-          children: Intl.v('确定'),
+          children: Intl.get('confirm'),
           onClick: search,
         },
         {
           key: 'reset',
           type: 'primary',
-          children: Intl.v('重置'),
+          children: Intl.get('reset'),
           onClick: reset,
         },
       ];
@@ -82,13 +82,13 @@ const FilterItem: FC<FilterItemProps> = ({
       {
         key: 'ok',
         primary: true,
-        text: Intl.v('确定'),
+        text: Intl.get('confirm'),
         onClick: search,
       },
       {
         key: 'reset',
         primary: true,
-        text: Intl.v('重置'),
+        text: Intl.get('reset'),
         onClick: reset,
       },
     ];

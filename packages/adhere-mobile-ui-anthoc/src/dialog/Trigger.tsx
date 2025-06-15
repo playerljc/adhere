@@ -59,7 +59,7 @@ const InternalDialogTrigger = memo<DialogTriggerProps<any>>(
       if (showCloseButton) {
         result.push({
           key: closeActionKey ?? 'close',
-          text: closeActionText ?? Intl.v('关闭'),
+          text: closeActionText ?? Intl.get('close'),
           onClick: () => {},
         });
       }

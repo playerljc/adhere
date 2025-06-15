@@ -32,31 +32,31 @@ const AdhereSearchListDict = {
      */
     Dict.handlers.AdhereSearchListResourceManagerLabelValue = () => [
       {
-        label: Intl.v('全部'),
+        label: Intl.get('all'),
         value: 'all',
       },
       {
-        label: Intl.v('文档'),
+        label: Intl.get('document'),
         value: 'doc',
       },
       {
-        label: Intl.v('视频'),
+        label: Intl.get('video'),
         value: 'video',
       },
       {
-        label: Intl.v('音频'),
+        label: Intl.get('audio'),
         value: 'audio',
       },
       {
-        label: Intl.v('图片'),
+        label: Intl.get('image'),
         value: 'image',
       },
       {
-        label: Intl.v('压缩'),
+        label: Intl.get('compressed'),
         value: 'compress',
       },
       {
-        label: Intl.v('其他'),
+        label: Intl.get('others'),
         value: 'other',
       },
     ];
@@ -66,14 +66,14 @@ const AdhereSearchListDict = {
      */
     Dict.handlers.AdhereSearchListResourceManagerLabelValueMap = () =>
       new Map([
-        ['directory', Intl.v('文件夹')],
-        ['all', Intl.v('全部')],
-        ['doc', Intl.v('文档')],
-        ['video', Intl.v('视频')],
-        ['audio', Intl.v('音频')],
-        ['image', Intl.v('图片')],
-        ['compress', Intl.v('压缩')],
-        ['other', Intl.v('其他')],
+        ['directory', Intl.get('folder')],
+        ['all', Intl.get('all')],
+        ['doc', Intl.get('document')],
+        ['video', Intl.get('video')],
+        ['audio', Intl.get('audio')],
+        ['image', Intl.get('image')],
+        ['compress', Intl.get('compressed')],
+        ['other', Intl.get('others')],
       ]);
   },
   initRemote() {},

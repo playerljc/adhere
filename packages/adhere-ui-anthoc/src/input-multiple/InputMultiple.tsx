@@ -127,7 +127,7 @@ const InputMultiple: FC<InputMultipleProps> = ({
         <Space.Group direction="horizontal" size={10}>
           <FlexLayout.Auto>
             <Input
-              placeholder={Intl.v('请输入关键字')}
+              placeholder={Intl.get('enter_keyword')}
               showCount={false}
               allowClear={false}
               {...(inputProps ?? {})}

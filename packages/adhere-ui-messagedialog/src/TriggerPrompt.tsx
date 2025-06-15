@@ -25,7 +25,7 @@ const TriggerPrompt = forwardRef<TriggerPromptHandle, TriggerPromptProps>(
             key: 'submit',
             // @ts-ignore
             type: 'primary',
-            children: okText ?? Intl.v('确定'),
+            children: okText ?? Intl.get('confirm'),
             onClick: () => onSubmit?.() ?? Promise.resolve(),
           },
         ]}

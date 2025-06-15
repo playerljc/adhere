@@ -231,12 +231,16 @@ const Ellipsis = memo<EllipsisProps>((props) => {
   /**
    * renderShow
    */
-  const renderShow = () => <div className={`${selectorPrefix}-show-more`}>{Intl.v('展开')}</div>;
+  const renderShow = () => (
+    <div className={`${selectorPrefix}-show-more`}>{Intl.get('expand')}</div>
+  );
 
   /**
    * renderHide
    */
-  const renderHide = () => <div className={`${selectorPrefix}-hide-more`}>{Intl.v('收起')}</div>;
+  const renderHide = () => (
+    <div className={`${selectorPrefix}-hide-more`}>{Intl.get('collapse')}</div>
+  );
 
   /**
    * renderMore

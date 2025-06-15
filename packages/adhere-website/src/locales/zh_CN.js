@@ -5,5 +5,6 @@ export default [
   '详细地址',
   {
     key1: '我是谁',
+    key2: '谁是我',
   },
 ];

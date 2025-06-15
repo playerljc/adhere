@@ -279,6 +279,7 @@ export default () => {
       />
 
       <div>11111111:{Intl.get('key1')}</div>
+      <div>22222222:{Intl.get('input_range_1_200')}</div>
     </PlayGroundPage>
   );
 };

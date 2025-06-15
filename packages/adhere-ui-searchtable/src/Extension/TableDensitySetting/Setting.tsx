@@ -8,15 +8,15 @@ import { TableDensity } from '../../types';
 
 const config = [
   {
-    label: Intl.v('缺省'),
+    label: Intl.get('default'),
     value: TableDensity.DEFAULT,
   },
   {
-    label: Intl.v('中等'),
+    label: Intl.get('moderate'),
     value: TableDensity.MIDDLE,
   },
   {
-    label: Intl.v('紧凑'),
+    label: Intl.get('compact'),
     value: TableDensity.SMALL,
   },
 ];
@@ -30,7 +30,7 @@ function TableDensitySetting({ density, onReset, onChange }) {
   return (
     <div className={`${selectorPrefix}-table-density-setting`}>
       <div className={`${selectorPrefix}-table-density-setting-header`}>
-        <a onClick={onReset}>{Intl.v('重置')}</a>
+        <a onClick={onReset}>{Intl.get('reset')}</a>
       </div>
 
       <div className={`${selectorPrefix}-table-density-setting-body`}>

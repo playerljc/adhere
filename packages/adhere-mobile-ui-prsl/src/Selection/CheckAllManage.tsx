@@ -22,12 +22,12 @@ const CheckAllManage = () => {
       <div className={`${selectorPrefix}-check-box`}>
         <Space.Group direction="horizontal" size={5}>
           <Checkbox checked={isCheckAll} onChange={selectionAllChange} />
-          <span>{Intl.v('全选')}</span>
+          <span>{Intl.get('select_all')}</span>
         </Space.Group>
       </div>
 
       <div className={`${selectorPrefix}-total`}>
-        {Intl.vHtml('共 <em>{n}</em> 条', { n: optionSelectedRowKeys.length })}
+        {Intl.getHTML('total_count', { n: optionSelectedRowKeys.length })}
       </div>
     </div>
   );

@@ -279,7 +279,7 @@ abstract class SearchList<
               );
             }}
           >
-            <span>{Intl.v('展开')}</span>
+            <span>{Intl.get('expand')}</span>
             <DownOutlined />
           </a>
         )}
@@ -299,7 +299,7 @@ abstract class SearchList<
               );
             }}
           >
-            <span>{Intl.v('收起')}</span>
+            <span>{Intl.get('collapse')}</span>
             <UpOutlined />
           </a>
         )}
@@ -326,10 +326,10 @@ abstract class SearchList<
           this.search();
         }}
       >
-        {Intl.v('查询')}
+        {Intl.get('search')}
       </Button>,
       <Button className={`${selectorPrefix}-search-footer-item`} key="reset" onClick={this.onClear}>
-        {Intl.v('重置')}
+        {Intl.get('reset')}
       </Button>,
       isShowExpandSearch && this.renderSearchBarCollapseControl(),
     ].filter((t) => !!t);

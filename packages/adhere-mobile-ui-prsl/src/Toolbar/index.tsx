@@ -85,7 +85,7 @@ const ToolBar = memo<ToolBarProps>(
     const showTotalElement = useMemo(() => {
       return showTotal && total > 0 ? (
         <div className={`${selectorPrefix}-show-total`}>
-          {Intl.v(`共{total}个结果`, {
+          {Intl.get('total_results', {
             total,
           })}
         </div>

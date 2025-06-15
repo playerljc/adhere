@@ -14,26 +14,26 @@ const Props = memo<PropsProps>((props) => {
   const columns = useMemo(
     () => [
       {
-        title: Intl.v('参数'),
+        title: Intl.get('parameter'),
         key: 'params',
         dataIndex: 'params',
         width: '20%',
       },
       {
-        title: Intl.v('说明'),
+        title: Intl.get('description'),
         key: 'desc',
         dataIndex: 'desc',
         width: '50%',
       },
       {
-        title: Intl.v('类型'),
+        title: Intl.get('type'),
         key: 'type',
         dataIndex: 'type',
         width: '15%',
         render: (value) => <code className={`${selectPrefix}-highlight`}>{value}</code>,
       },
       {
-        title: Intl.v('默认值'),
+        title: Intl.get('default_value'),
         key: 'defaultVal',
         dataIndex: 'defaultVal',
         width: '15%',
@@ -118,26 +118,26 @@ Props.displayName = 'Props';
 //   protected getColumns() {
 //     return [
 //       {
-//         title: Intl.v('参数'),
+//         title: Intl.get('parameter'),
 //         key: 'params',
 //         dataIndex: 'params',
 //         width: '20%',
 //       },
 //       {
-//         title: Intl.v('说明'),
+//         title: Intl.get('description'),
 //         key: 'desc',
 //         dataIndex: 'desc',
 //         width: '50%',
 //       },
 //       {
-//         title: Intl.v('类型'),
+//         title: Intl.get('type'),
 //         key: 'type',
 //         dataIndex: 'type',
 //         width: '15%',
 //         render: (value) => <code className={`${selectPrefix}-highlight`}>{value}</code>,
 //       },
 //       {
-//         title: Intl.v('默认值'),
+//         title: Intl.get('default_value'),
 //         key: 'defaultVal',
 //         dataIndex: 'defaultVal',
 //         width: '15%',

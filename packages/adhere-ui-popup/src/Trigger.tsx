@@ -111,7 +111,7 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
               })
             }
           >
-            {Intl.v('关闭')}
+            {Intl.get('close')}
           </SubmitButton>
         </div>
       );

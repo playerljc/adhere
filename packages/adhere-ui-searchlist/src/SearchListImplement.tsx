@@ -1259,7 +1259,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
     return (
       <div className={`${selectorPrefix}-list-row-selection-header`}>
         <div className={`${selectorPrefix}-list-row-selection-header-info`}>
-          {Intl.v('已选择{count}项', {
+          {Intl.get('selected_items_count', {
             //
             count: this.state.selectedRowKeys?.length,
           })}
@@ -1270,7 +1270,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
               this.unSelectedAll();
             }}
           >
-            {Intl.v('取消选择')}
+            {Intl.get('deselect')}
           </a>
         </div>
       </div>

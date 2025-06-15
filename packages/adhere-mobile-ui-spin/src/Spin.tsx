@@ -29,7 +29,7 @@ const Spin = memo<SpinProps>(({ className, style, spinning, zIndex, text, ...toa
   const DEFAULT_SHOW_CONFIG = useMemo(
     () => ({
       icon: 'loading',
-      content: `${Intl.v('加载中')}...`,
+      content: `${Intl.get('loading')}...`,
     }),
     [],
   );

@@ -447,7 +447,7 @@ class EditableCellUseKeepEditStateSearchTable extends ProEditableCellSearchState
               // });
             }}
           >
-            {Intl.v('新增')}
+            {Intl.get('add')}
           </Button>
         ),
       },

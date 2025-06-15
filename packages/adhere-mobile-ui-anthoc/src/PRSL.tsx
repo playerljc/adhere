@@ -97,7 +97,7 @@ const PRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>>(
             <div className={`${selectorPrefix}-loading-dot`}>
               <DotLoading color="primary" />
             </div>
-            <div>{`${Intl.v('数据加载中')}`}...</div>
+            <div>{`${Intl.get('data_loading')}`}...</div>
           </div>
         );
       }, [loading]);

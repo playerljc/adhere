@@ -50,7 +50,7 @@ const SortItem: FC<SortItemProps> = ({
       key="sort-item"
       className={selectorPrefix}
       icon={<TransportQRcodeOutline />}
-      label={Intl.v('排序')}
+      label={Intl.get('sort')}
     />
   );
 
@@ -64,7 +64,7 @@ const SortItem: FC<SortItemProps> = ({
         {
           key: 'reset',
           type: 'primary',
-          children: Intl.v('重置'),
+          children: Intl.get('reset'),
           onClick: reset,
         },
       ];
@@ -74,7 +74,7 @@ const SortItem: FC<SortItemProps> = ({
       {
         key: 'reset',
         primary: true,
-        text: Intl.v('重置'),
+        text: Intl.get('reset'),
         onClick: reset,
       },
     ];

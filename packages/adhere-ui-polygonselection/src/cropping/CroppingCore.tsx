@@ -314,7 +314,7 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
                   type={getType(SelectType.Rectangle)}
                   onClick={onClickHOC(SelectType.Rectangle, RectangleDrawAction)}
                 >
-                  {Intl.v('矩形剪裁')}
+                  {Intl.get('crop_rectangle')}
                 </Button>
               )),
           },
@@ -333,7 +333,7 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
                   type={getType(SelectType.Circle)}
                   onClick={onClickHOC(SelectType.Circle, CircleDrawAction)}
                 >
-                  {Intl.v('圆形剪裁')}
+                  {Intl.get('crop_circle')}
                 </Button>
               )),
           },
@@ -352,7 +352,7 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
                   type={getType(SelectType.Start)}
                   onClick={onClickHOC(SelectType.Start, StartDrawAction)}
                 >
-                  {Intl.v('五角星剪裁')}
+                  {Intl.get('crop_star')}
                 </Button>
               )),
           },
@@ -373,7 +373,7 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
                   type={getType(SelectType.Triangle)}
                   onClick={onClickHOC(SelectType.Triangle, TriangleDrawAction)}
                 >
-                  {Intl.v('三角形剪裁')}
+                  {Intl.get('crop_triangle')}
                 </Button>
               )),
           },
@@ -394,7 +394,7 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
                   type={getType(SelectType.Diamond)}
                   onClick={onClickHOC(SelectType.Diamond, DiamondDrawAction)}
                 >
-                  {Intl.v('菱形剪裁')}
+                  {Intl.get('crop_diamond')}
                 </Button>
               )),
           },
@@ -415,7 +415,7 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
                   type={getType(SelectType.Polygon)}
                   onClick={onClickHOC(SelectType.Polygon, PolygonDrawAction)}
                 >
-                  {Intl.v('多边形剪裁')}
+                  {Intl.get('crop_polygon')}
                 </Button>
               )),
           },
@@ -439,7 +439,7 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
                 inputFileFieldRef.current?.click();
               }}
             >
-              {Intl.v('打开')}
+              {Intl.get('open')}
             </Button>
           ),
         },

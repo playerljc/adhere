@@ -7,15 +7,15 @@ const selectorPrefix = 'adhere-ui-search-list';
 
 const config = [
   {
-    label: Intl.v('缺省'),
+    label: Intl.get('default'),
     value: 'default',
   },
   {
-    label: Intl.v('大'),
+    label: Intl.get('large'),
     value: 'large',
   },
   {
-    label: Intl.v('小'),
+    label: Intl.get('small'),
     value: 'small',
   },
 ];
@@ -29,7 +29,7 @@ function ListDensitySetting({ density, onReset, onChange }) {
   return (
     <div className={`${selectorPrefix}-list-density-setting`}>
       <div className={`${selectorPrefix}-list-density-setting-header`}>
-        <a onClick={onReset}>{Intl.v('重置')}</a>
+        <a onClick={onReset}>{Intl.get('reset')}</a>
       </div>
 
       <div className={`${selectorPrefix}-list-density-setting-body`}>

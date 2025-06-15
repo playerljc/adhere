@@ -81,7 +81,7 @@ const FunctionProps = memo<FunctionProps>((props) => {
                 <td valign="top" className={`${selectorPrefix}-item-info`}>
                   <div className={`${selectorPrefix}-item-desc`}>{desc}</div>
                   <dl>
-                    <dt className={`${selectorPrefix}-`}>{Intl.v('参数说明')}：</dt>
+                    <dt className={`${selectorPrefix}-`}>{Intl.get('parameter_description')}：</dt>
                     <dd>
                       <ConditionalRender conditional={!!params && params.length !== 0}>
                         {() => (
@@ -99,28 +99,28 @@ const FunctionProps = memo<FunctionProps>((props) => {
                                   style={{ marginBottom: 10 }}
                                 >
                                   <li>
-                                    {Intl.v('类型')}
+                                    {Intl.get('type')}
                                     <span className={`${selectorPrefix}-split`}>-</span>
                                     <span className={`${selectorPrefix}-highlight`}>
                                       {param.type || '-'}
                                     </span>
                                   </li>
                                   <li>
-                                    {Intl.v('默认值')}
+                                    {Intl.get('default_value')}
                                     <span className={`${selectorPrefix}-split`}>-</span>
                                     <span className={`${selectorPrefix}-highlight`}>
                                       {param.defaultVal || '-'}
                                     </span>
                                   </li>
                                   <li>
-                                    {Intl.v('是否必填')}
+                                    {Intl.get('required')}
                                     <span className={`${selectorPrefix}-split`}>-</span>
                                     <span className={`${selectorPrefix}-highlight`}>
-                                      {param.required || false ? Intl.v('是') : Intl.v('否')}
+                                      {param.required || false ? Intl.get('yes') : Intl.get('no')}
                                     </span>
                                   </li>
                                   {/*<li>
-                                  {intl.v('说明')}
+                                  {Intl.get('description')}
                                   <span className={`${selectorPrefix}-split`}>-</span>
                                   <span className={`${selectorPrefix}-highlight`}>{param.desc || '-'}</span>
                                 </li>*/}
@@ -133,16 +133,16 @@ const FunctionProps = memo<FunctionProps>((props) => {
                     </dd>
                   </dl>
                   <dl>
-                    <dt>{Intl.v('返回值')}：</dt>
+                    <dt>{Intl.get('return_valueption')}：</dt>
                     <dd>
                       <ul className={`${selectorPrefix}-level1`}>
                         <li>
-                          {Intl.v('类型')}
+                          {Intl.get('type')}
                           <span className={`${selectorPrefix}-split`}>-</span>
                           <span className={`${selectorPrefix}-highlight`}>{returnType || '-'}</span>
                         </li>
                         <li>
-                          {Intl.v('说明')}
+                          {Intl.get('description')}
                           <span className={`${selectorPrefix}-split`}>-</span>
                           <span className={`${selectorPrefix}-highlight`}>{returnDesc || '-'}</span>
                         </li>
@@ -311,7 +311,7 @@ FunctionProps.displayName = 'FunctionProps';
 //                   <td valign="top" className={`${selectorPrefix}-item-info`}>
 //                     <div className={`${selectorPrefix}-item-desc`}>{desc}</div>
 //                     <dl>
-//                       <dt className={`${selectorPrefix}-`}>{intl.v('参数说明')}：</dt>
+//                       <dt className={`${selectorPrefix}-`}>{Intl.get('parameter_description')}：</dt>
 //                       <dd>
 //                         <ConditionalRender conditional={!!params && params.length !== 0}>
 //                           {() => (
@@ -329,28 +329,28 @@ FunctionProps.displayName = 'FunctionProps';
 //                                     style={{ marginBottom: 10 }}
 //                                   >
 //                                     <li>
-//                                       {intl.v('类型')}
+//                                       {Intl.get('type')}
 //                                       <span className={`${selectorPrefix}-split`}>-</span>
 //                                       <span className={`${selectorPrefix}-highlight`}>
 //                                         {param.type || '-'}
 //                                       </span>
 //                                     </li>
 //                                     <li>
-//                                       {intl.v('默认值')}
+//                                       {Intl.get('default_value')}
 //                                       <span className={`${selectorPrefix}-split`}>-</span>
 //                                       <span className={`${selectorPrefix}-highlight`}>
 //                                         {param.defaultVal || '-'}
 //                                       </span>
 //                                     </li>
 //                                     <li>
-//                                       {intl.v('是否必填')}
+//                                       {Intl.get('required')}
 //                                       <span className={`${selectorPrefix}-split`}>-</span>
 //                                       <span className={`${selectorPrefix}-highlight`}>
-//                                         {param.required || false ? intl.v('是') : intl.v('否')}
+//                                         {param.required || false ? Intl.get('是') : Intl.get('否')}
 //                                       </span>
 //                                     </li>
 //                                     {/*<li>
-//                                   {intl.v('说明')}
+//                                   {Intl.get('description')}
 //                                   <span className={`${selectorPrefix}-split`}>-</span>
 //                                   <span className={`${selectorPrefix}-highlight`}>{param.desc || '-'}</span>
 //                                 </li>*/}
@@ -363,18 +363,18 @@ FunctionProps.displayName = 'FunctionProps';
 //                       </dd>
 //                     </dl>
 //                     <dl>
-//                       <dt>{intl.v('返回值')}：</dt>
+//                       <dt>{Intl.get('return_valueption')}：</dt>
 //                       <dd>
 //                         <ul className={`${selectorPrefix}-level1`}>
 //                           <li>
-//                             {intl.v('类型')}
+//                             {Intl.get('type')}
 //                             <span className={`${selectorPrefix}-split`}>-</span>
 //                             <span className={`${selectorPrefix}-highlight`}>
 //                               {returnType || '-'}
 //                             </span>
 //                           </li>
 //                           <li>
-//                             {intl.v('说明')}
+//                             {Intl.get('description')}
 //                             <span className={`${selectorPrefix}-split`}>-</span>
 //                             <span className={`${selectorPrefix}-highlight`}>
 //                               {returnDesc || '-'}

@@ -50,7 +50,9 @@ const InputMultipleDialog: FC<InputMultipleDialogProps<string>> = ({
       popoverTriggerProps={{
         renderTrigger: (values) => {
           if (!values || !values.length) {
-            return <div className={`${selectorPrefix}-placeholder`}>{Intl.v('请输入关键字')}</div>;
+            return (
+              <div className={`${selectorPrefix}-placeholder`}>{Intl.get('enter_keyword')}</div>
+            );
           }
 
           return (
