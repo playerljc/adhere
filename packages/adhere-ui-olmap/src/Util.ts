@@ -29,7 +29,7 @@ import WindLayer from './WindLayer';
 
 const EARTH_RADIUS = Resource.Dict.value.ResourceGisEarthRadius?.value; // 单位M
 
-const DEFAULT_COLOE = '#1788F3';
+const DEFAULT_COLOR = '#1788F3';
 
 /**
  * getMinZoom
@@ -323,7 +323,7 @@ export default {
     center,
     radius,
     color = 'rgba(23,136,243,.2)',
-    strokeColor = DEFAULT_COLOE,
+    strokeColor = DEFAULT_COLOR,
     strokeWidth = 2,
     zIndex = Resource.Dict.value.ResourceNormalMaxZIndex?.value,
     id = v4(),
@@ -364,7 +364,7 @@ export default {
   drawPolygon({
     points,
     color = 'rgba(23,136,243,.2)',
-    strokeColor = DEFAULT_COLOE,
+    strokeColor = DEFAULT_COLOR,
     strokeWidth = 2,
     zIndex = Resource.Dict.value.ResourceNormalMaxZIndex?.value,
     id = v4(),
@@ -412,7 +412,7 @@ export default {
     },
     strokeOpt = {
       width: 2,
-      color: DEFAULT_COLOE,
+      color: DEFAULT_COLOR,
     },
     radius = 10,
     textOpt = {},
@@ -467,7 +467,7 @@ export default {
     fillOpt = { color: 'rgba(23,136,243,.2)' },
     strokeOpt = {
       width: 2,
-      color: DEFAULT_COLOE,
+      color: DEFAULT_COLOR,
     },
     // points = 3,
     // radius = 10,
