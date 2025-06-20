@@ -52,6 +52,7 @@ const InternalWangEditorSandbox = memo<
       injectionStyles,
       injectionStylesByString,
       gap = 60,
+      direction = 'ltr',
     } = props;
 
     const wrapRef = useRef<HTMLDivElement | null>(null);
@@ -439,7 +440,7 @@ const InternalWangEditorSandbox = memo<
           editor: !('readOnly' in props) || !props.readOnly,
         })}">
           <body>
-            <div id="${editorId}" class="editor-content-view" style="${
+            <div id="${editorId}" dir="${direction}" class="editor-content-view" style="${
               wangEditorStyle ?? ''
             }"></div>
           </body>

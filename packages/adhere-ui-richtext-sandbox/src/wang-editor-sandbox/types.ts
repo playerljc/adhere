@@ -49,6 +49,7 @@ export interface WangEditorSandboxProps {
   injectionScriptsByString?: string[];
   injectionStyles?: string[];
   injectionStylesByString?: string[];
+  direction?: 'ltr' | 'rtl';
 }
 
 export type WangEditorSandboxComponent = NamedExoticComponent<
