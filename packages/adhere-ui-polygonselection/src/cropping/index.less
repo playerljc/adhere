@@ -25,8 +25,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    background-color: rgb(0 0 0 / 60%);
+    //color: #fff;
+    color: var(--selection-cropping-mask-color, #fff);
+    //background-color: rgb(0 0 0 / 60%);
+    background-color: var(--selection-cropping-mask-background-color, rgb(0 0 0 / 60%));
     transform: scale(0);
     transform-origin: center;
     transition: transform ease-out 0.2s;

@@ -12,8 +12,10 @@
 
   > img {
     flex-shrink: 0;
-    width: 40px;
-    margin-right: 10px;
+    //width: 40px;
+    width: var(--content-img-width, 40px);
+    //margin-right: 10px;
+    margin-right: var(--content-img-margin-right, 10px);
   }
 
   > .adhere-ui-mobile-important-confirm-content-info {

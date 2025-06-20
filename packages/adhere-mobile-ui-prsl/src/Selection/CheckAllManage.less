@@ -1,12 +1,17 @@
 .adhere-mobile-ui-prsl-selection-check-all {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 15px;
+  //align-items: center;
+  align-items: var(--selection-check-all-align-items, center);
+  //justify-content: space-between;
+  justify-content: var(--selection-check-all-justify-content, space-between);
+  //padding: 10px 15px;
+  padding: var(--selection-check-all-padding, 10px 15px);
 
   > .adhere-mobile-ui-prsl-selection-check-box {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    //align-items: center;
+    align-items: var(--selection-check-box-align-items, center);
+    //justify-content: center;
+    justify-content: var(--selection-check-box-justify-content, center);
   }
 }

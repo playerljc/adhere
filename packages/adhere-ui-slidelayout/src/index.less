@@ -7,7 +7,8 @@
     &-push-master,
     &-push-slave {
       position: absolute;
-      background-color: var(--adhere-color-bg-base);
+      //background-color: var(--adhere-color-bg-base);
+      background-color: var(--background-color, var(--adhere-color-bg-base));
     }
 
     &-overlay,
@@ -19,7 +20,8 @@
     }
 
     &-overlay {
-      z-index: 9999;
+      //z-index: 9999;
+      z-index: var(--overlay-z-index, 9999);
     }
 
     &-overlay,
@@ -27,24 +29,44 @@
     &-push {
       box-sizing: border-box;
       max-width: 100%;
-      padding: 15px;
+      //padding: 15px;
+      padding: var(--overlay-reveal-push-padding, 15px);
       overflow: auto;
       overflow-scrolling: touch;
 
       &.left {
-        border-right: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+        //border-right: var(--adhere-line-width) var(--adhere-line-type)
+        //  var(--adhere-color-border-base);
+        border-right: var(
+          --overlay-reveal-push-left-border-right,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
       }
 
       &.right {
-        border-left: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+        //border-left: var(--adhere-line-width) var(--adhere-line-type)
+        //  var(--adhere-color-border-base);
+        border-left: var(
+          --overlay-reveal-push-right-border-left,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
       }
 
       &.top {
-        border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+        //border-bottom: var(--adhere-line-width) var(--adhere-line-type)
+        //  var(--adhere-color-border-base);
+        border-bottom: var(
+          --overlay-reveal-push-top-border-bottom,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
       }
 
       &.bottom {
-        border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+        //border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+        border-top: var(
+          --overlay-reveal-push-bottom-border-top,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
       }
     }
 
@@ -59,7 +81,8 @@
     &-reveal-master {
       right: 0;
       left: 0;
-      z-index: 9998;
+      //z-index: 9998;
+      z-index: var(--reveal-master-z-index, 9998);
     }
 
     &-push-master,

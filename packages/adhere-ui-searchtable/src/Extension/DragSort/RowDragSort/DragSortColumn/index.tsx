@@ -7,7 +7,7 @@ import { DRAG_SORT_ROW_COLUMN_KEY } from '../../../../Constant';
 import type { DragSortColumnProps } from '../../../../types';
 import DragSortRowContext from '../DragSortRowContext';
 
-const selectorPrefix = 'adhere-ui-searchtable-drag-handler';
+const selectorPrefix = 'adhere-ui-search-table-drag-handler';
 
 /**
  * DragHandler

@@ -77,7 +77,7 @@ function ColumnSetting({ columns, onShowColumns, onReset, onDisplayColumn, onSor
           }}
           useDragHandle
           // lockToContainerEdges
-          helperClass={`${selectorPrefix}-sortableHelper`}
+          helperClass={`${selectorPrefix}-sortable-helper`}
         >
           {columns.map((column, index) => (
             <SortableItem

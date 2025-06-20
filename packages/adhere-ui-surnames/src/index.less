@@ -1,6 +1,6 @@
-@adhere-ui-surnames-group-title-background-color: rgb(247, 247, 247);
-
 .adhere-ui-surnames {
+  @adhere-ui-surnames-group-title-background-color: rgb(247, 247, 247);
+
   position: relative;
   display: flex;
   height: 100%;
@@ -12,7 +12,8 @@
 
     > .adhere-ui-surnames-highlighted {
       &::after {
-        top: 4px;
+        //top: 4px;
+        top: var(--config-position-right-left-highlighted-after-top, 4px);
       }
     }
 
@@ -29,12 +30,19 @@
 
   &.adhere-ui-surnames-config-position-right {
     > .adhere-ui-surnames-highlighted {
-      right: 20px;
+      //right: 20px;
+      right: var(--config-position-right-highlighted-right, 20px);
 
       &::after {
-        right: -9px;
-        border-color: transparent transparent transparent var(--adhere-color-primary);
-        border-width: 18px 0 18px 18px;
+        //right: -9px;
+        right: var(--config-position-right-highlighted-after-right, -9px);
+        //border-color: transparent transparent transparent var(--adhere-color-primary);
+        border-color: var(
+          --config-position-right-highlighted-after-border-color,
+          transparent transparent transparent var(--adhere-color-primary)
+        );
+        //border-width: 18px 0 18px 18px;
+        border-width: var(--config-position-right-highlighted-after-border-width, 18px 0 18px 18px);
       }
     }
 
@@ -49,12 +57,19 @@
 
   &.adhere-ui-surnames-config-position-left {
     > .adhere-ui-surnames-highlighted {
-      left: 20px;
+      //left: 20px;
+      left: var(--config-position-left-highlighted-left, 20px);
 
       &::after {
-        left: -9px;
-        border-color: transparent var(--adhere-color-primary) transparent transparent;
-        border-width: 18px 18px 18px 0;
+        //left: -9px;
+        left: var(--config-position-left-highlighted-after-left, -9px);
+        //border-color: transparent var(--adhere-color-primary) transparent transparent;
+        border-color: var(
+          --config-position-left-highlighted-after-border-color,
+          transparent var(--adhere-color-primary) transparent transparent
+        );
+        //border-width: 18px 18px 18px 0;
+        border-width: var(--config-position-left-highlighted-after-border-width, 18px 18px 18px 0);
       }
     }
 
@@ -73,7 +88,8 @@
 
     > .adhere-ui-surnames-highlighted {
       &::after {
-        left: 4px;
+        //left: 4px;
+        left: var(--config-position-top-bottom-highlighted-after-left, 4px);
       }
     }
 
@@ -82,11 +98,17 @@
         flex-direction: row;
 
         > .adhere-ui-surnames-index-item {
-          padding-top: 0;
-          padding-bottom: 0;
+          //padding-top: 0;
+          padding-top: var(--config-position-top-bottom-index-item-padding-top, 0);
+          //padding-bottom: 0;
+          padding-bottom: var(--config-position-top-bottom-index-item-padding-bottom, 0);
 
           &:not(:last-of-type) {
-            padding-right: 10px;
+            //padding-right: 10px;
+            padding-right: var(
+              --config-position-top-bottom-index-item-not-last-of-type-padding-right,
+              10px
+            );
           }
         }
       }
@@ -99,12 +121,19 @@
 
   &.adhere-ui-surnames-config-position-top {
     > .adhere-ui-surnames-highlighted {
-      top: 20px;
+      //top: 20px;
+      top: var(--config-position-top-highlighted-top, 20px);
 
       &::after {
-        top: -9px;
-        border-color: transparent transparent var(--adhere-color-primary) transparent;
-        border-width: 0 18px 18px;
+        //top: -9px;
+        top: var(--config-position-top-highlighted-after-top, -9px);
+        //border-color: transparent transparent var(--adhere-color-primary) transparent;
+        border-color: var(
+          --config-position-top-highlighted-after-border-color,
+          transparent transparent var(--adhere-color-primary) transparent
+        );
+        //border-width: 0 18px 18px;
+        border-width: var(--config-position-top-highlighted-after-border-width, 0 18px 18px);
       }
     }
 
@@ -119,12 +148,19 @@
 
   &.adhere-ui-surnames-config-position-bottom {
     > .adhere-ui-surnames-highlighted {
-      bottom: 20px;
+      //bottom: 20px;
+      bottom: var(--config-position-bottom-highlighted, 20px);
 
       &::after {
-        bottom: -9px;
-        border-color: var(--adhere-color-primary) transparent transparent transparent;
-        border-width: 18px 18px 0;
+        //bottom: -9px;
+        bottom: var(--config-position-bottom-highlighted-after-bottom, -9px);
+        //border-color: var(--adhere-color-primary) transparent transparent transparent;
+        border-color: var(
+          --config-position-bottom-highlighted-after-border-color,
+          var(--adhere-color-primary) transparent transparent transparent
+        );
+        //border-width: 18px 18px 0;
+        border-width: var(--config-position-bottom-highlighted-after-border-width, 18px 18px 0);
       }
     }
 

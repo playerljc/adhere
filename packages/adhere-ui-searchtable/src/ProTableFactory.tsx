@@ -33,7 +33,7 @@ import type { AdvancedSearchPanelGroupData, ColumnTypeExt } from './types';
 
 const { TextArea } = Input;
 const { renderGridSearchFormGroup, Label, Value } = TableGridLayout;
-const _selectorPrefix = `${selectorPrefix}-protable`;
+const _selectorPrefix = `${selectorPrefix}-pro-table`;
 
 export default (SuperClass, searchAndPaginParamsMemo) =>
   class extends SuperClass {
@@ -580,8 +580,8 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                     const type = searchConfig.type;
 
                     return (
-                      <div className={`${_selectorPrefix}-headersearchwrap`}>
-                        <div className={`${_selectorPrefix}-headersearchwrap-main`}>
+                      <div className={`${_selectorPrefix}-header-search-wrap`}>
+                        <div className={`${_selectorPrefix}-header-search-wrap-main`}>
                           {this.renderGridSearchFormGroupDataItem(type, {
                             searchConfig,
                             column,
@@ -589,7 +589,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                           })}
                         </div>
 
-                        <div className={`${_selectorPrefix}-headersearchwrap-footer`}>
+                        <div className={`${_selectorPrefix}-header-search-wrap-footer`}>
                           <Button
                             size="small"
                             onClick={() => {
@@ -1117,13 +1117,13 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       return [
         ...currentDefaultItems,
         this.renderTableReload && !!this.renderTableReload?.() && (
-          <div className={`${_selectorPrefix}-headeritem`}>{this.renderTableReload()}</div>
+          <div className={`${_selectorPrefix}-header-item`}>{this.renderTableReload()}</div>
         ),
         this.renderTableDensitySetting && !!this.renderTableDensitySetting?.() && (
-          <div className={`${_selectorPrefix}-headeritem`}>{this.renderTableDensitySetting()}</div>
+          <div className={`${_selectorPrefix}-header-item`}>{this.renderTableDensitySetting()}</div>
         ),
         this.renderColumnSetting && !!this.renderColumnSetting?.() && (
-          <div className={`${_selectorPrefix}-headeritem`}>{this.renderColumnSetting()}</div>
+          <div className={`${_selectorPrefix}-header-item`}>{this.renderColumnSetting()}</div>
         ),
         // this.renderExportExcel && !!this.renderExportExcel?.() && (
         //   <div className={`${_selectorPrefix}-headeritem`}>{this.renderExportExcel()}</div>

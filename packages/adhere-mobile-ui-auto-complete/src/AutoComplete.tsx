@@ -121,7 +121,7 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
       onChange?.(_values);
     }
 
-    function remove(_id) {
+    function remove(_id: string) {
       setDataSource((_dataSource) =>
         _dataSource.filter((_r) => (getValue(_r) ?? getKey(_r)) !== _id),
       );

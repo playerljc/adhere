@@ -5,11 +5,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 20px;
+    //padding: 14px 20px;
+    padding: var(--code-box-header-padding, 14px 20px);
 
     > .adhere-ui-playground-code-box-header-title {
-      font-weight: 500;
-      font-size: 24px;
+      //font-weight: 500;
+      font-weight: var(--code-box-header-title-font-weight, 500);
+      //font-size: 24px;
+      font-size: var(--code-box-header-title-font-size, 24px);
     }
 
     > .adhere-ui-playground-code-box-header-extra {
@@ -27,11 +30,13 @@
     > .adhere-ui-playground-code-box-column {
       flex-grow: 1;
       width: 100%;
-      margin: 0 14px;
+      //margin: 0 14px;
+      margin: var(--code-box-column-margin, 0 14px);
 
       > .adhere-ui-playground-code-box-item {
         &:not(:last-child) {
-          margin-bottom: 14px;
+          //margin-bottom: 14px;
+          margin-bottom: var(--code-box-item-not-last-child-margin-bottom, 14px);
         }
       }
     }

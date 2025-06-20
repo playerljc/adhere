@@ -110,8 +110,12 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
 
   useUpdateLayoutEffect(() => {
     if (isIntlInit && wrapperELRef.current) {
+      const targetTheme = Object.fromEntries(
+        Object.entries(theme).filter(([key]) => key !== 'components'),
+      ) as { [prop: string]: string };
+
       // 初始化css变量
-      init(theme, wrapperELRef.current as HTMLElement, media);
+      init(targetTheme, wrapperELRef.current as HTMLElement, media);
     }
   }, [theme, isIntlInit]);
 

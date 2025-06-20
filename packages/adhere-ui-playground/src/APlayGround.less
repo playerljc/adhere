@@ -1,16 +1,23 @@
 //@import '~@baifendian/adhere-ui-css/es/vars';
 
 .adhere-ui-playground {
-  border-radius: 2px;
+  //border-radius: 2px;
+  border-radius: var(--border-radius, 2px);
   transition: all 0.3s ease;
 
   &.adhere-ui-playground-active {
-    border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-primary);
+    //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-primary);
+    border: var(
+      --active-border,
+      var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-primary)
+    );
   }
 
   .adhere-ui-playground-action-btn {
-    width: 14px;
-    margin: 0 10px;
+    //width: 14px;
+    width: var(--action-btn-width, 14px);
+    //margin: 0 10px;
+    margin: var(--action-btn-margin, 0 10px);
 
     &:hover {
       cursor: pointer;
