@@ -44,6 +44,7 @@ export interface WangEditorSandboxProps {
     injectionScriptsByString?: string[];
     injectionStyles?: string[];
     injectionStylesByString?: string[];
+    direction?: 'ltr' | 'rtl';
 }
 export type WangEditorSandboxComponent = NamedExoticComponent<PropsWithoutRef<WangEditorSandboxProps> & RefAttributes<WangEditorSandboxHandler>> & {
     AntdFormRequireValidator: (editor: any, tip: any) => any;
