@@ -791,7 +791,47 @@ export interface ConfigProviderProps {
           maskZIndex?: string;
           maskBackground?: string;
         };
-        Surnames: {};
+        Surnames: {
+          configPositionRightLeftHighlightedAfterTop?: string;
+          configPositionRightHighlightedRight?: string;
+          configPositionRightHighlightedAfterRight?: string;
+          configPositionRightHighlightedAfterBorderColor?: string;
+          configPositionRightHighlightedAfterBorderWidth?: string;
+          configPositionLeftHighlightedLeft?: string;
+          configPositionLeftHighlightedAfterLeft?: string;
+          configPositionLeftHighlightedAfterBorderColor?: string;
+          configPositionLeftHighlightedAfterBorderWidth?: string;
+          configPositionTopBottomHighlightedAfterLeft?: string;
+          configPositionTopBottomIndexItemPaddingTop?: string;
+          configPositionTopBottomIndexItemPaddingBottom?: string;
+          configPositionTopBottomIndexItemNotLastOfTypePaddingRight?: string;
+          configPositionTopHighlightedTop?: string;
+          configPositionTopHighlightedAfterTop?: string;
+          configPositionTopHighlightedAfterBorderColor?: string;
+          configPositionTopHighlightedAfterBorderWidth?: string;
+          configPositionBottomHighlighted?: string;
+          configPositionBottomHighlightedAfterBottom?: string;
+          configPositionBottomHighlightedAfterBorderColor?: string;
+          configPositionBottomHighlightedAfterBorderWidth?: string;
+          highlightedZIndex?: string;
+          highlightedWidth?: string;
+          highlightedHeight?: string;
+          highlightedColor?: string;
+          highlightedFontWeight?: string;
+          highlightedFontSize?: string;
+          highlightedLineHeight?: string;
+          highlightedBackgroundColor?: string;
+          indexItemPadding?: string;
+          indexItemColor?: string;
+          indexItemFontWeight?: string;
+          indexItemFontSize?: string;
+          indexItemActiveBackgroundColor?: string;
+          groupTitleHeight?: string;
+          groupTitleColor?: string;
+          groupTitleLineHeight?: string;
+          groupTitleTextIndent?: string;
+          groupTitleBackground?: string;
+        };
       };
       mobile?: {
         AutoComplete?: {
