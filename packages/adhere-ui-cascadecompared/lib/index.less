@@ -9,7 +9,11 @@
     position: relative;
     display: flex;
     flex-shrink: 0;
-    border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    //border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    border-bottom: var(
+      --indicator-border-bottom,
+      var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+    );
 
     > .adhere-ui-cascade-compared-auto-wrap {
       > .adhere-ui-cascade-compared-item {
@@ -24,8 +28,12 @@
 
       > .adhere-ui-cascade-compared-cell {
         height: 100%;
-        border-right: var(--adhere-line-width) var(--adhere-line-type)
-          var(--adhere-color-border-base);
+        //border-right: var(--adhere-line-width) var(--adhere-line-type)
+        //  var(--adhere-color-border-base);
+        border-right: var(
+          --cell-border-right,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
       }
     }
   }
@@ -59,8 +67,12 @@
       /* 项下的单元格 */
       > .adhere-ui-cascade-compared-cell {
         width: 100%;
-        border-right: var(--adhere-line-width) var(--adhere-line-type)
-          var(--adhere-color-border-base);
+        //border-right: var(--adhere-line-width) var(--adhere-line-type)
+        //  var(--adhere-color-border-base);
+        border-right: var(
+          --cell-border-right,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
       }
     }
   }
@@ -73,8 +85,12 @@
 
     .adhere-ui-cascade-compared-item {
       > .adhere-ui-cascade-compared-cell {
-        border-right: var(--adhere-line-width) var(--adhere-line-type)
-          var(--adhere-color-border-base);
+        //border-right: var(--adhere-line-width) var(--adhere-line-type)
+        //  var(--adhere-color-border-base);
+        border-right: var(
+          --cell-border-right,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
       }
     }
 
@@ -91,8 +107,12 @@
     /* 不是最后一行才有 */
     &:not(:last-child) {
       > .adhere-ui-cascade-compared-cell {
-        border-bottom: var(--adhere-line-width) var(--adhere-line-type)
-          var(--adhere-color-border-base);
+        //border-bottom: var(--adhere-line-width) var(--adhere-line-type)
+        //  var(--adhere-color-border-base);
+        border-bottom: var(
+          --cell-border-bottom,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
       }
     }
 
@@ -110,7 +130,8 @@
     .adhere-ui-cascade-compared-item {
       > .adhere-ui-cascade-compared-cell {
         height: 100%;
-        font-size: var(--adhere-font-size-xl);
+        //font-size: var(--adhere-font-size-xl);
+        font-size: var(--cell-font-size, var(--adhere-font-size-xl));
         white-space: inherit;
         text-align: center;
         word-wrap: break-word;

@@ -1,10 +1,10 @@
 //@import '~@baifendian/adhere-ui-css/es/vars';
 
-@adhere-ui-jd-category-tab-menu-item-active-color: #f15353;
-@adhere-ui-jd-category-tab-menu-item-background-color: #f3f4f6;
-
 /* 京东的分类面板 */
 .adhere-ui-jd-category-tab {
+  @adhere-ui-jd-category-tab-menu-item-active-color: #f15353;
+  @adhere-ui-jd-category-tab-menu-item-background-color: #f3f4f6;
+
   position: relative;
   display: flex;
   width: 100%;
@@ -20,13 +20,17 @@
     overflow-scrolling: touch;
 
     > .adhere-ui-jd-category-tab-menu-inner {
-      margin: 0;
-      padding: 0;
+      //margin: 0;
+      margin: var(--menu-inner-margin, 0);
+      //padding: 0;
+      padding: var(--menu-inner-padding, 0);
       list-style: none;
 
       > .adhere-ui-jd-category-tab-menu-item {
-        margin: 0;
-        padding: 0;
+        //margin: 0;
+        margin: var(--menu-item-margin, 0);
+        //padding: 0;
+        padding: var(--menu-item-padding, 0);
 
         &::before,
         &::after {
@@ -37,16 +41,28 @@
 
         &:not(:last-child) {
           > a {
-            border-bottom: var(--adhere-line-width) var(--adhere-line-type)
-              var(--adhere-color-border-base);
+            //border-bottom: var(--adhere-line-width) var(--adhere-line-type)
+            //  var(--adhere-color-border-base);
+            border-bottom: var(
+              --menu-item-not-last-child-a-border-bottom,
+              var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+            );
           }
         }
 
         &.active {
           > a {
-            color: @adhere-ui-jd-category-tab-menu-item-active-color;
+            //color: @adhere-ui-jd-category-tab-menu-item-active-color;
+            color: var(
+              --menu-item-active-a-color,
+              @adhere-ui-jd-category-tab-menu-item-active-color
+            );
             //background: #fff;
-            border-right: var(--adhere-line-width) var(--adhere-line-type) #fff;
+            //border-right: var(--adhere-line-width) var(--adhere-line-type) #fff;
+            border-right: var(
+              --menu-item-active-a-border-right,
+              var(--adhere-line-width) var(--adhere-line-type) #fff
+            );
           }
         }
 
@@ -54,18 +70,28 @@
           display: block;
           box-sizing: border-box;
           width: 100%;
-          padding: 5px 10px;
+          //padding: 5px 10px;
+          padding: var(--menu-item-a-padding, 5px 10px);
           //height: 3rem;
-          font-size: var(--adhere-font-size-base);
+          //font-size: var(--adhere-font-size-base);
+          font-size: var(--menu-item-a-font-size, var(--adhere-font-size-base));
           //line-height: 3rem;
           white-space: nowrap;
           text-align: center;
           text-overflow: ellipsis;
           word-wrap: break-word;
           word-break: break-all;
-          background: @adhere-ui-jd-category-tab-menu-item-background-color;
-          border-right: var(--adhere-line-width) var(--adhere-line-type)
-            var(--adhere-color-border-base);
+          //background: @adhere-ui-jd-category-tab-menu-item-background-color;
+          background: var(
+            --menu-item-a-background,
+            @adhere-ui-jd-category-tab-menu-item-background-color
+          );
+          //border-right: var(--adhere-line-width) var(--adhere-line-type)
+          //  var(--adhere-color-border-base);
+          border-right: var(
+            --menu-item-a-border-right,
+            var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+          );
         }
       }
     }
@@ -74,16 +100,20 @@
   > .adhere-ui-jd-category-tab-tab {
     flex: 1;
     min-width: 0;
-    margin: 0 0 0 20px;
-    padding: 0;
+    //margin: 0 0 0 20px;
+    margin: var(--tab-margin, 0 0 0 20px);
+    //padding: 0;
+    padding: var(--tab-padding, 0);
     list-style: none;
 
     > .adhere-ui-jd-category-tab-tab-item {
       display: none;
       width: 100%;
       height: 100%;
-      margin: 0;
-      padding: 0;
+      //margin: 0;
+      margin: var(--tab-item-margin, 0);
+      //padding: 0;
+      padding: var(--tab-item-padding, 0);
       overflow: auto;
       -webkit-overflow-scrolling: touch;
       overflow-scrolling: touch;

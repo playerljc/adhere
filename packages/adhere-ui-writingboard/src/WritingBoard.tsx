@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import React, {
-  PropsWithoutRef,
-  RefAttributes,
+  type PropsWithoutRef,
+  type RefAttributes,
   forwardRef,
   memo,
   useImperativeHandle,
@@ -10,14 +10,23 @@ import React, {
   useRef,
 } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Util from '@baifendian/adhere-util';
 import { ResizeObserver } from '@juggle/resize-observer';
 
 import Signature from './signature';
 import MobileSignature from './signature/mobile';
-import { Mode, Point, WritingBoardComponent, WritingBoardHandle, WritingBoardProps } from './types';
+import {
+  Mode,
+  type Point,
+  type WritingBoardComponent,
+  type WritingBoardHandle,
+  type WritingBoardProps,
+} from './types';
 
 const selectorPrefix = 'adhere-ui-writing-board';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * WritingBoard
@@ -368,6 +377,12 @@ const InternalWritingBoard = memo<
       ]),
     );
 
+    useTheme<HTMLElement>({
+      elRef: containerRef,
+      group: 'normal',
+      displayName: 'WritingBoard',
+    });
+
     /**
      * style
      * @param lineWidth
@@ -639,7 +654,7 @@ const InternalWritingBoard = memo<
      * isEmpty
      * @return {boolean}
      */
-    function isEmpty() {
+    function isEmpty(): boolean {
       // 先设置背景
       let imageData = ctx?.current?.getImageData(
         0,

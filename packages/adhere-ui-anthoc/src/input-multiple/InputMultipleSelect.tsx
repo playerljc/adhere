@@ -1,5 +1,6 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { type FC, useCallback, useMemo, useRef } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Hooks from '@baifendian/adhere-ui-hooks';
 
 import Select from '../select';
@@ -10,6 +11,8 @@ const selectorPrefix = 'adhere-ui-anthoc-input-multiple-select';
 
 const { usePropToState } = Hooks;
 
+const { useTheme } = ConfigProvider;
+
 /**
  * InputMultipleSelect
  */
@@ -17,6 +20,8 @@ const InputMultipleSelect: FC<InputMultipleSelectProps> = ({
   selectProps,
   ...inputMultipleSelectProps
 }) => {
+  const wrapperRef = useRef<HTMLElement | undefined>();
+
   const [targetValue, setTargetValue] = usePropToState(inputMultipleSelectProps.value);
 
   const targetProps = useMemo(() => selectProps ?? {}, [selectProps]);
@@ -39,8 +44,17 @@ const InputMultipleSelect: FC<InputMultipleSelectProps> = ({
     return <InputMultipleHOC {...inputMultipleSelectProps} options={targetOptions} />;
   }, [inputMultipleSelectProps, targetOptions]);
 
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'normal-hoc',
+  });
+
   return (
-    <div className={selectorPrefix}>
+    <div
+      // @ts-ignore
+      ref={wrapperRef}
+      className={selectorPrefix}
+    >
       <Select
         mode="multiple"
         {...targetProps}
@@ -50,7 +64,7 @@ const InputMultipleSelect: FC<InputMultipleSelectProps> = ({
           inputMultipleSelectProps?.onChange?.(_value);
         }}
         options={targetOptions}
-        dropdownRender={dropdownRender}
+        popupRender={dropdownRender}
       />
     </div>
   );

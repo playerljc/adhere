@@ -4,6 +4,7 @@ import debounce from 'lodash.debounce';
 import { forwardRef, useImperativeHandle } from 'react';
 import React, { useEffect, useMemo, useRef } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Intl from '@baifendian/adhere-util-intl';
 
 import Popup, { Popup as PopupInner } from './Popup';
@@ -13,6 +14,8 @@ import type { TriggerHandle, TriggerProps } from './types';
 const selectorPrefix = 'adhere-ui-popup';
 const triggerSelectorPrefix = `${selectorPrefix}-trigger`;
 const triggerSelectorInnerPrefix = `${triggerSelectorPrefix}-inner`;
+
+const { useTheme } = ConfigProvider;
 
 /**
  * Trigger
@@ -53,7 +56,15 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
     },
     ref,
   ) => {
+    const wrapperRef = useRef<HTMLElement | undefined>();
+
     const popup = useRef<PopupInner | null>();
+
+    useTheme<HTMLElement>({
+      elRef: wrapperRef,
+      group: 'normal',
+      displayName: 'Popup',
+    });
 
     const onConfirm = (
       onClick: (() => Promise<any>) | undefined,
@@ -197,6 +208,8 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
 
     return (
       <div
+        // @ts-ignore
+        ref={wrapperRef}
         className={classNames(triggerSelectorPrefix, className ?? '')}
         style={style ?? {}}
         onClick={debounce(onTrigger, 200)}

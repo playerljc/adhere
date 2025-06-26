@@ -18,7 +18,7 @@ import sortBy from 'lodash.sortby';
 import uniq from 'lodash.uniq';
 import uniqBy from 'lodash.uniqby';
 import PropTypes from 'prop-types';
-import { ExpandableConfig } from 'rc-table/lib/interface';
+import type { ExpandableConfig } from 'rc-table/lib/interface';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createContext, createRef } from 'react';
 import * as ReactIs from 'react-is';
@@ -26,8 +26,10 @@ import * as ReactIs from 'react-is';
 import { DownOutlined, SearchOutlined, SyncOutlined, UpOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
-import type { ConfigProviderContext } from '@baifendian/adhere-ui-configprovider/es/types';
-import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
+import type {
+  ConfigProviderContext,
+  ConfigProviderProps,
+} from '@baifendian/adhere-ui-configprovider/es/types';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -44,7 +46,7 @@ import TableRow from './Extension/TableComponents/TableRow';
 import TableDensitySetting from './Extension/TableDensitySetting';
 import Search, { defaultProps as searchDefaultProps, propTypes as searchPropTypes } from './Search';
 import { cloneDeep } from './Util';
-import {
+import type {
   CellConfigReducer,
   ColumnTypeExt,
   ColumnWidthMaxContent,
@@ -143,6 +145,8 @@ abstract class SearchTable<
   // tableCellComponentReducers
   // 处理TableCell的reducer
   protected tableCellComponentReducers: string[] = [];
+
+  protected childrenWrapRef: RefObject<HTMLDivElement> = createRef();
 
   /**
    * isShowNumber
@@ -356,13 +360,24 @@ abstract class SearchTable<
   }
 
   componentDidMount() {
-    super.componentDidMount?.();
+    if (!!super.componentDidMount) {
+      super.componentDidMount?.();
+    }
 
     document.body.addEventListener('keyup', this.onBodyKeyup);
+
+    ConfigProvider.theme({
+      elRef: this.childrenWrapRef,
+      group: 'normal',
+      displayName: 'SearchTable',
+      theme: this._context?.theme,
+    });
   }
 
   componentWillUnmount() {
-    super.componentWillUnmount?.();
+    if (!!super.componentWillUnmount) {
+      super.componentWillUnmount?.();
+    }
 
     if (this._hackerElement) {
       try {
@@ -376,8 +391,19 @@ abstract class SearchTable<
   }
 
   componentWillReceiveProps(nextProps: SearchTableProps) {
+    if (!!super.componentWillReceiveProps) {
+      super.componentWillReceiveProps(nextProps);
+    }
+
     // @ts-ignore
-    super.componentWillReceiveProps(nextProps);
+    // super.componentWillReceiveProps(nextProps);
+
+    ConfigProvider.theme({
+      elRef: this.childrenWrapRef,
+      group: 'normal',
+      displayName: 'SearchTable',
+      theme: this._context?.theme,
+    });
 
     this.effectWithExpandedRowKeys(nextProps);
 
@@ -2597,7 +2623,11 @@ abstract class SearchTable<
    */
   renderChildren(): ReactElement {
     // @ts-ignore
-    return <div className={`${selectorPrefix}-wrap`}>{super.render()}</div>;
+    return (
+      <div ref={this.childrenWrapRef} className={`${selectorPrefix}-wrap`}>
+        {super.render()}
+      </div>
+    );
   }
 
   /**
@@ -2616,6 +2646,7 @@ abstract class SearchTable<
         <ConfigProvider.Context.Consumer>
           {(context) => {
             _self._context = context;
+
             return this.renderChildren();
           }}
         </ConfigProvider.Context.Consumer>

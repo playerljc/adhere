@@ -3,8 +3,9 @@ import { DatePicker, Radio } from 'antd';
 import classNames from 'classnames';
 import dayjs, { UnitType } from 'dayjs';
 import quarterOfYear from 'dayjs/plugin/quarterOfYear';
-import React, { memo, useMemo, useState } from 'react';
+import React, { type MutableRefObject, forwardRef, memo, useMemo, useState } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Intl from '@baifendian/adhere-util-intl';
 
 import type {
@@ -18,6 +19,8 @@ import type {
 dayjs.extend(quarterOfYear);
 
 const selectorPrefix = 'adhere-ui-quick-range-date';
+
+const { useTheme } = ConfigProvider;
 
 const labelByTypeMap = new Map<DateType, (value?: number) => string>([
   ['a-d', (value) => Intl.getHTML('past_days', { value })],
@@ -164,198 +167,214 @@ export const isCustomByType = (type?: DateType) => {
 };
 
 const InternalQuickRangeDate = memo<QuickRangeDateProps>(
-  ({ className, style, config, value, onChange, radioGroupProps, rangePickerProps, children }) => {
-    const [selfValue, setSelfValue] = useState(sync(value));
+  forwardRef<HTMLElement, QuickRangeDateProps>(
+    (
+      { className, style, config, value, onChange, radioGroupProps, rangePickerProps, children },
+      ref,
+    ) => {
+      useTheme<HTMLElement>({
+        elRef: ref as MutableRefObject<HTMLElement>,
+        group: 'normal',
+        displayName: 'QuickRangeDate',
+      });
 
-    const targetConfig = useMemo<ConfigItem[]>(() => {
-      if (!config) {
-        return [
-          {
-            type: 'a-d',
-            value: 7,
-          },
-          {
-            type: 'a-w',
-            value: 1,
-          },
-          {
-            type: 'a-M',
-            value: 3,
-          },
-          {
-            type: 'a-Q',
-            value: 1,
-          },
-          {
-            type: 'a-y',
-            value: 1,
-          },
-          {
-            type: 'a-h',
-            value: 24,
-          },
-          {
-            type: 'a-m',
-            value: 60,
-          },
-          {
-            type: 'a-s',
-            value: 60,
-          },
-          {
-            type: 'a-ms',
-            value: 1000,
-          },
-          {
-            type: 'b-d',
-            value: 7,
-          },
-          {
-            type: 'b-w',
-            value: 1,
-          },
-          {
-            type: 'b-M',
-            value: 3,
-          },
-          {
-            type: 'b-Q',
-            value: 1,
-          },
-          {
-            type: 'b-y',
-            value: 1,
-          },
-          {
-            type: 'b-h',
-            value: 24,
-          },
-          {
-            type: 'b-m',
-            value: 60,
-          },
-          {
-            type: 'b-s',
-            value: 60,
-          },
-          {
-            type: 'b-ms',
-            value: 1000,
-          },
-          {
-            type: 'custom',
-          },
-        ];
-      }
+      const [selfValue, setSelfValue] = useState(sync(value));
 
-      return config;
-    }, [config]);
+      const targetConfig = useMemo<ConfigItem[]>(() => {
+        if (!config) {
+          return [
+            {
+              type: 'a-d',
+              value: 7,
+            },
+            {
+              type: 'a-w',
+              value: 1,
+            },
+            {
+              type: 'a-M',
+              value: 3,
+            },
+            {
+              type: 'a-Q',
+              value: 1,
+            },
+            {
+              type: 'a-y',
+              value: 1,
+            },
+            {
+              type: 'a-h',
+              value: 24,
+            },
+            {
+              type: 'a-m',
+              value: 60,
+            },
+            {
+              type: 'a-s',
+              value: 60,
+            },
+            {
+              type: 'a-ms',
+              value: 1000,
+            },
+            {
+              type: 'b-d',
+              value: 7,
+            },
+            {
+              type: 'b-w',
+              value: 1,
+            },
+            {
+              type: 'b-M',
+              value: 3,
+            },
+            {
+              type: 'b-Q',
+              value: 1,
+            },
+            {
+              type: 'b-y',
+              value: 1,
+            },
+            {
+              type: 'b-h',
+              value: 24,
+            },
+            {
+              type: 'b-m',
+              value: 60,
+            },
+            {
+              type: 'b-s',
+              value: 60,
+            },
+            {
+              type: 'b-ms',
+              value: 1000,
+            },
+            {
+              type: 'custom',
+            },
+          ];
+        }
 
-    const defaultElement = useMemo(() => {
-      return (
-        <div className={`${selectorPrefix}-group`}>
-          <Radio.Group
-            value={stringValue(selfValue)}
-            optionType="button"
-            buttonStyle="solid"
-            {...(radioGroupProps ?? {})}
-          >
-            {targetConfig.map(({ type, value: typeValue, label, render }) => {
-              const itemEntityValue = {
-                type,
-                value: typeValue,
-              };
+        return config;
+      }, [config]);
 
-              const itemValue = stringValue(itemEntityValue) as string;
+      const defaultElement = useMemo(() => {
+        return (
+          <div className={`${selectorPrefix}-group`}>
+            <Radio.Group
+              value={stringValue(selfValue)}
+              optionType="button"
+              buttonStyle="solid"
+              {...(radioGroupProps ?? {})}
+            >
+              {targetConfig.map(({ type, value: typeValue, label, render }) => {
+                const itemEntityValue = {
+                  type,
+                  value: typeValue,
+                };
 
-              return (
-                <Radio.Button
-                  key={itemValue}
-                  value={itemValue}
-                  onChange={() => {
-                    const dataRange = getDataRangeByValue(type as DateType, typeValue as number);
+                const itemValue = stringValue(itemEntityValue) as string;
 
-                    const changeValue = {
-                      ...itemEntityValue,
-                      start: dataRange[0],
-                      end: dataRange[1],
-                    };
+                return (
+                  <Radio.Button
+                    key={itemValue}
+                    value={itemValue}
+                    onChange={() => {
+                      const dataRange = getDataRangeByValue(type as DateType, typeValue as number);
 
-                    setSelfValue(changeValue);
-                    onChange?.(changeValue);
-                  }}
-                >
-                  {render?.(value) ?? label ?? getLabel({ type, value: typeValue })}
-                </Radio.Button>
-              );
-            })}
-          </Radio.Group>
+                      const changeValue = {
+                        ...itemEntityValue,
+                        start: dataRange[0],
+                        end: dataRange[1],
+                      };
 
-          {isCustomByType(selfValue?.type) && (
-            <div className={`${selectorPrefix}-range`}>
-              <DatePicker.RangePicker
-                {...(rangePickerProps ?? {})}
-                value={numberToDayjs([selfValue?.start, selfValue?.end])}
-                onChange={(_value) => {
-                  const numbers = datesToNumbers(_value);
+                      setSelfValue(changeValue);
+                      onChange?.(changeValue);
+                    }}
+                  >
+                    {render?.(value) ?? label ?? getLabel({ type, value: typeValue })}
+                  </Radio.Button>
+                );
+              })}
+            </Radio.Group>
 
-                  setSelfValue((_self) => {
-                    return {
+            {isCustomByType(selfValue?.type) && (
+              <div className={`${selectorPrefix}-range`}>
+                <DatePicker.RangePicker
+                  {...(rangePickerProps ?? {})}
+                  value={numberToDayjs([selfValue?.start, selfValue?.end])}
+                  onChange={(_value) => {
+                    const numbers = datesToNumbers(_value);
+
+                    setSelfValue((_self) => {
+                      return {
+                        type: 'custom',
+                        value: undefined,
+                        start: numbers[0],
+                        end: numbers[1],
+                      };
+                    });
+
+                    onChange?.({
                       type: 'custom',
                       value: undefined,
                       start: numbers[0],
                       end: numbers[1],
-                    };
-                  });
+                    });
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        );
+      }, [targetConfig, selfValue, rangePickerProps, radioGroupProps]);
 
-                  onChange?.({
-                    type: 'custom',
-                    value: undefined,
-                    start: numbers[0],
-                    end: numbers[1],
-                  });
-                }}
-              />
-            </div>
-          )}
+      useUpdateEffect(() => {
+        setSelfValue(sync(value));
+      }, [value]);
+
+      return (
+        <div
+          // @ts-ignore
+          ref={ref}
+          className={classNames(selectorPrefix, className ?? '')}
+          style={style ?? {}}
+        >
+          {children &&
+            children({
+              defaultElement,
+              value,
+              onChange: (_value) => {
+                if (isCustomByType(_value?.type)) {
+                  setSelfValue(_value);
+                  onChange?.(_value);
+                  return;
+                }
+
+                const dataRange = getDataRangeByValue(_value.type, _value.value as number);
+
+                const changeValue = {
+                  ..._value,
+                  start: dataRange[0],
+                  end: dataRange[1],
+                };
+
+                setSelfValue(changeValue);
+                onChange?.(changeValue);
+              },
+            })}
+
+          {!children && defaultElement}
         </div>
       );
-    }, [targetConfig, selfValue, rangePickerProps, radioGroupProps]);
-
-    useUpdateEffect(() => {
-      setSelfValue(sync(value));
-    }, [value]);
-
-    return (
-      <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
-        {children &&
-          children({
-            defaultElement,
-            value,
-            onChange: (_value) => {
-              if (isCustomByType(_value?.type)) {
-                setSelfValue(_value);
-                onChange?.(_value);
-                return;
-              }
-
-              const dataRange = getDataRangeByValue(_value.type, _value.value as number);
-
-              const changeValue = {
-                ..._value,
-                start: dataRange[0],
-                end: dataRange[1],
-              };
-
-              setSelfValue(changeValue);
-              onChange?.(changeValue);
-            },
-          })}
-
-        {!children && defaultElement}
-      </div>
-    );
-  },
+    },
+  ),
 );
 
 const QuickRangeDate = InternalQuickRangeDate as QuickRangeDateComponent;

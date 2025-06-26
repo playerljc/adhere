@@ -279,6 +279,8 @@ export type CheckAllListSelectProps = CheckAllWrapperStyleProps &
   };
 
 export type RadioListProps = ListProps<any> & {
+  wrapperClassName?: string;
+  wrapperStyle?: CSSProperties;
   value?: SelectProps['value'];
   onChange?: SelectProps['onChange'];
   options?: ListProps<any>['dataSource'];
@@ -287,6 +289,8 @@ export type RadioListProps = ListProps<any> & {
 export type RadioPagingListProps = RadioListProps & PagingProps;
 
 export type CheckboxListProps = ListProps<any> & {
+  wrapperClassName?: string;
+  wrapperStyle?: CSSProperties;
   value?: SelectProps['value'];
   onChange?: SelectProps['onChange'];
   options?: ListProps<any>['dataSource'];
@@ -654,6 +658,8 @@ export type AsyncTreeLeafSelectProps = AsyncTreeSelectProps;
 export type AsyncTreeMultiLeafSelectProps = AsyncTreeSelectProps;
 
 export type SelectHOCComponent = ReturnType<typeof createFactory<SelectProps>> & {
+  wrapperClassName?: string;
+  wrapperStyle?: CSSProperties;
   DropdownRenderSelect: typeof DropdownRenderSelect;
   AutoCompleteSelect: typeof AutoCompleteSelect;
 };

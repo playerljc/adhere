@@ -5,6 +5,7 @@ import type { CheckListValue } from 'antd-mobile/es/components/check-list/check-
 import classNames from 'classnames';
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -14,6 +15,8 @@ import type { AutoCompleteComponent, AutoCompleteProps } from './types';
 const selectorPrefix = 'adhere-mobile-ui-auto-complete';
 
 const { Title, Text } = Typography;
+
+const { useTheme } = ConfigProvider;
 
 /**
  * InternalAutoComplete
@@ -55,6 +58,12 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
     children,
   }) => {
     const wrapperRef = useRef<HTMLDivElement | null>();
+
+    useTheme<HTMLElement>({
+      elRef: wrapperRef,
+      group: 'mobile',
+      displayName: 'AutoComplete',
+    });
 
     const [kw, setKw] = useState<string>('');
 

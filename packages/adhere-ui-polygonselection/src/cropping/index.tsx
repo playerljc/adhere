@@ -1,14 +1,15 @@
 import { Button } from 'antd';
 import classNames from 'classnames';
 import React, {
-  PropsWithoutRef,
-  RefAttributes,
+  type PropsWithoutRef,
+  type RefAttributes,
   forwardRef,
   memo,
   useCallback,
   useRef,
 } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import MessageDialog from '@baifendian/adhere-ui-messagedialog';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -21,6 +22,8 @@ import type {
 import CroppingCore from './CroppingCore';
 
 const selectorPrefix = 'adhere-ui-polygon-selection-cropping';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * ForwardRefRenderFunction
@@ -35,6 +38,14 @@ const InternalCropping = memo<PropsWithoutRef<CroppingProps> & RefAttributes<Cro
       ref,
     ) => {
       const coreRef = useRef<CroppingCoreHandle | null>(null);
+
+      const wrapperRef = useRef<HTMLElement | undefined>();
+
+      useTheme<HTMLElement>({
+        elRef: wrapperRef,
+        group: 'normal',
+        displayName: 'PolygonSelection',
+      });
 
       const renderMask = useCallback(
         () => (
@@ -83,7 +94,12 @@ const InternalCropping = memo<PropsWithoutRef<CroppingProps> & RefAttributes<Cro
       }, [value]);
 
       return (
-        <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+        <div
+          // @ts-ignore
+          ref={wrapperRef}
+          className={classNames(selectorPrefix, className ?? '')}
+          style={style ?? {}}
+        >
           {renderMask()}
           {renderInner()}
         </div>

@@ -3,18 +3,23 @@ import classNames from 'classnames';
 import omit from 'omit.js';
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Intl from '@baifendian/adhere-util-intl';
 
 import type { FontSizeSettingProps } from './types';
 
 const selectorPrefix = 'adhere-ui-font-size-setting';
 
+const { useTheme } = ConfigProvider;
+
 const FontSizeSetting = memo<FontSizeSettingProps>((props) => {
   const { className, style, onChange } = props;
 
-  const [value, setValue] = useState<number>(props.value ?? 0);
+  const wrapperRef = useRef<HTMLElement | undefined>();
 
   const rootELRef = useRef<HTMLDivElement | null>(null);
+
+  const [value, setValue] = useState<number>(props.value ?? 0);
 
   const onSliderChange = useCallback(
     (v) => {
@@ -24,13 +29,21 @@ const FontSizeSetting = memo<FontSizeSettingProps>((props) => {
     [value],
   );
 
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'normal',
+    displayName: 'FontSizeSetting',
+  });
+
   useEffect(() => {
     setValue(props.value ?? 0);
   }, [props.value]);
 
   return (
     <div
-      className={classNames(selectorPrefix, className ?? '')}
+      // @ts-ignore
+      rel={wrapperRef}
+      className={classNames(selectorPrefix, className)}
       style={style ?? {}}
       ref={rootELRef}
     >

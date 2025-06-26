@@ -5,6 +5,7 @@ import React, { forwardRef, memo, useImperativeHandle, useMemo, useRef } from 'r
 import type { PropsWithoutRef, RefAttributes } from 'react';
 
 import { CloseCircleOutlined } from '@ant-design/icons';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
@@ -19,6 +20,8 @@ import type {
   OperatorType,
   Operators,
 } from './types';
+
+const { useTheme } = ConfigProvider;
 
 const {
   getCurrentParentElementWithCursor,
@@ -159,6 +162,12 @@ const InternalExpression = memo<
         () => String.fromCharCode(triggerCharCode ?? defaultTriggerCharCode),
         [triggerCharCode],
       );
+
+      useTheme<HTMLElement>({
+        elRef: contextRef,
+        group: 'normal',
+        displayName: 'Expression',
+      });
 
       useMount(() => {
         const editor = getEditorEl();

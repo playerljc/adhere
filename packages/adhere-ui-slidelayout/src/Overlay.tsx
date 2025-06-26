@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, {
-  PropsWithoutRef,
-  RefAttributes,
+  type PropsWithoutRef,
+  type RefAttributes,
   forwardRef,
   memo,
   useEffect,
@@ -9,11 +9,15 @@ import React, {
   useRef,
 } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+
 import { slider } from './SlideLayout';
-import { OverlayProps, SlideLayoutHandle } from './types';
+import type { OverlayProps, SlideLayoutHandle } from './types';
 import useSlide from './useSlide';
 
 const selectorPrefix = 'adhere-ui-slide-layout-overlay';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * Overlay
@@ -24,7 +28,7 @@ const selectorPrefix = 'adhere-ui-slide-layout-overlay';
 const Overlay = memo<PropsWithoutRef<OverlayProps> & RefAttributes<SlideLayoutHandle>>(
   forwardRef<SlideLayoutHandle, OverlayProps>((props, ref) => {
     const {
-      className = '',
+      className,
       style = {},
       zIndex = 9999,
       direction = 'left',
@@ -150,6 +154,12 @@ const Overlay = memo<PropsWithoutRef<OverlayProps> & RefAttributes<SlideLayoutHa
       },
     });
 
+    useTheme<HTMLElement>({
+      elRef: el,
+      group: 'normal',
+      displayName: 'SlideLayout',
+    });
+
     const { getDuration, maskEl } = useSlide(props, el, positionConfig);
 
     useEffect(() => {
@@ -184,9 +194,9 @@ const Overlay = memo<PropsWithoutRef<OverlayProps> & RefAttributes<SlideLayoutHa
 
     return (
       <div
-        className={classNames(selectorPrefix, direction, className ?? '')}
-        style={{ ...(style ?? {}), zIndex }}
         ref={el}
+        className={classNames(selectorPrefix, direction, className)}
+        style={{ ...(style ?? {}), zIndex }}
       >
         {children}
       </div>

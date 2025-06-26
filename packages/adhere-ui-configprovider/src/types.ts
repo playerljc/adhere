@@ -3,15 +3,17 @@ import type { CSSProperties } from 'react';
 
 import type { Init } from '@baifendian/adhere-util-intl/es/intl';
 
-import { Context } from './ConfigProvider';
+import { Context } from './Context';
+import themeFunction from './theme';
+import useTheme from './useTheme';
 
 /**
  * IntlType
  */
 export type IntlType = {
-  lang: 'en_US' | 'zh_CN' | 'pt_PT';
-  locales: Record<string, any>;
-  prefix: string;
+  lang?: 'en_US' | 'zh_CN' | 'pt_PT';
+  locales?: Record<string, any>;
+  prefix?: string;
 };
 
 /**
@@ -22,29 +24,29 @@ export interface ConfigProviderProps {
   className?: string;
   style?: CSSProperties;
   // 国际化
-  intl: IntlType & {
-    mainLanguage: string;
+  intl?: IntlType & {
+    mainLanguage?: string;
     extraLibLocales?: Init['extraLibLocales'];
   };
   // 国际化初始化完成
   onIntlInit: () => void;
   // 主题
-  theme: {
-    primaryColor: string;
-    normalColor: string;
-    backColor: string;
-    baseFontSize: string;
-    smallFontSize: string;
-    commonMaxZIndex: string;
+  theme?: {
+    primaryColor?: string;
+    normalColor?: string;
+    backColor?: string;
+    baseFontSize?: string;
+    smallFontSize?: string;
+    commonMaxZIndex?: string;
     components?: {
       normal?: {
-        AutoComplete: {
+        AutoComplete?: {
           margin?: string;
           padding?: string;
           loadingPadding?: string;
           loadingTextAlign?: string;
         };
-        BackTopAnimation: {
+        BackTopAnimation?: {
           right?: string;
           bottom?: string;
           width?: string;
@@ -53,243 +55,243 @@ export interface ConfigProviderProps {
           backgroundSize?: string;
           maskBackgroundColor?: string;
         };
-        CascadeCompared: {
+        CascadeCompared?: {
           indicatorBorderBottom?: string;
           cellBorderRight?: string;
           cellBorderBottom?: string;
           cellFontSize?: string;
         };
-        Comment: {
-          margin: string;
-          padding: string;
-          itemPadding: string;
-          itemFirstChildPaddingTop: string;
-          itemNotLastChildMarginBottom: string;
-          replyTextareaWrapMarginBottom: string;
-          replyTextareaHeight: string;
-          replyToolbarPadding: string;
-          replyToolbarItemEmojiFontSize: string;
-          replyToolbarItemNotLastChildMarginRight: string;
-          nodeAvatarWrapWidth: string;
-          nodeAvatarWrapHeight: string;
-          nodeAvatarWrapMarginRight: string;
-          nodeAvatarWrapPadding: string;
-          nodeTitleRowAuthorMarginRight: string;
-          nodeTitleRowAuthorColor: string;
-          nodeTitleRowAuthorFontWeight: string;
-          nodeTitleRowDateTimeColor: string;
-          nodeTitleRowDateTimeFontSize: string;
-          nodeContentWrapMargin: string;
-          nodeContentWrapColor: string;
-          nodeContentWrapFontWeight: string;
-          nodeActionsMargin: string;
-          nodeActionsPadding: string;
-          nodeActionsActionColor: string;
-          nodeActionsActionFontWeight: string;
-          nodeActionsActionNotLastChildMarginRight: string;
-          nodeChildrenItemPadding: string;
-          nodeChildrenItemFirstChildPaddingTop: string;
-          nodeChildrenItemNotLastChildMarginBottom: string;
-          nodeChildrenItemMoreMarginBottom: string;
-          nodeChildrenItemMoreMarginLeft: string;
-          nodeChildrenItemMoreReplyIconMarginRight: string;
-          nodeChildrenItemMoreReplyIconFontWeight: string;
-          nodeChildrenItemMoreReplyIconFontSize: string;
-          nodeCollapseMarginTop: string;
-          nodeCollapseFontWeight: string;
-          nodeCollapseFirstChildMarginRight: string;
-          nodeAvatarWrapReplyWidth: string;
-          nodeAvatarWrapReplyHeight: string;
-          innerListLoadingWrapPadding: string;
-          innerListLoadingWrapFixedMarginRight: string;
+        Comment?: {
+          margin?: string;
+          padding?: string;
+          itemPadding?: string;
+          itemFirstChildPaddingTop?: string;
+          itemNotLastChildMarginBottom?: string;
+          replyTextareaWrapMarginBottom?: string;
+          replyTextareaHeight?: string;
+          replyToolbarPadding?: string;
+          replyToolbarItemEmojiFontSize?: string;
+          replyToolbarItemNotLastChildMarginRight?: string;
+          nodeAvatarWrapWidth?: string;
+          nodeAvatarWrapHeight?: string;
+          nodeAvatarWrapMarginRight?: string;
+          nodeAvatarWrapPadding?: string;
+          nodeTitleRowAuthorMarginRight?: string;
+          nodeTitleRowAuthorColor?: string;
+          nodeTitleRowAuthorFontWeight?: string;
+          nodeTitleRowDateTimeColor?: string;
+          nodeTitleRowDateTimeFontSize?: string;
+          nodeContentWrapMargin?: string;
+          nodeContentWrapColor?: string;
+          nodeContentWrapFontWeight?: string;
+          nodeActionsMargin?: string;
+          nodeActionsPadding?: string;
+          nodeActionsActionColor?: string;
+          nodeActionsActionFontWeight?: string;
+          nodeActionsActionNotLastChildMarginRight?: string;
+          nodeChildrenItemPadding?: string;
+          nodeChildrenItemFirstChildPaddingTop?: string;
+          nodeChildrenItemNotLastChildMarginBottom?: string;
+          nodeChildrenItemMoreMarginBottom?: string;
+          nodeChildrenItemMoreMarginLeft?: string;
+          nodeChildrenItemMoreReplyIconMarginRight?: string;
+          nodeChildrenItemMoreReplyIconFontWeight?: string;
+          nodeChildrenItemMoreReplyIconFontSize?: string;
+          nodeCollapseMarginTop?: string;
+          nodeCollapseFontWeight?: string;
+          nodeCollapseFirstChildMarginRight?: string;
+          nodeAvatarWrapReplyWidth?: string;
+          nodeAvatarWrapReplyHeight?: string;
+          innerListLoadingWrapPadding?: string;
+          innerListLoadingWrapFixedMarginRight?: string;
         };
-        ContextMenu: {
-          subMenuMargin: string;
-          subMenuPadding: string;
-          subMenuBackgroundColor: string;
-          subMenuBorderRadius: string;
-          subMenuBoxShadow: string;
-          menuItemAlignItems: string;
-          menuItemHeight: string;
-          menuMenuItemIconColor: string;
-          menuItemHoverBackgroundColor: string;
-          menuItemHoverBorderColor: string;
-          menuItemIconAlignItems: string;
-          menuItemIconJustifyContent: string;
-          menuItemIconWidth: string;
-          menuItemIconMargin: string;
-          menuItemNameColor: string;
-          menuItemMoreMarginRight: string;
-          menuItemMoreColor: string;
-          menuItemMoreFontSize: string;
-          menuItemSeparationMargin: string;
-          menuItemSeparationBackgroundColor: string;
+        ContextMenu?: {
+          subMenuMargin?: string;
+          subMenuPadding?: string;
+          subMenuBackgroundColor?: string;
+          subMenuBorderRadius?: string;
+          subMenuBoxShadow?: string;
+          menuItemAlignItems?: string;
+          menuItemHeight?: string;
+          menuMenuItemIconColor?: string;
+          menuItemHoverBackgroundColor?: string;
+          menuItemHoverBorderColor?: string;
+          menuItemIconAlignItems?: string;
+          menuItemIconJustifyContent?: string;
+          menuItemIconWidth?: string;
+          menuItemIconMargin?: string;
+          menuItemNameColor?: string;
+          menuItemMoreMarginRight?: string;
+          menuItemMoreColor?: string;
+          menuItemMoreFontSize?: string;
+          menuItemSeparationMargin?: string;
+          menuItemSeparationBackgroundColor?: string;
         };
-        CurrencySymbol: {
-          boldFontWeight: string;
-          dangerColor: string;
-          symbolMarginRight: string;
-          symbolSmallFontSize: string;
-          symbolMiddleFontSize: string;
-          symbolLargeFontSize: string;
-          currencySymbolTopVerticalAlign: string;
-          currencySymbolCenterVerticalAlign: string;
-          currencySymbolBottomVerticalAlign: string;
+        CurrencySymbol?: {
+          boldFontWeight?: string;
+          dangerColor?: string;
+          symbolMarginRight?: string;
+          symbolSmallFontSize?: string;
+          symbolMiddleFontSize?: string;
+          symbolLargeFontSize?: string;
+          currencySymbolTopVerticalAlign?: string;
+          currencySymbolCenterVerticalAlign?: string;
+          currencySymbolBottomVerticalAlign?: string;
         };
-        Ellipsis: {
-          moreMarginTop: string;
-          moreColor: string;
-          customToolTipZIndex: string;
-          customToolTipPadding: string;
-          customToolTipColor: string;
-          customToolTipFontWeight: string;
-          customToolTipFontSize: string;
-          customToolTipBackgroundColor: string;
-          customToolTipArrowBottom: string;
-          customToolTipArrowTop: string;
-          customToolTipArrowRight: string;
-          customToolTipArrowBeforeBorderTop: string;
-          customToolTipArrowBeforeBorderRight: string;
-          customToolTipArrowLeft: string;
-          customToolTipArrowBeforeBorderBottom: string;
-          customToolTipArrowBeforeBorderLeft: string;
-          customToolTipInnerPadding: string;
-          customToolTipInnerBorder: string;
-          customToolTipInnerBorderRadius: string;
-          customToolTipArrowWidth: string;
-          customToolTipArrowHeight: string;
-          customToolTipArrowBeforeWidth: string;
-          customToolTipArrowBeforeHeight: string;
-          customToolTipArrowBeforeTransform: string;
+        Ellipsis?: {
+          moreMarginTop?: string;
+          moreColor?: string;
+          customToolTipZIndex?: string;
+          customToolTipPadding?: string;
+          customToolTipColor?: string;
+          customToolTipFontWeight?: string;
+          customToolTipFontSize?: string;
+          customToolTipBackgroundColor?: string;
+          customToolTipArrowBottom?: string;
+          customToolTipArrowTop?: string;
+          customToolTipArrowRight?: string;
+          customToolTipArrowBeforeBorderTop?: string;
+          customToolTipArrowBeforeBorderRight?: string;
+          customToolTipArrowLeft?: string;
+          customToolTipArrowBeforeBorderBottom?: string;
+          customToolTipArrowBeforeBorderLeft?: string;
+          customToolTipInnerPadding?: string;
+          customToolTipInnerBorder?: string;
+          customToolTipInnerBorderRadius?: string;
+          customToolTipArrowWidth?: string;
+          customToolTipArrowHeight?: string;
+          customToolTipArrowBeforeWidth?: string;
+          customToolTipArrowBeforeHeight?: string;
+          customToolTipArrowBeforeTransform?: string;
         };
-        Expression: {
-          expressionMinHeight: string;
-          editorPadding: string;
-          editorColor: string;
-          editorLineHeight: string;
-          editorBorder: string;
-          editorBorderRadius: string;
-          editorTransition: string;
-          editorShowClearPaddingRight: string;
-          editorFocusBorderColor: string;
-          editorFocusBoxShadow: string;
-          editorFocusBorderInlineEndWidth: string;
-          editorTextColor: string;
-          editorOperatorColor: string;
-          editorOperatorFontWeight: string;
-          editorPlaceholderPadding: string;
-          editorPlaceholderColor: string;
-          editorPlaceholderLineHeight: string;
-          editorClearWidth: string;
-          editorClearSpanColor: string;
-          editorClearSpanFontSize: string;
-          editorClearSpanBackgroundColor: string;
-          editorClearSpanBorderRadius: string;
-          editorClearSpanTransition: string;
-          operatorsQuickTipsZIndex: string;
-          operatorsQuickTipsWidth: string;
-          operatorsQuickTipsMargin: string;
-          operatorsQuickTipsBackgroundColor: string;
-          operatorsQuickTipsBorder: string;
-          operatorsQuickTipsBorderRadius: string;
-          operatorsQuickTipsBoxShadow: string;
-          operatorsQuickTipsHeaderHeight: string;
-          operatorsQuickTipsHeaderPadding: string;
-          operatorsQuickTipsHeaderBorderBottom: string;
-          operatorsQuickTipsHeaderHoverBackgroundColor: string;
-          operatorsQuickTipsHeaderHoverCursor: string;
-          operatorsQuickTipsHeaderIFontSize: string;
-          operatorsQuickTipsMainMaxHeight: string;
-          operatorsQuickTipsMainLiPadding: string;
-          operatorsQuickTipsMainLiColor: string;
-          operatorsQuickTipsMainLiFontWeight: string;
-          operatorsQuickTipsMainLiFontSize: string;
-          operatorsQuickTipsMainLiHoverBackgroundColor: string;
-          viewTextColor: string;
-          viewOperatorColor: string;
-          viewOperatorFontWeight: string;
+        Expression?: {
+          expressionMinHeight?: string;
+          editorPadding?: string;
+          editorColor?: string;
+          editorLineHeight?: string;
+          editorBorder?: string;
+          editorBorderRadius?: string;
+          editorTransition?: string;
+          editorShowClearPaddingRight?: string;
+          editorFocusBorderColor?: string;
+          editorFocusBoxShadow?: string;
+          editorFocusBorderInlineEndWidth?: string;
+          editorTextColor?: string;
+          editorOperatorColor?: string;
+          editorOperatorFontWeight?: string;
+          editorPlaceholderPadding?: string;
+          editorPlaceholderColor?: string;
+          editorPlaceholderLineHeight?: string;
+          editorClearWidth?: string;
+          editorClearSpanColor?: string;
+          editorClearSpanFontSize?: string;
+          editorClearSpanBackgroundColor?: string;
+          editorClearSpanBorderRadius?: string;
+          editorClearSpanTransition?: string;
+          operatorsQuickTipsZIndex?: string;
+          operatorsQuickTipsWidth?: string;
+          operatorsQuickTipsMargin?: string;
+          operatorsQuickTipsBackgroundColor?: string;
+          operatorsQuickTipsBorder?: string;
+          operatorsQuickTipsBorderRadius?: string;
+          operatorsQuickTipsBoxShadow?: string;
+          operatorsQuickTipsHeaderHeight?: string;
+          operatorsQuickTipsHeaderPadding?: string;
+          operatorsQuickTipsHeaderBorderBottom?: string;
+          operatorsQuickTipsHeaderHoverBackgroundColor?: string;
+          operatorsQuickTipsHeaderHoverCursor?: string;
+          operatorsQuickTipsHeaderIFontSize?: string;
+          operatorsQuickTipsMainMaxHeight?: string;
+          operatorsQuickTipsMainLiPadding?: string;
+          operatorsQuickTipsMainLiColor?: string;
+          operatorsQuickTipsMainLiFontWeight?: string;
+          operatorsQuickTipsMainLiFontSize?: string;
+          operatorsQuickTipsMainLiHoverBackgroundColor?: string;
+          viewTextColor?: string;
+          viewOperatorColor?: string;
+          viewOperatorFontWeight?: string;
         };
-        FlexLayout: {
-          fixedTriggerZIndex: string;
-          fixedTriggerColor: string;
-          fixedTriggerFontSize: string;
-          toolBarLayoutMainAutoWrapPadding: string;
-          toolBarLayoutTopBottomAlignItems: string;
-          toolBarLayoutTopBottomJustifyContent: string;
-          toolBarLayoutTopBottomPadding: string;
-          toolBarLayoutToolbarItemNotLastChildMarginRight: string;
-          layoutToolBarLayoutTopBorderBottom: string;
-          toolBarLayoutBottomBorderTop: string;
+        FlexLayout?: {
+          fixedTriggerZIndex?: string;
+          fixedTriggerColor?: string;
+          fixedTriggerFontSize?: string;
+          toolBarLayoutMainAutoWrapPadding?: string;
+          toolBarLayoutTopBottomAlignItems?: string;
+          toolBarLayoutTopBottomJustifyContent?: string;
+          toolBarLayoutTopBottomPadding?: string;
+          toolBarLayoutToolbarItemNotLastChildMarginRight?: string;
+          layoutToolBarLayoutTopBorderBottom?: string;
+          toolBarLayoutBottomBorderTop?: string;
         };
-        FontSizeSetting: {
-          width: string;
-          height: string;
-          settingRangeWrapMargin: string;
-          settingSeparatedToolHeight: string;
-          settingSeparatedToolMargin: string;
-          settingSeparatedWidth: string;
-          settingSeparatedBackground: string;
-          settingSeparatedSpanTop: string;
-          settingSeparatedSpanLeft: string;
-          settingSeparatedSpanWidth: string;
-          settingSeparatedSpanColor: string;
-          settingSeparatedSpanFontSize: string;
-          settingSeparatedSpanLastChildLeft: string;
-          settingRangeWrapAntSliderMarginTop: string;
-          beforeAfterMarginTop: string;
-          beforeAfterColor: string;
-          beforeAfterFontSize: string;
-          beforeLeft: string;
-          beforeRight: string;
+        FontSizeSetting?: {
+          width?: string;
+          height?: string;
+          settingRangeWrapMargin?: string;
+          settingSeparatedToolHeight?: string;
+          settingSeparatedToolMargin?: string;
+          settingSeparatedWidth?: string;
+          settingSeparatedBackground?: string;
+          settingSeparatedSpanTop?: string;
+          settingSeparatedSpanLeft?: string;
+          settingSeparatedSpanWidth?: string;
+          settingSeparatedSpanColor?: string;
+          settingSeparatedSpanFontSize?: string;
+          settingSeparatedSpanLastChildLeft?: string;
+          settingRangeWrapAntSliderMarginTop?: string;
+          beforeAfterMarginTop?: string;
+          beforeAfterColor?: string;
+          beforeAfterFontSize?: string;
+          beforeLeft?: string;
+          beforeRight?: string;
         };
-        GlobalIndicator: {
-          backgroundColor: string;
-          textColor: string;
-          textFontSize: string;
-          dotWidth: string;
-          dotHeight: string;
+        GlobalIndicator?: {
+          backgroundColor?: string;
+          textColor?: string;
+          textFontSize?: string;
+          dotWidth?: string;
+          dotHeight?: string;
         };
-        JdCategoryTab: {
-          menuInnerMargin: string;
-          menuInnerPadding: string;
-          menuItemMargin: string;
-          menuItemPadding: string;
-          menuItemNotLastChildABorderBottom: string;
-          menuItemActiveAColor: string;
-          menuItemActiveABorderRight: string;
-          menuItemAPadding: string;
-          menuItemAFontSize: string;
-          menuItemABackground: string;
-          menuItemABorderRight: string;
-          tabMargin: string;
-          tabPadding: string;
-          tabItemMargin: string;
-          tabItemPadding: string;
+        JdCategoryTab?: {
+          menuInnerMargin?: string;
+          menuInnerPadding?: string;
+          menuItemMargin?: string;
+          menuItemPadding?: string;
+          menuItemNotLastChildABorderBottom?: string;
+          menuItemActiveAColor?: string;
+          menuItemActiveABorderRight?: string;
+          menuItemAPadding?: string;
+          menuItemAFontSize?: string;
+          menuItemABackground?: string;
+          menuItemABorderRight?: string;
+          tabMargin?: string;
+          tabPadding?: string;
+          tabItemMargin?: string;
+          tabItemPadding?: string;
         };
-        MessageDialog: {
-          antModalHeaderFontSize: string;
-          antModalBodyFontSize: string;
-          antModalFooterBorderTop: string;
-          renderIconFixedMarginRight: string;
-          maximizeModalMaxHeight: string;
-          maximizeModalInnerMaxWidth: string;
-          maximizeModalInnerMaxHeight: string;
-          maximizeModalInnerPadding: string;
-          maximizeModalInnerBackgroundColor: string;
-          maximizeModalInnerBorderRadius: string;
-          maximizeModalInnerBoxShadow: string;
-          maximizeModalHeaderGap: string;
-          maximizeModalHeaderPaddingBottom: string;
-          maximizeModalHeaderTitleMargin: string;
-          maximizeModalHeaderTitleColor: string;
-          maximizeModalHeaderTitleFontWeight: string;
-          maximizeModalHeaderTitleFontSize: string;
-          maximizeModalHeaderTitleLineHeight: string;
-          maximizeModalHeaderActionFontSize: string;
-          maximizeModalBodyAntModalContentPadding: string;
-          maximizeModalBodyAntModalContentBorderRadius: string;
+        MessageDialog?: {
+          antModalHeaderFontSize?: string;
+          antModalBodyFontSize?: string;
+          antModalFooterBorderTop?: string;
+          renderIconFixedMarginRight?: string;
+          maximizeModalMaxHeight?: string;
+          maximizeModalInnerMaxWidth?: string;
+          maximizeModalInnerMaxHeight?: string;
+          maximizeModalInnerPadding?: string;
+          maximizeModalInnerBackgroundColor?: string;
+          maximizeModalInnerBorderRadius?: string;
+          maximizeModalInnerBoxShadow?: string;
+          maximizeModalHeaderGap?: string;
+          maximizeModalHeaderPaddingBottom?: string;
+          maximizeModalHeaderTitleMargin?: string;
+          maximizeModalHeaderTitleColor?: string;
+          maximizeModalHeaderTitleFontWeight?: string;
+          maximizeModalHeaderTitleFontSize?: string;
+          maximizeModalHeaderTitleLineHeight?: string;
+          maximizeModalHeaderActionFontSize?: string;
+          maximizeModalBodyAntModalContentPadding?: string;
+          maximizeModalBodyAntModalContentBorderRadius?: string;
         };
-        Notification: {
+        Notification?: {
           zIndex?: number;
           ulMargin?: string;
           ulPadding?: string;
@@ -330,7 +332,7 @@ export interface ConfigProviderProps {
           materialUlLiCloseBtnWidth?: string;
           materialUlLiCloseBtnHeight?: string;
         };
-        OLMap: {
+        OLMap?: {
           olZoomRight?: string;
           olZoomBottom?: string;
           olZoomLeft?: string;
@@ -351,7 +353,7 @@ export interface ConfigProviderProps {
           olMousePositionBorder?: string;
           olMousePositionBorderRadius?: string;
         };
-        Playground: {
+        Playground?: {
           cardBorder?: string;
           borderRadius?: string;
           cardHeaderMinHeight?: string;
@@ -521,7 +523,7 @@ export interface ConfigProviderProps {
           anchorNavigationAnchorLiAColor?: string;
           anchorNavigationAnchorLiABorderLeft?: string;
         };
-        PolygonSelection: {
+        PolygonSelection?: {
           croppingCoreInnerBackgroundColor?: string;
           croppingCoreClipTop?: string;
           croppingCoreClipRight?: string;
@@ -539,7 +541,7 @@ export interface ConfigProviderProps {
           selectionCroppingMaskColor?: string;
           selectionCroppingMaskBackgroundColor?: string;
         };
-        Popup: {
+        Popup?: {
           backgroundColor?: string;
           transform?: string;
           transition?: string;
@@ -558,7 +560,7 @@ export interface ConfigProviderProps {
           triggerInnerActionsPadding?: string;
           triggerInnerActionNotLastChildMarginRight?: string;
         };
-        PullRefresh: {
+        PullRefresh?: {
           triggerHeight?: string;
           triggerTransform?: string;
           triggerIconWidth?: string;
@@ -575,10 +577,10 @@ export interface ConfigProviderProps {
           maskZIndex?: string;
           maskBackground?: string;
         };
-        QuickRangeDate: {
+        QuickRangeDate?: {
           rangeMarginRight?: string;
         };
-        ScrollLoad: {
+        ScrollLoad?: {
           loadEmptyErrorMinHeight?: string;
           loadEmptyErrorPadding?: string;
           loadEmptyErrorColor?: string;
@@ -589,7 +591,7 @@ export interface ConfigProviderProps {
           loadAnimationStandardMixinsHeight?: string;
           loadAnimationStandardMixinsMarginRight?: string;
         };
-        SearchList: {
+        SearchList?: {
           tableWrapperAntListPaginationMarginTop?: string;
           tableWrapperAntListPaginationMarginBottom?: string;
           implementListMetaTitleMarginRight?: string;
@@ -628,7 +630,7 @@ export interface ConfigProviderProps {
           listDensitySettingBodyUlLiActiveBackgroundColor?: string;
           listDensitySettingBodyUlLiHoverBackgroundColor?: string;
         };
-        SearchTable: {
+        SearchTable?: {
           implementLoadDataIconMarginRight?: string;
           implementLoadDataIconColor?: string;
           searchWrapperGapMarginBottom?: string;
@@ -725,7 +727,7 @@ export interface ConfigProviderProps {
           proTableHeaderSearchWrapFooterBorderTop?: string;
           dragHandlerFontSize?: string;
         };
-        SlideLayout: {
+        SlideLayout?: {
           backgroundColor?: string;
           overlayZIndex?: string;
           overlayRevealPushPadding?: string;
@@ -735,7 +737,7 @@ export interface ConfigProviderProps {
           overlayRevealPushBottomBorderTop?: string;
           revealMasterZIndex?: string;
         };
-        SliderScale: {
+        SliderScale?: {
           marginTop?: string;
           padding?: string;
           rangeMargin?: string;
@@ -764,16 +766,16 @@ export interface ConfigProviderProps {
           scaleItemValueColor?: string;
           scaleItemValueFontSize?: string;
         };
-        Spin: {
+        Spin?: {
           backgroundColor?: string;
           textColor?: string;
           dotWidth?: string;
           dotHeight?: string;
         };
-        Split: {
+        Split?: {
           backgroundColor?: string;
         };
-        SplitLayout: {
+        SplitLayout?: {
           verticalHorizontalBeforeBackgroundColor?: string;
           verticalHeight?: string;
           verticalBeforeWidth?: string;
@@ -782,7 +784,7 @@ export interface ConfigProviderProps {
           horizontalBeforeWidth?: string;
           horizontalBeforeHeight?: string;
         };
-        StickupLayout: {
+        StickupLayout?: {
           margin?: string;
           padding?: string;
           fixedTop?: string;
@@ -791,7 +793,7 @@ export interface ConfigProviderProps {
           maskZIndex?: string;
           maskBackground?: string;
         };
-        Surnames: {
+        Surnames?: {
           configPositionRightLeftHighlightedAfterTop?: string;
           configPositionRightHighlightedRight?: string;
           configPositionRightHighlightedAfterRight?: string;
@@ -832,22 +834,69 @@ export interface ConfigProviderProps {
           groupTitleTextIndent?: string;
           groupTitleBackground?: string;
         };
+        Suspense?: {
+          LoadingPadding?: string;
+        };
+        TableGridLayout?: {
+          borderBorderTop?: string;
+          borderBorderRight?: string;
+          borderBorderLeft?: string;
+          tableTrTdBorderBottom?: string;
+          tableTrTdNotLastChildBorderRight?: string;
+          tableRowLabelPaddingRight?: string;
+          tableRowLabelColor?: string;
+          tableRowLabelFontSize?: string;
+          tableRowLabelRequireBeforeMarginRight?: string;
+          tableRowLabelRequireBeforeColor?: string;
+          tableRowValueColor?: string;
+          tableRowValueAntFormItemExplainConnectedPosition?: string;
+          tableRowValueAntFormItemExplainConnectedBottom?: string;
+          tableRowValueAntFormItemExplainConnectedLeft?: string;
+          tableRowValueAntFormItemMarginBottom?: string;
+          parityTableRowOddBackgroundColor?: string;
+          parityTableRowEvenBackgroundColor?: string;
+          borderedTableRowLabelBackgroundColor?: string;
+          densitydefaultTableRowLabelPadding?: string;
+          densitydefaultTableRowValuePadding?: string;
+          densitymiddleTableRowLabelPadding?: string;
+          densitymiddleTableRowValuePadding?: string;
+          densitysmallTableRowLabelPadding?: string;
+          densitysmallTableRowValuePadding?: string;
+          mobileTableRowLabelTextAlign?: string;
+          mobileTableRowValuePaddingTop?: string;
+          mobileTableRowValueAdmFormItemPaddingLeft?: string;
+          mobileTableRowValueAdmListItemContentBorderTop?: string;
+          mobileTableRowValueAdmListItemContentMainBorderTop?: string;
+          mobileTableRowNotChildTableRowValueAdmFormItemBorderBottom?: string;
+        };
+        WritingBoard?: {
+          mobileSignatureMaskZIndex?: string;
+          mobileSignatureMaskColor?: string;
+          mobileSignatureMaskBackgroundColor?: string;
+          mobileSignatureMaskTransition?: string;
+          signatureCoreWrapBackgroundColor?: string;
+          signatureMaskZIndex?: string;
+          signatureMaskColor?: string;
+          signatureMaskBackgroundColor?: string;
+          signatureMaskTransition?: string;
+        };
       };
       mobile?: {
         AutoComplete?: {
           searchBarPadding?: string;
           bodyPadding?: string;
           resultPadding?: string;
+          resultBorderTop?: string;
           resultItemCloseZIndex?: string;
           resultItemCloseColor?: string;
           resultItemCloseFontWeight?: string;
           resultItemCloseFontSize?: string;
         };
-        ConfirmImportantConfirm: {
+        ConfirmImportantConfirm?: {
           contentImgWidth?: string;
           contentImgMarginRight?: string;
         };
-        PopoverMenu: {
+        PopoverMenu?: {
           maxWidth?: string;
           menuMargin?: string;
           menuPadding?: string;
@@ -866,25 +915,25 @@ export interface ConfigProviderProps {
           subMenuArrowTransform?: string;
           admPopoverInnerContentPadding?: string;
         };
-        promptErrorPrompt: {
+        promptErrorPrompt?: {
           dialogIconMarginRight?: string;
           dialogIconColor?: string;
           dialogIconFontSize?: string;
           dialogContentColor?: string;
         };
-        promptSuccessPrompt: {
+        promptSuccessPrompt?: {
           dialogIconMarginRight?: string;
           dialogIconColor?: string;
           dialogIconFontSize?: string;
           dialogContentColor?: string;
         };
-        promptWarnPrompt: {
+        promptWarnPrompt?: {
           dialogIconMarginRight?: string;
           dialogIconColor?: string;
           dialogIconFontSize?: string;
           dialogContentColor?: string;
         };
-        PRSL: {
+        PRSL?: {
           dndManagerItemMargin?: string;
           selectionManagerItemMargin?: string;
           itemExtraMarginRight?: string;
@@ -921,10 +970,10 @@ export interface ConfigProviderProps {
           headerExtraAlignItems?: string;
           headerExtraPaddingRight?: string;
         };
-        QuickRangeDate: {
+        QuickRangeDate?: {
           rangeCalendarModalMarginTop?: string;
         };
-        Tabs: {
+        Tabs?: {
           arrowMoreIconBackgroundColor?: string;
           arrowMoreIconBoxShadow?: string;
           arrowMoreIconTransition?: string;
@@ -941,11 +990,11 @@ export interface ConfigProviderProps {
           admTabsTabListPaddingRight?: string;
           admTabsContentPadding?: string;
         };
-        TimePickerView: {
+        TimePickerView?: {
           margin?: string;
           padding?: string;
         };
-        Tree: {
+        Tree?: {
           searchPadding: string;
           nodeInfoTitleWrapperColor: string;
           nodeInfoCheckboxTextAlign: string;
@@ -964,8 +1013,50 @@ export interface ConfigProviderProps {
           nodeChildrenMargin: string;
         };
       };
-      'normal-hoc'?: {};
-      'mobile-hoc'?: {};
+      'normal-hoc'?: {
+        revolvingTableRowCellBackgroundColor?: string;
+        sizeSmallRevolvingTableHeaderCellPadding?: string;
+        sizeSmallRevolvingTableRowCellPadding?: string;
+        sizeMiddleRevolvingTableHeaderCellPadding?: string;
+        sizeMiddleRevolvingTableRowCellPadding?: string;
+        sizeLargeRevolvingTableHeaderCellPadding?: string;
+        sizeLargeRevolvingTableRowCellPadding?: string;
+        revolvingTableHeaderCellColor?: string;
+        revolvingTableHeaderCellFontWeight?: string;
+        revolvingTableHeaderCellBackgroundColor?: string;
+        revolvingTableHeaderCellHeight?: string;
+        revolvingTableHeaderCellTransition?: string;
+        stepsSwiperGap?: string;
+        tableAntTableRowExpandIconCollapsedMarginTop?: string;
+        autoCompleteFetchLoadingPadding?: string;
+        autoCompleteFetchLoadingTextAlign?: string;
+        inputMultipleTagWrapperMarginTop?: string;
+        checkAllCheckBoxCheckAllMarginBottom?: string;
+        checkboxListRadioListPadding?: string;
+        checkboxListExtraRadioListExtraMarginRight?: string;
+        checkAllSelectCheckAllMarginBottom?: string;
+      };
+      'mobile-hoc'?: {
+        listFilterSearchPadding?: string;
+        listCheckAllWrapperPadding?: string;
+        prslLoadingPadding?: string;
+        prslLoadingDotMarginRight?: string;
+        modalTriggerPopupAdmPopupCloseIconTop?: string;
+        showPopupInnerTitleHeight?: string;
+        showPopupInnerTitleFontWeight?: string;
+        showPopupInnerTitleFontSize?: string;
+        showPopupInnerTitleLineHeight?: string;
+        showPopupInnerActionsPadding?: string;
+        showPopupInnerActionNotLastChildMarginBottom?: string;
+        dateTimerPopoverTriggerColor?: string;
+        dateTimerPopoverTriggerFontSize?: string;
+        dateTimerPopoverPlaceholderColor?: string;
+        treeFilterSearchPadding?: string;
+        inputMultipleTagWrapperMarginTop?: string;
+        inputMultipleRenderTriggerFlexWrap?: string;
+        inputMultipleRenderTriggerGap?: string;
+        inputMultiplePlaceholderColor?: string;
+      };
     };
   };
   // 媒体相关参数
@@ -989,11 +1080,14 @@ export interface ConfigProviderProps {
  */
 export interface ConfigProviderContext {
   media: ConfigProviderProps['media'];
-  intl?: IntlType;
   router?: ConfigProviderProps['router'];
+  theme?: ConfigProviderProps['theme'];
+  intl?: ConfigProviderProps['intl'];
   publicPath?: string;
 }
 
 export type ConfigProviderComponent = NamedExoticComponent<ConfigProviderProps> & {
   Context: typeof Context;
+  useTheme: typeof useTheme;
+  theme: typeof themeFunction;
 };

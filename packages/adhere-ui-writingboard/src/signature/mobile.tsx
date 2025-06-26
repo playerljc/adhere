@@ -2,8 +2,8 @@ import SignatureCore from './MobileSignatureCore';
 
 import classNames from 'classnames';
 import React, {
-  PropsWithoutRef,
-  RefAttributes,
+  type PropsWithoutRef,
+  type RefAttributes,
   forwardRef,
   memo,
   useCallback,
@@ -12,6 +12,7 @@ import React, {
 } from 'react';
 
 import { Modal } from '@baifendian/adhere-mobile-ui-anthoc';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Intl from '@baifendian/adhere-util-intl';
 
 import type {
@@ -22,6 +23,8 @@ import type {
 } from '../types';
 
 const selectorPrefix = 'adhere-ui-mobile-signature';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * MobileSignature
@@ -34,6 +37,14 @@ const InternalMobileSignature = memo<
   forwardRef<SignatureHandle, SignatureProps>(
     ({ className, style, value, onChange, modalProps, coreProps }, ref) => {
       const coreRef = useRef<SignatureCoreHandle>(null);
+
+      const wrapperRef = useRef<HTMLElement | undefined>();
+
+      useTheme<HTMLElement>({
+        elRef: wrapperRef,
+        group: 'normal',
+        displayName: 'WritingBoard',
+      });
 
       const renderMask = useCallback(() => {
         return (
@@ -84,7 +95,12 @@ const InternalMobileSignature = memo<
       }));
 
       return (
-        <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+        <div
+          // @ts-ignore
+          ref={wrapperRef}
+          className={classNames(selectorPrefix, className ?? '')}
+          style={style ?? {}}
+        >
           {renderMask()}
         </div>
       );

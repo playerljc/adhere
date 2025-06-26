@@ -1,5 +1,6 @@
-import React from 'react';
-import { ISuspense, SuspenseProps, SuspenseState } from './types';
+import React, { type RefObject } from 'react';
+import type { ConfigProviderContext } from '@baifendian/adhere-ui-configprovider/es/types';
+import type { ISuspense, SuspenseProps, SuspenseState } from './types';
 /**
  * Suspense
  * @class Suspense
@@ -11,9 +12,11 @@ import { ISuspense, SuspenseProps, SuspenseState } from './types';
  * showLoading
  */
 declare abstract class Suspense<P extends SuspenseProps = SuspenseProps, S extends SuspenseState = SuspenseState> extends React.PureComponent<P, S> implements ISuspense {
-    static displayName: string;
     isFirst: boolean;
     isFirstLoading: boolean;
+    protected childrenWrapRef: RefObject<HTMLDivElement>;
+    protected _context: ConfigProviderContext | undefined;
+    static displayName: string;
     static defaultProps: any;
     static propTypes: any;
     /**

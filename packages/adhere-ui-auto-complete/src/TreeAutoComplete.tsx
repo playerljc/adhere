@@ -5,10 +5,13 @@ import debounce from 'lodash.debounce';
 import uniqBy from 'lodash.uniqby';
 import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Util from '@baifendian/adhere-util';
 
 import type { TreeAutoCompleteProps } from './types';
 import useCommon from './useCommon';
+
+const { useTheme } = ConfigProvider;
 
 const treeTransformConfig = {
   keyAttr: 'value',
@@ -35,6 +38,14 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
     isUsePath,
     ...treeSelectProps
   }) => {
+    const wrapperRef = useRef<HTMLElement | undefined>();
+
+    useTheme<HTMLElement>({
+      elRef: wrapperRef,
+      group: 'normal',
+      displayName: 'AutoComplete',
+    });
+
     const [paths, setPaths] = useState<object>({});
 
     const onSelectChangeStartTime = useRef<number>(0);
@@ -336,7 +347,12 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
     }, [treeSelectProps.defaultValue, treeSelectProps.value, paths]);
 
     return (
-      <div className={classNames(selectorPrefix, classNameWrap ?? '')} style={styleWrap ?? {}}>
+      <div
+        // @ts-ignore
+        ref={wrapperRef}
+        className={classNames(selectorPrefix, classNameWrap)}
+        style={styleWrap ?? {}}
+      >
         <TreeSelect
           showSearch
           allowClear
@@ -349,8 +365,8 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
           // @ts-ignore
           onInput={onInput}
           onClear={onClear}
-          dropdownRender={dropdownRender}
-          onDropdownVisibleChange={setOpen}
+          popupRender={dropdownRender}
+          onOpenChange={setOpen}
           treeCheckable={false}
           {...treeSelectProps}
           treeDataSimpleMode={targetTreeDataSimpleMode}

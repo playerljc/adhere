@@ -1,7 +1,7 @@
 import { useLatest, useUpdateEffect } from 'ahooks';
 import { ErrorBlock, SearchBar } from 'antd-mobile';
 import classNames from 'classnames';
-import React, { memo, useContext, useMemo, useState } from 'react';
+import React, { memo, useContext, useMemo, useRef, useState } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Hooks from '@baifendian/adhere-ui-hooks';
@@ -34,6 +34,8 @@ import useChecked from './useChecked';
 import useUtil from './useUtil';
 
 const selectorPrefix = 'adhere-mobile-ui-tree';
+
+const { useTheme } = ConfigProvider;
 
 const { usePropToState } = Hooks;
 
@@ -82,6 +84,14 @@ const InternalTree = memo<TreeProps>(
     onExpand,
     onCheck,
   }) => {
+    const wrapperRef = useRef<HTMLElement | undefined>();
+
+    useTheme<HTMLElement>({
+      elRef: wrapperRef,
+      group: 'mobile',
+      displayName: 'Tree',
+    });
+
     const { media } = useContext(ConfigProvider.Context);
 
     const { omitDisabledKeys, getValueWithUnit, checkTreeDataSimpleModeFromObject } = useUtil();
@@ -379,7 +389,12 @@ const InternalTree = memo<TreeProps>(
 
     const treeElement = (
       <TreeContext.Provider value={contextProviderValue}>
-        <ul className={classNames(selectorPrefix, className)} style={style ?? {}}>
+        <ul
+          // @ts-ignore
+          ref={wrapperRef}
+          className={classNames(selectorPrefix, className)}
+          style={style ?? {}}
+        >
           <Space.Group direction="vertical" size={rowGap}>
             {isEmpty && <li>{renderEmpty?.() ?? <ErrorBlock status="empty" />}</li>}
             {!isEmpty && treeChildrenElements}

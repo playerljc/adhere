@@ -33,6 +33,7 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
+    "@baifendian/adhere-ui-configprovider": "^2.11.0",
     "@baifendian/adhere-util-intl": "^2.11.0",
     "antd-mobile": "^5.39.0",
     "antd-mobile-icons": "^0.3.0",

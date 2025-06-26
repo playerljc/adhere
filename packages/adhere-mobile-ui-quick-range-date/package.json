@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-mobile-ui-anthoc": "^2.11.0",
+    "@baifendian/adhere-ui-configprovider": "^2.11.0",
     "@baifendian/adhere-ui-quick-range-date": "^2.11.0",
     "ahooks": "^3.8.4",
     "classnames": "^2.5.1",

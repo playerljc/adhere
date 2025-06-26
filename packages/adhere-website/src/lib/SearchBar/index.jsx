@@ -102,14 +102,14 @@ export default withRouter((props) => {
           onSearch={(val) => {
             setSearchVal(open ? val : searchVal);
           }}
-          dropdownRender={() => {
+          popupRender={() => {
             return (
               <ConditionalRender conditional={!!filter.length} noMatch={() => <Empty />}>
                 {() => renderDropdown()}
               </ConditionalRender>
             );
           }}
-          onDropdownVisibleChange={(visible) => {
+          onOpenChange={(visible) => {
             setOpen(visible);
 
             if (ref.current && !instance.current) {

@@ -117,10 +117,13 @@
 
     > .adhere-ui-flex-layout-fixed-trigger {
       position: absolute;
-      z-index: 999;
+      //z-index: 999;
+      z-index: var(--fixed-trigger-z-index, 999);
       width: auto;
-      color: var(--adhere-color-text-tertiary);
-      font-size: 18px;
+      //color: var(--adhere-color-text-tertiary);
+      color: var(--fixed-trigger-color, var(--adhere-color-text-tertiary));
+      //font-size: 18px;
+      font-size: var(--fixed-trigger-font-size, 18px);
 
       &.adhere-ui-flex-layout-fixed-trigger-l,
       &.adhere-ui-flex-layout-fixed-trigger-r {

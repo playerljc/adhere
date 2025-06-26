@@ -2,10 +2,18 @@ import { Button, List } from 'antd';
 import { ListSize } from 'antd/es/list';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { ReactElement, ReactNode, RefObject, createContext, createRef } from 'react';
+import React, {
+  type ReactElement,
+  type ReactNode,
+  type RefObject,
+  createContext,
+  createRef,
+} from 'react';
 
 import { DownOutlined, SearchOutlined, UpOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+import { ConfigProviderContext } from '@baifendian/adhere-ui-configprovider/es/types';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -38,6 +46,10 @@ abstract class SearchList<
   static propTypes: any;
 
   protected listWrapRef: RefObject<HTMLDivElement> = createRef();
+
+  protected childrenWrapRef: RefObject<HTMLDivElement> = createRef();
+
+  protected configProviderContextValue: ConfigProviderContext | undefined;
 
   /**
    * isShowNumber
@@ -116,13 +128,37 @@ abstract class SearchList<
   }
 
   componentDidMount() {
-    super.componentDidMount?.();
+    if (!!super.componentDidMount) {
+      super.componentDidMount?.();
+    }
 
     document.body.addEventListener('keyup', this.onBodyKeyup);
+
+    ConfigProvider.theme({
+      elRef: this.childrenWrapRef,
+      group: 'normal',
+      displayName: 'SearchList',
+      theme: this.configProviderContextValue?.theme,
+    });
+  }
+
+  componentWillReceiveProps(nextProps: any) {
+    if (!!super.componentWillReceiveProps) {
+      super.componentWillReceiveProps(nextProps);
+    }
+
+    ConfigProvider.theme({
+      elRef: this.childrenWrapRef,
+      group: 'normal',
+      displayName: 'SearchList',
+      theme: this.configProviderContextValue?.theme,
+    });
   }
 
   componentWillUnmount() {
-    super.componentWillUnmount?.();
+    if (!!super.componentWillUnmount) {
+      super.componentWillUnmount?.();
+    }
 
     document.body.removeEventListener('keyup', this.onBodyKeyup);
   }
@@ -574,10 +610,14 @@ abstract class SearchList<
   /**
    * renderChildren
    * @description renderChildren
-   * @return {ReactNode}
+   * @return {ReactElement}
    */
-  renderChildren() {
-    return <div className={`${selectorPrefix}-wrap`}>{super.render()}</div>;
+  renderChildren(): ReactElement {
+    return (
+      <div ref={this.childrenWrapRef} className={`${selectorPrefix}-wrap`}>
+        {super.render()}
+      </div>
+    );
   }
 
   /**
@@ -592,7 +632,13 @@ abstract class SearchList<
           context: this,
         }}
       >
-        {this.renderChildren()}
+        <ConfigProvider.Context.Consumer>
+          {(value) => {
+            this.configProviderContextValue = value;
+
+            return this.renderChildren();
+          }}
+        </ConfigProvider.Context.Consumer>
       </SearchListContext.Provider>
     );
   }

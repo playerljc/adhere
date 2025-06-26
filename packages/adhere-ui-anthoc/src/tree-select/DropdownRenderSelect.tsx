@@ -205,7 +205,7 @@ const InternalDropdownRenderSelect = memo<TreeDropdownRenderSelectProps>(
 
     return (
       <TreeSelect
-        dropdownRender={onDropdownRender}
+        popupRender={onDropdownRender}
         {...props}
         treeData={targetTreeData}
         // @ts-ignore

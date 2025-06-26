@@ -1,7 +1,8 @@
 import classNames from 'classnames';
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import type { FC } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -9,6 +10,8 @@ import CheckAllWrapper from './CheckAllWrapper';
 import type { ListCheckAllProps } from './types';
 
 const _selectorPrefix = 'adhere-mobile-ui-ant-hoc-list-check-all';
+
+const { useTheme } = ConfigProvider;
 
 const ListCheckAll: FC<ListCheckAllProps> = ({
   checkAllWrapperClassName,
@@ -23,6 +26,13 @@ const ListCheckAll: FC<ListCheckAllProps> = ({
   selectorPrefix,
   childrenOrigin,
 }) => {
+  const wrapperRef = useRef<HTMLElement | undefined>();
+
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'mobile-hoc',
+  });
+
   const CheckAllLabel = useMemo(() => {
     if (checkAllLabel) {
       if (Util.isFunction(checkAllLabel)) {
@@ -49,7 +59,11 @@ const ListCheckAll: FC<ListCheckAllProps> = ({
   );
 
   return (
-    <div className={classNames(selectorPrefix, _selectorPrefix)}>
+    <div
+      // @ts-ignore
+      ref={wrapperRef}
+      className={classNames(selectorPrefix, _selectorPrefix)}
+    >
       {renderCheckAll?.(checkAllOrigin, childrenOrigin) ?? (
         <>
           <div

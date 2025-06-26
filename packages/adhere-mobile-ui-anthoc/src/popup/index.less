@@ -12,7 +12,8 @@
     position: absolute;
 
     > .adm-popup-close-icon {
-      top: 10px;
+      //top: 10px;
+      top: var(--modal-trigger-popup-adm-popup-close-icon-top, 10px);
     }
 
     > .adhere-mobile-ui-ant-hoc-show-popup-inner {
@@ -21,10 +22,14 @@
 
       > .adhere-mobile-ui-ant-hoc-show-popup-inner-title {
         flex-shrink: 0;
-        height: 35px;
-        font-weight: 700;
-        font-size: 18px;
-        line-height: 35px;
+        //height: 35px;
+        height: var(--show-popup-inner-title-height, 35px);
+        //font-weight: 700;
+        font-weight: var(--show-popup-inner-title-font-weight, 700);
+        //font-size: 18px;
+        font-size: var(--show-popup-inner-title-font-size, 18px);
+        //line-height: 35px;
+        line-height: var(--show-popup-inner-title-line-height, 35px);
         text-align: center;
       }
 
@@ -45,11 +50,13 @@
 
       > .adhere-mobile-ui-ant-hoc-show-popup-inner-actions {
         flex-shrink: 0;
-        padding: 10px;
+        //padding: 10px;
+        padding: var(--show-popup-inner-actions-padding, 10px);
 
         > .adhere-mobile-ui-ant-hoc-show-popup-inner-action {
           &:not(:last-child) {
-            margin-bottom: 5px;
+            //margin-bottom: 5px;
+            margin-bottom: var(--show-popup-inner-action-not-last-child-margin-bottom, 5px);
           }
         }
       }

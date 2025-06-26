@@ -1,7 +1,8 @@
 import classNames from 'classnames';
-import React, { FC, useMemo, useState } from 'react';
+import React, { type FC, useMemo, useRef, useState } from 'react';
 
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Space from '@baifendian/adhere-ui-space';
@@ -14,6 +15,8 @@ import type { InputMultipleOptionsItem, InputMultipleProps } from '../types';
 const selectorPrefix = 'adhere-ui-anthoc-input-multiple';
 
 const { usePropToState } = Hooks;
+
+const { useTheme } = ConfigProvider;
 
 /**
  * InputMultiple
@@ -46,6 +49,8 @@ const InputMultiple: FC<InputMultipleProps> = ({
   value,
   onChange,
 }) => {
+  const wrapperRef = useRef<HTMLElement | undefined>();
+
   const [inputValue, setInputValue] = useState('');
 
   const [selectOptions, setSelectOptions] = usePropToState(options);
@@ -82,6 +87,11 @@ const InputMultiple: FC<InputMultipleProps> = ({
 
     return Tag.HorizontalCheckableTagGroup;
   }, [targetDirection, isCheckAllTarget]);
+
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'normal-hoc',
+  });
 
   /**
    * onAdd
@@ -122,7 +132,12 @@ const InputMultiple: FC<InputMultipleProps> = ({
   }
 
   return (
-    <div className={classNames(selectorPrefix, className)} style={style ?? {}}>
+    <div
+      // @ts-ignore
+      ref={wrapperRef}
+      className={classNames(selectorPrefix, className)}
+      style={style ?? {}}
+    >
       <FlexLayout direction="horizontal">
         <Space.Group direction="horizontal" size={10}>
           <FlexLayout.Auto>

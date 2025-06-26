@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-mobile-ui-anthoc": "^2.11.0",
+    "@baifendian/adhere-ui-configprovider": "^2.11.0",
     "@baifendian/adhere-ui-flexlayout": "^2.11.0",
     "@baifendian/adhere-ui-messagedialog": "^2.11.0",
     "@baifendian/adhere-util": "^2.11.0",

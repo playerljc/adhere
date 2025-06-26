@@ -1,5 +1,5 @@
 import React from 'react';
-import { OverlayProps, SlideLayoutHandle } from './types';
+import type { OverlayProps, SlideLayoutHandle } from './types';
 /**
  * Overlay
  * @param props

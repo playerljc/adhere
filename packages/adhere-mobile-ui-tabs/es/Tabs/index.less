@@ -27,7 +27,8 @@
         }
 
         .adm-tabs-tab-list {
-          padding-right: 40px;
+          //padding-right: 40px;
+          padding-right: var(--adm-tabs-tab-list-padding-right, 40px);
         }
       }
     }
@@ -48,7 +49,8 @@
       display: flex;
       flex: 1;
       min-height: 0;
-      padding: 0;
+      //padding: 0;
+      padding: var(--adm-tabs-content-padding, 0);
     }
   }
 

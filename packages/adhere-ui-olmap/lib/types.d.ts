@@ -1,8 +1,11 @@
+import type { CSSProperties } from 'react';
 /**
  * OLMapProps
  * @interface OLMapProps
  */
 export interface OLMapProps {
+    className?: string;
+    style?: CSSProperties;
     type?: 'administrative' | 'satellite';
     mapConfig?: object;
     maxZoom?: number | string;

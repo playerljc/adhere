@@ -1,7 +1,9 @@
+import classNames from 'classnames';
 import { Fill, Stroke, Style, Text } from 'ol/style.js';
 import PropTypes from 'prop-types';
-import React, { createRef } from 'react';
+import React, { createRef, useRef } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Resource from '@baifendian/adhere-util-resource';
 
 import Constant from './Constant';
@@ -11,6 +13,8 @@ import type { OLMapProps } from './types';
 
 const selectorPrefix = 'adhere-ui-ol-map';
 
+const { useTheme } = ConfigProvider;
+
 /**
  * OlMap
  * @class OlMap
@@ -18,7 +22,7 @@ const selectorPrefix = 'adhere-ui-ol-map';
  */
 class OlMap extends React.Component<OLMapProps, any> {
   private mainGeoLayer: GeoLayer | undefined;
-  private el: React.RefObject<HTMLElement | null>;
+  private readonly el: React.RefObject<HTMLElement | null>;
   private zoom: number | null;
   protected map;
   static defaultProps: any;
@@ -162,6 +166,7 @@ class OlMap extends React.Component<OLMapProps, any> {
   getTileLayer() {
     return this.map.getLayers().getArray()[0];
   }
+
   /**
    * onAllTileloadend
    * @description 所有瓦片加载完成的时间
@@ -209,7 +214,7 @@ class OlMap extends React.Component<OLMapProps, any> {
   }
 
   render() {
-    return <div className={selectorPrefix} ref={this.el as any} />;
+    return <div ref={this.el as any} className={selectorPrefix} />;
   }
 }
 
@@ -238,4 +243,27 @@ OlMap.propTypes = {
   onAllTileloadend: PropTypes.func,
 };
 
-export default OlMap;
+function OLMapThemeHOC(props: OLMapProps) {
+  const { className, style, ...rest } = props;
+
+  const wrapperRef = useRef<HTMLElement | undefined>();
+
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'normal',
+    displayName: 'OLMap',
+  });
+
+  return (
+    <div
+      // @ts-ignore
+      ref={wrapperRef}
+      className={classNames(`${selectorPrefix}-theme-wrapper`, className)}
+      style={style ?? {}}
+    >
+      <OlMap {...rest} />
+    </div>
+  );
+}
+
+export default OLMapThemeHOC;

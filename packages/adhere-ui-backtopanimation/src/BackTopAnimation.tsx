@@ -1,11 +1,14 @@
 import classNames from 'classnames';
-import React, { FC, memo, useLayoutEffect, useRef } from 'react';
+import React, { memo, useLayoutEffect, useRef } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Resource from '@baifendian/adhere-util-resource';
 
 import { BackTopAnimationProps } from './types';
 
 const selectorPrefix = 'adhere-ui-back-top-animation';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * BackTopAnimation
@@ -22,9 +25,15 @@ const BackTopAnimation = memo<BackTopAnimationProps>((props) => {
     duration = 300,
   } = props;
 
-  const elRef = useRef<HTMLDivElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
   const mask = useRef<HTMLDivElement | null>(null);
   const key = useRef(false);
+
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'normal',
+    displayName: 'BackTopAnimation',
+  });
 
   /**
    * getUpdateInterval
@@ -124,9 +133,9 @@ const BackTopAnimation = memo<BackTopAnimationProps>((props) => {
 
     function onScroll() {
       if (container.scrollTop !== 0) {
-        elRef.current!.style.display = 'block';
+        wrapperRef.current!.style.display = 'block';
       } else {
-        elRef.current!.style.display = 'none';
+        wrapperRef.current!.style.display = 'none';
       }
     }
 
@@ -137,7 +146,7 @@ const BackTopAnimation = memo<BackTopAnimationProps>((props) => {
 
   return (
     <div
-      ref={elRef}
+      ref={wrapperRef}
       className={classNames(selectorPrefix, className ?? '')}
       style={{ zIndex, ...(style ?? {}) }}
       onClick={onTrigger}

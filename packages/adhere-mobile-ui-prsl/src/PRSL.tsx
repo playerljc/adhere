@@ -16,6 +16,7 @@ import type { PropsWithoutRef, ReactElement, RefAttributes } from 'react';
 import { useImmer } from 'use-immer';
 
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
 import type { ScrollLoadRefHandle } from '@baifendian/adhere-ui-scrollload/es/types';
 import Intl from '@baifendian/adhere-util-intl';
@@ -34,6 +35,8 @@ import type {
   PRSLHandle,
   PRSLProps,
 } from './types';
+
+const { useTheme } = ConfigProvider;
 
 const selectorPrefix = 'adhere-mobile-ui-prsl';
 
@@ -185,6 +188,8 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       },
       ref,
     ) => {
+      const wrapperRef = useRef<HTMLDivElement | undefined>(undefined);
+
       const isFirstRef = useRef(true);
 
       const isFirstLoadingRef = useRef(false);
@@ -214,6 +219,12 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
                 }
               ).defaultPageSize ?? DEFAULT_PAGING_SIZE
             : DEFAULT_PAGING_SIZE,
+      });
+
+      useTheme<HTMLElement>({
+        elRef: wrapperRef,
+        group: 'mobile',
+        displayName: 'PRSL',
       });
 
       const [dataSource, setDataSource] = useState<DataSource>({
@@ -1272,7 +1283,12 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
 
       return (
         <Context.Provider value={contextExpose}>
-          <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+          <div
+            // @ts-ignore
+            ref={wrapperRef}
+            className={classNames(selectorPrefix, className ?? '')}
+            style={style ?? {}}
+          >
             {networkState.online && renderChildren()}
             {!networkState.online && offlineElement}
           </div>

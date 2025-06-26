@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, {
-  PropsWithoutRef,
-  RefAttributes,
+  type PropsWithoutRef,
+  type RefAttributes,
   forwardRef,
   memo,
   useEffect,
@@ -9,11 +9,15 @@ import React, {
   useRef,
 } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+
 import { slider } from './SlideLayout';
-import { RevealProps, SlideLayoutHandle } from './types';
+import type { RevealProps, SlideLayoutHandle } from './types';
 import useSlide from './useSlide';
 
 const selectorPrefix = 'adhere-ui-slide-layout-reveal';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * Reveal
@@ -24,9 +28,9 @@ const selectorPrefix = 'adhere-ui-slide-layout-reveal';
 const Reveal = memo<PropsWithoutRef<RevealProps> & RefAttributes<SlideLayoutHandle>>(
   forwardRef<SlideLayoutHandle, RevealProps>((props, ref) => {
     const {
-      masterClassName = '',
+      masterClassName,
       masterStyle = {},
-      slaveClassName = '',
+      slaveClassName,
       slaveStyle = {},
       zIndex = 9999,
       direction = 'left',
@@ -130,6 +134,12 @@ const Reveal = memo<PropsWithoutRef<RevealProps> & RefAttributes<SlideLayoutHand
           if (maskEl.current) maskEl.current.style.display = 'none';
         },
       },
+    });
+
+    useTheme<HTMLElement>({
+      elRef: el,
+      group: 'normal',
+      displayName: 'SlideLayout',
     });
 
     const { getDuration, maskEl } = useSlide(props, el, positionConfig);

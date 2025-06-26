@@ -81,7 +81,7 @@ import { applyMiddleware, createStore } from '@ctsj/state/lib/state';
 import DictConfig from '@/dict/dict.config';
 
 import FieldGeneratorToDict from '../src/index';
-import AutoCompleteTest from './AutoComplete/SelectInput';
+import AutoCompleteTest from './AutoComplete/Standard';
 import BreadcrumbTest from './Breadcrumb/SuspenseStandard';
 import CascaderAsyncEntityValueHOC from './Cascader/CascaderAsyncEntityValueHOC';
 import CascaderTest from './Cascader/CascaderAsyncFlatChangeOnSelect';
@@ -106,6 +106,7 @@ import RadioTest from './Radio/AutoCompleteButtonRadioSelect';
 import SegmentedTest from './Segmented/SuspenseStandard';
 import SelectTest from './Select/ArrayEntityValueHOC';
 import AutoCompleteCheckAllMultipleSelect from './Select/AutoCompleteCheckAllMultipleSelect';
+import AutoCompleteSelect from './Select/AutoCompleteSelect';
 import MultipleSelect from './Select/MultipleSelect';
 import StepsTest from './Steps/SuspenseStandard';
 import TableTest from './Table/AutoCompleteCheckboxPagin';
@@ -161,11 +162,12 @@ const SearchTable = lazy(() =>
 
 e2e.PC({
   children: (
-    <Provider store={store}>
+    /*<Provider store={store}>
       <Suspense fallback={<div>loading</div>}>
         <SearchTable />
       </Suspense>
-    </Provider>
+    </Provider>*/
+    <AutoCompleteSelect />
   ),
 });
 

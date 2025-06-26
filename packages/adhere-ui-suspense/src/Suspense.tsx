@@ -1,11 +1,13 @@
 import { Skeleton } from 'antd';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { ReactElement } from 'react';
+import React, { type ReactElement, type RefObject, createRef } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+import type { ConfigProviderContext } from '@baifendian/adhere-ui-configprovider/es/types';
 import Spin from '@baifendian/adhere-ui-spin';
 
-import { ISuspense, SuspenseProps, SuspenseState } from './types';
+import type { ISuspense, SuspenseProps, SuspenseState } from './types';
 
 const selectorPrefix = 'adhere-ui-suspense';
 
@@ -26,14 +28,17 @@ abstract class Suspense<
   extends React.PureComponent<P, S>
   implements ISuspense
 {
-  static displayName = 'Suspense';
-
   // 第一次
   isFirst = true;
 
   // 第一次加载
   isFirstLoading = false;
 
+  protected childrenWrapRef: RefObject<HTMLDivElement> = createRef();
+
+  protected _context: ConfigProviderContext | undefined = undefined;
+
+  static displayName = 'Suspense';
   static defaultProps: any;
   static propTypes: any;
 
@@ -88,9 +93,23 @@ abstract class Suspense<
 
       this.forceUpdate();
     }
+
+    ConfigProvider.theme({
+      elRef: this.childrenWrapRef,
+      group: 'normal',
+      displayName: 'Suspense',
+      theme: this._context?.theme,
+    });
   }
 
   componentDidMount() {
+    ConfigProvider.theme({
+      elRef: this.childrenWrapRef,
+      group: 'normal',
+      displayName: 'Suspense',
+      theme: this._context?.theme,
+    });
+
     if (this.onFirstFetchDataBefore) {
       this.onFirstFetchDataBefore?.()?.then?.(() => {
         this?.fetchData?.()?.then?.((res) => {
@@ -183,13 +202,24 @@ abstract class Suspense<
   }
 
   render() {
+    const _self = this;
+
     return (
-      <div
-        className={classNames(selectorPrefix, this.props.className ?? '')}
-        style={this.props.style ?? {}}
-      >
-        {this.renderDispatch()}
-      </div>
+      <ConfigProvider.Context.Consumer>
+        {(context) => {
+          _self._context = context;
+
+          return (
+            <div
+              ref={this.childrenWrapRef}
+              className={classNames(selectorPrefix, this.props.className)}
+              style={this.props.style ?? {}}
+            >
+              {this.renderDispatch()}
+            </div>
+          );
+        }}
+      </ConfigProvider.Context.Consumer>
     );
   }
 }

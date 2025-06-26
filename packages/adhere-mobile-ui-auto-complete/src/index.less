@@ -36,7 +36,11 @@
         padding: var(--result-padding, 15px);
         overflow-y: auto;
         white-space: nowrap;
-        border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+        //border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+        border-top: var(
+          --result-border-top,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
 
         > .adm-list {
           > .adm-list-body {

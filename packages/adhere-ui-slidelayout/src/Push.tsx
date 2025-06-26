@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, {
-  PropsWithoutRef,
-  RefAttributes,
+  type PropsWithoutRef,
+  type RefAttributes,
   forwardRef,
   memo,
   useEffect,
@@ -9,11 +9,15 @@ import React, {
   useRef,
 } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+
 import { slider } from './SlideLayout';
-import { PushProps, SlideLayoutHandle } from './types';
+import type { PushProps, SlideLayoutHandle } from './types';
 import useSlide from './useSlide';
 
 const selectorPrefix = 'adhere-ui-slide-layout-push';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * Push
@@ -24,11 +28,11 @@ const selectorPrefix = 'adhere-ui-slide-layout-push';
 const Push = memo<PropsWithoutRef<PushProps> & RefAttributes<SlideLayoutHandle>>(
   forwardRef<SlideLayoutHandle, PushProps>((props, ref) => {
     const {
-      masterClassName = '',
+      masterClassName,
       masterStyle = {},
-      className = '',
+      className,
       style = {},
-      slaveClassName = '',
+      slaveClassName,
       slaveStyle = {},
       zIndex = 9999,
       direction = 'left',
@@ -127,6 +131,12 @@ const Push = memo<PropsWithoutRef<PushProps> & RefAttributes<SlideLayoutHandle>>
           if (maskEl.current) maskEl.current.style.display = 'none';
         },
       },
+    });
+
+    useTheme<HTMLElement>({
+      elRef: el,
+      group: 'normal',
+      displayName: 'SlideLayout',
     });
 
     const { getDuration, maskEl } = useSlide(props, el, positionConfig);

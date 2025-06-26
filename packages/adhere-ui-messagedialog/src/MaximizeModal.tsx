@@ -1,14 +1,17 @@
 import classNames from 'classnames';
-import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
+import React, { memo, useMemo, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 
 import { BlockOutlined, BorderOutlined, CloseOutlined } from '@ant-design/icons';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Space from '@baifendian/adhere-ui-space';
 
 import Modal from './Modal';
-import { ModalDialogProps } from './types';
+import type { ModalDialogProps } from './types';
 
 export const selectorPrefix = 'adhere-ui-message-dialog-maximize-modal';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * MaximizeModalDialog
@@ -21,6 +24,8 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
     config: { title, closeIcon, ...restConfig },
     ...restProps
   } = props;
+
+  const wrapperRef = useRef<HTMLElement | undefined>();
 
   const draggableRef = useRef<any>(null);
 
@@ -42,6 +47,12 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
       }),
     [isMaximize, restConfig],
   );
+
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'normal',
+    displayName: 'MessageDialog',
+  });
 
   const modalRender = (_modal) => renderDraggableModal(_modal);
 
@@ -174,14 +185,19 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
   }
 
   return (
-    <Modal
-      {...restProps}
-      config={{
-        ...(restConfig ?? {}),
-        className: modalClassName,
-        modalRender,
-      }}
-    />
+    <div
+      // @ts-ignore
+      ref={wrapperRef}
+    >
+      <Modal
+        {...restProps}
+        config={{
+          ...(restConfig ?? {}),
+          className: modalClassName,
+          modalRender,
+        }}
+      />
+    </div>
   );
 });
 

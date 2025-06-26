@@ -49,7 +49,7 @@ export default function <P, S>(SuperClass) {
       const superItems = super.renderSearchFooterItemsImpl(defaultItems);
 
       return [
-        <div className={`${selectorPrefix}-headeritem`}>
+        <div className={`${selectorPrefix}-header-item`}>
           <Radio.Group
             optionType="button"
             buttonStyle="solid"

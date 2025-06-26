@@ -2,8 +2,8 @@ import { Skeleton } from 'antd';
 import { DotLoading, PullToRefresh } from 'antd-mobile';
 import classNames from 'classnames';
 import React, {
-  PropsWithoutRef,
-  RefAttributes,
+  type PropsWithoutRef,
+  type RefAttributes,
   forwardRef,
   memo,
   useCallback,
@@ -13,6 +13,7 @@ import React, {
 import type { ReactElement } from 'react';
 
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
 import type { ScrollLoadRefHandle } from '@baifendian/adhere-ui-scrollload/es/types';
 import Intl from '@baifendian/adhere-util-intl';
@@ -20,6 +21,8 @@ import Intl from '@baifendian/adhere-util-intl';
 import type { PRSLHandle, PRSLProps } from './types';
 
 const selectorPrefix = 'adhere-mobile-ui-ant-hoc-prsl';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * PRSL
@@ -69,11 +72,18 @@ const PRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>>(
         return renderNormal();
       }
 
+      const wrapperRef = useRef<HTMLElement | undefined>();
+
       const scrollLoadRef = useRef<ScrollLoadRefHandle>();
 
       const isFirst = useRef(true);
 
       const isFirstLoading = useRef(false);
+
+      useTheme<HTMLElement>({
+        elRef: wrapperRef,
+        group: 'mobile-hoc',
+      });
 
       const renderFirstLoading = useCallback(() => {
         if (firstLoading) {
@@ -143,7 +153,12 @@ const PRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>>(
       }));
 
       return (
-        <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+        <div
+          // @ts-ignore
+          ref={wrapperRef}
+          className={classNames(selectorPrefix, className ?? '')}
+          style={style ?? {}}
+        >
           {renderChildren()}
         </div>
       );

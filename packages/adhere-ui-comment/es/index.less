@@ -9,19 +9,24 @@
 @import './Reply/Submit/index.less';
 
 .adhere-ui-comment-list {
-  margin: 0;
-  padding: 0;
+  //margin: 0;
+  margin: var(--margin, 0);
+  //padding: 0;
+  padding: var(--padding, 0);
   list-style: none;
 
   > .adhere-ui-comment-list-item {
-    padding: 0 10px;
+    //padding: 0 10px;
+    padding: var(--item-padding, 0 10px);
 
     &:first-child {
-      padding-top: 10px;
+      //padding-top: 10px;
+      padding-top: var(--item-first-child-padding-top, 10px);
     }
 
     &:not(:last-child) {
-      margin-bottom: 20px;
+      //margin-bottom: 20px;
+      margin-bottom: var(--item-not-last-child-margin-bottom, 20px);
     }
   }
 }

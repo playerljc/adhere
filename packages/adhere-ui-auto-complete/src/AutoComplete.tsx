@@ -4,9 +4,13 @@ import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+
 import TreeAutoComplete from './TreeAutoComplete';
 import type { AutoCompleteComponent, AutoCompleteProps } from './types';
 import useCommon from './useCommon';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * AutoComplete
@@ -35,6 +39,14 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
     children,
     ...selectProps
   }) => {
+    const wrapperRef = useRef<HTMLElement | undefined>();
+
+    useTheme<HTMLElement>({
+      elRef: wrapperRef,
+      group: 'normal',
+      displayName: 'AutoComplete',
+    });
+
     const [selectedRows, setSelectedRows] = useState<any[]>(defaultOptions ?? []);
 
     const onSelectChangeStartTime = useRef<number>(0);
@@ -138,7 +150,12 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
     }, [defaultOptions]);
 
     return (
-      <div className={classNames(selectorPrefix, classNameWrap ?? '')} style={styleWrap ?? {}}>
+      <div
+        // @ts-ignore
+        ref={wrapperRef}
+        className={classNames(selectorPrefix, classNameWrap)}
+        style={styleWrap ?? {}}
+      >
         <Select
           showSearch
           allowClear
@@ -148,7 +165,7 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
           // @ts-ignore
           onInput={onInput}
           onClear={onClear}
-          dropdownRender={(originNode) => {
+          popupRender={(originNode) => {
             if (fetching) return fetchLoading;
 
             return !!targetOptions?.length
@@ -161,7 +178,7 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
                 }) ?? originNode
               : empty;
           }}
-          onDropdownVisibleChange={setOpen}
+          onOpenChange={setOpen}
           {...selectProps}
           onChange={(_value) => onSelectChange(_value)}
         />

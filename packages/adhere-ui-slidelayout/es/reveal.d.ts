@@ -1,5 +1,5 @@
 import React from 'react';
-import { RevealProps, SlideLayoutHandle } from './types';
+import type { RevealProps, SlideLayoutHandle } from './types';
 /**
  * Reveal
  * @param props

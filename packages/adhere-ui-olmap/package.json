@@ -33,6 +33,7 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
+    "@baifendian/adhere-ui-configprovider": "^2.11.0",
     "@baifendian/adhere-util-resource": "^2.11.0",
     "algebra.js": "^0.2.6",
     "ol": "6.5.0",

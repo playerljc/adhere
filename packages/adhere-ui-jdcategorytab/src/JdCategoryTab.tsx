@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import IScroll from 'iscroll/build/iscroll';
 import React, {
-  PropsWithoutRef,
-  RefAttributes,
+  type PropsWithoutRef,
+  type RefAttributes,
   forwardRef,
   memo,
   useEffect,
@@ -10,6 +10,7 @@ import React, {
   useRef,
 } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Hooks from '@baifendian/adhere-ui-hooks';
 
 import JdCategoryTabItem from './Item';
@@ -19,21 +20,23 @@ const selectorPrefix = 'adhere-ui-jd-category-tab';
 
 const { useSetState } = Hooks;
 
+const { useTheme } = ConfigProvider;
+
 const InternalJdCategoryTab = memo<
   PropsWithoutRef<JdCategoryTabProps> & RefAttributes<JdCategoryTabRefHandle>
 >(
   forwardRef<JdCategoryTabRefHandle, JdCategoryTabProps>((props, ref) => {
     const {
-      className = '',
+      className,
       style = {},
-      menuClassName = '',
+      menuClassName,
       menuStyle = {},
-      menuInnerClassName = '',
+      menuInnerClassName,
       menuInnerStyle = {},
-      tabClassName = '',
+      tabClassName,
       tabStyle = {},
       menuData = [],
-      menuItemClassName = '',
+      menuItemClassName,
       menuItemStyle = {},
       renderMenuItem,
       onBeforeChange,
@@ -44,10 +47,16 @@ const InternalJdCategoryTab = memo<
     const [activeKeyRef, setActiveKey] = useSetState(props.activeKey);
 
     const ease = useRef(IScroll.utils.ease);
-    const el = useRef<HTMLDivElement | null>(null);
+    const wrapperRef = useRef<HTMLDivElement | null>(null);
     const menuEl = useRef<HTMLDivElement | null>(null);
     const menuInnerEl = useRef<HTMLUListElement | null>(null);
     const scroll = useRef<typeof IScroll>();
+
+    useTheme<HTMLElement>({
+      elRef: wrapperRef,
+      group: 'normal',
+      displayName: 'JdCategoryTab',
+    });
 
     function findElByKey(key) {
       const index = menuData.findIndex((t) => t.key === key);
@@ -161,7 +170,11 @@ const InternalJdCategoryTab = memo<
     }));
 
     return (
-      <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}} ref={el}>
+      <div
+        ref={wrapperRef}
+        className={classNames(selectorPrefix, className ?? '')}
+        style={style ?? {}}
+      >
         <div
           ref={menuEl}
           className={classNames(`${selectorPrefix}-menu`, menuClassName ?? '')}

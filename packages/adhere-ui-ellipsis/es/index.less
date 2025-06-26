@@ -96,8 +96,10 @@
 
 .adhere-ui-ellipsis-show-more,
 .adhere-ui-ellipsis-hide-more {
-  margin-top: 15px;
-  color: var(--adhere-color-primary);
+  //margin-top: 15px;
+  margin-top: var(--more-margin-top, 15px);
+  //color: var(--adhere-color-primary);
+  color: var(--more-color, var(--adhere-color-primary));
 
   &:hover {
     cursor: pointer;
@@ -106,13 +108,19 @@
 
 // 自定义tooltip
 .adhere-ui-ellipsis-custom-tool-tip {
-  z-index: var(--adhere-z-index-max-base);
+  //z-index: var(--adhere-z-index-max-base);
+  z-index: var(--custom-tool-tip-z-index, var(--adhere-z-index-max-base));
   display: none;
-  padding: @adhere-ui-ellipsis-custom-tool-tip-wrap-padding;
-  color: var(--adhere-color-text);
-  font-weight: bold;
-  font-size: var(--adhere-font-size-base);
-  background-color: var(--adhere-color-bg-base);
+  //padding: @adhere-ui-ellipsis-custom-tool-tip-wrap-padding;
+  padding: var(--custom-tool-tip-padding, @adhere-ui-ellipsis-custom-tool-tip-wrap-padding);
+  //color: var( --adhere-color-text);
+  color: var(--custom-tool-tip-color, var(--adhere-color-text));
+  //font-weight: bold;
+  font-weight: var(--custom-tool-tip-font-weight, bold);
+  //font-size: var(--adhere-font-size-base);
+  font-size: var(--custom-tool-tip-font-size, var(--adhere-font-size-base));
+  //background-color: var(--adhere-color-bg-base);
+  background-color: var(--custom-tool-tip-background-color, var(--adhere-color-bg-base));
   .adhere-word-break();
 
   &[data-show] {
@@ -121,78 +129,145 @@
 
   &[data-popper-placement^='top'] {
     .adhere-ui-ellipsis-custom-tool-tip-arrow {
-      bottom: @adhere-ui-ellipsis-custom-tool-tip-wrap-padding +
-        @adhere-ui-ellipsis-custom-tool-tip-arrow-offset;
+      //bottom: @adhere-ui-ellipsis-custom-tool-tip-wrap-padding +
+      //  @adhere-ui-ellipsis-custom-tool-tip-arrow-offset;
+      bottom: var(
+        --custom-tool-tip-arrow-bottom,
+        @adhere-ui-ellipsis-custom-tool-tip-wrap-padding +
+          @adhere-ui-ellipsis-custom-tool-tip-arrow-offset
+      );
 
       &::before {
-        border-right: var(--adhere-line-width) var(--adhere-line-type)
-          var(--adhere-color-border-base);
-        border-bottom: var(--adhere-line-width) var(--adhere-line-type)
-          var(--adhere-color-border-base);
+        //border-right: var(--adhere-line-width) var(--adhere-line-type)
+        //  var(--adhere-color-border-base);
+        border-right: var(
+          --custom-tool-tip-arrow-before-border-right,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
+        //border-bottom: var(--adhere-line-width) var(--adhere-line-type)
+        //  var(--adhere-color-border-base);
+        border-bottom: var(
+          --custom-tool-tip-arrow-before-border-bottom,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
       }
     }
   }
 
   &[data-popper-placement^='bottom'] {
     .adhere-ui-ellipsis-custom-tool-tip-arrow {
-      top: @adhere-ui-ellipsis-custom-tool-tip-wrap-padding +
-        @adhere-ui-ellipsis-custom-tool-tip-arrow-offset;
+      //top: @adhere-ui-ellipsis-custom-tool-tip-wrap-padding +
+      //  @adhere-ui-ellipsis-custom-tool-tip-arrow-offset;
+      top: var(
+        --custom-tool-tip-arrow-top,
+        @adhere-ui-ellipsis-custom-tool-tip-wrap-padding +
+          @adhere-ui-ellipsis-custom-tool-tip-arrow-offset
+      );
 
       &::before {
-        border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-        border-left: var(--adhere-line-width) var(--adhere-line-type)
-          var(--adhere-color-border-base);
+        //border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+        border-top: var(
+          --custom-tool-tip-arrow-before-border-top,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
+
+        //border-left: var(--adhere-line-width) var(--adhere-line-type)
+        //  var(--adhere-color-border-base);
+        border-left: var(
+          --custom-tool-tip-arrow-before-border-left,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
       }
     }
   }
 
   &[data-popper-placement^='left'] {
     .adhere-ui-ellipsis-custom-tool-tip-arrow {
-      right: @adhere-ui-ellipsis-custom-tool-tip-wrap-padding +
-        @adhere-ui-ellipsis-custom-tool-tip-arrow-offset;
+      //right: @adhere-ui-ellipsis-custom-tool-tip-wrap-padding +
+      //  @adhere-ui-ellipsis-custom-tool-tip-arrow-offset;
+      right: var(
+        --custom-tool-tip-arrow-right,
+        @adhere-ui-ellipsis-custom-tool-tip-wrap-padding +
+          @adhere-ui-ellipsis-custom-tool-tip-arrow-offset
+      );
 
       &::before {
-        border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-        border-right: var(--adhere-line-width) var(--adhere-line-type)
-          var(--adhere-color-border-base);
+        //border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+        border-top: var(
+          --custom-tool-tip-arrow-before-border-top,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
+        //border-right: var(--adhere-line-width) var(--adhere-line-type)
+        //  var(--adhere-color-border-base);
+        border-right: var(
+          --custom-tool-tip-arrow-before-border-right,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
       }
     }
   }
 
   &[data-popper-placement^='right'] {
     .adhere-ui-ellipsis-custom-tool-tip-arrow {
-      left: @adhere-ui-ellipsis-custom-tool-tip-wrap-padding +
-        @adhere-ui-ellipsis-custom-tool-tip-arrow-offset;
+      //left: @adhere-ui-ellipsis-custom-tool-tip-wrap-padding +
+      //  @adhere-ui-ellipsis-custom-tool-tip-arrow-offset;
+      left: var(
+        --custom-tool-tip-arrow-left,
+        @adhere-ui-ellipsis-custom-tool-tip-wrap-padding +
+          @adhere-ui-ellipsis-custom-tool-tip-arrow-offset
+      );
 
       &::before {
-        border-bottom: var(--adhere-line-width) var(--adhere-line-type)
-          var(--adhere-color-border-base);
-        border-left: var(--adhere-line-width) var(--adhere-line-type)
-          var(--adhere-color-border-base);
+        //border-bottom: var(--adhere-line-width) var(--adhere-line-type)
+        //  var(--adhere-color-border-base);
+        border-bottom: var(
+          --custom-tool-tip-arrow-before-border-bottom,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
+        //border-left: var(--adhere-line-width) var(--adhere-line-type)
+        //  var(--adhere-color-border-base);
+        border-left: var(
+          --custom-tool-tip-arrow-before-border-left,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
       }
     }
   }
 
   > .adhere-ui-ellipsis-custom-tool-tip-inner {
     position: relative;
-    padding: @adhere-ui-ellipsis-custom-tool-tip-inner-padding;
-    border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-    border-radius: var(--adhere-border-radius-base);
+    //padding: @adhere-ui-ellipsis-custom-tool-tip-inner-padding;
+    padding: var(
+      --custom-tool-tip-inner-padding,
+      @adhere-ui-ellipsis-custom-tool-tip-inner-padding
+    );
+    //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    border: var(
+      --custom-tool-tip-inner-border,
+      var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+    );
+    //border-radius: var(--adhere-border-radius-base);
+    border-radius: var(--custom-tool-tip-inner-border-radius, var(--adhere-border-radius-base));
   }
 
   > .adhere-ui-ellipsis-custom-tool-tip-arrow {
     position: absolute;
-    width: 8px;
-    height: 8px;
+    //width: 8px;
+    width: var(--custom-tool-tip-arrow-width, 8px);
+    //height: 8px;
+    height: var(--custom-tool-tip-arrow-height, 8px);
     background: inherit;
     visibility: hidden;
 
     &::before {
       position: absolute;
-      width: 8px;
-      height: 8px;
+      //width: 8px;
+      width: var(--custom-tool-tip-arrow-before-width, 8px);
+      //height: 8px;
+      height: var(--custom-tool-tip-arrow-before-height, 8px);
       background: inherit;
-      transform: rotate(45deg);
+      //transform: rotate(45deg);
+      transform: var(--custom-tool-tip-arrow-before-transform, rotate(45deg));
       visibility: visible;
       content: '';
     }

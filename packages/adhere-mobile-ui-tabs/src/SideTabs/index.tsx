@@ -1,9 +1,13 @@
 import { SideBar } from 'antd-mobile';
 import classNames from 'classnames';
-import React, { memo } from 'react';
+import React, { memo, useRef } from 'react';
+
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import type { SystemSideTabsComponent, SystemSideTabsProps } from '../types';
 import Tab from './tab';
+
+const { useTheme } = ConfigProvider;
 
 const selectorPrefix = 'adhere-ui-tabs-side-tabs';
 
@@ -15,6 +19,8 @@ const selectorPrefix = 'adhere-ui-tabs-side-tabs';
  */
 const InternalSystemSideTabs = memo<SystemSideTabsProps>(
   ({ className, style, items, ...props }) => {
+    const wrapperRef = useRef<HTMLDivElement | undefined>();
+
     function renderHeader() {
       return (
         <SideBar {...props}>
@@ -50,8 +56,19 @@ const InternalSystemSideTabs = memo<SystemSideTabsProps>(
       });
     }
 
+    useTheme<HTMLElement>({
+      elRef: wrapperRef,
+      group: 'mobile',
+      displayName: 'Tabs',
+    });
+
     return (
-      <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+      <div
+        // @ts-ignore
+        ref={wrapperRef}
+        className={classNames(selectorPrefix, className)}
+        style={style ?? {}}
+      >
         <div className={`${selectorPrefix}-fixed`}>{renderHeader()}</div>
         <div className={`${selectorPrefix}-auto`}>{renderBody()}</div>
       </div>

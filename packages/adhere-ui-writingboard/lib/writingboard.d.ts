@@ -1,3 +1,3 @@
-import { WritingBoardComponent } from './types';
+import { type WritingBoardComponent } from './types';
 declare const WritingBoard: WritingBoardComponent;
 export default WritingBoard;

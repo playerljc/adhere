@@ -1,7 +1,8 @@
 import { AddOutline, CloseOutline } from 'antd-mobile-icons';
 import classNames from 'classnames';
-import React, { FC, useMemo, useState } from 'react';
+import React, { type FC, useMemo, useRef, useState } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Space from '@baifendian/adhere-ui-space';
@@ -14,6 +15,8 @@ import type { InputMultipleProps } from '../types';
 const selectorPrefix = 'adhere-mobile-ui-anthoc-input-multiple';
 
 const { usePropToState } = Hooks;
+
+const { useTheme } = ConfigProvider;
 
 /**
  * InputMultiple
@@ -43,6 +46,13 @@ const InputMultiple: FC<InputMultipleProps<string>> = ({
   value,
   onChange,
 }) => {
+  const wrapperRef = useRef<HTMLElement | undefined>();
+
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'mobile-hoc',
+  });
+
   const [inputValue, setInputValue] = useState('');
 
   const [selectOptions, setSelectOptions] = usePropToState(options);
@@ -116,7 +126,12 @@ const InputMultiple: FC<InputMultipleProps<string>> = ({
   }
 
   return (
-    <div className={classNames(selectorPrefix, className)} style={style ?? {}}>
+    <div
+      // @ts-ignore
+      ref={wrapperRef}
+      className={classNames(selectorPrefix, className)}
+      style={style ?? {}}
+    >
       <FlexLayout direction="horizontal">
         <Space.Group direction="horizontal" size={10}>
           <FlexLayout.Auto>

@@ -1,12 +1,15 @@
 import { ErrorBlock, SearchBar } from 'antd-mobile';
 import classNames from 'classnames';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Util from '@baifendian/adhere-util';
 
 import type { ListFilterProps } from './types';
 
 const selectorPrefix = 'adhere-mobile-ui-ant-hoc-list-filter';
+
+const { useTheme } = ConfigProvider;
 
 function ListFilter<Option>({
   options,
@@ -20,7 +23,14 @@ function ListFilter<Option>({
   bodyWrapperStyle,
   renderEmpty,
 }: ListFilterProps<Option>) {
+  const wrapperRef = useRef<HTMLElement | undefined>();
+
   const [filterValue, setFilterValue] = useState<string>('');
+
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'mobile-hoc',
+  });
 
   function filter(_filterValue, option) {
     return option[filterProps?.optionFilterProp ?? 'title'].includes(_filterValue);
@@ -54,7 +64,12 @@ function ListFilter<Option>({
   }
 
   return (
-    <div className={classNames(selectorPrefix, wrapperClassName ?? '')} style={wrapperStyle ?? {}}>
+    <div
+      // @ts-ignore
+      ref={wrapperRef}
+      className={classNames(selectorPrefix, wrapperClassName ?? '')}
+      style={wrapperStyle ?? {}}
+    >
       <div
         className={classNames(`${selectorPrefix}-search`, filterWrapperClassName ?? '')}
         style={filterWrapperStyle ?? {}}

@@ -1,8 +1,8 @@
 import { usePrevious } from 'ahooks';
 import { Table, theme } from 'antd';
-import { ColumnsType } from 'antd/es/table';
+import type { ColumnsType } from 'antd/es/table';
 import classNames from 'classnames';
-import React, { FC, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { type FC, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import * as ReactIs from 'react-is';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -12,6 +12,8 @@ import Util from '@baifendian/adhere-util';
 import type { ColumnWidthMaxContent, TableExtProps } from '../types';
 
 const selectorPrefix = 'adhere-ui-anthoc-table';
+
+const { useTheme } = ConfigProvider;
 
 const TableExt: FC<TableExtProps> = ({
   wrapperClassName,
@@ -34,6 +36,11 @@ const TableExt: FC<TableExtProps> = ({
   const _hackerElement = useRef<HTMLSpanElement | null>(null);
 
   const tableWrapRef = useRef<HTMLElement | null>({} as HTMLElement);
+
+  useTheme<HTMLElement>({
+    elRef: tableWrapRef,
+    group: 'normal-hoc',
+  });
 
   const [scrollY, setScrollY] = useState(0);
 
@@ -372,6 +379,8 @@ const TableExt: FC<TableExtProps> = ({
 
   return (
     <div
+      // @ts-ignore
+      ref={tableWrapRef}
       className={classNames(
         selectorPrefix,
         {
@@ -380,8 +389,6 @@ const TableExt: FC<TableExtProps> = ({
         wrapperClassName,
       )}
       style={wrapperStyle ?? {}}
-      // @ts-ignore
-      ref={tableWrapRef}
     >
       <Table {...targetTableProps} columns={targetColumns} />
     </div>

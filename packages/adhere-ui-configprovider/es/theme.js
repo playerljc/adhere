@@ -1,0 +1,2 @@
+import{themeCSSVariablesInjectToTheme}from"./themeCSSVariablesInjectToTheme";export default function theme(e){var r,n=e.elRef,t=e.group,o=e.displayName,e=e.theme;!n||Array.isArray(n)&&!n.length||n.current&&t&&e&&(e=null==e?void 0:e.components)&&e[t]&&(r=o?null==(r=null==e?void 0:e[t])?void 0:r[o]:null==e?void 0:e[t])&&(o=[],o=Array.isArray(n)?n.map(function(e){return e.current}):[n.current],themeCSSVariablesInjectToTheme({componentTheme:r,els:o}))}
+//# sourceMappingURL=theme.js.map

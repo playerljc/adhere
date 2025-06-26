@@ -1,12 +1,16 @@
 import type { CheckboxOptionType } from 'antd/es/checkbox';
 import classNames from 'classnames';
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useRef } from 'react';
+
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import CheckAllWrapper from '../CheckAllWrapper';
 import type { DisplayNameInternal, HorizontalCheckableTagGroupProps } from '../types';
 import HorizontalCheckableTagGroup from './HorizontalCheckableTagGroup';
 
 const selectorPrefix = 'adhere-ui-ant-hoc-check-all-check-box';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * HorizontalCheckAllCheckableTagGroup
@@ -27,6 +31,13 @@ const InternalHorizontalCheckAllCheckableTagGroup = memo<HorizontalCheckableTagG
     render,
     ...props
   }) => {
+    const wrapperRef = useRef<HTMLElement | undefined>();
+
+    useTheme<HTMLElement>({
+      elRef: wrapperRef,
+      group: 'normal-hoc',
+    });
+
     const CheckAllOrigin = useMemo(
       () => (
         <CheckAllWrapper
@@ -53,7 +64,11 @@ const InternalHorizontalCheckAllCheckableTagGroup = memo<HorizontalCheckableTagG
     );
 
     return (
-      <div className={selectorPrefix}>
+      <div
+        // @ts-ignore
+        ref={wrapperRef}
+        className={selectorPrefix}
+      >
         {render?.(CheckAllOrigin, ChildrenOrigin) ?? (
           <>
             <div

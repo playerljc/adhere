@@ -1,12 +1,15 @@
 import { ErrorBlock, SearchBar } from 'antd-mobile';
 import classNames from 'classnames';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Util from '@baifendian/adhere-util';
 
 import type { TreeFilterProps } from './types';
 
 const selectorPrefix = 'adhere-mobile-ui-ant-hoc-tree-filter';
+
+const { useTheme } = ConfigProvider;
 
 export const treeTransformConfig = {
   keyAttr: 'value',
@@ -29,6 +32,13 @@ function TreeFilter({
   children,
 }: TreeFilterProps) {
   const [filterValue, setFilterValue] = useState<string>('');
+
+  const wrapperRef = useRef<HTMLElement | undefined>();
+
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'mobile-hoc',
+  });
 
   function filter(_filterValue, option) {
     return option[filterProps?.optionFilterProp ?? 'label'].includes(_filterValue);
@@ -95,7 +105,12 @@ function TreeFilter({
   }
 
   return (
-    <div className={classNames(selectorPrefix, wrapperClassName ?? '')} style={wrapperStyle ?? {}}>
+    <div
+      // @ts-ignore
+      ref={wrapperRef}
+      className={classNames(selectorPrefix, wrapperClassName ?? '')}
+      style={wrapperStyle ?? {}}
+    >
       <div
         className={classNames(`${selectorPrefix}-search`, filterWrapperClassName ?? '')}
         style={filterWrapperStyle ?? {}}

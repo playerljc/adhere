@@ -7,7 +7,7 @@ import Context from './Context';
 import Menu from './Menu';
 import type { PopoverMenuComponent, PopoverMenuProps } from './types';
 
-const selectorPrefix = 'adhere-mobile-ui-popovermenu';
+const selectorPrefix = 'adhere-mobile-ui-popover-menu';
 
 /**
  * InternalPopoverMenu

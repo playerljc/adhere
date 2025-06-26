@@ -21,15 +21,19 @@
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 10;
+    //z-index: 10;
+    z-index: var(--mobile-signature-mask-z-index, 10);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    background-color: rgb(0 0 0 / 60%);
+    //color: #fff;
+    color: var(--mobile-signature-mask-color, #fff);
+    //background-color: rgb(0 0 0 / 60%);
+    background-color: var(--mobile-signature-mask-background-color, rgb(0 0 0 / 60%));
     transform: scale(0);
     transform-origin: center;
-    transition: transform ease-out 0.2s;
+    //transition: transform ease-out 0.2s;
+    transition: var(--mobile-signature-mask-transition, transform ease-out 0.2s);
 
     &:hover {
       cursor: pointer;

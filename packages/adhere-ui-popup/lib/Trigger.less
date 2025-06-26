@@ -10,15 +10,18 @@
     display: flex;
     flex-shrink: 0;
     align-items: center;
-    padding: 10px 20px;
+    //padding: 10px 20px;
+    padding: var(--trigger-inner-header-padding, 10px 20px);
 
     > .adhere-ui-popup-trigger-inner-close {
       flex-shrink: 0;
-      margin-right: 15px;
+      //margin-right: 15px;
+      margin-right: var(--trigger-inner-close-margin-right, 15px);
 
       > .adhere-ui-popup-trigger-inner-close-inner {
         font-weight: bold;
-        font-size: 30px;
+        //font-size: 30px;
+        font-size: var(--trigger-inner-close-inner-font-size, 30px);
 
         &:hover {
           cursor: pointer;
@@ -29,34 +32,42 @@
     > .adhere-ui-popup-trigger-inner-title {
       flex: 1;
       min-width: 0;
-      color: var(--adhere-color-text);
-      font-weight: 700;
-      font-size: var(--adhere-font-size-xl);
-      text-align: left;
+      //color: var(--adhere-color-text);
+      color: var(--trigger-inner-title-color, var(--adhere-color-text));
+      //font-weight: 700;
+      font-weight: var(--trigger-inner-title-font-weight, 700);
+      //font-size: var(--adhere-font-size-xl);
+      font-size: var(--trigger-inner-title-font-size, var(--adhere-font-size-xl));
+      //text-align: left;
+      text-align: var(--trigger-inner-title-text-align, left);
       .adhere-text-inline-overflow();
     }
 
     > .adhere-ui-popup-trigger-inner-extra {
       flex-shrink: 0;
-      margin-left: 15px;
+      //margin-left: 15px;
+      margin-left: var(--trigger-inner-extra-margin-right, 15px);
     }
   }
 
   > .adhere-ui-popup-trigger-inner-body {
     flex: 1;
     min-height: 0;
-    padding: 15px;
+    //padding: 15px;
+    padding: var(--trigger-inner-body-padding, 15px);
   }
 
   > .adhere-ui-popup-trigger-inner-actions {
     display: flex;
     flex-shrink: 0;
     justify-content: center;
-    padding: 20px;
+    //padding: 20px;
+    padding: var(--trigger-inner-actions-padding, 20px);
 
     > .adhere-ui-popup-trigger-inner-action {
       &:not(:last-child) {
-        margin-right: 20px;
+        //margin-right: 20px;
+        margin-right: var(--trigger-inner-action-not-last-child-margin-right, 20px);
       }
     }
   }

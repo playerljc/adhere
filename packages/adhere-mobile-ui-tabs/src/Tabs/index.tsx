@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import React, { memo, useEffect, useRef, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Hooks from '@baifendian/adhere-ui-hooks';
 
 import type { SystemTabsComponent, SystemTabsProps } from '../types';
@@ -11,6 +12,8 @@ import ArrowMore from './arrowMore';
 import Tab from './tab';
 
 const { useForceUpdate } = Hooks;
+
+const { useTheme } = ConfigProvider;
 
 const selectorPrefix = 'adhere-ui-tabs';
 
@@ -28,9 +31,9 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
     ...restProps
   } = props;
 
-  const swiperRef = useRef<SwiperRef | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
 
-  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const swiperRef = useRef<SwiperRef | null>(null);
 
   const childrenEffectFirst = useRef(false);
 
@@ -39,6 +42,12 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
   const [activeKey, setActiveKey] = useState(
     props.activeKey ? props.activeKey : children && children.length ? children[0].key : '',
   );
+
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'mobile',
+    displayName: 'Tabs',
+  });
 
   const forceUpdate = useForceUpdate();
 
@@ -60,7 +69,9 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
 
   useEffect(() => {
     if (!props.activeKey) return;
+
     setActiveKey(props.activeKey);
+
     swiperRef?.current?.swipeTo?.(getActiveIndexByKey?.(props.activeKey) as number);
   }, [props.activeKey]);
 
@@ -75,7 +86,7 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
 
   return (
     <div
-      ref={wrapRef}
+      ref={wrapperRef}
       className={classNames(selectorPrefix, className ?? '', {
         [`${selectorPrefix}-swiper`]: swiper,
         [`${selectorPrefix}-arrowMore`]: showArrowMore,
@@ -114,7 +125,7 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
       {showArrowMore && (
         <ArrowMore
           zIndex={arrowZIndex}
-          wrapRef={wrapRef}
+          wrapRef={wrapperRef}
           data={props?.children?.map?.((_rElement) => ({
             key: _rElement.key,
             title: _rElement.props.title,

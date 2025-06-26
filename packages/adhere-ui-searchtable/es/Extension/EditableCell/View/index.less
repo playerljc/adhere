@@ -5,7 +5,8 @@
   display: flex;
   align-items: center;
   max-width: 100%;
-  min-height: 32px;
+  //min-height: 32px;
+  min-height: var(--editable-cell-view-min-height, 32px);
 
   &:hover {
     > .adhere-ui-search-table-editable-cell-view-trigger {
@@ -26,9 +27,12 @@
 
   > .adhere-ui-search-table-editable-cell-view-trigger {
     flex-shrink: 0;
-    width: 20px;
-    color: var(--adhere-color-primary);
-    font-size: var(--adhere-font-size-lg);
+    //width: 20px;
+    width: var(--editable-cell-view-trigger-width, 20px);
+    //color: var(--adhere-color-primary);
+    color: var(--editable-cell-view-trigger-color, var(--adhere-color-primary));
+    //font-size: var(--adhere-font-size-lg);
+    font-size: var(--editable-cell-view-trigger-font-size, var(--adhere-font-size-lg));
 
     > .adhere-ui-search-table-editable-cell-view-trigger-inner {
       display: none;

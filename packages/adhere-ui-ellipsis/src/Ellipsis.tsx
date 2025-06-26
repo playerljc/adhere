@@ -3,6 +3,7 @@ import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from '
 import type { CSSProperties, HTMLProps } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Intl from '@baifendian/adhere-util-intl';
 import { createPopper } from '@popperjs/core';
 import type { Instance } from '@popperjs/core/lib/types';
@@ -10,6 +11,8 @@ import type { Instance } from '@popperjs/core/lib/types';
 import type { EllipsisProps } from './types';
 
 const selectorPrefix = 'adhere-ui-ellipsis';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * Ellipsis
@@ -40,9 +43,15 @@ const Ellipsis = memo<EllipsisProps>((props) => {
     children,
   } = props;
 
-  const ref = useRef<HTMLDivElement>();
+  const wrapperRef = useRef<HTMLDivElement>();
   const tooltipRef = useRef<Instance>();
   const customToolTipRef = useRef<HTMLDivElement | null>(null);
+
+  useTheme<HTMLElement>({
+    elRef: [wrapperRef, customToolTipRef],
+    group: 'normal',
+    displayName: 'Ellipsis',
+  });
 
   const [collapse, setCollapse] = useState(false);
 
@@ -169,7 +178,7 @@ const Ellipsis = memo<EllipsisProps>((props) => {
       }
 
       tooltipRef.current = createPopper(
-        ref.current as HTMLDivElement,
+        wrapperRef.current as HTMLDivElement,
         customToolTipRef.current as HTMLDivElement,
         customTooltipOptions ?? {
           placement: 'auto',
@@ -185,21 +194,21 @@ const Ellipsis = memo<EllipsisProps>((props) => {
       );
 
       showEvents.forEach((event) => {
-        ref.current?.addEventListener?.(event, show);
+        wrapperRef.current?.addEventListener?.(event, show);
       });
 
       hideEvents.forEach((event) => {
-        ref.current?.addEventListener?.(event, hide);
+        wrapperRef.current?.addEventListener?.(event, hide);
       });
     }
 
     return () => {
       showEvents.forEach((event) => {
-        ref.current?.removeEventListener?.(event, show);
+        wrapperRef.current?.removeEventListener?.(event, show);
       });
 
       hideEvents.forEach((event) => {
-        ref.current?.removeEventListener?.(event, hide);
+        wrapperRef.current?.removeEventListener?.(event, hide);
       });
     };
   }, [
@@ -281,7 +290,7 @@ const Ellipsis = memo<EllipsisProps>((props) => {
   return (
     <>
       <div className={`${selectorPrefix}`}>
-        <div ref={ref} {...innerProps}>
+        <div ref={wrapperRef} {...innerProps}>
           {children}
         </div>
         {isMaxValueToTooltip() && renderMore()}

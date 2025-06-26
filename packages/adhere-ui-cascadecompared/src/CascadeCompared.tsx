@@ -10,16 +10,24 @@ import React, {
 } from 'react';
 import type { PropsWithoutRef, ReactElement, RefAttributes } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import StickupLayout from '@baifendian/adhere-ui-stickuplayout';
 import type { StickupLayoutHandle } from '@baifendian/adhere-ui-stickuplayout/lib/types';
 
-import { CascadeComparedHandle, CascadeComparedProps, ColumnConfig, IMasterItem } from './types';
+import type {
+  CascadeComparedHandle,
+  CascadeComparedProps,
+  ColumnConfig,
+  IMasterItem,
+} from './types';
 
 const selectorPrefix = 'adhere-ui-cascade-compared';
 
 const defaultCellWidth = 120;
 
 const { Item } = StickupLayout;
+
+const { useTheme } = ConfigProvider;
 
 const StickupLayoutItem = Item!;
 
@@ -71,36 +79,42 @@ const CascadeCompared = memo<
 >(
   forwardRef<CascadeComparedHandle, CascadeComparedProps>((props, ref) => {
     const {
-      className = '',
+      className,
       style = {},
-      indicatorClassName = '',
+      indicatorClassName,
       indicatorStyle = {},
-      indicatorFixedWrapClassName = '',
+      indicatorFixedWrapClassName,
       indicatorFixedWrapStyle = {},
-      indicatorAutoWrapClassName = '',
+      indicatorAutoWrapClassName,
       indicatorAutoWrapStyle = {},
       indicator: { columns = [], dataSource = {} },
-      masterClassName = '',
+      masterClassName,
       masterStyle = {},
-      masterInnerClassName = '',
+      masterInnerClassName,
       masterInnerStyle = {},
-      masterStickFixedClassName = '',
+      masterStickFixedClassName,
       masterStickFixedStyle = {},
-      masterStickInnerClassName = '',
+      masterStickInnerClassName,
       masterStickInnerStyle = {},
       master = [],
       onStickChange,
     } = props;
 
-    const el = useRef<HTMLDivElement | null>(null);
+    const wrapperRef = useRef<HTMLDivElement | null>(null);
     const stickup = useRef<StickupLayoutHandle | null>(null);
     const scrolls = useRef<(typeof IScroll)[]>([]);
+
+    useTheme<HTMLElement>({
+      elRef: wrapperRef,
+      group: 'normal',
+      displayName: 'CascadeCompared',
+    });
 
     /**
      * initScroll
      */
     function initScroll() {
-      const wrapEls = el.current!.querySelectorAll(`.${selectorPrefix}-auto-wrap`);
+      const wrapEls = wrapperRef.current!.querySelectorAll(`.${selectorPrefix}-auto-wrap`);
 
       for (let i = 0; i < scrolls.current.length; i++) {
         scrolls.current[i].destroy();
@@ -173,14 +187,11 @@ const CascadeCompared = memo<
 
       return (
         <div
-          className={classNames(`${selectorPrefix}-indicator`, indicatorClassName ?? '')}
+          className={classNames(`${selectorPrefix}-indicator`, indicatorClassName)}
           style={{ ...indicatorStyle }}
         >
           <div
-            className={classNames(
-              `${selectorPrefix}-fixed-wrap`,
-              indicatorFixedWrapClassName ?? '',
-            )}
+            className={classNames(`${selectorPrefix}-fixed-wrap`, indicatorFixedWrapClassName)}
             style={{
               ...(indicatorFixedWrapStyle ?? {}),
               width: fixedColumnConfig?.width || defaultCellWidth,
@@ -188,7 +199,7 @@ const CascadeCompared = memo<
           >
             <div className={`${selectorPrefix}-item`}>
               <div
-                className={classNames(`${selectorPrefix}-cell`, fixedColumnConfig?.className ?? '')}
+                className={classNames(`${selectorPrefix}-cell`, fixedColumnConfig?.className)}
                 style={{
                   ...(fixedColumnConfig?.style ?? {}),
                 }}
@@ -198,7 +209,7 @@ const CascadeCompared = memo<
             </div>
           </div>
           <div
-            className={classNames(`${selectorPrefix}-auto-wrap`, indicatorAutoWrapClassName ?? '')}
+            className={classNames(`${selectorPrefix}-auto-wrap`, indicatorAutoWrapClassName)}
             style={{ ...(indicatorAutoWrapStyle ?? {}) }}
           >
             <div className={`${selectorPrefix}-item`}>
@@ -207,7 +218,7 @@ const CascadeCompared = memo<
                 .map((column, columnIndex) => (
                   <div
                     key={column.dataIndex}
-                    className={classNames(`${selectorPrefix}-cell`, column.className ?? '')}
+                    className={classNames(`${selectorPrefix}-cell`, column.className)}
                     style={{ ...(column.style ?? {}), width: column?.width || defaultCellWidth }}
                   >
                     {renderCell(column, dataSource, -1, -1, columnIndex)}
@@ -235,11 +246,11 @@ const CascadeCompared = memo<
       {
         dataSource = [],
         columns = [],
-        fixedWrapClassName = '',
+        fixedWrapClassName,
         fixedWrapStyle = {},
-        autoWrapClassName = '',
+        autoWrapClassName,
         autoWrapStyle = {},
-        autoInnerClassName = '',
+        autoInnerClassName,
         autoInnerStyle = {},
       }: IMasterItem,
       groupIndex: number,
@@ -249,7 +260,7 @@ const CascadeCompared = memo<
       return (
         <>
           <div
-            className={classNames(`${selectorPrefix}-fixed-wrap`, fixedWrapClassName ?? '')}
+            className={classNames(`${selectorPrefix}-fixed-wrap`, fixedWrapClassName)}
             style={{
               ...(fixedWrapStyle ?? {}),
               width: fixedColumnConfig?.width || defaultCellWidth,
@@ -258,10 +269,7 @@ const CascadeCompared = memo<
             {dataSource.map((record, rowIndex) => (
               <div key={rowIndex} className={`${selectorPrefix}-item`}>
                 <div
-                  className={classNames(
-                    `${selectorPrefix}-cell`,
-                    fixedColumnConfig?.className ?? '',
-                  )}
+                  className={classNames(`${selectorPrefix}-cell`, fixedColumnConfig?.className)}
                   style={{
                     ...(fixedColumnConfig?.style ?? {}),
                   }}
@@ -273,11 +281,11 @@ const CascadeCompared = memo<
           </div>
 
           <div
-            className={classNames(`${selectorPrefix}-auto-wrap`, autoWrapClassName ?? '')}
+            className={classNames(`${selectorPrefix}-auto-wrap`, autoWrapClassName)}
             style={{ ...(autoWrapStyle ?? {}) }}
           >
             <div
-              className={classNames(`${selectorPrefix}-auto-inner`, autoInnerClassName ?? '')}
+              className={classNames(`${selectorPrefix}-auto-inner`, autoInnerClassName)}
               style={{ ...autoInnerStyle }}
             >
               {dataSource.map((record, rowIndex) => (
@@ -287,7 +295,7 @@ const CascadeCompared = memo<
                     .map((column, columnIndex) => (
                       <div
                         key={column.dataIndex}
-                        className={classNames(`${selectorPrefix}-cell`, column.className ?? '')}
+                        className={classNames(`${selectorPrefix}-cell`, column.className)}
                         style={{
                           ...(column.style ?? {}),
                           width: column?.width || defaultCellWidth,
@@ -310,12 +318,12 @@ const CascadeCompared = memo<
      * @param groupIndex
      */
     function renderMasterGroup(config: IMasterItem, groupIndex): ReactElement {
-      const { title = undefined, className = '', style = {} } = config;
+      const { title = undefined, className, style = {} } = config;
 
       return (
         <StickupLayoutItem
           key={groupIndex}
-          className={classNames(className ?? '')}
+          className={classNames(className)}
           style={{ ...(style ?? {}) }}
           title={title}
           content={renderMasterGroupContent(config, groupIndex)}
@@ -329,18 +337,18 @@ const CascadeCompared = memo<
     function renderMaster(): ReactElement {
       const stickupLayoutProps = {
         ref: stickup,
-        className: classNames(`${selectorPrefix}-master-inner`, masterInnerClassName ?? ''),
+        className: classNames(`${selectorPrefix}-master-inner`, masterInnerClassName),
         style: masterInnerStyle ?? {},
-        fixedClassName: classNames(masterStickFixedClassName ?? ''),
+        fixedClassName: classNames(masterStickFixedClassName),
         fixedStyle: masterStickFixedStyle ?? {},
-        innerClassName: classNames(masterStickInnerClassName ?? ''),
+        innerClassName: classNames(masterStickInnerClassName),
         innerStyle: masterStickInnerStyle ?? {},
         onChange: onStickChange,
       };
 
       return (
         <div
-          className={classNames(`${selectorPrefix}-master`, masterClassName ?? '')}
+          className={classNames(`${selectorPrefix}-master`, masterClassName)}
           style={{ ...(masterStyle ?? {}) }}
         >
           <StickupLayout {...stickupLayoutProps}>
@@ -397,9 +405,9 @@ const CascadeCompared = memo<
 
     return (
       <div
-        className={classNames(selectorPrefix, className ?? '')}
+        ref={wrapperRef}
+        className={classNames(selectorPrefix, className)}
         style={{ ...(style ?? {}) }}
-        ref={el}
       >
         {renderIndicator()}
         {renderMaster()}

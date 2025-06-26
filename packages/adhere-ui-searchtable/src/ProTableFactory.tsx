@@ -44,6 +44,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
       this.pathname = this.getPathName();
 
+      this.lastAction = '';
+
+      this.unlisten = null;
+
       // 获取浏览器地址栏上默认的searchQuery和分页参数
       let defaultSearchAndPaginParams = {
         search: {},
@@ -51,10 +55,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         limit: this.getLimit(),
       };
 
-      if (
-        !('openSearchParamsMemory' in (this.props ?? {})) ||
-        ('openSearchParamsMemory' in (this.props ?? {}) && this.props.openSearchParamsMemory)
-      ) {
+      if (this.isUseMemo()) {
         defaultSearchAndPaginParams = this.initSearchAndPaginParams();
       }
 
@@ -92,18 +93,54 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
       // 调用路由监听的方法
       const code = RouteListen.getCode();
+      // 先初始化数据在清空缓存
       !!code && code();
+    }
+
+    componentDidMount() {
+      super.componentDidMount && super.componentDidMount();
+
+      const history = this.props?.history;
+
+      if (history) {
+        this.unlisten = history.listen(() => {
+          this.lastAction = history.action;
+        });
+      }
     }
 
     componentWillUnmount() {
       super.componentWillUnmount && super.componentWillUnmount();
 
-      if (
-        !('openSearchParamsMemory' in this.props) ||
-        ('openSearchParamsMemory' in this.props && this.props.openSearchParamsMemory)
-      ) {
-        // 卸载的时候处理查询和分页参数的缓存
-        this.unMountSearchAndPaginParamsDeal();
+      // 1 -> 2
+      // 保存1的数据
+
+      // 2 -> 3
+      // 保存2的数据
+
+      // 3 <- 2
+      // 清空3
+      // 初始化2
+
+      // 1 2 3  2
+
+      // 清理监听器
+      if (this.unlisten) {
+        this.unlisten();
+      }
+
+      if (this.isUseMemo()) {
+        // 如果是进操作则保存缓存数据
+        if (['push', 'replace'].includes(this?.lastAction?.toLowerCase?.())) {
+          // 卸载的时候处理查询和分页参数的缓存
+          this.unMountSearchAndPaginParamsDeal();
+        }
+        // 如果是出操作则清空缓存数据
+        else {
+          if (searchAndPaginParamsMemo.findByPath(this.pathname)) {
+            searchAndPaginParamsMemo.deleteByPath(this.pathname);
+          }
+        }
       }
     }
 
@@ -216,6 +253,13 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //}
     }
 
+    isUseMemo() {
+      return (
+        !('openSearchParamsMemory' in (this.props ?? {})) ||
+        ('openSearchParamsMemory' in (this.props ?? {}) && this.props.openSearchParamsMemory)
+      );
+    }
+
     /**
      * initSearchAndPaginParams
      * @description - 初始化组件的查询和分页参数
@@ -269,7 +313,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @description 是否开启高级搜索
      * @returns {boolean}
      */
-    hasAdvancedSearch() {
+    hasAdvancedSearch(): boolean {
       return true;
     }
 
@@ -278,7 +322,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @description 序号列是否固定
      * @returns {boolean}
      */
-    hasNumberColumnFixed() {
+    hasNumberColumnFixed(): boolean {
       return true;
     }
 
@@ -287,7 +331,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @description 操作列是否固定
      * @returns {boolean}
      */
-    hasOptionColumnFixed() {
+    hasOptionColumnFixed(): boolean {
       return true;
     }
 
@@ -419,7 +463,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * getLimit
      * @return {number}
      */
-    getLimit() {
+    getLimit(): number {
       return 10;
     }
 

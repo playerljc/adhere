@@ -1,5 +1,5 @@
 import React from 'react';
-import { CascadeComparedHandle, CascadeComparedProps } from './types';
+import type { CascadeComparedHandle, CascadeComparedProps } from './types';
 /**
  * CascadeComparedProps
  * @param props

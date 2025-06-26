@@ -1,11 +1,15 @@
 import { useUpdateEffect } from 'ahooks';
 import classNames from 'classnames';
-import React, { ReactElement, memo, useMemo, useState } from 'react';
+import React, { ReactElement, memo, useMemo, useRef, useState } from 'react';
+
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import type { DisplayNameInternal, StepsSwiperProps } from '../types';
 import Steps from './index';
 
 const selectorPrefix = 'adhere-ui-anthoc-steps-swiper';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * StepsSwiper
@@ -35,6 +39,13 @@ const InternalStepsSwiper = memo<StepsSwiperProps>(
         _visited: _index === initial,
       }));
     }
+
+    const wrapperRef = useRef<HTMLElement | undefined>();
+
+    useTheme<HTMLElement>({
+      elRef: wrapperRef,
+      group: 'normal-hoc',
+    });
 
     const targetStepsProps = useMemo(() => {
       const _props = stepsProps ?? {};
@@ -135,6 +146,8 @@ const InternalStepsSwiper = memo<StepsSwiperProps>(
     const layout = useMemo<ReactElement>(
       () => (
         <div
+          // @ts-ignore
+          rel={wrapperRef}
           className={classNames(
             selectorPrefix,
             [`${selectorPrefix}-layout-${targetItemLayoutMode}`],

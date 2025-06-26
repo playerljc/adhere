@@ -1,0 +1,1 @@
+{"version":3,"file":"Context.js","sources":["Context.js"],"sourcesContent":["import { createContext } from 'react';\nexport var Context = createContext({});\n"],"names":["createContext","Context"],"mappings":"OAASA,aAA4B,KAAP,QACvB,IAAIC,QAAUD,cAAc,EAAE,SAA1BC,OAA2B"}

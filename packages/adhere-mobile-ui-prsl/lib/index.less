@@ -14,7 +14,8 @@
   flex-direction: column;
 
   > .adhere-mobile-ui-prsl-first-loading {
-    padding: 15px;
+    //padding: 15px;
+    padding: var(--first-loading-padding, 15px);
   }
 
   > .adhere-mobile-ui-prsl-header {
@@ -29,8 +30,10 @@
     > .adhere-mobile-ui-prsl-header-extra {
       display: flex;
       flex-shrink: 0;
-      align-items: center;
-      padding-right: 15px;
+      //align-items: center;
+      align-items: var(--header-extra-align-items, center);
+      //padding-right: 15px;
+      padding-right: var(--header-extra-padding-right, 15px);
     }
   }
 

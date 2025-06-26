@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React, { memo, useContext, useLayoutEffect, useRef } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
 import * as TRBLC from './TRBLC';
@@ -21,6 +22,8 @@ const directionProp = {
   },
 };
 const selectorPrefix = 'adhere-ui-split-layout';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * toPoint - 百分数转化为小数
@@ -67,6 +70,12 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
   const changeBaseVal = useRef(0);
   const fixedValue = useRef(0);
   const maxDimension = useRef(0);
+
+  useTheme<HTMLElement>({
+    elRef: el,
+    group: 'normal',
+    displayName: 'SplitLayout',
+  });
 
   /**
    * checked
@@ -399,7 +408,7 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
   return (
     <div
       ref={el}
-      className={classNames(selectorPrefix, `${selectorPrefix}-${direction}`, className ?? '')}
+      className={classNames(selectorPrefix, `${selectorPrefix}-${direction}`, className)}
       style={style ?? {}}
     />
   );

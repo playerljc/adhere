@@ -1,13 +1,16 @@
 import { useUpdateEffect } from 'ahooks';
 import classNames from 'classnames';
-import React, { memo, useCallback, useMemo, useState } from 'react';
+import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 
 import { CalendarModal, CheckList, Modal } from '@baifendian/adhere-mobile-ui-anthoc';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import AdhereQuickRangeDate from '@baifendian/adhere-ui-quick-range-date';
 import type { ConfigItem } from '@baifendian/adhere-ui-quick-range-date/src/types';
 import { DateValue } from '@baifendian/adhere-ui-quick-range-date/src/types';
 
 import type { QuickRangeDateComponent, QuickRangeDateProps } from './types';
+
+const { useTheme } = ConfigProvider;
 
 const selectorPrefix = 'adhere-mobile-ui-quick-range-date';
 
@@ -33,6 +36,8 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
     modalTriggerPromptProps,
     ...adhereQuickRangeDateProps
   }) => {
+    const wrapperRef = useRef<HTMLElement | undefined>();
+
     const [selfValue, setSelfValue] = useState(AdhereQuickRangeDate.sync(value));
 
     const targetConfig = useMemo<ConfigItem[]>(() => {
@@ -201,12 +206,20 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
       ],
     );
 
+    useTheme<HTMLElement>({
+      elRef: wrapperRef,
+      group: 'mobile',
+      displayName: 'QuickRangeDate',
+    });
+
     useUpdateEffect(() => {
       setSelfValue(AdhereQuickRangeDate.sync(value));
     }, [value]);
 
     return (
       <AdhereQuickRangeDate
+        // @ts-ignore
+        ref={wrapperRef}
         className={classNames(selectorPrefix, className ?? '')}
         style={style ?? {}}
         config={targetConfig}

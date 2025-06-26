@@ -32,6 +32,7 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
+    "@baifendian/adhere-ui-configprovider": "^2.11.0",
     "@baifendian/adhere-util-intl": "^2.11.0",
     "ahooks": "^3.8.4",
     "classnames": "^2.5.1",

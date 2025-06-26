@@ -11,22 +11,42 @@
   @adhere-ui-table-grid-layout-table-row-label-font-size: 14px;
 
   &.adhere-ui-table-grid-layout-border {
-    border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-    border-right: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-    border-left: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    //border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    border-top: var(
+      --border-border-top,
+      var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+    );
+    //border-right: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    border-right: var(
+      --border-border-right,
+      var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+    );
+    //border-left: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    border-left: var(
+      --border-border-left,
+      var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+    );
 
     .adhere-ui-table-grid-layout-table {
       tr {
         > td {
-          border-bottom: var(--adhere-line-width) var(--adhere-line-type)
-            var(--adhere-color-border-base);
+          //border-bottom: var(--adhere-line-width) var(--adhere-line-type)
+          //  var(--adhere-color-border-base);
+          border-bottom: var(
+            --table-tr-td-border-bottom,
+            var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+          );
 
           &:not(:last-child) {
-            border-right: var(--adhere-line-width) var(--adhere-line-type)
-              var(--adhere-color-border-base);
+            //border-right: var(--adhere-line-width) var(--adhere-line-type)
+            //  var(--adhere-color-border-base);
+            border-right: var(
+              --table-tr-td-not-last-child-border-right,
+              var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+            );
           }
 
-          &.adhere-ui-table-grid-layout-table-noborder {
+          &.adhere-ui-table-grid-layout-table-no-border {
             border: 0;
           }
         }
@@ -57,16 +77,27 @@
 
     .adhere-ui-table-grid-layout-table-row {
       > .adhere-ui-table-grid-layout-table-row-label {
-        padding-right: 10px;
-        color: var(--adhere-color-text-secondary);
-        font-size: @adhere-ui-table-grid-layout-table-row-label-font-size;
+        //padding-right: 10px;
+        padding-right: var(--table-row-label-padding-right, 10px);
+        //color: var(--adhere-color-text-secondary);
+        color: var(--table-row-label-color, var(--adhere-color-text-secondary));
+        //font-size: @adhere-ui-table-grid-layout-table-row-label-font-size;
+        font-size: var(
+          --table-row-label-font-size,
+          @adhere-ui-table-grid-layout-table-row-label-font-size
+        );
         white-space: nowrap;
         word-break: keep-all;
 
         &.require {
           &::before {
-            margin-right: 5px;
-            color: @adhere-ui-table-grid-layout-table-row-label-require-color;
+            //margin-right: 5px;
+            margin-right: var(--table-row-label-require-before-margin-right, 5px);
+            //color: @adhere-ui-table-grid-layout-table-row-label-require-color;
+            color: var(
+              --table-row-label-require-before-color,
+              @adhere-ui-table-grid-layout-table-row-label-require-color
+            );
             vertical-align: middle;
             content: '*';
           }
@@ -74,7 +105,8 @@
       }
 
       > .adhere-ui-table-grid-layout-table-row-value {
-        color: var(--adhere-color-text-tertiary);
+        //color: var(--adhere-color-text-tertiary);
+        color: var(--table-row-value-color, var(--adhere-color-text-tertiary));
         white-space: normal;
         .adhere-word-break();
 
@@ -93,15 +125,22 @@
 
               > .ant-form-item-explain {
                 &.ant-form-item-explain-connected {
-                  position: absolute;
-                  bottom: -24px;
-                  left: 0;
+                  //position: absolute;
+                  position: var(
+                    --table-row-value-ant-form-item-explain-connected-position,
+                    absolute
+                  );
+                  //bottom: -24px;
+                  bottom: var(--table-row-value-ant-form-item-explain-connected-bottom, -24px);
+                  //left: 0;
+                  left: var(--table-row-value-ant-form-item-explain-connected-left, 0);
                 }
               }
             }
           }
 
-          margin-bottom: 0;
+          //margin-bottom: 0;
+          margin-bottom: var(--table-row-value-ant-form-item-margin-bottom, 0);
         }
 
         .ant-select,
@@ -115,11 +154,19 @@
     &.parity {
       .adhere-ui-table-grid-layout-table-row {
         &.odd {
-          background-color: @adhere-ui-table-grid-layout-table-row-even-color;
+          //background-color: @adhere-ui-table-grid-layout-table-row-even-color;
+          background-color: var(
+            --parity-table-row-odd-background-color,
+            @adhere-ui-table-grid-layout-table-row-even-color
+          );
         }
 
         &.even {
-          background-color: @adhere-ui-table-grid-layout-table-row-odd-color;
+          //background-color: @adhere-ui-table-grid-layout-table-row-odd-color;
+          background-color: var(
+            --parity-table-row-even-background-color,
+            @adhere-ui-table-grid-layout-table-row-even-color
+          );
         }
       }
     }
@@ -127,7 +174,11 @@
     &.bordered {
       .adhere-ui-table-grid-layout-table-row {
         > .adhere-ui-table-grid-layout-table-row-label {
-          background-color: @adhere-ui-table-grid-layout-table-row-even-color;
+          //background-color: @adhere-ui-table-grid-layout-table-row-even-color;
+          background-color: var(
+            --bordered-table-row-label-background-color,
+            @adhere-ui-table-grid-layout-table-row-even-color
+          );
         }
       }
     }
@@ -135,11 +186,13 @@
     &.densitydefault {
       .adhere-ui-table-grid-layout-table-row {
         > .adhere-ui-table-grid-layout-table-row-label {
-          padding: 20px;
+          //padding: 20px;
+          padding: var(--densitydefault-table-row-label-padding, 20px);
         }
 
         > .adhere-ui-table-grid-layout-table-row-value {
-          padding: 20px;
+          //padding: 20px;
+          padding: var(--densitydefault-table-row-value-padding, 20px);
         }
       }
     }
@@ -147,11 +200,13 @@
     &.densitymiddle {
       .adhere-ui-table-grid-layout-table-row {
         > .adhere-ui-table-grid-layout-table-row-label {
-          padding: 10px;
+          //padding: 10px;
+          padding: var(--densitymiddle-table-row-label-padding, 10px);
         }
 
         > .adhere-ui-table-grid-layout-table-row-value {
-          padding: 10px;
+          //padding: 10px;
+          padding: var(--densitymiddle-table-row-value-padding, 10px);
         }
       }
     }
@@ -159,11 +214,13 @@
     &.densitysmall {
       .adhere-ui-table-grid-layout-table-row {
         > .adhere-ui-table-grid-layout-table-row-label {
-          padding: 0;
+          //padding: 0;
+          padding: var(--densitysmall-table-row-label-padding, 0);
         }
 
         > .adhere-ui-table-grid-layout-table-row-value {
-          padding: 0;
+          //padding: 0;
+          padding: var(--densitysmall-table-row-value-padding, 0);
         }
       }
     }
@@ -177,20 +234,28 @@
         .adhere-ui-table-grid-layout-table {
           .adhere-ui-table-grid-layout-table-row {
             > .adhere-ui-table-grid-layout-table-row-label {
-              text-align: left;
+              //text-align: left;
+              text-align: var(--mobile-table-row-label-text-align, left);
             }
 
             > .adhere-ui-table-grid-layout-table-row-value {
-              padding-top: 0;
+              //padding-top: 0;
+              padding-top: var(--mobile-table-row-value-padding-top, 0);
 
               .adm-list-item.adm-form-item {
-                padding-left: 0;
+                //padding-left: 0;
+                padding-left: var(--mobile-table-row-value-adm-form-item-padding-left, 0);
 
                 > .adm-list-item-content {
-                  border-top: 0;
+                  //border-top: 0;
+                  border-top: var(--mobile-table-row-value-adm-list-item-content-border-top, 0);
 
                   > .adm-list-item-content-main {
-                    padding-top: 0;
+                    //padding-top: 0;
+                    border-top: var(
+                      --mobile-table-row-value-adm-list-item-content-main-border-top,
+                      0
+                    );
                   }
                 }
               }
@@ -199,8 +264,12 @@
             &:not(:last-child) {
               > .adhere-ui-table-grid-layout-table-row-value {
                 .adm-list-item.adm-form-item {
-                  border-bottom: var(--adhere-line-width) var(--adhere-line-type)
-                    var(--adhere-color-border-base);
+                  //border-bottom: var(--adhere-line-width) var(--adhere-line-type)
+                  //  var(--adhere-color-border-base);
+                  border-bottom: var(
+                    --mobile-table-row-not-child-table-row-value-adm-form-item-border-bottom,
+                    var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+                  );
                 }
               }
             }

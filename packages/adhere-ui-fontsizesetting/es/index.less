@@ -2,47 +2,61 @@
 
 .adhere-ui-font-size-setting {
   position: relative;
-  width: 100%;
-  height: 40px;
+  //width: 100%;
+  width: var(--width, 100%);
+  //height: 40px;
+  height: var(--height, 40px);
 
   > .adhere-ui-font-size-setting-range-wrap {
     position: relative;
     height: 100%;
-    margin: 0 40px;
+    //margin: 0 40px;
+    margin: var(--setting-range-wrap-margin, 0 40px);
 
     > .adhere-ui-font-size-setting-separated-tool {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      height: 8px;
-      margin: 0 7px 0 5px;
+      //height: 8px;
+      height: var(--setting-separated-tool-height, 8px);
+      //margin: 0 7px 0 5px;
+      margin: var(--setting-separated-tool-margin, 0 7px 0 5px);
 
       > .adhere-ui-font-size-setting-separated {
         position: relative;
-        width: 2px;
+        //width: 2px;
+        width: var(--setting-separated-width, 2px);
         height: 100%;
-        background: var(--adhere-color-split-base);
+        //background: var(--adhere-color-split-base);
+        background: var(--setting-separated-background, var(--adhere-color-split-base));
 
         > span {
           position: absolute;
-          top: -20px;
-          left: -4px;
-          width: 2em;
-          color: var(--adhere-color-primary);
-          font-size: var(--adhere-font-size-sm);
+          //top: -20px;
+          top: var(--setting-separated-span-top, -20px);
+          //left: -4px;
+          left: var(--setting-separated-span-left, -4px);
+          //width: 2em;
+          width: var(--setting-separated-span-width, 2em);
+          //color: var(--adhere-color-primary);
+          color: var(--setting-separated-span-color, var(--adhere-color-primary));
+          //font-size: var(--adhere-font-size-sm);
+          font-size: var(--setting-separated-span-font-size, var(--adhere-font-size-sm));
         }
 
         &:last-child {
           > span {
-            left: -12px;
+            //left: -12px;
+            left: var(--setting-separated-span-last-child-left, -12px);
           }
         }
       }
     }
 
     > .ant-slider {
-      margin-top: 0;
+      //margin-top: 0;
+      margin-top: var(--setting-range-wrap-ant-slider-margin-top, 0);
     }
   }
 
@@ -50,20 +64,25 @@
   &::after {
     position: absolute;
     top: 50%;
-    margin-top: -17px;
-    color: var(--adhere-color-primary);
-    font-size: var(--adhere-font-size-base);
+    //margin-top: -17px;
+    margin-top: var(--before-after-margin-top, -17px);
+    //color: var(--adhere-color-primary);
+    color: var(--before-after-color, var(--adhere-color-primary));
+    //font-size: var(--adhere-font-size-base);
+    font-size: var(--before-after-font-size, var(--adhere-font-size-base));
     font-family: iconfont;
     content: '';
   }
 
   &::before {
-    left: 2px;
+    //left: 2px;
+    left: var(--before-left, 2px);
     content: '\e60d';
   }
 
   &::after {
-    right: 2px;
+    //right: 2px;
+    right: var(--before-right, 2px);
     content: '\e60e';
   }
 }

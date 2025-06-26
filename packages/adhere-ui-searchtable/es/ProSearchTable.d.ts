@@ -6,10 +6,12 @@ export declare const SearchAndPaginParamsMemo: any;
 declare const ProSearchTable: {
     new (props: any): {
         [x: string]: any;
+        componentDidMount(): void;
         componentWillUnmount(): void;
         onSubTableChange(pagination: any, filters: any, sorter: any): void;
         onSearchPanelCollapseBefore(): void;
         unMountSearchAndPaginParamsDeal(): void;
+        isUseMemo(): any;
         initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
         hasAdvancedSearch(): boolean;
         hasNumberColumnFixed(): boolean;

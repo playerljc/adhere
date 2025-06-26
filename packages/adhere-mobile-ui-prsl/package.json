@@ -36,6 +36,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
     "@baifendian/adhere-mobile-ui-anthoc": "^2.11.0",
+    "@baifendian/adhere-ui-configprovider": "^2.11.0",
     "@baifendian/adhere-ui-popup": "^2.11.0",
     "@baifendian/adhere-ui-scrollload": "^2.11.0",
     "@baifendian/adhere-util": "^2.11.0",

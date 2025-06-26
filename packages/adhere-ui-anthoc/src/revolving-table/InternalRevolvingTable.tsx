@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import merge from 'lodash.merge';
-import React, { CSSProperties, forwardRef, memo, useContext, useMemo } from 'react';
+import React, { CSSProperties, forwardRef, memo, useContext, useMemo, useRef } from 'react';
 import type { PropsWithoutRef, RefAttributes } from 'react';
 import { Autoplay, Mousewheel } from 'swiper/modules';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
@@ -14,6 +14,8 @@ import { getValue } from '../util';
 const selectorPrefix = 'adhere-ui-anthoc-revolving-table';
 
 const defaultSlidesPerView = 5;
+
+const { useTheme } = ConfigProvider;
 
 const InternalRevolvingTable = memo<
   PropsWithoutRef<RevolvingTableProps<any, any>> & RefAttributes<SwiperRef>
@@ -43,7 +45,14 @@ const InternalRevolvingTable = memo<
       },
       ref,
     ) => {
+      const wrapperRef = useRef<HTMLElement | undefined>();
+
       const { media } = useContext(ConfigProvider.Context);
+
+      useTheme<HTMLElement>({
+        elRef: wrapperRef,
+        group: 'normal-hoc',
+      });
 
       const targetDataSource = useMemo(() => dataSource ?? [], [dataSource]);
 
@@ -90,6 +99,8 @@ const InternalRevolvingTable = memo<
 
       return (
         <div
+          // @ts-ignore
+          rel={wrapperRef}
           className={classNames(
             selectorPrefix,
             `${selectorPrefix}-size-${size ?? 'middle'}`,

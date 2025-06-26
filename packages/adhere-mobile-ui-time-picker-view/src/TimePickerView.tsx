@@ -2,11 +2,15 @@ import { PickerView, PickerViewProps } from 'antd-mobile';
 import type { PickerColumnItem } from 'antd-mobile/es/components/picker-view/picker-view';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useRef } from 'react';
+
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import type { Format, TimePickerViewProps } from './types';
 
 const selectorPrefix = 'adhere-mobile-ui-time-picker-view';
+
+const { useTheme } = ConfigProvider;
 
 const timeColumns = [
   Array.from({ length: 24 })
@@ -108,6 +112,14 @@ const TimePickerView = memo<TimePickerViewProps>(
       return map.get(format) as Date;
     }
 
+    const wrapperRef = useRef<HTMLDivElement | undefined>();
+
+    useTheme<HTMLElement>({
+      elRef: wrapperRef,
+      group: 'mobile',
+      displayName: 'TimePickerView',
+    });
+
     const targetDefaultValue = useMemo<PickerViewProps['defaultValue']>(
       () => dataToPickerViewValue(defaultValue ?? new Date()),
       [defaultValue],
@@ -121,7 +133,12 @@ const TimePickerView = memo<TimePickerViewProps>(
     const columns = useMemo<PickerColumnItem[][] | undefined>(() => timeMap.get(format), [format]);
 
     return (
-      <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+      <div
+        // @ts-ignore
+        ref={wrapperRef}
+        className={classNames(selectorPrefix, className)}
+        style={style ?? {}}
+      >
         <PickerView
           {...pickerViewProps}
           columns={columns ?? []}

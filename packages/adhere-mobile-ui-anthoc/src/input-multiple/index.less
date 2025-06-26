@@ -5,17 +5,20 @@
   }
 
   .adhere-mobile-ui-anthoc-input-multiple-tag-wrapper {
-    margin-top: 10px;
+    //margin-top: 10px;
+    margin-top: var(--input-multiple-tag-wrapper-margin-top, 10px);
   }
 }
 
 .adhere-mobile-ui-anthoc-input-multiple-render-trigger {
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  //flex-wrap: wrap;
+  flex-wrap: var(--input-multiple-render-trigger-flex-wrap, wrap);
+  //gap: 10px;
+  gap: var(--input-multiple-render-trigger-gap, 10px);
 }
 
 .adhere-mobile-ui-anthoc-input-multiple-placeholder {
-  color: var(--adm-color-light);
+  //color: var(--adm-color-light);
+  color: var(--input-multiple-placeholder-color, var(--adm-color-light));
 }
-

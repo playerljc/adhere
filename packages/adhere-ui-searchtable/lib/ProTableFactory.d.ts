@@ -4,6 +4,7 @@ import type { ColumnTypeExt } from './types';
 declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
     new (props: any): {
         [x: string]: any;
+        componentDidMount(): void;
         componentWillUnmount(): void;
         /**
          * onSubTableChange
@@ -22,6 +23,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * @description - 卸载的时候处理查询和分页参数的缓存
          */
         unMountSearchAndPaginParamsDeal(): void;
+        isUseMemo(): any;
         /**
          * initSearchAndPaginParams
          * @description - 初始化组件的查询和分页参数

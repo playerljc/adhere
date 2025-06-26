@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import React, {
-  PropsWithoutRef,
-  RefAttributes,
+  type PropsWithoutRef,
+  type RefAttributes,
   forwardRef,
   memo,
   useImperativeHandle,
@@ -10,6 +10,7 @@ import React, {
   useRef,
 } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import { ResizeObserver } from '@juggle/resize-observer';
 
 import StickupLayoutItem from './Item';
@@ -21,6 +22,8 @@ import type {
 } from './types';
 
 const selectorPrefix = 'adhere-ui-stickup-layout';
+
+const { useTheme } = ConfigProvider;
 
 const InternalStickupLayout = memo<
   PropsWithoutRef<StickupLayoutProps> & RefAttributes<StickupLayoutHandle>
@@ -46,6 +49,12 @@ const InternalStickupLayout = memo<
     const headerEls = useRef<NodeList>();
     const preScrollObj = useRef<IndexItem | null>(null);
     const maskEl = useRef<HTMLDivElement>();
+
+    useTheme<HTMLElement>({
+      elRef: el,
+      group: 'normal',
+      displayName: 'StickupLayout',
+    });
 
     /**
      * updateInterval
@@ -330,17 +339,17 @@ const InternalStickupLayout = memo<
     }, []);
 
     return (
-      <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}} ref={el}>
+      <div ref={el} className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
         <div
+          ref={fixedEl}
           className={classNames(`${selectorPrefix}-fixed`, fixedClassName ?? '')}
           style={fixedStyle ?? {}}
-          ref={fixedEl}
         />
 
         <div
+          ref={innerEl}
           className={classNames(`${selectorPrefix}-inner`, innerClassName ?? '')}
           style={innerStyle ?? {}}
-          ref={innerEl}
         >
           {children}
         </div>

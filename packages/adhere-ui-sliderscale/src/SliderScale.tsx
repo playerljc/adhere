@@ -1,13 +1,17 @@
 import classNames from 'classnames';
-import React, { ReactElement, memo, useCallback, useLayoutEffect, useRef } from 'react';
+import React, { type ReactElement, memo, useCallback, useLayoutEffect, useRef } from 'react';
 
-import { SliderScaleProps } from './types';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+
+import type { SliderScaleProps } from './types';
 
 const selectorPrefix = 'adhere-ui-slider-scale';
 
+const { useTheme } = ConfigProvider;
+
 const SliderScale = memo<SliderScaleProps>((props) => {
   const {
-    className = '',
+    className,
     style = {},
     min = 0,
     max = 100,
@@ -20,6 +24,12 @@ const SliderScale = memo<SliderScaleProps>((props) => {
   const el = useRef<HTMLDivElement>(null);
   const rangeEl = useRef<HTMLInputElement>(null);
   const preValue = useRef<string | number | undefined>('');
+
+  useTheme<HTMLElement>({
+    elRef: el,
+    group: 'normal',
+    displayName: 'SliderScale',
+  });
 
   const renderScale = useCallback(() => {
     const itResult: ReactElement[] = [];
@@ -116,7 +126,7 @@ const SliderScale = memo<SliderScaleProps>((props) => {
   }, [min, max, step, value, interval]);
 
   return (
-    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}} ref={el}>
+    <div ref={el} className={classNames(selectorPrefix, className)} style={style ?? {}}>
       <div className={`${selectorPrefix}-scale`}>{renderScale()}</div>
 
       <input

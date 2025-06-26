@@ -1,12 +1,16 @@
-import { CheckboxOptionType } from 'antd/es/checkbox';
+import type { CheckboxOptionType } from 'antd/es/checkbox';
 import classNames from 'classnames';
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useRef } from 'react';
+
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import CheckAllWrapper from '../CheckAllWrapper';
 import type { DisplayNameInternal, HorizontalCheckAllCheckboxProps } from '../types';
 import HorizontalCheckbox from './HorizontalCheckbox';
 
 const selectorPrefix = 'adhere-ui-ant-hoc-check-all-check-box';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * HorizontalCheckAllCheckbox
@@ -27,6 +31,8 @@ const InternalHorizontalCheckAllCheckbox = memo<HorizontalCheckAllCheckboxProps>
     render,
     ...props
   }) => {
+    const wrapperRef = useRef<HTMLElement | undefined>();
+
     const CheckAllOrigin = useMemo(
       () => (
         <CheckAllWrapper
@@ -51,8 +57,17 @@ const InternalHorizontalCheckAllCheckbox = memo<HorizontalCheckAllCheckboxProps>
 
     const ChildrenOrigin = useMemo(() => <HorizontalCheckbox {...props} />, [props]);
 
+    useTheme<HTMLElement>({
+      elRef: wrapperRef,
+      group: 'normal-hoc',
+    });
+
     return (
-      <div className={selectorPrefix}>
+      <div
+        // @ts-ignore
+        ref={wrapperRef}
+        className={selectorPrefix}
+      >
         {render?.(CheckAllOrigin, ChildrenOrigin) ?? (
           <>
             <div

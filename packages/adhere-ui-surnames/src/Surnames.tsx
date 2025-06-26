@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, {
-  PropsWithoutRef,
-  RefAttributes,
+  type PropsWithoutRef,
+  type RefAttributes,
   forwardRef,
   memo,
   useCallback,
@@ -10,11 +10,14 @@ import React, {
   useRef,
 } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Util from '@baifendian/adhere-util';
 
-import { Position, SurnamesProps, SurnamesRefHandle } from './types';
+import type { Position, SurnamesProps, SurnamesRefHandle } from './types';
 
 const selectorPrefix = 'adhere-ui-surnames';
+
+const { useTheme } = ConfigProvider;
 
 const DURATION = 100;
 
@@ -22,11 +25,11 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
   forwardRef<SurnamesRefHandle, SurnamesProps>((props, ref) => {
     const {
       position = 'right',
-      className = '',
+      className,
       style = {},
-      indexClassName = '',
+      indexClassName,
       indexStyle = {},
-      contentClassName = '',
+      contentClassName,
       contentStyle,
       indexes = [],
       dataSource = [],
@@ -48,6 +51,12 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
     const startX = useRef<number>(0);
     const curIndexName = useRef('');
     const indexPositionMap = useRef<Position[]>([]);
+
+    useTheme<HTMLElement>({
+      elRef: el,
+      group: 'normal',
+      displayName: 'Surnames',
+    });
 
     function initEvent() {
       if (Util.isTouch()) {
@@ -456,28 +465,28 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
 
     return (
       <div
+        ref={el}
         className={classNames(
           selectorPrefix,
           `${selectorPrefix}-config-position-${position}`,
           className ?? '',
         )}
         style={style ?? {}}
-        ref={el}
       >
         <div className={`${selectorPrefix}-highlighted`} ref={highlightedEl} />
 
         <div
+          ref={contentEl}
           className={classNames(`${selectorPrefix}-content`, contentClassName)}
           style={contentStyle ?? {}}
-          ref={contentEl}
         >
           {renderContent()}
         </div>
 
         <div
+          ref={indexEl}
           className={classNames(`${selectorPrefix}-index`, indexClassName)}
           style={indexStyle ?? {}}
-          ref={indexEl}
         >
           <div className={`${selectorPrefix}-index-inner`} ref={indexInnerEl}>
             {renderIndex()}

@@ -1,13 +1,16 @@
 import { TabBar } from 'antd-mobile';
 import classNames from 'classnames';
 import type { FC } from 'react';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 // @ts-ignore
 import { useHistory } from '@ctsj/router';
 
 import type { SystemTabBarNavProps, SystemTabBarProps } from '../types';
+
+const { useTheme } = ConfigProvider;
 
 const { VerticalFlexLayout } = FlexLayout;
 
@@ -40,37 +43,54 @@ const TabBarNav: FC<SystemTabBarNavProps> = (props) => {
 
 const SystemTabBar = memo<SystemTabBarProps>((props) => {
   const {
-    className = '',
-    style = {},
-    mainClassName = '',
-    mainStyle = {},
-    bottomClassName = '',
-    bottomStyle = {},
+    className,
+    style,
+    wrapperClassName,
+    wrapperStyle,
+    mainClassName,
+    mainStyle,
+    bottomClassName,
+    bottomStyle,
     children,
     activeKey,
     ...tabBarNavProps
   } = props;
 
+  const wrapperRef = useRef<HTMLElement | undefined>();
+
   const history = useHistory();
 
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'mobile',
+    displayName: 'Tabs',
+  });
+
   return (
-    <VerticalFlexLayout
-      className={classNames(selectorPrefix, className ?? '')}
+    <div
+      // @ts-ignore
+      ref={wrapperRef}
+      className={classNames(selectorPrefix, className)}
       style={style ?? {}}
-      mainClassName={mainClassName ?? ''}
-      mainStyle={mainStyle ?? {}}
-      bottomClassName={bottomClassName ?? ''}
-      bottomStyle={bottomStyle ?? {}}
-      renderMain={children}
-      renderBottom={
-        <TabBarNav
-          {...tabBarNavProps}
-          activeKey={
-            activeKey !== history.location.pathname ? history.location.pathname : activeKey
-          }
-        />
-      }
-    />
+    >
+      <VerticalFlexLayout
+        className={classNames(selectorPrefix, wrapperClassName)}
+        style={wrapperStyle ?? {}}
+        mainClassName={mainClassName}
+        mainStyle={mainStyle ?? {}}
+        bottomClassName={bottomClassName}
+        bottomStyle={bottomStyle ?? {}}
+        renderMain={children}
+        renderBottom={
+          <TabBarNav
+            {...tabBarNavProps}
+            activeKey={
+              activeKey !== history.location.pathname ? history.location.pathname : activeKey
+            }
+          />
+        }
+      />
+    </div>
   );
 });
 

@@ -1,6 +1,7 @@
 import { ListSize } from 'antd/es/list';
 import PropTypes from 'prop-types';
-import React, { ReactElement, ReactNode, RefObject } from 'react';
+import React, { type ReactElement, type ReactNode, type RefObject } from 'react';
+import { ConfigProviderContext } from '@baifendian/adhere-ui-configprovider/es/types';
 import type { Metas, SearchListProps, SearchListState } from './types';
 declare const Search: typeof import("@baifendian/adhere-ui-searchtable/es/Search").default;
 export declare const selectorPrefix = "adhere-ui-search-table";
@@ -17,6 +18,8 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
     static defaultProps: any;
     static propTypes: any;
     protected listWrapRef: RefObject<HTMLDivElement>;
+    protected childrenWrapRef: RefObject<HTMLDivElement>;
+    protected configProviderContextValue: ConfigProviderContext | undefined;
     /**
      * isShowNumber
      * @description 列表是否显示序号
@@ -68,6 +71,7 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
     abstract renderListHeader(): ReactNode;
     constructor(props: any);
     componentDidMount(): void;
+    componentWillReceiveProps(nextProps: any): void;
     componentWillUnmount(): void;
     /**
      * onBodyKeyup
@@ -207,9 +211,9 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
     /**
      * renderChildren
      * @description renderChildren
-     * @return {ReactNode}
+     * @return {ReactElement}
      */
-    renderChildren(): React.JSX.Element;
+    renderChildren(): ReactElement;
     /**
      * render
      * @protected

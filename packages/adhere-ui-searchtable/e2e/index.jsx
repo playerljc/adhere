@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 
 import e2e from '@baifendian/adhere-e2e';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 import { createLoggerMiddleware } from '@ctsj/state/lib/middleware';
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
@@ -67,11 +68,30 @@ const ProSearchStateTableImpl = lazy(() =>
 e2e.PC({
   children: (
     <Provider store={store}>
-      <div style={{ height: 1000 }}>
-        <Suspense fallback={<div>loading</div>}>
-          <ProSearchStateTableImpl pagination={true} FieldGeneratorToDict={FieldGeneratorToDict} />
-        </Suspense>
-      </div>
+      <ConfigProvider
+        theme={{
+          components: {
+            normal: {
+              SearchTable: {
+                SearchWrapperGapMarginBottom: '100px',
+              },
+            },
+          },
+        }}
+      >
+        {() => {
+          return (
+            <div style={{ height: 1000 }}>
+              <Suspense fallback={<div>loading</div>}>
+                <ProSearchStateTableImpl
+                  pagination={true}
+                  FieldGeneratorToDict={FieldGeneratorToDict}
+                />
+              </Suspense>
+            </div>
+          );
+        }}
+      </ConfigProvider>
     </Provider>
   ),
 });

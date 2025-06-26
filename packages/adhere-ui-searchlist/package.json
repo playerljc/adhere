@@ -37,6 +37,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
     "@baifendian/adhere-ui-conditionalrender": "^2.11.0",
+    "@baifendian/adhere-ui-configprovider": "^2.11.0",
     "@baifendian/adhere-ui-contourblock": "^2.11.0",
     "@baifendian/adhere-ui-css": "^2.11.0",
     "@baifendian/adhere-ui-datedisplay": "^2.11.0",

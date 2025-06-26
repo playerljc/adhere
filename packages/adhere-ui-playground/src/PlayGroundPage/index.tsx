@@ -1,13 +1,15 @@
 import classNames from 'classnames';
 import React, {
-  PropsWithoutRef,
-  ReactElement,
-  RefAttributes,
+  MutableRefObject,
+  type PropsWithoutRef,
+  type ReactElement,
+  type RefAttributes,
   forwardRef,
   memo,
   useContext,
 } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Space from '@baifendian/adhere-ui-space';
 
 import AnchorNavigation from '../AnchorNavigation';
@@ -20,6 +22,8 @@ import PropsSection from './PropsSection';
 import Section from './Section';
 
 const selectPrefix = 'adhere-ui-playground-page';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * PlayGroundPage
@@ -46,6 +50,12 @@ const InternalPlayGroundPage = memo<
     } = props;
 
     const { scrollEl } = useContext(PlayGroundPageContext);
+
+    useTheme<HTMLElement>({
+      elRef: ref as MutableRefObject<HTMLElement | null>,
+      group: 'normal',
+      displayName: 'Playground',
+    });
 
     function getAnchors() {
       return children

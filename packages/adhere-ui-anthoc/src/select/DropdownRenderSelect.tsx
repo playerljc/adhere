@@ -93,9 +93,9 @@ const InternalDropdownRenderSelect = memo<DropdownRenderSelectProps>(
       <Select
         options={filterOptions}
         filterOption={() => Object.is(dropdownRenderElement.current, currentOriginNode.current)}
-        dropdownRender={onDropdownRender}
+        popupRender={onDropdownRender}
         open={open}
-        onDropdownVisibleChange={setOpen}
+        onOpenChange={setOpen}
         onSearch={(v) => {
           setInputValue(v?.trim?.());
           props?.onSearch?.(v?.trim?.());

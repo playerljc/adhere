@@ -32,6 +32,7 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
+    "@baifendian/adhere-ui-configprovider": "^2.11.0",
     "@baifendian/adhere-ui-hooks": "^2.11.0",
     "@types/iscroll": "^5.2.5",
     "classnames": "^2.5.1",

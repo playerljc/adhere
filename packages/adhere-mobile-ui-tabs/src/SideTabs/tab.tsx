@@ -10,7 +10,7 @@ const Tab: FC<SystemSideTabProps> = (props) => {
   const { className = '', style = {}, children } = props;
 
   return (
-    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+    <div className={classNames(selectorPrefix, className)} style={style ?? {}}>
       {children}
     </div>
   );

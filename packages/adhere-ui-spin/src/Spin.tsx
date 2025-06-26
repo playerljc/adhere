@@ -3,9 +3,12 @@ import React, { memo, useRef } from 'react';
 import { Spinner } from 'spin.js';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Resource from '@baifendian/adhere-util-resource';
 
 import type { SpinProps } from './types';
+
+const { useTheme } = ConfigProvider;
 
 const selectorPrefix = 'adhere-ui-spin';
 
@@ -17,9 +20,17 @@ const Spin = memo<SpinProps>((props) => {
     size = 'default',
   } = props;
 
+  const wrapperRef = useRef<HTMLElement | undefined>(undefined);
+
   const spinRef = useRef<Spinner | null>(null);
 
   const dotRef = useRef<HTMLElement | null>(null);
+
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'normal',
+    displayName: 'Spin',
+  });
 
   const createSpin = () => {
     if (spinRef.current) {
@@ -73,7 +84,12 @@ const Spin = memo<SpinProps>((props) => {
   return (
     <ConditionalRender conditional={spinning}>
       {() => (
-        <div className={selectorPrefix} style={{ zIndex: zIndex }}>
+        <div
+          // @ts-ignore
+          ref={wrapperRef}
+          className={selectorPrefix}
+          style={{ zIndex: zIndex }}
+        >
           <span ref={dotRef} className={`${selectorPrefix}-dot`}></span>
           {text && <div className={`${selectorPrefix}-text`}>{text}</div>}
         </div>

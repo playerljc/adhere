@@ -1,5 +1,5 @@
 import React from 'react';
-import { PushProps, SlideLayoutHandle } from './types';
+import type { PushProps, SlideLayoutHandle } from './types';
 /**
  * Push
  * @param props

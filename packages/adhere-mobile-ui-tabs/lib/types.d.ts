@@ -55,6 +55,8 @@ export interface SystemSideTabProps {
 export interface SystemTabBarProps {
     className?: string;
     style?: CSSProperties;
+    wrapperClassName?: string;
+    wrapperStyle?: CSSProperties;
     mainClassName?: string;
     mainStyle?: CSSProperties;
     bottomClassName?: string;

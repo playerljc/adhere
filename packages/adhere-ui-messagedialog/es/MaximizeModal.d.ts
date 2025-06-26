@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModalDialogProps } from './types';
+import type { ModalDialogProps } from './types';
 export declare const selectorPrefix = "adhere-ui-message-dialog-maximize-modal";
 /**
  * MaximizeModalDialog

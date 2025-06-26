@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { forwardRef, memo, useCallback, useContext, useMemo } from 'react';
+import React, { MutableRefObject, forwardRef, memo, useCallback, useContext, useMemo } from 'react';
 import type { PropsWithoutRef, RefAttributes } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -20,17 +20,25 @@ import type { FlexLayoutComponent, FlexLayoutProps } from './types';
 
 export const selectorPrefix = 'adhere-ui-flex-layout';
 
+const { useTheme } = ConfigProvider;
+
 /**
  * InternalFlexLayout
  * @param {FlexLayoutProps} props
  * @param ref
  * @constructor
  */
-const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes<any>>(
-  forwardRef<any, FlexLayoutProps>((props, ref) => {
+const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes<HTMLElement>>(
+  forwardRef<HTMLElement, FlexLayoutProps>((props, ref) => {
     const { className, style, direction, gutter = [0, 0], children, ...attrs } = props;
 
     const { media } = useContext(ConfigProvider.Context);
+
+    useTheme<HTMLElement>({
+      elRef: ref as MutableRefObject<HTMLElement | null>,
+      group: 'normal',
+      displayName: 'FlexLayout',
+    });
 
     const targetDirection = useMemo(() => direction ?? 'vertical', [direction]);
 
@@ -107,7 +115,13 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
           children,
         }}
       >
-        <div ref={ref} {...attrs} className={classList} style={styleList}>
+        <div
+          // @ts-ignore
+          ref={ref}
+          {...attrs}
+          className={classList}
+          style={styleList}
+        >
           {children}
         </div>
       </FlexContext.Provider>

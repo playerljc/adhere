@@ -1,6 +1,8 @@
 import classNames from 'classnames';
-import React, { ReactNode, forwardRef, useImperativeHandle, useRef } from 'react';
+import React, { type ReactNode, forwardRef, useImperativeHandle, useRef } from 'react';
 import ReactDOM, { Root } from 'react-dom/client';
+
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import CircularMenuFactory from './CircularMenu/factory';
 import { ProviderContext } from './ContextMenuContext';
@@ -16,6 +18,8 @@ import type {
 
 const selectorPrefix = 'adhere-ui-context-menu';
 
+const { useTheme } = ConfigProvider;
+
 let renderToWrapper: (children: () => ReactNode) => ReactNode;
 
 const ContextMenuComponentFunction = forwardRef<
@@ -24,7 +28,15 @@ const ContextMenuComponentFunction = forwardRef<
 >((props, ref) => {
   const { data = [], config, el } = props;
 
+  const wrapperRef = useRef<HTMLElement | undefined>();
+
   const menuIns = useRef<MenuRefHandle>();
+
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'normal',
+    displayName: 'ContextMenu',
+  });
 
   function onClick(e) {
     e.stopPropagation();
@@ -67,6 +79,8 @@ const ContextMenuComponentFunction = forwardRef<
       }}
     >
       <div
+        // @ts-ignore
+        ref={wrapperRef}
         className={classNames(selectorPrefix)}
         style={{ zIndex: 9999 * 2 }}
         onClick={onClick}

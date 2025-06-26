@@ -1,16 +1,27 @@
 import { Button, Modal } from 'antd';
-import React, { memo, useCallback, useMemo } from 'react';
+import React, { memo, useCallback, useMemo, useRef } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { ModalDialogProps } from './types';
+import type { ModalDialogProps } from './types';
 
 export const selectorPrefix = 'adhere-ui-message-dialog';
+
+const { useTheme } = ConfigProvider;
 
 const ModalDialog = memo<ModalDialogProps>((props) => {
   const { config, closeBtn, close, open, children } = props;
 
   const { footer = [], centered = true, ...rest } = config;
+
+  const wrapperRef = useRef<HTMLElement | undefined>();
+
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'normal',
+    displayName: 'MessageDialog',
+  });
 
   /**
    * renderCloseBtn
@@ -59,16 +70,21 @@ const ModalDialog = memo<ModalDialogProps>((props) => {
   const onCancel = useCallback(() => close?.(), []);
 
   return (
-    <Modal
-      centered={centered}
-      wrapClassName={selectorPrefix}
-      onCancel={onCancel}
-      open={open}
-      {...rest}
-      footer={footerNode}
+    <div
+      // @ts-ignore
+      ref={wrapperRef}
     >
-      {children}
-    </Modal>
+      <Modal
+        centered={centered}
+        wrapClassName={selectorPrefix}
+        onCancel={onCancel}
+        open={open}
+        {...rest}
+        footer={footerNode}
+      >
+        {children}
+      </Modal>
+    </div>
   );
 });
 

@@ -1,9 +1,13 @@
 import classNames from 'classnames';
-import React, { createContext, memo, useContext, useRef } from 'react';
+import React, { MutableRefObject, createContext, memo, useContext, useRef } from 'react';
+
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import { ScrollLayoutContextType, ScrollLayoutProps } from './types';
 
 const selectorPrefix = 'adhere-ui-flex-layout-scroll-layout';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * ScrollLayoutContext
@@ -30,16 +34,22 @@ export const useScrollLayout = () => {
 const ScrollLayout = memo<ScrollLayoutProps>((props) => {
   const { children, className, style, scrollY, ...attrs } = props;
 
-  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'normal',
+    displayName: 'FlexLayout',
+  });
 
   return (
     <ScrollLayoutContext.Provider
       value={{
-        getEl: () => wrapRef?.['current'],
+        getEl: () => wrapperRef?.['current'],
       }}
     >
       <div
-        ref={wrapRef}
+        ref={wrapperRef}
         {...attrs}
         className={classNames(selectorPrefix, className ?? '')}
         style={{ overflowY: scrollY ? 'auto' : 'hidden', ...(style ?? {}) }}

@@ -1,5 +1,6 @@
 import { Spin } from 'antd';
-import React, { memo, useCallback } from 'react';
+import classNames from 'classnames';
+import React, { memo, useCallback, useRef } from 'react';
 
 import {
   CaretDownOutlined,
@@ -7,6 +8,7 @@ import {
   EnterOutlined,
   LoadingOutlined,
 } from '@ant-design/icons';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Intl from '@baifendian/adhere-util-intl';
 
 import ReplyInfo from '../Reply/Info';
@@ -16,6 +18,8 @@ import ListStandard from './ListStandard';
 
 const selectorPrefix = 'adhere-ui-comment';
 
+const { useTheme } = ConfigProvider;
+
 /**
  * Comment
  * @param props
@@ -24,6 +28,8 @@ const selectorPrefix = 'adhere-ui-comment';
  */
 const Comment = memo<CommentProps>((props) => {
   const {
+    className,
+    style,
     listProps,
     commentDataKeys = {
       current: 'current',
@@ -69,6 +75,14 @@ const Comment = memo<CommentProps>((props) => {
     local = 'zh',
     emojiPickerProps,
   } = props;
+
+  const wrapperRef = useRef<HTMLElement | undefined>();
+
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'normal',
+    displayName: 'Comment',
+  });
 
   const renderList = useCallback(
     (data) => (
@@ -174,17 +188,24 @@ const Comment = memo<CommentProps>((props) => {
   );
 
   return (
-    <ListStandard
-      listProps={listProps}
-      dataKeys={commentDataKeys}
-      limit={commentLimit}
-      renderList={renderList}
-      renderLoading={renderLoading}
-      fetchData={fetchCommentData}
-      renderEmpty={renderEmpty}
-      renderFirstLoading={renderFirstLoading}
-      flexLayoutProps={flexLayoutProps}
-    />
+    <div
+      // @ts-ignore
+      ref={wrapperRef}
+      className={classNames(selectorPrefix, className)}
+      style={style ?? {}}
+    >
+      <ListStandard
+        listProps={listProps}
+        dataKeys={commentDataKeys}
+        limit={commentLimit}
+        renderList={renderList}
+        renderLoading={renderLoading}
+        fetchData={fetchCommentData}
+        renderEmpty={renderEmpty}
+        renderFirstLoading={renderFirstLoading}
+        flexLayoutProps={flexLayoutProps}
+      />
+    </div>
   );
 });
 

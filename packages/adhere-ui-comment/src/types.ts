@@ -21,6 +21,8 @@ export type Local =
   | string;
 
 export interface CommentProps {
+  className?: string;
+  style?: CSSProperties;
   fetchCommentData?: (params?: any) => Promise<any>;
   commentDataKeys?: {
     current: string;

@@ -4,11 +4,10 @@ import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, Tab
 import PropTypes from 'prop-types';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React from 'react';
-import type { ConfigProviderContext } from '@baifendian/adhere-ui-configprovider/es/types';
-import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
+import type { ConfigProviderContext, ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
 import ColumnResizable, { SearchTableResizableTitle } from './Extension/ColumnResizable';
 import Search from './Search';
-import { CellConfigReducer, ColumnTypeExt, RowConfig, RowConfigReducer, SearchTableProps, SearchTableState, TableRowSelectionExt } from './types';
+import type { CellConfigReducer, ColumnTypeExt, RowConfig, RowConfigReducer, SearchTableProps, SearchTableState, TableRowSelectionExt } from './types';
 import { TableDensity } from './types';
 export declare const selectorPrefix = "adhere-ui-search-table";
 export declare const SearchTableContext: React.Context<{
@@ -58,6 +57,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     protected cellConfigReducers: CellConfigReducer[];
     protected tableRowComponentReducers: string[];
     protected tableCellComponentReducers: string[];
+    protected childrenWrapRef: RefObject<HTMLDivElement>;
     /**
      * isShowNumber
      * @description 表格是否显示序号

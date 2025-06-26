@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { ReactElement, memo, useContext, useMemo } from 'react';
+import React, { ReactElement, memo, useContext, useMemo, useRef } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -22,6 +22,8 @@ import type {
 } from './types';
 
 export const selectorPrefix = 'adhere-ui-table-grid-layout';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * renderHorizontal
@@ -76,7 +78,7 @@ const renderHorizontal: RenderHorizontal = (params) => {
       Array.from({ length: columnCount - columnsCount })
         .fill(0)
         .forEach(() => {
-          tdJSXChildren.push(<td className={`${selectorPrefix}-table-noborder`} />);
+          tdJSXChildren.push(<td className={`${selectorPrefix}-table-no-border`} />);
         });
     }
 
@@ -207,8 +209,8 @@ const renderVertical: RenderVertical = (data, rowCountRef) => {
       Array.from({ length: fillCount })
         .fill(0)
         .forEach(() => {
-          tdLabelJSXS.push(<td className={`${selectorPrefix}-table-noborder`} />);
-          tdValueJSXS.push(<td className={`${selectorPrefix}-table-noborder`} />);
+          tdLabelJSXS.push(<td className={`${selectorPrefix}-table-no-border`} />);
+          tdValueJSXS.push(<td className={`${selectorPrefix}-table-no-border`} />);
         });
     }
 
@@ -471,6 +473,8 @@ function getRenderDetail(
  */
 const InternalTableGridLayout = memo<TableGridLayoutProps>(
   ({ data, className, style, ...props }) => {
+    const wrapperRef = useRef<HTMLElement | undefined>();
+
     const targetData = useMemo(
       () =>
         (data ?? [])
@@ -484,8 +488,19 @@ const InternalTableGridLayout = memo<TableGridLayoutProps>(
 
     const configProvider = useContext(ConfigProvider.Context);
 
+    useTheme<HTMLElement>({
+      elRef: wrapperRef,
+      group: 'normal',
+      displayName: 'TableGridLayout',
+    });
+
     return (
-      <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+      <div
+        // @ts-ignore
+        ref={wrapperRef}
+        className={classNames(selectorPrefix, className ?? '')}
+        style={style ?? {}}
+      >
         {renderGridSearchFormGroup(targetData, props, configProvider.media)}
       </div>
     );

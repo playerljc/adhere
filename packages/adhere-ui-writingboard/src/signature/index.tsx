@@ -1,8 +1,8 @@
 import { Button } from 'antd';
 import classNames from 'classnames';
 import React, {
-  PropsWithoutRef,
-  RefAttributes,
+  type PropsWithoutRef,
+  type RefAttributes,
   forwardRef,
   memo,
   useCallback,
@@ -10,6 +10,7 @@ import React, {
   useRef,
 } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import MessageDialog from '@baifendian/adhere-ui-messagedialog';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -23,6 +24,8 @@ import SignatureCore from './SignatureCore';
 
 const selectorPrefix = 'adhere-ui-signature';
 
+const { useTheme } = ConfigProvider;
+
 /**
  * Signature
  * @param props
@@ -33,6 +36,14 @@ const InternalSignature = memo<PropsWithoutRef<SignatureProps> & RefAttributes<S
   forwardRef<SignatureHandle, SignatureProps>(
     ({ className, style, value, onChange, modalProps, coreProps }, ref) => {
       const coreRef = useRef<SignatureCoreHandle>(null);
+
+      const wrapperRef = useRef<HTMLElement | undefined>();
+
+      useTheme<HTMLElement>({
+        elRef: wrapperRef,
+        group: 'normal',
+        displayName: 'WritingBoard',
+      });
 
       const renderMask = useCallback(() => {
         return (
@@ -95,7 +106,12 @@ const InternalSignature = memo<PropsWithoutRef<SignatureProps> & RefAttributes<S
       }));
 
       return (
-        <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+        <div
+          //@ts-ignore
+          ref={wrapperRef}
+          className={classNames(selectorPrefix, className ?? '')}
+          style={style ?? {}}
+        >
           {renderMask()}
           {renderInner()}
         </div>

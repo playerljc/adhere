@@ -2,16 +2,17 @@ import init from '@baifendian/adhere-ui-css';
 
 import { useUpdateEffect, useUpdateLayoutEffect } from 'ahooks';
 import classNames from 'classnames';
-import React, { createContext, memo, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useContext, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Intl from '@baifendian/adhere-util-intl';
 import Resource from '@baifendian/adhere-util-resource';
 
+import { Context } from './Context';
+import themeFunction from './theme';
 import type { ConfigProviderComponent, ConfigProviderContext, ConfigProviderProps } from './types';
-
-export const Context = createContext<ConfigProviderContext>({} as ConfigProviderContext);
+import useTheme from './useTheme';
 
 const { useForceUpdate } = Hooks;
 
@@ -24,7 +25,7 @@ const selectorPrefix = 'adhere-ui-config-provider';
  */
 const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
   const {
-    intl: { lang, locales, prefix, mainLanguage, extraLibLocales = {} },
+    intl,
     theme,
     media,
     children,
@@ -36,26 +37,65 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
 
   const wrapperELRef = useRef<HTMLElement | null>(null);
 
+  const context = useContext(Context);
+
+  const targetIntl = useMemo<ConfigProviderProps['intl']>(() => {
+    const lang = intl?.lang ?? context?.intl?.lang;
+
+    const locales = intl?.locales ?? context?.intl?.locales;
+
+    const prefix = intl?.prefix ?? context?.intl?.prefix ?? '';
+
+    const mainLanguage = intl?.mainLanguage ?? context?.intl?.mainLanguage;
+
+    const extraLibLocales = intl?.extraLibLocales ?? context?.intl?.extraLibLocales;
+
+    return {
+      lang,
+      locales,
+      prefix,
+      mainLanguage,
+      extraLibLocales,
+    };
+  }, [context]);
+
+  const targetTheme = useMemo(() => {
+    return theme ?? context?.theme;
+  }, [context]);
+
+  const targetMedia = useMemo(() => {
+    return media ?? context?.media;
+  }, [context]);
+
+  const targetRouter = useMemo(() => {
+    return router ?? context?.router;
+  }, [context]);
+
+  const targetPublicPath = useMemo(() => {
+    return publicPath ?? context?.publicPath;
+  }, [context]);
+
   const [isIntlInit, setIntlInit] = useState(false);
 
   const providerValue = useMemo<ConfigProviderContext>(
     () => ({
-      intl: {
-        lang,
-        prefix,
-        locales: locales ?? {},
-      },
       media: {
         ...{
           isUseMedia: false,
           designWidth: 192,
         },
-        ...(media ?? {}),
+        ...(targetMedia ?? {}),
       },
-      router: router ?? 'browser',
-      publicPath: publicPath ?? '/',
+      router: targetRouter ?? 'browser',
+      theme: { ...(targetTheme ?? {}) },
+      intl: {
+        lang: targetIntl?.lang,
+        prefix: targetIntl?.prefix,
+        locales: targetIntl?.locales ?? {},
+      },
+      publicPath: targetPublicPath ?? '/',
     }),
-    [lang, prefix, locales, media],
+    [targetIntl, targetMedia, targetRouter, targetTheme, targetPublicPath],
   );
 
   const forceUpdate = useForceUpdate();
@@ -80,11 +120,11 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
   function initIntl() {
     return Intl.init(
       {
-        prefix: prefix || 'local',
-        currentLocale: lang,
-        locales: locales ?? {},
-        mainLanguage: mainLanguage || 'zh_CN',
-        extraLibLocales,
+        prefix: targetIntl?.prefix || 'local',
+        currentLocale: targetIntl?.lang ?? '',
+        locales: targetIntl?.locales ?? {},
+        mainLanguage: targetIntl?.mainLanguage || 'zh_CN',
+        extraLibLocales: targetIntl?.extraLibLocales,
       },
       Intl.isInit(),
     );
@@ -92,32 +132,33 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
 
   useUpdateEffect(() => {
     initIntl().then(() => {
-      Resource?.Dict?.value?.LocalsMoment?.value[lang]();
-
-      forceUpdate();
+      if (targetIntl?.lang) {
+        Resource?.Dict?.value?.LocalsMoment?.value[targetIntl?.lang]();
+        forceUpdate();
+      }
     });
-  }, [lang, locales, prefix, mainLanguage]);
+  }, [targetIntl]);
 
   useLayoutEffect(() => {
     initIntl().then(() => {
-      Resource?.Dict?.value?.LocalsMoment?.value[lang]();
-
-      setIntlInit(true);
-
-      if (onIntlInit) onIntlInit();
+      if (targetIntl?.lang) {
+        Resource?.Dict?.value?.LocalsMoment?.value[targetIntl?.lang]();
+        setIntlInit(true);
+        if (onIntlInit) onIntlInit();
+      }
     });
   }, []);
 
   useUpdateLayoutEffect(() => {
-    if (isIntlInit && wrapperELRef.current) {
-      const targetTheme = Object.fromEntries(
-        Object.entries(theme).filter(([key]) => key !== 'components'),
+    if (isIntlInit && wrapperELRef.current && !!targetTheme) {
+      const baseTheme = Object.fromEntries(
+        Object.entries(targetTheme).filter(([key]) => key !== 'components'),
       ) as { [prop: string]: string };
 
       // 初始化css变量
-      init(targetTheme, wrapperELRef.current as HTMLElement, media);
+      init(baseTheme, wrapperELRef.current as HTMLElement, targetMedia);
     }
-  }, [theme, isIntlInit]);
+  }, [targetTheme, targetMedia, isIntlInit]);
 
   return (
     <ConditionalRender conditional={isIntlInit}>
@@ -129,6 +170,10 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
 const ConfigProvider = InternalConfigProvider as ConfigProviderComponent;
 
 ConfigProvider.Context = Context;
+
+ConfigProvider.useTheme = useTheme;
+
+ConfigProvider.theme = themeFunction;
 
 ConfigProvider.displayName = 'ConfigProvider';
 

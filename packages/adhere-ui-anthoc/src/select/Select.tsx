@@ -1,9 +1,13 @@
 import type { SelectProps } from 'antd';
 import { Select } from 'antd';
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
+
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import type { SelectHOCComponent } from '../types';
 import { createFactory, getOptionsValue } from '../util';
+
+const { useTheme } = ConfigProvider;
 
 const InternalSelect: SelectHOCComponent = createFactory<
   SelectProps & {
@@ -26,12 +30,16 @@ const InternalSelect: SelectHOCComponent = createFactory<
 );
 
 const SelectHOC: SelectHOCComponent = ({
+  wrapperClassName,
+  wrapperStyle,
   options,
   defaultValue,
   isHideInvalidValue = true,
   value,
   ...restProps
 }) => {
+  const wrapperRef = useRef<HTMLElement | undefined>();
+
   const targetValue = useMemo(
     () => (isHideInvalidValue ? getOptionsValue(value, options) : defaultValue),
     [value, options, isHideInvalidValue],
@@ -42,13 +50,25 @@ const SelectHOC: SelectHOCComponent = ({
     [defaultValue, options, isHideInvalidValue],
   );
 
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'normal-hoc',
+  });
+
   return (
-    <InternalSelect
-      {...restProps}
-      defaultValue={targetDefaultValue}
-      value={targetValue}
-      options={options}
-    />
+    <div
+      // @ts-ignore
+      ref={wrapperRef}
+      className={wrapperClassName}
+      style={wrapperStyle ?? {}}
+    >
+      <InternalSelect
+        {...restProps}
+        defaultValue={targetDefaultValue}
+        value={targetValue}
+        options={options}
+      />
+    </div>
   );
 };
 

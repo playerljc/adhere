@@ -1,12 +1,16 @@
 import classNames from 'classnames';
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useRef } from 'react';
 import CountUp from 'react-countup';
+
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import codes from './codes';
 import currenciesMap from './currenciesMap';
 import type { CurrencySymbolComponent, CurrencySymbolProps } from './types';
 
 const selectorPrefix = 'adhere-ui-currency-symbol';
+
+const { useTheme } = ConfigProvider;
 
 /**
  * InternalCurrencySymbol
@@ -32,6 +36,8 @@ const InternalCurrencySymbol = memo<CurrencySymbolProps>(
     suffix,
     align,
   }) => {
+    const wrapperRef = useRef<HTMLElement | undefined>();
+
     const targetCode = useMemo(() => code ?? 'CNY', [code]);
 
     const targetAmount = useMemo(() => amount ?? 0, [amount]);
@@ -48,8 +54,16 @@ const InternalCurrencySymbol = memo<CurrencySymbolProps>(
 
     const targetAlign = useMemo(() => align ?? 'bottom', [align]);
 
+    useTheme<HTMLElement>({
+      elRef: wrapperRef,
+      group: 'normal',
+      displayName: 'CurrencySymbol',
+    });
+
     return (
       <span
+        // @ts-ignore
+        ref={wrapperRef}
         className={classNames(selectorPrefix, className, `${selectorPrefix}-${targetAlign}`, {
           [`${selectorPrefix}-bold`]: targetBold,
           [`${selectorPrefix}-danger`]: targetDanger,

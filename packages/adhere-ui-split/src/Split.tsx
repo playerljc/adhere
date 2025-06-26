@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { CSSProperties, memo, useContext, useMemo } from 'react';
+import React, { type CSSProperties, memo, useContext, useMemo, useRef } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
@@ -9,6 +9,8 @@ import type { SplitComponent, SplitProps } from './types';
 
 const selectorPrefix = 'adhere-ui-split';
 
+const { useTheme } = ConfigProvider;
+
 /**
  * Split
  * @param props
@@ -16,6 +18,8 @@ const selectorPrefix = 'adhere-ui-split';
  */
 const InternalSplit = memo<SplitProps>((props) => {
   const { className = '', style, direction = 'vertical', size = 10, horizontalFit = false } = props;
+
+  const wrapperRef = useRef<HTMLElement | undefined>();
 
   const { media } = useContext(ConfigProvider.Context);
 
@@ -44,8 +48,16 @@ const InternalSplit = memo<SplitProps>((props) => {
     };
   }, [direction, size]);
 
+  useTheme<HTMLElement>({
+    elRef: wrapperRef,
+    group: 'normal',
+    displayName: 'Split',
+  });
+
   return (
     <div
+      // @ts-ignore
+      ref={wrapperRef}
       className={classNames(selectorPrefix, className ?? '')}
       style={{ ...targetStyle, ...(style ?? {}) }}
     />

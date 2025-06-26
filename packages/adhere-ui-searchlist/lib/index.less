@@ -37,8 +37,10 @@
 
               > .ant-list-pagination {
                 flex-shrink: 0;
-                margin-top: 24px;
-                margin-bottom: 24px;
+                //margin-top: 24px;
+                margin-top: var(--table-wrapper-ant-list-pagination-margin-top, 24px);
+                //margin-bottom: 24px;
+                margin-bottom: var(--table-wrapper-ant-list-pagination-margin-bottom, 24px);
               }
             }
           }
@@ -54,7 +56,8 @@
   justify-content: flex-start;
 
   > .adhere-ui-search-table-implement-list-meta-title {
-    margin-right: 16px;
+    //margin-right: 16px;
+    margin-right: var(--implement-list-meta-title-margin-right, 16px);
     word-break: break-all;
     cursor: pointer;
   }
@@ -82,10 +85,15 @@
 .adhere-ui-search-table-implement-list-item-horizontal {
   display: flex;
   align-items: center;
-  padding: 12px 0;
+  //padding: 12px 0;
+  padding: var(--implement-list-item-vertical-horizontal-padding, 12px 0);
 
   &.split {
-    border-block-end: var(--adhere-line-width) var(--adhere-line-type) rgb(5 5 5 / 6%);
+    //border-block-end: var(--adhere-line-width) var(--adhere-line-type) rgb(5 5 5 / 6%);
+    border-block-end: var(
+      --implement-list-item-vertical-horizontal-split-/border-block-end,
+      var(--adhere-line-width) var(--adhere-line-type) rgb(5 5 5 / 6%)
+    );
   }
 
   .adhere-ui-search-table-implement-list-item-vertical-body,
@@ -108,12 +116,17 @@
 }
 
 .adhere-ui-search-table-implement-list-selection {
-  background-color: rgba(var(--adhere-color-primary-rgb), 0.3);
+  //background-color: rgba(var(--adhere-color-primary-rgb), 0.3);
+  background-color: var(
+    --implement-list-selection-background-color,
+    rgba(var(--adhere-color-primary-rgb), 0.3)
+  );
 }
 
 .adhere-ui-search-table-implement-list-item-content {
   &.horizontal {
-    max-width: 50%;
+    //max-width: 50%;
+    max-width: var(--implement-list-item-content-horizontal-max-width, 50%);
     overflow: hidden;
     .adhere-word-break();
   }
@@ -121,11 +134,13 @@
 
 .adhere-ui-search-table-implement-list-row-selection-checkbox-wrap {
   flex-shrink: 0;
-  margin: 0 20px;
+  //margin: 0 20px;
+  margin: var(--implement-list-row-selection-checkbox-wrap-margin, 0 20px);
 }
 
 .adhere-ui-search-table-implement-list-expandable-trigger {
-  margin-right: 20px;
+  //margin-right: 20px;
+  margin-right: var(--implement-list-expandable-trigger-margin-right, 20px);
 
   &:hover {
     cursor: pointer;
@@ -134,30 +149,43 @@
 
 .adhere-ui-search-table-implement-list-number-wrap {
   flex-shrink: 0;
-  margin: 0 20px;
+  //margin: 0 20px;
+  margin: var(--implement-list-number-wrap-margin, 0 20px);
 
   .adhere-ui-search-table-implement-list-number {
-    color: var(--adhere-color-text-secondary);
-    font-weight: bold;
-    font-size: 16px;
+    //color: var(--adhere-color-text-secondary);
+    color: var(--implement-list-number-color, var(--adhere-color-text-secondary));
+    //font-weight: bold;
+    font-weight: var(--implement-list-number-font-weight, bold);
+    //font-size: 16px;
+    font-size: var(--implement-list-number-font-size, 16px);
   }
 }
 
 .adhere-ui-search-table-implement-list-row-selection-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 16px;
-  padding: 12px 24px;
-  background-color: rgb(61 62 64 / 2%);
-  border-radius: var(--adhere-border-radius-base);
+  //margin-bottom: 16px;
+  margin-bottom: var(--implement-list-row-selection-header-margin-bottom, 16px);
+  //padding: 12px 24px;
+  padding: var(--implement-list-row-selection-header-padding, 12px 24px);
+  //background-color: rgb(61 62 64 / 2%);
+  background-color: var(--implement-list-row-selection-header-background-color, rgb(61 62 64 / 2%));
+  //border-radius: var(--adhere-border-radius-base);
+  border-radius: var(
+    --implement-list-row-selection-header-border-radius,
+    var(--adhere-border-radius-base)
+  );
 
   > .adhere-ui-search-table-implement-list-row-selection-header-cancel {
-    color: var(--adhere-color-primary);
+    //color: var(--adhere-color-primary);
+    color: var(--implement-list-row-selection-header-cancel-color, var(--adhere-color-primary));
   }
 }
 
 .adhere-ui-search-table-implement-list-card-title {
   display: flex;
-  gap: 10px;
+  //gap: 10px;
+  gap: var(--implement-list-card-title-gap, 10px);
   align-items: center;
 }

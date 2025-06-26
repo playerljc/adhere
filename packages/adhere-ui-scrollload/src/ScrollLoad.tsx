@@ -1,8 +1,8 @@
 import { useUpdateEffect } from 'ahooks';
 import classNames from 'classnames';
 import React, {
-  PropsWithoutRef,
-  RefAttributes,
+  type PropsWithoutRef,
+  type RefAttributes,
   forwardRef,
   memo,
   useCallback,
@@ -11,11 +11,14 @@ import React, {
   useRef,
 } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Intl from '@baifendian/adhere-util-intl';
 
 import type { ScrollLoadComponent, ScrollLoadProps, ScrollLoadRefHandle } from './types';
 
 const selectorPrefix = 'adhere-ui-scroll-load';
+
+const { useTheme } = ConfigProvider;
 
 const EMPTY = 'empty';
 const HIDE_EMPTY = 'hide_empty';
@@ -27,13 +30,13 @@ const InternalScrollLoad = memo<
 >(
   forwardRef<ScrollLoadRefHandle, ScrollLoadProps>((props, ref) => {
     const {
-      className = '',
+      className,
       style = {},
-      loadClassName = '',
+      loadClassName,
       loadStyle = {},
-      emptyClassName = '',
+      emptyClassName,
       emptyStyle = {},
-      errorClassName = '',
+      errorClassName,
       errorStyle = {},
       getScrollContainer,
       distance = 50,
@@ -45,7 +48,7 @@ const InternalScrollLoad = memo<
       onErrorClick,
       disabled = false,
       children,
-      ...attrs
+      ...rest
     } = props;
 
     const currentStatus = useRef<string | undefined>(NORMAL);
@@ -54,6 +57,12 @@ const InternalScrollLoad = memo<
     const loadEl = useRef<HTMLDivElement | null>(null);
     const emptyEl = useRef<HTMLDivElement | null>(null);
     const errorEl = useRef<HTMLDivElement | null>(null);
+
+    useTheme<HTMLElement>({
+      elRef: el,
+      group: 'normal',
+      displayName: 'ScrollLoad',
+    });
 
     function _getScrollContainer() {
       return getScrollContainer ? getScrollContainer() : el.current;
@@ -235,13 +244,13 @@ const InternalScrollLoad = memo<
 
     return (
       <div
-        {...attrs}
+        ref={el}
+        {...rest}
         className={classNames(selectorPrefix, className)}
         style={{
           ...(style ?? {}),
           overflowY: _getScrollContainer() === el.current ? 'auto' : 'initial',
         }}
-        ref={el}
       >
         {children}
         {_renderLoading()}
