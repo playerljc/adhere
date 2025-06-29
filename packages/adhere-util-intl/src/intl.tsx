@@ -1,9 +1,9 @@
-import intl, { ReactIntlUniversalMessageDescriptor } from 'react-intl-universal';
+import intl, { type ReactIntlUniversalMessageDescriptor } from 'react-intl-universal';
 
-import ar_EG from './locales/ar_EG';
-import en_US from './locales/en_US';
-import pt_PT from './locales/pt_PT';
-import zh_CN from './locales/zh_CN';
+// import ar_EG from './locales/ar_EG';
+// import en_US from './locales/en_US';
+// import pt_PT from './locales/pt_PT';
+// import zh_CN from './locales/zh_CN';
 
 // 是否进行过初始化
 let isInit = false;
@@ -74,17 +74,24 @@ export function getLocales(): object {
   return { ...mainLocales };
 }
 
+type localsType = {
+  [key: string]: localValue;
+};
+
+type localValue = (string | { [key: string]: string })[];
+
+type langType = string;
+
 export interface Init {
   prefix: string;
-  currentLocale: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
-  mainLanguage: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
-  locales: {
-    [key: string]: string[];
-  };
+  // 当前语言
+  currentLocale: langType /*'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;*/;
+  // 主语言
+  mainLanguage: langType; //'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
+  // 国际化词条
+  locales: localsType;
   // 对adhere的国际化扩展
-  extraLibLocales?: {
-    [key: string]: string[];
-  };
+  // extraLibLocales?: localsType;
 }
 
 export default {
@@ -93,13 +100,13 @@ export default {
    * @param {String} - prefix
    * @param reload 是否是重新载入
    */
-  init(
+  async init(
     {
       prefix = 'local',
       currentLocale = 'zh_CN',
       mainLanguage = 'zh_CN',
       locales = {},
-      extraLibLocales = {},
+      // extraLibLocales = {},
       ...rest
     }: Init,
     reload: boolean = false,
@@ -110,75 +117,96 @@ export default {
       });
     }
 
-    // 库的国际化资源
-    const libLocales = {
-      en_US: [...en_US],
-      zh_CN: [...zh_CN],
-      pt_PT: [...pt_PT],
-      ar_EG: [...ar_EG],
-      // 还需要加入
-      ...extraLibLocales,
-    };
+    /**
+     *  lib
+     * [
+     *   {
+     *      key1:'',
+     *      key2:'',
+     *   }
+     * ]
+     *
+     * user
+     * [
+     *   '1111',
+     *   {
+     *     w: '我'
+     *   }
+     * ]
+     *
+     *
+     */
 
-    const duplicateIndex: number[] = [];
+    // adhere的国际化词条
+    // const libLocales: localsType = {
+    //   en_US: [...en_US],
+    //   zh_CN: [...zh_CN],
+    //   pt_PT: [...pt_PT],
+    //   ar_EG: [...ar_EG],
+    //   // 外部加入其他语言
+    //   ...extraLibLocales,
+    // };
 
-    libLocales[mainLanguage].forEach((_word: string, _index: number) => {
-      if (locales[mainLanguage].includes(_word)) {
-        duplicateIndex.push(_index);
-      }
-    });
+    // const duplicateIndex: number[] = [];
+
+    // libLocales[mainLanguage].forEach((_word, _index: number) => {
+    //   if (locales[mainLanguage].includes(_word)) {
+    //     duplicateIndex.push(_index);
+    //   }
+    // });
 
     // 如果用户重写了国际化，使用用户的
-    const libLocaleKeys = Object.keys(libLocales);
-    libLocaleKeys.forEach((_libLocaleKey) => {
-      libLocales[_libLocaleKey] = libLocales[_libLocaleKey].filter(
-        (_t: any, _index: number) => !duplicateIndex.includes(_index),
-      );
-    });
+    // const libLocaleKeys = Object.keys(libLocales);
+    // libLocaleKeys.forEach((_libLocaleKey) => {
+    //   libLocales[_libLocaleKey] = libLocales[_libLocaleKey].filter(
+    //     (_t, _index) => !duplicateIndex.includes(_index),
+    //   );
+    // });
 
     // 最终的国际化资源
-    const targetLocales = libLocaleKeys.reduce((_targetLocales, _currentLibLocalKey) => {
-      _targetLocales[_currentLibLocalKey] = [
-        ...(libLocales[_currentLibLocalKey] ?? []),
-        ...(locales[_currentLibLocalKey] ?? []),
-      ];
+    // const targetLocales: localsType = libLocaleKeys.reduce(
+    //   (_targetLocales, _currentLibLocalKey) => {
+    //     _targetLocales[_currentLibLocalKey] = [
+    //       ...(libLocales[_currentLibLocalKey] ?? []),
+    //       ...(locales[_currentLibLocalKey] ?? []),
+    //     ];
+    //
+    //     return _targetLocales;
+    //   },
+    //   {},
+    // );
 
-      return _targetLocales;
-    }, {});
-
+    const keys = Object.keys(locales);
     // 整合用户的locales
-    libLocaleKeys.forEach((_libLocalKey) => {
+    keys.forEach((_key) => {
       // 每一种语言都需要处理成k,v对象
-      const local = targetLocales[_libLocalKey];
+      const local = locales[_key];
 
       const stringItems: string[] = [];
       const objEntry: any[] = [];
 
-      local.forEach((_item: string) => {
+      local.forEach((_item) => {
         if (typeof _item === 'string') stringItems.push(_item);
         else objEntry.push(_item);
       });
 
-      mainLocales[_libLocalKey] = getLocal(prefix, stringItems);
+      mainLocales[_key] = getLocal(prefix, stringItems);
 
       objEntry.forEach((_entry) => {
-        Object.keys(_entry).forEach((_key) => {
-          mainLocales[_libLocalKey][_key] = _entry[_key];
+        Object.keys(_entry).forEach((_property) => {
+          mainLocales[_key][_property] = _entry[_property];
         });
       });
     });
 
-    return intl
-      .init({
-        currentLocale,
-        locales: mainLocales,
-        ...rest,
-      })
-      .then(() => {
-        // @ts-ignore
-        initIntlMap(mainLocales[mainLanguage]);
-        isInit = true;
-      });
+    await intl.init({
+      currentLocale,
+      locales: mainLocales,
+      ...rest,
+    });
+    // @ts-ignore
+    initIntlMap(mainLocales[mainLanguage]);
+    isInit = true;
   },
 
   /**
@@ -283,7 +311,7 @@ export default {
    * @param prefix
    * @param data
    */
-  getLocal(prefix: string = 'local', data: Array<string>): object {
+  getLocal(prefix: string = 'local', data: string[]): object {
     return getLocal(prefix, data);
   },
 };

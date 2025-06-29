@@ -1,4 +1,4 @@
-import { ReactIntlUniversalMessageDescriptor } from 'react-intl-universal';
+import { type ReactIntlUniversalMessageDescriptor } from 'react-intl-universal';
 /**
  * getLocal
  * @description 生成k,v的对象
@@ -12,16 +12,18 @@ export declare function getLocal(prefix: string | undefined, data: Array<string>
  * @return object
  */
 export declare function getLocales(): object;
+type localsType = {
+    [key: string]: localValue;
+};
+type localValue = (string | {
+    [key: string]: string;
+})[];
+type langType = string;
 export interface Init {
     prefix: string;
-    currentLocale: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
-    mainLanguage: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
-    locales: {
-        [key: string]: string[];
-    };
-    extraLibLocales?: {
-        [key: string]: string[];
-    };
+    currentLocale: langType;
+    mainLanguage: langType;
+    locales: localsType;
 }
 declare const _default: {
     /**
@@ -29,7 +31,7 @@ declare const _default: {
      * @param {String} - prefix
      * @param reload 是否是重新载入
      */
-    init({ prefix, currentLocale, mainLanguage, locales, extraLibLocales, ...rest }: Init, reload?: boolean): Promise<any>;
+    init({ prefix, currentLocale, mainLanguage, locales, ...rest }: Init, reload?: boolean): Promise<any>;
     /**
      * isInit
      * @description 是否进行了初始化
@@ -88,6 +90,6 @@ declare const _default: {
      * @param prefix
      * @param data
      */
-    getLocal(prefix: string | undefined, data: Array<string>): object;
+    getLocal(prefix: string | undefined, data: string[]): object;
 };
 export default _default;

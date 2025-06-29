@@ -51,6 +51,7 @@ declare const _default: {
     required: string;
     description: string;
     return_value: string;
+    back: string;
     collapse: string;
     expand: string;
     parameter: string;
