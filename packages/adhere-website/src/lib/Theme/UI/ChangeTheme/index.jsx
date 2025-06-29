@@ -8,8 +8,6 @@ import { changeTheme, getThemeKey, getThemeKeys } from '../../Util';
 
 import styles from './index.less';
 
-const { Option } = Select;
-
 /**
  * ChangeTheme
  * @param className
@@ -32,13 +30,11 @@ export default ({ className, style }) => {
           setTheme(t);
           changeTheme(t);
         }}
-      >
-        {getThemeKeys().map((key) => (
-          <Option key={key} value={key}>
-            {key}
-          </Option>
-        ))}
-      </Select>
+        options={getThemeKeys().map((key) => ({
+          name: key,
+          value: key,
+        }))}
+      />
     </div>
   );
 };

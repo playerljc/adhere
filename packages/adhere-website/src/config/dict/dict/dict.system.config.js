@@ -1,17 +1,23 @@
-// import dayjs from 'dayjs';
-// import zhCN from 'antd/es/locale/zh_CN';
-// import enUS from 'antd/es/locale/en_US';
-// import ptPT from 'antd/lib/locale/pt_PT';
-import 'dayjs/locale/en-ca';
+import arEG from 'antd/locale/ar_EG';
+import enUS from 'antd/locale/en_US';
+import ptPT from 'antd/locale/pt_PT';
+import zhCN from 'antd/locale/zh_CN';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ar';
+import 'dayjs/locale/en';
 import 'dayjs/locale/pt';
 import 'dayjs/locale/zh-cn';
 
 import { Dict } from '@baifendian/adhere';
+import arEGAdhere from '@baifendian/adhere-util-intl/es/locales/ar_EG';
+import enUSAdhere from '@baifendian/adhere-util-intl/es/locales/en_US';
+import ptPTAdhere from '@baifendian/adhere-util-intl/es/locales/pt_PT';
+import zhCNAdhere from '@baifendian/adhere-util-intl/es/locales/zh_CN';
 
-import ar_EG from '../../../locales/ar_EG';
-import en_US from '../../../locales/en_US';
-import pt_PT from '../../../locales/pt_PT';
-import zh_CN from '../../../locales/zh_CN';
+import ar_EG from '@/locales/ar_EG';
+import en_US from '@/locales/en_US';
+import pt_PT from '@/locales/pt_PT';
+import zh_CN from '@/locales/zh_CN';
 
 export default {
   initStatic() {
@@ -19,38 +25,56 @@ export default {
     Dict.handlers.SystemFontFamily = () => '"Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体"';
 
     Dict.handlers.SystemDefaultLang = () => 'zh_CN';
+
     Dict.handlers.SystemLang = () => ({
       zh_CN: {
         name: 'ZH',
         code: 'zh_CN',
-        icon: '',
-        module: zh_CN,
         direction: 'ltr',
-        dayjsCode: 'zh',
+        icon: '',
+        antd: zhCN,
+        dayjs: () => {
+          dayjs.locale('zh-cn');
+        },
+        adhere: zhCNAdhere,
+        module: zh_CN,
       },
       en_US: {
         name: 'EN',
         code: 'en_US',
-        icon: '',
-        module: en_US,
         direction: 'ltr',
-        dayjsCode: 'en',
+        icon: '',
+        antd: enUS,
+        dayjs: () => {
+          dayjs.locale('en');
+        },
+        adhere: enUSAdhere,
+        module: en_US,
       },
       pt_PT: {
         name: 'PT',
         code: 'pt_PT',
-        icon: '',
-        module: pt_PT,
         direction: 'ltr',
-        dayjsCode: 'pt',
+        icon: '',
+        antd: ptPT,
+        dayjs: () => {
+          dayjs.locale('pt');
+        },
+        adhere: ptPTAdhere,
+        module: pt_PT,
       },
       ar_EG: {
         name: 'AR',
         code: 'ar_EG',
-        icon: '',
-        module: ar_EG,
         direction: 'rtl',
         dayjsCode: 'ar',
+        icon: '',
+        antd: arEG,
+        dayjs: () => {
+          dayjs.locale('ar');
+        },
+        adhere: arEGAdhere,
+        module: ar_EG,
       },
     });
   },

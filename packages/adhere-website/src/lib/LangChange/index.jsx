@@ -10,8 +10,6 @@ import { changeDirection } from '../DirectionChange';
 
 import styles from './index.less';
 
-const { Option } = Select;
-
 /**
  * changeLang
  * @param {string} _lang 语言的code
@@ -33,18 +31,11 @@ export default ({ className, style }) => {
         onChange={(t) => {
           changeLang(t);
         }}
-      >
-        {Array.from(Object.values(Dict.value.SystemLang.value)).map((t) => (
-          <Option key={t.code} value={t.code}>
-            {t.name}
-          </Option>
-          /*<div className={styles.Option}>
-              <img src={t.icon} alt="" />
-              <span>{t.name}</span>
-            </div>*/
-          /*</Option>*/
-        ))}
-      </Select>
+        options={Array.from(Object.values(Dict.value.SystemLang.value)).map((t) => ({
+          label: t.name,
+          value: t.code,
+        }))}
+      />
     </div>
   );
 };
