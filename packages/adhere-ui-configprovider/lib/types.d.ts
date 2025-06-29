@@ -1,6 +1,5 @@
 import type { NamedExoticComponent } from 'react';
 import type { CSSProperties } from 'react';
-import type { Init } from '@baifendian/adhere-util-intl/es/intl';
 import { Context } from './Context';
 import themeFunction from './theme';
 import useTheme from './useTheme';
@@ -21,7 +20,6 @@ export interface ConfigProviderProps {
     style?: CSSProperties;
     intl?: IntlType & {
         mainLanguage?: string;
-        extraLibLocales?: Init['extraLibLocales'];
     };
     onIntlInit: () => void;
     theme?: {

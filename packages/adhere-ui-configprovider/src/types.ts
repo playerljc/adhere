@@ -26,7 +26,7 @@ export interface ConfigProviderProps {
   // 国际化
   intl?: IntlType & {
     mainLanguage?: string;
-    extraLibLocales?: Init['extraLibLocales'];
+    // extraLibLocales?: Init['extraLibLocales'];
   };
   // 国际化初始化完成
   onIntlInit: () => void;

@@ -7,8 +7,8 @@ import React, { memo, useContext, useLayoutEffect, useMemo, useRef, useState } f
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Intl from '@baifendian/adhere-util-intl';
-import Resource from '@baifendian/adhere-util-resource';
 
+// import Resource from '@baifendian/adhere-util-resource';
 import { Context } from './Context';
 import themeFunction from './theme';
 import type { ConfigProviderComponent, ConfigProviderContext, ConfigProviderProps } from './types';
@@ -48,14 +48,14 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
 
     const mainLanguage = intl?.mainLanguage ?? context?.intl?.mainLanguage;
 
-    const extraLibLocales = intl?.extraLibLocales ?? context?.intl?.extraLibLocales;
+    // const extraLibLocales = intl?.extraLibLocales ?? context?.intl?.extraLibLocales;
 
     return {
       lang,
       locales,
       prefix,
       mainLanguage,
-      extraLibLocales,
+      // extraLibLocales,
     };
   }, [context]);
 
@@ -124,7 +124,7 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
         currentLocale: targetIntl?.lang ?? '',
         locales: targetIntl?.locales ?? {},
         mainLanguage: targetIntl?.mainLanguage || 'zh_CN',
-        extraLibLocales: targetIntl?.extraLibLocales,
+        // extraLibLocales: targetIntl?.extraLibLocales,
       },
       Intl.isInit(),
     );
@@ -133,7 +133,7 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
   useUpdateEffect(() => {
     initIntl().then(() => {
       if (targetIntl?.lang) {
-        Resource?.Dict?.value?.LocalsMoment?.value[targetIntl?.lang]();
+        // Resource?.Dict?.value?.LocalsMoment?.value[targetIntl?.lang]();
         forceUpdate();
       }
     });
@@ -142,7 +142,7 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
   useLayoutEffect(() => {
     initIntl().then(() => {
       if (targetIntl?.lang) {
-        Resource?.Dict?.value?.LocalsMoment?.value[targetIntl?.lang]();
+        // Resource?.Dict?.value?.LocalsMoment?.value[targetIntl?.lang]();
         setIntlInit(true);
         if (onIntlInit) onIntlInit();
       }
