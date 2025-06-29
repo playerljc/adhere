@@ -160,10 +160,10 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
 
     return (
       <div
-        className={classNames(selectorPrefix, className ?? '')}
-        style={style ?? {}}
         // @ts-ignore
         ref={wrapperRef}
+        className={classNames(selectorPrefix, className ?? '')}
+        style={style ?? {}}
       >
         <div
           className={classNames(`${selectorPrefix}-search-bar`, searchBarClassName ?? '')}
