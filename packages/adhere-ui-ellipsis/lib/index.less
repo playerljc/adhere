@@ -1,9 +1,5 @@
 @import '~@baifendian/adhere-ui-css/es/mixin';
 
-@adhere-ui-ellipsis-custom-tool-tip-wrap-padding: 12px;
-@adhere-ui-ellipsis-custom-tool-tip-inner-padding: 8px;
-@adhere-ui-ellipsis-custom-tool-tip-arrow-offset: -5px;
-
 .adhere-ui-ellipsis {
   //&:hover {
   //  cursor: help;
@@ -108,6 +104,10 @@
 
 // 自定义tooltip
 .adhere-ui-ellipsis-custom-tool-tip {
+  @adhere-ui-ellipsis-custom-tool-tip-wrap-padding: 12px;
+  @adhere-ui-ellipsis-custom-tool-tip-inner-padding: 8px;
+  @adhere-ui-ellipsis-custom-tool-tip-arrow-offset: -5px;
+
   //z-index: var(--adhere-z-index-max-base);
   z-index: var(--custom-tool-tip-z-index, var(--adhere-z-index-max-base));
   display: none;
