@@ -1,10 +1,8 @@
 import ReactAop from './ReactAop';
 import ReactAutoTryCatch from './ReactAutoTryCatch';
+import ReactErrorBoundaries from './ReactErrorBoundaries';
 declare const _default: {
-    ReactErrorBoundaries: {
-        (Component: any): import("react").ForwardRefExoticComponent<import("react").RefAttributes<unknown>>;
-        setDefaultErrorUI(defaultErrorUI: React.ReactElement): void;
-    };
+    ReactErrorBoundaries: typeof ReactErrorBoundaries;
     ReactAop: typeof ReactAop;
     ReactAutoTryCatch: typeof ReactAutoTryCatch;
 };
