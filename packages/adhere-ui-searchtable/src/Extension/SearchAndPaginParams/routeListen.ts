@@ -74,4 +74,8 @@ const Listener = (e, _history) => {
 
 Listener.getCode = () => codeStack.pop();
 
+export function getTop() {
+  return historyStack[historyStack.length - 1];
+}
+
 export default Listener;

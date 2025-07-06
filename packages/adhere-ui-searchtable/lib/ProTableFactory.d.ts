@@ -5,6 +5,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
     new (props: any): {
         [x: string]: any;
         componentDidMount(): void;
+        isOnlyLastSegmentDifferent(path1?: string, path2?: string): boolean;
         componentWillUnmount(): void;
         /**
          * onSubTableChange

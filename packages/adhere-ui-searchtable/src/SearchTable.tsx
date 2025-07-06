@@ -366,12 +366,12 @@ abstract class SearchTable<
 
     document.body.addEventListener('keyup', this.onBodyKeyup);
 
-    ConfigProvider.theme({
-      elRef: this.childrenWrapRef,
-      group: 'normal',
-      displayName: 'SearchTable',
-      theme: this._context?.theme,
-    });
+    // ConfigProvider.theme({
+    //   elRef: this.childrenWrapRef,
+    //   group: 'normal',
+    //   displayName: 'SearchTable',
+    //   theme: this._context?.theme,
+    // });
   }
 
   componentWillUnmount() {
@@ -398,12 +398,12 @@ abstract class SearchTable<
     // @ts-ignore
     // super.componentWillReceiveProps(nextProps);
 
-    ConfigProvider.theme({
-      elRef: this.childrenWrapRef,
-      group: 'normal',
-      displayName: 'SearchTable',
-      theme: this._context?.theme,
-    });
+    // ConfigProvider.theme({
+    //   elRef: this.childrenWrapRef,
+    //   group: 'normal',
+    //   displayName: 'SearchTable',
+    //   theme: this._context?.theme,
+    // });
 
     this.effectWithExpandedRowKeys(nextProps);
 

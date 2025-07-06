@@ -7,6 +7,7 @@ declare const ProSearchTable: {
     new (props: any): {
         [x: string]: any;
         componentDidMount(): void;
+        isOnlyLastSegmentDifferent(path1?: string, path2?: string): boolean;
         componentWillUnmount(): void;
         onSubTableChange(pagination: any, filters: any, sorter: any): void;
         onSearchPanelCollapseBefore(): void;

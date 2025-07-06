@@ -27,6 +27,7 @@ import Validator from '@baifendian/adhere-util-validator';
 
 import AdvancedSearchPanel from './Extension/AdvancedSearchPanel';
 import ColumnTipTitle from './Extension/ColumnTipTitle';
+import { getTop } from './Extension/SearchAndPaginParams/routeListen';
 import RouteListen from './Extension/SearchAndPaginParams/routeListen';
 import { selectorPrefix } from './SearchTable';
 import type { AdvancedSearchPanelGroupData, ColumnTypeExt } from './types';
@@ -45,6 +46,8 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       this.pathname = this.getPathName();
 
       this.lastAction = '';
+
+      this.lastPathname = '';
 
       this.unlisten = null;
 
@@ -103,10 +106,24 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const history = this.props?.history;
 
       if (history) {
-        this.unlisten = history.listen(() => {
+        this.unlisten = history.listen((location) => {
           this.lastAction = history.action;
+          this.lastPathname = location.pathname;
         });
       }
+    }
+
+    isOnlyLastSegmentDifferent(path1: string = '', path2: string = '') {
+      const parts1 = path1.split(/[\\/]/);
+      const parts2 = path2.split(/[\\/]/);
+
+      if (parts1.length !== parts2.length) return false;
+
+      for (let i = 0; i < parts1.length - 1; i++) {
+        if (parts1[i] !== parts2[i]) return false;
+      }
+
+      return parts1[parts1.length - 1] !== parts2[parts2.length - 1];
     }
 
     componentWillUnmount() {
@@ -132,8 +149,13 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       if (this.isUseMemo()) {
         // 如果是进操作则保存缓存数据
         if (['push', 'replace'].includes(this?.lastAction?.toLowerCase?.())) {
-          // 卸载的时候处理查询和分页参数的缓存
-          this.unMountSearchAndPaginParamsDeal();
+          // 如果要新跳转的路由和
+          const top = getTop() ?? '';
+
+          if (this.isOnlyLastSegmentDifferent(top, this.lastPathname)) {
+            // 卸载的时候处理查询和分页参数的缓存
+            this.unMountSearchAndPaginParamsDeal();
+          }
         }
         // 如果是出操作则清空缓存数据
         else {
