@@ -63,4 +63,10 @@ export declare const createChildren: (tdREL: any, subChildren: any) => any[];
 export declare const cloneDeep: (obj: {
     [x: string]: any;
 }) => any;
+/**
+ * hasCommonPathRelation
+ * @param path1
+ * @param path2
+ */
+export declare function hasCommonPathRelation(path1: string, path2: string): boolean;
 export declare const clone: any;

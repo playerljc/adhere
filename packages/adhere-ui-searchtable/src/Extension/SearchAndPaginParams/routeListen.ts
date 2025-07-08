@@ -1,81 +1,86 @@
 import { SearchAndPaginParamsMemo as StateSearchAndPaginParamsMemo } from '../../ProSearchStateTable';
 import { SearchAndPaginParamsMemo } from '../../ProSearchTable';
+import { hasCommonPathRelation } from '../../Util';
 
 let historyStack: string[] = [];
+let codeStack: any = [];
 
 /**
  * clearSearAndPaginParamsByPathname
- * @description 清除查询条件根据pathname
- * @param pathname
+ * @description 清除指定路径的分页与搜索参数（针对两个 Memo 实例）
  */
 function clearSearAndPaginParamsByPathname(pathname) {
-  // let findIndex = SearchAndPaginParamsMemo.findIndexByPath(pathname);
-  // if (findIndex !== -1) {
-  //   SearchAndPaginParamsMemo.deleteByIndex(findIndex);
-  // }
   SearchAndPaginParamsMemo.deleteByPath(pathname);
   StateSearchAndPaginParamsMemo.deleteByPath(pathname);
-  // findIndex = StateSearchAndPaginParamsMemo.findIndexByPath(pathname);
-  // if (findIndex !== -1) {
-  //   StateSearchAndPaginParamsMemo.deleteByIndex(findIndex);
-  // }
 }
 
-const codeStack: Array<() => void> = [];
+/**
+ * clearAll
+ */
+function clearAll() {
+  SearchAndPaginParamsMemo.clearAll();
+  StateSearchAndPaginParamsMemo.clearAll();
+}
 
-const Listener = (e, _history) => {
-  const { location, action } = e;
+/**
+ * Listener
+ * @description 路由监听函数：处理 PUSH 和 POP 操作
+ */
+const Listener = function (history, action) {
+  const location = history.location;
 
-  const code = () => {
-    const { pathname } = location;
+  function handlePush() {
+    const pathname: string = location.pathname;
 
-    const findIndex = historyStack.lastIndexOf(pathname);
-
-    // 没找到
-    if (findIndex === -1) {
-      // 清除查询条件
-      clearSearAndPaginParamsByPathname(pathname);
+    if (historyStack.length === 0) {
       historyStack.push(pathname);
+    } else {
+      const top = historyStack[historyStack.length - 1];
+
+      // 不是一个体系中的
+      if (!hasCommonPathRelation(top, pathname)) {
+        clearAll();
+
+        historyStack = [];
+      } else {
+        historyStack.push(pathname);
+      }
     }
-    // 找到了
-    else {
-      const pathnames = historyStack.slice(findIndex /* + 1*/);
+  }
 
-      pathnames.forEach((_pathname) => {
-        clearSearAndPaginParamsByPathname(_pathname);
-      });
-      // 1 2 1
-      // 之间只有一个页面的路径
-      // if (pathArr.length === 1) {
-      //   // pathArr[0] /system/task/list/view
-      //   // pathname   /system/task/list/ 当前
-      //
-      //   if (!pathArr[0].startsWith(pathname)) {
-      //     // 清除查询条件
-      //     clearSearAndPaginParamsByPathname(pathname);
-      //   }
-      // } else {
-      //   // 清除查询条件
-      //   clearSearAndPaginParamsByPathname(pathname);
-      // }
-
-      // 都需要清空路径
-      historyStack = historyStack.slice(0, findIndex);
-      historyStack.push(pathname);
-    }
-  };
-
-  if (_history.action === 'PUSH') {
-    code();
-  } else if (_history.action === 'POP') {
-    codeStack.push(code);
+  if (action.action === 'PUSH') {
+    handlePush();
+  } else if (action.action === 'POP') {
+    codeStack.push(handlePush);
   }
 };
 
-Listener.getCode = () => codeStack.pop();
+/**
+ * getCode
+ * @description 获取最近保存的回调函数（用于处理 POP）
+ */
+Listener.getCode = function () {
+  return codeStack.pop();
+};
 
-export function getTop() {
+/**
+ * getTop
+ */
+Listener.getTop = function () {
+  if (historyStack.length === 0) {
+    return null;
+  }
+
   return historyStack[historyStack.length - 1];
-}
+};
+
+/**
+ * getLength
+ */
+Listener.getLength = function () {
+  return historyStack.length;
+};
 
 export default Listener;
+
+//# sourceMappingURL=routeListen.js.map

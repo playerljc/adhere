@@ -22,10 +22,10 @@ const _selectorPrefix = `${selectorPrefix}-options-wrap`;
 const OptionsWrap = ({
   className = '',
   style = {},
-  ellipsisCount = 3,
+  ellipsisCount = 5,
   isEllipsesShowOnlyOneAfterCollapsing = false,
   children,
-}) => {
+}): JSX.Element => {
   let result;
 
   if (children.length <= 1) {

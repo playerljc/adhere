@@ -15,11 +15,11 @@ export class Memo {
     });
   }
 
-  findByPath(path) {
+  findByPath(path: string) {
     return this.memo.find((t) => t.path === path);
   }
 
-  findIndexByPath(path) {
+  findIndexByPath(path: string) {
     return this.memo.findIndex((t) => t.path === path);
   }
 
@@ -31,7 +31,11 @@ export class Memo {
       });
   }
 
-  deleteByIndex(index) {
+  clearAll() {
+    this.memo = [];
+  }
+
+  deleteByIndex(index: number) {
     return this.memo.splice(index, 1);
   }
 }

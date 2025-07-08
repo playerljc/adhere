@@ -5,7 +5,6 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
     new (props: any): {
         [x: string]: any;
         componentDidMount(): void;
-        isOnlyLastSegmentDifferent(path1?: string, path2?: string): boolean;
         componentWillUnmount(): void;
         /**
          * onSubTableChange
@@ -24,6 +23,11 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * @description - 卸载的时候处理查询和分页参数的缓存
          */
         unMountSearchAndPaginParamsDeal(): void;
+        /**
+         * isUseMemo
+         * @description 是否开启了缓存
+         * @return {boolean}
+         */
         isUseMemo(): any;
         /**
          * initSearchAndPaginParams

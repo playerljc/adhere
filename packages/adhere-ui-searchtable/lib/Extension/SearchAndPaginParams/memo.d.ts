@@ -5,13 +5,14 @@ export declare class Memo {
     }[];
     isEmpty(): boolean;
     add(path: string, components: any): void;
-    findByPath(path: any): {
+    findByPath(path: string): {
         path: string;
         components: any;
     } | undefined;
-    findIndexByPath(path: any): number;
+    findIndexByPath(path: string): number;
     deleteByPath(_path: string): void;
-    deleteByIndex(index: any): {
+    clearAll(): void;
+    deleteByIndex(index: number): {
         path: string;
         components: any;
     }[];

@@ -161,4 +161,32 @@ export const cloneDeep = (obj: { [x: string]: any }) => {
   return lodashCloneDeep(targetObj);
 };
 
+/**
+ * hasCommonPathRelation
+ * @param path1
+ * @param path2
+ */
+export function hasCommonPathRelation(path1: string, path2: string) {
+  // 按斜杠分割路径并过滤空字符串
+  const segments1 = path1.split(/[\\/]/).filter((segment) => segment !== '');
+  const segments2 = path2.split(/[\\/]/).filter((segment) => segment !== '');
+
+  // 获取较短路径的长度
+  const minLength = Math.min(segments1.length, segments2.length);
+
+  // 检查公共前缀的长度
+  let commonLength = 0;
+  while (commonLength < minLength && segments1[commonLength] === segments2[commonLength]) {
+    commonLength++;
+  }
+
+  // 情况1：除最后一级外完全相同
+  if (segments1.length === segments2.length && commonLength === segments1.length - 1) {
+    return true;
+  }
+
+  // 情况2：一个路径是另一个的完整前缀
+  return commonLength === minLength;
+}
+
 export const clone = lodashClone;

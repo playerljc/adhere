@@ -27,9 +27,9 @@ import Validator from '@baifendian/adhere-util-validator';
 
 import AdvancedSearchPanel from './Extension/AdvancedSearchPanel';
 import ColumnTipTitle from './Extension/ColumnTipTitle';
-import { getTop } from './Extension/SearchAndPaginParams/routeListen';
 import RouteListen from './Extension/SearchAndPaginParams/routeListen';
 import { selectorPrefix } from './SearchTable';
+import { hasCommonPathRelation } from './Util';
 import type { AdvancedSearchPanelGroupData, ColumnTypeExt } from './types';
 
 const { TextArea } = Input;
@@ -44,8 +44,6 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       super(props);
 
       this.pathname = this.getPathName();
-
-      this.lastAction = '';
 
       this.lastPathname = '';
 
@@ -107,23 +105,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
       if (history) {
         this.unlisten = history.listen((location) => {
-          this.lastAction = history.action;
+          // this.lastAction = history.action;
           this.lastPathname = location.pathname;
         });
       }
-    }
-
-    isOnlyLastSegmentDifferent(path1: string = '', path2: string = '') {
-      const parts1 = path1.split(/[\\/]/);
-      const parts2 = path2.split(/[\\/]/);
-
-      if (parts1.length !== parts2.length) return false;
-
-      for (let i = 0; i < parts1.length - 1; i++) {
-        if (parts1[i] !== parts2[i]) return false;
-      }
-
-      return parts1[parts1.length - 1] !== parts2[parts2.length - 1];
     }
 
     componentWillUnmount() {
@@ -146,22 +131,34 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         this.unlisten();
       }
 
+      // if (this.isUseMemo()) {
+      //   // 如果是进操作则保存缓存数据
+      //   if (['push', 'replace'].includes(this?.lastAction?.toLowerCase?.())) {
+      //     // 如果要新跳转的路由和
+      //     // const top = RouteListen.getTop() ?? '';
+      //
+      //     // if (this.isOnlyLastSegmentDifferent(top, this.lastPathname)) {
+      //     // 卸载的时候处理查询和分页参数的缓存
+      //     this.unMountSearchAndPaginParamsDeal();
+      //     // }
+      //   }
+      //   // 如果是出操作则清空缓存数据
+      //   else {
+      //     if (searchAndPaginParamsMemo.findByPath(this.pathname)) {
+      //       searchAndPaginParamsMemo.deleteByPath(this.pathname);
+      //     }
+      //   }
+      // }
       if (this.isUseMemo()) {
-        // 如果是进操作则保存缓存数据
-        if (['push', 'replace'].includes(this?.lastAction?.toLowerCase?.())) {
-          // 如果要新跳转的路由和
-          const top = getTop() ?? '';
-
-          if (this.isOnlyLastSegmentDifferent(top, this.lastPathname)) {
-            // 卸载的时候处理查询和分页参数的缓存
-            this.unMountSearchAndPaginParamsDeal();
-          }
-        }
-        // 如果是出操作则清空缓存数据
-        else {
-          if (searchAndPaginParamsMemo.findByPath(this.pathname)) {
-            searchAndPaginParamsMemo.deleteByPath(this.pathname);
-          }
+        if (
+          RouteListen.getLength() === 0 ||
+          hasCommonPathRelation(this.pathname, this.lastPathname)
+        ) {
+          // 是一个体系中的保存缓存数据
+          this.unMountSearchAndPaginParamsDeal();
+        } else {
+          // 不是则清空全部的缓存
+          searchAndPaginParamsMemo.clearAll();
         }
       }
     }
@@ -275,6 +272,11 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //}
     }
 
+    /**
+     * isUseMemo
+     * @description 是否开启了缓存
+     * @return {boolean}
+     */
     isUseMemo() {
       return (
         !('openSearchParamsMemory' in (this.props ?? {})) ||
