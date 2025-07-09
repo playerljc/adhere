@@ -10,7 +10,7 @@ import React, {
   createRef,
 } from 'react';
 
-import { DownOutlined, SearchOutlined, UpOutlined } from '@ant-design/icons';
+import { DownOutlined, SearchOutlined, SyncOutlined, UpOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import { ConfigProviderContext } from '@baifendian/adhere-ui-configprovider/es/types';
@@ -142,6 +142,14 @@ abstract class SearchList<
     });
   }
 
+  componentWillUnmount() {
+    if (!!super.componentWillUnmount) {
+      super.componentWillUnmount?.();
+    }
+
+    document.body.removeEventListener('keyup', this.onBodyKeyup);
+  }
+
   componentWillReceiveProps(nextProps: any) {
     if (!!super.componentWillReceiveProps) {
       super.componentWillReceiveProps(nextProps);
@@ -153,14 +161,6 @@ abstract class SearchList<
       displayName: 'SearchList',
       theme: this.configProviderContextValue?.theme,
     });
-  }
-
-  componentWillUnmount() {
-    if (!!super.componentWillUnmount) {
-      super.componentWillUnmount?.();
-    }
-
-    document.body.removeEventListener('keyup', this.onBodyKeyup);
   }
 
   /**
@@ -304,7 +304,7 @@ abstract class SearchList<
         noMatch={() => (
           <a
             key="expand"
-            className={`${selectorPrefix}-search-footer-item-expand-search-up-btn`}
+            className={`${selectorPrefix}-search-footer-item-expand-search-down-btn`}
             onClick={() => {
               this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
               this.setState(
@@ -323,7 +323,7 @@ abstract class SearchList<
         {() => (
           <a
             key="hide"
-            className={`${selectorPrefix}-search-footer-item-expand-search-down-btn`}
+            className={`${selectorPrefix}-search-footer-item-expand-search-up-btn`}
             onClick={() => {
               this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
 
@@ -358,13 +358,16 @@ abstract class SearchList<
         key="search"
         loading={this.showLoading()}
         icon={<SearchOutlined />}
-        onClick={() => {
-          this.search();
-        }}
+        onClick={() => this.search()}
       >
         {Intl.get('search')}
       </Button>,
-      <Button className={`${selectorPrefix}-search-footer-item`} key="reset" onClick={this.onClear}>
+      <Button
+        className={`${selectorPrefix}-search-footer-item`}
+        key="reset"
+        icon={<SyncOutlined />}
+        onClick={this.onClear}
+      >
         {Intl.get('reset')}
       </Button>,
       isShowExpandSearch && this.renderSearchBarCollapseControl(),
@@ -378,9 +381,9 @@ abstract class SearchList<
           {this.renderSearchFormToolBarDefaultPanel?.()}
         </div>
         {!!items.length && (
-          <div className={`${selectorPrefix}-search-footer-wrapper`}>
+          <div className={`${selectorPrefix}-search-form-tool-bar-items`}>
             {items.map((t, index) => (
-              <div key={index} className={`${selectorPrefix}-search-footer-item`}>
+              <div key={index} className={`${selectorPrefix}-search-form-tool-bar-item`}>
                 {t}
               </div>
             ))}

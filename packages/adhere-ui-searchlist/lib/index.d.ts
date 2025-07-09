@@ -323,7 +323,7 @@ declare const _default: {
             ellipsisCount?: number | undefined;
             isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
             children: any;
-        }): import("react").JSX.Element;
+        }): JSX.Element;
         displayName: string;
     };
     DisabledOption: {

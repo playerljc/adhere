@@ -71,8 +71,8 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
     abstract renderListHeader(): ReactNode;
     constructor(props: any);
     componentDidMount(): void;
-    componentWillReceiveProps(nextProps: any): void;
     componentWillUnmount(): void;
+    componentWillReceiveProps(nextProps: any): void;
     /**
      * onBodyKeyup
      */
