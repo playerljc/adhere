@@ -1,4 +1,3 @@
-import React from 'react';
 /**
  * OptionsWrap
  * @description - 表格操作列的父组件，自动加入分割线
@@ -16,7 +15,7 @@ declare const OptionsWrap: {
         ellipsisCount?: number | undefined;
         isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
         children: any;
-    }): React.JSX.Element;
+    }): JSX.Element;
     displayName: string;
 };
 export default OptionsWrap;

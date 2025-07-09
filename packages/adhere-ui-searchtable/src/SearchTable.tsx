@@ -1101,7 +1101,7 @@ abstract class SearchTable<
     // console.log('columnConfig.width===', columnConfig.width);
 
     // console.time('setColumnWidth');
-    console.log('columnConfig', columnConfig, typeof columnConfig.width === 'number');
+    // console.log('columnConfig', columnConfig, typeof columnConfig.width === 'number');
 
     if (
       !('width' in columnConfig) ||
@@ -1346,7 +1346,7 @@ abstract class SearchTable<
     // console.log('_width===', _width);
 
     if (_width !== -1) {
-      console.log('_width1===', this.pxToRem(_width));
+      // console.log('_width1===', this.pxToRem(_width));
       /*columnConfig.width*/ targetWidth = this.pxToRem(_width);
     }
 

@@ -1168,7 +1168,7 @@ declare const _default: {
             ellipsisCount?: number | undefined;
             isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
             children: any;
-        }): import("react").JSX.Element;
+        }): JSX.Element;
         displayName: string;
     };
     EditableContext: import("react").Context<import("antd").FormInstance<any> | null>;
