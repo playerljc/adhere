@@ -1,0 +1,9 @@
+# Add directories or file patterns to ignore during indexing (e.g. foo/ or *.csv)
+./packages/**/*/es
+./packages/**/*/lib
+./packages/**/*/umd
+./packages/**/*/node_modules
+./packages/**/*/dist
+./packages/**/*/build
+./packages/**/*/coverage
+./packages/**/*/directories
