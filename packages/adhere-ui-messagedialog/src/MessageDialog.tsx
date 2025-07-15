@@ -1,7 +1,7 @@
 import { Button, Form } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import { produce } from 'immer';
-import React, { ReactNode, useRef } from 'react';
+import React, { ReactNode, createRef } from 'react';
 import ReactDOM, { Root } from 'react-dom/client';
 
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
@@ -12,15 +12,7 @@ import MaximizeModalDialog from './MaximizeModal';
 import ModalDialog, { selectorPrefix } from './Modal';
 import Trigger from './Trigger';
 import TriggerPrompt from './TriggerPrompt';
-import type { 
-  AlertArgv, 
-  ConfirmArgv, 
-  ModalArgv, 
-  PromptArgv,
-  TriggerPromptHandle,
-  TriggerHandle,
-  DialogHandle
-} from './types';
+import type { AlertArgv, ConfirmArgv, DialogHandle, ModalArgv, PromptArgv } from './types';
 
 /**
  * 渲染带图标的组件
@@ -56,8 +48,6 @@ let renderToWrapper: ((children: () => ReactNode) => ReactNode) | undefined;
  * 存储MessageDialog实例的WeakMap
  */
 const MessageDialogHandlers = new WeakMap<HTMLElement, Root>();
-
-
 
 /**
  * MessageDialog工厂类
@@ -181,7 +171,7 @@ const MessageDialogFactory = {
     local,
     onSuccess,
   }: PromptArgv): DialogHandle | void {
-    const ref = useRef<FormInstance>(null);
+    const ref = createRef<FormInstance>();
 
     const result = this.Modal({
       config: {
@@ -237,6 +227,7 @@ const MessageDialogFactory = {
 
   /**
    * 创建输入框提示对话框
+   * @param config
    * @param params - 输入框提示对话框参数
    * @returns 对话框句柄
    */
@@ -252,6 +243,7 @@ const MessageDialogFactory = {
 
   /**
    * 创建文本域提示对话框
+   * @param config
    * @param params - 文本域提示对话框参数
    * @returns 对话框句柄
    */
@@ -267,6 +259,7 @@ const MessageDialogFactory = {
 
   /**
    * 创建密码输入提示对话框
+   * @param config
    * @param params - 密码输入提示对话框参数
    * @returns 对话框句柄
    */
@@ -282,6 +275,7 @@ const MessageDialogFactory = {
 
   /**
    * 创建数字输入提示对话框
+   * @param config
    * @param params - 数字输入提示对话框参数
    * @returns 对话框句柄
    */
@@ -377,7 +371,11 @@ const MessageDialogFactory = {
    * @param params.defaultCloseBtn - 是否显示默认关闭按钮
    * @returns 对话框句柄
    */
-  MaximizeModal({ config = {}, children = null, defaultCloseBtn = true }: ModalArgv): DialogHandle | void {
+  MaximizeModal({
+    config = {},
+    children = null,
+    defaultCloseBtn = true,
+  }: ModalArgv): DialogHandle | void {
     if (!allowMultipleInstances && lock) {
       console.warn('Maximize modal dialog is locked, cannot create new instance');
       return;

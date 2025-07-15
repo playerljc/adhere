@@ -137,5 +137,6 @@ export default [
     future_milliseconds: 'الميلي ثانية القادمة {value}',
     custom: 'مخصص',
     enter_keyword: 'يرجى إدخال كلمة مفتاحية',
+    return_valueption: 'قيمة الإرجاع',
   },
 ];

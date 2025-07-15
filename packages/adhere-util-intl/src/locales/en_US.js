@@ -137,5 +137,6 @@ export default [
     future_milliseconds: 'Future {value} milliseconds',
     custom: 'Custom',
     enter_keyword: 'Please enter a keyword',
+    return_valueption: 'return',
   },
 ];

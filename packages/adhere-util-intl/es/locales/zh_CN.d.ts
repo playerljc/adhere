@@ -136,5 +136,6 @@ declare const _default: {
     future_milliseconds: string;
     custom: string;
     enter_keyword: string;
+    return_valueption: string;
 }[];
 export default _default;

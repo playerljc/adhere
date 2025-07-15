@@ -36,7 +36,7 @@ export class Preferences {
    * @returns {StorageInterface | null} 存储对象或null
    */
   private static getStorage(type: StorageType): StorageInterface | null {
-    if (!this.isBrowser()) {
+    if (!Preferences.isBrowser()) {
       return null;
     }
 
@@ -88,7 +88,7 @@ export class Preferences {
   private static putObject<T extends Record<string, any>>(key: string, object: T, storage: StorageInterface): void {
     try {
       const serializedValue = JSON.stringify(object);
-      this.putString(key, serializedValue, storage);
+      Preferences.putString(key, serializedValue, storage);
     } catch (error) {
       throw new Error(`存储对象失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
@@ -103,7 +103,7 @@ export class Preferences {
    */
   private static getObject<T extends Record<string, any>>(key: string, storage: StorageInterface): T | null {
     try {
-      const value = this.getString(key, storage);
+      const value = Preferences.getString(key, storage);
       if (value === null) {
         return null;
       }
@@ -139,13 +139,13 @@ export class Preferences {
    * ```
    */
   static putStringByLocal(key: string, value: string): boolean {
-    const storage = this.getStorage(StorageType.LOCAL);
+    const storage = Preferences.getStorage(StorageType.LOCAL);
     if (!storage) {
       return false;
     }
 
     try {
-      this.putString(key, value, storage);
+      Preferences.putString(key, value, storage);
       return true;
     } catch (error) {
       console.error('本地存储字符串失败:', error);
@@ -163,12 +163,12 @@ export class Preferences {
    * ```
    */
   static getStringByLocal(key: string): string | null {
-    const storage = this.getStorage(StorageType.LOCAL);
+    const storage = Preferences.getStorage(StorageType.LOCAL);
     if (!storage) {
       return null;
     }
 
-    return this.getString(key, storage);
+    return Preferences.getString(key, storage);
   }
 
   /**
@@ -184,13 +184,13 @@ export class Preferences {
    * ```
    */
   static putObjectByLocal<T extends Record<string, any>>(key: string, object: T): boolean {
-    const storage = this.getStorage(StorageType.LOCAL);
+    const storage = Preferences.getStorage(StorageType.LOCAL);
     if (!storage) {
       return false;
     }
 
     try {
-      this.putObject(key, object, storage);
+      Preferences.putObject(key, object, storage);
       return true;
     } catch (error) {
       console.error('本地存储对象失败:', error);
@@ -209,12 +209,12 @@ export class Preferences {
    * ```
    */
   static getObjectByLocal<T extends Record<string, any>>(key: string): T | null {
-    const storage = this.getStorage(StorageType.LOCAL);
+    const storage = Preferences.getStorage(StorageType.LOCAL);
     if (!storage) {
       return null;
     }
 
-    return this.getObject<T>(key, storage);
+    return Preferences.getObject<T>(key, storage);
   }
 
   /**
@@ -227,13 +227,13 @@ export class Preferences {
    * ```
    */
   static removeByLocal(key: string): boolean {
-    const storage = this.getStorage(StorageType.LOCAL);
+    const storage = Preferences.getStorage(StorageType.LOCAL);
     if (!storage) {
       return false;
     }
 
     try {
-      this.remove(key, storage);
+      Preferences.remove(key, storage);
       return true;
     } catch (error) {
       console.error('本地删除存储项失败:', error);
@@ -252,13 +252,13 @@ export class Preferences {
    * ```
    */
   static putStringBySession(key: string, value: string): boolean {
-    const storage = this.getStorage(StorageType.SESSION);
+    const storage = Preferences.getStorage(StorageType.SESSION);
     if (!storage) {
       return false;
     }
 
     try {
-      this.putString(key, value, storage);
+      Preferences.putString(key, value, storage);
       return true;
     } catch (error) {
       console.error('会话存储字符串失败:', error);
@@ -276,12 +276,12 @@ export class Preferences {
    * ```
    */
   static getStringBySession(key: string): string | null {
-    const storage = this.getStorage(StorageType.SESSION);
+    const storage = Preferences.getStorage(StorageType.SESSION);
     if (!storage) {
       return null;
     }
 
-    return this.getString(key, storage);
+    return Preferences.getString(key, storage);
   }
 
   /**
@@ -297,13 +297,13 @@ export class Preferences {
    * ```
    */
   static putObjectBySession<T extends Record<string, any>>(key: string, object: T): boolean {
-    const storage = this.getStorage(StorageType.SESSION);
+    const storage = Preferences.getStorage(StorageType.SESSION);
     if (!storage) {
       return false;
     }
 
     try {
-      this.putObject(key, object, storage);
+      Preferences.putObject(key, object, storage);
       return true;
     } catch (error) {
       console.error('会话存储对象失败:', error);
@@ -322,12 +322,12 @@ export class Preferences {
    * ```
    */
   static getObjectBySession<T extends Record<string, any>>(key: string): T | null {
-    const storage = this.getStorage(StorageType.SESSION);
+    const storage = Preferences.getStorage(StorageType.SESSION);
     if (!storage) {
       return null;
     }
 
-    return this.getObject<T>(key, storage);
+    return Preferences.getObject<T>(key, storage);
   }
 
   /**
@@ -340,13 +340,13 @@ export class Preferences {
    * ```
    */
   static removeBySession(key: string): boolean {
-    const storage = this.getStorage(StorageType.SESSION);
+    const storage = Preferences.getStorage(StorageType.SESSION);
     if (!storage) {
       return false;
     }
 
     try {
-      this.remove(key, storage);
+      Preferences.remove(key, storage);
       return true;
     } catch (error) {
       console.error('会话删除存储项失败:', error);
@@ -363,7 +363,7 @@ export class Preferences {
    * ```
    */
   static clearLocal(): boolean {
-    const storage = this.getStorage(StorageType.LOCAL);
+    const storage = Preferences.getStorage(StorageType.LOCAL);
     if (!storage) {
       return false;
     }
@@ -386,7 +386,7 @@ export class Preferences {
    * ```
    */
   static clearSession(): boolean {
-    const storage = this.getStorage(StorageType.SESSION);
+    const storage = Preferences.getStorage(StorageType.SESSION);
     if (!storage) {
       return false;
     }
@@ -409,7 +409,7 @@ export class Preferences {
    * ```
    */
   static getLocalLength(): number {
-    const storage = this.getStorage(StorageType.LOCAL);
+    const storage = Preferences.getStorage(StorageType.LOCAL);
     if (!storage) {
       return 0;
     }
@@ -431,7 +431,7 @@ export class Preferences {
    * ```
    */
   static getSessionLength(): number {
-    const storage = this.getStorage(StorageType.SESSION);
+    const storage = Preferences.getStorage(StorageType.SESSION);
     if (!storage) {
       return 0;
     }
@@ -454,7 +454,7 @@ export class Preferences {
    * ```
    */
   static hasLocalKey(key: string): boolean {
-    const storage = this.getStorage(StorageType.LOCAL);
+    const storage = Preferences.getStorage(StorageType.LOCAL);
     if (!storage) {
       return false;
     }
@@ -477,7 +477,7 @@ export class Preferences {
    * ```
    */
   static hasSessionKey(key: string): boolean {
-    const storage = this.getStorage(StorageType.SESSION);
+    const storage = Preferences.getStorage(StorageType.SESSION);
     if (!storage) {
       return false;
     }

@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import type { AlertArgv, ConfirmArgv, ModalArgv, PromptArgv, TriggerPromptHandle, TriggerHandle, DialogHandle } from './types';
+import type { AlertArgv, ConfirmArgv, DialogHandle, ModalArgv, PromptArgv } from './types';
 /**
  * MessageDialog工厂类
  * 提供各种类型的弹窗功能，包括确认框、警告框、输入框等
@@ -50,24 +50,28 @@ declare const MessageDialogFactory: {
     Prompt({ title, config, layout, width, zIndex, local, onSuccess, }: PromptArgv): DialogHandle | void;
     /**
      * 创建输入框提示对话框
+     * @param config
      * @param params - 输入框提示对话框参数
      * @returns 对话框句柄
      */
     InputPrompt({ config, ...params }: PromptArgv): DialogHandle | void;
     /**
      * 创建文本域提示对话框
+     * @param config
      * @param params - 文本域提示对话框参数
      * @returns 对话框句柄
      */
     TextAreaPrompt({ config, ...params }: PromptArgv): DialogHandle | void;
     /**
      * 创建密码输入提示对话框
+     * @param config
      * @param params - 密码输入提示对话框参数
      * @returns 对话框句柄
      */
     PassWordPrompt({ config, ...params }: PromptArgv): DialogHandle | void;
     /**
      * 创建数字输入提示对话框
+     * @param config
      * @param params - 数字输入提示对话框参数
      * @returns 对话框句柄
      */
@@ -89,7 +93,7 @@ declare const MessageDialogFactory: {
      * @param params.defaultCloseBtn - 是否显示默认关闭按钮
      * @returns 对话框句柄
      */
-    MaximizeModal({ config, children, defaultCloseBtn }: ModalArgv): DialogHandle | void;
+    MaximizeModal({ config, children, defaultCloseBtn, }: ModalArgv): DialogHandle | void;
     /**
      * 关闭指定的对话框
      * @param el - 对话框DOM元素
@@ -98,7 +102,7 @@ declare const MessageDialogFactory: {
     /**
      * Trigger组件
      */
-    Trigger: React.ForwardRefExoticComponent<import("./types").TriggerProps & React.RefAttributes<TriggerHandle>>;
+    Trigger: React.ForwardRefExoticComponent<import("./types").TriggerProps & React.RefAttributes<import("./types").TriggerHandle>>;
     /**
      * TriggerPrompt组件
      */
@@ -106,7 +110,7 @@ declare const MessageDialogFactory: {
         onSubmit?: () => Promise<any>;
         modalConfig?: Omit<ModalArgv, "children" | "defaultCloseBtn">;
         okText?: string;
-    } & React.RefAttributes<TriggerPromptHandle>>;
+    } & React.RefAttributes<import("./types").TriggerPromptHandle>>;
     /**
      * 设置是否允许多实例共存
      * @param allow - 是否允许

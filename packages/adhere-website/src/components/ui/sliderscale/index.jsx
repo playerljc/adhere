@@ -64,7 +64,7 @@ export default () => {
   }
 
   return (
-    <PlayGroundPage className="SliderScale">
+    <PlayGroundPage>
       <Section title="SliderScale">
         <p>刻度盘</p>
       </Section>

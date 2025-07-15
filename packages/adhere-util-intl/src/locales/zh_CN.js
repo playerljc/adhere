@@ -137,5 +137,6 @@ export default [
     future_milliseconds: '未来{value}毫秒',
     custom: '自定义',
     enter_keyword: '请输入关键字',
+    return_valueption: '返回值',
   },
 ];

@@ -7,7 +7,7 @@ import styles from './examples.less';
 export default () => (
   <div>
     <div className={styles.Wrapper}>
-      <Split.Group direction="horizontal">
+      <Split.Group direction="horizontal" horizontalFit>
         <a>编辑</a>
         <a>查看</a>
         <a>删除</a>

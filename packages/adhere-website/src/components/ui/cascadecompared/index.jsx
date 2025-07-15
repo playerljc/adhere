@@ -17,6 +17,8 @@ import P2 from './examples/p2';
 import P3 from './examples/p3';
 import P4 from './examples/p4';
 
+import './index.less';
+
 export default () => {
   return (
     <PlayGroundPage className="CascadeCompared">

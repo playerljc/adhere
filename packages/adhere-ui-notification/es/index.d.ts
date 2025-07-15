@@ -1,4 +1,4 @@
 import NotificationFactory from './Notification';
-import type { Config, ShowConfig, ShowStandardConfig, NotificationInstance, NotificationFactory as INotificationFactory } from './types';
+import type { Config, INotificationFactory, NotificationInstance, ShowConfig, ShowStandardConfig } from './types';
 export default NotificationFactory;
-export type { Config, ShowConfig, ShowStandardConfig, NotificationInstance, INotificationFactory as NotificationFactory, };
+export type { Config, ShowConfig, ShowStandardConfig, NotificationInstance, INotificationFactory };

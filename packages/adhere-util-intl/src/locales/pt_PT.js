@@ -137,5 +137,6 @@ export default [
     future_milliseconds: 'Próximos {value} milissegundos',
     custom: 'Personalizado',
     enter_keyword: 'Digite uma palavra-chave',
+    return_valueption: 'Valor de retorno',
   },
 ];

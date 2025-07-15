@@ -4,10 +4,10 @@ import React, {
   ReactNode,
   forwardRef,
   memo,
+  useCallback,
   useImperativeHandle,
   useLayoutEffect,
   useRef,
-  useCallback,
 } from 'react';
 import type { PropsWithoutRef, ReactElement, RefAttributes } from 'react';
 
@@ -75,13 +75,13 @@ initTouch();
 
 /**
  * 级联对比组件
- * 
+ *
  * 一个用于对比多组数据的级联表格组件，支持固定列、同步滚动等功能
- * 
+ *
  * @param props - 组件属性
  * @param ref - 组件引用
  * @returns 级联对比组件
- * 
+ *
  * @example
  * ```tsx
  * <CascadeCompared
@@ -210,21 +210,24 @@ const CascadeCompared = memo<
      * @param columnIndex - 列索引
      * @returns 渲染的单元格内容
      */
-    const renderCell = useCallback((
-      config: ColumnConfig | null,
-      record: Record<string, any>,
-      groupIndex: number,
-      rowIndex: number,
-      columnIndex: number,
-    ): ReactNode => {
-      if (!config) return null;
+    const renderCell = useCallback(
+      (
+        config: ColumnConfig | null,
+        record: Record<string, any>,
+        groupIndex: number,
+        rowIndex: number,
+        columnIndex: number,
+      ): ReactNode => {
+        if (!config) return null;
 
-      if (config.render) {
-        return config.render(record[config.dataIndex], record, groupIndex, rowIndex, columnIndex);
-      }
+        if (config.render) {
+          return config.render(record[config.dataIndex], record, groupIndex, rowIndex, columnIndex);
+        }
 
-      return record[config.dataIndex];
-    }, []);
+        return record[config.dataIndex];
+      },
+      [],
+    );
 
     /**
      * 渲染指示器区域
@@ -265,9 +268,9 @@ const CascadeCompared = memo<
                   <div
                     key={column.dataIndex}
                     className={classNames(`${selectorPrefix}-cell`, column.className)}
-                    style={{ 
-                      ...column.style, 
-                      width: column?.width || actualDefaultCellWidth 
+                    style={{
+                      ...column.style,
+                      width: column?.width || actualDefaultCellWidth,
                     }}
                   >
                     {renderCell(column, dataSource, -1, -1, columnIndex)}
@@ -297,75 +300,75 @@ const CascadeCompared = memo<
      * @param groupIndex - 分组索引
      * @returns 主内容组内容的JSX元素
      */
-    const renderMasterGroupContent = useCallback((
-      config: IMasterItem,
-      groupIndex: number,
-    ): ReactElement => {
-      const {
-        dataSource = [],
-        columns = [],
-        fixedWrapClassName,
-        fixedWrapStyle = {},
-        autoWrapClassName,
-        autoWrapStyle = {},
-        autoInnerClassName,
-        autoInnerStyle = {},
-      } = config;
+    const renderMasterGroupContent = useCallback(
+      (config: IMasterItem, groupIndex: number): ReactElement => {
+        const {
+          dataSource = [],
+          columns = [],
+          fixedWrapClassName,
+          fixedWrapStyle = {},
+          autoWrapClassName,
+          autoWrapStyle = {},
+          autoInnerClassName,
+          autoInnerStyle = {},
+        } = config;
 
-      const fixedColumnConfig = getFixedColumnConfig(columns);
+        const fixedColumnConfig = getFixedColumnConfig(columns);
 
-      return (
-        <>
-          <div
-            className={classNames(`${selectorPrefix}-fixed-wrap`, fixedWrapClassName)}
-            style={{
-              ...fixedWrapStyle,
-              width: fixedColumnConfig?.width || actualDefaultCellWidth,
-            }}
-          >
-            {dataSource.map((record, rowIndex) => (
-              <div key={rowIndex} className={`${selectorPrefix}-item`}>
-                <div
-                  className={classNames(`${selectorPrefix}-cell`, fixedColumnConfig?.className)}
-                  style={fixedColumnConfig?.style}
-                >
-                  {renderCell(fixedColumnConfig, record, groupIndex, rowIndex, -1)}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div
-            className={classNames(`${selectorPrefix}-auto-wrap`, autoWrapClassName)}
-            style={autoWrapStyle}
-          >
+        return (
+          <>
             <div
-              className={classNames(`${selectorPrefix}-auto-inner`, autoInnerClassName)}
-              style={autoInnerStyle}
+              className={classNames(`${selectorPrefix}-fixed-wrap`, fixedWrapClassName)}
+              style={{
+                ...fixedWrapStyle,
+                width: fixedColumnConfig?.width || actualDefaultCellWidth,
+              }}
             >
               {dataSource.map((record, rowIndex) => (
                 <div key={rowIndex} className={`${selectorPrefix}-item`}>
-                  {columns
-                    .filter((column) => column !== fixedColumnConfig)
-                    .map((column, columnIndex) => (
-                      <div
-                        key={column.dataIndex}
-                        className={classNames(`${selectorPrefix}-cell`, column.className)}
-                        style={{
-                          ...column.style,
-                          width: column?.width || actualDefaultCellWidth,
-                        }}
-                      >
-                        {renderCell(column, record, groupIndex, rowIndex, columnIndex)}
-                      </div>
-                    ))}
+                  <div
+                    className={classNames(`${selectorPrefix}-cell`, fixedColumnConfig?.className)}
+                    style={fixedColumnConfig?.style}
+                  >
+                    {renderCell(fixedColumnConfig, record, groupIndex, rowIndex, -1)}
+                  </div>
                 </div>
               ))}
             </div>
-          </div>
-        </>
-      );
-    }, [getFixedColumnConfig, renderCell, actualDefaultCellWidth]);
+
+            <div
+              className={classNames(`${selectorPrefix}-auto-wrap`, autoWrapClassName)}
+              style={autoWrapStyle}
+            >
+              <div
+                className={classNames(`${selectorPrefix}-auto-inner`, autoInnerClassName)}
+                style={autoInnerStyle}
+              >
+                {dataSource.map((record, rowIndex) => (
+                  <div key={rowIndex} className={`${selectorPrefix}-item`}>
+                    {columns
+                      .filter((column) => column !== fixedColumnConfig)
+                      .map((column, columnIndex) => (
+                        <div
+                          key={column.dataIndex}
+                          className={classNames(`${selectorPrefix}-cell`, column.className)}
+                          style={{
+                            ...column.style,
+                            width: column?.width || actualDefaultCellWidth,
+                          }}
+                        >
+                          {renderCell(column, record, groupIndex, rowIndex, columnIndex)}
+                        </div>
+                      ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        );
+      },
+      [getFixedColumnConfig, renderCell, actualDefaultCellWidth],
+    );
 
     /**
      * 渲染主内容组
@@ -373,22 +376,22 @@ const CascadeCompared = memo<
      * @param groupIndex - 分组索引
      * @returns 主内容组的JSX元素
      */
-    const renderMasterGroup = useCallback((
-      config: IMasterItem,
-      groupIndex: number,
-    ): ReactElement => {
-      const { title, className, style = {} } = config;
+    const renderMasterGroup = useCallback(
+      (config: IMasterItem, groupIndex: number): ReactElement => {
+        const { title, className, style = {} } = config;
 
-      return (
-        <StickupLayoutItem
-          key={groupIndex}
-          className={classNames(className)}
-          style={style}
-          title={title}
-          content={renderMasterGroupContent(config, groupIndex)}
-        />
-      );
-    }, [renderMasterGroupContent]);
+        return (
+          <StickupLayoutItem
+            key={groupIndex}
+            className={classNames(className)}
+            style={style}
+            title={title}
+            content={renderMasterGroupContent(config, groupIndex)}
+          />
+        );
+      },
+      [renderMasterGroupContent],
+    );
 
     /**
      * 渲染主内容区域
@@ -482,14 +485,10 @@ const CascadeCompared = memo<
         stickup.current.refresh();
       }
       initScroll();
-    }, [initScroll]);
+    }, [columns, dataSource, master]);
 
     return (
-      <div
-        ref={wrapperRef}
-        className={classNames(selectorPrefix, className)}
-        style={style}
-      >
+      <div ref={wrapperRef} className={classNames(selectorPrefix, className)} style={style}>
         {renderIndicator()}
         {renderMaster()}
       </div>

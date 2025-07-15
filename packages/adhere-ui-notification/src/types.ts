@@ -66,9 +66,9 @@ export interface NotificationInstance {
 
 /**
  * Notification factory interface
- * @interface NotificationFactory
+ * @interface INotificationFactory
  */
-export interface NotificationFactory {
+export interface INotificationFactory {
   /** Set render wrapper function */
   setRenderToWrapper(renderToWrapper: (children: () => ReactNode) => ReactNode): void;
   /** Build notification instance */

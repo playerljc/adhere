@@ -22,6 +22,9 @@ import MessageDialog from '@baifendian/adhere-ui-messagedialog';
 import Notification from '@baifendian/adhere-ui-notification';
 import Popup from '@baifendian/adhere-ui-popup';
 import Browsersniff from '@baifendian/adhere-util-browsersniff';
+import enUSAdhere from '@baifendian/adhere-util-intl/es/locales/en_US';
+import ptPTAdhere from '@baifendian/adhere-util-intl/es/locales/pt_PT';
+import zhCNAdhere from '@baifendian/adhere-util-intl/es/locales/zh_CN';
 import Resource from '@baifendian/adhere-util-resource';
 
 import { antdThemeToCssVariable } from './theme';
@@ -75,9 +78,9 @@ export default ({
   children,
   lang = 'zh_CN',
   locales = {
-    en_US: [],
-    zh_CN: [],
-    pt_PT: [],
+    en_US: enUSAdhere,
+    zh_CN: zhCNAdhere,
+    pt_PT: ptPTAdhere,
   },
   theme = {},
   curTheme = 'default',

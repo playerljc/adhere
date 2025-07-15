@@ -6,7 +6,13 @@ import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
 import Util from '@baifendian/adhere-util';
 
-import type { Config, ShowConfig, ShowStandardConfig, NotificationInstance, NotificationFactory } from './types';
+import type {
+  Config,
+  INotificationFactory,
+  NotificationInstance,
+  ShowConfig,
+  ShowStandardConfig,
+} from './types';
 
 const selectorPrefix = 'adhere-ui-notification';
 
@@ -190,7 +196,11 @@ class Notification implements NotificationInstance {
     };
 
     const root = ReactDOM.createRoot(notificationElement);
-    const component = renderToWrapper ? renderToWrapper(() => <CustomComponent />) : <CustomComponent />;
+    const component = renderToWrapper ? (
+      renderToWrapper(() => <CustomComponent />)
+    ) : (
+      <CustomComponent />
+    );
     root.render(component);
 
     return id;
@@ -250,7 +260,11 @@ class Notification implements NotificationInstance {
     };
 
     const root = ReactDOM.createRoot(notificationElement);
-    const component = renderToWrapper ? renderToWrapper(() => <StandardComponent />) : <StandardComponent />;
+    const component = renderToWrapper ? (
+      renderToWrapper(() => <StandardComponent />)
+    ) : (
+      <StandardComponent />
+    );
     root.render(component);
 
     return id;
@@ -300,7 +314,7 @@ class Notification implements NotificationInstance {
         if (media?.isUseMedia && media?.designWidth) {
           targetHeightValue = `${Util.pxToRem(targetHeight, media.designWidth)}`;
         }
-        
+
         notificationElement.style.height = targetHeightValue;
 
         const infoElement = notificationElement.querySelector('.info') as HTMLElement;
@@ -359,7 +373,7 @@ class Notification implements NotificationInstance {
 /**
  * Notification factory for creating notification instances
  */
-const NotificationFactory: NotificationFactory = {
+const NotificationFactory: INotificationFactory = {
   /**
    * Set render wrapper function for custom rendering
    * @param _renderToWrapper - Render wrapper function

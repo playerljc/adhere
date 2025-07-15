@@ -3,7 +3,7 @@ import copy from 'copy-to-clipboard';
 import PropTypes from 'prop-types';
 import React, { Requireable } from 'react';
 
-import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+// import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Intl from '@baifendian/adhere-util-intl';
 
 import Card, { cardPropTypes } from './Card';
@@ -25,7 +25,7 @@ export const selectPrefix = 'adhere-ui-playground';
  *   protected renderCodeView(): React.ReactElement {
  *     return <div>代码视图</div>;
  *   }
- *   
+ *
  *   protected getClipboardText(): Promise<string> {
  *     return Promise.resolve('代码内容');
  *   }
@@ -47,7 +47,7 @@ abstract class APlayGround<
 
   /** 默认属性 */
   static defaultProps: PlayGroundProps;
-  
+
   /** 属性类型定义 */
   static propTypes: {
     id: Requireable<string>;
@@ -86,11 +86,7 @@ abstract class APlayGround<
    * @param nextState - 新的状态
    * @param nextContext - 新的上下文
    */
-  componentWillUpdate(
-    nextProps: Readonly<P>,
-    nextState: Readonly<S>,
-    nextContext: any,
-  ): void {
+  componentWillUpdate(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): void {
     if (this.isFirst && nextState.expand) {
       this.isFirst = false;
     }
@@ -133,7 +129,7 @@ abstract class APlayGround<
     return (
       <div
         key="clipboard"
-        className={`${selectPrefix}-action`}
+        className={`${selectPrefix}-action-btn`}
         onClick={this.handleClipboardClick}
         title={Intl.get('copy')}
         role="button"
@@ -162,7 +158,7 @@ abstract class APlayGround<
     return (
       <div
         key="expand"
-        className={`${selectPrefix}-action`}
+        className={`${selectPrefix}-action-btn`}
         onClick={this.handleExpandClick}
         title={expand ? Intl.get('collapse') : Intl.get('expand')}
         role="button"
@@ -191,7 +187,7 @@ abstract class APlayGround<
   protected handleClipboardClick = async (e: React.MouseEvent): Promise<void> => {
     try {
       const text = await this.getClipboardText(e);
-      
+
       if (copy(text)) {
         Message.success(Intl.get('copy_success'));
       } else {
@@ -212,9 +208,12 @@ abstract class APlayGround<
     e.preventDefault();
     e.stopPropagation();
 
-    this.setState((prevState) => ({
-      expand: !prevState.expand,
-    } as S));
+    this.setState(
+      (prevState) =>
+        ({
+          expand: !prevState.expand,
+        } as S),
+    );
   };
 
   /**

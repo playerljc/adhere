@@ -8,9 +8,9 @@ export default () => (
   <div>
     <div className={styles.Wrapper}>
       <a>编辑</a>
-      <Split direction="horizontal" size={10} />
+      <Split direction="horizontal" size={10} horizontalFit />
       <a>查看</a>
-      <Split direction="horizontal" size={10} />
+      <Split direction="horizontal" size={10} horizontalFit />
       <a>删除</a>
     </div>
 
