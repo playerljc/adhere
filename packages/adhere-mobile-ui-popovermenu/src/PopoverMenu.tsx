@@ -10,7 +10,17 @@ import type { PopoverMenuComponent, PopoverMenuProps } from './types';
 const selectorPrefix = 'adhere-mobile-ui-popover-menu';
 
 /**
- * InternalPopoverMenu
+ * 内部弹出菜单组件
+ * @description 渲染弹出式菜单，支持多级菜单和统一关闭功能
+ * @param className - 自定义类名
+ * @param style - 自定义样式
+ * @param menuClassName - 菜单容器的自定义类名
+ * @param menuStyle - 菜单容器的自定义样式
+ * @param direction - 菜单展开方向
+ * @param popoverProps - Popover 组件的额外属性
+ * @param items - 菜单项配置数组
+ * @param maxCount - 最大显示菜单项数量
+ * @param children - 触发弹出菜单的子元素
  */
 const InternalPopoverMenu = memo<PopoverMenuProps>(
   ({
@@ -20,24 +30,22 @@ const InternalPopoverMenu = memo<PopoverMenuProps>(
     menuStyle,
     direction,
     popoverProps,
-    items,
+    items = [],
     maxCount,
     children,
   }) => {
     const refs = useRef<PopoverRef[]>([]);
-
     const popoverRef = useRef<PopoverRef>();
 
-    // placement
+    // 计算弹出位置
     const placement = useMemo(() => {
       if (direction === 'horizontal' || !direction) {
         return 'bottom';
       }
-
       return 'right';
     }, [direction]);
 
-    // content
+    // 渲染菜单内容
     const content = useMemo(
       () => (
         <Menu
@@ -48,28 +56,32 @@ const InternalPopoverMenu = memo<PopoverMenuProps>(
           items={items}
         />
       ),
-      [menuClassName, menuStyle, items],
+      [menuClassName, menuStyle, direction, maxCount, items],
     );
 
+    // 注册 Popover 引用到上下文
     useEffect(() => {
-      refs.current.push(popoverRef.current as PopoverRef);
+      if (popoverRef.current) {
+        refs.current.push(popoverRef.current);
+      }
     }, []);
 
+    // 创建上下文值
+    const contextValue = useMemo(() => ({
+      refs: refs.current,
+    }), []);
+
     return (
-      <Context.Provider
-        value={{
-          refs: refs.current,
-        }}
-      >
+      <Context.Provider value={contextValue}>
         <Popover
           ref={popoverRef as any}
-          className={classNames(selectorPrefix, className ?? '')}
-          style={style ?? {}}
+          className={classNames(selectorPrefix, className)}
+          style={style}
           placement={placement}
           trigger="click"
           stopPropagation={[]}
           content={content}
-          {...(popoverProps ?? {})}
+          {...popoverProps}
         >
           {children}
         </Popover>

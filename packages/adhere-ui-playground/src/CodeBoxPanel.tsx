@@ -7,25 +7,38 @@ import PlayGroundMulti from './PlayGroundMulti';
 import PlayGroundTab from './PlayGroundTab';
 import PlayGroundTabMobile from './PlayGroundTabMobile';
 import Constant from './constant';
-import type { CodeBoxProps } from './types';
+import type { CodeBoxProps, CodeBoxConfigItem } from './types';
 
 const selectPrefix = 'adhere-ui-playground-code-box';
 
 /**
- * CodeBoxPanel
- * @classdesc - 代码组
- * @constructor
+ * 代码盒子面板组件
+ * @component CodeBoxPanel
+ * @description 代码组展示组件，支持多种类型的代码展示和统一管理
+ * @param props - 组件属性
+ * @returns JSX.Element
  */
 const CodeBoxPanel = memo<CodeBoxProps>((props) => {
-  const { columnCount = 1, config = [], title, isShowExpandAllBtn = true } = props;
+  const { 
+    columnCount = 1, 
+    config = [], 
+    title, 
+    isShowExpandAllBtn = true,
+    expandAll: propExpandAll = false,
+    extra,
+  } = props;
 
-  const [activeAnchor, setAnchor] = useState('');
-  const [expandAll, setExpandAll] = useState(props.expandAll);
-  const expandLock = useRef(false);
+  const [activeAnchor, setAnchor] = useState<string>('');
+  const [expandAll, setExpandAll] = useState<boolean>(propExpandAll);
+  const expandLock = useRef<boolean>(false);
 
-  const column: any[] = Array.from<any>({ length: columnCount }).fill(undefined);
+  const column: unknown[] = Array.from({ length: columnCount }).fill(undefined);
 
-  const renderMap = new Map<string, Function>([
+  /**
+   * 渲染函数映射表
+   * @constant renderMap
+   */
+  const renderMap = new Map<string, (columnIndex: number, index: number) => React.ReactNode>([
     ['PlayGroundMulti', renderPlayGroundMulti],
     ['PlayGround', renderPlayGround],
     ['PlayGroundTab', renderPlayGroundTab],
@@ -33,130 +46,140 @@ const CodeBoxPanel = memo<CodeBoxProps>((props) => {
   ]);
 
   /**
-   * useEffect mount
+   * 监听hash变化
    */
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    function onHashChange() {
+    const onHashChange = (): void => {
       const hash = window.location.hash.substring(1);
       setAnchor(hash);
-    }
+    };
 
     window.addEventListener('hashchange', onHashChange);
 
     return () => {
       if (typeof window === 'undefined') return;
-
       window.removeEventListener('hashchange', onHashChange);
     };
   }, []);
 
   /**
-   * useEffect props.expandAll
+   * 监听expandAll属性变化
    */
   useEffect(() => {
-    setExpandAll(props.expandAll);
-  }, [props.expandAll]);
+    setExpandAll(propExpandAll);
+  }, [propExpandAll]);
 
   /**
-   * useEffect expandAll
+   * 监听expandAll状态变化
    */
   useEffect(() => {
     expandLock.current = false;
   }, [expandAll]);
 
   /**
-   * renderPlayGroundMulti
-   * @description - 渲染PlayGroundMulti
-   * @param columnIndex
-   * @param index
-   * @return JSX
+   * 渲染PlayGroundMulti组件
+   * @function renderPlayGroundMulti
+   * @param columnIndex - 列索引
+   * @param index - 配置索引
+   * @returns JSX.Element
    */
-  function renderPlayGroundMulti(columnIndex: number, index: number) {
-    const { config } = props;
-
-    // @ts-ignore
-    const { renderWrap, renderChildren, type, ...restProps } = config[index];
+  function renderPlayGroundMulti(columnIndex: number, index: number): React.ReactNode {
+    const item = config[index] as any;
+    const { renderWrap, renderChildren, type, ...restProps } = item;
 
     const children = (
-      // @ts-ignore
-      <PlayGroundMulti {...restProps} isActive={activeAnchor === restProps.id} expand={expandAll}>
+      <PlayGroundMulti 
+        {...restProps} 
+        isActive={activeAnchor === restProps.id} 
+        expand={expandAll}
+      >
         <ConditionalRender conditional={!!renderChildren}>
-          {() => renderChildren?.(columnIndex, index, config as Array<any>)}
+          {() => renderChildren?.(columnIndex, index, config)}
         </ConditionalRender>
       </PlayGroundMulti>
     );
 
     return (
       <ConditionalRender conditional={!!renderWrap} noMatch={() => children}>
-        {() => renderWrap?.(columnIndex, index, config as any, children)}
+        {() => renderWrap?.(columnIndex, index, config, children)}
       </ConditionalRender>
     );
   }
 
   /**
-   * renderPlayGround
-   * @description - 渲染PlayGround
-   * @param columnIndex
-   * @param index
-   * @return JSX
+   * 渲染PlayGround组件
+   * @function renderPlayGround
+   * @param columnIndex - 列索引
+   * @param index - 配置索引
+   * @returns JSX.Element
    */
-  function renderPlayGround(columnIndex: number, index: number) {
-    // @ts-ignore
-    const { renderWrap, renderChildren, type, ...restProps } = config[index];
+  function renderPlayGround(columnIndex: number, index: number): React.ReactNode {
+    const item = config[index] as any;
+    const { renderWrap, renderChildren, type, ...restProps } = item;
 
     const children = (
-      // @ts-ignore
-      <PlayGround {...restProps} isActive={activeAnchor === restProps.id} expand={expandAll}>
+      <PlayGround 
+        {...restProps} 
+        isActive={activeAnchor === restProps.id} 
+        expand={expandAll}
+      >
         <ConditionalRender conditional={!!renderChildren}>
-          {() => renderChildren?.(columnIndex, index, config as any)}
+          {() => renderChildren?.(columnIndex, index, config)}
         </ConditionalRender>
       </PlayGround>
     );
 
     return (
       <ConditionalRender conditional={!!renderWrap} noMatch={() => children}>
-        {() => renderWrap?.(columnIndex, index, config as any, children)}
+        {() => renderWrap?.(columnIndex, index, config, children)}
       </ConditionalRender>
     );
   }
 
   /**
-   * renderPlayGroundTab
-   * @param columnIndex
-   * @param index
+   * 渲染PlayGroundTab组件
+   * @function renderPlayGroundTab
+   * @param columnIndex - 列索引
+   * @param index - 配置索引
+   * @returns JSX.Element
    */
-  function renderPlayGroundTab(columnIndex: number, index: number) {
-    // @ts-ignore
-    const { renderWrap, renderChildren, type, ...restProps } = config[index];
+  function renderPlayGroundTab(columnIndex: number, index: number): React.ReactNode {
+    const item = config[index] as any;
+    const { renderWrap, renderChildren, type, ...restProps } = item;
 
     const children = (
-      // @ts-ignore
-      <PlayGroundTab {...restProps} isActive={activeAnchor === restProps.id} expand={expandAll}>
+      <PlayGroundTab 
+        {...restProps} 
+        isActive={activeAnchor === restProps.id} 
+        expand={expandAll}
+      >
         <ConditionalRender conditional={!!renderChildren}>
-          {() => renderChildren?.(columnIndex, index, config as any)}
+          {() => renderChildren?.(columnIndex, index, config)}
         </ConditionalRender>
       </PlayGroundTab>
     );
 
     return (
       <ConditionalRender conditional={!!renderWrap} noMatch={() => children}>
-        {() => renderWrap?.(columnIndex, index, config as any, children)}
+        {() => renderWrap?.(columnIndex, index, config, children)}
       </ConditionalRender>
     );
   }
 
   /**
-   * renderPlayGroundTabMobile
-   * @param columnIndex
-   * @param index
+   * 渲染PlayGroundTabMobile组件
+   * @function renderPlayGroundTabMobile
+   * @param columnIndex - 列索引
+   * @param index - 配置索引
+   * @returns JSX.Element
    */
-  function renderPlayGroundTabMobile(columnIndex: number, index: number) {
-    const { renderWrap, type, ...restProps } = config[index];
+  function renderPlayGroundTabMobile(columnIndex: number, index: number): React.ReactNode {
+    const item = config[index] as any;
+    const { renderWrap, type, ...restProps } = item;
 
     const children = (
-      // @ts-ignore
       <PlayGroundTabMobile
         {...restProps}
         isActive={activeAnchor === restProps.id}
@@ -166,10 +189,30 @@ const CodeBoxPanel = memo<CodeBoxProps>((props) => {
 
     return (
       <ConditionalRender conditional={!!renderWrap} noMatch={() => children}>
-        {() => renderWrap?.(columnIndex, index, config as any, children)}
+        {() => renderWrap?.(columnIndex, index, config, children)}
       </ConditionalRender>
     );
   }
+
+  /**
+   * 处理展开全部按钮点击
+   * @function handleExpandAll
+   */
+  const handleExpandAll = (): void => {
+    if (expandLock.current) return;
+    expandLock.current = true;
+    setExpandAll(true);
+  };
+
+  /**
+   * 处理收起全部按钮点击
+   * @function handleCollapseAll
+   */
+  const handleCollapseAll = (): void => {
+    if (expandLock.current) return;
+    expandLock.current = true;
+    setExpandAll(false);
+  };
 
   return (
     <div className={selectPrefix}>
@@ -187,12 +230,8 @@ const CodeBoxPanel = memo<CodeBoxProps>((props) => {
                   <img
                     className={`${selectPrefix}-expand-code`}
                     src={Constant.ExpandCodeAll}
-                    alt=""
-                    onClick={() => {
-                      if (expandLock.current) return;
-                      expandLock.current = true;
-                      setExpandAll(true);
-                    }}
+                    alt="展开全部"
+                    onClick={handleExpandAll}
                   />
                 )}
               >
@@ -200,18 +239,16 @@ const CodeBoxPanel = memo<CodeBoxProps>((props) => {
                   <img
                     className={`${selectPrefix}-expand-code`}
                     src={Constant.CloseCodeAll}
-                    alt=""
-                    onClick={() => {
-                      if (expandLock.current) return;
-                      expandLock.current = true;
-                      setExpandAll(false);
-                    }}
+                    alt="收起全部"
+                    onClick={handleCollapseAll}
                   />
                 )}
               </ConditionalRender>
             )}
           </ConditionalRender>
-          <ConditionalRender conditional={!!props.extra}>{() => props.extra}</ConditionalRender>
+          <ConditionalRender conditional={!!extra}>
+            {() => extra}
+          </ConditionalRender>
         </div>
       </div>
 
@@ -226,7 +263,6 @@ const CodeBoxPanel = memo<CodeBoxProps>((props) => {
                   </div>
                 );
               }
-
               return null;
             })}
           </div>

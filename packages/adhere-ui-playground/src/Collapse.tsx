@@ -3,10 +3,17 @@ import React, { memo, useEffect, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
-import { CollapseProps } from './types';
+import type { CollapseProps } from './types';
 
 const selectorPrefix = 'adhere-ui-playground-collapse';
 
+/**
+ * 可折叠组件
+ * @component Collapse
+ * @description 一个可折叠的内容组件，支持展开/收起功能
+ * @param props - 组件属性
+ * @returns JSX.Element
+ */
 const Collapse = memo<CollapseProps>((props) => {
   const {
     headerClassName = '',
@@ -19,17 +26,25 @@ const Collapse = memo<CollapseProps>((props) => {
     border = false,
     scrollY = false,
     fixedHeaderScrollBody = false,
+    defaultCollapse = false,
   } = props;
 
-  const [collapse, setCollapse] = useState(props.defaultCollapse || false);
+  const [collapse, setCollapse] = useState<boolean>(defaultCollapse);
 
-  function onClickHeader() {
+  /**
+   * 处理头部点击事件
+   * @function onClickHeader
+   */
+  const onClickHeader = (): void => {
     setCollapse(!collapse);
-  }
+  };
 
+  /**
+   * 监听defaultCollapse属性变化
+   */
   useEffect(() => {
-    setCollapse(props.defaultCollapse || false);
-  }, [props.defaultCollapse]);
+    setCollapse(defaultCollapse);
+  }, [defaultCollapse]);
 
   return (
     <div
@@ -43,9 +58,9 @@ const Collapse = memo<CollapseProps>((props) => {
         className={classNames(
           `${selectorPrefix}-header`,
           border ? `${selectorPrefix}-header-border` : '',
-          headerClassName ?? '',
+          headerClassName,
         )}
-        style={headerStyle ?? {}}
+        style={headerStyle}
         onClickCapture={onClickHeader}
       >
         <div className={`${selectorPrefix}-header-collapse`}>
@@ -71,10 +86,10 @@ const Collapse = memo<CollapseProps>((props) => {
             className={classNames(
               `${selectorPrefix}-body`,
               border ? `${selectorPrefix}-body-border` : '',
-              bodyClassName ?? '',
+              bodyClassName,
               !!title || !!extra ? `${selectorPrefix}-body-exists-header` : '',
             )}
-            style={bodyStyle ?? {}}
+            style={bodyStyle}
           >
             {children}
           </div>
@@ -85,142 +100,5 @@ const Collapse = memo<CollapseProps>((props) => {
 });
 
 Collapse.displayName = 'Collapse';
-
-// /**
-//  * Collapse
-//  * @class Collapse
-//  * @classdesc Collapse
-//  */
-// // @ts-ignore
-// class Collapse extends React.Component<ICollapseProps, ICollapseState> {
-//   static propTypes: {
-//     border: Requireable<boolean>;
-//     headerClassName: Requireable<string>;
-//     fixedHeaderScrollBody: Requireable<boolean>;
-//     bodyClassName: Requireable<string>;
-//     extra: Requireable<ReactNodeLike>;
-//     defaultCollapse: Requireable<boolean>;
-//     bodyStyle: Requireable<object>;
-//     scrollY: Requireable<boolean>;
-//     title: Requireable<NonNullable<InferType<Requireable<ReactNodeLike> | Requireable<string>>>>;
-//     headerStyle: Requireable<object>;
-//   };
-//
-//   static defaultProps: ICollapseProps;
-//
-//   state: ICollapseState = {
-//     collapse: this.props.defaultCollapse,
-//   };
-//
-//   componentWillReceiveProps(nextProps: Readonly<ICollapseProps>, nextContext: any) {
-//     if (this.state.collapse !== nextProps.defaultCollapse) {
-//       this.setState({
-//         collapse: nextProps.defaultCollapse,
-//       });
-//     }
-//   }
-//
-//   protected onClickHeader = () => {
-//     this.setState({
-//       collapse: !this.state.collapse,
-//     });
-//   };
-//
-//   protected render() {
-//     const {
-//       headerClassName,
-//       headerStyle,
-//       bodyClassName,
-//       bodyStyle,
-//       children,
-//       title,
-//       extra,
-//       border,
-//       scrollY,
-//       fixedHeaderScrollBody,
-//     } = this.props;
-//
-//     const { collapse } = this.state;
-//
-//     return (
-//       <div
-//         className={classNames(
-//           selectorPrefix,
-//           scrollY ? `${selectorPrefix}-scroll-y` : '',
-//           fixedHeaderScrollBody ? `${selectorPrefix}-fixed-header-scroll-body` : '',
-//         )}
-//       >
-//         <div
-//           className={classNames(
-//             `${selectorPrefix}-header`,
-//             border ? `${selectorPrefix}-header-border` : '',
-//             headerClassName.split(/\s+/),
-//           )}
-//           style={{ ...headerStyle }}
-//           onClickCapture={this.onClickHeader}
-//         >
-//           <div className={`${selectorPrefix}-header-collapse`}>
-//             <div
-//               className={classNames(
-//                 `${selectorPrefix}-header-collapse-icon`,
-//                 collapse ? '' : `${selectorPrefix}-header-collapse-icon-close`,
-//               )}
-//             />
-//             <ConditionalRender conditional={!!title}>
-//               {() => <div className={`${selectorPrefix}-header-title`}>{title}</div>}
-//             </ConditionalRender>
-//           </div>
-//
-//           <ConditionalRender conditional={!!extra}>
-//             {() => <div className={`${selectorPrefix}-header-extra`}>{extra}</div>}
-//           </ConditionalRender>
-//         </div>
-//
-//         <ConditionalRender conditional={!collapse}>
-//           {() => (
-//             <div
-//               className={classNames(
-//                 `${selectorPrefix}-body`,
-//                 border ? `${selectorPrefix}-body-border` : '',
-//                 bodyClassName.split(/\s+/),
-//                 !!title || !!extra ? `${selectorPrefix}-body-exists-header` : '',
-//               )}
-//               style={{ ...bodyStyle }}
-//             >
-//               {children}
-//             </div>
-//           )}
-//         </ConditionalRender>
-//       </div>
-//     );
-//   }
-// }
-//
-// Collapse.defaultProps = {
-//   headerClassName: '',
-//   headerStyle: {},
-//   bodyClassName: '',
-//   bodyStyle: {},
-//   title: null,
-//   extra: null,
-//   border: false,
-//   scrollY: false,
-//   defaultCollapse: false,
-//   fixedHeaderScrollBody: false,
-// };
-//
-// Collapse.propTypes = {
-//   headerClassName: PropTypes.string,
-//   headerStyle: PropTypes.object,
-//   bodyClassName: PropTypes.string,
-//   bodyStyle: PropTypes.object,
-//   title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-//   // @ts-ignore
-//   extra: PropTypes.node,
-//   defaultCollapse: PropTypes.bool,
-//   border: PropTypes.bool,
-//   scrollY: PropTypes.bool,
-//   fixedHeaderScrollBody: PropTypes.bool,
-// };
 
 export default Collapse;

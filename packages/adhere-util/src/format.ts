@@ -3,152 +3,281 @@ import ObjTree from 'xml-objtree';
 
 const objTree = new ObjTree();
 
+/**
+ * 格式化工具类
+ * @description 提供各种格式化和转换功能
+ */
 const FormatUtil = {
   /**
-   * prettierJSON
-   * @description 格式化JSON字符串
-   * @return string
-   * @param _jsonStr
+   * 格式化 JSON 字符串
+   * @description 将 JSON 字符串格式化为可读的格式
+   * @param jsonStr - 要格式化的 JSON 字符串
+   * @returns 格式化后的 JSON 字符串
+   * @example
+   * ```typescript
+   * prettierJSON('{"name":"John","age":30}') 
+   * // 返回:
+   * // {
+   * //   "name": "John",
+   * //   "age": 30
+   * // }
+   * ```
    */
-  prettierJSON(_jsonStr: string = '') {
-    let jsonStr = (_jsonStr || '').trim();
-    const glue = '  ';
+  prettierJSON(jsonStr: string = ''): string {
+    if (!jsonStr) return '';
 
     try {
-      return JSON.stringify(JSON.parse(jsonStr), null, glue);
+      return JSON.stringify(JSON.parse(jsonStr.trim()), null, '  ');
     } catch (e) {
-      return _jsonStr;
+      console.error('Failed to prettify JSON:', e);
+      return jsonStr;
     }
   },
+
   /**
-   * compressJSON
-   * @description 压缩JSON
-   * @return string
-   * @param _jsonStr
+   * 压缩 JSON
+   * @description 将 JSON 字符串压缩为单行格式
+   * @param jsonStr - 要压缩的 JSON 字符串
+   * @returns 压缩后的 JSON 字符串
+   * @example
+   * ```typescript
+   * compressJSON('{\n  "name": "John",\n  "age": 30\n}') 
+   * // 返回: {"name":"John","age":30}
+   * ```
    */
-  compressJSON(_jsonStr: string = '') {
-    let jsonStr = (_jsonStr || '').trim();
-    const glue = '';
+  compressJSON(jsonStr: string = ''): string {
+    if (!jsonStr) return '';
 
     try {
-      return JSON.stringify(JSON.parse(jsonStr), null, glue);
+      return JSON.stringify(JSON.parse(jsonStr.trim()));
     } catch (e) {
-      return _jsonStr;
+      console.error('Failed to compress JSON:', e);
+      return jsonStr;
     }
   },
-  /**
-   * prettierXML
-   * @description 格式化XML
-   * @param _xmlStr
-   * @return xmlStr
-   */
-  prettierXML(_xmlStr: string = '') {
-    let xmlStr = (_xmlStr || '').trim();
 
-    return vkbeautify.xml(xmlStr);
-  },
   /**
-   * compressXML
-   * @description 压缩XML
-   * @param _xmlStr
-   * @return xmlStr
+   * 格式化 XML
+   * @description 将 XML 字符串格式化为可读的格式
+   * @param xmlStr - 要格式化的 XML 字符串
+   * @returns 格式化后的 XML 字符串
+   * @example
+   * ```typescript
+   * prettierXML('<root><item>value</item></root>')
+   * ```
    */
-  compressXML(_xmlStr: string = '') {
-    let xmlStr = (_xmlStr || '').trim();
+  prettierXML(xmlStr: string = ''): string {
+    if (!xmlStr) return '';
 
-    return vkbeautify.xmlmin(xmlStr);
-  },
-  /**
-   * prettierHTML
-   * @description 格式化HTML
-   * @param _htmlStr
-   * @return htmlStr
-   */
-  prettierHTML(_htmlStr: string = '') {
-    let htmlStr = (_htmlStr || '').trim();
-
-    return vkbeautify.html(htmlStr);
-  },
-  /**
-   * compressHTML
-   * @description 压缩HTML
-   * @param _htmlStr
-   * @return htmlStr
-   */
-  compressHTML(_htmlStr: string = '') {
-    let htmlStr = (_htmlStr || '').trim();
-
-    return vkbeautify.xmlmin(htmlStr);
-  },
-  /**
-   * prettierCSS
-   * @description 格式化CSS
-   * @param _cssStr
-   * @return cssStr
-   */
-  prettierCSS(_cssStr: string = '') {
-    let cssStr = (_cssStr || '').trim();
-
-    return vkbeautify.css(cssStr);
-  },
-  /**
-   * compressCSS
-   * @description 压缩CSS
-   * @param _cssStr
-   * @return cssStr
-   */
-  compressCSS(_cssStr: string = '') {
-    let cssStr = (_cssStr || '').trim();
-
-    return vkbeautify.cssmin(cssStr);
-  },
-  /**
-   * prettierSQL
-   * @description 格式化SQL
-   * @param _sqlStr
-   * @return sqlStr
-   */
-  prettierSQL(_sqlStr: string = '') {
-    let sqlStr = (_sqlStr || '').trim();
-
-    return vkbeautify.sql(sqlStr);
-  },
-  /**
-   * compressSQL
-   * @description 压缩SQL
-   * @param _sqlStr
-   * @return sqlStr
-   */
-  compressSQL(_sqlStr: string = '') {
-    let sqlStr = (_sqlStr || '').trim();
-
-    return vkbeautify.sqlmin(sqlStr);
-  },
-  /**
-   * jsonToXML
-   * @description json转xml
-   * @param _jsonStr
-   * @return xmlStr
-   */
-  jsonToXML(_jsonStr: string = '') {
-    return objTree.writeXML(JSON.parse((_jsonStr || '').trim()));
-  },
-  /**
-   * xmlToJSON
-   * @description xml转json
-   * @param _xmlStr
-   * @param prettier
-   * @return jsonStr
-   */
-  xmlToJSON(_xmlStr: string = '', prettier: boolean = true) {
-    const tree = objTree.parseXML((_xmlStr || '').trim());
-
-    if (!tree.html) {
-      const space = prettier ? '  ' : '';
-      return JSON.stringify(tree, null, space);
+    try {
+      return vkbeautify.xml(xmlStr.trim());
+    } catch (e) {
+      console.error('Failed to prettify XML:', e);
+      return xmlStr;
     }
+  },
 
-    return '';
+  /**
+   * 压缩 XML
+   * @description 将 XML 字符串压缩为单行格式
+   * @param xmlStr - 要压缩的 XML 字符串
+   * @returns 压缩后的 XML 字符串
+   * @example
+   * ```typescript
+   * compressXML('<root>\n  <item>value</item>\n</root>')
+   * // 返回: <root><item>value</item></root>
+   * ```
+   */
+  compressXML(xmlStr: string = ''): string {
+    if (!xmlStr) return '';
+
+    try {
+      return vkbeautify.xmlmin(xmlStr.trim());
+    } catch (e) {
+      console.error('Failed to compress XML:', e);
+      return xmlStr;
+    }
+  },
+
+  /**
+   * 格式化 HTML
+   * @description 将 HTML 字符串格式化为可读的格式
+   * @param htmlStr - 要格式化的 HTML 字符串
+   * @returns 格式化后的 HTML 字符串
+   * @example
+   * ```typescript
+   * prettierHTML('<div><p>Hello</p></div>')
+   * ```
+   */
+  prettierHTML(htmlStr: string = ''): string {
+    if (!htmlStr) return '';
+
+    try {
+      return vkbeautify.html(htmlStr.trim());
+    } catch (e) {
+      console.error('Failed to prettify HTML:', e);
+      return htmlStr;
+    }
+  },
+
+  /**
+   * 压缩 HTML
+   * @description 将 HTML 字符串压缩为单行格式
+   * @param htmlStr - 要压缩的 HTML 字符串
+   * @returns 压缩后的 HTML 字符串
+   * @example
+   * ```typescript
+   * compressHTML('<div>\n  <p>Hello</p>\n</div>')
+   * // 返回: <div><p>Hello</p></div>
+   * ```
+   */
+  compressHTML(htmlStr: string = ''): string {
+    if (!htmlStr) return '';
+
+    try {
+      return vkbeautify.xmlmin(htmlStr.trim());
+    } catch (e) {
+      console.error('Failed to compress HTML:', e);
+      return htmlStr;
+    }
+  },
+
+  /**
+   * 格式化 CSS
+   * @description 将 CSS 字符串格式化为可读的格式
+   * @param cssStr - 要格式化的 CSS 字符串
+   * @returns 格式化后的 CSS 字符串
+   * @example
+   * ```typescript
+   * prettierCSS('body{color:red;font-size:14px;}')
+   * ```
+   */
+  prettierCSS(cssStr: string = ''): string {
+    if (!cssStr) return '';
+
+    try {
+      return vkbeautify.css(cssStr.trim());
+    } catch (e) {
+      console.error('Failed to prettify CSS:', e);
+      return cssStr;
+    }
+  },
+
+  /**
+   * 压缩 CSS
+   * @description 将 CSS 字符串压缩为单行格式
+   * @param cssStr - 要压缩的 CSS 字符串
+   * @returns 压缩后的 CSS 字符串
+   * @example
+   * ```typescript
+   * compressCSS('body {\n  color: red;\n  font-size: 14px;\n}')
+   * // 返回: body{color:red;font-size:14px;}
+   * ```
+   */
+  compressCSS(cssStr: string = ''): string {
+    if (!cssStr) return '';
+
+    try {
+      return vkbeautify.cssmin(cssStr.trim());
+    } catch (e) {
+      console.error('Failed to compress CSS:', e);
+      return cssStr;
+    }
+  },
+
+  /**
+   * 格式化 SQL
+   * @description 将 SQL 字符串格式化为可读的格式
+   * @param sqlStr - 要格式化的 SQL 字符串
+   * @returns 格式化后的 SQL 字符串
+   * @example
+   * ```typescript
+   * prettierSQL('SELECT * FROM users WHERE age>18')
+   * ```
+   */
+  prettierSQL(sqlStr: string = ''): string {
+    if (!sqlStr) return '';
+
+    try {
+      return vkbeautify.sql(sqlStr.trim());
+    } catch (e) {
+      console.error('Failed to prettify SQL:', e);
+      return sqlStr;
+    }
+  },
+
+  /**
+   * 压缩 SQL
+   * @description 将 SQL 字符串压缩为单行格式
+   * @param sqlStr - 要压缩的 SQL 字符串
+   * @returns 压缩后的 SQL 字符串
+   * @example
+   * ```typescript
+   * compressSQL('SELECT *\nFROM users\nWHERE age > 18')
+   * // 返回: SELECT * FROM users WHERE age > 18
+   * ```
+   */
+  compressSQL(sqlStr: string = ''): string {
+    if (!sqlStr) return '';
+
+    try {
+      return vkbeautify.sqlmin(sqlStr.trim());
+    } catch (e) {
+      console.error('Failed to compress SQL:', e);
+      return sqlStr;
+    }
+  },
+
+  /**
+   * JSON 转 XML
+   * @description 将 JSON 字符串转换为 XML 格式
+   * @param jsonStr - 要转换的 JSON 字符串
+   * @returns 转换后的 XML 字符串
+   * @example
+   * ```typescript
+   * jsonToXML('{"root":{"item":"value"}}')
+   * // 返回: <root><item>value</item></root>
+   * ```
+   */
+  jsonToXML(jsonStr: string = ''): string {
+    if (!jsonStr) return '';
+
+    try {
+      return objTree.writeXML(JSON.parse(jsonStr.trim()));
+    } catch (e) {
+      console.error('Failed to convert JSON to XML:', e);
+      return '';
+    }
+  },
+
+  /**
+   * XML 转 JSON
+   * @description 将 XML 字符串转换为 JSON 格式
+   * @param xmlStr - 要转换的 XML 字符串
+   * @param prettier - 是否格式化输出，默认为 true
+   * @returns 转换后的 JSON 字符串
+   * @example
+   * ```typescript
+   * xmlToJSON('<root><item>value</item></root>')
+   * // 返回: {"root":{"item":"value"}}
+   * ```
+   */
+  xmlToJSON(xmlStr: string = '', prettier: boolean = true): string {
+    if (!xmlStr) return '';
+
+    try {
+      const tree = objTree.parseXML(xmlStr.trim());
+
+      if (!tree.html) {
+        const space = prettier ? '  ' : '';
+        return JSON.stringify(tree, null, space);
+      }
+
+      return '';
+    } catch (e) {
+      console.error('Failed to convert XML to JSON:', e);
+      return '';
+    }
   },
 };
 

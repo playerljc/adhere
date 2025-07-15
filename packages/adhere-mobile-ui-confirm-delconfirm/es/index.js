@@ -1,2 +1,2 @@
-import DelConform from"./DelConfirm";export default DelConform;
+import DelConfirm from"./DelConfirm";export default DelConfirm;
 //# sourceMappingURL=index.js.map

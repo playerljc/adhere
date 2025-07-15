@@ -14,10 +14,11 @@ export const selectorPrefix = 'adhere-ui-message-dialog-maximize-modal';
 const { useTheme } = ConfigProvider;
 
 /**
- * MaximizeModalDialog
- * @description 可以最大化的Modal
- * @param props
- * @constructor
+ * MaximizeModalDialog组件
+ * 可以最大化和拖拽的模态对话框组件
+ * 
+ * @param props - 组件属性
+ * @returns 最大化模态对话框组件
  */
 const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
   const {
@@ -57,10 +58,11 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
   const modalRender = (_modal) => renderDraggableModal(_modal);
 
   /**
-   * renderDraggableModal
-   * @param modal
+   * 渲染可拖拽的模态框
+   * @param modal - 模态框内容
+   * @returns 可拖拽的模态框元素
    */
-  function renderDraggableModal(modal) {
+  function renderDraggableModal(modal: React.ReactElement): React.ReactElement {
     return (
       <Draggable
         disabled={isMaximize ? true : draggableDisabled}
@@ -74,9 +76,10 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
   }
 
   /**
-   * renderClose
+   * 渲染关闭按钮
+   * @returns 关闭按钮元素
    */
-  function renderClose() {
+  function renderClose(): React.ReactElement {
     if (closeIcon) {
       return (
         <div className={`${selectorPrefix}-header-action`} onClick={onClose}>
@@ -89,10 +92,11 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
   }
 
   /**
-   * renderModalInner
-   * @param modal
+   * 渲染模态框内部内容
+   * @param modal - 模态框内容
+   * @returns 模态框内部元素
    */
-  function renderModalInner(modal) {
+  function renderModalInner(modal: React.ReactElement): React.ReactElement {
     return (
       <div className={`${selectorPrefix}-inner`} ref={draggableRef}>
         <div
@@ -142,11 +146,11 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
   }
 
   /**
-   * onDraggableStart
-   * @param _event
-   * @param uiData
+   * 拖拽开始事件处理
+   * @param _event - 拖拽事件
+   * @param uiData - 拖拽数据
    */
-  function onDraggableStart(_event, uiData) {
+  function onDraggableStart(_event: any, uiData: { x: number; y: number }): void {
     const { clientWidth, clientHeight } = window.document.documentElement;
     const targetRect = draggableRef.current?.getBoundingClientRect?.();
     if (!targetRect) {
@@ -160,27 +164,45 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
     });
   }
 
-  function revert() {
+  /**
+   * 恢复窗口大小
+   */
+  function revert(): void {
     setMaximize(false);
   }
 
-  function maximize() {
+  /**
+   * 最大化窗口
+   */
+  function maximize(): void {
     setMaximize(true);
   }
 
-  function close() {
+  /**
+   * 关闭窗口
+   */
+  function close(): void {
     restProps?.close?.();
   }
 
-  function onClose() {
+  /**
+   * 关闭按钮点击事件
+   */
+  function onClose(): void {
     close();
   }
 
-  function onRevert() {
+  /**
+   * 恢复按钮点击事件
+   */
+  function onRevert(): void {
     revert();
   }
 
-  function onMaximize() {
+  /**
+   * 最大化按钮点击事件
+   */
+  function onMaximize(): void {
     maximize();
   }
 

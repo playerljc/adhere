@@ -1,7 +1,7 @@
 {
   "name": "@baifendian/adhere-mobile-ui-prompt-errorprompt",
   "version": "2.11.0",
-  "description": "错误的提示(就是为了全局统一)",
+  "description": "错误提示组件，提供统一的错误提示解决方案，支持Toast轻量提示和Modal对话框两种形式",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
     "url": "https://github.com/playerljc/adhere/issues"

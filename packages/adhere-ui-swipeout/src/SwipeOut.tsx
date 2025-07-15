@@ -1,11 +1,29 @@
 import classNames from 'classnames';
-import React, { memo, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { memo, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { Swiper } from 'swiper';
 
-import { SwipeOutProps } from './types';
+import { SwipeOutProps, SwiperRef, SlideStateMap } from './types';
 
 const selectorPrefix = 'adhere-ui-swipe-out';
 
+/**
+ * SwipeOut 组件
+ * 
+ * 一个基于 Swiper 的滑动组件，支持前置和后置内容的显示与隐藏。
+ * 可以通过 beforeShow 和 afterShow 属性控制前置和后置内容的显示状态。
+ * 
+ * @example
+ * ```tsx
+ * <SwipeOut
+ *   beforeShow={true}
+ *   afterShow={false}
+ *   before={() => <div>前置内容</div>}
+ *   after={() => <div>后置内容</div>}
+ * >
+ *   <div>主内容</div>
+ * </SwipeOut>
+ * ```
+ */
 const SwipeOut = memo<SwipeOutProps>((props) => {
   const {
     className = '',
@@ -23,81 +41,129 @@ const SwipeOut = memo<SwipeOutProps>((props) => {
     direction = 'horizontal',
     duration = 0,
     children,
+    onInit,
+    slideChangeTransitionStart,
+    slideChangeTransitionEnd,
   } = props;
 
   const ref = useRef<HTMLDivElement>(null);
-  const swiper = useRef<Swiper>();
-  const map = useRef(
+  const swiper = useRef<SwiperRef>();
+  
+  /**
+   * 滑动状态映射表
+   * 根据 beforeShow 和 afterShow 的组合确定当前应该显示哪个 slide
+   */
+  const slideStateMap = useRef<SlideStateMap>(
     new Map([
-      [[true, true].toString(), 1],
-      [[false, false].toString(), 1],
-      [[true, false].toString(), 0],
-      [[false, true].toString(), 2],
+      [[true, true].toString(), 1],    // 前置和后置都显示，显示主内容
+      [[false, false].toString(), 1],  // 前置和后置都不显示，显示主内容
+      [[true, false].toString(), 0],   // 只显示前置，显示前置内容
+      [[false, true].toString(), 2],   // 只显示后置，显示后置内容
     ]),
   );
 
-  function slide() {
-    swiper?.current?.slideTo?.(
-      map.current.get([beforeShow, afterShow].toString()) as number,
-      duration,
-    );
-  }
+  /**
+   * 触发回调函数
+   * @param action - 回调函数名称
+   * @param params - 回调参数
+   */
+  const trigger = useCallback((action: string, params?: any): void => {
+    const callback = props[action as keyof SwipeOutProps];
+    if (typeof callback === 'function') {
+      callback(params);
+    }
+  }, [props]);
 
-  function createSwiper() {
-    if (swiper.current) {
+  /**
+   * 滑动到指定位置
+   */
+  const slide = useCallback(() => {
+    const targetSlide = slideStateMap.current.get([beforeShow, afterShow].toString());
+    if (targetSlide !== undefined && swiper.current?.slideTo) {
+      swiper.current.slideTo(targetSlide, duration);
+    }
+  }, [beforeShow, afterShow, duration]);
+
+  /**
+   * 创建 Swiper 实例
+   */
+  const createSwiper = useCallback(() => {
+    if (swiper.current || !ref.current) {
       return;
-      // swiper.current.destroy();
     }
 
-    const initialSlide = map.current.get([beforeShow, afterShow].toString());
+    const initialSlide = slideStateMap.current.get([beforeShow, afterShow].toString()) ?? 1;
 
-    swiper.current = new Swiper(ref.current as HTMLElement, {
+    swiper.current = new Swiper(ref.current, {
       init: false,
-      // 初始化在第一个选项卡上
       initialSlide,
-      direction: direction,
+      direction,
       slidesPerView: 'auto',
       centeredSlides: false,
       spaceBetween: 0,
     });
 
-    swiper?.current?.on?.('init', () => trigger('onInit'));
+    // 绑定事件监听器
+    swiper.current.on('init', () => {
+      trigger('onInit');
+    });
 
-    swiper?.current?.on?.('slideChangeTransitionStart', () =>
-      trigger('onSlideChangeTransitionStart', swiper.current?.activeIndex),
-    );
+    swiper.current.on('slideChangeTransitionStart', () => {
+      trigger('slideChangeTransitionStart', swiper.current?.activeIndex);
+    });
 
-    swiper?.current?.on?.('slideChangeTransitionEnd', () =>
-      trigger('onSlideChangeTransitionEnd', swiper.current?.activeIndex),
-    );
+    swiper.current.on('slideChangeTransitionEnd', () => {
+      trigger('slideChangeTransitionEnd', swiper.current?.activeIndex);
+    });
 
-    swiper?.current?.init?.();
-  }
+    // 初始化 Swiper
+    swiper.current.init();
+  }, [beforeShow, afterShow, direction, trigger]);
 
-  function trigger(action: string, params?: any): void {
-    if (props[action]) {
-      props[action](params);
+  /**
+   * 清理 Swiper 实例
+   */
+  const destroySwiper = useCallback(() => {
+    if (swiper.current) {
+      swiper.current.destroy(true, true);
+      swiper.current = undefined;
     }
-  }
+  }, []);
 
-  useLayoutEffect(() => createSwiper(), []);
+  // 组件挂载时创建 Swiper 实例
+  useLayoutEffect(() => {
+    createSwiper();
+    
+    // 组件卸载时清理 Swiper 实例
+    return () => {
+      destroySwiper();
+    };
+  }, [createSwiper, destroySwiper]);
+
+  // 当 beforeShow 或 afterShow 变化时，滑动到对应位置
   useEffect(() => {
-    slide();
-  }, [beforeShow, afterShow, duration]);
+    if (swiper.current) {
+      slide();
+    }
+  }, [slide]);
+
+  // 当方向变化时，更新 Swiper 方向
   useEffect(() => {
-    swiper.current && swiper.current.changeDirection(direction);
+    if (swiper.current) {
+      swiper.current.changeDirection(direction);
+    }
   }, [direction]);
 
   return (
     <div
-      className={classNames(selectorPrefix, 'swiper', className ?? '')}
-      style={style ?? {}}
+      className={classNames(selectorPrefix, 'swiper', className)}
+      style={style}
       ref={ref}
     >
       <div className="swiper-wrapper">
         <div
-          className={classNames('swiper-slide', `${selectorPrefix}-before`, beforeClassName ?? '')}
-          style={beforeStyle ?? {}}
+          className={classNames('swiper-slide', `${selectorPrefix}-before`, beforeClassName)}
+          style={beforeStyle}
         >
           {before?.()}
         </div>
@@ -106,16 +172,16 @@ const SwipeOut = memo<SwipeOutProps>((props) => {
           className={classNames(
             'swiper-slide',
             `${selectorPrefix}-content`,
-            contentClassName ?? '',
+            contentClassName,
           )}
-          style={contentStyle ?? {}}
+          style={contentStyle}
         >
           {children}
         </div>
 
         <div
-          className={classNames('swiper-slide', `${selectorPrefix}-after`, afterClassName ?? '')}
-          style={afterStyle ?? {}}
+          className={classNames('swiper-slide', `${selectorPrefix}-after`, afterClassName)}
+          style={afterStyle}
         >
           {after?.()}
         </div>
@@ -123,208 +189,6 @@ const SwipeOut = memo<SwipeOutProps>((props) => {
     </div>
   );
 });
-
-// /**
-//  * SwipeOut
-//  * @class SwipeOut
-//  * @classdesc SwipeOut
-//  */
-// class SwipeOut extends React.Component<ISwipeOutProps> {
-//   static defaultProps: any;
-//   static propTypes: any;
-//
-//   private ref = React.createRef();
-//   private swiper: Swiper | null = null;
-//
-//   private map = new Map([
-//     [[true, true].toString(), 1],
-//     [[false, false].toString(), 1],
-//     [[true, false].toString(), 0],
-//     [[false, true].toString(), 2],
-//   ]);
-//
-//   componentDidMount() {
-//     this.createSwiper();
-//   }
-//
-//   componentWillReceiveProps(nextProps: Readonly<ISwipeOutProps>) {
-//     if (this.props.direction !== nextProps.direction) {
-//       this.swiper.changeDirection(nextProps.direction);
-//     }
-//
-//     if (
-//       this.props.beforeShow !== nextProps.beforeShow ||
-//       this.props.afterShow !== nextProps.afterShow
-//     ) {
-//       this.slide(nextProps);
-//     }
-//   }
-//
-//   private slide(props: ISwipeOutProps): void {
-//     const { beforeShow, afterShow, duration } = props;
-//
-//     this.swiper.slideTo(this.map.get([beforeShow, afterShow].toString()), duration);
-//   }
-//
-//   /**
-//    * createSwiper
-//    * @private
-//    */
-//   private createSwiper(): void {
-//     if (this.swiper) {
-//       this.swiper.destroy();
-//     }
-//
-//     const { beforeShow, afterShow } = this.props;
-//
-//     // console.log('beforeShow-afterShow', beforeShow, afterShow, [beforeShow, afterShow].toString());
-//
-//     const initialSlide = this.map.get([beforeShow, afterShow].toString());
-//
-//     // console.log('initialSlide', initialSlide);
-//
-//     this.swiper = new Swiper(this.ref.current, {
-//       init: false,
-//       // 初始化在第一个选项卡上
-//       initialSlide,
-//       direction: this.props.direction,
-//       slidesPerView: 'auto',
-//       centeredSlides: false,
-//       spaceBetween: 0,
-//     });
-//
-//     this.swiper.on('init', () => {
-//       this.trigger('onInit');
-//     });
-//
-//     this.swiper.on('slideChangeTransitionStart', () => {
-//       this.trigger('onSlideChangeTransitionStart', this.swiper.activeIndex);
-//     });
-//
-//     this.swiper.on('slideChangeTransitionEnd', () => {
-//       this.trigger('onSlideChangeTransitionEnd', this.swiper.activeIndex);
-//     });
-//
-//     this.swiper.init();
-//   }
-//
-//   /**
-//    * trigger
-//    * @param action
-//    * @param params
-//    * @private
-//    */
-//   private trigger(action: string, params?: any): void {
-//     if (this.props[action]) {
-//       this.props[action](params);
-//     }
-//   }
-//
-//   render() {
-//     // @ts-ignore
-//     const {
-//       className,
-//       style,
-//       contentClassName,
-//       contentStyle,
-//       beforeClassName,
-//       beforeStyle,
-//       afterClassName,
-//       afterStyle,
-//       before,
-//       after,
-//       children,
-//     } = this.props;
-//
-//     // @ts-ignore
-//     return (
-//       <div
-//         className={classNames(
-//           selectorPrefix,
-//           'swiper-container',
-//           // @ts-ignore
-//           className.split(/\s+/),
-//         )}
-//         style={{ ...style }}
-//         // @ts-ignore
-//         ref={this.ref}
-//       >
-//         <div className="swiper-wrapper">
-//           <div
-//             className={classNames(
-//               'swiper-slide',
-//               `${selectorPrefix}-before`,
-//               // @ts-ignore
-//               beforeClassName.split(/\s+/),
-//             )}
-//             style={{ ...beforeStyle }}
-//           >
-//             {before()}
-//           </div>
-//           <div
-//             className={classNames(
-//               'swiper-slide',
-//               `${selectorPrefix}-content`,
-//               // @ts-ignore
-//               contentClassName.split(/\s+/),
-//             )}
-//             style={{ ...contentStyle }}
-//           >
-//             {children}
-//           </div>
-//           <div
-//             className={classNames(
-//               'swiper-slide',
-//               `${selectorPrefix}-after`,
-//               // @ts-ignore
-//               afterClassName.split(/\s+/),
-//             )}
-//             style={{ ...afterStyle }}
-//           >
-//             {after()}
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-//
-// SwipeOut.defaultProps = {
-//   className: '',
-//   style: {},
-//   beforeClassName: '',
-//   beforeStyle: {},
-//   afterClassName: '',
-//   afterStyle: {},
-//   contentClassName: '',
-//   contentStyle: {},
-//   beforeShow: false,
-//   afterShow: false,
-//   direction: 'horizontal',
-//   duration: 0,
-//   before: () => null,
-//   after: () => null,
-// };
-//
-// SwipeOut.propTypes = {
-//   className: PropTypes.string,
-//   style: PropTypes.object,
-//   beforeClassName: PropTypes.string,
-//   beforeStyle: PropTypes.object,
-//   afterClassName: PropTypes.string,
-//   afterStyle: PropTypes.object,
-//   contentClassName: PropTypes.string,
-//   contentStyle: PropTypes.object,
-//   beforeShow: PropTypes.bool,
-//   afterShow: PropTypes.bool,
-//   direction: PropTypes.string,
-//   duration: PropTypes.number,
-//   before: PropTypes.func,
-//   after: PropTypes.func,
-//   onInit: PropTypes.func,
-//   slideChangeTransitionStart: PropTypes.func,
-//   slideChangeTransitionEnd: PropTypes.func,
-// };
 
 SwipeOut.displayName = 'SwipeOut';
 

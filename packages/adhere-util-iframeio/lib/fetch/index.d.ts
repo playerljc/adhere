@@ -1,37 +1,56 @@
 import Response from '../Response';
+import type { SendOptions } from '../types';
 /**
- * Fetch
+ * 客户端发送消息类
  * @class Fetch
- * @classdesc 客户端发送消息
+ * @description 用于在iframe通信中发送请求并处理响应
  */
 declare class Fetch {
+    /** 发送方的window对象 */
     private readonly source;
+    /** 发送方的origin */
     private readonly origin;
+    /**
+     * 构造函数
+     * @param source - 源窗口对象
+     * @param origin - 源域名
+     */
     constructor(source: MessageEventSource, origin: string);
     /**
-     * send
-     * @description 发送一个请求
-     * @param targetWindow 目标window
-     * @param targetOrigin 目标origin
-     * @param pathname 路径
-     * @param options 配置
-     * @return Promise<Response>
+     * 发送请求
+     * @param targetWindow - 目标窗口对象
+     * @param targetOrigin - 目标域名
+     * @param pathname - 请求路径
+     * @param options - 发送选项
+     * @returns Promise<Response> 响应对象
      */
     private send;
     /**
-     * get
-     * @param params
+     * GET请求
+     * @param targetWindow - 目标窗口对象
+     * @param targetOrigin - 目标域名
+     * @param pathname - 请求路径
+     * @param options - 发送选项
+     * @returns Promise<Response> 响应对象
      */
-    get(...params: any[]): Promise<Response>;
+    get(targetWindow: MessageEventSource, targetOrigin: string, pathname: string, options?: SendOptions): Promise<Response>;
     /**
-     * put
-     * @param params
+     * PUT请求
+     * @param targetWindow - 目标窗口对象
+     * @param targetOrigin - 目标域名
+     * @param pathname - 请求路径
+     * @param options - 发送选项
+     * @returns Promise<Response> 响应对象
      */
-    put(...params: any[]): Promise<Response>;
+    put(targetWindow: MessageEventSource, targetOrigin: string, pathname: string, options?: SendOptions): Promise<Response>;
     /**
-     * delete
-     * @param params
+     * DELETE请求
+     * @param targetWindow - 目标窗口对象
+     * @param targetOrigin - 目标域名
+     * @param pathname - 请求路径
+     * @param options - 发送选项
+     * @returns Promise<Response> 响应对象
      */
-    delete(...params: any[]): Promise<Response>;
+    delete(targetWindow: MessageEventSource, targetOrigin: string, pathname: string, options?: SendOptions): Promise<Response>;
 }
 export default Fetch;

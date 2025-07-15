@@ -1,11 +1,15 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode, HTMLAttributes } from 'react';
 
 /**
- * ContourBlockProps
+ * ContourBlock 组件的属性接口
  * @interface ContourBlockProps
+ * @extends {HTMLAttributes<HTMLDivElement>} 继承 HTML div 元素的所有属性
  */
-export interface ContourBlockProps {
+export interface ContourBlockProps extends HTMLAttributes<HTMLDivElement> {
+  /** 自定义 CSS 类名 */
   className?: string;
+  /** 自定义内联样式 */
   style?: CSSProperties;
-  children?: any;
+  /** 子元素内容 */
+  children?: ReactNode;
 }

@@ -1,21 +1,10 @@
 import React from 'react';
 import type { TriggerHandle, TriggerProps } from './types';
 /**
- * Trigger
- * @param className
- * @param style
- * @param renderTrigger
- * @param popupConfig
- * @param title
- * @param closeIcon
- * @param extra
- * @param actions
- * @param isShowCloseAction
- * @param closeActionPosition
- * @param children
- * @param value
- * @param disabled
- * @param onChange
+ * Trigger组件
+ * @description 弹窗触发器组件，用于触发弹窗显示
+ * @param props - 组件属性
+ * @param ref - 组件引用
  * @constructor
  */
 declare const Trigger: React.ForwardRefExoticComponent<TriggerProps & React.RefAttributes<TriggerHandle>>;

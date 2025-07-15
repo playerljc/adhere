@@ -1,3 +1,7 @@
+/**
+ * 树结构工具类
+ * @description 提供树结构与数组互转、节点查找、过滤等相关工具函数
+ */
 import { IAntdTreeNode, IAntdTreeSelectNode, IFlatTreeArrNode } from './types';
 
 export interface TreeUtilType {
@@ -155,11 +159,12 @@ export interface TreeUtilType {
 
 const TreeUtil: TreeUtilType = {
   /**
-   * treeToArray
-   * @description tree数据转换成Array
-   * @param treeData
-   * @param config
-   * @param keyAttr
+   * 树转数组
+   * @description 将树形结构数据转换为扁平数组
+   * @param treeData - 树形数据
+   * @param config - 配置项
+   * @param keyAttr - 主键属性名，默认为 'key'
+   * @returns 扁平化数组
    */
   treeToArray(treeData, config, keyAttr = 'key') {
     // key: string;
@@ -168,33 +173,28 @@ const TreeUtil: TreeUtilType = {
     // children?: IAntdTreeNode[];
     // properties?: any;
     const { parentIdAttr, rootParentId } = config;
-
     const result: any[] = [];
-
-    function loop(context, data, parentId) {
+    function loop(context: any[], data: any[], parentId: string | number) {
       for (let i = 0; i < data.length; i++) {
         const item = data[i];
-
         result.push({
-          ...item, // ('properties' in item ? item.properties : item),
-          // ...item.properties,
+          ...item,
           [parentIdAttr]: parentId,
         });
-
         if (item.children && Array.isArray(item.children) && item.children.length) {
           loop(context, item.children, item[keyAttr ?? 'key']);
         }
       }
     }
-
     loop(result, treeData, rootParentId);
-
     return result.map(({ children, ...rest }) => rest) as any[];
   },
   /**
-   * arrayToAntdTree - array转换成Tree
-   * @param arr
-   * @param config
+   * 数组转 Antd Tree
+   * @description 将扁平数组转换为 Antd Tree 结构
+   * @param arr - 扁平数组
+   * @param config - 配置项
+   * @returns Antd Tree 结构数组
    */
   arrayToAntdTree(arr, config) {
     const {
@@ -207,14 +207,13 @@ const TreeUtil: TreeUtilType = {
       // root的parentId的值
       rootParentId,
     } = config;
-
     /**
      * findNodesByParentId
      * @param arr
      * @param parentId
      * @return {*}
      */
-    function findNodesByParentId(arr, parentId: string | number) {
+    function findNodesByParentId(arr: any[], parentId: string | number) {
       return arr
         .filter((item) => item[parentIdAttr] == parentId)
         .map((item) => ({
@@ -231,7 +230,7 @@ const TreeUtil: TreeUtilType = {
      * Recursion
      * @constructor
      */
-    function Recursion(node) {
+    function Recursion(node: any) {
       node.children = findNodesByParentId(arr, node.properties[keyAttr]);
 
       node.isLeaf = 'isLeaf' in node ? node.isLeaf : !node.children.length;
@@ -240,7 +239,7 @@ const TreeUtil: TreeUtilType = {
         delete node.children;
       }
 
-      (node.children || []).forEach((node) => {
+      (node.children || []).forEach((node: any) => {
         Recursion(node);
       });
     }
@@ -254,9 +253,11 @@ const TreeUtil: TreeUtilType = {
     return roots;
   },
   /**
-   * arrayToAntdTreeSelect - array转换成TreeSelect
-   * @param arr
-   * @param config
+   * 数组转 Antd TreeSelect
+   * @description 将扁平数组转换为 Antd TreeSelect 结构
+   * @param arr - 扁平数组
+   * @param config - 配置项
+   * @returns Antd TreeSelect 结构数组
    */
   arrayToAntdTreeSelect(arr, config) {
     const { keyAttr, titleAttr, rootParentId, parentIdAttr } = config;
@@ -285,7 +286,7 @@ const TreeUtil: TreeUtilType = {
      * Recursion
      * @constructor
      */
-    function Recursion(node) {
+    function Recursion(node: any) {
       node.children = findNodesByParentId(arr, node.properties[keyAttr]);
 
       node.isLeaf = 'isLeaf' in node ? node.isLeaf : !node.children.length;
@@ -294,7 +295,7 @@ const TreeUtil: TreeUtilType = {
         delete node.children;
       }
 
-      (node.children || []).forEach((node) => {
+      (node.children || []).forEach((node: any) => {
         Recursion(node);
       });
     }

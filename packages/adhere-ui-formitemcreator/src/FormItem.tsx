@@ -43,10 +43,16 @@ const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const { Option } = Select;
 
-// 只读文本
+/**
+ * 只读文本输入框组件
+ * @description 渲染一个只读的文本输入框
+ */
 const renderText = memo<InputProps>(({ ...rest }) => <Input {...rest} readOnly />);
 
-// 输入框
+/**
+ * 普通输入框组件
+ * @description 渲染一个标准的输入框，带有默认的占位符和最大长度限制
+ */
 const renderInput = memo<InputProps>(
   ({ type, maxLength = 100, placeholder = Intl.get('please_enter'), ...rest }) => (
     <Input
@@ -59,7 +65,10 @@ const renderInput = memo<InputProps>(
   ),
 );
 
-// 搜索框
+/**
+ * 搜索输入框组件
+ * @description 渲染一个带有搜索功能的输入框
+ */
 const renderSearch = memo<InputProps>(
   ({ maxLength = 800, placeholder = Intl.get('please_enter'), ...rest }) => (
     <Input.Search
@@ -71,7 +80,10 @@ const renderSearch = memo<InputProps>(
   ),
 );
 
-// 多行输入框
+/**
+ * 多行文本输入框组件
+ * @description 渲染一个多行文本输入框
+ */
 const renderInputArea = memo<TextAreaProps>(
   ({ maxLength = 500, rows = 4, placeholder = Intl.get('please_enter'), ...rest }) => (
     <TextArea
@@ -84,7 +96,10 @@ const renderInputArea = memo<TextAreaProps>(
   ),
 );
 
-// 密码输入框
+/**
+ * 密码输入框组件
+ * @description 渲染一个密码输入框
+ */
 const renderPassword = memo<InputProps>(
   ({ type, maxLength = 800, placeholder = Intl.get('please_enter'), ...rest }) => (
     <Input.Password
@@ -97,7 +112,10 @@ const renderPassword = memo<InputProps>(
   ),
 );
 
-// 数字输入框
+/**
+ * 数字输入框组件
+ * @description 渲染一个数字输入框
+ */
 const renderInputNumber = memo<InputNumberProps>(
   ({ placeholder = '请输入', max = Infinity, min = -Infinity, ...rest }) => (
     <InputNumber
@@ -110,32 +128,40 @@ const renderInputNumber = memo<InputNumberProps>(
   ),
 );
 
-// 单选
+/**
+ * 单选框组组件
+ * @description 渲染一个单选框组
+ */
 const renderRadio = memo<RadioGroupProps>(({ ...rest }) => <RadioGroup {...rest} />);
 
-// 多选
-// @ts-ignore
-const renderCheckbox = memo<CheckboxProps | CheckboxGroupProps>(({ options, ...rest }) =>
-  options.length && options.length === 1 ? (
-    // @ts-ignore
-    <Checkbox {...rest}>{options[0].label}</Checkbox>
+/**
+ * 复选框组件
+ * @description 根据选项数量渲染单个复选框或复选框组
+ */
+const renderCheckbox = memo<CheckboxGroupProps>(({ options = [], ...rest }) => {
+  const checkboxOptions = options as Array<{ label: string; value: any }>;
+  
+  return checkboxOptions.length && checkboxOptions.length === 1 ? (
+    <Checkbox {...(rest as CheckboxProps)}>{checkboxOptions[0].label}</Checkbox>
   ) : (
-    // @ts-ignore
-    <CheckboxGroup options={options} {...rest} />
-  ),
-);
+    <CheckboxGroup options={checkboxOptions} {...rest} />
+  );
+});
 
-// 下拉
+/**
+ * 下拉选择器组件
+ * @description 渲染一个下拉选择器，支持自动完成功能
+ */
 const renderSelect = memo<
   SelectProps & {
-    optGroup: Array<OptionProps>;
-    renderOption: (v: OptionProps) => ReactElement;
-    autoComplete: boolean; // 非多选模式自动填充
+    optGroup?: Array<OptionProps[]>;
+    renderOption?: (v: OptionProps) => ReactElement;
+    autoComplete?: boolean; // 非多选模式自动填充
   }
 >(
   ({
     optGroup,
-    options,
+    options = [],
     placeholder = Intl.get('please_select'),
     renderOption,
     autoComplete,
@@ -143,7 +169,7 @@ const renderSelect = memo<
   }) => {
     const [searchValue, setSearchValue] = useState('');
 
-    const getOptions = (arr) => {
+    const getOptions = (arr: OptionProps[]): OptionProps[] => {
       if (arr?.length && autoComplete && searchValue && !rest.mode) {
         if (
           arr?.find(
@@ -154,11 +180,12 @@ const renderSelect = memo<
         ) {
           return arr;
         }
-        return [...arr, { label: searchValue, value: searchValue }];
+        return [...arr, { label: searchValue, value: searchValue, children: searchValue }];
       }
       return arr;
     };
-    const renderOptionItem = (arr) =>
+
+    const renderOptionItem = (arr: OptionProps[]): ReactElement[] =>
       (arr || []).map((v) => (
         <Option value={v.value} key={v.value} disabled={v.disabled}>
           {renderOption ? renderOption(v) : v.label}
@@ -175,49 +202,67 @@ const renderSelect = memo<
       >
         {optGroup && optGroup.length
           ? optGroup.map((e) => renderOptionItem(e))
-          : renderOptionItem(getOptions(options))}
+          : renderOptionItem(getOptions(options as OptionProps[]))}
       </Select>
     );
   },
 );
 
-// 日期范围选择框
-const renderRangePicker = memo<RangePickerProps>(({ ...rest }) => (
-  // @ts-ignore
-  <RangePicker {...rest} />
-));
+/**
+ * 日期范围选择器组件
+ * @description 渲染一个日期范围选择器
+ */
+const renderRangePicker = memo<RangePickerProps>(({ ...rest }) => <RangePicker {...rest} />);
 
-// 日期选择框
-const renderDatePicker = memo<DatePickerProps>(({ ...rest }) => (
-  // @ts-ignore
-  <DatePicker {...rest} />
-));
+/**
+ * 日期选择器组件
+ * @description 渲染一个日期选择器
+ */
+const renderDatePicker = memo<DatePickerProps>(({ ...rest }) => <DatePicker {...rest} />);
 
-// 时间选择框
+/**
+ * 时间选择器组件
+ * @description 渲染一个时间选择器
+ */
 const renderTimePicker = memo<TimePickerProps>(({ ...rest }) => <TimePicker {...rest} />);
 
-// 开关
+/**
+ * 开关组件
+ * @description 渲染一个开关组件
+ */
 const renderSwitch = memo<SwitchProps>((item) => <Switch {...item} />);
 
-// 树形选择框
-const renderTreeSelect = memo<TreeSelectProps>(({ ...rest }) => (
-  // @ts-ignore
-  <TreeSelect {...rest} />
-));
+/**
+ * 树形选择器组件
+ * @description 渲染一个树形选择器
+ */
+const renderTreeSelect = memo<TreeSelectProps>(({ ...rest }) => <TreeSelect {...rest} />);
 
-// 滑动输入条
+/**
+ * 滑动条组件
+ * @description 渲染一个滑动条组件
+ */
 const renderSlider = memo<SliderSingleProps>(({ ...rest }) => <Slider {...rest} />);
 
-// 评分
+/**
+ * 评分组件
+ * @description 渲染一个评分组件
+ */
 const renderRate = memo<RateProps>(({ ...rest }) => <Rate {...rest} />);
 
-// 上传
+/**
+ * 文件上传组件
+ * @description 渲染一个文件上传组件
+ */
 const renderUpload = memo<UploadProps>(({ ...rest }) => <Upload {...rest} />);
 
-// 标签
+/**
+ * 标签组件
+ * @description 一个可编辑的标签组件，支持添加、删除和编辑标签
+ */
 const Tags: FC<TagItemProps> = (props) => {
   const { longLimit = 20, disabled, addTagInner = '+' } = props;
-  const [tags, setTags] = useState(props.value || []);
+  const [tags, setTags] = useState<string[]>(props.value || []);
   const [inputVisible, setInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [editInputValue, setEditInputValue] = useState('');
@@ -245,9 +290,13 @@ const Tags: FC<TagItemProps> = (props) => {
     if (props.onChange) {
       props.onChange(tags);
     }
-  }, [tags]);
+  }, [tags, props.onChange]);
 
-  const handleInputConfirm = (isedit: boolean) => {
+  /**
+   * 处理输入确认
+   * @param isedit - 是否为编辑模式
+   */
+  const handleInputConfirm = (isedit: boolean): void => {
     if (isedit) {
       const newTags = [...tags];
       newTags[editInputIndex] = editInputValue;
@@ -263,12 +312,22 @@ const Tags: FC<TagItemProps> = (props) => {
     }
   };
 
-  const handleClose = (removedTag: string) => {
+  /**
+   * 处理标签关闭
+   * @param removedTag - 要移除的标签
+   */
+  const handleClose = (removedTag: string): void => {
     const newTags = tags.filter((tag) => tag !== removedTag);
     setTags(newTags);
   };
 
-  const renderTagInput = (val: string, isedit: boolean = false) => (
+  /**
+   * 渲染标签输入框
+   * @param val - 输入值
+   * @param isedit - 是否为编辑模式
+   * @returns 输入框组件
+   */
+  const renderTagInput = (val: string, isedit: boolean = false): ReactElement => (
     <Input
       type="text"
       key={isedit ? val : ''}
@@ -283,7 +342,13 @@ const Tags: FC<TagItemProps> = (props) => {
     />
   );
 
-  const renderTag = (tag: string, index: number) => {
+  /**
+   * 渲染单个标签
+   * @param tag - 标签文本
+   * @param index - 标签索引
+   * @returns 标签组件
+   */
+  const renderTag = (tag: string, index: number): ReactElement => {
     const isLongTag = tag.length > longLimit;
 
     return (
@@ -308,7 +373,11 @@ const Tags: FC<TagItemProps> = (props) => {
     );
   };
 
-  const renderAdd = () =>
+  /**
+   * 渲染添加标签按钮
+   * @returns 添加标签的组件
+   */
+  const renderAdd = (): ReactElement =>
     inputVisible ? (
       renderTagInput(inputValue, false)
     ) : (
@@ -322,12 +391,21 @@ const Tags: FC<TagItemProps> = (props) => {
       {tags?.map((tag, index) =>
         index === editInputIndex ? renderTagInput(editInputValue, true) : renderTag(tag, index),
       )}
-      {disabled ? '' : renderAdd()}
+      {disabled ? null : renderAdd()}
     </div>
   );
 };
+
+/**
+ * 标签渲染组件
+ * @description 渲染标签组件
+ */
 const renderTag = memo<TagItemProps>((item) => <Tags {...item} />);
 
+/**
+ * 表单项目渲染器导出对象
+ * @description 包含所有表单组件的渲染函数
+ */
 export default {
   renderText,
   renderInput,

@@ -9,12 +9,19 @@ export const selectorPrefix = 'adhere-ui-flex-layout-space-around';
 
 const { useTheme } = ConfigProvider;
 
+/**
+ * 内部 SpaceAround 组件
+ * 提供空间环绕布局的组件
+ * 
+ * @param {InternalSpaceAroundProps} props - 组件属性
+ * @returns {JSX.Element} SpaceAround 组件
+ */
 const InternalSpaceAround = memo<InternalSpaceAroundProps>((props) => {
   const { className, style, direction, children, ...attrs } = props;
 
-  const wrapperRef = useRef<HTMLElement | undefined>();
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
 
-  useTheme<HTMLElement>({
+  useTheme<HTMLDivElement>({
     elRef: wrapperRef,
     group: 'normal',
     displayName: 'FlexLayout',
@@ -29,7 +36,6 @@ const InternalSpaceAround = memo<InternalSpaceAroundProps>((props) => {
 
   return (
     <div
-      // @ts-ignore
       ref={wrapperRef}
       className={classList}
       style={style ?? {}}

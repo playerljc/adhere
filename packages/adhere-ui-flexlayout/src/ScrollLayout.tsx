@@ -3,40 +3,44 @@ import React, { MutableRefObject, createContext, memo, useContext, useRef } from
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
-import { ScrollLayoutContextType, ScrollLayoutProps } from './types';
+import type { ScrollLayoutContextType, ScrollLayoutProps } from './types';
 
 const selectorPrefix = 'adhere-ui-flex-layout-scroll-layout';
 
 const { useTheme } = ConfigProvider;
 
 /**
- * ScrollLayoutContext
+ * ScrollLayout 上下文
+ * 提供滚动布局相关的上下文信息
  */
 export const ScrollLayoutContext = createContext<ScrollLayoutContextType>({
-  getEl: () => document.body,
+  getEl: () => null,
 });
 
 /**
- * useScrollLayout
+ * 使用 ScrollLayout Hook
+ * 获取滚动布局上下文信息
+ * 
+ * @returns {ScrollLayoutContextType} 滚动布局上下文
  */
-export const useScrollLayout = () => {
+export const useScrollLayout = (): ScrollLayoutContextType => {
   const result = useContext(ScrollLayoutContext);
-
   return { ...result };
 };
 
 /**
- * ScrollLayout
- * @param props
- * @return {JSX.Element}
- * @constructor
+ * ScrollLayout 组件
+ * 提供滚动功能的布局容器
+ * 
+ * @param {ScrollLayoutProps} props - 组件属性
+ * @returns {JSX.Element} ScrollLayout 组件
  */
 const ScrollLayout = memo<ScrollLayoutProps>((props) => {
   const { children, className, style, scrollY, ...attrs } = props;
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
-  useTheme<HTMLElement>({
+  useTheme<HTMLDivElement>({
     elRef: wrapperRef,
     group: 'normal',
     displayName: 'FlexLayout',
@@ -45,14 +49,17 @@ const ScrollLayout = memo<ScrollLayoutProps>((props) => {
   return (
     <ScrollLayoutContext.Provider
       value={{
-        getEl: () => wrapperRef?.['current'],
+        getEl: () => wrapperRef.current,
       }}
     >
       <div
         ref={wrapperRef}
         {...attrs}
         className={classNames(selectorPrefix, className ?? '')}
-        style={{ overflowY: scrollY ? 'auto' : 'hidden', ...(style ?? {}) }}
+        style={{ 
+          overflowY: scrollY ? 'auto' : 'hidden', 
+          ...(style ?? {}) 
+        }}
       >
         {children}
       </div>

@@ -14,17 +14,22 @@ import React, {
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Intl from '@baifendian/adhere-util-intl';
 
-import type { ScrollLoadComponent, ScrollLoadProps, ScrollLoadRefHandle } from './types';
+import type { 
+  ScrollLoadComponent, 
+  ScrollLoadProps, 
+  ScrollLoadRefHandle,
+  ScrollLoadStatus 
+} from './types';
+import { SCROLL_LOAD_STATUS } from './types';
 
 const selectorPrefix = 'adhere-ui-scroll-load';
 
 const { useTheme } = ConfigProvider;
 
-const EMPTY = 'empty';
-const HIDE_EMPTY = 'hide_empty';
-const ERROR = 'error';
-const NORMAL = 'normal';
-
+/**
+ * 内部滚动加载组件
+ * 提供滚动到底部自动加载数据的功能
+ */
 const InternalScrollLoad = memo<
   PropsWithoutRef<ScrollLoadProps> & RefAttributes<ScrollLoadRefHandle>
 >(
@@ -51,11 +56,17 @@ const InternalScrollLoad = memo<
       ...rest
     } = props;
 
-    const currentStatus = useRef<string | undefined>(NORMAL);
-    const lock = useRef(false); // 锁
+    // 当前组件状态
+    const currentStatus = useRef<ScrollLoadStatus>(SCROLL_LOAD_STATUS.NORMAL);
+    // 防止重复触发的锁
+    const lock = useRef(false);
+    // 主容器引用
     const el = useRef<HTMLDivElement | null>(null);
+    // 加载状态容器引用
     const loadEl = useRef<HTMLDivElement | null>(null);
+    // 空数据状态容器引用
     const emptyEl = useRef<HTMLDivElement | null>(null);
+    // 错误状态容器引用
     const errorEl = useRef<HTMLDivElement | null>(null);
 
     useTheme<HTMLElement>({
@@ -64,94 +75,151 @@ const InternalScrollLoad = memo<
       displayName: 'ScrollLoad',
     });
 
-    function _getScrollContainer() {
+    /**
+     * 获取滚动容器元素
+     * @returns 滚动容器元素
+     */
+    const _getScrollContainer = useCallback((): HTMLElement | null => {
       return getScrollContainer ? getScrollContainer() : el.current;
-    }
+    }, [getScrollContainer]);
 
-    function initEvents() {
-      if (!disabled) {
-        _getScrollContainer()?.addEventListener('scroll', _onScroll);
+    /**
+     * 初始化事件监听器
+     */
+    const initEvents = useCallback(() => {
+      const scrollContainer = _getScrollContainer();
+      
+      if (!disabled && scrollContainer) {
+        scrollContainer.addEventListener('scroll', _onScroll);
       }
 
-      emptyEl.current?.addEventListener('click', _onEmptyClick);
-      errorEl.current?.addEventListener('click', _onErrorClick);
-    }
-
-    function removeEvents() {
-      if (!disabled) {
-        _getScrollContainer()?.removeEventListener('scroll', _onScroll);
+      if (emptyEl.current) {
+        emptyEl.current.addEventListener('click', _onEmptyClick);
       }
-      emptyEl.current?.removeEventListener('click', _onEmptyClick);
-      errorEl.current?.removeEventListener('click', _onErrorClick);
-    }
+      
+      if (errorEl.current) {
+        errorEl.current.addEventListener('click', _onErrorClick);
+      }
+    }, [disabled, _getScrollContainer]);
 
-    function _onScroll() {
-      const el = _getScrollContainer() as HTMLElement;
+    /**
+     * 移除事件监听器
+     */
+    const removeEvents = useCallback(() => {
+      const scrollContainer = _getScrollContainer();
+      
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', _onScroll);
+      }
+      
+      if (emptyEl.current) {
+        emptyEl.current.removeEventListener('click', _onEmptyClick);
+      }
+      
+      if (errorEl.current) {
+        errorEl.current.removeEventListener('click', _onErrorClick);
+      }
+    }, [_getScrollContainer]);
 
-      const bottomHeight = el.scrollHeight - el.offsetHeight;
-      const scrollTop = el.scrollTop;
+    /**
+     * 滚动事件处理函数
+     */
+    const _onScroll = useCallback(() => {
+      const scrollContainer = _getScrollContainer();
+      if (!scrollContainer || !onScrollBottom) return;
 
-      /**
-       * 条件完全相等或误差值在1之间
-       */
-      if (onScrollBottom && Math.abs(scrollTop - bottomHeight) <= distance) {
-        // 如果是EMPTY则不触发滚动事件
-        if ([EMPTY, HIDE_EMPTY].includes(currentStatus.current as string)) return;
+      const bottomHeight = scrollContainer.scrollHeight - scrollContainer.offsetHeight;
+      const scrollTop = scrollContainer.scrollTop;
 
+      // 检查是否滚动到底部（考虑距离阈值）
+      if (Math.abs(scrollTop - bottomHeight) <= distance) {
+        // 如果是空数据状态则不触发滚动事件
+        if (currentStatus.current === SCROLL_LOAD_STATUS.EMPTY || currentStatus.current === SCROLL_LOAD_STATUS.HIDE_EMPTY) {
+          return;
+        }
+
+        // 防止重复触发
         if (lock.current) return;
 
         lock.current = true;
 
-        // 先显示loading
-        (loadEl.current as HTMLElement).style.display = 'flex';
+        // 显示加载状态
+        if (loadEl.current) {
+          loadEl.current.style.display = 'flex';
+        }
 
         /**
-         * 完成
-         * @param {string} status [empty(没有数据) | error(有错误) | normal(正常)]
+         * 调用滚动到底部的回调函数
+         * @param status 状态设置函数，用于设置组件状态
          */
         onScrollBottom((status) => {
-          currentStatus.current = status;
+          currentStatus.current = status || SCROLL_LOAD_STATUS.NORMAL;
 
-          (loadEl.current as HTMLElement).style.display = 'none';
+          // 隐藏加载状态
+          if (loadEl.current) {
+            loadEl.current.style.display = 'none';
+          }
 
-          if (currentStatus.current === EMPTY) {
-            (emptyEl.current as HTMLElement).style.display = 'block';
-          } else if (currentStatus.current === ERROR) {
-            (errorEl.current as HTMLElement).style.display = 'block';
-          } else if (currentStatus.current === HIDE_EMPTY) {
-            (emptyEl.current as HTMLElement).style.display = 'none';
+          // 根据状态显示对应的UI
+          if (currentStatus.current === SCROLL_LOAD_STATUS.EMPTY) {
+            if (emptyEl.current) {
+              emptyEl.current.style.display = 'block';
+            }
+          } else if (currentStatus.current === SCROLL_LOAD_STATUS.ERROR) {
+            if (errorEl.current) {
+              errorEl.current.style.display = 'block';
+            }
+          } else if (currentStatus.current === SCROLL_LOAD_STATUS.HIDE_EMPTY) {
+            if (emptyEl.current) {
+              emptyEl.current.style.display = 'none';
+            }
           }
 
           lock.current = false;
         });
       }
-    }
-
-    function _onEmptyClick() {
-      onEmptyClick && onEmptyClick();
-    }
-
-    function _onErrorClick() {
-      onErrorClick && onErrorClick();
-    }
+    }, [distance, onScrollBottom, _getScrollContainer]);
 
     /**
-     * hideAll
+     * 空数据状态点击事件处理函数
      */
-    function hideAll() {
-      currentStatus.current = NORMAL;
+    const _onEmptyClick = useCallback(() => {
+      onEmptyClick?.();
+    }, [onEmptyClick]);
 
-      (loadEl.current as HTMLElement).style.display = 'none';
-      (errorEl.current as HTMLElement).style.display = 'none';
-      (emptyEl.current as HTMLElement).style.display = 'none';
-    }
+    /**
+     * 错误状态点击事件处理函数
+     */
+    const _onErrorClick = useCallback(() => {
+      onErrorClick?.();
+    }, [onErrorClick]);
 
+    /**
+     * 隐藏所有状态显示
+     */
+    const hideAll = useCallback(() => {
+      currentStatus.current = SCROLL_LOAD_STATUS.NORMAL;
+
+      if (loadEl.current) {
+        loadEl.current.style.display = 'none';
+      }
+      if (errorEl.current) {
+        errorEl.current.style.display = 'none';
+      }
+      if (emptyEl.current) {
+        emptyEl.current.style.display = 'none';
+      }
+    }, []);
+
+    /**
+     * 渲染加载状态
+     */
     const _renderLoading = useCallback(() => {
       if (renderLoading) {
         return (
           <div
             className={classNames(`${selectorPrefix}-load`, loadClassName)}
-            style={loadStyle ?? {}}
+            style={loadStyle}
             ref={loadEl}
           >
             {renderLoading()}
@@ -162,7 +230,7 @@ const InternalScrollLoad = memo<
       return (
         <div
           className={classNames(`${selectorPrefix}-load`, 'standard', loadClassName)}
-          style={loadStyle ?? {}}
+          style={loadStyle}
           ref={loadEl}
         >
           {Intl.get('data_loading')}
@@ -170,12 +238,15 @@ const InternalScrollLoad = memo<
       );
     }, [renderLoading, loadClassName, loadStyle]);
 
+    /**
+     * 渲染空数据状态
+     */
     const _renderEmpty = useCallback(() => {
       if (renderEmpty) {
         return (
           <div
             className={classNames(`${selectorPrefix}-empty`, emptyClassName)}
-            style={emptyStyle ?? {}}
+            style={emptyStyle}
             ref={emptyEl}
           >
             {renderEmpty()}
@@ -186,7 +257,7 @@ const InternalScrollLoad = memo<
       return (
         <div
           className={classNames(`${selectorPrefix}-empty`, emptyClassName)}
-          style={emptyStyle ?? {}}
+          style={emptyStyle}
           ref={emptyEl}
         >
           ~{Intl.get('no_more')}
@@ -194,12 +265,15 @@ const InternalScrollLoad = memo<
       );
     }, [renderEmpty, emptyClassName, emptyStyle]);
 
+    /**
+     * 渲染错误状态
+     */
     const _renderError = useCallback(() => {
       if (renderError) {
         return (
           <div
             className={classNames(`${selectorPrefix}-error`, errorClassName)}
-            style={errorStyle ?? {}}
+            style={errorStyle}
             ref={errorEl}
           >
             {renderError()}
@@ -210,7 +284,7 @@ const InternalScrollLoad = memo<
       return (
         <div
           className={classNames(`${selectorPrefix}-error`, errorClassName)}
-          style={errorStyle ?? {}}
+          style={errorStyle}
           ref={errorEl}
         >
           {Intl.get('error_occurred_ext1')}
@@ -218,29 +292,36 @@ const InternalScrollLoad = memo<
       );
     }, [renderError, errorClassName, errorStyle]);
 
+    // 暴露给父组件的方法
     useImperativeHandle(ref, () => ({
       hideAll,
       getScrollContainer: () => _getScrollContainer(),
     }));
 
+    // 初始化事件监听器
     useLayoutEffect(() => {
       initEvents();
+      return removeEvents;
+    }, [initEvents, removeEvents]);
 
-      return () => removeEvents();
-    });
-
+    // 监听 disabled 状态变化
     useUpdateEffect(() => {
-      if (disabled) {
-        _getScrollContainer()?.removeEventListener('scroll', _onScroll);
-      } else {
-        _getScrollContainer()?.removeEventListener('scroll', _onScroll);
-        _getScrollContainer()?.addEventListener('scroll', _onScroll);
+      const scrollContainer = _getScrollContainer();
+      
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', _onScroll);
+        
+        if (!disabled) {
+          scrollContainer.addEventListener('scroll', _onScroll);
+        }
       }
 
       return () => {
-        _getScrollContainer()?.removeEventListener('scroll', _onScroll);
+        if (scrollContainer) {
+          scrollContainer.removeEventListener('scroll', _onScroll);
+        }
       };
-    }, [disabled]);
+    }, [disabled, _getScrollContainer, _onScroll]);
 
     return (
       <div
@@ -248,7 +329,7 @@ const InternalScrollLoad = memo<
         {...rest}
         className={classNames(selectorPrefix, className)}
         style={{
-          ...(style ?? {}),
+          ...style,
           overflowY: _getScrollContainer() === el.current ? 'auto' : 'initial',
         }}
       >
@@ -265,9 +346,10 @@ const ScrollLoad = InternalScrollLoad as ScrollLoadComponent;
 
 ScrollLoad.displayName = 'ScrollLoad';
 
-ScrollLoad.EMPTY = EMPTY;
-ScrollLoad.ERROR = ERROR;
-ScrollLoad.NORMAL = NORMAL;
-ScrollLoad.HIDE_EMPTY = HIDE_EMPTY;
+// 设置静态属性
+ScrollLoad.EMPTY = SCROLL_LOAD_STATUS.EMPTY;
+ScrollLoad.ERROR = SCROLL_LOAD_STATUS.ERROR;
+ScrollLoad.NORMAL = SCROLL_LOAD_STATUS.NORMAL;
+ScrollLoad.HIDE_EMPTY = SCROLL_LOAD_STATUS.HIDE_EMPTY;
 
 export default ScrollLoad;

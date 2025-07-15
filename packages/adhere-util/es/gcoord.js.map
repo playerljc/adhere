@@ -1,1 +1,1 @@
-{"version":3,"file":"gcoord.js","sources":["gcoord.js"],"sourcesContent":["import gcoord from 'gcoord';\nexport default gcoord;\n"],"names":["gcoord"],"mappings":"OAAOA,WAAY,wBACJA"}
+{"version":3,"file":"gcoord.js","sources":["gcoord.js"],"sourcesContent":["/**\n * gcoord 地理坐标转换工具\n * @description 提供地理坐标系（如 WGS84、GCJ02、BD09 等）之间的转换能力\n * @see https://github.com/hujiulong/gcoord\n */\nimport gcoord from 'gcoord';\nexport default gcoord;\n"],"names":["gcoord"],"mappings":"OAKOA,WAAY,wBACJA"}

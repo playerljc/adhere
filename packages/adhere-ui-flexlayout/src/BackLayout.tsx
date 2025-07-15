@@ -9,9 +9,11 @@ import ToolBarLayout from './ToolBarLayout';
 import type { BackLayoutProps } from './types';
 
 /**
- * BackLayout
- * @class BackLayout
- * @classdesc BackLayout
+ * BackLayout 组件
+ * 带返回按钮的布局组件，继承自 ToolBarLayout
+ * 
+ * @param {BackLayoutProps} props - 组件属性
+ * @returns {JSX.Element} BackLayout 组件
  */
 const BackLayout = memo<BackLayoutProps>((props) => {
   const {
@@ -25,6 +27,9 @@ const BackLayout = memo<BackLayoutProps>((props) => {
     ...resetProps
   } = props;
 
+  /**
+   * 计算工具栏项目
+   */
   const toolbar = useMemo(
     () =>
       [
@@ -44,11 +49,13 @@ const BackLayout = memo<BackLayoutProps>((props) => {
             </Button>
           )}
         </ConditionalRender>,
-      ].filter((t) => {
-        if ('props' in t && 'conditional' in t.props) return t.props.conditional;
+      ].filter((item) => {
+        if ('props' in item && 'conditional' in item.props) {
+          return item.props.conditional;
+        }
         return true;
       }),
-    [topToolBarItems, isShowBack, enforceBackPath, backPath, backTitle],
+    [topToolBarItems, isShowBack, enforceBackPath, backPath, backTitle, history],
   );
 
   return (

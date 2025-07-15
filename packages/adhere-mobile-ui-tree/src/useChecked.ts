@@ -6,30 +6,41 @@ import { DEFAULT_TREE_UTIL_CONFIG } from './Constant';
 import type { TreeData, TreeDataItem } from './types';
 
 /**
- * useChecked
+ * 树节点选中状态管理 Hook
+ * @returns 包含选中状态管理函数的对象
  */
 function useChecked() {
-  function targetChildren(children) {
-    return children
-      ?.filter((node) => {
+  /**
+   * 过滤目标子节点（排除不可选中和禁用的节点）
+   * @param children - 子节点数组
+   * @returns 过滤后的子节点数组
+   */
+  function targetChildren(children?: TreeData): TreeDataItem[] {
+    if (!children) return [];
+    
+    // 过滤出 TreeDataItem 类型（排除 TreeDataFlatItem）
+    const treeDataItems = children.filter((node): node is TreeDataItem => 
+      'children' in node
+    );
+    
+    // 使用 any 类型临时解决 readonly 类型问题
+    return (treeDataItems as any)
+      .filter((node: any) => {
         if (!('checkable' in node)) return true;
-
         return node.checkable;
       })
-      ?.filter((node) => {
+      .filter((node: any) => {
         if (!('disabled' in node)) return true;
-
         return !node.disabled;
       });
   }
 
   /**
-   * getChildrenKeys
-   * @description 递归获取所有子节点的key
-   * @param {TreeDataItem} node 触发时候的节点数据
-   * @return {string[]}
+   * 递归获取所有子节点的key
+   * @param node - 触发时候的节点数据
+   * @returns 子节点的键数组
    */
-  function getChildrenKeys(node) {
+  function getChildrenKeys(node: TreeDataItem): string[] {
     let keys = [node[DEFAULT_TREE_UTIL_CONFIG.keyAttr]];
 
     const children = targetChildren(node.children ?? []);
@@ -44,11 +55,10 @@ function useChecked() {
   }
 
   /**
-   * getDefaultCheckedKeysWithCheckStrictly
-   * @description 获取受控状态下的defaultCheckedKeys
-   * @param {TreeData} treeData
-   * @param {string[]} defaultCheckedKeys
-   * @return {string[]}
+   * 获取受控状态下的defaultCheckedKeys
+   * @param treeData - 树数据
+   * @param defaultCheckedKeys - 默认选中的键数组
+   * @returns 处理后的选中键数组
    */
   function getDefaultCheckedKeysWithCheckStrictly(
     treeData: TreeData,
@@ -56,10 +66,29 @@ function useChecked() {
   ): string[] {
     const checkedKeys: string[] = [...defaultCheckedKeys];
 
-    function up({ key, checkedKeys, parentId, childrenData }) {
-      const childrenKeys = childrenData
-        ?.filter(({ key: itemKey }) => itemKey !== key)
-        .map((node) => node[DEFAULT_TREE_UTIL_CONFIG.keyAttr]);
+    /**
+     * 向上更新父节点状态
+     * @param params - 更新参数
+     */
+    function up({
+      key,
+      checkedKeys,
+      parentId,
+      childrenData,
+    }: {
+      key: string;
+      checkedKeys: string[];
+      parentId: string;
+      childrenData?: TreeData;
+    }): void {
+      // 过滤出 TreeDataItem 类型并处理
+      const treeDataItems = childrenData?.filter((node): node is TreeDataItem => 
+        'children' in node
+      ) ?? [];
+      
+      const childrenKeys = treeDataItems
+        .filter(({ key: itemKey }) => itemKey !== key)
+        .map((node) => node[DEFAULT_TREE_UTIL_CONFIG.keyAttr]) ?? [];
 
       let selfChecked: boolean;
 
@@ -71,8 +100,7 @@ function useChecked() {
         }
       }
 
-      // @ts-ignore
-      const parentNodeData = Util.findParentNodeByKey(treeData, parentId, {
+      const parentNodeData = Util.findParentNodeByKey(treeData as any, parentId, {
         keyAttr: DEFAULT_TREE_UTIL_CONFIG.keyAttr,
       });
 
@@ -87,8 +115,7 @@ function useChecked() {
     }
 
     defaultCheckedKeys.forEach((checkedKey) => {
-      // @ts-ignore
-      const nodeData = Util.findNodeByKey(treeData, checkedKey, {
+      const nodeData = Util.findNodeByKey(treeData as any, checkedKey, {
         keyAttr: DEFAULT_TREE_UTIL_CONFIG.keyAttr,
       });
 
@@ -98,8 +125,7 @@ function useChecked() {
         checkedKeys.push(checkedKey, ...descendants);
       }
 
-      // @ts-ignore
-      const parentNodeData = Util.findParentNodeByKey(treeData, checkedKey, {
+      const parentNodeData = Util.findParentNodeByKey(treeData as any, checkedKey, {
         keyAttr: DEFAULT_TREE_UTIL_CONFIG.keyAttr,
       });
 
@@ -117,29 +143,33 @@ function useChecked() {
   }
 
   /**
-   * updateParentChecked
-   * @description 向上处理
-   * @param {string} key 触发checked的节点key
-   * @param {boolean} checked 触发的时候选中状态
-   * @param {string[]} checkedKeys 存放所有checked的keys
-   * @param {string} parentId key的父亲key
-   * @param {TreeDataItem[]} childrenData key父亲的孩子
-   * @param {updateParentChecked} next updateParentChecked
+   * 向上处理父节点选中状态
+   * @param params - 处理参数
    */
-  function updateParentChecked({ key, checked, checkedKeys, parentId, childrenData, next }) {
-    // console.log('key', key);
-    // console.log('parentId', parentId);
-    // console.log('childrenData', childrenData);
-    // console.log('checked', checked);
-
+  function updateParentChecked({
+    key,
+    checked,
+    checkedKeys,
+    parentId,
+    childrenData,
+    next,
+  }: {
+    key: string;
+    checked: boolean;
+    checkedKeys: string[];
+    parentId: string;
+    childrenData?: TreeDataItem[];
+    next?: (params: { key: string; checked: boolean; checkedKeys: string[] }) => void;
+  }): void {
     let selfChecked = false;
 
-    const targetChildrenData = targetChildren(childrenData);
+    // 将 TreeDataItem[] 转换为 TreeData 类型
+    const targetChildrenData = targetChildren(childrenData as TreeData);
 
     if (checked) {
       const childrenKeys = targetChildrenData
         ?.filter(({ key: itemKey }) => itemKey !== key)
-        .map(({ key }) => key);
+        .map(({ key }) => key) ?? [];
 
       selfChecked = childrenKeys.every((key) => checkedKeys.includes(key));
 
@@ -158,19 +188,26 @@ function useChecked() {
     }
 
     // 调用parent的updateParentChecked
-    next?.({ [DEFAULT_TREE_UTIL_CONFIG.keyAttr]: parentId, checked: selfChecked, checkedKeys });
+    next?.({ key: parentId, checked: selfChecked, checkedKeys });
   }
 
   /**
-   * handleCheck
-   * @description 处理选中逻辑
-   * @param {TreeDataItem} node 触发的节点nodeData
-   * @param {boolean} checked 触发的时候选中状态
-   * @param {string[]} checkedKeys 存放所有checked的keys
-   * @param {boolean} checkStrictly 是否受控
-   * @param {updateParentChecked} next
+   * 处理选中逻辑
+   * @param params - 处理参数
    */
-  function handleCheck({ node, checked, checkedKeys, checkStrictly, next }) {
+  function handleCheck({
+    node,
+    checked,
+    checkedKeys,
+    checkStrictly,
+    next,
+  }: {
+    node: TreeDataItem;
+    checked: boolean;
+    checkedKeys: string[];
+    checkStrictly: boolean;
+    next?: (params: { key: string; checked: boolean; checkedKeys: string[] }) => void;
+  }): void {
     // 不受控
     if (!checkStrictly) {
       if (checked) {
@@ -207,22 +244,21 @@ function useChecked() {
 
     // 更新父节点的状态
     next?.({
-      [DEFAULT_TREE_UTIL_CONFIG.keyAttr]: node[DEFAULT_TREE_UTIL_CONFIG.keyAttr],
+      key: node[DEFAULT_TREE_UTIL_CONFIG.keyAttr],
       checked,
       checkedKeys,
     });
   }
 
   /**
-   * existsCheckableNodeInParentChildren
-   * @description 在parentChildren中是否存在checkable的节点
-   * @param children
+   * 在parentChildren中是否存在checkable的节点
+   * @param children - 子节点数组
+   * @returns 是否存在可选中节点
    */
   function existsCheckableNodeInParentChildren(children?: Readonly<TreeDataItem[]>): boolean {
     if (!children) return false;
     return children?.some((node) => {
       if (!('checkable' in node)) return true;
-
       return !!node.checkable;
     });
   }

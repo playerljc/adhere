@@ -1,3 +1,7 @@
+/**
+ * 树结构工具类
+ * @description 提供树结构与数组互转、节点查找、过滤等相关工具函数
+ */
 import { IAntdTreeNode, IAntdTreeSelectNode, IFlatTreeArrNode } from './types';
 export interface TreeUtilType {
     treeToArray: (treeData: (IAntdTreeNode | IAntdTreeSelectNode)[], config: {

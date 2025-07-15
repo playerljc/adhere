@@ -8,15 +8,12 @@ import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import { FlexContext } from './Context';
 import { gridCount } from './Fixed';
 import { getValueWithUnit } from './Util';
-import type { ContextType, FixedProps } from './types';
-
-// import { ResizeObserver } from '@juggle/resize-observer';
+import type { ContextType, FixedProps, CollapseDirection, GutterType } from './types';
 
 /**
- * useGrid
- * @description 是否使用了栅格系统
- * @param {FixedProps} props
- * @return {boolean}
+ * 判断是否使用了栅格系统
+ * @param {FixedProps} props - Fixed 组件属性
+ * @returns {boolean} 是否使用栅格
  */
 export const useGrid = (props: FixedProps): boolean =>
   useMemo(
@@ -29,18 +26,18 @@ export const useGrid = (props: FixedProps): boolean =>
   );
 
 /**
- * useGap
- * @param {number | number[]} gutter
- * @return {boolean}
+ * 判断是否使用了间隙
+ * @param {GutterType} gutter - 栅格间隙
+ * @returns {boolean} 是否使用间隙
  */
-export const useGap = (gutter: any): boolean => {
+export const useGap = (gutter: GutterType): boolean => {
   const { direction } = useContext<ContextType>(FlexContext);
 
   return useMemo(() => {
+    // 检查 gutter 是否有效
     if (
       gutter === undefined ||
       gutter === null ||
-      gutter === '' ||
       gutter === 0 ||
       typeof gutter === 'function' ||
       (typeof gutter === 'object' && !Array.isArray(gutter))
@@ -52,11 +49,11 @@ export const useGap = (gutter: any): boolean => {
       if (gutter.length === 0) return false;
 
       if (gutter.length >= 1 && gutter.length <= 2) {
-        const validate = gutter.some(
-          (g) => g === undefined || g === null || g === '' || typeof g !== 'number',
+        const hasInvalidValue = gutter.some(
+          (g) => g === undefined || g === null || typeof g !== 'number',
         );
 
-        if (validate) return false;
+        if (hasInvalidValue) return false;
 
         if (gutter.length === 1) {
           if (gutter[0] === 0) return false;
@@ -75,11 +72,36 @@ export const useGap = (gutter: any): boolean => {
     }
 
     return true;
-  }, [gutter]);
+  }, [gutter, direction]);
 };
 
 /**
- * useTrigger
+ * 触发器 Hook 参数
+ */
+interface UseTriggerParams extends Pick<
+  FixedProps,
+  'trigger' | 'collapseDirection' | 'collapsedSize' | 'defaultCollapsible' | 'onCollapse'
+> {
+  /** 元素引用 */
+  elRef: MutableRefObject<HTMLDivElement | null>;
+  /** 选择器前缀 */
+  selectorPrefix: string;
+}
+
+/**
+ * 触发器 Hook 返回值
+ */
+interface UseTriggerReturn {
+  /** 渲染触发器 */
+  renderTrigger: () => React.ReactNode;
+  /** 折叠样式 */
+  collapseStyle: React.CSSProperties;
+}
+
+/**
+ * 使用触发器 Hook
+ * @param {UseTriggerParams} params - 触发器参数
+ * @returns {UseTriggerReturn} 触发器相关状态和方法
  */
 export const useTrigger = ({
   trigger,
@@ -89,125 +111,92 @@ export const useTrigger = ({
   onCollapse,
   selectorPrefix,
   elRef,
-}: Pick<
-  FixedProps,
-  'trigger' | 'collapseDirection' | 'collapsedSize' | 'defaultCollapsible' | 'onCollapse'
-> & {
-  elRef: MutableRefObject<HTMLDivElement | null>;
-  selectorPrefix: string;
-}) => {
+}: UseTriggerParams): UseTriggerReturn => {
   const { media } = useContext(ConfigProvider.Context);
 
   const targetCollapsedSize = useMemo(
     () => getValueWithUnit(collapsedSize, media),
-    [collapsedSize],
+    [collapsedSize, media],
   );
 
   const [collapsible, setCollapsible] = useState(defaultCollapsible);
 
-  // 缺省的Trigger元素
+  // 默认触发器元素
   const DefaultTrigger = useMemo(() => {
-    if (collapseDirection === 'L') {
-      if (collapsible) {
-        return <DoubleRightOutlined />;
-      } else return <DoubleLeftOutlined />;
-    } else if (collapseDirection === 'R') {
-      if (collapsible) {
-        return <DoubleLeftOutlined />;
-      } else return <DoubleRightOutlined />;
-    } else if (collapseDirection === 'T') {
-      if (collapsible) {
-        return <DoubleRightOutlined style={{ transform: 'rotate(90deg)' }} />;
-      } else return <DoubleLeftOutlined style={{ transform: 'rotate(90deg)' }} />;
-    } else if (collapseDirection === 'B') {
-      if (collapsible) {
-        return <DoubleLeftOutlined style={{ transform: 'rotate(90deg)' }} />;
-      } else return <DoubleRightOutlined style={{ transform: 'rotate(90deg)' }} />;
+    const iconStyle = { transform: 'rotate(90deg)' };
+    
+    switch (collapseDirection) {
+      case 'L':
+        return collapsible ? <DoubleRightOutlined /> : <DoubleLeftOutlined />;
+      case 'R':
+        return collapsible ? <DoubleLeftOutlined /> : <DoubleRightOutlined />;
+      case 'T':
+        return collapsible ? 
+          <DoubleRightOutlined style={iconStyle} /> : 
+          <DoubleLeftOutlined style={iconStyle} />;
+      case 'B':
+        return collapsible ? 
+          <DoubleLeftOutlined style={iconStyle} /> : 
+          <DoubleRightOutlined style={iconStyle} />;
+      default:
+        return null;
     }
   }, [collapseDirection, collapsible]);
 
-  // 渲染Trigger
+  // 渲染触发器
   const renderTrigger = useCallback(() => {
-    if (trigger) {
-      const triggerInner = trigger?.(collapsible as boolean, DefaultTrigger);
+    if (!trigger) return null;
 
-      if (triggerInner) {
-        return (
-          <div
-            className={classNames(
-              `${selectorPrefix}-trigger`,
-              `${selectorPrefix}-trigger-${collapseDirection?.toLowerCase()}`,
-            )}
-            onClick={_onCollapse}
-          >
-            {triggerInner}
-          </div>
-        );
-      }
+    const triggerInner = trigger(collapsible, DefaultTrigger);
 
-      return null;
-    }
+    if (!triggerInner) return null;
 
-    return null;
-  }, [trigger, collapseDirection, DefaultTrigger]);
+    return (
+      <div
+        className={classNames(
+          `${selectorPrefix}-trigger`,
+          `${selectorPrefix}-trigger-${collapseDirection?.toLowerCase()}`,
+        )}
+        onClick={_onCollapse}
+      >
+        {triggerInner}
+      </div>
+    );
+  }, [trigger, collapseDirection, DefaultTrigger, collapsible, selectorPrefix]);
 
+  // 计算折叠样式
   const collapseStyle = useMemo(() => {
-    // 关闭
-    if (collapsible) {
-      if (collapseDirection === 'L') {
+    const isCollapsed = collapsible;
+    
+    switch (collapseDirection) {
+      case 'L':
+      case 'R':
         return {
-          maxWidth: targetCollapsedSize,
+          maxWidth: isCollapsed ? targetCollapsedSize : '100%',
         };
-      } else if (collapseDirection === 'R') {
+      case 'T':
+      case 'B':
         return {
-          maxWidth: targetCollapsedSize,
+          maxHeight: isCollapsed ? targetCollapsedSize : '100%',
         };
-      } else if (collapseDirection === 'T') {
-        return {
-          maxHeight: targetCollapsedSize,
-        };
-      } else if (collapseDirection === 'B') {
-        return {
-          maxHeight: targetCollapsedSize,
-        };
-      }
-
-      return {};
+      default:
+        return {};
     }
-
-    // 显示
-    if (collapseDirection === 'L') {
-      return {
-        maxWidth: '100%',
-      };
-    } else if (collapseDirection === 'R') {
-      return {
-        maxWidth: '100%',
-      };
-    } else if (collapseDirection === 'T') {
-      return {
-        maxHeight: '100%',
-      };
-    } else if (collapseDirection === 'B') {
-      return {
-        maxHeight: '100%',
-      };
-    }
-
-    return {};
   }, [collapseDirection, collapsible, targetCollapsedSize]);
 
+  // 监听 defaultCollapsible 变化
   useUpdateEffect(() => {
     setCollapsible(defaultCollapsible);
   }, [defaultCollapsible]);
 
   /**
-   * _onCollapse
+   * 处理折叠状态变化
    */
-  function _onCollapse() {
-    setCollapsible(!collapsible);
-    onCollapse?.(!collapsible);
-  }
+  const _onCollapse = useCallback(() => {
+    const newCollapsed = !collapsible;
+    setCollapsible(newCollapsed);
+    onCollapse?.(newCollapsed);
+  }, [collapsible, onCollapse]);
 
   return {
     renderTrigger,

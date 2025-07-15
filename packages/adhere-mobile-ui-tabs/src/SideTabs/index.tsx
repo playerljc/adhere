@@ -1,6 +1,6 @@
 import { SideBar } from 'antd-mobile';
 import classNames from 'classnames';
-import React, { memo, useRef } from 'react';
+import React, { memo, useRef, useCallback } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
@@ -12,38 +12,45 @@ const { useTheme } = ConfigProvider;
 const selectorPrefix = 'adhere-ui-tabs-side-tabs';
 
 /**
- * SystemSideTabs
- * @param props
- * @return {JSX.Element}
- * @constructor
+ * 内部侧边栏标签页组件
+ * 
+ * @param props - 组件属性
+ * @returns JSX元素
  */
 const InternalSystemSideTabs = memo<SystemSideTabsProps>(
   ({ className, style, items, ...props }) => {
     const wrapperRef = useRef<HTMLDivElement | undefined>();
 
-    function renderHeader() {
+    /**
+     * 渲染侧边栏头部
+     * 
+     * @returns JSX元素
+     */
+    const renderHeader = useCallback(() => {
       return (
         <SideBar {...props}>
-          {items?.map?.((_item) => (
-            <SideBar.Item {..._item} />
+          {items?.map?.((item, index) => (
+            <SideBar.Item key={item.key || index} {...item} />
           ))}
         </SideBar>
       );
-    }
+    }, [items, props]);
 
-    function renderBody() {
+    /**
+     * 渲染侧边栏内容
+     * 
+     * @returns JSX元素数组
+     */
+    const renderBody = useCallback(() => {
       return items?.map?.(({ children }) => {
         if (!children) return null;
 
-        const itemStyle: any = {
+        const itemStyle: React.CSSProperties = {
           ...(children?.props?.style || {}),
         };
 
-        if (children?.key === (props.activeKey || props.defaultActiveKey)) {
-          itemStyle.display = '';
-        } else {
-          itemStyle.display = 'none';
-        }
+        const isActive = children?.key === (props.activeKey || props.defaultActiveKey);
+        itemStyle.display = isActive ? '' : 'none';
 
         return React.cloneElement(
           children,
@@ -54,7 +61,7 @@ const InternalSystemSideTabs = memo<SystemSideTabsProps>(
           children.props.children,
         );
       });
-    }
+    }, [items, props.activeKey, props.defaultActiveKey]);
 
     useTheme<HTMLElement>({
       elRef: wrapperRef,

@@ -1,7 +1,7 @@
 import { Grid, Popup } from 'antd-mobile';
 import classNames from 'classnames';
 import type { FC } from 'react';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 
 import type { SystemTabArrowMoreProps } from '../types';
@@ -11,6 +11,12 @@ const arrowIcon =
 
 const selectorPrefix = 'adhere-ui-tabs-arrow-more';
 
+/**
+ * 标签页更多箭头组件
+ * 
+ * @param props - 组件属性
+ * @returns JSX元素
+ */
 const ArrowMore: FC<SystemTabArrowMoreProps> = (props) => {
   const {
     defaultCollapsed = false,
@@ -25,24 +31,57 @@ const ArrowMore: FC<SystemTabArrowMoreProps> = (props) => {
 
   const [collapse, setCollapse] = useState(defaultCollapsed);
 
-  function getPopupContainer() {
+  /**
+   * 获取弹出层容器
+   * 
+   * @returns DOM元素
+   */
+  const getPopupContainer = useCallback((): HTMLElement => {
     if (!wrapRef?.current) return document.body;
 
-    let contentEl;
+    let contentEl: HTMLElement | undefined;
 
     if (swiper) {
       const index = getActiveIndexByKey?.(activeKey);
-      contentEl = Array.from(wrapRef.current.querySelectorAll('.adm-swiper-slide'))[index];
+      const slides = Array.from(wrapRef.current.querySelectorAll('.adm-swiper-slide'));
+      contentEl = slides[index] as HTMLElement;
     } else {
-      contentEl = Array.from(wrapRef.current.querySelectorAll('.adm-tabs-content')).find(
-        (_el) => (_el as HTMLElement).style.display === 'block',
-      );
+      const tabsContent = Array.from(wrapRef.current.querySelectorAll('.adm-tabs-content'));
+      contentEl = tabsContent.find(
+        (el) => (el as HTMLElement).style.display === 'block',
+      ) as HTMLElement;
     }
 
-    return contentEl;
-  }
+    return contentEl || document.body;
+  }, [wrapRef, swiper, getActiveIndexByKey, activeKey]);
 
-  useEffect(() => setCollapse(defaultCollapsed), [defaultCollapsed, activeKey]);
+  /**
+   * 处理标签页切换
+   * 
+   * @param key - 目标标签页key
+   */
+  const handleTabChange = useCallback((key: any) => {
+    onChange?.(key);
+    setCollapse(false);
+  }, [onChange]);
+
+  /**
+   * 处理箭头点击
+   */
+  const handleArrowClick = useCallback(() => {
+    setCollapse(!collapse);
+  }, [collapse]);
+
+  /**
+   * 处理遮罩点击
+   */
+  const handleMaskClick = useCallback(() => {
+    setCollapse(false);
+  }, []);
+
+  useEffect(() => {
+    setCollapse(defaultCollapsed);
+  }, [defaultCollapsed, activeKey]);
 
   return (
     <>
@@ -58,9 +97,7 @@ const ArrowMore: FC<SystemTabArrowMoreProps> = (props) => {
             }}
             src={arrowIcon}
             alt=""
-            onClick={() => {
-              setCollapse(!collapse);
-            }}
+            onClick={handleArrowClick}
           />,
           wrapRef.current.querySelector('.adm-tabs-header') as HTMLElement,
         )}
@@ -70,23 +107,20 @@ const ArrowMore: FC<SystemTabArrowMoreProps> = (props) => {
         maskClassName={`${selectorPrefix}-mask`}
         visible={collapse}
         destroyOnClose
-        getContainer={() => getPopupContainer()}
-        onMaskClick={() => setCollapse(false)}
+        getContainer={getPopupContainer}
+        onMaskClick={handleMaskClick}
         position="top"
       >
         <Grid className={`${selectorPrefix}-grid`} columns={4} gap={[15, 20]}>
-          {(data || []).map((t) => (
-            <Grid.Item key={t.key}>
+          {data.map((item) => (
+            <Grid.Item key={item.key}>
               <div
                 className={classNames(`${selectorPrefix}-item`, {
-                  [`${selectorPrefix}-active`]: activeKey === t.key,
+                  [`${selectorPrefix}-active`]: activeKey === item.key,
                 })}
-                onClick={() => {
-                  onChange?.(t.key);
-                  setCollapse(false);
-                }}
+                onClick={() => handleTabChange(item.key)}
               >
-                {t.title}
+                {item.title}
               </div>
             </Grid.Item>
           ))}

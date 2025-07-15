@@ -1,7 +1,7 @@
 {
   "name": "@baifendian/adhere-ui-split",
   "version": "2.11.0",
-  "description": "无侵入性的竖线和横线分割",
+  "description": "React分割条组件，支持垂直和水平分割，响应式设计，可自定义样式和主题",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
     "url": "https://github.com/playerljc/adhere/issues"

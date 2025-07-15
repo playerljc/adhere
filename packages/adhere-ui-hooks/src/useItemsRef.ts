@@ -1,13 +1,43 @@
 import { useRef } from 'react';
 
+import type { UseItemsRef } from './types';
+
 /**
- * useItemsRef
- * @description 存储列表ref的hooks
+ * useItemsRef hook
+ * @description 用于存储和管理列表项引用的 React Hook
+ * @template T - 引用值的类型
+ * @returns {UseItemsRef<T>} 返回引用管理对象
+ * 
+ * @example
+ * ```tsx
+ * const itemsRef = useItemsRef<HTMLDivElement>();
+ * 
+ * // 设置引用
+ * itemsRef.set('item-1', divRef.current);
+ * 
+ * // 获取引用
+ * const element = itemsRef.get('item-1');
+ * 
+ * // 获取所有 keys
+ * const keys = Array.from(itemsRef.getKeys() || []);
+ * 
+ * // 获取所有引用
+ * const refs = Array.from(itemsRef.getRefs() || []);
+ * ```
  */
-function useItemsRef<T>() {
+function useItemsRef<T>(): {
+  get: (key: string | symbol) => T | undefined;
+  set: (key: string | symbol, value: T | null | undefined) => Map<string | symbol, T> | undefined;
+  getKeys: () => IterableIterator<string | symbol> | undefined;
+  getRefs: () => IterableIterator<T> | undefined;
+} {
   const itemsRef = useRef<Map<string | symbol, T> | null>(null);
 
-  function getMap() {
+  /**
+   * 获取 Map 实例
+   * @returns {Map<string | symbol, T>} Map 实例
+   */
+  function getMap(): Map<string | symbol, T> {
     if (!itemsRef.current) {
       itemsRef.current = new Map<string | symbol, T>();
     }
@@ -16,23 +46,46 @@ function useItemsRef<T>() {
   }
 
   return {
-    get(key: string | symbol) {
+    /**
+     * 获取指定 key 的引用
+     * @param {string | symbol} key - 引用键
+     * @returns {T | undefined} 引用值
+     */
+    get(key: string | symbol): T | undefined {
       const map = getMap();
-
-      return map?.get(key);
+      return map.get(key);
     },
-    set(key: string | symbol, value: T) {
-      if (value) {
-        return getMap()?.set(key, value);
+
+    /**
+     * 设置指定 key 的引用
+     * @param {string | symbol} key - 引用键
+     * @param {T | null | undefined} value - 引用值，如果为 null 或 undefined 则删除该引用
+     * @returns {Map<string | symbol, T> | undefined} Map 实例
+     */
+    set(key: string | symbol, value: T | null | undefined): Map<string | symbol, T> | undefined {
+      const map = getMap();
+      
+      if (value != null) {
+        return map.set(key, value);
       } else {
-        getMap()?.delete(key);
-        return getMap();
+        map.delete(key);
+        return map;
       }
     },
-    getKeys() {
+
+    /**
+     * 获取所有 keys
+     * @returns {IterableIterator<string | symbol> | undefined} keys 迭代器
+     */
+    getKeys(): IterableIterator<string | symbol> | undefined {
       return itemsRef.current?.keys();
     },
-    getRefs() {
+
+    /**
+     * 获取所有引用值
+     * @returns {IterableIterator<T> | undefined} 引用值迭代器
+     */
+    getRefs(): IterableIterator<T> | undefined {
       return itemsRef.current?.values();
     },
   };

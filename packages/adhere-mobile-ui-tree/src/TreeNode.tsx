@@ -3,6 +3,7 @@ import { Checkbox } from 'antd-mobile';
 import { AddOutline, MinusOutline } from 'antd-mobile-icons';
 import classNames from 'classnames';
 import React, { memo, useContext, useMemo } from 'react';
+import type { MouseEvent, TouchEvent } from 'react';
 
 import { LoadingOutlined } from '@ant-design/icons';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -17,7 +18,7 @@ import {
 } from './Constant';
 import TreeContext from './TreeContext';
 import TreeNodeContext from './TreeNodeContext';
-import type { TreeDataItemExtra, TreeNodeProps } from './types';
+import type { TreeDataItem, TreeDataItemExtra, TreeNodeProps } from './types';
 import useChecked from './useChecked';
 import useLoadedLocks from './useLoadedLocks';
 import useUtil from './useUtil';
@@ -25,8 +26,10 @@ import useUtil from './useUtil';
 const selectorPrefix = 'adhere-mobile-ui-tree-node';
 
 /**
- * TreeNode
- * @description TreeNode
+ * 树节点组件
+ * @description 树形结构中的单个节点组件，支持展开/折叠、选择、勾选等功能
+ * @param props - 节点属性
+ * @returns 树节点组件
  */
 const TreeNode = memo<TreeNodeProps>(
   ({
@@ -50,12 +53,10 @@ const TreeNode = memo<TreeNodeProps>(
       setExpandedKeys,
       setCheckedKeys,
       setLoadedKeys,
-      // setTreeData,
       selectedKeys,
       expandedKeys,
       checkedKeys,
       loadedKeys,
-      // teeDataSimpleMode,
       loadData,
       size,
       multiple,
@@ -98,7 +99,7 @@ const TreeNode = memo<TreeNodeProps>(
     );
 
     // 当前节点的icon
-    const targetIcon = useMemo(() => icon?.(nodeDataExtra), [nodeDataExtra]);
+    const targetIcon = useMemo(() => icon?.(nodeDataExtra), [icon, nodeDataExtra]);
 
     const { updateParentChecked: next, existsCheckableNodeInParentChildren: existsCheckable } =
       useContext(TreeNodeContext);
@@ -130,7 +131,7 @@ const TreeNode = memo<TreeNodeProps>(
     }, [checkable]);
 
     // children数据
-    const targetChildrenData = useMemo(() => children ?? [], [children]);
+    const targetChildrenData = useMemo(() => (children ?? []) as TreeDataItem[], [children]);
 
     // 是否有children
     const hasChildren = useMemo<boolean>(() => {
@@ -139,43 +140,41 @@ const TreeNode = memo<TreeNodeProps>(
       }
 
       return !isLeaf;
-    }, [targetChildrenData]);
+    }, [targetChildrenData, isLeaf]);
 
     const targetCheckboxWidth = useMemo(
       () => getValueWithUnit(checkboxWidth, media) ?? commonCheckboxWidth(),
-      [checkboxWidth, commonCheckboxWidth(), media],
+      [checkboxWidth, commonCheckboxWidth, media, getValueWithUnit],
     );
 
     const targetCheckboxGap = useMemo(
       () => getValueWithUnit(checkboxGap, media) ?? commonCheckboxGap(),
-      [checkboxGap, commonCheckboxGap(), media],
+      [checkboxGap, commonCheckboxGap, media, getValueWithUnit],
     );
 
     const targetTitleGap = useMemo(
       () => getValueWithUnit(titleGap, media) ?? commonTitleGap(),
-      [titleGap, commonTitleGap(), media],
+      [titleGap, commonTitleGap, media, getValueWithUnit],
     );
 
     const targetIconGap = useMemo(
       () => getValueWithUnit(iconGap, media) ?? commonIconGap(),
-      [iconGap, commonIconGap(), media],
+      [iconGap, commonIconGap, media, getValueWithUnit],
     );
 
     const targetIndent = useMemo(
       () => getValueWithUnit(indent, media) ?? commonIndent(),
-      [indent, commonIndent(), media],
+      [indent, commonIndent, media, getValueWithUnit],
     );
 
-    const targetRowGap = useMemo(() => commonRowGap(), [commonRowGap()]);
+    const targetRowGap = useMemo(() => commonRowGap(), [commonRowGap]);
 
-    // 1
-    //  1.1
-    //    1.1.1
-    //    1.1.2
+    // 子节点元素
     const childrenElement = useMemo(
       () =>
         targetChildrenData.map((_treeNodeData) => (
           <TreeNodeContext.Provider
+            key={_treeNodeData[DEFAULT_TREE_UTIL_CONFIG.keyAttr]}
             value={{
               updateParentChecked: ({ key, checked, checkedKeys }) => {
                 updateParentChecked({
@@ -198,20 +197,27 @@ const TreeNode = memo<TreeNodeProps>(
             />
           </TreeNodeContext.Provider>
         )),
-      [targetChildrenData],
+      [
+        targetChildrenData,
+        updateParentChecked,
+        existsCheckableNodeInParentChildren,
+        id,
+        next,
+        level,
+      ],
     );
 
-    const checked = useMemo(() => checkedKeys().includes(id), [checkedKeys(), id]);
+    const checked = useMemo(() => checkedKeys().includes(id), [checkedKeys, id]);
 
     const isExpanded = expandedKeys().includes(id);
 
     const isSelected = selectedKeys().includes(id);
 
     /**
-     * onExpandedCombination
-     * @param e
+     * 展开/折叠组合处理函数
+     * @param e - 事件对象
      */
-    function onExpandedCombination(e) {
+    function onExpandedCombination(e: TouchEvent<HTMLElement> | MouseEvent<HTMLElement>): void {
       if (!isExpanded) {
         if (loadData) {
           onLoadData(e);
@@ -223,17 +229,15 @@ const TreeNode = memo<TreeNodeProps>(
     }
 
     /**
-     * onLoadData
-     * @description 动态加载数据
-     * @param e
+     * 动态加载数据
+     * @param e - 事件对象
      */
-    function onLoadData(e) {
+    function onLoadData(e: TouchEvent<HTMLElement> | MouseEvent<HTMLElement>): void {
       if (isLock(id)) return;
 
       // 如果当前节点已经加载过
       if (loadedKeys().includes(id)) {
         onExpanded(e);
-
         return;
       }
 
@@ -244,45 +248,6 @@ const TreeNode = memo<TreeNodeProps>(
 
       loadData?.(nodeDataExtra)
         ?.then(() => {
-          // setTreeData((_treeData) => {
-          //   let _childrenTreeData = childrenTreeData as TreeDataItem[];
-          //   const targetTreeDataSimpleMode = !!teeDataSimpleMode?.();
-          //
-          //   if (targetTreeDataSimpleMode) {
-          //     if (Util.isBoolean(targetTreeDataSimpleMode)) {
-          //       if (targetTreeDataSimpleMode as boolean) {
-          //         // @ts-ignore
-          //         _childrenTreeData = Util.arrayToAntdTreeSelect(
-          //           _childrenTreeData,
-          //           DEFAULT_TREE_UTIL_CONFIG,
-          //         );
-          //       }
-          //     } else if (
-          //       Util.isObject(targetTreeDataSimpleMode) &&
-          //       checkTreeDataSimpleModeFromObject(targetTreeDataSimpleMode)
-          //     ) {
-          //       // @ts-ignore
-          //       _childrenTreeData = Util.arrayToAntdTreeSelect(
-          //         _childrenTreeData,
-          //         teeDataSimpleMode?.() as TreeDataSimpleModeFromObject,
-          //       );
-          //     }
-          //   }
-          //
-          //   const item = Util.findNodeByKey(
-          //     _treeData,
-          //     nodeDataExtra[DEFAULT_TREE_UTIL_CONFIG.keyAttr],
-          //     { keyAttr: DEFAULT_TREE_UTIL_CONFIG.keyAttr },
-          //   );
-          //
-          //   if (item) {
-          //     // @ts-ignore
-          //     item.children = _childrenTreeData ?? [];
-          //   }
-          //
-          //   return JSON.parse(JSON.stringify(_treeData));
-          // });
-
           // 展开
           onExpanded(e);
 
@@ -310,10 +275,11 @@ const TreeNode = memo<TreeNodeProps>(
     }
 
     /**
-     * onExpanded
+     * 展开/折叠处理函数
+     * @param e - 事件对象
      */
-    function onExpanded(e) {
-      function _e(_targetExpandedKeys) {
+    function onExpanded(e: TouchEvent<HTMLElement> | MouseEvent<HTMLElement>): void {
+      function _e(_targetExpandedKeys: string[]) {
         return {
           expanded: !isExpanded,
           expandedNodes: getTreeNodesByKeys({
@@ -349,13 +315,14 @@ const TreeNode = memo<TreeNodeProps>(
     }
 
     /**
-     * onSelected
+     * 选中处理函数
+     * @param e - 事件对象
      */
-    function onSelected(e) {
+    function onSelected(e: TouchEvent<HTMLElement> | MouseEvent<HTMLElement>): void {
       // 如果不能选中或者不可用
       if (!targetSelectable || targetDisabled) return;
 
-      function _e(keys) {
+      function _e(keys: string[]) {
         return {
           selected: !isSelected,
           selectedNodes: getTreeNodesByKeys({ treeData: treeData() ?? [], keys }),
@@ -406,10 +373,10 @@ const TreeNode = memo<TreeNodeProps>(
     }
 
     /**
-     * onChecked
-     * @param {boolean} _checked
+     * 勾选处理函数
+     * @param _checked - 是否勾选
      */
-    function onChecked(_checked) {
+    function onChecked(_checked: boolean): void {
       const _checkedKeys = checkedKeys();
 
       handleCheck({

@@ -1,2 +1,2 @@
-import Browsersniff from"./browsersniff";export default Browsersniff;
+import Browsersniff from"./browsersniff";export*from"./types";export default Browsersniff;
 //# sourceMappingURL=index.js.map

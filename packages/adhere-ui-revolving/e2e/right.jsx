@@ -1,21 +1,25 @@
 import React from 'react';
 
-import Revolving from '../src/index';
+import { Revolving } from '@baifendian/adhere';
 
-import '../src/index.less';
-
+/**
+ * 向右轮播测试用例
+ * 展示水平向右滚动的轮播图效果
+ */
 export default () => {
+  const items = Array.from({ length: 10 }).map((_, index) => ({
+    key: `${index + 1}`,
+    children: <span>Slide {index + 1}</span>,
+  }));
+
   return (
-    <div>
-      <div style={{ width: 200 }}>
-        <Revolving
-          direction="right"
-          items={Array.from({ length: 10 }).map((_, index) => ({
-            key: `${index + 1}`,
-            children: <span>{index + 1}</span>,
-          }))}
-        ></Revolving>
-      </div>
-    </div>
+    <Revolving
+      direction="right"
+      styleWrapper={{ height: 50 }}
+      items={items}
+      speed={1000}
+      delay={2000}
+      loop={true}
+    />
   );
 };

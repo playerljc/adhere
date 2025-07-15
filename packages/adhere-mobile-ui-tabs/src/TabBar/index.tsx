@@ -1,7 +1,7 @@
 import { TabBar } from 'antd-mobile';
 import classNames from 'classnames';
 import type { FC } from 'react';
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState, useCallback } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
@@ -16,31 +16,52 @@ const { VerticalFlexLayout } = FlexLayout;
 
 const selectorPrefix = 'adhere-ui-tabs-tab-bar';
 
+/**
+ * 底部标签栏导航组件
+ * 
+ * @param props - 组件属性
+ * @returns JSX元素
+ */
 const TabBarNav: FC<SystemTabBarNavProps> = (props) => {
   const { items = [], onChange } = props;
 
   const history = useHistory();
 
-  const [activeKey, setActiveKey] = useState(props.activeKey ?? '');
+  const [activeKey, setActiveKey] = useState<string>(props.activeKey ?? '');
 
-  useEffect(() => setActiveKey(props.activeKey ?? ''), [props.activeKey]);
+  /**
+   * 处理标签页切换
+   * 
+   * @param key - 目标标签页key
+   */
+  const handleTabChange = useCallback((key: string) => {
+    history.push(key);
+    setActiveKey(key);
+    onChange?.(key);
+  }, [history, onChange]);
+
+  useEffect(() => {
+    setActiveKey(props.activeKey ?? '');
+  }, [props.activeKey]);
 
   return (
     <TabBar
       activeKey={activeKey}
-      onChange={(key) => {
-        history.push(key);
-        setActiveKey(key);
-        onChange?.(key);
-      }}
+      onChange={handleTabChange}
     >
-      {(items ?? []).map((_item) => (
-        <TabBar.Item {..._item} />
+      {items.map((item, index) => (
+        <TabBar.Item key={item.key || index} {...item} />
       ))}
     </TabBar>
   );
 };
 
+/**
+ * 底部标签栏组件
+ * 
+ * @param props - 组件属性
+ * @returns JSX元素
+ */
 const SystemTabBar = memo<SystemTabBarProps>((props) => {
   const {
     className,
@@ -56,7 +77,7 @@ const SystemTabBar = memo<SystemTabBarProps>((props) => {
     ...tabBarNavProps
   } = props;
 
-  const wrapperRef = useRef<HTMLElement | undefined>();
+  const wrapperRef = useRef<HTMLDivElement | undefined>();
 
   const history = useHistory();
 
@@ -65,6 +86,13 @@ const SystemTabBar = memo<SystemTabBarProps>((props) => {
     group: 'mobile',
     displayName: 'Tabs',
   });
+
+  /**
+   * 获取当前激活的标签页key
+   */
+  const getCurrentActiveKey = useCallback((): string => {
+    return activeKey !== history.location.pathname ? history.location.pathname : (activeKey || '');
+  }, [activeKey, history.location.pathname]);
 
   return (
     <div
@@ -84,9 +112,7 @@ const SystemTabBar = memo<SystemTabBarProps>((props) => {
         renderBottom={
           <TabBarNav
             {...tabBarNavProps}
-            activeKey={
-              activeKey !== history.location.pathname ? history.location.pathname : activeKey
-            }
+            activeKey={getCurrentActiveKey()}
           />
         }
       />

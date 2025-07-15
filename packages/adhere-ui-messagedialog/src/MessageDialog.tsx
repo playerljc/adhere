@@ -1,7 +1,7 @@
 import { Button, Form } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import { produce } from 'immer';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useRef } from 'react';
 import ReactDOM, { Root } from 'react-dom/client';
 
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
@@ -12,15 +12,23 @@ import MaximizeModalDialog from './MaximizeModal';
 import ModalDialog, { selectorPrefix } from './Modal';
 import Trigger from './Trigger';
 import TriggerPrompt from './TriggerPrompt';
-import type { AlertArgv, ConfirmArgv, ModalArgv, PromptArgv } from './types';
+import type { 
+  AlertArgv, 
+  ConfirmArgv, 
+  ModalArgv, 
+  PromptArgv,
+  TriggerPromptHandle,
+  TriggerHandle,
+  DialogHandle
+} from './types';
 
 /**
- * renderByIcon
- * @param icon
- * @param text
- * @return React.ReactElement
+ * 渲染带图标的组件
+ * @param icon - 图标元素
+ * @param text - 文本内容
+ * @returns 渲染的React元素
  */
-function renderByIcon(icon: ReactNode, text: ReactNode) {
+function renderByIcon(icon: ReactNode, text: ReactNode): React.ReactElement {
   return (
     <div className={`${selectorPrefix}-render-icon`}>
       <div className={`${selectorPrefix}-render-icon-fixed`}>{icon}</div>
@@ -29,33 +37,52 @@ function renderByIcon(icon: ReactNode, text: ReactNode) {
   );
 }
 
-// 是否允许多实例共存(也就是弹层之后再弹层) 默认是允许
+/**
+ * 是否允许多实例共存(弹层之后再弹层)，默认允许
+ */
 let allowMultipleInstances = true;
 
-// lock
+/**
+ * 锁定状态，防止重复创建弹窗
+ */
 let lock = false;
 
-let renderToWrapper: (children: () => ReactNode) => ReactNode;
+/**
+ * 自定义渲染包装器函数
+ */
+let renderToWrapper: ((children: () => ReactNode) => ReactNode) | undefined;
 
+/**
+ * 存储MessageDialog实例的WeakMap
+ */
 const MessageDialogHandlers = new WeakMap<HTMLElement, Root>();
 
+
+
+/**
+ * MessageDialog工厂类
+ * 提供各种类型的弹窗功能，包括确认框、警告框、输入框等
+ */
 const MessageDialogFactory = {
   /**
-   * setRenderToWrapper
-   * @description 设置renderToWrapper方法
-   * @param _renderToWrapper
+   * 设置自定义渲染包装器
+   * @param _renderToWrapper - 渲染包装器函数
    */
-  setRenderToWrapper(_renderToWrapper) {
+  setRenderToWrapper(_renderToWrapper: (children: () => ReactNode) => ReactNode): void {
     renderToWrapper = _renderToWrapper;
   },
+
   /**
-   * Confirm
-   * @param title {String | ReactNode}
-   * @param text {String | ReactNode}
-   * @param width {number}
-   * @param zIndex {number}
-   * @param icon {React.ReactElement}
-   * @param {Function} - onSuccess
+   * 创建确认对话框
+   * @param params - 确认对话框参数
+   * @param params.title - 对话框标题
+   * @param params.text - 对话框内容文本
+   * @param params.width - 对话框宽度
+   * @param params.zIndex - 对话框层级
+   * @param params.local - 国际化语言
+   * @param params.icon - 图标元素
+   * @param params.onSuccess - 确认回调函数
+   * @returns 对话框句柄
    */
   Confirm({
     title,
@@ -65,7 +92,7 @@ const MessageDialogFactory = {
     local,
     icon = null,
     onSuccess,
-  }: ConfirmArgv) {
+  }: ConfirmArgv): DialogHandle | void {
     const result = this.Modal({
       config: {
         title,
@@ -78,12 +105,14 @@ const MessageDialogFactory = {
             key="submit"
             type="primary"
             title={Intl.get('confirm')}
-            onClick={() => {
-              if (onSuccess) {
-                onSuccess()
-                  .then(() => result?.close?.())
-                  .catch(() => result?.close?.());
-              } else {
+            onClick={async () => {
+              try {
+                if (onSuccess) {
+                  await onSuccess();
+                }
+                result?.close?.();
+              } catch (error) {
+                console.error('Confirm dialog onSuccess error:', error);
                 result?.close?.();
               }
             }}
@@ -98,14 +127,17 @@ const MessageDialogFactory = {
 
     return result;
   },
+
   /**
-   * Alert
-   * @param title - {String | ReactNode}
-   * @param text - {String | ReactNode}
-   * @param width - {number}
-   * @param local
-   * @param zIndex
-   * @param icon - {React.ReactElement | null}
+   * 创建警告对话框
+   * @param params - 警告对话框参数
+   * @param params.title - 对话框标题
+   * @param params.text - 对话框内容文本
+   * @param params.width - 对话框宽度
+   * @param params.zIndex - 对话框层级
+   * @param params.local - 国际化语言
+   * @param params.icon - 图标元素
+   * @returns 对话框句柄
    */
   Alert({
     title,
@@ -114,7 +146,7 @@ const MessageDialogFactory = {
     zIndex = DEFAULT_ZINDEX,
     local,
     icon,
-  }: AlertArgv) {
+  }: AlertArgv): DialogHandle | void {
     return this.Modal({
       config: {
         title,
@@ -127,16 +159,18 @@ const MessageDialogFactory = {
       children: icon ? renderByIcon(icon, text) : text,
     });
   },
+
   /**
-   * Prompt
-   * @param title
-   * @param config
-   * @param layout
-   * @param width
-   * @param zIndex
-   * @param local
-   * @param onSuccess
-   * @constructor
+   * 创建输入提示对话框
+   * @param params - 输入提示对话框参数
+   * @param params.title - 对话框标题
+   * @param params.config - 表单配置
+   * @param params.layout - 表单布局
+   * @param params.width - 对话框宽度
+   * @param params.zIndex - 对话框层级
+   * @param params.local - 国际化语言
+   * @param params.onSuccess - 确认回调函数
+   * @returns 对话框句柄
    */
   Prompt({
     title,
@@ -146,8 +180,8 @@ const MessageDialogFactory = {
     zIndex = DEFAULT_ZINDEX,
     local,
     onSuccess,
-  }: PromptArgv) {
-    const ref = React.createRef<FormInstance>();
+  }: PromptArgv): DialogHandle | void {
+    const ref = useRef<FormInstance>(null);
 
     const result = this.Modal({
       config: {
@@ -161,13 +195,16 @@ const MessageDialogFactory = {
             key="submit"
             type="primary"
             title={Intl.get('confirm')}
-            onClick={() => {
-              if (onSuccess) {
-                ref.current!.validateFields().then((values) => {
-                  onSuccess(values?.value).then(() => result?.close?.());
-                });
-              } else {
+            onClick={async () => {
+              try {
+                if (onSuccess && ref.current) {
+                  const values = await ref.current.validateFields();
+                  await onSuccess(values?.value);
+                }
                 result?.close?.();
+              } catch (error) {
+                console.error('Prompt dialog validation error:', error);
+                // 验证失败时不关闭对话框
               }
             }}
           >
@@ -197,13 +234,13 @@ const MessageDialogFactory = {
 
     return result;
   },
+
   /**
-   * InputPrompt
-   * @param config
-   * @param params
-   * @constructor
+   * 创建输入框提示对话框
+   * @param params - 输入框提示对话框参数
+   * @returns 对话框句柄
    */
-  InputPrompt({ config, ...params }: PromptArgv) {
+  InputPrompt({ config, ...params }: PromptArgv): DialogHandle | void {
     return MessageDialogFactory.Prompt({
       ...params,
       config: {
@@ -212,13 +249,13 @@ const MessageDialogFactory = {
       },
     });
   },
+
   /**
-   * TextAreaPrompt
-   * @param config
-   * @param params
-   * @constructor
+   * 创建文本域提示对话框
+   * @param params - 文本域提示对话框参数
+   * @returns 对话框句柄
    */
-  TextAreaPrompt({ config, ...params }) {
+  TextAreaPrompt({ config, ...params }: PromptArgv): DialogHandle | void {
     return MessageDialogFactory.Prompt({
       ...params,
       config: {
@@ -227,13 +264,13 @@ const MessageDialogFactory = {
       },
     });
   },
+
   /**
-   * PassWordPrompt
-   * @param config
-   * @param params
-   * @constructor
+   * 创建密码输入提示对话框
+   * @param params - 密码输入提示对话框参数
+   * @returns 对话框句柄
    */
-  PassWordPrompt({ config, ...params }) {
+  PassWordPrompt({ config, ...params }: PromptArgv): DialogHandle | void {
     return MessageDialogFactory.Prompt({
       ...params,
       config: {
@@ -242,13 +279,13 @@ const MessageDialogFactory = {
       },
     });
   },
+
   /**
-   * NumberPrompt
-   * @param config
-   * @param params
-   * @constructor
+   * 创建数字输入提示对话框
+   * @param params - 数字输入提示对话框参数
+   * @returns 对话框句柄
    */
-  NumberPrompt({ config, ...params }) {
+  NumberPrompt({ config, ...params }: PromptArgv): DialogHandle | void {
     return MessageDialogFactory.Prompt({
       ...params,
       config: {
@@ -257,34 +294,42 @@ const MessageDialogFactory = {
       },
     });
   },
+
   /**
-   *  Modal
-   *  @param {Object} - config
-   *  @param {String | ReactElement} - title
-   *  @param {Boolean} - maskClosable 是否点击遮罩关闭 默认是false
-   *  @param {Number} - zIndex 层级大小
-   *  @param {String} - className 容器类名
-   *  @param {String} - wrapClassName 包裹容器类名
-   *  @param {Boolean} - centered 垂直居中展示 Modal 默认false
-   *  @param {String | Number} - width 宽度
-   *  @param {Boolean} - closable 是否显示关闭 默认true
-   *  @param {Array<ReactNode>} - footer
-   *  @param {ReactNode} - children
-   *  @param defaultCloseBtn
+   * 创建模态对话框
+   * @param params - 模态对话框参数
+   * @param params.config - 模态框配置
+   * @param params.children - 子元素
+   * @param params.defaultCloseBtn - 是否显示默认关闭按钮
+   * @returns 对话框句柄
    */
-  Modal({ config = {}, children = null, defaultCloseBtn = true }: ModalArgv): {
-    el: HTMLElement;
-    close: () => void;
-    setConfig: (callback: any) => void;
-    update: (children?: any) => void;
-  } | void {
-    // allowMultipleInstances true 允许多实例
-    // allowMultipleInstances false 不允许
-    if (!allowMultipleInstances && lock) return;
+  Modal({ config = {}, children = null, defaultCloseBtn = true }: ModalArgv): DialogHandle | void {
+    // 如果不允许多实例且已锁定，则返回
+    if (!allowMultipleInstances && lock) {
+      console.warn('Modal dialog is locked, cannot create new instance');
+      return;
+    }
 
     lock = true;
 
-    function render(_children?: any) {
+    let open = true;
+    let modalConfig = {
+      maskClosable: false,
+      ...config,
+      afterClose: () => {
+        lock = false;
+        config?.afterClose?.();
+      },
+    };
+
+    const el = document.createElement('div');
+    const root = ReactDOM.createRoot(el);
+
+    /**
+     * 渲染对话框内容
+     * @param _children - 可选的子元素
+     */
+    function render(_children?: ReactNode): void {
       const element = (
         <ModalDialog open={open} close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
           {_children ?? children}
@@ -294,9 +339,11 @@ const MessageDialogFactory = {
       root.render(renderToWrapper?.(() => element) ?? element);
     }
 
-    function close() {
+    /**
+     * 关闭对话框
+     */
+    function close(): void {
       open = false;
-
       render();
 
       setTimeout(() => {
@@ -305,61 +352,57 @@ const MessageDialogFactory = {
       }, 300);
     }
 
-    let open = true;
-
-    let modalConfig = {
-      maskClosable: false,
-      ...config,
-      afterClose: () => {
-        lock = false;
-
-        if (config?.afterClose) {
-          config?.afterClose?.();
-        }
-      },
-    };
-
-    const el = document.createElement('div');
-
-    const root = ReactDOM.createRoot(el);
-
     render();
-
     MessageDialogHandlers.set(el, root);
-
     document.body.appendChild(el);
 
     return {
       el,
       close,
-      setConfig: (callback: any, _children?: any) => {
+      setConfig: (callback: (draft: any) => void, _children?: ReactNode): void => {
         modalConfig = produce(modalConfig, callback);
         render(_children);
       },
-      update: (_children) => {
+      update: (_children?: ReactNode): void => {
         render(_children);
       },
     };
   },
+
   /**
-   * MaximizeModal
-   * @param config
-   * @param children
-   * @param defaultCloseBtn
-   * @param local
-   * @constructor
+   * 创建最大化模态对话框
+   * @param params - 最大化模态对话框参数
+   * @param params.config - 模态框配置
+   * @param params.children - 子元素
+   * @param params.defaultCloseBtn - 是否显示默认关闭按钮
+   * @returns 对话框句柄
    */
-  MaximizeModal({ config = {}, children = null, defaultCloseBtn = true }: ModalArgv): {
-    el: HTMLElement;
-    close: () => void;
-    setConfig: (callback: any, _children?: any) => void;
-    update: (children?: any) => void;
-  } | void {
-    if (!allowMultipleInstances && lock) return;
+  MaximizeModal({ config = {}, children = null, defaultCloseBtn = true }: ModalArgv): DialogHandle | void {
+    if (!allowMultipleInstances && lock) {
+      console.warn('Maximize modal dialog is locked, cannot create new instance');
+      return;
+    }
 
     lock = true;
 
-    function render(_children?: any) {
+    let open = true;
+    let modalConfig = {
+      maskClosable: false,
+      ...config,
+      afterClose: () => {
+        lock = false;
+        config?.afterClose?.();
+      },
+    };
+
+    const el = document.createElement('div');
+    const root = ReactDOM.createRoot(el);
+
+    /**
+     * 渲染对话框内容
+     * @param _children - 可选的子元素
+     */
+    function render(_children?: ReactNode): void {
       const element = (
         <MaximizeModalDialog
           open={open}
@@ -374,9 +417,11 @@ const MessageDialogFactory = {
       root.render(renderToWrapper?.(() => element) ?? element);
     }
 
-    function close() {
+    /**
+     * 关闭对话框
+     */
+    function close(): void {
       open = false;
-
       render();
 
       setTimeout(() => {
@@ -385,73 +430,51 @@ const MessageDialogFactory = {
       }, 300);
     }
 
-    let open = true;
-
-    let modalConfig = {
-      maskClosable: false,
-      ...config,
-      afterClose: () => {
-        lock = false;
-
-        if (config?.afterClose) {
-          config?.afterClose?.();
-        }
-      },
-    };
-
-    const el = document.createElement('div');
-
-    const root = ReactDOM.createRoot(el);
-
     render();
-
     MessageDialogHandlers.set(el, root);
-
     document.body.appendChild(el);
 
     return {
       el,
       close,
-      setConfig: (callback: any, _children) => {
+      setConfig: (callback: (draft: any) => void, _children?: ReactNode): void => {
         modalConfig = produce(modalConfig, callback);
         render(_children);
       },
-      update: (_children) => {
+      update: (_children?: ReactNode): void => {
         render(_children);
       },
     };
   },
-  /**
-   * close
-   * @param el
-   */
-  close(el: HTMLElement) {
-    const root = MessageDialogHandlers.get(el);
 
+  /**
+   * 关闭指定的对话框
+   * @param el - 对话框DOM元素
+   */
+  close(el: HTMLElement): void {
+    const root = MessageDialogHandlers.get(el);
     if (root) {
       root.unmount();
+      MessageDialogHandlers.delete(el);
     }
-
     lock = false;
-    // const flag = ReactDOM.unmountComponentAtNode(el);
-    // if (flag) {
-    //   el?.parentElement?.removeChild?.(el);
-    // }
   },
+
   /**
-   * Trigger
+   * Trigger组件
    */
   Trigger,
+
   /**
-   * TriggerPrompt
+   * TriggerPrompt组件
    */
   TriggerPrompt,
+
   /**
-   * allowMultipleInstances
-   * @description 设置是否允许多实例共存
-   * @param {boolean} allow
+   * 设置是否允许多实例共存
+   * @param allow - 是否允许
    */
-  allowMultipleInstances: (allow: boolean) => {
+  allowMultipleInstances: (allow: boolean): void => {
     allowMultipleInstances = allow;
   },
 };

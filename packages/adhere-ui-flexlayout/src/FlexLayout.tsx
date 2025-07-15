@@ -16,26 +16,27 @@ import * as TRBLC from './TRBLC';
 import ToolBarLayout from './ToolBarLayout';
 import { getValueWithUnit } from './Util';
 import VerticalFlexLayout from './VerticalFlexLayout';
-import type { FlexLayoutComponent, FlexLayoutProps } from './types';
+import type { FlexLayoutComponent, FlexLayoutProps, FlexDirection, GutterType } from './types';
 
 export const selectorPrefix = 'adhere-ui-flex-layout';
 
 const { useTheme } = ConfigProvider;
 
 /**
- * InternalFlexLayout
- * @param {FlexLayoutProps} props
- * @param ref
- * @constructor
+ * 内部 FlexLayout 组件
+ * 
+ * @param {FlexLayoutProps} props - 组件属性
+ * @param {React.Ref<HTMLDivElement>} ref - 组件引用
+ * @returns {JSX.Element} FlexLayout 组件
  */
-const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes<HTMLElement>>(
-  forwardRef<HTMLElement, FlexLayoutProps>((props, ref) => {
+const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes<HTMLDivElement>>(
+  forwardRef<HTMLDivElement, FlexLayoutProps>((props, ref) => {
     const { className, style, direction, gutter = [0, 0], children, ...attrs } = props;
 
     const { media } = useContext(ConfigProvider.Context);
 
-    useTheme<HTMLElement>({
-      elRef: ref as MutableRefObject<HTMLElement | null>,
+    useTheme<HTMLDivElement>({
+      elRef: ref as MutableRefObject<HTMLDivElement | null>,
       group: 'normal',
       displayName: 'FlexLayout',
     });
@@ -43,16 +44,18 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
     const targetDirection = useMemo(() => direction ?? 'vertical', [direction]);
 
     /**
-     * getVerticalGridStyle
+     * 获取垂直栅格样式
+     * @returns {React.CSSProperties} 垂直栅格样式
      */
-    const getVerticalGridStyle = useCallback(() => ({}), []);
+    const getVerticalGridStyle = useCallback((): React.CSSProperties => ({}), []);
 
     /**
-     * getHorizontalGridStyle
+     * 获取水平栅格样式
+     * @returns {React.CSSProperties} 水平栅格样式
      */
-    const getHorizontalGridStyle = useCallback(() => {
-      let rowGapOrigin: number = 0;
-      let columnGapOrigin: number = 0;
+    const getHorizontalGridStyle = useCallback((): React.CSSProperties => {
+      let rowGapOrigin = 0;
+      let columnGapOrigin = 0;
 
       if (Array.isArray(gutter)) {
         if (gutter.length === 1) {
@@ -62,9 +65,9 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
           rowGapOrigin = gutter[0];
           columnGapOrigin = gutter[1];
         }
-      } else {
-        rowGapOrigin = gutter as number;
-        columnGapOrigin = gutter as number;
+      } else if (typeof gutter === 'number') {
+        rowGapOrigin = gutter;
+        columnGapOrigin = gutter;
       }
 
       const columnGapOriginValue = getValueWithUnit(columnGapOrigin / 2, media);
@@ -77,46 +80,44 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
     }, [gutter, media]);
 
     /**
-     * getGridStyle
+     * 获取栅格样式
+     * @returns {React.CSSProperties} 栅格样式
      */
-    const getGridStyle = useCallback(() => {
-      const map = new Map([
+    const getGridStyle = useCallback((): React.CSSProperties => {
+      const styleMap = new Map<FlexDirection, () => React.CSSProperties>([
         ['horizontal', getHorizontalGridStyle],
         ['vertical', getVerticalGridStyle],
       ]);
 
-      return map.get(targetDirection)?.();
+      return styleMap.get(targetDirection)?.() ?? {};
     }, [targetDirection, getHorizontalGridStyle, getVerticalGridStyle]);
 
-    // class
+    // 计算类名
     const classList = useMemo(
       () => classNames(selectorPrefix, className, `${selectorPrefix}-${targetDirection}`),
       [className, targetDirection],
     );
 
-    // style
+    // 计算样式
     const styleList = useMemo(() => {
       const defaultStyle = style ?? {};
-
-      // 栅格的style
-      const gridStyle = getGridStyle(); // 'gutter' in props ? getGridStyle() : {};
+      const gridStyle = getGridStyle();
 
       return {
         ...defaultStyle,
         ...gridStyle,
       };
-    }, [style, gutter, getGridStyle]);
+    }, [style, getGridStyle]);
 
     return (
       <FlexContext.Provider
         value={{
           gutter,
           direction: targetDirection,
-          children,
+          children: React.Children.toArray(children),
         }}
       >
         <div
-          // @ts-ignore
           ref={ref}
           {...attrs}
           className={classList}

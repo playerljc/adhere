@@ -1,181 +1,115 @@
 import cloneDeep from 'lodash/cloneDeep';
 
 import Util from '@baifendian/adhere-util';
-import Emitter from '@baifendian/adhere-util-emitter';
+import Emitter, { Events } from '@baifendian/adhere-util-emitter';
 
-import { ICompareConfig, ICompareModeFun, IWatchMemoized } from './types';
-
-const Events = Emitter.Events;
+import {
+  ICompareConfig,
+  ICompareModeFun,
+  IWatchMemoized,
+  IWatchHandler,
+  ISubscriptionHandler,
+  IChangeLogItem,
+  IMemoizedItem,
+  IWatchCreateResult,
+} from './types';
 
 /**
- * 原始对象
+ * 原始对象存储
  */
-const srcObj = {};
+const srcObj: Record<symbol, any> = {};
 
-// 特殊符号
+/**
+ * 特殊符号常量
+ */
 const SPECIAL_SYMBOL = '__';
 
-// 记录对象路径的变量
+/**
+ * 记录对象路径的符号
+ */
 const PATH_SYMBOLS = [
   `${SPECIAL_SYMBOL}parentName${SPECIAL_SYMBOL}`,
   `${SPECIAL_SYMBOL}parent${SPECIAL_SYMBOL}`,
-];
+] as const;
 
+/**
+ * 私有符号前缀
+ */
 const PRIVATE_SYMBOL = '$';
 
-// 创建代理排除的属性前缀
+/**
+ * 创建代理时排除的属性前缀
+ */
 const CREATE_PROXY_EXCLUDE_PREFIX = [PRIVATE_SYMBOL, SPECIAL_SYMBOL];
 
-// 创建代理排除的属性后缀
+/**
+ * 创建代理时排除的属性后缀
+ */
 const CREATE_PROXY_EXCLUDE_SUFFIX = [SPECIAL_SYMBOL];
 
 /**
- * isProxyProperty - 是否是代理属性 一般对$开头的属性不进行任何处理
- * @param property - Object
- * @return {boolean}
+ * 判断是否为代理属性
+ * 一般对$开头的属性不进行任何处理
+ * @param property - 属性名
+ * @returns 是否为代理属性
  */
-function isProxyProperty(property) {
+function isProxyProperty(property: string | symbol): boolean {
+  const propertyStr = String(property);
   return !(
-    CREATE_PROXY_EXCLUDE_PREFIX.some((t) => property.startsWith(t)) ||
-    CREATE_PROXY_EXCLUDE_SUFFIX.some((t) => property.endsWith(t))
+    CREATE_PROXY_EXCLUDE_PREFIX.some((prefix) => propertyStr.startsWith(prefix)) ||
+    CREATE_PROXY_EXCLUDE_SUFFIX.some((suffix) => propertyStr.endsWith(suffix))
   );
 }
 
 /**
- * createProxy - 创建代理
- * @param srcObj
- * @param noProxy
- * @param events
- * @return Proxy;
+ * 创建代理对象
+ * @param srcObj - 源对象
+ * @param noProxy - 未被代理的对象副本
+ * @param events - 事件发射器
+ * @returns 代理对象
  */
-function createProxy(srcObj: object, noProxy: object, events) {
+function createProxy<T extends object>(
+  srcObj: T,
+  noProxy: Record<string, any>,
+  events: Events
+): T {
   const proxy = new Proxy(srcObj, {
     /**
-     * set 陷阱的函数
-     * 一般都是在生命周期hook或者事件处理函数中对data的值进行修改，会触发set
-     * @param target
-     * @param key
-     * @param value
-     * @param receiver
-     * @return {boolean}
+     * set 陷阱函数
+     * 在生命周期hook或事件处理函数中对data的值进行修改时会触发set
+     * @param target - 目标对象
+     * @param key - 属性键
+     * @param value - 新值
+     * @param receiver - 接收器
+     * @returns 是否设置成功
      */
-    set(target, key, value, receiver) {
+    set(target: any, key: string | symbol, value: any, receiver: any): boolean {
       // 如果不是代理属性则不处理
-      // 比如已$等开头的key不进行处理 或者是计算属性的key
+      // 比如以$等开头的key不进行处理，或者是计算属性的key
       if (!isProxyProperty(key)) {
         return Reflect.set(target, key, value, receiver);
       }
 
-      // 是数组
+      // 处理数组
       if (Util.isArray(target)) {
-        // console.log(target, key);
-        // console.log('是数组');
-
-        // 数组的原始长度
-        const srcLength = (target as Array<any>).length;
-
-        let result = Reflect.set(target, key, value, receiver);
-
-        // 数组在data中的访问表达式
-        const propertyAccessStr = Util.getPropertyVisitPathStr(target, key);
-
-        // 对原始对象赋值
-        noProxy[propertyAccessStr] = cloneDeep(target);
-
-        // 数组的当前长度
-        const targetLength = (target as Array<any>).length;
-
-        // watch监听
-        events.trigger(propertyAccessStr, key, value);
-
-        // 数组是删除
-        if (targetLength < srcLength) {
-          // @ts-ignore
-          // console.log('删除', `key:${key}`, `value:${value}`);
-        }
-        // 数组是添加
-        else if (targetLength > srcLength) {
-          // @ts-ignore
-          // console.log('添加', `key:${key}`, `value:${value}`);
-
-          // 如果可以则会给value继续创建代理
-          if ((Util.isObject(value) || Util.isArray(value)) && !(PATH_SYMBOLS[0] in value)) {
-            value = createProxy(value, noProxy, events);
-            // @ts-ignore
-            value[PATH_SYMBOLS[0]] = `[${key}]`;
-            value[PATH_SYMBOLS[1]] = target;
-            result = Reflect.set(target, key, value, receiver);
-          }
-        }
-        // 数组修改
-        else {
-          // @ts-ignore
-          // console.log('修改', `key:${key}`, `value:${value}`);
-
-          // 如果可以则会给value继续创建代理
-          if ((Util.isObject(value) || Util.isArray(value)) && !(PATH_SYMBOLS[0] in value)) {
-            value = createProxy(value, noProxy, events);
-            // @ts-ignore
-            value[PATH_SYMBOLS[0]] = `[${key}]`;
-            value[PATH_SYMBOLS[1]] = target;
-            result = Reflect.set(target, key, value, receiver);
-          }
-        }
-
-        // console.log('数组完成');
-        return result;
+        return handleArraySet(target, key, value, receiver, noProxy, events);
       }
 
-      // 是对象
+      // 处理对象
       if (Util.isObject(target)) {
-        // console.log(target, key);
-        // console.log('是对象');
-        // 一个表达式路径 比如a.b.c.d这样的一个路径，key是target的一个键，但是target也是其他对象键的值，
-        // 这个方法会返回追溯到整个的一个访问链
-        const propertyAccessStr = Util.getPropertyVisitPathStr(target, key);
-        // console.log('propertyAccessStr', propertyAccessStr);
-
-        let cloneValue;
-
-        // watch监听
-        // 新的值
-        const newVal = cloneDeep(value);
-
-        // console.log('newVal', newVal);
-
-        events.trigger(propertyAccessStr, value, newVal);
-
-        // 回写原始数据
-        if (!cloneValue) {
-          cloneValue = cloneDeep(value);
-        }
-
-        noProxy[propertyAccessStr] = cloneValue;
-
-        // console.log('noProxy[propertyAccessStr]', noProxy[propertyAccessStr]);
-
-        // 如果不是私有属性且是对象或数组继续loop，给value进行代理
-        if ((Util.isObject(value) || Util.isArray(value)) && !(PATH_SYMBOLS[0] in value)) {
-          value = createProxy(value, noProxy, events);
-          // 创建value的上下级关系(留着在watch中在原始对象中通过上下级关系找到变量)
-          value[PATH_SYMBOLS[0]] = key;
-          value[PATH_SYMBOLS[1]] = target /* [key] */;
-        }
-
-        // console.log('对象完成');
-        return Reflect.set(target, key, value, receiver);
+        return handleObjectSet(target, key, value, receiver, noProxy, events);
       }
 
-      // console.log('完成');
       return Reflect.set(target, key, value, receiver);
     },
+
     /**
-     * deleteProperty - 对象删除属性
+     * deleteProperty 陷阱函数 - 对象删除属性
      * @param target - 目标对象
-     * @param property - 删除的属性
-     * @return Object
+     * @param property - 要删除的属性
+     * @returns 是否删除成功
      */
-    deleteProperty(target, property) {
+    deleteProperty(target: any, property: string | symbol): boolean {
       if (!isProxyProperty(property)) {
         return Reflect.deleteProperty(target, property);
       }
@@ -185,11 +119,12 @@ function createProxy(srcObj: object, noProxy: object, events) {
         return Reflect.deleteProperty(target, property);
       }
 
-      const propertyAccessStr = Util.getPropertyVisitPathStr(target, property);
+      const propertyAccessStr = Util.getPropertyVisitPathStr(target, String(property));
 
-      // watch监听
+      // 触发监听事件
       events.trigger(propertyAccessStr, property);
 
+      // 从原始对象中删除
       delete noProxy[propertyAccessStr];
 
       return Reflect.deleteProperty(target, property);
@@ -197,18 +132,16 @@ function createProxy(srcObj: object, noProxy: object, events) {
   });
 
   /**
-   * 继续进行迭代，迭代srcObj的所有属性，为srcObj的所有属性都进行代理
+   * 继续迭代，为srcObj的所有属性都进行代理
    */
   for (const p in srcObj) {
-    // obj是Array, 迭代数组
-    // p是0,1,2,3...等索引
     const objItem = srcObj[p];
     if (isProxyProperty(p) && (Util.isObject(objItem) || Util.isArray(objItem))) {
       srcObj[p] = createProxy(objItem, noProxy, events);
       // 创建value的上下级关系
       // 如果srcObj是数组则记录数组的索引
-      objItem[PATH_SYMBOLS[0]] = Util.isArray(srcObj) ? `[${p}]` : p;
-      objItem[PATH_SYMBOLS[1]] = srcObj;
+      (objItem as any)[PATH_SYMBOLS[0]] = Util.isArray(srcObj) ? `[${p}]` : p;
+      (objItem as any)[PATH_SYMBOLS[1]] = srcObj;
     }
   }
 
@@ -216,74 +149,190 @@ function createProxy(srcObj: object, noProxy: object, events) {
 }
 
 /**
- * WatchMemoized
+ * 处理数组的set操作
+ * @param target - 目标数组
+ * @param key - 属性键
+ * @param value - 新值
+ * @param receiver - 接收器
+ * @param noProxy - 未被代理的对象副本
+ * @param events - 事件发射器
+ * @returns 是否设置成功
+ */
+function handleArraySet(
+  target: any[],
+  key: string | symbol,
+  value: any,
+  receiver: any,
+  noProxy: Record<string, any>,
+  events: Events
+): boolean {
+  // 数组的原始长度
+  const srcLength = target.length;
+
+  let result = Reflect.set(target, key, value, receiver);
+
+        // 数组在data中的访问表达式
+      const propertyAccessStr = Util.getPropertyVisitPathStr(target as unknown as Record<string, unknown>, String(key));
+
+      // 对原始对象赋值
+      noProxy[propertyAccessStr] = cloneDeep(target);
+
+  // 数组的当前长度
+  const targetLength = target.length;
+
+  // 触发监听事件
+  events.trigger(propertyAccessStr, key, value);
+
+  // 处理数组操作类型
+  if (targetLength < srcLength) {
+    // 数组删除操作
+    // console.log('删除', `key:${String(key)}`, `value:${value}`);
+  } else if (targetLength > srcLength) {
+    // 数组添加操作
+    // console.log('添加', `key:${String(key)}`, `value:${value}`);
+    value = createProxyForValue(value, key, target, noProxy, events);
+  } else {
+    // 数组修改操作
+    // console.log('修改', `key:${String(key)}`, `value:${value}`);
+    value = createProxyForValue(value, key, target, noProxy, events);
+  }
+
+  return result;
+}
+
+/**
+ * 处理对象的set操作
+ * @param target - 目标对象
+ * @param key - 属性键
+ * @param value - 新值
+ * @param receiver - 接收器
+ * @param noProxy - 未被代理的对象副本
+ * @param events - 事件发射器
+ * @returns 是否设置成功
+ */
+function handleObjectSet(
+  target: object,
+  key: string | symbol,
+  value: any,
+  receiver: any,
+  noProxy: Record<string, any>,
+  events: Events
+): boolean {
+        // 一个表达式路径，比如a.b.c.d这样的一个路径
+      // key是target的一个键，但是target也是其他对象键的值
+      // 这个方法会返回追溯到整个的一个访问链
+      const propertyAccessStr = Util.getPropertyVisitPathStr(target as Record<string, unknown>, String(key));
+
+  // 触发监听事件
+  const newVal = cloneDeep(value);
+  events.trigger(propertyAccessStr, value, newVal);
+
+  // 回写原始数据
+  noProxy[propertyAccessStr] = cloneDeep(value);
+
+  // 如果不是私有属性且是对象或数组，继续创建代理
+  if ((Util.isObject(value) || Util.isArray(value)) && !(PATH_SYMBOLS[0] in value)) {
+    value = createProxyForValue(value, key, target, noProxy, events);
+  }
+
+  return Reflect.set(target, key, value, receiver);
+}
+
+/**
+ * 为值创建代理
+ * @param value - 要代理的值
+ * @param key - 属性键
+ * @param parent - 父对象
+ * @param noProxy - 未被代理的对象副本
+ * @param events - 事件发射器
+ * @returns 代理后的值
+ */
+function createProxyForValue(
+  value: any,
+  key: string | symbol,
+  parent: any,
+  noProxy: Record<string, any>,
+  events: Events
+): any {
+  if ((Util.isObject(value) || Util.isArray(value)) && !(PATH_SYMBOLS[0] in value)) {
+    value = createProxy(value, noProxy, events);
+    // 创建value的上下级关系(留着在watch中在原始对象中通过上下级关系找到变量)
+    (value as any)[PATH_SYMBOLS[0]] = String(key);
+    (value as any)[PATH_SYMBOLS[1]] = parent;
+  }
+  return value;
+}
+
+/**
+ * WatchMemoized 主类
+ * 提供响应式数据监听和记忆化功能
  */
 const WatchMemoized: IWatchMemoized = {
   /**
-   * createRef - 创建一个值(其实就是在srcObj中创建一个属性)
-   * @param defaultValue
+   * 创建一个响应式引用
+   * @param defaultValue - 默认值
+   * @returns [获取值函数, 设置值函数, 属性符号]
    */
-  createRef(defaultValue) {
+  createRef<T = any>(defaultValue?: T): [() => T, (value: T) => void, symbol] {
     const property = Symbol.for(Util.uuid());
 
-    let value = defaultValue;
+    let value: T = defaultValue as T;
 
     // 在srcObj中创建这个值的property
     Object.defineProperty(srcObj, property, {
       enumerable: true,
       configurable: true,
-      set(curValue: any) {
+      set(curValue: T) {
         const preVal = value;
-
-        // console.log('preValue', preVal);
-
         value = curValue;
-
-        // console.log('curValue', curValue);
 
         Emitter.trigger(Symbol.keyFor(property) as string, {
           oldValue: preVal,
           newValue: curValue,
         });
       },
-      get(): any {
-        // console.log('get', value);
+      get(): T {
         return value;
       },
     });
 
     return [
       // 获取值
-      () => srcObj[property],
+      () => srcObj[property] as T,
       // 设置值
-      (value) => {
-        srcObj[property] = value;
+      (val: T) => {
+        srcObj[property] = val;
       },
       // 值在srcObj中的property
       property,
     ];
   },
-  // 缓存
+
+  // 记忆化功能
   memoized: {
-    // 监控
+    // 监听功能
     watch: {
       /**
-       * watchAll - 对依赖项的监控(所有依赖项全部发生改变才执行handler)
-       * @param handler
+       * 对依赖项的监控(所有依赖项全部发生改变才执行handler)
+       * @param handler - 处理函数
        * @param depends - 依赖项数组(这个数组中的值是createRef返回值中的第三个参数)
+       * @returns 取消订阅的函数
        */
-      all(handler, depends) {
+      all(handler: IWatchHandler, depends: Array<symbol | ICompareConfig>): () => void {
         // 依赖项可能重复，去重的操作
         depends = Array.from(new Set([...depends]));
 
         // 所有订阅的句柄
-        const subscriptionHandlers: Array<{ type: string; handler: Function }> = [];
+        const subscriptionHandlers: ISubscriptionHandler[] = [];
 
-        // 记录有个少个改变
-        let changelog: Array<{ type: string; isChange: boolean }> = [];
+        // 记录有多少个改变
+        let changelog: IChangeLogItem[] = [];
 
-        // 改变的处理
-        function changeDetail(type) {
+        /**
+         * 处理变更详情
+         * @param type - 变更类型
+         */
+        function changeDetail(type: string): void {
           const change = changelog.find((t) => t.type === type);
           if (change) {
             change.isChange = true;
@@ -297,13 +346,13 @@ const WatchMemoized: IWatchMemoized = {
 
         // 迭代进行订阅操作
         depends.forEach((depend) => {
-          let type;
+          let type: string;
 
           // 获取订阅的type，订阅的type就是depend符号的字符串值
           if (Util.isSymbol(depend)) {
-            type = Symbol.keyFor(depend as symbol);
+            type = Symbol.keyFor(depend as symbol) as string;
           } else {
-            type = Symbol.keyFor((depend as ICompareConfig).property as symbol);
+            type = Symbol.keyFor((depend as ICompareConfig).property as symbol) as string;
           }
 
           // changelog赋初值
@@ -313,11 +362,12 @@ const WatchMemoized: IWatchMemoized = {
           });
 
           /**
-           * onSubscription - 订阅
-           * @param oldValue
-           * @param newValue
+           * 订阅处理函数
+           * @param data - 变更数据
            */
-          function onSubscription({ oldValue, newValue }) {
+          function onSubscription(data: { oldValue: any; newValue: any }): void {
+            const { oldValue, newValue } = data;
+
             // 如果depend直接是符号那么就是浅比较
             if (Util.isSymbol(depend)) {
               if (oldValue !== newValue) {
@@ -335,7 +385,7 @@ const WatchMemoized: IWatchMemoized = {
               } else if (config.mode === 'deep') {
                 // 如果是深比较
                 if (Util.isRef(oldValue) && Util.isRef(newValue)) {
-                  // 只有oldValue和newValue同时为引用类型的时候才进行深度比较(这里的引用类型是obj或者array，并没有function)
+                  // 只有oldValue和newValue同时为引用类型的时候才进行深度比较
                   if (JSON.stringify(oldValue) !== JSON.stringify(newValue)) {
                     changeDetail(type);
                   }
@@ -371,35 +421,38 @@ const WatchMemoized: IWatchMemoized = {
           });
         };
       },
+
       /**
-       * watchRace - 对依赖项的监控(只要有一个依赖项发生改变的时候就执行handler)
-       * @param handler
+       * 对依赖项的监控(只要有一个依赖项发生改变的时候就执行handler)
+       * @param handler - 处理函数
        * @param depends - 依赖项数组(这个数组中的值是createRef返回值中的第三个参数)
+       * @returns 取消订阅的函数
        */
-      race(handler, depends) {
+      race(handler: IWatchHandler, depends: Array<symbol | ICompareConfig>): () => void {
         // 依赖项可能重复，去重的操作
         depends = Array.from(new Set([...depends]));
 
         // 所有订阅的句柄
-        const subscriptionHandlers: Array<{ type: string; handler: Function }> = [];
+        const subscriptionHandlers: ISubscriptionHandler[] = [];
 
         // 迭代进行订阅操作
         depends.forEach((depend) => {
-          let type;
+          let type: string;
 
           // 获取订阅的type，订阅的type就是depend符号的字符串值
           if (Util.isSymbol(depend)) {
-            type = Symbol.keyFor(depend as symbol);
+            type = Symbol.keyFor(depend as symbol) as string;
           } else {
-            type = Symbol.keyFor((depend as ICompareConfig).property as symbol);
+            type = Symbol.keyFor((depend as ICompareConfig).property as symbol) as string;
           }
 
           /**
-           * onSubscription - 订阅
-           * @param oldValue
-           * @param newValue
+           * 订阅处理函数
+           * @param data - 变更数据
            */
-          function onSubscription({ oldValue, newValue }) {
+          function onSubscription(data: { oldValue: any; newValue: any }): void {
+            const { oldValue, newValue } = data;
+
             // 如果depend直接是符号那么就是浅比较
             if (Util.isSymbol(depend)) {
               if (oldValue !== newValue) {
@@ -417,7 +470,7 @@ const WatchMemoized: IWatchMemoized = {
               } else if (config.mode === 'deep') {
                 // 如果是深比较
                 if (Util.isRef(oldValue) && Util.isRef(newValue)) {
-                  // 只有oldValue和newValue同时为引用类型的时候才进行深度比较(这里的引用类型是obj或者array，并没有function)
+                  // 只有oldValue和newValue同时为引用类型的时候才进行深度比较
                   if (JSON.stringify(oldValue) !== JSON.stringify(newValue)) {
                     handler();
                   }
@@ -454,34 +507,39 @@ const WatchMemoized: IWatchMemoized = {
         };
       },
     },
-    /**
-     * createMemoFun - 创建一个memo的Function
-     * @param handler
-     * @param stackMaxSize 最大保存栈
-     * @return Function
-     */
-    createMemoFun(handler, stackMaxSize = 10) {
-      // 缓存的值
-      const memoized: Array<{ resultVal: any; depends: Array<any> }> = [];
 
-      // 校验连
+    /**
+     * 创建一个记忆化函数
+     * @param handler - 要记忆化的函数
+     * @param stackMaxSize - 最大保存栈大小，默认10
+     * @returns 记忆化后的函数
+     */
+    createMemoFun<T extends any[] = any[], R = any>(
+      handler: (...args: T) => R,
+      stackMaxSize: number = 10
+    ): (...args: T) => R {
+      // 缓存的值
+      const memoized: IMemoizedItem<T, R>[] = [];
+
+      // 校验链
       const checkChain = [
         /**
          * 判断长度
-         * @param depends
-         * @param params
-         * @return boolean
+         * @param depends - 依赖参数
+         * @param params - 当前参数
+         * @returns 长度是否相等
          */
-        (depends, params) => {
+        (depends: T, params: T): boolean => {
           return depends.length === params.length;
         },
+
         /**
          * 深比较 depends和params一个一个的比较
-         * @param depends
-         * @param params
-         * @return boolean
+         * @param depends - 依赖参数
+         * @param params - 当前参数
+         * @returns 是否相等
          */
-        (depends, params) => {
+        (depends: T, params: T): boolean => {
           let result = true;
 
           for (let i = 0; i < depends.length; i++) {
@@ -502,12 +560,12 @@ const WatchMemoized: IWatchMemoized = {
       ];
 
       /**
-       * check - 校验
-       * @param depends
-       * @param params
-       * @return boolean
+       * 校验参数是否匹配
+       * @param depends - 依赖参数
+       * @param params - 当前参数
+       * @returns 是否匹配
        */
-      function check(depends, params) {
+      function check(depends: T, params: T): boolean {
         let result = true;
 
         for (let i = 0; i < checkChain.length; i++) {
@@ -521,12 +579,12 @@ const WatchMemoized: IWatchMemoized = {
       }
 
       /**
-       * find - 对params进行校验
-       * @param params
-       * @return boolean
+       * 查找匹配的缓存
+       * @param params - 参数
+       * @returns 缓存的结果或null
        */
-      function find(params: any[] = []) {
-        let result = null;
+      function find(params: T): R | null {
+        let result: R | null = null;
 
         for (let i = 0; i < memoized.length; i++) {
           const { resultVal, depends } = memoized[i];
@@ -543,46 +601,39 @@ const WatchMemoized: IWatchMemoized = {
       }
 
       /**
-       * getMemoized - 校验是否有符合的memoized
-       * @param arv
-       * @return object
+       * 获取记忆化的结果
+       * @param args - 函数参数
+       * @param context - 函数执行上下文
+       * @returns 函数结果
        */
-      function getMemoized(arv: any[] = []) {
-        let result = find(arv);
-
-        // console.log('find', result);
+      function getMemoized(args: T, context?: any): R {
+        let result = find(args);
 
         // 没找到返回值
-        if (!result) {
+        if (result === null) {
           // 调用函数
-          // @ts-ignore
-          result = handler.apply(this, arv);
-
-          // console.log('callfinish', result);
+          result = handler.apply(context, args);
 
           // 如果memoized大于stackMaxSize
           if (memoized.length >= stackMaxSize) {
             memoized.shift();
           }
 
-          // @ts-ignore
           if (result instanceof Promise) {
-            // console.log('函数返回值是Promise');
-
-            const p = (result as Promise<void>).then((res) => {
-              // console.log('返回res', res);
+            // 处理Promise返回值
+            const p = (result as Promise<any>).then((res) => {
               return res;
             });
 
             memoized.push({
-              depends: arv,
-              resultVal: p,
+              depends: args,
+              resultVal: p as R,
             });
 
-            return p;
+            return p as R;
           } else {
             memoized.push({
-              depends: arv,
+              depends: args,
               resultVal: result,
             });
           }
@@ -591,21 +642,24 @@ const WatchMemoized: IWatchMemoized = {
         return result;
       }
 
-      return function (...params) {
-        // @ts-ignore
-        return getMemoized.call(this, params || []);
+      return function (this: any, ...params: T): R {
+        return getMemoized(params, this);
       };
     },
   },
-  // 监控
+
+  // 监听功能
   watch: {
     /**
-     * create - 创建一个watch对象
-     * @param srcObj
-     * @param listeners
-     * @return Function
+     * 创建一个watch对象
+     * @param srcObj - 源对象
+     * @param listeners - 监听器对象
+     * @returns 监听器结果对象
      */
-    create(srcObj, listeners) {
+    create<T extends object>(
+      srcObj: T,
+      listeners?: Record<string, IWatchHandler>
+    ): IWatchCreateResult<T> {
       const events = new Events();
 
       // 注册事件
@@ -623,16 +677,15 @@ const WatchMemoized: IWatchMemoized = {
 
       return {
         value: proxy,
-        on(expression, handler) {
+        on(expression: string, handler: IWatchHandler) {
           events.on(expression, handler);
         },
-        remove(expression, handler) {
+        remove(expression: string, handler: IWatchHandler) {
           events.remove(expression, handler);
         },
       };
     },
   },
-  // createMemoFun(fun, depends) {},
 };
 
 export default WatchMemoized;

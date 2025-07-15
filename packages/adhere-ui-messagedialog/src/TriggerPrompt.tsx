@@ -6,12 +6,15 @@ import Trigger from './Trigger';
 import type { TriggerPromptHandle, TriggerPromptProps } from './types';
 
 /**
- * TriggerPrompt
- * @param className
- * @param {ModalArgv} modalConfig MessageDialog的配置
- * @param {() => Promise<any>} onSubmit 点击确定按钮，在里面处理实际业务最后resolve的值为value
- * @param {ReactNode} okText 确定按钮文本
- * @constructor
+ * TriggerPrompt组件
+ * 带确认按钮的触发器组件
+ * 
+ * @param props - 组件属性
+ * @param props.onSubmit - 提交回调函数
+ * @param props.modalConfig - 模态框配置
+ * @param props.okText - 确认按钮文本
+ * @param ref - 组件引用
+ * @returns 触发器提示组件
  */
 const TriggerPrompt = forwardRef<TriggerPromptHandle, TriggerPromptProps>(
   ({ onSubmit, modalConfig, okText, ...props }, ref) => {

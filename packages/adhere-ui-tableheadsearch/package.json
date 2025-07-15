@@ -1,7 +1,7 @@
 {
   "name": "@baifendian/adhere-ui-tableheadsearch",
   "version": "2.11.0",
-  "description": "基于antd-design的Table的列头筛选",
+  "description": "基于antd-design的Table的列头筛选，提供完整的TypeScript类型支持和详细的JSDoc文档",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
     "url": "https://github.com/playerljc/adhere/issues"

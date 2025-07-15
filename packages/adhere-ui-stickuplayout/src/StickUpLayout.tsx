@@ -8,6 +8,7 @@ import React, {
   useImperativeHandle,
   useLayoutEffect,
   useRef,
+  useCallback,
 } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -19,12 +20,30 @@ import type {
   StickupLayoutComponent,
   StickupLayoutHandle,
   StickupLayoutProps,
+  ScrollAnimationConfig,
 } from './types';
 
 const selectorPrefix = 'adhere-ui-stickup-layout';
 
 const { useTheme } = ConfigProvider;
 
+/**
+ * 获取屏幕刷新率间隔时间
+ * @returns 屏幕刷新率间隔时间（毫秒）
+ */
+function getUpdateInterval(): number {
+  return 'updateInterval' in screen ? (screen as any)['updateInterval'] : 16.7;
+}
+
+/**
+ * 内部 StickupLayout 组件
+ * 
+ * 实现粘性布局功能，当滚动时头部会固定在顶部
+ * 
+ * @param props - 组件属性
+ * @param ref - 组件引用
+ * @returns React 元素
+ */
 const InternalStickupLayout = memo<
   PropsWithoutRef<StickupLayoutProps> & RefAttributes<StickupLayoutHandle>
 >(
@@ -40,15 +59,16 @@ const InternalStickupLayout = memo<
       children,
     } = props;
 
-    const ro = useRef<ResizeObserver>({} as ResizeObserver);
+    // 引用定义
+    const ro = useRef<ResizeObserver | null>(null);
     const el = useRef<HTMLDivElement | null>(null);
     const fixedEl = useRef<HTMLDivElement | null>(null);
     const innerEl = useRef<HTMLDivElement | null>(null);
-    const key = useRef(false);
+    const key = useRef<boolean>(false);
     const index = useRef<IndexItem[]>([]);
-    const headerEls = useRef<NodeList>();
+    const headerEls = useRef<NodeListOf<Element> | null>(null);
     const preScrollObj = useRef<IndexItem | null>(null);
-    const maskEl = useRef<HTMLDivElement>();
+    const maskEl = useRef<HTMLDivElement | null>(null);
 
     useTheme<HTMLElement>({
       elRef: el,
@@ -57,31 +77,26 @@ const InternalStickupLayout = memo<
     });
 
     /**
-     * updateInterval
+     * 创建索引数组，记录每个头部元素的位置范围
      */
-    function updateInterval() {
-      return 'updateInterval' in screen ? screen['updateInterval'] : 16.7;
-    }
+    const createIndex = useCallback((): void => {
+      if (!headerEls.current || !innerEl.current) return;
 
-    /**
-     * createIndex
-     */
-    function createIndex() {
       let pre = 0;
-
       index.current = [];
-
       preScrollObj.current = null;
 
-      for (let i = 0, len = headerEls.current!.length; i < len; i++) {
-        const header = headerEls.current![i] as HTMLElement;
+      const headerElements = headerEls.current;
+      const len = headerElements.length;
 
-        let rangeStart = pre;
-
+      for (let i = 0; i < len; i++) {
+        const header = headerElements[i] as HTMLElement;
+        const rangeStart = pre;
         let rangeEnd: number;
 
         if (i !== len - 1) {
-          rangeEnd = (headerEls.current![i + 1] as HTMLElement).offsetTop - header.offsetHeight;
+          const nextHeader = headerElements[i + 1] as HTMLElement;
+          rangeEnd = nextHeader.offsetTop - header.offsetHeight;
         } else {
           rangeEnd = innerEl.current!.scrollHeight;
         }
@@ -92,31 +107,38 @@ const InternalStickupLayout = memo<
           dom: header,
           index: i,
         });
+
         pre = rangeEnd;
 
+        // 如果超出可视区域则停止
         if (pre > innerEl.current!.scrollHeight - innerEl.current!.offsetHeight) {
           break;
         }
       }
-    }
+    }, []);
 
     /**
-     * position
+     * 计算当前位置并更新固定头部
      */
-    function position() {
-      const val = innerEl.current!.scrollTop;
+    const position = useCallback((): boolean => {
+      if (!innerEl.current || !fixedEl.current) return false;
 
-      let low = 0,
-        high = index.current.length - 1,
-        middle: number,
-        target;
-      while (low <= high && low <= index.current.length - 1 && high <= index.current.length - 1) {
-        middle = (high + low) >> 1;
-        const targetVal = index.current[middle];
-        if (val >= targetVal.start && val < targetVal.end) {
+      const scrollTop = innerEl.current.scrollTop;
+      const indexArray = index.current;
+
+      // 使用二分查找优化性能
+      let low = 0;
+      let high = indexArray.length - 1;
+      let target: IndexItem | undefined;
+
+      while (low <= high && low <= indexArray.length - 1 && high <= indexArray.length - 1) {
+        const middle = (high + low) >> 1;
+        const targetVal = indexArray[middle];
+        
+        if (scrollTop >= targetVal.start && scrollTop < targetVal.end) {
           target = targetVal;
           break;
-        } else if (val < targetVal.start) {
+        } else if (scrollTop < targetVal.start) {
           high = middle - 1;
         } else {
           low = middle + 1;
@@ -124,92 +146,99 @@ const InternalStickupLayout = memo<
       }
 
       if (target) {
-        if (preScrollObj.current && preScrollObj.current?.index === target.index) {
+        // 避免重复更新
+        if (preScrollObj.current?.index === target.index) {
           return false;
-        } else {
-          preScrollObj.current = target;
-          fixedEl.current!.innerHTML = target.dom.outerHTML;
-
-          if (onChange) {
-            onChange(target.index);
-          }
         }
+
+        preScrollObj.current = target;
+        fixedEl.current.innerHTML = target.dom.outerHTML;
+
+        // 触发变化回调
+        onChange?.(target.index);
+        return true;
       }
-    }
+
+      return false;
+    }, [onChange]);
 
     /**
-     * initial
+     * 初始化组件
      */
-    function initial() {
+    const initial = useCallback((): void => {
+      if (!el.current || !innerEl.current) return;
+
       key.current = false;
       index.current = [];
-      headerEls.current = el.current?.querySelectorAll(`.${selectorPrefix}-item-header`);
+      headerEls.current = el.current.querySelectorAll(`.${selectorPrefix}-item-header`);
 
       createIndex();
       position();
 
-      innerEl.current?.removeEventListener?.('scroll', onScroll);
-      innerEl.current?.addEventListener?.('scroll', onScroll);
-    }
+      // 移除旧的事件监听器
+      innerEl.current.removeEventListener('scroll', onScroll);
+      // 添加新的事件监听器
+      innerEl.current.addEventListener('scroll', onScroll);
+    }, [createIndex, position]);
 
     /**
-     * initMask
+     * 初始化遮罩层
      */
-    function initMask() {
-      if (typeof window === 'undefined') return;
+    const initMask = useCallback((): void => {
+      if (typeof window === 'undefined' || maskEl.current) return;
 
-      if (!maskEl.current) {
-        maskEl.current = document.createElement('div');
-
-        maskEl.current.className = `${selectorPrefix}-mask`;
-
-        window.document.body.appendChild(maskEl.current);
-      }
-    }
+      maskEl.current = document.createElement('div');
+      maskEl.current.className = `${selectorPrefix}-mask`;
+      document.body.appendChild(maskEl.current);
+    }, []);
 
     /**
-     * scrollAnimationTo
-     * @access private
-     * @param {number} targetTop
-     * @param {number} duration
+     * 滚动动画到指定位置
+     * 
+     * @param targetTop - 目标滚动位置
+     * @param duration - 动画持续时间（毫秒）
      */
-    function scrollAnimationTo(targetTop: number = 0, duration: number = 300) {
-      if (key.current) return;
+    const scrollAnimationTo = useCallback((targetTop: number = 0, duration: number = 300): void => {
+      if (key.current || !innerEl.current) return;
 
       initMask();
-
       key.current = true;
 
-      maskEl.current!.style.display = 'block';
+      if (maskEl.current) {
+        maskEl.current.style.display = 'block';
+      }
 
-      let srcTop = innerEl.current!.scrollTop,
-        scrollVal = srcTop,
-        /**
-         * 一次滚动的步进
-         * @type {number}
-         */
-        setp =
-          innerEl.current!.scrollHeight /
-          // @ts-ignore
-          (duration / updateInterval() + (duration % updateInterval() !== 0 ? 1 : 0));
+      const srcTop = innerEl.current.scrollTop;
+      let scrollVal = srcTop;
+      const updateInterval = getUpdateInterval();
+      const step = innerEl.current.scrollHeight / (duration / updateInterval + (duration % updateInterval !== 0 ? 1 : 0));
 
-      /** *
-       * 动画的滚动
+      /**
+       * 执行滚动动画
        */
-      function scrollAnimation() {
+      const scrollAnimation = (): void => {
+        if (!innerEl.current) return;
+
         if (srcTop < targetTop) {
-          if (scrollVal + setp > targetTop) {
+          if (scrollVal + step > targetTop) {
             scrollVal = targetTop;
           } else {
-            scrollVal += setp;
+            scrollVal += step;
           }
-        } else if (scrollVal - setp < targetTop) {
+        } else if (scrollVal - step < targetTop) {
           scrollVal = targetTop;
         } else {
-          scrollVal -= setp;
+          scrollVal -= step;
         }
 
-        innerEl.current!.scrollTop = scrollVal;
+        innerEl.current.scrollTop = scrollVal;
+
+        const clear = (): void => {
+          key.current = false;
+          if (maskEl.current) {
+            maskEl.current.style.display = 'none';
+          }
+        };
 
         if (srcTop < targetTop) {
           if (scrollVal >= targetTop) {
@@ -222,121 +251,103 @@ const InternalStickupLayout = memo<
         } else {
           typeof window !== 'undefined' && window.requestAnimationFrame(scrollAnimation);
         }
+      };
 
-        function clear() {
-          key.current = false;
-          maskEl.current!.style.display = 'none';
-        }
-      }
-
-      /** *
-       * 滚动core
-       */
+      // 开始动画
       typeof window !== 'undefined' && window.requestAnimationFrame(scrollAnimation);
-    }
+    }, [initMask]);
 
     /**
-     * scrollTo
-     * @param item
-     * @param duration
+     * 滚动到指定项
+     * 
+     * @param item - 目标索引项
+     * @param duration - 动画持续时间（毫秒）
      */
-    function scrollTo(item: IndexItem, duration = 300) {
-      const targetTop = item.start + (headerEls.current![item.index] as HTMLElement).offsetHeight;
+    const scrollTo = useCallback((item: IndexItem, duration: number = 300): void => {
+      if (!headerEls.current || !innerEl.current) return;
+
+      const targetTop = item.start + (headerEls.current[item.index] as HTMLElement).offsetHeight;
 
       if (duration === 0) {
-        innerEl.current!.scrollTop = targetTop;
+        innerEl.current.scrollTop = targetTop;
       } else {
         scrollAnimationTo(targetTop, duration);
       }
-    }
+    }, [scrollAnimationTo]);
 
     /**
-     * onScroll
+     * 滚动事件处理函数
      */
-    function onScroll() {
+    const onScroll = useCallback((): void => {
       position();
-    }
+    }, [position]);
 
+    // 暴露给父组件的方法
     useImperativeHandle(ref, () => ({
       /**
-       * refresh
+       * 刷新组件状态，重新计算索引
        */
       refresh: () => initial(),
+      
       /**
-       * scrollToByIndex
-       * @param {number} _index
-       * @param {number} _duration
-       * @return {boolean}
+       * 根据索引滚动到指定项
+       * 
+       * @param index - 目标索引
+       * @param duration - 动画持续时间（毫秒）
        */
-      scrollToByIndex: (_index: number, _duration: number = 300) => {
-        let i = 0,
-          item;
-        for (; i < index.current.length; i++) {
-          if (index.current[i].index === _index) {
-            item = index.current[i];
-            break;
-          }
-        }
-
-        if (!item) {
-          item = index.current[index.current.length - 1];
-        }
-
-        scrollTo(item, _duration);
-      },
+             scrollToByIndex: (targetIndex: number, duration: number = 300): void => {
+         const item = index.current.find(item => item.index === targetIndex) || index.current[index.current.length - 1];
+         if (item) {
+           scrollTo(item, duration);
+         }
+       },
+      
       /**
-       * scrollToByHeaderEl
-       * @param {HtmlElement} _headerEl
-       * @param {number} _duration
-       * @return {boolean}
+       * 根据头部元素滚动到指定项
+       * 
+       * @param headerEl - 目标头部元素
+       * @param duration - 动画持续时间（毫秒）
        */
-      scrollToByHeaderEl: (_headerEl, _duration = 300) => {
-        let i = 0,
-          item,
-          current = -1;
-        for (; i < index.current.length; i++) {
-          if (index.current[i].dom === _headerEl) {
-            item = index.current[i];
-            current = i;
-            break;
-          }
+      scrollToByHeaderEl: (headerEl: HTMLElement, duration: number = 300): void => {
+        const item = index.current.find(item => item.dom === headerEl) || index.current[index.current.length - 1];
+        if (item) {
+          scrollTo(item, duration);
         }
-
-        if (!item) {
-          item = index.current[index.current.length - 1];
-        }
-
-        scrollTo(item, _duration);
       },
-    }));
+    }), [initial, scrollTo]);
 
+    // 组件挂载时初始化
     useLayoutEffect(() => {
       initial();
 
       return () => {
-        if (maskEl.current) {
-          maskEl.current?.parentElement?.removeChild(maskEl.current);
+        // 清理遮罩层
+        if (maskEl.current?.parentElement) {
+          maskEl.current.parentElement.removeChild(maskEl.current);
         }
       };
-    }, []);
+    }, [initial]);
 
+    // 监听容器大小变化
     useLayoutEffect(() => {
       const onResize = debounce(() => {
         initial();
       }, 300);
 
-      ro.current = new ResizeObserver(onResize);
-
-      ro.current.observe(el.current as HTMLElement);
+      if (el.current) {
+        ro.current = new ResizeObserver(onResize);
+        ro.current.observe(el.current);
+      }
 
       return () => {
-        ro?.current?.disconnect();
-
-        if (maskEl.current) {
-          maskEl.current?.parentElement?.removeChild(maskEl.current);
+        ro.current?.disconnect();
+        
+        // 清理遮罩层
+        if (maskEl.current?.parentElement) {
+          maskEl.current.parentElement.removeChild(maskEl.current);
         }
       };
-    }, []);
+    }, [initial]);
 
     return (
       <div ref={el} className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
@@ -345,7 +356,6 @@ const InternalStickupLayout = memo<
           className={classNames(`${selectorPrefix}-fixed`, fixedClassName ?? '')}
           style={fixedStyle ?? {}}
         />
-
         <div
           ref={innerEl}
           className={classNames(`${selectorPrefix}-inner`, innerClassName ?? '')}
@@ -361,7 +371,6 @@ const InternalStickupLayout = memo<
 const StickupLayout = InternalStickupLayout as StickupLayoutComponent;
 
 StickupLayout.displayName = 'StickupLayout';
-
 StickupLayout.Item = StickupLayoutItem;
 
 export default StickupLayout;

@@ -1,21 +1,27 @@
 import { Button, Modal } from 'antd';
-import React, { memo, useCallback, useMemo, useRef } from 'react';
+import type { ButtonProps } from 'antd';
+import React, { memo, useCallback, useMemo, useRef, ReactNode } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Intl from '@baifendian/adhere-util-intl';
 
 import type { ModalDialogProps } from './types';
 
+/** CSS选择器前缀 */
 export const selectorPrefix = 'adhere-ui-message-dialog';
 
 const { useTheme } = ConfigProvider;
 
+/**
+ * 模态对话框组件
+ * 提供可配置的模态对话框功能，支持自定义按钮、主题等
+ */
 const ModalDialog = memo<ModalDialogProps>((props) => {
   const { config, closeBtn, close, open, children } = props;
 
   const { footer = [], centered = true, ...rest } = config;
 
-  const wrapperRef = useRef<HTMLElement | undefined>();
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useTheme<HTMLElement>({
     elRef: wrapperRef,
@@ -24,56 +30,58 @@ const ModalDialog = memo<ModalDialogProps>((props) => {
   });
 
   /**
-   * renderCloseBtn
-   * @return {ReactNode}
+   * 渲染关闭按钮
+   * @returns 关闭按钮元素
    */
-  function renderCloseBtn() {
-    const props = {
-      key: 'close',
+  const renderCloseBtn = useCallback((): ReactNode => {
+    const buttonProps: Omit<ButtonProps, 'key'> = {
       title: Intl.get('cancel'),
       type: 'default',
       onClick: () => close?.(),
     };
 
+    // 如果没有其他按钮，将关闭按钮设为主要按钮
     if (Array.isArray(footer) && footer.length === 0) {
-      props['type'] = 'primary';
+      buttonProps.type = 'primary';
     }
 
-    // @ts-ignore
-    return <Button {...props}>{Intl.get('cancel')}</Button>;
-  }
+    return <Button key="close" {...buttonProps}>{Intl.get('cancel')}</Button>;
+  }, [footer, close]);
 
-  const footerNode = useMemo(() => {
+  /**
+   * 计算底部按钮区域
+   */
+  const footerNode = useMemo((): ReactNode => {
     const closeBtnNode = renderCloseBtn();
-
-    let footerNode: any = null;
 
     if (footer) {
       if (closeBtn) {
         if (Array.isArray(footer)) {
-          footerNode = [...footer, closeBtnNode];
+          return [...footer, closeBtnNode] as ReactNode;
         } else {
-          footerNode = [footer, closeBtnNode];
+          return [footer, closeBtnNode] as ReactNode;
         }
-      } else {
-        footerNode = footer;
-      }
+              } else {
+          return footer as ReactNode;
+        }
     } else {
       if (closeBtn) {
-        footerNode = closeBtnNode;
+        return closeBtnNode;
       }
     }
 
-    return footerNode;
-  }, [footer, closeBtn]);
+    return null;
+  }, [footer, closeBtn, renderCloseBtn]);
 
-  const onCancel = useCallback(() => close?.(), []);
+  /**
+   * 取消回调函数
+   */
+  const onCancel = useCallback((): void => {
+    close?.();
+  }, [close]);
 
   return (
-    <div
-      // @ts-ignore
-      ref={wrapperRef}
-    >
+    <div ref={wrapperRef}>
       <Modal
         centered={centered}
         wrapClassName={selectorPrefix}

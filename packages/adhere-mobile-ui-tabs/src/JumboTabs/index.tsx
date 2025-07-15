@@ -11,9 +11,10 @@ const { useTheme } = ConfigProvider;
 const selectorPrefix = 'adhere-ui-tabs-jumbo-tabs';
 
 /**
- * SystemJumboTabs
- * @param props
- * @constructor
+ * 内部巨型标签页组件
+ * 
+ * @param props - 组件属性
+ * @returns JSX元素
  */
 const InternalSystemJumboTabs = memo<SystemJumboTabsProps>(
   ({ className, style, innerClassName, innerStyle, items, ...props }) => {
@@ -33,8 +34,8 @@ const InternalSystemJumboTabs = memo<SystemJumboTabsProps>(
         style={style ?? {}}
       >
         <JumboTabs {...props} className={innerClassName ?? ''} style={innerStyle ?? {}}>
-          {items?.map((_item) => (
-            <JumboTabs.Tab {..._item} />
+          {items?.map?.((item, index) => (
+            <JumboTabs.Tab key={item.key || index} {...item} />
           ))}
         </JumboTabs>
       </div>

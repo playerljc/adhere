@@ -13,25 +13,28 @@ import {
 import DrawAction from './DrawAction';
 
 /**
- * StartDrawAction
- * @class
- * @classdesc - 五角星选取
- * @remark: - 一个start - end的周期中只能绘制一个五角星
+ * 星形绘制Action类
+ * @class StartDrawAction
+ * @classdesc 五角星选取绘制功能，支持绘制五角星几何图形
+ * @extends {DrawAction}
+ * @remark 一个start - end的周期中只能绘制一个五角星
  */
 class StartDrawAction extends DrawAction {
-  // 中心点
+  /** 中心点 */
   protected centerPoint: IPoint | null = null;
 
-  // 外圆半径
+  /** 外圆半径 */
   protected outRadius: number = 0;
 
-  // 内圆半径
+  /** 内圆半径 */
   protected innerRadius: number = 0;
 
+  /** 是否移动过 */
   protected isMove = false;
 
   /**
-   * context
+   * 构造函数
+   * @description 初始化星形绘制Action，绑定事件处理方法
    */
   constructor() {
     super();
@@ -41,10 +44,11 @@ class StartDrawAction extends DrawAction {
   }
 
   /**
-   * booleanPointInData
-   * @description 判断点是否在
-   * @param point
-   * @param data
+   * 判断点是否在星形数据内
+   * @param point - 待判断的点
+   * @param data - 星形数据
+   * @returns 点是否在星形内
+   * @description 使用turf库判断点是否在星形多边形内
    */
   static booleanPointInData(point: IPoint, data: IStartData): boolean {
     const {
@@ -85,9 +89,10 @@ class StartDrawAction extends DrawAction {
   }
 
   /**
-   * drawStart
-   * @param ctx
-   * @param data
+   * 绘制星形
+   * @param ctx - Canvas上下文
+   * @param data - 星形数据
+   * @description 静态方法，用于绘制星形
    */
   static drawStart({ ctx, data }: { ctx: CanvasRenderingContext2D; data: IStartData }): void {
     if (!data || !ctx) return;
@@ -144,10 +149,11 @@ class StartDrawAction extends DrawAction {
   }
 
   /**
-   * draw
-   * @param e
+   * 绘制星形
+   * @param e - 鼠标事件
+   * @description 根据鼠标位置绘制星形
    */
-  private draw(e): void {
+  private draw(e: MouseEvent): void {
     const { context, centerPoint } = this;
 
     const ctx = context?.getCtx();
@@ -185,10 +191,11 @@ class StartDrawAction extends DrawAction {
   }
 
   /**
-   * onCanvasMouseDown
-   * @param e
+   * Canvas鼠标按下事件处理
+   * @param e - 鼠标事件
+   * @description 记录起始点并注册移动和抬起事件
    */
-  private onCanvasMouseDown(e) {
+  private onCanvasMouseDown(e: MouseEvent): void {
     if (!this.context) return;
 
     const canvasEl = this.context.getCanvasEl();
@@ -205,10 +212,11 @@ class StartDrawAction extends DrawAction {
   }
 
   /**
-   * onCanvasMouseMove
-   * @param e
+   * Canvas鼠标移动事件处理
+   * @param e - 鼠标事件
+   * @description 实时绘制星形并触发绘制中事件
    */
-  private onCanvasMouseMove(e) {
+  private onCanvasMouseMove(e: MouseEvent): void {
     const { context } = this;
 
     if (!context) return;
@@ -224,7 +232,7 @@ class StartDrawAction extends DrawAction {
         id: BaseUtil.uuid(),
         type: SelectType.Start,
         data: {
-          center: this.centerPoint,
+          center: this.centerPoint!,
           outRadius: this.outRadius,
           innerRadius: this.innerRadius,
         },
@@ -234,69 +242,50 @@ class StartDrawAction extends DrawAction {
   }
 
   /**
-   * onCanvasMouseUp
-   * @param e
+   * Canvas鼠标抬起事件处理
+   * @param e - 鼠标事件
+   * @description 结束绘制过程
    */
-  private onCanvasMouseUp(e) {
+  private onCanvasMouseUp(e: MouseEvent): void {
     if (!this.isMove) return;
     this.end(e);
     e.stopPropagation();
   }
 
   /**
-   * draw
-   * @description
-   * @param ctx
-   * @param data
+   * 绘制星形
+   * @param ctx - Canvas上下文
+   * @param data - 星形数据
+   * @description 静态方法，用于绘制历史数据
    */
-  static draw(ctx: CanvasRenderingContext2D, data: IStartData) {
+  static draw(ctx: CanvasRenderingContext2D, data: IStartData): void {
     if (!ctx || !data) return;
 
-    this.drawHistoryPath(
-      ctx,
-      data,
-      // data.data as {
-      //   // 圆的中心点
-      //   center: IPoint;
-      //   // 外半径
-      //   outRadius: number;
-      //   // 内半径(外半径的一半)
-      //   innerRadius: number;
-      // },
-    );
+    this.drawHistoryPath(ctx, data);
   }
 
   /**
-   * drawHistoryPath - 绘制历史数据
-   * @param ctx
-   * @param data
+   * 绘制历史路径
+   * @param ctx - Canvas上下文
+   * @param data - 星形数据
+   * @description 绘制历史星形数据
    */
   static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
-    data,
-    // data: {
-    //   // 圆的中心点
-    //   center: IPoint;
-    //   // 外半径
-    //   outRadius: number;
-    //   // 内半径(外半径的一半)
-    //   innerRadius: number;
-    // },
+    data: IStartData,
   ): void {
     if (!data) return;
 
     StartDrawAction.drawStart({
       ctx,
       data,
-      // data: {
-      //   data,
-      // },
     });
   }
 
   /**
-   * start
-   * @param style
+   * 开始绘制
+   * @param style - 样式对象
+   * @description 开始星形绘制Action
    */
   start(style: IStyle): void {
     if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
@@ -331,9 +320,11 @@ class StartDrawAction extends DrawAction {
   }
 
   /**
-   * end
+   * 结束绘制
+   * @param e - 鼠标事件
+   * @description 结束星形绘制Action，保存数据
    */
-  end(e) {
+  end(e?: MouseEvent): void {
     const { context } = this;
 
     if (!context) {
@@ -387,7 +378,8 @@ class StartDrawAction extends DrawAction {
   }
 
   /**
-   * destroy
+   * 销毁Action
+   * @description 清理资源，移除事件监听器
    */
   destroy(): void {
     const { context } = this;

@@ -19,9 +19,10 @@ const { useForceUpdate } = Hooks;
 const selectorPrefix = 'adhere-ui-config-provider';
 
 /**
- * ConfigProvider
- * @constructor
- * @classdesc 全局配置 国际化、字典配置
+ * ConfigProvider 内部组件
+ * @description 全局配置提供者，负责国际化、字典配置和主题管理
+ * @param props ConfigProvider属性
+ * @returns JSX.Element
  */
 const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
   const {
@@ -35,76 +36,73 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
     isUseWrapper = true,
   } = props;
 
-  const wrapperELRef = useRef<HTMLElement | null>(null);
-
+  const wrapperELRef = useRef<HTMLDivElement | null>(null);
   const context = useContext(Context);
 
+  // 合并国际化配置
   const targetIntl = useMemo<ConfigProviderProps['intl']>(() => {
     const lang = intl?.lang ?? context?.intl?.lang;
-
     const locales = intl?.locales ?? context?.intl?.locales;
-
     const prefix = intl?.prefix ?? context?.intl?.prefix ?? '';
-
     const mainLanguage = intl?.mainLanguage ?? context?.intl?.mainLanguage;
-
-    // const extraLibLocales = intl?.extraLibLocales ?? context?.intl?.extraLibLocales;
 
     return {
       lang,
       locales,
       prefix,
       mainLanguage,
-      // extraLibLocales,
     };
-  }, [context]);
+  }, [intl, context]);
 
+  // 合并主题配置
   const targetTheme = useMemo(() => {
     return theme ?? context?.theme;
-  }, [context]);
+  }, [theme, context]);
 
+  // 合并媒体配置
   const targetMedia = useMemo(() => {
     return media ?? context?.media;
-  }, [context]);
+  }, [media, context]);
 
+  // 合并路由配置
   const targetRouter = useMemo(() => {
     return router ?? context?.router;
-  }, [context]);
+  }, [router, context]);
 
+  // 合并公共路径配置
   const targetPublicPath = useMemo(() => {
     return publicPath ?? context?.publicPath;
-  }, [context]);
+  }, [publicPath, context]);
 
   const [isIntlInit, setIntlInit] = useState(false);
+  const forceUpdate = useForceUpdate();
 
+  // 构建Provider值
   const providerValue = useMemo<ConfigProviderContext>(
     () => ({
       media: {
-        ...{
-          isUseMedia: false,
-          designWidth: 192,
-        },
+        isUseMedia: false,
+        designWidth: 192,
         ...(targetMedia ?? {}),
       },
       router: targetRouter ?? 'browser',
       theme: { ...(targetTheme ?? {}) },
       intl: {
         lang: targetIntl?.lang,
-        prefix: targetIntl?.prefix,
+        prefix: targetIntl?.prefix ?? '',
         locales: targetIntl?.locales ?? {},
+        mainLanguage: targetIntl?.mainLanguage,
       },
       publicPath: targetPublicPath ?? '/',
     }),
     [targetIntl, targetMedia, targetRouter, targetTheme, targetPublicPath],
   );
 
-  const forceUpdate = useForceUpdate();
-
+  // 渲染子组件
   const targetChildren = useMemo(() => {
     if (isUseWrapper) {
       return (
         <div
-          // @ts-ignore
           ref={wrapperELRef}
           className={classNames(selectorPrefix, props.className ?? '')}
           style={props.style ?? {}}
@@ -117,46 +115,60 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
     return children();
   }, [isUseWrapper, children, props.className, props.style]);
 
-  function initIntl() {
-    return Intl.init(
-      {
-        prefix: targetIntl?.prefix || 'local',
-        currentLocale: targetIntl?.lang ?? '',
-        locales: targetIntl?.locales ?? {},
-        mainLanguage: targetIntl?.mainLanguage || 'zh_CN',
-        // extraLibLocales: targetIntl?.extraLibLocales,
-      },
-      Intl.isInit(),
-    );
+  /**
+   * 初始化国际化
+   * @returns Promise<void>
+   */
+  async function initIntl(): Promise<void> {
+    try {
+      await Intl.init(
+        {
+          prefix: targetIntl?.prefix || 'local',
+          currentLocale: targetIntl?.lang ?? '',
+          locales: targetIntl?.locales ?? {},
+          mainLanguage: targetIntl?.mainLanguage || 'zh_CN',
+        },
+        Intl.isInit(),
+      );
+    } catch (error) {
+      console.error('Failed to initialize internationalization:', error);
+    }
   }
 
+  // 国际化配置变化时重新初始化
   useUpdateEffect(() => {
     initIntl().then(() => {
       if (targetIntl?.lang) {
-        // Resource?.Dict?.value?.LocalsMoment?.value[targetIntl?.lang]();
         forceUpdate();
       }
     });
   }, [targetIntl]);
 
+  // 组件挂载时初始化国际化
   useLayoutEffect(() => {
     initIntl().then(() => {
       if (targetIntl?.lang) {
-        // Resource?.Dict?.value?.LocalsMoment?.value[targetIntl?.lang]();
         setIntlInit(true);
-        if (onIntlInit) onIntlInit();
+        if (onIntlInit) {
+          onIntlInit();
+        }
       }
     });
   }, []);
 
+  // 主题和媒体配置变化时重新初始化CSS变量
   useUpdateLayoutEffect(() => {
-    if (isIntlInit && wrapperELRef.current && !!targetTheme) {
-      const baseTheme = Object.fromEntries(
-        Object.entries(targetTheme).filter(([key]) => key !== 'components'),
-      ) as { [prop: string]: string };
+    if (isIntlInit && wrapperELRef.current && targetTheme) {
+      try {
+        const baseTheme = Object.fromEntries(
+          Object.entries(targetTheme).filter(([key]) => key !== 'components'),
+        ) as { [prop: string]: string };
 
-      // 初始化css变量
-      init(baseTheme, wrapperELRef.current as HTMLElement, targetMedia);
+        // 初始化CSS变量
+        init(baseTheme, wrapperELRef.current, targetMedia);
+      } catch (error) {
+        console.error('Failed to initialize CSS variables:', error);
+      }
     }
   }, [targetTheme, targetMedia, isIntlInit]);
 
@@ -167,14 +179,19 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
   );
 });
 
+// 设置组件显示名称
+InternalConfigProvider.displayName = 'InternalConfigProvider';
+
+/**
+ * ConfigProvider 组件
+ * @description 全局配置提供者，提供国际化、主题、媒体等配置
+ */
 const ConfigProvider = InternalConfigProvider as ConfigProviderComponent;
 
+// 添加静态属性
 ConfigProvider.Context = Context;
-
 ConfigProvider.useTheme = useTheme;
-
 ConfigProvider.theme = themeFunction;
-
 ConfigProvider.displayName = 'ConfigProvider';
 
 export default ConfigProvider;

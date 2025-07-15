@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import TableList from './TableList';\nexport default TableList;"],"names":["TableList"],"mappings":"OAAOA,cAAe,6BACPA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["/*\n * @Description: 表格列表组件入口文件\n * @Author: yumeng.qin\n * @Date: 2021-04-27 16:23:26\n * @LastEditor: yumeng.qin\n * @LastEditTime: 2021-05-21 10:41:27\n */\nimport TableList from './TableList';\n// 导出组件\nexport default TableList;"],"names":["TableList"],"mappings":"OAOOA,cAAe,6BAEPA"}

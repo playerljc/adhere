@@ -1,14 +1,23 @@
+/**
+ * 文件大小格式化工具类
+ * @description 提供文件大小友好显示的工具函数
+ */
 import type { PrettyBytesOptions } from './types';
-declare const _default: {
+declare const SizeUtil: {
     /**
-     * prettyBytes
-     * @description Formats the given number using `Number#toLocaleString`.
-     * - If locale is a string, the value is expected to be a locale-key (for example: `de`).
-     * - If locale is true, the system default locale is used for translation.
-     * - If no value for locale is specified, the number is returned unmodified.
-     * @param {number} number - The number to format.
-     * @param {PrettyBytesOptions} options
+     * 格式化文件大小
+     * @description 将字节数格式化为友好的字符串（支持二进制、十进制、比特、带符号、国际化等）
+     * @param number - 文件大小（字节数）
+     * @param options - 格式化选项
+     * @returns 格式化后的字符串
+     * @example
+     * ```typescript
+     * prettyBytes(1024) // "1.02 kB"
+     * prettyBytes(1024, { binary: true }) // "1 kiB"
+     * prettyBytes(1024, { bits: true }) // "8.19 kbit"
+     * prettyBytes(1024, { signed: true }) // "+1.02 kB"
+     * ```
      */
-    prettyBytes(number: any, options?: PrettyBytesOptions): string;
+    prettyBytes(number: number, options?: PrettyBytesOptions): string;
 };
-export default _default;
+export default SizeUtil;

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Revolving from './Revolving';\nexport default Revolving;\n"],"names":["Revolving"],"mappings":"OAAOA,cAAe,6BACPA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Revolving from './Revolving';\n// 导出默认组件\nexport default Revolving;\n"],"names":["Revolving"],"mappings":"OAAOA,cAAe,6BAEPA"}

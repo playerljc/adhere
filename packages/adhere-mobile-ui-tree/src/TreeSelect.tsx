@@ -8,16 +8,17 @@ import type { TreeSelectProps } from './types';
 const selectorPrefix = 'adhere-mobile-ui-tree-select';
 
 /**
- * TreeSelect
+ * TreeSelect 组件
  * @description 能进行选取的Tree, 其实就是开启checkable模式
- * @param {string} className
- * @param {CSSProperties} style
- * @param {string} treeClassName
- * @param {CSSProperties} treeStyle
- * @param {string[]} value
- * @param {TreeProps['onCheck']} onChange
- * @param {Omit<TreeProps, 'className' | 'style' | 'checkable' | 'onCheck'>} treeProps
- * @constructor
+ * @param props - 组件属性
+ * @param props.className - 自定义类名
+ * @param props.style - 自定义样式
+ * @param props.treeClassName - 树组件的类名
+ * @param props.treeStyle - 树组件的样式
+ * @param props.value - 选中的值
+ * @param props.onChange - 值变化回调
+ * @param props.treeProps - 传递给Tree组件的其他属性
+ * @returns TreeSelect组件
  */
 const TreeSelect: FC<TreeSelectProps> = ({
   className,
@@ -31,7 +32,7 @@ const TreeSelect: FC<TreeSelectProps> = ({
   const targetValue = useMemo(() => value ?? [], [value]);
 
   const targetOnChange = useCallback(
-    (_checkedKeys, _e) => {
+    (_checkedKeys: string[], _e: any) => {
       onChange?.(_checkedKeys, _e);
     },
     [onChange],

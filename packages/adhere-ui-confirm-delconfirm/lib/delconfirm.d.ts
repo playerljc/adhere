@@ -1,3 +1,4 @@
 import type { DelConfirmComponent } from './types';
-declare const DelConform: DelConfirmComponent;
-export default DelConform;
+/** DelConfirm 组件类型转换 */
+declare const DelConfirm: DelConfirmComponent;
+export default DelConfirm;

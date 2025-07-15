@@ -1,7 +1,20 @@
 {
   "name": "@baifendian/adhere-ui-echarts",
   "version": "2.11.0",
-  "description": "echarts相关操作和字典",
+  "description": "基于 ECharts 的图表配置工具库，提供便捷的图表配置生成器和丰富的预设颜色",
+  "keywords": [
+    "echarts",
+    "chart",
+    "visualization",
+    "typescript",
+    "react",
+    "vue",
+    "angular",
+    "data-visualization",
+    "chart-config",
+    "color-palette",
+    "gradient-colors"
+  ],
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
     "url": "https://github.com/playerljc/adhere/issues"
@@ -10,7 +23,7 @@
     "type": "git",
     "url": "https://github.com/playerljc/adhere"
   },
-  "license": "ISC",
+  "license": "MIT",
   "author": "playerljc",
   "main": "lib/index.js",
   "module": "es/index.js",

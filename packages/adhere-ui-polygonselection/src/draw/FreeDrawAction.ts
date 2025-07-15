@@ -12,22 +12,25 @@ import {
 import DrawAction from './DrawAction';
 
 /**
- * FreeDrawAction
- * @class
- * @classdesc - 自由绘制选取
- * @remark: - 一个start - end的周期中只能绘制一个自由图形
+ * 自由绘制Action类
+ * @class FreeDrawAction
+ * @classdesc 自由绘制选取功能，支持用户自由绘制任意形状
+ * @extends {DrawAction}
+ * @remark 一个start - end的周期中只能绘制一个自由图形
  */
 class FreeDrawAction extends DrawAction {
-  // startPoint
+  /** 起始点 */
   protected startPoint: IPoint | null = null;
 
+  /** 是否移动过 */
   protected isMove = false;
 
-  // 除了第一个点的所有点
+  /** 除了第一个点的所有点 */
   protected points: IPoint[] = [];
 
   /**
-   * context
+   * 构造函数
+   * @description 初始化自由绘制Action，绑定事件处理方法
    */
   constructor() {
     super();
@@ -37,11 +40,12 @@ class FreeDrawAction extends DrawAction {
   }
 
   /**
-   * draw
-   * @param e
-   * @param isEnd
+   * 绘制自由图形
+   * @param e - 鼠标事件
+   * @param isEnd - 是否结束绘制
+   * @description 根据鼠标位置绘制自由图形路径
    */
-  private draw(e, isEnd = false) {
+  private draw(e: MouseEvent, isEnd = false): void {
     const { context, style } = this;
 
     const ctx = context?.getCtx();
@@ -91,10 +95,11 @@ class FreeDrawAction extends DrawAction {
   }
 
   /**
-   * onCanvasMouseDown
-   * @param e
+   * Canvas鼠标按下事件处理
+   * @param e - 鼠标事件
+   * @description 记录起始点并注册移动和抬起事件
    */
-  private onCanvasMouseDown(e) {
+  private onCanvasMouseDown(e: MouseEvent): void {
     if (!this.context) return;
 
     const canvasEl = this.context.getCanvasEl();
@@ -115,10 +120,11 @@ class FreeDrawAction extends DrawAction {
   }
 
   /**
-   * onCanvasMouseMove
-   * @param e
+   * Canvas鼠标移动事件处理
+   * @param e - 鼠标事件
+   * @description 实时绘制自由图形并触发绘制中事件
    */
-  private onCanvasMouseMove(e) {
+  private onCanvasMouseMove(e: MouseEvent): void {
     const { context } = this;
 
     if (!context) return;
@@ -142,38 +148,37 @@ class FreeDrawAction extends DrawAction {
   }
 
   /**
-   * onCanvasMouseUp
-   * @param e
+   * Canvas鼠标抬起事件处理
+   * @param e - 鼠标事件
+   * @description 结束绘制过程
    */
-  private onCanvasMouseUp(e) {
+  private onCanvasMouseUp(e: MouseEvent): void {
     if (!this.isMove) return;
     this.end(e);
     e.stopPropagation();
   }
 
   /**
-   * draw
-   * @description
-   * @param ctx
-   * @param data
+   * 绘制自由图形
+   * @param ctx - Canvas上下文
+   * @param data - 自由图形数据
+   * @description 静态方法，用于绘制历史数据
    */
-  static draw(ctx: CanvasRenderingContext2D, data: IFreeData) {
+  static draw(ctx: CanvasRenderingContext2D, data: IFreeData): void {
     if (!ctx || !data) return;
 
-    this.drawHistoryPath(ctx, data /*data.data as { points: IPoint[] }*/);
+    this.drawHistoryPath(ctx, data);
   }
 
   /**
-   * drawHistoryPath - 绘制历史数据
-   * @param ctx
-   * @param data
+   * 绘制历史路径
+   * @param ctx - Canvas上下文
+   * @param data - 自由图形数据
+   * @description 绘制历史自由图形数据
    */
   static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
-    data,
-    // data: {
-    //   points: IPoint[];
-    // },
+    data: IFreeData,
   ): void {
     ctx.beginPath();
 
@@ -207,8 +212,9 @@ class FreeDrawAction extends DrawAction {
   }
 
   /**
-   * start
-   * @param style
+   * 开始绘制
+   * @param style - 样式对象
+   * @description 开始自由绘制Action
    */
   start(style: IStyle): void {
     if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
@@ -243,9 +249,11 @@ class FreeDrawAction extends DrawAction {
   }
 
   /**
-   * end
+   * 结束绘制
+   * @param e - 鼠标事件
+   * @description 结束自由绘制Action，保存数据
    */
-  end(e): void {
+  end(e?: MouseEvent): void {
     const { context } = this;
 
     if (!context) {
@@ -264,7 +272,7 @@ class FreeDrawAction extends DrawAction {
     canvasEl?.removeEventListener('mousemove', this.onCanvasMouseMove);
     canvasEl?.removeEventListener('mouseup', this.onCanvasMouseUp);
 
-    this.draw(e, true);
+    this.draw(e!, true);
 
     this.status = ActionStatus.End;
 
@@ -295,7 +303,8 @@ class FreeDrawAction extends DrawAction {
   }
 
   /**
-   * destroy
+   * 销毁Action
+   * @description 清理资源，移除事件监听器
    */
   destroy(): void {
     const { context } = this;

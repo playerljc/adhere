@@ -1,1 +1,1 @@
-{"version":3,"file":"types.js","sources":[],"sourcesContent":[],"names":[],"mappings":""}
+{"version":3,"file":"types.js","sources":["types.js"],"sourcesContent":["/**\n * 滚动加载组件的状态常量\n */\nexport var SCROLL_LOAD_STATUS = {\n    /** 空数据状态 */\n    EMPTY: 'empty',\n    /** 错误状态 */\n    ERROR: 'error',\n    /** 正常状态 */\n    NORMAL: 'normal',\n    /** 隐藏空数据状态 */\n    HIDE_EMPTY: 'hide_empty',\n};\n"],"names":["SCROLL_LOAD_STATUS","EMPTY","ERROR","NORMAL","HIDE_EMPTY"],"mappings":"AAGO,IAAIA,mBAAqB,CAE5BC,MAAO,QAEPC,MAAO,QAEPC,OAAQ,SAERC,WAAY,YAChB,SATWJ,kBASV"}

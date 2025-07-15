@@ -1,21 +1,41 @@
+/**
+ * 重要确认对话框组件样式
+ * 提供带有警告图标的确认对话框样式定义
+ */
+
 .adhere-ui-mobile-important-confirm {
   position: relative;
 
+  /**
+   * 鼠标悬停时显示手型光标，提示可点击
+   */
   &:hover {
     cursor: pointer;
   }
 }
 
+/**
+ * 对话框内容区域样式
+ * 包含警告图标和文本信息的布局
+ */
 .adhere-ui-mobile-important-confirm-content {
   display: flex;
   align-items: center;
 
+  /**
+   * 警告图标样式
+   * 使用CSS变量控制尺寸和间距，便于主题定制
+   */
   > img {
     flex-shrink: 0;
-    width: 40px;
-    margin-right: 10px;
+    width: var(--adhere-important-confirm-icon-width, 40px);
+    margin-right: var(--adhere-important-confirm-icon-margin, 10px);
   }
 
+  /**
+   * 文本信息区域样式
+   * 支持长文本自动换行和省略
+   */
   > .adhere-ui-mobile-important-confirm-content-info {
     flex: 1;
     min-width: 0;

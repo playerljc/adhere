@@ -1,25 +1,47 @@
 import type { ProcessAsyncQueueItem } from './types';
 
+/**
+ * 集合工具类
+ * @description 提供集合操作相关的工具函数
+ */
 export default {
   /**----------------------------集合相关---------------------------**/
   /**
-   * processAsyncQueue
-   * @description 异步执行的队列
-   * @param {ProcessAsyncQueueItem[]} tasks 执行的任务
-   * @return {Promise<any>}
+   * 异步执行队列
+   * @description 按顺序执行异步任务队列，支持成功和失败回调
+   * @param tasks - 要执行的任务数组，可选
+   * @returns Promise，当所有任务执行完成时 resolve
+   * @example
+   * ```typescript
+   * const tasks: ProcessAsyncQueueItem[] = [
+   *   {
+   *     run: () => Promise.resolve('task1'),
+   *     success: (result) => console.log('Task 1 success:', result),
+   *     fail: (error) => console.error('Task 1 failed:', error)
+   *   },
+   *   {
+   *     run: () => Promise.resolve('task2'),
+   *     success: (result) => console.log('Task 2 success:', result)
+   *   }
+   * ];
+   * 
+   * processAsyncQueue(tasks).then(() => {
+   *   console.log('All tasks completed');
+   * });
+   * ```
    */
-  processAsyncQueue(tasks?: ProcessAsyncQueueItem[]) {
+  processAsyncQueue(tasks: ProcessAsyncQueueItem[] = []): Promise<void> {
     // 执行队列的索引
     let _index = 0;
 
     // 队列的所有任务
-    const _tasks = tasks ?? [];
+    const _tasks = tasks;
 
     /**
-     * loopTask
-     * @return {Promise}
+     * 循环执行任务
+     * @returns Promise
      */
-    function loopTask() {
+    function loopTask(): Promise<void> {
       return new Promise<void>((resolve, reject) => {
         // 队列结束
         if (_index >= _tasks.length) {
@@ -32,7 +54,7 @@ export default {
 
           // 没拿出任务直接结束
           if (!task) {
-            reject();
+            reject(new Error('Task is undefined'));
             return;
           }
 

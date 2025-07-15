@@ -1,3 +1,9 @@
-import DelConform from './DelConfirm';
+/**
+ * DelConfirm 组件导出文件
+ * @module index
+ */
 
-export default DelConform;
+import DelConfirm from './DelConfirm';
+
+export default DelConfirm;
+export type { DelConfirmProps, OpenFunction, DelConfirmComponent } from './types';

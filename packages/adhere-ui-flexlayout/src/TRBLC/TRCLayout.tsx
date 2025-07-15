@@ -1,29 +1,54 @@
 import classNames from 'classnames';
-import omit from 'omit.js';
 import React, { PropsWithoutRef, RefAttributes, forwardRef, memo, useMemo } from 'react';
 
 import Auto from '../Auto';
 import Fixed from '../Fixed';
 import FlexLayout, { selectorPrefix } from '../FlexLayout';
-import type { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
+import type { AutoProps, CenterProps, FlexLayoutProps, TBLRCLayoutProps, TBLRProps } from '../types';
+import { filterProps, getTRBLCClassList, getAutoWrapClassList, getAutoInnerClassList } from './utils';
 
 /**
- * TRCLayout
- * @param wrapClassName
- * @param wrapStyle
- * @param tProps
- * @param tSplit
- * @param rProps
- * @param cProps
- * @param autoWrapProps
- * @param rSplit
- * @param autoInnerProps
- * @param props
- * @param ref
- * @constructor
+ * TRCLayout 组件属性
+ * 顶部-右侧-中心布局组件，支持嵌套布局
  */
-const TRCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivElement>>(
-  forwardRef<HTMLDivElement, TBLRCLayoutProps>(
+export interface TRCLayoutProps extends TBLRCLayoutProps {
+  /** 右侧区域属性 */
+  rProps?: TBLRProps;
+  /** 右侧分割线 */
+  rSplit?: React.ReactNode;
+  /** 顶部区域属性 */
+  tProps?: TBLRProps;
+  /** 顶部分割线 */
+  tSplit?: React.ReactNode;
+  /** 中心区域属性 */
+  cProps?: CenterProps;
+  /** 自动包装属性 */
+  autoWrapProps?: AutoProps;
+  /** 自动内部属性 */
+  autoInnerProps?: FlexLayoutProps;
+}
+
+/**
+ * TRCLayout 组件
+ * 顶部-右侧-中心布局组件，用于创建复杂的嵌套布局，包含顶部区域、右侧区域和中心区域
+ * 
+ * @example
+ * ```tsx
+ * <TRCLayout
+ *   tProps={{ span: 6, children: <div>顶部区域</div> }}
+ *   cProps={{ children: <div>中心区域</div> }}
+ *   rProps={{ span: 6, children: <div>右侧区域</div> }}
+ *   tSplit={<div>顶部分割线</div>}
+ *   rSplit={<div>右侧分割线</div>}
+ * />
+ * ```
+ * 
+ * @param props - 组件属性
+ * @param ref - 组件引用
+ * @returns JSX.Element
+ */
+const TRCLayout = memo<PropsWithoutRef<TRCLayoutProps> & RefAttributes<HTMLDivElement>>(
+  forwardRef<HTMLDivElement, TRCLayoutProps>(
     (
       {
         wrapClassName,
@@ -39,50 +64,26 @@ const TRCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
       },
       ref,
     ) => {
-      // @ts-ignore
-      const TProps = omit<TBLRProps, string>(tProps, ['children']);
-      // @ts-ignore
-      const RProps = omit<TBLRProps, string>(rProps, ['children']);
-      // @ts-ignore
-      const CProps = omit<CenterProps, string>(cProps, ['children']);
+      // 过滤掉 children 属性，避免传递给 Fixed 和 Auto 组件
+      const TProps = filterProps(tProps);
+      const RProps = filterProps(rProps);
+      const CProps = filterProps(cProps);
 
+      // 计算包装容器的类名
       const classList = useMemo(
-        () =>
-          classNames(
-            `${selectorPrefix}-trblc`,
-            {
-              [`${selectorPrefix}-trblc-no-autofix`]:
-                cProps && 'autoFixed' in cProps && !cProps.autoFixed,
-            },
-            wrapClassName ?? '',
-          ),
-        [cProps],
+        () => getTRBLCClassList(selectorPrefix, cProps, wrapClassName),
+        [cProps, wrapClassName],
       );
 
+      // 计算自动包装容器的类名
       const autoWrapClassList = useMemo(
-        () =>
-          classNames(
-            `${selectorPrefix}-trblc-auto`,
-            {
-              [`${selectorPrefix}-trblc-auto-no-autofix`]:
-                autoWrapProps && 'autoFixed' in autoWrapProps && !autoWrapProps.autoFixed,
-            },
-            autoWrapProps?.className ?? '',
-          ),
+        () => getAutoWrapClassList(selectorPrefix, autoWrapProps),
         [autoWrapProps],
       );
 
+      // 计算自动内部容器的类名
       const autoInnerClassList = useMemo(
-        () =>
-          classNames(
-            `${selectorPrefix}-horizontal-flex-layout`,
-            `${selectorPrefix}-trblc-auto-inner`,
-            {
-              [`${selectorPrefix}-trblc-auto-inner-no-autofix`]:
-                autoInnerProps && 'autoFixed' in autoInnerProps && !autoInnerProps.autoFixed,
-            },
-            autoInnerProps?.className ?? '',
-          ),
+        () => getAutoInnerClassList(selectorPrefix, autoInnerProps, `${selectorPrefix}-horizontal-flex-layout`),
         [autoInnerProps],
       );
 
@@ -93,22 +94,28 @@ const TRCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
             className={classNames(`${selectorPrefix}-trc-layout`, props?.className ?? '')}
             direction="vertical"
           >
+            {/* 顶部区域 - 固定高度 */}
             <Fixed collapseDirection="T" {...(TProps ?? {})}>
               {tProps?.children}
             </Fixed>
 
+            {/* 顶部分割线 */}
             {tSplit}
 
+            {/* 自动包装容器 - 包含中心区域和右侧区域 */}
             <Auto {...(autoWrapProps ?? {})} fit={false} className={autoWrapClassList}>
               <FlexLayout
                 {...(autoInnerProps ?? {})}
                 className={autoInnerClassList}
                 direction="horizontal"
               >
+                {/* 中心区域 - 自动适应宽度 */}
                 <Auto {...(CProps ?? {})}>{cProps?.children}</Auto>
 
+                {/* 右侧分割线 */}
                 {rSplit}
 
+                {/* 右侧区域 - 固定宽度 */}
                 <Fixed collapseDirection="R" {...(RProps ?? {})}>
                   {rProps?.children}
                 </Fixed>

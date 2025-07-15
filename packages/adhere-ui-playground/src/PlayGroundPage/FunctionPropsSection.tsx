@@ -7,9 +7,11 @@ import type { FunctionPropsSectionProps } from '../types';
 import Section from './Section';
 
 /**
- * FunctionPropsSection
- * @param props
- * @constructor
+ * 函数属性区块组件
+ * @component FunctionPropsSection
+ * @description 用于展示函数属性说明的区块组件
+ * @param props - 组件属性
+ * @returns JSX.Element
  */
 const FunctionPropsSection = memo<FunctionPropsSectionProps>((props) => {
   const { title, extra, config = [] } = props;
@@ -17,7 +19,7 @@ const FunctionPropsSection = memo<FunctionPropsSectionProps>((props) => {
   return (
     <Section title={title} extra={extra}>
       <Space.Group direction="vertical">
-        {(config || []).map((c, index) => (
+        {config.map((c, index) => (
           <FunctionProps key={index + 1} {...c} />
         ))}
       </Space.Group>
@@ -26,15 +28,5 @@ const FunctionPropsSection = memo<FunctionPropsSectionProps>((props) => {
 });
 
 FunctionPropsSection.displayName = 'FunctionPropsSection';
-
-// FunctionPropsSection.defaultProps = {
-//   ...SectionDefaultProps,
-//   config: [],
-// };
-//
-// FunctionPropsSection.propTypes = {
-//   ...SectionPropTypes,
-//   config: PropTypes.arrayOf(FunctionPropsPropTypes),
-// };
 
 export default FunctionPropsSection;

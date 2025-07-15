@@ -1,3 +1,8 @@
 import React from 'react';
-import { CodeBoxContextValue } from './types';
+import type { CodeBoxContextValue } from './types';
+/**
+ * 代码盒子上下文
+ * @constant CodeBoxContext
+ * @description 提供代码盒子组件间的状态共享
+ */
 export declare const CodeBoxContext: React.Context<CodeBoxContextValue>;

@@ -8,6 +8,13 @@ import type { CardProps } from './types';
 
 const selectorPrefix = 'adhere-ui-playground-card';
 
+/**
+ * 卡片组件
+ * @component Card
+ * @description 一个可配置的卡片组件，支持标题、内容、操作按钮等
+ * @param props - 组件属性
+ * @returns JSX.Element
+ */
 const Card = memo<CardProps>((props) => {
   const {
     className = '',
@@ -26,12 +33,12 @@ const Card = memo<CardProps>((props) => {
   } = props;
 
   return (
-    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+    <div className={classNames(selectorPrefix, className)} style={style}>
       <ConditionalRender conditional={!!title || !!extra}>
         {() => (
           <div
-            className={classNames(`${selectorPrefix}-header`, headerClassName ?? '')}
-            style={headerStyle ?? {}}
+            className={classNames(`${selectorPrefix}-header`, headerClassName)}
+            style={headerStyle}
           >
             <ConditionalRender conditional={!!title}>
               {() => <div className={`${selectorPrefix}-header-title`}>{title}</div>}
@@ -47,8 +54,8 @@ const Card = memo<CardProps>((props) => {
       <ConditionalRender conditional={!!children}>
         {() => (
           <div
-            className={classNames(`${selectorPrefix}-body`, bodyClassName ?? '')}
-            style={bodyStyle ?? {}}
+            className={classNames(`${selectorPrefix}-body`, bodyClassName)}
+            style={bodyStyle}
           >
             {children}
           </div>
@@ -62,7 +69,7 @@ const Card = memo<CardProps>((props) => {
               {() => (
                 <div
                   className={`${selectorPrefix}-description-title`}
-                  title={description?.title as string}
+                  title={typeof description?.title === 'string' ? description.title : undefined}
                 >
                   {description?.title}
                 </div>
@@ -75,13 +82,13 @@ const Card = memo<CardProps>((props) => {
         )}
       </ConditionalRender>
 
-      <ConditionalRender conditional={!!actions}>
+      <ConditionalRender conditional={!!actions?.length}>
         {() => (
           <ul
-            className={classNames(`${selectorPrefix}-action`, actionClassName ?? '')}
-            style={actionStyle ?? {}}
+            className={classNames(`${selectorPrefix}-action`, actionClassName)}
+            style={actionStyle}
           >
-            {(actions || []).map((action, index) => (
+            {actions?.map((action, index) => (
               <li key={`${index + 1}`} className={`${selectorPrefix}-action-item`}>
                 {action}
               </li>
@@ -95,111 +102,11 @@ const Card = memo<CardProps>((props) => {
 
 Card.displayName = 'Card';
 
-// /**
-//  * Card
-//  * @class Card
-//  * @classdesc Card
-//  */
-// class Card extends React.Component<CardProps> {
-//   protected render() {
-//     const {
-//       className,
-//       style,
-//       headerClassName,
-//       headerStyle,
-//       bodyClassName,
-//       bodyStyle,
-//       actionClassName,
-//       actionStyle,
-//       children,
-//       title,
-//       extra,
-//       actions,
-//       description,
-//     } = this.props;
-//
-//     return (
-//       <div className={classNames(selectorPrefix, className || '')} style={{ ...style }}>
-//         <ConditionalRender conditional={!!title || !!extra}>
-//           {() => (
-//             <div
-//               className={classNames(`${selectorPrefix}-header`, headerClassName || '')}
-//               style={{ ...headerStyle }}
-//             >
-//               <ConditionalRender conditional={!!title}>
-//                 {() => <div className={`${selectorPrefix}-header-title`}>{title}</div>}
-//               </ConditionalRender>
-//
-//               <ConditionalRender conditional={!!extra}>
-//                 {() => <div className={`${selectorPrefix}-header-extra`}>{extra}</div>}
-//               </ConditionalRender>
-//             </div>
-//           )}
-//         </ConditionalRender>
-//
-//         <ConditionalRender conditional={!!children}>
-//           {() => (
-//             <div
-//               className={classNames(`${selectorPrefix}-body`, bodyClassName || '')}
-//               style={{ ...bodyStyle }}
-//             >
-//               {children}
-//             </div>
-//           )}
-//         </ConditionalRender>
-//
-//         <ConditionalRender conditional={!!description}>
-//           {() => (
-//             <div className={`${selectorPrefix}-description`}>
-//               <ConditionalRender conditional={!!description.title}>
-//                 {() => (
-//                   // @ts-ignore
-//                   <div className={`${selectorPrefix}-description-title`} title={description.title}>
-//                     {description.title}
-//                   </div>
-//                 )}
-//               </ConditionalRender>
-//               <ConditionalRender conditional={!!description.info}>
-//                 {() => description.info}
-//               </ConditionalRender>
-//             </div>
-//           )}
-//         </ConditionalRender>
-//
-//         <ConditionalRender conditional={!!actions}>
-//           {() => (
-//             <ul
-//               className={classNames(`${selectorPrefix}-action`, actionClassName || '')}
-//               style={{ ...actionStyle }}
-//             >
-//               {actions.map((action, index) => (
-//                 <li key={`${index + 1}`} className={`${selectorPrefix}-action-item`}>
-//                   {action}
-//                 </li>
-//               ))}
-//             </ul>
-//           )}
-//         </ConditionalRender>
-//       </div>
-//     );
-//   }
-// }
-//
-// Card.defaultProps = {
-//   className: '',
-//   style: {},
-//   headerClassName: '',
-//   headerStyle: {},
-//   bodyClassName: '',
-//   bodyStyle: {},
-//   actionClassName: '',
-//   actionStyle: {},
-//   title: null,
-//   extra: null,
-//   actions: null,
-//   description: null,
-// };
-//
+/**
+ * 卡片组件属性类型定义
+ * @constant cardPropTypes
+ * @description PropTypes类型检查定义
+ */
 export const cardPropTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
@@ -217,7 +124,5 @@ export const cardPropTypes = {
     info: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   }),
 };
-
-// Card.propTypes = cardPropTypes;
 
 export default Card;

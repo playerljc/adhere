@@ -1,1 +1,1 @@
-{"version":3,"file":"TreeContext.js","sources":["TreeContext.js"],"sourcesContent":["import React from 'react';\nexport default /*#__PURE__*/React.createContext({});"],"names":["React","createContext"],"mappings":"OAAOA,UAAW,uBACUA,MAAMC,cAAc,EAAE"}
+{"version":3,"file":"TreeContext.js","sources":["TreeContext.js"],"sourcesContent":["import React from 'react';\n/**\n * 树组件上下文\n * 提供树组件的全局状态管理，包括展开、选中、勾选等状态\n */\nexport default /*#__PURE__*/React.createContext({});"],"names":["React","createContext"],"mappings":"OAAOA,UAAW,uBAKUA,MAAMC,cAAc,EAAE"}

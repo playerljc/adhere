@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import FormItemCreator from './FormItemCreator';\nexport default FormItemCreator;"],"names":["FormItemCreator"],"mappings":"OAAOA,oBAAqB,mCACbA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["/**\n * @fileoverview FormItemCreator 组件入口文件\n * @description 导出表单项目创建器组件，用于动态生成表单项目\n */\nimport FormItemCreator from './FormItemCreator';\nexport default FormItemCreator;"],"names":["FormItemCreator"],"mappings":"OAIOA,oBAAqB,mCACbA"}

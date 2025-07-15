@@ -29,11 +29,11 @@ import { Mode } from '../types';
 const selectorPrefix = 'adhere-ui-signature-core';
 
 /**
- * Signature
- * @description 签名
- * @param {SignatureProps} props
- * @param ref
- * @constructor
+ * 签名核心组件
+ * @description 提供完整的签名编辑功能，包含工具栏和绘制区域
+ * @param props - 组件属性
+ * @param ref - 组件引用
+ * @returns 签名核心组件实例
  */
 const Signature = memo<PropsWithoutRef<SignatureCoreProps> & RefAttributes<SignatureCoreHandle>>(
   forwardRef<SignatureCoreHandle, SignatureCoreProps>(
@@ -42,7 +42,7 @@ const Signature = memo<PropsWithoutRef<SignatureCoreProps> & RefAttributes<Signa
       const [color, setColor] = useState(defaultColor ?? '#000');
       const [width, setWidth] = useState(defaultWidth ?? 2);
 
-      const writingBoardRef = useRef<WritingBoardHandle>();
+      const writingBoardRef = useRef<WritingBoardHandle>(null);
 
       const defaultProps = useMemo<SignatureCoreWrapProps>(
         () => ({
@@ -77,10 +77,9 @@ const Signature = memo<PropsWithoutRef<SignatureCoreProps> & RefAttributes<Signa
                 max={10}
                 min={1}
                 onChange={(v) => {
-                  setWidth(v as number);
-                  if (writingBoardRef.current) {
-                    writingBoardRef.current.setLineWidth(v as number);
-                  }
+                  const newWidth = v as number;
+                  setWidth(newWidth);
+                  writingBoardRef.current?.setLineWidth(newWidth);
                 }}
               />
 
@@ -88,10 +87,7 @@ const Signature = memo<PropsWithoutRef<SignatureCoreProps> & RefAttributes<Signa
                 color={color}
                 onChangeComplete={(c) => {
                   setColor(c.hex);
-
-                  if (writingBoardRef.current) {
-                    writingBoardRef.current.setStrokeStyle(c.hex);
-                  }
+                  writingBoardRef.current?.setStrokeStyle(c.hex);
                 }}
               />
 
@@ -100,11 +96,9 @@ const Signature = memo<PropsWithoutRef<SignatureCoreProps> & RefAttributes<Signa
                 block
                 type="primary"
                 onClick={() => {
-                  if (writingBoardRef.current) {
-                    const v = mode === Mode.FREE ? Mode.RUBBER : Mode.FREE;
-                    setMode(v);
-                    writingBoardRef.current.setMode(v);
-                  }
+                  const newMode = mode === Mode.FREE ? Mode.RUBBER : Mode.FREE;
+                  setMode(newMode);
+                  writingBoardRef.current?.setMode(newMode);
                 }}
               >
                 {mode === Mode.FREE ? Intl.get('eraser') : Intl.get('draw')}
@@ -115,9 +109,7 @@ const Signature = memo<PropsWithoutRef<SignatureCoreProps> & RefAttributes<Signa
                 block
                 type="primary"
                 onClick={() => {
-                  if (writingBoardRef.current) {
-                    writingBoardRef.current.clear();
-                  }
+                  writingBoardRef.current?.clear();
                 }}
               >
                 {Intl.get('clear')}
@@ -145,23 +137,25 @@ const Signature = memo<PropsWithoutRef<SignatureCoreProps> & RefAttributes<Signa
 
       useImperativeHandle(ref, () => ({
         /**
-         * Save
+         * 保存签名并返回base64字符串
+         * @param backgroundColor - 背景颜色
+         * @param type - 图片类型
+         * @param quality - 图片质量
+         * @returns base64字符串
          */
-        save: (backgroundColor?: string, type?: string, quality?: any) => {
-          if (!writingBoardRef.current) return;
-
-          return writingBoardRef.current.toDataURL(
+        save: (backgroundColor?: string, type?: string, quality?: number) => {
+          return writingBoardRef.current?.toDataURL(
             backgroundColor ?? '#fff',
             type ?? 'image/png',
             quality ?? 1.0,
           );
         },
+        /**
+         * 检查签名是否为空
+         * @returns 是否为空
+         */
         isEmpty: () => {
-          if (writingBoardRef?.current) {
-            return writingBoardRef?.current?.isEmpty?.();
-          }
-
-          return true;
+          return writingBoardRef.current?.isEmpty() ?? true;
         },
       }));
 

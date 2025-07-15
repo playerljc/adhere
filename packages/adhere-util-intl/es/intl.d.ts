@@ -1,95 +1,221 @@
 import { type ReactIntlUniversalMessageDescriptor } from 'react-intl-universal';
 /**
- * getLocal
- * @description 生成k,v的对象
- * @param prefix
- * @param data
+ * Supported locale types
  */
-export declare function getLocal(prefix: string | undefined, data: Array<string>): object;
+export type SupportedLocale = 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
 /**
- * getLocales
- * @description - 获取系统所有的词条
- * @return object
+ * Locale item can be either a string or an object with key-value pairs
  */
-export declare function getLocales(): object;
-type localsType = {
-    [key: string]: localValue;
-};
-type localValue = (string | {
-    [key: string]: string;
-})[];
-type langType = string;
-export interface Init {
-    prefix: string;
-    currentLocale: langType;
-    mainLanguage: langType;
-    locales: localsType;
+export type LocaleItem = string | Record<string, string>;
+/**
+ * Locale data structure - array of locale items
+ */
+export type LocaleData = LocaleItem[];
+/**
+ * Locales configuration - mapping of locale codes to locale data
+ */
+export type LocalesConfig = Record<SupportedLocale, LocaleData>;
+/**
+ * Processed locale object with key-value pairs
+ */
+export type ProcessedLocale = Record<string, string>;
+/**
+ * Main locales storage - mapping of locale codes to processed locales
+ */
+export type MainLocales = Record<SupportedLocale, ProcessedLocale>;
+/**
+ * Variables object for interpolation
+ */
+export type Variables = Record<string, string | number | boolean>;
+/**
+ * Options object for HTML formatting
+ */
+export type HtmlOptions = Record<string, any>;
+/**
+ * Initialization configuration interface
+ */
+export interface InitConfig {
+    /** Prefix for generated locale keys */
+    prefix?: string;
+    /** Current locale to use */
+    currentLocale?: SupportedLocale;
+    /** Main language for fallback */
+    mainLanguage?: SupportedLocale;
+    /** Locale data configuration */
+    locales: LocalesConfig;
+    /** Additional react-intl-universal options */
+    [key: string]: any;
 }
-declare const _default: {
+/**
+ * Generate a key-value object from an array of strings
+ *
+ * @param prefix - Prefix for generated keys (default: 'local')
+ * @param data - Array of strings to convert to key-value pairs
+ * @returns Object with generated keys and corresponding values
+ *
+ * @example
+ * ```typescript
+ * getLocal('prefix', ['Hello', 'World'])
+ * // Returns: { prefix1: 'Hello', prefix2: 'World' }
+ * ```
+ */
+export declare function getLocal(prefix: string | undefined, data: string[]): ProcessedLocale;
+/**
+ * Get all processed locales
+ *
+ * @returns Copy of the main locales object
+ */
+export declare function getLocales(): MainLocales;
+/**
+ * Main internationalization service
+ */
+declare const IntlService: {
     /**
-     * init
-     * @param {String} - prefix
-     * @param reload 是否是重新载入
+     * Initialize the internationalization service
+     *
+     * @param config - Initialization configuration
+     * @param reload - Whether to reload if already initialized
+     * @returns Promise that resolves when initialization is complete
+     *
+     * @throws Error if initialization fails
+     *
+     * @example
+     * ```typescript
+     * await IntlService.init({
+     *   currentLocale: 'en_US',
+     *   mainLanguage: 'zh_CN',
+     *   locales: {
+     *     en_US: ['Hello', 'World'],
+     *     zh_CN: ['你好', '世界']
+     *   }
+     * });
+     * ```
      */
-    init({ prefix, currentLocale, mainLanguage, locales, ...rest }: Init, reload?: boolean): Promise<any>;
+    init({ prefix, currentLocale, mainLanguage, locales, ...rest }: InitConfig, reload?: boolean): Promise<void>;
     /**
-     * isInit
-     * @description 是否进行了初始化
+     * Check if the service has been initialized
+     *
+     * @returns True if initialized, false otherwise
      */
     isInit(): boolean;
     /**
-     * v - 以中文获取国际化值
-     * @return {String}
-     * @param key
-     * @param variables
+     * Get internationalized value using Chinese text as key
+     *
+     * @param key - Chinese text key
+     * @param variables - Variables for interpolation
+     * @returns Internationalized string
+     *
+     * @example
+     * ```typescript
+     * IntlService.v('你好', { name: 'World' });
+     * ```
      */
-    v(key: string, variables?: object | null): string;
+    v(key: string, variables?: Variables | null): string;
     /**
-     * v - 以中文获取国际化后的html
-     * @param key
-     * @param options
+     * Get internationalized HTML using Chinese text as key
+     *
+     * @param key - Chinese text key
+     * @param options - HTML formatting options
+     * @returns Internationalized HTML string
+     *
+     * @example
+     * ```typescript
+     * IntlService.vHtml('欢迎', { name: 'User' });
+     * ```
      */
-    vHtml(key: string, options?: object | null): string;
+    vHtml(key: string, options?: HtmlOptions | null): string;
     /**
-     * get
-     * @param key
-     * @param variables
+     * Get internationalized value using locale key
+     *
+     * @param key - Locale key
+     * @param variables - Variables for interpolation
+     * @returns Internationalized string
+     *
+     * @example
+     * ```typescript
+     * IntlService.get('hello', { name: 'World' });
+     * ```
      */
-    get(key: string, variables?: object | null): string;
+    get(key: string, variables?: Variables | null): string;
     /**
-     * getHTML
-     * @param key
-     * @param options
+     * Get internationalized HTML using locale key
+     *
+     * @param key - Locale key
+     * @param options - HTML formatting options
+     * @returns Internationalized HTML string
+     *
+     * @example
+     * ```typescript
+     * IntlService.getHTML('welcome', { name: 'User' });
+     * ```
      */
-    getHTML(key: string, options?: object | null): string;
+    getHTML(key: string, options?: HtmlOptions | null): string;
     /**
-     * formatMessage
-     * @param options
-     * @param variables
+     * Format message using ReactIntlUniversalMessageDescriptor
+     *
+     * @param options - Message descriptor options
+     * @param variables - Variables for interpolation
+     * @returns Formatted message string
+     *
+     * @example
+     * ```typescript
+     * IntlService.formatMessage(
+     *   { id: 'welcome', defaultMessage: 'Welcome' },
+     *   { name: 'User' }
+     * );
+     * ```
      */
-    formatMessage(options: ReactIntlUniversalMessageDescriptor, variables?: object | null): string;
+    formatMessage(options: ReactIntlUniversalMessageDescriptor, variables?: Variables | null): string;
     /**
-     * formatHTMLMessage
-     * @param options
-     * @param variables
+     * Format HTML message using ReactIntlUniversalMessageDescriptor
+     *
+     * @param options - Message descriptor options
+     * @param variables - Variables for interpolation
+     * @returns Formatted HTML message string
+     *
+     * @example
+     * ```typescript
+     * IntlService.formatHTMLMessage(
+     *   { id: 'welcome', defaultMessage: 'Welcome <strong>{name}</strong>' },
+     *   { name: 'User' }
+     * );
+     * ```
      */
-    formatHTMLMessage(options: ReactIntlUniversalMessageDescriptor, variables?: object | null): string;
+    formatHTMLMessage(options: ReactIntlUniversalMessageDescriptor, variables?: Variables | null): string;
     /**
-     * getInitOptions
+     * Get initialization options from react-intl-universal
+     *
+     * @returns Current initialization options
      */
-    getInitOptions(): import("react-intl-universal").ReactIntlUniversalOptions;
+    getInitOptions(): any;
     /**
-     * load - Load more locales after init
-     * @param locales
+     * Load additional locales after initialization
+     *
+     * @param locales - Additional locale data to load
+     *
+     * @example
+     * ```typescript
+     * IntlService.load({
+     *   'fr_FR': ['Bonjour', 'Monde']
+     * });
+     * ```
      */
-    load(locales: {
-        [key: string]: any;
-    }): void;
+    load(locales: Record<string, any>): void;
     /**
-     * getLocal
-     * @param prefix
-     * @param data
+     * Generate local object from string array (alias for getLocal function)
+     *
+     * @param prefix - Prefix for generated keys
+     * @param data - Array of strings
+     * @returns Generated key-value object
+     *
+     * @see getLocal
      */
-    getLocal(prefix: string | undefined, data: string[]): object;
+    getLocal(prefix: string | undefined, data: string[]): ProcessedLocale;
+    /**
+     * Reset the service state (useful for testing)
+     *
+     * @internal
+     */
+    _reset(): void;
 };
-export default _default;
+export default IntlService;

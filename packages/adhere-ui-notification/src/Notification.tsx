@@ -6,61 +6,76 @@ import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
 import Util from '@baifendian/adhere-util';
 
-import type { Config, ShowConfig, ShowStandardConfig } from './types';
+import type { Config, ShowConfig, ShowStandardConfig, NotificationInstance, NotificationFactory } from './types';
 
 const selectorPrefix = 'adhere-ui-notification';
 
-let renderToWrapper: (children: () => ReactNode) => ReactNode;
+/** Type for render wrapper function */
+type RenderToWrapperFunction = (children: () => ReactNode) => ReactNode;
+
+/** Global render wrapper function */
+let renderToWrapper: RenderToWrapperFunction | undefined;
 
 /**
- * Notification
+ * Notification class for managing notification instances
  * @class Notification
- * @classdesc Notification
+ * @implements {NotificationInstance}
  */
-class Notification {
-  private readonly config: Config = {
+class Notification implements NotificationInstance {
+  /** Default configuration */
+  private readonly defaultConfig: Config = {
     style: 'material',
     type: 'top',
   };
 
-  // 通知产生的容器元素
-  private container: HTMLElement;
+  /** Current configuration */
+  private readonly config: Config;
 
-  // 通知的inner元素
-  private innerContainer: HTMLElement | undefined;
+  /** Container element for notifications */
+  private readonly container: HTMLElement;
 
-  // 通知的ul元素
-  private notificationContainer: HTMLElement | undefined;
+  /** Inner container element */
+  private innerContainer: HTMLElement | null = null;
 
-  // 存放所有的notification
-  private notifications = {};
-  private key: boolean = false;
+  /** Notification list container */
+  private notificationContainer: HTMLElement | null = null;
 
+  /** Map of all active notifications */
+  private readonly notifications: Record<string, HTMLLIElement> = {};
+
+  /** Flag to prevent multiple close operations */
+  private isClosing: boolean = false;
+
+  /**
+   * Constructor
+   * @param container - Container element for notifications
+   * @param config - Configuration object
+   */
   constructor(container: HTMLElement, config: Config) {
     this.container = container;
-
-    this.config = Object.assign(this.config, config);
+    this.config = { ...this.defaultConfig, ...config };
 
     this.createInnerContainer();
-
     this.init();
-
     this.initEvents();
   }
 
   /**
-   * createInnerContainer
+   * Create inner container for notifications
    * @private
    */
   private createInnerContainer(): void {
-    const innerContainer = this.container.querySelector(`.${selectorPrefix}`);
-    if (innerContainer) {
-      innerContainer?.parentElement?.removeChild(innerContainer);
+    // Remove existing container if present
+    const existingContainer = this.container.querySelector(`.${selectorPrefix}`);
+    if (existingContainer) {
+      existingContainer.parentElement?.removeChild(existingContainer);
     }
 
+    // Create new inner container
     this.innerContainer = document.createElement('div');
     this.innerContainer.className = selectorPrefix;
 
+    // Create notification list container
     this.notificationContainer = document.createElement('ul');
     this.innerContainer.appendChild(this.notificationContainer);
 
@@ -68,113 +83,123 @@ class Notification {
   }
 
   /**
-   * init
+   * Initialize notification container styles
    * @private
    */
   private init(): void {
+    if (!this.innerContainer) return;
+
     const { config } = this;
 
-    this.innerContainer?.classList.remove(
-      [selectorPrefix].concat([config.type === 'top' ? 'bottom' : 'top', config.style]).join('-'),
+    // Remove existing classes
+    this.innerContainer.classList.remove(
+      `${selectorPrefix}-${config.type === 'top' ? 'bottom' : 'top'}-${config.style}`,
     );
 
-    this.innerContainer?.classList.add(
-      [selectorPrefix].concat([config.type, config.style]).join('-'),
-    );
+    // Add new classes
+    this.innerContainer.classList.add(`${selectorPrefix}-${config.type}-${config.style}`);
   }
 
   /**
-   * initEvents
+   * Initialize event listeners
    * @private
    */
   private initEvents(): void {
-    const self = this;
+    if (!this.notificationContainer) return;
 
-    this.notificationContainer?.addEventListener('click', (e: MouseEvent) => {
-      if ((e.target as HTMLElement).classList.contains('close-btn')) {
-        self.closeNotification.call(
-          self,
-          ((e.target as HTMLElement).parentNode as HTMLElement).dataset.id as string,
-        );
+    this.notificationContainer.addEventListener('click', (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.classList.contains('close-btn')) {
+        const notificationElement = target.parentNode as HTMLElement;
+        const id = notificationElement.dataset.id;
+        if (id) {
+          this.closeNotification(id);
+        }
       }
     });
   }
 
   /**
-   * closeNotification - 点击删除通知
-   * closeNotification
-   * @param {string} id
-   * @access private
+   * Close notification by ID
+   * @param id - Notification ID
+   * @private
    */
   private closeNotification(id: string): void {
-    const self = this;
+    if (this.isClosing) return;
 
-    if (self.key) return;
+    this.isClosing = true;
 
-    self.key = true;
-
-    const n = self.notifications[id];
-
-    function transitionendAction() {
-      n.removeEventListener('transitionend', transitionendAction);
-
-      self?.notificationContainer?.removeChild(n);
-
-      self.key = false;
-
-      // closeAfter
-      self.trigger('onCloseAfter', n);
+    const notificationElement = this.notifications[id];
+    if (!notificationElement) {
+      this.isClosing = false;
+      return;
     }
 
-    // closeBefore
-    self.trigger('onCloseBefore', n);
+    const handleTransitionEnd = (): void => {
+      notificationElement.removeEventListener('transitionend', handleTransitionEnd);
 
-    n.addEventListener('transitionend', transitionendAction);
+      this.notificationContainer?.removeChild(notificationElement);
+      delete this.notifications[id];
 
-    n.style.overflow = 'hidden';
+      this.isClosing = false;
 
-    n.querySelector('.info').style.opacity = '0';
+      // Trigger onCloseAfter callback
+      this.trigger('onCloseAfter', notificationElement);
+    };
 
-    n.style.height = '0';
+    // Trigger onCloseBefore callback
+    this.trigger('onCloseBefore', notificationElement);
+
+    notificationElement.addEventListener('transitionend', handleTransitionEnd);
+
+    // Start close animation
+    notificationElement.style.overflow = 'hidden';
+    const infoElement = notificationElement.querySelector('.info') as HTMLElement;
+    if (infoElement) {
+      infoElement.style.opacity = '0';
+    }
+    notificationElement.style.height = '0';
   }
 
   /**
-   * buildCustom
-   * @param config
-   * @return string
+   * Build custom notification
+   * @param config - Custom notification configuration
+   * @returns Notification ID
    * @private
    */
   private buildCustom(config: ShowConfig): string {
     const { closed, children } = config;
 
     const id = v1();
-    const n = document.createElement('li');
-    n.dataset.id = id;
+    const notificationElement = document.createElement('li');
+    notificationElement.dataset.id = id;
 
-    const Component = () => {
+    const CustomComponent: React.FC = () => {
       const { media } = useContext(ConfigProvider.Context);
 
       useEffect(() => {
-        this.build(id, n, media);
+        this.build(id, notificationElement, media);
       }, []);
 
       return (
         <>
           <div className="info">{children}</div>
-          {closed ? <span className="close-btn" /> : null}
+          {closed && <span className="close-btn" />}
         </>
       );
     };
 
-    ReactDOM.createRoot(n).render(renderToWrapper?.(() => <Component />) ?? <Component />);
+    const root = ReactDOM.createRoot(notificationElement);
+    const component = renderToWrapper ? renderToWrapper(() => <CustomComponent />) : <CustomComponent />;
+    root.render(component);
 
     return id;
   }
 
   /**
-   * buildStandard
-   * @param config
-   * @return string
+   * Build standard notification
+   * @param config - Standard notification configuration
+   * @returns Notification ID
    * @private
    */
   private buildStandard(config: ShowStandardConfig): string {
@@ -189,14 +214,14 @@ class Notification {
     } = config;
 
     const id = v1();
-    const n = document.createElement('li');
-    n.dataset.id = id;
+    const notificationElement = document.createElement('li');
+    notificationElement.dataset.id = id;
 
-    const Component = () => {
+    const StandardComponent: React.FC = () => {
       const { media } = useContext(ConfigProvider.Context);
 
       useEffect(() => {
-        this.build(id, n, media);
+        this.build(id, notificationElement, media);
       }, []);
 
       return (
@@ -204,84 +229,87 @@ class Notification {
           <div className="info">
             <div className={`${selectorPrefix}-standard-header`}>
               <div className={`${selectorPrefix}-standard-header-icon`}>
-                {headerIcon ? <img src={headerIcon} alt="" /> : null}
+                {headerIcon && <img src={headerIcon} alt="" />}
               </div>
-              <div className={`${selectorPrefix}-standard-header-label`}>{headerLabel ?? ''}</div>
+              <div className={`${selectorPrefix}-standard-header-label`}>{headerLabel}</div>
             </div>
             <div className={`${selectorPrefix}-standard-content`}>
               <div className={`${selectorPrefix}-standard-content-media-l`}>
-                {icon ? <img src={icon} alt="" /> : null}
+                {icon && <img src={icon} alt="" />}
               </div>
               <div className={`${selectorPrefix}-standard-content-row`}>
-                <div className={`${selectorPrefix}-standard-content-row-title`}>{title ?? ''}</div>
-                <div className={`${selectorPrefix}-standard-content-row-text`}>{text ?? ''}</div>
+                <div className={`${selectorPrefix}-standard-content-row-title`}>{title}</div>
+                <div className={`${selectorPrefix}-standard-content-row-text`}>{text}</div>
               </div>
-              <div className={`${selectorPrefix}-standard-content-media-r`}>{datetime ?? ''}</div>
+              <div className={`${selectorPrefix}-standard-content-media-r`}>{datetime}</div>
             </div>
           </div>
-          {closed ? <span className="close-btn" /> : null}
+          {closed && <span className="close-btn" />}
         </>
       );
     };
 
-    ReactDOM.createRoot(n).render(renderToWrapper?.(() => <Component />) ?? <Component />);
-
-    this.build(id, n);
+    const root = ReactDOM.createRoot(notificationElement);
+    const component = renderToWrapper ? renderToWrapper(() => <StandardComponent />) : <StandardComponent />;
+    root.render(component);
 
     return id;
   }
 
   /**
-   * build
-   * @param id
-   * @param n
-   * @param media
-   * @return string
+   * Build notification element and add to container
+   * @param id - Notification ID
+   * @param notificationElement - Notification element
+   * @param media - Media configuration
+   * @returns Notification ID
    * @private
    */
   private build(
     id: string,
-    n: HTMLLIElement,
+    notificationElement: HTMLLIElement,
     media: ConfigProviderProps['media'] = { isUseMedia: false, designWidth: 192 },
   ): string {
-    const self = this;
+    this.notifications[id] = notificationElement;
 
-    this.notifications[id] = n;
+    if (!this.notificationContainer) {
+      throw new Error('Notification container not initialized');
+    }
 
-    // @ts-ignore
-    this.notificationContainer.appendChild(n);
+    this.notificationContainer.appendChild(notificationElement);
 
+    // Trigger onCreate callback
+    this.trigger('onCreate', notificationElement);
+
+    // Animate notification appearance
     setTimeout(() => {
-      // onCreate
-      self.trigger('onCreate', n);
+      notificationElement.style.height = 'auto';
 
-      n.style.height = 'auto';
+      let targetHeight = notificationElement.clientHeight;
 
-      let targetHeight = n.clientHeight;
-
-      // 会有最小高度的限制
-      if (self.config.style === 'material') {
-        if (targetHeight < 40) {
-          targetHeight = 40;
-        }
-      } else if (self.config.style === 'ios') {
-        if (targetHeight < 70) {
-          targetHeight = 70;
-        }
+      // Apply minimum height constraints
+      if (this.config.style === 'material' && targetHeight < 40) {
+        targetHeight = 40;
+      } else if (this.config.style === 'ios' && targetHeight < 70) {
+        targetHeight = 70;
       }
 
-      n.style.height = '0';
+      notificationElement.style.height = '0';
 
       setTimeout(() => {
         let targetHeightValue = `${targetHeight}px`;
-        if (media?.isUseMedia) {
-          targetHeightValue = `${Util.pxToRem(targetHeight, media?.designWidth as number)}`;
+        if (media?.isUseMedia && media?.designWidth) {
+          targetHeightValue = `${Util.pxToRem(targetHeight, media.designWidth)}`;
         }
-        n.style.height = `${targetHeightValue}`;
+        
+        notificationElement.style.height = targetHeightValue;
 
-        (n.querySelector('.info') as HTMLElement).style.opacity = '1';
+        const infoElement = notificationElement.querySelector('.info') as HTMLElement;
+        if (infoElement) {
+          infoElement.style.opacity = '1';
+        }
 
-        self.trigger('onShow', n);
+        // Trigger onShow callback
+        this.trigger('onShow', notificationElement);
       }, 100);
     }, 100);
 
@@ -289,65 +317,66 @@ class Notification {
   }
 
   /**
-   * trigger
-   * @param action
-   * @param params
+   * Trigger callback function if defined
+   * @param action - Callback action name
+   * @param element - Notification element
    * @private
    */
-  private trigger(action: string, params?: any): void {
-    if (this.config[action]) {
-      this.config[action](params);
+  private trigger(action: keyof Config, element?: HTMLElement): void {
+    const callback = this.config[action];
+    if (typeof callback === 'function') {
+      callback(element);
     }
   }
 
   /**
-   * show
-   * @param {Object} config
-   * @return {string} id
+   * Show custom notification
+   * @param config - Custom notification configuration
+   * @returns Notification ID
    */
   show(config: ShowConfig): string {
     return this.buildCustom(config);
   }
 
   /**
-   * showStandard
-   * @param {Object} config
-   * @return {string} id
+   * Show standard notification
+   * @param config - Standard notification configuration
+   * @returns Notification ID
    */
   showStandard(config: ShowStandardConfig): string {
     return this.buildStandard(config);
   }
 
   /**
-   * close
-   * @param {string} id
+   * Close notification by ID
+   * @param id - Notification ID
    */
   close(id: string): void {
     this.closeNotification(id);
   }
 }
 
-const NotificationFactory = {
+/**
+ * Notification factory for creating notification instances
+ */
+const NotificationFactory: NotificationFactory = {
   /**
-   * setRenderToWrapper
-   * @description 设置renderToWrapper方法
-   * @param _renderToWrapper
+   * Set render wrapper function for custom rendering
+   * @param _renderToWrapper - Render wrapper function
    */
-  setRenderToWrapper(_renderToWrapper) {
+  setRenderToWrapper(_renderToWrapper: RenderToWrapperFunction): void {
     renderToWrapper = _renderToWrapper;
   },
+
   /**
-   * build
-   * @param container
-   * @param config
-   * @return Notification
+   * Build notification instance
+   * @param container - Container element for notifications
+   * @param config - Configuration object
+   * @returns Notification instance
    */
-  build(container: HTMLElement, config: Config): Notification {
+  build(container: HTMLElement, config: Config): NotificationInstance {
     return new Notification(container, config);
   },
 };
 
-/**
- * NotificationFactory
- */
 export default NotificationFactory;

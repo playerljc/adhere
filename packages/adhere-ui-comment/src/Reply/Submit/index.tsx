@@ -20,7 +20,7 @@ import uk from '@emoji-mart/data/i18n/uk.json';
 import zh from '@emoji-mart/data/i18n/zh.json';
 import Picker from '@emoji-mart/react';
 
-import type { ReplyProps } from '../../types';
+import type { ReplyProps, Local, EmojiPickerProps } from '../../types';
 import EmojiIcon from './emoji';
 
 const { TextArea } = Input;
@@ -29,7 +29,10 @@ const { useSetState } = Hooks;
 
 const selectorPrefix = 'adhere-ui-comment-reply';
 
-const LOCAL_MAP = new Map<string, any>([
+/**
+ * 语言映射表
+ */
+const LOCAL_MAP = new Map<Local, any>([
   ['ar', ar],
   ['de', de],
   ['en', en],
@@ -47,36 +50,58 @@ const LOCAL_MAP = new Map<string, any>([
 ]);
 
 /**
- * Reply
- * @param props
- * @constructor
- * @classdesc 回复
+ * 表情选择事件参数
  */
-const Reply = memo<ReplyProps>((props) => {
+interface EmojiSelectEvent {
+  /** 表情的原始字符 */
+  native: string;
+}
+
+/**
+ * 回复提交组件
+ * 
+ * @description 提供回复内容的输入、表情选择和提交功能
+ * @param props - 组件属性
+ * @returns 回复提交组件实例
+ * 
+ * @example
+ * ```tsx
+ * <ReplySubmit
+ *   onCancel={() => setShowReply(false)}
+ *   onResult={(reply) => submitReply(reply)}
+ *   local="zh"
+ * />
+ * ```
+ */
+const ReplySubmit = memo<ReplyProps>((props) => {
   const { local = 'zh', emojiPickerProps = {}, onResult, onCancel } = props;
 
   const [valueRef, setValue] = useSetState<string>('');
 
-  // 回复内容的textarea
+  // 回复内容的textarea引用
   const textAreaRef = useRef<HTMLDivElement | null>(null);
 
+  // 表情选择器容器引用
   const emojiWrapRef = useRef<HTMLDivElement | null>(null);
 
+  // 表情选择器显示状态
   const [emojiIconWrapVisible, setEmojiIconWrapVisible] = useState(false);
 
   /**
-   * onEmojiSelect
-   * @param native
+   * 处理表情选择
+   * @param event - 表情选择事件
    */
   const onEmojiSelect = useCallback(
-    ({ native }) => {
-      // 获取textarea的dom
+    ({ native }: EmojiSelectEvent) => {
+      // 获取textarea的DOM元素
       const textareaEl = textAreaRef?.current?.querySelector('textarea') as HTMLTextAreaElement;
+
+      if (!textareaEl) return;
 
       // 光标开始索引
       const { selectionStart } = textareaEl;
 
-      // (0) 1 (1) 2 (2) 3 (3)
+      // 在光标位置插入表情
       setValue(
         `${valueRef.current.substring(0, selectionStart)}${native}${valueRef.current.substring(
           selectionStart,
@@ -90,9 +115,12 @@ const Reply = memo<ReplyProps>((props) => {
         },
       );
     },
-    [valueRef.current],
+    [valueRef.current, setValue],
   );
 
+  /**
+   * 表情选择器内容
+   */
   const PopoverContent = useMemo(
     () => (
       <Picker
@@ -105,18 +133,29 @@ const Reply = memo<ReplyProps>((props) => {
     [data, local, onEmojiSelect, emojiPickerProps],
   );
 
+  /**
+   * 处理文档点击事件
+   */
   useLayoutEffect(() => {
-    function onDocBodyClick(e) {
-      const target = e.target;
-
+    /**
+     * 处理文档主体点击
+     * @param e - 点击事件
+     */
+    function onDocBodyClick(e: MouseEvent) {
+      const target = e.target as Element;
       const textareaEl = textAreaRef?.current as HTMLDivElement;
 
-      if (![textareaEl.querySelector('textarea')].includes(target)) {
+      const textarea = textareaEl.querySelector('textarea');
+      if (textarea && !textarea.contains(target)) {
         setEmojiIconWrapVisible(false);
       }
     }
 
-    function onEmojiWrapClick(e) {
+    /**
+     * 处理表情容器点击
+     * @param e - 点击事件
+     */
+    function onEmojiWrapClick(e: Event) {
       e.stopPropagation();
     }
 
@@ -181,6 +220,6 @@ const Reply = memo<ReplyProps>((props) => {
   );
 });
 
-Reply.displayName = 'Reply';
+ReplySubmit.displayName = 'ReplySubmit';
 
-export default Reply;
+export default ReplySubmit;

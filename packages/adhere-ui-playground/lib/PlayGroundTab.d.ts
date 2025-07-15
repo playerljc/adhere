@@ -1,22 +1,48 @@
 import React from 'react';
 import APlayGround from './APlayGround';
-import { PlayGroundTabProps, PlayGroundTabState } from './types';
+import type { PlayGroundTabProps, PlayGroundTabState } from './types';
 /**
- * PlayGroundTab
+ * PlayGroundTab组件
  * @class PlayGroundTab
- * @classdesc PlayGroundTab
+ * @description 带标签页的代码展示组件，支持多个代码标签页的切换展示
+ * @extends APlayGround
+ * @example
+ * ```tsx
+ * <PlayGroundTab
+ *   config={[
+ *     { key: 'js', title: 'JavaScript', codeText: 'console.log("JS")' },
+ *     { key: 'ts', title: 'TypeScript', codeText: 'console.log("TS")' }
+ *   ]}
+ *   active="js"
+ * >
+ *   <div>代码演示内容</div>
+ * </PlayGroundTab>
+ * ```
  */
 declare class PlayGroundTab extends APlayGround<PlayGroundTabProps, PlayGroundTabState> {
     static displayName: string;
-    constructor(props: any);
-    componentWillReceiveProps(nextProps: any): void;
     /**
-     * renderCodeView - 代码展示视图
-     * @return {*}
+     * 构造函数
+     * @param props - 组件属性
      */
-    protected renderCodeView(): React.JSX.Element;
+    constructor(props: PlayGroundTabProps);
     /**
-     * getClipboardText
+     * 组件即将接收新属性时的处理
+     * @param nextProps - 新的属性
+     */
+    componentWillReceiveProps(nextProps: Readonly<PlayGroundTabProps>): void;
+    /**
+     * 渲染代码展示视图
+     * @protected renderCodeView
+     * @description 渲染带标签页的代码面板，支持标签页切换
+     * @returns React.ReactElement 代码展示视图
+     */
+    protected renderCodeView(): React.ReactElement;
+    /**
+     * 获取剪贴板文本内容
+     * @protected getClipboardText
+     * @description 获取当前激活标签页的代码文本内容
+     * @returns Promise<string> 当前激活标签页的代码文本
      */
     protected getClipboardText(): Promise<string>;
 }

@@ -1,89 +1,159 @@
+/**
+ * DOM 工具类
+ * @description 提供 DOM 操作相关的工具函数
+ */
 declare const DomUtil: {
     /**--------------------------dom-start-------------------------**/
     /**
-     * isTextNode - 是否是文本节点
-     * @param el - Node
-     * @return {boolean}
+     * 检查节点是否为文本节点
+     * @param el - 要检查的节点
+     * @returns 如果是文本节点返回 true，否则返回 false
+     * @example
+     * ```typescript
+     * isTextNode(document.createTextNode('hello')) // true
+     * isTextNode(document.createElement('div')) // false
+     * ```
      */
     isTextNode(el: Node): boolean;
     /**
-     * isCommentNode - 是否是注释节点
-     * @param el
-     * @return {boolean}
+     * 检查节点是否为注释节点
+     * @param el - 要检查的节点
+     * @returns 如果是注释节点返回 true，否则返回 false
+     * @example
+     * ```typescript
+     * isCommentNode(document.createComment('comment')) // true
+     * isCommentNode(document.createElement('div')) // false
+     * ```
      */
     isCommentNode(el: Node): boolean;
     /**
-     * isElementNode - 是否是元素节点
-     * @param el - Element
-     * @return {boolean}
+     * 检查节点是否为元素节点
+     * @param el - 要检查的节点
+     * @returns 如果是元素节点返回 true，否则返回 false
+     * @example
+     * ```typescript
+     * isElementNode(document.createElement('div')) // true
+     * isElementNode(document.createTextNode('hello')) // false
+     * ```
      */
     isElementNode(el: Node): boolean;
     /**
-     * createElement - 根据html字符串创建dom
-     * @param htmlStr - string
-     * @return {Element}
+     * 根据 HTML 字符串创建 DOM 元素
+     * @description 将 HTML 字符串转换为 DOM 元素
+     * @param htmlStr - HTML 字符串
+     * @returns 创建的 DOM 元素
+     * @example
+     * ```typescript
+     * createElement('<div class="test">Hello</div>') // 返回 div 元素
+     * ```
      */
     createElement(htmlStr: string): HTMLElement;
     /**
-     * getTopDom - 已source为开始向上查找元素
-     * @param {HtmlElement} source
-     * @param {string | string[]} selector
-     * @return {HtmlElement}
+     * 向上查找包含指定选择器的父元素
+     * @description 从指定元素开始向上查找包含指定类名的父元素
+     * @param source - 开始查找的元素
+     * @param selector - 选择器，可以是字符串或字符串数组
+     * @returns 找到的父元素，如果没找到返回 null
+     * @example
+     * ```typescript
+     * getTopDom(element, 'container') // 查找包含 container 类的父元素
+     * getTopDom(element, ['container', 'wrapper']) // 查找同时包含两个类的父元素
+     * ```
      */
     getTopDom(source: HTMLElement, selector: string | string[]): HTMLElement | null;
     /**
-     * on - 注册事件
-     * @param el
-     * @param tag
-     * @param type
-     * @param handler
-     * @param capture
+     * 注册事件监听器
+     * @description 为元素注册事件监听器，支持事件管理
+     * @param el - 要注册事件的元素
+     * @param tag - 事件标签，用于分组管理
+     * @param type - 事件类型
+     * @param handler - 事件处理函数
+     * @param capture - 是否在捕获阶段触发，默认为 false
+     * @example
+     * ```typescript
+     * on(element, 'click', 'click', () => console.log('clicked'), false)
+     * ```
      */
-    on(el: any, tag: string, type: string, handler: Function, capture?: boolean): void;
+    on(el: HTMLElement, tag: string, type: string, handler: EventListener, capture?: boolean): void;
     /**
-     * off
-     * @param el
-     * @param tag
-     * @param type
-     * @param handler
+     * 移除事件监听器
+     * @description 移除元素的事件监听器
+     * @param el - 要移除事件的元素
+     * @param tag - 事件标签
+     * @param type - 事件类型
+     * @param handler - 事件处理函数，可选
+     * @example
+     * ```typescript
+     * off(element, 'click', 'click', handler) // 移除特定处理函数
+     * off(element, 'click', 'click') // 移除所有 click 事件
+     * off(element, 'click') // 移除所有 click 标签的事件
+     * ```
      */
-    off(el: HTMLElement, tag: string, type: string, handler: Function): void;
+    off(el: HTMLElement, tag: string, type: string, handler?: EventListener): void;
     /**
-     * addClass
-     * @param {HTMLElement} el
-     * @param {String} classes
+     * 为元素添加 CSS 类
+     * @param el - 要添加类的元素
+     * @param classes - CSS 类名，多个类名用空格分隔
+     * @example
+     * ```typescript
+     * addClass(element, 'active') // 添加单个类
+     * addClass(element, 'active highlight') // 添加多个类
+     * ```
      */
-    addClass(el: any, classes?: string): void;
+    addClass(el: HTMLElement, classes?: string): void;
     /**
-     * removeClass
-     * @param {HTMLElement} el
-     * @param {String} classes
+     * 从元素移除 CSS 类
+     * @param el - 要移除类的元素
+     * @param classes - CSS 类名，多个类名用空格分隔
+     * @example
+     * ```typescript
+     * removeClass(element, 'active') // 移除单个类
+     * removeClass(element, 'active highlight') // 移除多个类
+     * ```
      */
-    removeClass(el: any, classes?: string): void;
+    removeClass(el: HTMLElement, classes?: string): void;
     /**
-     * hasClass
-     * @param {HTMLElement} el
-     * @param {String} className
-     * @return {Boolean}
+     * 检查元素是否包含指定的 CSS 类
+     * @param el - 要检查的元素
+     * @param className - CSS 类名
+     * @returns 如果包含该类返回 true，否则返回 false
+     * @example
+     * ```typescript
+     * hasClass(element, 'active') // 检查是否包含 active 类
+     * ```
      */
-    hasClass(el: any, className: string): boolean;
+    hasClass(el: HTMLElement, className: string): boolean;
     /**
-     * DOM没有提供insertAfter()方法
-     * @param {HtmlElement} newElement
-     * @param {HtmlElement} targetElement
+     * 在目标元素后插入新元素
+     * @description DOM 没有提供 insertAfter() 方法，这是自定义实现
+     * @param newElement - 要插入的新元素
+     * @param targetElement - 目标元素
+     * @example
+     * ```typescript
+     * insertAfter(newDiv, targetDiv) // 在 targetDiv 后插入 newDiv
+     * ```
      */
-    insertAfter(newElement: any, targetElement: any): void;
+    insertAfter(newElement: HTMLElement, targetElement: HTMLElement): void;
     /**
-     * prepend
-     * @param el
-     * @param children
+     * 在元素开头插入子元素
+     * @param el - 父元素
+     * @param children - 子元素，可以是字符串或 DOM 元素
+     * @example
+     * ```typescript
+     * prepend(container, '<div>First</div>') // 插入 HTML 字符串
+     * prepend(container, newElement) // 插入 DOM 元素
+     * ```
      */
-    prepend(el: any, children: any): void;
+    prepend(el: HTMLElement, children: string | HTMLElement): void;
     /**
-     * remove
-     * @param el
+     * 移除元素
+     * @param el - 要移除的元素
+     * @example
+     * ```typescript
+     * remove(element) // 从 DOM 中移除元素
+     * ```
      */
-    remove(el: any): void;
+    remove(el: HTMLElement): void;
     /**
      * getParentElementByTag
      * @param {HtmlElement} el

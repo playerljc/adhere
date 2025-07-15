@@ -1,79 +1,122 @@
-import React, { type RefObject } from 'react';
+import React, { type ReactElement, type RefObject } from 'react';
 import type { ConfigProviderContext } from '@baifendian/adhere-ui-configprovider/es/types';
 import type { ISuspense, SuspenseProps, SuspenseState } from './types';
 /**
- * Suspense
- * @class Suspense
- * @classdesc Suspense
+ * Suspense - 抽象基类组件
  *
- * 需要重写的方法
- * fetchData
- * renderInner
- * showLoading
+ * 这是一个抽象基类，提供了 Suspense 组件的核心功能。
+ * 子类需要实现以下抽象方法：
+ * - fetchData: 数据获取方法
+ * - renderInner: 渲染实际内容
+ * - showLoading: 是否显示加载状态
+ * - onFirstFetchDataBefore: 第一次数据获取前的回调
+ * - onFirstFetchDataAfter: 第一次数据获取后的回调
+ *
+ * @template P - 属性类型，继承自 SuspenseProps
+ * @template S - 状态类型，继承自 SuspenseState
+ * @abstract
  */
 declare abstract class Suspense<P extends SuspenseProps = SuspenseProps, S extends SuspenseState = SuspenseState> extends React.PureComponent<P, S> implements ISuspense {
+    /** 是否为第一次加载 */
     isFirst: boolean;
+    /** 是否为第一次加载状态 */
     isFirstLoading: boolean;
+    /** 子组件包装器的引用 */
     protected childrenWrapRef: RefObject<HTMLDivElement>;
+    /** 配置提供者上下文 */
     protected _context: ConfigProviderContext | undefined;
     static displayName: string;
     static defaultProps: any;
     static propTypes: any;
     /**
-     * fetchData
-     * @description 加载数据
-     * @param params?: any
-     * @return Promise<any>
+     * 数据获取方法
+     * @description 抽象方法，子类必须实现
+     * @param params - 可选的参数
+     * @returns Promise<any> 数据获取的 Promise
      */
     abstract fetchData(params?: any): Promise<any>;
     /**
-     * renderInner
-     * @description 渲染实际内容
-     * @return React.ReactElement
+     * 渲染实际内容
+     * @description 抽象方法，子类必须实现
+     * @returns ReactNode 渲染的内容
      */
     abstract renderInner(): React.ReactNode;
     /**
-     * showLoading
-     * @description 是否显示遮罩
-     * @return boolean
+     * 是否显示加载状态
+     * @description 抽象方法，子类必须实现
+     * @returns boolean 是否显示加载状态
      */
     abstract showLoading(): boolean;
     /**
-     * onFirstFetchDataBefore
-     * @description 第一次调用接口之前
-     * @return Promise<any>
+     * 第一次数据获取前的回调
+     * @description 抽象方法，子类必须实现
+     * @returns Promise<any> 回调的 Promise
      */
     abstract onFirstFetchDataBefore(): Promise<any>;
     /**
-     * onFirstFetchDataAfter
-     * @description 第一次调用接口之后
-     * @param res any
-     * @return Promise<any>
+     * 第一次数据获取后的回调
+     * @description 抽象方法，子类必须实现
+     * @param res - 数据获取的结果
+     * @returns Promise<any> 回调的 Promise
      */
     abstract onFirstFetchDataAfter(res?: any): Promise<any>;
-    constructor(props: any);
-    componentWillReceiveProps(nextProps: any): void;
+    /**
+     * 构造函数
+     * @param props - 组件属性
+     */
+    constructor(props: P);
+    /**
+     * 组件即将接收新属性时的生命周期方法
+     * @param nextProps - 新的属性对象
+     */
+    componentWillReceiveProps(nextProps: P): void;
+    /**
+     * 组件挂载后的生命周期方法
+     */
     componentDidMount(): void;
     /**
-     * renderNormalFirstLoading
-     * @return React.ReactElement
+     * 更新主题配置
+     * @private
+     */
+    private updateTheme;
+    /**
+     * 初始化数据获取
+     * @private
+     */
+    private initializeDataFetch;
+    /**
+     * 渲染默认的首次加载状态
+     * @description 创建 7 个骨架屏组件
+     * @returns ReactElement 首次加载的 UI
+     * @private
+     * @static
      */
     private static renderNormalFirstLoading;
     /**
-     * renderFirstLoading - 渲染第一次Loading的UI
-     * @return {React.Element}
+     * 渲染首次加载状态
+     * @description 根据 props 中的 firstLoading 或默认样式渲染
+     * @returns ReactElement 首次加载的 UI
+     * @private
      */
     private renderFirstLoading;
     /**
-     * renderNormal - 渲染正常的UI
-     * @return {React.Element}
+     * 渲染正常状态
+     * @description 根据是否自定义 normalLoading 来决定渲染方式
+     * @returns ReactNode 正常状态的 UI
+     * @private
      */
     private renderNormal;
     /**
-     * renderDispatch
-     * @return {React.Element|*}
+     * 渲染分发器
+     * @description 根据加载状态决定渲染首次加载还是正常状态
+     * @returns ReactNode 渲染的内容
+     * @private
      */
     private renderDispatch;
-    render(): React.JSX.Element;
+    /**
+     * 渲染组件
+     * @returns ReactElement 组件的 JSX
+     */
+    render(): ReactElement;
 }
 export default Suspense;

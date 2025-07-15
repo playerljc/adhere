@@ -27,10 +27,11 @@ const selectorPrefix = 'adhere-ui-signature';
 const { useTheme } = ConfigProvider;
 
 /**
- * Signature
- * @param props
- * @param ref
- * @constructor
+ * 签名组件
+ * @description 提供签名功能，支持在模态框中编辑签名并保存为base64格式
+ * @param props - 组件属性
+ * @param ref - 组件引用
+ * @returns 签名组件实例
  */
 const InternalSignature = memo<PropsWithoutRef<SignatureProps> & RefAttributes<SignatureHandle>>(
   forwardRef<SignatureHandle, SignatureProps>(
@@ -65,20 +66,14 @@ const InternalSignature = memo<PropsWithoutRef<SignatureProps> & RefAttributes<S
 
                         const isEmpty = coreRef.current.isEmpty();
                         if (isEmpty) {
-                          if (onChange) {
-                            onChange('');
-                            dialog?.close();
-                          }
-
+                          onChange?.('');
+                          dialog?.close();
                           return;
                         }
 
                         const base64 = coreRef.current.save();
-
-                        if (onChange) {
-                          onChange(base64);
-                          dialog?.close();
-                        }
+                        onChange?.(base64);
+                        dialog?.close();
                       }}
                     >
                       {Intl.get('save')}
@@ -93,16 +88,14 @@ const InternalSignature = memo<PropsWithoutRef<SignatureProps> & RefAttributes<S
             {Intl.get('edit_signature')}
           </div>
         );
-      }, [coreProps, value, onChange]);
+      }, [coreProps, modalProps, onChange]);
 
       const renderInner = useCallback(() => {
-        return value ? <img src={value} alt="" /> : null;
+        return value ? <img src={value} alt="签名" /> : null;
       }, [value]);
 
       useImperativeHandle(ref, () => ({
-        isEmpty: () => {
-          return !value;
-        },
+        isEmpty: () => !value,
       }));
 
       return (

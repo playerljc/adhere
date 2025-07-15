@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ConditionalRender from './ConditionalRender';\nexport default ConditionalRender;\n"],"names":["ConditionalRender"],"mappings":"OAAOA,sBAAuB,qCACfA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ConditionalRender from './ConditionalRender';\n// 导出主组件\nexport default ConditionalRender;\n// 导出工具函数\nexport { deal } from './Util';\n"],"names":["ConditionalRender"],"mappings":"OAAOA,sBAAuB,qCAEfA,6BAEc,KAAR"}

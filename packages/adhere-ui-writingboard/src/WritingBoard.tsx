@@ -8,6 +8,7 @@ import React, {
   useImperativeHandle,
   useLayoutEffect,
   useRef,
+  useCallback,
 } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -29,10 +30,11 @@ const selectorPrefix = 'adhere-ui-writing-board';
 const { useTheme } = ConfigProvider;
 
 /**
- * WritingBoard
- * @param props
- * @param ref
- * @constructor
+ * 画板组件
+ * @description 提供多种绘制模式的画板功能，支持自由绘制、直线、矩形、圆形、三角形等图形绘制
+ * @param props - 组件属性
+ * @param ref - 组件引用
+ * @returns 画板组件实例
  */
 const InternalWritingBoard = memo<
   PropsWithoutRef<WritingBoardProps> & RefAttributes<WritingBoardHandle>
@@ -48,26 +50,55 @@ const InternalWritingBoard = memo<
     const containerRef = useRef<HTMLDivElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const ctx = useRef<CanvasRenderingContext2D | null>(null);
-    const ro = useRef<any>(null);
+    const ro = useRef<ResizeObserver | null>(null);
 
     const startPoint = useRef<Point | null>(null);
     const prePoint = useRef<Point | null>(null);
     const curShape = useRef<Mode>(defaultMode);
     const lineWidth = useRef<number>(defaultLineWidth);
     const strokeStyle = useRef<string>(defaultStrokeStyle);
-    const stack = useRef<any>([]);
+    
+    // 定义绘制栈项的类型
+    type StackItem = {
+      shape: Mode;
+      sourcePoint?: Point;
+      targetPoint?: Point;
+      lineWidth?: number;
+      strokeStyle?: string;
+      x?: number;
+      y?: number;
+      width?: number;
+      height?: number;
+      radiusX?: number;
+      radiusY?: number;
+      rotation?: number;
+      startAngle?: number;
+      endAngle?: number;
+      points?: Point[];
+    };
+    
+    const stack = useRef<StackItem[]>([]);
     const stackIndex = useRef<number>(0);
 
-    const config = useRef<Map<Mode, any>>(
+    // 定义绘制配置的类型
+    type DrawConfig = {
+      draw: (params: { sourcePoint?: Point; targetPoint: Point }) => void;
+      drawStack: (item: StackItem) => void;
+      mouseup: (point: Point) => void;
+    };
+
+    const config = useRef<Map<Mode, DrawConfig>>(
       new Map([
         // 自由模式
         [
           Mode.FREE,
           {
             draw({ sourcePoint, targetPoint }) {
-              ctx?.current?.beginPath();
-              ctx?.current?.moveTo(sourcePoint.x, sourcePoint.y);
-              ctx?.current?.lineTo(targetPoint.x, targetPoint.y);
+              if (!ctx.current || !sourcePoint) return;
+              
+              ctx.current.beginPath();
+              ctx.current.moveTo(sourcePoint.x, sourcePoint.y);
+              ctx.current.lineTo(targetPoint.x, targetPoint.y);
 
               stack.current.push({
                 shape: curShape.current,
@@ -76,27 +107,30 @@ const InternalWritingBoard = memo<
               });
 
               style({
-                lineWidth: lineWidth?.current,
-                strokeStyle: strokeStyle?.current,
+                lineWidth: lineWidth.current,
+                strokeStyle: strokeStyle.current,
               });
 
-              // 描边
-              ctx?.current?.stroke();
+              ctx.current.stroke();
             },
             drawStack(item) {
-              ctx?.current?.beginPath();
-              ctx?.current?.moveTo(item.sourcePoint.x, item.sourcePoint.y);
-              ctx?.current?.lineTo(item.targetPoint.x, item.targetPoint.y);
+              if (!ctx.current || !item.sourcePoint || !item.targetPoint) return;
+              
+              ctx.current.beginPath();
+              ctx.current.moveTo(item.sourcePoint.x, item.sourcePoint.y);
+              ctx.current.lineTo(item.targetPoint.x, item.targetPoint.y);
 
               style({
-                lineWidth: item.lineWidth,
-                strokeStyle: item.strokeStyle,
+                lineWidth: item.lineWidth || 2,
+                strokeStyle: (item.strokeStyle as string) || '#000',
               });
 
-              ctx?.current?.stroke();
+              ctx.current.stroke();
             },
             mouseup(point) {
-              draw({ sourcePoint: prePoint.current, targetPoint: point });
+              if (prePoint.current) {
+                draw({ sourcePoint: prePoint.current, targetPoint: point });
+              }
             },
           },
         ],
@@ -105,43 +139,47 @@ const InternalWritingBoard = memo<
           Mode.LINE,
           {
             draw({ targetPoint }) {
-              // 清除画布
-              ctx?.current?.clearRect(
+              if (!ctx.current || !canvasRef.current || !startPoint.current) return;
+              
+              ctx.current.clearRect(
                 0,
                 0,
-                canvasRef?.current?.width!,
-                canvasRef?.current?.height!,
+                canvasRef.current.width,
+                canvasRef.current.height,
               );
               drawStack();
-              ctx?.current?.beginPath();
-              ctx?.current?.moveTo(startPoint?.current?.x!, startPoint?.current?.y!);
-              ctx?.current?.lineTo(targetPoint.x, targetPoint.y);
+              ctx.current.beginPath();
+              ctx.current.moveTo(startPoint.current.x, startPoint.current.y);
+              ctx.current.lineTo(targetPoint.x, targetPoint.y);
 
               style({
-                lineWidth: lineWidth?.current,
-                strokeStyle: strokeStyle?.current,
+                lineWidth: lineWidth.current,
+                strokeStyle: strokeStyle.current,
               });
 
-              // 描边
-              ctx?.current?.stroke();
+              ctx.current.stroke();
             },
             drawStack(item) {
-              ctx?.current?.beginPath();
-              ctx?.current?.moveTo(item.sourcePoint.x, item.sourcePoint.y);
-              ctx?.current?.lineTo(item.targetPoint.x, item.targetPoint.y);
+              if (!ctx.current || !item.sourcePoint || !item.targetPoint) return;
+              
+              ctx.current.beginPath();
+              ctx.current.moveTo(item.sourcePoint.x, item.sourcePoint.y);
+              ctx.current.lineTo(item.targetPoint.x, item.targetPoint.y);
 
               style({
-                lineWidth: item.lineWidth,
-                strokeStyle: item.strokeStyle,
+                lineWidth: item.lineWidth || 2,
+                strokeStyle: (item.strokeStyle as string) || '#000',
               });
 
-              ctx?.current?.stroke();
+              ctx.current.stroke();
             },
             mouseup(point) {
+              if (!startPoint.current) return;
+              
               stack.current.push({
                 shape: curShape.current,
-                lineWidth: ctx?.current?.lineWidth,
-                strokeStyle: ctx?.current?.strokeStyle,
+                lineWidth: ctx.current?.lineWidth || 2,
+                strokeStyle: (ctx.current?.strokeStyle as string) || '#000',
                 sourcePoint: startPoint.current,
                 targetPoint: point,
               });
@@ -153,55 +191,63 @@ const InternalWritingBoard = memo<
           Mode.RECTANGLE,
           {
             draw({ targetPoint }) {
-              // 清除画布
-              ctx?.current?.clearRect(
+              if (!ctx.current || !canvasRef.current || !startPoint.current) return;
+              
+              ctx.current.clearRect(
                 0,
                 0,
-                canvasRef?.current?.width!,
-                canvasRef?.current?.height!,
+                canvasRef.current.width,
+                canvasRef.current.height,
               );
               drawStack();
-              ctx?.current?.beginPath();
+              ctx.current.beginPath();
 
-              // 判断target在start的四个方向
               const rectStart = getPoint({ startPoint: startPoint.current, targetPoint });
-              ctx?.current?.rect(
+              ctx.current.rect(
                 rectStart.x,
                 rectStart.y,
-                Math.abs(targetPoint.x - startPoint?.current?.x!),
-                Math.abs(targetPoint.y - startPoint?.current?.y!),
+                Math.abs(targetPoint.x - startPoint.current.x),
+                Math.abs(targetPoint.y - startPoint.current.y),
               );
 
               style({
-                lineWidth: lineWidth?.current,
-                strokeStyle: strokeStyle?.current,
+                lineWidth: lineWidth.current,
+                strokeStyle: strokeStyle.current,
               });
 
-              // 描边
-              ctx?.current?.stroke();
+              ctx.current.stroke();
             },
             drawStack(item) {
-              ctx?.current?.beginPath();
-              ctx?.current?.rect(item.x, item.y, item.width, item.height);
+              if (!ctx.current) return;
+              
+              ctx.current.beginPath();
+              ctx.current.rect(
+                item.x || 0,
+                item.y || 0,
+                item.width || 0,
+                item.height || 0,
+              );
 
               style({
-                lineWidth: item.lineWidth,
-                strokeStyle: item.strokeStyle,
+                lineWidth: item.lineWidth || 2,
+                strokeStyle: (item.strokeStyle as string) || '#000',
               });
 
-              ctx?.current?.stroke();
+              ctx.current.stroke();
             },
             mouseup(point) {
+              if (!startPoint.current) return;
+              
               const rectStart = getPoint({ startPoint: startPoint.current, targetPoint: point });
 
               stack.current.push({
                 shape: curShape.current,
-                lineWidth: ctx?.current?.lineWidth,
-                strokeStyle: ctx?.current?.strokeStyle,
+                lineWidth: ctx.current?.lineWidth || 2,
+                strokeStyle: (ctx.current?.strokeStyle as string) || '#000',
                 x: rectStart.x,
                 y: rectStart.y,
-                width: Math.abs(point.x - startPoint?.current?.x!),
-                height: Math.abs(point.y - startPoint?.current?.y!),
+                width: Math.abs(point.x - startPoint.current.x),
+                height: Math.abs(point.y - startPoint.current.y),
               });
             },
           },
@@ -211,25 +257,25 @@ const InternalWritingBoard = memo<
           Mode.CIRCLE,
           {
             draw({ targetPoint }) {
-              // 清除画布
-              ctx?.current?.clearRect(
+              if (!ctx.current || !canvasRef.current || !startPoint.current) return;
+              
+              ctx.current.clearRect(
                 0,
                 0,
-                canvasRef?.current?.width!,
-                canvasRef?.current?.height!,
+                canvasRef.current.width,
+                canvasRef.current.height,
               );
               drawStack();
 
-              ctx?.current?.beginPath();
-              // 判断target在start的四个方向
-              const rectStart = getPoint({ startPoint: startPoint.current, targetPoint });
+              ctx.current.beginPath();
+              const center = getPoint({ startPoint: startPoint.current, targetPoint });
               const radius = getDistanceByBetweenPoint({
                 p2: targetPoint,
                 p1: startPoint.current,
               });
-              ctx?.current?.ellipse(
-                rectStart.x,
-                rectStart.y,
+              ctx.current.ellipse(
+                center.x,
+                center.y,
                 radius,
                 radius,
                 (45 * Math.PI) / 180,
@@ -238,39 +284,43 @@ const InternalWritingBoard = memo<
               );
 
               style({
-                lineWidth: lineWidth?.current,
-                strokeStyle: strokeStyle?.current,
+                lineWidth: lineWidth.current,
+                strokeStyle: strokeStyle.current,
               });
 
-              // 描边
-              ctx?.current?.stroke();
+              ctx.current.stroke();
             },
             drawStack(item) {
-              ctx?.current?.beginPath();
-              ctx?.current?.ellipse(
-                item.x,
-                item.y,
-                item.radiusX,
-                item.radiusY,
-                item.rotation,
-                item.startAngle,
-                item.endAngle,
+              if (!ctx.current) return;
+              
+              ctx.current.beginPath();
+              ctx.current.ellipse(
+                item.x || 0,
+                item.y || 0,
+                item.radiusX || 0,
+                item.radiusY || 0,
+                item.rotation || 0,
+                item.startAngle || 0,
+                item.endAngle || 2 * Math.PI,
               );
 
               style({
-                lineWidth: item.lineWidth,
-                strokeStyle: item.strokeStyle,
+                lineWidth: item.lineWidth || 2,
+                strokeStyle: (item.strokeStyle as string) || '#000',
               });
 
-              ctx?.current?.stroke();
+              ctx.current.stroke();
             },
             mouseup(point) {
+              if (!startPoint.current) return;
+              
               const center = getPoint({ startPoint: startPoint.current, targetPoint: point });
-              const radius = getDistanceByBetweenPoint({ p2: point, p1: startPoint?.current });
+              const radius = getDistanceByBetweenPoint({ p2: point, p1: startPoint.current });
+              
               stack.current.push({
                 shape: curShape.current,
-                lineWidth: ctx?.current?.lineWidth,
-                strokeStyle: ctx?.current?.strokeStyle,
+                lineWidth: ctx.current?.lineWidth || 2,
+                strokeStyle: (ctx.current?.strokeStyle as string) || '#000',
                 x: center.x,
                 y: center.y,
                 radiusX: radius,
@@ -287,51 +337,55 @@ const InternalWritingBoard = memo<
           Mode.TRIANGLE,
           {
             draw({ targetPoint }) {
-              // 清除画布
-              ctx?.current?.clearRect(
+              if (!ctx.current || !canvasRef.current || !startPoint.current) return;
+              
+              ctx.current.clearRect(
                 0,
                 0,
-                canvasRef?.current?.width!,
-                canvasRef?.current?.height!,
+                canvasRef.current.width,
+                canvasRef.current.height,
               );
               drawStack();
-              ctx?.current?.beginPath();
+              ctx.current.beginPath();
 
               const points = triangle({ startPoint: startPoint.current, targetPoint });
-              ctx?.current?.moveTo(points[0].x, points[0].y);
-              ctx?.current?.lineTo(points[1].x, points[1].y);
-              ctx?.current?.lineTo(points[2].x, points[2].y);
-              ctx?.current?.closePath();
+              ctx.current.moveTo(points[0].x, points[0].y);
+              ctx.current.lineTo(points[1].x, points[1].y);
+              ctx.current.lineTo(points[2].x, points[2].y);
+              ctx.current.closePath();
 
               style({
-                lineWidth: lineWidth?.current,
-                strokeStyle: strokeStyle?.current,
+                lineWidth: lineWidth.current,
+                strokeStyle: strokeStyle.current,
               });
 
-              // 描边
-              ctx?.current?.stroke();
+              ctx.current.stroke();
             },
             drawStack(item) {
-              ctx?.current?.beginPath();
-              ctx?.current?.moveTo(item.points[0].x, item.points[0].y);
-              ctx?.current?.lineTo(item.points[1].x, item.points[1].y);
-              ctx?.current?.lineTo(item.points[2].x, item.points[2].y);
-              ctx?.current?.closePath();
+              if (!ctx.current || !item.points) return;
+              
+              ctx.current.beginPath();
+              ctx.current.moveTo(item.points[0].x, item.points[0].y);
+              ctx.current.lineTo(item.points[1].x, item.points[1].y);
+              ctx.current.lineTo(item.points[2].x, item.points[2].y);
+              ctx.current.closePath();
 
               style({
-                lineWidth: item.lineWidth,
-                strokeStyle: item.strokeStyle,
+                lineWidth: item.lineWidth || 2,
+                strokeStyle: (item.strokeStyle as string) || '#000',
               });
 
-              ctx?.current?.stroke();
+              ctx.current.stroke();
             },
             mouseup(point) {
+              if (!startPoint.current) return;
+              
               const points = triangle({ startPoint: startPoint.current, targetPoint: point });
 
               stack.current.push({
                 shape: curShape.current,
-                lineWidth: ctx?.current?.lineWidth,
-                strokeStyle: ctx?.current?.strokeStyle,
+                lineWidth: ctx.current?.lineWidth || 2,
+                strokeStyle: (ctx.current?.strokeStyle as string) || '#000',
                 points,
               });
             },
@@ -342,9 +396,11 @@ const InternalWritingBoard = memo<
           Mode.RUBBER,
           {
             draw({ sourcePoint, targetPoint }) {
-              ctx?.current?.beginPath();
-              ctx?.current?.moveTo(sourcePoint.x, sourcePoint.y);
-              ctx?.current?.lineTo(targetPoint.x, targetPoint.y);
+              if (!ctx.current || !sourcePoint) return;
+              
+              ctx.current.beginPath();
+              ctx.current.moveTo(sourcePoint.x, sourcePoint.y);
+              ctx.current.lineTo(targetPoint.x, targetPoint.y);
 
               stack.current.push({
                 shape: curShape.current,
@@ -356,21 +412,25 @@ const InternalWritingBoard = memo<
               (ctx.current as CanvasRenderingContext2D).strokeStyle = '#fff';
               (ctx.current as CanvasRenderingContext2D).lineCap = 'round';
               (ctx.current as CanvasRenderingContext2D).lineJoin = 'round';
-              ctx?.current?.stroke();
+              ctx.current.stroke();
             },
             drawStack(item) {
-              ctx?.current?.beginPath();
-              ctx?.current?.moveTo(item.sourcePoint.x, item.sourcePoint.y);
-              ctx?.current?.lineTo(item.targetPoint.x, item.targetPoint.y);
+              if (!ctx.current || !item.sourcePoint || !item.targetPoint) return;
+              
+              ctx.current.beginPath();
+              ctx.current.moveTo(item.sourcePoint.x, item.sourcePoint.y);
+              ctx.current.lineTo(item.targetPoint.x, item.targetPoint.y);
 
               (ctx.current as CanvasRenderingContext2D).lineWidth = 15;
               (ctx.current as CanvasRenderingContext2D).strokeStyle = '#fff';
               (ctx.current as CanvasRenderingContext2D).lineCap = 'round';
               (ctx.current as CanvasRenderingContext2D).lineJoin = 'round';
-              ctx?.current?.stroke();
+              ctx.current.stroke();
             },
             mouseup(point) {
-              draw({ sourcePoint: prePoint.current, targetPoint: point });
+              if (prePoint.current) {
+                draw({ sourcePoint: prePoint.current, targetPoint: point });
+              }
             },
           },
         ],
@@ -384,23 +444,26 @@ const InternalWritingBoard = memo<
     });
 
     /**
-     * style
-     * @param lineWidth
-     * @param strokeStyle
+     * 设置画布样式
+     * @param lineWidth - 线条宽度
+     * @param strokeStyle - 线条颜色
      */
-    function style({ lineWidth, strokeStyle }) {
-      (ctx.current as CanvasRenderingContext2D).lineWidth = lineWidth;
-      (ctx.current as CanvasRenderingContext2D).strokeStyle = strokeStyle;
-      (ctx.current as CanvasRenderingContext2D).lineCap = 'round';
-      (ctx.current as CanvasRenderingContext2D).lineJoin = 'round';
+    function style({ lineWidth, strokeStyle }: { lineWidth: number; strokeStyle: string }) {
+      if (!ctx.current) return;
+      
+      ctx.current.lineWidth = lineWidth;
+      ctx.current.strokeStyle = strokeStyle;
+      ctx.current.lineCap = 'round';
+      ctx.current.lineJoin = 'round';
     }
 
     /**
-     * triangle - 获取三角形的三个点坐标
-     * @param startPoint
-     * @param targetPoint
+     * 获取三角形的三个点坐标
+     * @param startPoint - 起始点
+     * @param targetPoint - 目标点
+     * @returns 三角形的三个顶点
      */
-    function triangle({ startPoint, targetPoint }) {
+    function triangle({ startPoint, targetPoint }: { startPoint: Point; targetPoint: Point }): Point[] {
       const s = getPoint({ startPoint, targetPoint });
 
       const w = Math.abs(targetPoint.x - startPoint.x);
@@ -424,9 +487,10 @@ const InternalWritingBoard = memo<
     }
 
     /**
-     * devicePointToCanvasPoint
-     * @param {{clientX: number; clientY: number}}
-     * @return {Point}
+     * 将设备坐标转换为画布坐标
+     * @param clientX - 客户端X坐标
+     * @param clientY - 客户端Y坐标
+     * @returns 画布坐标点
      */
     function devicePointToCanvasPoint({
       clientX,
@@ -435,44 +499,47 @@ const InternalWritingBoard = memo<
       clientX: number;
       clientY: number;
     }): Point {
-      const { x, y } = canvasRef?.current?.getBoundingClientRect()!;
-
-      // const zoom = Util.getZoom();
+      const rect = canvasRef.current?.getBoundingClientRect();
+      if (!rect) return { x: 0, y: 0 };
 
       return {
-        x: clientX /*/ zoom*/ - x,
-        y: clientY /*/ zoom*/ - y,
+        x: clientX - rect.x,
+        y: clientY - rect.y,
       };
     }
 
     /**
-     * getDistanceByBetweenPoint
-     * @description 获取p1,p2两点间的距离
-     * @param p1
-     * @param p2
+     * 获取两点间的距离
+     * @param p1 - 第一个点
+     * @param p2 - 第二个点
+     * @returns 两点间的距离
      */
-    function getDistanceByBetweenPoint({ p1, p2 }) {
+    function getDistanceByBetweenPoint({ p1, p2 }: { p1: Point; p2: Point }): number {
       const { x: Ax1, y: Ay1 } = p1;
       const { x: Ax2, y: Ay2 } = p2;
-      return Math.sqrt(Math.pow(Ax2 - Ax1, 2) + Math.pow(Ay2 - Ay1, 2)); // 计算A1A2的长度
+      return Math.sqrt(Math.pow(Ax2 - Ax1, 2) + Math.pow(Ay2 - Ay1, 2));
     }
 
     /**
-     * drawStack
+     * 重绘画布栈
      */
     function drawStack() {
       for (let i = 0; i < stack.current.length; i++) {
         const item = stack.current[i];
-        config.current.get(item.shape).drawStack(item);
+        const configItem = config.current.get(item.shape);
+        if (configItem) {
+          configItem.drawStack(item);
+        }
       }
     }
 
     /**
-     * getPoint
-     * @param startPoint
-     * @param targetPoint
+     * 获取矩形的起始点坐标
+     * @param startPoint - 起始点
+     * @param targetPoint - 目标点
+     * @returns 矩形的起始点坐标
      */
-    function getPoint({ startPoint, targetPoint }) {
+    function getPoint({ startPoint, targetPoint }: { startPoint: Point; targetPoint: Point }): Point {
       if (targetPoint.x <= startPoint.x && targetPoint.y <= startPoint.y) {
         // leftTop
         return targetPoint;
@@ -488,28 +555,30 @@ const InternalWritingBoard = memo<
           x: startPoint.x,
           y: targetPoint.y,
         };
-      } else if (targetPoint.x >= startPoint.x && targetPoint.y >= startPoint.y) {
+      } else {
         // rightBottom
         return startPoint;
       }
     }
 
     /**
-     * draw
-     * @param sourcePoint
-     * @param targetPoint
+     * 执行绘制操作
+     * @param sourcePoint - 起始点
+     * @param targetPoint - 目标点
      */
-    function draw({ sourcePoint, targetPoint }) {
-      const entry = config?.current?.get(curShape.current);
-      entry.draw({ sourcePoint, targetPoint });
+    function draw({ sourcePoint, targetPoint }: { sourcePoint?: Point; targetPoint: Point }) {
+      const entry = config.current.get(curShape.current);
+      if (entry) {
+        entry.draw({ sourcePoint, targetPoint });
+      }
     }
 
     // 注册事件
-    function onMousemove(e) {
+    function onMousemove(e: MouseEvent) {
       move(e);
     }
 
-    function onTouchmove(e) {
+    function onTouchmove(e: TouchEvent) {
       move({
         ...e,
         clientX: e.targetTouches[0].clientX,
@@ -517,11 +586,11 @@ const InternalWritingBoard = memo<
       });
     }
 
-    function onMouseup(e) {
+    function onMouseup(e: MouseEvent) {
       end(e);
     }
 
-    function onTouchend(e) {
+    function onTouchend(e: TouchEvent) {
       end({
         ...e,
         clientX: e.changedTouches[0].clientX,
@@ -530,58 +599,64 @@ const InternalWritingBoard = memo<
     }
 
     /**
-     * start
-     * @param e
+     * 开始绘制
+     * @param e - 事件对象
      */
-    function start(e) {
-      // 屏幕坐标转换成canvas坐标
+    function start(e: { clientX: number; clientY: number }) {
       const { clientX, clientY } = e;
 
       startPoint.current = prePoint.current = devicePointToCanvasPoint({ clientX, clientY });
 
-      containerRef?.current?.addEventListener('mousemove', onMousemove);
-      containerRef?.current?.addEventListener('mouseup', onMouseup);
-      containerRef?.current?.addEventListener('touchmove', onTouchmove);
-      containerRef?.current?.addEventListener('touchend', onTouchend);
+      containerRef.current?.addEventListener('mousemove', onMousemove);
+      containerRef.current?.addEventListener('mouseup', onMouseup);
+      containerRef.current?.addEventListener('touchmove', onTouchmove);
+      containerRef.current?.addEventListener('touchend', onTouchend);
     }
 
     /**
-     * move
-     * @param e
+     * 移动绘制
+     * @param e - 事件对象
      */
-    function move(e) {
+    function move(e: { clientX: number; clientY: number }) {
       const { clientX, clientY } = e;
 
       const point = devicePointToCanvasPoint({ clientX, clientY });
-      draw({ sourcePoint: prePoint.current, targetPoint: point });
+      if (prePoint.current) {
+        draw({ sourcePoint: prePoint.current, targetPoint: point });
+      }
       prePoint.current = point;
     }
 
     /**
-     * end
-     * @param e
+     * 结束绘制
+     * @param e - 事件对象
      */
-    function end(e) {
+    function end(e: { clientX: number; clientY: number }) {
       const { clientX, clientY } = e;
 
       const point = devicePointToCanvasPoint({ clientX, clientY });
 
-      config?.current.get(curShape.current)?.mouseup(point);
+      const entry = config.current.get(curShape.current);
+      if (entry) {
+        entry.mouseup(point);
+      }
 
       startPoint.current = null;
       prePoint.current = null;
 
-      containerRef?.current?.removeEventListener('mousemove', onMousemove);
-      containerRef?.current?.removeEventListener('mouseup', onMouseup);
-      containerRef?.current?.removeEventListener('touchmove', onTouchmove);
-      containerRef?.current?.removeEventListener('touchend', onTouchend);
+      containerRef.current?.removeEventListener('mousemove', onMousemove);
+      containerRef.current?.removeEventListener('mouseup', onMouseup);
+      containerRef.current?.removeEventListener('touchmove', onTouchmove);
+      containerRef.current?.removeEventListener('touchend', onTouchend);
     }
 
     /**
-     * clear
+     * 清除画布
      */
     function clear() {
-      ctx?.current?.clearRect(0, 0, canvasRef?.current?.width!, canvasRef?.current?.height!);
+      if (!ctx.current || !canvasRef.current) return;
+      
+      ctx.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
 
       prePoint.current = startPoint.current = null;
 
@@ -591,27 +666,31 @@ const InternalWritingBoard = memo<
     }
 
     /**
-     * toDataURL
-     * @default canvas导出base64
-     * @param backgroundColor
-     * @param type
-     * @param quality
+     * 导出画布为DataURL
+     * @param backgroundColor - 背景颜色
+     * @param type - 图片类型
+     * @param quality - 图片质量
+     * @returns base64字符串
      */
-    function toDataURL(backgroundColor?: string, type?: string, quality?: any) {
+    function toDataURL(backgroundColor?: string, type?: string, quality?: number): string | undefined {
+      if (!canvasRef.current) return;
+
       if (backgroundColor) {
         const [R, G, B] = Util.colorToRgb(backgroundColor);
 
         const fillsIndex: number[] = [];
 
         // 先设置背景
-        let imageData = ctx?.current?.getImageData(
+        let imageData = ctx.current?.getImageData(
           0,
           0,
-          canvasRef?.current?.width!,
-          canvasRef?.current?.height!,
-        )!;
+          canvasRef.current.width,
+          canvasRef.current.height,
+        );
+        
+        if (!imageData) return;
 
-        for (let i = 0; i < imageData?.data?.length; i += 4) {
+        for (let i = 0; i < imageData.data.length; i += 4) {
           // 当该像素是透明的，则设置成backgroundColor
           if (imageData.data[i + 3] === 0) {
             imageData.data[i] = R; // R
@@ -626,42 +705,46 @@ const InternalWritingBoard = memo<
           }
         }
 
-        ctx?.current?.putImageData(imageData, 0, 0);
+        ctx.current?.putImageData(imageData, 0, 0);
 
         // 生成base64字符串
-        const base64 = canvasRef?.current?.toDataURL(type || 'image/png', quality);
+        const base64 = canvasRef.current.toDataURL(type || 'image/png', quality);
 
         // 删除背景
-        imageData = ctx?.current?.getImageData(
+        imageData = ctx.current?.getImageData(
           0,
           0,
-          canvasRef?.current?.width!,
-          canvasRef?.current?.height!,
-        )!;
-
-        fillsIndex.forEach((index) => {
-          imageData.data[index] = 0;
-        });
-        ctx?.current?.putImageData(imageData, 0, 0);
+          canvasRef.current.width,
+          canvasRef.current.height,
+        );
+        
+        if (imageData) {
+          fillsIndex.forEach((index) => {
+            imageData.data[index] = 0;
+          });
+          ctx.current?.putImageData(imageData, 0, 0);
+        }
 
         return base64;
       }
 
-      return canvasRef?.current?.toDataURL(type || 'image/png', quality);
+      return canvasRef.current.toDataURL(type || 'image/png', quality);
     }
 
     /**
-     * isEmpty
-     * @return {boolean}
+     * 检查画布是否为空
+     * @returns 是否为空
      */
     function isEmpty(): boolean {
+      if (!ctx.current || !canvasRef.current) return true;
+      
       // 先设置背景
-      let imageData = ctx?.current?.getImageData(
+      let imageData = ctx.current.getImageData(
         0,
         0,
-        canvasRef?.current?.width!,
-        canvasRef?.current?.height!,
-      )!;
+        canvasRef.current.width,
+        canvasRef.current.height,
+      );
 
       if (!imageData.data.length) return true;
 
@@ -670,79 +753,84 @@ const InternalWritingBoard = memo<
 
     useImperativeHandle(ref, () => ({
       /**
-       * setMode
-       * @param mode
+       * 设置绘制模式
+       * @param mode - 绘制模式
        */
-      setMode: (mode) => {
+      setMode: (mode: Mode) => {
         curShape.current = mode;
       },
       /**
-       * setStrokeStyle
-       * @param style
+       * 设置线条颜色
+       * @param style - 线条颜色
        */
-      setStrokeStyle: (style) => {
+      setStrokeStyle: (style: string) => {
         strokeStyle.current = style;
       },
       /**
-       * setLineWidth
-       * @param width
+       * 设置线条宽度
+       * @param width - 线条宽度
        */
-      setLineWidth: (width) => {
+      setLineWidth: (width: number) => {
         lineWidth.current = width;
       },
       /**
-       * clear
-       * @description 清除画布
+       * 清除画布
        */
       clear,
       /**
-       * toDataURL
-       * @description 获取base64
-       * @param backgroundColor 背景色
-       * @param type 导出的图片类型
-       * @param quality 搭配出图片的质量
+       * 导出画布为DataURL
+       * @param backgroundColor - 背景颜色
+       * @param type - 图片类型
+       * @param quality - 图片质量
        */
       toDataURL,
       /**
-       * isEmpty
+       * 检查画布是否为空
        */
       isEmpty,
     }));
 
     useLayoutEffect(() => {
-      ctx.current = canvasRef?.current?.getContext('2d')!;
+      if (!canvasRef.current) return;
+      
+      ctx.current = canvasRef.current.getContext('2d');
 
       const onResize = debounce(() => {
-        (canvasRef.current as HTMLCanvasElement).width = containerRef?.current?.offsetWidth!;
-        (canvasRef.current as HTMLCanvasElement).height = containerRef?.current?.offsetHeight!;
+        if (!canvasRef.current || !containerRef.current) return;
+        
+        canvasRef.current.width = containerRef.current.offsetWidth;
+        canvasRef.current.height = containerRef.current.offsetHeight;
 
-        ctx?.current?.clearRect(0, 0, canvasRef?.current?.width!, canvasRef?.current?.height!);
+        ctx.current?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
 
         drawStack();
       }, resizeTime);
 
       ro.current = new ResizeObserver(onResize);
 
-      ro?.current?.observe?.(document.body);
+      ro.current?.observe(document.body);
 
-      return () => ro?.current?.disconnect();
-    }, []);
+      return () => ro.current?.disconnect();
+    }, [resizeTime]);
 
     useLayoutEffect(() => {
-      function onMousedown(e) {
+      function onMousedown(e: MouseEvent) {
         start(e);
       }
 
-      function onTouchstart(e) {
-        start({ ...e, clientX: e.targetTouches[0].clientX, clientY: e.targetTouches[0].clientY });
+      function onTouchstart(e: TouchEvent) {
+        start({ 
+          clientX: e.targetTouches[0].clientX, 
+          clientY: e.targetTouches[0].clientY 
+        });
       }
 
-      containerRef?.current?.addEventListener('mousedown', onMousedown);
-      containerRef?.current?.addEventListener('touchstart', onTouchstart);
+      containerRef.current?.addEventListener('mousedown', onMousedown);
+      containerRef.current?.addEventListener('touchstart', onTouchstart);
 
       return () => {
-        containerRef?.current?.removeEventListener('mousedown', onMousedown);
-        containerRef?.current?.removeEventListener('touchstart', onTouchstart);
+        containerRef.current?.removeEventListener('mousedown', onMousedown);
+        containerRef.current?.removeEventListener('touchstart', onTouchstart);
       };
     }, []);
 

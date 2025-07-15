@@ -1,15 +1,7 @@
-import type { MiddleWare } from '../../types';
-type Config = {
-    whitelist: string[];
-    controllers: {
-        path: string;
-        middleWare: MiddleWare;
-    }[];
-    startAfterCB?: () => void;
-};
+import type { UseServerConfig } from '../../types';
 /**
- * useServer
- * @param {Config} config
+ * 使用服务器的React Hook
+ * @description 在React组件中启动iframe通信服务器
+ * @param config - 服务器配置
  */
-export default function useServer(config: Config): void;
-export {};
+export default function useServer(config: UseServerConfig): void;

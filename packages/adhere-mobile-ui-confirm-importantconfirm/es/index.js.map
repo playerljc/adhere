@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ImportantConform from './ImportantConfirm';\nexport default ImportantConform;"],"names":["ImportantConform"],"mappings":"OAAOA,qBAAsB,oCACdA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ImportantConfirm from './ImportantConfirm';\n/**\n * 重要确认对话框组件\n * 提供带有警告图标的确认对话框功能\n */\nexport default ImportantConfirm;"],"names":["ImportantConfirm"],"mappings":"OAAOA,qBAAsB,oCAKdA"}

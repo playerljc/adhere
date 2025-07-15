@@ -1,7 +1,19 @@
+/**
+ * ImportantConfirm组件样式
+ * 重要确认对话框组件的样式定义
+ */
+
 .adhere-ui-important-confirm {
   position: relative;
+  display: inline-block; /* 确保组件为内联块级元素 */
 
+  /* 鼠标悬停时显示手型光标，提示可点击 */
   &:hover {
     cursor: pointer;
+  }
+
+  /* 确保子元素继承样式 */
+  & > * {
+    pointer-events: none; /* 防止子元素阻止点击事件 */
   }
 }

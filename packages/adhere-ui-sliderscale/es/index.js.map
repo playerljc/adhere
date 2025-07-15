@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import SliderScale from './SliderScale';\nexport default SliderScale;\n"],"names":["SliderScale"],"mappings":"OAAOA,gBAAiB,+BACTA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["/**\n * @fileoverview 滑块刻度组件导出文件\n * @module adhere-ui-sliderscale\n */\nimport SliderScale from './SliderScale';\nexport default SliderScale;\n"],"names":["SliderScale"],"mappings":"OAIOA,gBAAiB,+BACTA"}

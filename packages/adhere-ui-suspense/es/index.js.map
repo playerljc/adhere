@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Suspense from './SuspenseImpl';\nexport default Suspense;"],"names":["Suspense"],"mappings":"OAAOA,aAAc,gCACNA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Suspense from './SuspenseImpl';\n// 导出主组件\nexport default Suspense;\n// 导出子组件\nexport { default as SuspenseSync } from './Sync';\nexport { default as SuspenseAsync } from './Async';"],"names":["Suspense"],"mappings":"OAAOA,aAAc,gCAENA,uCAEiC,KAAR,wCACU,KAAT"}

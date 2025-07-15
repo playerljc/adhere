@@ -1,2 +1,2 @@
-Object.defineProperty(exports,"__esModule",{value:!0});var ErrorPrompt_1=require("./ErrorPrompt");exports.default={openErrorDialog:ErrorPrompt_1.openErrorDialog,openErrorMessage:ErrorPrompt_1.openErrorMessage};
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.openErrorMessage=exports.openErrorDialog=void 0;var ErrorPrompt_1=require("./ErrorPrompt");Object.defineProperty(exports,"openErrorDialog",{enumerable:!0,get:function(){return ErrorPrompt_1.openErrorDialog}}),Object.defineProperty(exports,"openErrorMessage",{enumerable:!0,get:function(){return ErrorPrompt_1.openErrorMessage}}),exports.default={openErrorDialog:ErrorPrompt_1.openErrorDialog,openErrorMessage:ErrorPrompt_1.openErrorMessage};
 //# sourceMappingURL=index.js.map

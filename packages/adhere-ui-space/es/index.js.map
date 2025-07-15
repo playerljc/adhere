@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Space from './Space';\nexport default Space;\n"],"names":["Space"],"mappings":"OAAOA,UAAW,yBACHA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Space from './Space';\n// 导出主要组件\nexport default Space;\n// 导出工具函数\nexport { getValue } from './Util';\n"],"names":["Space"],"mappings":"OAAOA,UAAW,yBAEHA,qBAEkB,KAAR"}

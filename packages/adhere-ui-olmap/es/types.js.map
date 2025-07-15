@@ -1,1 +1,1 @@
-{"version":3,"file":"types.js","sources":[],"sourcesContent":[],"names":[],"mappings":""}
+{"version":3,"file":"types.js","sources":["types.js"],"sourcesContent":["/**\n * 地图类型枚举\n */\nexport var MapType;\n(function (MapType) {\n    MapType[\"ADMINISTRATIVE\"] = \"administrative\";\n    MapType[\"SATELLITE\"] = \"satellite\";\n})(MapType || (MapType = {}));\n"],"names":["MapType"],"mappings":"AAGO,IAAIA,SACAA,IACPA,EAAwB,eAAI,iBAC5BA,EAAmB,UAAI,WAC1B,GAAEA,QAAAA,SAAsB,EAAG,SAJjBA,OAIkB"}

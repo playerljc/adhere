@@ -1,10 +1,11 @@
+/*
+ * @Description: 表格列表组件
+ * @Author: yumeng.qin
+ * @Date: 2021-04-27 16:23:26
+ * @LastEditor: yumeng.qin
+ * @LastEditTime: 2021-05-21 10:41:27
+ */
 import { Button, Checkbox, Form, List, Skeleton, Table } from 'antd';
-// import Form from 'antd/lib/form';
-// import Button from 'antd/lib/button';
-// import Skeleton from 'antd/lib/skeleton';
-// import Table from 'antd/lib/table';
-// import List from 'antd/lib/list';
-// import Checkbox from 'antd/lib/checkbox';
 import { FormInstance } from 'antd/lib/form';
 import classNames from 'classnames';
 import cloneDeep from 'lodash.clonedeep';
@@ -16,47 +17,71 @@ import Intl from '@baifendian/adhere-util-intl';
 import SortableTable from './SortableTable';
 import { ToolbarReload, ToolbarSelectAll, ToolbarSetting } from './TableListToolBar';
 import Util from './Util';
-import { TableListProps } from './types';
+import { TableListProps, TableListState } from './types';
 
 export const selectorPrefix = 'adhere-ui-table-list';
 const defaultRowKey = 'id';
+
 /**
- * Template
- * @class Template
- * @classdesc Template
+ * 表格列表组件
+ * 支持表格和列表两种显示模式，提供搜索、分页、排序等功能
+ * @template RecordType - 数据记录类型
  */
 class TableList<RecordType extends object = any> extends React.PureComponent<
   TableListProps<RecordType>,
-  any
+  TableListState
 > {
   static displayName = 'TableList';
 
   static defaultProps: any;
   static propTypes: any;
 
-  private readonly searchFormRef: any;
+  /** 搜索表单引用 */
+  private readonly searchFormRef: React.RefObject<FormInstance>;
+  /** 获取模式属性方法 */
   private readonly getModeProps: Function;
+  /** 获取默认选中列键方法 */
   private readonly getDefaultSelectedColumnKeys: Function;
+  /** 获取表单列配置方法 */
   private readonly getFormColumns: Function;
+  /** 获取行选择配置方法 */
   private readonly getRowSelection: Function;
+  /** 获取分页配置方法 */
   private readonly getPagination: Function;
+  /** 获取加载状态方法 */
   private readonly getLoading: Function;
+  /** 获取表格列配置方法 */
   private readonly getTableColumns: Function;
 
+  /** 表格列表容器引用 */
   private TableListRef: HTMLDivElement | null | undefined;
 
+  /** 获取排序数据源方法 */
   public getSortDataSource: Function;
+  /** 获取参数方法 */
   public getParams: Function;
+  /** 获取数据方法 */
   public fetchList: Function;
+  /** 搜索方法 */
   public onSearch: Function;
+  /** 重置搜索方法 */
   public onResetSearch: Function;
+  /** 设置变化方法 */
   public onSettingChange: Function;
+  /** 设置排序结束方法 */
   public onSettingSortEnd: Function;
+  /** 表格变化方法 */
   public onTableChange: any;
+  /** 可排序表格引用 */
   public SortableTableRef: any;
 
-  constructor(props) {
+  /**
+   * 构造函数
+   * @param props - 组件属性
+   */
+  constructor(props: TableListProps<RecordType>) {
     super(props);
+    
     const util = new Util(this);
     this.getModeProps = util.getModeProps;
     this.getDefaultSelectedColumnKeys = util.getDefaultSelectedColumnKeys;
@@ -76,6 +101,7 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
 
     this.searchFormRef = React.createRef<FormInstance>();
     const modeProps = this.getModeProps();
+    
     this.state = {
       firstLoading: true,
       loading: false,
@@ -90,8 +116,15 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
     };
   }
 
-  static getDerivedStateFromProps(nextProps: Readonly<TableListProps<object>>, prevState: any) {
+  /**
+   * 从属性派生状态
+   * @param nextProps - 下一个属性
+   * @param prevState - 前一个状态
+   * @returns 新的状态或null
+   */
+  static getDerivedStateFromProps(nextProps: Readonly<TableListProps<object>>, prevState: TableListState) {
     const { dataSource } = nextProps[nextProps.mode || 'table'] ?? {};
+    
     if (!nextProps.request && prevState?.firstLoading && dataSource) {
       return {
         firstLoading: false,
@@ -109,30 +142,46 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
     return null;
   }
 
-  componentDidMount() {
+  /**
+   * 组件挂载后执行
+   */
+  componentDidMount(): void {
     const modeProps = this.getModeProps();
+    
     if (this.props.request) {
       this.setState({ firstRequest: true }, () => this.fetchList());
     } else if (modeProps.dataSource) {
       this.setState({ firstLoading: false });
     }
+    
     this.setState({ tableColumns: this.getTableColumns() });
   }
 
-  shouldComponentUpdate(nextProps: TableListProps<RecordType>, nextState: any) {
+  /**
+   * 判断组件是否需要更新
+   * @param nextProps - 下一个属性
+   * @param nextState - 下一个状态
+   * @returns 是否需要更新
+   */
+  shouldComponentUpdate(nextProps: TableListProps<RecordType>, nextState: TableListState): boolean {
     const nextModeProps = nextProps[nextProps.mode || 'table'] ?? {};
     const modeProps = this.getModeProps();
+    
     if (
       nextState.selectAll &&
       JSON.stringify(nextModeProps.dataSource) !== JSON.stringify(modeProps.dataSource)
     ) {
       const { dataSource, rowKey = defaultRowKey } = nextModeProps;
       const allKeys = (dataSource || []).map(
-        // @ts-ignore
-        (v) => v[typeof rowKey === 'function' ? rowKey(v) : rowKey],
+        (v: any) => v[typeof rowKey === 'function' ? rowKey(v) : rowKey],
       );
       // 得到没有被全选排除的keys
-      const selectedRowKeys = allKeys.filter((v) => !nextState.selectAll?.exceptKeys?.includes(v));
+      const selectedRowKeys = allKeys.filter((v: any) => {
+        if (typeof nextState.selectAll === 'object' && nextState.selectAll.exceptKeys) {
+          return !nextState.selectAll.exceptKeys.includes(v);
+        }
+        return true;
+      });
 
       if (
         nextProps.mode === 'table' &&
@@ -140,13 +189,13 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
         nextProps.table.rowSelection &&
         nextProps.table.rowSelection.onChange
       ) {
-        // @ts-ignore
-        nextProps.table.rowSelection.onChange(selectedRowKeys, cloneDeep(dataSource));
+        nextProps.table.rowSelection.onChange(selectedRowKeys, cloneDeep(dataSource), {} as any);
         return false;
       }
+      
       this.setState({
         selectedRowKeys,
-        selectedRows: dataSource,
+        selectedRows: dataSource as any,
       });
       return false;
     }
@@ -154,11 +203,12 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
   }
 
   /**
-   * 渲染搜索
+   * 渲染搜索栏
+   * @returns 搜索栏JSX
    */
-  private renderSearch() {
+  private renderSearch(): React.ReactNode {
     const { search } = this.props;
-    if (!search) return;
+    if (!search) return null;
 
     const {
       className,
@@ -171,7 +221,7 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
       size = 'middle',
     } = search;
 
-    return search ? (
+    return (
       <div className={classNames(className, `${selectorPrefix}-search`)}>
         {beforeContent}
         <Form
@@ -206,14 +256,17 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
         </Form>
         {afterContent}
       </div>
-    ) : null;
+    );
   }
 
   /**
-   * toolbar: 标题，全选----刷新，搜索，设置
+   * 渲染工具栏
+   * 包含标题、全选、刷新、搜索、设置等功能
+   * @returns 工具栏JSX
    */
-  private renderToolbar = () => {
-    if (!this.props.toolbar) return;
+  private renderToolbar = (): React.ReactNode => {
+    if (!this.props.toolbar) return null;
+    
     const { dataSource, rowKey, pagination } = this.getModeProps();
     const { className, title, total, selectAll, search, reload, setting, toolbarOptionRender } =
       this.props.toolbar;
@@ -235,7 +288,7 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
             // selectAll { total: 是否是选中全部数据，默认是当前页数据 }
             selectAll ? (
               <ToolbarSelectAll
-                selectAll={selectAll}
+                selectAll={typeof selectAll === 'boolean' ? {} : selectAll}
                 dataSource={dataSource}
                 rowSelection={rowSelection}
                 rowKey={rowKey}
@@ -249,13 +302,13 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
           {search ? (
             <FormItemCreator columns={this.getFormColumns(search || [], 'default', true)} />
           ) : null}
-          {reload ? <ToolbarReload reload={reload} onSearch={this.onSearch} /> : null}
+          {reload ? <ToolbarReload reload={typeof reload === 'boolean' ? {} : reload} onSearch={() => this.onSearch()} /> : null}
           {setting ? (
             <ToolbarSetting
-              setting={setting}
+              setting={typeof setting === 'boolean' ? {} : setting}
               tableColumns={tableColumns}
-              onSettingChange={this.onSettingChange}
-              onSettingSortEnd={this.onSettingSortEnd}
+              onSettingChange={(keys) => this.onSettingChange(keys)}
+              onSettingSortEnd={(params) => this.onSettingSortEnd(params)}
               selectedColumnKeys={selectedColumnKeys}
             />
           ) : null}
@@ -266,9 +319,10 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
 
   /**
    * 渲染列表
+   * @returns 列表JSX
    */
-  private renderList = () => {
-    if (!this.props.list) return;
+  private renderList = (): React.ReactNode => {
+    if (!this.props.list) return null;
 
     const { rowKey, pagination, loading, renderItem, ...rest } = this.getModeProps();
     const rowSelection = this.getRowSelection();
@@ -278,7 +332,7 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
         rowKey={rowKey}
         pagination={this.getPagination(pagination)}
         loading={this.getLoading(loading)}
-        renderItem={(item: any, index) => {
+        renderItem={(item: any, index: number) => {
           const key = typeof rowKey === 'function' ? rowKey(item) : rowKey;
           return (
             <List.Item>
@@ -296,8 +350,8 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
                         );
                       } else {
                         rowSelection.onChange(
-                          rowSelection.selectedRowKeys.filter((v) => v !== item[key]),
-                          rowSelection.selectedRows.filter((v) => v[key] !== item[key]),
+                          rowSelection.selectedRowKeys.filter((v: any) => v !== item[key]),
+                          rowSelection.selectedRows.filter((v: any) => v[key] !== item[key]),
                         );
                       }
                     }}
@@ -315,9 +369,11 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
 
   /**
    * 渲染表格
+   * @returns 表格JSX
    */
-  private renderTable = () => {
-    if (!this.props.table) return;
+  private renderTable = (): React.ReactNode => {
+    if (!this.props.table) return null;
+    
     const { selectedColumnKeys, tableColumns } = this.state;
     const { sortable, pagination, loading, dataSource, columns, rowKey, rowSelection, ...rest } =
       this.getModeProps();
@@ -326,7 +382,7 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
       pagination: this.getPagination(pagination),
       loading: this.getLoading(loading),
       rowSelection: this.getRowSelection(),
-      columns: tableColumns.filter((v) => selectedColumnKeys.includes(v.key)),
+      columns: tableColumns.filter((v: any) => selectedColumnKeys.includes(v.key)),
       dataSource: dataSource,
       onChange: this.onTableChange,
       ...rest,
@@ -345,11 +401,14 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
       <Table rowKey={rowKey} {...tableProps} />
     );
   };
+
   /**
-   * 渲染内容
+   * 渲染内容区域
+   * @returns 内容区域JSX
    */
-  private renderContent() {
+  private renderContent(): React.ReactNode {
     const { mode } = this.props;
+    
     return (
       <div className={`${selectorPrefix}-content`}>
         {this.renderToolbar()}
@@ -363,13 +422,18 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
   }
 
   /**
-   * 加载效果
+   * 渲染加载效果
+   * @returns 加载效果JSX
    */
-  private renderLoading() {
+  private renderLoading(): React.ReactNode {
     return <Skeleton paragraph={{ rows: 10 }} title={false} />;
   }
 
-  render() {
+  /**
+   * 渲染组件
+   * @returns 组件JSX
+   */
+  render(): React.ReactNode {
     const { className } = this.props;
 
     return (

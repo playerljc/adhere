@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Spin from './Spin';\nexport default Spin;\n"],"names":["Spin"],"mappings":"OAAOA,SAAU,wBACFA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["/**\n * @fileoverview Spin组件的主入口文件\n * @description 导出Spin组件及其相关类型定义\n */\nimport Spin from './Spin';\n// 导出组件\nexport default Spin;\n"],"names":["Spin"],"mappings":"OAIOA,SAAU,wBAEFA"}

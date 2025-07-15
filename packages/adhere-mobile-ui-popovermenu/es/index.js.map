@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import PopoverMenu from './PopoverMenu';\nexport default PopoverMenu;"],"names":["PopoverMenu"],"mappings":"OAAOA,gBAAiB,+BACTA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import PopoverMenu from './PopoverMenu';\n// 导出组件\nexport default PopoverMenu;"],"names":["PopoverMenu"],"mappings":"OAAOA,gBAAiB,+BAETA"}

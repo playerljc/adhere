@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Browsersniff from './browsersniff';\nexport default Browsersniff;\n"],"names":["Browsersniff"],"mappings":"OAAOA,iBAAkB,gCACVA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Browsersniff from './browsersniff';\nexport * from './types';\nexport default Browsersniff;\n"],"names":["Browsersniff"],"mappings":"OAAOA,iBAAkB,4BACX,yBACCA"}

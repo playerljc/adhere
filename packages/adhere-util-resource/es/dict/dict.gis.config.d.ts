@@ -1,5 +1,7 @@
-declare namespace _default {
-    function initStatic(): void;
-    function initRemote(): void;
-}
-export default _default;
+import type { GisConfigDict } from '../types';
+/**
+ * GIS配置字典
+ * 提供地理信息系统相关的配置参数
+ */
+declare const GisConfig: GisConfigDict;
+export default GisConfig;

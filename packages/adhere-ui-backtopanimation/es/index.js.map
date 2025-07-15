@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import BackTopAnimation from './BackTopAnimation';\nexport default BackTopAnimation;\n"],"names":["BackTopAnimation"],"mappings":"OAAOA,qBAAsB,oCACdA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import BackTopAnimation from './BackTopAnimation';\n// 导出组件\nexport default BackTopAnimation;\n// 导出组件作为命名导出\nexport { BackTopAnimation };\n"],"names":["BackTopAnimation"],"mappings":"OAAOA,qBAAsB,oCAEdA,wBAENA,gBAAkB"}

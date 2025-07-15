@@ -1,13 +1,31 @@
+/**
+ * 移动端快速日期范围选择器样式
+ * 继承基础样式并添加移动端特有的样式优化
+ */
+
+// 导入依赖样式
 @import '~@baifendian/adhere-mobile-ui-anthoc/es/index.less';
 @import '~@baifendian/adhere-ui-quick-range-date/es/index.less';
 
+/**
+ * 移动端快速日期范围选择器内层容器
+ */
 .adhere-mobile-ui-quick-range-date-inner {
-  //.adhere-mobile-ui-quick-range-date-trigger {
-  //
-  //}
+  /**
+   * 触发器区域样式
+   * 可根据需要自定义样式
+   */
+  .adhere-mobile-ui-quick-range-date-trigger {
+    // 触发器样式占位符
+    // 可根据具体需求添加样式
+  }
 
+  /**
+   * 范围日历模态框样式
+   * 用于自定义日期范围选择
+   */
   .adhere-mobile-ui-quick-range-date-range-calendar-modal {
-    //margin-top: 20px;
+    // 使用CSS变量控制间距，便于主题定制
     margin-top: var(--range-calendar-modal-margin-top, 20px);
   }
 }

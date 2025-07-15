@@ -8,21 +8,61 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import ReplyInfo from '../../Reply/Info';
 import ReplySubmit from '../../Reply/Submit';
-import type { NodeProps } from '../../types';
+import type { 
+  NodeProps, 
+  CommentDataItem, 
+  CommentListData, 
+  FetchReplyParams, 
+  SubmitReplyParams,
+  RenderParams,
+  PagingParams 
+} from '../../types';
 
 const selectorPrefix = 'adhere-ui-comment-node';
 
+/**
+ * 默认数据键名配置
+ */
 const DEFAULT_KEYS = {
   current: 'current',
   totalPage: 'totalPage',
   list: 'list',
   totalCount: 'totalCount',
-};
+} as const;
+
 /**
- * Node
- * @param props
- * @constructor
- * @classdesc 节点(评论 | 回复)
+ * 节点组件状态
+ */
+interface NodeState {
+  /** 列表数据 */
+  listData: CommentListData;
+  /** 当前数据项 */
+  data: CommentDataItem | undefined;
+  /** 是否折叠 */
+  collapse: boolean;
+  /** 是否加载中 */
+  loading: boolean;
+  /** 是否显示回复框 */
+  showReply: boolean;
+}
+
+/**
+ * 节点组件（评论 | 回复）
+ * 
+ * @description 评论或回复的节点组件，支持回复功能、分页加载、折叠展开等
+ * @param props - 组件属性
+ * @returns 节点组件实例
+ * 
+ * @example
+ * ```tsx
+ * <Node
+ *   data={commentData}
+ *   renderAuthor={(data) => <span>{data.author}</span>}
+ *   renderContent={(data) => <p>{data.content}</p>}
+ *   renderDateTime={(data) => <span>{data.datetime}</span>}
+ *   fetchReply={submitReply}
+ * />
+ * ```
  */
 const Node = memo<NodeProps>((props) => {
   const {
@@ -48,27 +88,48 @@ const Node = memo<NodeProps>((props) => {
     local = 'zh',
   } = props;
 
-  const [listData, setListData] = useState({
-    [dataKeys.current]: 1,
-    [dataKeys.list]: [],
-    [dataKeys.totalCount]: 0,
-    [dataKeys.totalPage]: 0,
+  // 组件状态
+  const [state, setState] = useState<NodeState>({
+    listData: {
+      current: 1,
+      totalPage: 0,
+      list: [],
+      totalCount: 0,
+    },
+    data: props?.data,
+    collapse: false,
+    loading: false,
+    showReply: false,
   });
 
-  const [data, setData] = useState(props?.data);
-
-  const [collapse, setCollapse] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [showReply, setShowReply] = useState(false);
-
-  const paging = useRef({
+  // 分页信息
+  const paging = useRef<PagingParams>({
     page: 1,
     limit: limit,
   });
 
+  /**
+   * 更新状态
+   * @param updates - 要更新的状态
+   */
+  const updateState = useCallback((updates: Partial<NodeState> | ((prev: NodeState) => Partial<NodeState>)) => {
+    setState(prev => {
+      if (typeof updates === 'function') {
+        return { ...prev, ...updates(prev) };
+      }
+      return { ...prev, ...updates };
+    });
+  }, []);
+
+  /**
+   * 渲染操作按钮
+   * @returns 操作按钮列表
+   */
   const renderActions = useCallback(() => {
     const actions = [
-      ...(props?.renderActions?.({ ...data }, (_data) => setData(_data)) || []).map(
+      ...(props?.renderActions?.({ data: state.data! }, (newData) => 
+        updateState({ data: newData })
+      ) || []).map(
         (action, index) =>
           ConditionalRender.conditionalRender({
             conditional: !(action as any)?.props?.className?.endsWith('-actions-action'),
@@ -82,7 +143,8 @@ const Node = memo<NodeProps>((props) => {
       ),
     ];
 
-    if (!actions.find((t) => t?.props?.children?.key === 'reply')) {
+    // 如果没有回复按钮，则添加默认回复按钮
+    if (!actions.find((t) => (t as any)?.props?.children?.key === 'reply')) {
       actions.push(
         <li
           key="reply"
@@ -90,7 +152,7 @@ const Node = memo<NodeProps>((props) => {
             `${selectorPrefix}-actions-action`,
             `${selectorPrefix}-actions-action-reply-btn`,
           )}
-          onClick={() => setShowReply(true)}
+          onClick={() => updateState({ showReply: true })}
         >
           {Intl.get('reply')}
         </li>,
@@ -98,12 +160,18 @@ const Node = memo<NodeProps>((props) => {
     }
 
     return actions;
-  }, [props?.renderActions, data, showReply]);
+  }, [props?.renderActions, state.data, updateState]);
 
+  /**
+   * 渲染子节点列表
+   * @returns 子节点列表JSX
+   */
   const renderChildren = useCallback(() => {
+    const list = state.listData.list;
+    
     return (
       <ul className={`${selectorPrefix}-children`}>
-        {((listData[dataKeys.list] as []) || [])?.map?.((record) => (
+        {list?.map?.((record: CommentDataItem) => (
           <li className={`${selectorPrefix}-children-item`} key={record[keyProp!]}>
             <ConditionalRender conditional={!children} noMatch={() => children?.(record)}>
               {() => (
@@ -136,34 +204,20 @@ const Node = memo<NodeProps>((props) => {
           </li>
         ))}
 
-        <ConditionalRender conditional={!loading && hasMore()}>
+        <ConditionalRender conditional={!state.loading && hasMore()}>
           {() => (
             <li className={classNames(`${selectorPrefix}-children-item`, 'more')}>
               <a onClick={appendData}>
                 <span>
-                  <ConditionalRender
-                    conditional={Util.isFunction(loadMoreCollapseTextIcon)}
-                    noMatch={() => loadMoreCollapseTextIcon}
-                  >
-                    {() =>
-                      loadMoreCollapseTextIcon instanceof Function
-                        ? loadMoreCollapseTextIcon()
-                        : loadMoreCollapseTextIcon
-                    }
-                  </ConditionalRender>
+                  {Util.isFunction(loadMoreCollapseTextIcon)
+                    ? loadMoreCollapseTextIcon()
+                    : loadMoreCollapseTextIcon}
                 </span>
 
                 <span>
-                  <ConditionalRender
-                    conditional={Util.isFunction(loadMoreReplyText)}
-                    noMatch={() => loadMoreReplyText}
-                  >
-                    {() =>
-                      loadMoreReplyText instanceof Function
-                        ? loadMoreReplyText()
-                        : loadMoreReplyText
-                    }
-                  </ConditionalRender>
+                  {Util.isFunction(loadMoreReplyText)
+                    ? loadMoreReplyText()
+                    : loadMoreReplyText}
                 </span>
               </a>
             </li>
@@ -172,9 +226,10 @@ const Node = memo<NodeProps>((props) => {
       </ul>
     );
   }, [
-    listData,
-    dataKeys.list,
+    state.listData,
+    state.loading,
     keyProp,
+    children,
     isMoreProp,
     renderActions,
     renderAuthor,
@@ -188,135 +243,146 @@ const Node = memo<NodeProps>((props) => {
     showReplyTextIcon,
     hideReplyTextIcon,
     loadMoreCollapseTextIcon,
-    loading,
+    local,
+    emojiPickerProps,
+    props?.fetchData,
+    props?.fetchReply,
+    props?.renderActions,
+    dataKeys,
+    limit,
   ]);
 
+  /**
+   * 渲染更多按钮
+   * @returns 更多按钮JSX
+   */
   const renderMore = useCallback(() => {
     return (
-      <ConditionalRender
-        conditional={!collapse}
-        noMatch={() => (
-          <a className={`${selectorPrefix}-collapse`} onClick={() => setCollapse(false)}>
-            <span>
               <ConditionalRender
-                conditional={Util.isFunction(hideReplyTextIcon)}
-                noMatch={() => hideReplyTextIcon}
-              >
-                {() =>
-                  hideReplyTextIcon instanceof Function ? hideReplyTextIcon() : hideReplyTextIcon
+          conditional={!state.collapse}
+          noMatch={() => (
+            <a className={`${selectorPrefix}-collapse`} onClick={() => updateState({ collapse: false })}>
+              <span>
+                {Util.isFunction(hideReplyTextIcon)
+                  ? hideReplyTextIcon()
+                  : hideReplyTextIcon}
+              </span>
+              <span>
+                {Util.isFunction(hideReplyText)
+                  ? hideReplyText()
+                  : hideReplyText}
+              </span>
+            </a>
+          )}
+        >
+          {() => (
+            <a
+              className={`${selectorPrefix}-collapse`}
+              onClick={() => {
+                const list = state.listData.list;
+                if (list.length > 0) {
+                  updateState({ collapse: true });
+                  return;
                 }
-              </ConditionalRender>
-            </span>
-            <span>
-              <ConditionalRender
-                conditional={Util.isFunction(hideReplyText)}
-                noMatch={() => hideReplyText}
-              >
-                {() => (hideReplyText instanceof Function ? hideReplyText() : hideReplyText)}
-              </ConditionalRender>
-            </span>
-          </a>
-        )}
-      >
-        {() => (
-          <a
-            className={`${selectorPrefix}-collapse`}
-            onClick={() => {
-              if (!!(listData[dataKeys.list] as []).length) {
-                setCollapse(true);
-                return;
-              }
 
-              loadData()?.then(() => setCollapse(true));
-            }}
-          >
-            <span>
-              <ConditionalRender
-                conditional={Util.isFunction(showReplyTextIcon)}
-                noMatch={() => showReplyTextIcon}
-              >
-                {() =>
-                  showReplyTextIcon instanceof Function ? showReplyTextIcon() : showReplyTextIcon
-                }
-              </ConditionalRender>
-            </span>
-            <span>
-              <ConditionalRender
-                conditional={Util.isFunction(showReplyText)}
-                noMatch={() => showReplyText}
-              >
-                {() => (showReplyText instanceof Function ? showReplyText() : showReplyText)}
-              </ConditionalRender>
-            </span>
-          </a>
-        )}
-      </ConditionalRender>
+                loadData()?.then(() => updateState({ collapse: true }));
+              }}
+            >
+              <span>
+                {Util.isFunction(showReplyTextIcon)
+                  ? showReplyTextIcon()
+                  : showReplyTextIcon}
+              </span>
+              <span>
+                {Util.isFunction(showReplyText)
+                  ? showReplyText()
+                  : showReplyText}
+              </span>
+            </a>
+          )}
+        </ConditionalRender>
     );
   }, [
-    collapse,
-    listData,
-    dataKeys.list,
+    state.collapse,
+    state.listData,
     hideReplyText,
     hideReplyTextIcon,
     showReplyText,
     showReplyTextIcon,
+    updateState,
   ]);
 
+  /**
+   * 检查是否有更多数据
+   * @returns 是否有更多数据
+   */
   const hasMore = useCallback(
-    // @ts-ignore
-    () => (listData[dataKeys.list] as []).length <= listData[dataKeys.totalCount],
-    [listData, dataKeys.list, dataKeys.totalCount],
+    () => state.listData.list.length < state.listData.totalCount,
+    [state.listData],
   );
 
+  /**
+   * 获取数据
+   * @returns 数据获取Promise
+   */
   const fetchData = useCallback(() => {
     return props
       ?.fetchData?.({
         ...paging.current,
-        record: { ...data },
+        record: state.data as CommentDataItem,
       })
-      ?.then((data) => {
-        setLoading(false);
-
+      ?.then((data: CommentListData) => {
+        updateState({ loading: false });
         return data;
       })
-      ?.catch((error) => {
-        setLoading(false);
-
+      ?.catch((error: any) => {
+        updateState({ loading: false });
         return error;
       });
-  }, [props?.fetchData, paging.current.page, paging.current.limit, data]);
+  }, [props?.fetchData, paging.current.page, paging.current.limit, state.data, updateState]);
 
-  function loadData(): Promise<any> | undefined {
-    setLoading(true);
+  /**
+   * 加载数据
+   * @returns 数据加载Promise
+   */
+  function loadData(): Promise<CommentListData> | undefined {
+    updateState({ loading: true });
 
     paging.current = {
       page: 1,
       limit: limit,
     };
 
-    return fetchData()?.then((res) => {
-      setListData(res);
+    return fetchData()?.then((res: CommentListData) => {
+      updateState({ listData: res });
+      return res;
     });
   }
 
-  function appendData(): Promise<any> | undefined {
-    setLoading(true);
+  /**
+   * 追加数据
+   * @returns 数据追加Promise
+   */
+  function appendData(): Promise<CommentListData> | undefined {
+    updateState({ loading: true });
 
     paging.current.page = paging.current.page + 1;
 
-    const { list } = dataKeys;
-
-    return fetchData()?.then((res) => {
-      setListData((_listData) => ({
-        ...res,
-        [dataKeys.list]: [...(_listData[list] as any), ...res[list]],
+    return fetchData()?.then((res: CommentListData) => {
+      updateState((prev) => ({
+        listData: {
+          ...res,
+          list: [...prev.listData.list, ...res.list],
+        },
       }));
+      return res;
     });
   }
 
+  // 监听数据变化
   useEffect(() => {
-    setData(props.data);
-  }, [props?.data]);
+    updateState({ data: props.data });
+  }, [props?.data, updateState]);
 
   return (
     <FlexLayout
@@ -326,40 +392,42 @@ const Node = memo<NodeProps>((props) => {
       })}
     >
       <FlexLayout.Fixed className={`${selectorPrefix}-avatar-wrap`}>
-        {renderAvatar?.({ ...data })}
+        {renderAvatar?.({ data: state.data! })}
       </FlexLayout.Fixed>
 
       <FlexLayout.Auto autoFixed fit>
         <FlexLayout direction="vertical">
           <FlexLayout.Fixed className={`${selectorPrefix}-title-row`} fit={false}>
             <div className={`${selectorPrefix}-title-row-author`}>
-              {renderAuthor?.({ ...data })}
+              {renderAuthor?.({ data: state.data! })}
             </div>
             <div className={`${selectorPrefix}-title-row-date-time`}>
-              {renderDateTime?.({ ...data })}
+              {renderDateTime?.({ data: state.data! })}
             </div>
           </FlexLayout.Fixed>
 
           <FlexLayout.Auto className={`${selectorPrefix}-content-wrap`}>
-            {renderContent?.({ ...data })}
+            {renderContent?.({ data: state.data! })}
           </FlexLayout.Auto>
 
           <FlexLayout.Fixed>
             <ul className={`${selectorPrefix}-actions`}>{renderActions()}</ul>
           </FlexLayout.Fixed>
 
-          <ConditionalRender conditional={showReply}>
+          <ConditionalRender conditional={state.showReply}>
             {() => (
               <FlexLayout.Fixed style={{ marginTop: 15 }}>
                 <ReplySubmit
-                  onCancel={() => setShowReply(false)}
-                  onResult={(reply) => {
-                    fetchReply?.({
-                      id: data?.[keyProp!],
-                      record: { ...data },
+                  onCancel={() => updateState({ showReply: false })}
+                  onResult={(reply: string) => {
+                    const params: SubmitReplyParams = {
+                      id: state.data?.[keyProp!] || '',
+                      record: state.data as CommentDataItem,
                       reply,
-                    })?.then(() => {
-                      setShowReply(false);
+                    };
+                    
+                    fetchReply?.(params)?.then(() => {
+                      updateState({ showReply: false });
                       loadData();
                     });
                   }}
@@ -370,16 +438,16 @@ const Node = memo<NodeProps>((props) => {
             )}
           </ConditionalRender>
 
-          <ConditionalRender conditional={data?.[isMoreProp!]}>
+          <ConditionalRender conditional={state.data?.[isMoreProp!]}>
             {() => (
               <>
-                <ConditionalRender conditional={!loading}>{() => renderMore()}</ConditionalRender>
+                <ConditionalRender conditional={!state.loading}>{() => renderMore()}</ConditionalRender>
 
-                <ConditionalRender.Show conditional={collapse}>
+                <ConditionalRender.Show conditional={state.collapse}>
                   {renderChildren()}
                 </ConditionalRender.Show>
 
-                <ConditionalRender conditional={loading}>
+                <ConditionalRender conditional={state.loading}>
                   {() => renderLoading?.()}
                 </ConditionalRender>
               </>

@@ -10,7 +10,7 @@ import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
 import TreeAutoComplete from './TreeAutoComplete';
-import type { AutoCompleteComponent, AutoCompleteProps } from './types';
+import type { AutoCompleteComponent, AutoCompleteProps, DataRecord } from './types';
 
 const selectorPrefix = 'adhere-mobile-ui-auto-complete';
 
@@ -19,20 +19,33 @@ const { Title, Text } = Typography;
 const { useTheme } = ConfigProvider;
 
 /**
- * InternalAutoComplete
- * @param className
- * @param style
- * @param searchBarProps
- * @param checkListProps
- * @param loadData
- * @param rowKey
- * @param labelProp
- * @param valueProp
- * @param value
- * @param onChange
- * @param renderEmpty
- * @param children
- * @constructor
+ * 内部自动完成组件
+ * 
+ * @description 提供搜索、选择和数据展示功能的自动完成组件
+ * 
+ * @param props - 组件属性
+ * @param props.className - 根容器的CSS类名
+ * @param props.style - 根容器的内联样式
+ * @param props.searchBarClassName - 搜索栏的CSS类名
+ * @param props.searchBarStyle - 搜索栏的内联样式
+ * @param props.bodyClassName - 内容区域的CSS类名
+ * @param props.bodyStyle - 内容区域的内联样式
+ * @param props.placeholder - 搜索框占位符文本
+ * @param props.searchBarProps - 搜索栏组件的属性
+ * @param props.loadData - 数据加载函数
+ * @param props.defaultDataSource - 默认数据源
+ * @param props.searchDataSource - 搜索数据源
+ * @param props.rowKey - 数据记录的唯一标识字段名
+ * @param props.labelProp - 数据记录的显示文本字段名
+ * @param props.valueProp - 数据记录的值字段名
+ * @param props.value - 当前选中的值
+ * @param props.onChange - 值变化回调函数
+ * @param props.renderResultItem - 自定义结果项渲染函数
+ * @param props.renderEmpty - 自定义空状态渲染函数
+ * @param props.showResult - 是否显示结果面板
+ * @param props.children - 子渲染函数
+ * 
+ * @returns 自动完成组件实例
  */
 const InternalAutoComplete = memo<AutoCompleteProps>(
   ({
@@ -57,7 +70,7 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
     showResult = true,
     children,
   }) => {
-    const wrapperRef = useRef<HTMLDivElement | null>();
+    const wrapperRef = useRef<HTMLDivElement | null>(null);
 
     useTheme<HTMLElement>({
       elRef: wrapperRef,
@@ -65,79 +78,109 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
       displayName: 'AutoComplete',
     });
 
-    const [kw, setKw] = useState<string>('');
+    const [keyword, setKeyword] = useState<string>('');
+    const [dataSource, setDataSource] = useState<DataRecord[]>(defaultDataSource ?? []);
 
-    const [dataSource, setDataSource] = useState<any[]>(defaultDataSource ?? []);
-
+    // 将value转换为ID数组
     const valueToIds = useMemo(
-      () =>
+      (): CheckListValue[] =>
         (value ?? []).map((_value) => {
           if (Util.isObject(_value)) {
             return getValue(_value) ?? getKey(_value);
           }
-
           return _value;
-        }),
+        }).filter((id): id is CheckListValue => id !== undefined),
       [value],
     );
 
-    function isEmpty() {
+    /**
+     * 检查数据源是否为空
+     */
+    function isEmpty(): boolean {
       return !searchDataSource?.length;
     }
 
-    function empty() {
+    /**
+     * 渲染空状态
+     */
+    function renderEmptyState(): React.ReactNode {
       return renderEmpty?.() ?? <ErrorBlock status="empty" />;
     }
 
-    function getKey(record) {
+    /**
+     * 获取数据记录的键值
+     */
+    function getKey(record: DataRecord): string | number | undefined {
       return record?.[rowKey ?? 'id'];
     }
 
-    function getValue(record) {
+    /**
+     * 获取数据记录的值
+     */
+    function getValue(record: DataRecord): string | number | undefined {
       return record?.[valueProp ?? 'value'];
     }
 
-    function getLabel(record) {
+    /**
+     * 获取数据记录的标签
+     */
+    function getLabel(record: DataRecord): string | null {
       return record?.[labelProp ?? 'label'] ?? null;
     }
 
-    function excludeVal(_value: CheckListValue): CheckListValue[] {
-      return valueToIds?.filter?.((_v) => _v !== _value) ?? [];
+    /**
+     * 从选中值中排除指定值
+     */
+    function excludeValue(targetValue: CheckListValue): CheckListValue[] {
+      return valueToIds?.filter?.((_v) => _v !== targetValue) ?? [];
     }
 
-    function onSearchChange(_v) {
-      if (!_v) {
+    /**
+     * 搜索框值变化处理
+     */
+    function handleSearchChange(newValue: string): void {
+      if (!newValue) {
         loadData?.('');
       }
-      setKw(_v);
+      setKeyword(newValue);
     }
 
-    function onSearch() {
-      loadData?.(kw);
+    /**
+     * 搜索处理
+     */
+    function handleSearch(): void {
+      loadData?.(keyword);
     }
 
-    function onCheckListChange(_values) {
-      const targetValues = Array.isArray(_values) ? _values : [_values];
+    /**
+     * 选择列表变化处理
+     */
+    function handleCheckListChange(values: CheckListValue[] | CheckListValue): void {
+      const targetValues = Array.isArray(values) ? values : [values];
 
       setDataSource((_dataSource) =>
         targetValues.map((_value) => {
           return [...(searchDataSource ?? []), ..._dataSource]?.find?.(
             (_r) => (getValue(_r) ?? getKey(_r)) === _value,
           );
-        }),
+        }).filter(Boolean) as DataRecord[],
       );
 
-      onChange?.(_values);
+      onChange?.(targetValues);
     }
 
-    function remove(_id: string) {
+    /**
+     * 移除选中项
+     */
+    function removeItem(id: string): void {
       setDataSource((_dataSource) =>
-        _dataSource.filter((_r) => (getValue(_r) ?? getKey(_r)) !== _id),
+        _dataSource.filter((_r) => (getValue(_r) ?? getKey(_r)) !== id),
       );
 
-      onChange?.(excludeVal(_id));
+      onChange?.(excludeValue(id));
     }
 
+    // 当数据源或值变化时，更新内部数据源
     useEffect(() => {
       setDataSource((_dataSource) => {
         const allDataSource = [
@@ -153,14 +196,13 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
             }
 
             return allDataSource.find((_r) => (getValue(_r) ?? getKey(_r)) === _value);
-          }) ?? []
+          }).filter(Boolean) as DataRecord[] ?? []
         );
       });
-    }, [searchDataSource, defaultDataSource, value]);
+    }, [searchDataSource, defaultDataSource, value, rowKey, valueProp]);
 
     return (
       <div
-        // @ts-ignore
         ref={wrapperRef}
         className={classNames(selectorPrefix, className ?? '')}
         style={style ?? {}}
@@ -171,9 +213,9 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
         >
           <SearchBar
             placeholder={placeholder ?? Intl.get('input_filter_text')}
-            value={kw}
-            onChange={onSearchChange}
-            onSearch={onSearch}
+            value={keyword}
+            onChange={handleSearchChange}
+            onSearch={handleSearch}
             {...(searchBarProps ?? {})}
           />
         </div>
@@ -182,12 +224,12 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
           className={classNames(`${selectorPrefix}-body`, bodyClassName ?? '')}
           style={bodyStyle ?? {}}
         >
-          {isEmpty() && empty()}
+          {isEmpty() && renderEmptyState()}
 
           {!isEmpty() &&
             children?.({
               value: valueToIds,
-              onChange: onCheckListChange,
+              onChange: handleCheckListChange,
               searchDataSource: searchDataSource ?? [],
             })}
         </div>
@@ -203,9 +245,9 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
               />
 
               <List>
-                {dataSource?.map((_record, _index) => {
-                  const key = getKey(_record);
-                  const label = getLabel(_record);
+                {dataSource?.map((record, index) => {
+                  const key = getKey(record);
+                  const label = getLabel(record);
 
                   const defaultItem = (
                     <>
@@ -223,12 +265,12 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
                     <List.Item key={key}>
                       <div
                         className={`${selectorPrefix}-result-item-close`}
-                        onClick={() => remove(valueToIds?.[_index])}
+                        onClick={() => removeItem(valueToIds?.[index] as string)}
                       >
                         <CloseCircleFill />
                       </div>
 
-                      {renderResultItem?.(_record, defaultItem) ?? defaultItem}
+                      {renderResultItem?.(record, defaultItem) ?? defaultItem}
                     </List.Item>
                   );
                 })}

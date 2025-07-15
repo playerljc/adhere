@@ -11,9 +11,10 @@ const { useTheme } = ConfigProvider;
 const selectorPrefix = 'adhere-ui-tabs-capsule-tabs';
 
 /**
- * SystemCapsuleTabs
- * @param props
- * @constructor
+ * 内部胶囊标签页组件
+ * 
+ * @param props - 组件属性
+ * @returns JSX元素
  */
 const InternalSystemCapsuleTabs = memo<SystemCapsuleTabsProps>(
   ({ className, style, innerClassName, innerStyle, items, ...props }) => {
@@ -33,8 +34,8 @@ const InternalSystemCapsuleTabs = memo<SystemCapsuleTabsProps>(
         style={style ?? {}}
       >
         <CapsuleTabs {...props} className={innerClassName} style={innerStyle ?? {}}>
-          {items?.map?.((_item) => (
-            <CapsuleTabs.Tab {..._item} />
+          {items?.map?.((item, index) => (
+            <CapsuleTabs.Tab key={item.key || index} {...item} />
           ))}
         </CapsuleTabs>
       </div>

@@ -1,4 +1,12 @@
+/**
+ * 滑块刻度组件样式
+ * 
+ * 包含滑块轨道、滑块手柄、刻度线和刻度值的样式定义
+ * 支持 CSS 变量自定义，提供良好的主题定制能力
+ */
+
 .adhere-ui-slider-scale {
+  // 滑块轨道背景色变量
   @adhere-ui-slider-scale-range-slider-runnable-track-color: #f2f2f2;
 
   position: relative;
@@ -7,6 +15,7 @@
   //padding: 0;
   padding: var(--padding, 0);
 
+  // 滑块输入框容器
   > .adhere-ui-slider-scale-range {
     display: block;
     width: 100%;
@@ -19,7 +28,7 @@
     outline: none;
     appearance: none;
 
-    /* 滑块 */
+    /* 滑块手柄样式 */
     &::-webkit-slider-thumb {
       width: 0;
       height: 0;
@@ -34,7 +43,7 @@
       appearance: none;
     }
 
-    /* 滚道 */
+    /* 滑块轨道样式 */
     &::-webkit-slider-runnable-track {
       width: 100%;
       //height: 30px;
@@ -49,6 +58,7 @@
     }
   }
 
+  // 刻度容器
   > .adhere-ui-slider-scale-scale {
     position: absolute;
     //right: 10px;
@@ -60,6 +70,7 @@
     justify-content: center;
     height: 100%;
 
+    // 刻度项
     > .adhere-ui-slider-scale-scale-item {
       position: relative;
       box-sizing: border-box;
@@ -69,11 +80,13 @@
       //background-color: transparent;
       background-color: var(--scale-item-background-color, transparent);
 
+      // 刻度点样式（带数值的刻度）
       &.adhere-ui-slider-scale-scale-item-point {
         //height: 30%;
         height: var(--scale-item-point-height, 30%);
       }
 
+      // 刻度线伪元素
       &::before,
       &::after {
         position: absolute;
@@ -82,6 +95,7 @@
         content: '';
       }
 
+      // 右侧刻度线
       &::after {
         right: 0;
         //border-left: var(--adhere-line-width) var(--adhere-line-type) rgb(0 0 0 50%);
@@ -91,7 +105,9 @@
         );
       }
 
+      // 第一个刻度项特殊处理
       &:first-child {
+        // 左侧刻度线
         &::before {
           left: 0;
           //height: 300%;
@@ -103,6 +119,7 @@
           );
         }
 
+        // 第一个刻度值的定位
         > .adhere-ui-slider-scale-scale-item-value {
           //top: 300%;
           top: var(--scale-item-value-top, 300%);
@@ -113,6 +130,7 @@
         }
       }
 
+      // 刻度值文本
       > .adhere-ui-slider-scale-scale-item-value {
         position: absolute;
         //right: 0;

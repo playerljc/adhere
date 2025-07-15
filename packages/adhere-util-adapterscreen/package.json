@@ -1,7 +1,7 @@
 {
   "name": "@baifendian/adhere-util-adapterscreen",
   "version": "2.11.0",
-  "description": "对屏幕的缩放进行适配的操作",
+  "description": "A powerful screen adaptation utility with TypeScript support, supporting multiple adaptation schemes including scaling adaptation and flexible layout adaptation",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
     "url": "https://github.com/playerljc/adhere/issues"

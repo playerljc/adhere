@@ -1,9 +1,13 @@
+/**
+ * TimePickerView 组件样式
+ * 基于 antd-mobile 的 PickerView 组件样式进行扩展
+ */
+
 @import '~antd-mobile/es/components/picker-view/picker-view.css';
 
 .adhere-mobile-ui-time-picker-view {
   width: 100%;
-  //margin: 0;
-  //padding: 0;
+  /* 使用CSS变量控制边距，支持主题定制 */
   margin: var(--margin, 0);
   padding: var(--padding, 0);
 }

@@ -1,88 +1,152 @@
+/**
+ * 格式化工具类
+ * @description 提供各种格式化和转换功能
+ */
 declare const FormatUtil: {
     /**
-     * prettierJSON
-     * @description 格式化JSON字符串
-     * @return string
-     * @param _jsonStr
+     * 格式化 JSON 字符串
+     * @description 将 JSON 字符串格式化为可读的格式
+     * @param jsonStr - 要格式化的 JSON 字符串
+     * @returns 格式化后的 JSON 字符串
+     * @example
+     * ```typescript
+     * prettierJSON('{"name":"John","age":30}')
+     * // 返回:
+     * // {
+     * //   "name": "John",
+     * //   "age": 30
+     * // }
+     * ```
      */
-    prettierJSON(_jsonStr?: string): string;
+    prettierJSON(jsonStr?: string): string;
     /**
-     * compressJSON
-     * @description 压缩JSON
-     * @return string
-     * @param _jsonStr
+     * 压缩 JSON
+     * @description 将 JSON 字符串压缩为单行格式
+     * @param jsonStr - 要压缩的 JSON 字符串
+     * @returns 压缩后的 JSON 字符串
+     * @example
+     * ```typescript
+     * compressJSON('{\n  "name": "John",\n  "age": 30\n}')
+     * // 返回: {"name":"John","age":30}
+     * ```
      */
-    compressJSON(_jsonStr?: string): string;
+    compressJSON(jsonStr?: string): string;
     /**
-     * prettierXML
-     * @description 格式化XML
-     * @param _xmlStr
-     * @return xmlStr
+     * 格式化 XML
+     * @description 将 XML 字符串格式化为可读的格式
+     * @param xmlStr - 要格式化的 XML 字符串
+     * @returns 格式化后的 XML 字符串
+     * @example
+     * ```typescript
+     * prettierXML('<root><item>value</item></root>')
+     * ```
      */
-    prettierXML(_xmlStr?: string): any;
+    prettierXML(xmlStr?: string): string;
     /**
-     * compressXML
-     * @description 压缩XML
-     * @param _xmlStr
-     * @return xmlStr
+     * 压缩 XML
+     * @description 将 XML 字符串压缩为单行格式
+     * @param xmlStr - 要压缩的 XML 字符串
+     * @returns 压缩后的 XML 字符串
+     * @example
+     * ```typescript
+     * compressXML('<root>\n  <item>value</item>\n</root>')
+     * // 返回: <root><item>value</item></root>
+     * ```
      */
-    compressXML(_xmlStr?: string): any;
+    compressXML(xmlStr?: string): string;
     /**
-     * prettierHTML
-     * @description 格式化HTML
-     * @param _htmlStr
-     * @return htmlStr
+     * 格式化 HTML
+     * @description 将 HTML 字符串格式化为可读的格式
+     * @param htmlStr - 要格式化的 HTML 字符串
+     * @returns 格式化后的 HTML 字符串
+     * @example
+     * ```typescript
+     * prettierHTML('<div><p>Hello</p></div>')
+     * ```
      */
-    prettierHTML(_htmlStr?: string): any;
+    prettierHTML(htmlStr?: string): string;
     /**
-     * compressHTML
-     * @description 压缩HTML
-     * @param _htmlStr
-     * @return htmlStr
+     * 压缩 HTML
+     * @description 将 HTML 字符串压缩为单行格式
+     * @param htmlStr - 要压缩的 HTML 字符串
+     * @returns 压缩后的 HTML 字符串
+     * @example
+     * ```typescript
+     * compressHTML('<div>\n  <p>Hello</p>\n</div>')
+     * // 返回: <div><p>Hello</p></div>
+     * ```
      */
-    compressHTML(_htmlStr?: string): any;
+    compressHTML(htmlStr?: string): string;
     /**
-     * prettierCSS
-     * @description 格式化CSS
-     * @param _cssStr
-     * @return cssStr
+     * 格式化 CSS
+     * @description 将 CSS 字符串格式化为可读的格式
+     * @param cssStr - 要格式化的 CSS 字符串
+     * @returns 格式化后的 CSS 字符串
+     * @example
+     * ```typescript
+     * prettierCSS('body{color:red;font-size:14px;}')
+     * ```
      */
-    prettierCSS(_cssStr?: string): any;
+    prettierCSS(cssStr?: string): string;
     /**
-     * compressCSS
-     * @description 压缩CSS
-     * @param _cssStr
-     * @return cssStr
+     * 压缩 CSS
+     * @description 将 CSS 字符串压缩为单行格式
+     * @param cssStr - 要压缩的 CSS 字符串
+     * @returns 压缩后的 CSS 字符串
+     * @example
+     * ```typescript
+     * compressCSS('body {\n  color: red;\n  font-size: 14px;\n}')
+     * // 返回: body{color:red;font-size:14px;}
+     * ```
      */
-    compressCSS(_cssStr?: string): any;
+    compressCSS(cssStr?: string): string;
     /**
-     * prettierSQL
-     * @description 格式化SQL
-     * @param _sqlStr
-     * @return sqlStr
+     * 格式化 SQL
+     * @description 将 SQL 字符串格式化为可读的格式
+     * @param sqlStr - 要格式化的 SQL 字符串
+     * @returns 格式化后的 SQL 字符串
+     * @example
+     * ```typescript
+     * prettierSQL('SELECT * FROM users WHERE age>18')
+     * ```
      */
-    prettierSQL(_sqlStr?: string): any;
+    prettierSQL(sqlStr?: string): string;
     /**
-     * compressSQL
-     * @description 压缩SQL
-     * @param _sqlStr
-     * @return sqlStr
+     * 压缩 SQL
+     * @description 将 SQL 字符串压缩为单行格式
+     * @param sqlStr - 要压缩的 SQL 字符串
+     * @returns 压缩后的 SQL 字符串
+     * @example
+     * ```typescript
+     * compressSQL('SELECT *\nFROM users\nWHERE age > 18')
+     * // 返回: SELECT * FROM users WHERE age > 18
+     * ```
      */
-    compressSQL(_sqlStr?: string): any;
+    compressSQL(sqlStr?: string): string;
     /**
-     * jsonToXML
-     * @description json转xml
-     * @param _jsonStr
-     * @return xmlStr
+     * JSON 转 XML
+     * @description 将 JSON 字符串转换为 XML 格式
+     * @param jsonStr - 要转换的 JSON 字符串
+     * @returns 转换后的 XML 字符串
+     * @example
+     * ```typescript
+     * jsonToXML('{"root":{"item":"value"}}')
+     * // 返回: <root><item>value</item></root>
+     * ```
      */
-    jsonToXML(_jsonStr?: string): any;
+    jsonToXML(jsonStr?: string): string;
     /**
-     * xmlToJSON
-     * @description xml转json
-     * @param _xmlStr
-     * @param prettier
-     * @return jsonStr
+     * XML 转 JSON
+     * @description 将 XML 字符串转换为 JSON 格式
+     * @param xmlStr - 要转换的 XML 字符串
+     * @param prettier - 是否格式化输出，默认为 true
+     * @returns 转换后的 JSON 字符串
+     * @example
+     * ```typescript
+     * xmlToJSON('<root><item>value</item></root>')
+     * // 返回: {"root":{"item":"value"}}
+     * ```
      */
-    xmlToJSON(_xmlStr?: string, prettier?: boolean): string;
+    xmlToJSON(xmlStr?: string, prettier?: boolean): string;
 };
 export default FormatUtil;

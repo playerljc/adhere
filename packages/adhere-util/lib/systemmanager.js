@@ -1,2 +1,2 @@
-export default{casUrl:function(c){var a=c.baseUrl,o=c.enterUrl,c=c.defaultLocal,c=c?"&locale=".concat(c):"";return"".concat(a,"/gotoLogin?backUrl=").concat(o).concat(c)},casLogoutUrl:function(c){var a=c.baseUrl,o=c.enterUrl,c=c.params,c=void 0===c?"":c;return"".concat(a,"/logout?service=").concat(o).concat(c)}};
+var SystemManagerUtil={casUrl:function(a){var t=a.baseUrl,c=a.enterUrl,a=a.defaultLocal,a=a?"&locale=".concat(a):"";return"".concat(t,"/gotoLogin?backUrl=").concat(c).concat(a)},casLogoutUrl:function(a){var t=a.baseUrl,c=a.enterUrl,a=a.params,a=void 0===a?"":a;return"".concat(t,"/logout?service=").concat(c).concat(a)}};export default SystemManagerUtil;
 //# sourceMappingURL=systemmanager.js.map

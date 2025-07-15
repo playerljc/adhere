@@ -27,15 +27,13 @@ import type {
   UseDictState,
 } from './types';
 
-// 组件的缓存
-const ComponentCache = new Map<string, any>();
-
-// data, isValidate, isPending
+/** Component cache for memoization to prevent unnecessary re-renders */
+const ComponentCache = new Map<string, React.ComponentType<any>>();
 
 /**
- * FunctionComponent
- * @constructor
- * @param key
+ * Create a function component for dictionary with arguments
+ * @param key - Dictionary key
+ * @returns ForwardRefRenderFunction for function-based dictionary component
  */
 const FunctionComponent: (
   key: string,
@@ -61,7 +59,7 @@ const FunctionComponent: (
       if (isEmpty) _props.isEmpty = isEmpty;
 
       return _props;
-    }, [firstLoading, renderNormalLoading, renderEmpty, isEmpty]);
+    }, [firstLoading, renderNormalLoading, renderEmpty, isEmpty, rest]);
 
     useUpdateLayoutEffect(() => {
       setData((_preData) => ({
@@ -94,13 +92,16 @@ const FunctionComponent: (
       },
     }));
 
-    const fetchData = () => {
-      Dict.handlers[key]!.isUseMemo = isUseMemo || false;
+    const fetchData = useCallback(() => {
+      const handler = Dict.handlers[key];
+      if (handler) {
+        handler.isUseMemo = isUseMemo || false;
+      }
 
       const result = Dict.value[key]?.value(...(args || []));
 
-      // 返回的Promise
-      if (result.then) {
+      // Handle Promise result
+      if (result && typeof result.then === 'function') {
         return result
           .then((res) => {
             setData({
@@ -121,7 +122,7 @@ const FunctionComponent: (
             return error;
           });
       }
-      // 非Promise
+      // Handle non-Promise result
       else {
         setData({
           data: result,
@@ -131,14 +132,14 @@ const FunctionComponent: (
 
         return Promise.resolve(result);
       }
-    };
+    }, [key, args, isUseMemo]);
 
     return (
       <Suspense.ASync
         ref={asyncRef}
         fetchData={fetchData}
         {...props}
-        isEmpty={() => data === null || data === undefined || isEmpty?.(data)}
+        isEmpty={() => data.data === null || data.data === undefined || isEmpty?.(data.data)}
       >
         {children?.(data)}
       </Suspense.ASync>
@@ -146,9 +147,9 @@ const FunctionComponent: (
   };
 
 /**
- * PromiseComponent
- * @constructor
- * @param key
+ * Create a promise component for dictionary
+ * @param key - Dictionary key
+ * @returns ForwardRefRenderFunction for promise-based dictionary component
  */
 const PromiseComponent: (
   key: string,
@@ -170,9 +171,9 @@ const PromiseComponent: (
       if (isEmpty) _props.isEmpty = isEmpty;
 
       return _props;
-    }, [firstLoading, renderNormalLoading, renderEmpty, isEmpty]);
+    }, [firstLoading, renderNormalLoading, renderEmpty, isEmpty, rest]);
 
-    const fetchData = () =>
+    const fetchData = useCallback(() =>
       Dict.value[key]?.value
         .then((res) => {
           setData({
@@ -191,14 +192,14 @@ const PromiseComponent: (
           });
 
           return error;
-        });
+        }), [key]);
 
     return (
       <Suspense.ASync
         ref={ref}
         fetchData={fetchData}
         {...props}
-        isEmpty={() => data === null || data === undefined || isEmpty?.(data)}
+        isEmpty={() => data.data === null || data.data === undefined || isEmpty?.(data.data)}
       >
         {children?.(data)}
       </Suspense.ASync>
@@ -206,9 +207,9 @@ const PromiseComponent: (
   };
 
 /**
- * NoPromiseComponent
- * @constructor
- * @param key
+ * Create a non-promise component for dictionary
+ * @param key - Dictionary key
+ * @returns FC for non-promise dictionary component
  */
 const NoPromiseComponent: (key: string) => FC<DictNoPromiseComponentProps> =
   (key: string) =>
@@ -230,8 +231,8 @@ const NoPromiseComponent: (key: string) => FC<DictNoPromiseComponentProps> =
     });
   };
 
-// 组件的config
-const ComponentMap = new Map<string, (key: string) => any>([
+/** Component factory map for creating different types of dictionary components */
+const ComponentMap = new Map<string, (key: string) => React.ComponentType<any>>([
   [
     'Function',
     (key) => {
@@ -239,13 +240,12 @@ const ComponentMap = new Map<string, (key: string) => any>([
         ComponentCache.set(
           `Function_${key}`,
           memo(
-            // @ts-ignore
             forwardRef<DictComponentHandler, DictFunctionComponentProps>(FunctionComponent(key)),
           ),
         );
       }
 
-      return ComponentCache.get(`Function_${key}`);
+      return ComponentCache.get(`Function_${key}`)!;
     },
   ],
   [
@@ -254,12 +254,11 @@ const ComponentMap = new Map<string, (key: string) => any>([
       if (!ComponentCache.has(`Promise_${key}`)) {
         ComponentCache.set(
           `Promise_${key}`,
-          // @ts-ignore
           memo(forwardRef<DictComponentHandler, DictPromiseComponentProps>(PromiseComponent(key))),
         );
       }
 
-      return ComponentCache.get(`Promise_${key}`);
+      return ComponentCache.get(`Promise_${key}`)!;
     },
   ],
   [
@@ -268,58 +267,55 @@ const ComponentMap = new Map<string, (key: string) => any>([
       if (!ComponentCache.has(`NotPromise_${key}`)) {
         ComponentCache.set(`NotPromise_${key}`, memo(NoPromiseComponent(key)));
       }
-      return ComponentCache.get(`NotPromise_${key}`);
+      return ComponentCache.get(`NotPromise_${key}`)!;
     },
   ],
 ]);
 
+/**
+ * Create appropriate component based on dictionary value type
+ * @param key - Dictionary key
+ * @returns ForwardRefRenderFunction for the appropriate component type
+ */
 const Component: (key: string) => ForwardRefRenderFunction<any, any> = (key) => (props, ref) => {
   const value = Dict.value[key]?.value;
 
-  let Component;
+  let Component: React.ComponentType<any> | undefined;
 
-  // isFunction
+  // Determine component type based on value
   if (Util.isFunction(value)) {
     Component = ComponentMap.get('Function')?.(key);
-  }
-  // isNotFunction
-  else {
-    // isNotPromise
-    if (!value?.then) {
-      Component = ComponentMap.get('NotPromise')?.(key);
-    }
-    // Promise
-    else {
+  } else {
+    // Check if value is a Promise
+    if (value && typeof value.then === 'function') {
       Component = ComponentMap.get('Promise')?.(key);
+    } else {
+      Component = ComponentMap.get('NotPromise')?.(key);
     }
   }
 
-  return Component && <Component ref={ref} {...props} />;
+  return Component ? <Component ref={ref} {...props} /> : null;
 };
 
 /**
- * set - 设置字典对应的组件
- * @param {string} key - 字典名称
- * @return {void}
+ * Set up dictionary component for the given key
+ * @param key - Dictionary key
  */
-export function set(key: string) {
+export function set(key: string): void {
   if (DictReactComponents[key]) return;
 
   DictReactComponents[key] = memo(forwardRef<any, any>(Component(key)));
 }
 
 /**
- * useDict
- * @description dict的hook
- * @param {string} dictName - 字典名称 如：SystemUser
- * @param {UseDictOptions} _options 配置
- * @return { data: any, isPending: boolean, isValidate: boolean, refresh:Function }
+ * Hook for using dictionaries in React components
+ * @param dictName - Dictionary name (e.g., 'SystemUser')
+ * @param _options - Configuration options
+ * @returns Dictionary state with data, loading status, and refresh function
  */
-export const useDict = (dictName: string, _options?: UseDictOptions) => {
+export const useDict = (dictName: string, _options?: UseDictOptions): UseDictState => {
   const value = Dict.value[dictName]?.value;
-
   const refresh = Dict.value[dictName]?.refresh as UseDictState['refresh'];
-
   const options = _options ?? {};
 
   const [data, setData] = useState<UseDictState>({
@@ -330,13 +326,16 @@ export const useDict = (dictName: string, _options?: UseDictOptions) => {
   });
 
   const getData = useCallback(() => {
-    // isFunction
+    // Handle function-based dictionaries
     if (Util.isFunction(value)) {
-      Dict.handlers[dictName]!.isUseMemo = !!options?.isUseMemo;
+      const handler = Dict.handlers[dictName];
+      if (handler) {
+        handler.isUseMemo = !!options?.isUseMemo;
+      }
 
       const result = value(options?.functionArgs ?? []);
 
-      if (result.then) {
+      if (result && typeof result.then === 'function') {
         result
           .then((res) => {
             setData({
@@ -363,17 +362,9 @@ export const useDict = (dictName: string, _options?: UseDictOptions) => {
         });
       }
     } else {
-      // isNotPromise
-      if (!value.then) {
-        setData({
-          data: value,
-          isValidate: true,
-          isPending: false,
-          refresh,
-        });
-      }
-      // Promise
-      else {
+      // Handle non-function dictionaries
+      if (value && typeof value.then === 'function') {
+        // Promise-based dictionary
         value
           .then((res) => {
             setData({
@@ -391,6 +382,14 @@ export const useDict = (dictName: string, _options?: UseDictOptions) => {
               refresh,
             });
           });
+      } else {
+        // Static dictionary
+        setData({
+          data: value,
+          isValidate: true,
+          isPending: false,
+          refresh,
+        });
       }
     }
   }, [dictName, value, refresh, JSON.stringify(options)]);
@@ -414,8 +413,8 @@ export const useDict = (dictName: string, _options?: UseDictOptions) => {
 };
 
 /**
- * Components - 字典对应的React组件
- * 调用init后会自动填充
+ * Dictionary React components - automatically populated after init
+ * Maps dictionary keys to their corresponding React components
  */
 const DictReactComponents: DictReactComponentObj = {};
 

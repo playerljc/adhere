@@ -2,30 +2,22 @@ import { useEffect, useRef } from 'react';
 
 import Server from '../../server';
 import Router from '../../server/router';
-import type { MiddleWare } from '../../types';
-
-type Config = {
-  whitelist: string[];
-  controllers: {
-    path: string;
-    middleWare: MiddleWare;
-  }[];
-  startAfterCB?: () => void;
-};
+import type { UseServerConfig, RouteController } from '../../types';
 
 /**
- * useServer
- * @param {Config} config
+ * 使用服务器的React Hook
+ * @description 在React组件中启动iframe通信服务器
+ * @param config - 服务器配置
  */
-export default function useServer(config: Config) {
+export default function useServer(config: UseServerConfig): void {
   const server = useRef<Server>();
   const router = useRef<Router>();
 
   useEffect(() => {
     router.current = new Router();
 
-    config.controllers.forEach(({ path, middleWare }) => {
-      router.current?.controller(path, middleWare);
+    config.controllers.forEach(({ path, middleware }: RouteController) => {
+      router.current?.controller(path, middleware);
     });
 
     server.current = new Server(config.whitelist, window, window.location.origin);
@@ -37,5 +29,5 @@ export default function useServer(config: Config) {
     return () => {
       server?.current?.close?.();
     };
-  });
+  }, [config.whitelist, config.controllers, config.startAfterCB]);
 }

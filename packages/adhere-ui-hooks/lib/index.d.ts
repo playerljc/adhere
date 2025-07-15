@@ -1,3 +1,21 @@
-import { HooksComponent } from './types';
-declare const Hooks: HooksComponent;
+import useItemsRef from './useItemsRef';
+import useLatestState from './useLatestState';
+import useMediaQuery from './useMediaQuery';
+import usePropToState from './usePropToState';
+import useSafeRef from './useSafeRef';
+import useSetState from './useSetState';
+import useTriggerQuery from './useTriggerQuery';
+declare const Hooks: {
+    readonly use: import("./types").Use;
+    readonly useFirst: import("./types").UseFirst;
+    readonly usePrevious: import("./types").UsePrevious;
+    readonly useForceUpdate: import("./types").UseForceUpdate;
+    readonly useSetState: typeof useSetState;
+    readonly useTriggerQuery: typeof useTriggerQuery;
+    readonly usePropToState: typeof usePropToState;
+    readonly useLatestState: typeof useLatestState;
+    readonly useItemsRef: typeof useItemsRef;
+    readonly useMediaQuery: typeof useMediaQuery;
+    readonly useSafeRef: typeof useSafeRef;
+};
 export default Hooks;

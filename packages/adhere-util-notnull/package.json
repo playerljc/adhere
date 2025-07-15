@@ -1,7 +1,7 @@
 {
   "name": "@baifendian/adhere-util-notnull",
   "version": "2.11.0",
-  "description": "一个永远都不为空的操作",
+  "description": "A utility for creating safe object proxies that ensure all property accesses never return null or undefined",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
     "url": "https://github.com/playerljc/adhere/issues"

@@ -7,13 +7,17 @@ import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import codes from './codes';
 import currenciesMap from './currenciesMap';
 import type { CurrencySymbolComponent, CurrencySymbolProps } from './types';
+import { isValidCurrencyCode } from './utils';
 
 const selectorPrefix = 'adhere-ui-currency-symbol';
 
 const { useTheme } = ConfigProvider;
 
 /**
- * InternalCurrencySymbol
+ * 内部货币符号组件
+ * @description 实际的货币符号渲染组件，使用memo优化性能
+ * @param props - 组件属性
+ * @returns JSX.Element
  */
 const InternalCurrencySymbol = memo<CurrencySymbolProps>(
   ({
@@ -36,25 +40,28 @@ const InternalCurrencySymbol = memo<CurrencySymbolProps>(
     suffix,
     align,
   }) => {
-    const wrapperRef = useRef<HTMLElement | undefined>();
+    const wrapperRef = useRef<HTMLSpanElement>(null);
 
-    const targetCode = useMemo(() => code ?? 'CNY', [code]);
-
+    // 使用useMemo优化性能，避免不必要的重新计算
+    const targetCode = useMemo(() => {
+      const providedCode = code ?? 'CNY';
+      // 验证货币代码有效性，如果无效则回退到CNY
+      return isValidCurrencyCode(providedCode) ? providedCode : 'CNY';
+    }, [code]);
+    
     const targetAmount = useMemo(() => amount ?? 0, [amount]);
-
     const targetBold = useMemo(() => bold ?? true, [bold]);
-
     const targetDanger = useMemo(() => danger ?? false, [danger]);
-
     const targetSymbolSize = useMemo(() => symbolSize ?? 'middle', [symbolSize]);
-
     const targetIsUseKilo = useMemo(() => isUseKilo ?? true, [isUseKilo]);
-
     const targetIsUseAnimation = useMemo(() => isUseAnimation ?? false, [isUseAnimation]);
-
     const targetAlign = useMemo(() => align ?? 'bottom', [align]);
 
-    useTheme<HTMLElement>({
+    // 获取货币信息
+    const currencyInfo = useMemo(() => currenciesMap.get(targetCode), [targetCode]);
+
+    // 应用主题
+    useTheme<HTMLSpanElement>({
       elRef: wrapperRef,
       group: 'normal',
       displayName: 'CurrencySymbol',
@@ -62,7 +69,6 @@ const InternalCurrencySymbol = memo<CurrencySymbolProps>(
 
     return (
       <span
-        // @ts-ignore
         ref={wrapperRef}
         className={classNames(selectorPrefix, className, `${selectorPrefix}-${targetAlign}`, {
           [`${selectorPrefix}-bold`]: targetBold,
@@ -79,7 +85,7 @@ const InternalCurrencySymbol = memo<CurrencySymbolProps>(
           )}
           style={symbolStyle ?? {}}
         >
-          {currenciesMap.get(targetCode)?.symbol}
+          {currencyInfo?.symbol}
         </span>
 
         <span
@@ -100,12 +106,37 @@ const InternalCurrencySymbol = memo<CurrencySymbolProps>(
   },
 );
 
+/**
+ * 货币符号组件
+ * @description 用于显示带有货币符号的金额，支持多种货币和自定义样式
+ * @example
+ * ```tsx
+ * // 基本用法
+ * <CurrencySymbol amount={1234.56} code="USD" />
+ * 
+ * // 自定义样式
+ * <CurrencySymbol 
+ *   amount={1234.56} 
+ *   code="EUR" 
+ *   bold={false}
+ *   danger={true}
+ *   symbolSize="large"
+ * />
+ * 
+ * // 带动画效果
+ * <CurrencySymbol 
+ *   amount={1234.56} 
+ *   isUseAnimation={true}
+ *   countUpProps={{ delay: 0.5 }}
+ * />
+ * ```
+ */
 const CurrencySymbol = InternalCurrencySymbol as CurrencySymbolComponent;
 
 CurrencySymbol.displayName = 'CurrencySymbol';
 
+// 静态属性
 CurrencySymbol.currencies = codes;
-
 CurrencySymbol.currenciesMap = currenciesMap;
 
 export default CurrencySymbol;

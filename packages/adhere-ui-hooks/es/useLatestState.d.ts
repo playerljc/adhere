@@ -2,12 +2,25 @@ import type { MutableRefObject } from 'react';
 type SetStateAction<S> = S | ((prevState: S) => S);
 type Dispatch<A> = (value: A) => void;
 /**
- * useLatestState
- * @description 返回的是最新的值(防止了闭包的问题)，返回的值用useLatest
- * @param initialState
+ * useLatestState hook
+ * @description 返回最新的状态值，防止闭包问题，返回的值使用 useLatest 包装
+ * @template S - 状态类型
+ * @param {S | (() => S)} initialState - 初始状态值或获取初始状态的函数
+ * @returns {UseLatestStateReturn<S>} 返回最新的状态引用和设置函数
+ *
+ * @example
+ * ```tsx
+ * const [valueRef, setValue] = useLatestState(0);
+ *
+ * useEffect(() => {
+ *   // 总是能获取到最新的值
+ *   console.log('最新值:', valueRef.current);
+ * }, []);
+ *
+ * const handleClick = () => {
+ *   setValue(prev => prev + 1);
+ * };
+ * ```
  */
 declare function useLatestState<S>(initialState: S | (() => S)): [MutableRefObject<S>, Dispatch<SetStateAction<S>>];
-/**
- * useLatestState
- */
 export default useLatestState;

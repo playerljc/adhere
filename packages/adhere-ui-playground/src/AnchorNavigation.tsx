@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import React, {
   memo,
-  /*useContext,*/
   useEffect,
   useRef,
   useState,
@@ -9,16 +8,16 @@ import React, {
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
-// import Util from '@baifendian/adhere-util';
-// import { AnchorNavigationContext } from './AnchorNavigationContext';
-import type { AnchorNavigationProps } from './types';
+import type { AnchorNavigationProps, AnchorConfig } from './types';
 
 const selectPrefix = 'adhere-ui-playground-anchor-navigation';
 
 /**
- * AnchorNavigation
- * @classdesc 带有锚点导航的面板
- * @constructor
+ * 锚点导航组件
+ * @component AnchorNavigation
+ * @description 带有锚点导航的面板，支持自动定位和滚动到指定锚点
+ * @param props - 组件属性
+ * @returns JSX.Element
  */
 const AnchorNavigation = memo<AnchorNavigationProps>((props) => {
   const {
@@ -34,154 +33,53 @@ const AnchorNavigation = memo<AnchorNavigationProps>((props) => {
       width: 120,
     },
     children,
+    activeAnchor: propActiveAnchor,
   } = props;
 
-  const [activeAnchor, setActiveAnchor] = useState<string>(props.activeAnchor ?? '');
-
+  const [activeAnchor, setActiveAnchor] = useState<string>(propActiveAnchor ?? '');
   const anchorRef = useRef<HTMLUListElement | null>(null);
 
-  // const anchorDimensionIndex = useRef<
-  //   {
-  //     anchor: string;
-  //     range: {
-  //       top: number;
-  //       bottom?: number | undefined;
-  //     };
-  //   }[]
-  // >([]);
-
-  // const { scrollEl } = useContext(AnchorNavigationContext);
-
-  // /**
-  //  * createAnchorDimensionIndex
-  //  */
-  // function createAnchorDimensionIndex(): void {
-  //   if (!scrollEl) return;
-  //
-  //   const container = scrollEl as HTMLElement;
-  //
-  //   anchorDimensionIndex.current = [];
-  //
-  //   (anchors || []).forEach(({ anchor }, index) => {
-  //     const el = document.getElementById(anchor) as HTMLElement;
-  //
-  //     if (!el) return;
-  //
-  //     const top = Util.getTopUntil({ el, untilEl: container });
-  //
-  //     const entry = {
-  //       anchor,
-  //       range: {
-  //         top,
-  //         bottom:
-  //           index === anchorDimensionIndex.current.length - 1 ? top + el.offsetHeight : undefined,
-  //       },
-  //     };
-  //
-  //     anchorDimensionIndex.current.push(entry);
-  //
-  //     if (index !== 0) {
-  //       anchorDimensionIndex.current[index - 1].range.bottom = top;
-  //     }
-  //   });
-  // }
-
-  // /**
-  //  * findAnchorByScrollVal
-  //  * @param scrollVal
-  //  */
-  // function findAnchorByScrollVal(scrollVal: number) {
-  //   return anchorDimensionIndex.current.find(
-  //     (anchorIndexItem) =>
-  //       scrollVal >= anchorIndexItem.range.top &&
-  //       scrollVal <= (anchorIndexItem.range.bottom as number),
-  //   );
-  // }
-
   /**
-   * useEffect
-   * @description scrollEl change
-   */
-  // useEffect(() => {
-  //   if (!scrollEl) return;
-  //
-  //   /**
-  //    * onWrapScroll
-  //    */
-  //   function onWrapScroll() {
-  //     if (!scrollEl || !anchorRef.current) return;
-  //
-  //     const scrollTop = (scrollEl as HTMLElement).scrollTop;
-  //
-  //     const anchor = findAnchorByScrollVal(scrollTop);
-  //
-  //     if (anchor) {
-  //       setActiveAnchor(anchor.anchor);
-  //     }
-  //
-  //     if (scrollTop === 0) {
-  //       (anchorRef.current as HTMLElement)?.classList?.remove?.(`${selectPrefix}-affix`);
-  //       // (anchorRef.current as HTMLElement).style.top = '0';
-  //     } else {
-  //       (anchorRef.current as HTMLElement)?.classList?.add?.(`${selectPrefix}-affix`);
-  //
-  //       if ((anchorRef.current as HTMLElement).style) {
-  //         (anchorRef.current as HTMLElement).style.top = `${anchorPosition.top}px`;
-  //       }
-  //     }
-  //   }
-  //
-  //   createAnchorDimensionIndex();
-  //
-  //   (scrollEl as HTMLElement).addEventListener('scroll', onWrapScroll);
-  //
-  //   return () => {
-  //     if (!scrollEl) return;
-  //     (scrollEl as HTMLElement).removeEventListener('scroll', onWrapScroll);
-  //   };
-  // }, [scrollEl]);
-
-  /**
-   * useEffect
-   * @description activeAnchor change
+   * 监听activeAnchor属性变化
    */
   useEffect(() => {
-    setActiveAnchor(props.activeAnchor ?? '');
-  }, [props.activeAnchor]);
+    setActiveAnchor(propActiveAnchor ?? '');
+  }, [propActiveAnchor]);
 
   /**
-   * render jsx
+   * 处理锚点点击
+   * @function handleAnchorClick
+   * @param anchor - 锚点配置
    */
+  const handleAnchorClick = (anchor: AnchorConfig): void => {
+    setActiveAnchor(anchor.anchor);
+
+    const anchorEl = document.getElementById(anchor.anchor);
+    if (anchorEl) {
+      anchorEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className={classNames(selectPrefix, className)} style={style ?? {}}>
-      <div className={classNames(`${selectPrefix}-auto`, autoClassName)} style={autoStyle ?? {}}>
+    <div className={classNames(selectPrefix, className)} style={style}>
+      <div className={classNames(`${selectPrefix}-auto`, autoClassName)} style={autoStyle}>
         <div className={`${selectPrefix}-inner`}>{children}</div>
       </div>
 
-      <ConditionalRender conditional={!!(anchors || []).length}>
+      <ConditionalRender conditional={!!anchors.length}>
         {() => (
           <div
             className={classNames(`${selectPrefix}-fixed`, fixedClassName)}
-            style={{ ...(style ?? {}), width: `${anchorPosition.width}px` }}
+            style={{ ...style, width: `${anchorPosition.width}px` }}
           >
             <ul className={`${selectPrefix}-anchor`} ref={anchorRef}>
-              {(anchors || []).map((anchor, _index) => (
+              {anchors.map((anchor, index) => (
                 <li
-                  key={`${_index}`}
+                  key={`${index}`}
                   className={anchor.anchor === activeAnchor ? `${selectPrefix}-active` : ''}
                   title={anchor.name}
                 >
-                  <a
-                    onClick={() => {
-                      setActiveAnchor(anchor.anchor);
-
-                      const anchorEl = document.getElementById(anchor.anchor);
-
-                      if (anchorEl) {
-                        anchorEl.scrollIntoView(true);
-                      }
-                    }}
-                  >
+                  <a onClick={() => handleAnchorClick(anchor)}>
                     {anchor.name}
                   </a>
                 </li>

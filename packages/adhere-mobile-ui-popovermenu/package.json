@@ -1,7 +1,7 @@
 {
   "name": "@baifendian/adhere-mobile-ui-popovermenu",
   "version": "2.11.0",
-  "description": "popover的菜单",
+  "description": "移动端弹出菜单组件，支持多级菜单、图标、禁用状态等功能",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
     "url": "https://github.com/playerljc/adhere/issues"

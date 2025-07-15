@@ -14,18 +14,19 @@ import {
 } from 'echarts/charts';
 
 import merge from './merge';
-import type { AreaStyle, Radius, RoseType } from './types';
+import type { AreaStyle, Radius, RoseType, BaseChartOption } from './types';
 
 /**
- * Echarts配置的分类
- *
- * @example
- * ```js
- * ```
+ * ECharts 配置选项集合
+ * @description 提供各种图表类型的配置选项生成函数
  */
 const Options = {
-  // 基础配置
-  baseOption: () => ({
+  /**
+   * 基础配置选项
+   * @description 所有图表的基础网格配置
+   * @returns 基础配置对象
+   */
+  baseOption: (): BaseChartOption => ({
     grid: {
       left: '1%',
       right: '1%',
@@ -34,8 +35,13 @@ const Options = {
       containLabel: true,
     },
   }),
-  // 值在Y轴上
-  valueToYOption: () => ({
+
+  /**
+   * 值在Y轴上的配置
+   * @description 适用于柱状图、折线图等以X轴为类别的图表
+   * @returns 坐标轴配置对象
+   */
+  valueToYOption: (): BaseChartOption => ({
     xAxis: {
       type: 'category',
     },
@@ -43,8 +49,13 @@ const Options = {
       type: 'value',
     },
   }),
-  // 值在X轴上
-  valueToXOption: () => ({
+
+  /**
+   * 值在X轴上的配置
+   * @description 适用于横向柱状图等以Y轴为类别的图表
+   * @returns 坐标轴配置对象
+   */
+  valueToXOption: (): BaseChartOption => ({
     xAxis: {
       type: 'value',
     },
@@ -52,135 +63,212 @@ const Options = {
       type: 'category',
     },
   }),
+
   // ---------------------------------------------------------------
-  // 柱状图
-  barOption: () => ({
+  // 柱状图相关配置
+  // ---------------------------------------------------------------
+
+  /**
+   * 柱状图基础配置
+   * @returns 柱状图系列配置
+   */
+  barOption: (): BarSeriesOption => ({
     type: 'bar',
   }),
-  // 堆叠柱状图
-  barToStackOption: (stack: string) =>
+
+  /**
+   * 堆叠柱状图配置
+   * @param stack - 堆叠分组名称
+   * @returns 堆叠柱状图系列配置
+   */
+  barToStackOption: (stack: string): BarSeriesOption =>
     merge(Options.barOption(), {
       stack,
     }),
-  // 动态排序柱状图
-  barToRealtimeSortOption: () =>
+
+  /**
+   * 动态排序柱状图配置
+   * @returns 动态排序柱状图系列配置
+   */
+  barToRealtimeSortOption: (): BarSeriesOption =>
     merge(Options.barOption(), {
       realtimeSort: true,
     }),
-  // ---------------------------------------------------------------
 
   // ---------------------------------------------------------------
-  // 折线图
-  lineOption: () => ({
+  // 折线图相关配置
+  // ---------------------------------------------------------------
+
+  /**
+   * 折线图基础配置
+   * @returns 折线图系列配置
+   */
+  lineOption: (): LineSeriesOption => ({
     type: 'line',
   }),
-  // 堆叠折线图
-  lineToStackOption: (stack: string) =>
+
+  /**
+   * 堆叠折线图配置
+   * @param stack - 堆叠分组名称
+   * @returns 堆叠折线图系列配置
+   */
+  lineToStackOption: (stack: string): LineSeriesOption =>
     merge(Options.lineOption(), {
       stack,
     }),
-  // 区域面积图(折线图)
-  lineToAreaOption: (areaStyle: AreaStyle) =>
+
+  /**
+   * 区域面积图配置
+   * @param areaStyle - 区域样式配置
+   * @returns 区域面积图系列配置
+   */
+  lineToAreaOption: (areaStyle: AreaStyle): LineSeriesOption =>
     merge(Options.lineOption(), {
       areaStyle,
     }),
-  // 平滑曲线图(折线图)
-  lineToSmoothOption: () =>
+
+  /**
+   * 平滑曲线图配置
+   * @returns 平滑曲线图系列配置
+   */
+  lineToSmoothOption: (): LineSeriesOption =>
     merge(Options.lineOption(), {
       smooth: true,
     }),
-  // 阶梯线图(折线图)
-  lineToStepOption: (step: string) =>
+
+  /**
+   * 阶梯线图配置
+   * @param step - 阶梯类型
+   * @returns 阶梯线图系列配置
+   */
+  lineToStepOption: (step: string): LineSeriesOption =>
     merge(Options.lineOption(), {
       step,
     }),
-  // ---------------------------------------------------------------
 
   // ---------------------------------------------------------------
-  // 饼图
-  pieOption: () => ({
+  // 饼图相关配置
+  // ---------------------------------------------------------------
+
+  /**
+   * 饼图基础配置
+   * @returns 饼图系列配置
+   */
+  pieOption: (): PieSeriesOption => ({
     type: 'pie',
   }),
-  // 圆环图(饼图)
-  pieToRadiusOption: (radius: Radius) =>
+
+  /**
+   * 圆环图配置
+   * @param radius - 半径配置
+   * @returns 圆环图系列配置
+   */
+  pieToRadiusOption: (radius: Radius): PieSeriesOption =>
     merge(Options.pieOption(), {
       radius,
     }),
-  //南丁格尔图（玫瑰图）(饼图)
-  pieToRoseOption: (roseType: RoseType) =>
+
+  /**
+   * 南丁格尔玫瑰图配置
+   * @param roseType - 玫瑰图类型
+   * @returns 玫瑰图系列配置
+   */
+  pieToRoseOption: (roseType: RoseType): PieSeriesOption =>
     merge(Options.pieOption(), {
       roseType,
     }),
-  // ---------------------------------------------------------------
 
   // ---------------------------------------------------------------
-  // 散点图
-  scatterOption: () => ({
+  // 散点图相关配置
+  // ---------------------------------------------------------------
+
+  /**
+   * 散点图基础配置
+   * @returns 散点图系列配置
+   */
+  scatterOption: (): ScatterSeriesOption => ({
     type: 'scatter',
   }),
+
+  // ---------------------------------------------------------------
+  // 其他图表类型配置
   // ---------------------------------------------------------------
 
-  // --------------------------不常见的图表类型-----------------------
-  // ---------------------------------------------------------------
-  // 雷达图
-  radarOption: () => ({
+  /**
+   * 雷达图基础配置
+   * @returns 雷达图系列配置
+   */
+  radarOption: (): RadarSeriesOption => ({
     type: 'radar',
   }),
-  // ---------------------------------------------------------------
 
-  // ---------------------------------------------------------------
-  // 旭日图
-  sunburstOption: () => ({
+  /**
+   * 旭日图基础配置
+   * @returns 旭日图系列配置
+   */
+  sunburstOption: (): SunburstSeriesOption => ({
     type: 'sunburst',
   }),
-  // ---------------------------------------------------------------
 
-  // ---------------------------------------------------------------
-  // 箱形图
-  boxplotOption: () => ({
+  /**
+   * 箱形图基础配置
+   * @returns 箱形图系列配置
+   */
+  boxplotOption: (): BoxplotSeriesOption => ({
     type: 'boxplot',
   }),
-  // ---------------------------------------------------------------
 
-  // ---------------------------------------------------------------
-  // K线图
-  candlestickOption: () => ({
+  /**
+   * K线图基础配置
+   * @returns K线图系列配置
+   */
+  candlestickOption: (): CandlestickSeriesOption => ({
     type: 'candlestick',
   }),
-  // ---------------------------------------------------------------
 
-  // ---------------------------------------------------------------
-  // 热力图
-  heatmapOption: () => ({
+  /**
+   * 热力图基础配置
+   * @returns 热力图系列配置
+   */
+  heatmapOption: (): HeatmapSeriesOption => ({
     type: 'heatmap',
   }),
-  // ---------------------------------------------------------------
 
-  // ---------------------------------------------------------------
-  // sankey
-  sankeyOption: () => ({
+  /**
+   * 桑基图基础配置
+   * @returns 桑基图系列配置
+   */
+  sankeyOption: (): SankeySeriesOption => ({
     type: 'sankey',
   }),
-  // ---------------------------------------------------------------
 
-  // ---------------------------------------------------------------
-  // 漏斗图
-  funnelOption: () => ({
+  /**
+   * 漏斗图基础配置
+   * @returns 漏斗图系列配置
+   */
+  funnelOption: (): FunnelSeriesOption => ({
     type: 'funnel',
   }),
-  // ---------------------------------------------------------------
 
-  // ---------------------------------------------------------------
-  // 仪表盘
-  gaugeOption: () => ({
+  /**
+   * 仪表盘基础配置
+   * @returns 仪表盘系列配置
+   */
+  gaugeOption: (): GaugeSeriesOption => ({
     type: 'gauge',
     radius: '100%',
   }),
-  // ---------------------------------------------------------------
 
   // ---------------------------------------------------------------
-  // 柱状图
-  barChart: (series?: BarSeriesOption[]) => {
+  // 完整图表配置生成函数
+  // ---------------------------------------------------------------
+
+  /**
+   * 生成柱状图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的柱状图配置
+   */
+  barChart: (series?: BarSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToYOption(),
@@ -193,7 +281,14 @@ const Options = {
       series: series.map((s) => merge(Options.barOption(), s)),
     });
   },
-  barChartToStack: (stack: string | string[], series?: BarSeriesOption[]) => {
+
+  /**
+   * 生成堆叠柱状图完整配置
+   * @param stack - 堆叠分组名称或名称数组
+   * @param series - 系列配置数组
+   * @returns 完整的堆叠柱状图配置
+   */
+  barChartToStack: (stack: string | string[], series?: BarSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToYOption(),
@@ -208,7 +303,13 @@ const Options = {
       ),
     });
   },
-  barChartToRealtimeSort: (series?: BarSeriesOption[]) => {
+
+  /**
+   * 生成动态排序柱状图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的动态排序柱状图配置
+   */
+  barChartToRealtimeSort: (series?: BarSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToYOption(),
@@ -221,7 +322,13 @@ const Options = {
       series: series.map((s) => merge(Options.barToRealtimeSortOption(), s)),
     });
   },
-  barChartValueToX: (series?: BarSeriesOption[]) => {
+
+  /**
+   * 生成横向柱状图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的横向柱状图配置
+   */
+  barChartValueToX: (series?: BarSeriesOption[]): BaseChartOption => {
     if (!series || !series.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToXOption(),
@@ -234,7 +341,14 @@ const Options = {
       series: series.map((s) => merge(Options.barOption(), s)),
     });
   },
-  barChartToStackValueToX: (stack: string | string[], series?: BarSeriesOption[]) => {
+
+  /**
+   * 生成横向堆叠柱状图完整配置
+   * @param stack - 堆叠分组名称或名称数组
+   * @param series - 系列配置数组
+   * @returns 完整的横向堆叠柱状图配置
+   */
+  barChartToStackValueToX: (stack: string | string[], series?: BarSeriesOption[]): BaseChartOption => {
     if (!series || !series.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToXOption(),
@@ -249,7 +363,13 @@ const Options = {
       ),
     });
   },
-  barChartToRealtimeSortValueToX: (series?: BarSeriesOption[]) => {
+
+  /**
+   * 生成横向动态排序柱状图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的横向动态排序柱状图配置
+   */
+  barChartToRealtimeSortValueToX: (series?: BarSeriesOption[]): BaseChartOption => {
     if (!series || !series.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToXOption(),
@@ -262,11 +382,17 @@ const Options = {
       series: series.map((s) => merge(Options.barToRealtimeSortOption(), s)),
     });
   },
-  // ---------------------------------------------------------------
 
   // ---------------------------------------------------------------
-  // 折线图
-  lineChart: (series?: LineSeriesOption[]) => {
+  // 折线图完整配置生成函数
+  // ---------------------------------------------------------------
+
+  /**
+   * 生成折线图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的折线图配置
+   */
+  lineChart: (series?: LineSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToYOption(),
@@ -279,7 +405,14 @@ const Options = {
       series: series.map((s) => merge(Options.lineOption(), s)),
     });
   },
-  lineChartToStack: (stack: string | string[], series?: LineSeriesOption[]) => {
+
+  /**
+   * 生成堆叠折线图完整配置
+   * @param stack - 堆叠分组名称或名称数组
+   * @param series - 系列配置数组
+   * @returns 完整的堆叠折线图配置
+   */
+  lineChartToStack: (stack: string | string[], series?: LineSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToYOption(),
@@ -294,7 +427,14 @@ const Options = {
       ),
     });
   },
-  lineChartToArea: (areaStyle: AreaStyle | AreaStyle[], series?: LineSeriesOption[]) => {
+
+  /**
+   * 生成区域面积图完整配置
+   * @param areaStyle - 区域样式配置或配置数组
+   * @param series - 系列配置数组
+   * @returns 完整的区域面积图配置
+   */
+  lineChartToArea: (areaStyle: AreaStyle | AreaStyle[], series?: LineSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToYOption(),
@@ -309,7 +449,13 @@ const Options = {
       ),
     });
   },
-  lineChartToSmooth: (series?: LineSeriesOption[]) => {
+
+  /**
+   * 生成平滑曲线图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的平滑曲线图配置
+   */
+  lineChartToSmooth: (series?: LineSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToYOption(),
@@ -322,7 +468,14 @@ const Options = {
       series: series.map((s) => merge(Options.lineToSmoothOption(), s)),
     });
   },
-  lineChartToStep: (step: string | string[], series?: LineSeriesOption[]) => {
+
+  /**
+   * 生成阶梯线图完整配置
+   * @param step - 阶梯类型或类型数组
+   * @param series - 系列配置数组
+   * @returns 完整的阶梯线图配置
+   */
+  lineChartToStep: (step: string | string[], series?: LineSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToYOption(),
@@ -337,7 +490,13 @@ const Options = {
       ),
     });
   },
-  lineChartValueToX: (series?: LineSeriesOption[]) => {
+
+  /**
+   * 生成横向折线图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的横向折线图配置
+   */
+  lineChartValueToX: (series?: LineSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToXOption(),
@@ -350,7 +509,14 @@ const Options = {
       series: series.map((s) => merge(Options.lineOption(), s)),
     });
   },
-  lineChartToStackValueToX: (stack: string | string[], series?: LineSeriesOption[]) => {
+
+  /**
+   * 生成横向堆叠折线图完整配置
+   * @param stack - 堆叠分组名称或名称数组
+   * @param series - 系列配置数组
+   * @returns 完整的横向堆叠折线图配置
+   */
+  lineChartToStackValueToX: (stack: string | string[], series?: LineSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToXOption(),
@@ -365,7 +531,14 @@ const Options = {
       ),
     });
   },
-  lineChartToAreaValueToX: (areaStyle: AreaStyle | AreaStyle[], series?: LineSeriesOption[]) => {
+
+  /**
+   * 生成横向区域面积图完整配置
+   * @param areaStyle - 区域样式配置或配置数组
+   * @param series - 系列配置数组
+   * @returns 完整的横向区域面积图配置
+   */
+  lineChartToAreaValueToX: (areaStyle: AreaStyle | AreaStyle[], series?: LineSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToXOption(),
@@ -380,7 +553,13 @@ const Options = {
       ),
     });
   },
-  lineChartToSmoothValueToX: (series?: LineSeriesOption[]) => {
+
+  /**
+   * 生成横向平滑曲线图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的横向平滑曲线图配置
+   */
+  lineChartToSmoothValueToX: (series?: LineSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToXOption(),
@@ -393,7 +572,14 @@ const Options = {
       series: series.map((s) => merge(Options.lineToSmoothOption(), s)),
     });
   },
-  lineChartToStepValueToX: (step: string | string[], series?: LineSeriesOption[]) => {
+
+  /**
+   * 生成横向阶梯线图完整配置
+   * @param step - 阶梯类型或类型数组
+   * @param series - 系列配置数组
+   * @returns 完整的横向阶梯线图配置
+   */
+  lineChartToStepValueToX: (step: string | string[], series?: LineSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToXOption(),
@@ -408,11 +594,17 @@ const Options = {
       ),
     });
   },
-  // ---------------------------------------------------------------
 
   // ---------------------------------------------------------------
-  // 饼图
-  pieChart: (series?: PieSeriesOption[]) => {
+  // 饼图完整配置生成函数
+  // ---------------------------------------------------------------
+
+  /**
+   * 生成饼图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的饼图配置
+   */
+  pieChart: (series?: PieSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         series: [Options.pieOption()],
@@ -423,7 +615,14 @@ const Options = {
       series: series.map((s) => merge(Options.pieOption(), s)),
     });
   },
-  pieChartToRadius: (radius: Radius | Radius[], series?: PieSeriesOption[]) => {
+
+  /**
+   * 生成圆环图完整配置
+   * @param radius - 半径配置或配置数组
+   * @param series - 系列配置数组
+   * @returns 完整的圆环图配置
+   */
+  pieChartToRadius: (radius: Radius | Radius[], series?: PieSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         series: [Options.pieToRadiusOption(radius as Radius)],
@@ -436,7 +635,14 @@ const Options = {
       ),
     });
   },
-  pieChartToRose: (roseType: RoseType | RoseType[], series?: PieSeriesOption[]) => {
+
+  /**
+   * 生成玫瑰图完整配置
+   * @param roseType - 玫瑰图类型或类型数组
+   * @param series - 系列配置数组
+   * @returns 完整的玫瑰图配置
+   */
+  pieChartToRose: (roseType: RoseType | RoseType[], series?: PieSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         series: [Options.pieToRoseOption(roseType as RoseType)],
@@ -449,11 +655,17 @@ const Options = {
       ),
     });
   },
-  // ---------------------------------------------------------------
 
   // ---------------------------------------------------------------
-  // 散点图
-  scatterChart: (series?: ScatterSeriesOption[]) => {
+  // 散点图完整配置生成函数
+  // ---------------------------------------------------------------
+
+  /**
+   * 生成散点图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的散点图配置
+   */
+  scatterChart: (series?: ScatterSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToYOption(),
@@ -466,7 +678,13 @@ const Options = {
       series: series.map((s) => merge(Options.scatterOption(), s)),
     });
   },
-  scatterChartValueToX: (series?: ScatterSeriesOption[]) => {
+
+  /**
+   * 生成横向散点图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的横向散点图配置
+   */
+  scatterChartValueToX: (series?: ScatterSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToXOption(),
@@ -479,11 +697,17 @@ const Options = {
       series: series.map((s) => merge(Options.scatterOption(), s)),
     });
   },
-  // ---------------------------------------------------------------
 
   // ---------------------------------------------------------------
-  // 雷达图
-  radarChart: (series?: RadarSeriesOption[]) => {
+  // 其他图表类型完整配置生成函数
+  // ---------------------------------------------------------------
+
+  /**
+   * 生成雷达图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的雷达图配置
+   */
+  radarChart: (series?: RadarSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         series: [Options.radarOption()],
@@ -494,11 +718,13 @@ const Options = {
       series: series.map((s) => merge(Options.radarOption(), s)),
     });
   },
-  // ---------------------------------------------------------------
 
-  // ---------------------------------------------------------------
-  // 旭日图
-  sunburstChart: (series?: SunburstSeriesOption[]) => {
+  /**
+   * 生成旭日图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的旭日图配置
+   */
+  sunburstChart: (series?: SunburstSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         series: [Options.sunburstOption()],
@@ -509,11 +735,13 @@ const Options = {
       series: series.map((s) => merge(Options.sunburstOption(), s)),
     });
   },
-  // ---------------------------------------------------------------
 
-  // ---------------------------------------------------------------
-  // 箱形图
-  boxplotChart: (series?: BoxplotSeriesOption[]) => {
+  /**
+   * 生成箱形图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的箱形图配置
+   */
+  boxplotChart: (series?: BoxplotSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         series: [Options.boxplotOption()],
@@ -524,11 +752,13 @@ const Options = {
       series: series.map((s) => merge(Options.boxplotOption(), s)),
     });
   },
-  // ---------------------------------------------------------------
 
-  // ---------------------------------------------------------------
-  // K线图
-  candlestickChart: (series?: CandlestickSeriesOption[]) => {
+  /**
+   * 生成K线图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的K线图配置
+   */
+  candlestickChart: (series?: CandlestickSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         series: [Options.candlestickOption()],
@@ -539,11 +769,13 @@ const Options = {
       series: series.map((s) => merge(Options.candlestickOption(), s)),
     });
   },
-  // ---------------------------------------------------------------
 
-  // ---------------------------------------------------------------
-  // 热力图
-  heatmapChart: (series?: HeatmapSeriesOption[]) => {
+  /**
+   * 生成热力图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的热力图配置
+   */
+  heatmapChart: (series?: HeatmapSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         series: [Options.heatmapOption()],
@@ -554,11 +786,13 @@ const Options = {
       series: series.map((s) => merge(Options.heatmapOption(), s)),
     });
   },
-  // ---------------------------------------------------------------
 
-  // ---------------------------------------------------------------
-  // sankey
-  sankeyChart: (series?: SankeySeriesOption[]) => {
+  /**
+   * 生成桑基图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的桑基图配置
+   */
+  sankeyChart: (series?: SankeySeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         series: [Options.sankeyOption()],
@@ -569,11 +803,13 @@ const Options = {
       series: series.map((s) => merge(Options.sankeyOption(), s)),
     });
   },
-  // ---------------------------------------------------------------
 
-  // ---------------------------------------------------------------
-  // 漏斗图
-  funnelChart: (series?: FunnelSeriesOption[]) => {
+  /**
+   * 生成漏斗图完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的漏斗图配置
+   */
+  funnelChart: (series?: FunnelSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         series: [Options.funnelOption()],
@@ -584,11 +820,13 @@ const Options = {
       series: series.map((s) => merge(Options.funnelOption(), s)),
     });
   },
-  // ---------------------------------------------------------------
 
-  // ---------------------------------------------------------------
-  // 仪表盘
-  gaugeChart: (series?: GaugeSeriesOption[]) => {
+  /**
+   * 生成仪表盘完整配置
+   * @param series - 系列配置数组
+   * @returns 完整的仪表盘配置
+   */
+  gaugeChart: (series?: GaugeSeriesOption[]): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         series: [Options.gaugeOption()],
@@ -599,7 +837,6 @@ const Options = {
       series: series.map((s) => merge(Options.gaugeOption(), s)),
     });
   },
-  // ---------------------------------------------------------------
 } as const;
 
 export default Options;

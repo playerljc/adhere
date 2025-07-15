@@ -1,5 +1,10 @@
-// 纯色
-const SolidColor = {
+import type { SolidColorConfig, GradientColorConfig, ColorConfig } from './types';
+
+/**
+ * 纯色配置
+ * @description 包含32种预定义的纯色，适用于各种图表场景
+ */
+const SolidColor: SolidColorConfig = {
   color1: '#404CE4',
   color2: '#238FFD',
   color3: '#0AB8FD',
@@ -34,8 +39,11 @@ const SolidColor = {
   color32: '#1E9292',
 };
 
-// 渐变色
-const GradientColor = {
+/**
+ * 渐变色配置
+ * @description 包含33种预定义的渐变色，支持多种渐变效果
+ */
+const GradientColor: Record<string, GradientColorConfig> = {
   color33: {
     x: 0.5,
     y: 0,
@@ -631,7 +639,13 @@ const GradientColor = {
   },
 };
 
-export default {
+/**
+ * 完整的颜色配置
+ * @description 合并纯色和渐变色配置，提供完整的颜色选择
+ */
+const colors: ColorConfig = {
   ...SolidColor,
   ...GradientColor,
 };
+
+export default colors;

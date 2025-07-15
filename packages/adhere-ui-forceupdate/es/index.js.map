@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ForceUpdate from './ForceUpdate';\nexport default ForceUpdate;\n"],"names":["ForceUpdate"],"mappings":"OAAOA,gBAAiB,+BACTA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ForceUpdate from './ForceUpdate';\n// 导出组件\nexport default ForceUpdate;\n"],"names":["ForceUpdate"],"mappings":"OAAOA,gBAAiB,+BAETA"}

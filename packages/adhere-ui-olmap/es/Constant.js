@@ -1,2 +1,2 @@
-export default{MAP_TYPE_ADMINISTRATIVE:"administrative",MAP_TYPE_SATELLITE:"satellite"};
+var MAP_TYPE_ADMINISTRATIVE="administrative",MAP_TYPE_SATELLITE="satellite",Constant={MAP_TYPE_ADMINISTRATIVE:MAP_TYPE_ADMINISTRATIVE,MAP_TYPE_SATELLITE:MAP_TYPE_SATELLITE};export default Constant;export{MAP_TYPE_ADMINISTRATIVE,MAP_TYPE_SATELLITE};
 //# sourceMappingURL=Constant.js.map

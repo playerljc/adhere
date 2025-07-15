@@ -1,8 +1,15 @@
 import { useMount, useUpdateLayoutEffect } from 'ahooks';
 import { Empty } from 'antd';
 import classNames from 'classnames';
+import type {
+  ClipboardEvent,
+  CompositionEvent,
+  FocusEvent,
+  KeyboardEvent,
+  PropsWithoutRef,
+  RefAttributes,
+} from 'react';
 import React, { forwardRef, memo, useImperativeHandle, useMemo, useRef } from 'react';
-import type { PropsWithoutRef, RefAttributes } from 'react';
 
 import { CloseCircleOutlined } from '@ant-design/icons';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -19,6 +26,8 @@ import type {
   OperatorItem,
   OperatorType,
   Operators,
+  ParseCallbackParams,
+  QuickTipItem,
 } from './types';
 
 const { useTheme } = ConfigProvider;
@@ -35,47 +44,27 @@ const {
   isFunction,
 } = Util;
 
-// 缺省的触发字符code
-const defaultTriggerCharCode = 32;
+/** 默认触发字符代码 - 空格 */
+const DEFAULT_TRIGGER_CHAR_CODE = 32;
 
-// html的空格
-const htmlSpace = '&shy;'; /*'&nbsp;'*/
+/** HTML空格实体 */
+const HTML_SPACE = '&shy;';
 
-// 弹层的宽度
-const modalWidth = 300;
+/** 弹层宽度 */
+const MODAL_WIDTH = 300;
 
 const { useSetState } = Hooks;
 
 export const selectorPrefix = 'adhere-ui-expression';
 
 /**
- * Expression
- * @param className
- * @param style
- * @param editorClassName
- * @param editorStyle
- * @param operatorWrapClassName
- * @param operatorWrapStyle
- * @param quickTipWrapClassName
- * @param quickTipWrapStyle
- * @param textClassName
- * @param operatorClassName
- * @param value
- * @param placeholder
- * @param triggerCharCode
- * @param quickTipProp
- * @param quickTipDataSource
- * @param disableQuickTip
- * @param operators
- * @param allowClear
- * @param onChange
- * @param onContinuousTextChange
- * @param onEditorInputEnd
- * @param onEditorBlurEnd
- * @param onEditorKeyDownEnd
- * @param onEditorPasteEnd
- * @param ref
- * @constructor
+ * 表达式编辑器组件
+ * 支持富文本编辑、运算符插入、快速提示等功能
+ *
+ * @template T - 快速提示数据类型
+ * @param props - 组件属性
+ * @param ref - 组件引用
+ * @returns JSX元素
  */
 const InternalExpression = memo<
   PropsWithoutRef<ExpressionProps<any>> & RefAttributes<ExpressionHandle>
@@ -111,64 +100,50 @@ const InternalExpression = memo<
       },
       ref,
     ) => {
+      // 运算符配置
       const operatorsConfig = useMemo<Operators>(
         () => operators ?? (ElasticSearch as OperatorItem[]),
         [operators],
       );
 
-      // contextRef
+      // DOM引用
       const contextRef = useRef<HTMLDivElement | null>(null);
-
-      // input对象
       const editorRef = useRef<HTMLDivElement | null>(null);
-
-      // 运算符下拉
       const operatorsRef = useRef<HTMLDivElement | null>(null);
-
-      // quickTipRef
       const quickTipRef = useRef<HTMLDivElement | null>(null);
-
-      // placeholder
       const placeholderRef = useRef<HTMLDivElement | null>(null);
 
-      // 光标输入处的父元素
+      // 光标状态
       const cursorContextParentElement = useRef<Node | null>(null);
-
-      // 光标输入处的元素
       const cursorContextElement = useRef<Node | null>(null);
-
-      // 光标的索引
       const cursorIndex = useRef<number>(-1);
 
-      // 之前光标的索引
+      // 连续输入状态
       const preCursorIndex = useRef(0);
-      // 之前光标处的元素
       const preCursorContextElement = useRef<Node | null>(null);
-      // 连续输入的字符
       const continuousText = useRef('');
-      // 若干可见字符的输入之前，而这些可见字符的输入可能需要一连串的键盘操作、点击输入法的备选词等
       const comStart = useRef(false);
 
+      // 状态管理
       const [operatorsShowRef, setOperatorsShow] = useSetState(false);
-
       const [quickTipShowRef, setQuickTipShow] = useSetState(false);
-
       const [placeholderShowRef, setPlaceholderShow] = useSetState(true);
-
-      // allowClear是否显示
       const [showAllowClearRef, setShowAllClear] = useSetState(false);
 
+      // 触发字符
       const triggerChar = useMemo(
-        () => String.fromCharCode(triggerCharCode ?? defaultTriggerCharCode),
+        () => String.fromCharCode(triggerCharCode ?? DEFAULT_TRIGGER_CHAR_CODE),
         [triggerCharCode],
       );
 
+      // 主题配置
       useTheme<HTMLElement>({
         elRef: contextRef,
         group: 'normal',
         displayName: 'Expression',
       });
 
+      // 组件挂载时初始化
       useMount(() => {
         const editor = getEditorEl();
         if (editor) {
@@ -178,12 +153,14 @@ const InternalExpression = memo<
         onReady();
       });
 
+      // 值变化时更新
       useUpdateLayoutEffect(() => {
         onReady();
       }, [value]);
 
+      // 暴露组件方法
       useImperativeHandle(ref, () => ({
-        setValue: (_value) => {
+        setValue: (_value: string) => {
           const editor = getEditorEl();
           if (editor) {
             editor.innerHTML = _value ?? '';
@@ -202,18 +179,16 @@ const InternalExpression = memo<
       }));
 
       /**
-       * onReady
-       * @description 组件mount
+       * 组件就绪处理
        */
-      function onReady() {
+      function onReady(): void {
         initial();
       }
 
       /**
-       * initial
-       * @description 初始化
+       * 初始化组件状态
        */
-      function initial() {
+      function initial(): void {
         if (isEditorEmpty()) {
           showPlaceholder();
         } else {
@@ -222,31 +197,29 @@ const InternalExpression = memo<
       }
 
       /**
-       * getEditorEl
-       * @return {HTMLElement}
+       * 获取编辑器元素
+       * @returns 编辑器DOM元素
        */
-      function getEditorEl() {
+      function getEditorEl(): HTMLElement | null {
         if (isFont()) {
-          return editorRef?.current?.firstElementChild;
+          return editorRef?.current?.firstElementChild as HTMLElement;
         } else {
           return editorRef?.current;
         }
       }
 
       /**
-       * isEditorEmpty
-       * @description 编辑器是否为空
-       * @return {boolean}
+       * 检查编辑器是否为空
+       * @returns 是否为空
        */
       function isEditorEmpty(): boolean {
         return getEditorEl()?.innerHTML?.trim?.() === '';
       }
 
       /**
-       * clear
-       * @description 清空内容
+       * 清空编辑器内容
        */
-      function clear() {
+      function clear(): void {
         const contextEditor = getEditorEl();
 
         if (contextEditor) {
@@ -259,36 +232,34 @@ const InternalExpression = memo<
       }
 
       /**
-       * containsEntityCharacters
-       * @description 判断是否是实体字符
-       * @param str
+       * 检查是否包含实体字符
+       * @param str - 待检查字符串
+       * @returns 是否包含实体字符
        */
-      function containsEntityCharacters(str) {
+      function containsEntityCharacters(str: string): boolean {
         const entityRegex = /^&#\d+;/gim;
         return entityRegex.test(str);
       }
 
       /**
-       * showModal
-       * @description 显示Modal
-       * @param {HTMLElement} currentEl
-       * @param {Function} callback
+       * 显示模态框
+       * @param currentEl - 当前元素
+       * @param callback - 回调函数
        */
-      function showModal(currentEl: HTMLElement, callback: Function) {
+      function showModal(currentEl: HTMLElement, callback?: () => void): void {
         const point = getCursorRectByDocument();
 
         if (point && currentEl) {
           const contextWidth = contextRef.current?.offsetWidth;
           const contextHeight = contextRef?.current?.offsetHeight;
-
           const contextRect = contextRef.current?.getBoundingClientRect?.();
 
           if (!!contextWidth && !!contextHeight && contextRef && currentEl && contextRect) {
             if (point?.x === 0 && point?.y === 0) {
               currentEl.style.left = `${contextRect.x + 20}px`;
               currentEl.style.top = `${contextRect.y + contextHeight - 2}px`;
-            } else if (contextRect?.x + contextWidth - point?.x < modalWidth) {
-              currentEl.style.left = `${contextRect.x + contextWidth - modalWidth - 10}px`;
+            } else if (contextRect?.x + contextWidth - point?.x < MODAL_WIDTH) {
+              currentEl.style.left = `${contextRect.x + contextWidth - MODAL_WIDTH - 10}px`;
               currentEl.style.top = `${point.y + 25}px`;
             } else {
               currentEl.style.left = `${point.x + 10}px`;
@@ -301,59 +272,53 @@ const InternalExpression = memo<
       }
 
       /**
-       * showOperators
-       * @description 显示运算符选择下拉
+       * 显示运算符选择器
        */
-      function showOperators() {
+      function showOperators(): void {
         showModal(operatorsRef.current as HTMLElement, () => setOperatorsShow(true, () => {}));
       }
 
       /**
-       * hideOperators
-       * @description 关闭运算符选择下拉
+       * 隐藏运算符选择器
        */
-      function hideOperators() {
+      function hideOperators(): void {
         setOperatorsShow(false);
       }
 
       /**
-       * showQuickTip
+       * 显示快速提示
        */
-      function showQuickTip() {
+      function showQuickTip(): void {
         showModal(quickTipRef.current as HTMLElement, () => setQuickTipShow(true));
       }
 
       /**
-       * hideOperators
-       * @description 关闭运算符选择下拉
+       * 隐藏快速提示
        */
-      function hideQuickTip() {
+      function hideQuickTip(): void {
         setQuickTipShow(false);
       }
 
       /**
-       * showPlaceholder
-       * @description 显示placeholder
+       * 显示占位符
        */
-      function showPlaceholder() {
+      function showPlaceholder(): void {
         setPlaceholderShow(true);
       }
 
       /**
-       * hidePlaceholder
-       * @description 隐藏placeholder
+       * 隐藏占位符
        */
-      function hidePlaceholder() {
+      function hidePlaceholder(): void {
         setPlaceholderShow(false);
       }
 
       /**
-       * createTextElement
-       * @description 创建文本元素
-       * @param {string} html 文本的内容
-       * @return {HTMLSpanElement}
+       * 创建文本元素
+       * @param html - 文本内容
+       * @returns 文本元素
        */
-      function createTextElement(html) {
+      function createTextElement(html: string): HTMLSpanElement {
         let targetTextClassName: string = '';
 
         if (isString(textClassName)) {
@@ -369,10 +334,9 @@ const InternalExpression = memo<
       }
 
       /**
-       * createOperatorElement
-       * @description 创建运算符元素
-       * @param {string} text 元素的文本
-       * @return {HTMLSpanElement}
+       * 创建运算符元素
+       * @param text - 运算符文本
+       * @returns 运算符元素
        */
       function createOperatorElement(text: string): HTMLSpanElement {
         let targetOperatorClassName: string = '';
@@ -391,20 +355,18 @@ const InternalExpression = memo<
       }
 
       /**
-       * isFont
-       * @description 是否是font元素
-       * @return {boolean}
+       * 检查是否是font元素
+       * @returns 是否是font元素
        */
       function isFont(): boolean {
         return editorRef?.current?.firstElementChild?.tagName?.toLowerCase?.() === 'font';
       }
 
       /**
-       * setContinuousText
-       * @description 设置连续输入的字符
-       * @param {string} text 当前输入的文本
+       * 设置连续输入文本
+       * @param text - 当前输入文本
        */
-      function setContinuousText(text: string) {
+      function setContinuousText(text: string): void {
         if (
           !preCursorContextElement.current ||
           (preCursorContextElement.current === cursorContextElement.current &&
@@ -421,31 +383,27 @@ const InternalExpression = memo<
       }
 
       /**
-       * onEditorCompositionStart
-       * @description 编辑框输入中文开始
+       * 编辑器输入法开始事件
        */
-      function onEditorCompositionStart() {
+      function onEditorCompositionStart(): void {
         comStart.current = true;
-        // console.log('中文输入：开始');
       }
 
       /**
-       * onEditorCompositionEnd
-       * @description 编辑框输入中文结束
-       * @param e
+       * 编辑器输入法结束事件
+       * @param e - 输入法事件
        */
-      function onEditorCompositionEnd(e) {
+      function onEditorCompositionEnd(e: CompositionEvent<HTMLDivElement>): void {
         comStart.current = false;
-        // console.log('中文输入：结束');
         onEditorInput(e);
       }
 
       /**
-       * onEditorInput
-       * @description 编辑框input
+       * 编辑器输入事件
+       * @param e - 输入事件
        */
-      function onEditorInput(e?: any) {
-        if (comStart.current) return; // 中文输入过程中不截断
+      function onEditorInput(e?: any): void {
+        if (comStart.current) return; // 中文输入过程中不处理
 
         if (cursorContextElement) {
           cursorContextElement.current = getCurrentElementWithCursor();
@@ -473,7 +431,6 @@ const InternalExpression = memo<
           if (!disableQuickTip) {
             onContinuousTextChange?.(cursorContextElement?.current?.textContent as string);
           }
-          // console.log('cursorContextElement', cursorContextElement.current?.textContent);
         }
 
         if (!disableQuickTip) {
@@ -482,40 +439,37 @@ const InternalExpression = memo<
           }
         }
 
-        // input输入结束
+        // 输入结束回调
         if (text !== triggerChar) {
           onEditorInputEnd?.(text, continuousText.current);
         }
 
-        // onChange
+        // 值变化回调
         onChange?.(editorRef?.current?.innerHTML);
 
         setShowAllClear(!isEditorEmpty());
       }
 
       /**
-       * onEditorPaste
-       * @description 编辑框粘贴
-       * @param e
+       * 编辑器粘贴事件
+       * @param e - 粘贴事件
        */
-      function onEditorPaste(e) {
+      function onEditorPaste(e: ClipboardEvent<HTMLDivElement>): void {
         // 禁止粘贴内容
         e.preventDefault();
-
         onEditorPasteEnd?.(e);
       }
 
       /**
-       * onEditorKeyDown
-       * @description 编辑框keyDown
-       * @param e
-       * @return {boolean}
+       * 编辑器按键事件
+       * @param e - 按键事件
+       * @returns 是否阻止默认行为
        */
-      function onEditorKeyDown(e) {
+      function onEditorKeyDown(e: KeyboardEvent<HTMLDivElement>): boolean {
         if (!isUseTriggerCharCode) return false;
 
-        // 默认空格
-        if (e.keyCode === (triggerCharCode ?? defaultTriggerCharCode)) {
+        // 默认空格触发运算符
+        if (e.keyCode === (triggerCharCode ?? DEFAULT_TRIGGER_CHAR_CODE)) {
           hideQuickTip();
           showOperators();
           onEditorKeyDownEnd?.(e);
@@ -533,13 +487,14 @@ const InternalExpression = memo<
 
         hideOperators();
         onEditorKeyDownEnd?.(e);
+        return true;
       }
 
       /**
-       * onEditorBlur
-       * @description 编辑框失去焦点
+       * 编辑器失去焦点事件
+       * @param e - 焦点事件
        */
-      function onEditorBlur(e) {
+      function onEditorBlur(e: FocusEvent<HTMLDivElement>): void {
         e.stopPropagation();
         e.preventDefault();
 
@@ -553,16 +508,18 @@ const InternalExpression = memo<
       }
 
       /**
-       * onOperatorsClick
-       * @description 选择运算符
-       * @param {string} operator
-       * @param {OperatorType} operatorType
+       * 运算符点击处理
+       * @param operator - 运算符
+       * @param operatorType - 运算符类型
        */
-      function onOperatorsClick(operator: string, operatorType: OperatorType) {
-        if (operator) {
-          const editor = getEditorEl();
+      function onOperatorsClick(operator: string, operatorType: OperatorType): void {
+        if (!operator) return;
 
-          // 括号
+        const editor = getEditorEl();
+        if (!editor) return;
+
+        try {
+          // 括号处理
           if (operatorType === 'brackets') {
             let left = operator[0];
             let right = operator[1];
@@ -575,110 +532,74 @@ const InternalExpression = memo<
 
             const leftElement = createOperatorElement(left);
             const rightElement = createOperatorElement(right);
-            const textElement = createTextElement(`${htmlSpace}${htmlSpace}`);
+            const textElement = createTextElement(`${HTML_SPACE}${HTML_SPACE}`);
 
-            // 如果是在editor的文本中进行的编辑
+            // 在editor的文本中进行编辑
             if (cursorContextParentElement.current === editor || isEditorEmpty()) {
-              const text = cursorContextElement?.current?.textContent;
-              const startElement = createTextElement(text?.substring?.(0, cursorIndex.current + 1));
-              const endElement = createTextElement(text?.substring?.(cursorIndex.current + 1));
-
-              const df = document.createDocumentFragment();
-              df.appendChild(startElement);
-              df.appendChild(leftElement);
-              df.appendChild(textElement);
-              df.appendChild(rightElement);
-
-              if (endElement && endElement.textContent) {
-                endElement.textContent.length !== 0 && df.appendChild(endElement);
-              }
-
-              try {
-                if (isEditorEmpty()) {
-                  editor?.appendChild?.(df);
-                } else {
-                  editor?.replaceChild?.(df, cursorContextElement.current!);
-                }
-
-                setCursorPosition(textElement, 1);
-              } catch (e) {
-                console.error(e);
-              }
-            }
-            // 如果是在text文本中进行的编辑
-            else {
-              const text = cursorContextElement?.current?.textContent;
-              const startElement = createTextElement(text?.substring?.(0, cursorIndex.current));
-              const endElement = createTextElement(text?.substring?.(cursorIndex.current));
-
-              const df = document.createDocumentFragment();
-              df.appendChild(startElement);
-              df.appendChild(startElement);
-              df.appendChild(leftElement);
-              df.appendChild(textElement);
-              df.appendChild(rightElement);
-
-              if (endElement && endElement.textContent) {
-                endElement.textContent.length !== 0 && df.appendChild(endElement);
-              }
-
-              try {
-                cursorContextParentElement?.current?.parentElement?.replaceChild?.(
-                  df,
-                  cursorContextParentElement.current as Node,
-                );
-
-                setCursorPosition(textElement, 1);
-              } catch (e) {
-                console.error(e);
-              }
-            }
-          }
-          // 其他符号
-          else {
-            const operatorElement = createOperatorElement(operator);
-            const textElement = createTextElement(htmlSpace);
-
-            // 如果是在editor的文本中进行的编辑
-            if (cursorContextParentElement.current === editor || isEditorEmpty()) {
-              // 光标所在的元素现在是text元素
-              // let parentElement = getInsertParentElement();
-              // parentElement.appendChild(operatorElement);
-              // parentElement.appendChild(textElement);
-              // setCursorToEnd(parentElement);
-
               const text = cursorContextElement?.current?.textContent;
               const startElement = createTextElement(
-                text?.substring?.(0, cursorIndex.current /* + 1*/),
+                text?.substring?.(0, cursorIndex.current + 1) || '',
               );
-              const endElement = createTextElement(text?.substring?.(cursorIndex.current /* + 1*/));
+              const endElement = createTextElement(
+                text?.substring?.(cursorIndex.current + 1) || '',
+              );
 
               const df = document.createDocumentFragment();
               df.appendChild(startElement);
-              df.appendChild(operatorElement);
+              df.appendChild(leftElement);
               df.appendChild(textElement);
+              df.appendChild(rightElement);
+
               if (endElement && endElement.textContent) {
                 endElement.textContent.length !== 0 && df.appendChild(endElement);
               }
 
-              try {
-                if (isEditorEmpty()) {
-                  editor?.appendChild?.(df);
-                } else {
-                  editor?.replaceChild(df, cursorContextElement.current!);
-                }
-
-                setCursorPosition(textElement, 0);
-              } catch (e) {
-                console.error(e);
+              if (isEditorEmpty()) {
+                editor?.appendChild?.(df);
+              } else {
+                editor?.replaceChild?.(df, cursorContextElement.current!);
               }
+
+              setCursorPosition(textElement, 1);
             }
-            // 如果是在text文本中进行的编辑
-            // @ts-ignore
-            else if (cursorContextParentElement?.current?.classList?.contains?.('text')) {
+            // 在text文本中进行编辑
+            else {
               const text = cursorContextElement?.current?.textContent;
-              const startElement = createTextElement(text?.substring?.(0, cursorIndex.current));
-              const endElement = createTextElement(text?.substring?.(cursorIndex.current));
+              const startElement = createTextElement(
+                text?.substring?.(0, cursorIndex.current) || '',
+              );
+              const endElement = createTextElement(text?.substring?.(cursorIndex.current) || '');
+
+              const df = document.createDocumentFragment();
+              df.appendChild(startElement);
+              df.appendChild(leftElement);
+              df.appendChild(textElement);
+              df.appendChild(rightElement);
+
+              if (endElement && endElement.textContent) {
+                endElement.textContent.length !== 0 && df.appendChild(endElement);
+              }
+
+              cursorContextParentElement?.current?.parentElement?.replaceChild?.(
+                df,
+                cursorContextParentElement.current as Node,
+              );
+
+              setCursorPosition(textElement, 1);
+            }
+          }
+          // 其他符号处理
+          else {
+            const operatorElement = createOperatorElement(operator);
+            const textElement = createTextElement(HTML_SPACE);
+
+            // 在editor的文本中进行编辑
+            if (cursorContextParentElement.current === editor || isEditorEmpty()) {
+              const text = cursorContextElement?.current?.textContent;
+              const startElement = createTextElement(
+                text?.substring?.(0, cursorIndex.current) || '',
+              );
+              const endElement = createTextElement(text?.substring?.(cursorIndex.current) || '');
 
               const df = document.createDocumentFragment();
               df.appendChild(startElement);
@@ -688,45 +609,64 @@ const InternalExpression = memo<
                 endElement.textContent.length !== 0 && df.appendChild(endElement);
               }
 
-              try {
-                cursorContextParentElement?.current?.parentElement?.replaceChild?.(
-                  df,
-                  cursorContextParentElement.current as Node,
-                );
-              } catch (e) {}
+              if (isEditorEmpty()) {
+                editor?.appendChild?.(df);
+              } else {
+                editor?.replaceChild(df, cursorContextElement.current!);
+              }
+
+              setCursorPosition(textElement, 0);
+            }
+            // 在text文本中进行编辑
+            else if (
+              (cursorContextParentElement?.current as HTMLElement)?.classList?.contains?.('text')
+            ) {
+              const text = cursorContextElement?.current?.textContent;
+              const startElement = createTextElement(
+                text?.substring?.(0, cursorIndex.current) || '',
+              );
+              const endElement = createTextElement(text?.substring?.(cursorIndex.current) || '');
+
+              const df = document.createDocumentFragment();
+              df.appendChild(startElement);
+              df.appendChild(operatorElement);
+              df.appendChild(textElement);
+              if (endElement && endElement.textContent) {
+                endElement.textContent.length !== 0 && df.appendChild(endElement);
+              }
+
+              cursorContextParentElement?.current?.parentElement?.replaceChild?.(
+                df,
+                cursorContextParentElement.current as Node,
+              );
 
               setCursorPosition(textElement, 0);
             }
           }
 
           onEditorInput();
-
           onChange?.(editorRef?.current?.innerHTML);
+        } catch (error) {
+          console.error('运算符插入失败:', error);
         }
 
         hideOperators();
       }
 
       /**
-       * onQuickTipClick
-       * @description 选额智能提示
-       * @param e
-       * @param item
+       * 快速提示点击处理
+       * @param e - 点击事件
+       * @param item - 提示项
        */
-      function onQuickTipClick(e, item) {
+      function onQuickTipClick(e: React.MouseEvent, item: QuickTipItem): void {
         const tip = item[quickTipProp ?? 'value'];
 
         const editor = getEditorEl() as HTMLElement;
+        if (!editor || !tip) return;
 
-        // java
-        if (tip) {
-          // 111
+        try {
           const text = cursorContextElement.current?.textContent || '';
-
           const startIndex = text.lastIndexOf(continuousText.current, preCursorIndex.current);
-          // 111(java) -> 111java
-          // (java)111 -> java111
-          // 1(java)11 -> 1java11
           const endIndex = startIndex + continuousText.current.length;
 
           const df = document.createDocumentFragment();
@@ -734,6 +674,7 @@ const InternalExpression = memo<
           const endTextNode = document.createTextNode(text.substring(endIndex));
           const collapseEl = document.createElement('div');
           collapseEl.innerHTML = tip;
+
           df.appendChild(startTextNode);
           Array.from(collapseEl.childNodes).forEach((el) => {
             df.appendChild(el);
@@ -760,20 +701,14 @@ const InternalExpression = memo<
           }
 
           setCursorPositionToNode(endTextNode, 0);
-
           onChange?.(editorRef?.current?.innerHTML);
+        } catch (error) {
+          console.error('快速提示插入失败:', error);
         }
 
         hideQuickTip();
         hidePlaceholder();
       }
-
-      // 获取插入的父元素
-      // function getInsertParentElement() {
-      //   return cursorContextParentElement.current === editor.current
-      //     ? cursorContextParentElement.current
-      //     : cursorContextParentElement.current.parentElement;
-      // }
 
       return (
         <div
@@ -781,7 +716,7 @@ const InternalExpression = memo<
           className={classNames(selectorPrefix, className ?? '')}
           style={style ?? {}}
         >
-          {/*editor*/}
+          {/* 编辑器 */}
           <div
             ref={editorRef}
             className={classNames(`${selectorPrefix}-editor`, editorClassName ?? '', {
@@ -797,24 +732,21 @@ const InternalExpression = memo<
             onCompositionEnd={onEditorCompositionEnd}
             onPaste={onEditorPaste}
             onClick={onEditorInput}
-          >
-            {/*<span className="text" contentEditable="true"></span>*/}
-          </div>
+          />
 
-          {/*allowClear*/}
+          {/* 清空按钮 */}
           {!!allowClear && showAllowClearRef.current && (
             <div className={`${selectorPrefix}-editor-clear`}>
               <CloseCircleOutlined
                 onClick={() => {
                   clear();
-                  // @ts-ignore
                   getEditorEl()?.focus();
                 }}
               />
             </div>
           )}
 
-          {/*placeholder*/}
+          {/* 占位符 */}
           <div
             className={classNames(`${selectorPrefix}-editor-placeholder`, {
               [`${selectorPrefix}-editor-placeholder--show`]: placeholderShowRef.current,
@@ -824,7 +756,7 @@ const InternalExpression = memo<
             {placeholder ?? Intl.get('enter_keyword')}
           </div>
 
-          {/*运算符*/}
+          {/* 运算符选择器 */}
           <div
             ref={operatorsRef}
             className={classNames(`${selectorPrefix}-operators`, operatorWrapClassName ?? '', {
@@ -851,7 +783,7 @@ const InternalExpression = memo<
             </ul>
           </div>
 
-          {/*快速补全*/}
+          {/* 快速提示 */}
           <div
             ref={quickTipRef}
             className={classNames(`${selectorPrefix}-quick-tips`, quickTipWrapClassName ?? '', {
@@ -895,15 +827,14 @@ Expression.SqlOptions = Sql;
 Expression.MathOptions = Math;
 
 /**
- * parse
- * @description 解析
- * @param {string} queryHtml
- * @param {(value: { nodeType: number; value: string | null }) => string} callback
- * @return {string}
+ * 解析HTML为文本
+ * @param queryHtml - HTML字符串
+ * @param callback - 解析回调函数
+ * @returns 解析后的文本
  */
 Expression.parse = (
   queryHtml: string,
-  callback: (value: { nodeType: number; value: string | null }) => string,
+  callback: (value: ParseCallbackParams) => string,
 ): string => {
   if (!queryHtml) return '';
 
@@ -914,18 +845,17 @@ Expression.parse = (
     context.innerHTML = context.firstElementChild.innerHTML;
   }
 
-  let result = '';
-
-  result = Array.from(context.childNodes)
+  return Array.from(context.childNodes)
     .map((node) => {
       // 元素节点
       if (node.nodeType === 1) {
+        const element = node as HTMLElement;
         // 文本节点
-        if ((node as HTMLElement).classList.contains('text')) {
+        if (element.classList.contains('text')) {
           return callback?.({ nodeType: 3, value: node.textContent }) ?? '';
         }
         // 运算符
-        else if ((node as HTMLElement).classList.contains('operator')) {
+        else if (element.classList.contains('operator')) {
           return callback?.({ nodeType: 1, value: node.textContent }) ?? '';
         }
       }
@@ -937,15 +867,15 @@ Expression.parse = (
       return '';
     })
     .join('');
-
-  return result;
 };
 
 /**
- * validator
+ * Antd表单必填验证器
+ * @param tip - 错误提示信息
+ * @returns 验证器配置
  */
-Expression.AntdFormRequireValidator = (tip) => ({
-  validator(rule, value, callback) {
+Expression.AntdFormRequireValidator = (tip: string) => ({
+  validator(rule: any, value: string, callback: (tip?: any) => {}) {
     if (value === undefined || value === null || value === '') {
       callback(tip);
     } else {

@@ -4,6 +4,7 @@ import React, {
   type RefAttributes,
   forwardRef,
   memo,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -20,10 +21,23 @@ const selectorPrefix = 'adhere-ui-slide-layout-reveal';
 const { useTheme } = ConfigProvider;
 
 /**
- * Reveal
- * @param props
- * @param ref
- * @constructor
+ * 揭示滑动布局组件
+ * 滑动面板揭示主内容，只支持左右方向的滑动
+ * 
+ * @param props - 组件属性
+ * @param ref - 组件引用
+ * @returns 揭示滑动布局组件
+ * 
+ * @example
+ * ```typescript
+ * <Reveal
+ *   direction="left"
+ *   collapse={isOpen}
+ *   width="300px"
+ *   slide={<div>侧边栏内容</div>}
+ *   master={<div>主内容</div>}
+ * />
+ * ```
  */
 const Reveal = memo<PropsWithoutRef<RevealProps> & RefAttributes<SlideLayoutHandle>>(
   forwardRef<SlideLayoutHandle, RevealProps>((props, ref) => {
@@ -43,71 +57,85 @@ const Reveal = memo<PropsWithoutRef<RevealProps> & RefAttributes<SlideLayoutHand
     const el = useRef<HTMLDivElement>(null);
     const rMasterEl = useRef<HTMLDivElement>(null);
 
+    // 位置配置对象
     const positionConfig = useRef({
       init: {
         left: () => {
-          (el.current as HTMLElement).style.zIndex = `${zIndex}`;
+          if (!el.current || !rMasterEl.current) return;
 
-          (rMasterEl.current as HTMLElement).style.zIndex = `${(zIndex as number) + 1}`;
-
-          (el.current as HTMLElement).style.left = '0';
+          el.current.style.zIndex = `${zIndex}`;
+          rMasterEl.current.style.zIndex = `${(zIndex as number) + 1}`;
+          el.current.style.left = '0';
         },
         right: () => {
-          (el.current as HTMLElement).style.zIndex = `${zIndex}`;
+          if (!el.current || !rMasterEl.current) return;
 
-          (rMasterEl.current as HTMLElement).style.zIndex = `${(zIndex as number) + 1}`;
-
-          (el.current as HTMLElement).style.right = '0';
+          el.current.style.zIndex = `${zIndex}`;
+          rMasterEl.current.style.zIndex = `${(zIndex as number) + 1}`;
+          el.current.style.right = '0';
         },
       },
       show: {
-        left: (time) => {
-          (el.current as HTMLElement).style.zIndex = `${zIndex}`;
+        left: (time?: string | number | null | undefined) => {
+          if (!el.current || !rMasterEl.current) return;
 
-          (maskEl.current as HTMLElement).style.zIndex = `${(zIndex as number) + 1}`;
+          el.current.style.zIndex = `${zIndex}`;
 
-          (rMasterEl.current as HTMLElement).style.zIndex = `${(zIndex as number) - 2}`;
+          if (maskEl.current) {
+            maskEl.current.style.zIndex = `${(zIndex as number) + 1}`;
+          }
 
+          rMasterEl.current.style.zIndex = `${(zIndex as number) - 2}`;
+
+          const slideWidth = el.current.offsetWidth;
           slider(
-            rMasterEl.current as HTMLElement,
-
-            `${(el.current as HTMLElement).offsetWidth}px`,
+            rMasterEl.current,
+            `${slideWidth}px`,
             '0',
             '0',
             `${getDuration(time)}ms`,
             onAfterShow,
           );
 
-          if (maskEl.current) maskEl.current.style.display = 'block';
+          if (maskEl.current) {
+            maskEl.current.style.display = 'block';
+          }
         },
-        right: (time) => {
-          (el.current as HTMLElement).style.zIndex = `${zIndex}`;
+        right: (time?: string | number | null | undefined) => {
+          if (!el.current || !rMasterEl.current) return;
 
-          (maskEl.current as HTMLElement).style.zIndex = `${(zIndex as number) + 1}`;
+          el.current.style.zIndex = `${zIndex}`;
 
-          (rMasterEl.current as HTMLElement).style.zIndex = `${(zIndex as number) - 2}`;
+          if (maskEl.current) {
+            maskEl.current.style.zIndex = `${(zIndex as number) + 1}`;
+          }
 
+          rMasterEl.current.style.zIndex = `${(zIndex as number) - 2}`;
+
+          const slideWidth = el.current.offsetWidth;
           slider(
-            rMasterEl.current as HTMLElement,
-
-            `-${(el.current as HTMLElement).offsetWidth}px`,
+            rMasterEl.current,
+            `-${slideWidth}px`,
             '0',
             '0',
             `${getDuration(time)}ms`,
             onAfterShow,
           );
 
-          if (maskEl.current) maskEl.current.style.display = 'block';
+          if (maskEl.current) {
+            maskEl.current.style.display = 'block';
+          }
         },
       },
       close: {
-        left: (time) => {
-          (el.current as HTMLElement).style.zIndex = `${zIndex}`;
+        left: (time?: string | number | null | undefined) => {
+          if (!el.current || !rMasterEl.current) return;
 
-          (rMasterEl.current as HTMLElement).style.zIndex = `${(zIndex as number) + 1}`;
+          el.current.style.zIndex = `${zIndex}`;
+          rMasterEl.current.style.zIndex = `${(zIndex as number) + 1}`;
 
           slider(
-            rMasterEl.current as HTMLElement,
+            rMasterEl.current,
             '0',
             '0',
             '0',
@@ -115,15 +143,18 @@ const Reveal = memo<PropsWithoutRef<RevealProps> & RefAttributes<SlideLayoutHand
             onAfterClose,
           );
 
-          if (maskEl.current) maskEl.current.style.display = 'none';
+          if (maskEl.current) {
+            maskEl.current.style.display = 'none';
+          }
         },
-        right: (time) => {
-          (el.current as HTMLElement).style.zIndex = `${zIndex}`;
+        right: (time?: string | number | null | undefined) => {
+          if (!el.current || !rMasterEl.current) return;
 
-          (rMasterEl.current as HTMLElement).style.zIndex = `${(zIndex as number) + 1}`;
+          el.current.style.zIndex = `${zIndex}`;
+          rMasterEl.current.style.zIndex = `${(zIndex as number) + 1}`;
 
           slider(
-            rMasterEl.current as HTMLElement,
+            rMasterEl.current,
             '0',
             '0',
             '0',
@@ -131,11 +162,14 @@ const Reveal = memo<PropsWithoutRef<RevealProps> & RefAttributes<SlideLayoutHand
             onAfterClose,
           );
 
-          if (maskEl.current) maskEl.current.style.display = 'none';
+          if (maskEl.current) {
+            maskEl.current.style.display = 'none';
+          }
         },
       },
     });
 
+    // 主题配置
     useTheme<HTMLElement>({
       elRef: el,
       group: 'normal',
@@ -144,32 +178,42 @@ const Reveal = memo<PropsWithoutRef<RevealProps> & RefAttributes<SlideLayoutHand
 
     const { getDuration, maskEl } = useSlide(props, el, positionConfig);
 
-    useEffect(() => {
-      const onTransitionend = () => {
-        if (!props.collapse) {
-          el?.current?.classList?.add?.(`${selectorPrefix}-hide`);
-        }
-      };
-
-      rMasterEl?.current?.addEventListener?.('transitionend', onTransitionend);
-
-      return () => {
-        rMasterEl?.current?.removeEventListener?.('transitionend', onTransitionend);
-      };
-    });
-
-    useEffect(() => {
-      if (props.collapse) {
-        el?.current?.classList?.remove?.(`${selectorPrefix}-hide`);
+    /**
+     * 处理过渡动画结束事件
+     */
+    const handleTransitionEnd = useCallback(() => {
+      if (!props.collapse && el.current) {
+        el.current.classList.add(`${selectorPrefix}-hide`);
       }
     }, [props.collapse]);
 
+    // 监听过渡动画结束事件
     useEffect(() => {
-      if (!props.collapse) {
-        el?.current?.classList?.add?.(`${selectorPrefix}-hide`);
+      const element = rMasterEl.current;
+      if (!element) return;
+
+      element.addEventListener('transitionend', handleTransitionEnd);
+
+      return () => {
+        element.removeEventListener('transitionend', handleTransitionEnd);
+      };
+    }, [handleTransitionEnd]);
+
+    // 监听展开状态变化
+    useEffect(() => {
+      if (props.collapse && el.current) {
+        el.current.classList.remove(`${selectorPrefix}-hide`);
+      }
+    }, [props.collapse]);
+
+    // 初始化隐藏状态
+    useEffect(() => {
+      if (!props.collapse && el.current) {
+        el.current.classList.add(`${selectorPrefix}-hide`);
       }
     }, []);
 
+    // 暴露组件方法
     useImperativeHandle(ref, () => ({
       getEl: () => el.current,
     }));
@@ -177,15 +221,15 @@ const Reveal = memo<PropsWithoutRef<RevealProps> & RefAttributes<SlideLayoutHand
     return (
       <>
         <div
-          className={classNames(`${selectorPrefix}`, direction, slaveClassName ?? '')}
-          style={{ ...(slaveStyle ?? {}), zIndex }}
+          className={classNames(`${selectorPrefix}`, direction, slaveClassName)}
+          style={{ ...slaveStyle, zIndex }}
           ref={el}
         >
           {slide}
         </div>
         <div
-          className={classNames(`${selectorPrefix}-master`, masterClassName ?? '')}
-          style={{ ...(masterStyle ?? {}), zIndex: (zIndex as number) + 1 }}
+          className={classNames(`${selectorPrefix}-master`, masterClassName)}
+          style={{ ...masterStyle, zIndex: (zIndex as number) + 1 }}
           ref={rMasterEl}
         >
           {master}
@@ -194,216 +238,6 @@ const Reveal = memo<PropsWithoutRef<RevealProps> & RefAttributes<SlideLayoutHand
     );
   }),
 );
-
-// /**
-//  * Reveal
-//  * @class Reveal
-//  * @classdesc Reveal
-//  */
-// class Reveal extends SlideLayout<IRevealProps, ISlideLayoutState> {
-//   static defaultProps: any;
-//   static propTypes: any;
-//
-//   private rMasterEl: HTMLDivElement | null | undefined;
-//
-//   constructor(props) {
-//     super(props);
-//
-//     this.positionConfig = {
-//       init: {
-//         left: () => {
-//
-//           this.el.style.zIndex = this.props.zIndex;
-//
-//
-//           this.rMasterEl.style.zIndex = this.props.zIndex + 1;
-//
-//
-//           this.el.style.left = '0';
-//         },
-//         right: () => {
-//
-//           this.el.style.zIndex = this.props.zIndex;
-//
-//
-//           this.rMasterEl.style.zIndex = this.props.zIndex + 1;
-//
-//
-//           this.el.style.right = '0';
-//         },
-//       },
-//       show: {
-//         left: (time) => {
-//
-//           this.el.style.zIndex = this.props.zIndex;
-//
-//
-//           this.maskEl.style.zIndex = this.props.zIndex - 1;
-//
-//
-//           this.rMasterEl.style.zIndex = this.props.zIndex - 2;
-//
-//           slider(
-//             this.rMasterEl,
-//
-//             `${this.el.offsetWidth}px`,
-//             '0',
-//             '0',
-//             `${this.getDuration(time)}ms`,
-//             this.props.onAfterShow,
-//           );
-//
-//           if (this.maskEl) this.maskEl.style.display = 'block';
-//         },
-//         right: (time) => {
-//
-//           this.el.style.zIndex = this.props.zIndex;
-//
-//           this.maskEl.style.zIndex = this.props.zIndex - 1;
-//
-//           this.rMasterEl.style.zIndex = this.props.zIndex - 2;
-//
-//           slider(
-//             this.rMasterEl,
-//
-//             `-${this.el.offsetWidth}px`,
-//             '0',
-//             '0',
-//             `${this.getDuration(time)}ms`,
-//             this.props.onAfterShow,
-//           );
-//
-//           if (this.maskEl) this.maskEl.style.display = 'block';
-//         },
-//       },
-//       close: {
-//         left: (time) => {
-//
-//           this.el.style.zIndex = this.props.zIndex;
-//
-//
-//           this.rMasterEl.style.zIndex = this.props.zIndex + 1;
-//
-//           slider(
-//             this.rMasterEl,
-//             '0',
-//             '0',
-//             '0',
-//             `${this.getDuration(time)}ms`,
-//             this.props.onAfterClose,
-//           );
-//
-//           if (this.maskEl) this.maskEl.style.display = 'none';
-//         },
-//         right: (time) => {
-//
-//           this.el.style.zIndex = this.props.zIndex;
-//
-//
-//           this.rMasterEl.style.zIndex = this.props.zIndex + 1;
-//
-//           slider(
-//             this.rMasterEl,
-//             '0',
-//             '0',
-//             '0',
-//             `${this.getDuration(time)}ms`,
-//             this.props.onAfterClose,
-//           );
-//
-//           if (this.maskEl) this.maskEl.style.display = 'none';
-//         },
-//       },
-//     };
-//
-//     this.state = {
-//       collapse: this.props.collapse,
-//     };
-//   }
-//
-//   render() {
-//
-//     const {
-//       masterClassName,
-//       masterStyle,
-//       slaveClassName,
-//       slaveStyle,
-//       direction,
-//       slide,
-//       master,
-//       zIndex,
-//     } = this.props;
-//
-//
-//     return (
-//       <>
-//         <div
-//           className={classNames(
-//             `${selectorPrefix}`,
-//             direction,
-//
-//             slaveClassName|| '',
-//           )}
-//           style={{ ...slaveStyle, zIndex }}
-//           ref={(el) => (this.el = el)}
-//         >
-//           {slide}
-//         </div>
-//         <div
-//           className={classNames(
-//             `${selectorPrefix}-master`,
-//
-//             masterClassName|| '',
-//           )}
-//           style={{ ...masterStyle, zIndex: zIndex + 1 }}
-//           ref={(el) => (this.rMasterEl = el)}
-//         >
-//           {master}
-//         </div>
-//       </>
-//     );
-//   }
-// }
-//
-// Reveal.defaultProps = {
-//   masterClassName: '',
-//   masterStyle: {},
-//   className: '',
-//   style: {},
-//   slaveClassName: '',
-//   slaveStyle: {},
-//   width: '80%',
-//   height: '40%',
-//   mask: true,
-//   zIndex: 9999,
-//   time: 300,
-//   direction: 'left',
-//   collapse: false,
-//   slide: null,
-//   master: null,
-// };
-//
-// Reveal.propTypes = {
-//   masterClassName: PropTypes.string,
-//   masterStyle: PropTypes.object,
-//   className: PropTypes.string,
-//   style: PropTypes.object,
-//   slaveClassName: PropTypes.string,
-//   slaveStyle: PropTypes.object,
-//   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-//   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-//   mask: PropTypes.bool,
-//   zIndex: PropTypes.number,
-//   time: PropTypes.number,
-//   direction: PropTypes.oneOf(['left', 'right']),
-//   collapse: PropTypes.bool,
-//   onAfterShow: PropTypes.func,
-//   onAfterClose: PropTypes.func,
-//   onBeforeShow: PropTypes.func,
-//   onBeforeClose: PropTypes.func,
-//   slide: PropTypes.node,
-//   master: PropTypes.node,
-// };
 
 Reveal.displayName = 'Reveal';
 

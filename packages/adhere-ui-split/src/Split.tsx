@@ -12,43 +12,59 @@ const selectorPrefix = 'adhere-ui-split';
 const { useTheme } = ConfigProvider;
 
 /**
- * Split
- * @param props
- * @constructor
+ * Split组件 - 用于在元素之间创建分割条
+ * 
+ * @param props - Split组件的属性
+ * @returns Split组件实例
+ * 
+ * @example
+ * ```tsx
+ * // 垂直分割
+ * <Split direction="vertical" size={10} />
+ * 
+ * // 水平分割
+ * <Split direction="horizontal" size="1rem" horizontalFit />
+ * ```
  */
 const InternalSplit = memo<SplitProps>((props) => {
-  const { className = '', style, direction = 'vertical', size = 10, horizontalFit = false } = props;
+  const { 
+    className = '', 
+    style, 
+    direction = 'vertical', 
+    size = 10, 
+    horizontalFit = false 
+  } = props;
 
-  const wrapperRef = useRef<HTMLElement | undefined>();
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const { media } = useContext(ConfigProvider.Context);
 
+  // 计算最终的尺寸值
   const value = useMemo(() => getValue(media, size), [media, size]);
 
+  // 根据方向计算样式
   const targetStyle = useMemo<CSSProperties>(() => {
     if (direction === 'horizontal') {
       const styles: CSSProperties = {
         display: 'inline-block',
         width: 1,
         margin: `0 ${value}`,
-        height: '100%',
+        height: horizontalFit ? '100%' : 'auto',
       };
-
-      if (horizontalFit) {
-        styles.height = '100%';
-      }
 
       return styles;
     }
 
+    // 垂直方向
     return {
       width: '100%',
       height: 1,
       margin: `${value} 0`,
     };
-  }, [direction, size]);
+  }, [direction, value, horizontalFit]);
 
-  useTheme<HTMLElement>({
+  // 应用主题
+  useTheme<HTMLDivElement>({
     elRef: wrapperRef,
     group: 'normal',
     displayName: 'Split',
@@ -56,18 +72,20 @@ const InternalSplit = memo<SplitProps>((props) => {
 
   return (
     <div
-      // @ts-ignore
       ref={wrapperRef}
-      className={classNames(selectorPrefix, className ?? '')}
-      style={{ ...targetStyle, ...(style ?? {}) }}
+      className={classNames(selectorPrefix, className)}
+      style={{ ...targetStyle, ...style }}
     />
   );
 });
 
+// 类型断言为SplitComponent
 const Split = InternalSplit as SplitComponent;
 
+// 设置显示名称
 Split.displayName = 'Split';
 
+// 添加Group子组件
 Split.Group = SplitGroup;
 
 export default Split;

@@ -1,4 +1,7 @@
-declare namespace _default {
-    function initStatic(): void;
-}
-export default _default;
+import type { MimeConfigDict } from '../types';
+/**
+ * MIME类型配置字典
+ * 提供各种文件类型的MIME类型映射
+ */
+declare const MimeConfig: MimeConfigDict;
+export default MimeConfig;

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import TableHeadSearch from './TableHeadSearch';\nexport default TableHeadSearch;\n"],"names":["TableHeadSearch"],"mappings":"OAAOA,oBAAqB,mCACbA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import TableHeadSearch from './TableHeadSearch';\n// 导出默认函数\nexport default TableHeadSearch;\n"],"names":["TableHeadSearch"],"mappings":"OAAOA,oBAAqB,mCAEbA"}

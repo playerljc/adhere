@@ -3,7 +3,51 @@ import tinyColor from 'tinycolor2';
 import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
 import Util from '@baifendian/adhere-util';
 
-const defaultThemeMap = new Map<string, any>([
+/**
+ * CSS变量映射项接口
+ */
+interface CSSVarMapItem {
+  /** 变量值 */
+  value: string | number;
+  /** 映射的token */
+  mapToken?: Map<string, CSSVarMapTokenItem>;
+}
+
+/**
+ * CSS变量映射token项接口
+ */
+interface CSSVarMapTokenItem {
+  /** 透明度值 */
+  alpha?: string;
+  /** 计算表达式 */
+  calc?: string;
+}
+
+/**
+ * CSS变量对象接口
+ */
+interface CSSVars {
+  [key: string]: any;
+}
+
+/**
+ * 导出对象接口
+ */
+interface ExportObj {
+  [key: string]: any;
+}
+
+/**
+ * 主题配置接口
+ */
+interface ThemeConfig {
+  [prop: string]: string | number;
+}
+
+/**
+ * 默认主题映射
+ */
+const defaultThemeMap = new Map<string, CSSVarMapItem>([
   // 品牌颜色
   [
     'adhere-color-primary',
@@ -23,7 +67,7 @@ const defaultThemeMap = new Map<string, any>([
     'adhere-color-text-base',
     {
       value: '#000',
-      mapToken: new Map([
+      mapToken: new Map<string, CSSVarMapTokenItem>([
         // 最深的文本色
         ['adhere-color-text', { alpha: '0.88' }],
         // 第二级文本
@@ -61,7 +105,7 @@ const defaultThemeMap = new Map<string, any>([
     'adhere-font-size-base',
     {
       value: '14px',
-      mapToken: new Map([
+      mapToken: new Map<string, CSSVarMapTokenItem>([
         [
           'adhere-font-size-lg',
           {
@@ -120,23 +164,32 @@ const defaultThemeMap = new Map<string, any>([
   ],
 ]);
 
+/**
+ * 初始化函数接口
+ */
 export interface Init {
+  /**
+   * 初始化CSS变量系统
+   * @param theme - 主题配置对象
+   * @param wrapperEL - 包装元素，默认为document.documentElement
+   * @param media - 媒体配置
+   */
   (
-    theme: { [prop: string]: string },
+    theme: ThemeConfig,
     wrapperEL?: HTMLElement,
     media?: ConfigProviderProps['media'],
   ): void;
 }
 
 /**
- * getValue
- * @param {string | number} originValue
- * @param {ConfigProviderProps['media']} media
- * @return {string | number}
+ * 根据媒体配置获取处理后的值
+ * @param originValue - 原始值
+ * @param media - 媒体配置
+ * @returns 处理后的值
  */
 function getValue(
   originValue: string | number,
-  media: ConfigProviderProps['media'],
+  media?: ConfigProviderProps['media'],
 ): string | number {
   if (media?.isUseMedia) {
     if (typeof originValue === 'string' && originValue.endsWith('px')) {
@@ -145,10 +198,8 @@ function getValue(
         .map((value) => {
           if (value.endsWith('px')) {
             const number = parseFloat(value.replace('px', ''));
-
             return Util.pxToRem(number, media.designWidth ?? 192, media);
           }
-
           return value;
         })
         .join(' ');
@@ -159,10 +210,89 @@ function getValue(
 }
 
 /**
- * init
- * @param theme
- * @param wrapperEL
- * @param media
+ * 设置CSS变量到指定元素
+ * @param element - 目标元素
+ * @param htmlEl - HTML根元素
+ * @param varName - 变量名
+ * @param value - 变量值
+ */
+function setCSSVariable(
+  element: HTMLElement,
+  htmlEl: HTMLElement,
+  varName: string,
+  value: string | number,
+): void {
+  element.style.setProperty(`--${varName}`, `${value}`);
+  if (!htmlEl.style.getPropertyValue(`--${varName}`)) {
+    htmlEl.style.setProperty(`--${varName}`, `${value}`);
+  }
+}
+
+/**
+ * 处理颜色相关的CSS变量
+ * @param element - 目标元素
+ * @param htmlEl - HTML根元素
+ * @param varName - 变量名
+ * @param targetValue - 目标值
+ */
+function handleColorVariable(
+  element: HTMLElement,
+  htmlEl: HTMLElement,
+  varName: string,
+  targetValue: string | number,
+): void {
+  const color = tinyColor(targetValue);
+  if (color.isValid()) {
+    const rgb = color.toRgb();
+    const rgbValue = `${[rgb.r, rgb.g, rgb.b].join(',')}`;
+    
+    setCSSVariable(element, htmlEl, `${varName}-rgb`, rgbValue);
+  }
+}
+
+/**
+ * 处理映射token
+ * @param element - 目标元素
+ * @param htmlEl - HTML根元素
+ * @param entryValue - 映射项值
+ * @param targetValue - 目标值
+ * @param media - 媒体配置
+ */
+function handleMapToken(
+  element: HTMLElement,
+  htmlEl: HTMLElement,
+  entryValue: CSSVarMapItem,
+  targetValue: string | number,
+  media?: ConfigProviderProps['media'],
+): void {
+  if (!entryValue?.mapToken) return;
+
+  const color = tinyColor(targetValue);
+  
+  Array.from(entryValue.mapToken.keys()).forEach((mapTokenVarName) => {
+    const mapTokenEntryValue = entryValue.mapToken!.get(mapTokenVarName);
+    if (!mapTokenEntryValue) return;
+
+    // 处理alpha透明度
+    if (mapTokenEntryValue.alpha) {
+      color.setAlpha(Number.parseFloat(mapTokenEntryValue.alpha));
+      setCSSVariable(element, htmlEl, mapTokenVarName, color.toPercentageRgbString());
+    }
+
+    // 处理calc计算
+    if (mapTokenEntryValue.calc) {
+      const targetCalc = getValue(mapTokenEntryValue.calc, media);
+      const calcValue = `calc(${targetValue} ${targetCalc})`;
+      setCSSVariable(element, htmlEl, mapTokenVarName, calcValue);
+    }
+  });
+}
+
+/**
+ * 初始化CSS变量系统
+ * @param theme - 主题配置对象
+ * @param wrapperEL - 包装元素，默认为document.documentElement
+ * @param media - 媒体配置
  */
 const init: Init = (
   theme,
@@ -170,125 +300,56 @@ const init: Init = (
   media?: ConfigProviderProps['media'],
 ) => {
   const htmlEl = document.documentElement;
-
-  // 当前变量
-  const cssVars = {};
-
-  const exportObj = {};
-
+  const cssVars: CSSVars = {};
+  const exportObj: ExportObj = {};
   const curTheme = theme ?? {};
-
   const keys = Array.from(defaultThemeMap.keys());
 
   keys.forEach((varName) => {
-    // 小写的驼峰
-    // 例子: adhereColorPrimary
+    // 小写的驼峰命名
     const varCamelCaseName = Util.toCamelCase(varName, '-');
-    // 大写的驼峰
-    // 例子: AdhereColorPrimary
+    // 大写的驼峰命名
     const varUpperCamelCaseName = Util.toCamelCase(varName, '-', true);
-
     const entryValue = defaultThemeMap.get(varName);
 
-    // cssVars定义驼峰变量
+    if (!entryValue) return;
+
+    // 定义CSS变量设置器
     Object.defineProperty(cssVars, varCamelCaseName, {
-      set(value) {
+      set(value: string | number) {
         const targetValue = getValue(value, media);
 
-        // --------------定义css变量 -------------
-        wrapperEL.style.setProperty(`--${varName}`, `${targetValue}`);
-        if (!htmlEl.style.getPropertyValue(`--${varName}`)) {
-          htmlEl.style.setProperty(`--${varName}`, `${targetValue}`);
-        }
+        // 设置CSS变量
+        setCSSVariable(wrapperEL, htmlEl, varName, targetValue);
 
-        // 是颜色需要在定义一个-rgb的变量
-        const color = tinyColor(targetValue);
-        if (color.isValid()) {
-          const rgb = color.toRgb();
+        // 处理颜色相关的RGB变量
+        handleColorVariable(wrapperEL, htmlEl, varName, targetValue);
 
-          wrapperEL.style.setProperty(`--${varName}-rgb`, `${[rgb.r, rgb.g, rgb.b].join(',')}`);
-          if (!htmlEl.style.getPropertyValue(`--${varName}-rgb`)) {
-            htmlEl.style.setProperty(`--${varName}-rgb`, `${[rgb.r, rgb.g, rgb.b].join(',')}`);
-          }
-        }
-
-        // 处理mapToken
-        if (!entryValue?.mapToken) return;
-        Array.from(entryValue?.mapToken?.keys?.())?.forEach?.((mapTokenVarName) => {
-          const mapTokenVEntryValue = entryValue?.mapToken?.get?.(mapTokenVarName);
-          // alpha的处理
-          if (mapTokenVEntryValue?.alpha) {
-            color.setAlpha(Number.parseFloat(mapTokenVEntryValue?.alpha));
-
-            wrapperEL.style.setProperty(`--${mapTokenVarName}`, color.toPercentageRgbString());
-            if (!htmlEl.style.getPropertyValue(`--${mapTokenVarName}`)) {
-              htmlEl.style.setProperty(`--${mapTokenVarName}`, color.toPercentageRgbString());
-            }
-          }
-
-          // calc的处理
-          if (mapTokenVEntryValue.calc) {
-            const targetCalc = getValue(mapTokenVEntryValue.calc, media);
-
-            wrapperEL.style.setProperty(
-              `--${mapTokenVarName}`,
-              `calc(${targetValue} ${targetCalc})`,
-            );
-            if (!htmlEl.style.getPropertyValue(`--${mapTokenVarName}`)) {
-              htmlEl.style.setProperty(
-                `--${mapTokenVarName}`,
-                `calc(${targetValue} ${targetCalc})`,
-              );
-            }
-          }
-        });
+        // 处理映射token
+        handleMapToken(wrapperEL, htmlEl, entryValue, targetValue, media);
       },
     });
 
-    // 定义导出变量
-    exportObj[`set${varUpperCamelCaseName}`] = (value: any) => {
+    // 定义设置器方法
+    exportObj[`set${varUpperCamelCaseName}`] = (value: string | number) => {
       cssVars[varCamelCaseName] = value;
     };
 
-    // 定义导出变量
-    exportObj[`get${varUpperCamelCaseName}`] = () =>
-      wrapperEL.style.getPropertyValue(`--${varName}`);
+    // 定义获取器方法
+    exportObj[`get${varUpperCamelCaseName}`] = (): string => {
+      return wrapperEL.style.getPropertyValue(`--${varName}`);
+    };
 
-    // -----------------------------------------------------------------------------------------
-    // ColorPrimary
-    exportObj?.[`set${varUpperCamelCaseName}`]?.(
-      curTheme[
-        Util.lowercaseInitial(
-          varUpperCamelCaseName.substring(
-            varUpperCamelCaseName.indexOf('Adhere') + 'Adhere'.length,
-          ),
-        )
-      ] ?? defaultThemeMap.get(varName)?.value,
+    // 初始化变量值
+    const themeKey = Util.lowercaseInitial(
+      varUpperCamelCaseName.substring(
+        varUpperCamelCaseName.indexOf('Adhere') + 'Adhere'.length,
+      ),
     );
+    
+    const initialValue = curTheme[themeKey] ?? entryValue.value;
+    exportObj[`set${varUpperCamelCaseName}`](initialValue);
   });
-
-  // keys.forEach((varName) => {
-  //   // varName === adhere-color-primary
-  //
-  //   // AdhereColorPrimary
-  //   const varCamelCaseName = Util.toCamelCase(varName, '-', true);
-  //
-  //   // ColorPrimary
-  //   const inputName = Util.lowercaseInitial(
-  //     varCamelCaseName.substring(varCamelCaseName.indexOf('Adhere') + 'Adhere'.length),
-  //   );
-  //
-  //   exportObj?.[`set${varCamelCaseName}`]?.(
-  //     curTheme[inputName] ?? defaultThemeMap.get(varName)?.value,
-  //   );
-  // });
 };
 
-/**
- * theme
- * {
- *   colorPrimary
- * }
- * @param theme
- */
 export default init;

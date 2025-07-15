@@ -3,12 +3,32 @@ import React, { type ReactElement, memo, useCallback, useLayoutEffect, useRef } 
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
-import type { SliderScaleProps } from './types';
+import type { SliderScaleProps, ScaleItemResult } from './types';
 
 const selectorPrefix = 'adhere-ui-slider-scale';
 
 const { useTheme } = ConfigProvider;
 
+/**
+ * 滑块刻度组件
+ * 
+ * 一个带有刻度显示的滑块组件，支持自定义最小值、最大值、步进值和刻度间隔。
+ * 
+ * @example
+ * ```tsx
+ * <SliderScale
+ *   min={0}
+ *   max={100}
+ *   step={1}
+ *   value={50}
+ *   interval={10}
+ *   onChange={(value) => console.log('当前值:', value)}
+ * />
+ * ```
+ * 
+ * @param props - 组件属性
+ * @returns 滑块刻度组件
+ */
 const SliderScale = memo<SliderScaleProps>((props) => {
   const {
     className,
@@ -23,7 +43,7 @@ const SliderScale = memo<SliderScaleProps>((props) => {
 
   const el = useRef<HTMLDivElement>(null);
   const rangeEl = useRef<HTMLInputElement>(null);
-  const preValue = useRef<string | number | undefined>('');
+  const preValue = useRef<number>(0);
 
   useTheme<HTMLElement>({
     elRef: el,
@@ -31,102 +51,124 @@ const SliderScale = memo<SliderScaleProps>((props) => {
     displayName: 'SliderScale',
   });
 
-  const renderScale = useCallback(() => {
-    const itResult: ReactElement[] = [];
-
-    for (let i = min; i < max; i++) {
-      if (max - 1 === min) {
-        break;
-      }
-
-      let itemJSX: ReactElement | null = null;
-
-      if ((i + 1) % interval === 0) {
-        itemJSX = (
-          <div
-            key={i}
-            className={`${selectorPrefix}-scale-item ${selectorPrefix}-scale-item-point`}
-          >
-            <span className={`${selectorPrefix}-scale-item-value`}>{i + 1}</span>
-          </div>
-        );
-      } else if (i === min) {
-        itemJSX = (
-          <div key={i} className={`${selectorPrefix}-scale-item`}>
-            <span className={`${selectorPrefix}-scale-item-value`}>{min}</span>
-          </div>
-        );
-      } else if ((i + 1) % interval !== 0 && i === max - 1) {
-        itemJSX = (
-          <div key={i} className={`${selectorPrefix}-scale-item`}>
-            <span className={`${selectorPrefix}-scale-item-value`}>{i + 1}</span>
-          </div>
-        );
-      } else {
-        itemJSX = <div key={i} className={`${selectorPrefix}-scale-item`} />;
-      }
-
-      itResult.push(itemJSX);
-    }
-
-    const result: ReactElement[] = [];
-
-    if (min === max) {
-      result.push(
-        <div key={0} className={`${selectorPrefix}-scale-item`}>
-          <span className={`${selectorPrefix}-scale-item-value`}>0</span>
-          <span className={`${selectorPrefix}-scale-item-value`} style={{ right: 0, left: 'auto' }}>
-            ${max}
-          </span>
-        </div>,
+  /**
+   * 渲染刻度项
+   * @param index - 刻度索引
+   * @returns 刻度项 JSX 元素
+   */
+  const renderScaleItem = useCallback((index: number): ScaleItemResult => {
+    const currentValue = index + 1;
+    
+    // 如果是间隔刻度点
+    if (currentValue % interval === 0) {
+      return (
+        <div
+          key={index}
+          className={`${selectorPrefix}-scale-item ${selectorPrefix}-scale-item-point`}
+        >
+          <span className={`${selectorPrefix}-scale-item-value`}>{currentValue}</span>
+        </div>
       );
-    } else {
-      if (max - 1 === min) {
-        result.push(
-          <div key={min} className={`${selectorPrefix}-scale-item`}>
-            <span className={`${selectorPrefix}-scale-item-value`}>{min}</span>
-            <span
-              className={`${selectorPrefix}-scale-item-value`}
-              style={{ right: 0, left: 'auto' }}
-            >
-              {max}
-            </span>
-          </div>,
-        );
-      }
     }
-
-    return result.concat(itResult);
+    
+    // 如果是最小值
+    if (index === min) {
+      return (
+        <div key={index} className={`${selectorPrefix}-scale-item`}>
+          <span className={`${selectorPrefix}-scale-item-value`}>{min}</span>
+        </div>
+      );
+    }
+    
+    // 如果是最大值
+    if (index === max - 1) {
+      return (
+        <div key={index} className={`${selectorPrefix}-scale-item`}>
+          <span className={`${selectorPrefix}-scale-item-value`}>{currentValue}</span>
+        </div>
+      );
+    }
+    
+    // 普通刻度点
+    return <div key={index} className={`${selectorPrefix}-scale-item`} />;
   }, [min, max, interval]);
 
-  const onMousemove = useCallback((e) => {
-    touchEvent(e);
-  }, []);
+  /**
+   * 渲染刻度
+   * @returns 刻度 JSX 元素数组
+   */
+  const renderScale = useCallback((): ReactElement[] => {
+    // 处理边界情况：最小值和最大值相等
+    if (min === max) {
+      return [
+        <div key={0} className={`${selectorPrefix}-scale-item`}>
+          <span className={`${selectorPrefix}-scale-item-value`}>0</span>
+          <span 
+            className={`${selectorPrefix}-scale-item-value`} 
+            style={{ right: 0, left: 'auto' }}
+          >
+            {max}
+          </span>
+        </div>,
+      ];
+    }
 
-  const onTouchmove = useCallback((e) => {
-    touchEvent(e);
-  }, []);
+    // 处理边界情况：最大值比最小值大1
+    if (max - 1 === min) {
+      return [
+        <div key={min} className={`${selectorPrefix}-scale-item`}>
+          <span className={`${selectorPrefix}-scale-item-value`}>{min}</span>
+          <span
+            className={`${selectorPrefix}-scale-item-value`}
+            style={{ right: 0, left: 'auto' }}
+          >
+            {max}
+          </span>
+        </div>,
+      ];
+    }
 
-  function touchEvent(e) {
-    const { value } = e.target;
-
-    (rangeEl.current as HTMLInputElement).value = value;
-
-    if (preValue.current !== value) {
-      preValue.current = value;
-
-      if (onChange) {
-        onChange(value);
+    // 正常情况：渲染所有刻度
+    const scaleItems: ReactElement[] = [];
+    
+    for (let i = min; i < max; i++) {
+      const scaleItem = renderScaleItem(i);
+      if (scaleItem) {
+        scaleItems.push(scaleItem);
       }
     }
-  }
 
+    return scaleItems;
+  }, [min, max, renderScaleItem]);
+
+  /**
+   * 处理值变化事件
+   * @param e - 事件对象
+   */
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const currentValue = Number(e.target.value);
+
+    if (rangeEl.current) {
+      rangeEl.current.value = String(currentValue);
+    }
+
+    // 只有当值真正改变时才触发回调
+    if (preValue.current !== currentValue) {
+      preValue.current = currentValue;
+      onChange?.(currentValue);
+    }
+  }, [onChange]);
+
+  // 当属性变化时更新滑块值
   useLayoutEffect(() => {
-    (rangeEl.current as HTMLInputElement).value = `${value}`;
-  }, [min, max, step, value, interval]);
+    if (rangeEl.current) {
+      rangeEl.current.value = String(value);
+      preValue.current = value;
+    }
+  }, [value]);
 
   return (
-    <div ref={el} className={classNames(selectorPrefix, className)} style={style ?? {}}>
+    <div ref={el} className={classNames(selectorPrefix, className)} style={style}>
       <div className={`${selectorPrefix}-scale`}>{renderScale()}</div>
 
       <input
@@ -136,8 +178,8 @@ const SliderScale = memo<SliderScaleProps>((props) => {
         min={min}
         max={max}
         step={step}
-        onMouseMove={onMousemove}
-        onTouchMove={onTouchmove}
+        defaultValue={value}
+        onChange={handleChange}
       />
     </div>
   );

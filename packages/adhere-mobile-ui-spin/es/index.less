@@ -1,27 +1,40 @@
+/**
+ * Spin 组件样式
+ * 基于 antd-mobile Toast 组件的样式覆盖
+ */
+
 .adhere-mobile-ui-spin {
+  /* 容器定位为绝对定位，覆盖整个父容器 */
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 
+  /* 覆盖 antd-mobile Toast 的遮罩层样式 */
   > .adm-mask {
     &.adm-toast-mask {
+      /* 重置遮罩层的定位，使其相对于容器定位 */
       position: static;
       top: auto;
       left: auto;
 
+      /* 遮罩内容区域样式 */
       > .adm-mask-content {
         width: 100%;
         height: 100%;
 
+        /* Toast 包装器样式 */
         > .adm-toast-wrap {
+          /* 重置 Toast 包装器的定位 */
           position: static;
           top: auto;
           left: auto;
 
+          /* Toast 主要内容区域样式 */
           > .adm-toast-main {
             &.adm-toast-main-icon {
+              /* 防止图标区域出现垂直滚动条 */
               overflow-y: hidden;
             }
           }

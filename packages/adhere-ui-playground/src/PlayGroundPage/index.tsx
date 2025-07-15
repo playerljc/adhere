@@ -26,13 +26,17 @@ const selectPrefix = 'adhere-ui-playground-page';
 const { useTheme } = ConfigProvider;
 
 /**
- * PlayGroundPage
- * @constructor
+ * PlayGround页面组件
+ * @component InternalPlayGroundPage
+ * @description PlayGround页面主组件，提供完整的页面布局和导航功能
+ * @param props - 组件属性
+ * @param ref - 组件引用
+ * @returns JSX.Element
  */
 const InternalPlayGroundPage = memo<
-  PropsWithoutRef<PlayGroundPageProps> & RefAttributes<HTMLElement>
+  PropsWithoutRef<PlayGroundPageProps> & RefAttributes<HTMLDivElement>
 >(
-  forwardRef<HTMLElement, PlayGroundPageProps>((props, ref) => {
+  forwardRef<HTMLDivElement, PlayGroundPageProps>((props, ref) => {
     const {
       className,
       style,
@@ -51,14 +55,22 @@ const InternalPlayGroundPage = memo<
 
     const { scrollEl } = useContext(PlayGroundPageContext);
 
-    useTheme<HTMLElement>({
-      elRef: ref as MutableRefObject<HTMLElement | null>,
+    useTheme<HTMLDivElement>({
+      elRef: ref as MutableRefObject<HTMLDivElement | null>,
       group: 'normal',
       displayName: 'Playground',
     });
 
-    function getAnchors() {
-      return children
+    /**
+     * 获取锚点配置
+     * @function getAnchors
+     * @returns AnchorConfig[]
+     */
+    const getAnchors = () => {
+      if (!children) return [];
+      
+      const childrenArray = Array.isArray(children) ? children : [children];
+      return childrenArray
         .flat()
         .filter(
           (c) =>
@@ -67,13 +79,13 @@ const InternalPlayGroundPage = memo<
             c.type?.type === (CodeBoxSection as unknown as ReactElement)?.type,
         )
         .map((c) =>
-          c?.props?.config?.map((t) => ({
+          c?.props?.config?.map((t: any) => ({
             name: t.name,
             anchor: t.id,
           })),
         )
-        ?.flat();
-    }
+        ?.flat() || [];
+    };
 
     return (
       <AnchorNavigationContext.Provider
@@ -82,10 +94,9 @@ const InternalPlayGroundPage = memo<
         }}
       >
         <div
-          // @ts-ignore
           ref={ref}
-          className={`${classNames(selectPrefix, className ?? '')}`}
-          style={style ?? {}}
+          className={classNames(selectPrefix, className)}
+          style={style}
         >
           <AnchorNavigation
             className={anchorNavigationClassName}
@@ -105,10 +116,18 @@ const InternalPlayGroundPage = memo<
   }),
 );
 
+InternalPlayGroundPage.displayName = 'InternalPlayGroundPage';
+
+/**
+ * PlayGround页面组件
+ * @component PlayGroundPage
+ * @description 导出的PlayGround页面组件，包含所有子组件
+ */
 const PlayGroundPage = InternalPlayGroundPage as PlayGroundPageComponent;
 
 PlayGroundPage.displayName = 'PlayGroundPage';
 
+// 添加子组件
 PlayGroundPage.Section = Section;
 PlayGroundPage.CodeBoxSection = CodeBoxSection;
 PlayGroundPage.PropsSection = PropsSection;

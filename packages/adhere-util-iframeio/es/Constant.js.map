@@ -1,1 +1,1 @@
-{"version":3,"file":"Constant.js","sources":["Constant.js"],"sourcesContent":["export var OK_MESSAGE = 'ok';\nexport var ERROR_MESSAGE = 'error';\n"],"names":["OK_MESSAGE","ERROR_MESSAGE"],"mappings":"AAAO,IAAIA,WAAa,KACbC,cAAgB,eADhBD,WACAC,aAAuB"}
+{"version":3,"file":"Constant.js","sources":["Constant.js"],"sourcesContent":["/**\n * 成功状态消息\n */\nexport var OK_MESSAGE = 'ok';\n/**\n * 错误状态消息\n */\nexport var ERROR_MESSAGE = 'error';\n"],"names":["OK_MESSAGE","ERROR_MESSAGE"],"mappings":"AAGO,IAAIA,WAAa,KAIbC,cAAgB,eAJhBD,WAIAC,aAAuB"}

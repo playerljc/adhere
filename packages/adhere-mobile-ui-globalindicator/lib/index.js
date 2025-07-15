@@ -1,2 +1,2 @@
-var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},GlobalIndicator_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./GlobalIndicator")));exports.default=GlobalIndicator_1.default;
+var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},GlobalIndicator_1=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.createGlobalIndicator=void 0,__importDefault(require("./GlobalIndicator"))),GlobalIndicator_2=require("./GlobalIndicator");Object.defineProperty(exports,"createGlobalIndicator",{enumerable:!0,get:function(){return GlobalIndicator_2.createGlobalIndicator}}),exports.default=GlobalIndicator_1.default;
 //# sourceMappingURL=index.js.map

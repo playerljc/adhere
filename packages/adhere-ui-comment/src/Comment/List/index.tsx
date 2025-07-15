@@ -12,9 +12,23 @@ import type { ListProps } from '../../types';
 const selectorPrefix = 'adhere-ui-comment-inner-list';
 
 /**
- * CommentList
- * @constructor
- * @classdesc 评论列表
+ * 评论列表组件
+ * 
+ * @description 提供评论列表的容器组件，支持首次加载、滚动加载、回到顶部等功能
+ * @param props - 组件属性
+ * @returns 评论列表组件实例
+ * 
+ * @example
+ * ```tsx
+ * <CommentList
+ *   isLoading={loading}
+ *   hasMore={hasMore}
+ *   onLoadMore={loadMore}
+ *   pages={totalPages}
+ * >
+ *   {commentItems}
+ * </CommentList>
+ * ```
  */
 const CommentList = memo<ListProps>((props) => {
   const {
@@ -29,20 +43,22 @@ const CommentList = memo<ListProps>((props) => {
     children,
   } = props;
 
+  // 滚动加载引用
   const scrollLoadRef = useRef<ScrollLoadRefHandle | null>(null);
 
-  // 第一次
+  // 是否为首次加载
   const isFirst = useRef(true);
 
-  // 第一次加载
+  // 是否正在首次加载
   const isFirstLoading = useRef(false);
 
+  // 容器引用
   const wrapRef = useRef<HTMLDivElement | null>(null);
 
   /**
-   * renderDispatch
-   * @description 渲染的一个分配
-   * @return {*}
+   * 渲染分发函数
+   * @description 根据加载状态决定渲染首次加载还是正常内容
+   * @returns 渲染的JSX元素
    */
   function renderDispatch() {
     const loading = isLoading;
@@ -64,13 +80,14 @@ const CommentList = memo<ListProps>((props) => {
   }
 
   /**
-   * _renderFirstLoading
-   * @description 渲染第一次的UI
-   * @return {JSX.Element}
+   * 渲染首次加载状态
+   * @description 渲染首次加载的骨架屏
+   * @returns 首次加载JSX元素
    */
-  function _renderFirstLoading() {
+  function _renderFirstLoading(): ReactElement {
     if (renderFirstLoading) {
-      return renderFirstLoading();
+      const result = renderFirstLoading();
+      return (result as ReactElement) || <div className={`${selectorPrefix}-first-loading-wrap`} />;
     }
 
     const result: ReactElement[] = [];
@@ -83,13 +100,13 @@ const CommentList = memo<ListProps>((props) => {
   }
 
   /**
-   * renderNormal
-   * @description 渲染真正的UI
-   * @return {JSX.Element}
+   * 渲染正常内容
+   * @description 渲染正常的评论列表和滚动加载功能
+   * @returns 正常内容JSX元素
    */
-  function renderNormal() {
+  function renderNormal(): ReactElement {
     const defaultScrollLoadProps = {
-      onScrollBottom: onLoadMore,
+      onScrollBottom: onLoadMore ? (handle?: (status?: any) => void) => onLoadMore(handle) : undefined,
     };
 
     return (

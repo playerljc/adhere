@@ -1,2 +1,2 @@
-import BackTopAnimation from"./BackTopAnimation";export default BackTopAnimation;
+import BackTopAnimation from"./BackTopAnimation";export default BackTopAnimation;export{BackTopAnimation};
 //# sourceMappingURL=index.js.map

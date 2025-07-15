@@ -1,62 +1,47 @@
-import type { IConfig, IDict } from './types';
-type TV<H> = {
-    isStatic?: boolean;
-    handler: H;
-    isImmediateAccess?: boolean;
+import type { IConfig, IDict, ModuleDictEntry, NamesObject, ValuesObject } from './types';
+/**
+ * Generate module dictionary with automatic expansion capabilities
+ * @param handlerOptions - Dictionary handler options
+ * @param isUseMemo - Whether to use memoization (overrides global config)
+ * @returns Object containing names and values accessors
+ */
+export declare function genModuleDict<T extends Record<string, ModuleDictEntry<any>>, H extends (...args: any[]) => any>(handlerOptions: T, isUseMemo?: boolean): {
+    names: NamesObject;
+    values: ValuesObject<T>;
 };
 /**
- * genModuleDict
- * @param handlerOptions
- * @param {boolean} isUseMemo
+ * Main Dictionary object with all functionality
+ * Provides a centralized interface for dictionary management
  */
-export declare function genModuleDict<T extends {
-    [key: string]: TV<H>;
-}, H extends (...args: any[]) => ReturnType<H>>(handlerOptions: T, isUseMemo?: boolean): {
-    names: Partial<{
-        [key: string]: string;
-    }>;
-    values: Partial<{ [K in keyof T]: {
-        value: ReturnType<T[K]["handler"]>;
-    }; }>;
-};
 declare const Dict: {
     /**
-     * handler - 字典的定义对象
+     * Dictionary handlers - stores function definitions with memoization support
      */
     handlers: Partial<{
         [key: string]: import("./types").HandlerTargetValue;
     }>;
     /**
-     * value - 字典的使用对象
+     * Dictionary values - provides access to dictionary data with lazy initialization
      */
     value: Partial<{
-        [key: string]: {
-            value: any;
-            refresh: () => any;
-        };
+        [key: string]: import("./types").TargetValue<any>;
     }>;
     /**
-     * init - 字典的初始化
-     * @param {
-     *   {
-     *    initStatic: () => void;
-     *    initRemote: () => void;
-     *   }[]
-     * } dictArray 字典定义的集合
-     * @param {IConfig} _config 字典的配置
-     * @return {void}
+     * Initialize dictionaries with configuration
+     * @param dictArray - Array of dictionary definitions
+     * @param _config - Dictionary configuration
      */
     init: (dictArray?: IDict[], _config?: IConfig) => void;
     /**
-     * React - 字典对应的React组件
+     * React components for dictionaries
      */
     React: import("./types").DictReactComponentObj;
     /**
-     * useDict - 字典的hook
+     * Hook for using dictionaries in React components
      */
     useDict: (dictName: string, _options?: import("./types").UseDictOptions) => import("./types").UseDictState;
     /**
-     * genModuleDict - 字典生成器
+     * Generate module dictionaries
      */
     genModuleDict: typeof genModuleDict;
 };

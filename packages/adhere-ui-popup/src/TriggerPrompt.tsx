@@ -7,7 +7,10 @@ import Trigger from './Trigger';
 import type { TriggerPromptHandle, TriggerPromptProps } from './types';
 
 /**
- * TriggerPrompt
+ * TriggerPrompt组件
+ * @description 带确认按钮的弹窗触发器组件
+ * @param props - 组件属性
+ * @param ref - 组件引用
  * @constructor
  */
 const TriggerPrompt = forwardRef<TriggerPromptHandle, TriggerPromptProps>(
@@ -19,7 +22,6 @@ const TriggerPrompt = forwardRef<TriggerPromptHandle, TriggerPromptProps>(
         actions={[
           {
             key: 'submit',
-            // @ts-ignore
             color: 'primary',
             children: okText ?? Intl.get('confirm'),
             onClick: () => onSubmit?.() ?? Promise.resolve(),

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Emitter from './emitter';\nexport default Emitter;\n"],"names":["Emitter"],"mappings":"OAAOA,YAAa,2BACLA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["// Main exports\nexport { default as Emitter } from './emitter';\nexport { default as Events } from './events';\n// Default export for backward compatibility\nimport Emitter from './emitter';\nexport default Emitter;\n"],"names":["Emitter"],"mappings":"yBAC8C,KAAX,oCACS,KAAV,kBAE3BA,YAAa,2BACLA"}

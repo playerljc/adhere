@@ -1,0 +1,2 @@
+var Carrier,CardType;(C=>{C.CHINA_MOBILE="ChinaMobile",C.CHINA_UNICOM="ChinaUnicom",C.CHINA_TELECOM="ChinaTelecom",C.CHINA_SARFT="ChinaSARFT",C.INMARSAT="INMARSAT",C.ONEDOW="Onedow",C.VIRTUAL="Virtual",C.IOT="IoT",C.WIE="WIE"})(Carrier=Carrier||{}),(C=>{C.SIM_CARD="SIMCard",C.VIRTUAL_SIM_CARD="VirtualSIMCard",C.IOT_SIM_CARD="IoTSIMCard",C.WIE_SIM_CARD="WIETSIMCard"})(CardType=CardType||{});export{Carrier,CardType};
+//# sourceMappingURL=types.js.map

@@ -9,12 +9,19 @@ export const selectorPrefix = 'adhere-ui-flex-layout-space-between';
 
 const { useTheme } = ConfigProvider;
 
+/**
+ * 内部 SpaceBetween 组件
+ * 提供空间分布布局的组件
+ * 
+ * @param {InternalSpaceBetweenProps} props - 组件属性
+ * @returns {JSX.Element} SpaceBetween 组件
+ */
 const InternalSpaceBetween = memo<InternalSpaceBetweenProps>((props) => {
   const { className, style, direction, children, ...attrs } = props;
 
-  const wrapperRef = useRef<HTMLElement | undefined>();
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
 
-  useTheme<HTMLElement>({
+  useTheme<HTMLDivElement>({
     elRef: wrapperRef,
     group: 'normal',
     displayName: 'FlexLayout',
@@ -29,7 +36,6 @@ const InternalSpaceBetween = memo<InternalSpaceBetweenProps>((props) => {
 
   return (
     <div
-      // @ts-ignore
       ref={wrapperRef}
       className={classList}
       style={style ?? {}}

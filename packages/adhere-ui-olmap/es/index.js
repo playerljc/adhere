@@ -1,2 +1,2 @@
-import AnimationManager from"./AnimationManager";import GeoLayer from"./GeoLayer";import HeatMap from"./HeatMap";import OLMap from"./OLMap";import*as TitleLayer from"./TitleLayer";import Util from"./Util";export default{AnimationManager:AnimationManager,GeoLayer:GeoLayer,TitleLayer:TitleLayer,OLMap:OLMap,HeatMap:HeatMap,Util:Util};
+import AnimationManager from"./AnimationManager";import GeoLayer from"./GeoLayer";import HeatMap from"./HeatMap";import OLMap from"./OLMap";import*as TitleLayer from"./TitleLayer";import Util from"./Util";export{default as Constant}from"./Constant";export{MAP_TYPE_ADMINISTRATIVE,MAP_TYPE_SATELLITE}from"./Constant";export default OLMap;export{AnimationManager,GeoLayer,TitleLayer,OLMap,HeatMap,Util};
 //# sourceMappingURL=index.js.map

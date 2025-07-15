@@ -4,9 +4,11 @@ import CodeBoxPanel from '../CodeBoxPanel';
 import type { CodeBoxProps } from '../types';
 
 /**
- * CodeBoxSection
- * @param props
- * @constructor
+ * 代码盒子区块组件
+ * @component CodeBoxSection
+ * @description 用于展示代码盒子的区块组件
+ * @param props - 组件属性
+ * @returns JSX.Element
  */
 const CodeBoxSection = memo<CodeBoxProps>((props) => <CodeBoxPanel {...props} />);
 

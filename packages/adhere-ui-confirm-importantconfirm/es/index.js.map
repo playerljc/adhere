@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ImportantConfirm from './ImportantConfirm';\nexport default ImportantConfirm;\n"],"names":["ImportantConfirm"],"mappings":"OAAOA,qBAAsB,oCACdA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ImportantConfirm from './ImportantConfirm';\n// 导出默认组件\nexport default ImportantConfirm;\n"],"names":["ImportantConfirm"],"mappings":"OAAOA,qBAAsB,oCAEdA"}

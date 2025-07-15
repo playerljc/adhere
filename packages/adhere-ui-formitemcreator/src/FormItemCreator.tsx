@@ -4,6 +4,7 @@ import React, { ReactElement, memo, useMemo } from 'react';
 import renderItem from './FormItem';
 import type { ColumnItemProps, FormItemCreatorComponent, FormItemCreatorProps } from './types';
 
+// 表单组件类型符号定义
 const TEXT = Symbol('text');
 const INPUT = Symbol('input');
 const SEARCH = Symbol('search');
@@ -23,40 +24,46 @@ const UPLOAD = Symbol('upload');
 const TAG = Symbol('tag');
 const DEFINE = Symbol('define');
 
+/**
+ * 内部表单项目创建器组件
+ * @description 根据配置动态生成表单项目的核心组件
+ * @param props - 表单项目创建器属性
+ * @returns 渲染的表单项目
+ */
 const InternalFormItemCreator = memo<FormItemCreatorProps>((props) => {
   const { columns, layout, row } = props;
 
   /**
-   * renderFormItem
-   * @description 表单单项渲染 通过type来制定
-   * @param item
+   * 渲染表单项目
+   * @description 根据类型渲染对应的表单组件
+   * @param item - 表单项目配置
+   * @returns 渲染的表单组件
    */
-  function renderFormItem(item: ColumnItemProps) {
+  function renderFormItem(item: ColumnItemProps): ReactElement | null {
     const { type, contentProps = {} } = item;
 
     if (type === DEFINE) {
-      return item.content;
+      return item.content || null;
     } else {
       const renderMethodName = FORM_ITEM_CONFIG.get(type || INPUT);
 
       if (renderMethodName) {
-        const FormItem = renderItem[renderMethodName];
+        const FormItem = renderItem[renderMethodName as keyof typeof renderItem] as React.ComponentType<any>;
 
         return <FormItem {...contentProps} />;
       }
 
       return null;
-
-      // return renderMethodName ? renderItem[renderMethodName](contentProps) : null;
     }
   }
 
   /**
-   * getDefaultItemProps
-   * @description 表单单项的默认配置 通过type来制定
-   * @param item
+   * 获取默认项目属性
+   * @description 根据组件类型返回默认的表单项目属性
+   * @param item - 表单项目配置
+   * @returns 默认属性配置
    */
-  function getDefaultItemProps(item: ColumnItemProps) {
+  function getDefaultItemProps(item: ColumnItemProps): Record<string, any> | null {
     switch (item.type) {
       case SWITCH:
         return { valuePropName: 'checked' };
@@ -69,6 +76,7 @@ const InternalFormItemCreator = memo<FormItemCreatorProps>((props) => {
     }
   }
 
+  // 表单项目类型到渲染方法的映射
   const FORM_ITEM_CONFIG = useMemo(
     () =>
       new Map([
@@ -93,10 +101,11 @@ const InternalFormItemCreator = memo<FormItemCreatorProps>((props) => {
     [],
   );
 
+  // 渲染表单项目列表
   const formItems = useMemo<ReactElement[]>(
     () =>
       columns
-        .filter((item) => !('skip' in item))
+        .filter((item) => !('skip' in item && item.skip))
         .map((item) => {
           const { contentProps, col, type, ...itemProps } = item;
 
@@ -119,7 +128,7 @@ const InternalFormItemCreator = memo<FormItemCreatorProps>((props) => {
             formItem
           );
         }),
-    [columns],
+    [columns, layout],
   );
 
   return (
@@ -130,10 +139,12 @@ const InternalFormItemCreator = memo<FormItemCreatorProps>((props) => {
   );
 });
 
+// 导出组件并添加类型符号
 const FormItemCreator = InternalFormItemCreator as FormItemCreatorComponent;
 
 FormItemCreator.displayName = 'FormItemCreator';
 
+// 添加组件类型符号
 FormItemCreator.TEXT = TEXT;
 FormItemCreator.INPUT = INPUT;
 FormItemCreator.SEARCH = SEARCH;

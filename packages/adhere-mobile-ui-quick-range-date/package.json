@@ -1,7 +1,7 @@
 {
   "name": "@baifendian/adhere-mobile-ui-quick-range-date",
   "version": "2.11.0",
-  "description": "快速时间选取",
+  "description": "移动端快速日期范围选择器组件，专为移动端场景优化，支持预设时间范围和自定义日期选择",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
     "url": "https://github.com/playerljc/adhere/issues"
@@ -55,6 +55,15 @@
     "react": ">=18.0.0 - <19.0.0",
     "react-dom": ">=18.0.0 - <19.0.0"
   },
+  "keywords": [
+    "react",
+    "mobile",
+    "date-picker",
+    "date-range",
+    "quick-select",
+    "typescript",
+    "ui-component"
+  ],
   "publishConfig": {
     "access": "public"
   },

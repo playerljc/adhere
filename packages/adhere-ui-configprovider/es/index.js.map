@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ConfigProvider from './ConfigProvider';\nexport default ConfigProvider;\n"],"names":["ConfigProvider"],"mappings":"OAAOA,mBAAoB,kCACZA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["/**\n * ConfigProvider 导出文件\n * @description 导出全局配置提供者组件\n */\nimport ConfigProvider from './ConfigProvider';\nexport default ConfigProvider;\n"],"names":["ConfigProvider"],"mappings":"OAIOA,mBAAoB,kCACZA"}

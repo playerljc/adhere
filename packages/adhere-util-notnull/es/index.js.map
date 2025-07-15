@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import NotNull from './notnull';\nexport default NotNull;\n"],"names":["NotNull"],"mappings":"OAAOA,YAAa,2BACLA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import NotNull from './notnull';\n// 导出默认函数\nexport default NotNull;\n// 命名导出\nexport { NotNull };\n"],"names":["NotNull"],"mappings":"OAAOA,YAAa,2BAELA,eAENA,OAAS"}

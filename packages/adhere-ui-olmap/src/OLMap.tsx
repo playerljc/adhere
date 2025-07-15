@@ -9,52 +9,76 @@ import Resource from '@baifendian/adhere-util-resource';
 import Constant from './Constant';
 import GeoLayer from './GeoLayer';
 import Util from './Util';
-import type { OLMapProps } from './types';
+import type { OLMapProps, GeoJSONStyle, MapInstance } from './types';
 
 const selectorPrefix = 'adhere-ui-ol-map';
 
 const { useTheme } = ConfigProvider;
 
 /**
- * OlMap
- * @class OlMap
- * @classdesc openlayers的地图组件
+ * OLMap组件状态接口
  */
-class OlMap extends React.Component<OLMapProps, any> {
+interface OLMapState {
+  isLoading: boolean;
+  zoom: number | null;
+}
+
+/**
+ * OLMap组件
+ * @class OlMap
+ * @classdesc OpenLayers地图组件，提供地图显示和交互功能
+ */
+class OlMap extends React.Component<OLMapProps, OLMapState> implements MapInstance {
   private mainGeoLayer: GeoLayer | undefined;
-  private readonly el: React.RefObject<HTMLElement | null>;
-  private zoom: number | null;
-  protected map;
-  static defaultProps: any;
+  private readonly el: React.RefObject<HTMLDivElement>;
+  protected map: any;
+  
+  static defaultProps: Partial<OLMapProps>;
   static propTypes: any;
 
-  constructor(props) {
+  constructor(props: OLMapProps) {
     super(props);
 
-    this.el = createRef() as any;
+    this.el = createRef<HTMLDivElement>();
 
-    this.zoom = null;
+    this.state = {
+      isLoading: true,
+      zoom: null,
+    };
   }
 
-  componentDidMount() {
-    const { mapConfig, type, maxZoom, minZoom, zoom, layers, center, extent, fitZoom } = this.props;
+  /**
+   * 组件挂载后初始化地图
+   */
+  componentDidMount(): void {
+    const { 
+      mapConfig, 
+      type, 
+      maxZoom, 
+      minZoom, 
+      zoom, 
+      layers, 
+      center, 
+      extent, 
+      fitZoom,
+      onAllTileloadend 
+    } = this.props;
 
     this.map = Util.createMap({
       config: {
-        target: this.el.current,
+        target: this.el.current!,
       },
-      type,
-      fitZoom,
-      maxZoom,
-      zoom,
-      minZoom,
+      fitZoom: typeof fitZoom === 'string' ? parseFloat(fitZoom) : fitZoom,
+      maxZoom: typeof maxZoom === 'string' ? parseFloat(maxZoom) : maxZoom,
+      zoom: typeof zoom === 'string' ? parseFloat(zoom) : zoom,
+      minZoom: typeof minZoom === 'string' ? parseFloat(minZoom) : minZoom,
       center,
       extent,
       layers,
       ...mapConfig,
     });
 
-    this.zoom = this.map.getView().getZoom();
+    this.setState({ zoom: this.map.getView().getZoom() });
 
     // 注册所有瓦片加载完成事件
     this.onAllTileloadend();
@@ -64,115 +88,141 @@ class OlMap extends React.Component<OLMapProps, any> {
   }
 
   /**
-   * addMainGeoJSONLayer - 添加主的geoJSON层
-   * @param geoJSONStyle
-   * @param geoJSONData
+   * 添加主GeoJSON图层
+   * @param params - 图层参数
+   * @param params.geoJSONStyle - GeoJSON样式配置
+   * @param params.geoJSONData - GeoJSON数据
    */
-  addMainGeoJSONLayer({ geoJSONStyle, geoJSONData }) {
-    // @ts-ignore
-    // const { geoJSONStyle, geoJSONData } = this.props;
+  addMainGeoJSONLayer({ geoJSONStyle, geoJSONData }: { geoJSONStyle: GeoJSONStyle; geoJSONData: any }): void {
+    const { stroke, fill, text } = geoJSONStyle;
 
-    const { stroke, fill, text } = geoJSONStyle; // Dict.value['feature-style-xinbeiqu'];
-
-    this.mainGeoLayer = this.addGeoLayer(geoJSONData /* Dict.value.mainGeoJSONData */, () => {
+    this.mainGeoLayer = this.addGeoLayer(geoJSONData, () => {
       return new Style({
         fill: new Fill({ ...fill }),
         stroke: new Stroke({ ...stroke }),
-        text: new Text({ ...text, fill: new Fill({ color: text.color }), overflow: true }),
+        text: new Text({ 
+          ...text, 
+          fill: new Fill({ color: text?.color }), 
+          overflow: true 
+        }),
       });
     });
   }
 
   /**
-   * 添加GeoJSONLayer
-   * @param geojsonData
-   * @param getStyleConfig
-   * @param zIndex
+   * 添加GeoJSON图层
+   * @param geojsonData - GeoJSON数据
+   * @param getStyleConfig - 样式配置函数
+   * @param zIndex - 图层层级
+   * @returns GeoLayer实例
    */
-  addGeoLayer(geojsonData, getStyleConfig, zIndex = 0) {
+  addGeoLayer(geojsonData: any, getStyleConfig: () => Style, zIndex: number = 0): GeoLayer {
     return Util.addGeoLayer(this.map, geojsonData, getStyleConfig, zIndex);
   }
 
   /**
-   * addWindLayer - 添加风场层
-   * @param data
-   * @param config
-   * @param zIndex
+   * 添加风场图层
+   * @param data - 风场数据
+   * @param config - 配置参数
+   * @param zIndex - 图层层级
+   * @returns 风场图层实例
    */
-  addWindLayer(data, config, zIndex = 0) {
+  addWindLayer(data: any, config: any, zIndex: number = 0): any {
     return Util.addWindLayer(this.map, data, config, zIndex);
   }
 
   /**
-   * 添加数据层
-   * @return {*|{vectorLayer, vectorSource}}
+   * 添加数据图层
+   * @param zIndex - 图层层级
+   * @returns 向量图层和源对象
    */
-  addDataLayer(zIndex) {
+  addDataLayer(zIndex: number): { vectorLayer: any; vectorSource: any } {
     return Util.addVectorLayer(this.map, zIndex);
   }
 
   /**
-   * 给地图实例添加 hover监听者
+   * 给地图实例添加悬停监听器
+   * @param layer - 图层
+   * @param hit - 悬停回调
+   * @param unHit - 离开回调
    */
-  addHoverListener(layer, hit, unHit) {
+  addHoverListener(layer: any, hit: (feature: any) => void, unHit: () => void): void {
     Util.addHoverListener(this.map, layer, hit, unHit);
   }
 
   /**
-   * 添加缩放事件
-   * @param handler
+   * 添加缩放事件监听器
+   * @param handler - 缩放回调函数
    */
-  addZoomListener(handler) {
-    this.map.on('moveend', (evt) => {
+  addZoomListener(handler: (zoom: number) => void): void {
+    this.map.on('moveend', (evt: any) => {
       const zoom = this.map.getView().getZoom();
 
-      if (zoom !== this.zoom) {
+      if (zoom !== this.state.zoom) {
         handler(zoom);
       }
 
-      this.zoom = zoom;
+      this.setState({ zoom });
     });
   }
 
   /**
-   * 给地图实例添加 单击监听者
+   * 给地图实例添加点击监听器
+   * @param layer - 图层
+   * @param hit - 点击回调
+   * @param unHit - 未点击回调
    */
-  addClickListener = (layer, hit, unHit) => {
+  addClickListener = (layer: any, hit: (feature: any) => void, unHit: () => void): void => {
     Util.addClickListener(this.map, layer, hit, unHit, this.setCursor);
   };
 
   /**
-   * 添加一个Overlay对象, 一般来说只有弹窗marker 故仅实例化一个
+   * 添加一个Overlay对象
+   * @param config - 覆盖物配置
+   * @returns Overlay实例
    */
-  addOverlay(config) {
-    // @ts-ignore
-    return Util.addOverlay(this.map, config);
+  addOverlay(config: any): any {
+    return Util.addOverlay(this.map, config, null);
   }
 
   /**
-   * 给Overlay对象 配置状态
+   * 给Overlay对象配置状态
+   * @param overlay - Overlay实例
+   * @param state - 状态配置
    */
-  setOverlayState(overlay, state) {
+  setOverlayState(overlay: any, state: any): void {
     Util.setOverlayState(overlay, state);
   }
 
   /**
-   * 将此处鼠标点样式
+   * 设置鼠标样式
+   * @param style - 鼠标样式
    */
-  setCursor = (style) => {
-    this.map.getTarget().style.cursor = style;
+  setCursor = (style: string): void => {
+    if (this.map?.getTarget()) {
+      this.map.getTarget().style.cursor = style;
+    }
   };
 
-  getTileLayer() {
+  /**
+   * 获取瓦片图层
+   * @returns 瓦片图层
+   */
+  getTileLayer(): any {
     return this.map.getLayers().getArray()[0];
   }
 
   /**
-   * onAllTileloadend
-   * @description 所有瓦片加载完成的时间
+   * 所有瓦片加载完成事件处理
+   * @description 监听所有瓦片加载完成的时间
    */
-  private onAllTileloadend() {
+  private onAllTileloadend(): void {
     const tileLayer = this.getTileLayer();
+    const { onAllTileloadend } = this.props;
+
+    if (!tileLayer || !onAllTileloadend) {
+      return;
+    }
 
     // 追踪加载中的瓦片数
     let loadingTileCount = 0;
@@ -188,16 +238,16 @@ class OlMap extends React.Component<OLMapProps, any> {
 
       // 当所有瓦片都加载完成时
       if (loadingTileCount === 0) {
-        // 所有瓦片加载完成
-        this.props?.onAllTileloadend?.();
+        this.setState({ isLoading: false });
+        onAllTileloadend();
       }
     });
   }
 
   /**
-   * 清空所有层，除了底图和常州geoJSOn层
+   * 清空所有图层，除了底图和主GeoJSON层
    */
-  clear() {
+  clear(): void {
     const layers = this.map.getLayers();
 
     for (let i = 1; i < layers.getLength(); i++) {
@@ -206,21 +256,21 @@ class OlMap extends React.Component<OLMapProps, any> {
   }
 
   /**
-   * getMap
-   * @return {*|Map}
+   * 获取地图实例
+   * @returns 地图实例
    */
-  getMap() {
+  getMap(): any {
     return this.map;
   }
 
-  render() {
-    return <div ref={this.el as any} className={selectorPrefix} />;
+  render(): React.ReactElement {
+    return <div ref={this.el} className={selectorPrefix} />;
   }
 }
 
 // 指定 props 的默认值：
 OlMap.defaultProps = {
-  type: Constant.MAP_TYPE_ADMINISTRATIVE,
+  type: 'administrative' as const,
   mapConfig: {},
   maxZoom: Resource.Dict.value.ResourceGisMapMaxZoom?.value,
   zoom: Resource.Dict.value.ResourceGisMapMaxZoom?.value,
@@ -243,12 +293,17 @@ OlMap.propTypes = {
   onAllTileloadend: PropTypes.func,
 };
 
-function OLMapThemeHOC(props: OLMapProps) {
+/**
+ * OLMap主题高阶组件
+ * @param props - 组件属性
+ * @returns 带主题的OLMap组件
+ */
+function OLMapThemeHOC(props: OLMapProps): React.ReactElement {
   const { className, style, ...rest } = props;
 
-  const wrapperRef = useRef<HTMLElement | undefined>();
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
-  useTheme<HTMLElement>({
+  useTheme<HTMLDivElement>({
     elRef: wrapperRef,
     group: 'normal',
     displayName: 'OLMap',
@@ -256,7 +311,6 @@ function OLMapThemeHOC(props: OLMapProps) {
 
   return (
     <div
-      // @ts-ignore
       ref={wrapperRef}
       className={classNames(`${selectorPrefix}-theme-wrapper`, className)}
       style={style ?? {}}

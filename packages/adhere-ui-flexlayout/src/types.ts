@@ -34,12 +34,36 @@ import TRCLayout from './TRBLC/TRCLayout';
 import ToolBarLayout from './ToolBarLayout';
 import VerticalFlexLayout from './VerticalFlexLayout';
 
+/**
+ * FlexLayout 方向类型
+ */
+export type FlexDirection = 'vertical' | 'horizontal';
+
+/**
+ * 折叠方向类型
+ */
+export type CollapseDirection = 'L' | 'R' | 'T' | 'B';
+
+/**
+ * 栅格间隙类型
+ */
+export type GutterType = number | number[];
+
+/**
+ * FlexLayout 上下文类型
+ */
 export interface ContextType {
-  direction: 'vertical' | 'horizontal';
-  gutter?: number | number[];
+  /** 布局方向 */
+  direction: FlexDirection;
+  /** 栅格间隙 */
+  gutter?: GutterType;
+  /** 子元素 */
   children?: ReactNode[];
 }
 
+/**
+ * FlexLayout 函数组件类型
+ */
 export interface FlexLayoutFunction<P> extends NamedExoticComponent<P> {
   Fixed: typeof Fixed;
   Auto: typeof Auto;
@@ -76,208 +100,321 @@ export interface FlexLayoutFunction<P> extends NamedExoticComponent<P> {
   };
 }
 
+/**
+ * FlexLayout 基础属性
+ */
 export interface FlexLayoutProps {
+  /** 自定义类名 */
   className?: string;
+  /** 自定义样式 */
   style?: CSSProperties;
-  direction?: 'vertical' | 'horizontal';
-  children?: any;
-  gutter?: number | number[];
+  /** 布局方向 */
+  direction?: FlexDirection;
+  /** 子元素 */
+  children?: ReactNode;
+  /** 栅格间隙 */
+  gutter?: GutterType;
 }
 
+/**
+ * Fixed 组件属性
+ */
 export interface FixedProps {
+  /** 自定义类名 */
   className?: string;
+  /** 自定义样式 */
   style?: CSSProperties;
+  /** 是否适应容器 */
   fit?: boolean;
-  children?: any;
+  /** 子元素 */
+  children?: ReactNode;
+  /** 栅格跨度 (0-24) */
   span?: number;
-  // 展开收起的方向
-  collapseDirection?: 'L' | 'R' | 'T' | 'B';
-  // 展开收起的宽度
+  /** 折叠方向 */
+  collapseDirection?: CollapseDirection;
+  /** 折叠时的尺寸 */
   collapsedSize?: number | string;
-  // 收起和展开的开关
+  /** 默认是否折叠 */
   defaultCollapsible?: boolean;
-  // 自定义渲染trigger
+  /** 自定义触发器渲染函数 */
   trigger?: (collapsed: boolean, defaultTrigger: ReactNode) => ReactNode;
-  // 展开收起的事件
+  /** 折叠状态变化回调 */
   onCollapse?: (collapsed: boolean) => void;
 }
 
+/**
+ * Auto 组件属性
+ */
 export interface AutoProps {
+  /** 自定义类名 */
   className?: string;
+  /** 自定义样式 */
   style?: CSSProperties;
+  /** 是否自动固定 */
   autoFixed?: boolean;
+  /** 是否适应容器 */
   fit?: boolean;
-  children?: any;
+  /** 子元素 */
+  children?: ReactNode;
+  /** 是否使用普通模式 */
   isUseNormal?: boolean;
+  /** 是否使用最小填充模式 */
   isUseMinFill?: boolean;
 }
 
-export interface VerticalFlexLayoutProps {
-  className?: string;
-  style?: CSSProperties;
+/**
+ * 渲染函数类型
+ */
+export type RenderFunction = ReactNode | (() => ReactNode);
+
+/**
+ * VerticalFlexLayout 属性
+ */
+export interface VerticalFlexLayoutProps extends Omit<FlexLayoutProps, 'direction'> {
+  /** 顶部区域类名 */
   topClassName?: string;
+  /** 顶部区域样式 */
   topStyle?: CSSProperties;
+  /** 右侧区域类名 */
   rightClassName?: string;
+  /** 右侧区域样式 */
   rightStyle?: CSSProperties;
+  /** 底部区域类名 */
   bottomClassName?: string;
+  /** 底部区域样式 */
   bottomStyle?: CSSProperties;
+  /** 左侧区域类名 */
   leftClassName?: string;
+  /** 左侧区域样式 */
   leftStyle?: CSSProperties;
+  /** 主区域类名 */
   mainClassName?: string;
+  /** 主区域样式 */
   mainStyle?: CSSProperties;
+  /** 主区域自动包装类名 */
   mainAutoWrapClassName?: string;
+  /** 主区域自动包装样式 */
   mainAutoStyle?: CSSProperties;
+  /** 主区域包装类名 */
   mainWrapClassName?: string;
+  /** 主区域包装样式 */
   mainWrapStyle?: CSSProperties;
-  renderTop?: any;
-  renderRight?: any;
-  renderBottom?: any;
-  renderLeft?: any;
-  renderMain?: any;
-  topProps?: FixedProps;
-  rightProps?: FixedProps;
-  bottomProps?: FixedProps;
-  leftProps?: FixedProps;
-  mainProps?: AutoProps;
-  mainAutoWrapProps?: AutoProps;
-  children?: any;
+  /** 渲染顶部区域 */
+  renderTop?: RenderFunction;
+  /** 渲染右侧区域 */
+  renderRight?: RenderFunction;
+  /** 渲染底部区域 */
+  renderBottom?: RenderFunction;
+  /** 渲染左侧区域 */
+  renderLeft?: RenderFunction;
+  /** 渲染主区域 */
+  renderMain?: RenderFunction;
+  /** 顶部区域属性 */
+  topProps?: Partial<FixedProps>;
+  /** 右侧区域属性 */
+  rightProps?: Partial<FixedProps>;
+  /** 底部区域属性 */
+  bottomProps?: Partial<FixedProps>;
+  /** 左侧区域属性 */
+  leftProps?: Partial<FixedProps>;
+  /** 主区域属性 */
+  mainProps?: Partial<AutoProps>;
+  /** 主区域自动包装属性 */
+  mainAutoWrapProps?: Partial<AutoProps>;
 }
 
-export interface HorizontalFlexLayoutProps {
-  className?: string;
-  style?: CSSProperties;
+/**
+ * HorizontalFlexLayout 属性
+ */
+export interface HorizontalFlexLayoutProps extends Omit<FlexLayoutProps, 'direction'> {
+  /** 顶部区域类名 */
   topClassName?: string;
+  /** 顶部区域样式 */
   topStyle?: CSSProperties;
+  /** 右侧区域类名 */
   rightClassName?: string;
+  /** 右侧区域样式 */
   rightStyle?: CSSProperties;
+  /** 底部区域类名 */
   bottomClassName?: string;
+  /** 底部区域样式 */
   bottomStyle?: CSSProperties;
+  /** 左侧区域类名 */
   leftClassName?: string;
+  /** 左侧区域样式 */
   leftStyle?: CSSProperties;
+  /** 主区域类名 */
   mainClassName?: string;
+  /** 主区域样式 */
   mainStyle?: CSSProperties;
+  /** 主区域自动包装类名 */
   mainAutoWrapClassName?: string;
+  /** 主区域自动包装样式 */
   mainAutoStyle?: CSSProperties;
+  /** 主区域包装类名 */
   mainWrapClassName?: string;
+  /** 主区域包装样式 */
   mainWrapStyle?: CSSProperties;
-  renderTop?: any;
-  renderRight?: any;
-  renderBottom?: any;
-  renderLeft?: any;
-  renderMain?: any;
-  topProps?: FixedProps;
-  rightProps?: FixedProps;
-  bottomProps?: FixedProps;
-  leftProps?: FixedProps;
-  mainProps?: AutoProps;
-  mainAutoWrapProps?: AutoProps;
-  children?: any;
+  /** 渲染顶部区域 */
+  renderTop?: RenderFunction;
+  /** 渲染右侧区域 */
+  renderRight?: RenderFunction;
+  /** 渲染底部区域 */
+  renderBottom?: RenderFunction;
+  /** 渲染左侧区域 */
+  renderLeft?: RenderFunction;
+  /** 渲染主区域 */
+  renderMain?: RenderFunction;
+  /** 顶部区域属性 */
+  topProps?: Partial<FixedProps>;
+  /** 右侧区域属性 */
+  rightProps?: Partial<FixedProps>;
+  /** 底部区域属性 */
+  bottomProps?: Partial<FixedProps>;
+  /** 左侧区域属性 */
+  leftProps?: Partial<FixedProps>;
+  /** 主区域属性 */
+  mainProps?: Partial<AutoProps>;
+  /** 主区域自动包装属性 */
+  mainAutoWrapProps?: Partial<AutoProps>;
 }
 
-export interface ToolBarLayoutProps {
-  className?: string;
-  style?: CSSProperties;
-  topClassName?: string;
-  topStyle?: CSSProperties;
-  bottomClassName?: string;
-  bottomStyle?: CSSProperties;
-  mainClassName?: string;
-  mainStyle?: CSSProperties;
-  mainAutoWrapClassName?: string;
-  mainAutoStyle?: CSSProperties;
-  mainWrapClassName?: string;
-  mainWrapStyle?: CSSProperties;
+/**
+ * ToolBarLayout 属性
+ */
+export interface ToolBarLayoutProps extends Omit<VerticalFlexLayoutProps, 'direction'> {
+  /** 顶部工具栏项目 */
   topToolBarItems?: ReactElement[];
+  /** 底部工具栏项目 */
   bottomToolBarItems?: ReactElement[];
-  topProps?: FixedProps;
-  bottomProps?: FixedProps;
-  mainProps?: AutoProps;
-  mainAutoWrapProps?: AutoProps;
-  children?: any;
+  /** 顶部区域属性 */
+  topProps?: Partial<FixedProps>;
+  /** 底部区域属性 */
+  bottomProps?: Partial<FixedProps>;
+  /** 主区域属性 */
+  mainProps?: Partial<AutoProps>;
+  /** 主区域自动包装属性 */
+  mainAutoWrapProps?: Partial<AutoProps>;
 }
 
-export interface BackLayoutProps {
-  className?: string;
-  style?: CSSProperties;
-  topClassName?: string;
-  topStyle?: CSSProperties;
-  bottomClassName?: string;
-  bottomStyle?: CSSProperties;
-  mainClassName?: string;
-  mainStyle?: CSSProperties;
-  mainAutoWrapClassName?: string;
-  mainAutoStyle?: CSSProperties;
-  mainWrapClassName?: string;
-  mainWrapStyle?: CSSProperties;
-  topToolBarItems?: ReactElement[];
-  topProps?: FixedProps;
-  bottomProps?: FixedProps;
-  mainProps?: AutoProps;
-  mainAutoWrapProps?: AutoProps;
+/**
+ * BackLayout 属性
+ */
+export interface BackLayoutProps extends Omit<ToolBarLayoutProps, 'direction'> {
+  /** 返回路径 */
   backPath?: string;
+  /** 强制返回路径 */
   enforceBackPath?: string;
+  /** 是否显示返回按钮 */
   isShowBack?: boolean;
+  /** 历史对象 */
   history?: any;
+  /** 返回按钮标题 */
   backTitle?: ReactNode;
-  children?: any;
 }
 
+/**
+ * ScrollLayout 属性
+ */
 export interface ScrollLayoutProps {
+  /** 自定义类名 */
   className?: string;
+  /** 自定义样式 */
   style?: CSSProperties;
+  /** 是否启用垂直滚动 */
   scrollY?: boolean;
-  children?: any;
+  /** 子元素 */
+  children?: ReactNode;
 }
 
+/**
+ * ScrollLayout 上下文类型
+ */
 export interface ScrollLayoutContextType {
+  /** 获取元素引用 */
   getEl: () => HTMLElement | null | undefined;
 }
 
-export interface getGridStyleParams {
-  gutter?: number | number[];
-  children?: any;
+/**
+ * 获取栅格样式参数
+ */
+export interface GetGridStyleParams {
+  /** 栅格间隙 */
+  gutter?: GutterType;
+  /** 子元素 */
+  children?: ReactNode[];
+  /** 栅格跨度 */
   span?: number | null;
-  direction: 'vertical' | 'horizontal';
+  /** 布局方向 */
+  direction: FlexDirection;
+  /** 媒体配置 */
   media: ConfigProviderProps['media'];
 }
 
+/**
+ * TBLR 属性
+ */
 export interface TBLRProps extends FixedProps {
+  /** 子元素 */
   children: ReactNode;
 }
 
+/**
+ * Center 属性
+ */
 export interface CenterProps extends AutoProps {
+  /** 子元素 */
   children: ReactNode;
 }
 
+/**
+ * TBLRC 布局属性
+ */
 export interface TBLRCLayoutProps extends FlexLayoutProps {
+  /** 包装类名 */
   wrapClassName?: string;
+  /** 包装样式 */
   wrapStyle?: CSSProperties;
 
-  // top
+  // 顶部
+  /** 顶部属性 */
   tProps?: TBLRProps;
+  /** 顶部分割线 */
   tSplit?: ReactNode;
 
-  // bottom
+  // 底部
+  /** 底部属性 */
   bProps?: TBLRProps;
+  /** 底部分割线 */
   bSplit?: ReactNode;
 
-  // left
+  // 左侧
+  /** 左侧属性 */
   lProps?: TBLRProps;
+  /** 左侧分割线 */
   lSplit?: ReactNode;
 
-  // right
+  // 右侧
+  /** 右侧属性 */
   rProps?: TBLRProps;
+  /** 右侧分割线 */
   rSplit?: ReactNode;
 
-  // center
+  // 中心
+  /** 中心属性 */
   cProps?: CenterProps;
 
+  /** 自动包装属性 */
   autoWrapProps?: AutoProps;
+  /** 自动内部属性 */
   autoInnerProps?: FlexLayoutProps;
 }
 
+/**
+ * FlexLayout 组件类型
+ */
 export type FlexLayoutComponent = NamedExoticComponent<
-  PropsWithoutRef<FlexLayoutProps> & RefAttributes<any>
+  PropsWithoutRef<FlexLayoutProps> & RefAttributes<HTMLElement>
 > & {
   selectorPrefix: string;
   Context: typeof FlexContext;
@@ -316,20 +453,40 @@ export type FlexLayoutComponent = NamedExoticComponent<
   };
 };
 
+/**
+ * SpaceBetween 组件类型
+ */
 export type SpaceBetweenComponent = NamedExoticComponent<InternalSpaceBetweenProps>;
 
+/**
+ * SpaceAround 组件类型
+ */
 export type SpaceAroundComponent = NamedExoticComponent<InternalSpaceAroundProps>;
 
+/**
+ * 内部 SpaceBetween 属性
+ */
 export interface InternalSpaceBetweenProps {
+  /** 自定义类名 */
   className?: string;
+  /** 自定义样式 */
   style?: CSSProperties;
+  /** 布局方向 */
   direction: FlexLayoutProps['direction'];
-  children?: any;
+  /** 子元素 */
+  children?: ReactNode;
 }
 
+/**
+ * 内部 SpaceAround 属性
+ */
 export interface InternalSpaceAroundProps {
+  /** 自定义类名 */
   className?: string;
+  /** 自定义样式 */
   style?: CSSProperties;
+  /** 布局方向 */
   direction: FlexLayoutProps['direction'];
-  children?: any;
+  /** 子元素 */
+  children?: ReactNode;
 }

@@ -11,49 +11,64 @@ import Label from './Label';
 import Value from './Value';
 import type {
   DataItem,
+  DataItemRow,
   GroupRenderDetail,
   RenderDetail,
   RenderGridSearchForm,
+  RenderGridSearchFormParams,
   RenderHorizontal,
+  RenderHorizontalParams,
+  RenderHorizontalResult,
   RenderVertical,
   RowCountRef,
   TableGridLayoutComponent,
   TableGridLayoutProps,
+  DensityType,
+  LayoutType,
+  ModeType,
 } from './types';
 
+/** CSS selector prefix for the component */
 export const selectorPrefix = 'adhere-ui-table-grid-layout';
 
 const { useTheme } = ConfigProvider;
 
 /**
- * renderHorizontal
- * @description 渲染横向布局
- * @return {
- *   element: JSX.Element[];
-     detail: GroupRenderDetail;
- * }
+ * Density class mapping
  */
-const renderHorizontal: RenderHorizontal = (params) => {
+const DENSITY_CLASS_MAP = new Map<DensityType, string>([
+  ['default', 'densitydefault'],
+  ['middle', 'densitymiddle'],
+  ['small', 'densitysmall'],
+]);
+
+/**
+ * Renders horizontal layout for table grid
+ * 
+ * @description Creates a horizontal table layout where labels and values are in the same row
+ * @param params - Rendering parameters
+ * @returns Object containing rendered elements and detail information
+ */
+const renderHorizontal: RenderHorizontal = (params: RenderHorizontalParams): RenderHorizontalResult => {
   const {
     data: { columnCount: _columnCount, data: _data },
     rowCountRef,
   } = params;
 
   /**
-   * createRow
-   * @description 创建一行
+   * Creates a single row in horizontal layout
    */
-  function createRow() {
+  function createRow(): void {
     const startIndex = _index;
 
-    // 一行的所有列
+    // All columns in one row
     const tdJSXChildren: ReactElement[] = [];
 
-    // 一行的列数计数
+    // Column count for current row
     let columnsCount = 0;
 
     while (_index < flatData.length) {
-      // label或者value
+      // Label or value element
       const item = flatData[_index];
 
       if (columnsCount !== columnCount) {
@@ -61,7 +76,7 @@ const renderHorizontal: RenderHorizontal = (params) => {
           if ('colSpan' in item.props && typeof item.props.colSpan === 'number') {
             columnsCount += item.props.colSpan;
           } else {
-            columnsCount = columnsCount + 1;
+            columnsCount += 1;
           }
 
           tdJSXChildren.push(item);
@@ -73,26 +88,27 @@ const renderHorizontal: RenderHorizontal = (params) => {
       }
     }
 
-    // 一行
+    // Fill remaining columns if needed
     if (columnsCount < columnCount) {
       Array.from({ length: columnCount - columnsCount })
         .fill(0)
         .forEach(() => {
-          tdJSXChildren.push(<td className={`${selectorPrefix}-table-no-border`} />);
+          tdJSXChildren.push(<td key={`empty-${_index}`} className={`${selectorPrefix}-table-no-border`} />);
         });
     }
 
     const rowJSX = (
       <tr
+        key={`row-${rowCountRef.current}`}
         className={classNames(
           `${selectorPrefix}-table-row`,
-          (rowCountRef as RowCountRef).current % 2 === 0 ? 'odd' : 'even',
+          rowCountRef.current % 2 === 0 ? 'odd' : 'even',
         )}
       >
         {tdJSXChildren}
       </tr>
     );
-    (rowCountRef as RowCountRef).current++;
+    rowCountRef.current++;
 
     rowJSXChildren.push(rowJSX);
 
@@ -106,30 +122,25 @@ const renderHorizontal: RenderHorizontal = (params) => {
     if (_index < flatData.length) {
       createRow();
     }
-
-    // 0 1 2 3 4 5 6 7
-    // 第一行 0 1 2 3 4 5 | 0 1 2
-    // 第二行 6 7 8 9 10 11 | 3 4 5
   }
 
   const detail: GroupRenderDetail = [];
 
-  // 一行多少列
+  // Number of columns per row (label + value = 2 columns per data item)
   const columnCount = (_columnCount as number) * 2;
 
-  // 拉平的数据
+  // Flattened data array
   const flatData: ReactElement[] = [];
 
-  (_data || []).forEach((t) => {
-    let label = t.label;
+  (_data || []).forEach((item: DataItemRow) => {
+    let label = item.label;
 
-    if ('require' in t && !!t.require) {
+    if ('require' in item && !!item.require) {
       label = React.cloneElement(
         label,
         {
           ...label.props,
           className: classNames(
-            // `${selectorPrefix}-table-row-label`,
             'require',
             label.props.className ?? '',
           ),
@@ -139,10 +150,10 @@ const renderHorizontal: RenderHorizontal = (params) => {
     }
 
     flatData.push(label);
-    flatData.push(t.value);
+    flatData.push(item.value);
   });
 
-  // 迭代的索引
+  // Current iteration index
   let _index = 0;
 
   const rowJSXChildren: ReactElement[] = [];
@@ -156,29 +167,26 @@ const renderHorizontal: RenderHorizontal = (params) => {
 };
 
 /**
- * renderVertical
- * @description 渲染纵向布局
- * @return ReactElement[]
- * @param data
- * @param rowCountRef
+ * Renders vertical layout for table grid
+ * 
+ * @description Creates a vertical table layout where labels and values are in separate rows
+ * @param data - Data configuration
+ * @param rowCountRef - Row count reference
+ * @returns Object containing rendered elements and detail information
  */
-const renderVertical: RenderVertical = (data, rowCountRef) => {
+const renderVertical: RenderVertical = (data: DataItem, rowCountRef: RowCountRef): RenderHorizontalResult => {
   const { columnCount: _columnCount, data: _data } = data;
 
   /**
-   * createRow
-   * @description 创建一行
+   * Creates a single row in vertical layout
    */
-  function createRow() {
-    // 一行的所有列
+  function createRow(): void {
+    // All columns in one row
     const tdLabelJSXS: ReactElement[] = [];
     const tdValueJSXS: ReactElement[] = [];
 
-    // 一行的列数计数
+    // Column count for current row
     let columnsCount = 0;
-
-    // 0 1 2
-    // 3 4 5
 
     const startIndex = _index;
 
@@ -190,7 +198,7 @@ const renderVertical: RenderVertical = (data, rowCountRef) => {
           if ('colSpan' in item.value.props && typeof item.value.props.colSpan === 'number') {
             columnsCount += item.value.props.colSpan;
           } else {
-            columnsCount = columnsCount + 1;
+            columnsCount += 1;
           }
 
           tdLabelJSXS.push(item.label);
@@ -203,22 +211,27 @@ const renderVertical: RenderVertical = (data, rowCountRef) => {
       }
     }
 
-    // 一行
+    // Fill remaining columns if needed
     if (columnsCount < columnCount) {
       const fillCount = columnCount - columnsCount;
       Array.from({ length: fillCount })
         .fill(0)
-        .forEach(() => {
-          tdLabelJSXS.push(<td className={`${selectorPrefix}-table-no-border`} />);
-          tdValueJSXS.push(<td className={`${selectorPrefix}-table-no-border`} />);
+        .forEach((_, index) => {
+          const key = `empty-${_index}-${index}`;
+          tdLabelJSXS.push(<td key={key} className={`${selectorPrefix}-table-no-border`} />);
+          tdValueJSXS.push(<td key={`${key}-value`} className={`${selectorPrefix}-table-no-border`} />);
         });
     }
 
     const labelRowJSX = (
-      <tr className={classNames(`${selectorPrefix}-table-row`, 'even')}>{tdLabelJSXS}</tr>
+      <tr key={`label-row-${rowCountRef.current}`} className={classNames(`${selectorPrefix}-table-row`, 'even')}>
+        {tdLabelJSXS}
+      </tr>
     );
     const valueRowJSX = (
-      <tr className={classNames(`${selectorPrefix}-table-row`, 'odd')}>{tdValueJSXS}</tr>
+      <tr key={`value-row-${rowCountRef.current}`} className={classNames(`${selectorPrefix}-table-row`, 'odd')}>
+        {tdValueJSXS}
+      </tr>
     );
 
     rowJSXChildren.push(labelRowJSX, valueRowJSX);
@@ -238,19 +251,18 @@ const renderVertical: RenderVertical = (data, rowCountRef) => {
 
   const detail: GroupRenderDetail = [];
 
-  // 一行多少列
+  // Number of columns per row
   const columnCount = _columnCount as number;
 
-  (_data || []).forEach((t) => {
-    let label = t.label;
+  (_data || []).forEach((item: DataItemRow) => {
+    let label = item.label;
 
-    if ('require' in t && !!t.require) {
-      t.label = React.cloneElement(
+    if ('require' in item && !!item.require) {
+      item.label = React.cloneElement(
         label,
         {
           ...label.props,
           className: classNames(
-            // `${selectorPrefix}-table-row-label`,
             'require',
             label.props.className ?? '',
           ),
@@ -273,21 +285,23 @@ const renderVertical: RenderVertical = (data, rowCountRef) => {
 };
 
 /**
- * renderGridSearchForm
- * @description 渲染一个Table
- * @return {ReactElement}
+ * Renders a single table grid
+ * 
+ * @description Creates a table element with proper styling and layout
+ * @param params - Rendering parameters
+ * @returns Table element
  */
-const renderGridSearchForm: RenderGridSearchForm = (params): ReactElement => {
+const renderGridSearchForm: RenderGridSearchForm = (params: RenderGridSearchFormParams): ReactElement => {
   const {
     data: { className, style, width, colgroup, defaultLabelWidth = 120 },
     layout,
     density,
-    // parity = false,
     mode,
     rowCountRef,
     media = { isUseMedia: false, designWidth: 192 },
   } = params;
 
+  // Calculate target width based on media settings
   let targetWidth = width;
   if (media.isUseMedia) {
     targetWidth = Util.isNumber(width)
@@ -295,6 +309,7 @@ const renderGridSearchForm: RenderGridSearchForm = (params): ReactElement => {
       : width;
   }
 
+  // Calculate target default label width based on media settings
   let targetDefaultLabelWidth: string | number = defaultLabelWidth;
   if (media.isUseMedia) {
     targetDefaultLabelWidth = Util.isNumber(defaultLabelWidth)
@@ -302,14 +317,9 @@ const renderGridSearchForm: RenderGridSearchForm = (params): ReactElement => {
       : defaultLabelWidth;
   }
 
-  const densityClass = new Map([
-    ['default', 'densitydefault'],
-    ['middle', 'densitymiddle'],
-    ['small', 'densitysmall'],
-  ]);
-
   const colgroupJSX: ReactElement[] = [];
 
+  // Generate colgroup elements
   for (let i = 0; i < (colgroup || []).length; i++) {
     const width = (colgroup || [])[i];
 
@@ -338,9 +348,9 @@ const renderGridSearchForm: RenderGridSearchForm = (params): ReactElement => {
       className={classNames(
         `${selectorPrefix}-table`,
         `${selectorPrefix}-table-${layout}`,
-        densityClass.get(density || 'default'),
+        DENSITY_CLASS_MAP.get(density || 'default'),
         mode,
-        className ?? '',
+        className,
       )}
       style={{ width: targetWidth ? targetWidth : '100%', ...(style ?? {}) }}
     >
@@ -357,17 +367,20 @@ const renderGridSearchForm: RenderGridSearchForm = (params): ReactElement => {
 };
 
 /**
- * renderGridSearchFormGroup
- * @param data
- * @param props
- * @param media
+ * Renders a group of table grids
+ * 
+ * @description Creates multiple table grids with proper grouping and styling
+ * @param data - Array of data items for each table
+ * @param props - Component props
+ * @param media - Media configuration
+ * @returns Group of table elements
  */
 function renderGridSearchFormGroup(
   data?: DataItem[],
   props?: Omit<TableGridLayoutProps, 'data'>,
   media?: ConfigProviderProps['media'],
 ): ReactElement {
-  const rowCountRef = { current: 0 };
+  const rowCountRef: RowCountRef = { current: 0 };
 
   const {
     bordered = false,
@@ -383,17 +396,17 @@ function renderGridSearchFormGroup(
         {
           [`${selectorPrefix}-border`]: bordered,
         },
-        innerClassName ?? '',
+        innerClassName,
       )}
       style={innerStyle ?? {}}
     >
-      {(data || []).map((g, index) => (
+      {(data || []).map((group, index) => (
         <ConditionalRender
-          key={g.name || index}
+          key={group.name || index}
           conditional={index !== 0}
           noMatch={() =>
             renderGridSearchForm({
-              data: g,
+              data: group,
               rowCountRef,
               media,
               ...renderGridSearchFormProps,
@@ -403,7 +416,7 @@ function renderGridSearchFormGroup(
           {() => (
             <div>
               {renderGridSearchForm({
-                data: g,
+                data: group,
                 rowCountRef,
                 media,
                 ...renderGridSearchFormProps,
@@ -417,9 +430,12 @@ function renderGridSearchFormGroup(
 }
 
 /**
- * getRenderDetail
- * @param data
- * @param props
+ * Gets render detail information for table grids
+ * 
+ * @description Calculates and returns detailed information about the rendering structure
+ * @param data - Array of data items
+ * @param props - Component props
+ * @returns Render detail information
  */
 function getRenderDetail(
   data: DataItem[],
@@ -432,13 +448,17 @@ function getRenderDetail(
     ...renderGridSearchFormProps
   } = props ?? {};
 
-  const result: RenderDetail = { rowCount: 0, layout: props.layout, detail: [] };
+  const result: RenderDetail = { 
+    rowCount: 0, 
+    layout: props.layout, 
+    detail: [] 
+  };
 
-  data.forEach((g) => {
-    const rowCountRef = { current: 0 };
+  data.forEach((group) => {
+    const rowCountRef: RowCountRef = { current: 0 };
 
-    const params = {
-      data: g,
+    const params: RenderHorizontalParams = {
+      data: group,
       rowCountRef,
       ...renderGridSearchFormProps,
     };
@@ -454,7 +474,7 @@ function getRenderDetail(
     result.rowCount += rowCountRef.current;
 
     result.detail.push({
-      name: g.name!,
+      name: group.name!,
       rowCount: props.layout === 'horizontal' ? rowCountRef.current : rowCountRef.current / 2,
       detail,
     });
@@ -464,31 +484,51 @@ function getRenderDetail(
 }
 
 /**
- * TableGridLayout
- * @param data
- * @param className
- * @param style
- * @param props
- * @return {ReactElement}
+ * TableGridLayout component
+ * 
+ * @description A flexible table grid layout component that supports both horizontal and vertical layouts
+ * @param props - Component props
+ * @returns TableGridLayout component
+ * 
+ * @example
+ * ```tsx
+ * <TableGridLayout
+ *   data={[
+ *     {
+ *       columnCount: 3,
+ *       colgroup: [120, 200, 150],
+ *       data: [
+ *         {
+ *           key: 'name',
+ *           label: <TableGridLayout.Label>Name:</TableGridLayout.Label>,
+ *           value: <TableGridLayout.Value>John Doe</TableGridLayout.Value>,
+ *         },
+ *       ],
+ *     },
+ *   ]}
+ *   layout="horizontal"
+ *   bordered
+ * />
+ * ```
  */
 const InternalTableGridLayout = memo<TableGridLayoutProps>(
   ({ data, className, style, ...props }) => {
-    const wrapperRef = useRef<HTMLElement | undefined>();
+    const wrapperRef = useRef<HTMLDivElement>(null);
 
     const targetData = useMemo(
       () =>
         (data ?? [])
-          .map((_record) => ({
-            ..._record,
-            data: _record.data?.filter?.((_item) => !('show' in _item) || !!_item.show),
+          .map((record) => ({
+            ...record,
+            data: record.data?.filter?.((item) => !('show' in item) || !!item.show),
           }))
-          .filter((_record) => !!_record?.data?.length),
-      [data, className, style, props],
+          .filter((record) => !!record?.data?.length),
+      [data],
     );
 
     const configProvider = useContext(ConfigProvider.Context);
 
-    useTheme<HTMLElement>({
+    useTheme<HTMLDivElement>({
       elRef: wrapperRef,
       group: 'normal',
       displayName: 'TableGridLayout',
@@ -496,9 +536,8 @@ const InternalTableGridLayout = memo<TableGridLayoutProps>(
 
     return (
       <div
-        // @ts-ignore
         ref={wrapperRef}
-        className={classNames(selectorPrefix, className ?? '')}
+        className={classNames(selectorPrefix, className)}
         style={style ?? {}}
       >
         {renderGridSearchFormGroup(targetData, props, configProvider.media)}
@@ -512,36 +551,37 @@ const TableGridLayout = InternalTableGridLayout as TableGridLayoutComponent;
 TableGridLayout.displayName = 'TableGridLayout';
 
 /**
- * Label
- * @description 左侧Label
- * @param props
- * @constructor
+ * Label sub-component for table grid layout
+ * 
+ * @description Renders a table cell with label styling
  */
 TableGridLayout.Label = Label;
 
 /**
- * Value
- * @description 右侧Value
- * @param props
- * @constructor
+ * Value sub-component for table grid layout
+ * 
+ * @description Renders a table cell with value styling
  */
 TableGridLayout.Value = Value;
 
 /**
- * renderGridSearchFormGroup
- * @description - 渲染TableGridLayout
- * @param data
- * @param props
- * @return {ReactElement}
+ * Renders a group of table grids
+ * 
+ * @description Static method to render multiple table grids with proper grouping
+ * @param data - Array of data items for each table
+ * @param props - Component props
+ * @param media - Media configuration
+ * @returns Group of table elements
  */
 TableGridLayout.renderGridSearchFormGroup = renderGridSearchFormGroup;
 
 /**
- * getRenderDetail
- * @description 获取渲染细节
- * @param data - 组数据
- * @param props - 配置
- * @return RenderDetail
+ * Gets render detail information for table grids
+ * 
+ * @description Static method to calculate detailed information about the rendering structure
+ * @param data - Array of data items
+ * @param props - Component props
+ * @returns Render detail information
  */
 TableGridLayout.getRenderDetail = getRenderDetail;
 
@@ -557,40 +597,39 @@ TableGridLayout.propTypes = {
   style: PropTypes.object,
   innerClassName: PropTypes.string,
   innerStyle: PropTypes.object,
-  // 是否有边框
+  /** Whether to show borders */
   bordered: PropTypes.bool,
-  // 布局
+  /** Layout type */
   layout: PropTypes.oneOf(['horizontal', 'vertical']),
-  // 密度
+  /** Density setting */
   density: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  // 是否是奇偶数不同色
-  // parity: PropTypes.bool,
+  /** Display mode */
   mode: PropTypes.string,
-  // 数据配置，一个数据表示一个表格
+  /** Data configuration, each item represents a table */
   data: PropTypes.arrayOf(
     PropTypes.shape({
       className: PropTypes.string,
       style: PropTypes.object,
-      // group名称
+      /** Group name */
       name: PropTypes.string,
-      // group的宽度，默认是100%
+      /** Group width, defaults to 100% */
       width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      // 缺省的Label宽度
+      /** Default label width */
       defaultLabelWidth: PropTypes.number,
-      // 缺省的padding
+      /** Default padding */
       padding: PropTypes.arrayOf(PropTypes.number),
-      // 列设置 auto表示自适应
+      /** Column settings, 'auto' means adaptive */
       colgroup: PropTypes.arrayOf(PropTypes.number).isRequired,
-      // 列数
+      /** Number of columns */
       columnCount: PropTypes.number.isRequired,
       data: PropTypes.arrayOf(
         PropTypes.shape({
           key: PropTypes.string.isRequired,
-          // Label组件
+          /** Label component */
           label: PropTypes.node.isRequired,
-          // Value组件
+          /** Value component */
           value: PropTypes.node.isRequired,
-          // 是否显示此项
+          /** Whether to show this item */
           show: PropTypes.bool,
         }),
       ).isRequired,

@@ -1,7 +1,9 @@
 import React from 'react';
 import type { ContextType } from './types';
 /**
- * FlexContext
- * @type {React.Context<{store: {}}>}
+ * FlexLayout 上下文
+ * 提供布局方向、栅格间隙和子元素信息给子组件
+ *
+ * @type {React.Context<ContextType>}
  */
 export declare const FlexContext: React.Context<ContextType>;

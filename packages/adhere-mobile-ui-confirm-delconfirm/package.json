@@ -1,7 +1,7 @@
 {
   "name": "@baifendian/adhere-mobile-ui-confirm-delconfirm",
   "version": "2.11.0",
-  "description": "删除确认提示",
+  "description": "移动端删除确认组件，基于 antd-mobile 的 Dialog 组件封装，提供统一的删除确认交互体验",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
     "url": "https://github.com/playerljc/adhere/issues"

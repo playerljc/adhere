@@ -22,6 +22,9 @@ const selectorPrefix = 'adhere-ui-quick-range-date';
 
 const { useTheme } = ConfigProvider;
 
+/**
+ * 日期类型对应的标签生成函数映射
+ */
 const labelByTypeMap = new Map<DateType, (value?: number) => string>([
   ['a-d', (value) => Intl.getHTML('past_days', { value })],
   ['a-w', (value) => Intl.getHTML('past_weeks', { value })],
@@ -45,19 +48,30 @@ const labelByTypeMap = new Map<DateType, (value?: number) => string>([
 ]);
 
 /**
- * sync
- * @param {DateType | function} dateValue
- * @return {undefined | DateType}
+ * 判断是否为自定义类型
+ * @param type - 日期类型
+ * @returns 是否为自定义类型
  */
-export function sync(dateValue: DateValue | undefined) {
+export const isCustomByType = (type?: DateType): boolean => {
+  return type === 'custom';
+};
+
+/**
+ * 同步日期值，确保 start 和 end 字段存在
+ * @param dateValue - 日期值对象
+ * @returns 同步后的日期值对象，如果输入为空则返回 undefined
+ */
+export function sync(dateValue: DateValue | undefined): DateValue | undefined {
   if (!dateValue) return undefined;
 
   const { type, value } = dateValue;
 
-  if (isCustomByType(type)) return dateValue;
+  // 如果是自定义类型或已有 start/end 字段，直接返回
+  if (isCustomByType(type) || (dateValue?.start && dateValue?.end)) {
+    return dateValue;
+  }
 
-  if (dateValue?.start && dateValue?.end) return dateValue;
-
+  // 根据类型和值计算时间范围
   const dataRange = getDataRangeByValue(type, value as number);
 
   return {
@@ -68,11 +82,11 @@ export function sync(dateValue: DateValue | undefined) {
 }
 
 /**
- * stringValue
- * @param {DateValue | undefined} dateValue
- * @return {undefined | DateType | string}
+ * 将日期值转换为字符串
+ * @param dateValue - 日期值对象
+ * @returns 字符串表示，如果输入为空则返回 undefined
  */
-export const stringValue = (dateValue: DateValue | undefined) => {
+export const stringValue = (dateValue: DateValue | undefined): string | undefined => {
   if (!dateValue) return undefined;
 
   const { type, value } = dateValue;
@@ -83,35 +97,37 @@ export const stringValue = (dateValue: DateValue | undefined) => {
 };
 
 /**
- * numberToDayjs
- * @param {[number | undefined, number | undefined]} dateValue
- * @return {null | [dayjs.Dayjs, dayjs.Dayjs]}
+ * 将数字时间戳转换为 dayjs 对象数组
+ * @param dateValue - 时间戳数组 [start, end]
+ * @returns dayjs 对象数组，如果输入无效则返回 null
  */
-export const numberToDayjs = (dateValue: [number | undefined, number | undefined]) => {
+export const numberToDayjs = (
+  dateValue: [number | undefined, number | undefined]
+): [dayjs.Dayjs, dayjs.Dayjs] | null => {
   if (!dateValue.filter((t) => !!t).length) return null;
 
   return dateValue.map((_v) => dayjs(_v as number)) as [dayjs.Dayjs, dayjs.Dayjs];
 };
 
 /**
- * datesToNumbers
- * @param {undefined | [] | [dayjs.Dayjs, dayjs.Dayjs]} _value
- * @return {[undefined | number, undefined | number]}
+ * 将 dayjs 对象数组转换为数字时间戳数组
+ * @param _value - dayjs 对象数组或空值
+ * @returns 时间戳数组 [start, end]
  */
-export const datesToNumbers = (_value) => {
-  if (!_value) return [undefined, undefined];
+export const datesToNumbers = (
+  _value: [dayjs.Dayjs, dayjs.Dayjs] | null | undefined
+): [number | undefined, number | undefined] => {
+  if (!_value || !_value.length) return [undefined, undefined];
 
-  if (!_value.length) return [undefined, undefined];
-
-  return _value.map((_dayjs) => _dayjs.valueOf());
+  return [_value[0]?.valueOf(), _value[1]?.valueOf()];
 };
 
 /**
- * getValueEntityByStringValue
- * @param {string} stringValue
- * @return { type: DateType, value: number }
+ * 根据字符串值获取日期实体
+ * @param stringValue - 字符串值，格式为 "type,value"
+ * @returns 日期实体对象
  */
-export const getValueEntityByStringValue = (stringValue: string) => {
+export const getValueEntityByStringValue = (stringValue: string): { type: DateType; value: number } => {
   const arr = stringValue.split(',');
   const type = arr[0] as DateType;
   const value = Number(arr[1]);
@@ -123,49 +139,70 @@ export const getValueEntityByStringValue = (stringValue: string) => {
 };
 
 /**
- * getDataRangeByValue
- * @param {DateType} type
- * @param {number} typeValue
- * @return {[number | undefined, number | undefined]}
+ * 根据日期类型和值获取时间范围
+ * @param type - 日期类型
+ * @param typeValue - 时间单位数量
+ * @returns 时间范围数组 [start, end]
  */
-export const getDataRangeByValue = (type: DateType, typeValue: number) => {
+export const getDataRangeByValue = (
+  type: DateType,
+  typeValue: number
+): [number | undefined, number | undefined] => {
   const arr = type.split('-');
-
   const direction = arr[0];
-
   const unit = arr[1] as UnitType;
-
   const currentTime = dayjs();
 
   if (direction === 'b') {
-    return [currentTime.subtract(typeValue, unit).valueOf(), currentTime.valueOf()];
+    // 未来时间：从当前时间减去指定单位到当前时间
+    return [currentTime.subtract(typeValue, unit).valueOf(), currentTime.valueOf()] as [number, number];
   }
 
   if (direction === 'a') {
-    return [currentTime.valueOf(), currentTime.add(typeValue, unit).valueOf()];
+    // 过去时间：从当前时间到当前时间加上指定单位
+    return [currentTime.valueOf(), currentTime.add(typeValue, unit).valueOf()] as [number, number];
   }
 
   return [undefined, undefined];
 };
 
 /**
- * getLabel
- * @param { type: DateType; value?: number } params
- * @return { ReactNode }
+ * 获取日期类型对应的标签
+ * @param params - 包含类型和值的参数对象
+ * @returns 标签内容
  */
-export const getLabel = ({ type, value }: { type: DateType; value?: number }) => {
+export const getLabel = ({ type, value }: { type: DateType; value?: number }): React.ReactNode => {
   return labelByTypeMap.get(type)?.(!isCustomByType(type) ? value : undefined);
 };
 
 /**
- * isCustomByType
- * @param {DateValue} type
- * @return {boolean}
+ * 默认配置项
  */
-export const isCustomByType = (type?: DateType) => {
-  return type === 'custom';
-};
+const DEFAULT_CONFIG: ConfigItem[] = [
+  { type: 'a-d', value: 7 },
+  { type: 'a-w', value: 1 },
+  { type: 'a-M', value: 3 },
+  { type: 'a-Q', value: 1 },
+  { type: 'a-y', value: 1 },
+  { type: 'a-h', value: 24 },
+  { type: 'a-m', value: 60 },
+  { type: 'a-s', value: 60 },
+  { type: 'a-ms', value: 1000 },
+  { type: 'b-d', value: 7 },
+  { type: 'b-w', value: 1 },
+  { type: 'b-M', value: 3 },
+  { type: 'b-Q', value: 1 },
+  { type: 'b-y', value: 1 },
+  { type: 'b-h', value: 24 },
+  { type: 'b-m', value: 60 },
+  { type: 'b-s', value: 60 },
+  { type: 'b-ms', value: 1000 },
+  { type: 'custom' },
+];
 
+/**
+ * 内部快速日期范围选择器组件
+ */
 const InternalQuickRangeDate = memo<QuickRangeDateProps>(
   forwardRef<HTMLElement, QuickRangeDateProps>(
     (
@@ -178,91 +215,59 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
         displayName: 'QuickRangeDate',
       });
 
-      const [selfValue, setSelfValue] = useState(sync(value));
+      const [selfValue, setSelfValue] = useState<DateValue | undefined>(sync(value));
 
+      // 使用配置项或默认配置
       const targetConfig = useMemo<ConfigItem[]>(() => {
-        if (!config) {
-          return [
-            {
-              type: 'a-d',
-              value: 7,
-            },
-            {
-              type: 'a-w',
-              value: 1,
-            },
-            {
-              type: 'a-M',
-              value: 3,
-            },
-            {
-              type: 'a-Q',
-              value: 1,
-            },
-            {
-              type: 'a-y',
-              value: 1,
-            },
-            {
-              type: 'a-h',
-              value: 24,
-            },
-            {
-              type: 'a-m',
-              value: 60,
-            },
-            {
-              type: 'a-s',
-              value: 60,
-            },
-            {
-              type: 'a-ms',
-              value: 1000,
-            },
-            {
-              type: 'b-d',
-              value: 7,
-            },
-            {
-              type: 'b-w',
-              value: 1,
-            },
-            {
-              type: 'b-M',
-              value: 3,
-            },
-            {
-              type: 'b-Q',
-              value: 1,
-            },
-            {
-              type: 'b-y',
-              value: 1,
-            },
-            {
-              type: 'b-h',
-              value: 24,
-            },
-            {
-              type: 'b-m',
-              value: 60,
-            },
-            {
-              type: 'b-s',
-              value: 60,
-            },
-            {
-              type: 'b-ms',
-              value: 1000,
-            },
-            {
-              type: 'custom',
-            },
-          ];
+        return config || DEFAULT_CONFIG;
+      }, [config]);
+
+      // 处理单选按钮变化
+      const handleRadioChange = (type: DateType, typeValue: number) => {
+        const itemEntityValue = { type, value: typeValue };
+        const dataRange = getDataRangeByValue(type, typeValue);
+        const changeValue = {
+          ...itemEntityValue,
+          start: dataRange[0],
+          end: dataRange[1],
+        };
+
+        setSelfValue(changeValue);
+        onChange?.(changeValue);
+      };
+
+      // 处理日期范围选择器变化
+      const handleRangePickerChange = (_value: any) => {
+        const numbers = datesToNumbers(_value);
+        const changeValue = {
+          type: 'custom' as const,
+          value: undefined,
+          start: numbers[0],
+          end: numbers[1],
+        };
+
+        setSelfValue(changeValue);
+        onChange?.(changeValue);
+      };
+
+      // 处理自定义 onChange 回调
+      const handleCustomChange = (_value: DateValue) => {
+        if (isCustomByType(_value?.type)) {
+          setSelfValue(_value);
+          onChange?.(_value);
+          return;
         }
 
-        return config;
-      }, [config]);
+        const dataRange = getDataRangeByValue(_value.type, _value.value as number);
+        const changeValue = {
+          ..._value,
+          start: dataRange[0],
+          end: dataRange[1],
+        };
+
+        setSelfValue(changeValue);
+        onChange?.(changeValue);
+      };
 
       const defaultElement = useMemo(() => {
         return (
@@ -274,29 +279,14 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
               {...(radioGroupProps ?? {})}
             >
               {targetConfig.map(({ type, value: typeValue, label, render }) => {
-                const itemEntityValue = {
-                  type,
-                  value: typeValue,
-                };
-
+                const itemEntityValue = { type, value: typeValue };
                 const itemValue = stringValue(itemEntityValue) as string;
 
                 return (
                   <Radio.Button
                     key={itemValue}
                     value={itemValue}
-                    onChange={() => {
-                      const dataRange = getDataRangeByValue(type as DateType, typeValue as number);
-
-                      const changeValue = {
-                        ...itemEntityValue,
-                        start: dataRange[0],
-                        end: dataRange[1],
-                      };
-
-                      setSelfValue(changeValue);
-                      onChange?.(changeValue);
-                    }}
+                    onChange={() => handleRadioChange(type as DateType, typeValue as number)}
                   >
                     {render?.(value) ?? label ?? getLabel({ type, value: typeValue })}
                   </Radio.Button>
@@ -309,32 +299,15 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
                 <DatePicker.RangePicker
                   {...(rangePickerProps ?? {})}
                   value={numberToDayjs([selfValue?.start, selfValue?.end])}
-                  onChange={(_value) => {
-                    const numbers = datesToNumbers(_value);
-
-                    setSelfValue((_self) => {
-                      return {
-                        type: 'custom',
-                        value: undefined,
-                        start: numbers[0],
-                        end: numbers[1],
-                      };
-                    });
-
-                    onChange?.({
-                      type: 'custom',
-                      value: undefined,
-                      start: numbers[0],
-                      end: numbers[1],
-                    });
-                  }}
+                  onChange={handleRangePickerChange}
                 />
               </div>
             )}
           </div>
         );
-      }, [targetConfig, selfValue, rangePickerProps, radioGroupProps]);
+      }, [targetConfig, selfValue, rangePickerProps, radioGroupProps, value]);
 
+      // 当外部 value 变化时同步内部状态
       useUpdateEffect(() => {
         setSelfValue(sync(value));
       }, [value]);
@@ -350,24 +323,7 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
             children({
               defaultElement,
               value,
-              onChange: (_value) => {
-                if (isCustomByType(_value?.type)) {
-                  setSelfValue(_value);
-                  onChange?.(_value);
-                  return;
-                }
-
-                const dataRange = getDataRangeByValue(_value.type, _value.value as number);
-
-                const changeValue = {
-                  ..._value,
-                  start: dataRange[0],
-                  end: dataRange[1],
-                };
-
-                setSelfValue(changeValue);
-                onChange?.(changeValue);
-              },
+              onChange: handleCustomChange,
             })}
 
           {!children && defaultElement}
@@ -377,22 +333,23 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
   ),
 );
 
+// 设置组件显示名称
+InternalQuickRangeDate.displayName = 'InternalQuickRangeDate';
+
+/**
+ * 快速日期范围选择器组件
+ */
 const QuickRangeDate = InternalQuickRangeDate as QuickRangeDateComponent;
 
 QuickRangeDate.displayName = 'QuickRangeDate';
 
+// 绑定静态方法
 QuickRangeDate.sync = sync;
-
 QuickRangeDate.stringValue = stringValue;
-
 QuickRangeDate.getLabel = getLabel;
-
 QuickRangeDate.numberToDayjs = numberToDayjs;
-
 QuickRangeDate.datesToNumbers = datesToNumbers;
-
 QuickRangeDate.getValueEntityByStringValue = getValueEntityByStringValue;
-
 QuickRangeDate.getDataRangeByValue = getDataRangeByValue;
 
 export default QuickRangeDate;

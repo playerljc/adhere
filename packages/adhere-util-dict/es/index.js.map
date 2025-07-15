@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Dict from './dict';\nexport default Dict;\n"],"names":["Dict"],"mappings":"OAAOA,SAAU,wBACFA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Dict, { genModuleDict } from './dict';\nimport { useDict, set } from './react';\nexport default Dict;\nexport { useDict, set, genModuleDict };\n"],"names":["Dict","genModuleDict","useDict","set"],"mappings":"OAAOA,MAAQC,aAA6B,KAAR,gBAC3BC,QAASC,GAAoB,KAAT,yBACdH,YACNE,QAASC,IAAKF,aAAe"}

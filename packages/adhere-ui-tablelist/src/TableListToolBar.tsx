@@ -13,18 +13,51 @@ import { ReloadOutlined, SettingOutlined } from '@ant-design/icons';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { selectorPrefix } from './TableList';
+import { ToolbarSelectAllProps, ReloadProps, SettingProps } from './types';
 
-export const ToolbarSelectAll = ({ selectAll, rowSelection, rowKey, dataSource, setSelectAll }) => {
+/**
+ * 工具栏全选组件属性接口
+ */
+interface ToolbarSelectAllComponentProps {
+  /** 全选配置 */
+  selectAll: ToolbarSelectAllProps;
+  /** 行选择配置 */
+  rowSelection: any;
+  /** 行键名 */
+  rowKey: string;
+  /** 数据源 */
+  dataSource: any[];
+  /** 设置全选状态的回调 */
+  setSelectAll: (value: boolean | { exceptKeys: any[] }) => void;
+}
+
+/**
+ * 工具栏全选组件
+ * 提供全选功能和跨页选择支持
+ */
+export const ToolbarSelectAll: React.FC<ToolbarSelectAllComponentProps> = ({ 
+  selectAll, 
+  rowSelection, 
+  rowKey, 
+  dataSource, 
+  setSelectAll 
+}) => {
   if (!rowSelection) return null;
-  function onChange(e) {
+
+  /**
+   * 全选状态变化处理
+   * @param e - 复选框变化事件
+   */
+  function onChange(e: any) {
     if (e.target.checked) {
       rowSelection.onChange(
-        dataSource.map((v) => v[rowKey]),
+        dataSource.map((v: any) => v[rowKey]),
         dataSource,
       );
     } else {
       rowSelection.onChange([], []);
     }
+    
     if (selectAll.total && setSelectAll) {
       setSelectAll(e.target.checked);
     }
@@ -54,7 +87,21 @@ export const ToolbarSelectAll = ({ selectAll, rowSelection, rowKey, dataSource, 
   );
 };
 
-export const ToolbarReload = ({ reload, onSearch }) => {
+/**
+ * 工具栏刷新组件属性接口
+ */
+interface ToolbarReloadComponentProps {
+  /** 刷新配置 */
+  reload: ReloadProps;
+  /** 搜索回调 */
+  onSearch: () => void;
+}
+
+/**
+ * 工具栏刷新组件
+ * 提供刷新数据功能
+ */
+export const ToolbarReload: React.FC<ToolbarReloadComponentProps> = ({ reload, onSearch }) => {
   return (
     <Tooltip title={Intl.get('refresh')} placement="top" {...reload}>
       {reload.render || <ReloadOutlined onClick={() => onSearch()} />}
@@ -62,18 +109,53 @@ export const ToolbarReload = ({ reload, onSearch }) => {
   );
 };
 
-export const ToolbarSetting = ({
+/**
+ * 工具栏设置组件属性接口
+ */
+interface ToolbarSettingComponentProps {
+  /** 设置配置 */
+  setting: SettingProps;
+  /** 表格列配置 */
+  tableColumns: any[];
+  /** 列设置变化回调 */
+  onSettingChange: (selectedColumnKeys: string[]) => void;
+  /** 列设置拖拽排序完成回调 */
+  onSettingSortEnd: (params: { oldIndex: number; newIndex: number }) => void;
+  /** 选中的列键 */
+  selectedColumnKeys: string[];
+}
+
+/**
+ * 工具栏设置组件
+ * 提供列显示设置和拖拽排序功能
+ */
+export const ToolbarSetting: React.FC<ToolbarSettingComponentProps> = ({
   setting,
   tableColumns,
   onSettingChange,
   onSettingSortEnd,
   selectedColumnKeys,
 }) => {
-  const SortableItem = SortableElement((props) => <Checkbox {...props} />);
+  const SortableItem = SortableElement((props: any) => <Checkbox {...props} />);
 
-  const SortableWrapper = SortableContainer((props) => <Checkbox.Group {...props} />);
+  const SortableWrapper = SortableContainer((props: any) => <Checkbox.Group {...props} />);
 
-  const SettingTitle = ({ columns = [], selectedColumnKeys = [], onChange }) => {
+  /**
+   * 设置标题组件属性接口
+   */
+  interface SettingTitleProps {
+    /** 列配置 */
+    columns?: any[];
+    /** 选中的列键 */
+    selectedColumnKeys?: string[];
+    /** 变化回调 */
+    onChange: (selectedColumnKeys: string[]) => void;
+  }
+
+  /**
+   * 设置标题组件
+   */
+  const SettingTitle: React.FC<SettingTitleProps> = ({ columns = [], selectedColumnKeys = [], onChange }) => {
     return (
       <>
         <Checkbox
@@ -89,7 +171,29 @@ export const ToolbarSetting = ({
     );
   };
 
-  const SettingContent = ({ columns = [], selectedColumnKeys = [], onChange, onSortEnd }) => {
+  /**
+   * 设置内容组件属性接口
+   */
+  interface SettingContentProps {
+    /** 列配置 */
+    columns?: any[];
+    /** 选中的列键 */
+    selectedColumnKeys?: string[];
+    /** 变化回调 */
+    onChange: (selectedColumnKeys: string[]) => void;
+    /** 拖拽排序完成回调 */
+    onSortEnd: (params: { oldIndex: number; newIndex: number }) => void;
+  }
+
+  /**
+   * 设置内容组件
+   */
+  const SettingContent: React.FC<SettingContentProps> = ({ 
+    columns = [], 
+    selectedColumnKeys = [], 
+    onChange, 
+    onSortEnd 
+  }) => {
     return (
       // @ts-ignore
       <SortableWrapper
@@ -99,7 +203,7 @@ export const ToolbarSetting = ({
         onSortEnd={onSortEnd}
         distance={2}
       >
-        {columns.map((item: any, index) => (
+        {columns.map((item: any, index: number) => (
           // @ts-ignore
           <SortableItem value={item.key} index={index} key={item.key}>
             {item.title}

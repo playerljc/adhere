@@ -10,87 +10,91 @@ import type { IConfig } from './types';
 
 const selectorPrefix = 'adhere-ui-popup';
 
+/** 前一个弹窗实例 */
 let prePopup: Popup | null = null;
+/** 所有弹窗实例数组 */
 let popups: Popup[] = [];
-let maskEl: HTMLElement | null;
-let el = null;
+/** 遮罩层元素 */
+let maskEl: HTMLElement | null = null;
+/** 容器元素 */
+let el: HTMLElement | null = null;
 
-let renderToWrapper: (children: () => ReactNode) => ReactNode;
+/** 渲染包装器函数 */
+let renderToWrapper: ((children: () => ReactNode) => ReactNode) | null = null;
 
 /**
- * Popup
+ * Popup弹窗类
  * @class Popup
- * @classdesc Popup
+ * @description 管理弹窗的显示、隐藏、销毁等生命周期
  */
 export class Popup {
-  private readonly id: string = '';
-  private readonly config: IConfig | null = null;
-
+  /** 弹窗唯一标识 */
+  private readonly id: string;
+  /** 弹窗配置 */
+  private readonly config: IConfig;
+  /** 是否显示状态 */
   private isShow: boolean = false;
-  private el: HTMLElement | null = null;
+  /** 容器元素 */
+  private el: HTMLElement;
+  /** 弹窗元素 */
   private popupEl: HTMLDivElement | null = null;
-
+  /** React根节点 */
   private root: Root | null = null;
-
+  /** 弹窗处理器映射 */
   private popupHandlers = new WeakMap<HTMLElement, Root>();
 
   /**
-   * constructor
-   * @param config {Object} - config
+   * 构造函数
+   * @param config - 弹窗配置
    */
   constructor(config: IConfig) {
-    this.isShow = false;
-    this.el = PopupFactory.getEl();
     this.id = v1();
     this.config = config;
+    this.el = PopupFactory.getEl();
 
     this.onInnerElTransitionend = this.onInnerElTransitionend.bind(this);
-
     this.render();
   }
 
   /**
-   * createMask
+   * 创建遮罩层
+   * @private
    */
   private createMask(): void {
-    const { zIndex } = this.config!;
+    const { zIndex } = this.config;
 
     maskEl = document.createElement('div');
-
     maskEl.className = `${selectorPrefix}-mask`;
-
     maskEl.style.zIndex = String((zIndex || 11000) - 1500);
 
-    (this.el as HTMLElement).appendChild(maskEl);
+    this.el.appendChild(maskEl);
   }
 
   /**
-   * render
+   * 渲染弹窗内容
+   * @private
    */
   private render(): void {
-    const { children, zIndex } = this.config!;
+    const { children, zIndex } = this.config;
 
     this.popupEl = document.createElement('div');
-
     this.popupEl.addEventListener('transitionend', this.onInnerElTransitionend);
-
     this.popupEl.className = selectorPrefix;
-
     this.popupEl.style.zIndex = String(zIndex || 11000);
 
     this.root = ReactDOM.createRoot(this.popupEl);
 
-    const element = React.cloneElement(children, {
+    const element = React.cloneElement(children as React.ReactElement, {
       ref: () => {
-        (this.el as HTMLElement).appendChild(this.popupEl as HTMLElement);
+        this.el.appendChild(this.popupEl!);
 
         const configProviderEL = Util.getTopDom(
-          this.popupEl as HTMLElement,
+          this.popupEl!,
           'adhere-ui-config-provider',
         );
 
         if (configProviderEL) {
-          (this.popupEl as HTMLDivElement).style.cssText = configProviderEL?.style?.cssText;
+          this.popupEl!.style.cssText = configProviderEL.style.cssText;
         }
 
         this.trigger('onCreate');
@@ -98,70 +102,70 @@ export class Popup {
     });
 
     this.root.render(renderToWrapper?.(() => element) ?? element);
-
     this.popupHandlers.set(this.popupEl, this.root);
   }
 
   /**
-   * trigger
-   * @param hookName
+   * 触发回调函数
+   * @param hookName - 回调名称
+   * @private
    */
-  private trigger(hookName: string): void {
-    if (this.config?.[hookName]) {
-      return this?.config?.[hookName]?.();
+  private trigger(hookName: keyof IConfig): void {
+    const callback = this.config[hookName];
+    if (typeof callback === 'function') {
+      callback();
     }
   }
 
-  update(_children) {
-    const { children } = this.config!;
+  /**
+   * 更新弹窗内容
+   * @param newChildren - 新的子元素
+   */
+  update(newChildren?: ReactNode): void {
+    const { children } = this.config;
+    const elementToRender = newChildren ?? children;
 
-    const element = React.cloneElement(_children ?? children, {
+    const element = React.cloneElement(elementToRender as React.ReactElement, {
       ref: () => {
-        (this.el as HTMLElement).appendChild(this.popupEl as HTMLElement);
+        this.el.appendChild(this.popupEl!);
 
         const configProviderEL = Util.getTopDom(
-          this.popupEl as HTMLElement,
+          this.popupEl!,
           'adhere-ui-config-provider',
         );
 
         if (configProviderEL) {
-          (this.popupEl as HTMLDivElement).style.cssText = configProviderEL?.style?.cssText;
+          this.popupEl!.style.cssText = configProviderEL.style.cssText;
         }
 
         this.trigger('onUpdate');
       },
     });
+
     this.root?.render(renderToWrapper?.(() => element) ?? element);
   }
 
   /**
-   * show - 显示一个popup
-   * @return boolean
+   * 显示弹窗
+   * @returns 是否成功显示
    */
   show(): boolean {
     if (!maskEl) {
       this.createMask();
     }
 
-    // if (prePopup) {
-    //   prePopup.close();
-    // }
-
-    (maskEl as HTMLElement).style.display = 'block';
-
-    (this.popupEl as HTMLElement).style.display = 'block';
-
+    maskEl!.style.display = 'block';
+    this.popupEl!.style.display = 'block';
     this.isShow = true;
 
     this.trigger('onBeforeShow');
 
     setTimeout(() => {
       if (maskEl) {
-        (maskEl as HTMLElement).classList.add('modal-in');
+        maskEl.classList.add('modal-in');
       }
-
       if (this.popupEl) {
-        (this.popupEl as HTMLElement).classList.add('modal-in');
+        this.popupEl.classList.add('modal-in');
       }
     }, 100);
 
@@ -169,8 +173,8 @@ export class Popup {
   }
 
   /**
-   * show - 显示一个popup
-   * @return boolean
+   * 显示弹窗并关闭前一个弹窗
+   * @returns 是否成功显示
    */
   showClosePrePopup(): boolean {
     if (!maskEl) {
@@ -181,21 +185,18 @@ export class Popup {
       prePopup.close();
     }
 
-    (maskEl as HTMLElement).style.display = 'block';
-
-    (this.popupEl as HTMLElement).style.display = 'block';
-
+    maskEl!.style.display = 'block';
+    this.popupEl!.style.display = 'block';
     this.isShow = true;
 
     this.trigger('onBeforeShow');
 
     setTimeout(() => {
       if (maskEl) {
-        (maskEl as HTMLElement).classList.add('modal-in');
+        maskEl.classList.add('modal-in');
       }
-
       if (this.popupEl) {
-        (this.popupEl as HTMLElement).classList.add('modal-in');
+        this.popupEl.classList.add('modal-in');
       }
     }, 100);
 
@@ -203,8 +204,8 @@ export class Popup {
   }
 
   /**
-   * close - 关闭一个popup
-   * @return boolean
+   * 关闭弹窗
+   * @returns 是否成功关闭
    */
   close(): boolean {
     if (!maskEl) {
@@ -213,37 +214,38 @@ export class Popup {
 
     this.isShow = false;
 
-    const promise = this.trigger('onBeforeClose') as any;
+    const promise = this.config.onBeforeClose?.();
 
-    if (promise && 'then' in promise && promise.then instanceof Function) {
+    if (promise && typeof promise.then === 'function') {
       promise.then(() => {
-        try {
-          if (this.popupEl) {
-            (this.popupEl as HTMLElement).classList.remove('modal-in');
-          }
-        } catch (e) {
-          throw e;
-        }
-
-        if (maskEl) {
-          (maskEl as HTMLElement).classList.remove('modal-in');
-        }
+        this.removeModalClasses();
+      }).catch((error) => {
+        console.error('Error in onBeforeClose:', error);
+        this.removeModalClasses();
       });
     } else {
-      if (this.popupEl) {
-        (this.popupEl as HTMLElement).classList.remove('modal-in');
-      }
-
-      if (maskEl) {
-        (maskEl as HTMLElement).classList.remove('modal-in');
-      }
+      this.removeModalClasses();
     }
 
     return true;
   }
 
   /**
-   * destroy - 销毁一个popup
+   * 移除模态框类名
+   * @private
+   */
+  private removeModalClasses(): void {
+    if (this.popupEl) {
+      this.popupEl.classList.remove('modal-in');
+    }
+    if (maskEl) {
+      maskEl.classList.remove('modal-in');
+    }
+  }
+
+  /**
+   * 销毁弹窗
+   * @returns 是否成功销毁
    */
   destroy(): boolean {
     if (this.popupEl) {
@@ -254,104 +256,88 @@ export class Popup {
       this.popupEl = null;
     }
 
-    // if (ReactDOM.unmountComponentAtNode(this.popupEl!)) {
-    //   (this.popupEl as HTMLElement).parentNode?.removeChild(this.popupEl!);
-    //   this.popupEl = null;
-    // }
-
     this.trigger('onDestroy');
-
     return true;
   }
 
   /**
-   * isDestroy - 是否已经销毁
-   * @return {boolean}
+   * 检查是否已销毁
+   * @returns 是否已销毁
    */
   isDestroy(): boolean {
     return !this.popupEl;
   }
 
   /**
-   * getId
-   * @return {string} - id
+   * 获取弹窗ID
+   * @returns 弹窗ID
    */
   getId(): string {
     return this.id;
   }
 
   /**
-   * onInnerElTransitionend
+   * 过渡动画结束回调
+   * @private
    */
-  onInnerElTransitionend(): void {
+  private onInnerElTransitionend(): void {
     if (!this.isShow) {
       prePopup = null;
-
-      (this.popupEl as HTMLElement).style.display = 'none';
-      (maskEl as HTMLElement).style.display = 'none';
-
+      this.popupEl!.style.display = 'none';
+      maskEl!.style.display = 'none';
       this.trigger('onAfterClose');
     } else {
       prePopup = this;
-
       this.trigger('onAfterShow');
     }
   }
 }
 
 /**
- * PopupFactory
+ * Popup工厂类
+ * @description 提供弹窗的创建、显示、关闭等静态方法
  */
 const PopupFactory = {
   /**
-   * setRenderToWrapper
-   * @description 设置renderToWrapper方法
-   * @param _renderToWrapper
+   * 设置渲染包装器
+   * @param _renderToWrapper - 渲染包装器函数
    */
-  setRenderToWrapper(_renderToWrapper) {
+  setRenderToWrapper(_renderToWrapper: (children: () => ReactNode) => ReactNode): void {
     renderToWrapper = _renderToWrapper;
   },
+
   /**
-   * create
-   * @param config
-   * @return Popup
+   * 创建弹窗实例
+   * @param config - 弹窗配置
+   * @returns 弹窗实例
    */
   create(config: IConfig): Popup {
-    const ins = new Popup(config);
-
-    popups.push(ins);
-
-    return ins;
+    const instance = new Popup(config);
+    popups.push(instance);
+    return instance;
   },
+
   /**
-   * show - 显示一个popup
-   * @param popup
-   * @return boolean
+   * 显示弹窗
+   * @param popup - 弹窗实例
+   * @returns 是否成功显示
    */
-  show(popup: Popup) {
-    if (!popup) return false;
-
-    if (popup.isDestroy()) return false;
-
+  show(popup: Popup): boolean {
+    if (!popup || popup.isDestroy()) return false;
     if (popup === prePopup) return false;
-
     if (prePopup && popup.getId() === prePopup.getId()) return false;
 
     return popup.show();
   },
+
   /**
-   * showClosePrePopup
-   * @description 关闭之前的显示
-   * @param popup
-   * @return boolean
+   * 显示弹窗并关闭前一个
+   * @param popup - 弹窗实例
+   * @returns 是否成功显示
    */
-  showClosePrePopup(popup: Popup) {
-    if (!popup) return false;
-
-    if (popup.isDestroy()) return false;
-
+  showClosePrePopup(popup: Popup): boolean {
+    if (!popup || popup.isDestroy()) return false;
     if (popup === prePopup) return false;
-
     if (prePopup && popup.getId() === prePopup.getId()) return false;
 
     if (prePopup) {
@@ -360,79 +346,64 @@ const PopupFactory = {
 
     return popup.show();
   },
+
   /**
-   * close - 关闭一个popup
-   * @param {Popup} popup
-   * @return boolean
+   * 关闭弹窗
+   * @param popup - 弹窗实例
+   * @returns 是否成功关闭
    */
-  close(popup: Popup) {
-    try {
-      if (!popup) return false;
-
-      if (popup.isDestroy()) return false;
-
-      return popup.close();
-    } catch (e) {
-      throw e;
-    }
+  close(popup: Popup): boolean {
+    if (!popup || popup.isDestroy()) return false;
+    return popup.close();
   },
+
   /**
-   * closeAll - 关闭所有
-   * @return boolean
+   * 关闭所有弹窗
+   * @returns 是否全部成功关闭
    */
-  closeAll() {
-    const flags: boolean[] = [];
-
-    popups.forEach((p) => {
-      const flag = this.close(p);
-      flags.push(flag);
-    });
-
-    return flags.every((flag) => flag);
+  closeAll(): boolean {
+    const results = popups.map((popup) => this.close(popup));
+    return results.every((result) => result);
   },
+
   /**
-   * destroy - 销毁一个popup
-   * @param {Popup} popup
-   * @return bool
+   * 销毁弹窗
+   * @param popup - 弹窗实例
+   * @returns 是否成功销毁
    */
-  destroy(popup) {
-    if (!popup) return false;
+  destroy(popup: Popup): boolean {
+    if (!popup || popup.isDestroy()) return false;
 
-    if (popup.isDestroy()) return false;
-
-    const res = popup.destroy();
-
-    if (res) {
+    const success = popup.destroy();
+    if (success) {
       const index = popups.findIndex((p) => p === popup);
-
       if (index !== -1) {
         popups.splice(index, 1);
       }
     }
 
-    return res;
+    return success;
   },
+
   /**
-   * getEl
-   * @return {HTMLElement}
+   * 获取容器元素
+   * @returns 容器元素
    */
-  getEl() {
+  getEl(): HTMLElement {
     return el || document.body;
   },
+
   /**
-   * setEl
-   * @param tel
+   * 设置容器元素
+   * @param containerEl - 容器元素
    */
-  setEl(tel) {
-    el = tel;
+  setEl(containerEl: HTMLElement): void {
+    el = containerEl;
   },
-  /**
-   * Trigger
-   */
+
+  /** Trigger组件 */
   Trigger,
-  /**
-   * TriggerPrompt
-   */
+  /** TriggerPrompt组件 */
   TriggerPrompt,
 };
 

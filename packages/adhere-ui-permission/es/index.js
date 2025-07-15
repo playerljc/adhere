@@ -1,2 +1,2 @@
-import{Permission,PermissionFun,checkPermission,getPermission,setPermission}from"./Permission";var PermissionComponent={Permission:Permission,setPermission:setPermission,checkPermission:checkPermission,getPermission:getPermission,PermissionFun:PermissionFun};export default PermissionComponent;
+import{Permission,PermissionFun,checkPermission,getPermission,setPermission,PermissionUtils}from"./Permission";var PermissionComponent={Permission:Permission,setPermission:setPermission,checkPermission:checkPermission,getPermission:getPermission,PermissionFun:PermissionFun,PermissionUtils:PermissionUtils};export default PermissionComponent;export{Permission,PermissionFun,checkPermission,getPermission,setPermission,PermissionUtils};
 //# sourceMappingURL=index.js.map

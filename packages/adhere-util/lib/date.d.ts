@@ -1,42 +1,61 @@
+/**
+ * 日期工具类
+ * @description 提供日期和时间相关的工具函数
+ */
 declare const DateUtil: {
     /**
-     * toTimestampByTimeZone
-     * @description 根据format字符串和时区获取时间错
-     * @param str format的str YYYY-MM-DD HH:mm:ss
-     * @param timezone utc的字符串 11 ~ 0 ~ -12
-     * @return number timestamp 时间错
+     * 根据格式字符串和时区获取时间戳
+     * @description 将格式化的时间字符串转换为指定时区的时间戳
+     * @param str - 格式化的时间字符串，格式为 YYYY-MM-DD HH:mm:ss
+     * @param timezone - UTC 时区字符串，范围 11 ~ 0 ~ -12
+     * @returns 时间戳（秒）
+     * @example
+     * ```typescript
+     * toTimestampByFormatStrAndTimeZone('2023-12-25 10:30:00', '8') // 返回时间戳
+     * ```
      */
     toTimestampByFormatStrAndTimeZone(str: string, timezone: string): number;
     /**
-     * toStrByTimestampAndTimeZone
-     * @description 通过时间错和时区获取format时间字符串
-     * @param _timestamp 时间错的字符串
-     * @param timezone utc的字符串 11 ~ 0 ~ -12
-     * @return YYYY-MM-DD HH:mm:ss
+     * 通过时间戳和时区获取格式化的时间字符串
+     * @description 将时间戳转换为指定时区的格式化时间字符串
+     * @param timestamp - 时间戳字符串（秒）
+     * @param timezone - UTC 时区字符串，范围 11 ~ 0 ~ -12
+     * @returns 格式化的时间字符串，格式为 YYYY-MM-DD HH:mm:ss
+     * @example
+     * ```typescript
+     * toStrByTimestampAndTimeZone('1703482200', '8') // 返回 "2023-12-25 10:30:00"
+     * ```
      */
-    toStrByTimestampAndTimeZone(_timestamp: string, timezone: string): string;
+    toStrByTimestampAndTimeZone(timestamp: string, timezone: string): string;
     /**
-     * getCurrentTimestamp
-     * @description 获取当前的时间错
-     * @return number
+     * 获取当前时间戳
+     * @description 获取当前时间的时间戳（秒）
+     * @returns 当前时间戳
+     * @example
+     * ```typescript
+     * getCurrentTimestamp() // 返回当前时间戳，如 1703482200
+     * ```
      */
     getCurrentTimestamp(): number;
     /**
-     * getTimezone
-     * @description 获取当前Timezone(时区) 11 ~ 0 ~ -12
-     * @return number
+     * 获取当前时区
+     * @description 获取当前系统的时区偏移量
+     * @returns 时区偏移量，范围 11 ~ 0 ~ -12
+     * @example
+     * ```typescript
+     * getTimezone() // 在东八区返回 8，在 UTC 返回 0
+     * ```
      */
     getTimezone(): number;
     /**
-     * formatMilliseconds
-     * @description format毫秒数
-     * @param {number} milliseconds 毫秒数
-     * @return {
-     *   days: number;
-     *   hours: number;
-     *   minutes: number;
-     *   remainingSeconds: number;
-     * }
+     * 格式化毫秒数
+     * @description 将毫秒数转换为天、小时、分钟、秒的格式
+     * @param milliseconds - 毫秒数
+     * @returns 包含天、小时、分钟、剩余秒数的对象
+     * @example
+     * ```typescript
+     * formatMilliseconds(90061000) // 返回 { days: 1, hours: 1, minutes: 1, remainingSeconds: 1 }
+     * ```
      */
     formatMilliseconds(milliseconds: number): {
         days: number;

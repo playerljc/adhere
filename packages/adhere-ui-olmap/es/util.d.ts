@@ -1,8 +1,6 @@
 import Feature from 'ol/Feature.js';
 import Map from 'ol/Map';
 import Overlay from 'ol/Overlay.js';
-import { LineString, Point } from 'ol/geom';
-import Circle from 'ol/geom/Circle';
 import Polygon from 'ol/geom/Polygon';
 import Draw from 'ol/interaction/Draw.js';
 import Modify from 'ol/interaction/Modify';
@@ -10,474 +8,364 @@ import { Heatmap as HeatMapLayer, Vector as VectorLayer } from 'ol/layer.js';
 import { Vector as VectorSource } from 'ol/source.js';
 import GeoLayer from './GeoLayer';
 import WindLayer from './WindLayer';
+/**
+ * 获取最小缩放级别
+ * @param target 地图容器 HTMLElement
+ */
+declare function getMinZoom(target: HTMLElement): number;
+/**
+ * 坐标转换：3857 -> 4326
+ * @param point 坐标点 [number, number]
+ */
+declare function transformLonLat(point: number[]): number[];
+export interface CreateMapConfig {
+    config: Record<string, any> & {
+        target: HTMLElement;
+    };
+    fitZoom?: number;
+    zoom?: number;
+    minZoom?: number;
+    maxZoom?: number;
+    center?: number[];
+    extent?: number[][];
+    layers?: any[];
+}
+/**
+ * 创建地图
+ * @param Config 地图配置
+ */
+declare function createMap(Config: CreateMapConfig): Map;
+interface DrawCircleParams {
+    center: number[];
+    radius: number;
+    color?: string;
+    strokeColor?: string;
+    strokeWidth?: number;
+    zIndex?: number;
+    id?: string;
+    propertys?: Record<string, any>;
+}
+interface DrawPolygonParams {
+    points: number[][][];
+    color?: string;
+    strokeColor?: string;
+    strokeWidth?: number;
+    zIndex?: number;
+    id?: string;
+    propertys?: Record<string, any>;
+}
+interface DrawLineParams {
+    points: number[][];
+    width: number;
+    color: string;
+    lineCap?: CanvasLineCap;
+    lineJoin?: CanvasLineJoin;
+    lineDash?: number[];
+}
+interface DrawCirclePointParams {
+    id: string;
+    pos: number[];
+    fillOpt?: {
+        color?: string;
+    };
+    strokeOpt?: {
+        width?: number;
+        color?: string;
+    };
+    radius?: number;
+    textOpt?: Record<string, any>;
+    zIndex?: number;
+    text?: string;
+    propertys?: Record<string, any>;
+}
+interface DrawRegularShapePointParams {
+    id: string;
+    pos: number[];
+    points: number;
+    fillOpt?: {
+        color?: string;
+    };
+    strokeOpt?: {
+        width?: number;
+        color?: string;
+    };
+    text?: string;
+    textOpt?: Record<string, any>;
+    zIndex?: number;
+    propertys?: Record<string, any>;
+    [key: string]: any;
+}
+interface DrawImagePointParams {
+    id: string;
+    pos: number[];
+    zIndex?: number;
+    src?: string;
+    color?: string;
+    opacity?: number;
+    scale?: number;
+    anchor?: number[];
+    rotation?: number;
+    offset?: number[];
+    offsetOrigin?: string;
+    size?: number[];
+    text?: string;
+    textOpt?: Record<string, any>;
+    propertys?: Record<string, any>;
+}
+interface SetMapCenterAnimateParams {
+    map: Map;
+    point: number[];
+    duration?: number;
+}
+interface CreateInteractionParams {
+    map: Map;
+    config: any;
+}
+interface PolygonInteractionParams {
+    map: Map;
+    freehand?: boolean;
+    vectorSource: VectorSource;
+    onDrawEnd?: (result: any) => void;
+    [key: string]: any;
+}
+interface CircleInteractionParams {
+    map: Map;
+    vectorSource: VectorSource;
+    onDrawEnd?: (result: any) => void;
+    [key: string]: any;
+}
+interface BoxInteractionParams {
+    map: Map;
+    vectorSource: VectorSource;
+    onDrawEnd?: (result: any) => void;
+    [key: string]: any;
+}
+interface LinStringInteractionParams {
+    map: Map;
+    freehand?: boolean;
+    vectorSource: VectorSource;
+    onDrawEnd?: (result: any) => void;
+    [key: string]: any;
+}
+interface CreateModifyInteractionParams {
+    map: Map;
+    vectorSource: VectorSource;
+    onModifyEnd: (result: any) => void;
+}
+interface AddArrowsSourceParams {
+    points: number[][];
+    color?: string;
+    icon?: string;
+    anchor?: number[];
+    offset?: number[];
+}
 declare const _default: {
     SHOWBASESTATION_MINZOOM: number;
+    getMinZoom: typeof getMinZoom;
+    transformLonLat: typeof transformLonLat;
+    createMap: typeof createMap;
     /**
-     * createMap - 创建地图
-     * @param Config
+     * 设置 Overlay 状态
      */
-    createMap(Config: any): Map;
+    setOverlayState: (overlay: Overlay, point: number[]) => void;
     /**
-     * setOverlayState - 给overlay赋予状态
-     * @param overlay
-     * @param point
+     * 添加点击监听器
      */
-    setOverlayState: (overlay: any, point: any) => void;
+    addClickListener: (mapInstance: Map, listeningLayer: VectorLayer<any>, hitCallback: ((feature: Feature | any) => void) | undefined, unHitCallback: ((feature: Feature | any) => void) | undefined, setCursor: (cursor: string) => void) => void;
     /**
-     * addClickListener
-     * 给地图实例添加 click 监听者
-     * 此方法仅监听了单击
-     * @param {Object} mapInstance map实例对象
-     * @param {Object} listeningLayer 监听的layer
-     * @param {Function=} hitCallback 可选 选中的回调
-     * @param {Function=} unHitCallback 可选 未选中的回调
-     * @param {Function} setCursor 设置鼠标滑过当前图层的鼠标样式
+     * 添加悬停监听器
      */
-    addClickListener: (mapInstance: any, listeningLayer: any, hitCallback: ((feature: any) => void) | undefined, unHitCallback: ((feature: any) => void) | undefined, setCursor: any) => void;
+    addHoverListener: (mapInstance: Map, listeningLayer: VectorLayer<any>, hitCallback: (feature: Feature | any) => void, unHitCallback: (feature: Feature | any) => void) => void;
     /**
-     * addHoverListener - 给地图实例上的指定layer添加hover监听者
-     * @param {Object} mapInstance map实例对象
-     * @param {Object} listeningLayer 监听的layer
-     * @param {Function=} hitCallback 可选 选中的回调
-     * @param {Function=} unHitCallback 可选 未选中的回调
+     * 添加 GeoJSON 图层
      */
-    addHoverListener: (mapInstance: any, listeningLayer: any, hitCallback: any, unHitCallback: any) => void;
+    addGeoLayer: (mapInstance: Map, geojsonData: any, getStyleConfig?: any, zIndex?: number) => GeoLayer;
     /**
-     * addGeoLayer - 给地图实例添加一个geojson格式的 VectorLayer
-     * @param {Object} mapInstance map实例对象
-     * @param geojsonData
-     * @param {Function=} getStyleConfig 获取该geoJSON的样式
-     * @param {number=} zIndex 该 Layer 的层级 可选, 默认为0
-     * @returns geoLayer 此次生成的layer
+     * 添加风场图层
      */
-    addGeoLayer: (mapInstance: any, geojsonData: any, getStyleConfig?: () => void, zIndex?: number) => GeoLayer;
+    addWindLayer: (mapInstance: Map, data: any, config: any, zIndex?: number) => WindLayer;
     /**
-     * addWindLayer - 添加风场层
-     * @param mapInstance
-     * @param data
-     * @param config
-     * @param zIndex
-     * @return WindLayer
+     * 添加向量图层
      */
-    addWindLayer: (mapInstance: any, data: any, config: any, zIndex?: number) => WindLayer;
-    /**
-     * addVectorLayer - 添加一个向量层
-     * @param map
-     * @param zIndex
-     */
-    addVectorLayer(map: any, zIndex: any): {
-        vectorLayer: VectorLayer<VectorSource<import("ol/geom").Geometry>>;
-        vectorSource: VectorSource<import("ol/geom").Geometry>;
+    addVectorLayer(map: Map, zIndex: number): {
+        vectorLayer: VectorLayer<any>;
+        vectorSource: VectorSource;
     };
     /**
-     * createHeatMapLayer - 创建一个热力层
-     * @param layoutConfig
+     * 创建热力图层
      */
     createHeatMapLayer(layoutConfig: any): {
         layer: HeatMapLayer;
-        vectorSource: VectorSource<import("ol/geom").Geometry>;
+        vectorSource: VectorSource;
     };
     /**
-     * drawCircle - 创建一个圆形
-     * @param center
-     * @param radius
-     * @param color
-     * @param strokeColor
-     * @param strokeWidth
-     * @param zIndex
-     * @param id
-     * @param propertys
+     * 创建一个圆形 Feature
      */
-    drawCircle({ center, radius, color, strokeColor, strokeWidth, zIndex, id, propertys, }: {
-        center: any;
-        radius: any;
-        color?: string | undefined;
-        strokeColor?: string | undefined;
-        strokeWidth?: number | undefined;
-        zIndex?: any;
-        id?: string | undefined;
-        propertys?: {} | undefined;
-    }): Feature<Circle>;
+    drawCircle({ center, radius, color, strokeColor, strokeWidth, zIndex, id, propertys, }: DrawCircleParams): Feature;
     /**
-     * drawPolygon - 创建一个多边形
-     * @param points
-     * @param color
-     * @param strokeColor
-     * @param strokeWidth
-     * @param zIndex
-     * @param id
-     * @param propertys
+     * 创建一个多边形 Feature
      */
-    drawPolygon({ points, color, strokeColor, strokeWidth, zIndex, id, propertys, }: {
-        points: any;
-        color?: string | undefined;
-        strokeColor?: string | undefined;
-        strokeWidth?: number | undefined;
-        zIndex?: any;
-        id?: string | undefined;
-        propertys?: {} | undefined;
-    }): Feature<Polygon>;
+    drawPolygon({ points, color, strokeColor, strokeWidth, zIndex, id, propertys, }: DrawPolygonParams): Feature;
     /**
-     * drawCirclePoint - 创建一个圆的点
-     * @param id
-     * @param pos
-     * @param fillOpt
-     * @param strokeOpt
-     * @param radius
-     * @param textOpt
-     * @param zIndex
-     * @param text
-     * @param propertys
+     * 创建一条线 Feature
      */
-    drawCirclePoint({ id, pos, fillOpt, strokeOpt, radius, textOpt, zIndex, text, propertys, }: {
-        id: any;
-        pos: any;
-        fillOpt?: {
-            color: string;
-        } | undefined;
-        strokeOpt?: {
-            width: number;
-            color: string;
-        } | undefined;
-        radius?: number | undefined;
-        textOpt?: {} | undefined;
-        zIndex?: number | undefined;
-        text?: string | undefined;
-        propertys?: {} | undefined;
-    }): Feature<Point>;
+    drawLine({ points, width, color, lineCap, lineJoin, lineDash, }: DrawLineParams): Feature;
     /**
-     * drawRegularShapePoint - 创建一个多边形的点
-     * @param id
-     * @param pos
-     * @param fillOpt
-     * @param strokeOpt
-     * @param text
-     * @param textOpt
-     * @param zIndex
-     * @param propertys
-     * @param others
+     * 创建一个圆的点 Feature
      */
-    drawRegularShapePoint({ id, pos, fillOpt, strokeOpt, text, textOpt, zIndex, propertys, ...others }: {
-        [x: string]: any;
-        id: any;
-        pos: any;
-        fillOpt?: {
-            color: string;
-        } | undefined;
-        strokeOpt?: {
-            width: number;
-            color: string;
-        } | undefined;
-        text?: string | undefined;
-        textOpt?: {} | undefined;
-        zIndex?: number | undefined;
-        propertys?: {} | undefined;
-    }): Feature<Point>;
+    drawCirclePoint({ id, pos, fillOpt, strokeOpt, radius, textOpt, zIndex, text, propertys, }: DrawCirclePointParams): Feature;
     /**
-     * drawImagePoint - 创建一个图片的点
-     * @param id
-     * @param pos
-     * @param zIndex
-     * @param color
-     * @param src
-     * @param opacity
-     * @param scale
-     * @param anchor
-     * @param rotation
-     * @param offset
-     * @param offsetOrigin
-     * @param size
-     * @param text
-     * @param textOpt
-     * @param propertys
+     * 创建一个多边形的点 Feature
      */
-    drawImagePoint({ id, pos, zIndex, src, color, opacity, scale, anchor, rotation, offset, offsetOrigin, size, text, textOpt, propertys, }: {
-        id: any;
-        pos: any;
-        zIndex?: number | undefined;
-        src: any;
-        color: any;
-        opacity: any;
-        scale: any;
-        anchor: any;
-        rotation?: number | undefined;
-        offset?: number[] | undefined;
-        offsetOrigin: any;
-        size: any;
-        text?: string | undefined;
-        textOpt?: {} | undefined;
-        propertys?: {} | undefined;
-    }): Feature<Point>;
+    drawRegularShapePoint({ id, pos, points, fillOpt, strokeOpt, text, textOpt, zIndex, propertys, ...others }: DrawRegularShapePointParams): Feature;
     /**
-     * createRegularPolygonCurve - 扇形
-     * @param origin 圆心
-     * @param radius 半径
-     * @param sides 边数
-     * @param r 弧度
-     * @param angel 方向角(以y周围0)(可以自定义自己的x周一样)
-     * @return {Polygon}
+     * 创建一个图片的点 Feature
      */
-    createRegularPolygonCurve(origin: any, radius: any, sides: any, r: any, angel: any): Polygon;
+    drawImagePoint({ id, pos, zIndex, src, color, opacity, scale, anchor, rotation, offset, offsetOrigin, size, text, textOpt, propertys, }: DrawImagePointParams): Feature;
     /**
-     * removeFeature - 删除一个feature
-     * @param vectorSource
-     * @param feature
+     * 创建扇形多边形
      */
-    removeFeature(vectorSource: any, feature: any): void;
+    createRegularPolygonCurve(origin: number[], radius: number, sides: number, r: number, angel: number): Polygon;
     /**
-     * removeAllFeature - 删除所有feature
-     * @param vectorSource
+     * 移动地图到指定位置(动画)
      */
-    removeAllFeature(vectorSource: any): void;
+    setMapCenterAnimate({ map, point, duration }: SetMapCenterAnimateParams): void;
     /**
-     * removeAllOverlay - 删除所有覆盖物
-     * @param map
+     * 创建交互
      */
-    removeAllOverlay(map: any): void;
+    createInteraction({ map, config }: CreateInteractionParams): Draw;
     /**
-     * setMapCenterAnimate - 移动地图到指定位置(动画)
-     * @param map
-     * @param point
-     * @param duration
+     * 框多边形交互
      */
-    setMapCenterAnimate({ map, point, duration }: {
-        map: any;
-        point: any;
-        duration?: number | undefined;
-    }): void;
+    polygonInteraction({ map, freehand, vectorSource, onDrawEnd, ...other }: PolygonInteractionParams): Draw;
     /**
-     * drawLine - 创建线
-     * @param points
-     * @param width
-     * @param color
-     * @param lineCap
-     * @param lineJoin
-     * @param lineDash
+     * 框圆形交互
      */
-    drawLine({ points, width, color, lineCap, lineJoin, lineDash }: {
-        points: any;
-        width: any;
-        color: any;
-        lineCap?: string | undefined;
-        lineJoin?: string | undefined;
-        lineDash: any;
-    }): Feature<LineString>;
+    circleInteraction({ map, vectorSource, onDrawEnd, ...other }: CircleInteractionParams): Draw;
     /**
-     * createInteraction
-     * @param map
-     * @param config
+     * 框线框交互
      */
-    createInteraction(map: any, config: any): Draw;
+    boxInteraction({ map, vectorSource, onDrawEnd, ...other }: BoxInteractionParams): Draw;
     /**
-     * polygonInteraction - 框多边形
-     * @param map
-     * @param vectorSource
-     * @param onDrawStart
-     * @param onDrawEnd
+     * 线路交互
      */
-    polygonInteraction({ map, freehand, vectorSource, onDrawEnd, ...other }: {
-        [x: string]: any;
-        map: any;
-        freehand?: boolean | undefined;
-        vectorSource: any;
-        onDrawEnd: any;
-    }): Draw;
+    linStringInteraction({ map, freehand, vectorSource, onDrawEnd, ...other }: LinStringInteractionParams): Draw;
     /**
-     * circleInteraction - 框圆形
-     * @param map
-     * @param vectorSource
-     * @param onDrawStart
-     * @param onDrawEnd
+     * 创建修改交互
      */
-    circleInteraction({ map, vectorSource, onDrawEnd, ...other }: {
-        [x: string]: any;
-        map: any;
-        vectorSource: any;
-        onDrawEnd: any;
-    }): Draw;
+    createModifyInteraction({ map, vectorSource, onModifyEnd }: CreateModifyInteractionParams): Modify;
     /**
-     * boxInteraction - 框线框
-     * @param map
-     * @param vectorSource
-     * @param onDrawEnd
-     * @param other
+     * 删除一个 Feature
      */
-    boxInteraction({ map, vectorSource, onDrawEnd, ...other }: {
-        [x: string]: any;
-        map: any;
-        vectorSource: any;
-        onDrawEnd: any;
-    }): Draw;
+    removeFeature(vectorSource: VectorSource, feature: Feature): void;
     /**
-     * linStringInteraction - 线路
-     * @param map
-     * @param vectorSource
-     * @param onDrawStart
-     * @param onDrawEnd
+     * 删除所有 Feature
      */
-    linStringInteraction({ map, freehand, vectorSource, onDrawEnd, ...other }: {
-        [x: string]: any;
-        map: any;
-        freehand?: boolean | undefined;
-        vectorSource: any;
-        onDrawEnd: any;
-    }): Draw;
+    removeAllFeature(vectorSource: VectorSource): void;
     /**
-     * createModifyInteraction
-     * @param map
-     * @param vectorSource
-     * @param onModifyEnd
-     * @return {Modify|Modify}
+     * 删除所有 Overlay
      */
-    createModifyInteraction({ map, vectorSource, onModifyEnd }: {
-        map: any;
-        vectorSource: any;
-        onModifyEnd: any;
-    }): Modify;
+    removeAllOverlay(map: Map): void;
     /**
-     * removeInteraction - 移除interaction
-     * @param map
-     * @param interaction
+     * 移除交互
      */
-    removeInteraction(map: any, interaction: any): void;
+    removeInteraction(map: Map, interaction: any): void;
     /**
-     * removeInteractionAll - 移除所有的Interaction
-     * @param map
+     * 移除所有交互
      */
-    removeInteractionAll(map: any): void;
+    removeInteractionAll(map: Map): void;
     /**
-     * mapFit - 地图自适应
-     * @param extent
-     * @param option
-     * @param map
+     * 地图自适应
      */
-    mapFit(extent: never[] | undefined, option: {} | undefined, map: any): void;
+    mapFit(extent: number[] | undefined, option: any, map: Map): void;
     /**
-     * addArrowsSource - 为一系列点创建箭头
-     * @param points
-     * @param color
-     * @param icon
-     * @param anchor
-     * @param offset
-     * @return {Array}
+     * 为一系列点创建箭头 Feature 数组
      */
-    addArrowsSource({ points, color, icon, anchor, offset }: {
-        points: any;
-        color: any;
-        icon: any;
-        anchor: any;
-        offset: any;
-    }): never[];
+    addArrowsSource({ points, color, icon, anchor, offset }: AddArrowsSourceParams): Feature[];
     /**
-     * addArrowsOverlay
-     * @param map
-     * @param parentDom
-     * @param color
-     * @param points
+     * 为一系列点创建箭头 Overlay
      */
-    addArrowsOverlay(map: any, parentDom: any, color: any, points: any): void;
+    addArrowsOverlay(map: Map, parentDom: HTMLElement, color: string, points: number[][]): void;
     /**
-     * addOverlay - 添加覆盖物
-     * @param map
-     * @param config
-     * @param div
+     * 添加覆盖物
      */
-    addOverlay: (map: any, config: any, div: HTMLDivElement | null) => Overlay;
+    addOverlay: (map: Map, config: any, div: HTMLDivElement | null) => Overlay;
     /**
-     * getRad
-     * @param d
+     * rgb颜色随机
      */
-    getRad(d: any): number;
+    rgb(): string;
     /**
-     * getExtentByCoordinates - 获取coordinates中的矩形数据
-     * @param coordinates
-     * @return {*}
+     * 十六进制颜色随机
      */
-    getExtentByCoordinates(coordinates: any): never[];
+    color16(): string;
     /**
-     * getExtentByVectorSource - 获取vectorSource中的矩形数据
-     * @param vectorSource
-     * @param type
-     * @return {*}
+     * 角度转弧度
      */
-    getExtentByVectorSource(vectorSource: any, type?: string): never[];
+    getRad(d: number): number;
     /**
-     * getCectorSourceCoordinates - 获取向量层中的所有点
-     * @param vectorSource
-     * @param type
+     * 经度归一化
      */
-    getCectorSourceCoordinates(vectorSource: any, type?: string): never[];
+    wrapLon(value: number): number;
     /**
-     * getCenterByCoordinates - 获取source中所有Point的中心点
-     * @param vectorSource
-     * @param type
-     * @return {{centerLon: number, centerLat: number}}
+     * 获取地图的矩形范围
      */
-    getCenterByCoordinates(vectorSource: any, type?: string): {
+    getMapExtent(map: Map): Array<{
+        lon: number;
+        lat: number;
+    }> | false;
+    /**
+     * 获取范围内的 Feature
+     */
+    getFeaturesInExtent(map: Map, feature: Feature): any[];
+    /**
+     * 获取地图的图层数量
+     */
+    getLayersCount(map: Map): number;
+    /**
+     * 获取线条颜色
+     */
+    getLineColor(index: number): string;
+    downLoadMap(map: Map): void;
+    /**
+     * 根据经纬度和半径获取投影平面半径
+     */
+    getRadius(center: number[], radius: number): number;
+    /**
+     * 获取坐标范围
+     */
+    getExtentByCoordinates(coordinates: number[][]): number[];
+    /**
+     * 获取向量源中的矩形数据
+     */
+    getExtentByVectorSource(vectorSource: VectorSource, type?: string): number[];
+    /**
+     * 获取向量层中的所有点
+     */
+    getCectorSourceCoordinates(vectorSource: VectorSource, type?: string): number[][];
+    /**
+     * 获取向量源中所有 Point 的中心点
+     */
+    getCenterByCoordinates(vectorSource: VectorSource, type?: string): {
         centerLon: number;
         centerLat: number;
     };
     /**
-     * getCenterByPoints - 获取一系列点中的中心点
-     * @param points
-     * @return {{centerLon: number, centerLat: number}}
+     * 获取一系列点中的中心点
      */
-    getCenterByPoints(points: any): {
+    getCenterByPoints(points: number[][]): {
         centerLon: number;
         centerLat: number;
     };
     /**
-     * getPointsExtent - 获取一些列点的矩形范围(左上角[x,y]，右下角[x,y])
-     * @param points
-     * @return {{centerLon: number, centerLat: number}}
+     * 获取一系列点的矩形范围
      */
-    getPointsExtent(points: any): {
+    getPointsExtent(points: number[][]): {
         leftTop: number[];
         rightBottom: number[];
     };
     /**
-     * getFlatternDistance - 计算连个经纬度之间的距离(m)
-     * approx distance between two points on earth ellipsoid
-     * @param {Object} lat1
-     * @param {Object} lng1
-     * @param {Object} lat2
-     * @param {Object} lng2
+     * 计算连个经纬度之间的距离(m)
      */
-    getFlatternDistance(lat1: any, lng1: any, lat2: any, lng2: any): number;
-    /**
-     * wrapLon
-     * @param value
-     */
-    wrapLon(value: any): number;
-    /**
-     * getMapExtent - 获取地图的矩形范围
-     * @param map
-     */
-    getMapExtent(map: any): false | {
-        lon: number;
-        lat: number;
-    }[];
-    /**
-     * getFeaturesInExtent
-     * @param map
-     * @param feature
-     */
-    getFeaturesInExtent(map: any, feature: any): any;
-    /**
-     * getLayersCount - 获取地图的Layers数量
-     * @param map
-     * @return {number}
-     */
-    getLayersCount(map: any): any;
-    rgb(): string;
-    color16(): string;
-    getLineColor(index: any): string;
-    downLoadMap(map: any): void;
-    /**
-     * getRadius
-     * @param center 4326的点 [xxx.xx,xxx.xx]
-     * @param radius 半径(米/M)
-     */
-    getRadius(center: any, radius: any): number;
+    getFlatternDistance(lat1: number, lng1: number, lat2: number, lng2: number): number;
 };
 export default _default;

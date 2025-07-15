@@ -1,2 +1,2 @@
-var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}},ConditionalRender_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./ConditionalRender")));exports.default=ConditionalRender_1.default;
+var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}},ConditionalRender_1=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.deal=void 0,__importDefault(require("./ConditionalRender"))),Util_1=(exports.default=ConditionalRender_1.default,require("./Util"));Object.defineProperty(exports,"deal",{enumerable:!0,get:function(){return Util_1.deal}});
 //# sourceMappingURL=index.js.map

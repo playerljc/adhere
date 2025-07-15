@@ -8,16 +8,31 @@ import Intl from '@baifendian/adhere-util-intl';
 import { createPopper } from '@popperjs/core';
 import type { Instance } from '@popperjs/core/lib/types';
 
-import type { EllipsisProps } from './types';
+import type { ComputedStyle, EllipsisProps, MoreProps } from './types';
 
 const selectorPrefix = 'adhere-ui-ellipsis';
 
 const { useTheme } = ConfigProvider;
 
 /**
- * Ellipsis
- * @param props
- * @constructor
+ * 文本省略号组件
+ *
+ * 支持单行和多行文本省略，可配置 tooltip 提示，支持展开/收起功能
+ *
+ * @example
+ * ```tsx
+ * // 单行省略
+ * <Ellipsis>这是一段很长的文本内容，超出部分会显示省略号</Ellipsis>
+ *
+ * // 多行省略
+ * <Ellipsis wrap wrapLines={3}>这是一段很长的文本内容，超出三行部分会显示省略号</Ellipsis>
+ *
+ * // 自定义 tooltip
+ * <Ellipsis isUseNativeTooltip={false} tooltip="完整内容">省略的文本</Ellipsis>
+ * ```
+ *
+ * @param props - 组件属性
+ * @returns Ellipsis 组件实例
  */
 const Ellipsis = memo<EllipsisProps>((props) => {
   const {
@@ -26,11 +41,8 @@ const Ellipsis = memo<EllipsisProps>((props) => {
     wrap = false,
     wrapLines = 2,
     tooltip,
-    // tooltip最大显示的字符数
     tooltipMaxLength = 1024,
-    // 是否使用title作为tooltip
     isUseNativeTooltip = true,
-    // 自定义tooltip触发的条件
     trigger = 'hover',
     tooltipClassName = '',
     tooltipStyle = {},
@@ -43,8 +55,8 @@ const Ellipsis = memo<EllipsisProps>((props) => {
     children,
   } = props;
 
-  const wrapperRef = useRef<HTMLDivElement>();
-  const tooltipRef = useRef<Instance>();
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<Instance | null>(null);
   const customToolTipRef = useRef<HTMLDivElement | null>(null);
 
   useTheme<HTMLElement>({
@@ -53,15 +65,18 @@ const Ellipsis = memo<EllipsisProps>((props) => {
     displayName: 'Ellipsis',
   });
 
-  const [collapse, setCollapse] = useState(false);
+  const [collapse, setCollapse] = useState<boolean>(false);
 
-  // tooltip的计算内容
+  /**
+   * 计算 tooltip 显示内容
+   * 优先级：tooltip > children > dangerouslySetInnerHTML
+   */
   const computedTooltip = useMemo<string>(() => {
-    if (!!tooltip) return tooltip;
+    if (tooltip) return tooltip;
 
-    if (!!children) return children;
+    if (children) return children;
 
-    if (!!dangerouslySetInnerHTML?.__html) {
+    if (dangerouslySetInnerHTML?.__html) {
       const el = document.createElement('div');
       el.innerHTML = dangerouslySetInnerHTML.__html;
       return el.innerText;
@@ -70,15 +85,19 @@ const Ellipsis = memo<EllipsisProps>((props) => {
     return '';
   }, [tooltip, children, dangerouslySetInnerHTML]);
 
-  // 是否到达tooltip最大字符显示数
+  /**
+   * 判断是否超过 tooltip 最大字符数
+   */
   const isMaxValueToTooltip = useCallback(
-    () => computedTooltip.length > tooltipMaxLength,
-    [tooltip, children, dangerouslySetInnerHTML, tooltipMaxLength],
+    (): boolean => computedTooltip.length > tooltipMaxLength,
+    [computedTooltip.length, tooltipMaxLength],
   );
 
-  // style计算值
-  const styleComputed = useMemo(() => {
-    const computedStyle: CSSProperties = {};
+  /**
+   * 计算样式值
+   */
+  const styleComputed = useMemo((): ComputedStyle => {
+    const computedStyle: ComputedStyle = {};
 
     if (isMaxValueToTooltip()) {
       if (!collapse && 'wrapLines' in props && wrapLines >= 2) {
@@ -86,235 +105,232 @@ const Ellipsis = memo<EllipsisProps>((props) => {
       } else {
         computedStyle.WebkitLineClamp = 'unset';
       }
-
-      return computedStyle;
-    }
-
-    if ('wrapLines' in props && wrapLines >= 2) {
+    } else if ('wrapLines' in props && wrapLines >= 2) {
       computedStyle.WebkitLineClamp = wrapLines;
     } else {
       computedStyle.WebkitLineClamp = 'unset';
     }
 
     return computedStyle;
-  }, [collapse, wrapLines, tooltip, children, dangerouslySetInnerHTML, tooltipMaxLength]);
+  }, [collapse, wrapLines, isMaxValueToTooltip, props]);
 
-  // 是否使用自定义toolTip
+  /**
+   * 是否使用自定义 tooltip
+   */
   const isUseCustomToolTip = useCallback(
-    () => !isMaxValueToTooltip() && 'isUseNativeTooltip' in props && !isUseNativeTooltip,
-    [tooltip, children, dangerouslySetInnerHTML, tooltipMaxLength, isUseNativeTooltip],
+    (): boolean => !isMaxValueToTooltip() && 'isUseNativeTooltip' in props && !isUseNativeTooltip,
+    [isMaxValueToTooltip, isUseNativeTooltip, props],
   );
 
-  // 是否使用原生的title属性显示toolTip
+  /**
+   * 是否使用原生 title 属性显示 tooltip
+   */
   const isUseTitleToTooltip = useCallback(
-    () => !isMaxValueToTooltip() && (!('isUseNativeTooltip' in props) || isUseNativeTooltip),
-    [tooltip, children, dangerouslySetInnerHTML, tooltipMaxLength, isUseNativeTooltip],
+    (): boolean =>
+      !isMaxValueToTooltip() && (!('isUseNativeTooltip' in props) || isUseNativeTooltip),
+    [isMaxValueToTooltip, isUseNativeTooltip, props],
   );
 
-  // 是否使用单行...样式
-  const isUseLineEllipsisClassName = useCallback(() => {
-    // 超过了tooltip最大字符数
+  /**
+   * 是否使用单行省略样式
+   */
+  const isUseLineEllipsisClassName = useCallback((): boolean => {
     if (isMaxValueToTooltip()) {
-      return !collapse && (!('warp' in props) || !wrap);
+      return !collapse && (!('wrap' in props) || !wrap);
     }
+    return !('wrap' in props) || !wrap;
+  }, [isMaxValueToTooltip, collapse, wrap, props]);
 
-    return !('warp' in props) || !wrap;
-  }, [collapse, wrap, tooltip, children, dangerouslySetInnerHTML, tooltipMaxLength]);
-
-  // 是否使多行...样式
-  const isUseMultiLineEllipsisClassName = useCallback(() => {
-    // 超过了tooltip最大字符数
+  /**
+   * 是否使用多行省略样式
+   */
+  const isUseMultiLineEllipsisClassName = useCallback((): boolean => {
     if (isMaxValueToTooltip()) {
       return !collapse && 'wrap' in props && wrap;
     }
-
     return 'wrap' in props && wrap;
-  }, [collapse, wrap, tooltip, children, dangerouslySetInnerHTML, tooltipMaxLength]);
+  }, [isMaxValueToTooltip, collapse, wrap, props]);
 
-  // 是否使用换行样式
-  const isUseWrapClassName = useCallback(() => {
-    // 超过了tooltip最大字符数
+  /**
+   * 是否使用换行样式
+   */
+  const isUseWrapClassName = useCallback((): boolean => {
     if (isMaxValueToTooltip()) {
       return collapse;
     }
-
     return false;
-  }, [wrapLines, collapse, tooltip, children, dangerouslySetInnerHTML, tooltipMaxLength]);
+  }, [isMaxValueToTooltip, collapse]);
 
-  useEffect(() => {
-    // const showEvents = ['click'];
-    const showEvents = ['mouseenter', 'focus'];
-    const hideEvents = ['mouseleave', 'blur'];
+  /**
+   * 处理展开/收起状态切换
+   */
+  const handleToggleCollapse = useCallback(() => {
+    setCollapse((prev) => !prev);
+  }, []);
 
-    function show() {
-      // Make the tooltip visible
-      customToolTipRef.current?.setAttribute?.('data-show', '');
+  /**
+   * 显示自定义 tooltip
+   */
+  const showCustomTooltip = useCallback(() => {
+    if (customToolTipRef.current) {
+      customToolTipRef.current.setAttribute('data-show', '');
+    }
 
-      // Enable the event listeners
-      tooltipRef.current?.setOptions?.((options) => ({
+    if (tooltipRef.current) {
+      tooltipRef.current.setOptions((options) => ({
         ...options,
         modifiers: [...(options.modifiers ?? []), { name: 'eventListeners', enabled: true }],
       }));
+      tooltipRef.current.update();
+    }
+  }, []);
 
-      // Update its position
-      tooltipRef.current?.update?.();
+  /**
+   * 隐藏自定义 tooltip
+   */
+  const hideCustomTooltip = useCallback(() => {
+    if (customToolTipRef.current) {
+      customToolTipRef.current.removeAttribute('data-show');
     }
 
-    function hide() {
-      // Hide the tooltip
-      customToolTipRef.current?.removeAttribute?.('data-show');
-
-      // Disable the event listeners
-      tooltipRef.current?.setOptions?.((options) => ({
+    if (tooltipRef.current) {
+      tooltipRef.current.setOptions((options) => ({
         ...options,
         modifiers: [...(options.modifiers ?? []), { name: 'eventListeners', enabled: false }],
       }));
     }
+  }, []);
 
-    // 使用自定义toolTip
-    if (isUseCustomToolTip()) {
-      if (tooltipRef.current) {
-        tooltipRef.current?.destroy?.();
-      }
-
-      tooltipRef.current = createPopper(
-        wrapperRef.current as HTMLDivElement,
-        customToolTipRef.current as HTMLDivElement,
-        customTooltipOptions ?? {
-          placement: 'auto',
-          modifiers: [
-            {
-              name: 'offset',
-              options: {
-                offset: [0, 8],
-              },
-            },
-          ],
-        },
-      );
-
-      showEvents.forEach((event) => {
-        wrapperRef.current?.addEventListener?.(event, show);
-      });
-
-      hideEvents.forEach((event) => {
-        wrapperRef.current?.addEventListener?.(event, hide);
-      });
+  // 自定义 tooltip 事件处理
+  useEffect(() => {
+    if (!isUseCustomToolTip() || !wrapperRef.current) {
+      return;
     }
 
+    // 清理之前的实例
+    if (tooltipRef.current) {
+      tooltipRef.current.destroy();
+    }
+
+    // 创建新的 popper 实例
+    tooltipRef.current = createPopper(wrapperRef.current, customToolTipRef.current!, {
+      placement: 'auto',
+      modifiers: [
+        {
+          name: 'offset',
+          options: {
+            offset: [0, 8],
+          },
+        },
+      ],
+      ...customTooltipOptions,
+    });
+
+    // 添加事件监听器
+    const showEvents = ['mouseenter', 'focus'];
+    const hideEvents = ['mouseleave', 'blur'];
+
+    showEvents.forEach((event) => {
+      wrapperRef.current?.addEventListener(event, showCustomTooltip);
+    });
+
+    hideEvents.forEach((event) => {
+      wrapperRef.current?.addEventListener(event, hideCustomTooltip);
+    });
+
+    // 清理函数
     return () => {
       showEvents.forEach((event) => {
-        wrapperRef.current?.removeEventListener?.(event, show);
+        wrapperRef.current?.removeEventListener(event, showCustomTooltip);
       });
 
       hideEvents.forEach((event) => {
-        wrapperRef.current?.removeEventListener?.(event, hide);
+        wrapperRef.current?.removeEventListener(event, hideCustomTooltip);
       });
+
+      if (tooltipRef.current) {
+        tooltipRef.current.destroy();
+        tooltipRef.current = null;
+      }
     };
-  }, [
-    tooltip,
-    children,
-    dangerouslySetInnerHTML,
-    tooltipMaxLength,
-    isUseNativeTooltip,
-    customTooltipOptions,
-  ]);
+  }, [isUseCustomToolTip, customTooltipOptions, showCustomTooltip, hideCustomTooltip]);
 
   /**
-   * More
-   * @param moreProps
-   * @constructor
+   * More 按钮组件
    */
-  const More = (moreProps) => {
-    return (
-      <div
-        onClick={() => {
-          setCollapse(!collapse);
-        }}
-      >
-        {moreProps.children}
-      </div>
-    );
-  };
+  const More: React.FC<MoreProps> = ({ children, onClick }) => (
+    <div onClick={onClick} role="button" tabIndex={0}>
+      {children}
+    </div>
+  );
 
   /**
-   * renderShow
+   * 渲染展开按钮
    */
-  const renderShow = () => (
+  const renderShow = (): React.ReactNode => (
     <div className={`${selectorPrefix}-show-more`}>{Intl.get('expand')}</div>
   );
 
   /**
-   * renderHide
+   * 渲染收起按钮
    */
-  const renderHide = () => (
+  const renderHide = (): React.ReactNode => (
     <div className={`${selectorPrefix}-hide-more`}>{Intl.get('collapse')}</div>
   );
 
   /**
-   * renderMore
+   * 渲染展开/收起按钮
    */
-  const renderMore = () => {
-    return (
-      <ConditionalRender
-        conditional={collapse}
-        noMatch={() => <More>{tooltipMore ?? renderShow()}</More>}
-      >
-        {() => <More>{tooltipClose ?? renderHide()}</More>}
-      </ConditionalRender>
-    );
-  };
+  const renderMore = (): React.ReactNode => (
+    <ConditionalRender
+      conditional={collapse}
+      noMatch={() => <More onClick={handleToggleCollapse}>{tooltipMore ?? renderShow()}</More>}
+    >
+      {() => <More onClick={handleToggleCollapse}>{tooltipClose ?? renderHide()}</More>}
+    </ConditionalRender>
+  );
 
-  // root的Wrap
-  const innerProps: HTMLProps<any> = {
-    className: classNames(`${selectorPrefix}-inner`, className ?? '', {
-      // 单行...
+  // 构建内部元素的属性
+  const innerProps: HTMLProps<HTMLDivElement> = {
+    className: classNames(`${selectorPrefix}-inner`, className, {
       [`${selectorPrefix}-line-ellipsis`]: isUseLineEllipsisClassName(),
-      // 多行...
       [`${selectorPrefix}-multi-line-ellipsis`]: isUseMultiLineEllipsisClassName(),
-      // 换行
       [`${selectorPrefix}-wrap`]: isUseWrapClassName(),
     }),
-    style: { ...styleComputed, ...(style ?? {}) },
+    style: { ...styleComputed, ...style },
   };
 
-  if (dangerouslySetInnerHTML && dangerouslySetInnerHTML.__html) {
+  // 处理 innerHTML
+  if (dangerouslySetInnerHTML?.__html) {
     innerProps.dangerouslySetInnerHTML = dangerouslySetInnerHTML;
   }
 
-  // 使用原生title属性实现toolTip
+  // 使用原生 title 属性
   if (isUseTitleToTooltip()) {
     innerProps.title = computedTooltip;
   }
 
   return (
     <>
-      <div className={`${selectorPrefix}`}>
+      <div className={selectorPrefix}>
         <div ref={wrapperRef} {...innerProps}>
           {children}
         </div>
         {isMaxValueToTooltip() && renderMore()}
       </div>
 
-      {/*使用自定义的toolTip toolTip的内容*/}
+      {/* 自定义 tooltip */}
       {isUseCustomToolTip() && (
         <div
           ref={customToolTipRef}
-          className={classNames(`${selectorPrefix}-custom-tool-tip`, tooltipClassName ?? '')}
-          style={tooltipStyle ?? {}}
+          className={classNames(`${selectorPrefix}-custom-tool-tip`, tooltipClassName)}
+          style={tooltipStyle}
+          role="tooltip"
         >
-          {/*toolTip内容*/}
-          <div className={classNames(`${selectorPrefix}-custom-tool-tip-inner`)}>
-            {computedTooltip}
-          </div>
-
-          {/*tooltip的arrow*/}
+          <div className={`${selectorPrefix}-custom-tool-tip-inner`}>{computedTooltip}</div>
           <div
-            className={classNames(
-              `${selectorPrefix}-custom-tool-tip-arrow`,
-              tooltipArrowClassName ?? '',
-            )}
-            style={tooltipArrowStyle ?? {}}
+            className={classNames(`${selectorPrefix}-custom-tool-tip-arrow`, tooltipArrowClassName)}
+            style={tooltipArrowStyle}
             data-popper-arrow
           />
         </div>

@@ -1,0 +1,2 @@
+var Carrier,CardType;Object.defineProperty(exports,"__esModule",{value:!0}),exports.CardType=exports.Carrier=void 0,(r=>{r.CHINA_MOBILE="ChinaMobile",r.CHINA_UNICOM="ChinaUnicom",r.CHINA_TELECOM="ChinaTelecom",r.CHINA_SARFT="ChinaSARFT",r.INMARSAT="INMARSAT",r.ONEDOW="Onedow",r.VIRTUAL="Virtual",r.IOT="IoT",r.WIE="WIE"})(Carrier||(exports.Carrier=Carrier={})),(r=>{r.SIM_CARD="SIMCard",r.VIRTUAL_SIM_CARD="VirtualSIMCard",r.IOT_SIM_CARD="IoTSIMCard",r.WIE_SIM_CARD="WIETSIMCard"})(CardType||(exports.CardType=CardType={}));
+//# sourceMappingURL=types.js.map

@@ -12,22 +12,25 @@ import {
 import DrawAction from './DrawAction';
 
 /**
- * CircleDrawAction
- * @class
- * @classdesc - 圆形选取
- * @remark: - 一个start - end的周期中只能绘制一个圆形
+ * 圆形绘制Action类
+ * @class CircleDrawAction
+ * @classdesc 圆形选取绘制功能
+ * @extends {DrawAction}
+ * @remark 一个start - end的周期中只能绘制一个圆形
  */
 class CircleDrawAction extends DrawAction {
-  // 中心点
+  /** 中心点 */
   protected centerPoint: IPoint | null = null;
 
+  /** 是否移动过 */
   protected isMove = false;
 
-  // 半径
+  /** 半径 */
   protected radius: number = 0;
 
   /**
-   * context
+   * 构造函数
+   * @description 初始化圆形绘制Action，绑定事件处理方法
    */
   constructor() {
     super();
@@ -37,20 +40,21 @@ class CircleDrawAction extends DrawAction {
   }
 
   /**
-   * booleanPointInData
-   * @description 判断点是否在
-   * @param point
-   * @param data
+   * 判断点是否在圆形数据内
+   * @param point - 待判断的点
+   * @param data - 圆形数据
+   * @returns 点是否在圆形内
    */
   static booleanPointInData(point: IPoint, data: ICircleData): boolean {
     return BaseUtil.isPointInCircle(point, data.data);
   }
 
   /**
-   * draw
-   * @param e
+   * 绘制圆形
+   * @param e - 鼠标事件
+   * @description 根据鼠标位置绘制圆形
    */
-  private draw(e): void {
+  private draw(e: MouseEvent): void {
     const { context, centerPoint, style } = this;
 
     const ctx = context?.getCtx();
@@ -102,10 +106,11 @@ class CircleDrawAction extends DrawAction {
   }
 
   /**
-   * onCanvasMouseDown
-   * @param e
+   * Canvas鼠标按下事件处理
+   * @param e - 鼠标事件
+   * @description 记录起始点并注册移动和抬起事件
    */
-  private onCanvasMouseDown(e) {
+  private onCanvasMouseDown(e: MouseEvent): void {
     if (!this.context) return;
 
     const canvasEl = this.context.getCanvasEl();
@@ -122,10 +127,11 @@ class CircleDrawAction extends DrawAction {
   }
 
   /**
-   * onCanvasMouseMove
-   * @param e
+   * Canvas鼠标移动事件处理
+   * @param e - 鼠标事件
+   * @description 实时绘制圆形并触发绘制中事件
    */
-  private onCanvasMouseMove(e) {
+  private onCanvasMouseMove(e: MouseEvent): void {
     const { context } = this;
 
     if (!context) return;
@@ -154,38 +160,37 @@ class CircleDrawAction extends DrawAction {
   }
 
   /**
-   * onCanvasMouseUp
-   * @param e
+   * Canvas鼠标抬起事件处理
+   * @param e - 鼠标事件
+   * @description 结束绘制过程
    */
-  private onCanvasMouseUp(e) {
+  private onCanvasMouseUp(e: MouseEvent): void {
     if (!this.isMove) return;
     this.end(e);
     e.stopPropagation();
   }
 
   /**
-   * draw
-   * @description 绘制
-   * @param ctx
-   * @param data
+   * 绘制圆形
+   * @param ctx - Canvas上下文
+   * @param data - 圆形数据
+   * @description 静态方法，用于绘制历史数据
    */
   static draw(ctx: CanvasRenderingContext2D, data: ICircleData): void {
     if (!ctx || !data) return;
 
-    this.drawHistoryPath(ctx, data /*data.data as { center: IPoint; radius: number }*/);
+    this.drawHistoryPath(ctx, data);
   }
 
   /**
-   * drawHistoryPath - 绘制历史数据
-   * @param ctx
-   * @param data
+   * 绘制历史路径
+   * @param ctx - Canvas上下文
+   * @param data - 圆形数据
+   * @description 绘制历史圆形数据
    */
   static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
-    data /*{
-      center: IPoint;
-      radius: number;
-    }*/,
+    data: ICircleData,
   ): void {
     ctx.beginPath();
 
@@ -217,8 +222,9 @@ class CircleDrawAction extends DrawAction {
   }
 
   /**
-   * start
-   * @param style
+   * 开始绘制
+   * @param style - 样式对象
+   * @description 开始圆形绘制Action
    */
   start(style: IStyle): void {
     if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
@@ -253,9 +259,11 @@ class CircleDrawAction extends DrawAction {
   }
 
   /**
-   * end
+   * 结束绘制
+   * @param e - 鼠标事件
+   * @description 结束圆形绘制Action，保存数据
    */
-  end(e): void {
+  end(e?: MouseEvent): void {
     const { context } = this;
 
     if (!context) {
@@ -306,7 +314,8 @@ class CircleDrawAction extends DrawAction {
   }
 
   /**
-   * destroy
+   * 销毁Action
+   * @description 清理资源，移除事件监听器
    */
   destroy(): void {
     const { context } = this;

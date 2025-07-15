@@ -1,2 +1,2 @@
-import IJdCategoryTabProps from './JdCategoryTab';
-export default IJdCategoryTabProps;
+import JdCategoryTab from './JdCategoryTab';
+export default JdCategoryTab;

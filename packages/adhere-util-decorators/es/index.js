@@ -1,2 +1,2 @@
-import ReactAop from"./ReactAop";import ReactAutoTryCatch from"./ReactAutoTryCatch";import ReactErrorBoundaries from"./ReactErrorBoundaries";export default{ReactErrorBoundaries:ReactErrorBoundaries,ReactAop:ReactAop,ReactAutoTryCatch:ReactAutoTryCatch};
+import ReactAop from"./ReactAop";import ReactAutoTryCatch from"./ReactAutoTryCatch";import ReactErrorBoundaries from"./ReactErrorBoundaries";export default{ReactErrorBoundaries:ReactErrorBoundaries,ReactAop:ReactAop,ReactAutoTryCatch:ReactAutoTryCatch};export{default as ReactErrorBoundaries}from"./ReactErrorBoundaries";export{default as ReactAop}from"./ReactAop";export{default as ReactAutoTryCatch}from"./ReactAutoTryCatch";
 //# sourceMappingURL=index.js.map

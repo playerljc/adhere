@@ -1,40 +1,42 @@
 import classNames from 'classnames';
-import React, { memo, useContext, useLayoutEffect, useRef } from 'react';
+import React, { memo, useContext, useLayoutEffect, useRef, useCallback } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
 import * as TRBLC from './TRBLC';
-import type { SplitLayoutComponent, SplitLayoutProps } from './types';
+import type { 
+  SplitLayoutComponent, 
+  SplitLayoutProps, 
+  DragEventParams,
+  DirectionProps,
+  FixedElementPosition,
+  ResizeCursor
+} from './types';
 
 const FlexContext = FlexLayout.Context;
 const flexLayoutSelectorPrefix = FlexLayout.selectorPrefix;
-const directionProp = {
-  horizontal: {
-    page: 'pageX',
-    dimension: 'width',
-    offset: 'offsetWidth',
-  },
-  vertical: {
-    page: 'pageY',
-    dimension: 'height',
-    offset: 'offsetHeight',
-  },
-};
 const selectorPrefix = 'adhere-ui-split-layout';
 
 const { useTheme } = ConfigProvider;
 
 /**
- * toPoint - 百分数转化为小数
- * @param percent
+ * 将百分比字符串转换为小数
+ * @param percent - 百分比字符串，如 "50%"
+ * @returns 对应的小数值，如 0.5
+ * @example
+ * toPoint("50%") // 返回 0.5
+ * toPoint("25%") // 返回 0.25
  */
-function toPoint(percent: string) {
-  let str = Number(percent.replace('%', ''));
-
+function toPoint(percent: string): number {
+  const str = Number(percent.replace('%', ''));
   return str / 100;
 }
 
+/**
+ * 内部分割布局组件
+ * 提供可拖拽的分割线功能，支持水平和垂直方向
+ */
 const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
   const {
     className,
@@ -45,14 +47,18 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
     onDragStarted,
     onDragFinished,
     onChange,
+    onOut,
   } = props;
 
   const { direction } = useContext(FlexContext);
 
+  // DOM元素引用
   const el = useRef<HTMLDivElement | null>(null);
   const fixedEl = useRef<HTMLElement | null>(null);
   const autoEl = useRef<HTMLElement | null>(null);
   const containerEl = useRef<HTMLElement | null>();
+
+  // 支持的分割线组合情况
   const situation = useRef(
     new Map([
       [`${flexLayoutSelectorPrefix}-fixed_${flexLayoutSelectorPrefix}-auto`, true],
@@ -60,11 +66,13 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
     ]),
   );
 
+  // 状态管理
   const isEnter = useRef(false);
   const isOut = useRef(false);
   const isDown = useRef(false);
   const isMove = useRef(false);
 
+  // 数值计算
   const startVal = useRef(0);
   const changeVal = useRef(0);
   const changeBaseVal = useRef(0);
@@ -78,11 +86,11 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
   });
 
   /**
-   * checked
+   * 检查当前分割线是否支持拖拽
+   * @returns 是否支持拖拽
    */
-  function checked() {
+  const checked = useCallback((): boolean => {
     const { previousElementSibling, nextElementSibling } = el.current as HTMLDivElement;
-
     const keys = Array.from(situation.current.keys());
 
     return keys.some((key) => {
@@ -95,74 +103,86 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
         nextElementSibling?.classList.contains(nextKey)
       );
     });
-  }
+  }, []);
 
   /**
-   * getFixedEl
+   * 获取固定尺寸的元素
+   * @returns 固定尺寸的DOM元素
    */
-  function getFixedEl(): HTMLElement {
+  const getFixedEl = useCallback((): HTMLElement => {
     const { previousElementSibling, nextElementSibling } = el.current as HTMLDivElement;
 
     return previousElementSibling?.classList.contains(`${flexLayoutSelectorPrefix}-fixed`)
       ? (previousElementSibling as HTMLElement)
       : (nextElementSibling as HTMLElement);
-  }
+  }, []);
 
   /**
-   * getAutoEl
+   * 获取自动尺寸的元素
+   * @returns 自动尺寸的DOM元素
    */
-  function getAutoEl(): HTMLElement {
+  const getAutoEl = useCallback((): HTMLElement => {
     const { previousElementSibling, nextElementSibling } = el.current as HTMLDivElement;
 
     return previousElementSibling?.classList.contains(`${flexLayoutSelectorPrefix}-auto`)
       ? (previousElementSibling as HTMLElement)
       : (nextElementSibling as HTMLElement);
-  }
+  }, []);
 
   /**
-   * getResizeClass
+   * 获取调整大小的光标样式类名
+   * @returns 光标样式类名
    */
-  function getResizeClass(): 'row-resize' | 'col-resize' {
+  const getResizeClass = useCallback((): ResizeCursor => {
     return direction === 'vertical' ? 'row-resize' : 'col-resize';
-  }
+  }, [direction]);
 
   /**
-   * getProps
+   * 获取方向相关的属性配置
+   * @returns 方向属性配置
    */
-  function getProps() {
-    return directionProp[direction];
-  }
+  const getProps = useCallback((): DirectionProps => {
+    return direction === 'vertical' 
+      ? { page: 'pageY', dimension: 'height', offset: 'offsetHeight' }
+      : { page: 'pageX', dimension: 'width', offset: 'offsetWidth' };
+  }, [direction]);
 
-  function getFixedElPosition(): 'prev' | 'next' {
+  /**
+   * 获取固定元素的位置
+   * @returns 固定元素位置
+   */
+  const getFixedElPosition = useCallback((): FixedElementPosition => {
     const { previousElementSibling } = el.current as HTMLDivElement;
 
     return previousElementSibling?.classList.contains(`${flexLayoutSelectorPrefix}-fixed`)
       ? 'prev'
       : 'next';
-  }
+  }, []);
 
   /**
-   * getMaxDimension
+   * 获取最大尺寸
+   * @returns 最大尺寸值
    */
-  function getMaxDimension(): number {
+  const getMaxDimension = useCallback((): number => {
     if (maxDimension.current) {
       return maxDimension.current;
     }
 
     const fixedEl = getFixedEl();
-
     const autoEl = getAutoEl();
-
     const { offset } = getProps();
 
     maxDimension.current = fixedEl[offset] + autoEl[offset];
 
     return maxDimension.current;
-  }
+  }, [getFixedEl, getAutoEl, getProps]);
 
-  function getMaxSize(): number {
+  /**
+   * 获取最大尺寸限制
+   * @returns 最大尺寸限制值
+   */
+  const getMaxSize = useCallback((): number => {
     let resultVal = 0;
-
     const maxDimension = getMaxDimension();
 
     if (typeof maxSize === 'string') {
@@ -172,19 +192,17 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
     }
 
     return resultVal > maxDimension ? maxDimension : resultVal;
-  }
+  }, [maxSize, getMaxDimension]);
 
   /**
-   * getMinSize
+   * 获取最小尺寸限制
+   * @returns 最小尺寸限制值
    */
-  function getMinSize(): number {
+  const getMinSize = useCallback((): number => {
     let resultVal = 0;
-
     const maxDimension = getMaxDimension();
-
     const { offset } = getProps();
-
-    const elSize = el[offset];
+    const elSize = el.current?.[offset] || 0;
 
     if (typeof minSize === 'string') {
       resultVal = maxDimension * toPoint(minSize);
@@ -193,197 +211,193 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
     }
 
     return resultVal < elSize ? elSize : resultVal;
-  }
+  }, [minSize, getMaxDimension, getProps]);
 
-  function onMouseenter(e: any) {
+  /**
+   * 创建拖拽事件参数
+   * @param event - 鼠标事件
+   * @param targetValue - 目标尺寸
+   * @returns 拖拽事件参数
+   */
+  const createDragEventParams = useCallback((event: MouseEvent, targetValue: number): DragEventParams => {
+    const { page } = getProps();
+    return {
+      event,
+      currentPosition: event[page],
+      startPosition: startVal.current,
+      delta: changeVal.current,
+      targetSize: targetValue,
+    };
+  }, [getProps]);
+
+  /**
+   * 鼠标进入事件处理
+   * @param e - 鼠标事件
+   */
+  const onMouseenter = useCallback((e: MouseEvent) => {
     el.current?.classList.add(`${selectorPrefix}-${getResizeClass()}`);
-
     isOut.current = false;
-
     isEnter.current = true;
+    onCanDrag?.(createDragEventParams(e, 0));
+  }, [getResizeClass, onCanDrag, createDragEventParams]);
 
-    onCanDrag && onCanDrag(e);
-  }
-
-  function onMousedown(e) {
+  /**
+   * 鼠标按下事件处理
+   * @param e - 鼠标事件
+   */
+  const onMousedown = useCallback((e: MouseEvent) => {
     el.current?.classList.remove(`${selectorPrefix}-${getResizeClass()}`);
 
     if (isEnter.current) {
       isDown.current = true;
-
       startVal.current = e[getProps().page];
-
-      fixedValue.current = fixedEl.current?.[getProps().offset];
-
-      onDragStarted && onDragStarted(e);
+      fixedValue.current = fixedEl.current?.[getProps().offset] || 0;
+      onDragStarted?.(createDragEventParams(e, 0));
     }
-  }
+  }, [getResizeClass, getProps, onDragStarted, createDragEventParams]);
 
-  function onMouseup(e: any) {
+  /**
+   * 鼠标抬起事件处理
+   * @param e - 鼠标事件
+   */
+  const onMouseup = useCallback((e: MouseEvent) => {
     el.current?.classList.add(`${selectorPrefix}-${getResizeClass()}`);
 
     if (isDown.current) {
       isDown.current = false;
-
       isMove.current = false;
-
-      isEnter.current = !isOut;
-
+      isEnter.current = !isOut.current;
       startVal.current = 0;
-
       changeBaseVal.current = changeBaseVal.current + changeVal.current;
-
-      onDragFinished && onDragFinished(e);
+      onDragFinished?.(createDragEventParams(e, 0));
     }
-  }
+  }, [getResizeClass, onDragFinished, createDragEventParams]);
 
-  function onMouseleave(e: any) {
+  /**
+   * 鼠标离开容器事件处理
+   * @param e - 鼠标事件
+   */
+  const onMouseleave = useCallback((e: MouseEvent) => {
     if (isDown.current) {
       isDown.current = false;
-
       isMove.current = false;
-
       isEnter.current = false;
-
       startVal.current = 0;
-
       changeBaseVal.current += changeVal.current;
-
-      onDragFinished && onDragFinished(e);
+      onDragFinished?.(createDragEventParams(e, 0));
     }
-  }
+  }, [onDragFinished, createDragEventParams]);
 
-  function onMousemove(e: { [x: string]: any }) {
+  /**
+   * 鼠标移动事件处理
+   * @param e - 鼠标事件
+   */
+  const onMousemove = useCallback((e: MouseEvent) => {
     if (isEnter.current && isDown.current) {
       isMove.current = true;
 
-      let end = e[getProps().page];
-
+      const { page } = getProps();
+      const end = e[page];
       changeVal.current = end - startVal.current;
 
       const position = getFixedElPosition();
-
       const computedValue =
         position === 'prev'
           ? fixedValue.current + changeVal.current
           : fixedValue.current - changeVal.current;
 
-      let targetValue: number = 0;
-
       const maxSize = getMaxSize();
-
       const minSize = getMinSize();
 
-      if (computedValue >= maxSize || computedValue <= minSize) {
-        if (computedValue >= maxSize) {
-          targetValue = maxSize;
-        } else {
-          if (computedValue <= minSize) {
-            targetValue = minSize;
-          }
-        }
+      let targetValue: number;
+      if (computedValue >= maxSize) {
+        targetValue = maxSize;
+      } else if (computedValue <= minSize) {
+        targetValue = minSize;
       } else {
         targetValue = computedValue;
       }
 
-      (fixedEl.current as HTMLElement).style[getProps().dimension] = `${targetValue}px`;
+      if (fixedEl.current) {
+        fixedEl.current.style[getProps().dimension] = `${targetValue}px`;
+      }
 
-      onChange && onChange(e);
+      onChange?.(createDragEventParams(e, targetValue));
     }
-  }
+  }, [getProps, getFixedElPosition, getMaxSize, getMinSize, onChange, createDragEventParams]);
 
-  function onMouseout(e: any) {
+  /**
+   * 鼠标离开事件处理
+   * @param e - 鼠标事件
+   */
+  const onMouseout = useCallback((e: MouseEvent) => {
     isOut.current = true;
 
     if (!isDown.current) {
       isEnter.current = false;
-
-      onChange && onChange(e);
+      onOut?.(createDragEventParams(e, 0));
     }
-  }
+  }, [onOut, createDragEventParams]);
 
-  function initEvents() {
-    el.current?.removeEventListener?.('mouseenter', onMouseenter);
-    el.current?.addEventListener?.('mouseenter', onMouseenter);
+  /**
+   * 初始化事件监听器
+   */
+  const initEvents = useCallback(() => {
+    const elements = [el.current, fixedEl.current, autoEl.current].filter(Boolean) as HTMLElement[];
 
-    el.current?.removeEventListener?.('mousedown', onMousedown);
-    el.current?.addEventListener?.('mousedown', onMousedown);
+    // 添加事件监听器
+    el.current?.addEventListener('mouseenter', onMouseenter);
+    el.current?.addEventListener('mousedown', onMousedown);
 
-    fixedEl.current?.removeEventListener?.('mousemove', onMousemove);
-    el.current?.removeEventListener?.('mousemove', onMousemove);
-    autoEl.current?.removeEventListener?.('mousemove', onMousemove);
-    fixedEl.current?.addEventListener?.('mousemove', onMousemove);
-    el.current?.addEventListener?.('mousemove', onMousemove);
-    autoEl.current?.addEventListener?.('mousemove', onMousemove);
+    elements.forEach(element => {
+      element.addEventListener('mousemove', onMousemove);
+      element.addEventListener('mouseout', onMouseout);
+      element.addEventListener('mouseup', onMouseup);
+    });
 
-    fixedEl.current?.removeEventListener?.('mouseout', onMouseout);
-    el.current?.removeEventListener?.('mouseout', onMouseout);
-    autoEl.current?.removeEventListener?.('mouseout', onMouseout);
-    fixedEl.current?.addEventListener?.('mouseout', onMouseout);
-    el.current?.addEventListener?.('mouseout', onMouseout);
-    autoEl.current?.addEventListener?.('mouseout', onMouseout);
+    containerEl.current?.addEventListener('mouseleave', onMouseleave);
+  }, [onMouseenter, onMousedown, onMousemove, onMouseout, onMouseup, onMouseleave]);
 
-    fixedEl.current?.removeEventListener?.('mouseup', onMouseup);
-    el.current?.removeEventListener?.('mouseup', onMouseup);
-    autoEl.current?.removeEventListener?.('mouseup', onMouseup);
-    fixedEl.current?.addEventListener?.('mouseup', onMouseup);
-    el.current?.addEventListener?.('mouseup', onMouseup);
-    autoEl.current?.addEventListener?.('mouseup', onMouseup);
+  /**
+   * 移除事件监听器
+   */
+  const removeEvents = useCallback(() => {
+    const elements = [el.current, fixedEl.current, autoEl.current].filter(Boolean) as HTMLElement[];
 
-    containerEl.current?.removeEventListener?.('mouseleave', onMouseleave);
-    containerEl.current?.addEventListener?.('mouseleave', onMouseleave);
-  }
+    // 移除事件监听器
+    el.current?.removeEventListener('mouseenter', onMouseenter);
+    el.current?.removeEventListener('mousedown', onMousedown);
 
-  function removeEvents() {
-    el.current?.removeEventListener?.('mouseenter', onMouseenter);
-    el.current?.removeEventListener?.('mouseenter', onMouseenter);
+    elements.forEach(element => {
+      element.removeEventListener('mousemove', onMousemove);
+      element.removeEventListener('mouseout', onMouseout);
+      element.removeEventListener('mouseup', onMouseup);
+    });
 
-    el.current?.removeEventListener?.('mousedown', onMousedown);
-    el.current?.removeEventListener?.('mousedown', onMousedown);
+    containerEl.current?.removeEventListener('mouseleave', onMouseleave);
+  }, [onMouseenter, onMousedown, onMousemove, onMouseout, onMouseup, onMouseleave]);
 
-    fixedEl.current?.removeEventListener?.('mousemove', onMousemove);
-    el.current?.removeEventListener?.('mousemove', onMousemove);
-    autoEl.current?.removeEventListener?.('mousemove', onMousemove);
-    fixedEl.current?.removeEventListener?.('mousemove', onMousemove);
-    el.current?.removeEventListener?.('mousemove', onMousemove);
-    autoEl.current?.removeEventListener?.('mousemove', onMousemove);
-
-    fixedEl.current?.removeEventListener?.('mouseout', onMouseout);
-    el.current?.removeEventListener?.('mouseout', onMouseout);
-    autoEl.current?.removeEventListener?.('mouseout', onMouseout);
-    fixedEl.current?.removeEventListener?.('mouseout', onMouseout);
-    el.current?.removeEventListener?.('mouseout', onMouseout);
-    autoEl.current?.removeEventListener?.('mouseout', onMouseout);
-
-    fixedEl.current?.removeEventListener?.('mouseup', onMouseup);
-    el.current?.removeEventListener?.('mouseup', onMouseup);
-    autoEl.current?.removeEventListener?.('mouseup', onMouseup);
-    fixedEl.current?.removeEventListener?.('mouseup', onMouseup);
-    el.current?.removeEventListener?.('mouseup', onMouseup);
-    autoEl.current?.removeEventListener?.('mouseup', onMouseup);
-
-    containerEl.current?.removeEventListener?.('mouseleave', onMouseleave);
-    containerEl.current?.removeEventListener?.('mouseleave', onMouseleave);
-  }
-
+  // 初始化
   useLayoutEffect(() => {
     if (checked()) {
       fixedEl.current = getFixedEl();
-
       autoEl.current = getAutoEl();
-
       containerEl.current = el.current?.parentElement as HTMLElement;
 
-      containerEl.current.classList.add(`${selectorPrefix}-no-select`);
+      if (containerEl.current) {
+        containerEl.current.classList.add(`${selectorPrefix}-no-select`);
+      }
 
       initEvents();
     }
 
-    return () => removeEvents();
-  }, []);
+    return removeEvents;
+  }, [checked, getFixedEl, getAutoEl, initEvents, removeEvents]);
 
+  // 更新时重新初始化
   useLayoutEffect(() => {
     if (checked()) {
+      // 重置状态
       isEnter.current = false;
       isOut.current = false;
       isDown.current = false;
@@ -396,14 +410,13 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
       maxDimension.current = 0;
 
       fixedEl.current = getFixedEl();
-
       autoEl.current = getAutoEl();
 
       initEvents();
     }
 
-    return () => removeEvents();
-  });
+    return removeEvents;
+  }, [checked, getFixedEl, getAutoEl, initEvents, removeEvents]);
 
   return (
     <div
@@ -413,6 +426,8 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
     />
   );
 });
+
+InternalSplitLayout.displayName = 'InternalSplitLayout';
 
 const SplitLayout = InternalSplitLayout as SplitLayoutComponent;
 

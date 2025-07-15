@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Notification from './Notification';\nexport default Notification;\n"],"names":["Notification"],"mappings":"OAAOA,iBAAkB,gCACVA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import NotificationFactory from './Notification';\n// Export the default notification factory\nexport default NotificationFactory;\n"],"names":["NotificationFactory"],"mappings":"OAAOA,wBAAyB,gCAEjBA"}

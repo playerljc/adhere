@@ -7,12 +7,14 @@ import Auto from './Auto';
 import Fixed from './Fixed';
 import FlexLayout from './FlexLayout';
 import { selectorPrefix } from './FlexLayout';
-import type { HorizontalFlexLayoutProps } from './types';
+import type { HorizontalFlexLayoutProps, RenderFunction } from './types';
 
 /**
- * HorizontalFlexLayout
- * @constructor
- * @param props
+ * HorizontalFlexLayout 组件
+ * 水平方向的弹性布局组件，支持上、下、左、右、主区域的自定义渲染
+ *
+ * @param {HorizontalFlexLayoutProps} props - 组件属性
+ * @returns {JSX.Element} HorizontalFlexLayout 组件
  */
 const HorizontalFlexLayout = memo<HorizontalFlexLayoutProps>((props) => {
   const {
@@ -47,12 +49,15 @@ const HorizontalFlexLayout = memo<HorizontalFlexLayoutProps>((props) => {
     ...attrs
   } = props;
 
+  /**
+   * 渲染左侧区域
+   */
   const leftElement = useMemo(
     () => (
       <ConditionalRender conditional={!!renderLeft}>
         {() => (
           <Fixed className={leftClassName ?? ''} style={leftStyle ?? {}} fit {...(leftProps ?? {})}>
-            {renderLeft}
+            {typeof renderLeft === 'function' ? renderLeft() : renderLeft}
           </Fixed>
         )}
       </ConditionalRender>
@@ -60,6 +65,9 @@ const HorizontalFlexLayout = memo<HorizontalFlexLayoutProps>((props) => {
     [renderLeft, leftClassName, leftStyle, leftProps],
   );
 
+  /**
+   * 渲染主区域
+   */
   const mainElement = useMemo(
     () => (
       <ConditionalRender conditional={!!renderMain}>
@@ -84,7 +92,7 @@ const HorizontalFlexLayout = memo<HorizontalFlexLayoutProps>((props) => {
                     fit
                     {...(topProps ?? {})}
                   >
-                    {renderTop}
+                    {typeof renderTop === 'function' ? renderTop() : renderTop}
                   </Fixed>
                 )}
               </ConditionalRender>
@@ -96,7 +104,7 @@ const HorizontalFlexLayout = memo<HorizontalFlexLayoutProps>((props) => {
                 style={mainStyle ?? {}}
                 {...(mainProps ?? {})}
               >
-                {renderMain}
+                {typeof renderMain === 'function' ? renderMain() : renderMain}
               </Auto>
 
               <ConditionalRender conditional={!!renderBottom}>
@@ -107,7 +115,7 @@ const HorizontalFlexLayout = memo<HorizontalFlexLayoutProps>((props) => {
                     fit
                     {...(bottomProps ?? {})}
                   >
-                    {renderBottom}
+                    {typeof renderBottom === 'function' ? renderBottom() : renderBottom}
                   </Fixed>
                 )}
               </ConditionalRender>
@@ -137,6 +145,9 @@ const HorizontalFlexLayout = memo<HorizontalFlexLayoutProps>((props) => {
     ],
   );
 
+  /**
+   * 渲染右侧区域
+   */
   const rightElement = useMemo(
     () => (
       <ConditionalRender conditional={!!renderRight}>
@@ -147,7 +158,7 @@ const HorizontalFlexLayout = memo<HorizontalFlexLayoutProps>((props) => {
             fit
             {...(rightProps ?? {})}
           >
-            {renderRight}
+            {typeof renderRight === 'function' ? renderRight() : renderRight}
           </Fixed>
         )}
       </ConditionalRender>

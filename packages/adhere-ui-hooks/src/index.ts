@@ -7,10 +7,11 @@ import useLatestState from './useLatestState';
 import useMediaQuery from './useMediaQuery';
 import usePrevious from './usePrevious';
 import usePropToState from './usePropToState';
+import useSafeRef from './useSafeRef';
 import useSetState from './useSetState';
 import useTriggerQuery from './useTriggerQuery';
 
-const Hooks: HooksComponent = {
+const Hooks = {
   use,
   useFirst,
   usePrevious,
@@ -21,6 +22,7 @@ const Hooks: HooksComponent = {
   useLatestState,
   useItemsRef,
   useMediaQuery,
-};
+  useSafeRef,
+} as const;
 
 export default Hooks;

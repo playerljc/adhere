@@ -1,18 +1,46 @@
+/**
+ * SwipeOut 组件样式
+ * 基于 Swiper 的滑动组件样式定义
+ */
+
 @import '~swiper/less';
 
 .adhere-ui-swipe-out {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
+  position: relative;
+  overflow: hidden;
 
+  /* Swiper 容器样式 */
   > .swiper-wrapper {
+    display: flex;
+    align-items: stretch;
+    
+    /* 滑动项基础样式 */
     > .swiper-slide {
       width: auto;
       height: auto;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
+    /* 主内容区域样式 */
     > .swiper-slide.adhere-ui-swipe-out-content {
       width: 100%;
+      flex: 1;
+    }
+
+    /* 前置内容区域样式 */
+    > .swiper-slide.adhere-ui-swipe-out-before {
+      /* 前置内容特定样式 */
+    }
+
+    /* 后置内容区域样式 */
+    > .swiper-slide.adhere-ui-swipe-out-after {
+      /* 后置内容特定样式 */
     }
   }
 }

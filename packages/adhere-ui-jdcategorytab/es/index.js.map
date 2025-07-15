@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import IJdCategoryTabProps from './JdCategoryTab';\nexport default IJdCategoryTabProps;\n"],"names":["IJdCategoryTabProps"],"mappings":"OAAOA,wBAAyB,iCACjBA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import JdCategoryTab from './JdCategoryTab';\nexport default JdCategoryTab;\n"],"names":["JdCategoryTab"],"mappings":"OAAOA,kBAAmB,iCACXA"}

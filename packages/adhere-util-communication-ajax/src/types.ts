@@ -1,145 +1,363 @@
 import { Size } from '@baifendian/adhere-ui-globalindicator/es/types';
 
 /**
- * IConfig
- * @interface IConfig
- * @classdesc 构造函数配置对象(缺省的配置)
+ * HTTP状态码类型
+ */
+export type HttpStatusCode = 200 | 201 | 202 | 203 | 204 | 205 | 206 | 207 | 208 | 226 | 300 | 301 | 302 | 303 | 304 | 305 | 306 | 307 | 308 | 400 | 401 | 402 | 403 | 404 | 405 | 406 | 407 | 408 | 409 | 410 | 411 | 412 | 413 | 414 | 415 | 416 | 417 | 418 | 421 | 422 | 423 | 424 | 425 | 426 | 428 | 429 | 431 | 451 | 500 | 501 | 502 | 503 | 504 | 505 | 506 | 507 | 508 | 510 | 511;
+
+/**
+ * 终端类型
+ */
+export type TerminalType = 'pc' | 'mobile';
+
+/**
+ * HTTP请求方法类型
+ */
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+/**
+ * HTTP请求方法类型（小写）
+ */
+export type Method = Lowercase<HttpMethod>;
+
+/**
+ * XMLHttpRequest响应类型
+ */
+export type ResponseType = XMLHttpRequestResponseType;
+
+/**
+ * 内容类型常量
+ */
+export const CONTENT_TYPES = {
+  APPLICATION_JSON: 'application/json',
+  MULTIPART_FORM_DATA: 'multipart/form-data',
+  APPLICATION_X_WWW_FORM_URLENCODED: 'application/x-www-form-urlencoded',
+  TEXT_XML: 'text/xml',
+  APPLICATION_XML: 'application/xml',
+  TEXT_PLAIN: 'text/plain',
+} as const;
+
+/**
+ * 内容类型
+ */
+export type ContentType = typeof CONTENT_TYPES[keyof typeof CONTENT_TYPES];
+
+/**
+ * 事件处理器类型
+ */
+export type EventHandler = (e: ProgressEvent<XMLHttpRequestEventTarget> | null) => void;
+
+/**
+ * 拦截器参数接口
+ */
+export interface InterceptorParams {
+  /** HTTP状态码 */
+  status?: HttpStatusCode;
+  /** HTTP状态文本 */
+  statusText?: string;
+  /** 响应数据 */
+  response?: any;
+  /** 响应文本 */
+  responseText: string;
+}
+
+/**
+ * 拦截器函数类型
+ */
+export type InterceptorFunction = (params: InterceptorParams) => void;
+
+/**
+ * 自定义JSON序列化函数类型
+ */
+export type CustomJSONStringify = (this: any, key: string, value: any) => any;
+
+/**
+ * Loading配置接口
+ */
+export interface LoadingConfig {
+  /** 是否显示遮罩 */
+  show: boolean;
+  /** 遮罩的内容 */
+  text: string;
+  /** 遮罩的元素 */
+  el: HTMLElement;
+  /** 层级 */
+  zIndex: number;
+  /** 大小 */
+  size: Size;
+  /** 终端类型 */
+  terminal?: TerminalType;
+}
+
+/**
+ * 表单数据接口
+ */
+export interface FormDataConfig {
+  /** HTML表单对象(仅当Content-Type为multipart/form-data时生效) */
+  form: HTMLFormElement;
+  /** 表单数据 */
+  data: Record<string, any>;
+}
+
+/**
+ * 请求数据类型
+ */
+export type RequestData = FormDataConfig | Record<string, any>;
+
+/**
+ * 构造函数配置对象接口
+ * @description 定义Ajax类的默认配置选项
  */
 export interface IConfig {
   /**
-   * 在预设时间内没有接收到响应时触发。
-   * 也可以使用 ontimeout 属性。
+   * 在预设时间内没有接收到响应时触发
+   * @param e - 超时事件对象
    */
-  onTimeout?: (e: ProgressEvent<XMLHttpRequestEventTarget> | null) => void;
+  onTimeout?: EventHandler;
+  
   /**
-   * 接收到响应数据时触发。
-   * 也可以使用 onloadstart 属性。
+   * 接收到响应数据时触发
+   * @param e - 加载开始事件对象
    */
-  onLoadsStart?: (e: ProgressEvent<XMLHttpRequestEventTarget> | null) => void;
+  onLoadsStart?: EventHandler;
+  
   /**
-   * 当请求接收到更多数据时，周期性地触发。
-   * 也可以使用 onprogress 属性。
+   * 当请求接收到更多数据时，周期性地触发
+   * @param e - 进度事件对象
    */
-  onProgress?: (e: ProgressEvent<XMLHttpRequestEventTarget> | null) => void;
+  onProgress?: EventHandler;
+  
   /**
-   * 当 request 被停止时触发，例如当程序调用 XMLHttpRequest.abort() 时。
-   * 也可以使用 onabort 属性。
+   * 当 request 被停止时触发，例如当程序调用 XMLHttpRequest.abort() 时
+   * @param e - 中止事件对象
    */
-  onAbort?: (e: ProgressEvent<XMLHttpRequestEventTarget> | null) => void;
+  onAbort?: EventHandler;
+  
   /**
-   * 当 request 遭遇错误时触发。
-   * 也可以使用 onerror 属性
+   * 当 request 遭遇错误时触发
+   * @param e - 错误事件对象
    */
-  onError?: (e: ProgressEvent<XMLHttpRequestEventTarget> | null) => void;
+  onError?: EventHandler;
 
   /**
-   * XMLHttpRequest请求成功完成时触发。
-   * 也可以使用 onload 属性.
+   * XMLHttpRequest请求成功完成时触发
+   * @param e - 加载完成事件对象
    */
-  onLoad?: (e: ProgressEvent<XMLHttpRequestEventTarget> | null) => void;
+  onLoad?: EventHandler;
+  
   /**
-   * 当请求结束时触发, 无论请求成功 ( load) 还是失败 (abort 或 error)。
-   * 也可以使用 onloadend 属性。
+   * 当请求结束时触发, 无论请求成功 ( load) 还是失败 (abort 或 error)
+   * @param e - 加载结束事件对象
    */
-  onLoadend?: (e: ProgressEvent<XMLHttpRequestEventTarget> | null) => void;
+  onLoadend?: EventHandler;
+  
+  /** 请求超时时间(毫秒) */
   timeout?: number;
+  
+  /** 是否携带跨域凭证 */
   withCredentials?: boolean;
-  // 全局的拦截器
+  
   /**
-   * interceptor - 拦截器接口定义
-   * @interface
+   * 全局拦截器
+   * @description 用于处理HTTP状态码的拦截器函数
+   * @param params - 拦截器参数对象
    */
-  interceptor: (params: {
-    status?: number;
-    statusText?: string;
-    response?: any;
-    responseText: string;
-  }) => void;
+  interceptor: InterceptorFunction;
 
-  /* 下面是业务上的封装属性 */
-  // 是否支持mock数据
+  /** 是否支持mock数据 */
   mock?: boolean;
-  // loading的配置
-  loading?: {
-    // 是否显示遮罩
-    show: boolean;
-    // 遮罩的内容
-    text: string;
-    // 遮罩的元素
-    el: HTMLElement;
-    // 层级
-    zIndex: number;
-    // 大小
-    size: Size;
-    // 终端
-    terminal?: 'pc' | 'mobile';
-  };
-  // 和后端定义的三大业务key
+  
+  /** Loading配置 */
+  loading?: Partial<LoadingConfig>;
+  
+  /** 响应前的回调函数 */
   onBeforeResponse?: () => void;
-  // 数据属性
+  
+  /** 数据属性键名 */
   dataKey?: string;
-  // 消息属性
+  
+  /** 消息属性键名 */
   messageKey?: string;
-  // 业务code属性
-  codeKey?: number | string;
-  // 业务code成功属性
+  
+  /** 业务状态码属性键名 */
+  codeKey?: string;
+  
+  /** 业务成功状态码 */
   codeSuccess?: number;
-  // 在code不等于200的时候是否使出message的warn
+  
+  /** 在code不等于成功码时是否显示警告消息 */
   showWarn?: boolean;
-  // 数据的类型
-  responseType?: XMLHttpRequestResponseType;
-  // 自定义发送的数据需要进行JSON.stringify的时候的自定义处理
-  customSendJSONStringify?: (this: any, key: string, value: any) => any;
+  
+  /** 响应数据类型 */
+  responseType?: ResponseType;
+  
+  /**
+   * 自定义JSON序列化函数
+   * @description 用于自定义发送数据时的JSON.stringify处理
+   * @param this - 当前上下文
+   * @param key - 属性键名
+   * @param value - 属性值
+   * @returns 处理后的值
+   */
+  customSendJSONStringify?: CustomJSONStringify;
 }
 
 /**
- * ISendArg
- * @interface ISendArg
- * @classdesc get|post|path|put|delete的方法参数
+ * 请求参数接口
+ * @description 定义GET、POST、PUT、PATCH、DELETE方法的通用参数
  */
-export interface ISendArg extends IConfig {
-  // 请求的地址(相对的地址)
+export interface ISendArg extends Partial<IConfig> {
+  /** 请求的相对地址 */
   path: string;
-  // 请求的头
-  headers: object;
-  // 请求的数据
-  data?:
-    | {
-        // html表单对象(只有当requestHeader中的Content-Type为MulitPart-FormData才生效)
-        form?: HTMLFormElement;
-        // 数据
-        data: object;
-      }
-    | object;
+  
+  /** 请求头对象 */
+  headers?: Record<string, string>;
+  
+  /** 请求数据 */
+  data?: RequestData;
 }
 
 /**
- * ISendPrepareArg
- * @interface ISendPrepareArg
- * @classdesc sendPrepare的参数
+ * 请求准备参数接口
+ * @description sendPrepare函数的参数类型
  */
 export interface ISendPrepareArg extends ISendArg {
-  // 支持的method枚举
+  /** HTTP请求方法 */
   method: Method;
 }
 
-export type Method = 'get' | 'post' | 'put' | 'path' | 'delete';
-
-export type Prepare = {
+/**
+ * 请求准备结果类型
+ */
+export interface Prepare {
+  /** XMLHttpRequest对象 */
   xhr?: XMLHttpRequest | null;
+  /** 内容类型 */
   contentType?: string | null;
-};
+}
 
-export type SendResult = Prepare & {
+/**
+ * 发送结果类型
+ */
+export interface SendResult extends Prepare {
+  /** Promise对象 */
   promise: Promise<any>;
-};
+}
 
+/**
+ * 请求拦截器类型
+ */
 export type RequestInterceptor = (params: ISendArg) => ISendArg;
 
-export type ResponseInterceptor = (params: {
+/**
+ * 响应拦截器参数接口
+ */
+export interface ResponseInterceptorParams {
+  /** 是否显示loading */
   show: boolean;
+  /** 终端类型 */
   terminal: string;
+  /** 响应数据 */
   data: any;
+  /** 指示器实例 */
   indicator: any;
+  /** XMLHttpRequest对象 */
   xhr: XMLHttpRequest;
-}) => { show: boolean; terminal: string; data: any; indicator: any; xhr: XMLHttpRequest };
+}
+
+/**
+ * 响应拦截器类型
+ */
+export type ResponseInterceptor = (params: ResponseInterceptorParams) => ResponseInterceptorParams;
+
+/**
+ * 业务配置接口
+ */
+export interface BusinessConfig {
+  /** 数据属性键名 */
+  dataKey: string;
+  /** 消息属性键名 */
+  messageKey: string;
+  /** 业务状态码属性键名 */
+  codeKey: string;
+  /** 业务成功状态码 */
+  codeSuccess: number;
+  /** 在code不等于成功码时是否显示警告消息 */
+  showWarn: boolean;
+}
+
+/**
+ * Loading配置接口
+ */
+export interface LoadingParams {
+  /** 是否显示loading */
+  show: boolean;
+  /** 指示器实例 */
+  indicator: any;
+  /** 终端类型 */
+  terminal: string;
+}
+
+/**
+ * 事件处理参数接口
+ */
+export interface EventHandlerParams {
+  /** XMLHttpRequest对象 */
+  xhr: XMLHttpRequest;
+  /** 拦截器函数 */
+  interceptor: InterceptorFunction;
+  /** Loading配置 */
+  loading: LoadingParams;
+  /** 业务配置 */
+  business: BusinessConfig;
+  /** Promise resolve函数 */
+  resolve: (value: any) => void;
+  /** Promise reject函数 */
+  reject: (reason?: any) => void;
+}
+
+/**
+ * 发送参数获取参数接口
+ */
+export interface SendParamsConfig {
+  /** 数据 */
+  data: any;
+  /** 内容类型 */
+  contentType: string;
+  /** 自定义JSON序列化函数 */
+  customSendJSONStringify?: CustomJSONStringify;
+}
+
+/**
+ * 响应数据解析结果接口
+ */
+export interface ResolveDataResult {
+  /** 响应数据 */
+  data: any;
+  /** XMLHttpRequest对象 */
+  xhr: XMLHttpRequest;
+  /** 隐藏指示器函数 */
+  hideIndicator?: () => void;
+}
+
+/**
+ * XHR事件初始化参数接口
+ */
+export interface XhrEventsConfig {
+  /** XMLHttpRequest对象 */
+  xhr: XMLHttpRequest;
+  /** 事件配置 */
+  events: IConfig;
+  /** Promise reject函数 */
+  reject: (reason?: any) => void;
+}
+
+/**
+ * 准备函数参数接口
+ */
+export interface PrepareFunctionParams {
+  /** 解析函数 */
+  resolve: (value: any) => void;
+  /** 拒绝函数 */
+  reject: (reason?: any) => void;
+}

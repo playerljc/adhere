@@ -1,4 +1,10 @@
-export default [
+import type { OperatorItem } from '../types';
+
+/**
+ * ElasticSearch查询运算符配置
+ * 包含常用的ElasticSearch查询语法运算符
+ */
+const ElasticSearchOperators: OperatorItem[] = [
   {
     label: '()',
     value: '()',
@@ -20,3 +26,5 @@ export default [
     type: 'unary',
   },
 ];
+
+export default ElasticSearchOperators;

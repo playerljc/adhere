@@ -1,14 +1,7 @@
+import type { IStyle } from './types';
 /**
- * 几何图形默认的样式
+ * 几何图形默认样式配置
+ * @description 定义绘制几何图形时的默认样式属性
  */
-declare const _default: {
-    fillStyle: string;
-    strokeStyle: string;
-    lineWidth: number;
-    lineCap: CanvasLineCap;
-    lineJoin: CanvasLineJoin;
-    lineDash: never[];
-    lineDashOffset: number;
-    globalAlpha: number;
-};
-export default _default;
+declare const defaultStyle: IStyle;
+export default defaultStyle;

@@ -1,7 +1,7 @@
 {
   "name": "@baifendian/adhere-mobile-ui-prompt-warnprompt",
   "version": "2.11.0",
-  "description": "警告的提示(就是为了全局统一)",
+  "description": "移动端警告提示组件，提供Toast和Modal两种形式的警告提示功能，支持自动关闭和配置管理",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
     "url": "https://github.com/playerljc/adhere/issues"

@@ -1,202 +1,268 @@
+/**
+ * 加密工具类
+ * @description 提供各种加密和解密功能
+ */
 declare const EncryptUtil: {
     /**
-     * base64Encode
-     * @description base64编码
-     * @param str
-     * @return 编码后的base64
+     * Base64 编码
+     * @description 将字符串进行 Base64 编码
+     * @param str - 要编码的字符串
+     * @returns 编码后的 Base64 字符串
+     * @example
+     * ```typescript
+     * base64Encode('Hello World') // 返回 "SGVsbG8gV29ybGQ="
+     * ```
      */
-    base64Encode(str: string): any;
+    base64Encode(str: string): string;
     /**
-     * base64Decode
-     * @description base64解码
-     * @param _base64Str
-     * @return 解码后的字符串
+     * Base64 解码
+     * @description 将 Base64 字符串解码为原始字符串
+     * @param base64Str - 要解码的 Base64 字符串
+     * @returns 解码后的字符串
+     * @example
+     * ```typescript
+     * base64Decode('SGVsbG8gV29ybGQ=') // 返回 "Hello World"
+     * ```
      */
-    base64Decode(_base64Str: string): string;
+    base64Decode(base64Str: string): string;
     /**
-     * chineseToUTF8
-     * @description 中文字符串转UTF8
-     * @param _chineseStr 中文字符串
-     * @return utf-8字符串
+     * 中文字符串转 UTF8
+     * @description 将中文字符串转换为 UTF8 编码
+     * @param chineseStr - 中文字符串
+     * @returns UTF8 编码的字符串
+     * @example
+     * ```typescript
+     * chineseToUTF8('你好世界') // 返回 UTF8 编码字符串
+     * ```
      */
-    chineseToUTF8(_chineseStr?: string): string;
+    chineseToUTF8(chineseStr?: string): string;
     /**
-     * UTF8ToChinese
-     * @description UTF8转换成中文字符串
-     * @param _utf8Str uf8字符串
-     * @return 中文字符串
+     * UTF8 转换成中文字符串
+     * @description 将 UTF8 编码字符串转换为中文字符串
+     * @param utf8Str - UTF8 编码字符串
+     * @returns 中文字符串
+     * @example
+     * ```typescript
+     * UTF8ToChinese('&#x4f60;&#x597d;&#x4e16;&#x754c;') // 返回 "你好世界"
+     * ```
      */
-    UTF8ToChinese(_utf8Str: string): string;
+    UTF8ToChinese(utf8Str: string): string;
     /**
-     * chineseToASC2
-     * @description 中文转ASC2码
-     * @param _chineseStr 中文字符串
-     * @param hasNoTransformationLettersAndNumber 不转换字母和数字
-     * @return ASC2字符串
+     * 中文转 ASCII 码
+     * @description 将中文字符串转换为 ASCII 码
+     * @param chineseStr - 中文字符串
+     * @param hasNoTransformationLettersAndNumber - 是否不转换字母和数字，默认为 true
+     * @returns ASCII 码字符串
+     * @example
+     * ```typescript
+     * chineseToASC2('你好') // 返回 "\u4f60\u597d"
+     * ```
      */
-    chineseToASC2(_chineseStr?: string, hasNoTransformationLettersAndNumber?: boolean): string;
+    chineseToASC2(chineseStr?: string, hasNoTransformationLettersAndNumber?: boolean): string;
     /**
-     * ASC2ToChinese
-     * @description ASC2转中文
-     * @param _asc2Str ASC2字符串
-     * @return 中文字符串
+     * ASCII 转中文
+     * @description 将 ASCII 码字符串转换为中文字符串
+     * @param asc2Str - ASCII 码字符串
+     * @returns 中文字符串
+     * @example
+     * ```typescript
+     * ASC2ToChinese('\\u4f60\\u597d') // 返回 "你好"
+     * ```
      */
-    ASC2ToChinese(_asc2Str?: string): string;
+    ASC2ToChinese(asc2Str?: string): string;
     /**
-     * hashEncryptToMD5
-     * @description MD5加密 哈希加密算法
-     * @param _value
+     * MD5 加密
+     * @description 使用 MD5 算法进行哈希加密
+     * @param value - 要加密的值
+     * @returns MD5 加密后的字符串
+     * @example
+     * ```typescript
+     * hashEncryptToMD5('password') // 返回 MD5 哈希值
+     * ```
      */
-    hashEncryptToMD5(_value?: string): string;
+    hashEncryptToMD5(value?: string): string;
     /**
-     * hashEncryptToSHA1
-     * @description MD5加密 哈希加密算法
-     * @param _value
+     * SHA1 加密
+     * @description 使用 SHA1 算法进行哈希加密
+     * @param value - 要加密的值
+     * @returns SHA1 加密后的字符串
+     * @example
+     * ```typescript
+     * hashEncryptToSHA1('password') // 返回 SHA1 哈希值
+     * ```
      */
-    hashEncryptToSHA1(_value?: string): string;
+    hashEncryptToSHA1(value?: string): string;
     /**
-     * hashEncryptToSHA256
-     * @description MD5加密 哈希加密算法
-     * @param _value
+     * SHA256 加密
+     * @description 使用 SHA256 算法进行哈希加密
+     * @param value - 要加密的值
+     * @returns SHA256 加密后的字符串
+     * @example
+     * ```typescript
+     * hashEncryptToSHA256('password') // 返回 SHA256 哈希值
+     * ```
      */
-    hashEncryptToSHA256(_value?: string): string;
+    hashEncryptToSHA256(value?: string): string;
     /**
-     * hashEncryptToSHA512
-     * @description MD5加密 哈希加密算法
-     * @param _value
+     * SHA512 加密
+     * @description 使用 SHA512 算法进行哈希加密
+     * @param value - 要加密的值
+     * @returns SHA512 加密后的字符串
+     * @example
+     * ```typescript
+     * hashEncryptToSHA512('password') // 返回 SHA512 哈希值
+     * ```
      */
-    hashEncryptToSHA512(_value?: string): string;
+    hashEncryptToSHA512(value?: string): string;
     /**
-     * hashEncryptToSHA3_64
-     * @description MD5加密 哈希加密算法
-     * @param _value
+     * SHA3-64 加密
+     * @description 使用 SHA3-64 算法进行哈希加密
+     * @param value - 要加密的值
+     * @returns SHA3-64 加密后的字符串
      */
-    hashEncryptToSHA3_64(_value?: string): string;
+    hashEncryptToSHA3_64(value?: string): string;
     /**
-     * hashEncryptToSHA3_224
-     * @description MD5加密 哈希加密算法
-     * @param _value
+     * SHA3-224 加密
+     * @description 使用 SHA3-224 算法进行哈希加密
+     * @param value - 要加密的值
+     * @returns SHA3-224 加密后的字符串
      */
-    hashEncryptToSHA3_224(_value?: string): string;
+    hashEncryptToSHA3_224(value?: string): string;
     /**
-     * hashEncryptToSHA3_256
-     * @description MD5加密 哈希加密算法
-     * @param _value
+     * SHA3-256 加密
+     * @description 使用 SHA3-256 算法进行哈希加密
+     * @param value - 要加密的值
+     * @returns SHA3-256 加密后的字符串
      */
-    hashEncryptToSHA3_256(_value?: string): string;
+    hashEncryptToSHA3_256(value?: string): string;
     /**
-     * hashEncryptToSHA3_348
-     * @description MD5加密 哈希加密算法
-     * @param _value
+     * SHA3-384 加密
+     * @description 使用 SHA3-384 算法进行哈希加密
+     * @param value - 要加密的值
+     * @returns SHA3-384 加密后的字符串
      */
-    hashEncryptToSHA3_348(_value?: string): string;
+    hashEncryptToSHA3_348(value?: string): string;
     /**
-     * hashEncryptToSHA3_512
-     * @description MD5加密 哈希加密算法
-     * @param _value
+     * SHA3-512 加密
+     * @description 使用 SHA3-512 算法进行哈希加密
+     * @param value - 要加密的值
+     * @returns SHA3-512 加密后的字符串
      */
-    hashEncryptToSHA3_512(_value?: string): string;
+    hashEncryptToSHA3_512(value?: string): string;
     /**
-     * hashEncryptToRIPEMD160
-     * @description MD5加密 哈希加密算法
-     * @param _value
+     * RIPEMD160 加密
+     * @description 使用 RIPEMD160 算法进行哈希加密
+     * @param value - 要加密的值
+     * @returns RIPEMD160 加密后的字符串
      */
-    hashEncryptToRIPEMD160(_value?: string): string;
+    hashEncryptToRIPEMD160(value?: string): string;
     /**
-     * symmetricEncryptToAES
-     * @description 对称加密算法
-     * @param _value 加密的字符串
-     * @param _pwd 密钥
-     * @param options
-     * @return 加密后的字符串
+     * AES 对称加密
+     * @description 使用 AES 算法进行对称加密
+     * @param value - 要加密的字符串
+     * @param pwd - 密钥
+     * @param options - 加密选项
+     * @returns 加密后的字符串
+     * @example
+     * ```typescript
+     * symmetricEncryptToAES('Hello World', 'secretKey') // 返回 AES 加密字符串
+     * ```
      */
-    symmetricEncryptToAES(_value?: string, _pwd?: string, options?: any): any;
+    symmetricEncryptToAES(value?: string, pwd?: string, options?: any): string;
     /**
-     * symmetricEncryptToDES
-     * @description 对称加密算法
-     * @param _value 加密的字符串
-     * @param _pwd 密钥
-     * @param options
-     * @return 加密后的字符串
+     * DES 对称加密
+     * @description 使用 DES 算法进行对称加密
+     * @param value - 要加密的字符串
+     * @param pwd - 密钥
+     * @param options - 加密选项
+     * @returns 加密后的字符串
      */
-    symmetricEncryptToDES(_value?: string, _pwd?: string, options?: any): any;
+    symmetricEncryptToDES(value?: string, pwd?: string, options?: any): string;
     /**
-     * symmetricEncryptToRC4
-     * @description 对称加密算法
-     * @param _value 加密的字符串
-     * @param _pwd 密钥
-     * @param options
-     * @return 加密后的字符串
+     * RC4 对称加密
+     * @description 使用 RC4 算法进行对称加密
+     * @param value - 要加密的字符串
+     * @param pwd - 密钥
+     * @param options - 加密选项
+     * @returns 加密后的字符串
      */
-    symmetricEncryptToRC4(_value?: string, _pwd?: string, options?: any): any;
+    symmetricEncryptToRC4(value?: string, pwd?: string, options?: any): string;
     /**
-     * symmetricEncryptToRabbit
-     * @description 对称加密算法
-     * @param _value 加密的字符串
-     * @param _pwd 密钥
-     * @param options
-     * @return 加密后的字符串
+     * Rabbit 对称加密
+     * @description 使用 Rabbit 算法进行对称加密
+     * @param value - 要加密的字符串
+     * @param pwd - 密钥
+     * @param options - 加密选项
+     * @returns 加密后的字符串
      */
-    symmetricEncryptToRabbit(_value?: string, _pwd?: string, options?: any): any;
+    symmetricEncryptToRabbit(value?: string, pwd?: string, options?: any): string;
     /**
-     * symmetricEncryptToTripleDes
-     * @description 对称加密算法
-     * @param _value 加密的字符串
-     * @param _pwd 密钥
-     * @param options
-     * @return 加密后的字符串
+     * Triple DES 对称加密
+     * @description 使用 Triple DES 算法进行对称加密
+     * @param value - 要加密的字符串
+     * @param pwd - 密钥
+     * @param options - 加密选项
+     * @returns 加密后的字符串
      */
-    symmetricEncryptToTripleDes(_value?: string, _pwd?: string, options?: any): any;
+    symmetricEncryptToTripleDes(value?: string, pwd?: string, options?: any): string;
     /**
-     * symmetricDecryptToAES
-     * @description 对称解密算法
-     * @param _value 加密的字符串
-     * @param _pwd 密钥
-     * @param options
-     * @return 解密后的字符串
+     * AES 对称解密
+     * @description 使用 AES 算法进行对称解密
+     * @param value - 要解密的字符串
+     * @param pwd - 密钥
+     * @param options - 解密选项
+     * @returns 解密后的字符串
+     * @example
+     * ```typescript
+     * symmetricDecryptToAES(encryptedString, 'secretKey') // 返回解密后的字符串
+     * ```
      */
-    symmetricDecryptToAES(_value?: string, _pwd?: string, options?: any): any;
+    symmetricDecryptToAES(value?: string, pwd?: string, options?: any): string;
     /**
-     * symmetricDecryptToDES
-     * @description 对称解密算法
-     * @param _value 加密的字符串
-     * @param _pwd 密钥
-     * @param options
-     * @return 解密后的字符串
+     * DES 对称解密
+     * @description 使用 DES 算法进行对称解密
+     * @param value - 要解密的字符串
+     * @param pwd - 密钥
+     * @param options - 解密选项
+     * @returns 解密后的字符串
      */
-    symmetricDecryptToDES(_value?: string, _pwd?: string, options?: any): any;
+    symmetricDecryptToDES(value?: string, pwd?: string, options?: any): string;
     /**
-     * symmetricDecryptToRC4
-     * @description 对称解密算法
-     * @param _value 加密的字符串
-     * @param _pwd 密钥
-     * @param options
-     * @return 解密后的字符串
+     * RC4 对称解密
+     * @description 使用 RC4 算法进行对称解密
+     * @param value - 要解密的字符串
+     * @param pwd - 密钥
+     * @param options - 解密选项
+     * @returns 解密后的字符串
      */
-    symmetricDecryptToRC4(_value?: string, _pwd?: string, options?: any): any;
+    symmetricDecryptToRC4(value?: string, pwd?: string, options?: any): string;
     /**
-     * symmetricDecryptToRabbit
-     * @description 对称解密算法
-     * @param _value 加密的字符串
-     * @param _pwd 密钥
-     * @param options
-     * @return 解密后的字符串
+     * Rabbit 对称解密
+     * @description 使用 Rabbit 算法进行对称解密
+     * @param value - 要解密的字符串
+     * @param pwd - 密钥
+     * @param options - 解密选项
+     * @returns 解密后的字符串
      */
-    symmetricDecryptToRabbit(_value?: string, _pwd?: string, options?: any): any;
+    symmetricDecryptToRabbit(value?: string, pwd?: string, options?: any): string;
     /**
-     * symmetricDecryptToTripleDes
-     * @description 对称解密算法
-     * @param _value 加密的字符串
-     * @param _pwd 密钥
-     * @param options
-     * @return 解密后的字符串
+     * Triple DES 对称解密
+     * @description 使用 Triple DES 算法进行对称解密
+     * @param value - 要解密的字符串
+     * @param pwd - 密钥
+     * @param options - 解密选项
+     * @returns 解密后的字符串
      */
-    symmetricDecryptToTripleDes(_value?: string, _pwd?: string, options?: any): any;
+    symmetricDecryptToTripleDes(value?: string, pwd?: string, options?: any): string;
     /**
-     * dataUrlToBlob
-     * @description base64转换成Blob
-     * @param {string} dataUrl base64
-     * @return {Blob}
+     * 将 Data URL 转换为 Blob 对象
+     * @description 将 Base64 格式的 Data URL 转换为 Blob 对象
+     * @param dataUrl - Base64 格式的 Data URL
+     * @returns Blob 对象，如果转换失败返回 null
+     * @example
+     * ```typescript
+     * dataUrlToBlob('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==')
+     * ```
      */
     dataUrlToBlob(dataUrl: string): Blob | null;
 };

@@ -1,3 +1,3 @@
 import type { DelConfirmComponent } from './types';
-declare const DelConform: DelConfirmComponent;
-export default DelConform;
+declare const DelConfirm: DelConfirmComponent;
+export default DelConfirm;

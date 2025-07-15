@@ -15,57 +15,85 @@
     flex-shrink: 0;
 
     > .adhere-ui-playground-anchor-navigation-anchor {
-      margin: 0;
-      padding: 0;
-      font-size: var(--adhere-font-size-sm);
+      //margin: 0;
+      margin: var(--anchor-navigation-anchor-margin, 0);
+      //padding: 0;
+      padding: var(--anchor-navigation-anchor-padding, 0);
+      //font-size: var(--adhere-font-size-sm);
+      font-size: var(--anchor-navigation-anchor-font-size, var(--adhere-font-size-sm));
       list-style: none;
-      border-left: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+      //border-left: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+      border-left: var(
+        --anchor-navigation-anchor-border-left,
+        var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+      );
 
       &.adhere-ui-playground-anchor-navigation-affix {
         position: fixed;
-        z-index: 9999;
-        padding: 16px 0;
+        //z-index: 9999;
+        z-index: var(--anchor-navigation-affix-z-index, 9999);
+        //padding: 16px 0;
+        padding: var(--anchor-navigation-affix-padding, 16px 0);
         //background-color: #fff;
       }
 
       > li {
-        margin-left: 0;
-        padding-left: 0;
-        line-height: 1.5;
+        //margin-left: 0;
+        margin-left: var(--anchor-navigation-anchor-li-margin-left, 0);
+        //padding-left: 0;
+        padding-left: var(--anchor-navigation-anchor-li-padding-left, 0);
+        //line-height: 1.5;
+        line-height: var(--anchor-navigation-anchor-li-line-height, 1.5);
         list-style: none;
 
         &:not(:last-child) {
-          margin-bottom: 4px;
+          //margin-bottom: 4px;
+          margin-bottom: var(--anchor-navigation-anchor-li-not-last-child-margin-bottom, 4px);
         }
 
         &:hover {
           cursor: pointer;
 
           > a {
-            color: var(--adhere-color-primary);
+            //color: var(--adhere-color-primary);
+            color: var(--anchor-navigation-anchor-li-hover-a-color, var(--adhere-color-primary));
           }
         }
 
         &.adhere-ui-playground-anchor-navigation-active {
           > a {
-            color: var(--adhere-color-primary);
-            border-left: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-primary);
+            //color: var(--adhere-color-primary);
+            color: var(--anchor-navigation-active-a-color, var(--adhere-color-primary));
             text-decoration: none;
+            //border-left: var(--adhere-line-width) var(--adhere-line-type)
+            //  var(--adhere-color-primary);
+            border-left: var(
+              --anchor-navigation-active-a-border-left,
+              var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-primary)
+            );
           }
         }
 
         > a {
           display: block;
-          width: 110px;
-          margin-left: -1px;
-          padding-left: 16px;
+          //width: 110px;
+          width: var(--anchor-navigation-anchor-li-a-width, 0);
+          //margin-left: -1px;
+          margin-left: var(--anchor-navigation-anchor-li-a-width, -1px);
+          //padding-left: 16px;
+          padding-left: var(--anchor-navigation-anchor-li-a-padding-left, 16px);
           overflow: hidden;
-          color: var(--adhere-color-text);
+          //color: var(--adhere-color-text);
+          color: var(--anchor-navigation-anchor-li-a-color, var(--adhere-color-text));
           white-space: nowrap;
-          text-overflow: ellipsis;
-          border-left: var(--adhere-line-width) var(--adhere-line-type) transparent;
-          transition: all 0.3s ease;
           text-decoration: none;
+          text-overflow: ellipsis;
+          //border-left: var(--adhere-line-width) var(--adhere-line-type) transparent;
+          border-left: var(
+            --anchor-navigation-anchor-li-a-border-left,
+            var(--adhere-line-width) var(--adhere-line-type) transparent
+          );
+          transition: all 0.3s ease;
         }
       }
     }

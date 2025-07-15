@@ -6,18 +6,20 @@ import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import { FlexContext } from './Context';
 import { useGap } from './Hooks';
 import { getGridStyle } from './Util';
-import { AutoProps, ContextType } from './types';
+import type { AutoProps, ContextType } from './types';
 
 const selectorPrefix = 'adhere-ui-flex-layout-auto';
 
 /**
- * Auto
- * @param {AutoProps} props
- * @param ref
- * @constructor
+ * Auto 组件
+ * 自动适应尺寸的布局组件，支持栅格系统
+ * 
+ * @param {AutoProps} props - 组件属性
+ * @param {React.Ref<HTMLDivElement>} ref - 组件引用
+ * @returns {JSX.Element} Auto 组件
  */
 const Auto = memo<AutoProps>(
-  forwardRef<any, AutoProps>((props, ref) => {
+  forwardRef<HTMLDivElement, AutoProps>((props, ref) => {
     const {
       children,
       className,
@@ -39,11 +41,13 @@ const Auto = memo<AutoProps>(
 
     const isUseGap = useGap(gutter);
 
-    let isUseFit = false;
-    if (!isUseNormal) {
-      isUseFit = fit;
-    }
+    // 计算是否使用 fit 模式
+    const isUseFit = useMemo(() => {
+      if (isUseNormal) return false;
+      return fit;
+    }, [isUseNormal, fit]);
 
+    // 计算类名
     const classList = useMemo(
       () =>
         classNames(selectorPrefix, className, {
@@ -53,9 +57,10 @@ const Auto = memo<AutoProps>(
           [`${selectorPrefix}-normal`]: isUseNormal,
           [`${selectorPrefix}-min-fill`]: isUseMinFill,
         }),
-      [className, autoFixed, fit, isUseGap],
+      [className, autoFixed, isUseFit, isUseGap, isUseNormal, isUseMinFill],
     );
 
+    // 计算样式
     const styleList = useMemo(() => {
       const defaultStyle = style ?? {};
 

@@ -1,29 +1,29 @@
-import type { MiddleWare } from '../../types';
+import type { Middleware } from '../../types';
+import type Context from '../../Context';
 
 /**
- * Compose
- * @description 组合中间件
- * @param middleWares
- * @constructor
+ * 组合中间件函数
+ * @description 将多个中间件函数组合成一个函数，按顺序执行
+ * @param middlewares - 中间件数组
+ * @returns 组合后的中间件函数
  */
-function Compose(middleWares: MiddleWare[]) {
-  return (ctx, next?: () => Promise<void> | void) =>
+function Compose(middlewares: Middleware[]) {
+  return (ctx: Context, next?: () => Promise<void> | void) =>
     new Promise<void>((resolve) => {
       let index = -1;
 
       // 中间件的返回值
       const middleWareQueueResults: unknown[] = Array.from({
-        length: middleWares.length,
+        length: middlewares.length,
       }).fill(undefined);
 
       /**
-       * loop
-       * @description 迭代方法
+       * 迭代方法
+       * @returns unknown - 中间件执行结果
        */
       const loop = (): unknown => {
         // 迭代完成了
-
-        if (index + 1 >= middleWares.length) {
+        if (index + 1 >= middlewares.length) {
           Promise.all(middleWareQueueResults.filter((t) => t instanceof Promise)).then(() => {
             // 真正的迭代完成
             if (next) {
@@ -47,8 +47,8 @@ function Compose(middleWares: MiddleWare[]) {
         index++;
 
         // 调用中间件方法
-        // @ts-ignore
-        middleWareQueueResults[index] = middleWares[index](ctx, () => loop());
+        // @ts-ignore - 中间件可能返回Promise或void
+        middleWareQueueResults[index] = middlewares[index](ctx, () => loop());
 
         return middleWareQueueResults[index];
       };

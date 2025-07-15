@@ -1,15 +1,43 @@
 import React from 'react';
-import type { TBLRCLayoutProps } from '../types';
+import type { AutoProps, CenterProps, FlexLayoutProps, TBLRCLayoutProps, TBLRProps } from '../types';
 /**
- * TCRLayout
- * @param lProps
- * @param tProps
- * @param cProps
- * @param autoWrapProps
- * @param autoInnerProps
- * @param props
- * @param ref
- * @constructor
+ * TCRLayout 组件属性
+ * 顶部-中心-右侧布局组件，支持嵌套布局
  */
-declare const TCRLayout: React.NamedExoticComponent<TBLRCLayoutProps & React.RefAttributes<HTMLDivElement>>;
+export interface TCRLayoutProps extends TBLRCLayoutProps {
+    /** 右侧区域属性 */
+    rProps?: TBLRProps;
+    /** 右侧分割线 */
+    rSplit?: React.ReactNode;
+    /** 顶部区域属性 */
+    tProps?: TBLRProps;
+    /** 顶部分割线 */
+    tSplit?: React.ReactNode;
+    /** 中心区域属性 */
+    cProps?: CenterProps;
+    /** 自动包装属性 */
+    autoWrapProps?: AutoProps;
+    /** 自动内部属性 */
+    autoInnerProps?: FlexLayoutProps;
+}
+/**
+ * TCRLayout 组件
+ * 顶部-中心-右侧布局组件，用于创建复杂的嵌套布局，包含顶部区域、中心区域和右侧区域
+ *
+ * @example
+ * ```tsx
+ * <TCRLayout
+ *   tProps={{ span: 6, children: <div>顶部区域</div> }}
+ *   cProps={{ children: <div>中心区域</div> }}
+ *   rProps={{ span: 6, children: <div>右侧区域</div> }}
+ *   tSplit={<div>顶部分割线</div>}
+ *   rSplit={<div>右侧分割线</div>}
+ * />
+ * ```
+ *
+ * @param props - 组件属性
+ * @param ref - 组件引用
+ * @returns JSX.Element
+ */
+declare const TCRLayout: React.NamedExoticComponent<TCRLayoutProps & React.RefAttributes<HTMLDivElement>>;
 export default TCRLayout;

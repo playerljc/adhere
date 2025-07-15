@@ -1,112 +1,107 @@
 import Util from '@baifendian/adhere-util';
 
 import DictReactComponent, { set, useDict } from './react';
-import type { HandlerTarget, IConfig, IDict, LabelValue, Target } from './types';
+import type {
+  FunctionParamsCache,
+  HandlerTarget,
+  IConfig,
+  IDict,
+  LabelValue,
+  ModuleDictEntry,
+  ModuleDictExpansionContext,
+  NamesObject,
+  Target,
+  ValuesObject,
+} from './types';
 
-const target: Target<any> = {};
+/** Dictionary target object for storing values */
+const target: Target = {};
 
+/** Dictionary handler target object for storing handlers */
 const handlerTarget: HandlerTarget = {};
 
-const funParams = new Map();
+/** Function parameters cache for memoization */
+const funParams: FunctionParamsCache = new Map();
 
+/** Default configuration for dictionary system */
 const defaultConfig: IConfig = {
   isUseMemo: true,
 };
 
+/** Current configuration for dictionary system */
 let config: IConfig = defaultConfig;
 
 /**
- * diffParams
- * @param {Array} preArgArray
- * @param {Array} curArgArray
- * @return {boolean}
+ * Compare two argument arrays to determine if they are identical
+ * @param preArgArray - Previous argument array
+ * @param curArgArray - Current argument array
+ * @returns True if arrays are identical, false otherwise
  */
-function diffParams(preArgArray: any[], curArgArray: any[]): boolean {
+function diffParams(preArgArray: readonly any[], curArgArray: readonly any[]): boolean {
   if (preArgArray.length !== curArgArray.length) return false;
-
-  let flag = false;
 
   for (let i = 0; i < preArgArray.length; i++) {
     if (preArgArray[i] !== curArgArray[i]) {
-      flag = true;
-
-      break;
+      return false;
     }
   }
 
-  return !flag;
+  return true;
 }
 
 /**
- * CreateFunProxy
- * @param {Function} fun
- * @param {String} property
+ * Create a function proxy for memoization
+ * @param fun - Function to proxy
+ * @param property - Property name for caching
+ * @returns Proxied function with memoization capabilities
  */
-function CreateFunProxy(fun: Function, property: string) {
+function CreateFunProxy<T extends (...args: any[]) => any>(fun: T, property: string): T {
   return new Proxy(fun, {
     apply(funTarget, thisArg, argArray) {
       const context = thisArg || window;
 
-      let result = null;
-
       const entry = funParams.get(property);
 
-      if (!entry) {
-        result = funTarget.apply(context, argArray);
-
+      if (!entry || !diffParams(entry.argArray, argArray)) {
+        const result = funTarget.apply(context, argArray);
         funParams.set(property, {
           argArray,
           result,
         });
-      } else if (!diffParams(entry.argArray, argArray)) {
-        result = funTarget.apply(context, argArray);
-
-        funParams.set(property, {
-          argArray,
-          result,
-        });
-      } else {
-        result = entry.result;
+        return result;
       }
 
-      return result;
+      return entry.result;
     },
-  });
+  }) as T;
 }
 
 /**
- * initValue
- * @param p
+ * Initialize dictionary value with proper memoization handling
+ * @param p - Dictionary property name
+ * @returns Initialized dictionary value
+ * @throws Error if dictionary handler doesn't exist
  */
-function initValue(p: string) {
-  const handler = Dict.handlers[p]!;
+function initValue(p: string): any {
+  const handler = Dict.handlers[p];
 
-  let value: any = null;
-
-  // 返回值 - 一般都不是函数
   if (!handler) {
-    throw new Error(`${p} dict does not exist`);
+    throw new Error(`Dictionary handler for '${p}' does not exist`);
   }
 
-  // try {
-  value = handler();
-  // } catch (error) {
-  //   throw new Error(`${p} dict does not exist`);
-  // }
+  let value: any = handler();
 
-  // 如果value是函数则默认是缓存的
-  if (value instanceof Function) {
-    // 函数单独的缓存开关
+  // Apply memoization if value is a function
+  if (typeof value === 'function') {
+    // Check handler-specific memoization setting first
     if ('isUseMemo' in handler) {
       if (handler.isUseMemo) {
         value = CreateFunProxy(value, p);
       }
     } else {
-      // 总体的缓存开关
-      if ('isUseMemo' in config) {
-        if (config.isUseMemo) {
-          value = CreateFunProxy(value, p);
-        }
+      // Fall back to global memoization setting
+      if (config.isUseMemo) {
+        value = CreateFunProxy(value, p);
       }
     }
   }
@@ -115,166 +110,28 @@ function initValue(p: string) {
 }
 
 /**
- * genDictFullName
- * @param {string} name
- * @return {string}
+ * Generate unique dictionary full name with UUID prefix
+ * @param name - Base dictionary name
+ * @returns Unique dictionary name with UUID prefix
  */
 function genDictFullName(name: string): string {
   return `${Util.uuid()}_${name}`;
 }
 
-type NS = Partial<{ [key: string]: ReturnType<typeof genDictFullName> }>;
-
-type VS<
-  T extends Record<
-    string,
-    {
-      handler: H;
-    }
-  >,
-  H extends (...args: any[]) => ReturnType<H>,
-> = Partial<{
-  [K in keyof T]: { value: ReturnType<T[K]['handler']> };
-}>;
-
-type TV<H> = {
-  // 是否是静态字典
-  isStatic?: boolean;
-  // 字典代码的句柄函数
-  handler: H;
-  // 是否立即访问(仅对值不是函数类型的起作用)
-  isImmediateAccess?: boolean;
-};
-
 /**
- * genModuleDict
- * @param handlerOptions
- * @param {boolean} isUseMemo
+ * Check if value is a LabelValue array
+ * @param originValue - Value to check
+ * @returns True if value is a LabelValue array
  */
-export function genModuleDict<
-  T extends {
-    [key: string]: TV<H>;
-  },
-  H extends (...args: any[]) => ReturnType<H>,
->(handlerOptions: T, isUseMemo?: boolean) {
-  const moduleDictExpansions: Array<
-    (args: { entry: TV<H>; name: string; names: NS; values: VS<T, H> }) => void
-  > = [
-    // 如果是静态数据，对labelValue数据进行扩展，扩展出labelValue的Map形式，外部的handler不能使用解构出来的values和names
-    ({ name, entry, names, values }) => {
-      // 如果是静态的
-      if (!!entry?.isStatic) {
-        const value = entry.handler({ names, values });
-
-        // 是否是labelValue的数组
-        if (isLabelValueBeanArray(value)) {
-          const labelValueMapName = `${name}Map`;
-          const dictName = genDictFullName(labelValueMapName);
-          names[labelValueMapName] = dictName;
-
-          // 字典值的访问器
-          Object.defineProperty(values, labelValueMapName, {
-            get() {
-              return Dict.value[dictName];
-            },
-          });
-
-          // 创建字典
-          Dict.handlers[dictName] = () =>
-            genLabelValueBeanMap(entry.handler({ names, values }) as LabelValue[]);
-
-          // 如果是立即访问
-          if (!!entry?.isImmediateAccess) {
-            values[labelValueMapName]?.value;
-          }
-        }
-      }
-    },
-  ];
-
-  // 扩展字典
-  const targetHandlerOptions: T = handlerOptions;
-
-  // 生成
-  const { names, values } = Object.keys(targetHandlerOptions).reduce<{
-    names: NS;
-    values: VS<T, H>;
-  }>(
-    ({ names, values }, name) => {
-      const entry = targetHandlerOptions[name];
-
-      // 生成字典实际的名称
-      const dictName = genDictFullName(name);
-
-      // 字典名称访问器
-      names[name] = dictName;
-
-      // 字典值的访问器
-      Object.defineProperty(values, name, {
-        get() {
-          return Dict.value[dictName];
-        },
-      });
-
-      // 创建字典
-      Dict.handlers[dictName] = () => targetHandlerOptions[name].handler({ names, values });
-
-      // 对静态字典进行扩展
-      if (!!entry?.isStatic) {
-        moduleDictExpansions.forEach((moduleDictExpansion) =>
-          moduleDictExpansion({ name, entry, names, values }),
-        );
-      }
-
-      // 如果是立即访问
-      if (!!entry?.isImmediateAccess) {
-        values[name]?.value;
-      }
-
-      return {
-        names,
-        values,
-      };
-    },
-    {
-      names: {},
-      values: {},
-    },
-  );
-
-  // 初始化字典
-  Dict.init(
-    [
-      {
-        initStatic: () => {},
-        initRemote: () => {},
-      },
-    ],
-    {
-      isUseMemo: !!isUseMemo,
-    },
-  );
-
-  return {
-    names,
-    values,
-  };
-}
-
-/**
- * isLabelValueBeanArray
- * @description 是否是labelValueBean的数组
- * @param originValue any
- * @return {boolean}
- */
-function isLabelValueBeanArray(originValue: any): boolean {
+function isLabelValueBeanArray(originValue: any): originValue is LabelValue[] {
   if (Array.isArray(originValue)) {
-    return (originValue as Partial<LabelValue>[]).every(
+    return originValue.every(
       (t) =>
         typeof t === 'object' &&
+        t !== null &&
         'label' in t &&
         'value' in t &&
-        ['string'].includes(typeof t.label) &&
+        typeof t.label === 'string' &&
         ['string', 'number', 'symbol'].includes(typeof t.value),
     );
   }
@@ -283,94 +140,186 @@ function isLabelValueBeanArray(originValue: any): boolean {
 }
 
 /**
- * genLabelValueBeanMap
- * @description 将labelValueBean数组转换成map
+ * Convert LabelValue array to Map for efficient lookups
+ * @param originValue - LabelValue array
+ * @returns Map with value as key and label as value
  */
-function genLabelValueBeanMap<T extends LabelValue>(originValue: T[]) {
+function genLabelValueBeanMap<T extends LabelValue>(originValue: T[]): Map<T['value'], T['label']> {
   return originValue.reduce<Map<T['value'], T['label']>>((map, { label, value }) => {
     map.set(value, label);
     return map;
   }, new Map());
 }
 
+/**
+ * Generate module dictionary with automatic expansion capabilities
+ * @param handlerOptions - Dictionary handler options
+ * @param isUseMemo - Whether to use memoization (overrides global config)
+ * @returns Object containing names and values accessors
+ */
+export function genModuleDict<
+  T extends Record<string, ModuleDictEntry<any>>,
+  H extends (...args: any[]) => any,
+>(
+  handlerOptions: T,
+  isUseMemo?: boolean,
+): {
+  names: NamesObject;
+  values: ValuesObject<T>;
+} {
+  const moduleDictExpansions: Array<(args: ModuleDictExpansionContext<T, H>) => void> = [
+    // Expand static dictionaries with labelValue data
+    ({ name, entry, names, values }) => {
+      if (entry?.isStatic) {
+        const value = entry.handler({ names, values });
+
+        // Create Map version for LabelValue arrays
+        if (isLabelValueBeanArray(value)) {
+          const labelValueMapName = `${name}Map`;
+          const dictName = genDictFullName(labelValueMapName);
+          names[labelValueMapName] = dictName;
+
+          // Create value accessor
+          Object.defineProperty(values, labelValueMapName, {
+            get() {
+              return Dict.value[dictName];
+            },
+          });
+
+          // Create dictionary handler
+          Dict.handlers[dictName] = () =>
+            genLabelValueBeanMap(entry.handler({ names, values }) as LabelValue[]);
+
+          // Immediate access if configured
+          if (entry?.isImmediateAccess) {
+            values[labelValueMapName]?.value;
+          }
+        }
+      }
+    },
+  ];
+
+  // Generate dictionary structure
+  const { names, values } = Object.keys(handlerOptions).reduce<{
+    names: NamesObject;
+    values: ValuesObject<T>;
+  }>(
+    ({ names, values }, name) => {
+      const entry = handlerOptions[name];
+      const dictName = genDictFullName(name);
+
+      // Create name accessor
+      names[name] = dictName;
+
+      // Create value accessor
+      Object.defineProperty(values, name, {
+        get() {
+          return Dict.value[dictName];
+        },
+      });
+
+      // Create dictionary handler
+      Dict.handlers[dictName] = () => entry.handler({ names, values });
+
+      // Apply expansions for static dictionaries
+      if (entry?.isStatic) {
+        moduleDictExpansions.forEach((moduleDictExpansion) =>
+          moduleDictExpansion({ name, entry, names, values }),
+        );
+      }
+
+      // Immediate access if configured
+      if (entry?.isImmediateAccess) {
+        values[name]?.value;
+      }
+
+      return { names, values };
+    },
+    { names: {}, values: {} },
+  );
+
+  // Initialize dictionary
+  Dict.init(
+    [
+      {
+        initStatic: () => {},
+        initRemote: () => {},
+      },
+    ],
+    {
+      isUseMemo: isUseMemo ?? config.isUseMemo,
+    },
+  );
+
+  return { names, values };
+}
+
+/**
+ * Main Dictionary object with all functionality
+ * Provides a centralized interface for dictionary management
+ */
 const Dict = {
   /**
-   * handler - 字典的定义对象
+   * Dictionary handlers - stores function definitions with memoization support
    */
   handlers: new Proxy<HandlerTarget>(handlerTarget, {
     set(target, property, value, receiver) {
       const result = Reflect.set(target, property, value, receiver);
 
-      // 原始值
-      // const originValue = value();
-
-      // 1.如果是labelValue数组则转换成对应的labelValueMap
-      // if (isLabelValueBeanArray(originValue)) {
-      //   Dict.handlers[`${property as string}Map`] = () => genLabelValueBeanMap(originValue);
-      // }
-
-      // 下面可能还有其他的处理
-
-      // React组件处理
-      // @ts-ignore
-      set(property);
+      // React component processing
+      set(property as string);
 
       return result;
     },
   }),
+
   /**
-   * value - 字典的使用对象
+   * Dictionary values - provides access to dictionary data with lazy initialization
    */
   value: new Proxy(target, {
     get(target, property: string, receiver) {
-      // 如果p属性没在t中
       if (!(property in target)) {
         receiver[property] = {
-          // 给例如SystemXXX赋值，property是SystemXXX
           value: initValue(property),
           refresh() {
-            // receiver[property].value = initValue(property, params);
             delete receiver[property];
             return this;
           },
         };
       }
 
-      // 此处直接获取相当于只用一次
       return Reflect.get(target, property, receiver);
     },
   }),
+
   /**
-   * init - 字典的初始化
-   * @param {
-   *   {
-   *    initStatic: () => void;
-   *    initRemote: () => void;
-   *   }[]
-   * } dictArray 字典定义的集合
-   * @param {IConfig} _config 字典的配置
-   * @return {void}
+   * Initialize dictionaries with configuration
+   * @param dictArray - Array of dictionary definitions
+   * @param _config - Dictionary configuration
    */
   init: (dictArray: IDict[] = [], _config: IConfig = defaultConfig): void => {
     config = _config;
 
-    (dictArray ?? []).forEach((dict) => {
+    dictArray.forEach((dict) => {
       if (dict) {
-        dict?.initStatic?.();
-        dict?.initRemote?.();
+        dict.initStatic?.();
+        dict.initRemote?.();
       }
     });
   },
+
   /**
-   * React - 字典对应的React组件
+   * React components for dictionaries
    */
   React: DictReactComponent,
+
   /**
-   * useDict - 字典的hook
+   * Hook for using dictionaries in React components
    */
   useDict,
+
   /**
-   * genModuleDict - 字典生成器
+   * Generate module dictionaries
    */
   genModuleDict,
 };

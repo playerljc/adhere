@@ -1,279 +1,728 @@
 import Browser from './browser';
-
-let browserIns;
-
-type browser = {
-  browser: string;
-  device: string;
-  engine: string;
-  language: string;
-  os: string;
-  osVersion: string;
-  version: string;
-};
+import type { BrowserInfo, IBrowserSniff } from './types';
 
 /**
- * {
- *  browser: "Chrome"
-    device: "PC"
-    engine: "Blink"
-    language: "zh_CN"
-    os: "Windows"
-    osVersion: "10.0"
-    version: "94.0.4606.81"
+ * 浏览器嗅探器单例实例
  */
-export default {
-  getInstance(): browser {
-    if (!browserIns) {
-      console.log('Browser', Browser);
+let browserInstance: BrowserInfo | undefined;
 
-      browserIns = new Browser();
+/**
+ * 浏览器嗅探工具类
+ * 
+ * 提供浏览器信息检测功能，包括：
+ * - 浏览器类型检测
+ * - 设备类型检测  
+ * - 渲染引擎检测
+ * - 操作系统检测
+ * - 版本信息获取
+ * 
+ * @example
+ * ```typescript
+ * import Browsersniff from '@baifendian/adhere-util-browsersniff';
+ * 
+ * // 获取浏览器信息
+ * const browserInfo = Browsersniff.getInstance();
+ * console.log(browserInfo.browser); // 'Chrome'
+ * console.log(browserInfo.version); // '94.0.4606.81'
+ * 
+ * // 检测特定浏览器
+ * if (Browsersniff.isBrowserChrome()) {
+ *   console.log('当前是Chrome浏览器');
+ * }
+ * 
+ * // 检测设备类型
+ * if (Browsersniff.isDeviceMobile()) {
+ *   console.log('当前是移动设备');
+ * }
+ * ```
+ */
+class BrowserSniff implements IBrowserSniff {
+  /**
+   * 获取浏览器信息实例
+   * 
+   * 返回包含完整浏览器信息的对象，包括：
+   * - browser: 浏览器名称
+   * - device: 设备类型 (PC/Mobile/Tablet)
+   * - engine: 渲染引擎
+   * - language: 语言设置
+   * - os: 操作系统
+   * - osVersion: 操作系统版本
+   * - version: 浏览器版本
+   * 
+   * @returns 浏览器信息对象
+   * 
+   * @example
+   * ```typescript
+   * const info = Browsersniff.getInstance();
+   * console.log(info);
+   * // {
+   * //   browser: "Chrome",
+   * //   device: "PC",
+   * //   engine: "Blink",
+   * //   language: "zh_CN",
+   * //   os: "Windows",
+   * //   osVersion: "10.0",
+   * //   version: "94.0.4606.81"
+   * // }
+   * ```
+   */
+  getInstance(): BrowserInfo {
+    if (!browserInstance) {
+      browserInstance = new Browser();
     }
+    return browserInstance as BrowserInfo;
+  }
 
-    return browserIns as unknown as browser;
-  },
-  browser() {
+  /**
+   * 获取浏览器名称
+   * @returns 浏览器名称
+   */
+  browser(): string {
     return this.getInstance().browser;
-  },
-  device() {
+  }
+
+  /**
+   * 获取设备类型
+   * @returns 设备类型 (PC/Mobile/Tablet)
+   */
+  device(): string {
     return this.getInstance().device;
-  },
-  engine() {
+  }
+
+  /**
+   * 获取渲染引擎
+   * @returns 渲染引擎名称
+   */
+  engine(): string {
     return this.getInstance().engine;
-  },
-  language() {
+  }
+
+  /**
+   * 获取语言设置
+   * @returns 语言代码 (如: zh_CN, en_US)
+   */
+  language(): string {
     return this.getInstance().language;
-  },
-  os() {
+  }
+
+  /**
+   * 获取操作系统
+   * @returns 操作系统名称
+   */
+  os(): string {
     return this.getInstance().os;
-  },
-  osVersion() {
+  }
+
+  /**
+   * 获取操作系统版本
+   * @returns 操作系统版本号
+   */
+  osVersion(): string {
     return this.getInstance().osVersion;
-  },
-  version() {
+  }
+
+  /**
+   * 获取浏览器版本
+   * @returns 浏览器版本号
+   */
+  version(): string {
     return this.getInstance().version;
-  },
+  }
 
+  // ==================== 浏览器检测方法 ====================
+
+  /**
+   * 检测是否为Safari浏览器
+   * @returns 是否为Safari浏览器
+   */
   isBrowserSafari(): boolean {
-    return this.browser().toLowerCase().indexOf('safari') !== -1;
-  },
+    return this.browser().toLowerCase().includes('safari');
+  }
+
+  /**
+   * 检测是否为Chrome浏览器
+   * @returns 是否为Chrome浏览器
+   */
   isBrowserChrome(): boolean {
-    return this.browser().toLowerCase().indexOf('chrome') !== -1;
-  },
+    return this.browser().toLowerCase().includes('chrome');
+  }
+
+  /**
+   * 检测是否为IE浏览器
+   * @returns 是否为IE浏览器
+   */
   isBrowserIE(): boolean {
-    return this.browser().toLowerCase().indexOf('ie') !== -1;
-  },
+    return this.browser().toLowerCase().includes('ie');
+  }
+
+  /**
+   * 检测是否为Edge浏览器
+   * @returns 是否为Edge浏览器
+   */
   isBrowserEdge(): boolean {
-    return this.browser().toLowerCase().indexOf('edge') !== -1;
-  },
+    return this.browser().toLowerCase().includes('edge');
+  }
+
+  /**
+   * 检测是否为Firefox浏览器
+   * @returns 是否为Firefox浏览器
+   */
   isBrowserFirefox(): boolean {
-    return this.browser().toLowerCase().indexOf('firefox') !== -1;
-  },
+    return this.browser().toLowerCase().includes('firefox');
+  }
+
+  /**
+   * 检测是否为Firefox Focus浏览器
+   * @returns 是否为Firefox Focus浏览器
+   */
   isBrowserFirefoxFocus(): boolean {
-    return this.browser().toLowerCase().indexOf('firefox focus') !== -1;
-  },
+    return this.browser().toLowerCase().includes('firefox focus');
+  }
+
+  /**
+   * 检测是否为Chromium浏览器
+   * @returns 是否为Chromium浏览器
+   */
   isBrowserChromium(): boolean {
-    return this.browser().toLowerCase().indexOf('chromium') !== -1;
-  },
+    return this.browser().toLowerCase().includes('chromium');
+  }
+
+  /**
+   * 检测是否为Opera浏览器
+   * @returns 是否为Opera浏览器
+   */
   isBrowserOpera(): boolean {
-    return this.browser().toLowerCase().indexOf('opera') !== -1;
-  },
+    return this.browser().toLowerCase().includes('opera');
+  }
+
+  /**
+   * 检测是否为Vivaldi浏览器
+   * @returns 是否为Vivaldi浏览器
+   */
   isBrowserVivaldi(): boolean {
-    return this.browser().toLowerCase().indexOf('vivaldi') !== -1;
-  },
+    return this.browser().toLowerCase().includes('vivaldi');
+  }
+
+  /**
+   * 检测是否为Yandex浏览器
+   * @returns 是否为Yandex浏览器
+   */
   isBrowserYandex(): boolean {
-    return this.browser().toLowerCase().indexOf('yandex') !== -1;
-  },
+    return this.browser().toLowerCase().includes('yandex');
+  }
+
+  /**
+   * 检测是否为Arora浏览器
+   * @returns 是否为Arora浏览器
+   */
   isBrowserArora(): boolean {
-    return this.browser().toLowerCase().indexOf('arora') !== -1;
-  },
+    return this.browser().toLowerCase().includes('arora');
+  }
+
+  /**
+   * 检测是否为Lunascape浏览器
+   * @returns 是否为Lunascape浏览器
+   */
   isBrowserLunascape(): boolean {
-    return this.browser().toLowerCase().indexOf('lunascape') !== -1;
-  },
+    return this.browser().toLowerCase().includes('lunascape');
+  }
+
+  /**
+   * 检测是否为QupZilla浏览器
+   * @returns 是否为QupZilla浏览器
+   */
   isBrowserQupZilla(): boolean {
-    return this.browser().toLowerCase().indexOf('qupzilla') !== -1;
-  },
+    return this.browser().toLowerCase().includes('qupzilla');
+  }
+
+  /**
+   * 检测是否为Coc Coc浏览器
+   * @returns 是否为Coc Coc浏览器
+   */
   isBrowserCocCoc(): boolean {
-    return this.browser().toLowerCase().indexOf('coc coc') !== -1;
-  },
+    return this.browser().toLowerCase().includes('coc coc');
+  }
+
+  /**
+   * 检测是否为Kindle浏览器
+   * @returns 是否为Kindle浏览器
+   */
   isBrowserKindle(): boolean {
-    return this.browser().toLowerCase().indexOf('kindle') !== -1;
-  },
+    return this.browser().toLowerCase().includes('kindle');
+  }
+
+  /**
+   * 检测是否为Iceweasel浏览器
+   * @returns 是否为Iceweasel浏览器
+   */
   isBrowserIceweasel(): boolean {
-    return this.browser().toLowerCase().indexOf('iceweasel') !== -1;
-  },
+    return this.browser().toLowerCase().includes('iceweasel');
+  }
+
+  /**
+   * 检测是否为Konqueror浏览器
+   * @returns 是否为Konqueror浏览器
+   */
   isBrowserKonqueror(): boolean {
-    return this.browser().toLowerCase().indexOf('konqueror') !== -1;
-  },
+    return this.browser().toLowerCase().includes('konqueror');
+  }
+
+  /**
+   * 检测是否为Iceape浏览器
+   * @returns 是否为Iceape浏览器
+   */
   isBrowserIceape(): boolean {
-    return this.browser().toLowerCase().indexOf('iceape') !== -1;
-  },
+    return this.browser().toLowerCase().includes('iceape');
+  }
+
+  /**
+   * 检测是否为SeaMonkey浏览器
+   * @returns 是否为SeaMonkey浏览器
+   */
   isBrowserSeaMonkey(): boolean {
-    return this.browser().toLowerCase().indexOf('seamonkey') !== -1;
-  },
+    return this.browser().toLowerCase().includes('seamonkey');
+  }
+
+  /**
+   * 检测是否为Epiphany浏览器
+   * @returns 是否为Epiphany浏览器
+   */
   isBrowserEpiphany(): boolean {
-    return this.browser().toLowerCase().indexOf('epiphany') !== -1;
-  },
+    return this.browser().toLowerCase().includes('epiphany');
+  }
+
+  /**
+   * 检测是否为360浏览器
+   * @returns 是否为360浏览器
+   */
   isBrowser360(): boolean {
-    return this.browser().toLowerCase().indexOf('360') !== -1;
-  },
+    return this.browser().toLowerCase().includes('360');
+  }
+
+  /**
+   * 检测是否为360极速浏览器
+   * @returns 是否为360极速浏览器
+   */
   isBrowser360EE(): boolean {
-    return this.browser().toLowerCase().indexOf('360ee') !== -1;
-  },
+    return this.browser().toLowerCase().includes('360ee');
+  }
+
+  /**
+   * 检测是否为360安全浏览器
+   * @returns 是否为360安全浏览器
+   */
   isBrowser360SE(): boolean {
-    return this.browser().toLowerCase().indexOf('360se') !== -1;
-  },
+    return this.browser().toLowerCase().includes('360se');
+  }
+
+  /**
+   * 检测是否为UC浏览器
+   * @returns 是否为UC浏览器
+   */
   isBrowserUC(): boolean {
-    return this.browser().toLowerCase().indexOf('uc') !== -1;
-  },
+    return this.browser().toLowerCase().includes('uc');
+  }
+
+  /**
+   * 检测是否为QQ浏览器
+   * @returns 是否为QQ浏览器
+   */
   isBrowserQQBrowser(): boolean {
-    return this.browser().toLowerCase().indexOf('qqbrowser') !== -1;
-  },
+    return this.browser().toLowerCase().includes('qqbrowser');
+  }
+
+  /**
+   * 检测是否为QQ内置浏览器
+   * @returns 是否为QQ内置浏览器
+   */
   isBrowserQQ(): boolean {
-    return this.browser().toLowerCase().indexOf('qq') !== -1;
-  },
+    return this.browser().toLowerCase().includes('qq');
+  }
+
+  /**
+   * 检测是否为百度浏览器
+   * @returns 是否为百度浏览器
+   */
   isBrowserBaidu(): boolean {
-    return this.browser().toLowerCase().indexOf('baidu') !== -1;
-  },
+    return this.browser().toLowerCase().includes('baidu');
+  }
+
+  /**
+   * 检测是否为傲游浏览器
+   * @returns 是否为傲游浏览器
+   */
   isBrowserMaxthon(): boolean {
-    return this.browser().toLowerCase().indexOf('maxthon') !== -1;
-  },
+    return this.browser().toLowerCase().includes('maxthon');
+  }
+
+  /**
+   * 检测是否为搜狗浏览器
+   * @returns 是否为搜狗浏览器
+   */
   isBrowserSogou(): boolean {
-    return this.browser().toLowerCase().indexOf('sogou') !== -1;
-  },
+    return this.browser().toLowerCase().includes('sogou');
+  }
+
+  /**
+   * 检测是否为猎豹浏览器
+   * @returns 是否为猎豹浏览器
+   */
   isBrowserLiebao(): boolean {
-    return this.browser().toLowerCase().indexOf('liebao') !== -1;
-  },
+    return this.browser().toLowerCase().includes('liebao');
+  }
+
+  /**
+   * 检测是否为2345浏览器
+   * @returns 是否为2345浏览器
+   */
   isBrowser2345Explorer(): boolean {
-    return this.browser().toLowerCase().indexOf('2345explorer') !== -1;
-  },
+    return this.browser().toLowerCase().includes('2345explorer');
+  }
+
+  /**
+   * 检测是否为115浏览器
+   * @returns 是否为115浏览器
+   */
   isBrowser115Browser(): boolean {
-    return this.browser().toLowerCase().indexOf('115browser') !== -1;
-  },
+    return this.browser().toLowerCase().includes('115browser');
+  }
+
+  /**
+   * 检测是否为世界之窗浏览器
+   * @returns 是否为世界之窗浏览器
+   */
   isBrowserTheWorld(): boolean {
-    return this.browser().toLowerCase().indexOf('theworld') !== -1;
-  },
+    return this.browser().toLowerCase().includes('theworld');
+  }
+
+  /**
+   * 检测是否为小米浏览器
+   * @returns 是否为小米浏览器
+   */
   isBrowserXiaoMi(): boolean {
-    return this.browser().toLowerCase().indexOf('xiaomi') !== -1;
-  },
+    return this.browser().toLowerCase().includes('xiaomi');
+  }
+
+  /**
+   * 检测是否为夸克浏览器
+   * @returns 是否为夸克浏览器
+   */
   isBrowserQuark(): boolean {
-    return this.browser().toLowerCase().indexOf('quark') !== -1;
-  },
+    return this.browser().toLowerCase().includes('quark');
+  }
+
+  /**
+   * 检测是否为旗鱼浏览器
+   * @returns 是否为旗鱼浏览器
+   */
   isBrowserQiyu(): boolean {
-    return this.browser().toLowerCase().indexOf('qiyu') !== -1;
-  },
+    return this.browser().toLowerCase().includes('qiyu');
+  }
+
+  /**
+   * 检测是否为微信内置浏览器
+   * @returns 是否为微信内置浏览器
+   */
   isBrowserWechat(): boolean {
-    return this.browser().toLowerCase().indexOf('wechat') !== -1;
-  },
+    return this.browser().toLowerCase().includes('wechat');
+  }
+
+  /**
+   * 检测是否为企业微信内置浏览器
+   * @returns 是否为企业微信内置浏览器
+   */
   isBrowserWechatWork(): boolean {
-    return this.browser().toLowerCase().indexOf('wechatwork') !== -1;
-  },
+    return this.browser().toLowerCase().includes('wechatwork');
+  }
+
+  /**
+   * 检测是否为淘宝内置浏览器
+   * @returns 是否为淘宝内置浏览器
+   */
   isBrowserTaobao(): boolean {
-    return this.browser().toLowerCase().indexOf('taobao') !== -1;
-  },
+    return this.browser().toLowerCase().includes('taobao');
+  }
+
+  /**
+   * 检测是否为支付宝内置浏览器
+   * @returns 是否为支付宝内置浏览器
+   */
   isBrowserAlipay(): boolean {
-    return this.browser().toLowerCase().indexOf('alipay') !== -1;
-  },
+    return this.browser().toLowerCase().includes('alipay');
+  }
+
+  /**
+   * 检测是否为微博内置浏览器
+   * @returns 是否为微博内置浏览器
+   */
   isBrowserWeibo(): boolean {
-    return this.browser().toLowerCase().indexOf('weibo') !== -1;
-  },
+    return this.browser().toLowerCase().includes('weibo');
+  }
+
+  /**
+   * 检测是否为豆瓣内置浏览器
+   * @returns 是否为豆瓣内置浏览器
+   */
   isBrowserDouban(): boolean {
-    return this.browser().toLowerCase().indexOf('douban') !== -1;
-  },
+    return this.browser().toLowerCase().includes('douban');
+  }
+
+  /**
+   * 检测是否为苏宁内置浏览器
+   * @returns 是否为苏宁内置浏览器
+   */
   isBrowserSuning(): boolean {
-    return this.browser().toLowerCase().indexOf('suning') !== -1;
-  },
+    return this.browser().toLowerCase().includes('suning');
+  }
+
+  /**
+   * 检测是否为爱奇艺内置浏览器
+   * @returns 是否为爱奇艺内置浏览器
+   */
   isBrowseriQiYi(): boolean {
-    return this.browser().toLowerCase().indexOf('iqiyi') !== -1;
-  },
+    return this.browser().toLowerCase().includes('iqiyi');
+  }
+
+  /**
+   * 检测是否为钉钉内置浏览器
+   * @returns 是否为钉钉内置浏览器
+   */
   isBrowserDingTalk(): boolean {
-    return this.browser().toLowerCase().indexOf('dingtalk') !== -1;
-  },
+    return this.browser().toLowerCase().includes('dingtalk');
+  }
+
+  /**
+   * 检测是否为华为浏览器
+   * @returns 是否为华为浏览器
+   */
   isBrowserHuawei(): boolean {
-    return this.browser().toLowerCase().indexOf('huawei') !== -1;
-  },
+    return this.browser().toLowerCase().includes('huawei');
+  }
+
+  /**
+   * 检测是否为Vivo浏览器
+   * @returns 是否为Vivo浏览器
+   */
   isBrowserVivo(): boolean {
-    return this.browser().toLowerCase().indexOf('vivo') !== -1;
-  },
+    return this.browser().toLowerCase().includes('vivo');
+  }
+
+  /**
+   * 检测是否为Firefox Nightly版本
+   * @returns 是否为Firefox Nightly版本
+   */
   isBrowserNightly(): boolean {
-    return this.browser().toLowerCase().indexOf('nightly') !== -1;
-  },
+    return this.browser().toLowerCase().includes('nightly');
+  }
 
+  // ==================== 设备检测方法 ====================
+
+  /**
+   * 检测是否为PC设备
+   * @returns 是否为PC设备
+   */
   isDevicePC(): boolean {
-    return this.device().toLowerCase().indexOf('pc') !== -1;
-  },
+    return this.device().toLowerCase().includes('pc');
+  }
+
+  /**
+   * 检测是否为移动设备
+   * @returns 是否为移动设备
+   */
   isDeviceMobile(): boolean {
-    return this.device().toLowerCase().indexOf('mobile') !== -1;
-  },
+    return this.device().toLowerCase().includes('mobile');
+  }
+
+  /**
+   * 检测是否为平板设备
+   * @returns 是否为平板设备
+   */
   isDeviceTablet(): boolean {
-    return this.device().toLowerCase().indexOf('tablet') !== -1;
-  },
+    return this.device().toLowerCase().includes('tablet');
+  }
 
+  // ==================== 引擎检测方法 ====================
+
+  /**
+   * 检测是否为WebKit引擎
+   * @returns 是否为WebKit引擎
+   */
   isEngineWebKit(): boolean {
-    return this.engine().toLowerCase().indexOf('webkit') !== -1;
-  },
-  isEngineTrident(): boolean {
-    return this.engine().toLowerCase().indexOf('trident') !== -1;
-  },
-  isEngineGecko(): boolean {
-    return this.engine().toLowerCase().indexOf('gecko') !== -1;
-  },
-  isEnginePresto(): boolean {
-    return this.engine().toLowerCase().indexOf('presto') !== -1;
-  },
-  isEngineKHTML(): boolean {
-    return this.engine().toLowerCase().indexOf('khtml') !== -1;
-  },
-  isEngineBlink(): boolean {
-    return this.engine().toLowerCase().indexOf('blink') !== -1;
-  },
-  isEngineEdgeHTML(): boolean {
-    return this.engine().toLowerCase().indexOf('edgehtml') !== -1;
-  },
+    return this.engine().toLowerCase().includes('webkit');
+  }
 
+  /**
+   * 检测是否为Trident引擎
+   * @returns 是否为Trident引擎
+   */
+  isEngineTrident(): boolean {
+    return this.engine().toLowerCase().includes('trident');
+  }
+
+  /**
+   * 检测是否为Gecko引擎
+   * @returns 是否为Gecko引擎
+   */
+  isEngineGecko(): boolean {
+    return this.engine().toLowerCase().includes('gecko');
+  }
+
+  /**
+   * 检测是否为Presto引擎
+   * @returns 是否为Presto引擎
+   */
+  isEnginePresto(): boolean {
+    return this.engine().toLowerCase().includes('presto');
+  }
+
+  /**
+   * 检测是否为KHTML引擎
+   * @returns 是否为KHTML引擎
+   */
+  isEngineKHTML(): boolean {
+    return this.engine().toLowerCase().includes('khtml');
+  }
+
+  /**
+   * 检测是否为Blink引擎
+   * @returns 是否为Blink引擎
+   */
+  isEngineBlink(): boolean {
+    return this.engine().toLowerCase().includes('blink');
+  }
+
+  /**
+   * 检测是否为EdgeHTML引擎
+   * @returns 是否为EdgeHTML引擎
+   */
+  isEngineEdgeHTML(): boolean {
+    return this.engine().toLowerCase().includes('edgehtml');
+  }
+
+  // ==================== 操作系统检测方法 ====================
+
+  /**
+   * 检测是否为Windows系统
+   * @returns 是否为Windows系统
+   */
   iSOSWindows(): boolean {
-    return this.os().toLowerCase().indexOf('windows') !== -1;
-  },
+    return this.os().toLowerCase().includes('windows');
+  }
+
+  /**
+   * 检测是否为Linux系统
+   * @returns 是否为Linux系统
+   */
   iSOSLinux(): boolean {
-    return this.os().toLowerCase().indexOf('linux') !== -1;
-  },
+    return this.os().toLowerCase().includes('linux');
+  }
+
+  /**
+   * 检测是否为macOS系统
+   * @returns 是否为macOS系统
+   */
   iSOSMaxOS(): boolean {
-    return this.os().toLowerCase().indexOf('mac os') !== -1;
-  },
+    return this.os().toLowerCase().includes('mac os');
+  }
+
+  /**
+   * 检测是否为Android系统
+   * @returns 是否为Android系统
+   */
   iSOSAndroid(): boolean {
-    return this.os().toLowerCase().indexOf('android') !== -1;
-  },
+    return this.os().toLowerCase().includes('android');
+  }
+
+  /**
+   * 检测是否为HarmonyOS系统
+   * @returns 是否为HarmonyOS系统
+   */
   iSOSHarmonyOS(): boolean {
-    return this.os().toLowerCase().indexOf('harmonyos') !== -1;
-  },
+    return this.os().toLowerCase().includes('harmonyos');
+  }
+
+  /**
+   * 检测是否为Ubuntu系统
+   * @returns 是否为Ubuntu系统
+   */
   iSOSUbuntu(): boolean {
-    return this.os().toLowerCase().indexOf('ubuntu') !== -1;
-  },
+    return this.os().toLowerCase().includes('ubuntu');
+  }
+
+  /**
+   * 检测是否为FreeBSD系统
+   * @returns 是否为FreeBSD系统
+   */
   iSOSFreeBSD(): boolean {
-    return this.os().toLowerCase().indexOf('freebsd') !== -1;
-  },
+    return this.os().toLowerCase().includes('freebsd');
+  }
+
+  /**
+   * 检测是否为Debian系统
+   * @returns 是否为Debian系统
+   */
   iSOSDebian(): boolean {
-    return this.os().toLowerCase().indexOf('debian') !== -1;
-  },
+    return this.os().toLowerCase().includes('debian');
+  }
+
+  /**
+   * 检测是否为iOS系统
+   * @returns 是否为iOS系统
+   */
   iSOSiOS(): boolean {
-    return this.os().toLowerCase().indexOf('ios') !== -1;
-  },
+    return this.os().toLowerCase().includes('ios');
+  }
+
+  /**
+   * 检测是否为Windows Phone系统
+   * @returns 是否为Windows Phone系统
+   */
   iSOSWindowsPhone(): boolean {
-    return this.os().toLowerCase().indexOf('windows phone') !== -1;
-  },
+    return this.os().toLowerCase().includes('windows phone');
+  }
+
+  /**
+   * 检测是否为BlackBerry系统
+   * @returns 是否为BlackBerry系统
+   */
   iSOSBlackBerry(): boolean {
-    return this.os().toLowerCase().indexOf('blackberry') !== -1;
-  },
+    return this.os().toLowerCase().includes('blackberry');
+  }
+
+  /**
+   * 检测是否为MeeGo系统
+   * @returns 是否为MeeGo系统
+   */
   iSOSMeeGo(): boolean {
-    return this.os().toLowerCase().indexOf('meego') !== -1;
-  },
+    return this.os().toLowerCase().includes('meego');
+  }
+
+  /**
+   * 检测是否为Symbian系统
+   * @returns 是否为Symbian系统
+   */
   iSOSSymbian(): boolean {
-    return this.os().toLowerCase().indexOf('symbian') !== -1;
-  },
+    return this.os().toLowerCase().includes('symbian');
+  }
+
+  /**
+   * 检测是否为Chrome OS系统
+   * @returns 是否为Chrome OS系统
+   */
   iSOSChromeOS(): boolean {
-    return this.os().toLowerCase().indexOf('chrome os') !== -1;
-  },
+    return this.os().toLowerCase().includes('chrome os');
+  }
+
+  /**
+   * 检测是否为WebOS系统
+   * @returns 是否为WebOS系统
+   */
   iSOSWebOS(): boolean {
-    return this.os().toLowerCase().indexOf('webos') !== -1;
-  },
-};
+    return this.os().toLowerCase().includes('webos');
+  }
+}
+
+// 创建并导出单例实例
+const Browsersniff = new BrowserSniff();
+
+export default Browsersniff;

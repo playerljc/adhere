@@ -9,24 +9,43 @@ import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import timezone from 'dayjs/plugin/timezone';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
-import React, { ReactNode, memo } from 'react';
+import React, { memo } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Resource from '@baifendian/adhere-util-resource';
 
+import {
+  BaseDateDisplayProps,
+  DateDisplayComponents,
+  DateDisplayProps,
+  DictDateDisplayProps,
+  LocalizationFormat,
+  RelativeTimeDisplayProps,
+} from './types';
+import {
+  getRelativeTime,
+  isValidDate,
+  parseDictFormat,
+  safeFormatDate,
+  setGlobalLocale,
+} from './utils';
+
+// 扩展 dayjs 插件
 dayjs.extend(LocalizedFormat);
 dayjs.extend(relativeTime);
 dayjs.extend(timezone);
 dayjs.extend(advancedFormat);
 dayjs.extend(isoWeek);
 dayjs.extend(weekOfYear);
-// dayjs中formats和locale的文档地址
+
+// dayjs 中 formats 和 locale 的文档地址
 // https://day.js.org/docs/zh-CN/display/format#list-of-localized-formats
 // https://day.js.org/docs/zh-CN/plugin/advanced-format
 
-let globalLocal = 'zh';
-
-const localization = [
+/**
+ * 本地化格式列表
+ */
+const LOCALIZATION_FORMATS: readonly LocalizationFormat[] = [
   'LT',
   'LTS',
   'L',
@@ -41,140 +60,156 @@ const localization = [
   'L LT',
   'l LTS',
   'l LT',
-];
-
-const Components = {
-  dayjs,
-  /**
-   * setGlobalLocal
-   * @description 全局设置国际化
-   * @param {string} _local 国际化
-   */
-  setGlobalLocal: (_local) => {
-    globalLocal = dayjs.locale(_local);
-  },
-};
+] as const;
 
 /**
- * 字典的组件
- * 这个不支持国际化
+ * 组件集合
+ */
+const Components: DateDisplayComponents = {
+  dayjs,
+
+  /**
+   * 设置全局国际化语言
+   * @param locale - 国际化语言代码
+   */
+  setGlobalLocale,
+} as DateDisplayComponents;
+
+/**
+ * 动态生成基于字典的日期显示组件
+ * 这些组件不支持国际化
  */
 Object.keys(Resource.Dict.handlers)
   .filter((dictName) => /^ResourceMomentFormat\d+/gim.test(dictName))
   .forEach((key) => {
     const name = key.substring('ResourceMomentFormat'.length);
+    const componentName = `DateDisplay${name}`;
 
-    Components[`DateDisplay${name}`] = memo<{
-      value?: any;
-      split1?: string;
-      split2?: string;
-      errorUI?: ReactNode | null;
-    }>(({ value, split1 = '-', split2 = ':', errorUI = null }) => {
+    /**
+     * 字典格式化日期显示组件
+     */
+    const DictDateDisplayComponent = memo<DictDateDisplayProps>(
+      ({ value, split1 = '-', split2 = ':', errorUI = null }) => {
+        const dict = Resource.Dict.value[key]?.value;
+
+        if (!isValidDate(value)) {
+          return errorUI;
+        }
+
+        const formatString = parseDictFormat(dict, split1, split2);
+
+        return (
+          <ConditionalRender conditional={!!value} noMatch={() => errorUI}>
+            {() => dayjs(value).format(formatString)}
+          </ConditionalRender>
+        );
+      },
+    );
+
+    /**
+     * 字典格式化日期显示组件的字符串方法
+     */
+    (DictDateDisplayComponent as any).toString = ({
+      value,
+      split1 = '-',
+      split2 = ':',
+    }: DictDateDisplayProps): string => {
       const dict = Resource.Dict.value[key]?.value;
 
-      return (
-        <ConditionalRender conditional={!!value} noMatch={() => errorUI}>
-          {() => dayjs(value).format(dict instanceof Function ? dict(split1, split2) : dict)}
-        </ConditionalRender>
-      );
-    });
+      if (!isValidDate(value)) return '';
 
-    Components[`DateDisplay${name}`].toString = ({ value, split1 = '-', split2 = ':' }) => {
-      const dict = Resource.Dict.value[key]?.value;
-
-      return !!value
-        ? dayjs(value).format(dict instanceof Function ? dict(split1, split2) : dict)
-        : '';
+      const formatString = parseDictFormat(dict, split1, split2);
+      return dayjs(value).format(formatString);
     };
+
+    Components[componentName] = DictDateDisplayComponent;
   });
 
 /**
- * DateDisplayFromNow
- * @constructor
- * @classdesc 返回现在到当前实例的相对时间
+ * 相对时间显示组件 - 从指定时间到现在
+ * 返回现在到当前实例的相对时间
  */
-Components[`DateDisplayFromNow`] = memo<{
-  value?: any;
-  locale?: string;
-  now?: boolean;
-}>(({ value, locale, now = false }) => (
-  <ConditionalRender conditional={!!value}>
-    {() =>
-      dayjs(value)
-        ?.locale?.(globalLocal ?? locale)
-        ?.fromNow?.(now)
-    }
-  </ConditionalRender>
-));
-
-Components[`DateDisplayFromNow`].toString = ({ value, locale, now = false }) =>
-  !!value
-    ? dayjs(value)
-        .locale(globalLocal ?? locale)
-        .fromNow(now)
-    : '';
-
-/**
- * DateDisplayToNow
- * @constructor
- * @classdesc 返回当前实例到现在的相对时间
- */
-Components[`DateDisplayToNow`] = memo<{
-  value?: any;
-  locale?: string;
-  now?: boolean;
-}>(({ value, locale, now = false }) => (
-  <ConditionalRender conditional={!!value}>
-    {() =>
-      dayjs(value)
-        .locale(globalLocal ?? locale)
-        .toNow(now)
-    }
-  </ConditionalRender>
-));
-
-Components[`DateDisplayToNow`].toString = ({ value, locale, now = false }) =>
-  !!value
-    ? dayjs(value)
-        .locale(globalLocal ?? locale)
-        .toNow(now)
-    : '';
-
-/**
- * DateDisplay
- * @constructor
- */
-Components[`DateDisplay`] = memo<{
-  value?: any;
-  locale?: string;
-  format?: string;
-}>(({ value, locale, format }) => {
-  const targetLocale = locale ?? globalLocal;
-
-  const targetFormat = format;
+const DateDisplayFromNow = memo<RelativeTimeDisplayProps>(({ value, locale, now = false }) => {
+  if (!isValidDate(value)) return null;
 
   return (
     <ConditionalRender conditional={!!value}>
-      {() => dayjs(value).locale(targetLocale).format(targetFormat)}
+      {() => getRelativeTime(value, locale, now, 'fromNow')}
     </ConditionalRender>
   );
 });
 
-Components[`DateDisplay`].toString = ({ value, locale, format }) => {
-  const targetLocale = locale ?? globalLocal;
-
-  return !!value ? dayjs(value).locale(targetLocale).format(format) : '';
+/**
+ * DateDisplayFromNow 的字符串方法
+ */
+(DateDisplayFromNow as any).toString = ({
+  value,
+  locale,
+  now = false,
+}: RelativeTimeDisplayProps): string => {
+  return getRelativeTime(value, locale, now, 'fromNow');
 };
 
-///////////////////////////////////////////////////////////////////////////////////////
-localization.reduce((result, local) => {
-  result[`DateDisplay${local.replace(' ', '')}`] = memo<{
-    value: any;
-    locale?: string;
-    // @ts-ignore
-  }>((props) => <Components.DateDisplay {...props} format={local} />);
+/**
+ * 相对时间显示组件 - 从现在到指定时间
+ * 返回当前实例到现在的相对时间
+ */
+const DateDisplayToNow = memo<RelativeTimeDisplayProps>(({ value, locale, now = false }) => {
+  if (!isValidDate(value)) return null;
 
-  return result;
-}, Components);
+  return (
+    <ConditionalRender conditional={!!value}>
+      {() => getRelativeTime(value, locale, now, 'toNow')}
+    </ConditionalRender>
+  );
+});
+
+/**
+ * DateDisplayToNow 的字符串方法
+ */
+(DateDisplayToNow as any).toString = ({
+  value,
+  locale,
+  now = false,
+}: RelativeTimeDisplayProps): string => {
+  return getRelativeTime(value, locale, now, 'toNow');
+};
+
+/**
+ * 基础日期显示组件
+ * 支持自定义格式的日期显示
+ */
+const DateDisplay = memo<DateDisplayProps>(({ value, locale, format }) => {
+  if (!isValidDate(value)) return null;
+
+  return (
+    <ConditionalRender conditional={!!value}>
+      {() => safeFormatDate(value, format, locale)}
+    </ConditionalRender>
+  );
+});
+
+/**
+ * DateDisplay 的字符串方法
+ */
+(DateDisplay as any).toString = ({ value, locale, format }: DateDisplayProps): string => {
+  return safeFormatDate(value, format, locale);
+};
+
+// 将组件添加到集合中
+Components.DateDisplayFromNow = DateDisplayFromNow;
+Components.DateDisplayToNow = DateDisplayToNow;
+Components.DateDisplay = DateDisplay;
+
+/**
+ * 动态生成本地化格式的日期显示组件
+ */
+LOCALIZATION_FORMATS.forEach((format) => {
+  const componentName = `DateDisplay${format.replace(/\s+/g, '')}`;
+
+  Components[componentName] = memo<BaseDateDisplayProps>((props) => (
+    <DateDisplay {...props} format={format} />
+  ));
+});
 
 export default Components;

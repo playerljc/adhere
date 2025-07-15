@@ -1,7 +1,8 @@
-// import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
+/**
+ * URL 工具类
+ * @description 提供 URL 解析、拼接、路由相关的工具函数
+ */
 import { IUrlConfig } from './types';
-
-// const { memoized } = WatchMemoized;
 
 export const defaultConfig: IUrlConfig = {
   ignoreInvalid: true,
@@ -9,37 +10,32 @@ export const defaultConfig: IUrlConfig = {
   isEncode: true,
 };
 
-const methods = {
+const UrlUtil = {
   /**
-   * parse
-   * @description - query参数转换成obj
-   * @param path
-   * @param config
-   * @return object
+   * 解析 URL 查询参数为对象
+   * @description 将 URL 查询字符串解析为对象
+   * @param path - 可选，URL 字符串，默认为当前 window.location.search
+   * @param config - 解析配置项
+   * @returns 解析后的对象，或 null（非浏览器环境）
+   * @example
+   * ```typescript
+   * parse('?a=1&b=2') // { a: '1', b: '2' }
+   * ```
    */
-  parse(path?: string, config: IUrlConfig = { ...defaultConfig }): object | null {
+  parse(path?: string, config: IUrlConfig = { ...defaultConfig }): Record<string, string> | null {
     if (typeof window === 'undefined') return null;
 
     let href = window.location.search;
-
     if (path) href = path;
-
     const index = href.indexOf('?');
-
     if (index === -1) return {};
-
-    const obj = {};
-
+    const obj: Record<string, string> = {};
     href = href.substring(index + 1);
-
     const strs = href.split('&');
-
     for (let i = 0, len = strs.length; i < len; i++) {
       const t = strs[i].split('=');
-
       const key = config.isDecode ? window.decodeURIComponent(t[0]).trim() : t[0].trim();
       const value = config.isDecode ? window.decodeURIComponent(t[1]).trim() : t[1].trim();
-
       if (!config.ignoreInvalid) {
         obj[key] = value;
       } else {
@@ -48,24 +44,25 @@ const methods = {
         }
       }
     }
-
     return obj;
   },
+
   /**
-   * stringify
-   * @description - 对象转换成query参数
-   * @param record
-   * @param config
-   * @return string
+   * 对象转 URL 查询参数
+   * @description 将对象转换为 URL 查询字符串
+   * @param record - 要转换的对象
+   * @param config - 配置项
+   * @returns 查询字符串
+   * @example
+   * ```typescript
+   * stringify({ a: 1, b: 2 }) // '?a=1&b=2'
+   * ```
    */
-  stringify(record: object, config: IUrlConfig = { ...defaultConfig }): string {
+  stringify(record: Record<string, any>, config: IUrlConfig = { ...defaultConfig }): string {
     const keys = Object.keys(record ?? {});
-
     const getStr: string[] = [];
-
     keys.forEach((key) => {
       const value = config.isEncode ? window.encodeURIComponent(record[key]) : record[key];
-
       if (!config.ignoreInvalid) {
         getStr.push(`${key.trim()}=${value?.trim()}`);
       } else {
@@ -74,20 +71,23 @@ const methods = {
         }
       }
     });
-
     return `?${getStr.join('&')}`;
   },
 
   /**
-   * getPathName
-   * @description 不同路由模式下获取pathname的方法
-   * @return {string}
+   * 获取路由 pathname
+   * @description 获取当前路由的 pathname，支持 hash/browser 两种模式
+   * @param publicPath - 公共路径，默认为 '/'
+   * @param router - 路由模式，'hash' 或 'browser'
+   * @returns 路径名
+   * @example
+   * ```typescript
+   * getPathName('/app', 'hash')
+   * ```
    */
-  getPathName(publicPath: string = '/', router: 'hash' | 'browser' = 'browser') {
+  getPathName(publicPath: string = '/', router: 'hash' | 'browser' = 'browser'): string {
     const routerMode = router || 'browser';
-
     let pathname = '';
-
     if (routerMode === 'browser') {
       pathname = window.location.pathname;
     } else if (routerMode === 'hash') {
@@ -98,47 +98,49 @@ const methods = {
         pathname = hash.substring(1);
       }
     }
-
     if (publicPath !== '/') {
       pathname = pathname.replace(`${publicPath}/`, '');
     }
-
     return pathname;
   },
-  /**
-   * getSearch
-   * @description 不同路由模式下获取search的方法
-   * @return {string}
-   */
-  getSearch(router: 'hash' | 'browser' = 'browser') {
-    const routerMode = router || 'browser';
 
+  /**
+   * 获取路由 search
+   * @description 获取当前路由的 search 查询参数，支持 hash/browser 两种模式
+   * @param router - 路由模式，'hash' 或 'browser'
+   * @returns 查询参数字符串
+   * @example
+   * ```typescript
+   * getSearch('hash')
+   * ```
+   */
+  getSearch(router: 'hash' | 'browser' = 'browser'): string {
+    const routerMode = router || 'browser';
     if (routerMode === 'browser') {
       return window.location.search;
     } else if (routerMode === 'hash') {
       const hash = window.location.hash;
-
       const index = hash.lastIndexOf('?');
       if (index !== -1) {
         return hash.substring(index);
       }
-
       return '';
     }
+    return '';
   },
+
   /**
-   * getFullPath
-   * @return {`${string}${string}`}
+   * 获取完整路由路径
+   * @description 获取当前完整路由路径（pathname + search）
+   * @returns 完整路径
+   * @example
+   * ```typescript
+   * getFullPath()
+   * ```
    */
-  getFullPath() {
-    return `${methods.getPathName()}${methods.getSearch()}`;
+  getFullPath(): string {
+    return `${UrlUtil.getPathName()}${UrlUtil.getSearch()}`;
   },
 };
 
-// const memoizedMethods = {};
-//
-// for (const p in methods) {
-//   memoizedMethods[p] = memoized.createMemoFun(methods[p]);
-// }
-
-export default methods;
+export default UrlUtil;

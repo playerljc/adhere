@@ -8,15 +8,19 @@
 
   .adhere-mobile-success-prompt-dialog-icon {
     flex-shrink: 0;
-    margin-right: 15px;
-    color: #52c41a;
-    font-size: 22px;
+    //margin-right: 15px;
+    margin-right: var(--dialog-icon-margin-right, 15px);
+    //color: #52c41a;
+    color: var(--dialog-icon-color, #52c41a);
+    //font-size: 22px;
+    font-size: var(--dialog-icon-font-size, 22px);
   }
 
   .adhere-mobile-success-prompt-dialog-content {
     flex: 1;
     min-width: 0;
-    color: var(--adhere-color-text-base);
+    //color: var(--adhere-color-text-base);
+    color: var(--dialog-content-color, var(--adhere-color-text-base));
     white-space: normal;
     word-wrap: break-word;
     word-break: break-word;

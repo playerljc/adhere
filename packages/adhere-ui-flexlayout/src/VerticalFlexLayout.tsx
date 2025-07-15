@@ -6,12 +6,14 @@ import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Auto from './Auto';
 import Fixed from './Fixed';
 import FlexLayout from './FlexLayout';
-import type { VerticalFlexLayoutProps } from './types';
+import type { VerticalFlexLayoutProps, RenderFunction } from './types';
 
 /**
- * VerticalFlexLayout
- * @constructor
- * @param props
+ * VerticalFlexLayout 组件
+ * 垂直方向的弹性布局组件，支持上、下、左、右、主区域的自定义渲染
+ * 
+ * @param {VerticalFlexLayoutProps} props - 组件属性
+ * @returns {JSX.Element} VerticalFlexLayout 组件
  */
 const VerticalFlexLayout = memo<VerticalFlexLayoutProps>((props) => {
   const {
@@ -46,6 +48,9 @@ const VerticalFlexLayout = memo<VerticalFlexLayoutProps>((props) => {
     ...attrs
   } = props;
 
+  /**
+   * 渲染顶部区域
+   */
   const topElement = useMemo(
     () => (
       <ConditionalRender conditional={!!renderTop}>
@@ -56,7 +61,7 @@ const VerticalFlexLayout = memo<VerticalFlexLayoutProps>((props) => {
             fit
             {...(topProps ?? {})}
           >
-            {renderTop}
+            {typeof renderTop === 'function' ? renderTop() : renderTop}
           </Fixed>
         )}
       </ConditionalRender>
@@ -64,6 +69,9 @@ const VerticalFlexLayout = memo<VerticalFlexLayoutProps>((props) => {
     [renderTop, topClassName, topStyle, topProps],
   );
 
+  /**
+   * 渲染主区域
+   */
   const mainElement = useMemo(
     () => (
       <ConditionalRender conditional={!!renderMain}>
@@ -88,7 +96,7 @@ const VerticalFlexLayout = memo<VerticalFlexLayoutProps>((props) => {
                     fit
                     {...(leftProps ?? {})}
                   >
-                    {renderLeft}
+                    {typeof renderLeft === 'function' ? renderLeft() : renderLeft}
                   </Fixed>
                 )}
               </ConditionalRender>
@@ -100,7 +108,7 @@ const VerticalFlexLayout = memo<VerticalFlexLayoutProps>((props) => {
                 style={mainStyle ?? {}}
                 {...(mainProps ?? {})}
               >
-                {renderMain}
+                {typeof renderMain === 'function' ? renderMain() : renderMain}
               </Auto>
 
               <ConditionalRender conditional={!!renderRight}>
@@ -111,7 +119,7 @@ const VerticalFlexLayout = memo<VerticalFlexLayoutProps>((props) => {
                     fit
                     {...(rightProps ?? {})}
                   >
-                    {renderRight}
+                    {typeof renderRight === 'function' ? renderRight() : renderRight}
                   </Fixed>
                 )}
               </ConditionalRender>
@@ -141,6 +149,9 @@ const VerticalFlexLayout = memo<VerticalFlexLayoutProps>((props) => {
     ],
   );
 
+  /**
+   * 渲染底部区域
+   */
   const bottomElement = useMemo(
     () => (
       <ConditionalRender conditional={!!renderBottom}>
@@ -151,7 +162,7 @@ const VerticalFlexLayout = memo<VerticalFlexLayoutProps>((props) => {
             fit
             {...(bottomProps ?? {})}
           >
-            {renderBottom}
+            {typeof renderBottom === 'function' ? renderBottom() : renderBottom}
           </Fixed>
         )}
       </ConditionalRender>

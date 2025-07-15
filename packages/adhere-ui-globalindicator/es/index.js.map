@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import GlobalIndicator from './GlobalIndicator';\nexport default GlobalIndicator;\n"],"names":["GlobalIndicator"],"mappings":"OAAOA,oBAAqB,mCACbA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import GlobalIndicator from './GlobalIndicator';\n// 导出默认组件\nexport default GlobalIndicator;\n"],"names":["GlobalIndicator"],"mappings":"OAAOA,oBAAqB,mCAEbA"}

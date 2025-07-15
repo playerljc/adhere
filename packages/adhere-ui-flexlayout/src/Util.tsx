@@ -4,13 +4,14 @@ import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/e
 import Util from '@baifendian/adhere-util';
 
 import { gridCount } from './Fixed';
-import type { getGridStyleParams } from './types';
+import type { GetGridStyleParams, FlexDirection } from './types';
 
 /**
- * getHorizontalGridStyle
- * @param {number} gapOrigin
- * @param media
- * @return {React.CSSProperties}
+ * 获取水平栅格样式
+ * @param {Object} params - 参数对象
+ * @param {number} params.gapOrigin - 间隙值
+ * @param {ConfigProviderProps['media']} params.media - 媒体配置
+ * @returns {CSSProperties} 水平栅格样式
  */
 const getHorizontalGridStyle = ({
   gapOrigin,
@@ -19,23 +20,22 @@ const getHorizontalGridStyle = ({
   gapOrigin: number;
   media: ConfigProviderProps['media'];
 }): CSSProperties => {
-  const gridLayout: any = {};
-
   const gapValue = getValueWithUnit(gapOrigin / 2, media);
 
-  gridLayout.paddingLeft = gapValue;
-  gridLayout.paddingRight = gapValue;
-
-  return gridLayout;
+  return {
+    paddingLeft: gapValue,
+    paddingRight: gapValue,
+  };
 };
 
 /**
- * getVerticalGridStyle
- * @param {number} span
- * @param {ReactNode[]} children
- * @param {number} gapOrigin
- * @param media
- * @return {React.CSSProperties}
+ * 获取垂直栅格样式
+ * @param {Object} params - 参数对象
+ * @param {number | null} params.span - 栅格跨度
+ * @param {ReactNode[]} params.children - 子元素数组
+ * @param {number} params.gapOrigin - 间隙值
+ * @param {ConfigProviderProps['media']} params.media - 媒体配置
+ * @returns {CSSProperties} 垂直栅格样式
  */
 const getVerticalGridStyle = ({
   span,
@@ -48,15 +48,13 @@ const getVerticalGridStyle = ({
   gapOrigin: number;
   media: ConfigProviderProps['media'];
 }): CSSProperties => {
-  const gridStyle: any = {};
-
+  const gridStyle: CSSProperties = {};
   const gapValue = getValueWithUnit(gapOrigin / 2, media);
 
   // 栅格设置
-  if (span) {
+  if (span !== null && span !== undefined) {
     const heightGap = (children.length - 1) * gapOrigin;
     // (100% - 所有栅格间隙的高度) * (span / 24)
-    // gridStyle.height = `calc( (100% - ${gapHeight}px) * (${span}/${gridCount}) )`;
     gridStyle.height = `calc( (100% - ${getValueWithUnit(
       heightGap,
       media,
@@ -71,14 +69,10 @@ const getVerticalGridStyle = ({
 };
 
 /**
- * getGridStyle
- * @description 获取栅格系统的样式
- * @param {number | number[]} gutter gird的间隙
- * @param {'vertical' | 'horizontal'} direction 方向
- * @param {number} span 栅格的值
- * @param {React.ReactNode[]} children 孩子
- * @param media
- * @return {React.CSSProperties}
+ * 获取栅格系统的样式
+ * @description 根据布局方向、栅格间隙、跨度等参数计算样式
+ * @param {GetGridStyleParams} params - 栅格样式参数
+ * @returns {CSSProperties} 栅格样式
  */
 export const getGridStyle = ({
   gutter,
@@ -86,8 +80,8 @@ export const getGridStyle = ({
   children = [],
   direction = 'vertical',
   media,
-}: getGridStyleParams): CSSProperties => {
-  let gapOrigin: number = 0;
+}: GetGridStyleParams): CSSProperties => {
+  let gapOrigin = 0;
 
   if (Array.isArray(gutter)) {
     if (gutter.length === 1) {
@@ -95,34 +89,41 @@ export const getGridStyle = ({
     } else if (gutter.length === 2) {
       if (direction === 'horizontal') {
         gapOrigin = gutter[1];
-      } else if (direction === 'vertical') {
-        gapOrigin = gutter[0];
       } else {
         gapOrigin = gutter[0];
       }
     }
-  } else {
-    gapOrigin = gutter as number;
+  } else if (typeof gutter === 'number') {
+    gapOrigin = gutter;
   }
 
-  const map = new Map([
+  const styleMap = new Map<FlexDirection, () => CSSProperties>([
     [
-      // 横向
       'horizontal',
       () => getHorizontalGridStyle({ gapOrigin, media }),
     ],
     [
-      // 纵向
       'vertical',
       () => getVerticalGridStyle({ span, children, gapOrigin, media }),
     ],
   ]);
 
-  return map.get(direction)?.() ?? {};
+  return styleMap.get(direction)?.() ?? {};
 };
 
-export function getValueWithUnit(pixel: number | string, media: ConfigProviderProps['media']) {
-  if (Util.isString(pixel)) return pixel;
+/**
+ * 获取带单位的数值
+ * @param {number | string} pixel - 像素值或字符串
+ * @param {ConfigProviderProps['media']} media - 媒体配置
+ * @returns {string} 带单位的数值字符串
+ */
+export function getValueWithUnit(
+  pixel: number | string, 
+  media: ConfigProviderProps['media']
+): string {
+  if (Util.isString(pixel)) {
+    return pixel as string;
+  }
 
   const value = getValue(pixel as number, media);
 
@@ -133,10 +134,16 @@ export function getValueWithUnit(pixel: number | string, media: ConfigProviderPr
   return `${value}px`;
 }
 
+/**
+ * 获取数值
+ * @param {number} pixel - 像素值
+ * @param {ConfigProviderProps['media']} media - 媒体配置，默认为不使用媒体查询
+ * @returns {number} 转换后的数值
+ */
 export function getValue(
   pixel: number,
-  media: ConfigProviderProps['media'] = { isUseMedia: false, designWidth: 192 },
-) {
+  media: ConfigProviderProps['media'] = { isUseMedia: false, designWidth: 192 }
+): number {
   if (media?.isUseMedia) {
     return Util.pxToRemNumber(pixel, media.designWidth as number);
   }

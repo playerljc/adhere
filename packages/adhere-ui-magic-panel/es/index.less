@@ -1,12 +1,18 @@
 @import '~@baifendian/adhere-ui-css/es/mixin';
 
+/**
+ * 魔法面板组件样式
+ * 提供响应式布局和绝对定位功能
+ */
 .adhere-ui-magic-panel {
   position: relative;
 
+  /* 面板中的图片元素 */
   > .adhere-ui-magic-panel-image {
     width: 100%;
   }
 
+  /* 面板中的项目元素，使用绝对定位 */
   > .adhere-ui-magic-panel-item {
     position: absolute;
   }

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import DelConform from './DelConfirm';\nexport default DelConform;\n"],"names":["DelConform"],"mappings":"OAAOA,eAAgB,8BACRA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["/**\n * DelConfirm 组件导出文件\n * @module index\n */\nimport DelConfirm from './DelConfirm';\nexport default DelConfirm;\n"],"names":["DelConfirm"],"mappings":"OAIOA,eAAgB,8BACRA"}

@@ -27,9 +27,11 @@ const selectorPrefix = 'adhere-ui-mobile-signature';
 const { useTheme } = ConfigProvider;
 
 /**
- * MobileSignature
- * @param props
- * @param ref
+ * 移动端签名组件
+ * @description 提供移动端适配的签名功能，使用移动端模态框进行签名编辑
+ * @param props - 组件属性
+ * @param ref - 组件引用
+ * @returns 移动端签名组件实例
  */
 const InternalMobileSignature = memo<
   PropsWithoutRef<SignatureProps> & RefAttributes<SignatureHandle>
@@ -51,14 +53,14 @@ const InternalMobileSignature = memo<
           <Modal.TriggerPrompt
             title={Intl.get('edit_signature')}
             popoverTriggerProps={{
-              renderTrigger: () =>
-                value ? (
-                  <img src={value} alt="" />
-                ) : (
-                  <div className={classNames(`${selectorPrefix}-mask`)}>
-                    {Intl.get('edit_signature')}
-                  </div>
-                ),
+                              renderTrigger: () =>
+                  value ? (
+                    <img src={value} alt="签名" />
+                  ) : (
+                    <div className={classNames(`${selectorPrefix}-mask`)}>
+                      {Intl.get('edit_signature')}
+                    </div>
+                  ),
             }}
             actions={[
               {
@@ -66,19 +68,22 @@ const InternalMobileSignature = memo<
                 text: Intl.get('save'),
                 primary: true,
                 onClick: () =>
-                  new Promise((resolve) => {
-                    if (!coreRef.current) return;
+                  new Promise<string>((resolve) => {
+                    if (!coreRef.current) {
+                      resolve('');
+                      return;
+                    }
 
                     const isEmpty = coreRef.current.isEmpty();
                     if (isEmpty) {
-                      if (onChange) onChange('');
+                      onChange?.('');
                       resolve('');
                       return;
                     }
 
                     const base64 = coreRef.current.save();
-                    if (onChange) onChange(base64);
-                    resolve(base64);
+                    onChange?.(base64);
+                    resolve(base64 || '');
                   }),
               },
             ]}
@@ -89,9 +94,7 @@ const InternalMobileSignature = memo<
       }, [coreProps, value, onChange]);
 
       useImperativeHandle(ref, () => ({
-        isEmpty: () => {
-          return !value;
-        },
+        isEmpty: () => !value,
       }));
 
       return (

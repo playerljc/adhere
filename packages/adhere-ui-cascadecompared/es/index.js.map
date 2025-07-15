@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import CascadeCompared from './CascadeCompared';\nexport default CascadeCompared;\n"],"names":["CascadeCompared"],"mappings":"OAAOA,oBAAqB,mCACbA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import CascadeCompared from './CascadeCompared';\n// 导出默认组件\nexport default CascadeCompared;\n"],"names":["CascadeCompared"],"mappings":"OAAOA,oBAAqB,mCAEbA"}

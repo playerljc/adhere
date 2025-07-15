@@ -1,134 +1,150 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import type { IConfig } from './types';
 /**
- * Popup
+ * Popup弹窗类
  * @class Popup
- * @classdesc Popup
+ * @description 管理弹窗的显示、隐藏、销毁等生命周期
  */
 export declare class Popup {
+    /** 弹窗唯一标识 */
     private readonly id;
+    /** 弹窗配置 */
     private readonly config;
+    /** 是否显示状态 */
     private isShow;
+    /** 容器元素 */
     private el;
+    /** 弹窗元素 */
     private popupEl;
+    /** React根节点 */
     private root;
+    /** 弹窗处理器映射 */
     private popupHandlers;
     /**
-     * constructor
-     * @param config {Object} - config
+     * 构造函数
+     * @param config - 弹窗配置
      */
     constructor(config: IConfig);
     /**
-     * createMask
+     * 创建遮罩层
+     * @private
      */
     private createMask;
     /**
-     * render
+     * 渲染弹窗内容
+     * @private
      */
     private render;
     /**
-     * trigger
-     * @param hookName
+     * 触发回调函数
+     * @param hookName - 回调名称
+     * @private
      */
     private trigger;
-    update(_children: any): void;
     /**
-     * show - 显示一个popup
-     * @return boolean
+     * 更新弹窗内容
+     * @param newChildren - 新的子元素
+     */
+    update(newChildren?: ReactNode): void;
+    /**
+     * 显示弹窗
+     * @returns 是否成功显示
      */
     show(): boolean;
     /**
-     * show - 显示一个popup
-     * @return boolean
+     * 显示弹窗并关闭前一个弹窗
+     * @returns 是否成功显示
      */
     showClosePrePopup(): boolean;
     /**
-     * close - 关闭一个popup
-     * @return boolean
+     * 关闭弹窗
+     * @returns 是否成功关闭
      */
     close(): boolean;
     /**
-     * destroy - 销毁一个popup
+     * 移除模态框类名
+     * @private
+     */
+    private removeModalClasses;
+    /**
+     * 销毁弹窗
+     * @returns 是否成功销毁
      */
     destroy(): boolean;
     /**
-     * isDestroy - 是否已经销毁
-     * @return {boolean}
+     * 检查是否已销毁
+     * @returns 是否已销毁
      */
     isDestroy(): boolean;
     /**
-     * getId
-     * @return {string} - id
+     * 获取弹窗ID
+     * @returns 弹窗ID
      */
     getId(): string;
     /**
-     * onInnerElTransitionend
+     * 过渡动画结束回调
+     * @private
      */
-    onInnerElTransitionend(): void;
+    private onInnerElTransitionend;
 }
 /**
- * PopupFactory
+ * Popup工厂类
+ * @description 提供弹窗的创建、显示、关闭等静态方法
  */
 declare const PopupFactory: {
     /**
-     * setRenderToWrapper
-     * @description 设置renderToWrapper方法
-     * @param _renderToWrapper
+     * 设置渲染包装器
+     * @param _renderToWrapper - 渲染包装器函数
      */
-    setRenderToWrapper(_renderToWrapper: any): void;
+    setRenderToWrapper(_renderToWrapper: (children: () => ReactNode) => ReactNode): void;
     /**
-     * create
-     * @param config
-     * @return Popup
+     * 创建弹窗实例
+     * @param config - 弹窗配置
+     * @returns 弹窗实例
      */
     create(config: IConfig): Popup;
     /**
-     * show - 显示一个popup
-     * @param popup
-     * @return boolean
+     * 显示弹窗
+     * @param popup - 弹窗实例
+     * @returns 是否成功显示
      */
     show(popup: Popup): boolean;
     /**
-     * showClosePrePopup
-     * @description 关闭之前的显示
-     * @param popup
-     * @return boolean
+     * 显示弹窗并关闭前一个
+     * @param popup - 弹窗实例
+     * @returns 是否成功显示
      */
     showClosePrePopup(popup: Popup): boolean;
     /**
-     * close - 关闭一个popup
-     * @param {Popup} popup
-     * @return boolean
+     * 关闭弹窗
+     * @param popup - 弹窗实例
+     * @returns 是否成功关闭
      */
     close(popup: Popup): boolean;
     /**
-     * closeAll - 关闭所有
-     * @return boolean
+     * 关闭所有弹窗
+     * @returns 是否全部成功关闭
      */
     closeAll(): boolean;
     /**
-     * destroy - 销毁一个popup
-     * @param {Popup} popup
-     * @return bool
+     * 销毁弹窗
+     * @param popup - 弹窗实例
+     * @returns 是否成功销毁
      */
-    destroy(popup: any): any;
+    destroy(popup: Popup): boolean;
     /**
-     * getEl
-     * @return {HTMLElement}
+     * 获取容器元素
+     * @returns 容器元素
      */
     getEl(): HTMLElement;
     /**
-     * setEl
-     * @param tel
+     * 设置容器元素
+     * @param containerEl - 容器元素
      */
-    setEl(tel: any): void;
-    /**
-     * Trigger
-     */
+    setEl(containerEl: HTMLElement): void;
+    /** Trigger组件 */
     Trigger: React.ForwardRefExoticComponent<import("./types").TriggerProps & React.RefAttributes<import("./types").TriggerHandle>>;
-    /**
-     * TriggerPrompt
-     */
+    /** TriggerPrompt组件 */
     TriggerPrompt: React.ForwardRefExoticComponent<Omit<import("./types").TriggerProps, "actions"> & {
         isShowCloseAction?: boolean;
         onSubmit?: () => Promise<any>;

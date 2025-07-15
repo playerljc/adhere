@@ -8,27 +8,37 @@ import React, {
 } from 'react';
 
 import { createMask } from './SlideLayout';
-import type { OverlayProps } from './types';
+import type { OverlayProps, PositionConfig } from './types';
 
-export default (
+/**
+ * 滑动布局Hook返回值接口
+ */
+interface UseSlideReturn {
+  /** 获取动画持续时间 */
+  getDuration: (time?: number | string | null | undefined) => number;
+  /** 遮罩层元素引用 */
+  maskEl: React.MutableRefObject<HTMLDivElement | undefined>;
+}
+
+/**
+ * 滑动布局自定义Hook
+ * 管理滑动面板的状态、动画和遮罩层
+ * 
+ * @param props - 滑动布局属性
+ * @param el - 滑动面板DOM元素引用
+ * @param positionConfig - 位置配置对象
+ * @returns 包含工具函数和遮罩层引用的对象
+ * 
+ * @example
+ * ```typescript
+ * const { getDuration, maskEl } = useSlide(props, elRef, positionConfig);
+ * ```
+ */
+export default function useSlide(
   props: OverlayProps,
   el: RefObject<HTMLDivElement>,
-  positionConfig: MutableRefObject<{
-    init: { top?: () => void; left?: () => void; bottom?: () => void; right?: () => void };
-    show: {
-      top?: (time?: number | string) => void;
-      left?: (time?: number | string) => void;
-      bottom?: (time?: number | string) => void;
-      right?: (time?: number | string) => void;
-    };
-    close: {
-      top?: (time?: number | string) => void;
-      left?: (time?: number | string) => void;
-      bottom?: (time?: number | string) => void;
-      right?: (time?: number | string) => void;
-    };
-  }>,
-) => {
+  positionConfig: MutableRefObject<PositionConfig>,
+): UseSlideReturn {
   const {
     time = 300,
     mask = true,
@@ -39,90 +49,146 @@ export default (
     onBeforeClose,
   } = props;
 
-  const [collapse, setCollapse] = useState(props.collapse);
+  const [collapse, setCollapse] = useState<boolean>(props.collapse ?? false);
   const maskEl = useRef<HTMLDivElement>();
 
-  function close() {
-    onBeforeClose && onBeforeClose();
-
+  /**
+   * 关闭滑动面板
+   * 执行关闭前回调并更新状态
+   */
+  const close = (): void => {
+    if (onBeforeClose) {
+      onBeforeClose();
+    }
     setCollapse(false);
-  }
+  };
 
-  function initial() {
+  /**
+   * 初始化滑动面板
+   * 设置面板尺寸和初始位置
+   */
+  const initial = (): void => {
+    if (!el.current) {
+      console.warn('useSlide: 滑动面板元素不存在');
+      return;
+    }
+
+    const element = el.current as HTMLElement;
+    const parentElement = element.parentElement as HTMLElement;
+
+    if (!parentElement) {
+      console.warn('useSlide: 父元素不存在');
+      return;
+    }
+
     if (direction === 'left' || direction === 'right') {
-      // 赋值宽度
-      (el.current as HTMLElement).style.height = '100%';
+      // 设置高度为100%
+      element.style.height = '100%';
 
+      // 设置宽度
       if (typeof width === 'string') {
-        (el.current as HTMLElement).style.width = width;
+        element.style.width = width;
       } else {
-        (el.current as HTMLElement).style.width = `${
-          (el.current?.parentElement as HTMLElement).offsetWidth * 0.9
-        }px`;
+        const calculatedWidth = Math.min(parentElement.offsetWidth * 0.9, width);
+        element.style.width = `${calculatedWidth}px`;
       }
     } else {
-      // 赋值高度
-      (el.current as HTMLElement).style.width = '100%';
+      // 设置宽度为100%
+      element.style.width = '100%';
 
+      // 设置高度
       if (typeof height === 'string') {
-        (el.current as HTMLElement).style.height = height;
+        element.style.height = height;
       } else {
-        (el.current as HTMLElement).style.height = `${
-          (el.current?.parentElement as HTMLElement).offsetHeight * 0.3
-        }px`;
+        const calculatedHeight = Math.min(parentElement.offsetHeight * 0.3, height);
+        element.style.height = `${calculatedHeight}px`;
       }
     }
 
-    // 赋值默认位置
-    positionConfig.current['init'][direction]?.();
-
-    if (collapse) {
-      positionConfig.current['show'][direction]?.(0);
+    // 设置默认位置
+    const initFunction = positionConfig.current.init[direction];
+    if (initFunction) {
+      initFunction();
     }
-  }
 
+    // 如果初始状态为展开，立即显示
+    if (collapse) {
+      const showFunction = positionConfig.current.show[direction];
+      if (showFunction) {
+        showFunction(0);
+      }
+    }
+  };
+
+  // 监听collapse属性变化
   useEffect(() => {
-    setCollapse(props.collapse as boolean);
+    setCollapse(props.collapse ?? false);
   }, [props.collapse]);
 
+  // 初始化遮罩层和面板
   useLayoutEffect(() => {
     if (mask) {
-      maskEl.current = createMask(zIndex!, () => close());
+      try {
+        maskEl.current = createMask(zIndex, close);
 
-      (el.current?.parentElement as HTMLDivElement).insertBefore(
-        maskEl.current as HTMLElement,
-        el.current,
-      );
+        if (el.current?.parentElement && maskEl.current) {
+          (el.current.parentElement as HTMLDivElement).insertBefore(
+            maskEl.current,
+            el.current,
+          );
+        }
+      } catch (error) {
+        console.error('useSlide: 创建遮罩层失败', error);
+      }
     }
 
     initial();
 
+    // 清理函数
     return () => {
       if (maskEl.current) {
         try {
-          maskEl.current?.parentElement?.removeChild(maskEl?.current);
-        } catch (e) {}
-
-        // @ts-ignore
-        maskEl.current = null;
+          maskEl.current.parentElement?.removeChild(maskEl.current);
+        } catch (error) {
+          // 忽略清理时的错误
+        }
+        maskEl.current = undefined;
       }
     };
   }, []);
 
+  // 监听collapse状态变化，执行动画
   useLayoutEffect(() => {
-    if (collapse) {
-      positionConfig.current['show'][direction]?.();
-    } else {
-      positionConfig.current['close'][direction]?.();
-    }
-  }, [collapse]);
+    if (!el.current) return;
 
-  function getDuration(_time: undefined | null | string | number) {
-    return _time !== undefined && _time !== null ? _time : time;
-  }
+    if (collapse) {
+      const showFunction = positionConfig.current.show[direction];
+      if (showFunction) {
+        showFunction();
+      }
+    } else {
+      const closeFunction = positionConfig.current.close[direction];
+      if (closeFunction) {
+        closeFunction();
+      }
+    }
+  }, [collapse, direction]);
+
+  /**
+   * 获取动画持续时间
+   * 
+   * @param _time - 指定的时间值
+   * @returns 动画持续时间（毫秒）
+   */
+  const getDuration = (_time?: number | string | null | undefined): number => {
+    if (_time !== undefined && _time !== null) {
+      return typeof _time === 'string' ? parseInt(_time, 10) : _time;
+    }
+    return time;
+  };
 
   return {
     getDuration,
     maskEl,
   };
-};
+}

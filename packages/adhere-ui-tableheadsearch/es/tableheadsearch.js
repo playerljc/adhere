@@ -1,2 +1,2 @@
-import React from"react";import{SearchOutlined}from"@ant-design/icons";export default function(e,t){return void 0===t&&(t=React.createElement(SearchOutlined,null)),{filterIcon:function(){return t},filterDropdown:function(t){return e(t)}}}
+import React from"react";import{SearchOutlined}from"@ant-design/icons";export default function TableHeadSearch(t,e){return void 0===e&&(e=React.createElement(SearchOutlined,null)),{filterIcon:function(){return e},filterDropdown:function(e){return t(e)}}}
 //# sourceMappingURL=TableHeadSearch.js.map

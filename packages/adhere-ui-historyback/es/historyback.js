@@ -1,2 +1,2 @@
-var History=function(o,i){void 0===i&&(i="/"),1<window.history.length?window.history.back():o.replace(i||"/")};export default History;
+var DEFAULT_ROUTE_PATH="/",History=function(o,r){if(void 0===r&&(r=DEFAULT_ROUTE_PATH),!o||"function"!=typeof o.replace)throw new Error("History object with replace method is required");if("string"!=typeof r)throw new Error("Route path must be a string");if("undefined"==typeof window)console.warn("HistoryBack: Running in non-browser environment, using fallback route"),o.replace(r);else if(1<window.history.length)try{window.history.back()}catch(e){console.warn("HistoryBack: Failed to go back, using fallback route",e),o.replace(r)}else o.replace(r)};export default History;
 //# sourceMappingURL=HistoryBack.js.map
