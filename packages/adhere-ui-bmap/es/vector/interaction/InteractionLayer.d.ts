@@ -1,3 +1,4 @@
+import { Events } from '@baifendian/adhere-util-emitter';
 import { IAction, IActionData, IInteractionLayer, IListeners, IPoint, IStyle, SelectType } from './types';
 /**
  * InteractionLayer
@@ -14,7 +15,7 @@ declare class InteractionLayer extends BMap.CanvasLayer implements IInteractionL
     protected assistCanvasEl: HTMLCanvasElement | null;
     protected assistCtx: CanvasRenderingContext2D | null;
     protected canvasData: IActionData[];
-    protected emitter: import("@baifendian/adhere-util-emitter/es/events").default;
+    protected emitter: Events;
     protected isLoad: boolean;
     protected canvasObserver: MutationObserver | null;
     /**

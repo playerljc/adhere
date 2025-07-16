@@ -1,126 +1,58 @@
 import PropTypes from 'prop-types';
 import React, { Requireable } from 'react';
-import type { PlayGroundProps, PlayGroundState } from './types';
+import { PlayGroundProps, PlayGroundState } from './types';
 export declare const selectPrefix = "adhere-ui-playground";
 /**
- * PlayGround抽象基类
- * @abstract APlayGround
- * @description PlayGround组件的抽象基类，提供通用的功能实现，包括代码展示、复制、展开/收起等功能
- * @template P - 属性类型，继承自PlayGroundProps
- * @template S - 状态类型，继承自PlayGroundState
- * @example
- * ```tsx
- * class MyPlayGround extends APlayGround<MyProps, MyState> {
- *   protected renderCodeView(): React.ReactElement {
- *     return <div>代码视图</div>;
- *   }
- *
- *   protected getClipboardText(): Promise<string> {
- *     return Promise.resolve('代码内容');
- *   }
- * }
- * ```
+ * APlayGround
+ * @class APlayGround
+ * @classdesc APlayGround
  */
 declare abstract class APlayGround<P extends PlayGroundProps = PlayGroundProps, S extends PlayGroundState = PlayGroundState> extends React.PureComponent<P, S> {
-    /** 是否首次渲染标识 */
     protected isFirst: boolean;
-    /** 剪贴板引用 */
     protected clipboardRef: React.RefObject<HTMLDivElement>;
-    /** 操作配置列表 */
-    protected actionConfig: (() => React.ReactNode)[];
-    /** 默认属性 */
+    protected actionConfig: (() => React.JSX.Element)[];
     static defaultProps: PlayGroundProps;
-    /** 属性类型定义 */
     static propTypes: {
-        id: Requireable<string>;
-        cardProps: Requireable<object>;
+        id: any;
+        cardProps: any;
         expand: Requireable<boolean>;
         isActive: Requireable<boolean>;
     };
     /**
-     * 构造函数
-     * @param props - 组件属性
-     */
-    constructor(props: P);
-    /**
-     * 组件即将接收新属性时的处理
-     * @param nextProps - 新的属性
-     */
-    componentWillReceiveProps(nextProps: Readonly<P>): void;
-    /**
-     * 组件即将更新时的处理
-     * @param nextProps - 新的属性
-     * @param nextState - 新的状态
-     * @param nextContext - 新的上下文
-     */
-    componentWillUpdate(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): void;
-    /**
-     * 渲染代码视图
-     * @abstract renderCodeView
-     * @description 子类必须实现的抽象方法，用于渲染代码视图
-     * @returns React.ReactElement 代码视图的React元素
+     * renderExpandAction
+     * @description - 渲染代码视图
+     * @return React.ReactElement
      */
     protected abstract renderCodeView(): React.ReactElement;
     /**
-     * 获取剪贴板文本
-     * @abstract getClipboardText
-     * @description 子类必须实现的抽象方法，用于获取要复制的文本内容
-     * @param e - 点击事件对象
-     * @returns Promise<string> 要复制的文本内容
+     * getClipboardText
+     * @description - 获取复制的数据
+     * @return Promise<string>
      */
     protected abstract getClipboardText(e: React.MouseEvent): Promise<string>;
+    constructor(props: any);
+    componentWillReceiveProps(nextProps: any): void;
+    componentWillUpdate(nextProps: Readonly<PlayGroundProps>, nextState: Readonly<PlayGroundState>, nextContext: any): void;
     /**
-     * 渲染操作按钮
-     * @protected renderAction
-     * @description 渲染所有操作按钮，包括复制和展开/收起按钮
-     * @returns ReactNode[] 操作按钮数组
+     * renderAction
      */
-    protected renderAction(): React.ReactNode[];
+    protected renderAction(): React.JSX.Element[];
     /**
-     * 渲染复制按钮
-     * @protected renderClipboardAction
-     * @description 渲染复制到剪贴板的操作按钮
-     * @returns React.ReactNode 复制按钮元素
+     * renderClipboardAction
      */
-    protected renderClipboardAction(): React.ReactNode;
+    protected renderClipboardAction(): React.JSX.Element;
     /**
-     * 渲染展开/收起按钮
-     * @protected renderExpandAction
-     * @description 渲染展开或收起代码视图的操作按钮
-     * @returns React.ReactNode 展开/收起按钮元素
+     * renderExpandAction
+     * @return {*}
      */
-    protected renderExpandAction(): React.ReactNode;
+    protected renderExpandAction(): React.JSX.Element;
     /**
-     * 处理复制按钮点击事件
-     * @protected handleClipboardClick
-     * @description 处理复制按钮的点击事件，将代码内容复制到剪贴板
-     * @param e - 点击事件对象
+     * render
+     * @return {*}
      */
-    protected handleClipboardClick: (e: React.MouseEvent) => Promise<void>;
-    /**
-     * 处理展开/收起按钮点击事件
-     * @protected handleExpandClick
-     * @description 处理展开/收起按钮的点击事件，切换代码视图的显示状态
-     * @param e - 点击事件对象
-     */
-    protected handleExpandClick: (e: React.MouseEvent) => void;
-    /**
-     * 渲染组件
-     * @returns JSX.Element 组件的渲染结果
-     */
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
-/**
- * 默认属性
- * @constant APlayGroundDefaultProps
- * @description APlayGround组件的默认属性配置
- */
 export declare const APlayGroundDefaultProps: PlayGroundProps;
-/**
- * 属性类型定义
- * @constant APlayGroundPropTypes
- * @description APlayGround组件的PropTypes定义
- */
 export declare const APlayGroundPropTypes: {
     id: PropTypes.Requireable<string>;
     cardProps: PropTypes.Requireable<PropTypes.InferProps<{

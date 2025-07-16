@@ -9,6 +9,7 @@ import styles from './examples.less';
 const { Fixed, Auto } = FlexLayout;
 
 export default () => {
+  debugger;
   const [quillForm] = Form.useForm();
 
   const wangEditorRef = useRef();

@@ -2,6 +2,7 @@ import { useUpdateEffect } from 'ahooks';
 import { Select } from 'antd';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
+import uniqby from 'lodash.uniqby';
 import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -15,7 +16,7 @@ const { useTheme } = ConfigProvider;
 /**
  * 内部 AutoComplete 组件
  * 提供自动完成功能，支持搜索、防抖、自定义渲染等特性
- * 
+ *
  * @param props - 组件属性
  * @param props.classNameWrap - 外层容器类名
  * @param props.styleWrap - 外层容器样式
@@ -28,7 +29,7 @@ const { useTheme } = ConfigProvider;
  * @param props.children - 自定义下拉内容渲染函数
  * @param props.selectProps - Select 组件的其他属性
  * @returns 渲染的组件
- * 
+ *
  * @example
  * ```tsx
  * <AutoComplete
@@ -52,6 +53,7 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
     options,
     loadData,
     emptyContent,
+    optionsStrategy = 'merge',
     children,
     ...selectProps
   }) => {
@@ -67,7 +69,7 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
 
     /** 当前选中的行数据 */
     const [selectedRows, setSelectedRows] = useState<OptionType[]>(
-      (defaultOptions as OptionType[]) ?? []
+      (defaultOptions as OptionType[]) ?? [],
     );
 
     /** 选择变化开始时间戳，用于防抖处理 */
@@ -99,11 +101,11 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
      */
     const allOptions = useMemo<OptionType[]>(() => {
       return [
-        ...(options as OptionType[] ?? []),
-        ...((defaultOptions as OptionType[]) ?? []).filter((item) => 
-          Array.isArray(selectProps.value) 
+        ...((options as OptionType[]) ?? []),
+        ...((defaultOptions as OptionType[]) ?? []).filter((item) =>
+          Array.isArray(selectProps.value)
             ? selectProps.value.includes(item.value)
-            : selectProps.value === item.value
+            : selectProps.value === item.value,
         ),
         ...selectedRows,
       ];
@@ -112,42 +114,45 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
     /**
      * 选择变化处理函数
      * 从下方组件触发的选择变化事件
-     * 
+     *
      * @param values - 选中的值
      */
-    const onSelectChange = useCallback((values: any): void => {
-      if (Array.isArray(values)) {
-        // 多选模式
-        setSelectedRows(
-          values
-            .map((value) => allOptions?.find((option) => option.value === value))
-            .filter((item): item is OptionType => !!item),
-        );
-      } else {
-        // 单选模式
-        setSelectedRows(
-          [(allOptions ?? []).find((option) => option.value === values)].filter(
-            (value): value is OptionType => !!value,
-          ),
-        );
-      }
+    const onSelectChange = useCallback(
+      (values: any): void => {
+        if (Array.isArray(values)) {
+          // 多选模式
+          setSelectedRows(
+            values
+              .map((value) => allOptions?.find((option) => option.value === value))
+              .filter((item): item is OptionType => !!item),
+          );
+        } else {
+          // 单选模式
+          setSelectedRows(
+            [(allOptions ?? []).find((option) => option.value === values)].filter(
+              (value): value is OptionType => !!value,
+            ),
+          );
+        }
 
-      // 调用外部传入的 onChange 回调
-      selectProps.onChange?.(values);
+        // 调用外部传入的 onChange 回调
+        selectProps.onChange?.(values);
 
-      if (isMultiple) {
-        // 多选模式记录时间戳用于防抖
-        onSelectChangeStartTime.current = Date.now();
-      } else {
-        // 单选模式关闭下拉框
-        setOpen(false);
-      }
-    }, [allOptions, isMultiple, selectProps, setOpen]);
+        if (isMultiple) {
+          // 多选模式记录时间戳用于防抖
+          onSelectChangeStartTime.current = Date.now();
+        } else {
+          // 单选模式关闭下拉框
+          setOpen(false);
+        }
+      },
+      [allOptions, isMultiple, selectProps, setOpen],
+    );
 
     /**
      * 输入处理函数（带防抖）
      * 处理用户输入，触发搜索
-     * 
+     *
      * @param e - 输入事件对象
      */
     const onInput = useCallback(
@@ -185,13 +190,43 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
      * 根据 value 去重，保留第一个出现的选项
      */
     const targetOptions = useMemo<OptionType[]>(() => {
-      const allOptionKeys = allOptions.map(({ value }) => value);
-      const distinctKeys = Array.from(new Set(allOptionKeys));
+      console.log('optionsStrategy', optionsStrategy);
 
-      return distinctKeys
-        .map((value) => allOptions.find((option) => option.value === value))
-        .filter((option): option is OptionType => !!option);
-    }, [allOptions]);
+      // merge模式
+      if (optionsStrategy === 'merge') {
+        const allOptionKeys = allOptions.map(({ value }) => value);
+        const distinctKeys = Array.from(new Set(allOptionKeys));
+
+        return distinctKeys
+          .map((value) => allOptions.find((option) => option.value === value))
+          .filter((option): option is OptionType => !!option);
+      }
+      // 缺省模式
+      else if (optionsStrategy === 'normal') {
+        let _options: OptionType[] = [];
+
+        if (!!options?.length) {
+          _options = uniqby(
+            [
+              ...((options as OptionType[]) ?? []),
+              // ...((defaultOptions as OptionType[]) ?? []).filter((item) =>
+              //   Array.isArray(selectProps.value)
+              //     ? selectProps.value.includes(item.value)
+              //     : selectProps.value === item.value,
+              // ),
+            ],
+            'value',
+          );
+        } else {
+          // @ts-ignore
+          _options = defaultOptions ?? [];
+        }
+
+        return _options.filter((option): option is OptionType => !!option);
+      }
+
+      return (options ?? []).filter((option): option is OptionType => !!option);
+    }, [allOptions, optionsStrategy, defaultOptions, selectProps.value]);
 
     /**
      * 当 defaultOptions 变化时更新 selectedRows
@@ -212,7 +247,9 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
           filterOption={false}
           open={open}
           options={targetOptions}
-          onSearch={onInput}
+          // onSearch={onInput}
+          // @ts-ignore
+          onInput={onInput}
           onClear={onClear}
           popupRender={(originNode) => {
             if (fetching) return fetchLoading;

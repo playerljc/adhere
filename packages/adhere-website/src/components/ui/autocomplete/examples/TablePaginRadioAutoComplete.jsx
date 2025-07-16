@@ -5,8 +5,6 @@ import { AutoComplete } from '@baifendian/adhere';
 
 import Book from '../data';
 
-import styles from '../../anthoc/examples/Cascader/index.less';
-
 export default () => {
   const [options, setOptions] = useState([]);
 
@@ -49,35 +47,35 @@ export default () => {
 
   return (
     <AutoComplete
-      placeholder="自动补全"
+      placeholder="请输入"
       value={value}
-      className={styles.Wrapper3}
+      style={{ width: 600 }}
+      optionsStrategy="normal"
       loadData={(_kw) => {
-        return new Promise((resolve) => {
-          kw.current = _kw;
+        kw.current = _kw;
 
-          pagin.current = {
-            page: 1,
-            limit: 10,
-          };
+        pagin.current = {
+          page: 1,
+          limit: 10,
+        };
 
-          if (!_kw) {
-            setOptions([]);
-            resolve();
-            return;
-          }
+        if (!_kw) {
+          setTotalCount(0);
+          setOptions([]);
+          return Promise.resolve();
+        }
 
-          loadData();
-        });
+        return loadData();
       }}
       options={options}
       onChange={(_value) => {
         setValue(_value);
       }}
     >
-      {({ value: _value, onChange: _onChange, options }) => {
+      {({ value: _value, onChange: _onChange, options, loading }) => {
         return (
           <Table
+            loading={loading}
             columns={[
               {
                 title: '名称',
@@ -114,7 +112,7 @@ export default () => {
               },
             }}
             scroll={{
-              y: 200,
+              y: 500,
             }}
             rowSelection={{
               type: 'radio',

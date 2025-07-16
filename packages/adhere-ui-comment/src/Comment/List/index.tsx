@@ -1,34 +1,20 @@
 import { Skeleton } from 'antd';
-import classnames from 'classnames';
-import React, { ReactElement, memo, useRef } from 'react';
+import classNames from 'classnames';
+import React, { ReactElement, memo, useRef, type ReactNode } from 'react';
 
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
-import type { ScrollLoadRefHandle } from '@baifendian/adhere-ui-scrollload/es/types';
+import type { ScrollLoadRefHandle, ScrollLoadStatus } from '@baifendian/adhere-ui-scrollload/es/types';
 
 import type { ListProps } from '../../types';
 
 const selectorPrefix = 'adhere-ui-comment-inner-list';
 
 /**
- * 评论列表组件
- * 
- * @description 提供评论列表的容器组件，支持首次加载、滚动加载、回到顶部等功能
- * @param props - 组件属性
- * @returns 评论列表组件实例
- * 
- * @example
- * ```tsx
- * <CommentList
- *   isLoading={loading}
- *   hasMore={hasMore}
- *   onLoadMore={loadMore}
- *   pages={totalPages}
- * >
- *   {commentItems}
- * </CommentList>
- * ```
+ * CommentList
+ * @constructor
+ * @classdesc 评论列表
  */
 const CommentList = memo<ListProps>((props) => {
   const {
@@ -43,24 +29,22 @@ const CommentList = memo<ListProps>((props) => {
     children,
   } = props;
 
-  // 滚动加载引用
   const scrollLoadRef = useRef<ScrollLoadRefHandle | null>(null);
 
-  // 是否为首次加载
+  // 第一次
   const isFirst = useRef(true);
 
-  // 是否正在首次加载
+  // 第一次加载
   const isFirstLoading = useRef(false);
 
-  // 容器引用
   const wrapRef = useRef<HTMLDivElement | null>(null);
 
   /**
-   * 渲染分发函数
-   * @description 根据加载状态决定渲染首次加载还是正常内容
-   * @returns 渲染的JSX元素
+   * renderDispatch
+   * @description 渲染的一个分配
+   * @return {*}
    */
-  function renderDispatch() {
+  function renderDispatch(): ReactNode {
     const loading = isLoading;
 
     if (isFirst.current && !isFirstLoading.current && loading) {
@@ -80,14 +64,13 @@ const CommentList = memo<ListProps>((props) => {
   }
 
   /**
-   * 渲染首次加载状态
-   * @description 渲染首次加载的骨架屏
-   * @returns 首次加载JSX元素
+   * _renderFirstLoading
+   * @description 渲染第一次的UI
+   * @return {JSX.Element}
    */
-  function _renderFirstLoading(): ReactElement {
+  function _renderFirstLoading(): ReactNode {
     if (renderFirstLoading) {
-      const result = renderFirstLoading();
-      return (result as ReactElement) || <div className={`${selectorPrefix}-first-loading-wrap`} />;
+      return renderFirstLoading();
     }
 
     const result: ReactElement[] = [];
@@ -100,13 +83,15 @@ const CommentList = memo<ListProps>((props) => {
   }
 
   /**
-   * 渲染正常内容
-   * @description 渲染正常的评论列表和滚动加载功能
-   * @returns 正常内容JSX元素
+   * renderNormal
+   * @description 渲染真正的UI
+   * @return {JSX.Element}
    */
-  function renderNormal(): ReactElement {
+  function renderNormal(): ReactNode {
     const defaultScrollLoadProps = {
-      onScrollBottom: onLoadMore ? (handle?: (status?: any) => void) => onLoadMore(handle) : undefined,
+      onScrollBottom: onLoadMore ? (handle?: (status?: ScrollLoadStatus) => void) => {
+        onLoadMore(handle ? (status?: string) => handle(status as ScrollLoadStatus) : undefined);
+      } : undefined,
     };
 
     return (
@@ -134,7 +119,7 @@ const CommentList = memo<ListProps>((props) => {
   }
 
   return (
-    <div className={classnames(selectorPrefix, className ?? '')} style={style ?? {}} ref={wrapRef}>
+    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}} ref={wrapRef}>
       {renderDispatch()}
     </div>
   );

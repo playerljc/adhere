@@ -155,7 +155,7 @@ function render() {
   direction = SelfUtil.getDirection();
 
   // 获取当前语言
-  lang = Util.getLang();
+  lang = SelfUtil.getLang();
 
   // 初始化dayjs的国际化
   // DateDisplay.setGlobalLocal(Dict.value.SystemLang.value[lang].dayjsCode);

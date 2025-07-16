@@ -14,6 +14,7 @@ export default () => (
         { label: '[]', value: '[]', type: 'brackets' },
         { label: '{}', value: '{}', type: 'brackets' },
       ]}
+      disableQuickTip
     />
   </div>
 );

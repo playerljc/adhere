@@ -158,7 +158,7 @@ export default () => {
         显示Features
       </Button>
 
-      <OLMap.OLMap ref={fRef} />
+      <OLMap.OLMap ref={fRef} style={{ height: '100%' }} />
     </div>
   );
 };

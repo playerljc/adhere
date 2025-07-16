@@ -1,5 +1,5 @@
 import MathUtil from '@baifendian/adhere-util';
-import Emitter from '@baifendian/adhere-util-emitter';
+import { Events } from '@baifendian/adhere-util-emitter';
 
 import Util from '../../util';
 import CircleDrawAction from './draw/CircleDrawAction';
@@ -30,7 +30,7 @@ const zIndex = 19999;
  * @class
  * @classdesc - InteractionLayer
  */
-
+// @ts-ignore
 class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
   // map
   protected map: any | null = null;
@@ -59,7 +59,7 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
   // canvas上的所有数据
   protected canvasData: IActionData[] = [];
 
-  protected emitter = new Emitter.Events();
+  protected emitter = new Events();
 
   protected isLoad: boolean = false;
 

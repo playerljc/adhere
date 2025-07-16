@@ -421,7 +421,9 @@ const InternalExpression = memo<
 
         const text = e?.nativeEvent?.data;
 
-        if (text !== null) {
+        if (text === undefined) return;
+
+        if (!!text) {
           setContinuousText(text);
 
           if (!disableQuickTip) {

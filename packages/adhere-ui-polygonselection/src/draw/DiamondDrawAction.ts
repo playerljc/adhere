@@ -14,31 +14,28 @@ import {
 import DrawAction from './DrawAction';
 
 /**
- * 菱形绘制Action类
- * @class DiamondDrawAction
- * @classdesc 菱形选取绘制功能，支持绘制菱形几何图形
- * @extends {DrawAction}
- * @remark 一个start - end的周期中只能绘制一个菱形
+ * DiamondDrawAction
+ * @class
+ * @classdesc - 菱形选取
+ * @remark: - 一个start - end的周期中只能绘制一个菱形
  */
 class DiamondDrawAction extends DrawAction {
-  /** 起始点 */
+  // startPoint
   protected startPoint: IPoint | null = null;
 
-  /** 左上角坐标 */
+  // 左上角坐标
   protected leftTopPoint: IPoint | null = null;
 
-  /** 宽度 */
+  // 宽度
   protected width: number = 0;
 
-  /** 高度 */
+  // 高度
   protected height: number = 0;
 
-  /** 是否移动过 */
   protected isMove = false;
 
   /**
-   * 构造函数
-   * @description 初始化菱形绘制Action，绑定事件处理方法
+   * context
    */
   constructor() {
     super();
@@ -48,11 +45,10 @@ class DiamondDrawAction extends DrawAction {
   }
 
   /**
-   * 判断点是否在菱形数据内
-   * @param point - 待判断的点
-   * @param data - 菱形数据
-   * @returns 点是否在菱形内
-   * @description 使用turf库判断点是否在菱形多边形内
+   * booleanPointInData
+   * @description 判断点是否在
+   * @param point
+   * @param data
    */
   static booleanPointInData(point: IPoint, data: IDiamondData): boolean {
     const { leftTopPoint, width, height } = data.data;
@@ -74,11 +70,10 @@ class DiamondDrawAction extends DrawAction {
   }
 
   /**
-   * 绘制菱形
-   * @param e - 鼠标事件
-   * @description 根据鼠标位置绘制菱形
+   * draw
+   * @param e
    */
-  private draw(e: MouseEvent): void {
+  private draw(e): void {
     const { context, startPoint, style } = this;
 
     const ctx = context?.getCtx();
@@ -100,13 +95,9 @@ class DiamondDrawAction extends DrawAction {
 
     ctx.beginPath();
 
-    if (!startPoint) return;
+    this.leftTopPoint = Util.getRectLeftTopPoint({ startPoint, targetPoint });
 
-    const leftTopPoint = Util.getRectLeftTopPoint({ startPoint, targetPoint });
-
-    if (!leftTopPoint) return;
-
-    this.leftTopPoint = leftTopPoint;
+    if (!this.leftTopPoint) return;
 
     this.width = Math.abs(targetPoint.x - (startPoint?.x || 0));
     this.height = Math.abs(targetPoint.y - (startPoint?.y || 0));
@@ -136,11 +127,10 @@ class DiamondDrawAction extends DrawAction {
   }
 
   /**
-   * Canvas鼠标按下事件处理
-   * @param e - 鼠标事件
-   * @description 记录起始点并注册移动和抬起事件
+   * onCanvasMouseDown
+   * @param e
    */
-  private onCanvasMouseDown(e: MouseEvent): void {
+  private onCanvasMouseDown(e) {
     if (!this.context) return;
 
     const canvasEl = this.context.getCanvasEl();
@@ -157,11 +147,10 @@ class DiamondDrawAction extends DrawAction {
   }
 
   /**
-   * Canvas鼠标移动事件处理
-   * @param e - 鼠标事件
-   * @description 实时绘制菱形并触发绘制中事件
+   * onCanvasMouseMove
+   * @param e
    */
-  private onCanvasMouseMove(e: MouseEvent): void {
+  private onCanvasMouseMove(e) {
     const { context } = this;
 
     if (!context) return;
@@ -177,7 +166,7 @@ class DiamondDrawAction extends DrawAction {
         id: BaseUtil.uuid(),
         type: SelectType.Diamond,
         data: {
-          leftTopPoint: this.leftTopPoint!,
+          leftTopPoint: this.leftTopPoint as IPoint,
           width: this.width,
           height: this.height,
         },
@@ -187,37 +176,43 @@ class DiamondDrawAction extends DrawAction {
   }
 
   /**
-   * Canvas鼠标抬起事件处理
-   * @param e - 鼠标事件
-   * @description 结束绘制过程
+   * onCanvasMouseUp
+   * @param e
    */
-  private onCanvasMouseUp(e: MouseEvent): void {
+  private onCanvasMouseUp(e) {
     if (!this.isMove) return;
     this.end(e);
     e.stopPropagation();
   }
 
   /**
-   * 绘制菱形
-   * @param ctx - Canvas上下文
-   * @param data - 菱形数据
-   * @description 静态方法，用于绘制历史数据
+   * draw
+   * @description
+   * @param ctx
+   * @param data
    */
-  static draw(ctx: CanvasRenderingContext2D, data: IDiamondData): void {
+  static draw(ctx: CanvasRenderingContext2D, data: IDiamondData) {
     if (!ctx || !data) return;
 
-    this.drawHistoryPath(ctx, data);
+    this.drawHistoryPath(
+      ctx,
+      data,
+      // data.data as { leftTopPoint: IPoint | null; width: number; height: number },
+    );
   }
 
   /**
-   * 绘制历史路径
-   * @param ctx - Canvas上下文
-   * @param data - 菱形数据
-   * @description 绘制历史菱形数据
+   * drawHistoryPath - 绘制历史数据
+   * @param ctx
+   * @param data
    */
   static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
-    data: IDiamondData,
+    data /*: {
+      leftTopPoint: IPoint | null;
+      width: number;
+      height: number;
+    }*/,
   ): void {
     if (!data || !data.data.leftTopPoint) return;
 
@@ -250,9 +245,8 @@ class DiamondDrawAction extends DrawAction {
   }
 
   /**
-   * 开始绘制
-   * @param style - 样式对象
-   * @description 开始菱形绘制Action
+   * start
+   * @param style
    */
   start(style: IStyle): void {
     if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
@@ -287,11 +281,9 @@ class DiamondDrawAction extends DrawAction {
   }
 
   /**
-   * 结束绘制
-   * @param e - 鼠标事件
-   * @description 结束菱形绘制Action，保存数据
+   * end
    */
-  end(e?: MouseEvent): void {
+  end(e) {
     const { context } = this;
 
     if (!context) {
@@ -347,8 +339,7 @@ class DiamondDrawAction extends DrawAction {
   }
 
   /**
-   * 销毁Action
-   * @description 清理资源，移除事件监听器
+   * destroy
    */
   destroy(): void {
     const { context } = this;

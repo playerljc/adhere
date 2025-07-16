@@ -1,4 +1,4 @@
-import Emitter from '@baifendian/adhere-util-emitter';
+import { Events } from '@baifendian/adhere-util-emitter';
 
 import Util from '../../../util';
 import { IPoint, InteractionLayerActions } from '../../interaction/types';
@@ -11,6 +11,7 @@ const selectorPrefix = 'adhere-ui-trajectoryplaybacklayer';
  * @class TrajectoryPlayBackLayer
  * @classdesc 轨迹的回放
  */
+// @ts-ignore
 class TrajectoryPlayBackLayer extends BMap.CanvasLayer implements ITrajectoryPlayBackLayer {
   protected map: any;
   protected config: {
@@ -25,7 +26,7 @@ class TrajectoryPlayBackLayer extends BMap.CanvasLayer implements ITrajectoryPla
       | 'vertexPane';
     zIndex: number;
   };
-  protected emitter = new Emitter.Events();
+  protected emitter = new Events();
   protected isLoad: boolean = false;
   protected source: ITrajectory[] = [];
 

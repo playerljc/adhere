@@ -1,4 +1,4 @@
-import Emitter from '@baifendian/adhere-util-emitter';
+import { Events } from '@baifendian/adhere-util-emitter';
 
 import GeoJSONFormat from './format/GeoJSONFormat';
 import Geometry from './geom/Geometry';
@@ -9,7 +9,7 @@ import { GeoJSONNode, IFeature, IVectorLayer, IVectorSource, VectorActions } fro
  * @class VectorSource
  * @classdesc VectorLayer的数据源
  */
-class VectorSource extends Emitter.Events implements IVectorSource {
+class VectorSource extends Events implements IVectorSource {
   context: IVectorLayer | null = null;
   features: IFeature[] = [];
 
@@ -63,7 +63,7 @@ class VectorSource extends Emitter.Events implements IVectorSource {
     this?.getContext()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
-  clear(): void {
+  clearFeatures(): void {
     this.features = [];
     this?.getContext()?.getEmitter().trigger(VectorActions.UPDATE);
   }

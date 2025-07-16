@@ -4,6 +4,6 @@ import { Expression } from '@baifendian/adhere';
 
 export default () => (
   <div>
-    <Expression operators={Expression.SqlOptions} />
+    <Expression operators={Expression.SqlOptions} disableQuickTip />
   </div>
 );

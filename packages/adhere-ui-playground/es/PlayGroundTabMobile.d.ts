@@ -2,61 +2,32 @@ import React from 'react';
 import APlayGround from './APlayGround';
 import type { PlayGroundTabMobileProps, PlayGroundTabMobileState } from './types';
 /**
- * PlayGroundTabMobile组件
+ * PlayGroundTabMobile
  * @class PlayGroundTabMobile
- * @description 移动端标签页代码展示组件，支持二维码扫描和全屏预览
- * @extends APlayGround
- * @example
- * ```tsx
- * <PlayGroundTabMobile
- *   url="http://localhost:3000"
- *   config={[
- *     { key: 'js', title: 'JavaScript', codeText: 'console.log("JS")' }
- *   ]}
- *   active="js"
- * >
- *   <div>代码演示内容</div>
- * </PlayGroundTabMobile>
- * ```
+ * @classdesc PlayGroundTabMobile
  */
 declare class PlayGroundTabMobile extends APlayGround<PlayGroundTabMobileProps, PlayGroundTabMobileState> {
     static displayName: string;
+    constructor(props: any);
+    componentWillReceiveProps(nextProps: any): void;
     /**
-     * 构造函数
-     * @param props - 组件属性
+     * renderAction
      */
-    constructor(props: PlayGroundTabMobileProps);
+    protected renderAction(): React.JSX.Element[];
     /**
-     * 组件即将接收新属性时的处理
-     * @param nextProps - 新的属性
+     * renderCodeView - 代码展示视图
+     * @return {*}
      */
-    componentWillReceiveProps(nextProps: Readonly<PlayGroundTabMobileProps>): void;
+    protected renderCodeView(): React.JSX.Element;
     /**
-     * 渲染操作按钮
-     * @protected renderAction
-     * @description 渲染操作按钮，只显示第一个操作按钮
-     * @returns ReactNode[] 操作按钮数组
-     */
-    protected renderAction(): React.ReactNode[];
-    /**
-     * 渲染代码展示视图
-     * @protected renderCodeView
-     * @description 渲染移动端标签页代码展示视图
-     * @returns React.ReactElement 代码展示视图
-     */
-    protected renderCodeView(): React.ReactElement;
-    /**
-     * 获取剪贴板文本内容
-     * @protected getClipboardText
-     * @description 获取当前激活标签页的代码文本内容
-     * @returns Promise<string> 当前激活标签页的代码文本
+     * getClipboardText
      */
     protected getClipboardText(): Promise<string>;
     /**
-     * 渲染组件
-     * @returns JSX.Element 组件的渲染结果
+     * render
+     * @return {*}
      */
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export declare const PlayGroundTabDefaultProps: PlayGroundTabMobileProps;
 export declare const PlayGroundTabPropTypes: {

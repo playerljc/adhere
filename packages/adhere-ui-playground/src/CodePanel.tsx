@@ -2,16 +2,14 @@ import PlayGroundExt from 'component-playground';
 import PropTypes from 'prop-types';
 import React, { memo } from 'react';
 
-import type { CodePanelProps } from './types';
+import { CodePanelProps } from './types';
 
 const selectPrefix = 'adhere-ui-playground-code-panel';
 
 /**
- * 代码面板组件
- * @component CodePanel
- * @description 单一的代码片段展示组件，基于component-playground实现
- * @param props - 组件属性
- * @returns JSX.Element
+ * CodePanel
+ * @classdesc - 单一的代码片段
+ * @constructor
  */
 const CodePanel = memo<CodePanelProps>((props) => {
   return (
@@ -31,19 +29,11 @@ const CodePanel = memo<CodePanelProps>((props) => {
 
 CodePanel.displayName = 'CodePanel';
 
-/**
- * 默认属性
- * @constant CodePanelDefaultProps
- */
 export const CodePanelDefaultProps = {
   codeText: '',
   theme: 'monokai',
 };
 
-/**
- * 属性类型定义
- * @constant CodePanelPropTypes
- */
 export const CodePanelPropTypes = {
   codeText: PropTypes.string,
   theme: PropTypes.string,

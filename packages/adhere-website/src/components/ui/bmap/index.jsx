@@ -1051,6 +1051,8 @@ export default () => {
                   const action = new DrawActionComponent();
                   action.on(InteractionTypes.ActionEvents.End, ({ data }) => {
                     const Component = interactionModifyTypeActionMap.current.get(data.type);
+                    if (!Component) return;
+
                     const mAction = new Component({
                       selectType: data.type,
                       actionType: 'Draw',

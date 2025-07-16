@@ -2,14 +2,14 @@ import { Popover } from 'antd-mobile';
 import { DownFill } from 'antd-mobile-icons';
 import type { PopoverRef } from 'antd-mobile/es/components/popover';
 import classNames from 'classnames';
-import React, { useContext, useEffect, useMemo, useRef, useCallback } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import type { FC } from 'react';
 
 import Context from '../Context';
 import Menu from '../Menu';
 import type { SubMenuProps } from '../types';
 
-const selectorPrefix = 'adhere-mobile-ui-popovermenu';
+const selectorPrefix = 'adhere-mobile-ui-popover-menu';
 const subMenuSelectorPrefix = `${selectorPrefix}-sub-menu`;
 
 /**
@@ -49,13 +49,7 @@ const SubMenu: FC<SubMenuProps> = ({
 
   // 渲染子菜单内容
   const content = useMemo(
-    () => (
-      <Menu 
-        direction={direction} 
-        items={items} 
-        maxCount={maxCount} 
-      />
-    ),
+    () => <Menu direction={direction} items={items} maxCount={maxCount} />,
     [direction, items, maxCount],
   );
 
@@ -67,26 +61,23 @@ const SubMenu: FC<SubMenuProps> = ({
   }, [refs]);
 
   // 渲染触发器元素
-  const trigger = useMemo(() => (
-    <li
-      className={classNames(subMenuSelectorPrefix, className, {
-        [`${subMenuSelectorPrefix}-disabled`]: disabled,
-      })}
-      style={style}
-    >
-      {icon && (
-        <div className={`${subMenuSelectorPrefix}-icon`}>
-          {icon}
-        </div>
-      )}
-      <div className={`${subMenuSelectorPrefix}-text`}>
-        {text}
-      </div>
-      <span className={`${subMenuSelectorPrefix}-arrow`}>
-        <DownFill />
-      </span>
-    </li>
-  ), [className, disabled, icon, style, text]);
+  const trigger = useMemo(
+    () => (
+      <li
+        className={classNames(subMenuSelectorPrefix, className, {
+          [`${subMenuSelectorPrefix}-disabled`]: disabled,
+        })}
+        style={style}
+      >
+        {icon && <div className={`${subMenuSelectorPrefix}-icon`}>{icon}</div>}
+        <div className={`${subMenuSelectorPrefix}-text`}>{text}</div>
+        <span className={`${subMenuSelectorPrefix}-arrow`}>
+          <DownFill />
+        </span>
+      </li>
+    ),
+    [className, disabled, icon, style, text],
+  );
 
   // 如果禁用，直接渲染触发器
   if (disabled) {

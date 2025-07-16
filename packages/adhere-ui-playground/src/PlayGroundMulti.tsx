@@ -8,44 +8,25 @@ import APlayGround, { APlayGroundDefaultProps, APlayGroundPropTypes } from './AP
 import Card from './Card';
 import CodePanel, { CodePanelPropTypes } from './CodePanel';
 import CodeTabPanel, { CodeTabPanelPropTypes } from './CodeTabPanel';
-import type { PlayGroundMultiProps, PlayGroundMultiState } from './types';
+import { PlayGroundMultiProps, PlayGroundMultiState } from './types';
 
 const selectPrefix = 'adhere-ui-playground-multi';
 
 /**
- * 配置映射项接口
- * @interface ConfigMapItem
- * @description 定义配置映射项的结构
- */
-interface ConfigMapItem {
-  /** 渲染函数 */
-  render: (config: any, index: number) => React.ReactElement;
-  /** 获取代码文本函数 */
-  getCodeText: (config: any) => string;
-}
-
-/**
- * PlayGroundMulti组件
+ * PlayGroundMulti
  * @class PlayGroundMulti
- * @description 多配置代码展示组件，支持多种类型的代码展示配置
- * @extends APlayGround
- * @example
- * ```tsx
- * <PlayGroundMulti 
- *   config={[
- *     { type: 'CodePanel', title: '代码1', codeText: 'console.log("1")' },
- *     { type: 'CodeTabPanel', title: '代码2', config: [...] }
- *   ]}
- * >
- *   <div>代码演示内容</div>
- * </PlayGroundMulti>
- * ```
+ * @classdesc PlayGroundMulti
  */
 class PlayGroundMulti extends APlayGround<PlayGroundMultiProps, PlayGroundMultiState> {
   static displayName = 'PlayGroundMulti';
 
-  /** 配置映射表 */
-  configMap = new Map<string, ConfigMapItem>([
+  configMap = new Map<
+    string,
+    {
+      render: (config: any, index: number) => React.ReactElement;
+      getCodeText: (config: any) => string;
+    }
+  >([
     [
       'CodePanel',
       {
@@ -77,11 +58,7 @@ class PlayGroundMulti extends APlayGround<PlayGroundMultiProps, PlayGroundMultiS
     ],
   ]);
 
-  /**
-   * 构造函数
-   * @param props - 组件属性
-   */
-  constructor(props: PlayGroundMultiProps) {
+  constructor(props) {
     super(props);
 
     Object.assign(this.state, {
@@ -89,11 +66,7 @@ class PlayGroundMulti extends APlayGround<PlayGroundMultiProps, PlayGroundMultiS
     });
   }
 
-  /**
-   * 组件即将接收新属性时的处理
-   * @param nextProps - 新的属性
-   */
-  componentWillReceiveProps(nextProps: Readonly<PlayGroundMultiProps>): void {
+  componentWillReceiveProps(nextProps) {
     super.componentWillReceiveProps(nextProps);
 
     this.setState({
@@ -102,11 +75,8 @@ class PlayGroundMulti extends APlayGround<PlayGroundMultiProps, PlayGroundMultiS
   }
 
   /**
-   * 获取剪贴板文本内容
-   * @protected getClipboardText
-   * @description 通过右键菜单选择要复制的代码文本内容
-   * @param e - 点击事件对象
-   * @returns Promise<string> 选中的代码文本内容
+   * getClipboardText
+   * @return Promise<string>
    */
   protected getClipboardText(e: React.MouseEvent): Promise<string> {
     const { config } = this.state;
@@ -114,7 +84,7 @@ class PlayGroundMulti extends APlayGround<PlayGroundMultiProps, PlayGroundMultiS
     return new Promise<string>((resolve) => {
       ContextMenu.open(
         (config || []).map((c, index) => ({
-          name: String(c.title || `配置${index + 1}`),
+          name: c.title,
           id: `${index}`,
           separation: false,
           attribute: {
@@ -130,9 +100,10 @@ class PlayGroundMulti extends APlayGround<PlayGroundMultiProps, PlayGroundMultiS
           maskClosable: true,
           handler: (id, attribute) => {
             resolve(
+              // @ts-ignore
               this.configMap
                 .get(attribute.config.type || 'CodePanel')
-                ?.getCodeText(attribute.config) || '',
+                ?.getCodeText(attribute.config),
             );
           },
         },
@@ -141,14 +112,12 @@ class PlayGroundMulti extends APlayGround<PlayGroundMultiProps, PlayGroundMultiS
   }
 
   /**
-   * 渲染代码面板视图
-   * @protected renderCodePanelView
-   * @description 渲染单个代码面板配置项
-   * @param config - 配置项
-   * @param index - 配置项索引
-   * @returns React.ReactElement 代码面板视图
+   * renderCodeView - 代码展示视图
+   * @param config
+   * @param index
+   * <CodePanel {...config} />
    */
-  protected renderCodePanelView(config: any, index: number): React.ReactElement {
+  protected renderCodePanelView(config, index) {
     return (
       <div key={`${index}`} className={`${selectPrefix}-code-view-wrap`}>
         <div className={`${selectPrefix}-code-view-wrap-title`}>{config.title}</div>
@@ -160,15 +129,13 @@ class PlayGroundMulti extends APlayGround<PlayGroundMultiProps, PlayGroundMultiS
   }
 
   /**
-   * 渲染代码展示视图
-   * @protected renderCodeView
-   * @description 渲染多配置的代码展示视图
-   * @returns React.ReactElement 代码展示视图
+   * renderCodeView
    */
-  protected renderCodeView(): React.ReactElement {
+  protected renderCodeView() {
+    // @ts-ignore
     const { config, expand } = this.state;
+
     const { isFirst } = this;
-    
     return (
       <ConditionalRender
         conditional={isFirst}

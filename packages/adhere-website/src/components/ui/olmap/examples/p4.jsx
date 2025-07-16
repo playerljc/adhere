@@ -68,7 +68,7 @@ export default () => {
         添加新北区的GeoJSON数据
       </Button>
 
-      <OLMap.HeatMap ref={heatRef} />
+      <OLMap.HeatMap ref={heatRef} style={{ height: '100%' }} />
     </div>
   );
 };

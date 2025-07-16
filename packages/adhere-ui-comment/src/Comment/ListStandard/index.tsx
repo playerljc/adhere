@@ -13,43 +13,28 @@ import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
 
-import type { ListStandardProps, CommentListData, PagingParams } from '../../types';
+import type { ListStandardProps } from '../../types';
 import CommentList from '../List';
 
 const { VerticalFlexLayout } = FlexLayout;
 
 const selectorPrefix = 'adhere-ui-comment-list-standard';
 
-/**
- * 默认数据键名配置
- */
 const DEFAULT_KEYS = {
   current: 'current',
   totalPage: 'totalPage',
   list: 'list',
   totalCount: 'totalCount',
-} as const;
+};
 
-/**
- * 默认空状态渲染函数
- */
 const DEFAULT_RENDER_EMPTY = () => <Empty />;
 
 /**
- * 列表标准组件
- * 
- * @description 提供评论列表的标准实现，支持分页加载、滚动加载等功能
- * @param props - 组件属性
- * @returns 列表标准组件实例
- * 
- * @example
- * ```tsx
- * <ListStandard
- *   fetchData={fetchComments}
- *   renderList={(data) => <CommentList data={data.list} />}
- *   renderEmpty={() => <Empty description="暂无评论" />}
- * />
- * ```
+ * ListStandard
+ * @param props
+ * @return {JSX.Element}
+ * @constructor
+ * @classdesc 上拉下拽
  */
 const ListStandard = memo<ListStandardProps>((props) => {
   const {
@@ -62,37 +47,54 @@ const ListStandard = memo<ListStandardProps>((props) => {
     renderList,
   } = props;
 
-  // 分页信息
-  const paging = useRef<PagingParams>({
+  const paging = useRef({
     page: 1,
     limit,
   });
-  
-  // 回调处理器
-  const callbackHandler = useRef<(params?: string) => void>();
-  
-  // 滚动加载状态
+  const callbackHandler = useRef<(params?: any) => void>();
   const status = useRef<string>(ScrollLoad.NORMAL);
-  
-  // 主容器引用
   const mainRef = useRef<HTMLDivElement | null>(null);
 
-  // 列表数据状态
-  const [data, setData] = useState<CommentListData>({
-    current: 1,
-    totalPage: 0,
-    list: [],
-    totalCount: 0,
+  const [data, setData] = useState({
+    [dataKeys.current]: 1,
+    [dataKeys.totalPage]: 0,
+    [dataKeys.list]: [],
+    [dataKeys.totalCount]: 0,
   });
-  
-  // 加载状态
   const [loading, setLoading] = useState(true);
 
   /**
-   * 重新加载数据
-   * @returns 数据加载Promise
+   * fetchData
+   * @description 调用接口
    */
-  function loadData() {
+  const fetchData = useCallback((callback: (data: any) => void) => {
+    return props
+      ?.fetchData?.(paging?.current)
+      .then((data) => {
+        callback(data);
+
+        setLoading(false);
+
+        return data;
+      })
+      .catch((error) => {
+        setLoading(false);
+
+        if (callbackHandler.current) {
+          status.current = ScrollLoad.ERROR as string;
+          callbackHandler?.current?.(status.current);
+        }
+
+        return error;
+      });
+  }, [props?.fetchData]);
+
+  /**
+   * loadData
+   * @description 重新加载数据
+   * @return {*}
+   */
+  const loadData = useCallback(() => {
     setLoading(true);
 
     paging.current = {
@@ -100,109 +102,88 @@ const ListStandard = memo<ListStandardProps>((props) => {
       limit,
     };
 
-    return fetchData((res: CommentListData) => setData(res));
-  }
+    return fetchData((res) => setData(res));
+  }, [limit, fetchData]);
 
   /**
-   * 加载更多数据
-   * @returns 数据加载Promise
+   * appendData
+   * @description 加载更多
+   * @return {*}
    */
-  function appendData() {
+  const appendData = useCallback(() => {
     setLoading(true);
 
     paging.current.page = paging.current.page + 1;
 
-    return fetchData((res: CommentListData) => {
+    const { list } = dataKeys!;
+
+    return fetchData((res) => {
       setData((_data) => {
         return {
           ...res,
-          list: [..._data.list, ...res.list],
+          [dataKeys.list]: [...(_data[list] as any), ...res[list]],
         };
       });
     });
-  }
+  }, [dataKeys.list, fetchData]);
 
   /**
-   * 调用接口获取数据
-   * @param callback - 数据回调函数
-   * @returns 数据获取Promise
-   */
-  function fetchData(callback: (data: CommentListData) => void) {
-    return props
-      ?.fetchData?.(paging?.current)
-      .then((data: CommentListData) => {
-        callback(data);
-        setLoading(false);
-        return data;
-      })
-      .catch((error: any) => {
-        setLoading(false);
-
-        if (callbackHandler.current) {
-          status.current = ScrollLoad.ERROR;
-          callbackHandler?.current?.(status.current);
-        }
-
-        return error;
-      });
-  }
-
-  /**
-   * 加载更多回调
-   * @param callback - 状态回调函数
+   * onLoadMore
+   * @param callback
    */
   const onLoadMore = useCallback((callback?: (status?: string) => void) => {
-    if (callback) {
-      callbackHandler.current = callback;
-    }
+    // if (status.current === ScrollLoad.EMPTY) {
+    //   status.current = ScrollLoad.EMPTY;
+    //   callback(ScrollLoad.EMPTY);
+    //   return;
+    // }
+
+    callbackHandler.current = callback;
+
     setTimeout(() => appendData(), 100);
-  }, []);
+  }, [appendData]);
 
   /**
-   * 检查是否为空
-   * @returns 是否为空
+   * isEmpty
+   * @return {boolean}
    */
   const isEmpty = useCallback(
-    () => paging.current.page === 1 && data.list.length === 0,
-    [data.list.length, paging.current.page],
+    () => paging.current.page === 1 && (data[dataKeys!.list] as Array<any>).length === 0,
+    [data, dataKeys.list],
   );
 
-  /**
-   * 评论列表组件
-   */
   const _CommentList = useMemo(
     () => (
       <CommentList
         isLoading={loading}
-        hasMore={data.list.length < data.totalCount}
+        hasMore={(data[dataKeys!.list] as Array<any>).length < (data[dataKeys!.totalCount] as number)}
         onLoadMore={onLoadMore}
         renderFirstLoading={renderFirstLoading}
         {...(listProps ?? {})}
-        pages={data.totalPage}
+        pages={data[dataKeys!.totalPage] as number}
       >
         <ConditionalRender conditional={!isEmpty()} noMatch={() => renderEmpty()}>
           {() => renderList?.(data)}
         </ConditionalRender>
       </CommentList>
     ),
-    [loading, data, renderFirstLoading, listProps, renderEmpty, renderList, isEmpty, onLoadMore],
+    [loading, data, dataKeys.totalCount, dataKeys.list, dataKeys.totalPage, renderFirstLoading, listProps, renderEmpty, onLoadMore, isEmpty, renderList],
   );
 
-  // 组件挂载时加载数据
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
 
-  // 监听数据变化，更新滚动加载状态
   useLayoutEffect(() => {
     if (callbackHandler.current) {
-      const totalPage = data.totalPage;
+      const totalPage = data[dataKeys!.totalPage] as number;
 
-      status.current = paging.current.page < totalPage ? ScrollLoad.NORMAL : ScrollLoad.EMPTY;
+      status.current =
+        paging.current.page < totalPage ? ScrollLoad.NORMAL : (ScrollLoad.EMPTY as string);
 
       callbackHandler?.current(status.current);
     }
-  }, [data]);
+  }, [data, dataKeys.totalPage]);
 
   return (
     <VerticalFlexLayout

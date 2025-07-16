@@ -9,7 +9,6 @@ import React, {
   RefAttributes,
   forwardRef,
   memo,
-  useCallback,
   useContext,
   useEffect,
   useImperativeHandle,
@@ -34,58 +33,10 @@ import type {
   WangEditorSandboxProps,
 } from './types';
 
-/** CSS选择器前缀 */
-const SELECTOR_PREFIX = 'adhere-ui-richtext-wangeditor-sandbox';
+const selectorPrefix = 'adhere-ui-richtext-wangeditor-sandbox';
 
-/** 编辑器容器ID */
-const EDITOR_ID = 'wangEditorWrap';
+const editorId = 'wangEditorWrap';
 
-/** 默认高度调整值 */
-const DEFAULT_HEIGHT_GAP = 60;
-
-/** 默认文本方向 */
-const DEFAULT_DIRECTION = 'ltr';
-
-/**
- * iframe窗口类型扩展
- */
-interface IframeWindow extends Window {
-  wangEditor: {
-    i18nAddResources: (locale: string, resources: Record<string, string>) => void;
-    i18nChangeLanguage: (locale: string) => void;
-  };
-  WangEditorForReact: {
-    Editor: React.ComponentType<any>;
-    Toolbar: React.ComponentType<any>;
-  };
-  ReactDOM: {
-    render: (
-      element: React.ReactElement,
-      container: HTMLElement,
-      callback?: () => void
-    ) => void;
-  };
-}
-
-/**
- * 渲染结果接口
- */
-interface RenderResult {
-  window: IframeWindow;
-  document: Document;
-  wrap: HTMLDivElement;
-}
-
-/**
- * WangEditor沙箱组件
- * 
- * 该组件通过iframe沙箱环境运行WangEditor编辑器，提供隔离的编辑环境，
- * 避免样式冲突和全局污染。
- * 
- * @param props - 组件属性
- * @param ref - 转发引用
- * @returns React元素
- */
 const InternalWangEditorSandbox = memo<
   PropsWithoutRef<WangEditorSandboxProps> & RefAttributes<WangEditorSandboxHandler>
 >(
@@ -100,25 +51,30 @@ const InternalWangEditorSandbox = memo<
       injectionScriptsByString,
       injectionStyles,
       injectionStylesByString,
-      gap = DEFAULT_HEIGHT_GAP,
-      direction = DEFAULT_DIRECTION,
+      gap = 60,
+      direction = 'ltr',
     } = props;
 
-    // 引用
     const wrapRef = useRef<HTMLDivElement | null>(null);
+
     const frameRef = useRef<HTMLIFrameElement | null>(null);
+
     const resizeObserverRef = useRef<ResizeObserver | null>(null);
+
     const isMount = useRef<boolean>(false);
+
     const value = useRef<string>(props.value as string);
+
     const editor = useRef<IDomEditor | null>(null);
+
     const isTriggerChange = useRef(false);
 
-    // 配置提供者上下文
+    // @ts-ignore
     const configProvider = useContext<ConfigProviderContext>(ConfigProvider.Context);
 
     /**
-     * 国际化映射
-     * @description 将配置提供者的语言映射到WangEditor支持的语言
+     * langMap
+     * @description 国际化的映射
      */
     const langMap = useMemo<Map<string, string>>(() => {
       const map = new Map<string, string>([
@@ -126,70 +82,46 @@ const InternalWangEditorSandbox = memo<
         ['en_US', 'en'],
       ]);
 
-      // 添加自定义国际化
-      Object.keys(props?.locales ?? {}).forEach((key) => {
+      Object.keys(props?.locales ?? []).forEach((key) => {
         map.set(key, key);
       });
 
       return map;
     }, [props?.locales]);
 
-    /**
-     * 默认工具栏配置
-     */
     const defaultToolBarConfig = useMemo<ToolBarProps>(
       () => ({
         defaultConfig: {},
         mode: 'default',
       }),
-      []
+      [],
     );
 
-    /**
-     * 默认编辑器配置
-     */
     const defaultEditorProps = useMemo<EditorProps>(
       () => ({
         defaultConfig: {},
         mode: 'default',
       }),
-      []
+      [],
     );
 
     /**
-     * 获取设备像素比缩放值
-     * @returns 缩放比例
+     * renderWangEditor
+     * @description 渲染富文本
      */
-    const getZoom = useCallback((): number => {
-      const ratio = window.devicePixelRatio;
-      if (ratio) {
-        return 100 / Math.round(ratio * 100);
-      }
-      return 1;
-    }, []);
+    function renderWangEditor() {
+      return new Promise<{ window: Window; document: Document; wrap: HTMLDivElement }>(
+        (resolve) => {
+          const document = frameRef?.current?.contentDocument as Document;
+          const window = frameRef?.current?.contentWindow as Window;
 
-    /**
-     * 渲染WangEditor编辑器
-     * @returns Promise<RenderResult> 渲染结果
-     */
-    const renderWangEditor = useCallback((): Promise<RenderResult> => {
-      return new Promise<RenderResult>((resolve, reject) => {
-        const document = frameRef?.current?.contentDocument;
-        const window = frameRef?.current?.contentWindow as IframeWindow;
+          if (!document || !window) {
+            return;
+          }
 
-        if (!document || !window) {
-          reject(new Error('iframe document or window not available'));
-          return;
-        }
+          const wrap = document.getElementById(editorId) as HTMLDivElement;
 
-        const wrap = document.getElementById(EDITOR_ID) as HTMLDivElement;
-        if (!wrap) {
-          reject(new Error(`Editor container with id '${EDITOR_ID}' not found`));
-          return;
-        }
-
-        try {
-          // 获取样式表并更新样式
+          // ----------------------------------------- start
           const styleSheet: CSSStyleSheet = document.styleSheets[0];
           const editorWrapRule: CSSStyleRule = styleSheet.cssRules[3] as CSSStyleRule;
           const headerRule: CSSStyleRule = styleSheet.cssRules[4] as CSSStyleRule;
@@ -207,7 +139,7 @@ const InternalWangEditorSandbox = memo<
             flex-shrink: 0;
           `;
 
-          // 根据bordered属性设置边框样式
+          // 有边框
           if (!('bordered' in props) || props.bordered) {
             editorWrapRule.style.cssText = `
               ${editorWrapRuleCssText}
@@ -217,53 +149,60 @@ const InternalWangEditorSandbox = memo<
               ${headerRulesText}
               border-bottom: 1px solid #ccc;
             `;
-          } else {
+          }
+          // 没边框
+          else {
             editorWrapRule.style.cssText = editorWrapRuleCssText;
             headerRule.style.cssText = headerRulesText;
           }
+          // ----------------------------------------- end
 
-          // 设置国际化
-          const { i18nAddResources, i18nChangeLanguage } = window.wangEditor;
+          // console.log('render props.toolBarProps', {
+          //   ...defaultToolBarConfig,
+          //   ...props.toolBarProps,
+          // });
 
-          // 添加新的国际化资源
+          // @ts-ignore
+          const { i18nAddResources, i18nChangeLanguage } = window?.wangEditor;
+
+          // 添加新的国际化
           if (props.locales) {
             Object.keys(props.locales).forEach((localeKey) => {
-              i18nAddResources(localeKey, props.locales?.[localeKey] || {});
+              i18nAddResources(localeKey, props.locales?.[localeKey]);
             });
           }
 
-          // 切换语言
-          const currentLang = props.lang || configProvider.intl?.lang || 'zh_CN';
-          i18nChangeLanguage(langMap.get(currentLang) || 'zh-CN');
+          // 切换国际化
+          i18nChangeLanguage(langMap.get(props.lang || configProvider.intl?.lang || 'zh_CN'));
 
-          const { WangEditorForReact: { Editor, Toolbar }, ReactDOM } = window;
+          const {
+            // @ts-ignore
+            WangEditorForReact: { Editor, Toolbar },
+            // @ts-ignore
+            ReactDOM,
+          } = window;
 
-          // 渲染编辑器
           ReactDOM.render(
-            React.createElement(React.Fragment, null, [
-              React.createElement(Toolbar, {
-                key: 'toolbar',
-                editor: editor.current,
-                ...defaultToolBarConfig,
-                ...(props.toolBarProps ?? {}),
-              }),
-              React.createElement(Editor, {
-                key: 'editor',
-                ref: ref,
-                ...defaultEditorProps,
-                ...(props.editorProps ?? {}),
-                onCreated: (_editor: IDomEditor) => {
+            <>
+              <Toolbar
+                editor={editor.current}
+                {...defaultToolBarConfig}
+                {...(props.toolBarProps ?? {})}
+              />
+              <Editor
+                ref={ref}
+                {...defaultEditorProps}
+                {...(props.editorProps ?? {})}
+                onCreated={(_editor) => {
                   editor.current = _editor;
                   render().then(() => {
                     if (editorProps?.onCreated) {
                       editorProps.onCreated(_editor);
                     }
-                  }).catch((error) => {
-                    console.error('Failed to render after editor created:', error);
                   });
-                },
-                value: value.current,
-                onChange: (_editor: IDomEditor) => {
+                }}
+                value={value.current}
+                onChange={(_editor) => {
                   if (!isTriggerChange.current) {
                     isTriggerChange.current = true;
                     return;
@@ -272,58 +211,65 @@ const InternalWangEditorSandbox = memo<
                   if (props.onChange) {
                     props.onChange(_editor.getHtml());
                   }
-                },
-              }),
-            ]),
+                }}
+              />
+            </>,
             wrap,
             () => {
               isMount.current = true;
+
               resolve({
                 document,
                 window,
                 wrap,
               });
-            }
+            },
           );
-        } catch (error) {
-          reject(error);
-        }
-      });
-    }, [props, configProvider.intl?.lang, langMap, defaultToolBarConfig, defaultEditorProps, editorProps, ref]);
+        },
+      );
+    }
 
     /**
-     * 渲染HTML内容（只读模式）
+     * renderHTML
+     * @description 渲染HTML
      */
-    const renderHTML = useCallback((): void => {
-      const document = frameRef?.current?.contentDocument;
+    function renderHTML() {
+      const document = frameRef?.current?.contentDocument as Document;
+
       if (!document) return;
 
-      const wrap = document.getElementById(EDITOR_ID) as HTMLDivElement;
-      if (wrap) {
-        wrap.innerHTML = props.value as string;
-      }
-    }, [props.value]);
+      const wrap = document.getElementById(editorId) as HTMLDivElement;
+      wrap.innerHTML = props.value as string;
 
-    /**
-     * 监听高度变化
-     */
-    const monitorHeightChange = useCallback((): void => {
-      const document = frameRef?.current?.contentDocument;
+      // if (wrapRef.current) {
+      //   wrapRef.current.style.height = `${document.documentElement.offsetHeight / getZoom()}px`;
+      // }
+    }
+
+    function getZoom() {
+      let ratio = window.devicePixelRatio;
+
+      if (ratio) {
+        ratio = Math.round(ratio * 100);
+      }
+
+      return 100 / Number(ratio);
+    }
+
+    function monitorHeightChange() {
+      const document = frameRef?.current?.contentDocument as Document;
+
       if (!document) return;
 
-      const editElement = document.getElementById(EDITOR_ID);
-      if (!editElement) return;
+      const editEL = document.getElementById(editorId);
 
-      // 清理之前的观察器
-      if (resizeObserverRef.current) {
-        resizeObserverRef.current.disconnect();
-      }
+      if (!editEL) return;
 
-      // 创建新的ResizeObserver实例
+      // 创建一个 ResizeObserver 实例
       resizeObserverRef.current = new ResizeObserver((entries) => {
         requestAnimationFrame(() => {
           for (const entry of entries) {
-            if (entry.target === editElement) {
+            if (entry.target === editEL) {
               const newHeight = entry.contentRect.height;
               if (wrapRef.current) {
                 wrapRef.current.style.height = `${newHeight + gap}px`;
@@ -333,15 +279,19 @@ const InternalWangEditorSandbox = memo<
         });
       });
 
-      // 开始观察元素
-      resizeObserverRef.current.observe(editElement);
-    }, [gap]);
+      // 开始观察 body 元素
+      resizeObserverRef.current.observe(editEL);
+    }
 
     /**
-     * 渲染内容
-     * @returns Promise<RenderResult | void> 渲染结果
+     * render
+     * @description 渲染内容
      */
-    const render = useCallback((): Promise<RenderResult | void> => {
+    function render(): Promise<{
+      window: Window;
+      document: Document;
+      wrap: HTMLDivElement;
+    } | void> {
       return new Promise<void>((resolve) => {
         // 只读模式
         if ('readOnly' in props && props.readOnly) {
@@ -351,84 +301,86 @@ const InternalWangEditorSandbox = memo<
           return;
         }
 
-        // 编辑模式
-        renderWangEditor().catch((error) => {
-          console.error('Failed to render WangEditor:', error);
-          resolve();
-        });
+        return renderWangEditor();
       });
-    }, [props.readOnly, monitorHeightChange, renderHTML, renderWangEditor]);
+    }
 
     /**
-     * 向外暴露的方法
+     * useImperativeHandle
+     * @description 向外暴漏的方法
      */
     useImperativeHandle(ref, () => ({
-      getEditor: (): IDomEditor | null => {
+      /**
+       * getEditor
+       * @description 获取编辑器对象
+       * @return {IDomEditor | null}
+       */
+      getEditor(): IDomEditor | null {
         return editor.current;
       },
-      getWangEditor: () => {
-        const iframeWindow = frameRef?.current?.contentWindow as IframeWindow;
-        return iframeWindow?.wangEditor as any;
+      /**
+       * getWangEditor
+       * @description 获取wangEditor对象
+       * @return {}
+       */
+      getWangEditor() {
+        // @ts-ignore
+        return frameRef?.current?.contentWindow?.wangEditor;
       },
-      getWindow: (): Window => {
+      getWindow() {
         return frameRef?.current?.contentWindow as Window;
       },
     }));
 
     /**
-     * 初始化iframe和编辑器
+     * useLayoutEffect
+     * @description initEditor
      */
     useLayoutEffect(() => {
-      const onLoad = (): void => {
-        render().catch((error) => {
-          console.error('Failed to render editor:', error);
-        });
-      };
+      function onLoad() {
+        return render();
+      }
 
-      const iframe = frameRef.current;
-      if (!iframe) return;
+      frameRef?.current?.addEventListener('load', onLoad);
 
-      iframe.addEventListener('load', onLoad);
-
-      // 创建资源URL
       const reactUrl = URL.createObjectURL(new Blob([ReactStr], { type: 'text/javascript' }));
       const reactDOMUrl = URL.createObjectURL(new Blob([ReactDOMStr], { type: 'text/javascript' }));
       const wangEditorUrl = URL.createObjectURL(
-        new Blob([WangEditorStr], { type: 'text/javascript' })
+        new Blob([WangEditorStr], { type: 'text/javascript' }),
       );
       const wangEditorReactUrl = URL.createObjectURL(
-        new Blob([WangEditorReactStr], { type: 'text/javascript' })
+        new Blob([WangEditorReactStr], { type: 'text/javascript' }),
       );
 
-      // 处理注入的脚本和样式
-      const injectionScriptToString = injectionScriptsByString
-        ?.map((script) => {
-          const url = URL.createObjectURL(new Blob([script], { type: 'text/javascript' }));
-          return `<script src="${url}"><\/script>`;
-        })
-        ?.join('') ?? '';
+      const injectionScriptToString =
+        injectionScriptsByString
+          ?.map((string) => {
+            const url = URL.createObjectURL(new Blob([string], { type: 'text/javascript' }));
+            return `<script src="${url}"><\/script>`;
+          })
+          ?.join('') ?? '';
 
-      const injectionStyleToString = injectionStylesByString
-        ?.map((style) => {
-          const url = URL.createObjectURL(new Blob([style], { type: 'text/css' }));
-          return `<link rel="stylesheet" href="${url}"/>`;
-        })
-        ?.join('') ?? '';
+      const injectionStyleToString =
+        injectionStylesByString
+          ?.map((string) => {
+            const url = URL.createObjectURL(new Blob([string], { type: 'text/css' }));
+            return `<link rel="stylesheet" href="${url}"/>`;
+          })
+          ?.join('') ?? '';
 
-      // 创建iframe内容
-      const iframeContent = `
+      const iframeUrl = URL.createObjectURL(
+        new Blob(
+          [
+            `
         <!DOCTYPE html>
         <head>
           <meta charset="UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <meta http-equiv="Content-Security-Policy" content="default-src 'self'; blob:">
-          <title>WangEditor Sandbox</title>
+          <meta http-equiv="Content-Security-Policy" content="default-src'self'; blob:">
+          <title></title>
           <style>
             html, body {
               margin: 0;
               padding: 0;
-              height: 100%;
-              overflow: hidden;
             }
 
             html.editor {
@@ -441,13 +393,13 @@ const InternalWangEditorSandbox = memo<
               height: 100%;
             }
 
-            html.editor > body > #${EDITOR_ID} {
+            html.editor > body > #${editorId} {
             }
             
-            html > body > #${EDITOR_ID} > [data-w-e-toolbar=true] {
+            html > body > #${editorId} > [data-w-e-toolbar=true] {
             }
             
-            html > body > #${EDITOR_ID} > [data-w-e-textarea=true] {
+            html > body > #${editorId} > [data-w-e-textarea=true] {
               flex-grow: 1;
               min-height: 0;
             }
@@ -472,7 +424,10 @@ const InternalWangEditorSandbox = memo<
             }
           </style>
           ${injectionStyleToString}
-          ${injectionStyles?.map((href) => `<link rel="stylesheet" href="${href}" />`)?.join('') ?? ''}
+          ${
+            injectionStyles?.map((href) => `<link rel="stylesheet" href="${href}" />`)?.join('') ??
+            ''
+          }
           <script src="${reactUrl}"><\/script>
           <script src="${reactDOMUrl}"><\/script>
           <script src="${wangEditorUrl}"><\/script>
@@ -485,104 +440,92 @@ const InternalWangEditorSandbox = memo<
           editor: !('readOnly' in props) || !props.readOnly,
         })}">
           <body>
-            <div id="${EDITOR_ID}" dir="${direction}" class="editor-content-view" style="${
+            <div id="${editorId}" dir="${direction}" class="editor-content-view" style="${
               wangEditorStyle ?? ''
             }"></div>
           </body>
         </html>
-      `;
-
-      const iframeUrl = URL.createObjectURL(
-        new Blob([iframeContent], { type: 'text/html' })
+        `,
+          ],
+          {
+            type: 'text/html',
+          },
+        ),
       );
+      frameRef!.current!.src = iframeUrl;
 
-      iframe.src = iframeUrl;
-
-      // 清理函数
       return () => {
-        iframe.removeEventListener('load', onLoad);
-        
-        // 清理URL对象
+        frameRef?.current?.removeEventListener('load', onLoad);
         URL.revokeObjectURL(iframeUrl);
         URL.revokeObjectURL(reactUrl);
         URL.revokeObjectURL(reactDOMUrl);
         URL.revokeObjectURL(wangEditorUrl);
         URL.revokeObjectURL(wangEditorReactUrl);
 
-        // 清理ResizeObserver
         if (resizeObserverRef.current) {
           resizeObserverRef.current.disconnect();
         }
       };
-    }, [props.readOnly, wangEditorStyle, direction, getZoom, injectionScripts, injectionScriptsByString, injectionStyles, injectionStylesByString]);
+    }, []);
 
     /**
-     * 及时销毁编辑器
+     * 及时销毁 editor
      */
     useEffect(() => {
       return () => {
         if (editor.current === null) return;
 
         editor.current.destroy();
+
         editor.current = null;
-        render().catch((error) => {
-          console.error('Failed to render after editor destroy:', error);
-        });
+
+        render();
       };
-    }, [render]);
+    }, [editor]);
 
     /**
-     * 监听value变化
+     * useUpdateEffect
+     * @description value
      */
     useUpdateEffect(() => {
       value.current = props.value as string;
 
       if (isMount.current) {
-        render().catch((error) => {
-          console.error('Failed to update editor value:', error);
-        });
+        render().then(() => {});
       }
-    }, [props.value, render]);
+    }, [props.value]);
 
     /**
-     * 监听toolBarProps和editorProps变化
+     * useUpdateEffect
+     * @description toolBarProps, editorProps
      */
     useUpdateEffect(() => {
+      // console.log('toolBarProps change', toolBarProps);
+
       if (isMount.current) {
-        render().catch((error) => {
-          console.error('Failed to update editor props:', error);
-        });
+        render().then(() => {});
       }
-    }, [toolBarProps, editorProps, render]);
+    }, [toolBarProps, editorProps]);
 
     return (
       <div
         ref={wrapRef}
-        className={classNames(SELECTOR_PREFIX, wrapClassName ?? '')}
+        className={classNames(`${selectorPrefix}`, wrapClassName ?? '')}
         style={wrapStyle ?? {}}
       >
-        <iframe 
-          ref={frameRef} 
-          className={`${SELECTOR_PREFIX}-frame`}
-          title="WangEditor Sandbox"
-          sandbox="allow-scripts allow-same-origin"
-        />
+        <iframe ref={frameRef} className={`${selectorPrefix}-frame`}></iframe>
       </div>
     );
-  })
+  }),
 );
 
-// 类型断言
 const WangEditorSandbox = InternalWangEditorSandbox as WangEditorSandboxComponent;
 
-// 设置显示名称
 WangEditorSandbox.displayName = 'WangEditorSandbox';
 
-// 添加静态方法
 WangEditorSandbox.AntdFormRequireValidator = (editor, tip) => ({
   validator: (rule, value, callback) => {
-    const editorInstance = editor();
-    if (editorInstance?.isEmpty?.()) {
+    if (editor?.()?.isEmpty?.()) {
       callback(tip);
     } else {
       callback();

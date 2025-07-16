@@ -1,5 +1,5 @@
 import Util from '@baifendian/adhere-util';
-import Emitter from '@baifendian/adhere-util-emitter';
+import { Events } from '@baifendian/adhere-util-emitter';
 
 import {
   IPixel,
@@ -21,7 +21,7 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
   config: IVectorLayerConfig;
   source: IVectorSource;
   isLoad: boolean = false;
-  emitter = new Emitter.Events();
+  emitter = new Events();
 
   // @ts-ignore
   constructor(map, config: IVectorLayerConfig) {

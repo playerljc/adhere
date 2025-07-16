@@ -27,6 +27,7 @@
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename AdhereSwipeOut --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "e2e": "cross-env e2e",
     "upgrade": "yarn upgrade",
     "upgrade-interactive": "yarn upgrade-interactive"
   },

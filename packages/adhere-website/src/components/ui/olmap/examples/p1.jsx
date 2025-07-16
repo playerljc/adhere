@@ -7,7 +7,7 @@ import styles from './examples.less';
 export default () => {
   return (
     <div className={styles.Wrapper}>
-      <OLMap.OLMap />
+      <OLMap.OLMap style={{ height: '100%' }} />
     </div>
   );
 };

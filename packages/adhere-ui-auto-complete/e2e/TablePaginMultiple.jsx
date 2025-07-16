@@ -113,6 +113,7 @@ export default () => {
         return loadData();
       }}
       options={options}
+      optionsStrategy="normal"
       defaultOptions={defaultOptions.current}
       onChange={(_value) => {
         setValue(_value);

@@ -1,19 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import type { CardProps } from './types';
-/**
- * 卡片组件
- * @component Card
- * @description 一个可配置的卡片组件，支持标题、内容、操作按钮等
- * @param props - 组件属性
- * @returns JSX.Element
- */
 declare const Card: React.NamedExoticComponent<CardProps>;
-/**
- * 卡片组件属性类型定义
- * @constant cardPropTypes
- * @description PropTypes类型检查定义
- */
 export declare const cardPropTypes: {
     className: PropTypes.Requireable<string>;
     style: PropTypes.Requireable<object>;

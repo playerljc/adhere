@@ -1,3 +1,4 @@
+import { Events } from '@baifendian/adhere-util-emitter';
 import { IVectorLayer, IVectorLayerConfig, IVectorSource, VectorEventActions } from './types';
 /**
  * VectorLayer
@@ -9,7 +10,7 @@ declare class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
     config: IVectorLayerConfig;
     source: IVectorSource;
     isLoad: boolean;
-    emitter: import("@baifendian/adhere-util-emitter/es/events").default;
+    emitter: Events;
     constructor(map: any, config: IVectorLayerConfig);
     getSource(): IVectorSource;
     getZIndex(): number;
@@ -21,7 +22,7 @@ declare class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
     protected firstLoad(): void;
     update(): void;
     getMap(): any;
-    getEmitter(): import("@baifendian/adhere-util-emitter/es/events").default;
+    getEmitter(): Events;
     addEventListener(type: VectorEventActions, handler: any): void;
     removeEventListener(type: VectorEventActions, handler: any): void;
     protected initCanvasEvents(): void;

@@ -7,6 +7,7 @@ import type { Style } from 'ol/style';
 import type Draw from 'ol/interaction/Draw';
 import type Modify from 'ol/interaction/Modify';
 import type Overlay from 'ol/Overlay';
+import type GeoLayer from './GeoLayer';
 
 /**
  * 地图类型枚举
@@ -195,17 +196,17 @@ export interface MapInstance {
   /** 获取地图实例 */
   getMap(): Map;
   /** 添加GeoJSON图层 */
-  addGeoLayer(geojsonData: any, getStyleConfig: () => Style, zIndex?: number): any;
+  addGeoLayer(geojsonData: any, getStyleConfig: () => Style, zIndex?: number): GeoLayer;
   /** 添加风场图层 */
   addWindLayer(data: any, config: any, zIndex?: number): any;
   /** 添加数据图层 */
   addDataLayer(zIndex: number): { vectorLayer: VectorLayer<any>; vectorSource: VectorSource };
   /** 添加悬停监听器 */
-  addHoverListener(layer: any, hit: (feature: Feature) => void, unHit: () => void): void;
+  addHoverListener(layer: any, hit: (feature: Feature | any) => void, unHit: (feature?: Feature | any) => void): void;
   /** 添加缩放监听器 */
   addZoomListener(handler: (zoom: number) => void): void;
   /** 添加点击监听器 */
-  addClickListener(layer: any, hit: (feature: Feature) => void, unHit: () => void): void;
+  addClickListener(layer: any, hit: (feature: Feature | any) => void, unHit: (feature: Feature | any) => void): void;
   /** 添加覆盖物 */
   addOverlay(config: any): Overlay;
   /** 设置覆盖物状态 */
@@ -216,4 +217,190 @@ export interface MapInstance {
   clear(): void;
   /** 添加主GeoJSON图层 */
   addMainGeoJSONLayer(params: { geoJSONStyle: GeoJSONStyle; geoJSONData: any }): void;
+}
+
+/**
+ * 绘制圆形参数接口
+ */
+export interface DrawCircleParams {
+  center: number[];
+  radius: number;
+  color?: string;
+  strokeColor?: string;
+  strokeWidth?: number;
+  zIndex?: number;
+  id?: string;
+  propertys?: Record<string, any>;
+}
+
+/**
+ * 绘制多边形参数接口
+ */
+export interface DrawPolygonParams {
+  points: number[][][];
+  color?: string;
+  strokeColor?: string;
+  strokeWidth?: number;
+  zIndex?: number;
+  id?: string;
+  propertys?: Record<string, any>;
+}
+
+/**
+ * 绘制线条参数接口
+ */
+export interface DrawLineParams {
+  points: number[][];
+  width: number;
+  color: string;
+  lineCap?: CanvasLineCap;
+  lineJoin?: CanvasLineJoin;
+  lineDash?: number[];
+}
+
+/**
+ * 绘制圆形点参数接口
+ */
+export interface DrawCirclePointParams {
+  id: string;
+  pos: number[];
+  fillOpt?: { color?: string };
+  strokeOpt?: { width?: number; color?: string };
+  radius?: number;
+  textOpt?: Record<string, any>;
+  zIndex?: number;
+  text?: string;
+  propertys?: Record<string, any>;
+}
+
+/**
+ * 绘制规则形状点参数接口
+ */
+export interface DrawRegularShapePointParams {
+  id: string;
+  pos: number[];
+  points: number;
+  fillOpt?: { color?: string };
+  strokeOpt?: { width?: number; color?: string };
+  text?: string;
+  textOpt?: Record<string, any>;
+  zIndex?: number;
+  propertys?: Record<string, any>;
+  [key: string]: any;
+}
+
+/**
+ * 绘制图片点参数接口
+ */
+export interface DrawImagePointParams {
+  id: string;
+  pos: number[];
+  zIndex?: number;
+  src?: string;
+  color?: string;
+  opacity?: number;
+  scale?: number;
+  anchor?: number[];
+  rotation?: number;
+  offset?: number[];
+  offsetOrigin?: string;
+  size?: number[];
+  text?: string;
+  textOpt?: Record<string, any>;
+  propertys?: Record<string, any>;
+}
+
+/**
+ * 设置地图中心动画参数接口
+ */
+export interface SetMapCenterAnimateParams {
+  map: Map;
+  point: number[];
+  duration?: number;
+}
+
+/**
+ * 创建交互参数接口
+ */
+export interface CreateInteractionParams {
+  map: Map;
+  config: any;
+}
+
+/**
+ * 多边形交互参数接口
+ */
+export interface PolygonInteractionParams {
+  map: Map;
+  freehand?: boolean;
+  vectorSource: VectorSource;
+  onDrawEnd?: (result: any) => void;
+  [key: string]: any;
+}
+
+/**
+ * 圆形交互参数接口
+ */
+export interface CircleInteractionParams {
+  map: Map;
+  vectorSource: VectorSource;
+  onDrawEnd?: (result: any) => void;
+  [key: string]: any;
+}
+
+/**
+ * 矩形交互参数接口
+ */
+export interface BoxInteractionParams {
+  map: Map;
+  vectorSource: VectorSource;
+  onDrawEnd?: (result: any) => void;
+  [key: string]: any;
+}
+
+/**
+ * 线条交互参数接口
+ */
+export interface LinStringInteractionParams {
+  map: Map;
+  freehand?: boolean;
+  vectorSource: VectorSource;
+  onDrawEnd?: (result: any) => void;
+  [key: string]: any;
+}
+
+/**
+ * 创建修改交互参数接口
+ */
+export interface CreateModifyInteractionParams {
+  map: Map;
+  vectorSource: VectorSource;
+  onModifyEnd: (result: any) => void;
+}
+
+/**
+ * 添加箭头源参数接口
+ */
+export interface AddArrowsSourceParams {
+  points: number[][];
+  color?: string;
+  icon?: string;
+  anchor?: number[];
+  offset?: number[];
+}
+
+/**
+ * HeatMap组件属性接口
+ */
+export interface HeatMapProps extends OLMapProps {
+  /** 热力图配置 */
+  heatMapConfig?: HeatMapConfig;
+}
+
+/**
+ * OLMap组件状态接口
+ */
+export interface OLMapState {
+  isLoading: boolean;
+  zoom: number | null;
 }

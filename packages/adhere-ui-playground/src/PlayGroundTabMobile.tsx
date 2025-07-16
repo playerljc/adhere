@@ -12,31 +12,14 @@ import CodeTabPanel, { CodeTabPanelDefaultProps, CodeTabPanelPropTypes } from '.
 import type { PlayGroundTabMobileProps, PlayGroundTabMobileState } from './types';
 
 /**
- * PlayGroundTabMobile组件
+ * PlayGroundTabMobile
  * @class PlayGroundTabMobile
- * @description 移动端标签页代码展示组件，支持二维码扫描和全屏预览
- * @extends APlayGround
- * @example
- * ```tsx
- * <PlayGroundTabMobile 
- *   url="http://localhost:3000"
- *   config={[
- *     { key: 'js', title: 'JavaScript', codeText: 'console.log("JS")' }
- *   ]}
- *   active="js"
- * >
- *   <div>代码演示内容</div>
- * </PlayGroundTabMobile>
- * ```
+ * @classdesc PlayGroundTabMobile
  */
 class PlayGroundTabMobile extends APlayGround<PlayGroundTabMobileProps, PlayGroundTabMobileState> {
   static displayName = 'PlayGroundTabMobile';
 
-  /**
-   * 构造函数
-   * @param props - 组件属性
-   */
-  constructor(props: PlayGroundTabMobileProps) {
+  constructor(props) {
     super(props);
 
     Object.assign(this.state, {
@@ -45,11 +28,7 @@ class PlayGroundTabMobile extends APlayGround<PlayGroundTabMobileProps, PlayGrou
     });
   }
 
-  /**
-   * 组件即将接收新属性时的处理
-   * @param nextProps - 新的属性
-   */
-  componentWillReceiveProps(nextProps: Readonly<PlayGroundTabMobileProps>): void {
+  componentWillReceiveProps(nextProps) {
     super.componentWillReceiveProps(nextProps);
 
     this.setState({
@@ -59,24 +38,21 @@ class PlayGroundTabMobile extends APlayGround<PlayGroundTabMobileProps, PlayGrou
   }
 
   /**
-   * 渲染操作按钮
-   * @protected renderAction
-   * @description 渲染操作按钮，只显示第一个操作按钮
-   * @returns ReactNode[] 操作按钮数组
+   * renderAction
    */
-  protected renderAction(): React.ReactNode[] {
+  protected renderAction() {
     return this.actionConfig.slice(0, 1).map((config) => config.call(this));
   }
 
   /**
-   * 渲染代码展示视图
-   * @protected renderCodeView
-   * @description 渲染移动端标签页代码展示视图
-   * @returns React.ReactElement 代码展示视图
+   * renderCodeView - 代码展示视图
+   * @return {*}
    */
-  protected renderCodeView(): React.ReactElement {
+  protected renderCodeView() {
     const { activeKey } = this.state;
+
     const { isFirst } = this;
+
     const { cardProps, id, isActive, ...restProps } = this.props;
 
     return (
@@ -114,13 +90,11 @@ class PlayGroundTabMobile extends APlayGround<PlayGroundTabMobileProps, PlayGrou
   }
 
   /**
-   * 获取剪贴板文本内容
-   * @protected getClipboardText
-   * @description 获取当前激活标签页的代码文本内容
-   * @returns Promise<string> 当前激活标签页的代码文本
+   * getClipboardText
    */
   protected getClipboardText(): Promise<string> {
     const { config } = this.props;
+
     const { activeKey } = this.state;
 
     const item = config?.find((c) => c.key === activeKey);
@@ -129,10 +103,10 @@ class PlayGroundTabMobile extends APlayGround<PlayGroundTabMobileProps, PlayGrou
   }
 
   /**
-   * 渲染组件
-   * @returns JSX.Element 组件的渲染结果
+   * render
+   * @return {*}
    */
-  render(): JSX.Element {
+  render() {
     const {
       cardProps,
       isActive,
@@ -201,7 +175,7 @@ class PlayGroundTabMobile extends APlayGround<PlayGroundTabMobileProps, PlayGrou
             <div
               className={`${selectPrefix}-mobile-display-action`}
               onClick={() => {
-                // 生成二维码
+                // With promises
                 QRCode.toDataURL(url)
                   .then((_url) => {
                     this.setState({

@@ -20,7 +20,7 @@ export default () => {
         添加风场Layer
       </Button>
 
-      <OLMap.OLMap zoom={5} ref={windRef} />
+      <OLMap.OLMap zoom={5} ref={windRef} style={{ height: '100%' }} />
     </div>
   );
 };

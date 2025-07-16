@@ -467,7 +467,7 @@ export interface IVectorSource {
   addFeatures: (features: IFeature[]) => void;
   addFirstFeature: (feature: IFeature) => void;
   insertFeature: (feature: IFeature, index: number) => void;
-  clear: () => void;
+  clearFeatures: () => void;
   getFeatureById: (id: string) => IFeature | null;
   getFeatures: () => IFeature[];
   hasFeature: (feature: IFeature) => boolean;

@@ -24,7 +24,7 @@ const treeTransformConfig: TreeTransformConfig = {
 /**
  * TreeAutoComplete 组件
  * 提供树形结构的自动完成功能，支持搜索、防抖、自定义渲染等特性
- * 
+ *
  * @param props - 组件属性
  * @param props.classNameWrap - 外层容器类名
  * @param props.styleWrap - 外层容器样式
@@ -39,7 +39,7 @@ const treeTransformConfig: TreeTransformConfig = {
  * @param props.isUsePath - 是否使用路径模式
  * @param props.treeSelectProps - TreeSelect 组件的其他属性
  * @returns 渲染的组件
- * 
+ *
  * @example
  * ```tsx
  * <TreeAutoComplete
@@ -103,7 +103,8 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
 
     /** 是否为多选模式 */
     const isMultiple = useMemo(() => {
-      const isChecked = 'treeCheckable' in treeSelectProps ? !!treeSelectProps.treeCheckable : false;
+      const isChecked =
+        'treeCheckable' in treeSelectProps ? !!treeSelectProps.treeCheckable : false;
       return isChecked || ('multiple' in treeSelectProps ? !!treeSelectProps.multiple : false);
     }, [treeSelectProps.treeCheckable, treeSelectProps.multiple]);
 
@@ -155,9 +156,11 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
         const allFlatTreeDataKeys = allFlatTreeData.map((t) => t[treeTransformConfig.keyAttr]);
         const distinctKeys = Array.from(new Set(allFlatTreeDataKeys));
 
-        allFlatTreeData = distinctKeys.map((value) =>
-          allFlatTreeData.find((option) => option[treeTransformConfig.keyAttr] === value),
-        ).filter((item) => !!item);
+        allFlatTreeData = distinctKeys
+          .map((value) =>
+            allFlatTreeData.find((option) => option[treeTransformConfig.keyAttr] === value),
+          )
+          .filter((item) => !!item);
 
         return Util.completionIncompleteFlatArr(
           composeTreeData,
@@ -168,23 +171,21 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
       // flatTreeData 模式
       else {
         const composeTreeData = isUsePathTarget
-          ? [...(treeData as any[] ?? []), ...(flatPathData ?? [])]
-          : treeData as any[] ?? [];
+          ? [...((treeData as any[]) ?? []), ...(flatPathData ?? [])]
+          : (treeData as any[]) ?? [];
 
         let allFlatTreeData = composeTreeData.filter((t) => !!t);
         const allFlatTreeDataKeys = allFlatTreeData.map((t) => t[treeTransformConfig.keyAttr]);
         const distinctKeys = Array.from(new Set(allFlatTreeDataKeys));
 
         const filteredData = distinctKeys
-          .map((value) => allFlatTreeData.find((option) => option[treeTransformConfig.keyAttr] === value))
+          .map((value) =>
+            allFlatTreeData.find((option) => option[treeTransformConfig.keyAttr] === value),
+          )
           .filter((item) => !!item);
 
         return Util.treeToArray(
-          Util.completionIncompleteFlatArr(
-            composeTreeData,
-            filteredData,
-            treeTransformConfig,
-          ),
+          Util.completionIncompleteFlatArr(composeTreeData, filteredData, treeTransformConfig),
           {
             parentIdAttr: treeTransformConfig.parentIdAttr,
             rootParentId: treeTransformConfig.rootParentId,
@@ -212,33 +213,36 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
 
     /**
      * 根据值获取路径数据
-     * 
+     *
      * @param values - 选中的值
      * @returns 路径数据对象
      */
-    const getPathsByValues = useCallback((values: any): Record<string, any[]> => {
-      const targetValues = Array.isArray(values) ? values : [values];
+    const getPathsByValues = useCallback(
+      (values: any): Record<string, any[]> => {
+        const targetValues = Array.isArray(values) ? values : [values];
 
-      return targetValues.reduce((result, id) => {
-        const node = targetFlatTreeData.find((t) => t[treeTransformConfig.keyAttr] === id);
-        
-        if (!node) return result;
+        return targetValues.reduce((result, id) => {
+          const node = targetFlatTreeData.find((t) => t[treeTransformConfig.keyAttr] === id);
 
-        const brotherNodes = targetFlatTreeData.filter(
-          (t) =>
-            t[treeTransformConfig.keyAttr] !== id &&
-            t[treeTransformConfig.parentIdAttr] === node[treeTransformConfig.parentIdAttr],
-        );
+          if (!node) return result;
 
-        result[id] = [
-          ...Util.getAncestor(targetFlatTreeData, node, treeTransformConfig),
-          ...brotherNodes,
-          node,
-        ];
+          const brotherNodes = targetFlatTreeData.filter(
+            (t) =>
+              t[treeTransformConfig.keyAttr] !== id &&
+              t[treeTransformConfig.parentIdAttr] === node[treeTransformConfig.parentIdAttr],
+          );
 
-        return result;
-      }, {} as Record<string, any[]>);
-    }, [targetFlatTreeData]);
+          result[id] = [
+            ...Util.getAncestor(targetFlatTreeData, node, treeTransformConfig),
+            ...brotherNodes,
+            node,
+          ];
+
+          return result;
+        }, {} as Record<string, any[]>);
+      },
+      [targetFlatTreeData],
+    );
 
     /**
      * 所有树形数据
@@ -310,57 +314,72 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
     /**
      * 选择变化处理函数
      * 从下方组件触发的选择变化事件
-     * 
+     *
      * @param values - 选中的值
      * @param label - 标签
      * @param extra - 额外信息
      */
-    const onSelectChange = useCallback((values: any, label: any, extra: any): void => {
-      if (!extra.triggerNode) {
-        setPaths({});
+    const onSelectChange = useCallback(
+      (values: any, label: any, extra: any): void => {
+        if (!extra.triggerNode) {
+          setPaths({});
+          treeSelectProps.onChange?.(values, label, extra);
+          return;
+        }
+
+        setPaths(getPathsByValues(values));
+
+        // 调用外部传入的 onChange 回调
         treeSelectProps.onChange?.(values, label, extra);
-        return;
-      }
 
-      setPaths(getPathsByValues(values));
-
-      // 调用外部传入的 onChange 回调
-      treeSelectProps.onChange?.(values, label, extra);
-
-      if (isMultiple) {
-        // 多选模式记录时间戳用于防抖
-        onSelectChangeStartTime.current = Date.now();
-      } else {
-        // 单选模式关闭下拉框
-        setOpen(false);
-      }
-    }, [getPathsByValues, isMultiple, setOpen, treeSelectProps]);
+        if (isMultiple) {
+          // 多选模式记录时间戳用于防抖
+          onSelectChangeStartTime.current = Date.now();
+        } else {
+          // 单选模式关闭下拉框
+          setOpen(false);
+        }
+      },
+      [getPathsByValues, isMultiple, setOpen, treeSelectProps],
+    );
 
     /**
      * 下拉内容渲染函数
-     * 
+     *
      * @param originNode - 原始下拉节点
      * @returns 渲染的下拉内容
      */
-    const dropdownRender = useCallback((originNode: React.ReactElement): React.ReactElement => {
-      if (fetching) return fetchLoading;
+    const dropdownRender = useCallback(
+      (originNode: React.ReactElement): React.ReactElement => {
+        if (fetching) return fetchLoading;
 
-      return !!childrenTreeData?.length
-        ? children?.({
-            originNode,
-            treeDataSimpleMode: targetTreeDataSimpleMode,
-            value: treeSelectProps.value,
-            onChange: onSelectChange,
-            treeData: childrenTreeData ?? [],
-            loading: fetching,
-          }) ?? originNode
-        : empty;
-    }, [children, childrenTreeData, empty, fetching, fetchLoading, onSelectChange, targetTreeDataSimpleMode, treeSelectProps.value]);
+        return !!childrenTreeData?.length
+          ? children?.({
+              originNode,
+              treeDataSimpleMode: targetTreeDataSimpleMode,
+              value: treeSelectProps.value,
+              onChange: onSelectChange,
+              treeData: childrenTreeData ?? [],
+              loading: fetching,
+            }) ?? originNode
+          : empty;
+      },
+      [
+        children,
+        childrenTreeData,
+        empty,
+        fetching,
+        fetchLoading,
+        onSelectChange,
+        targetTreeDataSimpleMode,
+        treeSelectProps.value,
+      ],
+    );
 
     /**
      * 输入处理函数（带防抖）
      * 处理用户输入，触发搜索
-     * 
+     *
      * @param e - 输入事件对象
      */
     const onInput = useCallback(
@@ -425,7 +444,9 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
           filterTreeNode={false}
           open={open}
           treeData={allTreeData}
-          onSearch={onInput}
+          // onSearch={onInput}
+          // @ts-ignore
+          onInput={onInput}
           onClear={onClear}
           popupRender={dropdownRender}
           onOpenChange={setOpen}

@@ -47,6 +47,8 @@ export type AutoCompleteProps = IAutoComplete & Omit<SelectProps, 'children'> & 
         /** 是否正在加载 */
         loading?: boolean;
     }) => ReactElement;
+    /** options的显示策略 **/
+    optionsStrategy?: 'normal' | 'merge';
 };
 /**
  * TreeAutoComplete 组件的属性类型定义

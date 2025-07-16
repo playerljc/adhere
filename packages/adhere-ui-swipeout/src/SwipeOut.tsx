@@ -1,17 +1,17 @@
 import classNames from 'classnames';
-import React, { memo, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
+import React, { memo, useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import { Swiper } from 'swiper';
 
-import { SwipeOutProps, SwiperRef, SlideStateMap } from './types';
+import { SlideStateMap, SwipeOutProps, SwiperRef } from './types';
 
 const selectorPrefix = 'adhere-ui-swipe-out';
 
 /**
  * SwipeOut 组件
- * 
+ *
  * 一个基于 Swiper 的滑动组件，支持前置和后置内容的显示与隐藏。
  * 可以通过 beforeShow 和 afterShow 属性控制前置和后置内容的显示状态。
- * 
+ *
  * @example
  * ```tsx
  * <SwipeOut
@@ -41,24 +41,21 @@ const SwipeOut = memo<SwipeOutProps>((props) => {
     direction = 'horizontal',
     duration = 0,
     children,
-    onInit,
-    slideChangeTransitionStart,
-    slideChangeTransitionEnd,
   } = props;
 
   const ref = useRef<HTMLDivElement>(null);
   const swiper = useRef<SwiperRef>();
-  
+
   /**
    * 滑动状态映射表
    * 根据 beforeShow 和 afterShow 的组合确定当前应该显示哪个 slide
    */
   const slideStateMap = useRef<SlideStateMap>(
     new Map([
-      [[true, true].toString(), 1],    // 前置和后置都显示，显示主内容
-      [[false, false].toString(), 1],  // 前置和后置都不显示，显示主内容
-      [[true, false].toString(), 0],   // 只显示前置，显示前置内容
-      [[false, true].toString(), 2],   // 只显示后置，显示后置内容
+      [[true, true].toString(), 1], // 前置和后置都显示，显示主内容
+      [[false, false].toString(), 1], // 前置和后置都不显示，显示主内容
+      [[true, false].toString(), 0], // 只显示前置，显示前置内容
+      [[false, true].toString(), 2], // 只显示后置，显示后置内容
     ]),
   );
 
@@ -67,12 +64,15 @@ const SwipeOut = memo<SwipeOutProps>((props) => {
    * @param action - 回调函数名称
    * @param params - 回调参数
    */
-  const trigger = useCallback((action: string, params?: any): void => {
-    const callback = props[action as keyof SwipeOutProps];
-    if (typeof callback === 'function') {
-      callback(params);
-    }
-  }, [props]);
+  const trigger = useCallback(
+    (action: string, params?: any): void => {
+      const callback = props[action as keyof SwipeOutProps];
+      if (typeof callback === 'function') {
+        callback(params);
+      }
+    },
+    [props],
+  );
 
   /**
    * 滑动到指定位置
@@ -131,14 +131,19 @@ const SwipeOut = memo<SwipeOutProps>((props) => {
   }, []);
 
   // 组件挂载时创建 Swiper 实例
-  useLayoutEffect(() => {
-    createSwiper();
-    
-    // 组件卸载时清理 Swiper 实例
-    return () => {
-      destroySwiper();
-    };
-  }, [createSwiper, destroySwiper]);
+  useLayoutEffect(
+    () => {
+      createSwiper();
+
+      // 组件卸载时清理 Swiper 实例
+      return () => {
+        destroySwiper();
+      };
+    },
+    [
+      /*createSwiper, destroySwiper*/
+    ],
+  );
 
   // 当 beforeShow 或 afterShow 变化时，滑动到对应位置
   useEffect(() => {
@@ -155,11 +160,7 @@ const SwipeOut = memo<SwipeOutProps>((props) => {
   }, [direction]);
 
   return (
-    <div
-      className={classNames(selectorPrefix, 'swiper', className)}
-      style={style}
-      ref={ref}
-    >
+    <div className={classNames(selectorPrefix, 'swiper', className)} style={style} ref={ref}>
       <div className="swiper-wrapper">
         <div
           className={classNames('swiper-slide', `${selectorPrefix}-before`, beforeClassName)}
@@ -169,11 +170,7 @@ const SwipeOut = memo<SwipeOutProps>((props) => {
         </div>
 
         <div
-          className={classNames(
-            'swiper-slide',
-            `${selectorPrefix}-content`,
-            contentClassName,
-          )}
+          className={classNames('swiper-slide', `${selectorPrefix}-content`, contentClassName)}
           style={contentStyle}
         >
           {children}

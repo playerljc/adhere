@@ -13,25 +13,22 @@ import {
 import DrawAction from './DrawAction';
 
 /**
- * 多边形绘制Action类
- * @class PolygonDrawAction
- * @classdesc 多边形选取绘制功能，支持绘制任意多边形几何图形
- * @extends {DrawAction}
- * @remark 一个start - end的周期中只能绘制一个多边形
+ * PolygonAction
+ * @class PolygonAction
+ * @classdesc  - 多边形选取
+ * @remark: 一个start - end的周期中只能绘制一个多边形
  */
 class PolygonDrawAction extends DrawAction {
-  /** 开始点 */
+  // 开始点
   private startPoint: IPoint | null = null;
 
-  /** 点的集合 */
+  // 点的集合
   private pointStack: IPoint[] = [];
 
-  /** 是否移动过 */
   protected isMove = false;
 
   /**
-   * 构造函数
-   * @description 初始化多边形绘制Action，绑定事件处理方法
+   * constructor
    */
   constructor() {
     super();
@@ -41,11 +38,10 @@ class PolygonDrawAction extends DrawAction {
   }
 
   /**
-   * 判断点是否在多边形数据内
-   * @param point - 待判断的点
-   * @param data - 多边形数据
-   * @returns 点是否在多边形内
-   * @description 使用turf库判断点是否在多边形内
+   * booleanPointInData
+   * @description 判断点是否在
+   * @param point
+   * @param data
    */
   static booleanPointInData(point: IPoint, data: IPolygonData): boolean {
     const points = [...data.data];
@@ -58,11 +54,10 @@ class PolygonDrawAction extends DrawAction {
   }
 
   /**
-   * Canvas点击事件处理
-   * @param e - 鼠标事件
-   * @description 处理多边形绘制过程中的点击事件
+   * onCanvasClick
+   * @param e
    */
-  private onCanvasClick(e: MouseEvent): void {
+  private onCanvasClick(e): void {
     e.stopPropagation();
 
     if (!this.context) return;
@@ -99,8 +94,6 @@ class PolygonDrawAction extends DrawAction {
         rect: canvasEl?.getBoundingClientRect(),
       });
 
-      if (!curPoint) return;
-
       this.drawLine(this.startPoint, curPoint);
 
       this.startPoint = curPoint;
@@ -112,11 +105,10 @@ class PolygonDrawAction extends DrawAction {
   }
 
   /**
-   * Canvas鼠标移动事件处理
-   * @param e - 鼠标事件
-   * @description 处理多边形绘制过程中的鼠标移动事件
+   * onCanvasMousemove
+   * @param e
    */
-  private onCanvasMousemove(e: MouseEvent): void {
+  private onCanvasMousemove(e): void {
     if (!this.context) return;
     if (!this.startPoint) return;
 
@@ -136,30 +128,26 @@ class PolygonDrawAction extends DrawAction {
     this.drawStack();
 
     // drawLine
-    const curPoint = BaseUtil.clientToCtxPoint({
-      event: e,
-      rect: canvasEl?.getBoundingClientRect(),
-    });
-
-    if (curPoint) {
-      this.drawLine(this.startPoint, curPoint);
-    }
+    this.drawLine(
+      this.startPoint,
+      BaseUtil.clientToCtxPoint({
+        event: e,
+        rect: canvasEl?.getBoundingClientRect(),
+      }),
+    );
   }
 
   /**
-   * Canvas双击事件处理 - 结束绘制
-   * @param e - 鼠标事件
-   * @description 双击结束多边形绘制
+   * onCanvasDbClick - 结束绘制
    */
-  private onCanvasDbClick(e: MouseEvent): void {
+  private onCanvasDbClick(e): void {
     if (!this.isMove) return;
     this.end();
     e.stopPropagation();
   }
 
   /**
-   * 绘制点栈
-   * @description 绘制已确定的点之间的连线
+   * drawStack
    */
   private drawStack(): void {
     const { pointStack } = this;
@@ -176,8 +164,7 @@ class PolygonDrawAction extends DrawAction {
   }
 
   /**
-   * 填充多边形
-   * @description 填充已绘制的多边形
+   * fill
    */
   private fill(): void {
     if (!this.context) return;
@@ -217,10 +204,9 @@ class PolygonDrawAction extends DrawAction {
   }
 
   /**
-   * 绘制直线
-   * @param sP - 起始点
-   * @param eP - 结束点
-   * @description 绘制两点之间的直线
+   * drawLine
+   * @param sP
+   * @param eP
    */
   private drawLine(sP: IPoint, eP: IPoint): void {
     if (!this.context) return;
@@ -249,24 +235,23 @@ class PolygonDrawAction extends DrawAction {
   }
 
   /**
-   * 绘制多边形
-   * @param ctx - Canvas上下文
-   * @param data - 多边形数据
-   * @description 静态方法，用于绘制历史数据
+   * draw
+   * @description
+   * @param ctx
+   * @param data
    */
-  static draw(ctx: CanvasRenderingContext2D, data: IPolygonData): void {
+  static draw(ctx: CanvasRenderingContext2D, data: IPolygonData) {
     if (!ctx || !data) return;
 
-    this.drawHistoryPath(ctx, data);
+    this.drawHistoryPath(ctx, data /*data.data as IPoint[]*/);
   }
 
   /**
-   * 绘制历史路径
-   * @param ctx - Canvas上下文
-   * @param data - 多边形数据
-   * @description 绘制历史多边形数据
+   * drawHistoryPath - 绘制历史数据
+   * @param ctx
+   * @param data
    */
-  static drawHistoryPath(ctx: CanvasRenderingContext2D, data: IPolygonData): void {
+  static drawHistoryPath(ctx: CanvasRenderingContext2D, data /*data: IPoint[] = []*/): void {
     ctx.beginPath();
 
     if (data.style) {
@@ -295,9 +280,8 @@ class PolygonDrawAction extends DrawAction {
   }
 
   /**
-   * 开始绘制
-   * @param style - 样式对象
-   * @description 开始多边形绘制Action
+   * start - 开始
+   * @param style
    */
   start(style: IStyle): void {
     if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
@@ -328,8 +312,7 @@ class PolygonDrawAction extends DrawAction {
   }
 
   /**
-   * 结束绘制
-   * @description 结束多边形绘制Action，保存数据
+   * end - 结束
    */
   end(): void {
     // 结束
@@ -384,8 +367,7 @@ class PolygonDrawAction extends DrawAction {
   }
 
   /**
-   * 销毁Action
-   * @description 清理资源，移除事件监听器
+   * destroy
    */
   destroy(): void {
     const { context } = this;

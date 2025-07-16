@@ -1,11 +1,11 @@
 import classNames from 'classnames';
-import React, { useContext, useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import type { FC } from 'react';
 
 import Context from '../Context';
 import type { MenuItemProps } from '../types';
 
-const selectorPrefix = 'adhere-mobile-ui-popovermenu-menu-item';
+const selectorPrefix = 'adhere-mobile-ui-popover-menu-menu-item';
 
 /**
  * 菜单项组件
@@ -17,13 +17,13 @@ const selectorPrefix = 'adhere-mobile-ui-popovermenu-menu-item';
  * @param disabled - 是否禁用
  * @param onClick - 点击回调函数
  */
-const MenuItem: FC<MenuItemProps> = ({ 
-  className, 
-  style, 
-  icon, 
-  text, 
-  disabled = false, 
-  onClick 
+const MenuItem: FC<MenuItemProps> = ({
+  className,
+  style,
+  icon,
+  text,
+  disabled = false,
+  onClick,
 }) => {
   const { refs } = useContext(Context);
 
@@ -61,14 +61,8 @@ const MenuItem: FC<MenuItemProps> = ({
       style={style}
       onClick={handleClick}
     >
-      {icon && (
-        <div className={`${selectorPrefix}-icon`}>
-          {icon}
-        </div>
-      )}
-      <div className={`${selectorPrefix}-text`}>
-        {text}
-      </div>
+      {icon && <div className={`${selectorPrefix}-icon`}>{icon}</div>}
+      <div className={`${selectorPrefix}-text`}>{text}</div>
     </li>
   );
 };

@@ -12,7 +12,7 @@ import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Intl from '@baifendian/adhere-util-intl';
 
 import ReplyInfo from '../Reply/Info';
-import type { CommentProps, CommentListData, CommentDataItem, RenderParams } from '../types';
+import type { CommentProps } from '../types';
 import CommentInfo from './Info';
 import ListStandard from './ListStandard';
 
@@ -21,54 +21,31 @@ const selectorPrefix = 'adhere-ui-comment';
 const { useTheme } = ConfigProvider;
 
 /**
- * 默认数据键名配置
- */
-const DEFAULT_COMMENT_DATA_KEYS = {
-  current: 'current',
-  totalPage: 'totalPage',
-  list: 'list',
-  totalCount: 'totalCount',
-} as const;
-
-/**
- * 默认回复数据键名配置
- */
-const DEFAULT_REPLY_DATA_KEYS = {
-  current: 'current',
-  totalPage: 'totalPage',
-  list: 'list',
-  totalCount: 'totalCount',
-} as const;
-
-/**
- * 评论组件
- * 
- * @description 一个功能完整的评论组件，支持评论列表展示、回复功能、分页加载等
- * @param props - 组件属性
- * @returns 评论组件实例
- * 
- * @example
- * ```tsx
- * <Comment
- *   fetchCommentData={fetchComments}
- *   fetchReplyData={fetchReplies}
- *   fetchReply={submitReply}
- *   renderCommentAuthor={(data) => <span>{data.author}</span>}
- *   renderCommentContent={(data) => <p>{data.content}</p>}
- *   renderCommentDateTime={(data) => <span>{data.datetime}</span>}
- * />
- * ```
+ * Comment
+ * @param props
+ * @constructor
+ * @classdesc 评论
  */
 const Comment = memo<CommentProps>((props) => {
   const {
     className,
     style,
     listProps,
-    commentDataKeys = DEFAULT_COMMENT_DATA_KEYS,
+    commentDataKeys = {
+      current: 'current',
+      totalPage: 'totalPage',
+      list: 'list',
+      totalCount: 'totalCount',
+    },
     commentLimit = 10,
     flexLayoutProps,
     commentKeyProp = 'id',
-    replyDataKeys = DEFAULT_REPLY_DATA_KEYS,
+    replyDataKeys = {
+      current: 'current',
+      totalPage: 'totalPage',
+      list: 'list',
+      totalCount: 'totalCount',
+    },
     replyLimit = 10,
     replyKeyProp = 'id',
     isMoreProp = 'isMore',
@@ -99,23 +76,18 @@ const Comment = memo<CommentProps>((props) => {
     emojiPickerProps,
   } = props;
 
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLElement | undefined>();
 
-  useTheme<HTMLDivElement>({
+  useTheme<HTMLElement>({
     elRef: wrapperRef,
     group: 'normal',
     displayName: 'Comment',
   });
 
-  /**
-   * 渲染评论列表
-   * @param data - 评论列表数据
-   * @returns 渲染的评论列表JSX
-   */
   const renderList = useCallback(
-    (data: CommentListData) => (
+    (data) => (
       <ul className={`${selectorPrefix}-list`}>
-        {data?.list?.map?.((record: CommentDataItem) => (
+        {data?.list?.map?.((record) => (
           <li className={`${selectorPrefix}-list-item`} key={record[commentKeyProp!]}>
             <CommentInfo
               data={record}
@@ -140,7 +112,7 @@ const Comment = memo<CommentProps>((props) => {
               local={local}
               emojiPickerProps={emojiPickerProps}
             >
-              {(record: CommentDataItem) => (
+              {(record) => (
                 <ReplyInfo
                   data={record}
                   dataKeys={replyDataKeys}
@@ -171,7 +143,6 @@ const Comment = memo<CommentProps>((props) => {
       </ul>
     ),
     [
-      commentKeyProp,
       replyDataKeys,
       replyLimit,
       replyKeyProp,
@@ -182,14 +153,8 @@ const Comment = memo<CommentProps>((props) => {
       renderCommentAuthor,
       renderCommentAvatar,
       renderCommentContent,
-      renderCommentDateTime,
-      renderCommentLoading,
-      renderReplyActions,
-      renderReplyAuthor,
-      renderReplyAvatar,
-      renderReplyContent,
       renderReplyDateTime,
-      renderReplyLoading,
+      renderCommentLoading,
       showReplyText,
       hideReplyText,
       loadMoreReplyText,
@@ -198,13 +163,13 @@ const Comment = memo<CommentProps>((props) => {
       loadMoreCollapseTextIcon,
       local,
       emojiPickerProps,
+      renderReplyContent,
+      renderReplyAvatar,
+      renderReplyAuthor,
+      renderReplyActions,
     ],
   );
 
-  /**
-   * 渲染加载状态
-   * @returns 加载状态JSX
-   */
   const renderLoading = useCallback(
     () => (
       <div className={`${selectorPrefix}-loading`}>
@@ -224,6 +189,7 @@ const Comment = memo<CommentProps>((props) => {
 
   return (
     <div
+      // @ts-ignore
       ref={wrapperRef}
       className={classNames(selectorPrefix, className)}
       style={style ?? {}}

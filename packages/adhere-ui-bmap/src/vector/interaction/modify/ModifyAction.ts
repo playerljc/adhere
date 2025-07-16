@@ -1,5 +1,5 @@
 import MathUtil from '@baifendian/adhere-util';
-import Emitter from '@baifendian/adhere-util-emitter';
+import { Events } from '@baifendian/adhere-util-emitter';
 
 import defaultAnchorStyle from '../DefaultAnchorStyle';
 import {
@@ -19,7 +19,7 @@ import {
  * @class ModifyAction
  * @classdesc ModifyAction
  */
-abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMoveAction {
+abstract class ModifyAction extends Events implements IModifyAction, IMoveAction {
   // 上下文对象
   context: IInteractionLayer | null = null;
 

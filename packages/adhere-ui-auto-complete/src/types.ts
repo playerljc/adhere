@@ -52,6 +52,8 @@ export type AutoCompleteProps = IAutoComplete &
       /** 是否正在加载 */
       loading?: boolean;
     }) => ReactElement;
+    /** options的显示策略 **/
+    optionsStrategy?: 'normal' | 'merge';
   };
 
 /**
@@ -105,7 +107,10 @@ export type UseCommonReturn = {
 /**
  * useCommon Hook 的参数类型定义
  */
-export type UseCommonParams = Pick<AutoCompleteProps, 'renderLoading' | 'emptyContent' | 'loadData'>;
+export type UseCommonParams = Pick<
+  AutoCompleteProps,
+  'renderLoading' | 'emptyContent' | 'loadData'
+>;
 
 /**
  * useCommon Hook 的类型定义

@@ -26,6 +26,22 @@ import Resource from '@baifendian/adhere-util-resource';
 import GeoLayer from './GeoLayer';
 import * as TitleLayer from './TitleLayer';
 import WindLayer from './WindLayer';
+import type {
+  DrawCircleParams,
+  DrawPolygonParams,
+  DrawLineParams,
+  DrawCirclePointParams,
+  DrawRegularShapePointParams,
+  DrawImagePointParams,
+  SetMapCenterAnimateParams,
+  CreateInteractionParams,
+  PolygonInteractionParams,
+  CircleInteractionParams,
+  BoxInteractionParams,
+  LinStringInteractionParams,
+  CreateModifyInteractionParams,
+  AddArrowsSourceParams,
+} from './types';
 
 const EARTH_RADIUS: number = Resource.Dict.value.ResourceGisEarthRadius?.value ?? 6371000;
 
@@ -125,134 +141,7 @@ function createMap(Config: CreateMapConfig): Map {
   return map;
 }
 
-// 参数类型定义
-interface DrawCircleParams {
-  center: number[];
-  radius: number;
-  color?: string;
-  strokeColor?: string;
-  strokeWidth?: number;
-  zIndex?: number;
-  id?: string;
-  propertys?: Record<string, any>;
-}
 
-interface DrawPolygonParams {
-  points: number[][][];
-  color?: string;
-  strokeColor?: string;
-  strokeWidth?: number;
-  zIndex?: number;
-  id?: string;
-  propertys?: Record<string, any>;
-}
-
-interface DrawLineParams {
-  points: number[][];
-  width: number;
-  color: string;
-  lineCap?: CanvasLineCap;
-  lineJoin?: CanvasLineJoin;
-  lineDash?: number[];
-}
-
-interface DrawCirclePointParams {
-  id: string;
-  pos: number[];
-  fillOpt?: { color?: string };
-  strokeOpt?: { width?: number; color?: string };
-  radius?: number;
-  textOpt?: Record<string, any>;
-  zIndex?: number;
-  text?: string;
-  propertys?: Record<string, any>;
-}
-
-interface DrawRegularShapePointParams {
-  id: string;
-  pos: number[];
-  points: number; // 必填
-  fillOpt?: { color?: string };
-  strokeOpt?: { width?: number; color?: string };
-  text?: string;
-  textOpt?: Record<string, any>;
-  zIndex?: number;
-  propertys?: Record<string, any>;
-  [key: string]: any;
-}
-
-interface DrawImagePointParams {
-  id: string;
-  pos: number[];
-  zIndex?: number;
-  src?: string;
-  color?: string;
-  opacity?: number;
-  scale?: number;
-  anchor?: number[];
-  rotation?: number;
-  offset?: number[];
-  offsetOrigin?: string;
-  size?: number[];
-  text?: string;
-  textOpt?: Record<string, any>;
-  propertys?: Record<string, any>;
-}
-
-interface SetMapCenterAnimateParams {
-  map: Map;
-  point: number[];
-  duration?: number;
-}
-
-interface CreateInteractionParams {
-  map: Map;
-  config: any;
-}
-
-interface PolygonInteractionParams {
-  map: Map;
-  freehand?: boolean;
-  vectorSource: VectorSource;
-  onDrawEnd?: (result: any) => void;
-  [key: string]: any;
-}
-
-interface CircleInteractionParams {
-  map: Map;
-  vectorSource: VectorSource;
-  onDrawEnd?: (result: any) => void;
-  [key: string]: any;
-}
-
-interface BoxInteractionParams {
-  map: Map;
-  vectorSource: VectorSource;
-  onDrawEnd?: (result: any) => void;
-  [key: string]: any;
-}
-
-interface LinStringInteractionParams {
-  map: Map;
-  freehand?: boolean;
-  vectorSource: VectorSource;
-  onDrawEnd?: (result: any) => void;
-  [key: string]: any;
-}
-
-interface CreateModifyInteractionParams {
-  map: Map;
-  vectorSource: VectorSource;
-  onModifyEnd: (result: any) => void;
-}
-
-interface AddArrowsSourceParams {
-  points: number[][];
-  color?: string;
-  icon?: string;
-  anchor?: number[];
-  offset?: number[];
-}
 
 export default {
   SHOWBASESTATION_MINZOOM: 5,

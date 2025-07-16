@@ -37,10 +37,8 @@ import type {
   IAction,
   IPolygonSelection,
   IStyle,
-  IEventParams,
 } from '../types';
-import { SelectType } from '../types';
-import { ActionEvents, IActionData, PolygonSelectionActions } from '../types';
+import { ActionEvents, IActionData, PolygonSelectionActions, SelectType } from '../types';
 import {
   drawCircle,
   drawDiamond,
@@ -55,11 +53,10 @@ import {
 const selectorPrefix = 'adhere-ui-cropping-core';
 
 /**
- * 裁剪核心组件
- * @param props - 组件属性
- * @param ref - 组件引用
- * @returns 裁剪核心组件
- * @description 提供图片裁剪功能的核心组件，支持多种几何图形的绘制和修改
+ * CroppingCore
+ * @param props
+ * @param ref
+ * @constructor
  */
 const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
   (
@@ -75,23 +72,29 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
     ref,
   ) => {
     const [type, setType] = useState<SelectType | null>(null);
+
     const [base64, setBase64] = useState<string>('');
 
     const base64Ref = useRef<HTMLImageElement | null>(null);
+
     const wrapRef = useRef<HTMLDivElement | null>(null);
+
     const clipRef = useRef<HTMLDivElement | null>(null);
+
     const clipCanvasEL = useRef<HTMLCanvasElement | null>(null);
+
     const clipCanvasCtx = useRef<CanvasRenderingContext2D>();
+
     const geometryRef = useRef<HTMLDivElement | null>(null);
+
     const polygonSelection = useRef<IPolygonSelection>();
+
     const curAction = useRef<IAction | null>(null);
+
     const inputFileFieldRef = useRef<HTMLInputElement | null>(null);
+
     const data = useRef<IActionData | null>(null);
 
-    /**
-     * 布局映射
-     * @description 定义不同方向的布局配置
-     */
     const layoutMap = new Map<string, () => ReactNode>([
       [
         'left',
@@ -171,10 +174,7 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
       ],
     ]);
 
-    /**
-     * 选择类型到Action类的映射
-     * @description 定义不同几何图形对应的修改Action类
-     */
+    // ActionType
     const typeActionMap = useMemo(
       () =>
         new Map<SelectType, any>([
@@ -188,35 +188,30 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
       [],
     );
 
-    /**
-     * 默认样式配置
-     * @description 定义绘制几何图形时的默认样式
-     */
     const style: IStyle = useMemo(
       () => ({
         fillStyle: 'transparent',
+        // 描边颜色
         strokeStyle: '#fff',
+        // 描边大小
         lineWidth: 1,
         lineCap: 'round',
         lineJoin: 'round',
-        lineDash: [],
+        lineDash: [
+          /*5, 4, 3*/
+        ],
         lineDashOffset: -1,
         globalAlpha: 1,
       }),
       [],
     );
 
-    /**
-     * 锚点样式配置
-     * @description 定义控制点的样式
-     */
     const anchorStyle = {
       fillStyle: '#fff',
     };
 
     /**
-     * 默认包装属性
-     * @description 定义包装组件的默认属性
+     * defaultProps
      */
     const defaultProps = useMemo<CroppingCoreWrapProps>(
       () => ({
@@ -227,8 +222,7 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
     );
 
     /**
-     * 默认工具栏属性
-     * @description 定义工具栏的默认属性
+     * defaultToolbarProps
      */
     const defaultToolbarProps = useMemo<CroppingCoreToolProps>(
       () => ({
@@ -238,8 +232,7 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
     );
 
     /**
-     * 默认区域属性
-     * @description 定义区域的默认属性
+     * defaultCProps
      */
     const defaultCProps = useMemo<CroppingCoreAreaProps>(
       () => ({
@@ -249,25 +242,14 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
     );
 
     /**
-     * 渲染工具栏
-     * @description 渲染工具栏组件，包含各种绘制工具
+     * renderTool
      */
     const renderTool = useMemo(() => {
-      /**
-       * 获取按钮类型
-       * @param _type - 选择类型
-       * @returns 按钮类型
-       */
-      const getType = (_type: SelectType) => {
+      const getType = (_type) => {
         return _type === type ? 'primary' : 'default';
       };
 
-      /**
-       * 点击前的处理
-       * @param _type - 选择类型
-       * @returns Promise
-       */
-      const onBeforeClick = (_type: SelectType) => {
+      const onBeforeClick = (_type) => {
         if (_type !== type) {
           clearClip();
           polygonSelection?.current?.clearCanvasAll?.();
@@ -278,13 +260,7 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
         return _type !== type ? Promise.resolve() : Promise.reject();
       };
 
-      /**
-       * 点击处理的高阶函数
-       * @param type - 选择类型
-       * @param ActionClass - Action类
-       * @returns 点击处理函数
-       */
-      const onClickHOC = (type: SelectType, ActionClass: any) => () => {
+      const onClickHOC = (type: SelectType, ActionClass) => () => {
         onBeforeClick(type).then(() => {
           curAction.current = new ActionClass();
 
@@ -293,28 +269,31 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
           curAction.current.setAnchorStyle({ ...anchorStyle });
           curAction.current.setMoveGemStyle({ ...anchorStyle });
 
-          // 绑定事件监听器
-          curAction?.current?.on?.(ActionEvents.DrawBeforeStart, (e: IEventParams) => {
+          curAction?.current?.on?.(ActionEvents.DrawBeforeStart, (e) => {
+            // console.log('绘制开始前', JSON.stringify(e));
             clip(e);
           });
-          curAction?.current?.on?.(ActionEvents.DrawStart, (e: IEventParams) => {
+          curAction?.current?.on?.(ActionEvents.DrawStart, (e) => {
+            // console.log('绘制开始', JSON.stringify(e));
             clip(e);
           });
-          curAction?.current?.on?.(ActionEvents.Drawing, (e: IEventParams) => {
+          curAction?.current?.on?.(ActionEvents.Drawing, (e) => {
+            // console.log('绘制中', JSON.stringify(e));
             clip(e);
           });
-          curAction?.current?.on?.(ActionEvents.DrawEnd, (e: IEventParams) => {
+          curAction?.current?.on?.(ActionEvents.DrawEnd, (e) => {
+            // curAction.current.start(data?.style);
+            // console.log('绘制完成', JSON.stringify(e));
             clip(e);
           });
-
           polygonSelection?.current?.changeAction?.(curAction.current as IAction);
           curAction?.current?.start?.(style);
         });
       };
 
       /**
-       * 渲染裁剪工具
-       * @returns 工具按钮数组
+       * renderCroppingTools
+       * @returns
        */
       const renderCroppingTools = () => {
         const tools = [
@@ -502,8 +481,7 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
     }, [type, toolProps, base64, toolBarConfig]);
 
     /**
-     * 渲染区域
-     * @description 渲染裁剪区域组件
+     * renderArea
      */
     const renderArea = useMemo(
       () => (
@@ -520,23 +498,19 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
           <div className={`${selectorPrefix}-clip`} ref={clipRef}></div>
         </Card>
       ),
-      [base64, areaProps, minHeight],
+      [base64, areaProps],
     );
 
-    /**
-     * 创建图片对象
-     * @returns 图片对象
-     * @description 根据base64创建图片对象
-     */
     const image = useCallback(() => {
       const img = new Image();
+
       img.src = base64;
+
       return img;
     }, [base64]);
 
     /**
-     * 更新布局效果
-     * @description 当base64变化时重新初始化组件
+     * useUpdateLayoutEffect
      */
     useUpdateLayoutEffect(() => {
       setType(null);
@@ -556,20 +530,18 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
     }, [base64]);
 
     /**
-     * 布局效果
-     * @description 初始化文件输入事件监听器
+     * useLayoutEffect
      */
     useLayoutEffect(() => {
-      const onChange = (e: Event) => {
-        const target = e.target as HTMLInputElement;
-        const file = target.files?.[0];
-        if (!file) return;
+      const onChange = (e) => {
+        const file = e.target.files[0];
 
         const read = new FileReader();
+
         read.onload = (e) => {
-          const result = e.target?.result as string;
-          setBase64(result);
+          setBase64(e.target?.result as string);
         };
+
         read.readAsDataURL(file);
       };
 
@@ -580,16 +552,15 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
       };
     }, []);
 
-    /**
-     * 暴露给父组件的方法
-     * @description 定义组件对外暴露的接口
-     */
     useImperativeHandle(ref, () => ({
       /**
-       * 保存裁剪结果
-       * @returns base64格式的图片数据URL
+       * save
+       * @return {string}
        */
       save: (): string => {
+        // 通过data获取外接矩形数据
+        // 创建一个canvas，绘制base64
+        // getImageData(矩形数据)
         if (!data.current || !data.current.data || !base64) return '';
 
         return getClipDataUrl({
@@ -600,15 +571,14 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
     }));
 
     /**
-     * 裁剪处理
-     * @param e - 事件参数或Action数据
-     * @description 根据事件数据执行裁剪操作
+     * clip
+     * @param {IActionData} e
+     * @return void
      */
-    const clip = (e: IEventParams | IActionData) => {
-      const actionData = 'data' in e ? e.data : e;
-      if (!actionData) return;
+    const clip = (e) => {
+      if (!e.data) return;
 
-      data.current = actionData;
+      data.current = e;
 
       clipCanvasCtx.current?.restore?.();
       clipCanvasCtx.current?.save?.();
@@ -628,8 +598,7 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
         [SelectType.Polygon, drawPolygon],
       ]);
 
-      const selectType = 'selectType' in e ? e.selectType : actionData.type;
-      drawMap.get(selectType as SelectType)?.(clipCanvasCtx.current!, actionData);
+      drawMap.get(e.selectType)?.(clipCanvasCtx.current!, e.data);
 
       clipCanvasCtx?.current?.clip();
 
@@ -643,8 +612,7 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
     };
 
     /**
-     * 清除裁剪
-     * @description 清除当前的裁剪内容
+     * clearClip
      */
     const clearClip = () => {
       clipCanvasCtx.current?.restore();
@@ -657,17 +625,17 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
     };
 
     /**
-     * 销毁裁剪
-     * @description 销毁裁剪相关的DOM元素
+     * destroyClip
+     * @returns
      */
     const destroyClip = () => {
       if (!clipRef.current) return;
+
       clipRef.current.innerHTML = '';
     };
 
     /**
-     * 创建裁剪
-     * @description 创建裁剪Canvas元素
+     * createClip
      */
     const createClip = () => {
       clipCanvasEL.current = document.createElement('canvas');
@@ -681,16 +649,15 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
     };
 
     /**
-     * 销毁选择
-     * @description 销毁多边形选择组件
+     * destroySelection
      */
     const destroySelection = () => {
       polygonSelection?.current?.destroy?.();
     };
 
     /**
-     * 创建选择
-     * @description 创建多边形选择组件
+     * createSelection
+     * @returns
      */
     const createSelection = () => {
       if (!geometryRef.current) return;
@@ -700,15 +667,50 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
       polygonSelection.current = new PolygonSelection.PolygonSelection(geometryRef.current);
 
       /**
-       * Canvas点击几何图形事件
-       * @description 处理点击几何图形时的修改操作
+       * CanvasClickGeometry
        */
-      polygonSelection.current.on(PolygonSelectionActions.CanvasClickGeometry, (data: IActionData) => {
-        const Component = typeActionMap.get(data.type as SelectType);
-        if (!Component) return;
+      polygonSelection.current.on(PolygonSelectionActions.CanvasClickGeometry, (data) => {
+        // 多边形数据据
+        // const d = {
+        //   selectType: 'Polygon',
+        //   actionType: 'Draw',
+        //   data: {
+        //     id: 'fd4ef30f-8add-4cc1-8f36-d861e77b5354',
+        //     type: 'Polygon',
+        //     data: [
+        //       { x: 148.34375, y: 33 },
+        //       { x: 120.34375, y: 198 },
+        //       { x: 360.34375, y: 181 },
+        //     ],
+        //     style: {
+        //       fillStyle: 'red',
+        //       strokeStyle: '#000',
+        //       lineWidth: 2,
+        //       lineCap: 'round',
+        //       lineJoin: 'round',
+        //       lineDash: [],
+        //       lineDashOffset: -1,
+        //     },
+        //   },
+        // };
+        //
+        // polygonSelection.current.clearDraw();
+        // polygonSelection.current.addHistoryData(d.data);
+        // polygonSelection.current.drawHistoryData();
+        //
+        // const action = new PolygonModifyAction(d);
+        // action.on(ActionEvents.End, () => {
+        //   action.start();
+        // });
+        // polygonSelection.current.changeAction(action);
+        // action.start();
+
+        // console.log('click');
+
+        const Component = typeActionMap.get(data.type);
 
         const action = new Component({
-          selectType: data.type as SelectType,
+          selectType: data.type,
           actionType: 'Draw',
           data,
         });
@@ -716,38 +718,43 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
         action.setAnchorStyle({ ...anchorStyle });
         action.setMoveGemStyle({ ...anchorStyle });
 
-        // 绑定修改事件监听器
-        action.on(ActionEvents.ModifyBeforeStart, (e: IEventParams) => {
+        action.on(ActionEvents.ModifyBeforeStart, (e) => {
+          // console.log('修改开始前', JSON.stringify(e));
           clip(e);
         });
-        action.on(ActionEvents.ModifyStart, (e: IEventParams) => {
+        action.on(ActionEvents.ModifyStart, (e) => {
+          // console.log('修改开始', JSON.stringify(e));
           clip(e);
         });
-        action.on(ActionEvents.Modifying, (e: IEventParams) => {
+        action.on(ActionEvents.Modifying, (e) => {
+          // console.log('修改中', JSON.stringify(e));
           clip(e);
         });
-        action.on(ActionEvents.ModifyEnd, (e: IEventParams) => {
+        action.on(ActionEvents.ModifyEnd, (e) => {
+          // console.log('修改完成', JSON.stringify(e));
           clip(e);
           action.start();
         });
 
-        // 绑定移动事件监听器
-        action.on(ActionEvents.Moving, (e: IEventParams) => {
+        action.on(ActionEvents.Moving, (e) => {
+          // console.log('移动中', JSON.stringify(e));
           clip(e);
         });
-        action.on(ActionEvents.MoveEnd, (e: IEventParams) => {
+        action.on(ActionEvents.MoveEnd, (e) => {
+          // console.log('移动完成', JSON.stringify(e));
           clip(e);
         });
 
         polygonSelection?.current?.changeAction(action);
+
         action.start();
       });
 
       /**
-       * Canvas点击空白区域事件
-       * @description 处理点击空白区域时的清理操作
+       * CanvasClickEmpty
        */
       polygonSelection.current.on(PolygonSelectionActions.CanvasClickEmpty, () => {
+        // console.log('clickEmpty');
         polygonSelection?.current?.clearDraw();
         polygonSelection?.current?.clearAssistDraw();
         polygonSelection?.current?.drawHistoryData();

@@ -63,7 +63,7 @@ export default () => {
         轨迹播放
       </Button>
 
-      <OLMap.OLMap ref={animationRef} />
+      <OLMap.OLMap ref={animationRef} style={{ height: '100%' }} />
     </div>
   );
 };

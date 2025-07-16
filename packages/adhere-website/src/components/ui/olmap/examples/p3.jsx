@@ -52,7 +52,7 @@ export default () => {
         <Radio.Button value="DianziGaodeXYZ">高德电子地图</Radio.Button>
       </Radio.Group>
 
-      <OLMap.OLMap ref={changeRef} />
+      <OLMap.OLMap ref={changeRef} style={{ height: '100%' }} />
     </div>
   );
 };

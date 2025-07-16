@@ -23,42 +23,40 @@ import {
 const selectorPrefix = 'adhere-ui-polygon-selection';
 
 /**
- * 多边形选择主组件
- * @class PolygonSelection
- * @classdesc 提供多边形选择功能的核心组件，支持多种几何图形的绘制、修改和移动
- * @extends {Events}
- * @implements {IPolygonSelection}
+ * PolygonSelection
+ * @class
+ * @classdesc - PolygonSelection
  */
 class PolygonSelection extends Events implements IPolygonSelection {
-  /** 裁剪组件 */
   static Cropping = Cropping;
 
-  /** 父容器元素 */
+  // 父元素
   protected el: HTMLElement | null = null;
 
-  /** 事件监听器映射 */
+  // 注册的事件对象
   protected listeners: IListeners | null | undefined = null;
 
-  /** 当前活动的Action */
+  // 当前的Action
   protected curAction: IAction | null = null;
 
-  /** 主Canvas元素 */
+  // 当前的canvas元素
   protected canvasEl: HTMLCanvasElement | null = null;
 
-  /** 主Canvas渲染上下文 */
+  // 当前的ctx对象
   protected ctx: CanvasRenderingContext2D | null = null;
 
-  /** 辅助Canvas元素 */
+  // 辅助的canvas元素
   protected assistCanvasEl: HTMLCanvasElement | null = null;
 
-  /** 辅助Canvas渲染上下文 */
+  // 辅助的ctx对象
   protected assistCtx: CanvasRenderingContext2D | null = null;
 
-  /** Canvas上的所有历史数据 */
+  // canvas上的所有数据
   protected canvasData: IActionData[] = [];
 
-  /** 选择类型到Action类的映射 */
-  protected typeActionMap: Map<SelectType, any> = new Map<SelectType, any>([
+  // ActionType
+  // @ts-ignore
+  protected typeActionMap: Map<SelectType, IAction> = new Map([
     [SelectType.Polygon, PolygonDrawAction],
     [SelectType.Circle, CircleDrawAction],
     [SelectType.Rectangle, RectangleDrawAction],
@@ -69,34 +67,35 @@ class PolygonSelection extends Events implements IPolygonSelection {
   ]);
 
   /**
-   * 构造函数
-   * @param el - 父容器元素
-   * @param defaultData - 默认的Action数据数组
-   * @param listeners - 事件监听器映射
-   * @description 初始化多边形选择组件
+   * constructor
+   * @param el: HtmlElement - 父元素
+   * @param defaultData: IActionData[] - 缺省的ActionData数据
+   * @param listeners: IListeners - 缺省的事件注册对象
    */
   constructor(el: HTMLElement, defaultData?: IActionData[], listeners?: IListeners) {
     super();
 
     this.el = el;
+
     this.listeners = listeners;
+
     defaultData && (this.canvasData = defaultData);
 
     this.onResize = this.onResize.bind(this);
 
-    // 初始化事件监听器
+    // 初始化Listeners
     this.initListeners();
 
     // 初始化Canvas
     this.initCanvas();
 
-    // 初始化事件处理
+    // 初始化Events
     this.initEvents();
   }
 
   /**
-   * 初始化事件监听器
-   * @description 注册用户提供的事件监听器
+   * initListeners
+   * @description 注册用户的listeners
    */
   protected initListeners(): void {
     const { listeners } = this;
@@ -111,8 +110,7 @@ class PolygonSelection extends Events implements IPolygonSelection {
   }
 
   /**
-   * 初始化事件处理
-   * @description 绑定Canvas点击事件，处理几何图形的选择和空白区域点击
+   * initEvents
    */
   protected initEvents(): void {
     if (!this.el) return;
@@ -123,6 +121,11 @@ class PolygonSelection extends Events implements IPolygonSelection {
 
       // 查看point命中了HistoryData中的哪一项
       const historyData = this.getHistoryData();
+
+      // if (!historyData ||  !historyData.length) {
+      //   this.trigger(PolygonSelectionActions.CanvasClickEmpty);
+      //   return;
+      // }
 
       const point = MathUtil.clientToCtxPoint({
         event: e,
@@ -158,8 +161,7 @@ class PolygonSelection extends Events implements IPolygonSelection {
   }
 
   /**
-   * 初始化Canvas
-   * @description 创建主Canvas和辅助Canvas，并添加到DOM中
+   * initCanvas - 初始化Canvas
    */
   protected initCanvas(): void {
     if (!this.el) return;
@@ -182,22 +184,24 @@ class PolygonSelection extends Events implements IPolygonSelection {
 
     // 适配canvas
     this.adapterCanvas();
+
+    // window.addEventListener('resize', this.onResize);
   }
 
   /**
-   * 适配Canvas尺寸
-   * @description 根据容器尺寸调整Canvas的宽高
+   * adapterCanvas - 适配canvas
    */
-  protected adapterCanvas(): void {
+  protected adapterCanvas() {
     const { canvasEl, assistCanvasEl, el } = this;
 
-    if (!el || !canvasEl || !assistCanvasEl) return;
+    // @ts-ignore
+    if (!el ?? !canvasEl ?? !assistCanvasEl) return;
 
-    canvasEl.width = el.offsetWidth;
-    canvasEl.height = el.offsetHeight;
+    canvasEl.width = el?.offsetWidth ?? 0;
+    canvasEl.height = el?.offsetHeight ?? 0;
 
-    assistCanvasEl.width = el.offsetWidth;
-    assistCanvasEl.height = el.offsetHeight;
+    assistCanvasEl.width = el?.offsetWidth ?? 0;
+    assistCanvasEl.height = el?.offsetHeight ?? 0;
 
     this.clearDraw();
     this.clearAssistDraw();
@@ -205,75 +209,68 @@ class PolygonSelection extends Events implements IPolygonSelection {
   }
 
   /**
-   * 窗口大小变化处理
-   * @description 当窗口大小变化时重新适配Canvas
+   * onResize
    */
-  protected onResize(): void {
+  protected onResize() {
     this.adapterCanvas();
   }
 
   /**
-   * 获取主Canvas渲染上下文
-   * @returns Canvas渲染上下文，如果不存在则返回null
+   * getCtx
+   * @return CanvasRenderingContext2D | null
    */
   getCtx(): CanvasRenderingContext2D | null {
     return this.ctx;
   }
 
   /**
-   * 获取主Canvas元素
-   * @returns Canvas元素，如果不存在则返回null
+   * getCanvasEl
+   * @return HTMLCanvasElement | null
    */
   getCanvasEl(): HTMLCanvasElement | null {
     return this.canvasEl;
   }
 
   /**
-   * 获取辅助Canvas元素
-   * @returns 辅助Canvas元素，如果不存在则返回null
+   * getAssistCanvasEl
    */
   getAssistCanvasEl(): HTMLCanvasElement | null {
     return this.assistCanvasEl;
   }
 
-  /**
-   * 获取辅助Canvas渲染上下文
-   * @returns 辅助Canvas渲染上下文，如果不存在则返回null
-   */
   getAssistCtx(): CanvasRenderingContext2D | null {
     return this.assistCtx;
   }
 
   /**
-   * 获取组件宽度
-   * @returns 组件宽度值
+   * getWidth
+   * @return number
    */
   getWidth(): number {
-    return this.el?.offsetWidth ?? 0;
+    return this?.el?.offsetWidth ?? 0;
   }
 
   /**
-   * 获取组件高度
-   * @returns 组件高度值
+   * getHeight
+   * @return number
    */
   getHeight(): number {
-    return this.el?.offsetHeight ?? 0;
+    return this?.el?.offsetHeight ?? 0;
   }
 
   /**
-   * 添加历史数据
-   * @param data - 要添加的Action数据
-   * @description 向历史数据中添加新的Action数据
+   * addHistoryData - 添加一个ActionData到canvasData中
+   * @param data
+   * @return void
    */
   addHistoryData(data: IActionData): void {
     this.canvasData.push(data);
   }
 
   /**
-   * 根据ID移除历史数据
-   * @param actionDataId - 要移除的数据ID
-   * @returns 被移除的数据数组
-   * @description 根据ID从历史数据中移除指定的Action数据
+   * removeHistoryDataById - 删除一个ActionData中的数据
+   * @param actionDataId
+   * @return IActionData[]
    */
   removeHistoryDataById(actionDataId: string): IActionData[] {
     const index = this.canvasData.findIndex((data) => data.id === actionDataId);
@@ -283,8 +280,8 @@ class PolygonSelection extends Events implements IPolygonSelection {
   }
 
   /**
-   * 绘制历史数据
-   * @description 将所有历史数据重新绘制到Canvas上
+   * drawHistoryData - 绘制历史数据
+   * @return void
    */
   drawHistoryData(): void {
     this.canvasData.forEach((data: IActionData) => {
@@ -293,42 +290,40 @@ class PolygonSelection extends Events implements IPolygonSelection {
       if (!ctx || !data) return;
 
       // 绘制指定类型的路径
-      this.typeActionMap.get(data.type as SelectType)?.drawHistoryPath(ctx, data);
+      // @ts-ignore
+      this.typeActionMap.get(data.type)?.drawHistoryPath(ctx, data);
     });
   }
 
   /**
-   * 根据ID获取历史数据
-   * @param id - 数据ID
-   * @returns 对应的Action数据，如果不存在则返回null或undefined
-   * @description 根据ID从历史数据中获取指定的Action数据
+   * getHistoryDataById
+   * @param id
+   * @return IActionData | null | undefined
    */
   getHistoryDataById(id: string): IActionData | null | undefined {
     return this.canvasData.find((data) => data.id === id);
   }
 
   /**
-   * 获取所有历史数据
-   * @returns 所有历史数据的数组副本
-   * @description 获取所有历史Action数据
+   * getHistoryData
+   * @return IActionData []
    */
   getHistoryData(): IActionData[] {
     return [...this.canvasData];
   }
 
   /**
-   * 设置历史数据
-   * @param data - 新的历史数据数组
-   * @description 替换所有历史数据
+   * setHistoryData
+   * @param data
    */
   setHistoryData(data: IActionData[]): void {
     this.canvasData = data;
   }
 
   /**
-   * 切换Action
-   * @param action - 新的Action对象
-   * @description 切换到新的Action，销毁当前Action并设置新的Action
+   * changeAction - 切换一个Action
+   * @param action - action对象
+   * @return void
    */
   changeAction(action: IAction): void {
     // 如果当前和传入一致则跳过
@@ -347,18 +342,17 @@ class PolygonSelection extends Events implements IPolygonSelection {
   }
 
   /**
-   * 获取当前Action
-   * @returns 当前正在执行的Action，如果没有则返回null
-   * @description 获取当前正在执行的Action
+   * getCurAction
+   * @return IAction | null
    */
   getCurAction(): IAction | null {
     return this.curAction;
   }
 
   /**
-   * 开始多边形选择操作
-   * @param style - 样式对象，可选
-   * @description 开始当前Action的执行
+   * start - 开始
+   * @param style
+   * @return void
    */
   start(style?: IStyle): void {
     if (!this.curAction) return;
@@ -367,8 +361,8 @@ class PolygonSelection extends Events implements IPolygonSelection {
   }
 
   /**
-   * 结束当前的多边形选择操作
-   * @description 结束当前Action的执行
+   * end - 结束
+   * @return void
    */
   end(): void {
     if (!this.curAction) return;
@@ -377,8 +371,7 @@ class PolygonSelection extends Events implements IPolygonSelection {
   }
 
   /**
-   * 清除当前Canvas上的绘制内容
-   * @description 清除主Canvas上的所有绘制内容
+   * clear
    */
   clearDraw(): void {
     const { ctx } = this;
@@ -389,8 +382,8 @@ class PolygonSelection extends Events implements IPolygonSelection {
   }
 
   /**
-   * 清除辅助Canvas上的绘制内容
-   * @description 清除辅助Canvas上的所有绘制内容
+   * clearAssistDraw
+   * @description 清除assist的canvas
    */
   clearAssistDraw(): void {
     const { assistCtx } = this;
@@ -401,16 +394,14 @@ class PolygonSelection extends Events implements IPolygonSelection {
   }
 
   /**
-   * 清除所有历史数据
-   * @description 清除所有历史Action数据
+   * clearHistoryData
    */
   clearHistoryData(): void {
     this.canvasData = [];
   }
 
   /**
-   * 清除所有Canvas内容
-   * @description 清除所有Canvas上的内容和历史数据
+   * clearCanvasAll
    */
   clearCanvasAll(): void {
     this.clearDraw();
@@ -419,26 +410,28 @@ class PolygonSelection extends Events implements IPolygonSelection {
   }
 
   /**
-   * 设置Canvas层级为前置
-   * @param canvasEl - Canvas元素
-   * @description 将指定的Canvas设置为前置层级
+   * setFrontCanvas
+   * @description 置顶
+   * @param canvasEl
    */
   setFrontCanvas(canvasEl: HTMLCanvasElement): void {
+    // console.log('置顶');
     canvasEl.style.zIndex = '9999';
   }
 
   /**
-   * 设置Canvas层级为后置
-   * @param canvasEl - Canvas元素
-   * @description 将指定的Canvas设置为后置层级
+   * setBackCanvas
+   * @description 置底
+   * @param canvasEl
    */
   setBackCanvas(canvasEl: HTMLCanvasElement): void {
+    // console.log('置底');
     canvasEl.style.zIndex = '1';
   }
 
   /**
-   * 销毁多边形选择组件
-   * @description 销毁组件并清理所有资源
+   * destroy - 销毁
+   * @return void
    */
   destroy(): void {
     typeof window !== 'undefined' && window.removeEventListener('resize', this.onResize);
@@ -447,7 +440,7 @@ class PolygonSelection extends Events implements IPolygonSelection {
       this.curAction.destroy();
     }
 
-    this.clearCanvasAll();
+    this.clearAll();
 
     if (this.el) {
       this.el.innerHTML = '';

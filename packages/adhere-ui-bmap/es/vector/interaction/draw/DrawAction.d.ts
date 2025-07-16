@@ -1,11 +1,11 @@
-import Emitter from '@baifendian/adhere-util-emitter';
+import { Events } from '@baifendian/adhere-util-emitter';
 import { IAction, IInteractionLayer, IStyle, SelectType } from '../types';
 /**
  * DrawAction
  * @class DrawAction
  * @classdesc DrawAction
  */
-declare abstract class DrawAction extends Emitter.Events implements IAction {
+declare abstract class DrawAction extends Events implements IAction {
     protected context: IInteractionLayer | null;
     protected style: IStyle;
     protected status: number;

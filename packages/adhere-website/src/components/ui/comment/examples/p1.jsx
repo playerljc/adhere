@@ -61,7 +61,12 @@ export default () => {
 
   function renderCommentActions(record, callback) {
     return [
-      <Tooltip key="comment-basic-like" title="Like">
+      <Tooltip
+        key="comment-basic-like"
+        title="Like"
+        placement="top"
+        getPopupContainer={() => document.body}
+      >
         <span
           onClick={() => {
             setTimeout(() => {
@@ -74,7 +79,13 @@ export default () => {
           <span style={{ marginLeft: 5 }}>{record.like}</span>
         </span>
       </Tooltip>,
-      <Tooltip key="comment-basic-dislike" title="Dislike">
+
+      <Tooltip
+        key="comment-basic-dislike"
+        title="Dislike"
+        placement="top"
+        getPopupContainer={() => document.body}
+      >
         <span
           onClick={() => {
             setTimeout(() => {

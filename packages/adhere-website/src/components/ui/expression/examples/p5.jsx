@@ -11,6 +11,7 @@ export default () => (
       operators={Expression.SqlOptions}
       operatorClassName={styles.operatorClassName}
       textClassName={styles.textClassName}
+      disableQuickTip
     />
   </div>
 );

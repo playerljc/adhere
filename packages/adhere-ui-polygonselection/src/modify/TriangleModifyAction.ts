@@ -2,31 +2,19 @@ import MathUtil from '@baifendian/adhere-util';
 import * as turf from '@turf/turf';
 
 import TriangleDrawAction from '../draw/TriangleDrawAction';
-import { 
-  IPoint, 
-  ITriangleData, 
-  SelectType, 
-  IAnchorInfo,
-  IRectangleBox,
-  ModifyHandler,
-  ICursorMapping,
-  IActionData 
-} from '../types';
+import { IPoint, ITriangleData, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 
 /**
- * 三角形修改Action类
+ * TriangleModifyAction
  * @class TriangleModifyAction
- * @classdesc 三角形几何图形的修改功能，支持调整三角形大小和位置
- * @extends {ModifyAction}
- * @remark 提供8个控制点：4个角和4条边的中心点，用于调整三角形大小
+ * @classdesc - 三角形修改
+ * @remark:
  */
 class TriangleModifyAction extends ModifyAction {
-  /** 矩形锚点数组 */
   private rectangleAnchorPoints: IPoint[] = [];
 
-  /** 索引到修改处理器的映射 */
-  private indexToModifyHandlerMapping: Map<number, ModifyHandler> = new Map<number, ModifyHandler>([
+  private indexToModifyHandlerMapping: Map<number, Function> = new Map<number, Function>([
     [0, this.modifyDataByLeftTop],
     [1, this.modifyDataByCenterTop],
     [2, this.modifyDataByRightTop],
@@ -37,35 +25,30 @@ class TriangleModifyAction extends ModifyAction {
     [7, this.modifyDataByLeftCenter],
   ]);
 
-  /** 调整大小的光标映射 */
-  protected ResizeCursorMapping: ICursorMapping = new Map<number, string>([
-    [0, 'nwse-resize'],  // 左上角
-    [1, 'ns-resize'],    // 上边中心
-    [2, 'nesw-resize'],  // 右上角
-    [3, 'ew-resize'],    // 右边中心
-    [4, 'nwse-resize'],  // 右下角
-    [5, 'ns-resize'],    // 下边中心
-    [6, 'nesw-resize'],  // 左下角
-    [7, 'ew-resize'],    // 左边中心
+  protected ResizeCursorMapping = new Map<number, string>([
+    [0, 'nwse-resize'],
+    [1, 'ns-resize'],
+    [2, 'nesw-resize'],
+    [3, 'ew-resize'],
+    [4, 'nwse-resize'],
+    [5, 'ns-resize'],
+    [6, 'nesw-resize'],
+    [7, 'ew-resize'],
   ]);
 
-  /**
-   * 构造函数
-   * @param data - 三角形数据
-   * @description 初始化三角形修改Action
-   */
   constructor(data: ITriangleData) {
     super(data);
   }
 
   /**
-   * 绘制锚点
-   * @description 在三角形的8个控制点绘制锚点：4个角和4条边的中心点
+   * drawAnchors
+   * circle有4个anchor，上，下，左，右
    */
   protected drawAnchors(): void {
     if (!this.context) return;
 
     const ctx = this.context.getCtx();
+
     if (!ctx) return;
 
     const { points } = this?.data?.data?.data;
@@ -73,6 +56,7 @@ class TriangleModifyAction extends ModifyAction {
     if (!points || !points.length) return;
 
     // points三个点分别为左下，上中，右下
+
     // 绘制矩形和八个控制点
     const leftTopPoint = {
       x: points[0].x,
@@ -84,14 +68,37 @@ class TriangleModifyAction extends ModifyAction {
     const heightHalf = height / 2;
 
     this.rectangleAnchorPoints = [
-      { ...leftTopPoint }, // 左上角
-      { x: leftTopPoint.x + widthHalf, y: leftTopPoint.y }, // 上边中心
-      { x: leftTopPoint.x + width, y: leftTopPoint.y }, // 右上角
-      { x: leftTopPoint.x + width, y: leftTopPoint.y + heightHalf }, // 右边中心
-      { x: leftTopPoint.x + width, y: leftTopPoint.y + height }, // 右下角
-      { x: leftTopPoint.x + widthHalf, y: leftTopPoint.y + height }, // 下边中心
-      { x: leftTopPoint.x, y: leftTopPoint.y + height }, // 左下角
-      { x: leftTopPoint.x, y: leftTopPoint.y + heightHalf }, // 左边中心
+      {
+        ...leftTopPoint,
+      },
+      {
+        x: leftTopPoint.x + widthHalf,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + heightHalf,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + widthHalf,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + heightHalf,
+      },
     ];
 
     // 4个角,4条边中心点 顺时针绘制
@@ -99,6 +106,7 @@ class TriangleModifyAction extends ModifyAction {
       const point = this.rectangleAnchorPoints[i];
 
       ctx.beginPath();
+
       this.setAnchorCircleStyle();
 
       ctx.ellipse(
@@ -116,8 +124,9 @@ class TriangleModifyAction extends ModifyAction {
       ctx.fill();
     }
 
-    // 绘制矩形轮廓
+    // 矩形绘制
     ctx.beginPath();
+
     this.setAnchorLineStyle();
 
     ctx.moveTo(leftTopPoint.x, leftTopPoint.y);
@@ -131,99 +140,109 @@ class TriangleModifyAction extends ModifyAction {
   }
 
   /**
-   * 获取点是否在锚点内
-   * @param targetPoint - 目标点坐标
-   * @returns 锚点信息和索引，如果不在任何锚点内则返回null
-   * @description 检测目标点是否在三角形的某个控制锚点内
+   * getPointInAnchor
+   * @param targetPoint
+   * @return IPoint | null
    */
-  protected getPointInAnchor(targetPoint: IPoint): IAnchorInfo | null {
+  protected getPointInAnchor(targetPoint: IPoint): { point: IPoint; index: number } | null {
     if (!this.data) return null;
+
+    let point: IPoint | null = null;
+    let index: number = -1;
 
     for (let i = 0; i < this.rectangleAnchorPoints.length; i++) {
       const center = this.rectangleAnchorPoints[i];
+
       const radius = this.anchorRadius + this.anchorLineWidth;
 
       if (MathUtil.isPointInCircle(targetPoint, { center, radius })) {
-        return {
-          point: center,
-          index: i,
-        };
+        point = center;
+        index = i;
+        break;
       }
+    }
+
+    if (point && index !== -1) {
+      return {
+        point,
+        index,
+      };
     }
 
     return null;
   }
 
   /**
-   * 根据索引设置调整大小的光标
-   * @param index - 锚点索引
-   * @description 设置三角形调整大小时的光标样式
+   * setResizeCursorByIndex
+   * @param index
    */
   protected setResizeCursorByIndex(index: number): void {
     if (!this.context) return;
 
     const canvasEl = this.context.getCanvasEl();
+
     const assistCanvasEl = this.context.getAssistCanvasEl();
 
     if (!canvasEl || !assistCanvasEl) return;
 
-    const cursor = this.ResizeCursorMapping.get(index);
-    if (cursor) {
-      canvasEl.style.cursor = assistCanvasEl.style.cursor = cursor;
-    }
+    canvasEl.style.cursor = assistCanvasEl.style.cursor = this.ResizeCursorMapping.get(
+      index,
+    ) as string;
   }
 
   /**
-   * 绘制修改
-   * @param targetPoint - 目标点坐标
-   * @description 根据目标点和当前索引修改三角形的大小和位置
+   * drawModify
+   * @param targetPoint
    */
-  protected drawModify(targetPoint: IPoint): void {
+  protected drawModify(targetPoint: IPoint) {
     const { context } = this;
 
     const ctx = context?.getCtx();
+
     if (!context || !ctx || !this.data || !this.startPoint) return;
 
-    // 从历史数据中获取当前三角形数据
+    // canvasHistory需要修改 需要修改半径
     const data = context.getHistoryDataById(this.data.data.id);
+
     if (!data) return;
 
-    // 根据索引获取对应的修改处理器
+    // 判断index 0 1 2 3 4 5 6 7的情况下各自怎么修改leftTopPoint,width,height
     const handler = this.indexToModifyHandlerMapping.get(this.startIndex);
+
     if (!handler) return;
 
-    // 执行修改操作
     const result = handler.call(this, targetPoint);
+
     if (!result) return;
 
     this.data.data = data;
 
-    // 重新绘制
     context.clearDraw();
+
     context.drawHistoryData();
+
     this.drawAnchors();
   }
 
   /**
-   * 绘制移动
-   * @param startPoint - 起始点坐标
-   * @param targetPoint - 目标点坐标
-   * @description 移动整个三角形到新位置
+   * drawMove
+   * @param startPoint
+   * @param targetPoint
    */
   protected drawMove(startPoint: IPoint, targetPoint: IPoint): void {
     const { context } = this;
 
     const ctx = context?.getCtx();
+
     if (!context || !ctx || !this.data) return;
 
     const data = context.getHistoryDataById(this.data.data.id);
+
     if (!data) return;
 
-    // 计算偏移量
     const offsetX = targetPoint.x - startPoint.x;
     const offsetY = targetPoint.y - startPoint.y;
 
-    // 移动所有顶点
     data.data.points.forEach((point: IPoint) => {
       point.x += offsetX;
       point.y += offsetY;
@@ -231,32 +250,36 @@ class TriangleModifyAction extends ModifyAction {
 
     this.data.data = data;
 
-    // 重新绘制
     context.clearDraw();
+
     context.drawHistoryData();
+
     this.drawAnchors();
   }
 
   /**
-   * 获取选择类型
-   * @returns 三角形选择类型
-   * @description 返回当前Action的选择类型
+   * getSelectType
    */
   protected getSelectType(): SelectType {
     return SelectType.Triangle;
   }
 
   /**
-   * 获取三角形边界框
-   * @returns 三角形的四个角点坐标，如果无法获取则返回null
-   * @description 计算三角形的四个角点坐标
+   * getBox
    */
-  protected getBox(): IRectangleBox | null {
+  protected getBox(): {
+    leftTop: IPoint;
+    rightTop: IPoint;
+    rightBottom: IPoint;
+    leftBottom: IPoint;
+  } | null {
     const { context } = this;
 
     if (!context || !this.data) return null;
 
+    // canvasHistory需要修改 需要修改半径
     const data = context.getHistoryDataById(this.data.data.id);
+
     if (!data) return null;
 
     const { points } = data.data;
@@ -278,19 +301,16 @@ class TriangleModifyAction extends ModifyAction {
     };
   }
 
-  /**
-   * 通过左上角修改数据
-   * @param targetPoint - 目标点坐标
-   * @returns 修改是否成功
-   * @description 通过调整左上角来修改三角形的大小和位置
-   */
   protected modifyDataByLeftTop(targetPoint: IPoint): boolean {
     const { context } = this;
 
     const ctx = context?.getCtx();
+
     if (!context || !ctx || !this.data || !this.startPoint) return false;
 
+    // canvasHistory需要修改 需要修改半径
     const data = context.getHistoryDataById(this.data.data.id);
+
     if (!data) return false;
 
     const { points } = data.data;
@@ -299,38 +319,45 @@ class TriangleModifyAction extends ModifyAction {
 
     // 计算出四个角的坐标
     const box = this.getBox();
+
     if (!box) return false;
 
-    // 范围限制：不能超过右下角
+    // 范围限制
     if (targetPoint.x > box.rightTop.x || targetPoint.y > box.rightBottom.y) return false;
 
     const leftTopPoint = targetPoint;
     const width = box.rightTop.x - targetPoint.x;
     const height = box.rightBottom.y - targetPoint.y;
 
-    // 修改三角形顶点
+    // 修改
     data.data.points = [
-      { x: leftTopPoint.x, y: leftTopPoint.y + height }, // 左下
-      { x: leftTopPoint.x + width / 2, y: leftTopPoint.y }, // 上中
-      { x: leftTopPoint.x + width, y: leftTopPoint.y + height }, // 右下
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
     ];
 
     return true;
   }
 
-  /**
-   * 通过上边中心修改数据
-   * @param targetPoint - 目标点坐标
-   * @returns 修改是否成功
-   * @description 通过调整上边中心来修改三角形的高度
-   */
   protected modifyDataByCenterTop(targetPoint: IPoint): boolean {
     const { context } = this;
 
     const ctx = context?.getCtx();
+
     if (!context || !ctx || !this.data || !this.startPoint) return false;
 
+    // canvasHistory需要修改 需要修改半径
     const data = context.getHistoryDataById(this.data.data.id);
+
     if (!data) return false;
 
     const { points } = data.data;
@@ -339,12 +366,13 @@ class TriangleModifyAction extends ModifyAction {
 
     // 计算出四个角的坐标
     const box = this.getBox();
+
     if (!box) return false;
 
-    // 范围限制：不能超过下边
+    // 范围限制
     if (targetPoint.y > box.leftBottom.y) return false;
 
-    // 修改三角形顶点
+    // 修改
     const leftTopPoint = {
       x: box.leftTop.x,
       y: targetPoint.y,
@@ -352,28 +380,35 @@ class TriangleModifyAction extends ModifyAction {
     const width = box.rightTop.x - box.leftTop.x;
     const height = box.rightBottom.y - targetPoint.y;
 
+    // 修改
     data.data.points = [
-      { x: leftTopPoint.x, y: leftTopPoint.y + height }, // 左下
-      { x: leftTopPoint.x + width / 2, y: leftTopPoint.y }, // 上中
-      { x: leftTopPoint.x + width, y: leftTopPoint.y + height }, // 右下
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
     ];
 
     return true;
   }
 
-  /**
-   * 通过右上角修改数据
-   * @param targetPoint - 目标点坐标
-   * @returns 修改是否成功
-   * @description 通过调整右上角来修改三角形的宽度和高度
-   */
   protected modifyDataByRightTop(targetPoint: IPoint): boolean {
     const { context } = this;
 
     const ctx = context?.getCtx();
+
     if (!context || !ctx || !this.data || !this.startPoint) return false;
 
+    // canvasHistory需要修改 需要修改半径
     const data = context.getHistoryDataById(this.data.data.id);
+
     if (!data) return false;
 
     const { points } = data.data;
@@ -382,12 +417,13 @@ class TriangleModifyAction extends ModifyAction {
 
     // 计算出四个角的坐标
     const box = this.getBox();
+
     if (!box) return false;
 
-    // 范围限制：不能超过左下角
+    // 范围限制
     if (targetPoint.x < box.leftTop.x || targetPoint.y > box.leftBottom.y) return false;
 
-    // 修改三角形顶点
+    // 修改
     const leftTopPoint = {
       x: box.leftTop.x,
       y: targetPoint.y,
@@ -396,27 +432,33 @@ class TriangleModifyAction extends ModifyAction {
     const height = box.rightBottom.y - targetPoint.y;
 
     data.data.points = [
-      { x: leftTopPoint.x, y: leftTopPoint.y + height }, // 左下
-      { x: leftTopPoint.x + width / 2, y: leftTopPoint.y }, // 上中
-      { x: leftTopPoint.x + width, y: leftTopPoint.y + height }, // 右下
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
     ];
 
     return true;
   }
 
-  /**
-   * 通过右边中心修改数据
-   * @param targetPoint - 目标点坐标
-   * @returns 修改是否成功
-   * @description 通过调整右边中心来修改三角形的宽度
-   */
   protected modifyDataByRightCenter(targetPoint: IPoint): boolean {
     const { context } = this;
 
     const ctx = context?.getCtx();
+
     if (!context || !ctx || !this.data || !this.startPoint) return false;
 
+    // canvasHistory需要修改 需要修改半径
     const data = context.getHistoryDataById(this.data.data.id);
+
     if (!data) return false;
 
     const { points } = data.data;
@@ -425,9 +467,10 @@ class TriangleModifyAction extends ModifyAction {
 
     // 计算出四个角的坐标
     const box = this.getBox();
+
     if (!box) return false;
 
-    // 范围限制：不能超过左边
+    // 范围限制
     if (targetPoint.x < box.leftTop.x) return false;
 
     const leftTopPoint = {
@@ -437,29 +480,35 @@ class TriangleModifyAction extends ModifyAction {
     const width = targetPoint.x - box.leftTop.x;
     const height = box.rightBottom.y - box.rightTop.y;
 
-    // 修改三角形顶点
+    // 修改
     data.data.points = [
-      { x: leftTopPoint.x, y: leftTopPoint.y + height }, // 左下
-      { x: leftTopPoint.x + width / 2, y: leftTopPoint.y }, // 上中
-      { x: leftTopPoint.x + width, y: leftTopPoint.y + height }, // 右下
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
     ];
 
     return true;
   }
 
-  /**
-   * 通过右下角修改数据
-   * @param targetPoint - 目标点坐标
-   * @returns 修改是否成功
-   * @description 通过调整右下角来修改三角形的宽度和高度
-   */
   protected modifyDataByRightBottom(targetPoint: IPoint): boolean {
     const { context } = this;
 
     const ctx = context?.getCtx();
+
     if (!context || !ctx || !this.data || !this.startPoint) return false;
 
+    // canvasHistory需要修改 需要修改半径
     const data = context.getHistoryDataById(this.data.data.id);
+
     if (!data) return false;
 
     const { points } = data.data;
@@ -468,38 +517,45 @@ class TriangleModifyAction extends ModifyAction {
 
     // 计算出四个角的坐标
     const box = this.getBox();
+
     if (!box) return false;
 
-    // 范围限制：不能超过左上角
+    // 范围限制
     if (targetPoint.x < box.leftTop.x || targetPoint.y < box.leftTop.y) return false;
 
     const leftTopPoint = { ...box.leftTop };
     const width = targetPoint.x - box.leftTop.x;
     const height = targetPoint.y - box.leftTop.y;
 
-    // 修改三角形顶点
+    // 修改
     data.data.points = [
-      { x: leftTopPoint.x, y: leftTopPoint.y + height }, // 左下
-      { x: leftTopPoint.x + width / 2, y: leftTopPoint.y }, // 上中
-      { x: leftTopPoint.x + width, y: leftTopPoint.y + height }, // 右下
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
     ];
 
     return true;
   }
 
-  /**
-   * 通过下边中心修改数据
-   * @param targetPoint - 目标点坐标
-   * @returns 修改是否成功
-   * @description 通过调整下边中心来修改三角形的高度
-   */
   protected modifyDataByCenterBottom(targetPoint: IPoint): boolean {
     const { context } = this;
 
     const ctx = context?.getCtx();
+
     if (!context || !ctx || !this.data || !this.startPoint) return false;
 
+    // canvasHistory需要修改 需要修改半径
     const data = context.getHistoryDataById(this.data.data.id);
+
     if (!data) return false;
 
     const { points } = data.data;
@@ -508,38 +564,45 @@ class TriangleModifyAction extends ModifyAction {
 
     // 计算出四个角的坐标
     const box = this.getBox();
+
     if (!box) return false;
 
-    // 范围限制：不能超过上边
+    // 范围限制
     if (targetPoint.y < box.leftTop.y) return false;
 
     const leftTopPoint = { ...box.leftTop };
     const width = box.rightTop.x - box.leftTop.x;
     const height = targetPoint.y - box.leftTop.y;
 
-    // 修改三角形顶点
+    // 修改
     data.data.points = [
-      { x: leftTopPoint.x, y: leftTopPoint.y + height }, // 左下
-      { x: leftTopPoint.x + width / 2, y: leftTopPoint.y }, // 上中
-      { x: leftTopPoint.x + width, y: leftTopPoint.y + height }, // 右下
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
     ];
 
     return true;
   }
 
-  /**
-   * 通过左下角修改数据
-   * @param targetPoint - 目标点坐标
-   * @returns 修改是否成功
-   * @description 通过调整左下角来修改三角形的宽度和高度
-   */
   protected modifyDataByLeftBottom(targetPoint: IPoint): boolean {
     const { context } = this;
 
     const ctx = context?.getCtx();
+
     if (!context || !ctx || !this.data || !this.startPoint) return false;
 
+    // canvasHistory需要修改 需要修改半径
     const data = context.getHistoryDataById(this.data.data.id);
+
     if (!data) return false;
 
     const { points } = data.data;
@@ -548,9 +611,10 @@ class TriangleModifyAction extends ModifyAction {
 
     // 计算出四个角的坐标
     const box = this.getBox();
+
     if (!box) return false;
 
-    // 范围限制：不能超过右上角
+    // 范围限制
     if (targetPoint.x > box.rightBottom.x || targetPoint.y < box.rightTop.y) return false;
 
     const leftTopPoint = {
@@ -560,29 +624,35 @@ class TriangleModifyAction extends ModifyAction {
     const width = box.rightBottom.x - targetPoint.x;
     const height = targetPoint.y - box.rightTop.y;
 
-    // 修改三角形顶点
+    // 修改
     data.data.points = [
-      { x: leftTopPoint.x, y: leftTopPoint.y + height }, // 左下
-      { x: leftTopPoint.x + width / 2, y: leftTopPoint.y }, // 上中
-      { x: leftTopPoint.x + width, y: leftTopPoint.y + height }, // 右下
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
     ];
 
     return true;
   }
 
-  /**
-   * 通过左边中心修改数据
-   * @param targetPoint - 目标点坐标
-   * @returns 修改是否成功
-   * @description 通过调整左边中心来修改三角形的宽度
-   */
   protected modifyDataByLeftCenter(targetPoint: IPoint): boolean {
     const { context } = this;
 
     const ctx = context?.getCtx();
+
     if (!context || !ctx || !this.data || !this.startPoint) return false;
 
+    // canvasHistory需要修改 需要修改半径
     const data = context.getHistoryDataById(this.data.data.id);
+
     if (!data) return false;
 
     const { points } = data.data;
@@ -591,9 +661,10 @@ class TriangleModifyAction extends ModifyAction {
 
     // 计算出四个角的坐标
     const box = this.getBox();
+
     if (!box) return false;
 
-    // 范围限制：不能超过右边
+    // 范围限制
     if (targetPoint.x > box.rightBottom.x) return false;
 
     const leftTopPoint = {
@@ -603,27 +674,30 @@ class TriangleModifyAction extends ModifyAction {
     const width = box.rightBottom.x - targetPoint.x;
     const height = box.rightBottom.y - box.rightTop.y;
 
-    // 修改三角形顶点
+    // 修改
     data.data.points = [
-      { x: leftTopPoint.x, y: leftTopPoint.y + height }, // 左下
-      { x: leftTopPoint.x + width / 2, y: leftTopPoint.y }, // 上中
-      { x: leftTopPoint.x + width, y: leftTopPoint.y + height }, // 右下
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
     ];
 
     return true;
   }
 
-  /**
-   * 判断是否可以移动
-   * @param targetPoint - 目标点坐标
-   * @returns 是否可以移动到目标点
-   * @description 检查目标点是否在三角形内部且不在控制锚点内
-   */
   isCanMove(targetPoint: IPoint): boolean {
     if (!this.data) return false;
 
     const points = [...(this?.data?.data?.data?.points || [])];
-    points.push(points[0]); // 闭合多边形
+    points.push(points[0]);
 
     const pt = turf.point([targetPoint.x, targetPoint.y]);
     const poly = turf.polygon([points.map((point) => [point.x, point.y])]);
@@ -632,75 +706,57 @@ class TriangleModifyAction extends ModifyAction {
   }
 
   /**
-   * 绘制移动时的几何图形
-   * @description 在辅助Canvas上绘制移动中的三角形
+   * drawMoveGeometry
+   * @description 绘制移动时的几何图形
    */
-  drawMoveGeometry(): void;
-  /**
-   * 绘制移动时的几何图形
-   * @param startPoint - 起始点坐标
-   * @param targetPoint - 目标点坐标
-   * @returns 移动后的三角形数据，如果无法移动则返回null
-   * @description 在辅助Canvas上绘制移动中的三角形，并返回移动后的数据
-   */
-  drawMoveGeometry(startPoint: IPoint, targetPoint: IPoint): IActionData | null;
-  drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): IActionData | null | void {
+  // @ts-ignore
+  drawMoveGeometry(): void {
     if (!this.context || !this.data) return;
 
-    // 无参数版本
-    if (!startPoint || !targetPoint) {
-      TriangleDrawAction.draw(
-        this.context.getAssistCtx() as CanvasRenderingContext2D,
-        this.data as ITriangleData,
-      );
-      return;
-    }
+    TriangleDrawAction.draw(
+      this.context.getAssistCtx() as CanvasRenderingContext2D,
+      this.data as ITriangleData,
+    );
+  }
 
-    // 带参数版本
-    // 深拷贝原始数据
+  // @ts-ignore
+  drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): ITriangleData | null {
+    if (!this.context || !this.data || !startPoint || !targetPoint) return null;
+
     const srcData = JSON.parse(JSON.stringify(this.data.data as ITriangleData));
     srcData.data = {
       ...srcData.data,
       points: srcData.data.points.map((point) => ({ ...point })),
     };
 
-    // 计算偏移量
     const offsetX = targetPoint.x - startPoint.x;
     const offsetY = targetPoint.y - startPoint.y;
 
     if (srcData.data && srcData.data.points && srcData.data.points.length) {
-      // 移动所有顶点
       srcData.data.points.forEach((point: IPoint) => {
         point.x += offsetX;
         point.y += offsetY;
       });
 
-      // 应用移动样式
       const style = { ...this.moveGemStyle, ...(srcData.style ?? {}) };
-      srcData.style = {
-        lineWidth: style.lineWidth,
-        lineJoin: style.lineJoin,
-        lineCap: style.lineCap,
-        lineDash: style.lineDash,
-        lineDashOffset: style.lineDashOffset,
-        strokeStyle: style.strokeStyle,
-        fillStyle: style.fillStyle,
-        globalAlpha: style.globalAlpha ?? 1,
-      };
+      srcData.style.lineWidth = style.lineWidth;
+      srcData.style.lineJoin = style.lineJoin;
+      srcData.style.lineCap = style.lineCap;
+      srcData.lineDash = style.lineDash;
+      srcData.style.lineDashOffset = style.lineDashOffset;
+      srcData.style.strokeStyle = style.strokeStyle;
+      srcData.style.fillStyle = style.fillStyle;
+      srcData.style.globalAlpha = style.globalAlpha ?? 1;
 
-      // 在辅助Canvas上绘制
       TriangleDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }
 
     return srcData;
   }
 
-  /**
-   * 销毁Action
-   * @description 清理资源，重置起始索引
-   */
-  destroy(): void {
+  destroy() {
     this.startIndex = -1;
+
     super.destroy();
   }
 }

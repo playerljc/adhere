@@ -1,8 +1,3 @@
 import React from 'react';
-import type { PlayGroundPageContextValue } from '../types';
-/**
- * PlayGround页面上下文
- * @constant PlayGroundPageContext
- * @description 提供PlayGround页面组件间的状态共享
- */
+import { PlayGroundPageContextValue } from '../types';
 export declare const PlayGroundPageContext: React.Context<PlayGroundPageContextValue>;

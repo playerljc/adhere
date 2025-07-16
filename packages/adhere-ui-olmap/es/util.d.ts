@@ -8,6 +8,7 @@ import { Heatmap as HeatMapLayer, Vector as VectorLayer } from 'ol/layer.js';
 import { Vector as VectorSource } from 'ol/source.js';
 import GeoLayer from './GeoLayer';
 import WindLayer from './WindLayer';
+import type { DrawCircleParams, DrawPolygonParams, DrawLineParams, DrawCirclePointParams, DrawRegularShapePointParams, DrawImagePointParams, SetMapCenterAnimateParams, CreateInteractionParams, PolygonInteractionParams, CircleInteractionParams, BoxInteractionParams, LinStringInteractionParams, CreateModifyInteractionParams, AddArrowsSourceParams } from './types';
 /**
  * 获取最小缩放级别
  * @param target 地图容器 HTMLElement
@@ -35,130 +36,6 @@ export interface CreateMapConfig {
  * @param Config 地图配置
  */
 declare function createMap(Config: CreateMapConfig): Map;
-interface DrawCircleParams {
-    center: number[];
-    radius: number;
-    color?: string;
-    strokeColor?: string;
-    strokeWidth?: number;
-    zIndex?: number;
-    id?: string;
-    propertys?: Record<string, any>;
-}
-interface DrawPolygonParams {
-    points: number[][][];
-    color?: string;
-    strokeColor?: string;
-    strokeWidth?: number;
-    zIndex?: number;
-    id?: string;
-    propertys?: Record<string, any>;
-}
-interface DrawLineParams {
-    points: number[][];
-    width: number;
-    color: string;
-    lineCap?: CanvasLineCap;
-    lineJoin?: CanvasLineJoin;
-    lineDash?: number[];
-}
-interface DrawCirclePointParams {
-    id: string;
-    pos: number[];
-    fillOpt?: {
-        color?: string;
-    };
-    strokeOpt?: {
-        width?: number;
-        color?: string;
-    };
-    radius?: number;
-    textOpt?: Record<string, any>;
-    zIndex?: number;
-    text?: string;
-    propertys?: Record<string, any>;
-}
-interface DrawRegularShapePointParams {
-    id: string;
-    pos: number[];
-    points: number;
-    fillOpt?: {
-        color?: string;
-    };
-    strokeOpt?: {
-        width?: number;
-        color?: string;
-    };
-    text?: string;
-    textOpt?: Record<string, any>;
-    zIndex?: number;
-    propertys?: Record<string, any>;
-    [key: string]: any;
-}
-interface DrawImagePointParams {
-    id: string;
-    pos: number[];
-    zIndex?: number;
-    src?: string;
-    color?: string;
-    opacity?: number;
-    scale?: number;
-    anchor?: number[];
-    rotation?: number;
-    offset?: number[];
-    offsetOrigin?: string;
-    size?: number[];
-    text?: string;
-    textOpt?: Record<string, any>;
-    propertys?: Record<string, any>;
-}
-interface SetMapCenterAnimateParams {
-    map: Map;
-    point: number[];
-    duration?: number;
-}
-interface CreateInteractionParams {
-    map: Map;
-    config: any;
-}
-interface PolygonInteractionParams {
-    map: Map;
-    freehand?: boolean;
-    vectorSource: VectorSource;
-    onDrawEnd?: (result: any) => void;
-    [key: string]: any;
-}
-interface CircleInteractionParams {
-    map: Map;
-    vectorSource: VectorSource;
-    onDrawEnd?: (result: any) => void;
-    [key: string]: any;
-}
-interface BoxInteractionParams {
-    map: Map;
-    vectorSource: VectorSource;
-    onDrawEnd?: (result: any) => void;
-    [key: string]: any;
-}
-interface LinStringInteractionParams {
-    map: Map;
-    freehand?: boolean;
-    vectorSource: VectorSource;
-    onDrawEnd?: (result: any) => void;
-    [key: string]: any;
-}
-interface CreateModifyInteractionParams {
-    map: Map;
-    vectorSource: VectorSource;
-    onModifyEnd: (result: any) => void;
-}
-interface AddArrowsSourceParams {
-    points: number[][];
-    color?: string;
-    icon?: string;
-    anchor?: number[];
-    offset?: number[];
-}
 declare const _default: {
     SHOWBASESTATION_MINZOOM: number;
     getMinZoom: typeof getMinZoom;

@@ -1,3 +1,4 @@
+import { Events } from '@baifendian/adhere-util-emitter';
 import { IPoint } from '../../interaction/types';
 import { ITrajectory, ITrajectoryPlayBackLayer } from '../../types';
 /**
@@ -11,7 +12,7 @@ declare class TrajectoryPlayBackLayer extends BMap.CanvasLayer implements ITraje
         paneName: 'floatPane' | 'floatShadow' | 'labelPane' | 'mapPane' | 'markerMouseTarget' | 'markerPane' | 'markerShadow' | 'vertexPane';
         zIndex: number;
     };
-    protected emitter: import("@baifendian/adhere-util-emitter/es/events").default;
+    protected emitter: Events;
     protected isLoad: boolean;
     protected source: ITrajectory[];
     protected el: HTMLElement | null;
@@ -30,7 +31,7 @@ declare class TrajectoryPlayBackLayer extends BMap.CanvasLayer implements ITraje
     getMap(): any;
     getCtx(): CanvasRenderingContext2D | null;
     getCanvasEl(): HTMLCanvasElement | null;
-    getEmitter(): import("@baifendian/adhere-util-emitter/es/events").default;
+    getEmitter(): Events;
     pixelToPoint(pixel: IPoint): IPoint;
     pointToPixel(point: IPoint): IPoint;
     /**

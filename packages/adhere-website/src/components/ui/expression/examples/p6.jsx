@@ -7,6 +7,7 @@ export default () => {
   const [quickTipDataSource, setQuickTipDataSource] = useState([]);
 
   const onContinuousTextChange = debounce((text) => {
+    console.log('onContinuousTextChange', text);
     const kws = ['java', 'c++', 'javascript', 'react', 'vue', 'spring'];
 
     if (!text) {
@@ -22,6 +23,7 @@ export default () => {
       );
     }
   }, 150);
+
   return (
     <div>
       <Expression

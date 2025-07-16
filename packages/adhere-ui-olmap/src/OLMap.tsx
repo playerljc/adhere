@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { Fill, Stroke, Style, Text } from 'ol/style.js';
 import PropTypes from 'prop-types';
-import React, { createRef, useRef } from 'react';
+import React, { ForwardedRef, createRef, forwardRef, useRef } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Resource from '@baifendian/adhere-util-resource';
@@ -9,32 +9,45 @@ import Resource from '@baifendian/adhere-util-resource';
 import Constant from './Constant';
 import GeoLayer from './GeoLayer';
 import Util from './Util';
-import type { OLMapProps, GeoJSONStyle, MapInstance } from './types';
+import type { GeoJSONStyle, MapInstance, OLMapProps, OLMapState } from './types';
 
 const selectorPrefix = 'adhere-ui-ol-map';
 
 const { useTheme } = ConfigProvider;
 
 /**
- * OLMap组件状态接口
- */
-interface OLMapState {
-  isLoading: boolean;
-  zoom: number | null;
-}
-
-/**
  * OLMap组件
  * @class OlMap
  * @classdesc OpenLayers地图组件，提供地图显示和交互功能
  */
-class OlMap extends React.Component<OLMapProps, OLMapState> implements MapInstance {
-  private mainGeoLayer: GeoLayer | undefined;
-  private readonly el: React.RefObject<HTMLDivElement>;
-  protected map: any;
-  
-  static defaultProps: Partial<OLMapProps>;
-  static propTypes: any;
+export class OlMap extends React.Component<OLMapProps, OLMapState> implements MapInstance {
+  public mainGeoLayer: GeoLayer | undefined;
+  public readonly el: React.RefObject<HTMLDivElement>;
+  public map: any;
+
+  static defaultProps: Partial<OLMapProps> = {
+    type: 'administrative' as const,
+    mapConfig: {},
+    maxZoom: Resource.Dict.value.ResourceGisMapMaxZoom?.value,
+    zoom: Resource.Dict.value.ResourceGisMapMaxZoom?.value,
+    minZoom: Resource.Dict.value.ResourceGisMapMinZoom?.value,
+    center: Resource.Dict.value.ResourceGisXinbeiquCenterPoint?.value,
+    extent: Resource.Dict.value.ResourceGisXinbeiquMapExtent?.value,
+    layers: undefined,
+  };
+
+  static propTypes = {
+    type: PropTypes.oneOf([Constant.MAP_TYPE_ADMINISTRATIVE, Constant.MAP_TYPE_SATELLITE]),
+    mapConfig: PropTypes.object,
+    maxZoom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    zoom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    fitZoom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    minZoom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    center: PropTypes.arrayOf(PropTypes.number),
+    extent: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+    layers: PropTypes.array,
+    onAllTileloadend: PropTypes.func,
+  };
 
   constructor(props: OLMapProps) {
     super(props);
@@ -51,17 +64,17 @@ class OlMap extends React.Component<OLMapProps, OLMapState> implements MapInstan
    * 组件挂载后初始化地图
    */
   componentDidMount(): void {
-    const { 
-      mapConfig, 
-      type, 
-      maxZoom, 
-      minZoom, 
-      zoom, 
-      layers, 
-      center, 
-      extent, 
+    const {
+      mapConfig,
+      type,
+      maxZoom,
+      minZoom,
+      zoom,
+      layers,
+      center,
+      extent,
       fitZoom,
-      onAllTileloadend 
+      onAllTileloadend,
     } = this.props;
 
     this.map = Util.createMap({
@@ -93,17 +106,23 @@ class OlMap extends React.Component<OLMapProps, OLMapState> implements MapInstan
    * @param params.geoJSONStyle - GeoJSON样式配置
    * @param params.geoJSONData - GeoJSON数据
    */
-  addMainGeoJSONLayer({ geoJSONStyle, geoJSONData }: { geoJSONStyle: GeoJSONStyle; geoJSONData: any }): void {
+  addMainGeoJSONLayer({
+    geoJSONStyle,
+    geoJSONData,
+  }: {
+    geoJSONStyle: GeoJSONStyle;
+    geoJSONData: any;
+  }): void {
     const { stroke, fill, text } = geoJSONStyle;
 
     this.mainGeoLayer = this.addGeoLayer(geoJSONData, () => {
       return new Style({
         fill: new Fill({ ...fill }),
         stroke: new Stroke({ ...stroke }),
-        text: new Text({ 
-          ...text, 
-          fill: new Fill({ color: text?.color }), 
-          overflow: true 
+        text: new Text({
+          ...text,
+          fill: new Fill({ color: text?.color }),
+          overflow: true,
         }),
       });
     });
@@ -146,7 +165,7 @@ class OlMap extends React.Component<OLMapProps, OLMapState> implements MapInstan
    * @param hit - 悬停回调
    * @param unHit - 离开回调
    */
-  addHoverListener(layer: any, hit: (feature: any) => void, unHit: () => void): void {
+  addHoverListener(layer: any, hit: (feature: any) => void, unHit: (feature?: any) => void): void {
     Util.addHoverListener(this.map, layer, hit, unHit);
   }
 
@@ -172,7 +191,11 @@ class OlMap extends React.Component<OLMapProps, OLMapState> implements MapInstan
    * @param hit - 点击回调
    * @param unHit - 未点击回调
    */
-  addClickListener = (layer: any, hit: (feature: any) => void, unHit: () => void): void => {
+  addClickListener = (
+    layer: any,
+    hit: (feature: any) => void,
+    unHit: (feature?: any) => void,
+  ): void => {
     Util.addClickListener(this.map, layer, hit, unHit, this.setCursor);
   };
 
@@ -216,7 +239,7 @@ class OlMap extends React.Component<OLMapProps, OLMapState> implements MapInstan
    * 所有瓦片加载完成事件处理
    * @description 监听所有瓦片加载完成的时间
    */
-  private onAllTileloadend(): void {
+  public onAllTileloadend(): void {
     const tileLayer = this.getTileLayer();
     const { onAllTileloadend } = this.props;
 
@@ -268,37 +291,13 @@ class OlMap extends React.Component<OLMapProps, OLMapState> implements MapInstan
   }
 }
 
-// 指定 props 的默认值：
-OlMap.defaultProps = {
-  type: 'administrative' as const,
-  mapConfig: {},
-  maxZoom: Resource.Dict.value.ResourceGisMapMaxZoom?.value,
-  zoom: Resource.Dict.value.ResourceGisMapMaxZoom?.value,
-  minZoom: Resource.Dict.value.ResourceGisMapMinZoom?.value,
-  center: Resource.Dict.value.ResourceGisXinbeiquCenterPoint?.value,
-  extent: Resource.Dict.value.ResourceGisXinbeiquMapExtent?.value,
-  layers: undefined,
-};
-
-OlMap.propTypes = {
-  type: PropTypes.oneOf([Constant.MAP_TYPE_ADMINISTRATIVE, Constant.MAP_TYPE_SATELLITE]),
-  mapConfig: PropTypes.object,
-  maxZoom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  zoom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  fitZoom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  minZoom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  center: PropTypes.arrayOf(PropTypes.number),
-  extent: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-  layers: PropTypes.array,
-  onAllTileloadend: PropTypes.func,
-};
-
 /**
  * OLMap主题高阶组件
  * @param props - 组件属性
+ * @param ref - 转发引用
  * @returns 带主题的OLMap组件
  */
-function OLMapThemeHOC(props: OLMapProps): React.ReactElement {
+function OLMapThemeHOC(props: OLMapProps, ref: ForwardedRef<OlMap>): React.ReactElement {
   const { className, style, ...rest } = props;
 
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -315,9 +314,9 @@ function OLMapThemeHOC(props: OLMapProps): React.ReactElement {
       className={classNames(`${selectorPrefix}-theme-wrapper`, className)}
       style={style ?? {}}
     >
-      <OlMap {...rest} />
+      <OlMap {...rest} ref={ref} />
     </div>
   );
 }
 
-export default OLMapThemeHOC;
+export default forwardRef<OlMap, OLMapProps>(OLMapThemeHOC);

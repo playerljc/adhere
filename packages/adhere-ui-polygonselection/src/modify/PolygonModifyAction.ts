@@ -2,43 +2,30 @@ import MathUtil from '@baifendian/adhere-util';
 import * as turf from '@turf/turf';
 
 import PolygonDrawAction from '../draw/PolygonDrawAction';
-import { 
-  IPoint, 
-  IPolygonData, 
-  SelectType, 
-  IAnchorInfo,
-  IActionData 
-} from '../types';
+import { IPoint, IPolygonData, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 
 /**
- * 多边形修改Action类
+ * PolygonModifyAction
  * @class PolygonModifyAction
- * @classdesc 多边形几何图形的修改功能，支持调整多边形顶点位置和整体移动
- * @extends {ModifyAction}
- * @remark 提供每个顶点的控制点，用于调整多边形形状
+ * @classdesc - 多边形修改
+ * @remark:
  */
 class PolygonModifyAction extends ModifyAction {
-  /** 起始点的索引 */
   protected startIndex: number = -1;
 
-  /**
-   * 构造函数
-   * @param data - 多边形数据
-   * @description 初始化多边形修改Action
-   */
   constructor(data: IPolygonData) {
     super(data);
   }
 
   /**
-   * 绘制锚点
-   * @description 在多边形的每个顶点绘制控制锚点
+   * drawAnchors
    */
   protected drawAnchors(): void {
     if (!this.context) return;
 
     const ctx = this.context.getCtx();
+
     if (!ctx) return;
 
     const data: IPoint[] = this?.data?.data?.data || [];
@@ -47,6 +34,7 @@ class PolygonModifyAction extends ModifyAction {
       const point = data[i];
 
       ctx.beginPath();
+
       this.setAnchorCircleStyle();
 
       ctx.ellipse(
@@ -66,13 +54,15 @@ class PolygonModifyAction extends ModifyAction {
   }
 
   /**
-   * 获取点是否在锚点内
-   * @param targetPoint - 目标点坐标
-   * @returns 锚点信息和索引，如果不在任何锚点内则返回null
-   * @description 检测目标点是否在多边形的某个控制锚点内
+   * getPointInAnchor
+   * @param targetPoint
+   * @return IPoint | null
    */
-  protected getPointInAnchor(targetPoint: IPoint): IAnchorInfo | null {
+  protected getPointInAnchor(targetPoint: IPoint): { point: IPoint; index: number } | null {
     if (!this.data) return null;
+
+    let point: IPoint | null = null;
+    let index: number = -1;
 
     const {
       data: { data },
@@ -80,28 +70,35 @@ class PolygonModifyAction extends ModifyAction {
 
     for (let i = 0; i < data.length; i++) {
       const center = data[i];
+
       const radius = this.anchorRadius + this.anchorLineWidth;
 
       if (MathUtil.isPointInCircle(targetPoint, { center, radius })) {
-        return {
-          point: center,
-          index: i,
-        };
+        point = center;
+        index = i;
+        break;
       }
+    }
+
+    if (point && index !== -1) {
+      return {
+        point,
+        index,
+      };
     }
 
     return null;
   }
 
   /**
-   * 根据索引设置调整大小的光标
-   * @param index - 锚点索引
-   * @description 设置多边形顶点调整时的光标样式
+   * setResizeCursorByIndex
+   * @param index
    */
   protected setResizeCursorByIndex(index: number): void {
     if (!this.context) return;
 
     const canvasEl = this.context.getCanvasEl();
+
     const assistCanvasEl = this.context.getAssistCanvasEl();
 
     if (!canvasEl || !assistCanvasEl) return;
@@ -110,50 +107,51 @@ class PolygonModifyAction extends ModifyAction {
   }
 
   /**
-   * 绘制修改
-   * @param targetPoint - 目标点坐标
-   * @description 根据目标点修改多边形的顶点位置
+   * drawModify
+   * @param targetPoint
    */
-  protected drawModify(targetPoint: IPoint): void {
+  protected drawModify(targetPoint: IPoint) {
     const { context } = this;
 
     const ctx = context?.getCtx();
+
     if (!context || !ctx || !this.data || !this.startPoint || this.startIndex === -1) return;
 
-    // 从历史数据中获取当前多边形数据
+    // canvasHistory需要修改.this.startPoint那个点去找到，替换成targetPoint的值
     const data = context.getHistoryDataById(this.data.data.id);
+
     if (!data) return;
 
-    // 更新指定索引的顶点位置
     data.data[this.startIndex] = targetPoint;
+
     this.data.data = data;
 
-    // 重新绘制
     context.clearDraw();
+
     context.drawHistoryData();
+
     this.drawAnchors();
   }
 
   /**
-   * 绘制移动
-   * @param startPoint - 起始点坐标
-   * @param targetPoint - 目标点坐标
-   * @description 移动整个多边形到新位置
+   * drawMove
+   * @param startPoint
+   * @param targetPoint
    */
   protected drawMove(startPoint: IPoint, targetPoint: IPoint): void {
     const { context } = this;
 
     const ctx = context?.getCtx();
+
     if (!context || !ctx || !this.data) return;
 
     const data = context.getHistoryDataById(this.data.data.id);
+
     if (!data) return;
 
-    // 计算偏移量
     const offsetX = targetPoint.x - startPoint.x;
     const offsetY = targetPoint.y - startPoint.y;
 
-    // 移动所有顶点
     data.data.forEach((point: IPoint) => {
       point.x += offsetX;
       point.y += offsetY;
@@ -161,32 +159,25 @@ class PolygonModifyAction extends ModifyAction {
 
     this.data.data = data;
 
-    // 重新绘制
     context.clearDraw();
+
     context.drawHistoryData();
+
     this.drawAnchors();
   }
 
   /**
-   * 获取选择类型
-   * @returns 多边形选择类型
-   * @description 返回当前Action的选择类型
+   * getSelectType
    */
   protected getSelectType(): SelectType {
     return SelectType.Polygon;
   }
 
-  /**
-   * 判断是否可以移动
-   * @param targetPoint - 目标点坐标
-   * @returns 是否可以移动到目标点
-   * @description 检查目标点是否在多边形内部且不在控制锚点内
-   */
   isCanMove(targetPoint: IPoint): boolean {
     if (!this.data) return false;
 
     const points = [...this?.data?.data?.data];
-    points.push(points[0]); // 闭合多边形
+    points.push(points[0]);
 
     const pt = turf.point([targetPoint.x, targetPoint.y]);
     const poly = turf.polygon([points.map((point) => [point.x, point.y])]);
@@ -195,60 +186,51 @@ class PolygonModifyAction extends ModifyAction {
   }
 
   /**
-   * 绘制移动时的几何图形
-   * @description 在辅助Canvas上绘制移动中的多边形
+   * drawMoveGeometry
+   * @description 绘制移动时的几何图形
    */
-  drawMoveGeometry(): void;
-  /**
-   * 绘制移动时的几何图形
-   * @param startPoint - 起始点坐标
-   * @param targetPoint - 目标点坐标
-   * @returns 移动后的多边形数据，如果无法移动则返回null
-   * @description 在辅助Canvas上绘制移动中的多边形，并返回移动后的数据
-   */
-  drawMoveGeometry(startPoint: IPoint, targetPoint: IPoint): IActionData | null;
-  drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): IActionData | null | void {
+  // @ts-ignore
+  drawMoveGeometry(): void {
     if (!this.context || !this.data) return;
 
-    // 无参数版本
-    if (!startPoint || !targetPoint) {
-      PolygonDrawAction.draw(
-        this.context.getAssistCtx() as CanvasRenderingContext2D,
-        this.data as IPolygonData,
-      );
-      return;
-    }
+    PolygonDrawAction.draw(
+      this.context.getAssistCtx() as CanvasRenderingContext2D,
+      this.data as IPolygonData,
+    );
+  }
 
-    // 带参数版本
-    // 深拷贝原始数据
+  /**
+   * drawMoveGeometry
+   * @description 绘制移动时的几何图形
+   * @param startPoint
+   * @param targetPoint
+   */
+  // @ts-ignore
+  drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): IPolygonData | null {
+    if (!this.context || !this.data || !startPoint || !targetPoint) return null;
+
     const srcData = JSON.parse(JSON.stringify(this.data.data as IPolygonData));
     srcData.data = srcData.data.map((point) => ({ ...point }));
 
-    // 计算偏移量
     const offsetX = targetPoint.x - startPoint.x;
     const offsetY = targetPoint.y - startPoint.y;
 
     if (srcData.data && srcData.data.length) {
-      // 移动所有顶点
       srcData.data.forEach((point: IPoint) => {
         point.x += offsetX;
         point.y += offsetY;
       });
 
-      // 应用移动样式
       const style = { ...this.moveGemStyle, ...(srcData.style ?? {}) };
-      srcData.style = {
-        lineWidth: style.lineWidth,
-        lineJoin: style.lineJoin,
-        lineCap: style.lineCap,
-        lineDash: style.lineDash,
-        lineDashOffset: style.lineDashOffset,
-        strokeStyle: style.strokeStyle,
-        fillStyle: style.fillStyle,
-        globalAlpha: style.globalAlpha ?? 1,
-      };
+      srcData.style.lineWidth = style.lineWidth;
+      srcData.style.lineJoin = style.lineJoin;
+      srcData.style.lineCap = style.lineCap;
+      srcData.lineDash = style.lineDash;
+      srcData.style.lineDashOffset = style.lineDashOffset;
+      srcData.style.strokeStyle = style.strokeStyle;
+      srcData.style.fillStyle = style.fillStyle;
+      srcData.style.globalAlpha = style.globalAlpha ?? 1;
 
-      // 在辅助Canvas上绘制
       PolygonDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }
 

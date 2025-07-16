@@ -10,5 +10,5 @@ import UseItemsProps from './UseItemsProps';
 import '../src/index.less';
 
 e2e.PC({
-  children: <Resizable />,
+  children: <Normal />,
 });

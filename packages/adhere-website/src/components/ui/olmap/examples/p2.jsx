@@ -39,7 +39,7 @@ export default () => {
         添加新北区的GeoJSONLayer
       </Button>
 
-      <OLMap.OLMap ref={xbqRef} />
+      <OLMap.OLMap ref={xbqRef} style={{ height: '100%' }} />
     </div>
   );
 };
