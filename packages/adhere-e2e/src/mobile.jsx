@@ -24,7 +24,7 @@ import Browsersniff from '@baifendian/adhere-util-browsersniff';
 
 import intl from './intl';
 import { antdThemeToCssVariable } from './theme';
-import { isUseMedia } from './util';
+import { initDirection, isUseMedia } from './util';
 
 import 'antd/dist/reset.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -70,7 +70,16 @@ if (Browsersniff.iSOSiOS()) {
   });
 }
 
-export default ({ children, lang = 'zh_CN', locales, theme = {}, curTheme = 'default' }) => {
+export default ({
+  children,
+  lang = 'zh_CN',
+  locales,
+  theme = {},
+  curTheme = 'default',
+  direction = 'ltr',
+}) => {
+  initDirection(direction);
+
   const styleProviderProps = {
     transformers: [
       legacyLogicalPropertiesTransformer,

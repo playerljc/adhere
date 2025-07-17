@@ -68,5 +68,5 @@ import '../src/index.less';
 
 e2e.PC({
   // children: <TransferSelect />,
-  children: <TableExt />,
+  children: <TreeTablePagingSelect />,
 });

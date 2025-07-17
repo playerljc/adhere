@@ -87,5 +87,5 @@ import TreeShowChildSelect from './TreeSelect/TreeShowChildSelect';
 import '@baifendian/adhere-e2e/es/index.less';
 
 e2e.Mobile({
-  children: <InputMultipleDialog />,
+  children: <AutoCompletePagingSelector />,
 });

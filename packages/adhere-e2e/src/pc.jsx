@@ -15,7 +15,7 @@ import Popup from '@baifendian/adhere-ui-popup';
 
 import intl from './intl';
 import { antdThemeToCssVariable } from './theme';
-import { isUseMedia } from './util';
+import { initDirection, isUseMedia } from './util';
 
 import 'antd/dist/reset.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -23,7 +23,16 @@ import 'font-awesome/css/font-awesome.min.css';
 import '@baifendian/adhere-ui-configprovider/es/index.less';
 import '@baifendian/adhere-ui-css/lib/css.less';
 
-export default ({ children, lang = 'zh_CN', locales, theme = {}, curTheme = 'default' }) => {
+export default ({
+  children,
+  lang = 'zh_CN',
+  locales,
+  theme = {},
+  curTheme = 'default',
+  direction = 'ltr',
+}) => {
+  initDirection(direction);
+
   const styleProviderProps = {
     transformers: [
       legacyLogicalPropertiesTransformer,
