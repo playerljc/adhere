@@ -5,16 +5,14 @@ import { DEFAULT_TREE_UTIL_CONFIG } from './Constant';
 import type { TreeData, TreeDataItemExtra } from './types';
 
 /**
- * 树组件工具函数 Hook
- * @returns 包含各种工具函数的对象
+ * useUtil
  */
 function useUtil() {
   /**
-   * 通过keys获取树节点
-   * @param params - 参数对象
-   * @param params.treeData - 树数据
-   * @param params.keys - 要查找的键数组
-   * @returns 找到的树节点数组
+   * getTreeNodesByKeys
+   * @description 通过keys获取item
+   * @param {{treeData: TreeData, keys: string[]}} params
+   * @return {TreeDataItemExtra[]}
    */
   function getTreeNodesByKeys({
     treeData,
@@ -23,34 +21,35 @@ function useUtil() {
     treeData: TreeData;
     keys: string[];
   }): TreeDataItemExtra[] {
-    return keys
-      .map((key) => Util.findNodeByKey(treeData as any, key, { keyAttr: 'key' }))
-      .filter((node): node is TreeDataItemExtra => node !== null && node !== undefined);
+    // @ts-ignore
+    return keys.map((key) => Util.findNodeByKey(treeData, key, { keyAttr: 'key' }));
   }
 
   /**
-   * 获取叶子节点的keys
-   * @param params - 参数对象
-   * @param params.treeData - 树数据
-   * @param params.keys - 要过滤的键数组
-   * @returns 叶子节点的键数组
+   * getLeafKeys
+   * @description 获取叶子结点的keys
+   * @param {{treeData: TreeData, keys: string[]}} params
+   * @return {string[]}
    */
   function getLeafKeys({ treeData, keys }: { treeData: TreeData; keys: string[] }): string[] {
-    const leafKeys = Util.getLeafNodes(treeData as any).map(
+    // @ts-ignore
+    const leafKeys = Util.getLeafNodes(treeData).map(
       (nodeData) => nodeData[DEFAULT_TREE_UTIL_CONFIG.keyAttr],
     );
     return keys.filter((key) => leafKeys.includes(key));
   }
 
   /**
-   * 排除不可用的keys
-   * @param treeData - 树数据
-   * @param keys - 要过滤的键数组
-   * @returns 过滤后的键数组
+   * omitDisabledKeys
+   * @description 排除不可用的keys
+   * @param {TreeData} treeData
+   * @param {string[]} keys
+   * @return {string[]}
    */
   function omitDisabledKeys(treeData: TreeData, keys: string[]): string[] {
     const nodes = keys
-      .map((key) => Util.findNodeByKey(treeData as any, key, { keyAttr: 'key' }))
+      // @ts-ignore
+      .map((key) => Util.findNodeByKey(treeData, key, { keyAttr: 'key' }))
       .filter((t) => !!t);
 
     if (nodes.length !== keys.length) {
@@ -60,21 +59,16 @@ function useUtil() {
     return nodes
       .filter((node) => {
         if (node && !('disabled' in node)) return true;
+
         return !node?.disabled;
       })
       .map((node) => node?.[DEFAULT_TREE_UTIL_CONFIG.keyAttr] as string);
   }
 
-  /**
-   * 获取带单位的数值
-   * @param pixel - 像素值
-   * @param media - 媒体配置
-   * @returns 带单位的字符串值
-   */
   function getValueWithUnit(
     pixel: number | string | undefined | null,
     media: ConfigProviderProps['media'],
-  ): string | number | undefined | null {
+  ) {
     if (!pixel) return pixel;
 
     if (Util.isString(pixel)) return pixel;
@@ -88,16 +82,10 @@ function useUtil() {
     return `${value}px`;
   }
 
-  /**
-   * 根据媒体配置获取数值
-   * @param pixel - 像素值
-   * @param media - 媒体配置
-   * @returns 转换后的数值
-   */
   function getValue(
     pixel: number,
     media: ConfigProviderProps['media'] = { isUseMedia: false, designWidth: 192 },
-  ): number {
+  ) {
     if (media?.isUseMedia) {
       return Util.pxToRemNumber(pixel, media.designWidth as number);
     }
@@ -105,12 +93,7 @@ function useUtil() {
     return pixel;
   }
 
-  /**
-   * 检查简单模式配置对象是否完整
-   * @param treeDataSimpleMode - 简单模式配置对象
-   * @returns 是否为有效的简单模式配置
-   */
-  function checkTreeDataSimpleModeFromObject(treeDataSimpleMode: Record<string, any> = {}): boolean {
+  function checkTreeDataSimpleModeFromObject(treeDataSimpleMode: object = {}) {
     return (
       'keyAttr' in treeDataSimpleMode &&
       'titleAttr' in treeDataSimpleMode &&

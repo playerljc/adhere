@@ -46,18 +46,9 @@ export default ({ children, lang = 'zh_CN', locales, theme = {}, curTheme = 'def
             intl={{
               lang,
               locales: {
-                zh_CN: {
-                  ...intl.zh_CN.adhere,
-                  ...(locales?.zh_CN ?? {}),
-                },
-                en_US: {
-                  ...intl.en_US.adhere,
-                  ...(locales?.en_US ?? {}),
-                },
-                pt_PT: {
-                  ...intl.pt_PT.adhere,
-                  ...(locales?.pt_PT ?? {}),
-                },
+                zh_CN: [...intl.zh_CN.adhere, ...(locales?.zh_CN ?? [])],
+                en_US: [...intl.en_US.adhere, ...(locales?.en_US ?? [])],
+                pt_PT: [...intl.pt_PT.adhere, ...(locales?.pt_PT ?? [])],
               },
             }}
             theme={theme}
@@ -85,18 +76,9 @@ export default ({ children, lang = 'zh_CN', locales, theme = {}, curTheme = 'def
             intl={{
               lang,
               locales: {
-                zh_CN: {
-                  ...intl.zh_CN.adhere,
-                  ...(locales?.zh_CN ?? {}),
-                },
-                en_US: {
-                  ...intl.en_US.adhere,
-                  ...(locales?.en_US ?? {}),
-                },
-                pt_PT: {
-                  ...intl.pt_PT.adhere,
-                  ...(locales?.pt_PT ?? {}),
-                },
+                zh_CN: [...intl.zh_CN.adhere, ...(locales?.zh_CN ?? [])],
+                en_US: [...intl.en_US.adhere, ...(locales?.en_US ?? [])],
+                pt_PT: [...intl.pt_PT.adhere, ...(locales?.pt_PT ?? [])],
               },
             }}
             theme={theme}

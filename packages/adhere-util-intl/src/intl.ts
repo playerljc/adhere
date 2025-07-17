@@ -84,7 +84,7 @@ let mainLocales: MainLocales = {};
 
 /**
  * Initialize the internationalization map with Chinese keys
- * 
+ *
  * @param zhCN - Chinese locale object with key-value pairs
  * @description Creates mappings from Chinese text to internationalized values and keys
  */
@@ -93,12 +93,12 @@ function initIntlMap(zhCN: ProcessedLocale): void {
 
   properties.forEach((property) => {
     const chineseValue = zhCN[property];
-    
+
     // Ensure chineseValue is not undefined
     if (chineseValue !== undefined) {
       // Map Chinese value to internationalized value
       intlMap[chineseValue] = intl.get(property);
-      
+
       // Map Chinese value to its corresponding locale key
       intlKey[chineseValue] = property;
     }
@@ -107,11 +107,11 @@ function initIntlMap(zhCN: ProcessedLocale): void {
 
 /**
  * Generate a key-value object from an array of strings
- * 
+ *
  * @param prefix - Prefix for generated keys (default: 'local')
  * @param data - Array of strings to convert to key-value pairs
  * @returns Object with generated keys and corresponding values
- * 
+ *
  * @example
  * ```typescript
  * getLocal('prefix', ['Hello', 'World'])
@@ -124,14 +124,14 @@ export function getLocal(prefix: string = 'local', data: string[]): ProcessedLoc
 
   for (let i = 0; i < result.length; i++) {
     const key = `${prefix}${i + 1}`;
-    
+
     let value = localKeys.get(key);
-    
+
     if (!value) {
       localKeys.set(key, key);
       value = key;
     }
-    
+
     // Ensure result[i] is not undefined
     const item = result[i];
     if (item !== undefined) {
@@ -144,7 +144,7 @@ export function getLocal(prefix: string = 'local', data: string[]): ProcessedLoc
 
 /**
  * Get all processed locales
- * 
+ *
  * @returns Copy of the main locales object
  */
 export function getLocales(): MainLocales {
@@ -153,7 +153,7 @@ export function getLocales(): MainLocales {
 
 /**
  * Process locale data into key-value pairs
- * 
+ *
  * @param localeData - Array of locale items (strings or objects)
  * @param prefix - Prefix for generated keys
  * @returns Processed locale object
@@ -188,13 +188,13 @@ function processLocaleData(localeData: LocaleData, prefix: string): ProcessedLoc
 const IntlService = {
   /**
    * Initialize the internationalization service
-   * 
+   *
    * @param config - Initialization configuration
    * @param reload - Whether to reload if already initialized
    * @returns Promise that resolves when initialization is complete
-   * 
+   *
    * @throws Error if initialization fails
-   * 
+   *
    * @example
    * ```typescript
    * await IntlService.init({
@@ -215,15 +215,17 @@ const IntlService = {
       locales = {},
       ...rest
     }: InitConfig,
-    reload: boolean = false
+    reload: boolean = false,
   ): Promise<void> {
     if (!reload && isInitialized) {
-      throw new Error('Internationalization service is already initialized. Use reload=true to reinitialize.');
+      throw new Error(
+        'Internationalization service is already initialized. Use reload=true to reinitialize.',
+      );
     }
 
     // Process user locales
     const localeKeys = Object.keys(locales);
-    
+
     localeKeys.forEach((localeKey) => {
       const localeData = locales[localeKey as SupportedLocale];
       if (localeData) {
@@ -248,7 +250,7 @@ const IntlService = {
 
   /**
    * Check if the service has been initialized
-   * 
+   *
    * @returns True if initialized, false otherwise
    */
   isInit(): boolean {
@@ -257,11 +259,11 @@ const IntlService = {
 
   /**
    * Get internationalized value using Chinese text as key
-   * 
+   *
    * @param key - Chinese text key
    * @param variables - Variables for interpolation
    * @returns Internationalized string
-   * 
+   *
    * @example
    * ```typescript
    * IntlService.v('你好', { name: 'World' });
@@ -285,11 +287,11 @@ const IntlService = {
 
   /**
    * Get internationalized HTML using Chinese text as key
-   * 
+   *
    * @param key - Chinese text key
    * @param options - HTML formatting options
    * @returns Internationalized HTML string
-   * 
+   *
    * @example
    * ```typescript
    * IntlService.vHtml('欢迎', { name: 'User' });
@@ -313,11 +315,11 @@ const IntlService = {
 
   /**
    * Get internationalized value using locale key
-   * 
+   *
    * @param key - Locale key
    * @param variables - Variables for interpolation
    * @returns Internationalized string
-   * 
+   *
    * @example
    * ```typescript
    * IntlService.get('hello', { name: 'World' });
@@ -329,11 +331,11 @@ const IntlService = {
 
   /**
    * Get internationalized HTML using locale key
-   * 
+   *
    * @param key - Locale key
    * @param options - HTML formatting options
    * @returns Internationalized HTML string
-   * 
+   *
    * @example
    * ```typescript
    * IntlService.getHTML('welcome', { name: 'User' });
@@ -345,11 +347,11 @@ const IntlService = {
 
   /**
    * Format message using ReactIntlUniversalMessageDescriptor
-   * 
+   *
    * @param options - Message descriptor options
    * @param variables - Variables for interpolation
    * @returns Formatted message string
-   * 
+   *
    * @example
    * ```typescript
    * IntlService.formatMessage(
@@ -360,18 +362,18 @@ const IntlService = {
    */
   formatMessage(
     options: ReactIntlUniversalMessageDescriptor,
-    variables?: Variables | null
+    variables?: Variables | null,
   ): string {
     return intl.formatMessage(options, variables);
   },
 
   /**
    * Format HTML message using ReactIntlUniversalMessageDescriptor
-   * 
+   *
    * @param options - Message descriptor options
    * @param variables - Variables for interpolation
    * @returns Formatted HTML message string
-   * 
+   *
    * @example
    * ```typescript
    * IntlService.formatHTMLMessage(
@@ -382,14 +384,14 @@ const IntlService = {
    */
   formatHTMLMessage(
     options: ReactIntlUniversalMessageDescriptor,
-    variables?: Variables | null
+    variables?: Variables | null,
   ): string {
     return intl.formatHTMLMessage(options, variables);
   },
 
   /**
    * Get initialization options from react-intl-universal
-   * 
+   *
    * @returns Current initialization options
    */
   getInitOptions(): any {
@@ -398,9 +400,9 @@ const IntlService = {
 
   /**
    * Load additional locales after initialization
-   * 
+   *
    * @param locales - Additional locale data to load
-   * 
+   *
    * @example
    * ```typescript
    * IntlService.load({
@@ -414,11 +416,11 @@ const IntlService = {
 
   /**
    * Generate local object from string array (alias for getLocal function)
-   * 
+   *
    * @param prefix - Prefix for generated keys
    * @param data - Array of strings
    * @returns Generated key-value object
-   * 
+   *
    * @see getLocal
    */
   getLocal(prefix: string = 'local', data: string[]): ProcessedLocale {
@@ -427,16 +429,16 @@ const IntlService = {
 
   /**
    * Reset the service state (useful for testing)
-   * 
+   *
    * @internal
    */
   _reset(): void {
     isInitialized = false;
-    Object.keys(intlMap).forEach(key => delete intlMap[key]);
-    Object.keys(intlKey).forEach(key => delete intlKey[key]);
+    Object.keys(intlMap).forEach((key) => delete intlMap[key]);
+    Object.keys(intlKey).forEach((key) => delete intlKey[key]);
     localKeys.clear();
     mainLocales = {};
-  }
+  },
 };
 
 export default IntlService;

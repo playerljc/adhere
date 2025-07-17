@@ -1,10 +1,9 @@
 /**
- * 加载锁管理 Hook
- * @returns 包含锁管理函数的对象
+ * useLoadedLocks
  */
 declare function useLoadedLocks(): {
-    lock: (key: string) => void;
-    unLock: (key: string) => void;
-    isLock: (key: string) => boolean;
+    lock: (key: any) => void;
+    unLock: (key: any) => void;
+    isLock: (key: any) => boolean;
 };
 export default useLoadedLocks;

@@ -40,10 +40,8 @@ const { useTheme } = ConfigProvider;
 const { usePropToState } = Hooks;
 
 /**
- * 内部树组件
- * @description 移动端树形组件，支持展开/折叠、选择、勾选、搜索等功能
- * @param props - 组件属性
- * @returns 树组件
+ * Tree
+ * @description Tree
  */
 const InternalTree = memo<TreeProps>(
   ({
@@ -135,7 +133,7 @@ const InternalTree = memo<TreeProps>(
     }, [checkStrictly]);
 
     // 是否进行了查询
-    const [isSearching, setIsSearching] = useState<boolean>(false);
+    const [isSearching, setIsSearching] = useState(false);
     // 查询的关键字
     const [kw, setKw] = useState<string>('');
 
@@ -159,14 +157,16 @@ const InternalTree = memo<TreeProps>(
 
       if (Util.isBoolean(targetTreeDataSimpleMode)) {
         if (targetTreeDataSimpleMode as boolean) {
-          _targetTreeData = Util.arrayToAntdTreeSelect(_targetTreeData as any, DEFAULT_TREE_UTIL_CONFIG);
+          // @ts-ignore
+          _targetTreeData = Util.arrayToAntdTreeSelect(_targetTreeData, DEFAULT_TREE_UTIL_CONFIG);
         }
       } else if (
         Util.isObject(targetTreeDataSimpleMode) &&
         checkTreeDataSimpleModeFromObject(targetTreeDataSimpleMode as TreeDataSimpleModeFromObject)
       ) {
         _targetTreeData = Util.arrayToAntdTreeSelect(
-          _targetTreeData as any,
+          // @ts-ignore
+          _targetTreeData,
           targetTreeDataSimpleMode as TreeDataSimpleModeFromObject,
         );
       }
@@ -181,12 +181,13 @@ const InternalTree = memo<TreeProps>(
         return _treeData;
       }
 
-      return Util.filterTree(_treeData as any, kw, {
+      // @ts-ignore
+      return Util.filterTree(_treeData, kw, {
         ...DEFAULT_TREE_UTIL_CONFIG,
         filterAttr: targetFilterKey,
         titleAttr: targetFilterKey,
       });
-    }, [kw, isSearching, targetTreeDataSimpleMode, treeData, checkTreeDataSimpleModeFromObject, targetFilterKey]);
+    }, [kw, isSearching, targetTreeDataSimpleMode, treeData]);
     // const [targetTreeData, setTargetTreeData] = usePropToState(defaultTreeData);
 
     // 展开的keys
@@ -197,7 +198,7 @@ const InternalTree = memo<TreeProps>(
     const defaultSelectedKeys = useMemo(
       // 排除不可用的节点keys
       () => omitDisabledKeys(targetTreeData, selectedKeys ?? []),
-      [targetTreeData, selectedKeys],
+      [selectedKeys],
     );
     const [targetSelectedKeys, setTargetSelectedKeys] = usePropToState(defaultSelectedKeys);
 
@@ -213,7 +214,7 @@ const InternalTree = memo<TreeProps>(
       }
 
       return _defaultCheckedKeys;
-    }, [checkedKeys, targetCheckStrictly, targetTreeData, omitDisabledKeys, getDefaultCheckedKeysWithCheckStrictly]);
+    }, [checkedKeys, targetCheckStrictly]);
     const [targetCheckedKeys, setTargetCheckedKeys] = usePropToState(defaultCheckedKeys);
     const latestCheckedKeysRef = useLatest(targetCheckedKeys);
     useUpdateEffect(() => {
@@ -230,13 +231,13 @@ const InternalTree = memo<TreeProps>(
       } else {
         setTargetCheckedKeys(_defaultCheckedKeys);
       }
-    }, [targetTreeData, targetCheckStrictly, omitDisabledKeys, getDefaultCheckedKeysWithCheckStrictly, setTargetCheckedKeys]);
+    }, [targetTreeData, targetCheckStrictly]);
 
     // 异步加载的keys
     const defaultLoadedKeys = useMemo(
       // 排除不可用的节点keys
       () => omitDisabledKeys(targetTreeData, loadedKeys ?? []).filter((t) => !!t),
-      [targetTreeData, loadedKeys, omitDisabledKeys],
+      [targetTreeData, loadedKeys],
     );
     const [targetLoadedKeys, setTargetLoadedKeys] = usePropToState(defaultLoadedKeys);
     const latestLoadedKeysRef = useLatest(targetLoadedKeys);
@@ -244,31 +245,31 @@ const InternalTree = memo<TreeProps>(
       setTargetLoadedKeys(
         omitDisabledKeys(targetTreeData, latestLoadedKeysRef.current ?? []).filter((t) => !!t),
       );
-    }, [targetTreeData, omitDisabledKeys, setTargetLoadedKeys]);
+    }, [targetTreeData]);
 
     const targetCheckboxWidth = useMemo(
       () => getValueWithUnit(checkboxWidth ?? DEFAULT_CHECKBOX_WIDTH, media) as string,
-      [checkboxWidth, media, getValueWithUnit],
+      [checkboxWidth, media],
     );
 
     const targetCheckboxGap = useMemo(
       () => getValueWithUnit(checkboxGap ?? DEFAULT_CHECKBOX_GAP, media) as string,
-      [checkboxGap, media, getValueWithUnit],
+      [checkboxGap, media],
     );
 
     const targetTitleGap = useMemo(
       () => getValueWithUnit(titleGap ?? DEFAULT_TITLE_GAP, media) as string,
-      [titleGap, media, getValueWithUnit],
+      [titleGap, media],
     );
 
     const targetIconGap = useMemo(
       () => getValueWithUnit(iconGap ?? DEFAULT_ICON_GAP, media) as string,
-      [iconGap, media, getValueWithUnit],
+      [iconGap, media],
     );
 
     const targetIndent = useMemo(
       () => getValueWithUnit(indent ?? DEFAULT_INDENT, media) as string,
-      [indent, media, getValueWithUnit],
+      [indent, media],
     );
 
     // 行的间距
@@ -288,7 +289,6 @@ const InternalTree = memo<TreeProps>(
       () =>
         targetTreeData.map((_treeNodeData) => (
           <TreeNodeContext.Provider
-            key={_treeNodeData[DEFAULT_TREE_UTIL_CONFIG.keyAttr]}
             value={{
               existsCheckableNodeInParentChildren: () =>
                 existsCheckableNodeInParentChildren(_treeNodeData.children),
@@ -301,7 +301,7 @@ const InternalTree = memo<TreeProps>(
             />
           </TreeNodeContext.Provider>
         )),
-      [targetTreeData, existsCheckableNodeInParentChildren],
+      [targetTreeData, switcherIcon, titleRender],
     );
 
     // 是否为空
@@ -318,6 +318,7 @@ const InternalTree = memo<TreeProps>(
         setExpandedKeys: setTargetExpandedKeys,
         setCheckedKeys: setTargetCheckedKeys,
         setLoadedKeys: setTargetLoadedKeys,
+        // setTreeData: setTargetTreeData,
         loadData,
         size: () => targetSize,
         rowGap: () => rowGap ?? DEFAULT_ROW_GAP,
@@ -328,7 +329,8 @@ const InternalTree = memo<TreeProps>(
 
           if (Util.isBoolean(targetTreeDataSimpleMode)) {
             if (targetTreeDataSimpleMode as boolean) {
-              _treeData = Util.arrayToAntdTreeSelect(_treeData as any, DEFAULT_TREE_UTIL_CONFIG);
+              // @ts-ignore
+              _treeData = Util.arrayToAntdTreeSelect(_treeData, DEFAULT_TREE_UTIL_CONFIG);
             }
           } else if (
             Util.isObject(targetTreeDataSimpleMode) &&
@@ -337,7 +339,8 @@ const InternalTree = memo<TreeProps>(
             )
           ) {
             _treeData = Util.arrayToAntdTreeSelect(
-              _treeData as any,
+              // @ts-ignore
+              _treeData,
               targetTreeDataSimpleMode as TreeDataSimpleModeFromObject,
             );
           }
@@ -369,9 +372,7 @@ const InternalTree = memo<TreeProps>(
         targetCheckable,
         treeData,
         loadData,
-        targetCheckStrictly,
-        targetTreeDataSimpleMode,
-        checkTreeDataSimpleModeFromObject,
+        checkStrictly,
         icon,
         targetCheckboxWidth,
         targetCheckboxGap,
@@ -389,7 +390,8 @@ const InternalTree = memo<TreeProps>(
     const treeElement = (
       <TreeContext.Provider value={contextProviderValue}>
         <ul
-          ref={wrapperRef as React.RefObject<HTMLUListElement>}
+          // @ts-ignore
+          ref={wrapperRef}
           className={classNames(selectorPrefix, className)}
           style={style ?? {}}
         >
@@ -401,17 +403,11 @@ const InternalTree = memo<TreeProps>(
       </TreeContext.Provider>
     );
 
-    /**
-     * 搜索处理函数
-     */
-    function onSearch(): void {
+    function onSearch() {
       setIsSearching(true);
     }
 
-    /**
-     * 清除搜索处理函数
-     */
-    function onClear(): void {
+    function onClear() {
       setKw('');
       setIsSearching(false);
     }
@@ -441,10 +437,6 @@ const InternalTree = memo<TreeProps>(
   },
 );
 
-/**
- * 树组件
- * 移动端树形组件，支持展开/折叠、选择、勾选、搜索等功能
- */
 const Tree = InternalTree as TreeComponent;
 
 Tree.TreeSelect = TreeSelect;

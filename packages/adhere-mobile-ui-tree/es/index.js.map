@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Tree from './Tree';\n/**\n * 移动端树组件\n * 提供树形结构展示、选择、搜索等功能\n */\nexport default Tree;"],"names":["Tree"],"mappings":"OAAOA,SAAU,wBAKFA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Tree from './Tree';\nexport default Tree;"],"names":["Tree"],"mappings":"OAAOA,SAAU,wBACFA"}
