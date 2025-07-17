@@ -1,7 +1,7 @@
 const postcssPresetEnv = require('postcss-preset-env');
-// const postcssRTLCSS = require('postcss-rtlcss');
+const postcssRTLCSS = require('postcss-rtlcss');
 const postcssPxToRem = require('postcss-pxtorem');
-
+const postcssVarPxToRem = require('../../node-extra/postcss/plugins/postcss-var-pxtorem.js');
 /**
  * isMobile
  * @description 是否是移动端模式
@@ -44,8 +44,13 @@ const plugins = [
     stage: 4,
   }),
   // 网页方向设置
-  // postcssRTLCSS({}),
+  postcssRTLCSS({}),
   // px to rem(现在默认就加入，之前是移动端才加入)
+  // 转换css变量中的默认值
+  isUseMedia() &&
+    postcssVarPxToRem({
+      rootValue: getDesignWidth(),
+    }),
   isUseMedia() &&
     postcssPxToRem({
       rootValue: getDesignWidth(),

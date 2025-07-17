@@ -19,7 +19,7 @@ const InternalAutoCompletePagingSelector = memo<AutoCompletePagingSelectorProps>
     return (
       <AutoComplete
         {...(autoCompleteProps ?? {})}
-        searchDataSource={searchDataSource.data}
+        searchDataSource={searchDataSource.data as any[]}
         loadData={autoCompleteLoadData}
       >
         {({ value, onChange, searchDataSource }) => (

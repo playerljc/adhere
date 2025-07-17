@@ -207,7 +207,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     constructor(props: any);
     componentDidMount(): void;
     componentWillUnmount(): void;
-    componentWillReceiveProps(nextProps: SearchTableProps): void;
+    componentWillReceiveProps(nextProps: P): void;
     componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void;
     /**
      * effectWithExpandedRowKeys

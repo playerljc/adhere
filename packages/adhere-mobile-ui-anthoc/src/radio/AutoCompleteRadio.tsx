@@ -14,7 +14,7 @@ const InternalAutoCompleteRadio = memo<AutoCompleteRadioProps>(
           onChange={(_value) => {
             onChange?.([_value]);
           }}
-          options={searchDataSource}
+          options={searchDataSource as any}
           {...(radioGroupProps ?? {})}
         />
       )}

@@ -21,5 +21,5 @@ import '@baifendian/adhere-e2e/es/index.less';
 DictConfig();
 
 e2e.Mobile({
-  children: <ElectronicCommerce />,
+  children: <Selection />,
 });

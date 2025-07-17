@@ -9,5 +9,5 @@ import Normal from './Normal';
 import './index.less';
 
 e2e.PC({
-  children: <Form />,
+  children: <Normal />,
 });

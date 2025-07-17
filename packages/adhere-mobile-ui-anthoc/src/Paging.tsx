@@ -197,7 +197,7 @@ function Paging<Option>({
 
   useUpdateLayoutEffect(() => {
     if (callbackHandler.current) {
-      status.current = paging.page < pages ? ScrollLoad.NORMAL : ScrollLoad.EMPTY;
+      status.current = paging.page < pages ? ScrollLoad.NORMAL : (ScrollLoad.EMPTY as any);
 
       callbackHandler.current(status.current);
     }

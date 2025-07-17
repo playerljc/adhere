@@ -140,6 +140,7 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
         expand?: boolean;
         page?: number;
         limit?: number;
+        loading?: boolean;
     };
     /**
      * renderTitle

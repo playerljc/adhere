@@ -23,7 +23,7 @@ const InternalAutoCompletePagingCheckbox = memo<AutoCompletePagingCheckboxProps>
       <AutoComplete
         labelProp="title"
         {...(autoCompleteProps ?? {})}
-        searchDataSource={searchDataSource.data}
+        searchDataSource={searchDataSource.data as any[]}
         loadData={autoCompleteLoadData}
       >
         {({ value, onChange, searchDataSource }) => (

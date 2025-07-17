@@ -138,7 +138,7 @@ abstract class SearchList<
       elRef: this.childrenWrapRef,
       group: 'normal',
       displayName: 'SearchList',
-      theme: this.configProviderContextValue?.theme,
+      theme: this.configProviderContextValue?.theme!,
     });
   }
 
@@ -159,7 +159,7 @@ abstract class SearchList<
       elRef: this.childrenWrapRef,
       group: 'normal',
       displayName: 'SearchList',
-      theme: this.configProviderContextValue?.theme,
+      theme: this.configProviderContextValue?.theme!,
     });
   }
 

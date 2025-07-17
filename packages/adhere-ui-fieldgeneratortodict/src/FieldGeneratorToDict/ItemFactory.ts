@@ -10,7 +10,7 @@ import { getOriginDictNameByItemName } from './Util';
 
 const { memoized } = WatchMemoized;
 
-const map = new Map<string, (dictName: string) => any>();
+const map = new Map<string, (originDictName: string, dictName?: string) => any>();
 
 /**
  * setItem
@@ -48,14 +48,14 @@ export function getItem<P>({
 
   if (!name) return null;
 
-  const item = memoized.createMemoFun(map.get(`${itemName}${functionName}`) as Function)?.(
+  const item = memoized.createMemoFun(map.get(`${itemName}${functionName}`) as (originDictName: string, dictName?: string) => any)?.(
     name,
     dictName,
   );
 
   if (React.isValidElement(item)) {
     return DictRefreshHOC<P>(
-      memoized.createMemoFun(map.get(`${itemName}${functionName}`) as Function)?.(name, dictName),
+      memoized.createMemoFun(map.get(`${itemName}${functionName}`) as (originDictName: string, dictName?: string) => any)?.(name, dictName),
     );
   }
 

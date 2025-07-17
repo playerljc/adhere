@@ -63,7 +63,7 @@ const SortItem: FC<SortItemProps> = ({
       return [
         {
           key: 'reset',
-          type: 'primary',
+          type: 'reset' as const,
           children: Intl.get('reset'),
           onClick: reset,
         },
@@ -149,7 +149,7 @@ const SortItem: FC<SortItemProps> = ({
     };
 
     // hoc
-    if (['popup-bottom', 'popup-top', 'modal', 'dialog'].includes(sortTriggerMode ?? '')) {
+    if (["popup-bottom", "popup-top", "modal", "dialog"].includes(sortTriggerMode ?? "")) {
       const hocProps = {
         ...commonProps,
         actions,
@@ -165,42 +165,42 @@ const SortItem: FC<SortItemProps> = ({
       };
 
       // Popup
-      if (['popup-bottom', 'popup-top'].includes(sortTriggerMode ?? '')) {
+      if (["popup-bottom", "popup-top"].includes(sortTriggerMode ?? "")) {
         const position = new Map([
-          ['popup-bottom', 'bottom'],
-          ['popup-top', 'top'],
+          ["popup-bottom", "bottom"],
+          ["popup-top", "top"],
         ]);
 
         const popupProps = {
           ...hocProps,
-          position: position.get(sortTriggerMode ?? ''),
+          position: position.get(sortTriggerMode ?? ""),
         };
 
         return (
           <Popup.Trigger disabled={disabled} {...popupProps}>
-            {triggerContext}
+            {typeof triggerContext === 'function' ? triggerContext({ close: undefined }) : triggerContext}
           </Popup.Trigger>
         );
       }
       // Modal
-      else if (sortTriggerMode === 'modal') {
+      else if (sortTriggerMode === "modal") {
         return (
           <Modal.TriggerPrompt disabled={disabled} {...hocProps}>
-            {triggerContext}
+            {typeof triggerContext === 'function' ? triggerContext({ close: undefined }) : triggerContext}
           </Modal.TriggerPrompt>
         );
       }
       // Dialog
-      else if (sortTriggerMode === 'dialog') {
+      else if (sortTriggerMode === "dialog") {
         return (
           <Dialog.TriggerPrompt disabled={disabled} {...hocProps}>
-            {triggerContext}
+            {typeof triggerContext === 'function' ? triggerContext({ close: undefined }) : triggerContext}
           </Dialog.TriggerPrompt>
         );
       }
     }
     // adhere-popup
-    else if (sortTriggerMode === 'adhere-popup') {
+    else if (sortTriggerMode === "adhere-popup") {
       return (
         <AdherePopup.Trigger
           {...commonProps}
@@ -208,7 +208,7 @@ const SortItem: FC<SortItemProps> = ({
           renderTrigger={() => triggerElement}
           actions={actions}
         >
-          {triggerContext}
+          {typeof triggerContext === 'function' ? triggerContext({ close: undefined }) : triggerContext}
         </AdherePopup.Trigger>
       );
     }
@@ -250,12 +250,10 @@ const SortItem: FC<SortItemProps> = ({
     return onSort?.(draft ?? []);
   }
 
-  function reset() {
+  function reset(): Promise<void> {
     setSortValues(defaultSortValues);
-
     if (!onSortReset) return Promise.resolve();
-
-    return onSortReset?.();
+    return onSortReset?.() as Promise<void>;
   }
 
   useUpdateEffect(() => {

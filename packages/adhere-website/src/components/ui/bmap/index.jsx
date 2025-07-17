@@ -485,6 +485,7 @@ export default () => {
                 加入热力图
               </Button>
             </div>
+
             <div className={styles.BMapWrap}>
               <BMapComponent
                 ref={hotLayerRef}

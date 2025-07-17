@@ -6,7 +6,6 @@
  */
 import { ConfigProvider as AntdMobileConfigProvider } from 'antd-mobile';
 import 'antd-mobile/es/global';
-import zhCN from 'antd-mobile/es/locales/zh-CN';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -22,11 +21,8 @@ import MessageDialog from '@baifendian/adhere-ui-messagedialog';
 import Notification from '@baifendian/adhere-ui-notification';
 import Popup from '@baifendian/adhere-ui-popup';
 import Browsersniff from '@baifendian/adhere-util-browsersniff';
-import enUSAdhere from '@baifendian/adhere-util-intl/es/locales/en_US';
-import ptPTAdhere from '@baifendian/adhere-util-intl/es/locales/pt_PT';
-import zhCNAdhere from '@baifendian/adhere-util-intl/es/locales/zh_CN';
-import Resource from '@baifendian/adhere-util-resource';
 
+import intl from './intl';
 import { antdThemeToCssVariable } from './theme';
 import { isUseMedia } from './util';
 
@@ -74,17 +70,7 @@ if (Browsersniff.iSOSiOS()) {
   });
 }
 
-export default ({
-  children,
-  lang = 'zh_CN',
-  locales = {
-    en_US: enUSAdhere,
-    zh_CN: zhCNAdhere,
-    pt_PT: ptPTAdhere,
-  },
-  theme = {},
-  curTheme = 'default',
-}) => {
+export default ({ children, lang = 'zh_CN', locales, theme = {}, curTheme = 'default' }) => {
   const styleProviderProps = {
     transformers: [
       legacyLogicalPropertiesTransformer,
@@ -96,18 +82,31 @@ export default ({
   };
 
   const antDesignConfigProviderProps = {
-    locale: Resource.Dict.value.LocalsAntd.value[lang],
+    locale: intl[lang].antd,
   };
 
   function renderToFragmentWrapper(children) {
     return (
       <AntdConfigProvider {...antDesignConfigProviderProps}>
         <StyleProvider {...styleProviderProps}>
-          <AntdMobileConfigProvider locale={zhCN}>
+          <AntdMobileConfigProvider locale={intl[lang].adhereMobile}>
             <AdhereConfigProvider
               intl={{
                 lang,
-                locales,
+                locales: {
+                  zh_CN: {
+                    ...intl.zh_CN.adhere,
+                    ...(locales?.zh_CN ?? {}),
+                  },
+                  en_US: {
+                    ...intl.en_US.adhere,
+                    ...(locales?.en_US ?? {}),
+                  },
+                  pt_PT: {
+                    ...intl.pt_PT.adhere,
+                    ...(locales?.pt_PT ?? {}),
+                  },
+                },
               }}
               onIntlInit={() => {
                 antdThemeToCssVariable(curTheme);
@@ -131,11 +130,24 @@ export default ({
     return (
       <AntdConfigProvider {...antDesignConfigProviderProps}>
         <StyleProvider {...styleProviderProps}>
-          <AntdMobileConfigProvider locale={zhCN}>
+          <AntdMobileConfigProvider locale={intl[lang].adhereMobile}>
             <AdhereConfigProvider
               intl={{
                 lang,
-                locales,
+                locales: {
+                  zh_CN: {
+                    ...intl.zh_CN.adhere,
+                    ...(locales?.zh_CN ?? {}),
+                  },
+                  en_US: {
+                    ...intl.en_US.adhere,
+                    ...(locales?.en_US ?? {}),
+                  },
+                  pt_PT: {
+                    ...intl.pt_PT.adhere,
+                    ...(locales?.pt_PT ?? {}),
+                  },
+                },
               }}
               onIntlInit={() => {
                 antdThemeToCssVariable(curTheme);
@@ -153,6 +165,10 @@ export default ({
       </AntdConfigProvider>
     );
   }
+
+  Object.keys(intl).forEach((key) => {
+    intl[key].dayjs();
+  });
 
   MessageDialog.setRenderToWrapper(renderToFragmentWrapper);
   Popup.setRenderToWrapper(renderToFragmentWrapper);

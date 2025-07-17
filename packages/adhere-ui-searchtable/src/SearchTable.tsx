@@ -370,7 +370,7 @@ abstract class SearchTable<
       elRef: this.childrenWrapRef,
       group: 'normal',
       displayName: 'SearchTable',
-      theme: this._context?.theme,
+      theme: this._context?.theme || {},
     });
   }
 
@@ -390,7 +390,7 @@ abstract class SearchTable<
     document.body.removeEventListener('keyup', this.onBodyKeyup);
   }
 
-  componentWillReceiveProps(nextProps: SearchTableProps) {
+  componentWillReceiveProps(nextProps: P) {
     if (!!super.componentWillReceiveProps) {
       super.componentWillReceiveProps(nextProps);
     }
@@ -402,7 +402,7 @@ abstract class SearchTable<
       elRef: this.childrenWrapRef,
       group: 'normal',
       displayName: 'SearchTable',
-      theme: this._context?.theme,
+      theme: this._context?.theme || {},
     });
 
     this.effectWithExpandedRowKeys(nextProps);
@@ -493,11 +493,11 @@ abstract class SearchTable<
         selectedRowKeys: [...selectedRowKeys, ...selectedKeys],
         selectedRows: [
           ...selectedRows,
-          [...selectedKeys, ...asyncPageKeys].map((key) =>
+          ...[...selectedKeys, ...asyncPageKeys].map((key) =>
             flatDataSource.find((record) => record[rowKey] === key),
           ),
         ],
-      });
+      } as any);
     }
   }
 
@@ -568,18 +568,18 @@ abstract class SearchTable<
     const { selectedRowKeys, selectedRows } = this.state;
 
     // 祖先节点都不在selectedRowKeys中的时候
-    // console.log('selectedKeys', selectedKeys);
-    // console.log('selectedRowKeys', selectedRowKeys);
+    // console.log('selectedKeys,selectedKeys);
+    // console.log(selectedRowKeys,selectedRowKeys);
     if (!selectedKeys.every((key) => selectedRowKeys.includes(key))) {
       this.setState({
         selectedRowKeys: [...selectedRowKeys, ...selectedKeys],
         selectedRows: [
           ...selectedRows,
-          [...selectedKeys, ...asyncPageKeys].map((key) =>
+          ...[...selectedKeys, ...asyncPageKeys].map((key) =>
             flatDataSource.find((record) => record[rowKey] === key),
           ),
         ],
-      });
+      } as any);
     }
   }
 
@@ -1638,7 +1638,7 @@ abstract class SearchTable<
     return new Promise((resolve) => {
       const rowSelectionFilterData = this.getRowSelectionFilterData(selected, records);
 
-      this.setState(rowSelectionFilterData, () => {
+      this.setState(rowSelectionFilterData as any, () => {
         resolve();
       });
     });
@@ -1663,7 +1663,7 @@ abstract class SearchTable<
               {
                 selectedRowKeys,
                 selectedRows,
-              },
+              } as any,
               () => {
                 this?.onRowSelectionChange?.(selectedRowKeys, selectedRows);
                 resolve();

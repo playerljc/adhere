@@ -1,3 +1,7 @@
+import arEGMobile from 'antd-mobile/es/locales/ar-SA';
+import enUSMobile from 'antd-mobile/es/locales/en-US';
+import ptPTMobile from 'antd-mobile/es/locales/pt-BR';
+import zhCNMobile from 'antd-mobile/es/locales/zh-CN';
 import arEG from 'antd/locale/ar_EG';
 import enUS from 'antd/locale/en_US';
 import ptPT from 'antd/locale/pt_PT';
@@ -33,6 +37,7 @@ export default {
         direction: 'ltr',
         icon: '',
         antd: zhCN,
+        antdMobile: zhCNMobile,
         dayjs: () => {
           dayjs.locale('zh-cn');
         },
@@ -49,6 +54,7 @@ export default {
           dayjs.locale('en');
         },
         adhere: enUSAdhere,
+        antdMobile: enUSMobile,
         module: en_US,
       },
       pt_PT: {
@@ -61,6 +67,7 @@ export default {
           dayjs.locale('pt');
         },
         adhere: ptPTAdhere,
+        antdMobile: ptPTMobile,
         module: pt_PT,
       },
       ar_EG: {
@@ -74,6 +81,7 @@ export default {
           dayjs.locale('ar');
         },
         adhere: arEGAdhere,
+        antdMobile: arEGMobile,
         module: ar_EG,
       },
     });

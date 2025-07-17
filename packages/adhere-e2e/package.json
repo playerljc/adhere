@@ -40,7 +40,6 @@
     "@ant-design/cssinjs": "^1.17.0",
     "@baifendian/adhere-ui-anthoc": "^2.11.0",
     "@baifendian/adhere-ui-configprovider": "^2.11.0",
-    "@baifendian/adhere-ui-contourblock": "^2.11.0",
     "@baifendian/adhere-ui-css": "^2.11.0",
     "@baifendian/adhere-ui-messagedialog": "^2.11.0",
     "@baifendian/adhere-ui-notification": "^2.11.0",

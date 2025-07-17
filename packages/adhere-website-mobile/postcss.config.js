@@ -1,6 +1,7 @@
 const postcssPresetEnv = require('postcss-preset-env');
 const postcssRTLCSS = require('postcss-rtlcss');
 const postcssPxToRem = require('postcss-pxtorem');
+const postcssVarPxToRem = require('../../node-extra/postcss/plugins/postcss-var-pxtorem.js');
 
 /**
  * isUseMedia
@@ -17,6 +18,10 @@ const plugins = [
     stage: 4,
   }),
   postcssRTLCSS({}),
+  isUseMedia() &&
+    postcssVarPxToRem({
+      rootValue: 37.5,
+    }),
   isUseMedia() &&
     postcssPxToRem({
       rootValue: 37.5,

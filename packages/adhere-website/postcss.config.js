@@ -1,7 +1,7 @@
 const postcssPresetEnv = require('postcss-preset-env');
 const postcssRTLCSS = require('postcss-rtlcss');
 const postcssPxToRem = require('postcss-pxtorem');
-const postcssVarPxToRem = require('./node-extra/postcss/plugins/postcss-var-pxtorem.js');
+const postcssVarPxToRem = require('../../node-extra/postcss/plugins/postcss-var-pxtorem.js');
 
 /**
  * isUseMedia

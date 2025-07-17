@@ -11,7 +11,7 @@ const InternalAutoCompleteCheckbox = memo<AutoCompleteCheckboxProps>(
         <CheckboxGroup
           value={value}
           onChange={onChange}
-          options={searchDataSource}
+          options={searchDataSource as any}
           {...(checkboxGroupProps ?? {})}
         />
       )}

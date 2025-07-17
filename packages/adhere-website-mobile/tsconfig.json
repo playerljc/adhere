@@ -1,20 +1,18 @@
 {
   "extends": "../../node_modules/@ctsj/build/buildpackagetsconfig-base",
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "declarationDir": "./lib",
-    "outDir": "./lib",
-    "baseUrl": "./"
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
   },
   "exclude": [
     "node_modules"
   ],
   "include": [
     "src/**/*"
-  ],
-  "paths": {
-    "@/*": [
-      "./src/*"
-    ]
-  }
+  ]
 }

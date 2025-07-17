@@ -12,11 +12,8 @@ import ContextMenu from '@baifendian/adhere-ui-contextmenu';
 import MessageDialog from '@baifendian/adhere-ui-messagedialog';
 import Notification from '@baifendian/adhere-ui-notification';
 import Popup from '@baifendian/adhere-ui-popup';
-import enUSAdhere from '@baifendian/adhere-util-intl/es/locales/en_US';
-import ptPTAdhere from '@baifendian/adhere-util-intl/es/locales/pt_PT';
-import zhCNAdhere from '@baifendian/adhere-util-intl/es/locales/zh_CN';
-import Resource from '@baifendian/adhere-util-resource';
 
+import intl from './intl';
 import { antdThemeToCssVariable } from './theme';
 import { isUseMedia } from './util';
 
@@ -26,17 +23,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import '@baifendian/adhere-ui-configprovider/es/index.less';
 import '@baifendian/adhere-ui-css/lib/css.less';
 
-export default ({
-  children,
-  lang = 'zh_CN',
-  locales = {
-    en_US: enUSAdhere,
-    zh_CN: zhCNAdhere,
-    pt_PT: ptPTAdhere,
-  },
-  theme = {},
-  curTheme = 'default',
-}) => {
+export default ({ children, lang = 'zh_CN', locales, theme = {}, curTheme = 'default' }) => {
   const styleProviderProps = {
     transformers: [
       legacyLogicalPropertiesTransformer,
@@ -48,7 +35,7 @@ export default ({
   };
 
   const antDesignConfigProviderProps = {
-    locale: Resource.Dict.value.LocalsAntd.value[lang],
+    locale: intl[lang].antd,
   };
 
   function renderToFragmentWrapper(children) {
@@ -58,7 +45,20 @@ export default ({
           <AdhereConfigProvider
             intl={{
               lang,
-              locales,
+              locales: {
+                zh_CN: {
+                  ...intl.zh_CN.adhere,
+                  ...(locales?.zh_CN ?? {}),
+                },
+                en_US: {
+                  ...intl.en_US.adhere,
+                  ...(locales?.en_US ?? {}),
+                },
+                pt_PT: {
+                  ...intl.pt_PT.adhere,
+                  ...(locales?.pt_PT ?? {}),
+                },
+              },
             }}
             theme={theme}
             media={{
@@ -84,7 +84,20 @@ export default ({
           <AdhereConfigProvider
             intl={{
               lang,
-              locales,
+              locales: {
+                zh_CN: {
+                  ...intl.zh_CN.adhere,
+                  ...(locales?.zh_CN ?? {}),
+                },
+                en_US: {
+                  ...intl.en_US.adhere,
+                  ...(locales?.en_US ?? {}),
+                },
+                pt_PT: {
+                  ...intl.pt_PT.adhere,
+                  ...(locales?.pt_PT ?? {}),
+                },
+              },
             }}
             theme={theme}
             media={{
@@ -101,6 +114,10 @@ export default ({
       </ConfigProvider>
     );
   }
+
+  Object.keys(intl).forEach((key) => {
+    intl[key].dayjs();
+  });
 
   MessageDialog.setRenderToWrapper(renderToFragmentWrapper);
   Popup.setRenderToWrapper(renderToFragmentWrapper);

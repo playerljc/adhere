@@ -65,13 +65,13 @@ const FilterItem: FC<FilterItemProps> = ({
       return [
         {
           key: 'ok',
-          type: 'primary',
+          type: 'button' as const,
           children: Intl.get('confirm'),
           onClick: search,
         },
         {
           key: 'reset',
-          type: 'primary',
+          type: 'reset' as const,
           children: Intl.get('reset'),
           onClick: reset,
         },
@@ -181,15 +181,15 @@ const FilterItem: FC<FilterItemProps> = ({
     }
   }, [filterTriggerMode, filterTriggerProps, triggerElement, searchElement, actions, disabled]);
 
-  function search() {
+  function search(): Promise<void> {
     if (!onFilter) return Promise.resolve();
 
     const filterData = form ? form.getFieldsValue() : defaultFilterValues;
 
-    return onFilter?.(filterData);
+    return onFilter?.(filterData) as Promise<void>;
   }
 
-  function reset() {
+  function reset(): Promise<void> {
     // @ts-ignore
     form?.resetFields(isPrimaryEmpty(defaultFilterValues) ? undefined : defaultFilterValues);
 
@@ -197,7 +197,7 @@ const FilterItem: FC<FilterItemProps> = ({
       return Promise.resolve();
     }
 
-    return onFilterReset?.();
+    return onFilterReset?.() as Promise<void>;
   }
 
   useMount(() => {

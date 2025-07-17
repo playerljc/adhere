@@ -20,7 +20,7 @@ const InternalAutoCompletePagingCheckList = memo<AutoCompletePagingCheckListProp
       <AutoComplete
         labelProp="title"
         {...(autoCompleteProps ?? {})}
-        searchDataSource={searchDataSource.data}
+        searchDataSource={searchDataSource.data as any[]}
         loadData={autoCompleteLoadData}
       >
         {({ value, onChange, searchDataSource }) => (

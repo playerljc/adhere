@@ -198,7 +198,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
 
       const callbackHandler = useRef<Function | null>(null);
 
-      const status = useRef(ScrollLoad.NORMAL);
+      const status = useRef<typeof ScrollLoad.NORMAL | typeof ScrollLoad.EMPTY>(ScrollLoad.NORMAL);
 
       const scrollLoadRef = useRef<ScrollLoadRefHandle>();
 
@@ -1124,7 +1124,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         return scrollLoadRef.current?.getScrollContainer() ?? scrollRef.current ?? document.body;
       }
 
-      function pullToRefresh(_resetCallback) {
+      function pullToRefresh(_resetCallback: () => void): Promise<void> {
         const params = {
           searchKeyWord: defaultSearchKeyWord,
           filterValues: defaultFilterValues,
@@ -1152,7 +1152,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
           }).then((res) => {
             setDataSource(res);
           });
-        });
+        }) as Promise<void>;
       }
 
       function pullToRefreshAll() {

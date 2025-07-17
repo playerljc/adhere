@@ -59,7 +59,7 @@ const ViewSettingItem: FC<ViewSettingProps> = ({
       return [
         {
           key: 'reset',
-          type: 'primary',
+          type: 'reset' as const,
           children: Intl.get('reset'),
           onClick: reset,
         },
@@ -146,7 +146,7 @@ const ViewSettingItem: FC<ViewSettingProps> = ({
     };
 
     // hoc
-    if (['popup-bottom', 'popup-top', 'modal', 'dialog'].includes(viewSettingTriggerMode ?? '')) {
+    if (["popup-bottom", "popup-top", "modal", "dialog"].includes(viewSettingTriggerMode ?? "")) {
       const hocProps = {
         ...commonProps,
         actions,
@@ -162,42 +162,42 @@ const ViewSettingItem: FC<ViewSettingProps> = ({
       };
 
       // Popup
-      if (['popup-bottom', 'popup-top'].includes(viewSettingTriggerMode ?? '')) {
+      if (["popup-bottom", "popup-top"].includes(viewSettingTriggerMode ?? "")) {
         const position = new Map([
-          ['popup-bottom', 'bottom'],
-          ['popup-top', 'top'],
+          ["popup-bottom", "bottom"],
+          ["popup-top", "top"],
         ]);
 
         const popupProps = {
           ...hocProps,
-          position: position.get(viewSettingTriggerMode ?? ''),
+          position: position.get(viewSettingTriggerMode ?? ""),
         };
 
         return (
           <Popup.Trigger disabled={disabled} {...popupProps}>
-            {triggerContext}
+            {typeof triggerContext === 'function' ? triggerContext({ close: undefined }) : triggerContext}
           </Popup.Trigger>
         );
       }
       // Modal
-      else if (viewSettingTriggerMode === 'modal') {
+      else if (viewSettingTriggerMode === "modal") {
         return (
           <Modal.TriggerPrompt disabled={disabled} {...hocProps}>
-            {triggerContext}
+            {typeof triggerContext === 'function' ? triggerContext({ close: undefined }) : triggerContext}
           </Modal.TriggerPrompt>
         );
       }
       // Dialog
-      else if (viewSettingTriggerMode === 'dialog') {
+      else if (viewSettingTriggerMode === "dialog") {
         return (
           <Dialog.TriggerPrompt disabled={disabled} {...hocProps}>
-            {triggerContext}
+            {typeof triggerContext === 'function' ? triggerContext({ close: undefined }) : triggerContext}
           </Dialog.TriggerPrompt>
         );
       }
     }
     // adhere-popup
-    else if (viewSettingTriggerMode === 'adhere-popup') {
+    else if (viewSettingTriggerMode === "adhere-popup") {
       return (
         <AdherePopup.Trigger
           {...commonProps}
@@ -205,7 +205,7 @@ const ViewSettingItem: FC<ViewSettingProps> = ({
           renderTrigger={() => triggerElement}
           actions={actions}
         >
-          {triggerContext}
+          {typeof triggerContext === 'function' ? triggerContext({ close: undefined }) : triggerContext}
         </AdherePopup.Trigger>
       );
     }
@@ -217,12 +217,10 @@ const ViewSettingItem: FC<ViewSettingProps> = ({
     return onViewSetting?.(viewSettingValue ?? 'normal');
   }
 
-  function reset() {
+  function reset(): Promise<void> {
     setViewSettingValue(defaultViewSettingValue ?? 'normal');
-
     if (!onViewSettingReset) return Promise.resolve();
-
-    return onViewSettingReset?.();
+    return onViewSettingReset?.() as Promise<void>;
   }
 
   useUpdateEffect(() => {

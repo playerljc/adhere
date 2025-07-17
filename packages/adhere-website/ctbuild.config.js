@@ -1,4 +1,5 @@
 const modifyVars = require('./themes/default/vars');
+const path = require('path');
 
 function isDev(mode) {
   return mode === 'development';
@@ -161,85 +162,130 @@ module.exports = {
       );
     }
 
+    // split
     if (webpackConfig.mode === 'production') {
       webpackConfig.optimization.concatenateModules = false;
+      webpackConfig.optimization.usedExports = true;
       webpackConfig.optimization.splitChunks = {
         chunks: 'all',
         minSize: 20000,
+        minRemainingSize: 0,
         minChunks: 1,
         maxAsyncRequests: 30,
         maxInitialRequests: 30,
-        automaticNameDelimiter: '~',
         enforceSizeThreshold: 50000,
         cacheGroups: {
-          antdesigncompatible: {
-            test: /[\\/]node_modules[\\/](@ant-design[\\/]compatible|_@ant-design_compatible)/,
-            priority: 1,
+          // 通用的 node_modules 模块打包
+          vendor: {
+            test: (module) => {
+              // console.log('module.resource===', module.resource);
+              return (
+                module.resource &&
+                module.resource.includes('node_modules') &&
+                !module.resource.includes('@baifendian\\adhere') &&
+                !module.resource.includes('@baifendian/adhere')
+              );
+            },
+            name(module) {
+              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+              return `vendor/npm.${packageName.replace('@', '')}`;
+            },
+          },
+          // 单独打包 @baifendian/adhere
+          baifendianAdhere: {
+            test: (module) =>
+              module.resource &&
+              (module.resource.includes('node_modules\\@baifendian\\adhere') ||
+                module.resource.includes('node_modules/@baifendian/adhere')) &&
+              !module.resource.includes('node_modules/@baifendian/adhere-ui-olmap') &&
+              !module.resource.includes('node_modules\\@baifendian\\adhere-ui-olmap') &&
+              !module.resource.includes('node_modules/@baifendian/adhere-ui-searchtable') &&
+              !module.resource.includes('node_modules\\@baifendian\\adhere-ui-searchtable') &&
+              !module.resource.includes('node_modules/@baifendian/adhere-util-resource') &&
+              !module.resource.includes('node_modules\\@baifendian\\adhere-util-resource') &&
+              !module.resource.includes('node_modules/@baifendian/adhere-ui-anthoc') &&
+              !module.resource.includes('node_modules\\@baifendian\\adhere-ui-anthoc') &&
+              !module.resource.includes('node_modules/@baifendian/adhere-mobile-ui-anthoc') &&
+              !module.resource.includes('node_modules\\@baifendian\\adhere-mobile-ui-anthoc') &&
+              !module.resource.includes('node_modules/@baifendian/adhere-ui-richtext-sandbox') &&
+              !module.resource.includes('node_modules\\@baifendian\\adhere-ui-richtext-sandbox'),
+            name: 'vendor/npm.baifendian-adhere',
+            chunks: 'all',
+          },
+          baifendianAdhereUiOLMap: {
+            test: (module) =>
+              module.resource &&
+              (module.resource.includes('node_modules\\@baifendian\\adhere-ui-olmap') ||
+                module.resource.includes('node_modules/@baifendian/adhere-ui-olmap')),
+            name: 'vendor/npm.baifendian-adhere-ui-olmap',
+            chunks: 'all',
+          },
+          baifendianAdhereUiSearchTable: {
+            test: (module) =>
+              module.resource &&
+              (module.resource.includes('node_modules\\@baifendian\\adhere-ui-searchtable') ||
+                module.resource.includes('node_modules/@baifendian/adhere-ui-searchtable')),
+            name: 'vendor/npm.baifendian-adhere-ui-searchtable',
+            chunks: 'all',
+          },
+          baifendianAdhereUtilResource: {
+            test: (module) =>
+              module.resource &&
+              (module.resource.includes('node_modules\\@baifendian\\adhere-util-resource') ||
+                module.resource.includes('node_modules/@baifendian/adhere-util-resource')),
+            name: 'vendor/npm.baifendian-adhere-util-resource',
+            chunks: 'all',
+          },
+          baifendianAdhereUiAnthoc: {
+            test: (module) =>
+              module.resource &&
+              (module.resource.includes('node_modules\\@baifendian\\adhere-ui-anthoc') ||
+                module.resource.includes('node_modules/@baifendian/adhere-ui-anthoc')),
+            name: 'vendor/npm.baifendian-adhere-ui-anthoc',
+            chunks: 'all',
+          },
+          baifendianAdhereMobileUiAnthoc: {
+            test: (module) =>
+              module.resource &&
+              (module.resource.includes('node_modules\\@baifendian\\adhere-mobile-ui-anthoc') ||
+                module.resource.includes('node_modules/@baifendian/adhere-mobile-ui-anthoc')),
+            name: 'vendor/npm.baifendian-adhere-mobile-ui-anthoc',
+            chunks: 'all',
+          },
+          baifendianAdhereUiRichtextSandbox: {
+            test: (module) =>
+              module.resource &&
+              (module.resource.includes('node_modules\\@baifendian\\adhere-ui-richtext-sandbox') ||
+                module.resource.includes('node_modules/@baifendian/adhere-ui-richtext-sandbox')),
+            name: 'vendor/npm.baifendian-adhere-ui-richtext-sandbox',
+            chunks: 'all',
+          },
+          antDesignIcons: {
+            test: (module) =>
+              module.resource &&
+              (module.resource.includes('node_modules\\@ant-design/icons') ||
+                module.resource.includes('node_modules/@ant-design/icons')),
+            name: 'vendor/npm.ant-design-icons',
+            chunks: 'all',
+          },
+          antdMobileIcons: {
+            test: (module) =>
+              module.resource &&
+              (module.resource.includes('node_modules\\antd-mobile-icons') ||
+                module.resource.includes('node_modules/antd-mobile-icons')),
+            name: 'vendor/npm.antd-mobile-icons',
+            chunks: 'all',
+          },
+          locales: {
+            test: (module) => module.resource && module.resource.includes('locales'),
+            name(module) {
+              const fileName = path.basename(module.resource, '.js');
+              return `locales/locales.${fileName}`;
+            },
+            chunks: 'all',
             enforce: true,
+            priority: 20,
           },
-          antdesignicons: {
-            test: /[\\/]node_modules[\\/](@ant-design[\\/]icons|_@ant-design_icons)/,
-            priority: 1,
-            enforce: true,
-          },
-          echart: {
-            test: /[\\/]node_modules[\\/](echarts-for-react|_echarts-for-react|echarts|_echarts)/,
-            priority: 4,
-            enforce: true,
-          },
-          ol: {
-            test: /[\\/]node_modules[\\/](ol|_ol|ol-ext|_ol-ext)/,
-            priority: 1,
-            enforce: true,
-          },
-          ctsj: {
-            test: /[\\/]node_modules[\\/](@ctsj)/,
-            priority: 1,
-            enforce: true,
-          },
-          react: {
-            test: /[\\/]node_modules[\\/](react-intl-universal|_react-intl-universal|react|_react|react-dom|_react-dom|react-router|_react-router|prop-types|_prop-types|history|_history)/,
-            priority: 1,
-            enforce: true,
-          },
-          faker: {
-            test: /[\\/]node_modules[\\/](faker|_faker)/,
-            priority: 1,
-            enforce: true,
-          },
-          antd: {
-            test: /[\\/]node_modules[\\/](antd|_antd|rc|_rc)/,
-            priority: 1,
-            enforce: true,
-          },
-          static: {
-            test: /[\\/]node_modules[\\/](lodash|_lodash|js-md5|_js-md5|classnames|_classnames|uuid|_uuid|qs|_qs|dayjs|axios|_axios|_cookie_js|_dayjs|swiper|_swiper)/,
-            priority: 1,
-            enforce: true,
-          },
-          lib: {
-            test: /[\\/]node_modules[\\/]/,
-            priority: -1,
-            enforce: true,
-          },
-          defaultVendors: {
-            test: /[\\/]node_modules[\\/]/,
-            priority: -1,
-            reuseExistingChunk: true,
-          },
-          common: {
-            minChunks: 2,
-            priority: -1,
-            reuseExistingChunk: true,
-          },
-          utilities: {
-            priority: -1,
-            minChunks: 2,
-            test: /[\\/]src[\\/]components[\\/]/,
-            minSize: 0,
-          },
-          vendors: false,
-          default: false,
         },
       };
     }

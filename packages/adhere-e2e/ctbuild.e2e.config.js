@@ -198,137 +198,126 @@ function getConfig({ webpackConfig, webpack, plugins }) {
   // split
   if (webpackConfig.mode === 'production') {
     webpackConfig.optimization.concatenateModules = false;
+    webpackConfig.optimization.usedExports = true;
     webpackConfig.optimization.splitChunks = {
       chunks: 'all',
-      minSize: 30000,
+      minSize: 20000,
+      minRemainingSize: 0,
       minChunks: 1,
       maxAsyncRequests: 30,
       maxInitialRequests: 30,
-      automaticNameDelimiter: '~',
       enforceSizeThreshold: 50000,
       cacheGroups: {
-        antdesigncompatible: {
-          test: /[\\/]node_modules[\\/](@ant-design[\\/]compatible|_@ant-design_compatible)/,
-          priority: 1,
+        // 通用的 node_modules 模块打包
+        vendor: {
+          test: (module) => {
+            return (
+              module.resource &&
+              module.resource.includes('node_modules') &&
+              !module.resource.includes('@baifendian\\adhere') &&
+              !module.resource.includes('@baifendian/adhere')
+            );
+          },
+          name(module) {
+            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+            return `vendor/npm.${packageName.replace('@', '')}`;
+          },
+        },
+        // 单独打包 @baifendian/adhere
+        baifendianAdhere: {
+          test: (module) =>
+            module.resource &&
+            (module.resource.includes('node_modules\\@baifendian\\adhere') ||
+              module.resource.includes('node_modules/@baifendian/adhere')) &&
+            !module.resource.includes('node_modules/@baifendian/adhere-ui-olmap') &&
+            !module.resource.includes('node_modules\\@baifendian\\adhere-ui-olmap') &&
+            !module.resource.includes('node_modules/@baifendian/adhere-ui-searchtable') &&
+            !module.resource.includes('node_modules\\@baifendian\\adhere-ui-searchtable') &&
+            !module.resource.includes('node_modules/@baifendian/adhere-util-resource') &&
+            !module.resource.includes('node_modules\\@baifendian\\adhere-util-resource') &&
+            !module.resource.includes('node_modules/@baifendian/adhere-ui-anthoc') &&
+            !module.resource.includes('node_modules\\@baifendian\\adhere-ui-anthoc') &&
+            !module.resource.includes('node_modules/@baifendian/adhere-mobile-ui-anthoc') &&
+            !module.resource.includes('node_modules\\@baifendian\\adhere-mobile-ui-anthoc') &&
+            !module.resource.includes('node_modules/@baifendian/adhere-ui-richtext-sandbox') &&
+            !module.resource.includes('node_modules\\@baifendian\\adhere-ui-richtext-sandbox'),
+          name: 'vendor/npm.baifendian-adhere',
+          chunks: 'all',
+        },
+        baifendianAdhereUiOLMap: {
+          test: (module) =>
+            module.resource &&
+            (module.resource.includes('node_modules\\@baifendian\\adhere-ui-olmap') ||
+              module.resource.includes('node_modules/@baifendian/adhere-ui-olmap')),
+          name: 'vendor/npm.baifendian-adhere-ui-olmap',
+          chunks: 'all',
+        },
+        baifendianAdhereUiSearchTable: {
+          test: (module) =>
+            module.resource &&
+            (module.resource.includes('node_modules\\@baifendian\\adhere-ui-searchtable') ||
+              module.resource.includes('node_modules/@baifendian/adhere-ui-searchtable')),
+          name: 'vendor/npm.baifendian-adhere-ui-searchtable',
+          chunks: 'all',
+        },
+        baifendianAdhereUtilResource: {
+          test: (module) =>
+            module.resource &&
+            (module.resource.includes('node_modules\\@baifendian\\adhere-util-resource') ||
+              module.resource.includes('node_modules/@baifendian/adhere-util-resource')),
+          name: 'vendor/npm.baifendian-adhere-util-resource',
+          chunks: 'all',
+        },
+        baifendianAdhereUiAnthoc: {
+          test: (module) =>
+            module.resource &&
+            (module.resource.includes('node_modules\\@baifendian\\adhere-ui-anthoc') ||
+              module.resource.includes('node_modules/@baifendian/adhere-ui-anthoc')),
+          name: 'vendor/npm.baifendian-adhere-ui-anthoc',
+          chunks: 'all',
+        },
+        baifendianAdhereMobileUiAnthoc: {
+          test: (module) =>
+            module.resource &&
+            (module.resource.includes('node_modules\\@baifendian\\adhere-mobile-ui-anthoc') ||
+              module.resource.includes('node_modules/@baifendian/adhere-mobile-ui-anthoc')),
+          name: 'vendor/npm.baifendian-adhere-mobile-ui-anthoc',
+          chunks: 'all',
+        },
+        baifendianAdhereUiRichtextSandbox: {
+          test: (module) =>
+            module.resource &&
+            (module.resource.includes('node_modules\\@baifendian\\adhere-ui-richtext-sandbox') ||
+              module.resource.includes('node_modules/@baifendian/adhere-ui-richtext-sandbox')),
+          name: 'vendor/npm.baifendian-adhere-ui-richtext-sandbox',
+          chunks: 'all',
+        },
+        antDesignIcons: {
+          test: (module) =>
+            module.resource &&
+            (module.resource.includes('node_modules\\@ant-design/icons') ||
+              module.resource.includes('node_modules/@ant-design/icons')),
+          name: 'vendor/npm.ant-design-icons',
+          chunks: 'all',
+        },
+        antdMobileIcons: {
+          test: (module) =>
+            module.resource &&
+            (module.resource.includes('node_modules\\antd-mobile-icons') ||
+              module.resource.includes('node_modules/antd-mobile-icons')),
+          name: 'vendor/npm.antd-mobile-icons',
+          chunks: 'all',
+        },
+        locales: {
+          test: (module) => module.resource && module.resource.includes('locales'),
+          name(module) {
+            const fileName = path.basename(module.resource, '.js');
+            return `locales/locales.${fileName}`;
+          },
+          chunks: 'all',
           enforce: true,
-          name: getCacheGroupsName,
+          priority: 20,
         },
-        antdesignicons: {
-          test: /[\\/]node_modules[\\/](@ant-design[\\/]icons|_@ant-design_icons)/,
-          priority: 1,
-          enforce: true,
-          name: getCacheGroupsName,
-        },
-        adhere: {
-          test: /[\\/]node_modules[\\/](@baifendian[\\/]adhere)/,
-          priority: 2,
-          enforce: true,
-          name: getCacheGroupsName,
-        },
-        faker: {
-          test: /[\\/]node_modules[\\/]faker/,
-          priority: 1,
-          enforce: true,
-          name: getCacheGroupsName,
-        },
-        corejs: {
-          test: /[\\/]node_modules[\\/]core-js/,
-          priority: 1,
-          enforce: true,
-          name: getCacheGroupsName,
-        },
-        babel: {
-          test: /[\\/]node_modules[\\/]@babel/,
-          priority: 1,
-          enforce: true,
-          name: getCacheGroupsName,
-        },
-        moment: {
-          test: /[\\/]node_modules[\\/]moment/,
-          priority: 1,
-          enforce: true,
-          name: getCacheGroupsName,
-        },
-        zrender: {
-          test: /[\\/]node_modules[\\/]zrender/,
-          priority: 1,
-          enforce: true,
-          name: getCacheGroupsName,
-        },
-        lodash: {
-          test: /[\\/]node_modules[\\/]lodash/,
-          priority: 1,
-          enforce: true,
-          name: getCacheGroupsName,
-        },
-        validator: {
-          test: /[\\/]node_modules[\\/]validator/,
-          priority: 1,
-          enforce: true,
-          name: getCacheGroupsName,
-        },
-        echart: {
-          test: /[\\/]node_modules[\\/](echarts-for-react|_echarts-for-react|echarts|_echarts)/,
-          priority: 4,
-          enforce: true,
-          name: getCacheGroupsName,
-        },
-        ol: {
-          test: /[\\/]node_modules[\\/](ol|_ol|ol-ext|_ol-ext)/,
-          priority: 1,
-          enforce: true,
-          name: getCacheGroupsName,
-        },
-        ctsj: {
-          test: /[\\/]node_modules[\\/](@ctsj)/,
-          priority: 1,
-          enforce: true,
-          name: getCacheGroupsName,
-        },
-        react: {
-          test: /[\\/]node_modules[\\/](react-intl-universal|_react-intl-universal|react|_react|react-dom|_react-dom|react-router|_react-router|prop-types|_prop-types|history|_history)/,
-          priority: 1,
-          enforce: true,
-          name: getCacheGroupsName,
-        },
-        antd: {
-          test: /[\\/]node_modules[\\/](antd|_antd|rc|_rc)/,
-          priority: 1,
-          enforce: true,
-          name: getCacheGroupsName,
-        },
-        static: {
-          test: /[\\/]node_modules[\\/](js-md5|_js-md5|classnames|_classnames|uuid|_uuid|qs|_qs|axios|_axios|_cookie_js|swiper|_swiper|iscroll)/,
-          priority: 1,
-          enforce: true,
-          name: getCacheGroupsName,
-        },
-        lib: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -1,
-          enforce: true,
-          name: getCacheGroupsName,
-        },
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -1,
-          reuseExistingChunk: true,
-          name: getCacheGroupsName,
-        },
-        common: {
-          priority: -1,
-          minChunks: 2,
-          reuseExistingChunk: true,
-          name: getCacheGroupsName,
-        },
-        utilities: {
-          priority: -1,
-          minChunks: 2,
-          test: /[\\/]src[\\/](components|Components|lib|util|service|config)[\\/]/,
-          name: getCacheGroupsName,
-        },
-        vendors: false,
-        default: false,
       },
     };
   }
