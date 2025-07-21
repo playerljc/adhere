@@ -1,3 +1,5 @@
+import clone from 'rfdc';
+
 import MathUtil from '@baifendian/adhere-util';
 import * as turf from '@turf/turf';
 
@@ -583,7 +585,7 @@ class DiamondModifyAction extends ModifyAction {
   drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): IDiamondData | null {
     if (!this.context || !this.data || !startPoint || !targetPoint) return null;
 
-    const srcData = JSON.parse(JSON.stringify(this.data.data as IDiamondData));
+    const srcData = clone()(this.data.data as IDiamondData);
     srcData.data = {
       ...srcData.data,
       leftTopPoint: {
@@ -599,14 +601,15 @@ class DiamondModifyAction extends ModifyAction {
       srcData.data.leftTopPoint.y += offsetY;
 
       const style = { ...this.moveGemStyle, ...(srcData.style ?? {}) };
-      srcData.style.lineWidth = style.lineWidth;
-      srcData.style.lineJoin = style.lineJoin;
-      srcData.style.lineCap = style.lineCap;
-      srcData.lineDash = style.lineDash;
-      srcData.style.lineDashOffset = style.lineDashOffset;
-      srcData.style.strokeStyle = style.strokeStyle;
-      srcData.style.fillStyle = style.fillStyle;
-      srcData.style.globalAlpha = style.globalAlpha ?? 1;
+      if (srcData.style) {
+        srcData.style.lineWidth = style.lineWidth;
+        srcData.style.lineJoin = style.lineJoin;
+        srcData.style.lineCap = style.lineCap;
+        srcData.style.lineDashOffset = style.lineDashOffset;
+        srcData.style.strokeStyle = style.strokeStyle;
+        srcData.style.fillStyle = style.fillStyle;
+        srcData.style.globalAlpha = style.globalAlpha ?? 1;
+      }
 
       DiamondDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }

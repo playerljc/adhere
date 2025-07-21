@@ -1,8 +1,6 @@
 import type { NamedExoticComponent, ReactNode } from 'react';
 import type { CSSProperties } from 'react';
 
-import type { Init } from '@baifendian/adhere-util-intl/es/intl';
-
 import { Context } from './Context';
 import themeFunction from './theme';
 import useTheme from './useTheme';

@@ -1,3 +1,5 @@
+import clone from 'rfdc';
+
 import MathUtil from '@baifendian/adhere-util';
 import { Events } from '@baifendian/adhere-util-emitter';
 
@@ -192,7 +194,7 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
         // 原始数据-需要转换成坐标数据
         this.emitter.trigger(
           InteractionLayerActions.CanvasClickGeometry,
-          JSON.parse(JSON.stringify(finsEntitys[finsEntitys.length - 1].data)),
+          clone()(finsEntitys[finsEntitys.length - 1].data),
         );
       } else {
         if (historyData.length) {

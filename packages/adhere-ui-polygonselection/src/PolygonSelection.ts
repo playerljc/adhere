@@ -1,3 +1,5 @@
+import clone from 'rfdc';
+
 import MathUtil from '@baifendian/adhere-util';
 import { Events } from '@baifendian/adhere-util-emitter';
 
@@ -150,7 +152,7 @@ class PolygonSelection extends Events implements IPolygonSelection {
       if (findIndexes.length) {
         this.trigger(
           PolygonSelectionActions.CanvasClickGeometry,
-          JSON.parse(JSON.stringify(historyData[findIndexes[findIndexes.length - 1]])),
+          clone()(historyData[findIndexes[findIndexes.length - 1]]),
         );
       } else {
         if (historyData.length) {

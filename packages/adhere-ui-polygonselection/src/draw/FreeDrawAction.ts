@@ -1,3 +1,5 @@
+import clone from 'rfdc';
+
 import BaseUtil from '@baifendian/adhere-util';
 
 import {
@@ -134,7 +136,7 @@ class FreeDrawAction extends DrawAction {
         id: BaseUtil.uuid(),
         type: SelectType.Free,
         data: {
-          points: JSON.parse(JSON.stringify(this.points)),
+          points: clone()(this.points),
         },
         style: this.style,
       },
@@ -272,7 +274,7 @@ class FreeDrawAction extends DrawAction {
       id: BaseUtil.uuid(),
       type: SelectType.Free,
       data: {
-        points: JSON.parse(JSON.stringify(this.points)),
+        points: clone()(this.points),
       },
       style: this.style,
     };

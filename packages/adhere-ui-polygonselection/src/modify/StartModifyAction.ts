@@ -1,3 +1,5 @@
+import clone from 'rfdc';
+
 import MathUtil from '@baifendian/adhere-util';
 import * as turf from '@turf/turf';
 
@@ -302,7 +304,7 @@ class StartModifyAction extends ModifyAction {
 
     if (!this.context || !this.data || !startPoint || !targetPoint) return null;
 
-    const srcData = JSON.parse(JSON.stringify(this.data.data as IStartData));
+    const srcData = clone()(this.data.data as IStartData);
     srcData.data = {
       ...srcData.data,
       center: {
@@ -318,14 +320,15 @@ class StartModifyAction extends ModifyAction {
       srcData.data.center.y += offsetY;
 
       const style = { ...this.moveGemStyle, ...(srcData.style ?? {}) };
-      srcData.style.lineWidth = style.lineWidth;
-      srcData.style.lineJoin = style.lineJoin;
-      srcData.style.lineCap = style.lineCap;
-      srcData.lineDash = style.lineDash;
-      srcData.style.lineDashOffset = style.lineDashOffset;
-      srcData.style.strokeStyle = style.strokeStyle;
-      srcData.style.fillStyle = style.fillStyle;
-      srcData.style.globalAlpha = style.globalAlpha ?? 1;
+      if (srcData.style) {
+        srcData.style.lineWidth = style.lineWidth;
+        srcData.style.lineJoin = style.lineJoin;
+        srcData.style.lineCap = style.lineCap;
+        srcData.style.lineDashOffset = style.lineDashOffset;
+        srcData.style.strokeStyle = style.strokeStyle;
+        srcData.style.fillStyle = style.fillStyle;
+        srcData.style.globalAlpha = style.globalAlpha ?? 1;
+      }
 
       StartDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }

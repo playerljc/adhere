@@ -25,11 +25,11 @@ export interface ThemeInjectionParams<T extends HTMLElement> {
  * @description 将主题配置注入到指定的DOM元素中
  * @param params 主题注入参数
  * @returns void
- * 
+ *
  * @example
  * ```tsx
  * const elRef = useRef<HTMLDivElement>(null);
- * 
+ *
  * theme({
  *   elRef,
  *   group: 'normal',
@@ -55,9 +55,7 @@ export default function theme<T extends HTMLElement>({
       console.warn('theme: elRef array is empty');
       return;
     }
-  }
-
-  if (!(elRef as MutableRefObject<T | null | undefined>).current) {
+  } else if (!(elRef as MutableRefObject<T | null | undefined>).current) {
     console.warn('theme: elRef.current is null or undefined');
     return;
   }
@@ -94,7 +92,9 @@ export default function theme<T extends HTMLElement>({
   }
 
   if (!componentTheme) {
-    console.warn(`theme: component theme for ${group}${displayName ? `.${displayName}` : ''} is not found`);
+    console.warn(
+      `theme: component theme for ${group}${displayName ? `.${displayName}` : ''} is not found`,
+    );
     return;
   }
 

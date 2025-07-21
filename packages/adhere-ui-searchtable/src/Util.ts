@@ -1,5 +1,6 @@
 import lodashClone from 'lodash.clone';
 import lodashCloneDeep from 'lodash.clonedeep';
+import deepClone from 'rfdc';
 
 /**
  * findRecord
@@ -99,7 +100,7 @@ export function flatDataSource(dataSource: any[]) {
  * @param {any} record2
  */
 export function swap(record1: any, record2: any) {
-  const temp = JSON.parse(JSON.stringify(record1));
+  const temp = deepClone()(record1);
 
   Object.assign(record1, record2);
 

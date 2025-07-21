@@ -27,5 +27,5 @@ export interface UseThemeParams<T extends HTMLElement> {
  * });
  * ```
  */
-declare function useTheme<T extends HTMLElement>({ elRef, group, displayName, }: UseThemeParams<T>): void;
+declare function useTheme<T extends HTMLElement>({ elRef, group, displayName }: UseThemeParams<T>): void;
 export default useTheme;

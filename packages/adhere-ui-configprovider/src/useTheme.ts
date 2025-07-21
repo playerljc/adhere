@@ -25,11 +25,11 @@ export interface UseThemeParams<T extends HTMLElement> {
  * @description 将Provider中的主题配置注入到指定的DOM元素中
  * @param params useTheme参数
  * @returns void
- * 
+ *
  * @example
  * ```tsx
  * const elRef = useRef<HTMLDivElement>(null);
- * 
+ *
  * useTheme({
  *   elRef,
  *   group: 'normal',
@@ -37,11 +37,7 @@ export interface UseThemeParams<T extends HTMLElement> {
  * });
  * ```
  */
-function useTheme<T extends HTMLElement>({
-  elRef,
-  group,
-  displayName,
-}: UseThemeParams<T>): void {
+function useTheme<T extends HTMLElement>({ elRef, group, displayName }: UseThemeParams<T>): void {
   const context = useContext(Context);
 
   /**
@@ -59,9 +55,7 @@ function useTheme<T extends HTMLElement>({
         console.warn('useTheme: elRef array is empty');
         return;
       }
-    }
-
-    if (!(elRef as MutableRefObject<T | null | undefined>).current) {
+    } else if (!(elRef as MutableRefObject<T | null | undefined>).current) {
       console.warn('useTheme: elRef.current is null or undefined');
       return;
     }
@@ -100,7 +94,11 @@ function useTheme<T extends HTMLElement>({
     }
 
     if (!componentTheme) {
-      console.warn(`useTheme: component theme for ${group}${displayName ? `.${displayName}` : ''} is not found`);
+      console.warn(
+        `useTheme: component theme for ${group}${
+          displayName ? `.${displayName}` : ''
+        } is not found`,
+      );
       return;
     }
 
