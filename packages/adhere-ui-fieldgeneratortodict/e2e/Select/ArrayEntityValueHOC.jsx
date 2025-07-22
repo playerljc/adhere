@@ -1,8 +1,9 @@
-import { Button, Form, Select } from 'antd';
+import { Button, Form } from 'antd';
 // import Mock from 'mockjs';
 import React, { useEffect } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 const { ArrayEntityValueHOC } = FieldGeneratorToDict;
 
@@ -19,8 +20,16 @@ export default () => {
     // ]);
   }, []);
 
-  const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemBookCatalogDynamic,
+        FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard,
+      )
+    ];
 
   return (
     <Form
@@ -41,7 +50,7 @@ export default () => {
         // initialValue={[]}
       >
         <ArrayEntityValueHOC>
-          <DictComponent placeholder={DictComponentName} style={{ width: 500 }} />
+          <DictComponent placeholder={names.SystemBookCatalogDynamic} style={{ width: 500 }} />
         </ArrayEntityValueHOC>
       </Form.Item>
 

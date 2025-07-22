@@ -3,10 +3,16 @@ import React from 'react';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 import sage from '../saga';
 
+// const DictComponentName = `SystemTable${FieldGeneratorToDict.ComponentNames.SearchTable.EditorCell}`;
 const DictComponent = FieldGeneratorToDict.Components[
-  `SystemTable${FieldGeneratorToDict.ComponentNames.SearchTable.EditorCell}`
+  FieldGeneratorToDict.genDictComponentName(
+    // @ts-ignore
+    names.SystemTable,
+    FieldGeneratorToDict.ComponentNames.SearchTable.EditorCell,
+  )
 ]({
   override: {
     getColumns() {
@@ -59,12 +65,20 @@ const DictComponent = FieldGeneratorToDict.Components[
             $search: {
               type: 'dict',
               visible: true,
-              dictName: `SystemTestSex${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
+              dictName: FieldGeneratorToDict.genDictComponentName(
+                // @ts-ignore
+                names.SystemTestSex,
+                FieldGeneratorToDict.ComponentNames.Select.Standard,
+              ),
             },
             $editable: {
               editable: true,
               type: 'dict',
-              dictName: `SystemTestSex${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
+              dictName: FieldGeneratorToDict.genDictComponentName(
+                // @ts-ignore
+                names.SystemTestSex,
+                FieldGeneratorToDict.ComponentNames.Select.Standard,
+              ),
               rules: [
                 {
                   required: true,

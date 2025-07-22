@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
   const [value, setValue] = useState([]);
 
-  const DictComponentName = `SystemTableBookAC${FieldGeneratorToDict.ComponentNames.TableAC.Standard}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemTableBookAC${FieldGeneratorToDict.ComponentNames.TableAC.Standard}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemTableBookAC,
+        FieldGeneratorToDict.ComponentNames.TableAC.Standard,
+      )
+    ];
 
   return (
     <DictComponent
-      placeholder={DictComponentName}
+      placeholder={names.SystemTableBookAC}
       style={{ width: 600 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}

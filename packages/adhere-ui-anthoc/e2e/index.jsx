@@ -36,6 +36,7 @@ import RangePickerValueHOCInFormTest from './RangePickerValueHOCInFormTest';
 import RangePickerValueHOCTest from './RangePickerValueHOCTest';
 import RevolvingTableNormal from './RevolvingTable/normal';
 import SelectTest from './Select/AutoCompleteCheckAllMultipleSelect';
+import AutoCompleteSelect from './Select/AutoCompleteSelect';
 import CheckAllMultipleSelect from './Select/CheckAllMultipleSelect';
 import Select from './Select/Select';
 import StepsSwiper from './Steps/StepsSwiper';
@@ -68,5 +69,5 @@ import '../src/index.less';
 
 e2e.PC({
   // children: <TransferSelect />,
-  children: <TreeTablePagingSelect />,
+  children: <CheckAllMultipleSelect />,
 });

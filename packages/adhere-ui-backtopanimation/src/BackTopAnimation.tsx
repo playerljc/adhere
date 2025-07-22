@@ -1,8 +1,7 @@
 import classNames from 'classnames';
-import React, { memo, useLayoutEffect, useRef, useCallback } from 'react';
+import React, { memo, useCallback, useLayoutEffect, useRef } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
-import Resource from '@baifendian/adhere-util-resource';
 
 import { BackTopAnimationProps, ScrollAnimationConfig } from './types';
 
@@ -12,10 +11,10 @@ const { useTheme } = ConfigProvider;
 
 /**
  * 回到顶部动画组件
- * 
+ *
  * 该组件提供了一个带有平滑滚动动画的回到顶部功能。
  * 当用户点击组件时，会触发平滑的滚动动画回到页面顶部。
- * 
+ *
  * @example
  * ```tsx
  * <BackTopAnimation
@@ -27,7 +26,7 @@ const { useTheme } = ConfigProvider;
  *   onScrollTop={(scrollTop) => console.log('当前滚动位置:', scrollTop)}
  * />
  * ```
- * 
+ *
  * @param props - 组件属性
  * @returns 回到顶部动画组件
  */
@@ -35,7 +34,7 @@ const BackTopAnimation = memo<BackTopAnimationProps>((props) => {
   const {
     className,
     style,
-    zIndex = Resource?.Dict?.value?.ResourceNormalMaxZIndex?.value,
+    zIndex = 9999,
     getContainer,
     onTrigger,
     onScrollTop,
@@ -54,11 +53,11 @@ const BackTopAnimation = memo<BackTopAnimationProps>((props) => {
 
   /**
    * 获取屏幕刷新间隔时间
-   * 
+   *
    * 用于计算动画帧率，确保动画的流畅性。
    * 如果浏览器支持 screen.updateInterval，则使用该值；
    * 否则使用默认的 16.7ms（约 60fps）。
-   * 
+   *
    * @returns 屏幕刷新间隔时间（毫秒）
    */
   const getUpdateInterval = useCallback((): number => {
@@ -67,84 +66,85 @@ const BackTopAnimation = memo<BackTopAnimationProps>((props) => {
 
   /**
    * 计算滚动动画的步长
-   * 
+   *
    * 根据容器高度、动画持续时间和屏幕刷新率计算每次滚动的步长。
-   * 
+   *
    * @param container - 滚动容器元素
    * @param animationDuration - 动画持续时间
    * @returns 滚动步长
    */
-  const calculateScrollStep = useCallback((container: HTMLElement, animationDuration: number): number => {
-    const updateInterval = getUpdateInterval();
-    const totalFrames = Math.ceil(animationDuration / updateInterval);
-    return container.scrollHeight / totalFrames;
-  }, [getUpdateInterval]);
+  const calculateScrollStep = useCallback(
+    (container: HTMLElement, animationDuration: number): number => {
+      const updateInterval = getUpdateInterval();
+      const totalFrames = Math.ceil(animationDuration / updateInterval);
+      return container.scrollHeight / totalFrames;
+    },
+    [getUpdateInterval],
+  );
 
   /**
    * 执行滚动动画
-   * 
+   *
    * 使用 requestAnimationFrame 实现平滑的滚动动画效果。
-   * 
+   *
    * @param config - 滚动动画配置
    * @param container - 滚动容器元素
    */
-  const executeScrollAnimation = useCallback((
-    config: ScrollAnimationConfig,
-    container: HTMLElement
-  ): void => {
-    const { startTop, targetTop, step } = config;
-    let currentTop = config.currentTop;
+  const executeScrollAnimation = useCallback(
+    (config: ScrollAnimationConfig, container: HTMLElement): void => {
+      const { startTop, targetTop, step } = config;
+      let currentTop = config.currentTop;
 
-    const animate = (): void => {
-      // 计算新的滚动位置
-      if (startTop < targetTop) {
-        // 向上滚动
-        currentTop = Math.min(currentTop + step, targetTop);
-      } else {
-        // 向下滚动
-        currentTop = Math.max(currentTop - step, targetTop);
-      }
-
-      // 设置滚动位置
-      container.scrollTop = currentTop;
-
-      // 触发滚动回调
-      if (onScrollTop) {
-        onScrollTop(currentTop);
-      }
-
-      // 检查是否到达目标位置
-      const isReached = startTop < targetTop 
-        ? currentTop >= targetTop 
-        : currentTop <= targetTop;
-
-      if (isReached) {
-        // 动画完成，清理状态
-        cleanup();
-      } else {
-        // 继续动画
-        if (typeof window !== 'undefined') {
-          window.requestAnimationFrame(animate);
+      const animate = (): void => {
+        // 计算新的滚动位置
+        if (startTop < targetTop) {
+          // 向上滚动
+          currentTop = Math.min(currentTop + step, targetTop);
+        } else {
+          // 向下滚动
+          currentTop = Math.max(currentTop - step, targetTop);
         }
-      }
-    };
 
-    const cleanup = (): void => {
-      if (maskRef.current) {
-        maskRef.current.style.display = 'none';
-      }
-      isAnimatingRef.current = false;
-    };
+        // 设置滚动位置
+        container.scrollTop = currentTop;
 
-    // 开始动画
-    if (typeof window !== 'undefined') {
-      window.requestAnimationFrame(animate);
-    }
-  }, [onScrollTop]);
+        // 触发滚动回调
+        if (onScrollTop) {
+          onScrollTop(currentTop);
+        }
+
+        // 检查是否到达目标位置
+        const isReached = startTop < targetTop ? currentTop >= targetTop : currentTop <= targetTop;
+
+        if (isReached) {
+          // 动画完成，清理状态
+          cleanup();
+        } else {
+          // 继续动画
+          if (typeof window !== 'undefined') {
+            window.requestAnimationFrame(animate);
+          }
+        }
+      };
+
+      const cleanup = (): void => {
+        if (maskRef.current) {
+          maskRef.current.style.display = 'none';
+        }
+        isAnimatingRef.current = false;
+      };
+
+      // 开始动画
+      if (typeof window !== 'undefined') {
+        window.requestAnimationFrame(animate);
+      }
+    },
+    [onScrollTop],
+  );
 
   /**
    * 处理回到顶部触发事件
-   * 
+   *
    * 当用户点击组件时，执行回到顶部的动画逻辑。
    */
   const handleTrigger = useCallback(async (): Promise<void> => {
@@ -204,7 +204,7 @@ const BackTopAnimation = memo<BackTopAnimationProps>((props) => {
 
   /**
    * 渲染遮罩层
-   * 
+   *
    * 创建或获取遮罩层元素，用于在动画期间覆盖页面内容。
    */
   const renderMask = useCallback((): void => {
@@ -223,7 +223,7 @@ const BackTopAnimation = memo<BackTopAnimationProps>((props) => {
 
   /**
    * 处理滚动事件
-   * 
+   *
    * 监听容器的滚动事件，根据滚动位置显示或隐藏回到顶部按钮。
    */
   const handleScroll = useCallback((): void => {

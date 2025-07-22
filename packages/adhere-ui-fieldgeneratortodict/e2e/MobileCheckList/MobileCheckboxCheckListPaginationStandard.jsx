@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
-import { ArrayEntityValueHOC, PagingEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
+import { PagingEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 const defaultPaging = {
   limit: 20,
@@ -11,8 +12,16 @@ const defaultPaging = {
 export default () => {
   const [value, setValue] = useState();
 
-  const DictComponentName = `SystemUserPaging${FieldGeneratorToDict.ComponentNames.MobileCheckboxCheckListPagination.Standard}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemUserPaging${FieldGeneratorToDict.ComponentNames.MobileCheckboxCheckListPagination.Standard}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemUserPaging,
+        FieldGeneratorToDict.ComponentNames.MobileCheckboxCheckListPagination.Standard,
+      )
+    ];
 
   return (
     <PagingEntityValueHOC onChange={setValue} value={value}>

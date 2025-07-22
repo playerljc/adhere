@@ -190,8 +190,6 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
      * 根据 value 去重，保留第一个出现的选项
      */
     const targetOptions = useMemo<OptionType[]>(() => {
-      console.log('optionsStrategy', optionsStrategy);
-
       // merge模式
       if (optionsStrategy === 'merge') {
         const allOptionKeys = allOptions.map(({ value }) => value);
@@ -242,8 +240,8 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
         style={styleWrap ?? {}}
       >
         <Select
-          showSearch
           allowClear
+          showSearch
           filterOption={false}
           open={open}
           options={targetOptions}

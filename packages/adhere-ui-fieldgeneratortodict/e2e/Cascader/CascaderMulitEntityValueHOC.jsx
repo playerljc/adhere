@@ -3,6 +3,7 @@ import { Button, Form } from 'antd';
 import React, { useEffect } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 const { TreeEntityValueHOC } = FieldGeneratorToDict;
 
@@ -19,8 +20,16 @@ export default () => {
     // ]);
   }, []);
 
-  const DictComponentName = `SystemSSQ${FieldGeneratorToDict.ComponentNames.Cascader.Multi}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemSSQ${FieldGeneratorToDict.ComponentNames.Cascader.Multi}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemSSQ,
+        FieldGeneratorToDict.ComponentNames.Cascader.Multi,
+      )
+    ];
 
   return (
     <Form
@@ -41,7 +50,7 @@ export default () => {
         // initialValue={[]}
       >
         <TreeEntityValueHOC>
-          <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />
+          <DictComponent placeholder={names.SystemSSQ} style={{ width: 200 }} />
         </TreeEntityValueHOC>
       </Form.Item>
 

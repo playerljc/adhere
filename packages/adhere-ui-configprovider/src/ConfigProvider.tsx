@@ -8,7 +8,6 @@ import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Intl from '@baifendian/adhere-util-intl';
 
-// import Resource from '@baifendian/adhere-util-resource';
 import { Context } from './Context';
 import themeFunction from './theme';
 import type { ConfigProviderComponent, ConfigProviderContext, ConfigProviderProps } from './types';

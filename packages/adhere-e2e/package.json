@@ -48,7 +48,6 @@
     "@baifendian/adhere-util-adapterscreen": "^2.11.0",
     "@baifendian/adhere-util-browsersniff": "^2.11.0",
     "@baifendian/adhere-util-preferences": "^2.11.0",
-    "@baifendian/adhere-util-resource": "^2.11.0",
     "antd": "^5.26.0",
     "antd-mobile": "^5.39.0",
     "react": "^18.3.1",

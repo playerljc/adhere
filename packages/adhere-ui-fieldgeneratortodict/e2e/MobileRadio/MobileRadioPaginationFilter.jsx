@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 const defaultPaging = {
   limit: 20,
@@ -9,8 +10,16 @@ const defaultPaging = {
 export default () => {
   const [value, setValue] = useState();
 
-  const DictComponentName = `SystemUserStatic${FieldGeneratorToDict.ComponentNames.MobileRadioPagination.Filter}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemUserStatic${FieldGeneratorToDict.ComponentNames.MobileRadioPagination.Filter}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemUserStatic,
+        FieldGeneratorToDict.ComponentNames.MobileRadioPagination.Filter,
+      )
+    ];
 
   return (
     <DictComponent

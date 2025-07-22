@@ -3,10 +3,16 @@ import React from 'react';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 import sage from '../saga';
 
+// const DictComponentName = `SystemTable${FieldGeneratorToDict.ComponentNames.SearchTable.SingleSelect}`;
 const DictComponent = FieldGeneratorToDict.Components[
-  `SystemTable${FieldGeneratorToDict.ComponentNames.SearchTable.SingleSelect}`
+  FieldGeneratorToDict.genDictComponentName(
+    // @ts-ignore
+    names.SystemTable,
+    FieldGeneratorToDict.ComponentNames.SearchTable.SingleSelect,
+  )
 ]({
   override: {
     getColumns() {
@@ -32,7 +38,11 @@ const DictComponent = FieldGeneratorToDict.Components[
             $search: {
               visible: true,
               type: 'dict',
-              dictName: `SystemTestSex${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
+              dictName: FieldGeneratorToDict.genDictComponentName(
+                // @ts-ignore
+                names.SystemTestSex,
+                FieldGeneratorToDict.ComponentNames.Select.Standard,
+              ),
               props: {
                 dropdownStyle: {
                   zIndex: 19999,

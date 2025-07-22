@@ -2,6 +2,7 @@ import { Button, Form } from 'antd';
 import React, { useEffect } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 const { ArrayEntityValueHOC } = FieldGeneratorToDict;
 
@@ -18,8 +19,16 @@ export default () => {
     // ]);
   }, []);
 
-  const DictComponentName = `SystemUserPagin${FieldGeneratorToDict.ComponentNames.TablePagination.Select}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemUserPagin${FieldGeneratorToDict.ComponentNames.TablePagination.Select}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemUserPagin,
+        FieldGeneratorToDict.ComponentNames.TablePagination.Select,
+      )
+    ];
 
   return (
     <Form
@@ -41,7 +50,7 @@ export default () => {
       >
         <ArrayEntityValueHOC getOptionsByDataSource={(_dataSource) => _dataSource.data}>
           <DictComponent
-            placeholder={DictComponentName}
+            placeholder={names.SystemUserPagin}
             style={{ width: 600 }}
             dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
             pagingProps={{

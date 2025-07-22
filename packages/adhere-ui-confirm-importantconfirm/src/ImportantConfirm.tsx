@@ -2,7 +2,6 @@ import React, { MouseEvent, memo, useCallback } from 'react';
 
 import MessageDialog from '@baifendian/adhere-ui-messagedialog';
 import Intl from '@baifendian/adhere-util-intl';
-import Resource from '@baifendian/adhere-util-resource';
 
 import type { ImportantConfirmComponent, ImportantConfirmProps, OpenFunction } from './types';
 
@@ -26,18 +25,21 @@ const InternalImportantConfirm = memo<ImportantConfirmProps>((props) => {
    * 点击事件处理函数
    * @param e - 鼠标点击事件
    */
-  const handleClick = useCallback((e: MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
+  const handleClick = useCallback(
+    (e: MouseEvent<HTMLDivElement>) => {
+      e.stopPropagation();
 
-    const { children: _, ...dialogParams } = props;
+      const { children: _, ...dialogParams } = props;
 
-    ImportantConfirm.open({ ...dialogParams });
-  }, [props]);
+      ImportantConfirm.open({ ...dialogParams });
+    },
+    [props],
+  );
 
   return (
-    <div 
-      className={`${selectorPrefix} ${className ?? ''}`.trim()} 
-      style={style ?? {}} 
+    <div
+      className={`${selectorPrefix} ${className ?? ''}`.trim()}
+      style={style ?? {}}
       onClick={handleClick}
     >
       {children}
@@ -70,7 +72,7 @@ ImportantConfirm.open = ({ success, ...params }: OpenFunction): void => {
     ...params,
     title: params.title || Intl.get('hint'),
     text: params.text || `${Intl.get('confirm_action')}?`,
-    zIndex: params.zIndex ?? Resource?.Dict?.value?.ResourceNormalMaxZIndex?.value,
+    zIndex: params.zIndex ?? 1999,
     icon: <img src={WARNING_ICON_BASE64} alt="warning" width={32} height={32} />,
     onSuccess: () =>
       new Promise<void>((resolve, reject) => {

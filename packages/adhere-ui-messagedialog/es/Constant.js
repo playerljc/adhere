@@ -1,2 +1,2 @@
-var _a,_b,_c;import Resource from"@baifendian/adhere-util-resource";var DEFAULT_LOCAL="zh_CN",DEFAULT_WIDTH=300,DEFAULT_ZINDEX=999,THROTTLE_TIME=200,LOCAL=null==(_c=null==(_b=null==(_a=null==Resource?void 0:Resource.Dict)?void 0:_a.value)?void 0:_b.LocalsAntd)?void 0:_c.value,PROMPT_LAYOUT={labelCol:{span:6},wrapperCol:{span:18}};export{DEFAULT_LOCAL,DEFAULT_WIDTH,DEFAULT_ZINDEX,THROTTLE_TIME,LOCAL,PROMPT_LAYOUT};
+var DEFAULT_WIDTH=300,DEFAULT_ZINDEX=999,PROMPT_LAYOUT={labelCol:{span:6},wrapperCol:{span:18}};export{DEFAULT_WIDTH,DEFAULT_ZINDEX,PROMPT_LAYOUT};
 //# sourceMappingURL=Constant.js.map

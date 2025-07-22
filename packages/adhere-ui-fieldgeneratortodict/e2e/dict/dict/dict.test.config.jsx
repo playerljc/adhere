@@ -11,11 +11,13 @@ import {
   SmileOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { MobileGlobalIndicator } from '@baifendian/adhere';
+import MobileGlobalIndicator from '@baifendian/adhere-mobile-ui-globalindicator';
 import Util from '@baifendian/adhere-util';
 import Dict from '@baifendian/adhere-util-dict';
 
 import { City, County, Province, books, options } from './data';
+
+const { genModuleDict } = Dict;
 
 const PCCFlat = [
   ...Province.map((t) => ({
@@ -67,32 +69,33 @@ const userList = Array.from({ length: 10 }).map((t, index) => ({
 
 const ssqCascade = [
   {
-    value: 'zhejiang',
-    label: 'Zhejiang',
-    children: [
-      {
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [
-          {
-            value: 'xihu',
-            label: 'West Lake',
-          },
-        ],
-      },
-    ],
+    label: 'Light',
+    value: 'light',
+    children: Array.from({ length: 20 }).map((_, index) => ({
+      label: `Number ${index}`,
+      value: index,
+    })),
   },
   {
-    value: 'jiangsu',
-    label: 'Jiangsu',
+    label: 'Bamboo',
+    value: 'bamboo',
     children: [
       {
-        value: 'nanjing',
-        label: 'Nanjing',
+        label: 'Little',
+        value: 'little',
         children: [
           {
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
+            label: 'Toy Fish',
+            value: 'fish',
+            disableCheckbox: true,
+          },
+          {
+            label: 'Toy Cards',
+            value: 'cards',
+          },
+          {
+            label: 'Toy Bird',
+            value: 'bird',
           },
         ],
       },
@@ -191,9 +194,11 @@ const FLAT_TABLE_TREE_DATA = Util.treeToArray(
   'id',
 );
 
-export default {
-  initStatic() {
-    Dict.handlers.SystemTestSex = () => [
+const { names, values } = genModuleDict({
+  // 静态字典
+  SystemTestSex: {
+    isStatic: true,
+    handler: () => [
       {
         label: '男',
         value: '1',
@@ -202,9 +207,11 @@ export default {
         label: '女',
         value: '0',
       },
-    ];
-
-    Dict.handlers.SystemBookCatalog = () =>
+    ],
+  },
+  SystemBookCatalog: {
+    isStatic: true,
+    handler: () =>
       [
         {
           id: '242',
@@ -280,9 +287,469 @@ export default {
         children: t.catalog,
         key: t.id,
         title: t.catalog,
-      }));
+      })),
+  },
+  SystemOrg: {
+    isStatic: true,
+    handler: () => [
+      {
+        title: 'Node1',
+        value: '0-0',
+        key: '0-0',
+        isLeaf: false,
+        children: [
+          {
+            title: 'Child Node1',
+            value: '0-0-1',
+            key: '0-0-1',
+            isLeaf: true,
+          },
+          {
+            title: 'Child Node2',
+            value: '0-0-2',
+            key: '0-0-2',
+            isLeaf: true,
+          },
+        ],
+      },
+      {
+        title: 'Node2',
+        value: '0-1',
+        key: '0-1',
+        isLeaf: true,
+      },
+    ],
+  },
+  // SystemUser: {
+  //   isStatic: true,
+  //   handler: () => userList,
+  // },
+  SystemSSQ: {
+    isStatic: true,
+    handler: () => ssqCascade,
+  },
+  SystemNav: {
+    isStatic: true,
+    handler: () => [
+      { label: '菜单项一', key: 'item-1' },
+      { label: '菜单项二', key: 'item-2' },
+      {
+        label: '子菜单',
+        key: 'submenu',
+        children: [{ label: '子菜单项', key: 'submenu-item-1' }],
+      },
+    ],
+  },
+  SystemJSX1Nav: {
+    isStatic: true,
+    handler: () => [
+      {
+        label: 'Navigation One',
+        key: 'mail',
+        icon: <MailOutlined />,
+      },
+      {
+        label: 'Navigation Two',
+        key: 'app',
+        icon: <AppstoreOutlined />,
+        disabled: true,
+      },
+      {
+        label: 'Navigation Three - Submenu',
+        key: 'SubMenu',
+        icon: <SettingOutlined />,
+        children: [
+          {
+            type: 'group',
+            label: 'Item 1',
+            children: [
+              {
+                label: 'Option 1',
+                key: 'setting:1',
+              },
+              {
+                label: 'Option 2',
+                key: 'setting:2',
+              },
+            ],
+          },
+          {
+            type: 'group',
+            label: 'Item 2',
+            children: [
+              {
+                label: 'Option 3',
+                key: 'setting:3',
+              },
+              {
+                label: 'Option 4',
+                key: 'setting:4',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        label: (
+          <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
+            Navigation Four - Link
+          </a>
+        ),
+        key: 'alipay',
+      },
+    ],
+  },
+  SystemJSX2Nav: {
+    isStatic: true,
+    handler: () =>
+      (() => {
+        function getItem(label, key, icon, children, type) {
+          return {
+            key,
+            icon,
+            children,
+            label,
+            type,
+          };
+        }
 
-    Dict.handlers.SystemBookCatalogDynamic = () =>
+        return [
+          getItem('Navigation One', 'sub1', <MailOutlined />, [
+            getItem(
+              'Item 1',
+              'g1',
+              null,
+              [getItem('Option 1', '1'), getItem('Option 2', '2')],
+              'group',
+            ),
+            getItem(
+              'Item 2',
+              'g2',
+              null,
+              [getItem('Option 3', '3'), getItem('Option 4', '4')],
+              'group',
+            ),
+          ]),
+          getItem('Navigation Two', 'sub2', <AppstoreOutlined />, [
+            getItem('Option 5', '5'),
+            getItem('Option 6', '6'),
+            getItem('Submenu', 'sub3', null, [getItem('Option 7', '7'), getItem('Option 8', '8')]),
+          ]),
+          {
+            type: 'divider',
+          },
+          getItem('Navigation Three', 'sub4', <SettingOutlined />, [
+            getItem('Option 9', '9'),
+            getItem('Option 10', '10'),
+            getItem('Option 11', '11'),
+            getItem('Option 12', '12'),
+          ]),
+          getItem(
+            'Group',
+            'grp',
+            null,
+            [getItem('Option 13', '13'), getItem('Option 14', '14')],
+            'group',
+          ),
+        ];
+      })(),
+  },
+  SystemDropNav: {
+    isStatic: true,
+    handler: () => [
+      {
+        key: '1',
+        label: (
+          <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+            1st menu item
+          </a>
+        ),
+      },
+      {
+        key: '2',
+        label: (
+          <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+            2nd menu item (disabled)
+          </a>
+        ),
+        icon: <SmileOutlined />,
+        disabled: true,
+      },
+      {
+        key: '3',
+        label: (
+          <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+            3rd menu item (disabled)
+          </a>
+        ),
+        disabled: true,
+      },
+      {
+        key: '4',
+        danger: true,
+        label: 'a danger item',
+      },
+    ],
+  },
+  SystemBCNav: {
+    isStatic: true,
+    handler: () => [
+      {
+        title: 'Home',
+      },
+      {
+        title: <a href="">Application Center</a>,
+      },
+      {
+        title: <a href="">Application List</a>,
+      },
+      {
+        title: 'An Application',
+      },
+    ],
+  },
+  SystemSegNav: {
+    isStatic: true,
+    handler: () => ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'],
+  },
+  SystemObjArraySegNav: {
+    isStatic: true,
+    handler: () => [
+      {
+        label: (
+          <div style={{ padding: 4 }}>
+            <Avatar src="https://joesch.moe/api/v1/random" />
+            <div>User 1</div>
+          </div>
+        ),
+        value: 'user1',
+      },
+      {
+        label: (
+          <div style={{ padding: 4 }}>
+            <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+            <div>User 2</div>
+          </div>
+        ),
+        value: 'user2',
+      },
+      {
+        label: (
+          <div style={{ padding: 4 }}>
+            <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+            <div>User 3</div>
+          </div>
+        ),
+        value: 'user3',
+      },
+    ],
+  },
+  SystemOneTL: {
+    isStatic: true,
+    handler: () => [
+      {
+        children: 'Create a services site 2015-09-01',
+      },
+      {
+        children: 'Solve initial network problems 2015-09-01',
+      },
+      {
+        children: 'Technical testing 2015-09-01',
+      },
+      {
+        children: 'Network problems being solved 2015-09-01',
+      },
+    ],
+  },
+  SystemTwoTL: {
+    isStatic: true,
+    handler: () => [
+      {
+        children: 'Create a services site 2015-09-01',
+      },
+      {
+        children: 'Solve initial network problems 2015-09-01',
+        color: 'green',
+      },
+      {
+        dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
+        children: `Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.`,
+      },
+      {
+        color: 'red',
+        children: 'Network problems being solved 2015-09-01',
+      },
+      {
+        children: 'Create a services site 2015-09-01',
+      },
+      {
+        dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
+        children: 'Technical testing 2015-09-01',
+      },
+    ],
+  },
+  SystemThreeTL: {
+    isStatic: true,
+    handler: () => [
+      {
+        color: 'green',
+        children: 'Create a services site 2015-09-01',
+      },
+      {
+        color: 'green',
+        children: 'Create a services site 2015-09-01',
+      },
+      {
+        color: 'red',
+        children: (
+          <>
+            <p>Solve initial network problems 1</p>
+            <p>Solve initial network problems 2</p>
+            <p>Solve initial network problems 3 2015-09-01</p>
+          </>
+        ),
+      },
+      {
+        children: (
+          <>
+            <p>Technical testing 1</p>
+            <p>Technical testing 2</p>
+            <p>Technical testing 3 2015-09-01</p>
+          </>
+        ),
+      },
+      {
+        color: 'gray',
+        children: (
+          <>
+            <p>Technical testing 1</p>
+            <p>Technical testing 2</p>
+            <p>Technical testing 3 2015-09-01</p>
+          </>
+        ),
+      },
+      {
+        color: 'gray',
+        children: (
+          <>
+            <p>Technical testing 1</p>
+            <p>Technical testing 2</p>
+            <p>Technical testing 3 2015-09-01</p>
+          </>
+        ),
+      },
+      {
+        color: '#00CCFF',
+        dot: <SmileOutlined />,
+        children: <p>Custom color testing</p>,
+      },
+    ],
+  },
+  SystemOneWizard: {
+    isStatic: true,
+    handler: () => [
+      {
+        title: 'Finished',
+        description: 'This is a description.',
+      },
+      {
+        title: 'In Progress',
+        description: 'This is a description.',
+        subTitle: 'Left 00:00:08',
+      },
+      {
+        title: 'Waiting',
+        description: 'This is a description.',
+      },
+    ],
+  },
+  SystemTwoWizard: {
+    isStatic: true,
+    handler: () => [
+      {
+        title: 'Finished',
+        description: 'This is a description.',
+      },
+      {
+        title: 'In Progress',
+        description: 'This is a description.',
+        subTitle: 'Left 00:00:08',
+      },
+      {
+        title: 'Waiting',
+        description: 'This is a description.',
+      },
+    ],
+  },
+  SystemMent: {
+    isStatic: true,
+    handler: () => [
+      {
+        value: 'afc163',
+        label: 'afc163',
+      },
+      {
+        value: 'zombieJ',
+        label: 'zombieJ',
+      },
+      {
+        value: 'yesmeck',
+        label: 'yesmeck',
+      },
+    ],
+  },
+  SystemListStatic: {
+    isStatic: true,
+    handler: () =>
+      Array(1000)
+        .fill({
+          avatar:
+            'https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
+          name: 'Novalee Spicer',
+          description: 'Deserunt dolor ea eaque eos',
+        })
+        .map((t) => ({
+          ...t,
+          key: t.name,
+          prefix: (
+            <Image src={t.avatar} style={{ borderRadius: 20 }} fit="cover" width={40} height={40} />
+          ),
+        })),
+  },
+  SystemTreeStatic: {
+    isStatic: true,
+    handler: () => TREE_DATA,
+  },
+  SystemUserStatic: {
+    isStatic: true,
+    handler: () =>
+      Array.from({ length: 1000 }).map((t, _index) => {
+        const value = Mock.mock('@guid');
+        const title = `${Mock.mock('@name')}1`;
+
+        return {
+          value,
+          title,
+          label: title,
+          children: title,
+          id: value,
+          description: title,
+        };
+      }),
+  },
+
+  // 远程字典
+  SystemProvince: {
+    handler: () =>
+      Promise.resolve(
+        Province.map((t) => ({
+          label: t.name,
+          value: t.id,
+        })),
+      ),
+  },
+  SystemBookCatalogDynamic: {
+    handler: () =>
       Promise.resolve(
         [
           {
@@ -360,9 +827,10 @@ export default {
           key: t.id,
           title: t.catalog,
         })),
-      );
-
-    Dict.handlers.SystemBookCatalogTextDynamic = () =>
+      ),
+  },
+  SystemBookCatalogTextDynamic: {
+    handler: () =>
       Promise.resolve(
         [
           {
@@ -434,408 +902,20 @@ export default {
             catalog: '计算机',
           },
         ].map((t) => t.catalog),
-      );
-
-    Dict.handlers.SystemBookCatalogRem = () =>
+      ),
+  },
+  SystemBookCatalogRem: {
+    handler: () =>
       Promise.resolve(
         [].map((t) => ({
           label: t.catalog,
           value: t.id,
           children: t.catalog,
         })),
-      );
-
-    Dict.handlers.SystemOrg = () => [
-      {
-        title: 'Node1',
-        value: '0-0',
-        key: '0-0',
-        isLeaf: false,
-        children: [
-          {
-            title: 'Child Node1',
-            value: '0-0-1',
-            key: '0-0-1',
-            isLeaf: true,
-          },
-          {
-            title: 'Child Node2',
-            value: '0-0-2',
-            key: '0-0-2',
-            isLeaf: true,
-          },
-        ],
-      },
-      {
-        title: 'Node2',
-        value: '0-1',
-        key: '0-1',
-        isLeaf: true,
-      },
-    ];
-
-    // User
-    Dict.handlers.SystemUser = () => userList;
-
-    Dict.handlers.SystemSSQ = () => ssqCascade;
-
-    // Menu
-    Dict.handlers.SystemNav = () => [
-      { label: '菜单项一', key: 'item-1' }, // 菜单项务必填写 key
-      { label: '菜单项二', key: 'item-2' },
-      {
-        label: '子菜单',
-        key: 'submenu',
-        children: [{ label: '子菜单项', key: 'submenu-item-1' }],
-      },
-    ];
-    Dict.handlers.SystemJSX1Nav = () => [
-      {
-        label: 'Navigation One',
-        key: 'mail',
-        icon: <MailOutlined />,
-      },
-      {
-        label: 'Navigation Two',
-        key: 'app',
-        icon: <AppstoreOutlined />,
-        disabled: true,
-      },
-      {
-        label: 'Navigation Three - Submenu',
-        key: 'SubMenu',
-        icon: <SettingOutlined />,
-        children: [
-          {
-            type: 'group',
-            label: 'Item 1',
-            children: [
-              {
-                label: 'Option 1',
-                key: 'setting:1',
-              },
-              {
-                label: 'Option 2',
-                key: 'setting:2',
-              },
-            ],
-          },
-          {
-            type: 'group',
-            label: 'Item 2',
-            children: [
-              {
-                label: 'Option 3',
-                key: 'setting:3',
-              },
-              {
-                label: 'Option 4',
-                key: 'setting:4',
-              },
-            ],
-          },
-        ],
-      },
-      {
-        label: (
-          <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-            Navigation Four - Link
-          </a>
-        ),
-        key: 'alipay',
-      },
-    ];
-    Dict.handlers.SystemJSX2Nav = () =>
-      (() => {
-        function getItem(label, key, icon, children, type) {
-          return {
-            key,
-            icon,
-            children,
-            label,
-            type,
-          };
-        }
-
-        return [
-          getItem('Navigation One', 'sub1', <MailOutlined />, [
-            getItem(
-              'Item 1',
-              'g1',
-              null,
-              [getItem('Option 1', '1'), getItem('Option 2', '2')],
-              'group',
-            ),
-            getItem(
-              'Item 2',
-              'g2',
-              null,
-              [getItem('Option 3', '3'), getItem('Option 4', '4')],
-              'group',
-            ),
-          ]),
-          getItem('Navigation Two', 'sub2', <AppstoreOutlined />, [
-            getItem('Option 5', '5'),
-            getItem('Option 6', '6'),
-            getItem('Submenu', 'sub3', null, [getItem('Option 7', '7'), getItem('Option 8', '8')]),
-          ]),
-          {
-            type: 'divider',
-          },
-          getItem('Navigation Three', 'sub4', <SettingOutlined />, [
-            getItem('Option 9', '9'),
-            getItem('Option 10', '10'),
-            getItem('Option 11', '11'),
-            getItem('Option 12', '12'),
-          ]),
-          getItem(
-            'Group',
-            'grp',
-            null,
-            [getItem('Option 13', '13'), getItem('Option 14', '14')],
-            'group',
-          ),
-        ];
-      })();
-
-    // Dropdown
-    Dict.handlers.SystemDropNav = () => [
-      {
-        key: '1',
-        label: (
-          <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-            1st menu item
-          </a>
-        ),
-      },
-      {
-        key: '2',
-        label: (
-          <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-            2nd menu item (disabled)
-          </a>
-        ),
-        icon: <SmileOutlined />,
-        disabled: true,
-      },
-      {
-        key: '3',
-        label: (
-          <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-            3rd menu item (disabled)
-          </a>
-        ),
-        disabled: true,
-      },
-      {
-        key: '4',
-        danger: true,
-        label: 'a danger item',
-      },
-    ];
-
-    // Breadcrumb
-    Dict.handlers.SystemBCNav = () => [
-      {
-        title: 'Home',
-      },
-      {
-        title: <a href="">Application Center</a>,
-      },
-      {
-        title: <a href="">Application List</a>,
-      },
-      {
-        title: 'An Application',
-      },
-    ];
-
-    // Segmented
-    Dict.handlers.SystemSegNav = () => ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
-    Dict.handlers.SystemObjArraySegNav = () => [
-      {
-        label: (
-          <div style={{ padding: 4 }}>
-            <Avatar src="https://joesch.moe/api/v1/random" />
-            <div>User 1</div>
-          </div>
-        ),
-        value: 'user1',
-      },
-      {
-        label: (
-          <div style={{ padding: 4 }}>
-            <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-            <div>User 2</div>
-          </div>
-        ),
-        value: 'user2',
-      },
-      {
-        label: (
-          <div style={{ padding: 4 }}>
-            <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-            <div>User 3</div>
-          </div>
-        ),
-        value: 'user3',
-      },
-    ];
-
-    // Timeline
-    Dict.handlers.SystemOneTL = () => [
-      {
-        children: 'Create a services site 2015-09-01',
-      },
-      {
-        children: 'Solve initial network problems 2015-09-01',
-      },
-      {
-        children: 'Technical testing 2015-09-01',
-      },
-      {
-        children: 'Network problems being solved 2015-09-01',
-      },
-    ];
-    Dict.handlers.SystemTwoTL = () => [
-      {
-        children: 'Create a services site 2015-09-01',
-      },
-      {
-        children: 'Solve initial network problems 2015-09-01',
-        color: 'green',
-      },
-      {
-        dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
-        children: `Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.`,
-      },
-      {
-        color: 'red',
-        children: 'Network problems being solved 2015-09-01',
-      },
-      {
-        children: 'Create a services site 2015-09-01',
-      },
-      {
-        dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
-        children: 'Technical testing 2015-09-01',
-      },
-    ];
-    Dict.handlers.SystemThreeTL = () => [
-      {
-        color: 'green',
-        children: 'Create a services site 2015-09-01',
-      },
-      {
-        color: 'green',
-        children: 'Create a services site 2015-09-01',
-      },
-      {
-        color: 'red',
-        children: (
-          <>
-            <p>Solve initial network problems 1</p>
-            <p>Solve initial network problems 2</p>
-            <p>Solve initial network problems 3 2015-09-01</p>
-          </>
-        ),
-      },
-      {
-        children: (
-          <>
-            <p>Technical testing 1</p>
-            <p>Technical testing 2</p>
-            <p>Technical testing 3 2015-09-01</p>
-          </>
-        ),
-      },
-      {
-        color: 'gray',
-        children: (
-          <>
-            <p>Technical testing 1</p>
-            <p>Technical testing 2</p>
-            <p>Technical testing 3 2015-09-01</p>
-          </>
-        ),
-      },
-      {
-        color: 'gray',
-        children: (
-          <>
-            <p>Technical testing 1</p>
-            <p>Technical testing 2</p>
-            <p>Technical testing 3 2015-09-01</p>
-          </>
-        ),
-      },
-      {
-        color: '#00CCFF',
-        dot: <SmileOutlined />,
-        children: <p>Custom color testing</p>,
-      },
-    ];
-
-    // Steps
-    Dict.handlers.SystemOneWizard = () => [
-      {
-        title: 'Finished',
-        description: 'This is a description.',
-      },
-      {
-        title: 'In Progress',
-        description: 'This is a description.',
-        subTitle: 'Left 00:00:08',
-      },
-      {
-        title: 'Waiting',
-        description: 'This is a description.',
-      },
-    ];
-    Dict.handlers.SystemTwoWizard = () => [
-      {
-        title: 'Finished',
-        description: 'This is a description.',
-      },
-      {
-        title: 'In Progress',
-        description: 'This is a description.',
-        subTitle: 'Left 00:00:08',
-      },
-      {
-        title: 'Waiting',
-        description: 'This is a description.',
-      },
-    ];
-
-    // Mentions
-    Dict.handlers.SystemMent = () => [
-      {
-        value: 'afc163',
-        label: 'afc163',
-      },
-      {
-        value: 'zombieJ',
-        label: 'zombieJ',
-      },
-      {
-        value: 'yesmeck',
-        label: 'yesmeck',
-      },
-    ];
+      ),
   },
-  initRemote() {
-    // 省数据
-    Dict.handlers.SystemProvince = () =>
-      Promise.resolve(
-        Province.map((t) => ({
-          label: t.name,
-          value: t.id,
-        })),
-      );
-
-    // 市数据
-    Dict.handlers.SystemCity = () => (provinceId) => {
+  SystemCity: {
+    handler: () => (provinceId) => {
       if (!provinceId) return Promise.resolve([]);
 
       return Promise.resolve(
@@ -844,10 +924,10 @@ export default {
           value: t.id,
         })),
       );
-    };
-
-    // 区县
-    Dict.handlers.SystemCounty = () => (cityId) => {
+    },
+  },
+  SystemCounty: {
+    handler: () => (cityId) => {
       if (!cityId) return Promise.resolve([]);
 
       return Promise.resolve(
@@ -856,9 +936,10 @@ export default {
           value: t.id,
         })),
       );
-    };
-
-    Dict.handlers.SystemFilterBookList = () => (kw) => {
+    },
+  },
+  SystemFilterBookList: {
+    handler: () => (kw) => {
       return new Promise((resolve) => {
         setTimeout(() => {
           if (!kw) {
@@ -869,9 +950,10 @@ export default {
           resolve(books.filter((t) => t.label.includes(kw)));
         }, 1000);
       });
-    };
-
-    Dict.handlers.SystemUserPagin = () => (page, limit) => {
+    },
+  },
+  SystemUserPagin: {
+    handler: () => (page, limit) => {
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve({
@@ -880,9 +962,10 @@ export default {
           });
         }, 1000);
       });
-    };
-
-    Dict.handlers.SystemUserACPagin = () => (page, limit, _kw) => {
+    },
+  },
+  SystemUserACPagin: {
+    handler: () => (page, limit, _kw) => {
       console.log(page, limit, _kw);
 
       return new Promise((resolve) => {
@@ -893,9 +976,10 @@ export default {
           data: data.slice((page - 1) * limit, page * limit),
         });
       });
-    };
-
-    Dict.handlers.SystemBookAC = () => (_kw) => {
+    },
+  },
+  SystemBookAC: {
+    handler: () => (_kw) => {
       return new Promise((resolve) => {
         if (!_kw) {
           resolve([]);
@@ -907,9 +991,10 @@ export default {
           resolve(result);
         }, 500);
       });
-    };
-
-    Dict.handlers.SystemDepartment = () => (pid, cascadeParams) => {
+    },
+  },
+  SystemDepartment: {
+    handler: () => (pid, cascadeParams) => {
       if (!pid) {
         return Promise.resolve(
           Province.map((t) => ({
@@ -929,39 +1014,45 @@ export default {
         .flat()
         .map((t) => t.id);
 
+      let pidValue = pid;
       if (typeof pid === 'object') {
-        pid = pid.key;
+        pidValue = pid.key;
       }
 
-      const result = { ...City, ...County }[pid]?.map?.((t) => ({
+      const result = { ...City, ...County }[pidValue]?.map?.((t) => ({
         title: t.name,
         label: t.name,
         value: t.id,
         key: t.id,
         id: t.id,
-        pId: pid,
+        pId: pidValue,
         isLeaf: countyIds.includes(t.id),
       }));
 
       return Promise.resolve(result);
-    };
-
-    Dict.handlers.SystemDepartmentAll = () => Promise.resolve(PCCFlat);
-
-    Dict.handlers.SystemSSQRemote = () => ssqCascade;
-
-    Dict.handlers.SystemBook = () => Promise.resolve(books);
-
-    Dict.handlers.SystemTableBook = () => {
+    },
+  },
+  SystemDepartmentAll: {
+    handler: () => Promise.resolve(PCCFlat),
+  },
+  SystemSSQRemote: {
+    handler: () => ssqCascade,
+  },
+  SystemBook: {
+    handler: () => Promise.resolve(books),
+  },
+  SystemTableBook: {
+    handler: () => {
       const options = books.map(({ children, ...t }) => ({
         ...t,
         value: t.id,
       }));
 
       return Promise.resolve(options);
-    };
-
-    Dict.handlers.SystemTableBookAC = () => (_kw) => {
+    },
+  },
+  SystemTableBookAC: {
+    handler: () => (_kw) => {
       return new Promise((resolve) => {
         if (!_kw) {
           resolve([]);
@@ -978,9 +1069,10 @@ export default {
           resolve(result);
         }, 500);
       });
-    };
-
-    Dict.handlers.SystemTreeAC = () => (_kw) => {
+    },
+  },
+  SystemTreeAC: {
+    handler: () => (_kw) => {
       return new Promise((resolve) => {
         if (!_kw) {
           resolve();
@@ -988,7 +1080,6 @@ export default {
         }
 
         setTimeout(() => {
-          // 正常
           const flatTreeData = Util.treeToArray(
             TREE_DATA,
             { parentIdAttr: 'pId', rootParentId: '' },
@@ -1007,9 +1098,10 @@ export default {
           resolve(targetTreeData);
         }, 100);
       });
-    };
-
-    Dict.handlers.SystemTreeACFlat = () => (_kw) => {
+    },
+  },
+  SystemTreeACFlat: {
+    handler: () => (_kw) => {
       return new Promise((resolve) => {
         if (!_kw) {
           resolve([]);
@@ -1037,9 +1129,10 @@ export default {
           resolve(targetTreeData);
         }, 100);
       });
-    };
-
-    Dict.handlers.SystemTableTreeAC = () => (_kw) => {
+    },
+  },
+  SystemTableTreeAC: {
+    handler: () => (_kw) => {
       return new Promise((resolve) => {
         if (!_kw) {
           resolve();
@@ -1047,7 +1140,6 @@ export default {
         }
 
         setTimeout(() => {
-          // 正常
           const flatTreeData = Util.treeToArray(
             TABLE_TREE_DATA,
             { parentIdAttr: 'pId', rootParentId: '' },
@@ -1066,9 +1158,10 @@ export default {
           resolve(targetTreeData);
         }, 100);
       });
-    };
-
-    Dict.handlers.SystemTableTreeACFlat = () => (_kw) => {
+    },
+  },
+  SystemTableTreeACFlat: {
+    handler: () => (_kw) => {
       return new Promise((resolve) => {
         if (!_kw) {
           resolve([]);
@@ -1096,9 +1189,10 @@ export default {
           resolve(targetTreeData);
         }, 100);
       });
-    };
-
-    Dict.handlers.SystemTableTreeACPaging = () => (page, limit, _kw) => {
+    },
+  },
+  SystemTableTreeACPaging: {
+    handler: () => (page, limit, _kw) => {
       return new Promise((resolve) => {
         if (!_kw) {
           resolve({
@@ -1130,9 +1224,10 @@ export default {
           });
         }, 100);
       });
-    };
-
-    Dict.handlers.SystemUser = () =>
+    },
+  },
+  SystemUser: {
+    handler: () =>
       Promise.resolve(
         Array.from({ length: 1000 }).map((t, _index) => {
           const value = Mock.mock('@guid');
@@ -1147,24 +1242,10 @@ export default {
             description: title,
           };
         }),
-      );
-
-    Dict.handlers.SystemUserStatic = () =>
-      Array.from({ length: 1000 }).map((t, _index) => {
-        const value = Mock.mock('@guid');
-        const title = `${Mock.mock('@name')}1`;
-
-        return {
-          value,
-          title,
-          label: title,
-          children: title,
-          id: value,
-          description: title,
-        };
-      });
-
-    Dict.handlers.SystemUserByKw = () => (_kw) => {
+      ),
+  },
+  SystemUserByKw: {
+    handler: () => (_kw) => {
       return new Promise((resolve) => {
         if (!_kw) {
           resolve([]);
@@ -1178,9 +1259,10 @@ export default {
           resolve(options.filter((_option) => _option.title.indexOf(_kw) !== -1));
         }, 500);
       });
-    };
-
-    Dict.handlers.SystemUserByKPL = () => (_kw, page, limit) => {
+    },
+  },
+  SystemUserByKPL: {
+    handler: () => (_kw, page, limit) => {
       return new Promise((resolve) => {
         const options = Array.from({ length: 1000 }).map((t, _index) => {
           const value = Mock.mock('@guid');
@@ -1218,9 +1300,10 @@ export default {
           });
         }, 500);
       });
-    };
-
-    Dict.handlers.SystemUserPaging = () => (page, limit) => {
+    },
+  },
+  SystemUserPaging: {
+    handler: () => (page, limit) => {
       const options = Array.from({ length: 1000 }).map((t, _index) => {
         const value = Mock.mock('@guid');
         const title = `${Mock.mock('@name')}1`;
@@ -1243,9 +1326,10 @@ export default {
           });
         }, 1000);
       });
-    };
-
-    Dict.handlers.SystemTable = () => {
+    },
+  },
+  SystemTable: {
+    handler: () => {
       const dataSource = Array.from({ length: 100 }).map((t) => {
         const value = Mock.mock('@guid');
         const label = Mock.mock('@name');
@@ -1266,7 +1350,6 @@ export default {
       });
 
       return (argv) => {
-        // 是异步加载
         if (argv.isAsync) {
           return new Promise((resolve) => {
             setTimeout(() => {
@@ -1292,9 +1375,7 @@ export default {
               );
             }, 1000);
           });
-        }
-        // 列表的数据
-        else {
+        } else {
           const { cascadeParams, params } = argv;
 
           const { page, limit } = params;
@@ -1311,9 +1392,10 @@ export default {
           });
         }
       };
-    };
-
-    Dict.handlers.SystemList = () => {
+    },
+  },
+  SystemList: {
+    handler: () => {
       const dataSource = Array.from({ length: 100 }).map((t) => {
         const value = Mock.mock('@guid');
         const label = Mock.mock('@name');
@@ -1347,9 +1429,10 @@ export default {
           }, 300);
         });
       };
-    };
-
-    Dict.handlers.SystemTreeTable = () => {
+    },
+  },
+  SystemTreeTable: {
+    handler: () => {
       const _level = 3;
 
       function genChildren(length, level) {
@@ -1413,25 +1496,10 @@ export default {
           }, 300);
         });
       };
-    };
-
-    Dict.handlers.SystemListStatic = () =>
-      Array(1000)
-        .fill({
-          avatar:
-            'https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-          name: 'Novalee Spicer',
-          description: 'Deserunt dolor ea eaque eos',
-        })
-        .map((t) => ({
-          ...t,
-          key: t.name,
-          prefix: (
-            <Image src={t.avatar} style={{ borderRadius: 20 }} fit="cover" width={40} height={40} />
-          ),
-        }));
-
-    Dict.handlers.SystemListDynamic = () =>
+    },
+  },
+  SystemListDynamic: {
+    handler: () =>
       Promise.resolve(
         Array(1000)
           .fill({
@@ -1453,10 +1521,11 @@ export default {
               />
             ),
           })),
-      );
-
-    Dict.handlers.SystemTreeStatic = () => TREE_DATA;
-
-    Dict.handlers.SystemTreeDynamic = () => Promise.resolve(TREE_DATA);
+      ),
   },
-};
+  SystemTreeDynamic: {
+    handler: () => Promise.resolve(TREE_DATA),
+  },
+});
+
+export { names, values };

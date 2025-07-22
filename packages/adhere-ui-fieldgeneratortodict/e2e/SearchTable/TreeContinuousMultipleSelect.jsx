@@ -3,10 +3,16 @@ import React from 'react';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 import sage from '../saga';
 
+// const DictComponentName = `SystemTreeTable${FieldGeneratorToDict.ComponentNames.SearchTable.TreeContinuousMultipleSelect}`;
 const DictComponent = FieldGeneratorToDict.Components[
-  `SystemTreeTable${FieldGeneratorToDict.ComponentNames.SearchTable.TreeContinuousMultipleSelect}`
+  FieldGeneratorToDict.genDictComponentName(
+    // @ts-ignore
+    names.SystemTreeTable,
+    FieldGeneratorToDict.ComponentNames.SearchTable.TreeContinuousMultipleSelect,
+  )
 ]({
   override: {
     getColumns() {

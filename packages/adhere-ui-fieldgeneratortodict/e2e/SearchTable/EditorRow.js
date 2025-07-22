@@ -3,12 +3,18 @@ import React from 'react';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 import sage from '../saga';
 
 const { EditableRowControl } = SearchTable;
 
+// const DictComponentName = `SystemTable${FieldGeneratorToDict.ComponentNames.SearchTable.EditorRow}`;
 const DictComponent = FieldGeneratorToDict.Components[
-  `SystemTable${FieldGeneratorToDict.ComponentNames.SearchTable.EditorRow}`
+  FieldGeneratorToDict.genDictComponentName(
+    // @ts-ignore
+    names.SystemTable,
+    FieldGeneratorToDict.ComponentNames.SearchTable.EditorRow,
+  )
 ]({
   override: {
     getColumns() {

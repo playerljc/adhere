@@ -3,12 +3,21 @@ import React, { useState } from 'react';
 import { Checkbox, Col, Row } from '@baifendian/adhere-ui-anthoc';
 
 import FieldGeneratorToDict from '../../src';
+import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
   const [value, setValue] = useState();
 
-  const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.CheckAllCustom}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.CheckAllCustom}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemBookCatalogDynamic,
+        FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.CheckAllCustom,
+      )
+    ];
 
   return (
     <DictComponent value={value} onChange={setValue}>

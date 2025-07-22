@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TransferDynamic.SuspenseStandard}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TransferDynamic.SuspenseStandard}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemBookCatalogDynamic,
+        FieldGeneratorToDict.ComponentNames.TransferDynamic.SuspenseStandard,
+      )
+    ];
 
   const [targetKeys, setTargetKeys] = useState();
   const [selectedKeys, setSelectedKeys] = useState([]);

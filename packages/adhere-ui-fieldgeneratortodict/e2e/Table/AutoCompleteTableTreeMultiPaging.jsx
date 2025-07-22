@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
   const [value, setValue] = useState([]);
 
-  const DictComponentName = `SystemTableTreeACPaging${FieldGeneratorToDict.ComponentNames.TableTreeAC.MultiPaging}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemTableTreeACPaging${FieldGeneratorToDict.ComponentNames.TableTreeAC.MultiPaging}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemTableTreeACPaging,
+        FieldGeneratorToDict.ComponentNames.TableTreeAC.MultiPaging,
+      )
+    ];
 
   return (
     <DictComponent
-      placeholder={DictComponentName}
+      placeholder={names.SystemTableTreeACPaging}
       style={{ width: 800 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}

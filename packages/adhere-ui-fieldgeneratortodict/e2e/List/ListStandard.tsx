@@ -4,10 +4,19 @@ import React from 'react';
 import { List } from '@baifendian/adhere-ui-anthoc';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  const DictComponentName = `SystemBook${FieldGeneratorToDict.ComponentNames.ListDynamic.Standard}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemBook${FieldGeneratorToDict.ComponentNames.ListDynamic.Standard}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemBook,
+        FieldGeneratorToDict.ComponentNames.ListDynamic.Standard,
+      )
+    ];
 
   return (
     <DictComponent

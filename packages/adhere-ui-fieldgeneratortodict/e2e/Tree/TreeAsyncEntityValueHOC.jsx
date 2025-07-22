@@ -3,6 +3,7 @@ import { Button, Form } from 'antd';
 import React, { useEffect } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 const { AsyncTreeEntityValueHOC } = FieldGeneratorToDict;
 
@@ -19,8 +20,16 @@ export default () => {
     // ]);
   }, []);
 
-  const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.Standard}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.Standard}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemDepartment,
+        FieldGeneratorToDict.ComponentNames.TreeAsync.Standard,
+      )
+    ];
 
   return (
     <Form
@@ -41,7 +50,7 @@ export default () => {
         // initialValue={[]}
       >
         <AsyncTreeEntityValueHOC>
-          <DictComponent placeholder={DictComponentName} style={{ width: 350 }} />
+          <DictComponent placeholder={names.SystemDepartment} style={{ width: 350 }} />
         </AsyncTreeEntityValueHOC>
       </Form.Item>
 

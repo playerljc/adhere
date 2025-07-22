@@ -4,7 +4,6 @@ import { Spinner } from 'spin.js';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
-import Resource from '@baifendian/adhere-util-resource';
 
 import type { SpinProps, ScaleMap } from './types';
 
@@ -62,7 +61,7 @@ const Spin = memo<SpinProps>((props) => {
   const {
     spinning = false,
     text = '',
-    zIndex = Resource.Dict.value.ResourceNormalMaxZIndex?.value,
+    zIndex = 1999,
     size = 'default',
   } = props;
 

@@ -4,16 +4,25 @@ import React, { useState } from 'react';
 import { List } from '@baifendian/adhere-ui-anthoc';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
   const [value, setValue] = useState([]);
 
-  const DictComponentName = `SystemUserPagin${FieldGeneratorToDict.ComponentNames.ListPagination.MultiSelect}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemUserPagin${FieldGeneratorToDict.ComponentNames.ListPagination.MultiSelect}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemUserPagin,
+        FieldGeneratorToDict.ComponentNames.ListPagination.MultiSelect,
+      )
+    ];
 
   return (
     <DictComponent
-      placeholder={DictComponentName}
+      placeholder={names.SystemUserPagin}
       style={{ width: 600 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}

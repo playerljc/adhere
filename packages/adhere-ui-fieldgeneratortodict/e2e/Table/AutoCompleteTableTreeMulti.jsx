@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
   const [value, setValue] = useState([]);
 
-  const DictComponentName = `SystemTableTreeACFlat${FieldGeneratorToDict.ComponentNames.TableTreeAC.Multi}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemTableTreeACFlat${FieldGeneratorToDict.ComponentNames.TableTreeAC.Multi}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemTableTreeACFlat,
+        FieldGeneratorToDict.ComponentNames.TableTreeAC.Multi,
+      )
+    ];
 
   return (
     <DictComponent
-      placeholder={DictComponentName}
+      placeholder={names.SystemTableTreeACFlat}
       style={{ width: 800 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}

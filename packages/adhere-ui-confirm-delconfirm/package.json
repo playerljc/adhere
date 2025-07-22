@@ -33,7 +33,6 @@
   "dependencies": {
     "@baifendian/adhere-ui-messagedialog": "^2.11.0",
     "@baifendian/adhere-util-intl": "^2.11.0",
-    "@baifendian/adhere-util-resource": "^2.11.0",
     "react": "^18.3.1",
     "react-dom": "^18.2.0"
   },

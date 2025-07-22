@@ -3,10 +3,16 @@ import React from 'react';
 import SearchList from '@baifendian/adhere-ui-searchlist';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 import sage from '../saga';
 
+// const DictComponentName = `SystemList${FieldGeneratorToDict.ComponentNames.SearchList.SingleSelect}`;
 const DictComponent = FieldGeneratorToDict.Components[
-  `SystemList${FieldGeneratorToDict.ComponentNames.SearchList.SingleSelect}`
+  FieldGeneratorToDict.genDictComponentName(
+    // @ts-ignore
+    names.SystemList,
+    FieldGeneratorToDict.ComponentNames.SearchList.SingleSelect,
+  )
 ]({
   override: {
     getColumns() {
@@ -82,7 +88,11 @@ const DictComponent = FieldGeneratorToDict.Components[
           $search: {
             visible: true,
             type: 'dict',
-            dictName: `SystemTestSex${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
+            dictName: FieldGeneratorToDict.genDictComponentName(
+              // @ts-ignore
+              names.SystemTestSex,
+              FieldGeneratorToDict.ComponentNames.Select.Standard,
+            ),
             props: {
               dropdownStyle: {
                 zIndex: 19999,

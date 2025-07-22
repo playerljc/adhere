@@ -1,7 +1,5 @@
 import { Spinner } from 'spin.js';
 
-import Resource from '@baifendian/adhere-util-resource';
-
 import type { GlobalIndicator, GlobalIndicatorOptions, Size, SpinnerConfig } from './types';
 
 /**
@@ -12,7 +10,7 @@ const SELECTOR_PREFIX: string = 'adhere-ui-global-indicator';
 /**
  * 最大 z-index 值
  */
-const MAX_ZINDEX: number = Resource?.Dict?.value?.ResourceNormalMaxZIndex?.value || 9999;
+const MAX_ZINDEX: number = 9999;
 
 /**
  * 尺寸缩放映射
@@ -64,7 +62,7 @@ function getThemeColor(): string {
  */
 function createIndicatorElement(text: string, zIndex: number): HTMLElement {
   const container = document.createElement('div');
-  
+
   container.innerHTML = `
     <div class="${SELECTOR_PREFIX}" style="z-index: ${zIndex}">
       <span class="${SELECTOR_PREFIX}-dot"></span>
@@ -110,24 +108,24 @@ function safeRemoveElement(element: HTMLElement): void {
 
 /**
  * 全局指示器组件
- * 
+ *
  * 提供全局加载指示器功能，支持多种尺寸和自定义配置。
- * 
+ *
  * @example
  * ```typescript
  * // 基本使用
  * const indicator = GlobalIndicator.show();
- * 
+ *
  * // 带配置的使用
  * const indicator = GlobalIndicator.show({
  *   text: '加载中...',
  *   size: 'large',
  *   zIndex: 10000
  * });
- * 
+ *
  * // 隐藏指定指示器
  * GlobalIndicator.hide(indicator);
- * 
+ *
  * // 隐藏所有指示器
  * GlobalIndicator.hideAll();
  * ```
@@ -135,13 +133,13 @@ function safeRemoveElement(element: HTMLElement): void {
 const GlobalIndicatorComponent: GlobalIndicator = {
   /**
    * 显示全局指示器
-   * 
+   *
    * @param optionsOrParent - 配置选项或父容器元素
    * @param text - 显示的文本内容（当第一个参数为 HTMLElement 时使用）
    * @param zIndex - z-index 层级（当第一个参数为 HTMLElement 时使用）
    * @param size - 指示器尺寸（当第一个参数为 HTMLElement 时使用）
    * @returns 指示器 DOM 元素
-   * 
+   *
    * @example
    * ```typescript
    * // 新版本用法
@@ -149,7 +147,7 @@ const GlobalIndicatorComponent: GlobalIndicator = {
    *   text: '加载中...',
    *   size: 'large'
    * });
-   * 
+   *
    * // 兼容旧版本用法
    * const indicator = GlobalIndicator.show(
    *   document.body,
@@ -167,7 +165,7 @@ const GlobalIndicatorComponent: GlobalIndicator = {
   ): HTMLElement {
     // 处理参数重载
     let options: GlobalIndicatorOptions;
-    
+
     if (optionsOrParent && 'parent' in optionsOrParent) {
       // 新版本用法：传入配置对象
       options = optionsOrParent;
@@ -191,10 +189,10 @@ const GlobalIndicatorComponent: GlobalIndicator = {
 
     // 创建指示器元素
     const indicatorElement = createIndicatorElement(displayText, displayZIndex);
-    
+
     // 获取旋转点元素
     const dotElement = indicatorElement.querySelector(`.${SELECTOR_PREFIX}-dot`) as HTMLElement;
-    
+
     if (!dotElement) {
       throw new Error('Failed to create indicator dot element');
     }
@@ -219,9 +217,9 @@ const GlobalIndicatorComponent: GlobalIndicator = {
 
   /**
    * 隐藏指定的指示器
-   * 
+   *
    * @param indicatorDom - 要隐藏的指示器 DOM 元素
-   * 
+   *
    * @example
    * ```typescript
    * const indicator = GlobalIndicator.show();
@@ -241,7 +239,7 @@ const GlobalIndicatorComponent: GlobalIndicator = {
 
   /**
    * 隐藏所有活跃的指示器
-   * 
+   *
    * @example
    * ```typescript
    * // 隐藏所有指示器
@@ -250,7 +248,7 @@ const GlobalIndicatorComponent: GlobalIndicator = {
    */
   hideAll(): void {
     const indicators = Array.from(activeHandlers);
-    
+
     indicators.forEach((indicator) => {
       safeRemoveElement(indicator);
     });

@@ -3,10 +3,16 @@ import React from 'react';
 import SearchList from '@baifendian/adhere-ui-searchlist';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 import sage from '../saga';
 
+// const DictComponentName = `SystemList${FieldGeneratorToDict.ComponentNames.SearchList.Standard}`;
 const DictComponent = FieldGeneratorToDict.Components[
-  `SystemList${FieldGeneratorToDict.ComponentNames.SearchList.Standard}`
+  FieldGeneratorToDict.genDictComponentName(
+    // @ts-ignore
+    names.SystemList,
+    FieldGeneratorToDict.ComponentNames.SearchList.Standard,
+  )
 ]({
   override: {
     getColumns() {

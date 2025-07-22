@@ -73,13 +73,12 @@ import MobileTreeSelectStandard from './MobileTreeSelect/MobileTreeSelectStandar
 import React, { Suspense, lazy } from 'react';
 
 import e2e from '@baifendian/adhere-e2e';
-import { createLoggerMiddleware } from '@ctsj/state/lib/middleware';
-import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
-import { Provider } from '@ctsj/state/lib/react';
-import { applyMiddleware, createStore } from '@ctsj/state/lib/state';
 
-import DictConfig from '@/dict/dict.config';
-
+// import { createLoggerMiddleware } from '@ctsj/state/lib/middleware';
+// import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
+// import { Provider } from '@ctsj/state/lib/react';
+// import { applyMiddleware, createStore } from '@ctsj/state/lib/state';
+// import DictConfig from '@/dict/dict.config';
 import FieldGeneratorToDict from '../src/index';
 import AutoCompleteTest from './AutoComplete/Standard';
 import BreadcrumbTest from './Breadcrumb/SuspenseStandard';
@@ -89,6 +88,7 @@ import CascaderAsyncFlatEntityValueHOC from './Cascader/CascaderAsyncFlatEntityV
 import CascaderEntityValueHOC from './Cascader/CascaderEntityValueHOC';
 import CascaderFlatEntityValueHOC from './Cascader/CascaderFlatEntityValueHOC';
 import CascaderMulitEntityValueHOC from './Cascader/CascaderMulitEntityValueHOC';
+import CascaderMulti from './Cascader/Multi';
 import CheckboxTest from './Checkbox/Vertical.tsx';
 import DropdownTest from './Dropdown/Standard';
 import InputMultipleHorizontal from './InputMultiple/Horizontal';
@@ -144,33 +144,33 @@ import TreeFlatEntityValueHOC from './Tree/TreeFlatEntityValueHOC';
 import TreeFlatMultiEntityValueHOC from './Tree/TreeFlatMultiEntityValueHOC';
 import TreeLeafEntityValueHOC from './Tree/TreeLeafEntityValueHOC';
 import TreeMultiEntityValueHOC from './Tree/TreeMultiEntityValueHOC';
-import sage from './saga';
 
+// import sage from './saga';
 import '../src/index.less';
 
 // 设置Saga实例
-ServiceRegister.setSage(sage);
+// ServiceRegister.setSage(sage);
 
-DictConfig();
+// DictConfig();
 
 // store初始化
-const store = createStore(null, {}, applyMiddleware(createLoggerMiddleware(), sage));
+// const store = createStore(null, {}, applyMiddleware(createLoggerMiddleware(), sage));
 
-const SearchTable = lazy(() =>
-  import(/* webpackChunkName: "searchtable" */ './SearchTable/SingleSelect.jsx'),
-);
+// const SearchTable = lazy(() =>
+//   import(/* webpackChunkName: "searchtable" */ './SearchTable/SingleSelect.jsx'),
+// );
 
-e2e.PC({
-  children: (
-    /*<Provider store={store}>
-      <Suspense fallback={<div>loading</div>}>
-        <SearchTable />
-      </Suspense>
-    </Provider>*/
-    <AutoCompleteSelect />
-  ),
-});
-
-// e2e.Mobile({
-//   children: <MobileInputMultipleFilterCheckAllSelect />,
+// e2e.PC({
+//   children: (
+//     /*<Provider store={store}>
+//       <Suspense fallback={<div>loading</div>}>
+//         <SearchTable />
+//       </Suspense>
+//     </Provider>*/
+//     <AutoCompleteSelect />
+//   ),
 // });
+
+e2e.Mobile({
+  children: <MobileCheckListDynamicCheckAll />,
+});

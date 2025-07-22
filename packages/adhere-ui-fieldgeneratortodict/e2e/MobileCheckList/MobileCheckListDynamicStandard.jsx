@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
   const [value, setValue] = useState();
 
-  const DictComponentName = `SystemUser${FieldGeneratorToDict.ComponentNames.MobileCheckListDynamic.Standard}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemUser${FieldGeneratorToDict.ComponentNames.MobileCheckListDynamic.Standard}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemUser,
+        FieldGeneratorToDict.ComponentNames.MobileCheckListDynamic.Standard,
+      )
+    ];
 
-  return <DictComponent placeholder={DictComponentName} value={value} onChange={setValue} />;
+  return <DictComponent placeholder="SystemUser" value={value} onChange={setValue} />;
 };

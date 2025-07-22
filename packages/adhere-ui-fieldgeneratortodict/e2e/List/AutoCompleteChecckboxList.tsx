@@ -4,16 +4,25 @@ import React, { useState } from 'react';
 import { List } from '@baifendian/adhere-ui-anthoc';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
   const [value, setValue] = useState([]);
 
-  const DictComponentName = `SystemBookAC${FieldGeneratorToDict.ComponentNames.ListAC.Multi}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemBookAC${FieldGeneratorToDict.ComponentNames.ListAC.Multi}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemBookAC,
+        FieldGeneratorToDict.ComponentNames.ListAC.Multi,
+      )
+    ];
 
   return (
     <DictComponent
-      placeholder={DictComponentName}
+      placeholder={names.SystemBookAC}
       style={{ width: 600 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}

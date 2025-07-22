@@ -4,15 +4,26 @@ import React, { useState } from 'react';
 import { Modal } from '@baifendian/adhere-mobile-ui-anthoc';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
   const [value, setValue] = useState();
 
-  const DictComponentName = `SystemUser${FieldGeneratorToDict.ComponentNames.MobileCheckListDynamic.CheckAll}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemUser${FieldGeneratorToDict.ComponentNames.MobileCheckListDynamic.CheckAll}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemUser,
+        FieldGeneratorToDict.ComponentNames.MobileCheckListDynamic.CheckAll,
+      )
+    ];
 
   return (
     <Modal.TriggerPrompt
+      value={value}
+      onChange={setValue}
       title="人员选择"
       submitAction={{
         key: 'submit',
@@ -22,7 +33,7 @@ export default () => {
         //   return Promise.resolve(value);
         // },
         onClick: (cb) => {
-          cb();
+          return Promise.resolve();
         },
       }}
       popoverTriggerProps={{
@@ -36,8 +47,6 @@ export default () => {
       }}
     >
       <DictComponent
-        value={value}
-        onChange={setValue}
         onCheckAllChange={setValue}
         checkAllLabel={(_value) => (
           <div>

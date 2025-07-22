@@ -32,7 +32,6 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@baifendian/adhere-util-resource": "^2.11.0",
     "spin.js": "^4.1.1"
   },
   "devDependencies": {

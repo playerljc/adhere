@@ -1,11 +1,8 @@
 import classNames from 'classnames';
 import React, { memo, useMemo } from 'react';
 
-import Select from '../select';
 import type { AutoCompleteSelectInputProps } from '../types';
 import AutoComplete from './index';
-
-const { Option } = Select;
 
 /**
  * AutoCompleteSelectInput
@@ -52,20 +49,15 @@ const AutoCompleteSelectInput = memo<AutoCompleteSelectInputProps>(
         filterOption={false}
         onSelect={onSelect}
         onSearch={onSearch}
+        options={_options.map(({ label: itemLabel, value: itemValue }) => ({
+          label: itemLabel,
+          value: itemValue,
+          className: classNames({
+            'ant-select-item-option-selected': Object.is(value?.selectValue, itemValue),
+          }),
+        }))}
         {...props}
-      >
-        {_options.map(({ label: itemLabel, value: itemValue }) => (
-          <Option
-            className={classNames({
-              'ant-select-item-option-selected': Object.is(value?.selectValue, itemValue),
-            })}
-            key={itemValue}
-            value={itemValue}
-          >
-            {itemLabel}
-          </Option>
-        ))}
-      </AutoComplete>
+      />
     );
   },
 );

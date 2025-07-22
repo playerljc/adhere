@@ -2,6 +2,7 @@ import { Button, Form } from 'antd';
 import React, { useState } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 const { TreeEntityValueHOC } = FieldGeneratorToDict;
 
@@ -10,8 +11,16 @@ export default () => {
 
   const [form] = Form.useForm();
 
-  const DictComponentName = `SystemTableTreeACFlat${FieldGeneratorToDict.ComponentNames.TableTreeAC.Multi}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemTableTreeACFlat${FieldGeneratorToDict.ComponentNames.TableTreeAC.Multi}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemTableTreeACFlat,
+        FieldGeneratorToDict.ComponentNames.TableTreeAC.Multi,
+      )
+    ];
 
   return (
     <Form
@@ -33,7 +42,7 @@ export default () => {
       >
         <TreeEntityValueHOC>
           <DictComponent
-            placeholder={DictComponentName}
+            placeholder={names.SystemTableTreeACFlat}
             style={{ width: 800 }}
             dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
             value={value}

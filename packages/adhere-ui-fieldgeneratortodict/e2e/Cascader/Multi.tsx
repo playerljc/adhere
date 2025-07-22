@@ -1,10 +1,26 @@
 import React from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  const DictComponentName = `SystemSSQ${FieldGeneratorToDict.ComponentNames.Cascader.Multi}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const [value, setValue] = React.useState([]);
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemSSQ,
+        FieldGeneratorToDict.ComponentNames.Cascader.Multi,
+      )
+    ];
 
-  return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+  return (
+    <DictComponent
+      placeholder={names.SystemSSQ}
+      style={{ width: 300 }}
+      isHideInvalidValue={false}
+      value={value}
+      onChange={setValue}
+    />
+  );
 };

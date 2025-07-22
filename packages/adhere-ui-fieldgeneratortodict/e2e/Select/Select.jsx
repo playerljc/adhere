@@ -1,10 +1,19 @@
 import React from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
+import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard}`;
-  const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  // const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard}`;
+  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const DictComponent =
+    FieldGeneratorToDict.Components[
+      FieldGeneratorToDict.genDictComponentName(
+        // @ts-ignore
+        names.SystemBookCatalogDynamic,
+        FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard,
+      )
+    ];
 
-  return <DictComponent placeholder={DictComponentName} style={{ width: 500 }} />;
+  return <DictComponent placeholder={names.SystemBookCatalogDynamic} style={{ width: 500 }} />;
 };
