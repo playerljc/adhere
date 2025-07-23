@@ -6,7 +6,7 @@ import qs from 'qs';
 import type { ReactNode } from 'react';
 import React from 'react';
 
-import { EllipsisOutlined, FilterOutlined, SearchOutlined } from '@ant-design/icons';
+import { EllipsisOutlined, FilterOutlined, SearchOutlined, SyncOutlined } from '@ant-design/icons';
 import {
   DatePicker,
   Dropdown,
@@ -665,6 +665,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                         <div className={`${_selectorPrefix}-header-search-wrap-footer`}>
                           <Button
                             size="small"
+                            icon={<SyncOutlined />}
                             onClick={() => {
                               const state = {};
 
@@ -682,6 +683,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                           </Button>
 
                           <Button
+                            icon={<SearchOutlined />}
                             size="small"
                             type="primary"
                             onClick={() => this.search().then(() => confirm())}
