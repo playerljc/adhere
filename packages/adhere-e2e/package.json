@@ -50,6 +50,7 @@
     "@baifendian/adhere-util-preferences": "^2.11.0",
     "antd": "^5.26.0",
     "antd-mobile": "^5.39.0",
+    "dayjs": "^1.11.13",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-fastclick": "^3.0.2",
