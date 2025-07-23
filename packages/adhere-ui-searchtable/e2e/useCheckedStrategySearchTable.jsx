@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { Resource } from '@baifendian/adhere';
+import { FieldGeneratorToDict, Resource } from '@baifendian/adhere';
 
 import SearchTable from '../src/index';
+import { names } from './config/dict/dict/dict.test.config';
 import './serviceRegister';
 
+const { ComponentNames, genDictComponentName } = FieldGeneratorToDict;
 const { ProSearchRowDragSortStateTable, SearchTableStateImplementFactory, DragSortColumn } =
   SearchTable;
 
@@ -79,7 +81,8 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
         $search: {
           type: 'select',
           visible: true,
-          dictName: 'SystemTestSexSelect',
+          // dictName: 'SystemTestSexSelect',
+          dictName: `${genDictComponentName(names.SystemTestSex, ComponentNames.Select.Standard)}`,
         },
       },
       {
@@ -196,4 +199,6 @@ const Wrap = SearchTableStateImplementFactory({
   models,
 })(RowDragSort);
 
-export default Wrap;
+export default () => {
+  return <Wrap FieldGeneratorToDict={FieldGeneratorToDict} />;
+};

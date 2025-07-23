@@ -1,17 +1,18 @@
 import faker from 'faker';
 import React from 'react';
 
-import { Resource } from '@baifendian/adhere';
+import { FieldGeneratorToDict, Resource } from '@baifendian/adhere';
 import Util from '@baifendian/adhere-util';
 
 import SearchTable from '../src/index';
+import { names } from './config/dict/dict/dict.test.config';
 import './serviceRegister';
 
 const { ProSearchRowDragSortStateTable, SearchTableStateImplementFactory, DragSortColumn } =
   SearchTable;
 
 const serviceName = 'user';
-
+const { ComponentNames, genDictComponentName } = FieldGeneratorToDict;
 /**
  * RowDragSort
  * @class RowDragSort
@@ -81,7 +82,8 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
         $search: {
           type: 'select',
           visible: true,
-          dictName: 'SystemTestSexSelect',
+          // dictName: 'SystemTestSexSelect',
+          dictName: `${genDictComponentName(names.SystemTestSex, ComponentNames.Select.Standard)}`,
         },
       },
       {
@@ -198,4 +200,6 @@ const Wrap = SearchTableStateImplementFactory({
   models,
 })(RowDragSort);
 
-export default Wrap;
+export default () => {
+  return <Wrap FieldGeneratorToDict={FieldGeneratorToDict} />;
+};

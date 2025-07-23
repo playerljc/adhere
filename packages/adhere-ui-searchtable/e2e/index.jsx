@@ -8,7 +8,6 @@ import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 import { Provider } from '@ctsj/state/lib/react';
 import { applyMiddleware, createStore } from '@ctsj/state/lib/state';
 
-import DictConfig from './config/dict/dict.config';
 import sage from './saga';
 
 import 'antd/dist/reset.css';
@@ -20,9 +19,6 @@ import '../src/index.less';
 
 // 设置Saga实例
 ServiceRegister.setSage(sage);
-
-// 配置字典
-DictConfig();
 
 /**
  * serviceRegister - 注册所有的services

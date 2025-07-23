@@ -1,14 +1,15 @@
 import React from 'react';
 
-import { DateDisplay, DelConfirm, Resource } from '@baifendian/adhere';
+import { DelConfirm, Resource } from '@baifendian/adhere';
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 
 import SearchTable from '../src/index';
+import { names } from './config/dict/dict/dict.test.config';
 import './serviceRegister';
 
 const { ProEditableCellSearchStateTable, OptionsWrap, SearchTableStateImplementFactory } =
   SearchTable;
-
+const { ComponentNames, genDictComponentName } = FieldGeneratorToDict;
 const serviceName = 'user';
 
 /**
@@ -101,7 +102,8 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
         $search: {
           type: 'dict',
           visible: true,
-          dictName: `SystemTestTree${FieldGeneratorToDict.ComponentNames.Tree.Standard}`,
+          // dictName: `SystemTestTree${FieldGeneratorToDict.ComponentNames.Tree.Standard}`,
+          dictName: `${genDictComponentName(names.SystemTestSex, ComponentNames.Select.Standard)}`,
           props: {
             isHideInvalidValue: false,
           },
@@ -109,7 +111,8 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
         $editable: {
           editable: true,
           type: 'select',
-          dictName: 'SystemTestSexSelect',
+          // dictName: 'SystemTestSexSelect',
+          dictName: `${genDictComponentName(names.SystemTestSex, ComponentNames.Select.Standard)}`,
           rules: [
             {
               required: true,
@@ -341,4 +344,6 @@ const Wrap = SearchTableStateImplementFactory({
   models,
 })(ProSearchStateTableImpl);
 
-export default Wrap;
+export default () => {
+  return <Wrap FieldGeneratorToDict={FieldGeneratorToDict} />;
+};

@@ -19,6 +19,10 @@ import {
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
+import type {
+  LayoutType,
+  TableGridLayoutProps,
+} from '@baifendian/adhere-ui-tablegridlayout/lib/types';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
@@ -653,6 +657,8 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                             searchConfig,
                             column,
                             dataIndex,
+                            layout: undefined,
+                            currentTitle: undefined,
                           })}
                         </div>
 
@@ -843,6 +849,11 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       ];
     }
 
+    /**
+     * getGridSearchFormProps
+     * @description 是否显示 label后面的 ":"
+     * @param $search
+     */
     getSearchLabelSymbol($search) {
       const isShowLabelSymbol = !('isShowLabelSymbol' in $search)
         ? true
@@ -855,7 +866,13 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @description 通过列设置获取gridSearchFormGroup的Data数据
      * @return Array
      */
-    getGridSearchFormGroupDataByColumnConfig() {
+    getGridSearchFormGroupDataByColumnConfig(
+      tableGridLayoutProps?: Omit<TableGridLayoutProps, 'data' | 'layout'> & {
+        layout: LayoutType | 'prefix';
+      },
+    ) {
+      const layout = !tableGridLayoutProps ? 'horizontal' : tableGridLayoutProps.layout;
+
       const searchFormGroupData: {
         key: number;
         sort?: number;
@@ -883,7 +900,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
             searchFormGroupData.push({
               key: dataIndex,
               sort: $search.sort,
-              label: (
+              label: layout !== 'prefix' && (
                 <Label {...($search.labelAttrs ?? {})}>
                   {Util.isFunction(currentTitle) ? currentTitle() : currentTitle}
                   {this.getSearchLabelSymbol($search)}
@@ -900,6 +917,8 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                       searchConfig,
                       column,
                       dataIndex,
+                      layout,
+                      currentTitle,
                     })}
                   </Value>
                 ),
@@ -1205,11 +1224,27 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @param searchConfig
      * @param column
      * @param dataIndex
+     * @param layout
+     * @param currentTitle
      */
-    renderGridSearchFormGroupDataItem(type, { searchConfig, column, dataIndex }) {
+    renderGridSearchFormGroupDataItem(
+      type,
+      { searchConfig, column, dataIndex, layout, currentTitle },
+    ) {
+      const commonProps = {
+        prefix:
+          layout === 'prefix' ? (
+            <>
+              {Util.isFunction(currentTitle) ? currentTitle() : currentTitle}
+              {this.getSearchLabelSymbol(searchConfig)}
+            </>
+          ) : null,
+      };
+
       const renderInput = ({ searchConfig, dataIndex }) => {
         return (
           <Input
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onInputChange(dataIndex, e)}
             {...{
@@ -1222,6 +1257,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderTextArea = ({ searchConfig, dataIndex }) => {
         return (
           <TextArea
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onInputChange(dataIndex, e)}
             {...{
@@ -1234,6 +1270,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderInputNumber = ({ searchConfig, dataIndex }) => {
         return (
           <InputNumber
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...{
@@ -1246,6 +1283,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderInputNumberDecimal1 = ({ searchConfig, dataIndex }) => {
         return (
           <InputNumberDecimal1
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...{
@@ -1258,6 +1296,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderInputNegativeNumberDecimal1 = ({ searchConfig, dataIndex }) => {
         return (
           <InputNumberDecimal1.InputNegativeNumberDecimal1
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...{
@@ -1270,6 +1309,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderInputPositiveNumberDecimal1 = ({ searchConfig, dataIndex }) => {
         return (
           <InputNumberDecimal1.InputPositiveNumberDecimal1
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...{
@@ -1282,6 +1322,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderInputNumberDecimal2 = ({ searchConfig, dataIndex }) => {
         return (
           <InputNumberDecimal2
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...{
@@ -1294,6 +1335,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderInputNegativeNumberDecimal2 = ({ searchConfig, dataIndex }) => {
         return (
           <InputNumberDecimal2.InputNegativeNumberDecimal2
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...{
@@ -1306,6 +1348,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderInputPositiveNumberDecimal2 = ({ searchConfig, dataIndex }) => {
         return (
           <InputNumberDecimal2.InputPositiveNumberDecimal2
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...{
@@ -1318,6 +1361,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderInputNumberInteger = ({ searchConfig, dataIndex }) => {
         return (
           <InputNumberInteger
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...{
@@ -1330,6 +1374,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderInputNegativeNumberInteger = ({ searchConfig, dataIndex }) => {
         return (
           <InputNumberInteger.InputNegativeNumberInteger
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...{
@@ -1342,6 +1387,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderInputPositiveNumberInteger = ({ searchConfig, dataIndex }) => {
         return (
           <InputNumberInteger.InputPositiveNumberInteger
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...{
@@ -1354,6 +1400,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderDatePicker = ({ searchConfig, dataIndex }) => {
         return (
           <DatePicker
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(dayjs) => {
               this.setState({
@@ -1369,6 +1416,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderTimePicker = ({ searchConfig, dataIndex }) => {
         return (
           <TimePicker
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(dayjs) => {
               this.setState({
@@ -1386,6 +1434,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
         return (
           <RangePicker
+            {...commonProps}
             value={[this.state[startName], this.state[endName]]}
             onChange={(dayjs) => {
               this.onDateTimeRangeChange([startName, endName], dayjs);
@@ -1399,6 +1448,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderSlider = ({ searchConfig, dataIndex }) => {
         return (
           <Slider
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...{
@@ -1410,6 +1460,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderSliderRange = ({ searchConfig }) => {
         return (
           <Slider
+            {...commonProps}
             range
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
@@ -1422,6 +1473,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderRate = ({ searchConfig }) => {
         return (
           <Rate
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...{
@@ -1433,6 +1485,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderSwitch = ({ searchConfig }) => {
         return (
           <Switch
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...{
@@ -1444,6 +1497,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderColorPicker = ({ searchConfig }) => {
         return (
           <ColorPicker
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...{
@@ -1453,7 +1507,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         );
       };
       const renderCustom = ({ searchConfig, column, dataIndex }) => {
-        return searchConfig?.render?.({ searchConfig, column, dataIndex });
+        return searchConfig?.render?.({ searchConfig, column, dataIndex, layout, currentTitle });
       };
       const renderDict = ({ searchConfig, column, dataIndex }) => {
         let Component = this?.props?.FieldGeneratorToDict?.Components?.[searchConfig.dictName];
@@ -1490,6 +1544,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
         return (
           <Component
+            {...commonProps}
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...Object.assign(

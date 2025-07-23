@@ -1,12 +1,13 @@
 // import faker from 'faker';
 import Mockjs from 'mockjs';
 
-import Dict from '@baifendian/adhere-util-dict';
+import { genModuleDict } from '@baifendian/adhere-util-dict';
 
-export default {
-  initStatic() {
-    // Radio
-    Dict.handlers.SystemTestRadio = () => [
+const { names, values } = genModuleDict({
+  // 静态字典
+  SystemTestRadio: {
+    isStatic: true,
+    handler: () => [
       {
         value: 1,
         label: '通过',
@@ -19,26 +20,11 @@ export default {
         value: 3,
         label: '退回',
       },
-    ];
-
-    Dict.handlers.SystemTestDynamicRadio = () =>
-      Promise.resolve([
-        {
-          value: 1,
-          label: '通过',
-        },
-        {
-          value: 2,
-          label: '不通过',
-        },
-        {
-          value: 3,
-          label: '退回',
-        },
-      ]);
-
-    // CheckBox
-    Dict.handlers.SystemTestCheckBox = () => [
+    ],
+  },
+  SystemTestCheckBox: {
+    isStatic: true,
+    handler: () => [
       {
         value: 1,
         label: '通过',
@@ -51,26 +37,11 @@ export default {
         value: 3,
         label: '退回',
       },
-    ];
-
-    Dict.handlers.SystemTestDynamicCheckBox = () =>
-      Promise.resolve([
-        {
-          value: 1,
-          label: '通过',
-        },
-        {
-          value: 2,
-          label: '不通过',
-        },
-        {
-          value: 3,
-          label: '退回',
-        },
-      ]);
-
-    //Select
-    Dict.handlers.SystemTestSelect = () => [
+    ],
+  },
+  SystemTestSelect: {
+    isStatic: true,
+    handler: () => [
       {
         value: 1,
         label: '通过',
@@ -83,56 +54,11 @@ export default {
         value: 3,
         label: '退回',
       },
-    ];
-    Dict.handlers.SystemTestDynamicSelect = () =>
-      Promise.resolve([
-        {
-          value: 1,
-          label: '通过',
-        },
-        {
-          value: 2,
-          label: '不通过',
-        },
-        {
-          value: 3,
-          label: '退回',
-        },
-      ]);
-
-    // AutoComplete
-    Dict.handlers.SystemTestAutoCompleteSelect = () => (kw) => {
-      const data = [
-        {
-          label: 'java',
-          value: 1,
-        },
-        {
-          label: 'javaScript',
-          value: 2,
-        },
-        {
-          label: 'html',
-          value: 3,
-        },
-        {
-          label: 'css',
-          value: 4,
-        },
-        {
-          label: 'spring',
-          value: 5,
-        },
-        {
-          label: 'react',
-          value: 6,
-        },
-      ];
-
-      return Promise.resolve(data.filter((t) => t.label.includes(kw)));
-    };
-
-    Dict.handlers.SystemTestTree = () => [
+    ],
+  },
+  SystemTestTree: {
+    isStatic: true,
+    handler: () => [
       {
         title: 'Node1',
         value: '0-0',
@@ -155,10 +81,11 @@ export default {
         value: '0-1',
         leaf: true,
       },
-    ];
-
-    //Transfer
-    Dict.handlers.SystemTestTransfer = () => [
+    ],
+  },
+  SystemTestTransfer: {
+    isStatic: true,
+    handler: () => [
       {
         value: 1,
         label: '通过',
@@ -171,25 +98,11 @@ export default {
         value: 3,
         label: '退回',
       },
-    ];
-    Dict.handlers.SystemTestDynamicTransfer = () =>
-      Promise.resolve([
-        {
-          value: 1,
-          label: '通过',
-        },
-        {
-          value: 2,
-          label: '不通过',
-        },
-        {
-          value: 3,
-          label: '退回',
-        },
-      ]);
-
-    // Table
-    Dict.handlers.SystemTestTable = () =>
+    ],
+  },
+  SystemTestTable: {
+    isStatic: true,
+    handler: () =>
       Array.from({ length: 10 }).map((t, index) => ({
         id: Mockjs.mock('@guid'),
         isMore: !!Math.floor((Math.random() * 10) % 2),
@@ -201,44 +114,11 @@ export default {
         width: Mockjs.mock('@integer'),
         hometown: Mockjs.mock('@name'),
         address: Mockjs.mock('@name'),
-      }));
-
-    Dict.handlers.SystemTestTablePagination = () => (paging) => {
-      const { current, pageSize } = paging;
-
-      const data = [];
-      data.length = 300;
-      data.fill(0);
-
-      const res = {
-        resCode: 0,
-        data: {
-          total: data.length,
-          pages: 30,
-          current: 1,
-          records: data
-            .slice((current - 1) * pageSize, (current - 1) * pageSize + pageSize)
-            .map((t, index) => ({
-              id: (current - 1) * pageSize + (index + 1),
-              isMore: !!Math.floor((Math.random() * 10) % 2),
-              name: Mockjs.mock('@name'),
-              sex: `${(index + 1) % 2}`,
-              birthDay: new Date().getTime(),
-              deptName: Mockjs.mock('@name'),
-              height: Mockjs.mock('@integer'),
-              width: Mockjs.mock('@integer'),
-              hometown: Mockjs.mock('@name'),
-              address: Mockjs.mock('@name'),
-            })),
-        },
-        resMsg: '',
-      };
-
-      return Promise.resolve(res.data);
-    };
-
-    // Cascader
-    Dict.handlers.SystemTestCascader = () => [
+      })),
+  },
+  SystemTestCascader: {
+    isStatic: true,
+    handler: () => [
       {
         value: 'zhejiang',
         label: 'Zhejiang',
@@ -271,9 +151,11 @@ export default {
           },
         ],
       },
-    ];
-
-    Dict.handlers.SystemTestTree = () => [
+    ],
+  },
+  SystemTestTreeCascader: {
+    isStatic: true,
+    handler: () => [
       {
         value: 'zhejiang',
         title: 'Zhejiang',
@@ -306,9 +188,175 @@ export default {
           },
         ],
       },
-    ];
+    ],
+  },
+  SystemTestList: {
+    isStatic: true,
+    handler: () =>
+      Array.from({ length: 5 }).map((t, index) => ({
+        id: Mockjs.mock('@guid'),
+        isMore: !!Math.floor((Math.random() * 10) % 2),
+        name: Mockjs.mock('@name'),
+        sex: `${(index + 1) % 2}`,
+        birthDay: new Date().getTime(),
+        deptName: Mockjs.mock('@name'),
+        height: Mockjs.mock('@integer'),
+        width: Mockjs.mock('@integer'),
+        hometown: Mockjs.mock('@name'),
+        address: Mockjs.mock('@name'),
+      })),
+  },
+  SystemTestSex: {
+    isStatic: true,
+    handler: () => [
+      {
+        label: '男',
+        value: '1',
+      },
+      {
+        label: '女',
+        value: '0',
+      },
+    ],
+  },
+  // 远程字典
+  SystemTestDynamicRadio: {
+    handler: () =>
+      Promise.resolve([
+        {
+          value: 1,
+          label: '通过',
+        },
+        {
+          value: 2,
+          label: '不通过',
+        },
+        {
+          value: 3,
+          label: '退回',
+        },
+      ]),
+  },
+  SystemTestDynamicCheckBox: {
+    handler: () =>
+      Promise.resolve([
+        {
+          value: 1,
+          label: '通过',
+        },
+        {
+          value: 2,
+          label: '不通过',
+        },
+        {
+          value: 3,
+          label: '退回',
+        },
+      ]),
+  },
+  SystemTestDynamicSelect: {
+    handler: () =>
+      Promise.resolve([
+        {
+          value: 1,
+          label: '通过',
+        },
+        {
+          value: 2,
+          label: '不通过',
+        },
+        {
+          value: 3,
+          label: '退回',
+        },
+      ]),
+  },
+  SystemTestAutoCompleteSelect: {
+    handler: () => (kw) => {
+      const data = [
+        {
+          label: 'java',
+          value: 1,
+        },
+        {
+          label: 'javaScript',
+          value: 2,
+        },
+        {
+          label: 'html',
+          value: 3,
+        },
+        {
+          label: 'css',
+          value: 4,
+        },
+        {
+          label: 'spring',
+          value: 5,
+        },
+        {
+          label: 'react',
+          value: 6,
+        },
+      ];
 
-    Dict.handlers.SystemTestDynamicCascader = () =>
+      return Promise.resolve(data.filter((t) => t.label.includes(kw)));
+    },
+  },
+  SystemTestDynamicTransfer: {
+    handler: () =>
+      Promise.resolve([
+        {
+          value: 1,
+          label: '通过',
+        },
+        {
+          value: 2,
+          label: '不通过',
+        },
+        {
+          value: 3,
+          label: '退回',
+        },
+      ]),
+  },
+  SystemTestTablePagination: {
+    handler: () => (paging) => {
+      const { current, pageSize } = paging;
+
+      const data = [];
+      data.length = 300;
+      data.fill(0);
+
+      const res = {
+        resCode: 0,
+        data: {
+          total: data.length,
+          pages: 30,
+          current: 1,
+          records: data
+            .slice((current - 1) * pageSize, (current - 1) * pageSize + pageSize)
+            .map((t, index) => ({
+              id: (current - 1) * pageSize + (index + 1),
+              isMore: !!Math.floor((Math.random() * 10) % 2),
+              name: Mockjs.mock('@name'),
+              sex: `${(index + 1) % 2}`,
+              birthDay: new Date().getTime(),
+              deptName: Mockjs.mock('@name'),
+              height: Mockjs.mock('@integer'),
+              width: Mockjs.mock('@integer'),
+              hometown: Mockjs.mock('@name'),
+              address: Mockjs.mock('@name'),
+            })),
+        },
+        resMsg: '',
+      };
+
+      return Promise.resolve(res.data);
+    },
+  },
+  SystemTestDynamicCascader: {
+    handler: () =>
       Promise.resolve([
         {
           value: 'zhejiang',
@@ -342,24 +390,10 @@ export default {
             },
           ],
         },
-      ]);
-
-    // List
-    Dict.handlers.SystemTestList = () =>
-      Array.from({ length: 5 }).map((t, index) => ({
-        id: Mockjs.mock('@guid'),
-        isMore: !!Math.floor((Math.random() * 10) % 2),
-        name: Mockjs.mock('@name'),
-        sex: `${(index + 1) % 2}`,
-        birthDay: new Date().getTime(),
-        deptName: Mockjs.mock('@name'),
-        height: Mockjs.mock('@integer'),
-        width: Mockjs.mock('@integer'),
-        hometown: Mockjs.mock('@name'),
-        address: Mockjs.mock('@name'),
-      }));
-
-    Dict.handlers.SystemTestListPagination = () => (paging) => {
+      ]),
+  },
+  SystemTestListPagination: {
+    handler: () => (paging) => {
       const { current, pageSize } = paging;
 
       const data = [];
@@ -391,31 +425,8 @@ export default {
       };
 
       return Promise.resolve(res.data);
-    };
-
-    // sex
-    Dict.handlers.SystemTestSex = () => [
-      {
-        label: '男',
-        value: '1',
-      },
-      {
-        label: '女',
-        value: '0',
-      },
-    ];
-
-    // sex
-    Dict.handlers.SystemTestSexSelect = () => [
-      {
-        label: '男',
-        value: '1',
-      },
-      {
-        label: '女',
-        value: '0',
-      },
-    ];
+    },
   },
-  initRemote() {},
-};
+});
+
+export { names, values };

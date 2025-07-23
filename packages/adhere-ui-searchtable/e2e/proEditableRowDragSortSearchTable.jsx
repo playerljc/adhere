@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { DateDisplay, Resource } from '@baifendian/adhere';
+import { DateDisplay, FieldGeneratorToDict, Resource } from '@baifendian/adhere';
 
 import SearchTable from '../src/index';
+import { names } from './config/dict/dict/dict.test.config';
 import './serviceRegister';
 
+const { ComponentNames, genDictComponentName } = FieldGeneratorToDict;
 const {
   ProSearchEditableRowDragSortStateTable,
   ProEditableRowSearchStateTable,
@@ -101,12 +103,14 @@ class RowDragSort extends ProSearchEditableRowDragSortStateTable {
         $search: {
           type: 'select',
           visible: true,
-          dictName: 'SystemTestSexSelect',
+          // dictName: 'SystemTestSexSelect',
+          dictName: `${genDictComponentName(names.SystemTestSex, ComponentNames.Select.Standard)}`,
         },
         $editable: {
           editable: true,
           type: 'select',
-          dictName: 'SystemTestSexSelect',
+          // dictName: 'SystemTestSexSelect',
+          dictName: `${genDictComponentName(names.SystemTestSex, ComponentNames.Select.Standard)}`,
           rules: [
             {
               required: true,
@@ -312,4 +316,6 @@ const Wrap = SearchTableStateImplementFactory({
   models,
 })(RowDragSort);
 
-export default Wrap;
+export default () => {
+  return <Wrap FieldGeneratorToDict={FieldGeneratorToDict} />;
+};

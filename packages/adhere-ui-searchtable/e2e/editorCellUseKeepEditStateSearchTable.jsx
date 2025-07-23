@@ -6,8 +6,10 @@ import { DateDisplay, FieldGeneratorToDict, Resource } from '@baifendian/adhere'
 import Intl from '@baifendian/adhere-util-intl';
 
 import SearchTable from '../src';
+import { names } from './config/dict/dict/dict.test.config';
 import './serviceRegister';
 
+const { ComponentNames, genDictComponentName } = FieldGeneratorToDict;
 const { SearchTableStateImplementFactory, ProEditableCellSearchStateTable } = SearchTable;
 
 const serviceName = 'user';
@@ -158,12 +160,14 @@ class EditableCellUseKeepEditStateSearchTable extends ProEditableCellSearchState
         $search: {
           type: 'dict',
           visible: true,
-          dictName: `SystemTestSex${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
+          // dictName: `SystemTestSex${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
+          dictName: `${genDictComponentName(names.SystemTestSex, ComponentNames.Select.Standard)}`,
         },
         $editable: {
           editable: true,
           type: 'dict',
-          dictName: `SystemTestSex${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
+          // dictName: `SystemTestSex${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
+          dictName: `${genDictComponentName(names.SystemTestSex, ComponentNames.Select.Standard)}`,
           rules: [
             {
               required: true,
@@ -562,4 +566,6 @@ const Wrap = SearchTableStateImplementFactory({
   models: getModels(),
 })(EditableCellUseKeepEditStateSearchTable);
 
-export default Wrap;
+export default () => {
+  return <Wrap FieldGeneratorToDict={FieldGeneratorToDict} />;
+};

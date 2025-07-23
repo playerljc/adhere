@@ -1,13 +1,15 @@
 import React from 'react';
 
-import { DelConfirm } from '@baifendian/adhere';
+import DelConfirm from '@baifendian/adhere-ui-confirm-delconfirm';
+import DateDisplay from '@baifendian/adhere-ui-datedisplay';
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 
 import SearchTable from '../src/index';
+import { names } from './config/dict/dict/dict.test.config';
 import './serviceRegister';
 
 const { ProSearchStateTable, OptionsWrap, SearchTableStateImplementFactory } = SearchTable;
-
+const { ComponentNames, genDictComponentName } = FieldGeneratorToDict;
 const serviceName = 'user';
 
 /**
@@ -59,13 +61,17 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         key: 'name',
         width: {},
         align: 'left',
+        $search: {
+          visible: true,
+          showColumnHeader: true,
+        },
       },
       {
         title: '性别',
         dataIndex: 'sex',
         key: 'sex',
         $tip: '性别',
-        width: 150,
+        width: 400,
         render: (v, record) =>
           this.renderSwitch({
             record,
@@ -78,9 +84,33 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         $search: {
           type: 'dict',
           visible: true,
-          dictName: `SystemTestTree${FieldGeneratorToDict.ComponentNames.Tree.Standard}`,
+          showColumnHeader: true,
+          dictName: `${genDictComponentName(names.SystemTestSex, ComponentNames.Select.Standard)}`,
+          isHideInvalidValue: false,
           props: {
-            isHideInvalidValue: false,
+            getPopupContainer: () => {
+              return document.body;
+            },
+          },
+        },
+      },
+      {
+        title: '出生年月',
+        dataIndex: 'birthday',
+        key: 'birthday',
+        align: 'center',
+        width: {},
+        render: (val) => <DateDisplay.DateDisplay format="L" value={val} />,
+        $search: {
+          type: 'rangePicker',
+          visible: true,
+          startName: 'birthDayStart',
+          endName: 'birthDayEnd',
+          showColumnHeader: true,
+          props: {
+            getPopupContainer: () => {
+              return document.body;
+            },
           },
         },
       },
@@ -95,6 +125,7 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         $search: {
           type: 'inputNumberDecimal2',
           visible: true,
+          showColumnHeader: true,
         },
       },
       {
@@ -108,6 +139,7 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         $search: {
           type: 'inputNumberDecimal2',
           visible: true,
+          showColumnHeader: true,
         },
       },
       {
@@ -119,6 +151,7 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         $search: {
           type: 'input',
           visible: true,
+          showColumnHeader: true,
         },
       },
       {
@@ -129,9 +162,11 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         $search: {
           type: 'input',
           visible: true,
-          valueAttrs: {
-            colSpan: 5,
-          },
+          showColumnHeader: true,
+
+          // valueAttrs: {
+          //   colSpan: 5,
+          // },
         },
       },
       {
@@ -169,9 +204,41 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
       },
     ]);
   }
-}
 
-ProSearchStateTableImpl.propTypes = {};
+  /**
+   * getGridSearchFormColgroup
+   * @description 获取搜索表单的列分组配置
+   * @returns {{columnCount: number, colgroup: Array}}
+   */
+  getGridSearchFormColgroup() {
+    return {
+      // columnCount: 3,
+      // colgroup: [130, 'auto', 130, 'auto', 130, 'auto'],
+      columnCount: 3,
+      colgroup: ['auto', 'auto', 'auto'],
+    };
+  }
+
+  getGridSearchFormGroupParams() {
+    const tableGridLayoutProps = {
+      layout: 'prefix',
+    };
+
+    return [
+      [
+        {
+          name: 'g1',
+          ...this.getGridSearchFormColgroup(),
+          data: this.getGridSearchFormGroupDataByColumnConfig(tableGridLayoutProps),
+        },
+      ],
+      tableGridLayoutProps,
+      {
+        rowCount: Number.MAX_VALUE,
+      },
+    ];
+  }
+}
 
 const models = [];
 const requireComponent = require.context('./model', false, /.*\.(js)$/);
@@ -187,4 +254,13 @@ const Wrap = SearchTableStateImplementFactory({
   models,
 })(ProSearchStateTableImpl);
 
-export default Wrap;
+export default () => {
+  return (
+    <Wrap
+      FieldGeneratorToDict={FieldGeneratorToDict}
+      antdTableProps={{
+        getPopupContainer: () => document.body,
+      }}
+    />
+  );
+};

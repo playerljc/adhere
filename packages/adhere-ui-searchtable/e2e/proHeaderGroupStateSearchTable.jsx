@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { DateDisplay, Resource } from '@baifendian/adhere';
+import { DateDisplay, FieldGeneratorToDict, Resource } from '@baifendian/adhere';
 
 import SearchTable from '../src/index';
+import { names } from './config/dict/dict/dict.test.config';
 import './serviceRegister';
 
 const { ProSearchStateTable, SearchTableStateImplementFactory } = SearchTable;
-
+const { ComponentNames, genDictComponentName } = FieldGeneratorToDict;
 const serviceName = 'user';
 
 /**
@@ -61,7 +62,8 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         $search: {
           type: 'select',
           visible: true,
-          dictName: 'SystemTestSexSelect',
+          // dictName: 'SystemTestSexSelect',
+          dictName: `${genDictComponentName(names.SystemTestSex, ComponentNames.Select.Standard)}`,
         },
         children: [
           {
@@ -73,7 +75,11 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
             $search: {
               type: 'select',
               visible: true,
-              dictName: 'SystemTestSexSelect',
+              // dictName: 'SystemTestSexSelect',
+              dictName: `${genDictComponentName(
+                names.SystemTestSex,
+                ComponentNames.Select.Standard,
+              )}`,
             },
             $resizable: true,
           },
@@ -86,7 +92,11 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
             $search: {
               type: 'select',
               visible: true,
-              dictName: 'SystemTestSexSelect',
+              // dictName: 'SystemTestSexSelect',
+              dictName: `${genDictComponentName(
+                names.SystemTestSex,
+                ComponentNames.Select.Standard,
+              )}`,
             },
             $resizable: true,
           },
@@ -99,7 +109,11 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
             $search: {
               type: 'select',
               visible: true,
-              dictName: 'SystemTestSexSelect',
+              // dictName: 'SystemTestSexSelect',
+              dictName: `${genDictComponentName(
+                names.SystemTestSex,
+                ComponentNames.Select.Standard,
+              )}`,
             },
             $resizable: true,
           },
@@ -128,7 +142,8 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         $search: {
           type: 'select',
           visible: true,
-          dictName: 'SystemTestSexSelect',
+          // dictName: 'SystemTestSexSelect',
+          dictName: `${genDictComponentName(names.SystemTestSex, ComponentNames.Select.Standard)}`,
         },
       },
       {
@@ -217,4 +232,6 @@ const Wrap = SearchTableStateImplementFactory({
   models,
 })(ProSearchStateTableImpl);
 
-export default Wrap;
+export default () => {
+  return <Wrap FieldGeneratorToDict={FieldGeneratorToDict} />;
+};

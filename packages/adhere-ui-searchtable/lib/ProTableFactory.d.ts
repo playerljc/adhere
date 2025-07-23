@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import React from 'react';
+import type { LayoutType, TableGridLayoutProps } from '@baifendian/adhere-ui-tablegridlayout/lib/types';
 import type { ColumnTypeExt } from './types';
 declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
     new (props: any): {
@@ -154,13 +155,20 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * getGridSearchFormGroupParams
          */
         getGridSearchFormGroupParams(): {}[];
+        /**
+         * getGridSearchFormProps
+         * @description 是否显示 label后面的 ":"
+         * @param $search
+         */
         getSearchLabelSymbol($search: any): React.JSX.Element | null;
         /**
          * getGridSearchFormGroupDataByColumnConfig
          * @description 通过列设置获取gridSearchFormGroup的Data数据
          * @return Array
          */
-        getGridSearchFormGroupDataByColumnConfig(): {
+        getGridSearchFormGroupDataByColumnConfig(tableGridLayoutProps?: Omit<TableGridLayoutProps, "data" | "layout"> & {
+            layout: LayoutType | "prefix";
+        }): {
             key: number;
             sort?: number;
             label: ReactNode;
@@ -227,11 +235,15 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * @param searchConfig
          * @param column
          * @param dataIndex
+         * @param layout
+         * @param currentTitle
          */
-        renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
+        renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex, layout, currentTitle }: {
             searchConfig: any;
             column: any;
             dataIndex: any;
+            layout: any;
+            currentTitle: any;
         }): ReactNode;
         /**
          * renderGridSearchFormGroup
