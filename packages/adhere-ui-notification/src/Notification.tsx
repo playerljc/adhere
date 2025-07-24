@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext, useEffect } from 'react';
+import React, { ReactNode, useContext, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
 import { v1 } from 'uuid';
 
@@ -21,6 +21,8 @@ type RenderToWrapperFunction = (children: () => ReactNode) => ReactNode;
 
 /** Global render wrapper function */
 let renderToWrapper: RenderToWrapperFunction | undefined;
+
+const { useTheme } = ConfigProvider;
 
 /**
  * Notification class for managing notification instances
@@ -181,7 +183,15 @@ class Notification implements NotificationInstance {
     notificationElement.dataset.id = id;
 
     const CustomComponent: React.FC = () => {
+      const wrapperRef = useRef<HTMLDivElement>(null);
+
       const { media } = useContext(ConfigProvider.Context);
+
+      useTheme<HTMLElement>({
+        elRef: wrapperRef,
+        group: 'normal',
+        displayName: 'Notification',
+      });
 
       useEffect(() => {
         this.build(id, notificationElement, media);
@@ -189,7 +199,9 @@ class Notification implements NotificationInstance {
 
       return (
         <>
-          <div className="info">{children}</div>
+          <div ref={wrapperRef} className="info">
+            {children}
+          </div>
           {closed && <span className="close-btn" />}
         </>
       );
@@ -228,7 +240,15 @@ class Notification implements NotificationInstance {
     notificationElement.dataset.id = id;
 
     const StandardComponent: React.FC = () => {
+      const wrapperRef = useRef<HTMLDivElement>(null);
+
       const { media } = useContext(ConfigProvider.Context);
+
+      useTheme<HTMLElement>({
+        elRef: wrapperRef,
+        group: 'normal',
+        displayName: 'Notification',
+      });
 
       useEffect(() => {
         this.build(id, notificationElement, media);
@@ -236,7 +256,7 @@ class Notification implements NotificationInstance {
 
       return (
         <>
-          <div className="info">
+          <div ref={wrapperRef} className="info">
             <div className={`${selectorPrefix}-standard-header`}>
               <div className={`${selectorPrefix}-standard-header-icon`}>
                 {headerIcon && <img src={headerIcon} alt="" />}
