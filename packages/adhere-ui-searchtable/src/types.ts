@@ -234,6 +234,7 @@ export interface TableRowComponentReducer {
     columns: ColumnTypeExt[];
     rowKey: string;
     rowConfig: RowConfig;
+    // a: string;
   }): (trREL: ReactElement) => ReactElement;
 }
 

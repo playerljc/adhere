@@ -1,8 +1,9 @@
 import { Form } from 'antd';
 import type { FormInstance } from 'antd/es/form';
-import type { ReactElement } from 'react';
+import { ReactElement, useContext, useEffect } from 'react';
 import React, { createContext } from 'react';
 
+import SearchTable, { SearchTableContext } from '../../SearchTable';
 import type { TableRowComponentReducer } from '../../types';
 
 export const EditableContext = createContext<FormInstance<any> | null>(null);
@@ -15,8 +16,18 @@ export const EditableContext = createContext<FormInstance<any> | null>(null);
  * rowIndex: number;
  * columns: any[];
  */
-const EditableRow: TableRowComponentReducer = ({ columns = [] }) => {
+const EditableRow: TableRowComponentReducer = ({ columns = [], rowIndex }) => {
   const [form] = Form.useForm();
+
+  // 上下文
+  const context = useContext<{
+    context: SearchTable;
+  } | null>(SearchTableContext);
+
+  useEffect(() => {
+    // 设置行的form句柄
+    context?.context?.setEditableRowForm(rowIndex, form);
+  }, []);
 
   return (trREL: ReactElement) => {
     let res = trREL;

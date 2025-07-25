@@ -42,6 +42,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     private _hackerElement;
     protected _context: ConfigProviderContext | undefined;
     protected tableWrapRef: RefObject<HTMLDivElement>;
+    protected editableRowForms: Map<number, FormInstance<any>>;
     protected components: {
         header: {
             cell: typeof SearchTableResizableTitle;
@@ -687,6 +688,12 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @return {any[]}
      */
     getSelectedRowKeys(): any[];
+    /**
+     * 设置指定行的可编辑表单实例
+     * @param {number} rowIndex 行索引
+     * @param {FormInstance} form 该行对应的表单实例
+     */
+    setEditableRowForm(rowIndex: number, form: FormInstance): void;
 }
 export declare const defaultProps: {
     className: string;

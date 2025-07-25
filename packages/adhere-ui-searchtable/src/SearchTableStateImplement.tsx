@@ -95,6 +95,8 @@ export class SearchTableStateImplement<
    * @param data
    */
   setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<any[]> {
+    this.editableRowForms.clear();
+
     return new Promise((resolve) => {
       let targetDataSource;
 

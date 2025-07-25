@@ -1,3 +1,4 @@
+import { Button } from 'antd';
 import React from 'react';
 
 import { DelConfirm, Resource } from '@baifendian/adhere';
@@ -50,6 +51,32 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
    */
   getTotalKey() {
     return 'totalCount';
+  }
+
+  /**
+   * renderSearchFooterItems
+   * 渲染表格的工具栏
+   * @override
+   */
+  renderSearchFooterItems(defaultItems) {
+    return super.renderSearchFooterItems([
+      {
+        key: 'add',
+        value: (
+          <Button
+            key="add"
+            type="primary"
+            onClick={() => {
+              debugger;
+              this.validateAllEditableRow(false);
+            }}
+          >
+            保存
+          </Button>
+        ),
+      },
+      ...defaultItems,
+    ]);
   }
 
   /**

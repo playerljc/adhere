@@ -12,6 +12,7 @@ import type {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import classNames from 'classnames';
+// import debounce from 'lodash.debounce';
 import difference from 'lodash.difference';
 import memoize from 'lodash.memoize';
 import sortBy from 'lodash.sortby';
@@ -31,6 +32,7 @@ import type {
   ConfigProviderProps,
 } from '@baifendian/adhere-ui-configprovider/es/types';
 import Util from '@baifendian/adhere-util';
+// import Emitter from '@baifendian/adhere-util-emitter';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { TREE_UTIL_CONFIG } from './Constant';
@@ -110,6 +112,9 @@ abstract class SearchTable<
   protected _context: ConfigProviderContext | undefined = undefined;
 
   protected tableWrapRef: RefObject<HTMLDivElement> = createRef();
+
+  // 存放editableRow的forms实例
+  protected editableRowForms = new Map<number, FormInstance>();
 
   // 自定义表格部分
   protected components = {
@@ -357,6 +362,8 @@ abstract class SearchTable<
 
     this.getWidthByHacker = memoize(this.getWidthByHacker, (obj) => JSON.stringify(obj));
     this.getColumnWidth = memoize(this.getColumnWidth, (obj) => JSON.stringify(obj));
+
+    // this.validateAllEditableRow = debounce(this.validateAllEditableRow, 300);
   }
 
   componentDidMount() {
@@ -3073,6 +3080,100 @@ abstract class SearchTable<
 
     return selectedRowKeys;
   }
+
+  /**
+   * 设置指定行的可编辑表单实例
+   * @param {number} rowIndex 行索引
+   * @param {FormInstance} form 该行对应的表单实例
+   */
+  setEditableRowForm(rowIndex: number, form: FormInstance) {
+    this.editableRowForms.set(rowIndex, form);
+  }
+
+  // /**
+  //  * 校验所有可编辑行的表单
+  //  * @param {ValidateFields} [opt] 校验选项
+  //  * @returns {Promise<any[]>|Promise<any>} 并行时返回所有表单校验的Promise数组，串行时返回Promise链
+  //  */
+  // validateAllEditableRow(opt?: Parameters<FormInstance['validateFields']>[0]) {
+  //   return new Promise((resolve, reject) => {
+  //     const columns = this.state.columnSetting.filter(
+  //       (_column) =>
+  //         !!_column.$editable && !!_column.$editable.editable && !_column.$editable.useKeepEdit,
+  //     );
+  //     const dataLength = this.getDataSource().length;
+  //
+  //     const visitMap = new Map<number, string[]>();
+  //
+  //     Emitter.trigger(VALIDATE_ALL_EDITABLE_ROW, (_rowIndex: number, _dataIndex: string) => {
+  //       let values = visitMap.get(_rowIndex);
+  //
+  //       if (!values) {
+  //         values = [];
+  //         visitMap.set(_rowIndex, values);
+  //       }
+  //
+  //       values.push(_dataIndex);
+  //
+  //       if (
+  //         Array.from(visitMap.keys()).length === dataLength &&
+  //         Array.from(visitMap.values()).every((_columns) => _columns.length === columns.length)
+  //       ) {
+  //         // 结束
+  //         Promise.all(
+  //           Array.from(this.editableRowForms.values()).map((_form) => _form.validateFields(opt)),
+  //         )
+  //           .then((_values) => {
+  //             resolve(_values);
+  //           })
+  //           .catch((_err) => {
+  //             reject(_err);
+  //             throw _err;
+  //           });
+  //       }
+  //     });
+  //   });
+  // }
+  //
+  // /**
+  //  * 校验指定行的可编辑表单
+  //  * @param {number} rowIndex - 行索引   * @param {ValidateFields} [opt] - 校验选项
+  //  * @param opt
+  //  * @returns {Promise<any>|undefined} - 校验Promise或undefined（如果该行没有表单）
+  //  */
+  // // 需要先引入FormInstance类型，然后使用FormInstance的validateFields方法的参数类型
+  // // validateFields的参数类型可以通过Parameters<FormInstance['validateFields']>[0]获得
+  // validateEditableRow(rowIndex: number, opt?: Parameters<FormInstance['validateFields']>[0]) {
+  //   return new Promise((resolve, reject) => {
+  //     const columns = this.state.columnSetting.filter(
+  //       (_column) =>
+  //         !!_column.$editable && !!_column.$editable.editable && !_column.$editable.useKeepEdit,
+  //     );
+  //
+  //     const visitArray: string[] = [];
+  //
+  //     Emitter.trigger(VALIDATE_EDITABLE_ROW, {
+  //       rowIndex,
+  //       cb: (_dataIndex: string) => {
+  //         visitArray.push(_dataIndex);
+  //
+  //         if (visitArray.length === columns.length) {
+  //           // 完成
+  //           this.editableRowForms
+  //             .get(rowIndex)
+  //             ?.validateFields(opt)
+  //             .then((_values) => {
+  //               resolve(_values);
+  //             })
+  //             .catch((_err) => {
+  //               reject(_err);
+  //               throw _err;
+  //             });
+  //         }
+  //       },
+  //     });
+  //   });
+  // }
 }
 
 export const defaultProps = {

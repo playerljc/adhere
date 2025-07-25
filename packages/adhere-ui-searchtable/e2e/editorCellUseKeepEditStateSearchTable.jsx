@@ -137,7 +137,7 @@ class EditableCellUseKeepEditStateSearchTable extends ProEditableCellSearchState
               message: '请输入姓名',
             },
           ],
-          useKeepEdit: true,
+          // useKeepEdit: true,
           props: {
             onBlur: (e, { updateEditorCellData, form, dataIndex, rowIndex }) => {
               this.changeLocalModifyData({ rowIndex, dataIndex, form });
@@ -174,7 +174,7 @@ class EditableCellUseKeepEditStateSearchTable extends ProEditableCellSearchState
               message: '请选择',
             },
           ],
-          useKeepEdit: true,
+          // useKeepEdit: true,
           props: {
             onChange: (e, { updateEditorCellData, form, dataIndex, rowIndex }) => {
               this.changeLocalModifyData({ rowIndex, dataIndex, form });
@@ -210,7 +210,7 @@ class EditableCellUseKeepEditStateSearchTable extends ProEditableCellSearchState
               message: '请选择',
             },
           ],
-          useKeepEdit: true,
+          // useKeepEdit: true,
           props: {
             onChange: (e, { updateEditorCellData, form, dataIndex, rowIndex }) => {
               this.changeLocalModifyData({ rowIndex, dataIndex, form });
@@ -243,7 +243,7 @@ class EditableCellUseKeepEditStateSearchTable extends ProEditableCellSearchState
               message: '请输入身高',
             },
           ],
-          useKeepEdit: true,
+          // useKeepEdit: true,
           props: {
             onBlur: (e, { updateEditorCellData, form, dataIndex, rowIndex }) => {
               this.changeLocalModifyData({ rowIndex, dataIndex, form });
@@ -276,7 +276,7 @@ class EditableCellUseKeepEditStateSearchTable extends ProEditableCellSearchState
               message: '请输入体重',
             },
           ],
-          useKeepEdit: true,
+          // useKeepEdit: true,
           props: {
             onBlur: (e, { updateEditorCellData, form, dataIndex, rowIndex }) => {
               this.changeLocalModifyData({ rowIndex, dataIndex, form });
@@ -307,7 +307,7 @@ class EditableCellUseKeepEditStateSearchTable extends ProEditableCellSearchState
               message: '请输入籍贯',
             },
           ],
-          useKeepEdit: true,
+          // useKeepEdit: true,
           props: {
             onBlur: (e, { updateEditorCellData, form, dataIndex, rowIndex }) => {
               this.changeLocalModifyData({ rowIndex, dataIndex, form });
@@ -340,7 +340,7 @@ class EditableCellUseKeepEditStateSearchTable extends ProEditableCellSearchState
               message: '请输入居住地',
             },
           ],
-          useKeepEdit: true,
+          // useKeepEdit: true,
           props: {
             onBlur: (e, { updateEditorCellData, form, dataIndex, rowIndex }) => {
               this.changeLocalModifyData({ rowIndex, dataIndex, form });

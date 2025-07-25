@@ -1,5 +1,6 @@
+import { useLatest } from 'ahooks';
 import type { FormInstance } from 'antd/es/form';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import Util from '@baifendian/adhere-util';
 
@@ -17,6 +18,10 @@ import EditableCellView from './View';
 const EditableCell: TableCellComponentReducer = (props) => {
   const { column, rowIndex, record } = props;
 
+  const validateAllEditableRowCB = useRef<((rowIndex: number, dataIndex: string) => void) | null>(
+    null,
+  );
+
   /**
    * defaultConfig
    * @description 缺省的单元格配置
@@ -33,6 +38,10 @@ const EditableCell: TableCellComponentReducer = (props) => {
     useKeepEdit: false,
   };
 
+  const columnLatest = useLatest(column);
+
+  const rowIndexLatest = useLatest(rowIndex);
+
   /**
    * editableConfig
    * @description 实际的单元格配置
@@ -42,6 +51,8 @@ const EditableCell: TableCellComponentReducer = (props) => {
     [column, column?.dataIndex],
   );
 
+  const editableConfigLatest = useLatest(editableConfig);
+
   /**
    * status
    * @description 单元格的状态
@@ -49,6 +60,8 @@ const EditableCell: TableCellComponentReducer = (props) => {
   const [status, setStatus] = useState<'view' | 'edit' | string>(
     editableConfig.defaultStatus as string,
   );
+
+  const statusLatest = useLatest(status);
 
   const context = useContext<{
     context: SearchTable;
@@ -72,6 +85,38 @@ const EditableCell: TableCellComponentReducer = (props) => {
   useEffect(() => {
     setStatus(editableConfig?.defaultStatus as string);
   }, [editableConfig?.defaultStatus]);
+
+  // useUpdateEffect(() => {
+  //   if (statusLatest.current === 'edit' && validateAllEditableRowCB.current) {
+  //     validateAllEditableRowCB.current(rowIndex, column.dataIndex);
+  //   }
+  // }, [status]);
+
+  // useEffect(() => {
+  //   function onValidateAllEditableRow(_validateAllEditableRowCB) {
+  //     if (!editableConfigLatest.current.editable) return;
+  //
+  //     if (editableConfigLatest.current.useKeepEdit) return;
+  //
+  //     if (statusLatest.current !== 'edit') {
+  //       validateAllEditableRowCB.current = _validateAllEditableRowCB;
+  //       setStatus('edit');
+  //     } else {
+  //       _validateAllEditableRowCB(rowIndexLatest.current, columnLatest.current.dataIndex);
+  //     }
+  //   }
+  //
+  //   function onValidateEditableRow() {}
+  //
+  //   Emitter.on(VALIDATE_ALL_EDITABLE_ROW, onValidateAllEditableRow);
+  //   Emitter.on(VALIDATE_EDITABLE_ROW, onValidateEditableRow);
+  //
+  //   return () => {
+  //     Emitter.remove(VALIDATE_ALL_EDITABLE_ROW, onValidateAllEditableRow);
+  //     Emitter.remove(VALIDATE_EDITABLE_ROW, onValidateEditableRow);
+  //     validateAllEditableRowCB.current = null;
+  //   };
+  // }, []);
 
   return (tdREL) => {
     let res = tdREL;

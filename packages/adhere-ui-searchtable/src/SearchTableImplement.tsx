@@ -1,3 +1,4 @@
+import type { FormInstance } from 'antd/es/form';
 import type {
   ColumnType,
   FilterValue,
@@ -333,6 +334,8 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @param data
    */
   setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<any[]> {
+    this.editableRowForms.clear();
+
     let targetDataSource;
 
     if (Util.isArray(data)) {
@@ -668,6 +671,8 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @param {} result {code: data:}
    */
   afterFetchData(result: any) {
+    this.editableRowForms.clear();
+
     if (this.isCanCheckedStrategySync()) {
       this.syncCheckedStrategy(result[this.getFetchDataResultDataKey()][this.getDataKey()]);
     }
