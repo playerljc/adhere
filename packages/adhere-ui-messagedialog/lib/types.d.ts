@@ -1,7 +1,8 @@
-import { ButtonProps } from 'antd';
+import type { ButtonProps } from 'antd';
+import type { FormInstance } from 'antd/es/form';
 import type { ModalProps } from 'antd/lib/modal/interface';
+import type { FRProps } from 'form-render/lib/type';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
-import type { ColumnItemProps, FormItemLayoutProps } from '@baifendian/adhere-ui-formitemcreator/lib/types';
 /**
  * 警告对话框参数接口
  */
@@ -33,9 +34,8 @@ export interface PromptArgv {
     /** 对话框标题 */
     title?: string | null | ReactElement;
     /** 表单配置 */
-    config?: ColumnItemProps;
+    config: PromptFormProps;
     /** 表单布局 */
-    layout?: FormItemLayoutProps;
     /** 对话框宽度 */
     width?: number;
     /** 对话框层级 */
@@ -154,3 +154,7 @@ export interface DialogHandle {
     /** 更新内容方法 */
     update: (children?: ReactNode) => void;
 }
+export type PromptFormProps = Omit<FRProps, 'form'>;
+export type PromptFormRefHandle = {
+    validateFields: FormInstance['validateFields'];
+};

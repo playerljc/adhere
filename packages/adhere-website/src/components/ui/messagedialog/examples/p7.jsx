@@ -11,8 +11,17 @@ export default () => {
         MessageDialog.NumberPrompt({
           title: '提示',
           config: {
-            label: '数字',
-            initialValue: '',
+            schema: {
+              properties: {
+                value: {
+                  title: '数字',
+                  defaultValue: '',
+                  props: {
+                    placeholder: '111',
+                  },
+                },
+              },
+            },
           },
           width: 300,
           zIndex: 1000,

@@ -1,15 +1,15 @@
-import { Button, Form } from 'antd';
+import { Button } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import { produce } from 'immer';
 import React, { ReactNode, createRef } from 'react';
 import ReactDOM, { Root } from 'react-dom/client';
 
-import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DEFAULT_WIDTH, DEFAULT_ZINDEX, PROMPT_LAYOUT } from './Constant';
 import MaximizeModalDialog from './MaximizeModal';
 import ModalDialog, { selectorPrefix } from './Modal';
+import PromptForm from './PromptForm';
 import Trigger from './Trigger';
 import TriggerPrompt from './TriggerPrompt';
 import type { AlertArgv, ConfirmArgv, DialogHandle, ModalArgv, PromptArgv } from './types';
@@ -155,7 +155,6 @@ const MessageDialogFactory = {
    * @param params - 输入提示对话框参数
    * @param params.title - 对话框标题
    * @param params.config - 表单配置
-   * @param params.layout - 表单布局
    * @param params.width - 对话框宽度
    * @param params.zIndex - 对话框层级
    * @param params.local - 国际化语言
@@ -165,7 +164,6 @@ const MessageDialogFactory = {
   Prompt({
     title,
     config,
-    layout = PROMPT_LAYOUT,
     width = DEFAULT_WIDTH,
     zIndex = DEFAULT_ZINDEX,
     local,
@@ -203,23 +201,7 @@ const MessageDialogFactory = {
         ],
       },
       local,
-      children: (
-        <Form name="Prompt" ref={ref} style={{ width: '100%' }}>
-          <FormItemCreator
-            columns={[
-              {
-                ...(config || {
-                  label: 'normal',
-                  type: FormItemCreator.TEXT,
-                  initialValue: '',
-                }),
-                name: 'value',
-              },
-            ]}
-            layout={layout || PROMPT_LAYOUT}
-          />
-        </Form>
-      ),
+      children: <PromptForm ref={ref} {...config} />,
     });
 
     return result;
@@ -235,8 +217,23 @@ const MessageDialogFactory = {
     return MessageDialogFactory.Prompt({
       ...params,
       config: {
-        ...config,
-        type: FormItemCreator.INPUT,
+        ...(config ?? {}),
+        schema: {
+          type: 'object',
+          properties: {
+            ...(config?.schema?.properties ?? {}),
+            value: {
+              required: true,
+              type: 'string',
+              widget: 'input',
+              props: {
+                autoFocus: true,
+                ...(config?.schema?.properties?.value?.props ?? {}),
+              },
+              ...(config?.schema?.properties?.value ?? {}),
+            },
+          },
+        },
       },
     });
   },
@@ -251,24 +248,23 @@ const MessageDialogFactory = {
     return MessageDialogFactory.Prompt({
       ...params,
       config: {
-        ...config,
-        type: FormItemCreator.TEXTAREA,
-      },
-    });
-  },
-
-  /**
-   * 创建密码输入提示对话框
-   * @param config
-   * @param params - 密码输入提示对话框参数
-   * @returns 对话框句柄
-   */
-  PassWordPrompt({ config, ...params }: PromptArgv): DialogHandle | void {
-    return MessageDialogFactory.Prompt({
-      ...params,
-      config: {
-        ...config,
-        type: FormItemCreator.PASSWORD,
+        ...(config ?? {}),
+        schema: {
+          type: 'object',
+          properties: {
+            ...(config?.schema?.properties ?? {}),
+            value: {
+              required: true,
+              type: 'string',
+              widget: 'textArea',
+              props: {
+                autoFocus: true,
+                ...(config?.schema?.properties?.value?.props ?? {}),
+              },
+              ...(config?.schema?.properties?.value ?? {}),
+            },
+          },
+        },
       },
     });
   },
@@ -283,8 +279,23 @@ const MessageDialogFactory = {
     return MessageDialogFactory.Prompt({
       ...params,
       config: {
-        ...config,
-        type: FormItemCreator.NUMBER,
+        ...(config ?? {}),
+        schema: {
+          type: 'object',
+          properties: {
+            ...(config?.schema?.properties ?? {}),
+            value: {
+              required: true,
+              type: 'number',
+              widget: 'inputNumber',
+              props: {
+                autoFocus: true,
+                ...(config?.schema?.properties?.value?.props ?? {}),
+              },
+              ...(config?.schema?.properties?.value ?? {}),
+            },
+          },
+        },
       },
     });
   },

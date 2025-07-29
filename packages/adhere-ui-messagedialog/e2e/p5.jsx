@@ -11,8 +11,14 @@ export default () => {
         MessageDialog.TextAreaPrompt({
           title: '提示',
           config: {
-            label: '地址',
-            initialValue: '',
+            schema: {
+              properties: {
+                value: {
+                  title: '地址',
+                  defaultValue: '',
+                },
+              },
+            },
           },
           width: 300,
           zIndex: 1000,

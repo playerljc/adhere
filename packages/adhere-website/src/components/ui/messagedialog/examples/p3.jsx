@@ -11,9 +11,38 @@ export default () => {
         MessageDialog.Prompt({
           title: '提示',
           config: {
-            type: FormItemCreator.SLIDER,
-            label: '大小',
-            initialValue: 10,
+            schema: {
+              properties: {
+                value: {
+                  title: '生日',
+                  widget: 'treeSelect',
+                  props: {
+                    treeData: [
+                      {
+                        value: 'parent 1',
+                        title: 'parent 1',
+                        children: [
+                          {
+                            value: 'parent 1-0',
+                            title: 'parent 1-0',
+                            children: [
+                              {
+                                value: 'leaf1',
+                                title: 'leaf1',
+                              },
+                              {
+                                value: 'leaf2',
+                                title: 'leaf2',
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                },
+              },
+            },
           },
           width: 300,
           zIndex: 1000,

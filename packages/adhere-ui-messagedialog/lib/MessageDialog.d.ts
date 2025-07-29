@@ -40,14 +40,13 @@ declare const MessageDialogFactory: {
      * @param params - 输入提示对话框参数
      * @param params.title - 对话框标题
      * @param params.config - 表单配置
-     * @param params.layout - 表单布局
      * @param params.width - 对话框宽度
      * @param params.zIndex - 对话框层级
      * @param params.local - 国际化语言
      * @param params.onSuccess - 确认回调函数
      * @returns 对话框句柄
      */
-    Prompt({ title, config, layout, width, zIndex, local, onSuccess, }: PromptArgv): DialogHandle | void;
+    Prompt({ title, config, width, zIndex, local, onSuccess, }: PromptArgv): DialogHandle | void;
     /**
      * 创建输入框提示对话框
      * @param config
@@ -62,13 +61,6 @@ declare const MessageDialogFactory: {
      * @returns 对话框句柄
      */
     TextAreaPrompt({ config, ...params }: PromptArgv): DialogHandle | void;
-    /**
-     * 创建密码输入提示对话框
-     * @param config
-     * @param params - 密码输入提示对话框参数
-     * @returns 对话框句柄
-     */
-    PassWordPrompt({ config, ...params }: PromptArgv): DialogHandle | void;
     /**
      * 创建数字输入提示对话框
      * @param config

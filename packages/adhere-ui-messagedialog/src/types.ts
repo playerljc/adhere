@@ -1,11 +1,8 @@
-import { ButtonProps } from 'antd';
+import type { ButtonProps } from 'antd';
+import type { FormInstance } from 'antd/es/form';
 import type { ModalProps } from 'antd/lib/modal/interface';
+import type { FRProps } from 'form-render/lib/type';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
-
-import type {
-  ColumnItemProps,
-  FormItemLayoutProps,
-} from '@baifendian/adhere-ui-formitemcreator/lib/types';
 
 /**
  * 警告对话框参数接口
@@ -40,9 +37,9 @@ export interface PromptArgv {
   /** 对话框标题 */
   title?: string | null | ReactElement;
   /** 表单配置 */
-  config?: ColumnItemProps;
+  config: PromptFormProps;
   /** 表单布局 */
-  layout?: FormItemLayoutProps;
+  // layout?: FormItemLayoutProps;
   /** 对话框宽度 */
   width?: number;
   /** 对话框层级 */
@@ -116,12 +113,14 @@ export interface TriggerProps {
   /** 是否禁用 */
   disabled?: boolean;
   /** 操作按钮数组 */
-  actions?: Array<Omit<ButtonProps, 'onClick'> & {
-    /** 按钮唯一标识 */
-    key: string | number;
-    /** 点击回调函数 */
-    onClick?: () => Promise<any>;
-  }>;
+  actions?: Array<
+    Omit<ButtonProps, 'onClick'> & {
+      /** 按钮唯一标识 */
+      key: string | number;
+      /** 点击回调函数 */
+      onClick?: () => Promise<any>;
+    }
+  >;
   /** 模态框配置 */
   modalConfig?: Omit<
     Omit<ModalArgv, 'config'> & {
@@ -172,3 +171,9 @@ export interface DialogHandle {
   /** 更新内容方法 */
   update: (children?: ReactNode) => void;
 }
+
+export type PromptFormProps = Omit<FRProps, 'form'>;
+
+export type PromptFormRefHandle = {
+  validateFields: FormInstance['validateFields'];
+};

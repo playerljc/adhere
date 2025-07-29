@@ -5,7 +5,6 @@ import P2CodeText from '!!raw-loader!./examples/p2';
 import P3CodeText from '!!raw-loader!./examples/p3';
 import P4CodeText from '!!raw-loader!./examples/p4';
 import P5CodeText from '!!raw-loader!./examples/p5';
-import P6CodeText from '!!raw-loader!./examples/p6';
 import P7CodeText from '!!raw-loader!./examples/p7';
 import P8CodeText from '!!raw-loader!./examples/p8';
 import P9CodeText from '!!raw-loader!./examples/p9';
@@ -29,7 +28,6 @@ import P2 from './examples/p2';
 import P3 from './examples/p3';
 import P4 from './examples/p4';
 import P5 from './examples/p5';
-import P6 from './examples/p6';
 import P7 from './examples/p7';
 import P8 from './examples/p8';
 import P9 from './examples/p9';
@@ -116,21 +114,6 @@ export default () => {
         type: 'PlayGround',
         codeText: P5CodeText,
         renderChildren: () => <P5 />,
-      },
-      {
-        id: `p6`,
-        name: `PassWordPrompt`,
-        mode: 'code',
-        scope: { React },
-        cardProps: {
-          description: {
-            title: 'PassWordPrompt',
-            info: '使用PassWordPrompt',
-          },
-        },
-        type: 'PlayGround',
-        codeText: P6CodeText,
-        renderChildren: () => <P6 />,
       },
       {
         id: `p7`,
