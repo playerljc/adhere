@@ -31,7 +31,9 @@
     "lint:style": "stylelint --fix \"packages/**/src/**/*.less\" --syntax less",
     "prepare": "husky install",
     "prettier": "prettier -c --write \"**/*\"",
-    "prettier-json": "prettier -c --write \"**/*.json\""
+    "prettier-json": "prettier -c --write \"**/*.json\"",
+    "upgrade": "yarn upgrade",
+    "upgrade-interactive": "yarn upgrade-interactive"
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",

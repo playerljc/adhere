@@ -90,7 +90,12 @@ module.exports = {
       }),
     );
 
-    webpackConfig.module.rules[2].include.push(/ol.css/, /swiper.css/, /nprogress.css/);
+    webpackConfig.module.rules[2].include.push(
+      /ol.css/,
+      /swiper.css/,
+      /nprogress.css/,
+      /index.css/,
+    );
 
     webpackConfig.module.rules[3].use.push({
       loader: '@ctsj/less-media-query-loader',

@@ -77,7 +77,7 @@
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
     "@baifendian/adhere-mock": "^2.11.0",
-    "@ctsj/build": "^6.4.0",
+    "@ctsj/build": "6.4.1",
     "@ctsj/less-media-query-loader": "^1.0.1",
     "@trivago/prettier-plugin-sort-imports": "^4.0.0",
     "@types/react": "^18.3.1",
