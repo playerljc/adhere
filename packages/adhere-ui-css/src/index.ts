@@ -3,46 +3,7 @@ import tinyColor from 'tinycolor2';
 import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
 import Util from '@baifendian/adhere-util';
 
-/**
- * CSS变量映射项接口
- */
-interface CSSVarMapItem {
-  /** 变量值 */
-  value: string | number;
-  /** 映射的token */
-  mapToken?: Map<string, CSSVarMapTokenItem>;
-}
-
-/**
- * CSS变量映射token项接口
- */
-interface CSSVarMapTokenItem {
-  /** 透明度值 */
-  alpha?: string;
-  /** 计算表达式 */
-  calc?: string;
-}
-
-/**
- * CSS变量对象接口
- */
-interface CSSVars {
-  [key: string]: any;
-}
-
-/**
- * 导出对象接口
- */
-interface ExportObj {
-  [key: string]: any;
-}
-
-/**
- * 主题配置接口
- */
-interface ThemeConfig {
-  [prop: string]: string | number;
-}
+import type { CSSVarMapItem, CSSVarMapTokenItem, CSSVars, ExportObj, ThemeConfig } from './types';
 
 /**
  * 默认主题映射
@@ -174,11 +135,7 @@ export interface Init {
    * @param wrapperEL - 包装元素，默认为document.documentElement
    * @param media - 媒体配置
    */
-  (
-    theme: ThemeConfig,
-    wrapperEL?: HTMLElement,
-    media?: ConfigProviderProps['media'],
-  ): void;
+  (theme: ThemeConfig, wrapperEL?: HTMLElement, media?: ConfigProviderProps['media']): void;
 }
 
 /**
@@ -245,7 +202,7 @@ function handleColorVariable(
   if (color.isValid()) {
     const rgb = color.toRgb();
     const rgbValue = `${[rgb.r, rgb.g, rgb.b].join(',')}`;
-    
+
     setCSSVariable(element, htmlEl, `${varName}-rgb`, rgbValue);
   }
 }
@@ -268,7 +225,7 @@ function handleMapToken(
   if (!entryValue?.mapToken) return;
 
   const color = tinyColor(targetValue);
-  
+
   Array.from(entryValue.mapToken.keys()).forEach((mapTokenVarName) => {
     const mapTokenEntryValue = entryValue.mapToken!.get(mapTokenVarName);
     if (!mapTokenEntryValue) return;
@@ -342,11 +299,9 @@ const init: Init = (
 
     // 初始化变量值
     const themeKey = Util.lowercaseInitial(
-      varUpperCamelCaseName.substring(
-        varUpperCamelCaseName.indexOf('Adhere') + 'Adhere'.length,
-      ),
+      varUpperCamelCaseName.substring(varUpperCamelCaseName.indexOf('Adhere') + 'Adhere'.length),
     );
-    
+
     const initialValue = curTheme[themeKey] ?? entryValue.value;
     exportObj[`set${varUpperCamelCaseName}`](initialValue);
   });

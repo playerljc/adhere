@@ -1,5 +1,6 @@
 import type { NamedExoticComponent, ReactNode } from 'react';
 import type { CSSProperties } from 'react';
+import type { ThemeConfig as CSSThemeConfig } from '@baifendian/adhere-ui-css/es/types';
 import { Context } from './Context';
 import themeFunction from './theme';
 import useTheme from './useTheme';
@@ -34,19 +35,7 @@ export type RouterType = 'hash' | 'browser';
 /**
  * 主题配置类型
  */
-export type ThemeConfig = {
-    /** 主色调 */
-    primaryColor?: string;
-    /** 普通颜色 */
-    normalColor?: string;
-    /** 背景色 */
-    backColor?: string;
-    /** 基础字体大小 */
-    baseFontSize?: string;
-    /** 小字体大小 */
-    smallFontSize?: string;
-    /** 最大层级 */
-    commonMaxZIndex?: string;
+export type ThemeConfig = CSSThemeConfig & {
     /** 组件主题配置 */
     components?: {
         normal?: {

@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import React, { memo, useContext, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import type { ThemeConfig as CSSThemeConfig } from '@baifendian/adhere-ui-css/es/types';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -161,7 +162,7 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
       try {
         const baseTheme = Object.fromEntries(
           Object.entries(targetTheme).filter(([key]) => key !== 'components'),
-        ) as { [prop: string]: string };
+        ) as CSSThemeConfig;
 
         // 初始化CSS变量
         init(baseTheme, wrapperELRef.current, targetMedia);

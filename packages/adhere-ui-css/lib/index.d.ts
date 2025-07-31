@@ -1,10 +1,5 @@
 import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
-/**
- * 主题配置接口
- */
-interface ThemeConfig {
-    [prop: string]: string | number;
-}
+import type { ThemeConfig } from './types';
 /**
  * 初始化函数接口
  */
