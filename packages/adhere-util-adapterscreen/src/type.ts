@@ -57,10 +57,7 @@ export interface IAdapterScreen {
    * @param options - 配置选项或元素选择器字符串
    * @param isShowInitTip - 是否显示初始化提示，默认为 true
    */
-  init(
-    options?: IInitOptions | string,
-    isShowInitTip?: boolean,
-  ): void;
+  init(options?: IInitOptions | string, isShowInitTip?: boolean): void;
 
   /**
    * 关闭autofit.js造成的影响
@@ -80,10 +77,7 @@ export interface IAdapterScreen {
    * @param minSize - 最小尺寸配置
    * @param isUseMediaQuery - 是否使用媒体查询，默认为 false
    */
-  flexible(
-    minSize?: IMinSize,
-    isUseMediaQuery?: boolean,
-  ): void;
+  flexible(minSize?: IMinSize, isUseMediaQuery?: boolean): void;
 
   /**
    * 设置页面最小尺寸到CSS
@@ -96,21 +90,21 @@ export interface IAdapterScreen {
    */
   detectZoom(): void;
 
-  /**
-   * 判断是否为手机尺寸
-   * @returns 是否为手机尺寸（宽度 <= 768px）
-   */
-  isPhoneSize(): boolean;
-
-  /**
-   * 判断是否为平板尺寸
-   * @returns 是否为平板尺寸（768px < 宽度 <= 992px）
-   */
-  isPadSize(): boolean;
-
-  /**
-   * 判断是否为PC尺寸
-   * @returns 是否为PC尺寸（宽度 > 992px）
-   */
-  isPCSize(): boolean;
+  // /**
+  //  * 判断是否为手机尺寸
+  //  * @returns 是否为手机尺寸（宽度 <= 768px）
+  //  */
+  // isPhoneSize(): boolean;
+  //
+  // /**
+  //  * 判断是否为平板尺寸
+  //  * @returns 是否为平板尺寸（768px < 宽度 <= 992px）
+  //  */
+  // isPadSize(): boolean;
+  //
+  // /**
+  //  * 判断是否为PC尺寸
+  //  * @returns 是否为PC尺寸（宽度 > 992px）
+  //  */
+  // isPCSize(): boolean;
 }

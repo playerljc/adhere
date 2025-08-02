@@ -1,6 +1,6 @@
 import Util from '@baifendian/adhere-util';
 
-import { IAdapterScreen, IInitOptions, IIgnoreElement, IMinSize } from './type';
+import { IAdapterScreen, IIgnoreElement, IInitOptions, IMinSize } from './type';
 
 // 全局状态变量
 let currRenderDom = '';
@@ -31,12 +31,12 @@ function elRectification(el: string, level = 1): void {
     console.error('adapterScreen.js：adapterScreen has not been initialized yet');
     return;
   }
-  
+
   if (!el) {
     console.error(`adapterScreen.js：bad selector: ${el}`);
     return;
   }
-  
+
   currentRectification = el;
   currentRectificationLevel = level;
 
@@ -52,14 +52,14 @@ function elRectification(el: string, level = 1): void {
       item.originalWidth = item.clientWidth;
       item.originalHeight = item.clientHeight;
     }
-    
+
     const rectification = currScale === 1 ? 1 : currScale * level;
     item.style.width = `${(item.originalWidth || 0) * rectification}px`;
     item.style.height = `${(item.originalHeight || 0) * rectification}px`;
     item.style.transform = `scale(${1 / currScale})`;
     item.style.transformOrigin = '0 0';
   }
-  
+
   isElRectification = true;
 }
 
@@ -74,15 +74,15 @@ function elRectification(el: string, level = 1): void {
 function keepFit(dw: number, dh: number, dom: HTMLElement, ignore: IIgnoreElement[]): void {
   const clientHeight = document.documentElement.clientHeight;
   const clientWidth = document.documentElement.clientWidth;
-  
+
   // 计算缩放比例
   currScale = clientWidth / clientHeight < dw / dh ? clientWidth / dw : clientHeight / dh;
-  
+
   // 应用缩放
   dom.style.height = `${clientHeight / currScale}px`;
   dom.style.width = `${clientWidth / currScale}px`;
   dom.style.transform = `scale(${currScale})`;
-  
+
   // 处理忽略缩放的元素
   for (const item of ignore) {
     const ignoreStyle = document.querySelector<HTMLElement>('#ignoreStyle');
@@ -93,15 +93,15 @@ function keepFit(dw: number, dh: number, dom: HTMLElement, ignore: IIgnoreElemen
       console.error(`adapterScreen: bad selector: ${itemEl}`);
       continue;
     }
-    
+
     const realScale = item.scale ?? 1 / currScale;
     const realFontSize = realScale !== currScale ? item.fontSize : 'autofit';
     const realWidth = realScale !== currScale ? item.width : 'autofit';
     const realHeight = realScale !== currScale ? item.height : 'autofit';
-    
+
     const regex = new RegExp(`${itemEl}(\\x20|{)`, 'gm');
     const isIgnored = regex.test(ignoreStyle.innerHTML);
-    
+
     if (isIgnored) {
       continue;
     }
@@ -237,7 +237,7 @@ const adapterScreen: IAdapterScreen = {
       console.error(`adapterScreen: Failed to remove normally`, error);
       isAutoFitRunning = false;
     }
-    
+
     if (isAutoFitRunning) {
       console.log(
         `%c` + `adapterScreen.js` + ` is off`,
@@ -272,7 +272,7 @@ const adapterScreen: IAdapterScreen = {
    * @param minSize - 最小尺寸配置
    * @param isUseMediaQuery - 是否使用媒体查询，默认为 false
    */
-  flexible(minSize?: IMinSize, isUseMediaQuery = false): void {
+  flexible(minSize?: IMinSize): void {
     const baseFontSize = 12;
     const docEl = document.documentElement;
     const dpr = window.devicePixelRatio || 1;
@@ -282,7 +282,26 @@ const adapterScreen: IAdapterScreen = {
      */
     function setBodyFontSize(): void {
       if (document.body) {
-        const rem = (minSize?.availWidth ?? window.screen.availWidth) / 10;
+        // if (isUseMediaQuery) {
+        //   let baseWidth: number;
+        //   if (adapterScreen.isPhoneSize()) {
+        //     // 手机设备
+        //     baseWidth = 375; // 手机设计稿宽度
+        //   } else if (adapterScreen.isPadSize()) {
+        //     // 平板设备
+        //     baseWidth = 1280; // 平板设计稿宽度
+        //   } else {
+        //     // PC设备
+        //     baseWidth = 2560; // PC设计稿宽度
+        //   }
+        //
+        //   const rem = baseWidth / 10;
+        //   document.body.style.fontSize = `${(baseFontSize * dpr) / rem}rem`;
+        // } else {
+        //   const rem = (minSize?.availWidth ?? window.screen.availWidth) / 10;
+        //   document.body.style.fontSize = `${(baseFontSize * dpr) / rem}rem`;
+        // }
+        const rem = (minSize?.availWidth ?? window.innerWidth) / 10;
         document.body.style.fontSize = `${(baseFontSize * dpr) / rem}rem`;
       } else {
         document.addEventListener('DOMContentLoaded', setBodyFontSize);
@@ -294,31 +313,64 @@ const adapterScreen: IAdapterScreen = {
      * 设置 1rem = viewWidth / 10
      */
     function setRemUnit(): void {
+      // if (isUseMediaQuery) {
+      //   // const width = window.innerWidth;
+      //   //
+      //   // // 移动端适配（设计稿750px）
+      //   // if (adapterScreen.isPhoneSize()) {
+      //   //   rootValue = width / 7.5; // 750px设计稿 → 1rem=100px基准
+      //   // }
+      //   // // 平板适配（768-992px）
+      //   // else if (adapterScreen.isPadSize()) {
+      //   //   rootValue = width / 10.24; // 1024px基准
+      //   // }
+      //   // // PC端适配（设计稿1920px）
+      //   // else {
+      //   //   rootValue = width / 19.2; // 1920px设计稿 → 1rem=100px基准
+      //   // }
+      //
+      //   let rootValue: number;
+      //   const windowWidth = window.innerWidth;
+      //   let baseWidth: number, baseFontSize: number;
+      //
+      //   // 根据屏幕宽度判断设备类型并设置不同基准值
+      //   if (adapterScreen.isPhoneSize()) {
+      //     // 手机设备
+      //     baseWidth = 375; // 手机设计稿宽度
+      //   } else if (adapterScreen.isPadSize()) {
+      //     // 平板设备
+      //     baseWidth = 1280; // 平板设计稿宽度
+      //   } else {
+      //     // PC设备
+      //     baseWidth = 2560; // PC设计稿宽度
+      //   }
+      //
+      //   // 计算并设置font-size，限制最小值和最大值
+      //   // const fontSize = Math.max((windowWidth / baseWidth) * baseFontSize, 8);
+      //   rootValue = baseWidth / 10;
+      //   docEl.style.fontSize = `${rootValue}px`;
+      // } else {
+      //   let rootValue = 0;
+      //
+      //   const width = window.screen.availWidth;
+      //   // 使用window.screen.availWidth的目的是只有改变操作系统的分辨率才重新设置rem，如果是浏览器窗口的resize不重新计算rem
+      //   rootValue = (minSize?.availWidth ?? width) / 10;
+      //
+      //   if (dpr > 1) {
+      //     rootValue *= 1.13;
+      //   }
+      //
+      //   docEl.style.fontSize = `${rootValue}px`;
+      // }
+
       let rootValue = 0;
 
-      if (isUseMediaQuery) {
-        const width = window.innerWidth;
+      const width = window.innerWidth;
+      // 使用window.screen.availWidth的目的是只有改变操作系统的分辨率才重新设置rem，如果是浏览器窗口的resize不重新计算rem
+      rootValue = (minSize?.availWidth ?? width) / 10;
 
-        // 移动端适配（设计稿750px）
-        if (adapterScreen.isPhoneSize()) {
-          rootValue = width / 7.5; // 750px设计稿 → 1rem=100px基准
-        }
-        // 平板适配（768-992px）
-        else if (adapterScreen.isPadSize()) {
-          rootValue = width / 10.24; // 1024px基准
-        }
-        // PC端适配（设计稿1920px）
-        else {
-          rootValue = width / 19.2; // 1920px设计稿 → 1rem=100px基准
-        }
-      } else {
-        const width = window.screen.availWidth;
-        // 使用window.screen.availWidth的目的是只有改变操作系统的分辨率才重新设置rem，如果是浏览器窗口的resize不重新计算rem
-        rootValue = (minSize?.availWidth ?? width) / 10;
-
-        if (dpr > 1) {
-          rootValue *= 1.13;
-        }
+      if (dpr > 1) {
+        rootValue *= 1.13;
       }
 
       docEl.style.fontSize = `${rootValue}px`;
@@ -337,19 +389,34 @@ const adapterScreen: IAdapterScreen = {
       return minSize.minWidth <= clientWidth && minSize.minHeight <= clientHeight;
     }
 
-    setBodyFontSize();
-    setRemUnit();
+    function init() {
+      setBodyFontSize();
+      setRemUnit();
+    }
+
+    // 先调用一次
+    init();
 
     // 页面resize时重置rem单位
     window.addEventListener('resize', () => {
+      // if (isUseMediaQuery) {
+      //   init();
+      //   return;
+      // }
+
       if (checkSize()) {
-        setRemUnit();
+        init();
       }
     });
-    
+
     window.addEventListener('pageshow', function (e) {
+      // if (e.persisted && isUseMediaQuery) {
+      //   init();
+      //   return;
+      // }
+
       if (e.persisted && checkSize()) {
-        setRemUnit();
+        init();
       }
     });
 
@@ -393,30 +460,30 @@ const adapterScreen: IAdapterScreen = {
     });
   },
 
-  /**
-   * 判断是否为手机尺寸
-   * @returns 是否为手机尺寸（宽度 <= 768px）
-   */
-  isPhoneSize(): boolean {
-    return window.innerWidth <= 768;
-  },
-
-  /**
-   * 判断是否为平板尺寸
-   * @returns 是否为平板尺寸（768px < 宽度 <= 992px）
-   */
-  isPadSize(): boolean {
-    const width = window.innerWidth;
-    return width > 768 && width <= 992;
-  },
-
-  /**
-   * 判断是否为PC尺寸
-   * @returns 是否为PC尺寸（宽度 > 992px）
-   */
-  isPCSize(): boolean {
-    return window.innerWidth > 992;
-  },
+  // /**
+  //  * 判断是否为手机尺寸
+  //  * @returns 是否为手机尺寸（宽度 <= 768px）
+  //  */
+  // isPhoneSize(): boolean {
+  //   return window.innerWidth <= 768;
+  // },
+  //
+  // /**
+  //  * 判断是否为平板尺寸
+  //  * @returns 是否为平板尺寸（768px < 宽度 <= 992px）
+  //  */
+  // isPadSize(): boolean {
+  //   const width = window.innerWidth;
+  //   return width > 768 && width <= 1023;
+  // },
+  //
+  // /**
+  //  * 判断是否为PC尺寸
+  //  * @returns 是否为PC尺寸（宽度 > 1023px）
+  //  */
+  // isPCSize(): boolean {
+  //   return window.innerWidth > 1023;
+  // },
 
   elRectification,
 };

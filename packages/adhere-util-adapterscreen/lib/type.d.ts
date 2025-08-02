@@ -81,19 +81,4 @@ export interface IAdapterScreen {
      * 检测浏览器缩放
      */
     detectZoom(): void;
-    /**
-     * 判断是否为手机尺寸
-     * @returns 是否为手机尺寸（宽度 <= 768px）
-     */
-    isPhoneSize(): boolean;
-    /**
-     * 判断是否为平板尺寸
-     * @returns 是否为平板尺寸（768px < 宽度 <= 992px）
-     */
-    isPadSize(): boolean;
-    /**
-     * 判断是否为PC尺寸
-     * @returns 是否为PC尺寸（宽度 > 992px）
-     */
-    isPCSize(): boolean;
 }
