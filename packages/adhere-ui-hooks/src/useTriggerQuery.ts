@@ -1,8 +1,8 @@
 import { useCreation, useLatest } from 'ahooks';
 import { useImmer } from 'use-immer';
 
+import type { UseTriggerQueryReturn } from './types';
 import useSetState from './useSetState';
-import type { UseTriggerQuery } from './types';
 
 /**
  * useTriggerQuery hook
@@ -10,7 +10,7 @@ import type { UseTriggerQuery } from './types';
  * @template T - 查询参数类型
  * @param {T} defaultValue - 默认查询参数
  * @returns {UseTriggerQueryReturn<T>} 返回查询管理对象
- * 
+ *
  * @example
  * ```tsx
  * interface SearchParams {
@@ -18,7 +18,7 @@ import type { UseTriggerQuery } from './types';
  *   status: string;
  *   page: number;
  * }
- * 
+ *
  * const {
  *   fieldsValue,
  *   searchParams,
@@ -30,32 +30,24 @@ import type { UseTriggerQuery } from './types';
  *   status: 'all',
  *   page: 1
  * });
- * 
+ *
  * // 更新字段值
  * setFieldsValue(draft => {
  *   draft.keyword = 'search term';
  * });
- * 
+ *
  * // 执行搜索
  * search(() => {
  *   console.log('搜索完成');
  * });
- * 
+ *
  * // 重置搜索
  * reset(() => {
  *   console.log('重置完成');
  * }, { page: 1 });
  * ```
  */
-function useTriggerQuery<T extends Record<string, any>>(
-  defaultValue: T,
-): {
-  setFieldsValue: (updater: T | ((draft: T) => void)) => void;
-  fieldsValue: React.MutableRefObject<T>;
-  searchParams: React.MutableRefObject<T>;
-  search: (callback?: () => void) => void;
-  reset: (callback?: () => void, defaultValue?: Partial<T>) => void;
-} {
+function useTriggerQuery<T extends Record<string, any>>(defaultValue: T): UseTriggerQueryReturn<T> {
   const memoDefaultValue = useCreation(() => defaultValue, []);
 
   // 状态参数
@@ -71,11 +63,11 @@ function useTriggerQuery<T extends Record<string, any>>(
    * @param {() => void} [cb] - 搜索完成后的回调函数
    */
   function search(cb?: () => void): void {
-    const keys = Object.keys(targetFieldsValueRef.current);
+    const keys = Object.keys(targetFieldsValueRef.current as object);
     const searchParams: Partial<T> = {};
 
     keys.forEach((key) => {
-      searchParams[key as keyof T] = targetFieldsValueRef.current[key as keyof T];
+      searchParams[key as keyof T] = targetFieldsValueRef?.current?.[key as keyof T];
     });
 
     setSearchParams(searchParams as T, cb);
@@ -107,7 +99,7 @@ function useTriggerQuery<T extends Record<string, any>>(
   }
 
   return {
-    setFieldsValue: setFieldsValue as any,
+    setFieldsValue: setFieldsValue as (updater: ((draft: T) => void) | T) => void,
     fieldsValue: targetFieldsValueRef,
     searchParams: targetSearchParamsRef,
     search,

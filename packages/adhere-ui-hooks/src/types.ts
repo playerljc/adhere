@@ -1,13 +1,4 @@
-import use from './use';
-import useFirst from './useFirst';
-import useForceUpdate from './useForceUpdate';
-import useItemsRef from './useItemsRef';
-import useLatestState from './useLatestState';
-import useMediaQuery from './useMediaQuery';
-import usePrevious from './usePrevious';
-import usePropToState from './usePropToState';
-import useSetState from './useSetState';
-import useTriggerQuery from './useTriggerQuery';
+import React from 'react';
 
 /**
  * useFirst hook 返回类型
@@ -78,9 +69,7 @@ export type UseSetStateReturn<T> = [
  * useSetState hook 类型定义
  * @template T - 状态类型
  */
-export type UseSetState = <T>(
-  initialState: T | (() => T),
-) => UseSetStateReturn<T>;
+export type UseSetState = <T>(initialState: T | (() => T)) => UseSetStateReturn<T>;
 
 /**
  * usePropToState hook 返回类型
@@ -92,9 +81,7 @@ export type UsePropToStateReturn<T> = [T, React.Dispatch<React.SetStateAction<T>
  * usePropToState hook 类型定义
  * @template T - 状态类型
  */
-export type UsePropToState = <T>(
-  propValue: T,
-) => UsePropToStateReturn<T>;
+export type UsePropToState = <T>(propValue: T) => UsePropToStateReturn<T>;
 
 /**
  * useLatestState hook 返回类型
@@ -109,9 +96,7 @@ export type UseLatestStateReturn<T> = [
  * useLatestState hook 类型定义
  * @template T - 状态类型
  */
-export type UseLatestState = <T>(
-  initialState: T | (() => T),
-) => UseLatestStateReturn<T>;
+export type UseLatestState = <T>(initialState: T | (() => T)) => UseLatestStateReturn<T>;
 
 /**
  * useItemsRef hook 返回类型
@@ -159,7 +144,7 @@ export type UseTriggerQueryReturn<T extends Record<string, any>> = {
   /** 设置字段值 */
   setFieldsValue: (updater: T | ((draft: T) => void)) => void;
   /** 当前字段值 */
-  fieldsValue: React.MutableRefObject<T>;
+  fieldsValue: React.RefObject<T>;
   /** 搜索参数 */
   searchParams: React.MutableRefObject<T>;
   /** 执行搜索 */
@@ -175,19 +160,3 @@ export type UseTriggerQueryReturn<T extends Record<string, any>> = {
 export type UseTriggerQuery = <T extends Record<string, any>>(
   defaultValue: T,
 ) => UseTriggerQueryReturn<T>;
-
-/**
- * Hooks 组件类型定义
- */
-export type HooksComponent = {
-  use: typeof use;
-  useFirst: typeof useFirst;
-  useForceUpdate: typeof useForceUpdate;
-  usePrevious: typeof usePrevious;
-  useSetState: typeof useSetState;
-  useTriggerQuery: typeof useTriggerQuery;
-  usePropToState: typeof usePropToState;
-  useLatestState: typeof useLatestState;
-  useItemsRef: typeof useItemsRef;
-  useMediaQuery: typeof useMediaQuery;
-};

@@ -1,3 +1,4 @@
+import type { UseTriggerQueryReturn } from './types';
 /**
  * useTriggerQuery hook
  * @description 用于管理查询参数和搜索状态的 React Hook
@@ -41,11 +42,5 @@
  * }, { page: 1 });
  * ```
  */
-declare function useTriggerQuery<T extends Record<string, any>>(defaultValue: T): {
-    setFieldsValue: (updater: T | ((draft: T) => void)) => void;
-    fieldsValue: React.MutableRefObject<T>;
-    searchParams: React.MutableRefObject<T>;
-    search: (callback?: () => void) => void;
-    reset: (callback?: () => void, defaultValue?: Partial<T>) => void;
-};
+declare function useTriggerQuery<T extends Record<string, any>>(defaultValue: T): UseTriggerQueryReturn<T>;
 export default useTriggerQuery;

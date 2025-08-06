@@ -1,10 +1,8 @@
-import { HooksComponent } from './types';
 import use from './use';
 import useFirst from './useFirst';
 import useForceUpdate from './useForceUpdate';
 import useItemsRef from './useItemsRef';
 import useLatestState from './useLatestState';
-import useMediaQuery from './useMediaQuery';
 import usePrevious from './usePrevious';
 import usePropToState from './usePropToState';
 import useSafeRef from './useSafeRef';
@@ -21,7 +19,6 @@ const Hooks = {
   usePropToState,
   useLatestState,
   useItemsRef,
-  useMediaQuery,
   useSafeRef,
 } as const;
 

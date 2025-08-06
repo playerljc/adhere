@@ -1,6 +1,5 @@
 import useItemsRef from './useItemsRef';
 import useLatestState from './useLatestState';
-import useMediaQuery from './useMediaQuery';
 import usePropToState from './usePropToState';
 import useSafeRef from './useSafeRef';
 import useSetState from './useSetState';
@@ -15,7 +14,6 @@ declare const Hooks: {
     readonly usePropToState: typeof usePropToState;
     readonly useLatestState: typeof useLatestState;
     readonly useItemsRef: typeof useItemsRef;
-    readonly useMediaQuery: typeof useMediaQuery;
     readonly useSafeRef: typeof useSafeRef;
 };
 export default Hooks;

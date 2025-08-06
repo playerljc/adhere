@@ -1,6 +1,9 @@
-import type { MutableRefObject } from 'react';
-type SetStateAction<S> = S | ((prevState: S) => S);
-type Dispatch<A> = (value: A) => void;
+import { type Dispatch, type MutableRefObject, type SetStateAction } from 'react';
+/**
+ * useLatestState hook 返回类型
+ * @template S - 状态类型
+ */
+type UseLatestStateReturn<S> = [MutableRefObject<S>, Dispatch<SetStateAction<S>>];
 /**
  * useLatestState hook
  * @description 返回最新的状态值，防止闭包问题，返回的值使用 useLatest 包装
@@ -22,5 +25,5 @@ type Dispatch<A> = (value: A) => void;
  * };
  * ```
  */
-declare function useLatestState<S>(initialState: S | (() => S)): [MutableRefObject<S>, Dispatch<SetStateAction<S>>];
+declare function useLatestState<S>(initialState: S | (() => S)): UseLatestStateReturn<S>;
 export default useLatestState;
