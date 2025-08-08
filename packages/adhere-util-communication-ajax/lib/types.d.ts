@@ -33,7 +33,7 @@ export declare const CONTENT_TYPES: {
 /**
  * 内容类型
  */
-export type ContentType = typeof CONTENT_TYPES[keyof typeof CONTENT_TYPES];
+export type ContentType = (typeof CONTENT_TYPES)[keyof typeof CONTENT_TYPES];
 /**
  * 事件处理器类型
  */
@@ -88,7 +88,7 @@ export interface FormDataConfig {
 /**
  * 请求数据类型
  */
-export type RequestData = FormDataConfig | Record<string, any>;
+export type RequestData = FormDataConfig | Record<string, any> | string;
 /**
  * 构造函数配置对象接口
  * @description 定义Ajax类的默认配置选项
@@ -173,11 +173,12 @@ export interface IConfig {
  */
 export interface ISendArg extends Partial<IConfig> {
     /** 请求的相对地址 */
-    path: string;
+    path?: string;
     /** 请求头对象 */
     headers?: Record<string, string>;
     /** 请求数据 */
     data?: RequestData;
+    method?: Method;
 }
 /**
  * 请求准备参数接口
@@ -195,6 +196,7 @@ export interface Prepare {
     xhr?: XMLHttpRequest | null;
     /** 内容类型 */
     contentType?: string | null;
+    interceptorsConfig?: ISendArg;
 }
 /**
  * 发送结果类型
@@ -210,22 +212,30 @@ export type RequestInterceptor = (params: ISendArg) => ISendArg;
 /**
  * 响应拦截器参数接口
  */
-export interface ResponseInterceptorParams {
-    /** 是否显示loading */
-    show: boolean;
-    /** 终端类型 */
-    terminal: string;
-    /** 响应数据 */
-    data: any;
-    /** 指示器实例 */
-    indicator: any;
-    /** XMLHttpRequest对象 */
-    xhr: XMLHttpRequest;
+export interface ResponseInterceptorParams extends ISendArg {
+    response: XMLHttpRequest['response'];
+    responseText: XMLHttpRequest['responseText'];
+    responseXML: XMLHttpRequest['responseXML'];
+}
+export interface ResponseInterceptorReturn extends ISendArg {
+    response: XMLHttpRequest['response'];
+    responseText: XMLHttpRequest['responseText'];
+    responseXML: XMLHttpRequest['responseXML'];
 }
 /**
  * 响应拦截器类型
  */
-export type ResponseInterceptor = (params: ResponseInterceptorParams) => ResponseInterceptorParams;
+export type ResponseInterceptor = (params: ResponseInterceptorParams) => ResponseInterceptorReturn;
+export type ResolveDataParams = {
+    /** 是否显示loading */
+    show: boolean;
+    /** 指示器实例 */
+    indicator: any;
+    /** 终端类型 */
+    terminal: string;
+    xhr: XMLHttpRequest;
+    data: any;
+};
 /**
  * 业务配置接口
  */
@@ -268,6 +278,8 @@ export interface EventHandlerParams {
     resolve: (value: any) => void;
     /** Promise reject函数 */
     reject: (reason?: any) => void;
+    /** interceptorsConfig **/
+    interceptorsConfig?: ISendArg;
 }
 /**
  * 发送参数获取参数接口

@@ -1,4 +1,4 @@
-import type { IConfig, ISendArg, RequestInterceptor, ResponseInterceptor, SendResult, HttpStatusCode } from './types';
+import { HttpStatusCode, IConfig, ISendArg, RequestInterceptor, ResponseInterceptor, SendResult } from './types';
 /**
  * 拦截器管理类
  * @description 用于管理请求和响应拦截器
@@ -72,7 +72,7 @@ declare class Ajax {
     /** Content-Type: text/plain */
     static readonly CONTENT_TYPE_TEXT_PLAIN: "text/plain";
     /** 拦截器实例 */
-    static readonly interceptors: Interceptors;
+    readonly interceptors: Interceptors;
     /** 基础URL */
     protected readonly baseURL: string;
     /** 系统管理基础URL */
