@@ -471,17 +471,17 @@ function onreadystatechange(
 
   // readyState === 4
   if (xhr.readyState === Ajax.READY_STATE_DONE) {
+    /** 调用response过滤器 **/
+    const { response, responseXML, responseText } = this.interceptors.responseReducer({
+      ...interceptorsConfig,
+      headers: transformStringHeadersToObject(xhr.getAllResponseHeaders()),
+      response: xhr.response,
+      responseText: xhr.responseText,
+      responseXML: xhr.responseXML,
+    });
+
     // status success
     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
-      /** 调用response过滤器 **/
-      const { response, responseXML, responseText } = this.interceptors.responseReducer({
-        ...interceptorsConfig,
-        headers: transformStringHeadersToObject(xhr.getAllResponseHeaders()),
-        response: xhr.response,
-        responseText: xhr.responseText,
-        responseXML: xhr.responseXML,
-      });
-
       // 获取contentType
       const contentType = xhr.getResponseHeader('Content-type') || '';
 
@@ -534,16 +534,16 @@ function onreadystatechange(
       interceptor({
         status: xhr.status as HttpStatusCode,
         statusText: xhr.statusText,
-        response: xhr.response,
-        responseText: xhr.responseText,
+        response,
+        responseText,
       });
 
       // catch
       reject({
         status: xhr.status,
         statusText: xhr.statusText,
-        response: xhr.response,
-        responseText: xhr.responseText,
+        response,
+        responseText,
       });
 
       // 取消遮罩
