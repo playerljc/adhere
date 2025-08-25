@@ -224,6 +224,7 @@ declare const _default: {
     getOvalPoint(center: import("./types").IPoint, radiusX: number, radiusY: number, angle: number): import("./types").IPoint;
     pxToRemNumber(px: number, base: number): number;
     pxToRem(px: number, base: number, media?: import("@baifendian/adhere-ui-configprovider/es/types").ConfigProviderProps["media"]): string;
+    remToPx(rem: number): number;
     isTextNode(el: Node): boolean;
     isCommentNode(el: Node): boolean;
     isElementNode(el: Node): boolean;

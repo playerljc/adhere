@@ -294,5 +294,11 @@ declare const _default: {
      * ```
      */
     pxToRem(px: number, base: number, media?: ConfigProviderProps["media"]): string;
+    /**
+     * remToPx
+     * @description 根据rem获取px
+     * @param rem
+     */
+    remToPx(rem: number): number;
 };
 export default _default;

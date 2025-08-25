@@ -22,7 +22,7 @@ export default {
    */
   toPoint(percent: string): number {
     if (!percent) return 0;
-    
+
     const str = percent.replace('%', '');
     return parseInt(str, 10) / 100;
   },
@@ -40,7 +40,7 @@ export default {
    */
   toPercent(point: number): string {
     if (typeof point !== 'number' || isNaN(point)) return '0%';
-    
+
     let str = Number(point * 100).toFixed(1);
     str += '%';
     return str;
@@ -69,12 +69,12 @@ export default {
     const { x: x4, y: y4 } = p4;
 
     const denominator = (x3 - x4) * (y1 - y2) - (x1 - x2) * (y3 - y4);
-    
+
     if (Math.abs(denominator) < 1e-10) {
       // 平行线，返回中点
       return {
         x: (x1 + x3) / 2,
-        y: (y1 + y3) / 2
+        y: (y1 + y3) / 2,
       };
     }
 
@@ -104,14 +104,14 @@ export default {
     const { x: Ax1, y: Ay1 } = p1;
     const { x: Ax2, y: Ay2 } = p2;
     const dLA1A2 = Math.sqrt(Math.pow(Ax2 - Ax1, 2) + Math.pow(Ay2 - Ay1, 2)); // 计算A1A2的长度
-    
+
     if (dLA1A2 === 0) {
       return p1; // 两点重合
     }
-    
+
     const Ax3 = (distance / dLA1A2) * (Ax2 - Ax1) + Ax1; // A3的横坐标
     const Ay3 = (distance / dLA1A2) * (Ay2 - Ay1) + Ay1; // A3的纵坐标
-    
+
     return { x: Ax3, y: Ay3 };
   },
 
@@ -198,7 +198,10 @@ export default {
    * ) // 返回 true
    * ```
    */
-  isPointInRect(point: IPoint, rect: { x: number; y: number; width: number; height: number }): boolean {
+  isPointInRect(
+    point: IPoint,
+    rect: { x: number; y: number; width: number; height: number },
+  ): boolean {
     return (
       point.x >= rect.x &&
       point.x <= rect.x + rect.width - 1 &&
@@ -390,7 +393,7 @@ export default {
   distance(value: number, unit: 'kilometer'): number {
     const map = new Map<string, number>([['kilometer', 1000]]);
     const conversionFactor = map.get(unit);
-    
+
     if (!conversionFactor) {
       throw new Error(`Unsupported unit: ${unit}`);
     }
@@ -474,6 +477,22 @@ export default {
     }
 
     return `${px}px`;
+  },
+  /**
+   * remToPx
+   * @description 根据rem获取px
+   * @param rem
+   */
+  remToPx(rem: number) {
+    const htmlElement = document.documentElement;
+
+    const computedStyles = window.getComputedStyle(htmlElement);
+
+    const fontSize = computedStyles.fontSize;
+
+    const fontSizeValue = parseFloat(fontSize);
+
+    return rem * fontSizeValue;
   },
   /**--------------------------math-end------------------------**/
 };
