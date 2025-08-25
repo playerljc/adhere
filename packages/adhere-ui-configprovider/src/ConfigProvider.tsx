@@ -165,7 +165,7 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
         ) as CSSThemeConfig;
 
         // 初始化CSS变量
-        init(baseTheme, wrapperELRef.current, targetMedia);
+        init(baseTheme, document.documentElement, targetMedia);
       } catch (error) {
         console.error('Failed to initialize CSS variables:', error);
       }
