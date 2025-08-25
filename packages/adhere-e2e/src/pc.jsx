@@ -45,6 +45,7 @@ export default ({
 
   const antDesignConfigProviderProps = {
     locale: intl[lang].antd,
+    getPopupContainer: () => document.body,
   };
 
   function renderToFragmentWrapper(children) {
