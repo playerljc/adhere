@@ -56,6 +56,7 @@ declare const _default: {
         renderSearchFooterItems(_defaultItems: any): any[];
         getSearchFooterItemsEllipsisCount(): number;
         isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
+        renderSearchFooterItemsMore(): import("react").JSX.Element;
         renderSearchFooterItemsImpl(defaultItems: any): any[];
         renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex, layout, currentTitle }: {
             searchConfig: any;

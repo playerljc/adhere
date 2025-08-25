@@ -6,14 +6,16 @@
  * @param style
  * @param ellipsisCount
  * @param isEllipsesShowOnlyOneAfterCollapsing
+ * @param renderEllipsis
  * @return {JSX.Element}
  */
 declare const OptionsWrap: {
-    ({ className, style, ellipsisCount, isEllipsesShowOnlyOneAfterCollapsing, children, }: {
+    ({ className, style, ellipsisCount, isEllipsesShowOnlyOneAfterCollapsing, renderEllipsis, children, }: {
         className?: string | undefined;
         style?: {} | undefined;
         ellipsisCount?: number | undefined;
         isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
+        renderEllipsis: any;
         children: any;
     }): JSX.Element;
     displayName: string;

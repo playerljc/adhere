@@ -223,6 +223,11 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          */
         isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
         /**
+         * renderSearchFooterItemsMore
+         * @description 渲染renderSearchFooterItems的more
+         */
+        renderSearchFooterItemsMore(): React.JSX.Element;
+        /**
          * renderSearchFooterItemsImpl
          * @param defaultItems
          * @return {*}

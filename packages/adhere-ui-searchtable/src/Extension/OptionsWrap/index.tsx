@@ -17,6 +17,7 @@ const _selectorPrefix = `${selectorPrefix}-options-wrap`;
  * @param style
  * @param ellipsisCount
  * @param isEllipsesShowOnlyOneAfterCollapsing
+ * @param renderEllipsis
  * @return {JSX.Element}
  */
 const OptionsWrap = ({
@@ -24,6 +25,7 @@ const OptionsWrap = ({
   style = {},
   ellipsisCount = 5,
   isEllipsesShowOnlyOneAfterCollapsing = false,
+  renderEllipsis,
   children,
 }): JSX.Element => {
   let result;
@@ -54,7 +56,7 @@ const OptionsWrap = ({
     } else {
       const currentEllipsisCount = ellipsisCount <= 0 ? 3 : ellipsisCount;
 
-      if (currentChildren.length >= currentEllipsisCount) {
+      if (isEllipsesShowOnlyOneAfterCollapsing || currentChildren.length >= currentEllipsisCount) {
         const showOnlyOneDisplay = isEllipsesShowOnlyOneAfterCollapsing;
         const displayEndIndex = showOnlyOneDisplay ? 1 : ellipsisCount - 1;
         const ellipseStartIndex = showOnlyOneDisplay ? 1 : ellipsisCount - 1;
@@ -71,9 +73,11 @@ const OptionsWrap = ({
               })),
             }}
           >
-            <a href="#">
-              <EllipsisOutlined />
-            </a>
+            {renderEllipsis?.() ?? (
+              <a href="#">
+                <EllipsisOutlined />
+              </a>
+            )}
           </Dropdown>,
         ];
       }

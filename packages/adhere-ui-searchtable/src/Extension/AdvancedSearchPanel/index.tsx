@@ -40,6 +40,8 @@ const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
       showStrategy = 'all',
       renderTitleLabel,
       renderCollapse,
+      renderSearch,
+      renderReset,
     },
     tableGridLayoutConfig = {
       layout: 'horizontal',
@@ -123,7 +125,7 @@ const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
         renderMain={
           <div className={`${_selectorPrefix}-main`}>
             <div className={`${_selectorPrefix}-scroll`}>
-              <ScrollLayout scrollY className={`${_selectorPrefix}-scroll-innner`}>
+              <ScrollLayout scrollY className={`${_selectorPrefix}-scroll-inner`}>
                 {
                   // @ts-ignore
                   props?.children?.({ ...props }) ?? (
@@ -144,22 +146,26 @@ const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
 
             <footer className={`${_selectorPrefix}-footer`}>
               <div className={`${_selectorPrefix}-item`}>
-                <Button
-                  type="primary"
-                  icon={<SearchOutlined />}
-                  onClick={() => onSearch().then(() => setCollapse(false))}
-                >
-                  {Intl.get('confirm')}
-                </Button>
+                {renderSearch?.(() => onSearch().then(() => setCollapse(false))) ?? (
+                  <Button
+                    type="primary"
+                    icon={<SearchOutlined />}
+                    onClick={() => onSearch().then(() => setCollapse(false))}
+                  >
+                    {Intl.get('confirm')}
+                  </Button>
+                )}
               </div>
 
               <div className={`${_selectorPrefix}-item`}>
-                <Button
-                  icon={<ReloadOutlined />}
-                  onClick={() => onReset().then(() => setCollapse(false))}
-                >
-                  {Intl.get('reset')}
-                </Button>
+                {renderReset?.(() => onReset().then(() => setCollapse(false))) ?? (
+                  <Button
+                    icon={<ReloadOutlined />}
+                    onClick={() => onReset().then(() => setCollapse(false))}
+                  >
+                    {Intl.get('reset')}
+                  </Button>
+                )}
               </div>
             </footer>
           </div>

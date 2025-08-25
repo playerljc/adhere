@@ -67,7 +67,34 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
             key="add"
             type="primary"
             onClick={() => {
-              debugger;
+              this.validateAllEditableRow(false);
+            }}
+          >
+            保存
+          </Button>
+        ),
+      },
+      {
+        key: 'add1',
+        value: (
+          <Button
+            key="add"
+            type="primary"
+            onClick={() => {
+              this.validateAllEditableRow(false);
+            }}
+          >
+            保存
+          </Button>
+        ),
+      },
+      {
+        key: 'add2',
+        value: (
+          <Button
+            key="add"
+            type="primary"
+            onClick={() => {
               this.validateAllEditableRow(false);
             }}
           >
@@ -77,6 +104,34 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
       },
       ...defaultItems,
     ]);
+  }
+
+  isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing() {
+    return true;
+  }
+
+  isSearchFormToolBarItemEllipsesShowOnlyOneAfterCollapsing() {
+    return true;
+  }
+
+  isShowNumber() {
+    return false;
+  }
+
+  renderSearchFooterItemsMore() {
+    return <span>111</span>;
+  }
+
+  renderSearchFormToolBarMore() {
+    return <span>222</span>;
+  }
+
+  renderSearchFormToolBarSearchItem(cb) {
+    return <span onClick={cb}>Search</span>;
+  }
+
+  renderSearchFormToolBarResetItem(cb) {
+    return <span onClick={cb}>Reset</span>;
   }
 
   /**
@@ -91,8 +146,8 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
         dataIndex: 'name',
         key: 'name',
         width: 150,
-        align: 'left',
-        render: (val) => <div style={{ color: 'red' }}>{val}</div>,
+        // align: 'left',
+        // render: (val) => <div style={{ color: 'red' }}>{val}</div>,
         $search: {
           type: 'input',
           visible: true,
@@ -156,6 +211,7 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
             });
           },
         },
+        $hide: true,
       },
       {
         title: '身高',
@@ -188,6 +244,7 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
             });
           },
         },
+        $hide: true,
       },
       {
         title: '体重',
@@ -220,6 +277,7 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
             });
           },
         },
+        $hide: true,
       },
       {
         title: '籍贯',
@@ -250,6 +308,7 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
             });
           },
         },
+        $hide: true,
       },
       // {
       //   title: '出生年月',
@@ -317,6 +376,7 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
             });
           },
         },
+        $hide: true,
       },
       {
         title: '操作',
@@ -324,7 +384,11 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
         key: this.getOptionsColumnDataIndex(),
         width: 260,
         render: (v, record) => (
-          <OptionsWrap style={{ justifyContent: 'center' }}>
+          <OptionsWrap
+            style={{ justifyContent: 'center' }}
+            isEllipsesShowOnlyOneAfterCollapsing
+            renderEllipsis={() => <span>333</span>}
+          >
             {this.renderOptionColumn(
               [
                 {
@@ -372,5 +436,5 @@ const Wrap = SearchTableStateImplementFactory({
 })(ProSearchStateTableImpl);
 
 export default () => {
-  return <Wrap FieldGeneratorToDict={FieldGeneratorToDict} />;
+  return <Wrap FieldGeneratorToDict={FieldGeneratorToDict} isShowExpandSearch={false} />;
 };

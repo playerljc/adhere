@@ -287,6 +287,8 @@ export interface ColumnTypeExt extends ColumnType<any> {
 export interface SearchProps extends SuspenseProps {
     className?: string;
     style?: CSSProperties;
+    wrapClassName?: string;
+    wrapStyle?: CSSProperties;
     searchClassName: string;
     searchStyle: CSSProperties;
     firstLoading: ReactElement;
@@ -427,6 +429,8 @@ export interface AdvancedSearchPanelSearchConfig {
     renderTitleLabel?: Function;
     renderCollapse?: Function;
     renderSearchButton?: Function;
+    renderSearch?: Function;
+    renderReset?: Function;
     insertSearchButton?: Function;
 }
 export interface AdvancedSearchPanelProps {

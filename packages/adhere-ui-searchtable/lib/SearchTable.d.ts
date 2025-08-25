@@ -547,6 +547,14 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     renderExportExcel(): ReactElement;
     /**
+     * renderSearchBarCollapseOpenControl
+     */
+    renderSearchBarCollapseOpenControl(): React.JSX.Element;
+    /**
+     * renderSearchBarCollapseHideControl
+     */
+    renderSearchBarCollapseHideControl(): React.JSX.Element;
+    /**
      * renderSearchBarCollapseControl
      */
     renderSearchBarCollapseControl(): React.JSX.Element;
@@ -577,6 +585,33 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
         switchProps?: SwitchProps;
         onChange?: (checked: boolean, event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLButtonElement>, switchColumnElRef: HTMLElement) => Promise<void>;
     }): React.JSX.Element;
+    /**
+     * getSearchFormToolBarItemsEllipsisCountEllipsisCount
+     * @description 获取SearchFormToolBar省略的个数
+     * @return {Number}
+     */
+    getSearchFormToolBarItemsEllipsisCountEllipsisCount(): number;
+    /**
+     * isSearchFormToolBarItemEllipsesShowOnlyOneAfterCollapsing
+     * @description SearchFormToolBar只剩一个
+     * @return {Boolean}
+     */
+    isSearchFormToolBarItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
+    /**
+     * renderSearchFormToolBarMore
+     * @description 渲染renderSearchFormToolBar的More
+     */
+    renderSearchFormToolBarMore(): React.JSX.Element;
+    /**
+     * renderSearchFormToolBarSearchItem
+     * @param cb
+     */
+    renderSearchFormToolBarSearchItem(cb: any): React.JSX.Element;
+    /**
+     * renderSearchFormToolBarResetItem
+     * @param cb
+     */
+    renderSearchFormToolBarResetItem(cb: any): React.JSX.Element;
     /**
      * renderSearchFormToolBar
      * @description 渲染查询表单的工具栏

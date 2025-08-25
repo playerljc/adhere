@@ -831,6 +831,8 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         // renderSearchButton: (callback) => <div onClick={() => callback()}>高级搜索</div>,
         // // 高级查询面板查询按钮的插入位置 (defaultItems) => {}
         // insertSearchButton: null,
+        // renderSearch: (cb) => <span onClick={cb}>Search</span>,
+        // renderReset: (cb) => <span onClick={cb}>Reset</span>,
       };
     }
 
@@ -1049,31 +1051,28 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     renderSearchFormToolBarItems(_defaultItems) {
       const defaultItems = [...(_defaultItems || [])];
 
-      if (this.hasAdvancedSearch() && this.hasAdvancedSearchPanel && this.state.expand) {
+      if (this.hasAdvancedSearch() && this.hasAdvancedSearchPanel) {
         const SearchButtonComponent = (
-          <ConditionalRender
-            conditional={!this.advancedSearchConfig.renderSearchButton}
-            noMatch={() =>
-              this.advancedSearchConfig.renderSearchButton(() =>
+          <ConditionalRender conditional={!this.props.isShowExpandSearch || this.state.expand}>
+            {() =>
+              this?.advancedSearchConfig?.renderSearchButton?.(() =>
                 this.setState({
                   advancedSearchPanelCollapse: true,
                 }),
+              ) ?? (
+                <Button
+                  icon={<FilterOutlined />}
+                  type="primary"
+                  onClick={() =>
+                    this.setState({
+                      advancedSearchPanelCollapse: true,
+                    })
+                  }
+                >
+                  {Intl.get('advanced_search')}
+                </Button>
               )
             }
-          >
-            {() => (
-              <Button
-                icon={<FilterOutlined />}
-                type="primary"
-                onClick={() =>
-                  this.setState({
-                    advancedSearchPanelCollapse: true,
-                  })
-                }
-              >
-                {Intl.get('advanced_search')}
-              </Button>
-            )}
           </ConditionalRender>
         );
 
@@ -1160,6 +1159,18 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     }
 
     /**
+     * renderSearchFooterItemsMore
+     * @description 渲染renderSearchFooterItems的more
+     */
+    renderSearchFooterItemsMore() {
+      return (
+        <Button>
+          <EllipsisOutlined />
+        </Button>
+      );
+    }
+
+    /**
      * renderSearchFooterItemsImpl
      * @param defaultItems
      * @return {*}
@@ -1172,12 +1183,16 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         searchFooterItemsEllipsisCount = 5;
       }
 
-      if (defaultItems.length >= searchFooterItemsEllipsisCount) {
-        const showOnlyOneDisplay = this.isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing();
+      const showOnlyOneDisplay = this.isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing();
+
+      if (showOnlyOneDisplay || defaultItems.length >= searchFooterItemsEllipsisCount) {
         const displayEndIndex = showOnlyOneDisplay ? 1 : searchFooterItemsEllipsisCount - 1;
         const ellipseStartIndex = showOnlyOneDisplay ? 1 : searchFooterItemsEllipsisCount - 1;
 
-        if (!!defaultItems.length && defaultItems.length >= searchFooterItemsEllipsisCount) {
+        if (
+          showOnlyOneDisplay ||
+          (!!defaultItems.length && defaultItems.length >= searchFooterItemsEllipsisCount)
+        ) {
           currentDefaultItems = [
             ...defaultItems.slice(0, displayEndIndex),
             {
@@ -1187,14 +1202,12 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                   key="menu"
                   menu={{
                     items: defaultItems.slice(ellipseStartIndex).map(({ key, value }) => ({
-                      key: key,
+                      key,
                       label: value,
                     })),
                   }}
                 >
-                  <Button>
-                    <EllipsisOutlined />
-                  </Button>
+                  {this.renderSearchFooterItemsMore()}
                 </Dropdown>
               ),
             },

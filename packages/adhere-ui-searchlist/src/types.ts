@@ -1,6 +1,12 @@
 import type { ListProps } from 'antd';
 import { ListSize } from 'antd/es/list';
-import { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes, RefObject } from 'react';
+import {
+  type CSSProperties,
+  ForwardRefExoticComponent,
+  PropsWithoutRef,
+  RefAttributes,
+  RefObject,
+} from 'react';
 import { ReactNode } from 'react';
 
 import { SearchProps, SearchState } from '@baifendian/adhere-ui-searchtable/es/types';
@@ -12,6 +18,8 @@ import SearchListStateImplement from './SearchListStateImplement';
  * SearchListProps
  */
 export interface SearchListProps extends SearchProps {
+  wrapClassName?: string;
+  wrapStyle?: CSSProperties;
   antdListProps: ListProps<any>;
   // 锁定选择头，列表体滚动
   fixedSelectionHeaderAutoList: boolean;

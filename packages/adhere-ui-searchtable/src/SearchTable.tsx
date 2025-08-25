@@ -1,4 +1,4 @@
-import { Button, Checkbox, Switch, Table, theme } from 'antd';
+import { Button, Checkbox, Dropdown, Switch, Table, theme } from 'antd';
 import type { SwitchProps } from 'antd';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
 import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
@@ -24,7 +24,13 @@ import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createContext, createRef } from 'react';
 import * as ReactIs from 'react-is';
 
-import { DownOutlined, SearchOutlined, SyncOutlined, UpOutlined } from '@ant-design/icons';
+import {
+  DownOutlined,
+  EllipsisOutlined,
+  SearchOutlined,
+  SyncOutlined,
+  UpOutlined,
+} from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import type {
@@ -2331,6 +2337,30 @@ abstract class SearchTable<
   }
 
   /**
+   * renderSearchBarCollapseOpenControl
+   */
+  renderSearchBarCollapseOpenControl() {
+    return (
+      <>
+        <span>{Intl.get('expand')}</span>
+        <DownOutlined />
+      </>
+    );
+  }
+
+  /**
+   * renderSearchBarCollapseHideControl
+   */
+  renderSearchBarCollapseHideControl() {
+    return (
+      <>
+        <span>{Intl.get('collapse')}</span>
+        <UpOutlined />
+      </>
+    );
+  }
+
+  /**
    * renderSearchBarCollapseControl
    */
   renderSearchBarCollapseControl() {
@@ -2352,8 +2382,7 @@ abstract class SearchTable<
               );
             }}
           >
-            <span>{Intl.get('expand')}</span>
-            <DownOutlined />
+            {this.renderSearchBarCollapseOpenControl()}
           </a>
         )}
       >
@@ -2372,8 +2401,7 @@ abstract class SearchTable<
               );
             }}
           >
-            <span>{Intl.get('collapse')}</span>
-            <UpOutlined />
+            {this.renderSearchBarCollapseHideControl()}
           </a>
         )}
       </ConditionalRender>
@@ -2467,6 +2495,72 @@ abstract class SearchTable<
   }
 
   /**
+   * getSearchFormToolBarItemsEllipsisCountEllipsisCount
+   * @description 获取SearchFormToolBar省略的个数
+   * @return {Number}
+   */
+  getSearchFormToolBarItemsEllipsisCountEllipsisCount(): number {
+    return Number.MAX_VALUE;
+  }
+
+  /**
+   * isSearchFormToolBarItemEllipsesShowOnlyOneAfterCollapsing
+   * @description SearchFormToolBar只剩一个
+   * @return {Boolean}
+   */
+  isSearchFormToolBarItemEllipsesShowOnlyOneAfterCollapsing(): boolean {
+    return false;
+  }
+
+  /**
+   * renderSearchFormToolBarMore
+   * @description 渲染renderSearchFormToolBar的More
+   */
+  renderSearchFormToolBarMore() {
+    return (
+      <Button>
+        <EllipsisOutlined />
+      </Button>
+    );
+  }
+
+  /**
+   * renderSearchFormToolBarSearchItem
+   * @param cb
+   */
+  renderSearchFormToolBarSearchItem(cb) {
+    return (
+      <Button
+        className={`${selectorPrefix}-search-footer-item`}
+        type="primary"
+        key="search"
+        loading={this.showLoading()}
+        icon={<SearchOutlined />}
+        onClick={cb}
+      >
+        {Intl.get('search')}
+      </Button>
+    );
+  }
+
+  /**
+   * renderSearchFormToolBarResetItem
+   * @param cb
+   */
+  renderSearchFormToolBarResetItem(cb) {
+    return (
+      <Button
+        className={`${selectorPrefix}-search-footer-item`}
+        key="reset"
+        icon={<SyncOutlined />}
+        onClick={cb}
+      >
+        {Intl.get('reset')}
+      </Button>
+    );
+  }
+
+  /**
    * renderSearchFormToolBar
    * @description 渲染查询表单的工具栏
    * @return {ReactNode}
@@ -2475,28 +2569,42 @@ abstract class SearchTable<
     const { isShowExpandSearch } = this.props;
 
     const defaultItems = [
-      <Button
-        className={`${selectorPrefix}-search-footer-item`}
-        type="primary"
-        key="search"
-        loading={this.showLoading()}
-        icon={<SearchOutlined />}
-        onClick={() => this.search()}
-      >
-        {Intl.get('search')}
-      </Button>,
-      <Button
-        className={`${selectorPrefix}-search-footer-item`}
-        key="reset"
-        icon={<SyncOutlined />}
-        onClick={this.onClear}
-      >
-        {Intl.get('reset')}
-      </Button>,
+      this.renderSearchFormToolBarSearchItem(() => this.search()),
+      this.renderSearchFormToolBarResetItem(this.onClear),
       isShowExpandSearch && this.renderSearchBarCollapseControl(),
     ].filter((t) => !!t);
 
-    const items = this.renderSearchFormToolBarItems(defaultItems) || defaultItems;
+    let items = this.renderSearchFormToolBarItems(defaultItems) || defaultItems;
+
+    let searchFormToolBarItemsEllipsisCount =
+      this.getSearchFormToolBarItemsEllipsisCountEllipsisCount() ?? Number.MAX_VALUE;
+
+    const showOnlyOneDisplay = this.isSearchFormToolBarItemEllipsesShowOnlyOneAfterCollapsing();
+
+    if (showOnlyOneDisplay || items.length >= searchFormToolBarItemsEllipsisCount) {
+      const displayEndIndex = showOnlyOneDisplay ? 1 : searchFormToolBarItemsEllipsisCount - 1;
+      const ellipseStartIndex = showOnlyOneDisplay ? 1 : searchFormToolBarItemsEllipsisCount - 1;
+
+      if (
+        showOnlyOneDisplay ||
+        (!!items.length && items.length >= searchFormToolBarItemsEllipsisCount)
+      ) {
+        items = [
+          ...items.slice(0, displayEndIndex),
+          <Dropdown
+            key="menu"
+            menu={{
+              items: items.slice(ellipseStartIndex).map((item, _index) => ({
+                key: `${_index + 1}`,
+                label: item,
+              })),
+            }}
+          >
+            {this.renderSearchFormToolBarMore()}
+          </Dropdown>,
+        ];
+      }
+    }
 
     return (
       <>
@@ -2546,11 +2654,23 @@ abstract class SearchTable<
 
     const { columnSetting = [], tableDensity } = this.state;
 
+    const isShowColumnSetting = this.renderColumnSetting();
+
     const columns = this.getTableColumns()
-      .map((column, index) => ({
-        ...columnSetting[index],
-        ...column,
-      }))
+      .map((column, index) => {
+        if (isShowColumnSetting) {
+          return {
+            ...columnSetting[index],
+            ...column,
+          };
+        }
+
+        return {
+          ...column,
+          display: true,
+          sore: index,
+        };
+      })
       .filter((column) => column.display);
 
     columns.sort((c1, c2) => {
@@ -2631,7 +2751,11 @@ abstract class SearchTable<
   renderChildren(): ReactElement {
     // @ts-ignore
     return (
-      <div ref={this.childrenWrapRef} className={`${selectorPrefix}-wrap`}>
+      <div
+        ref={this.childrenWrapRef}
+        className={classNames(`${selectorPrefix}-wrap`, this.props.wrapClassName)}
+        style={this.props.wrapStyle ?? {}}
+      >
         {super.render()}
       </div>
     );

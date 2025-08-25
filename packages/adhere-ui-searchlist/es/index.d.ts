@@ -53,7 +53,9 @@ declare const _default: {
             };
             getGridSearchFormGroupParams(): {}[];
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
-            getGridSearchFormGroupDataByColumnConfig(): {
+            getGridSearchFormGroupDataByColumnConfig(tableGridLayoutProps?: Omit<import("@baifendian/adhere-ui-tablegridlayout/lib/types").TableGridLayoutProps, "data" | "layout"> & {
+                layout: import("@baifendian/adhere-ui-tablegridlayout/lib/types").LayoutType | "prefix";
+            }): {
                 key: number;
                 sort?: number;
                 label: import("react").ReactNode;
@@ -67,11 +69,14 @@ declare const _default: {
             renderSearchFooterItems(_defaultItems: any): any[];
             getSearchFooterItemsEllipsisCount(): number;
             isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
+            renderSearchFooterItemsMore(): import("react").JSX.Element;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
-            renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
+            renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex, layout, currentTitle }: {
                 searchConfig: any;
                 column: any;
                 dataIndex: any;
+                layout: any;
+                currentTitle: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
             renderAdvancedSearchPanel(params: any): null;
@@ -116,7 +121,9 @@ declare const _default: {
             };
             getGridSearchFormGroupParams(): {}[];
             getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
-            getGridSearchFormGroupDataByColumnConfig(): {
+            getGridSearchFormGroupDataByColumnConfig(tableGridLayoutProps?: Omit<import("@baifendian/adhere-ui-tablegridlayout/lib/types").TableGridLayoutProps, "data" | "layout"> & {
+                layout: import("@baifendian/adhere-ui-tablegridlayout/lib/types").LayoutType | "prefix";
+            }): {
                 key: number;
                 sort?: number;
                 label: import("react").ReactNode;
@@ -130,11 +137,14 @@ declare const _default: {
             renderSearchFooterItems(_defaultItems: any): any[];
             getSearchFooterItemsEllipsisCount(): number;
             isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
+            renderSearchFooterItemsMore(): import("react").JSX.Element;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
-            renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
+            renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex, layout, currentTitle }: {
                 searchConfig: any;
                 column: any;
                 dataIndex: any;
+                layout: any;
+                currentTitle: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
             renderAdvancedSearchPanel(params: any): null;
@@ -317,11 +327,12 @@ declare const _default: {
         displayName: string;
     };
     OptionsWrap: {
-        ({ className, style, ellipsisCount, isEllipsesShowOnlyOneAfterCollapsing, children, }: {
+        ({ className, style, ellipsisCount, isEllipsesShowOnlyOneAfterCollapsing, renderEllipsis, children, }: {
             className?: string | undefined;
             style?: {} | undefined;
             ellipsisCount?: number | undefined;
             isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
+            renderEllipsis: any;
             children: any;
         }): JSX.Element;
         displayName: string;
