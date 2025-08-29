@@ -1,12 +1,13 @@
-import type { CSSProperties } from 'react';
 import type { Map, View } from 'ol';
-import type { Vector as VectorSource } from 'ol/source';
-import type { Vector as VectorLayer } from 'ol/layer';
 import type Feature from 'ol/Feature';
-import type { Style } from 'ol/style';
+import type Overlay from 'ol/Overlay';
 import type Draw from 'ol/interaction/Draw';
 import type Modify from 'ol/interaction/Modify';
-import type Overlay from 'ol/Overlay';
+import type { Vector as VectorLayer } from 'ol/layer';
+import type { Vector as VectorSource } from 'ol/source';
+import type { Style } from 'ol/style';
+import type { CSSProperties } from 'react';
+
 import type GeoLayer from './GeoLayer';
 
 /**
@@ -97,7 +98,7 @@ export interface DrawParams {
   strokeWidth?: number;
   zIndex?: number;
   id?: string;
-  propertys?: Record<string, any>;
+  properties?: Record<string, any>;
 }
 
 /**
@@ -112,7 +113,7 @@ export interface PointDrawParams {
   textOpt?: Record<string, any>;
   zIndex?: number;
   text?: string;
-  propertys?: Record<string, any>;
+  properties?: Record<string, any>;
 }
 
 /**
@@ -133,7 +134,7 @@ export interface ImagePointParams {
   size?: number[];
   text?: string;
   textOpt?: Record<string, any>;
-  propertys?: Record<string, any>;
+  properties?: Record<string, any>;
 }
 
 /**
@@ -202,11 +203,19 @@ export interface MapInstance {
   /** 添加数据图层 */
   addDataLayer(zIndex: number): { vectorLayer: VectorLayer<any>; vectorSource: VectorSource };
   /** 添加悬停监听器 */
-  addHoverListener(layer: any, hit: (feature: Feature | any) => void, unHit: (feature?: Feature | any) => void): void;
+  addHoverListener(
+    layer: any,
+    hit: (feature: Feature | any) => void,
+    unHit: (feature?: Feature | any) => void,
+  ): void;
   /** 添加缩放监听器 */
   addZoomListener(handler: (zoom: number) => void): void;
   /** 添加点击监听器 */
-  addClickListener(layer: any, hit: (feature: Feature | any) => void, unHit: (feature: Feature | any) => void): void;
+  addClickListener(
+    layer: any,
+    hit: (feature: Feature | any) => void,
+    unHit: (feature: Feature | any) => void,
+  ): void;
   /** 添加覆盖物 */
   addOverlay(config: any): Overlay;
   /** 设置覆盖物状态 */
@@ -230,7 +239,7 @@ export interface DrawCircleParams {
   strokeWidth?: number;
   zIndex?: number;
   id?: string;
-  propertys?: Record<string, any>;
+  properties?: Record<string, any>;
 }
 
 /**
@@ -243,7 +252,7 @@ export interface DrawPolygonParams {
   strokeWidth?: number;
   zIndex?: number;
   id?: string;
-  propertys?: Record<string, any>;
+  properties?: Record<string, any>;
 }
 
 /**
@@ -270,7 +279,7 @@ export interface DrawCirclePointParams {
   textOpt?: Record<string, any>;
   zIndex?: number;
   text?: string;
-  propertys?: Record<string, any>;
+  properties?: Record<string, any>;
 }
 
 /**
@@ -285,7 +294,7 @@ export interface DrawRegularShapePointParams {
   text?: string;
   textOpt?: Record<string, any>;
   zIndex?: number;
-  propertys?: Record<string, any>;
+  properties?: Record<string, any>;
   [key: string]: any;
 }
 
@@ -307,7 +316,7 @@ export interface DrawImagePointParams {
   size?: number[];
   text?: string;
   textOpt?: Record<string, any>;
-  propertys?: Record<string, any>;
+  properties?: Record<string, any>;
 }
 
 /**

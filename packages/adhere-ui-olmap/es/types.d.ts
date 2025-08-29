@@ -1,10 +1,10 @@
-import type { CSSProperties } from 'react';
 import type { Map, View } from 'ol';
-import type { Vector as VectorSource } from 'ol/source';
-import type { Vector as VectorLayer } from 'ol/layer';
 import type Feature from 'ol/Feature';
-import type { Style } from 'ol/style';
 import type Overlay from 'ol/Overlay';
+import type { Vector as VectorLayer } from 'ol/layer';
+import type { Vector as VectorSource } from 'ol/source';
+import type { Style } from 'ol/style';
+import type { CSSProperties } from 'react';
 import type GeoLayer from './GeoLayer';
 /**
  * 地图类型枚举
@@ -88,7 +88,7 @@ export interface DrawParams {
     strokeWidth?: number;
     zIndex?: number;
     id?: string;
-    propertys?: Record<string, any>;
+    properties?: Record<string, any>;
 }
 /**
  * 点绘制参数接口
@@ -107,7 +107,7 @@ export interface PointDrawParams {
     textOpt?: Record<string, any>;
     zIndex?: number;
     text?: string;
-    propertys?: Record<string, any>;
+    properties?: Record<string, any>;
 }
 /**
  * 图片点绘制参数接口
@@ -127,7 +127,7 @@ export interface ImagePointParams {
     size?: number[];
     text?: string;
     textOpt?: Record<string, any>;
-    propertys?: Record<string, any>;
+    properties?: Record<string, any>;
 }
 /**
  * 交互配置接口
@@ -225,7 +225,7 @@ export interface DrawCircleParams {
     strokeWidth?: number;
     zIndex?: number;
     id?: string;
-    propertys?: Record<string, any>;
+    properties?: Record<string, any>;
 }
 /**
  * 绘制多边形参数接口
@@ -237,7 +237,7 @@ export interface DrawPolygonParams {
     strokeWidth?: number;
     zIndex?: number;
     id?: string;
-    propertys?: Record<string, any>;
+    properties?: Record<string, any>;
 }
 /**
  * 绘制线条参数接口
@@ -267,7 +267,7 @@ export interface DrawCirclePointParams {
     textOpt?: Record<string, any>;
     zIndex?: number;
     text?: string;
-    propertys?: Record<string, any>;
+    properties?: Record<string, any>;
 }
 /**
  * 绘制规则形状点参数接口
@@ -286,7 +286,7 @@ export interface DrawRegularShapePointParams {
     text?: string;
     textOpt?: Record<string, any>;
     zIndex?: number;
-    propertys?: Record<string, any>;
+    properties?: Record<string, any>;
     [key: string]: any;
 }
 /**
@@ -307,7 +307,7 @@ export interface DrawImagePointParams {
     size?: number[];
     text?: string;
     textOpt?: Record<string, any>;
-    propertys?: Record<string, any>;
+    properties?: Record<string, any>;
 }
 /**
  * 设置地图中心动画参数接口

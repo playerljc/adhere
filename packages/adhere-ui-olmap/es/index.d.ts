@@ -16,14 +16,14 @@ declare const defaultExport: {
     OLMap: import("react").ForwardRefExoticComponent<import("./types").OLMapProps & import("react").RefAttributes<import("./OLMap").OlMap>>;
     HeatMap: typeof HeatMap;
     Util: {
-        SHOWBASESTATION_MINZOOM: number;
+        SHOW_BASE_STATION_MIN_ZOOM: number;
         getMinZoom: (target: HTMLElement) => number;
         transformLonLat: (point: number[]) => number[];
         createMap: (Config: import("./Util").CreateMapConfig) => import("ol").Map;
         setOverlayState: (overlay: import("ol").Overlay, point: number[]) => void;
         addClickListener: (mapInstance: import("ol").Map, listeningLayer: import("ol/layer").Vector<any>, hitCallback: ((feature: import("ol").Feature | any) => void) | undefined, unHitCallback: ((feature: import("ol").Feature | any) => void) | undefined, setCursor: (cursor: string) => void) => void;
         addHoverListener: (mapInstance: import("ol").Map, listeningLayer: import("ol/layer").Vector<any>, hitCallback: (feature: import("ol").Feature | any) => void, unHitCallback: (feature: import("ol").Feature | any) => void) => void;
-        addGeoLayer: (mapInstance: import("ol").Map, geojsonData: any, getStyleConfig?: any, zIndex?: number) => GeoLayer;
+        addGeoLayer: (mapInstance: import("ol").Map, geoJsonData: any, getStyleConfig?: any, zIndex?: number) => GeoLayer;
         addWindLayer: (mapInstance: import("ol").Map, data: any, config: any, zIndex?: number) => import("./WindLayer").default;
         addVectorLayer(map: import("ol").Map, zIndex: number): {
             vectorLayer: import("ol/layer").Vector<any>;
@@ -33,26 +33,26 @@ declare const defaultExport: {
             layer: import("ol/layer").Heatmap;
             vectorSource: import("ol/source").Vector;
         };
-        drawCircle({ center, radius, color, strokeColor, strokeWidth, zIndex, id, propertys, }: import("./types").DrawCircleParams): import("ol").Feature;
-        drawPolygon({ points, color, strokeColor, strokeWidth, zIndex, id, propertys, }: import("./types").DrawPolygonParams): import("ol").Feature;
+        drawCircle({ center, radius, color, strokeColor, strokeWidth, zIndex, id, properties, }: import("./types").DrawCircleParams): import("ol").Feature;
+        drawPolygon({ points, color, strokeColor, strokeWidth, zIndex, id, properties, }: import("./types").DrawPolygonParams): import("ol").Feature;
         drawLine({ points, width, color, lineCap, lineJoin, lineDash, }: import("./types").DrawLineParams): import("ol").Feature;
-        drawCirclePoint({ id, pos, fillOpt, strokeOpt, radius, textOpt, zIndex, text, propertys, }: import("./types").DrawCirclePointParams): import("ol").Feature;
-        drawRegularShapePoint({ id, pos, points, fillOpt, strokeOpt, text, textOpt, zIndex, propertys, ...others }: import("./types").DrawRegularShapePointParams): import("ol").Feature;
-        drawImagePoint({ id, pos, zIndex, src, color, opacity, scale, anchor, rotation, offset, offsetOrigin, size, text, textOpt, propertys, }: import("./types").DrawImagePointParams): import("ol").Feature;
+        drawCirclePoint({ id, pos, fillOpt, strokeOpt, radius, textOpt, zIndex, text, properties, }: import("./types").DrawCirclePointParams): import("ol").Feature;
+        drawRegularShapePoint({ id, pos, points, fillOpt, strokeOpt, text, textOpt, zIndex, properties, ...rest }: import("./types").DrawRegularShapePointParams): import("ol").Feature;
+        drawImagePoint({ id, pos, zIndex, src, color, opacity, scale, anchor, rotation, offset, offsetOrigin, size, text, textOpt, properties, }: import("./types").DrawImagePointParams): import("ol").Feature;
         createRegularPolygonCurve(origin: number[], radius: number, sides: number, r: number, angel: number): import("ol/geom").Polygon;
         setMapCenterAnimate({ map, point, duration }: import("./types").SetMapCenterAnimateParams): void;
         createInteraction({ map, config }: import("./types").CreateInteractionParams): import("ol/interaction/Draw").default;
-        polygonInteraction({ map, freehand, vectorSource, onDrawEnd, ...other }: import("./types").PolygonInteractionParams): import("ol/interaction/Draw").default;
-        circleInteraction({ map, vectorSource, onDrawEnd, ...other }: import("./types").CircleInteractionParams): import("ol/interaction/Draw").default;
-        boxInteraction({ map, vectorSource, onDrawEnd, ...other }: import("./types").BoxInteractionParams): import("ol/interaction/Draw").default;
-        linStringInteraction({ map, freehand, vectorSource, onDrawEnd, ...other }: import("./types").LinStringInteractionParams): import("ol/interaction/Draw").default;
-        createModifyInteraction({ map, vectorSource, onModifyEnd }: import("./types").CreateModifyInteractionParams): import("ol/interaction/Modify").default;
+        polygonInteraction({ map, freehand, vectorSource, onDrawEnd, ...rest }: import("./types").PolygonInteractionParams): import("ol/interaction/Draw").default;
+        circleInteraction({ map, vectorSource, onDrawEnd, ...rest }: import("./types").CircleInteractionParams): import("ol/interaction/Draw").default;
+        boxInteraction({ map, vectorSource, onDrawEnd, ...rest }: import("./types").BoxInteractionParams): import("ol/interaction/Draw").default;
+        linStringInteraction({ map, freehand, vectorSource, onDrawEnd, ...rest }: import("./types").LinStringInteractionParams): import("ol/interaction/Draw").default;
+        createModifyInteraction({ map, vectorSource, onModifyEnd, }: import("./types").CreateModifyInteractionParams): import("ol/interaction/Modify").default;
         removeFeature(vectorSource: import("ol/source").Vector, feature: import("ol").Feature): void;
         removeAllFeature(vectorSource: import("ol/source").Vector): void;
         removeAllOverlay(map: import("ol").Map): void;
         removeInteraction(map: import("ol").Map, interaction: any): void;
         removeInteractionAll(map: import("ol").Map): void;
-        mapFit(extent: number[] | undefined, option: any, map: import("ol").Map): void;
+        mapFit(extent: number[] | undefined, option: any | undefined, map: import("ol").Map): void;
         addArrowsSource({ points, color, icon, anchor, offset }: import("./types").AddArrowsSourceParams): import("ol").Feature[];
         addArrowsOverlay(map: import("ol").Map, parentDom: HTMLElement, color: string, points: number[][]): void;
         addOverlay: (map: import("ol").Map, config: any, div: HTMLDivElement | null) => import("ol").Overlay;
@@ -71,7 +71,7 @@ declare const defaultExport: {
         getRadius(center: number[], radius: number): number;
         getExtentByCoordinates(coordinates: number[][]): number[];
         getExtentByVectorSource(vectorSource: import("ol/source").Vector, type?: string): number[];
-        getCectorSourceCoordinates(vectorSource: import("ol/source").Vector, type?: string): number[][];
+        getVectorSourceCoordinates(vectorSource: import("ol/source").Vector, type?: string): number[][];
         getCenterByCoordinates(vectorSource: import("ol/source").Vector, type?: string): {
             centerLon: number;
             centerLat: number;
@@ -84,7 +84,7 @@ declare const defaultExport: {
             leftTop: number[];
             rightBottom: number[];
         };
-        getFlatternDistance(lat1: number, lng1: number, lat2: number, lng2: number): number;
+        getFlattenDistance(lat1: number, lng1: number, lat2: number, lng2: number): number;
     };
 };
 export default defaultExport;

@@ -27,20 +27,20 @@ import GeoLayer from './GeoLayer';
 import * as TitleLayer from './TitleLayer';
 import WindLayer from './WindLayer';
 import type {
-  DrawCircleParams,
-  DrawPolygonParams,
-  DrawLineParams,
-  DrawCirclePointParams,
-  DrawRegularShapePointParams,
-  DrawImagePointParams,
-  SetMapCenterAnimateParams,
-  CreateInteractionParams,
-  PolygonInteractionParams,
-  CircleInteractionParams,
-  BoxInteractionParams,
-  LinStringInteractionParams,
-  CreateModifyInteractionParams,
   AddArrowsSourceParams,
+  BoxInteractionParams,
+  CircleInteractionParams,
+  CreateInteractionParams,
+  CreateModifyInteractionParams,
+  DrawCircleParams,
+  DrawCirclePointParams,
+  DrawImagePointParams,
+  DrawLineParams,
+  DrawPolygonParams,
+  DrawRegularShapePointParams,
+  LinStringInteractionParams,
+  PolygonInteractionParams,
+  SetMapCenterAnimateParams,
 } from './types';
 
 const EARTH_RADIUS: number = Resource.Dict.value.ResourceGisEarthRadius?.value ?? 6371000;
@@ -90,9 +90,18 @@ function createMap(Config: CreateMapConfig): Map {
     fitZoom,
     zoom = getMinZoom(config.target) || 3,
     minZoom = getMinZoom(config.target) || 3,
-    maxZoom = typeof Resource.Dict.value.ResourceGisMapMaxZoom?.value === 'number' ? Resource.Dict.value.ResourceGisMapMaxZoom.value : 18,
-    center = Array.isArray(Resource.Dict.value.ResourceGisXinbeiquCenterPoint?.value) ? Resource.Dict.value.ResourceGisXinbeiquCenterPoint?.value : [0, 0],
-    extent = Array.isArray(Resource.Dict.value.ResourceGisXinbeiquMapExtent?.value) ? Resource.Dict.value.ResourceGisXinbeiquMapExtent?.value : [[0, 0], [0, 0]],
+    maxZoom = typeof Resource.Dict.value.ResourceGisMapMaxZoom?.value === 'number'
+      ? Resource.Dict.value.ResourceGisMapMaxZoom.value
+      : 18,
+    center = Array.isArray(Resource.Dict.value.ResourceGisXinbeiquCenterPoint?.value)
+      ? Resource.Dict.value.ResourceGisXinbeiquCenterPoint?.value
+      : [0, 0],
+    extent = Array.isArray(Resource.Dict.value.ResourceGisXinbeiquMapExtent?.value)
+      ? Resource.Dict.value.ResourceGisXinbeiquMapExtent?.value
+      : [
+          [0, 0],
+          [0, 0],
+        ],
     layers = [TitleLayer.getOSMTileLayer()],
   } = Config;
 
@@ -141,10 +150,8 @@ function createMap(Config: CreateMapConfig): Map {
   return map;
 }
 
-
-
 export default {
-  SHOWBASESTATION_MINZOOM: 5,
+  SHOW_BASE_STATION_MIN_ZOOM: 5,
   getMinZoom,
   transformLonLat,
   createMap,
@@ -241,8 +248,13 @@ export default {
   /**
    * 添加 GeoJSON 图层
    */
-  addGeoLayer: (mapInstance: Map, geojsonData: any, getStyleConfig: any = () => {}, zIndex = 0): GeoLayer => {
-    const geoLayer = new GeoLayer(geojsonData, getStyleConfig, zIndex);
+  addGeoLayer: (
+    mapInstance: Map,
+    geoJsonData: any,
+    getStyleConfig: any = () => {},
+    zIndex = 0,
+  ): GeoLayer => {
+    const geoLayer = new GeoLayer(geoJsonData, getStyleConfig, zIndex);
     mapInstance.addLayer(geoLayer);
     return geoLayer;
   },
@@ -257,7 +269,10 @@ export default {
   /**
    * 添加向量图层
    */
-  addVectorLayer(map: Map, zIndex: number): { vectorLayer: VectorLayer<any>; vectorSource: VectorSource } {
+  addVectorLayer(
+    map: Map,
+    zIndex: number,
+  ): { vectorLayer: VectorLayer<any>; vectorSource: VectorSource } {
     const vectorSource = new VectorSource();
     const vectorLayer = new VectorLayer({
       source: vectorSource,
@@ -299,19 +314,19 @@ export default {
     strokeWidth = 2,
     zIndex = Resource.Dict.value.ResourceNormalMaxZIndex?.value ?? 1,
     id = v4(),
-    propertys = {},
+    properties = {},
   }: DrawCircleParams): Feature {
     const f = new Feature({
       zIndex,
       geometry: new Circle(center, radius),
-      ...propertys,
+      ...properties,
     });
     f.setId(id);
     f.setStyle(
       new Style({
         fill: new Fill({ color }),
         stroke: new Stroke({ width: strokeWidth, color: strokeColor }),
-      })
+      }),
     );
     return f;
   },
@@ -325,19 +340,19 @@ export default {
     strokeWidth = 2,
     zIndex = Resource.Dict.value.ResourceNormalMaxZIndex?.value ?? 1,
     id = v4(),
-    propertys = {},
+    properties = {},
   }: DrawPolygonParams): Feature {
     const f = new Feature({
       zIndex,
       geometry: new Polygon(points),
-      ...propertys,
+      ...properties,
     });
     f.setId(id);
     f.setStyle(
       new Style({
         fill: new Fill({ color }),
         stroke: new Stroke({ width: strokeWidth, color: strokeColor }),
-      })
+      }),
     );
     return f;
   },
@@ -364,7 +379,7 @@ export default {
           lineJoin,
           lineDash,
         }),
-      })
+      }),
     );
     return f;
   },
@@ -380,12 +395,12 @@ export default {
     textOpt = {},
     zIndex = 1,
     text = '',
-    propertys = {},
+    properties = {},
   }: DrawCirclePointParams): Feature {
     const point = new Feature({
       zIndex: Resource.Dict.value.ResourceNormalMaxZIndex?.value ?? 1,
       geometry: new Point(pos),
-      ...propertys,
+      ...properties,
     });
     point.setId(id);
     point.setStyle(
@@ -402,7 +417,7 @@ export default {
           ...textOpt,
         }),
         zIndex,
-      })
+      }),
     );
     return point;
   },
@@ -418,17 +433,17 @@ export default {
     text = '',
     textOpt = {},
     zIndex = 1,
-    propertys = {},
-    ...others
+    properties = {},
+    ...rest
   }: DrawRegularShapePointParams): Feature {
     const point = new Feature({
       zIndex: Resource.Dict.value.ResourceNormalMaxZIndex?.value ?? 1,
       geometry: new Point(pos),
-      ...propertys,
+      ...properties,
     });
     point.setId(id);
-    // 移除others中的points，防止被覆盖
-    const { points: _points, ...restOthers } = others;
+    // 移除rest中的points，防止被覆盖
+    const { points: _points, ...restOthers } = rest;
     point.setStyle(
       new Style({
         image: new RegularShape({
@@ -444,7 +459,7 @@ export default {
           ...textOpt,
         }),
         zIndex,
-      })
+      }),
     );
     return point;
   },
@@ -466,12 +481,12 @@ export default {
     size,
     text = '',
     textOpt = {},
-    propertys = {},
+    properties = {},
   }: DrawImagePointParams): Feature {
     const point = new Feature({
       zIndex: Resource.Dict.value.ResourceNormalMaxZIndex?.value ?? 1,
       geometry: new Point(pos),
-      ...propertys,
+      ...properties,
     });
     point.setId(id);
     point.setStyle(
@@ -495,14 +510,20 @@ export default {
           ...textOpt,
         }),
         zIndex,
-      })
+      }),
     );
     return point;
   },
   /**
    * 创建扇形多边形
    */
-  createRegularPolygonCurve(origin: number[], radius: number, sides: number, r: number, angel: number): Polygon {
+  createRegularPolygonCurve(
+    origin: number[],
+    radius: number,
+    sides: number,
+    r: number,
+    angel: number,
+  ): Polygon {
     const rotation = 360 - r;
     let angle = Math.PI * (1 / sides - 1 / 2);
     if (rotation) {
@@ -554,33 +575,39 @@ export default {
   /**
    * 框多边形交互
    */
-  polygonInteraction({ map, freehand = true, vectorSource, onDrawEnd, ...other }: PolygonInteractionParams): Draw {
+  polygonInteraction({
+    map,
+    freehand = true,
+    vectorSource,
+    onDrawEnd,
+    ...rest
+  }: PolygonInteractionParams): Draw {
     const drawPolygonInteraction = this.createInteraction({
       map,
       config: {
         source: vectorSource,
         type: 'Polygon',
         freehand,
-        ...other,
+        ...rest,
       },
     });
     drawPolygonInteraction.on('drawend', (e) => {
       e.feature.setId(v4());
       const geometry = e.feature.getGeometry() as any;
-      const lonlats: number[][] = [];
+      const lonLats: number[][] = [];
       const coordinates = geometry.getCoordinates()[0].map((v: number[]) => {
-        lonlats.push(transformLonLat(v));
+        lonLats.push(transformLonLat(v));
         return v;
       });
-      const centerp = map.getView().getCenter();
+      const centerP = map.getView().getCenter();
       if (onDrawEnd) {
         onDrawEnd({
           e,
           geometry,
           coordinates,
-          lonlats,
-          centerp,
-          transformCenterp: centerp ? transformLonLat(centerp) : undefined,
+          lonLats,
+          centerP,
+          transformCenterP: centerP ? transformLonLat(centerP) : undefined,
         });
       }
     });
@@ -589,14 +616,14 @@ export default {
   /**
    * 框圆形交互
    */
-  circleInteraction({ map, vectorSource, onDrawEnd, ...other }: CircleInteractionParams): Draw {
+  circleInteraction({ map, vectorSource, onDrawEnd, ...rest }: CircleInteractionParams): Draw {
     const drawCircleInteraction = this.createInteraction({
       map,
       config: {
         source: vectorSource,
         type: 'Circle',
         freehand: true,
-        ...other,
+        ...rest,
       },
     });
     drawCircleInteraction.on('drawend', (e) => {
@@ -619,7 +646,7 @@ export default {
   /**
    * 框线框交互
    */
-  boxInteraction({ map, vectorSource, onDrawEnd, ...other }: BoxInteractionParams): Draw {
+  boxInteraction({ map, vectorSource, onDrawEnd, ...rest }: BoxInteractionParams): Draw {
     const drawBoxInteraction = this.createInteraction({
       map,
       config: {
@@ -627,20 +654,20 @@ export default {
         type: 'Circle',
         freehand: true,
         geometryFunction: createBox(),
-        ...other,
+        ...rest,
       },
     });
     drawBoxInteraction.on('drawend', (e) => {
       e.feature.setId(v4());
       const geometry = e.feature.getGeometry() as any;
       const coordinates = geometry.getCoordinates()[0].map((v: number[]) => v);
-      const centerp = map.getView().getCenter();
+      const centerP = map.getView().getCenter();
       if (onDrawEnd) {
         onDrawEnd({
           e,
           geometry,
           coordinates,
-          centerp,
+          centerP,
         });
       }
     });
@@ -649,35 +676,41 @@ export default {
   /**
    * 线路交互
    */
-  linStringInteraction({ map, freehand = true, vectorSource, onDrawEnd, ...other }: LinStringInteractionParams): Draw {
+  linStringInteraction({
+    map,
+    freehand = true,
+    vectorSource,
+    onDrawEnd,
+    ...rest
+  }: LinStringInteractionParams): Draw {
     const drawPolygonInteraction = this.createInteraction({
       map,
       config: {
         source: vectorSource,
         type: 'LineString',
         freehand,
-        ...other,
+        ...rest,
       },
     });
     drawPolygonInteraction.on('drawend', (e) => {
       e.feature.setId(v4());
       const geometry = e.feature.getGeometry() as any;
-      const lonlats: number[][] = [];
+      const lonLats: number[][] = [];
       const coordinates = geometry.getCoordinates().map((v: number[]) => {
-        lonlats.push(transformLonLat(v));
+        lonLats.push(transformLonLat(v));
         return v;
       });
-      const centerp = map.getView().getCenter();
+      const centerP = map.getView().getCenter();
       const mileage = geometry.getLength().toFixed(3);
       if (onDrawEnd) {
         onDrawEnd({
           e,
           geometry,
           coordinates,
-          lonlats,
-          centerp,
+          lonLats,
+          centerP,
           mileage,
-          transformCenterp: centerp ? transformLonLat(centerp) : undefined,
+          transformCenterP: centerP ? transformLonLat(centerP) : undefined,
         });
       }
     });
@@ -686,7 +719,11 @@ export default {
   /**
    * 创建修改交互
    */
-  createModifyInteraction({ map, vectorSource, onModifyEnd }: CreateModifyInteractionParams): Modify {
+  createModifyInteraction({
+    map,
+    vectorSource,
+    onModifyEnd,
+  }: CreateModifyInteractionParams): Modify {
     const modifyInteraction = new Modify({
       source: vectorSource,
     });
@@ -751,7 +788,8 @@ export default {
     for (let i = 0; i < points.length - 1; i++) {
       const start = points[i];
       const end = points[i + 1];
-      if (!Array.isArray(start) || !Array.isArray(end) || start.length < 2 || end.length < 2) continue;
+      if (!Array.isArray(start) || !Array.isArray(end) || start.length < 2 || end.length < 2)
+        continue;
       const dx = Number(end[0]) - Number(start[0]);
       const dy = Number(end[1]) - Number(start[1]);
       const rotation = Math.atan2(dy, dx);
@@ -768,7 +806,7 @@ export default {
             offset: offset ?? [0, 0],
             rotation: -rotation,
           }),
-        })
+        }),
       );
       arrows.push(arrow);
     }
@@ -781,7 +819,8 @@ export default {
     for (let i = 0; i < points.length - 1; i++) {
       const start = points[i];
       const end = points[i + 1];
-      if (!Array.isArray(start) || !Array.isArray(end) || start.length < 2 || end.length < 2) continue;
+      if (!Array.isArray(start) || !Array.isArray(end) || start.length < 2 || end.length < 2)
+        continue;
       const dx = Number(end[0]) - Number(start[0]);
       const dy = Number(end[1]) - Number(start[1]);
       const rotation = Math.atan2(dy, dx);
@@ -940,7 +979,8 @@ export default {
     const top4236 = [center4326[0], lat1];
     const top3857 = fromLonLat(top4236);
     // 计算出纬度方向上距离圆心radius米的点的坐标
-    const lon1 = center4326[0] + (radius / (R * Math.cos((Math.PI * center4326[1]) / 180))) * (180 / Math.PI);
+    const lon1 =
+      center4326[0] + (radius / (R * Math.cos((Math.PI * center4326[1]) / 180))) * (180 / Math.PI);
     const right4236 = [lon1, center4326[1]];
     const right3857 = fromLonLat(right4236);
     // 计算经度方向上的点和圆心的平面距离
@@ -979,13 +1019,13 @@ export default {
    * 获取向量源中的矩形数据
    */
   getExtentByVectorSource(vectorSource: VectorSource, type = 'Point'): number[] {
-    const coordinates = this.getCectorSourceCoordinates(vectorSource, type);
+    const coordinates = this.getVectorSourceCoordinates(vectorSource, type);
     return this.getExtentByCoordinates(coordinates);
   },
   /**
    * 获取向量层中的所有点
    */
-  getCectorSourceCoordinates(vectorSource: VectorSource, type = 'Point'): number[][] {
+  getVectorSourceCoordinates(vectorSource: VectorSource, type = 'Point'): number[][] {
     let points: number[][] = [];
     vectorSource
       .getFeatures()
@@ -1017,7 +1057,10 @@ export default {
   /**
    * 获取向量源中所有 Point 的中心点
    */
-  getCenterByCoordinates(vectorSource: VectorSource, type = 'Point'): { centerLon: number; centerLat: number } {
+  getCenterByCoordinates(
+    vectorSource: VectorSource,
+    type = 'Point',
+  ): { centerLon: number; centerLat: number } {
     let points: number[][] = [];
     vectorSource
       .getFeatures()
@@ -1091,7 +1134,7 @@ export default {
   /**
    * 计算连个经纬度之间的距离(m)
    */
-  getFlatternDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  getFlattenDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
     const f = this.getRad((lat1 + lat2) / 2);
     const g = this.getRad((lat1 - lat2) / 2);
     const l = this.getRad((lng1 - lng2) / 2);

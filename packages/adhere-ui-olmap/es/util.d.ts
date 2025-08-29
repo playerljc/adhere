@@ -8,7 +8,7 @@ import { Heatmap as HeatMapLayer, Vector as VectorLayer } from 'ol/layer.js';
 import { Vector as VectorSource } from 'ol/source.js';
 import GeoLayer from './GeoLayer';
 import WindLayer from './WindLayer';
-import type { DrawCircleParams, DrawPolygonParams, DrawLineParams, DrawCirclePointParams, DrawRegularShapePointParams, DrawImagePointParams, SetMapCenterAnimateParams, CreateInteractionParams, PolygonInteractionParams, CircleInteractionParams, BoxInteractionParams, LinStringInteractionParams, CreateModifyInteractionParams, AddArrowsSourceParams } from './types';
+import type { AddArrowsSourceParams, BoxInteractionParams, CircleInteractionParams, CreateInteractionParams, CreateModifyInteractionParams, DrawCircleParams, DrawCirclePointParams, DrawImagePointParams, DrawLineParams, DrawPolygonParams, DrawRegularShapePointParams, LinStringInteractionParams, PolygonInteractionParams, SetMapCenterAnimateParams } from './types';
 /**
  * 获取最小缩放级别
  * @param target 地图容器 HTMLElement
@@ -37,7 +37,7 @@ export interface CreateMapConfig {
  */
 declare function createMap(Config: CreateMapConfig): Map;
 declare const _default: {
-    SHOWBASESTATION_MINZOOM: number;
+    SHOW_BASE_STATION_MIN_ZOOM: number;
     getMinZoom: typeof getMinZoom;
     transformLonLat: typeof transformLonLat;
     createMap: typeof createMap;
@@ -56,7 +56,7 @@ declare const _default: {
     /**
      * 添加 GeoJSON 图层
      */
-    addGeoLayer: (mapInstance: Map, geojsonData: any, getStyleConfig?: any, zIndex?: number) => GeoLayer;
+    addGeoLayer: (mapInstance: Map, geoJsonData: any, getStyleConfig?: any, zIndex?: number) => GeoLayer;
     /**
      * 添加风场图层
      */
@@ -78,11 +78,11 @@ declare const _default: {
     /**
      * 创建一个圆形 Feature
      */
-    drawCircle({ center, radius, color, strokeColor, strokeWidth, zIndex, id, propertys, }: DrawCircleParams): Feature;
+    drawCircle({ center, radius, color, strokeColor, strokeWidth, zIndex, id, properties, }: DrawCircleParams): Feature;
     /**
      * 创建一个多边形 Feature
      */
-    drawPolygon({ points, color, strokeColor, strokeWidth, zIndex, id, propertys, }: DrawPolygonParams): Feature;
+    drawPolygon({ points, color, strokeColor, strokeWidth, zIndex, id, properties, }: DrawPolygonParams): Feature;
     /**
      * 创建一条线 Feature
      */
@@ -90,15 +90,15 @@ declare const _default: {
     /**
      * 创建一个圆的点 Feature
      */
-    drawCirclePoint({ id, pos, fillOpt, strokeOpt, radius, textOpt, zIndex, text, propertys, }: DrawCirclePointParams): Feature;
+    drawCirclePoint({ id, pos, fillOpt, strokeOpt, radius, textOpt, zIndex, text, properties, }: DrawCirclePointParams): Feature;
     /**
      * 创建一个多边形的点 Feature
      */
-    drawRegularShapePoint({ id, pos, points, fillOpt, strokeOpt, text, textOpt, zIndex, propertys, ...others }: DrawRegularShapePointParams): Feature;
+    drawRegularShapePoint({ id, pos, points, fillOpt, strokeOpt, text, textOpt, zIndex, properties, ...rest }: DrawRegularShapePointParams): Feature;
     /**
      * 创建一个图片的点 Feature
      */
-    drawImagePoint({ id, pos, zIndex, src, color, opacity, scale, anchor, rotation, offset, offsetOrigin, size, text, textOpt, propertys, }: DrawImagePointParams): Feature;
+    drawImagePoint({ id, pos, zIndex, src, color, opacity, scale, anchor, rotation, offset, offsetOrigin, size, text, textOpt, properties, }: DrawImagePointParams): Feature;
     /**
      * 创建扇形多边形
      */
@@ -114,23 +114,23 @@ declare const _default: {
     /**
      * 框多边形交互
      */
-    polygonInteraction({ map, freehand, vectorSource, onDrawEnd, ...other }: PolygonInteractionParams): Draw;
+    polygonInteraction({ map, freehand, vectorSource, onDrawEnd, ...rest }: PolygonInteractionParams): Draw;
     /**
      * 框圆形交互
      */
-    circleInteraction({ map, vectorSource, onDrawEnd, ...other }: CircleInteractionParams): Draw;
+    circleInteraction({ map, vectorSource, onDrawEnd, ...rest }: CircleInteractionParams): Draw;
     /**
      * 框线框交互
      */
-    boxInteraction({ map, vectorSource, onDrawEnd, ...other }: BoxInteractionParams): Draw;
+    boxInteraction({ map, vectorSource, onDrawEnd, ...rest }: BoxInteractionParams): Draw;
     /**
      * 线路交互
      */
-    linStringInteraction({ map, freehand, vectorSource, onDrawEnd, ...other }: LinStringInteractionParams): Draw;
+    linStringInteraction({ map, freehand, vectorSource, onDrawEnd, ...rest }: LinStringInteractionParams): Draw;
     /**
      * 创建修改交互
      */
-    createModifyInteraction({ map, vectorSource, onModifyEnd }: CreateModifyInteractionParams): Modify;
+    createModifyInteraction({ map, vectorSource, onModifyEnd, }: CreateModifyInteractionParams): Modify;
     /**
      * 删除一个 Feature
      */
@@ -154,7 +154,7 @@ declare const _default: {
     /**
      * 地图自适应
      */
-    mapFit(extent: number[] | undefined, option: any, map: Map): void;
+    mapFit(extent: number[] | undefined, option: any | undefined, map: Map): void;
     /**
      * 为一系列点创建箭头 Feature 数组
      */
@@ -218,7 +218,7 @@ declare const _default: {
     /**
      * 获取向量层中的所有点
      */
-    getCectorSourceCoordinates(vectorSource: VectorSource, type?: string): number[][];
+    getVectorSourceCoordinates(vectorSource: VectorSource, type?: string): number[][];
     /**
      * 获取向量源中所有 Point 的中心点
      */
@@ -243,6 +243,6 @@ declare const _default: {
     /**
      * 计算连个经纬度之间的距离(m)
      */
-    getFlatternDistance(lat1: number, lng1: number, lat2: number, lng2: number): number;
+    getFlattenDistance(lat1: number, lng1: number, lat2: number, lng2: number): number;
 };
 export default _default;
