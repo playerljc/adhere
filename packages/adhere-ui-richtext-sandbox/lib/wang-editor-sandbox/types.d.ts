@@ -1,11 +1,33 @@
 import React, { NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import { IDomEditor, IEditorConfig, SlateDescendant } from '@wangeditor/editor';
 import * as wangEditor from '@wangeditor/editor';
+export interface Theme {
+    textareaBgColor?: string;
+    textareaColor?: string;
+    textareaBorderColor?: string;
+    textareaSlightBorderColor?: string;
+    textareaSlightColor?: string;
+    textareaSlightBgColor?: string;
+    textareaSelectedBorderColor?: string;
+    textareaHandlerBgColor?: string;
+    toolbarColor?: string;
+    toolbarBgColor?: string;
+    toolbarActiveColor?: string;
+    toolbarActiveBgColor?: string;
+    toolbarDisabledColor?: string;
+    toolbarBorderColor?: string;
+    modalButtonBgColor?: string;
+    modalButtonBorderColor?: string;
+}
 /**
  * WangEditorSandboxHandler
  */
 export interface WangEditorSandboxHandler {
     getEditor: () => IDomEditor | null;
+    getWangEditor: () => any;
+    getWindow: () => Window;
+    getDocument: () => Document;
+    setTheme: (theme: Theme) => void;
 }
 export interface ToolBarProps {
     defaultConfig?: Partial<wangEditor.IToolbarConfig>;
@@ -45,6 +67,7 @@ export interface WangEditorSandboxProps {
     injectionStyles?: string[];
     injectionStylesByString?: string[];
     direction?: 'ltr' | 'rtl';
+    onRender: () => void;
 }
 export type WangEditorSandboxComponent = NamedExoticComponent<PropsWithoutRef<WangEditorSandboxProps> & RefAttributes<WangEditorSandboxHandler>> & {
     AntdFormRequireValidator: (editor: any, tip: any) => any;

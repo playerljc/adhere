@@ -3,11 +3,41 @@ import React, { NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'rea
 import { IDomEditor, IEditorConfig, SlateDescendant } from '@wangeditor/editor';
 import * as wangEditor from '@wangeditor/editor';
 
+export interface Theme {
+  /* textarea - css vars */
+  textareaBgColor?: string;
+  textareaColor?: string;
+  textareaBorderColor?: string;
+  textareaSlightBorderColor?: string;
+  textareaSlightColor?: string;
+  textareaSlightBgColor?: string;
+  /* 选中的元素，如选中了分割线 */
+  textareaSelectedBorderColor?: string;
+  /* 工具，如图片拖拽按钮 */
+  textareaHandlerBgColor?: string;
+
+  /* toolbar - css vars */
+  toolbarColor?: string;
+  toolbarBgColor?: string;
+  toolbarActiveColor?: string;
+  toolbarActiveBgColor?: string;
+  toolbarDisabledColor?: string;
+  toolbarBorderColor?: string;
+
+  /* modal - css vars */
+  modalButtonBgColor?: string;
+  modalButtonBorderColor?: string;
+}
+
 /**
  * WangEditorSandboxHandler
  */
 export interface WangEditorSandboxHandler {
   getEditor: () => IDomEditor | null;
+  getWangEditor: () => any;
+  getWindow: () => Window;
+  getDocument: () => Document;
+  setTheme: (theme: Theme) => void;
 }
 
 export interface ToolBarProps {
@@ -50,6 +80,7 @@ export interface WangEditorSandboxProps {
   injectionStyles?: string[];
   injectionStylesByString?: string[];
   direction?: 'ltr' | 'rtl';
+  onRender: () => void;
 }
 
 export type WangEditorSandboxComponent = NamedExoticComponent<

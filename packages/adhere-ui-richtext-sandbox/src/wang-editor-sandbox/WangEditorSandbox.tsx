@@ -19,6 +19,7 @@ import React, {
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import type { ConfigProviderContext } from '@baifendian/adhere-ui-configprovider/es/types';
+import Util from '@baifendian/adhere-util';
 import type { IDomEditor } from '@wangeditor/editor';
 
 import ReactDOMStr from '../common-lib/react-dom.production.min';
@@ -53,6 +54,7 @@ const InternalWangEditorSandbox = memo<
       injectionStylesByString,
       gap = 60,
       direction = 'ltr',
+      onRender,
     } = props;
 
     const wrapRef = useRef<HTMLDivElement | null>(null);
@@ -143,11 +145,11 @@ const InternalWangEditorSandbox = memo<
           if (!('bordered' in props) || props.bordered) {
             editorWrapRule.style.cssText = `
               ${editorWrapRuleCssText}
-              border: 1px solid #ccc;
+              border: 1px solid var(--w-e-textarea-border-color);
             `;
             headerRule.style.cssText = `
               ${headerRulesText}
-              border-bottom: 1px solid #ccc;
+              border-bottom: 1px solid var(--w-e-textarea-border-color);
             `;
           }
           // 没边框
@@ -199,6 +201,8 @@ const InternalWangEditorSandbox = memo<
                     if (editorProps?.onCreated) {
                       editorProps.onCreated(_editor);
                     }
+
+                    onRender?.();
                   });
                 }}
                 value={value.current}
@@ -239,7 +243,7 @@ const InternalWangEditorSandbox = memo<
       if (!document) return;
 
       const wrap = document.getElementById(editorId) as HTMLDivElement;
-      wrap.innerHTML = props.value as string;
+      wrap.innerHTML = `<div class="w-view">${props.value as string}</div>`;
 
       // if (wrapRef.current) {
       //   wrapRef.current.style.height = `${document.documentElement.offsetHeight / getZoom()}px`;
@@ -301,8 +305,27 @@ const InternalWangEditorSandbox = memo<
           return;
         }
 
-        return renderWangEditor();
+        return renderWangEditor().then(() => {
+          resolve();
+        });
       });
+    }
+
+    function getWindow() {
+      return frameRef?.current?.contentWindow as Window;
+    }
+
+    function getDocument() {
+      return frameRef?.current?.contentDocument as Document;
+    }
+
+    function getWangEditor() {
+      // @ts-ignore
+      return frameRef?.current?.contentWindow?.wangEditor;
+    }
+
+    function getEditor(): IDomEditor | null {
+      return editor.current;
     }
 
     /**
@@ -316,7 +339,7 @@ const InternalWangEditorSandbox = memo<
        * @return {IDomEditor | null}
        */
       getEditor(): IDomEditor | null {
-        return editor.current;
+        return getEditor();
       },
       /**
        * getWangEditor
@@ -324,11 +347,27 @@ const InternalWangEditorSandbox = memo<
        * @return {}
        */
       getWangEditor() {
-        // @ts-ignore
-        return frameRef?.current?.contentWindow?.wangEditor;
+        return getWangEditor();
       },
       getWindow() {
-        return frameRef?.current?.contentWindow as Window;
+        return getWindow();
+      },
+      getDocument() {
+        return getDocument();
+      },
+      setTheme(theme): void {
+        const document = getDocument();
+
+        Object.keys(theme).forEach((key: string) => {
+          const value = theme[key];
+
+          if (value) {
+            document.documentElement.style.setProperty(
+              `--w-e-${Util.pascalCaseToKebabCase2(key, '-')}`,
+              value,
+            );
+          }
+        });
       },
     }));
 
@@ -338,7 +377,9 @@ const InternalWangEditorSandbox = memo<
      */
     useLayoutEffect(() => {
       function onLoad() {
-        return render();
+        return render().then(() => {
+          onRender?.();
+        });
       }
 
       frameRef?.current?.addEventListener('load', onLoad);
@@ -416,6 +457,13 @@ const InternalWangEditorSandbox = memo<
               height: 10px;
             }
             
+            ${
+              'readOnly' in props || props.readOnly
+                ? `.w-view {
+                    color: var(--w-e-textarea-color);
+                  }`
+                : ''
+            }
             ${WangEditorCssStr}
             ${'readOnly' in props || props.readOnly ? WangEditorViewCssStr : ''}
             
@@ -452,6 +500,7 @@ const InternalWangEditorSandbox = memo<
           },
         ),
       );
+
       frameRef!.current!.src = iframeUrl;
 
       return () => {
@@ -479,7 +528,9 @@ const InternalWangEditorSandbox = memo<
 
         editor.current = null;
 
-        render();
+        render().then(() => {
+          onRender?.();
+        });
       };
     }, [editor]);
 
@@ -491,7 +542,9 @@ const InternalWangEditorSandbox = memo<
       value.current = props.value as string;
 
       if (isMount.current) {
-        render().then(() => {});
+        render().then(() => {
+          onRender?.();
+        });
       }
     }, [props.value]);
 
@@ -503,7 +556,9 @@ const InternalWangEditorSandbox = memo<
       // console.log('toolBarProps change', toolBarProps);
 
       if (isMount.current) {
-        render().then(() => {});
+        render().then(() => {
+          onRender?.();
+        });
       }
     }, [toolBarProps, editorProps]);
 
