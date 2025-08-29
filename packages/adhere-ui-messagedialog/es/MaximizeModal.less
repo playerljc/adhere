@@ -39,19 +39,18 @@
     //max-height: 96vh;
     max-height: var(--maximize-modal-inner-max-height, 96vh);
     //padding: calc(var(--antd-padding-m-d) * 1px) calc(var(--antd-padding-l-g) * 1px);
-    padding: var(
-      --maximize-modal-inner-padding,
-      calc(var(--antd-padding-m-d) * 1px) calc(var(--antd-padding-l-g) * 1px)
-    );
+    padding: var(--maximize-modal-inner-padding, 20px 24px);
     //background-color: #fff;
     background-color: var(--maximize-modal-inner-background-color, inherit);
     //border-radius: calc(var(--antd-border-radius-l-g) * 1px);
-    border-radius: var(
-      --maximize-modal-inner-border-radius,
-      calc(var(--antd-border-radius-l-g) * 1px)
-    );
+    border-radius: var(--maximize-modal-inner-border-radius, 8px);
     //box-shadow: var(--antd-box-shadow);
-    box-shadow: var(--maximize-modal-inner-box-shadow, var(--antd-box-shadow));
+    box-shadow: var(
+      --maximize-modal-inner-box-shadow,
+      0 6px 16px 0 rgba(0, 0, 0, 0.08),
+      0 3px 6px -4px rgba(0, 0, 0, 0.12),
+      0 9px 28px 8px rgba(0, 0, 0, 0.05)
+    );
     pointer-events: auto;
 
     > .adhere-ui-message-dialog-maximize-modal-header {
@@ -72,16 +71,13 @@
         //margin: 0;
         margin: var(--maximize-modal-header-title-margin, 0);
         //color: var(--antd-color-text);
-        color: var(--maximize-modal-header-title-color, var(--antd-color-text));
+        color: var(--maximize-modal-header-title-color, inherit /*var(--antd-color-text)*/);
         //font-weight: var(--antd-font-weight-strong);
-        font-weight: var(--maximize-modal-header-title-font-weight, var(--antd-font-weight-strong));
+        font-weight: var(--maximize-modal-header-title-font-weight, 600);
         //font-size: calc(var(--antd-font-size-l-g) * 1px);
-        font-size: var(
-          --maximize-modal-header-title-font-size,
-          calc(var(--antd-font-size-l-g) * 1px)
-        );
+        font-size: var(--maximize-modal-header-title-font-size, 16px);
         //line-height: var(--antd-line-height);
-        line-height: var(--maximize-modal-header-title-line-height, var(--antd-line-height));
+        line-height: var(--maximize-modal-header-title-line-height, 1.5714285714285714);
         //word-wrap: break-word;
         .adhere-text-inline-overflow();
       }

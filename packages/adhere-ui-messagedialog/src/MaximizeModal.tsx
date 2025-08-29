@@ -3,7 +3,7 @@ import React, { memo, useMemo, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 
 import { BlockOutlined, BorderOutlined, CloseOutlined } from '@ant-design/icons';
-import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+// import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Space from '@baifendian/adhere-ui-space';
 
 import Modal from './Modal';
@@ -11,12 +11,12 @@ import type { ModalDialogProps } from './types';
 
 export const selectorPrefix = 'adhere-ui-message-dialog-maximize-modal';
 
-const { useTheme } = ConfigProvider;
+// const { useTheme } = ConfigProvider;
 
 /**
  * MaximizeModalDialog组件
  * 可以最大化和拖拽的模态对话框组件
- * 
+ *
  * @param props - 组件属性
  * @returns 最大化模态对话框组件
  */
@@ -26,7 +26,7 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
     ...restProps
   } = props;
 
-  const wrapperRef = useRef<HTMLElement | undefined>();
+  // const wrapperRef = useRef<HTMLElement | undefined>();
 
   const draggableRef = useRef<any>(null);
 
@@ -49,11 +49,11 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
     [isMaximize, restConfig],
   );
 
-  useTheme<HTMLElement>({
-    elRef: wrapperRef,
-    group: 'normal',
-    displayName: 'MessageDialog',
-  });
+  // useTheme<HTMLElement>({
+  //   elRef: wrapperRef,
+  //   group: 'normal',
+  //   displayName: 'MessageDialog',
+  // });
 
   const modalRender = (_modal) => renderDraggableModal(_modal);
 
@@ -207,19 +207,14 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
   }
 
   return (
-    <div
-      // @ts-ignore
-      ref={wrapperRef}
-    >
-      <Modal
-        {...restProps}
-        config={{
-          ...(restConfig ?? {}),
-          className: modalClassName,
-          modalRender,
-        }}
-      />
-    </div>
+    <Modal
+      {...restProps}
+      config={{
+        ...(restConfig ?? {}),
+        className: modalClassName,
+        modalRender,
+      }}
+    />
   );
 });
 

@@ -1,6 +1,6 @@
 import { Button, Modal } from 'antd';
 import type { ButtonProps } from 'antd';
-import React, { memo, useCallback, useMemo, useRef, ReactNode } from 'react';
+import React, { ReactNode, memo, useCallback, useMemo, useRef } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Intl from '@baifendian/adhere-util-intl';
@@ -45,7 +45,11 @@ const ModalDialog = memo<ModalDialogProps>((props) => {
       buttonProps.type = 'primary';
     }
 
-    return <Button key="close" {...buttonProps}>{Intl.get('cancel')}</Button>;
+    return (
+      <Button key="close" {...buttonProps}>
+        {Intl.get('cancel')}
+      </Button>
+    );
   }, [footer, close]);
 
   /**
@@ -61,9 +65,9 @@ const ModalDialog = memo<ModalDialogProps>((props) => {
         } else {
           return [footer, closeBtnNode] as ReactNode;
         }
-              } else {
-          return footer as ReactNode;
-        }
+      } else {
+        return footer as ReactNode;
+      }
     } else {
       if (closeBtn) {
         return closeBtnNode;
@@ -88,6 +92,7 @@ const ModalDialog = memo<ModalDialogProps>((props) => {
         onCancel={onCancel}
         open={open}
         {...rest}
+        getContainer={() => wrapperRef.current ?? document.body}
         footer={footerNode}
       >
         {children}
