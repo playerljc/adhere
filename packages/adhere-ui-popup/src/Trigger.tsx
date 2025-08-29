@@ -9,7 +9,7 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import Popup, { Popup as PopupInner } from './Popup';
 import SubmitButton from './SubmitButton';
-import type { TriggerHandle, TriggerProps, ActionConfig } from './types';
+import type { ActionConfig, TriggerHandle, TriggerProps } from './types';
 
 const selectorPrefix = 'adhere-ui-popup';
 const triggerSelectorPrefix = `${selectorPrefix}-trigger`;
@@ -86,7 +86,12 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
      * 弹窗内容
      */
     const bodyChildren = useMemo(() => {
-      if (!children || typeof children === 'string' || typeof children === 'number' || typeof children === 'boolean') {
+      if (
+        !children ||
+        typeof children === 'string' ||
+        typeof children === 'number' ||
+        typeof children === 'boolean'
+      ) {
         return children;
       }
 
@@ -151,7 +156,7 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
      */
     const popupChildren = useMemo(() => {
       return (
-        <div className={classNames(triggerSelectorInnerPrefix)}>
+        <div ref={wrapperRef} className={classNames(triggerSelectorInnerPrefix)}>
           <div className={classNames(`${triggerSelectorInnerPrefix}-header`)}>
             <div
               className={`${triggerSelectorInnerPrefix}-close`}
@@ -231,7 +236,6 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
 
     return (
       <div
-        ref={wrapperRef}
         className={classNames(triggerSelectorPrefix, className ?? '')}
         style={style ?? {}}
         onClick={debounce(onTrigger, 200)}
