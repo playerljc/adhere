@@ -438,7 +438,7 @@ const adapterScreen: IAdapterScreen = {
    * 设置页面最小尺寸到CSS
    * @param el - 目标元素，默认为 document.body
    */
-  setPageMinSizeToCSS(el?: HTMLElement): void {
+  setPageMinSizeToCSS(el?: HTMLElement): () => void {
     function setMinSize(): void {
       const { width, height } = Util.getMaximizedViewportSize();
 
@@ -452,12 +452,19 @@ const adapterScreen: IAdapterScreen = {
       }
     }
 
-    window.addEventListener('resize', setMinSize);
-    window.addEventListener('pageshow', function (e) {
+    function onPageShow(e) {
       if (e.persisted) {
         setMinSize();
       }
-    });
+    }
+
+    window.addEventListener('resize', setMinSize);
+    window.addEventListener('pageshow', onPageShow);
+
+    return () => {
+      window.removeEventListener('resize', setMinSize);
+      window.removeEventListener('pageshow', onPageShow);
+    };
   },
 
   // /**

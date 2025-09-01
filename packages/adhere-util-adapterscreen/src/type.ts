@@ -83,7 +83,7 @@ export interface IAdapterScreen {
    * 设置页面最小尺寸到CSS
    * @param el - 目标元素，默认为 document.body
    */
-  setPageMinSizeToCSS(el?: HTMLElement): void;
+  setPageMinSizeToCSS(el?: HTMLElement): () => void;
 
   /**
    * 检测浏览器缩放
