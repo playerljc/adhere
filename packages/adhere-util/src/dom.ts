@@ -1,6 +1,9 @@
 import ClientDetectionUtil from './clientDetection';
 
-const eventListenerHandlers = new Map<HTMLElement, Record<string, Record<string, EventListener[]>>>();
+const eventListenerHandlers = new Map<
+  HTMLElement,
+  Record<string, Record<string, EventListener[]>>
+>();
 
 /**
  * DOM 工具类
@@ -127,11 +130,11 @@ const DomUtil = {
    * ```
    */
   on(
-    el: HTMLElement, 
-    tag: string, 
-    type: string, 
-    handler: EventListener, 
-    capture: boolean = false
+    el: HTMLElement,
+    tag: string,
+    type: string,
+    handler: EventListener,
+    capture: boolean = false,
   ): void {
     let value = eventListenerHandlers.get(el);
     if (!value) {
@@ -175,12 +178,7 @@ const DomUtil = {
    * off(element, 'click') // 移除所有 click 标签的事件
    * ```
    */
-  off(
-    el: HTMLElement, 
-    tag: string, 
-    type: string, 
-    handler?: EventListener
-  ): void {
+  off(el: HTMLElement, tag: string, type: string, handler?: EventListener): void {
     if (tag && type && handler) {
       const value = eventListenerHandlers.get(el);
       if (value && value[tag] && value[tag][type]) {
@@ -224,7 +222,7 @@ const DomUtil = {
    */
   addClass(el: HTMLElement, classes: string = ''): void {
     if (!classes) return;
-    
+
     const classNames = classes.split(' ');
     for (let i = 0; i < classNames.length; i++) {
       if (classNames[i]) {
@@ -245,7 +243,7 @@ const DomUtil = {
    */
   removeClass(el: HTMLElement, classes: string = ''): void {
     if (!classes) return;
-    
+
     const classNames = classes.split(' ');
     for (let i = 0; i < classNames.length; i++) {
       if (classNames[i]) {
@@ -281,7 +279,7 @@ const DomUtil = {
   insertAfter(newElement: HTMLElement, targetElement: HTMLElement): void {
     const parent = targetElement.parentNode;
     if (!parent) return;
-    
+
     if (parent.lastChild === targetElement) {
       // 如果最后的节点是目标元素，则直接添加。因为默认是最后
       parent.appendChild(newElement);
@@ -912,10 +910,23 @@ const DomUtil = {
    * getProportionalSize
    * @param {number} origin 原始大小
    * @param {number} designWidth 设计稿大小
+   * @param isUseDevicePixelRatio
    * @return {number}
    */
-  getProportionalSize(origin: number, designWidth: number = 1920) {
-    return (document.documentElement.clientWidth * origin) / designWidth;
+  getProportionalSize({
+    origin,
+    designWidth = 1920,
+    isUseDevicePixelRatio = true,
+  }: {
+    origin: number;
+    designWidth: number;
+    isUseDevicePixelRatio: boolean;
+  }): number {
+    let currentWidth = document.documentElement.clientWidth;
+    if (isUseDevicePixelRatio) {
+      currentWidth = currentWidth * window.devicePixelRatio;
+    }
+    return (currentWidth * origin) / designWidth;
   },
   /**--------------------------dom-end-------------------------**/
 };

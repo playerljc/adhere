@@ -295,7 +295,11 @@ declare const _default: {
         width: number;
         height: number;
     };
-    getProportionalSize(origin: number, designWidth?: number): number;
+    getProportionalSize({ origin, designWidth, isUseDevicePixelRatio, }: {
+        origin: number;
+        designWidth: number;
+        isUseDevicePixelRatio: boolean;
+    }): number;
     rgbRandom(): string;
     color16Random(): string;
     colorToRgb(color: string): number[];

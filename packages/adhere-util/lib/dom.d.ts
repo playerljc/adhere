@@ -350,8 +350,13 @@ declare const DomUtil: {
      * getProportionalSize
      * @param {number} origin 原始大小
      * @param {number} designWidth 设计稿大小
+     * @param isUseDevicePixelRatio
      * @return {number}
      */
-    getProportionalSize(origin: number, designWidth?: number): number;
+    getProportionalSize({ origin, designWidth, isUseDevicePixelRatio, }: {
+        origin: number;
+        designWidth: number;
+        isUseDevicePixelRatio: boolean;
+    }): number;
 };
 export default DomUtil;
