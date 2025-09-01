@@ -12,11 +12,12 @@
     //padding: 10px 20px;
     padding: var(--advanced-search-panel-header-padding, 10px 20px);
     //background-color: #f0f0f0;
-    background-color: var(--advanced-search-panel-header-background-color, #f0f0f0);
+    background-color: var(--advanced-search-panel-header-background-color, inherit);
 
     > .adhere-ui-search-table-advanced-search-panel-title {
       display: flex;
       align-items: center;
+      color: var(--advanced-search-panel-title-color, var(--adhere-color-text));
 
       .adhere-ui-search-table-advanced-search-panel-title-icon {
         //font-size: 16px;
@@ -33,7 +34,7 @@
       display: flex;
       align-items: center;
       //color: #999;
-      color: var(--advanced-search-panel-collapse-color, #999);
+      color: var(--advanced-search-panel-collapse-color, var(--adhere-color-text));
 
       &:hover {
         cursor: pointer;
