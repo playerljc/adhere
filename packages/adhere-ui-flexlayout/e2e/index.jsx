@@ -13,5 +13,5 @@ import VSpan from './vSpan';
 import './index.less';
 
 e2e.PC({
-  children: <SpaceBetween />,
+  children: <RefTest />,
 });

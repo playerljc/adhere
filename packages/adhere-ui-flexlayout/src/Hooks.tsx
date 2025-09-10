@@ -2,13 +2,13 @@ import { useUpdateEffect } from 'ahooks';
 import classNames from 'classnames';
 import React, { MutableRefObject, useCallback, useContext, useMemo, useState } from 'react';
 
-import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
+import { DownOutlined, LeftOutlined, RightOutlined, UpOutlined } from '@ant-design/icons';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import { FlexContext } from './Context';
 import { gridCount } from './Fixed';
 import { getValueWithUnit } from './Util';
-import type { ContextType, FixedProps, CollapseDirection, GutterType } from './types';
+import type { ContextType, FixedProps, GutterType } from './types';
 
 /**
  * 判断是否使用了栅格系统
@@ -78,10 +78,11 @@ export const useGap = (gutter: GutterType): boolean => {
 /**
  * 触发器 Hook 参数
  */
-interface UseTriggerParams extends Pick<
-  FixedProps,
-  'trigger' | 'collapseDirection' | 'collapsedSize' | 'defaultCollapsible' | 'onCollapse'
-> {
+interface UseTriggerParams
+  extends Pick<
+    FixedProps,
+    'trigger' | 'collapseDirection' | 'collapsedSize' | 'defaultCollapsible' | 'onCollapse'
+  > {
   /** 元素引用 */
   elRef: MutableRefObject<HTMLDivElement | null>;
   /** 选择器前缀 */
@@ -110,7 +111,6 @@ export const useTrigger = ({
   defaultCollapsible = false,
   onCollapse,
   selectorPrefix,
-  elRef,
 }: UseTriggerParams): UseTriggerReturn => {
   const { media } = useContext(ConfigProvider.Context);
 
@@ -123,21 +123,17 @@ export const useTrigger = ({
 
   // 默认触发器元素
   const DefaultTrigger = useMemo(() => {
-    const iconStyle = { transform: 'rotate(90deg)' };
-    
+    // const iconStyle = { transform: 'rotate(90deg)' };
+
     switch (collapseDirection) {
       case 'L':
-        return collapsible ? <DoubleRightOutlined /> : <DoubleLeftOutlined />;
+        return collapsible ? <RightOutlined /> : <LeftOutlined />;
       case 'R':
-        return collapsible ? <DoubleLeftOutlined /> : <DoubleRightOutlined />;
+        return collapsible ? <LeftOutlined /> : <RightOutlined />;
       case 'T':
-        return collapsible ? 
-          <DoubleRightOutlined style={iconStyle} /> : 
-          <DoubleLeftOutlined style={iconStyle} />;
+        return collapsible ? <DownOutlined /> : <UpOutlined />;
       case 'B':
-        return collapsible ? 
-          <DoubleLeftOutlined style={iconStyle} /> : 
-          <DoubleRightOutlined style={iconStyle} />;
+        return collapsible ? <UpOutlined /> : <DownOutlined />;
       default:
         return null;
     }
@@ -167,7 +163,7 @@ export const useTrigger = ({
   // 计算折叠样式
   const collapseStyle = useMemo(() => {
     const isCollapsed = collapsible;
-    
+
     switch (collapseDirection) {
       case 'L':
       case 'R':

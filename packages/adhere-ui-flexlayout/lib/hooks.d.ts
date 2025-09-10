@@ -35,5 +35,5 @@ interface UseTriggerReturn {
  * @param {UseTriggerParams} params - 触发器参数
  * @returns {UseTriggerReturn} 触发器相关状态和方法
  */
-export declare const useTrigger: ({ trigger, collapseDirection, collapsedSize, defaultCollapsible, onCollapse, selectorPrefix, elRef, }: UseTriggerParams) => UseTriggerReturn;
+export declare const useTrigger: ({ trigger, collapseDirection, collapsedSize, defaultCollapsible, onCollapse, selectorPrefix, }: UseTriggerParams) => UseTriggerReturn;
 export {};
