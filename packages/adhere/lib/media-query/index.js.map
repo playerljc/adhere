@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["media-query/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-media-query/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,uDACHA"}

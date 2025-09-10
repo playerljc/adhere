@@ -69,6 +69,7 @@ import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
 import TableList from '@baifendian/adhere-ui-tablelist';
 import WritingBoard from '@baifendian/adhere-ui-writingboard';
+import MediaQuery from '@baifendian/adhere-ui-media-query';
 import Util from '@baifendian/adhere-util';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
 import Browsersniff from '@baifendian/adhere-util-browsersniff';
@@ -158,6 +159,7 @@ export {
   TableHeadSearch,
   TableList,
   WritingBoard,
+  MediaQuery,
   Util,
   AdapterScreen,
   Browsersniff,

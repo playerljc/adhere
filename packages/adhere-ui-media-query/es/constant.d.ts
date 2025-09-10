@@ -1,0 +1,1 @@
+export declare const WINDOW_RESIZE = "ADHERE_MEDIA_QUERY_WINDOW_RESIZE";

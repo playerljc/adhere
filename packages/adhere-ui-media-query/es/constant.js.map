@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["constant.js"],"sourcesContent":["export var WINDOW_RESIZE = 'ADHERE_MEDIA_QUERY_WINDOW_RESIZE';\n"],"names":["WINDOW_RESIZE"],"mappings":"AAAO,IAAIA,cAAgB,0CAAhBA,aAAkD"}
