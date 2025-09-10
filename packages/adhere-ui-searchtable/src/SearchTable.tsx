@@ -2572,7 +2572,7 @@ abstract class SearchTable<
       this.renderSearchFormToolBarSearchItem(() => this.search()),
       this.renderSearchFormToolBarResetItem(this.onClear),
       isShowExpandSearch && this.renderSearchBarCollapseControl(),
-    ].filter((t) => !!t);
+    ].filter((t) => Boolean(t));
 
     let items = this.renderSearchFormToolBarItems(defaultItems) || defaultItems;
 
