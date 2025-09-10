@@ -1,5 +1,5 @@
 # 简介
-&ensp;&ensp;文字省略
+&ensp;&ensp;魔法面板
 
 # ✨ 特性
 - 支持 react(18.x)
