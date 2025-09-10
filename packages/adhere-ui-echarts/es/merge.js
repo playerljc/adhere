@@ -1,2 +1,2 @@
-import merge from"lodash.merge";var deepMerge=function(e,r){return merge(e,r)};export default deepMerge;
+var __spreadArray=this&&this.__spreadArray||function(r,e,t){if(t||2===arguments.length)for(var a,o=0,l=e.length;o<l;o++)!a&&o in e||((a=a||Array.prototype.slice.call(e,0,o))[o]=e[o]);return r.concat(a||Array.prototype.slice.call(e))};import merge from"lodash.merge";function deepMerge(r){for(var e=[],t=1;t<arguments.length;t++)e[t-1]=arguments[t];var a=e.filter(function(r){return null!=r&&"object"==typeof r});return merge.apply(void 0,__spreadArray([r],a,!1))}export default deepMerge;
 //# sourceMappingURL=merge.js.map

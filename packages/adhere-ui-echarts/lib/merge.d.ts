@@ -4,7 +4,7 @@
  * @template T - 目标对象类型
  * @template U - 源对象类型
  * @param target - 目标对象
- * @param source - 源对象
+ * @param sources
  * @returns 合并后的对象
  *
  * @example
@@ -15,5 +15,5 @@
  * // result: { a: 1, b: { c: 2, d: 3 }, e: 4 }
  * ```
  */
-declare const deepMerge: <T, U>(target: T, source: U) => T & U;
+declare function deepMerge<T extends object>(target: T, ...sources: Array<Partial<T> | undefined | null>): T;
 export default deepMerge;

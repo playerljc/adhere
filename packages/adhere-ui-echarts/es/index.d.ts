@@ -1,3 +1,4 @@
+import merge from './merge';
 /**
  * Adhere ECharts 工具库
  * @description 提供 ECharts 图表配置的便捷工具和预设颜色
@@ -23,7 +24,7 @@
  */
 declare const adhereECharts: {
     /** 对象合并工具 */
-    readonly merge: <T, U>(target: T, source: U) => T & U;
+    readonly merge: typeof merge;
     /** 图表配置选项 */
     readonly options: {
         readonly baseOption: () => import("./types").BaseChartOption;
