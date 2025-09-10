@@ -283,6 +283,19 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
      */
     getExpandable(): ListExpandable | null | undefined;
     /**
+     * getActionsEllipsisCount
+     */
+    getActionsEllipsisCount(): number;
+    /**
+     * renderActionsEllipsis
+     */
+    renderActionsEllipsis(): React.JSX.Element;
+    /**
+     * toMetasActionsByOrigin
+     * @param actions
+     */
+    toMetasActionsByOrigin(actions: any): any;
+    /**
      * getListProps
      * @param record
      * @param rowIndex

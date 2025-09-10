@@ -99,6 +99,44 @@ class ProSearchStateListImpl extends ProSearchStateList {
       },
     ];
   }
+
+  getMetas() {
+    return {
+      actions: {
+        dataIndex: 'actions',
+        render: (val, record, _index) =>
+          this.renderOptionColumn(
+            [
+              {
+                key: 'edit',
+                value: <a>编辑</a>,
+              },
+              {
+                key: 'view',
+                value: <a>编辑</a>,
+              },
+              {
+                key: 'modalView',
+                value: <a>编辑</a>,
+              },
+              {
+                key: 'modalEdit',
+                value: <a>编辑</a>,
+              },
+              {
+                key: 'modalList',
+                value: <a>编辑</a>,
+              },
+              {
+                key: 'delete',
+                value: <a>编辑</a>,
+              },
+            ],
+            { record, value: val, index: _index },
+          ),
+      },
+    };
+  }
 }
 
 ProSearchStateListImpl.propTypes = {};
@@ -120,15 +158,14 @@ const Wrap = SearchListStateImplementFactory({
 export default (props) => (
   <Wrap
     bodyStyle={{ padding: '20px 30px' }}
-    antdListProps={
-      {
-        // itemLayout: 'vertical',
-        // grid: { gutter: 16, column: 4 },
-        // renderItem: () => {
-        //   return <div>Custom</div>;
-        // },
-      }
-    }
+    antdListProps={{
+      // itemLayout: 'vertical',
+      // grid: { gutter: 16, column: 4 },
+      // renderItem: () => {
+      //   return <div>Custom</div>;
+      // },
+      grid: { gutter: 16, column: 3 },
+    }}
     {...props}
   />
 );

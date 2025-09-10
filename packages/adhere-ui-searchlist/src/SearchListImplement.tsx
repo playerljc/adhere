@@ -1,4 +1,4 @@
-import { Avatar, Card, Checkbox, List, Radio } from 'antd';
+import { Avatar, Card, Checkbox, Dropdown, List, Radio } from 'antd';
 import type { CardProps } from 'antd/es/card';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { ListItemMetaProps, ListItemProps } from 'antd/es/list';
@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { ReactElement, ReactNode, RefObject, createRef, forwardRef } from 'react';
 
-import { DownOutlined, RightOutlined } from '@ant-design/icons';
+import { DownOutlined, EllipsisOutlined, RightOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 import type { TableRowSelectionExt } from '@baifendian/adhere-ui-searchtable/es/types';
@@ -820,6 +820,54 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   }
 
   /**
+   * getActionsEllipsisCount
+   */
+  getActionsEllipsisCount() {
+    return 5;
+  }
+
+  /**
+   * renderActionsEllipsis
+   */
+  renderActionsEllipsis() {
+    return (
+      <a href="#">
+        <EllipsisOutlined />
+      </a>
+    );
+  }
+
+  /**
+   * toMetasActionsByOrigin
+   * @param actions
+   */
+  toMetasActionsByOrigin(actions) {
+    const ellipsisCount = this.getActionsEllipsisCount();
+
+    if (actions.length >= ellipsisCount) {
+      const displayEndIndex = ellipsisCount - 1;
+      const ellipseStartIndex = ellipsisCount - 1;
+
+      return [
+        ...actions.slice(0, displayEndIndex),
+        <Dropdown
+          key="menu"
+          menu={{
+            items: actions.slice(ellipseStartIndex).map((_v, _index) => ({
+              key: `${_index + 1}`,
+              label: _v,
+            })),
+          }}
+        >
+          {this.renderActionsEllipsis?.()}
+        </Dropdown>,
+      ];
+    }
+
+    return actions;
+  }
+
+  /**
    * getListProps
    * @param record
    * @param rowIndex
@@ -836,16 +884,19 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
       metas?.extra?.render?.(record?.[metas.extra.dataIndex], record, rowIndex) ||
       (metas.extra && record?.[metas.extra.dataIndex]);
 
+    if (extra) listProps.extra = extra;
+
     const actions =
       metas?.actions?.render?.(record?.[metas.actions.dataIndex], record, rowIndex) ||
       (
         metas.actions &&
         record?.[metas.actions.dataIndex] &&
         record?.[metas.actions.dataIndex]
-      )?.map((t) => <span>{t}</span>);
+      )?.map((ele) => <span>{ele}</span>);
 
-    if (extra) listProps.extra = extra;
-    if (actions) listProps[metas.actions?.cardActionProps || 'actions'] = actions;
+    if (actions) {
+      listProps[metas.actions?.cardActionProps || 'actions'] = this.toMetasActionsByOrigin(actions);
+    }
 
     return listProps;
   }
@@ -1010,6 +1061,8 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
       metas?.extra?.render?.(record?.[metas.extra.dataIndex], record, rowIndex) ||
       (metas.extra && record?.[metas.extra.dataIndex]);
 
+    if (extra) cardProps.extra = extra;
+
     const actions =
       metas?.actions?.render?.(record?.[metas.actions.dataIndex], record, rowIndex) ||
       (
@@ -1018,8 +1071,10 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
         record?.[metas.actions.dataIndex]
       )?.map((t) => <span>{t}</span>);
 
-    if (extra) cardProps.extra = extra;
-    if (actions) cardProps[metas.actions?.cardActionProps || 'actions'] = actions;
+    if (actions) {
+      cardProps[metas.actions?.cardActionProps || 'actions'] = this.toMetasActionsByOrigin(actions);
+    }
+
     if (this.isShowNumber() || !!rowSelection) {
       cardProps.title = (
         <div className={`${selectorPrefix}-list-card-title`}>
