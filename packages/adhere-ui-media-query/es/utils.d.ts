@@ -13,5 +13,5 @@ export declare function isInBetween({ breakpoint, width, }: {
  * getMediaQueryByBreakPoints
  * @param breakPoints
  */
-export declare function getMediaQueryByBreakPoints(breakPoints: BreakPoints): BreakPointsCondition;
+export declare function getMediaQueryByBreakPoints<T extends Record<string, BreakPoint>>(breakPoints: BreakPoints<T>): BreakPointsCondition<T>;
 export declare const antdNumberTokenToRem: (...args: any[]) => any;

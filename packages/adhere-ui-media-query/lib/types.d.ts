@@ -1,10 +1,10 @@
 import React, { type NamedExoticComponent } from 'react';
 import { useMediaQuery } from './useMediaQuery';
-export interface MediaQueryProps {
+export interface MediaQueryProps<T extends Record<string, BreakPoint>> {
     children?: React.ReactNode;
     noMatch?: () => React.ReactNode;
-    breakPoint: BreakPointsType;
-    breakPoints: BreakPoints;
+    breakPoint: BreakPointsType<T>;
+    breakPoints: BreakPoints<T>;
 }
 export interface BreakPoint {
     minWidth?: number;
@@ -15,23 +15,23 @@ export interface BreakPoint {
     } | number;
     designWidth: number;
 }
-export interface BreakPoints {
-    mobile: BreakPoint;
-    mobileSM: BreakPoint;
-    tablet: BreakPoint;
-    tabletLG: BreakPoint;
-    laptop: BreakPoint;
-    desktop: BreakPoint;
-}
-export interface BreakPointsCondition {
-    isMobile: boolean;
-    isMobileSM: boolean;
-    isTablet: boolean;
-    isTabletLG: boolean;
-    isLaptop: boolean;
-    isDesktop: boolean;
-}
-export type BreakPointsType = keyof BreakPoints;
-export type MediaQueryComponent = NamedExoticComponent<MediaQueryProps> & {
+export type BreakPoints<T extends Record<string, BreakPoint>> = {
+    [P in keyof T]: T[P];
+};
+/**
+ * {
+ *   isMobile: boolean;
+ *   isMobileSM: boolean;
+ *   isTablet: boolean;
+ *   isTabletLG: boolean;
+ *   isLaptop: boolean;
+ *   isDesktop: boolean;
+ * }
+ */
+export type BreakPointsCondition<T extends Record<string, BreakPoint>> = {
+    [P in keyof T as `is${Capitalize<string & P>}`]: boolean;
+};
+export type BreakPointsType<T extends Record<string, BreakPoint>> = keyof BreakPoints<T>;
+export type MediaQueryComponent<T extends Record<string, BreakPoint>> = NamedExoticComponent<MediaQueryProps<T>> & {
     useMediaQuery: typeof useMediaQuery;
 };

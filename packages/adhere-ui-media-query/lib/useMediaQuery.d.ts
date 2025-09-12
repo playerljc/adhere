@@ -1,6 +1,6 @@
-import type { BreakPoints, BreakPointsCondition } from './types';
+import type { BreakPoint, BreakPoints, BreakPointsCondition } from './types';
 /**
  * useMediaQuery
  * @param breakPoints
  */
-export declare function useMediaQuery(breakPoints: BreakPoints): BreakPointsCondition;
+export declare function useMediaQuery<T extends Record<string, BreakPoint>>(breakPoints: BreakPoints<T>): BreakPointsCondition<T>;

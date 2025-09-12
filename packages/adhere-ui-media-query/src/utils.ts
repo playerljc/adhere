@@ -58,9 +58,9 @@ export const antdNumberTokenToRem = WatchMemoized.memoized.createMemoFun(
 
       if (typeof value === 'number') {
         acc[key] = (value / rootValue) * fontSize;
-      } else {
+      } /*else {
         acc[key] = value;
-      }
+      }*/
 
       return acc;
     }, {});
