@@ -145,7 +145,7 @@ declare const PopupFactory: {
     /** Trigger组件 */
     Trigger: React.ForwardRefExoticComponent<import("./types").TriggerProps & React.RefAttributes<import("./types").TriggerHandle>>;
     /** TriggerPrompt组件 */
-    TriggerPrompt: React.ForwardRefExoticComponent<Omit<import("./types").TriggerProps, "actions"> & {
+    TriggerPrompt: React.ForwardRefExoticComponent<import("./types").TriggerProps & {
         isShowCloseAction?: boolean;
         onSubmit?: () => Promise<any>;
         okText?: string;

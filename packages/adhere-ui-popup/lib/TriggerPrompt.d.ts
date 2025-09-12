@@ -7,7 +7,7 @@ import type { TriggerPromptHandle } from './types';
  * @param ref - 组件引用
  * @constructor
  */
-declare const TriggerPrompt: React.ForwardRefExoticComponent<Omit<import("./types").TriggerProps, "actions"> & {
+declare const TriggerPrompt: React.ForwardRefExoticComponent<import("./types").TriggerProps & {
     isShowCloseAction?: boolean;
     onSubmit?: () => Promise<any>;
     okText?: string;

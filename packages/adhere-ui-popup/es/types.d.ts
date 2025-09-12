@@ -71,7 +71,7 @@ export interface TriggerProps {
 /**
  * TriggerPrompt组件属性
  */
-export type TriggerPromptProps = Omit<TriggerProps, 'actions'> & {
+export type TriggerPromptProps = TriggerProps & {
     /** 是否显示关闭按钮 */
     isShowCloseAction?: boolean;
     /** 提交回调 */

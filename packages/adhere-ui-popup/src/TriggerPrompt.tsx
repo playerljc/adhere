@@ -14,19 +14,23 @@ import type { TriggerPromptHandle, TriggerPromptProps } from './types';
  * @constructor
  */
 const TriggerPrompt = forwardRef<TriggerPromptHandle, TriggerPromptProps>(
-  ({ onSubmit, okText, ...props }, ref) => {
+  ({ onSubmit, okText, actions, ...props }, ref) => {
     return (
       <Trigger
         ref={ref}
         {...props}
-        actions={[
-          {
-            key: 'submit',
-            color: 'primary',
-            children: okText ?? Intl.get('confirm'),
-            onClick: () => onSubmit?.() ?? Promise.resolve(),
-          },
-        ]}
+        actions={
+          actions
+            ? actions
+            : [
+                {
+                  key: 'submit',
+                  color: 'primary',
+                  children: okText ?? Intl.get('confirm'),
+                  onClick: () => onSubmit?.() ?? Promise.resolve(),
+                },
+              ]
+        }
       />
     );
   },
