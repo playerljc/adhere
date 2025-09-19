@@ -1,7 +1,7 @@
 import { Swiper, Tabs } from 'antd-mobile';
 import type { SwiperRef } from 'antd-mobile/es/components/swiper/swiper';
 import classNames from 'classnames';
-import React, { memo, useEffect, useRef, useState, useCallback } from 'react';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -19,20 +19,20 @@ const selectorPrefix = 'adhere-ui-tabs';
 
 /**
  * 内部标签页组件
- * 
+ *
  * @param props - 组件属性
  * @returns JSX元素
  */
 const InternalSystemTabs = memo<SystemTabsProps>((props) => {
   const {
-    swiper = false,
-    showArrowMore = true,
-    arrowZIndex = 100,
-    className = '',
-    style = {},
-    innerClassName = '',
-    innerStyle = {},
-    swiperProps = {},
+    swiper,
+    showArrowMore,
+    arrowZIndex,
+    className,
+    style,
+    innerClassName,
+    innerStyle,
+    swiperProps,
     children,
     onChange,
     activeKey: externalActiveKey,
@@ -58,34 +58,40 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
 
   /**
    * 根据key获取激活索引
-   * 
+   *
    * @param key - 标签页key
    * @returns 索引值
    */
-  const getActiveIndexByKey = useCallback((key?: string): number => {
-    if (!key) return -1;
-    return children?.findIndex?.((c) => c.key === key) ?? -1;
-  }, [children]);
+  const getActiveIndexByKey = useCallback(
+    (key?: string): number => {
+      if (!key) return -1;
+      return children?.findIndex?.((c) => c.key === key) ?? -1;
+    },
+    [children],
+  );
 
   /**
    * 标签页切换处理
-   * 
+   *
    * @param key - 目标标签页key
    */
-  const handleKeyChange = useCallback((key: string) => {
-    setActiveKey(key);
-    const index = getActiveIndexByKey(key);
-    if (index >= 0) {
-      swiperRef?.current?.swipeTo(index);
-    }
-    onChange?.(key);
-  }, [getActiveIndexByKey, onChange]);
+  const handleKeyChange = useCallback(
+    (key: string) => {
+      setActiveKey(key);
+      const index = getActiveIndexByKey(key);
+      if (index >= 0) {
+        swiperRef?.current?.swipeTo(index);
+      }
+      onChange?.(key);
+    },
+    [getActiveIndexByKey, onChange],
+  );
 
   useEffect(() => {
     if (showArrowMore) {
       forceUpdate();
     }
-  }, [showArrowMore, forceUpdate]);
+  }, [showArrowMore]);
 
   useEffect(() => {
     if (!externalActiveKey) return;
@@ -108,34 +114,37 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
 
   /**
    * 轮播索引变化处理
-   * 
+   *
    * @param index - 新的索引值
    */
-  const handleSwiperIndexChange = useCallback((index: number) => {
-    const newKey = children?.[index]?.key as string;
-    if (newKey) {
-      setActiveKey(newKey);
-    }
-  }, [children]);
+  const handleSwiperIndexChange = useCallback(
+    (index: number) => {
+      const newKey = children?.[index]?.key as string;
+      if (newKey) {
+        setActiveKey(newKey);
+      }
+    },
+    [children],
+  );
 
   return (
     <div
       ref={wrapperRef}
       className={classNames(selectorPrefix, className, {
-        [`${selectorPrefix}-swiper`]: swiper,
-        [`${selectorPrefix}-arrowMore`]: showArrowMore,
+        [`${selectorPrefix}-swiper`]: !!swiper,
+        [`${selectorPrefix}-arrowMore`]: !!showArrowMore,
       })}
-      style={style}
+      style={style ?? {}}
     >
       <Tabs
         className={innerClassName}
-        style={innerStyle}
+        style={innerStyle ?? {}}
         activeKey={activeKey}
         {...restProps}
         onChange={handleKeyChange}
       >
         {ConditionalRender.conditionalRender({
-          conditional: swiper,
+          conditional: !!swiper,
           match: children?.map?.((reactElement) => {
             const {
               props: { children: elementChildren, ...elementProps },
@@ -154,22 +163,22 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
         })}
       </Tabs>
 
-      {showArrowMore && (
+      {!!showArrowMore && (
         <ArrowMore
-          zIndex={arrowZIndex}
+          zIndex={arrowZIndex ?? 100}
           wrapRef={wrapperRef}
           data={children?.map?.((reactElement) => ({
             key: reactElement.key,
             title: reactElement.props.title,
           }))}
           activeKey={activeKey}
-          swiper={swiper}
+          swiper={!!swiper}
           getActiveIndexByKey={getActiveIndexByKey}
           onChange={handleKeyChange}
         />
       )}
 
-      {swiper && (
+      {!!swiper && (
         <Swiper
           ref={swiperRef}
           direction="horizontal"
@@ -177,7 +186,7 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
           defaultIndex={getActiveIndexByKey(activeKey)}
           onIndexChange={handleSwiperIndexChange}
           loop={false}
-          {...swiperProps}
+          {...(swiperProps ?? {})}
         >
           {children?.map?.((reactElement) => {
             const {
