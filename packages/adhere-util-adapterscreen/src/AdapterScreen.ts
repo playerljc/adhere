@@ -369,9 +369,9 @@ const adapterScreen: IAdapterScreen = {
       // 使用window.screen.availWidth的目的是只有改变操作系统的分辨率才重新设置rem，如果是浏览器窗口的resize不重新计算rem
       rootValue = (minSize?.availWidth ?? width) / 10;
 
-      if (dpr > 1) {
-        rootValue *= 1.13;
-      }
+      // if (dpr > 1) {
+      //   rootValue *= 1.13;
+      // }
 
       docEl.style.fontSize = `${rootValue}px`;
     }
