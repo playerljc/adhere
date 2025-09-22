@@ -73,6 +73,8 @@ declare class Ajax {
     static readonly CONTENT_TYPE_TEXT_PLAIN: "text/plain";
     /** 拦截器实例 */
     readonly interceptors: Interceptors;
+    /** 防抖请求缓存 **/
+    readonly debounceRequestCache: Map<string, SendResult>;
     /** 基础URL */
     protected readonly baseURL: string;
     /** 系统管理基础URL */
@@ -87,34 +89,93 @@ declare class Ajax {
      */
     constructor(baseURL: string, systemManagerBaseURL: string, config: IConfig);
     /**
+     * debounceRequest
+     * @description 防抖请求方法，用于避免重复的相同请求
+     * @param requestFn - 请求函数，接收请求参数并返回请求结果
+     * @param options - 可选配置项
+     * @param options.filterData - 用于过滤请求数据的函数，返回处理后的数据用于生成缓存键
+     * @param options.filterHeaders - 用于过滤请求头的函数，返回处理后的请求头用于生成缓存键
+     * @returns 返回一个异步函数，该函数接收请求参数并返回防抖后的请求结果
+     * @protected
+     */
+    protected debounceRequest(requestFn: (params: ISendArg) => Promise<SendResult>, options?: {
+        filterData?: ISendArg['debounceFilterData'];
+        filterHeaders?: ISendArg['debounceFilterHeaders'];
+    }): (this: Ajax, params: ISendArg) => Promise<SendResult>;
+    /**
      * GET请求
      * @param params - 请求参数
      * @returns 请求结果
      */
-    get(this: Ajax, { data, ...arg }: ISendArg): SendResult;
+    protected getCore(this: Ajax, { data, ...arg }: ISendArg): Promise<SendResult>;
     /**
      * POST请求
      * @param params - 请求参数
      * @returns 请求结果
      */
-    post(this: Ajax, params: ISendArg): SendResult;
+    protected postCore(this: Ajax, params: ISendArg): Promise<SendResult>;
     /**
      * PATCH请求
      * @param params - 请求参数
      * @returns 请求结果
      */
-    patch(this: Ajax, params: ISendArg): SendResult;
+    protected patchCore(this: Ajax, params: ISendArg): Promise<SendResult>;
     /**
      * PUT请求
      * @param params - 请求参数
      * @returns 请求结果
      */
-    put(this: Ajax, params: ISendArg): SendResult;
+    protected putCore(this: Ajax, params: ISendArg): Promise<SendResult>;
     /**
      * DELETE请求
      * @param params - 请求参数
      * @returns 请求结果
      */
-    delete(this: Ajax, params: ISendArg): SendResult;
+    protected deleteCore(this: Ajax, params: ISendArg): Promise<SendResult>;
+    /**
+     * GET请求
+     * @param {ISendArg} params - 请求参数
+     * @param {boolean} [params.enableDebounce=true] - 是否启用防抖
+     * @param {Function} [params.debounceFilterData] - 防抖时用于过滤data的函数
+     * @param {Function} [params.debounceFilterHeaders] - 防抖时用于过滤headers的函数
+     * @returns {Promise<SendResult>} 请求结果
+     */
+    get(this: Ajax, { enableDebounce, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg): Promise<SendResult>;
+    /**
+     * POST请求
+     * @param {ISendArg} params - 请求参数
+     * @param {boolean} [params.enableDebounce=true] - 是否启用防抖
+     * @param {Function} [params.debounceFilterData] - 防抖时用于过滤data的函数
+     * @param {Function} [params.debounceFilterHeaders] - 防抖时用于过滤headers的函数
+     * @returns {Promise<SendResult>} 请求结果
+     */
+    post(this: Ajax, { enableDebounce, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg): Promise<SendResult>;
+    /**
+     * PATCH请求
+     * @param {ISendArg} params - 请求参数
+     * @param {boolean} [params.enableDebounce=true] - 是否启用防抖
+     * @param {Function} [params.debounceFilterData] - 防抖时用于过滤data的函数
+     * @param {Function} [params.debounceFilterHeaders] - 防抖时用于过滤headers的函数
+     * @returns {Promise<SendResult>} 请求结果
+     */
+    patch(this: Ajax, { enableDebounce, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg): Promise<SendResult>;
+    /**
+     * PUT请求
+     * @param {ISendArg} params - 请求参数
+     * @param {boolean} [params.enableDebounce=true] - 是否启用防抖
+     * @param {Function} [params.debounceFilterData] - 防抖时用于过滤data的函数
+     * @param {Function} [params.debounceFilterHeaders] - 防抖时用于过滤headers的函数
+     * @returns {Promise<SendResult>} 请求结果
+     */
+    put(this: Ajax, { enableDebounce, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg): Promise<SendResult>;
+    /**
+     * DELETE请求
+     * @param {ISendArg} params - 请求参数
+     * @param {boolean} [params.enableDebounce=true] - 是否启用防抖
+     * @param {Function} [params.debounceFilterData] - 防抖时用于过滤data的函数
+     * @param {Function} [params.debounceFilterHeaders] - 防抖时用于过滤headers的函数
+     * @returns {Promise<SendResult>} 请求结果
+     */
+    delete(this: Ajax, { enableDebounce, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg): Promise<SendResult>;
 }
 export default Ajax;

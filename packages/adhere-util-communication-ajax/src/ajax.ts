@@ -6,6 +6,7 @@ import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
 import {
+  CONTENT_TYPES,
   EventHandlerParams,
   FormDataConfig,
   HttpStatusCode,
@@ -23,7 +24,7 @@ import {
   SendResult,
   XhrEventsConfig,
 } from './types';
-import { CONTENT_TYPES } from './types';
+import { combineUrls, generateCacheKey } from './utils';
 
 /** 是否触发过402状态码 */
 let trigger402 = false;
@@ -171,6 +172,9 @@ class Ajax {
   /** 拦截器实例 */
   readonly interceptors = new Interceptors();
 
+  /** 防抖请求缓存 **/
+  readonly debounceRequestCache = new Map<string, SendResult>();
+
   /** 基础URL */
   protected readonly baseURL: string;
 
@@ -193,21 +197,71 @@ class Ajax {
   }
 
   /**
+   * debounceRequest
+   * @description 防抖请求方法，用于避免重复的相同请求
+   * @param requestFn - 请求函数，接收请求参数并返回请求结果
+   * @param options - 可选配置项
+   * @param options.filterData - 用于过滤请求数据的函数，返回处理后的数据用于生成缓存键
+   * @param options.filterHeaders - 用于过滤请求头的函数，返回处理后的请求头用于生成缓存键
+   * @returns 返回一个异步函数，该函数接收请求参数并返回防抖后的请求结果
+   * @protected
+   */
+  protected debounceRequest(
+    requestFn: (params: ISendArg) => Promise<SendResult>,
+    options?: {
+      filterData?: ISendArg['debounceFilterData'];
+      filterHeaders?: ISendArg['debounceFilterHeaders'];
+    },
+  ) {
+    const self = this;
+
+    return async function (this: Ajax, params: ISendArg): Promise<SendResult> {
+      // 生成请求唯一标识
+      const requestKey = await generateCacheKey({
+        url: combineUrls(self.baseURL, params.path),
+        method: params.method!,
+        body: options?.filterData ? options?.filterData?.(params.data!) : params.data,
+        headers: options?.filterHeaders ? options?.filterHeaders(params.headers) : params.headers,
+      });
+
+      // 检查是否有相同的请求正在进行
+      if (self.debounceRequestCache.has(requestKey)) {
+        // 返回已存在的请求对象
+        return self.debounceRequestCache.get(requestKey) as SendResult;
+      }
+
+      const { promise, ...rest } = await requestFn(params);
+
+      const debouncePromise = promise.finally(() => {
+        self.debounceRequestCache.delete(requestKey);
+      });
+
+      const result: SendResult = { promise: debouncePromise, ...rest };
+
+      self.debounceRequestCache.set(requestKey, result);
+
+      return result;
+    };
+  }
+
+  /**
    * GET请求
    * @param params - 请求参数
    * @returns 请求结果
    */
-  get(this: Ajax, { data, ...arg }: ISendArg): SendResult {
+  protected getCore(this: Ajax, { data, ...arg }: ISendArg): Promise<SendResult> {
     let prepare: Prepare = {};
+
+    const self = this;
 
     const promise = new Promise((resolve, reject) => {
       prepare = sendPrepare.call(
-        this,
+        self,
         {
           // 默认配置
-          ...getDefaultConfig.call(this),
+          ...getDefaultConfig.call(self),
           // 用户构造函数传的配置
-          ...this.config,
+          ...self.config,
           method: 'get',
           // get方法传的参数
           ...arg,
@@ -225,10 +279,10 @@ class Ajax {
       }
     });
 
-    return {
+    return Promise.resolve({
       ...prepare,
       promise,
-    };
+    });
   }
 
   /**
@@ -236,8 +290,8 @@ class Ajax {
    * @param params - 请求参数
    * @returns 请求结果
    */
-  post(this: Ajax, params: ISendArg): SendResult {
-    return complexRequest.call(this, 'post', params);
+  protected postCore(this: Ajax, params: ISendArg): Promise<SendResult> {
+    return Promise.resolve(complexRequest.call(this, 'post', params));
   }
 
   /**
@@ -245,8 +299,8 @@ class Ajax {
    * @param params - 请求参数
    * @returns 请求结果
    */
-  patch(this: Ajax, params: ISendArg): SendResult {
-    return complexRequest.call(this, 'patch', params);
+  protected patchCore(this: Ajax, params: ISendArg): Promise<SendResult> {
+    return Promise.resolve(complexRequest.call(this, 'patch', params));
   }
 
   /**
@@ -254,8 +308,8 @@ class Ajax {
    * @param params - 请求参数
    * @returns 请求结果
    */
-  put(this: Ajax, params: ISendArg): SendResult {
-    return complexRequest.call(this, 'put', params);
+  protected putCore(this: Ajax, params: ISendArg): Promise<SendResult> {
+    return Promise.resolve(complexRequest.call(this, 'put', params));
   }
 
   /**
@@ -263,8 +317,118 @@ class Ajax {
    * @param params - 请求参数
    * @returns 请求结果
    */
-  delete(this: Ajax, params: ISendArg): SendResult {
-    return complexRequest.call(this, 'delete', params);
+  protected deleteCore(this: Ajax, params: ISendArg): Promise<SendResult> {
+    return Promise.resolve(complexRequest.call(this, 'delete', params));
+  }
+
+  /**
+   * GET请求
+   * @param {ISendArg} params - 请求参数
+   * @param {boolean} [params.enableDebounce=true] - 是否启用防抖
+   * @param {Function} [params.debounceFilterData] - 防抖时用于过滤data的函数
+   * @param {Function} [params.debounceFilterHeaders] - 防抖时用于过滤headers的函数
+   * @returns {Promise<SendResult>} 请求结果
+   */
+  get(
+    this: Ajax,
+    { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
+  ): Promise<SendResult> {
+    const call = enableDebounce
+      ? this.debounceRequest(this.getCore, {
+          filterData: debounceFilterData,
+          filterHeaders: debounceFilterHeaders,
+        })
+      : this.getCore;
+
+    return call.call(this, arg);
+  }
+
+  /**
+   * POST请求
+   * @param {ISendArg} params - 请求参数
+   * @param {boolean} [params.enableDebounce=true] - 是否启用防抖
+   * @param {Function} [params.debounceFilterData] - 防抖时用于过滤data的函数
+   * @param {Function} [params.debounceFilterHeaders] - 防抖时用于过滤headers的函数
+   * @returns {Promise<SendResult>} 请求结果
+   */
+  post(
+    this: Ajax,
+    { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
+  ): Promise<SendResult> {
+    const call = enableDebounce
+      ? this.debounceRequest(this.postCore, {
+          filterData: debounceFilterData,
+          filterHeaders: debounceFilterHeaders,
+        })
+      : this.postCore;
+
+    return call.call(this, arg);
+  }
+
+  /**
+   * PATCH请求
+   * @param {ISendArg} params - 请求参数
+   * @param {boolean} [params.enableDebounce=true] - 是否启用防抖
+   * @param {Function} [params.debounceFilterData] - 防抖时用于过滤data的函数
+   * @param {Function} [params.debounceFilterHeaders] - 防抖时用于过滤headers的函数
+   * @returns {Promise<SendResult>} 请求结果
+   */
+  patch(
+    this: Ajax,
+    { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
+  ): Promise<SendResult> {
+    const call = enableDebounce
+      ? this.debounceRequest(this.patchCore, {
+          filterData: debounceFilterData,
+          filterHeaders: debounceFilterHeaders,
+        })
+      : this.patchCore;
+
+    return call.call(this, arg);
+  }
+
+  /**
+   * PUT请求
+   * @param {ISendArg} params - 请求参数
+   * @param {boolean} [params.enableDebounce=true] - 是否启用防抖
+   * @param {Function} [params.debounceFilterData] - 防抖时用于过滤data的函数
+   * @param {Function} [params.debounceFilterHeaders] - 防抖时用于过滤headers的函数
+   * @returns {Promise<SendResult>} 请求结果
+   */
+  put(
+    this: Ajax,
+    { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
+  ): Promise<SendResult> {
+    const call = enableDebounce
+      ? this.debounceRequest(this.putCore, {
+          filterData: debounceFilterData,
+          filterHeaders: debounceFilterHeaders,
+        })
+      : this.putCore;
+
+    return call.call(this, arg);
+  }
+
+  /**
+   * DELETE请求
+   * @param {ISendArg} params - 请求参数
+   * @param {boolean} [params.enableDebounce=true] - 是否启用防抖
+   * @param {Function} [params.debounceFilterData] - 防抖时用于过滤data的函数
+   * @param {Function} [params.debounceFilterHeaders] - 防抖时用于过滤headers的函数
+   * @returns {Promise<SendResult>} 请求结果
+   */
+  delete(
+    this: Ajax,
+    { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
+  ): Promise<SendResult> {
+    const call = enableDebounce
+      ? this.debounceRequest(this.deleteCore, {
+          filterData: debounceFilterData,
+          filterHeaders: debounceFilterHeaders,
+        })
+      : this.deleteCore;
+
+    return call.call(this, arg);
   }
 }
 
@@ -632,8 +796,8 @@ function sendPrepare(
     show = false,
     text = defaultLoadingText,
     el = document.body,
-    zIndex = 19999,
-    size = 'default',
+    // zIndex = 19999,
+    // size = 'default',
     terminal = 'pc',
   } = loading!;
 
@@ -688,7 +852,7 @@ function sendPrepare(
   // responseType
   xhr.responseType = responseType || '';
 
-  let contentType = '';
+  let contentType: string;
 
   // requestHeaders - 在open之后
   /** 如果用户设置了header **/

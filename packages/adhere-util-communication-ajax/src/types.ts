@@ -275,7 +275,17 @@ export interface ISendArg extends Partial<IConfig> {
   /** 请求数据 */
   data?: RequestData;
 
+  /** Method **/
   method?: Method;
+
+  /** 接口防抖开关 **/
+  enableDebounce?: boolean;
+
+  /** debounceFilterData 对防抖的data进行过滤 **/
+  debounceFilterData?: (data: RequestData) => RequestData;
+
+  /** debounceFilterHeaders 对防抖的header进行过滤 **/
+  debounceFilterHeaders?: (headers: ISendArg['headers']) => ISendArg['headers'];
 }
 
 /**
