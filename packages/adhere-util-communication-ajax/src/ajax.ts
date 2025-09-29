@@ -334,7 +334,7 @@ class Ajax {
     { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
   ): Promise<SendResult> {
     const call = enableDebounce
-      ? this.debounceRequest(this.getCore, {
+      ? this.debounceRequest(this.getCore.bind(this), {
           filterData: debounceFilterData,
           filterHeaders: debounceFilterHeaders,
         })
@@ -356,7 +356,7 @@ class Ajax {
     { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
   ): Promise<SendResult> {
     const call = enableDebounce
-      ? this.debounceRequest(this.postCore, {
+      ? this.debounceRequest(this.postCore.bind(this), {
           filterData: debounceFilterData,
           filterHeaders: debounceFilterHeaders,
         })
@@ -378,7 +378,7 @@ class Ajax {
     { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
   ): Promise<SendResult> {
     const call = enableDebounce
-      ? this.debounceRequest(this.patchCore, {
+      ? this.debounceRequest(this.patchCore.bind(this), {
           filterData: debounceFilterData,
           filterHeaders: debounceFilterHeaders,
         })
@@ -400,7 +400,7 @@ class Ajax {
     { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
   ): Promise<SendResult> {
     const call = enableDebounce
-      ? this.debounceRequest(this.putCore, {
+      ? this.debounceRequest(this.putCore.bind(this), {
           filterData: debounceFilterData,
           filterHeaders: debounceFilterHeaders,
         })
@@ -422,7 +422,7 @@ class Ajax {
     { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
   ): Promise<SendResult> {
     const call = enableDebounce
-      ? this.debounceRequest(this.deleteCore, {
+      ? this.debounceRequest(this.deleteCore.bind(this), {
           filterData: debounceFilterData,
           filterHeaders: debounceFilterHeaders,
         })
