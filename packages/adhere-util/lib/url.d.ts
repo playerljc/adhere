@@ -62,5 +62,26 @@ declare const UrlUtil: {
      * ```
      */
     getFullPath(): string;
+    /**
+     * isIPv4
+     * @description 判断host是否是ipv4
+     * @param {string} host
+     * @return {boolean}
+     */
+    isIPv4(host: string): boolean;
+    /**
+     * isIPv6
+     * @description 判断host是否是ipv6
+     * @param {string} host
+     * @return {boolean}
+     */
+    isIPv6(host: string): boolean;
+    /**
+     * shouldEnhance
+     * @description 当前Url和origin是否是同一个
+     * @param {string} url
+     * @return boolean
+     */
+    shouldEnhance(url: string): boolean;
 };
 export default UrlUtil;

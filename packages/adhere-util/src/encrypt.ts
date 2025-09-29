@@ -8,15 +8,24 @@ import CryptoJS from 'crypto-js';
  * @returns 加密后的字符串
  */
 function hashEncrypt(type: string[], value: string = ''): string {
-  let val = '';
+  let result: any = '';
 
   if (type[0] === 'SHA3') {
-    val = CryptoJS['SHA3'](value, { outputLength: type[1] });
+    result = (CryptoJS as any)['SHA3'](value, { outputLength: Number(type[1]) });
   } else {
-    val = CryptoJS[type[0] as keyof typeof CryptoJS](value);
+    const hasher = (CryptoJS as any)[type[0]];
+    if (typeof hasher === 'function') {
+      result = hasher(value);
+    } else {
+      return '';
+    }
   }
 
-  return val;
+  try {
+    return typeof result?.toString === 'function' ? result.toString() : String(result ?? '');
+  } catch {
+    return '';
+  }
 }
 
 /**
@@ -31,12 +40,19 @@ function symmetricEncrypt(type: string, pwd: string, value: string, options?: an
   const cleanValue = (value || '').trim();
   const cleanPwd = (pwd || '').trim();
   const cleanType = (type || '').trim();
-  
+
   if (!cleanValue || !cleanPwd || !cleanType) {
     return '';
   }
 
-  return CryptoJS[cleanType as keyof typeof CryptoJS].encrypt(cleanValue, cleanPwd, options).toString();
+  const helper = (CryptoJS as any)[cleanType];
+  if (!helper || typeof helper.encrypt !== 'function') return '';
+
+  try {
+    return helper.encrypt(cleanValue, cleanPwd, options).toString();
+  } catch {
+    return '';
+  }
 }
 
 /**
@@ -51,12 +67,19 @@ function symmetricDecrypt(type: string, pwd: string, value: string, options?: an
   const cleanValue = (value || '').trim();
   const cleanPwd = (pwd || '').trim();
   const cleanType = (type || '').trim();
-  
+
   if (!cleanValue || !cleanPwd || !cleanType) {
     return '';
   }
 
-  return CryptoJS[cleanType as keyof typeof CryptoJS].decrypt(cleanValue, cleanPwd, options).toString(CryptoJS.enc.Utf8);
+  const helper = (CryptoJS as any)[cleanType];
+  if (!helper || typeof helper.decrypt !== 'function') return '';
+
+  try {
+    return helper.decrypt(cleanValue, cleanPwd, options).toString(CryptoJS.enc.Utf8);
+  } catch {
+    return '';
+  }
 }
 
 /**
@@ -76,7 +99,7 @@ const EncryptUtil = {
    */
   base64Encode(str: string): string {
     if (!str) return '';
-    
+
     return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(str.trim()));
   },
 
@@ -157,12 +180,15 @@ const EncryptUtil = {
    * chineseToASC2('你好') // 返回 "\u4f60\u597d"
    * ```
    */
-  chineseToASC2(chineseStr: string = '', hasNoTransformationLettersAndNumber: boolean = true): string {
+  chineseToASC2(
+    chineseStr: string = '',
+    hasNoTransformationLettersAndNumber: boolean = true,
+  ): string {
     if (!chineseStr) return '';
 
     const character = chineseStr.trim().split('');
     let ascii = '';
-    
+
     for (let i = 0; i < character.length; i++) {
       const code = Number(character[i].charCodeAt(0));
       if (!hasNoTransformationLettersAndNumber || code > 127) {
@@ -192,7 +218,7 @@ const EncryptUtil = {
 
     const character = asc2Str.trim().split('\\u');
     let native = character[0];
-    
+
     for (let i = 1; i < character.length; i++) {
       const code = character[i];
       native += String.fromCharCode(parseInt('0x' + code.substring(0, 4), 16));
@@ -200,7 +226,7 @@ const EncryptUtil = {
         native += code.substring(4, code.length);
       }
     }
-    
+
     return native;
   },
 
@@ -216,7 +242,7 @@ const EncryptUtil = {
    */
   hashEncryptToMD5(value: string = ''): string {
     if (!value) return '';
-    
+
     return hashEncrypt(['MD5'], value.trim());
   },
 
@@ -232,7 +258,7 @@ const EncryptUtil = {
    */
   hashEncryptToSHA1(value: string = ''): string {
     if (!value) return '';
-    
+
     return hashEncrypt(['SHA1'], value.trim());
   },
 
@@ -248,7 +274,7 @@ const EncryptUtil = {
    */
   hashEncryptToSHA256(value: string = ''): string {
     if (!value) return '';
-    
+
     return hashEncrypt(['SHA256'], value.trim());
   },
 
@@ -264,7 +290,7 @@ const EncryptUtil = {
    */
   hashEncryptToSHA512(value: string = ''): string {
     if (!value) return '';
-    
+
     return hashEncrypt(['SHA512'], value.trim());
   },
 
@@ -276,7 +302,7 @@ const EncryptUtil = {
    */
   hashEncryptToSHA3_64(value: string = ''): string {
     if (!value) return '';
-    
+
     return hashEncrypt(['SHA3', '64'], value.trim());
   },
 
@@ -288,7 +314,7 @@ const EncryptUtil = {
    */
   hashEncryptToSHA3_224(value: string = ''): string {
     if (!value) return '';
-    
+
     return hashEncrypt(['SHA3', '224'], value.trim());
   },
 
@@ -300,7 +326,7 @@ const EncryptUtil = {
    */
   hashEncryptToSHA3_256(value: string = ''): string {
     if (!value) return '';
-    
+
     return hashEncrypt(['SHA3', '256'], value.trim());
   },
 
@@ -312,7 +338,7 @@ const EncryptUtil = {
    */
   hashEncryptToSHA3_348(value: string = ''): string {
     if (!value) return '';
-    
+
     return hashEncrypt(['SHA3', '384'], value.trim());
   },
 
@@ -324,7 +350,7 @@ const EncryptUtil = {
    */
   hashEncryptToSHA3_512(value: string = ''): string {
     if (!value) return '';
-    
+
     return hashEncrypt(['SHA3', '512'], value.trim());
   },
 
@@ -336,7 +362,7 @@ const EncryptUtil = {
    */
   hashEncryptToRIPEMD160(value: string = ''): string {
     if (!value) return '';
-    
+
     return hashEncrypt(['RIPEMD160'], value.trim());
   },
 
@@ -354,7 +380,7 @@ const EncryptUtil = {
    */
   symmetricEncryptToAES(value: string = '', pwd: string = '', options?: any): string {
     if (!value || !pwd) return '';
-    
+
     return symmetricEncrypt('AES', pwd.trim(), value.trim(), options);
   },
 
@@ -368,7 +394,7 @@ const EncryptUtil = {
    */
   symmetricEncryptToDES(value: string = '', pwd: string = '', options?: any): string {
     if (!value || !pwd) return '';
-    
+
     return symmetricEncrypt('DES', pwd.trim(), value.trim(), options);
   },
 
@@ -382,7 +408,7 @@ const EncryptUtil = {
    */
   symmetricEncryptToRC4(value: string = '', pwd: string = '', options?: any): string {
     if (!value || !pwd) return '';
-    
+
     return symmetricEncrypt('RC4', pwd.trim(), value.trim(), options);
   },
 
@@ -396,7 +422,7 @@ const EncryptUtil = {
    */
   symmetricEncryptToRabbit(value: string = '', pwd: string = '', options?: any): string {
     if (!value || !pwd) return '';
-    
+
     return symmetricEncrypt('Rabbit', pwd.trim(), value.trim(), options);
   },
 
@@ -410,7 +436,7 @@ const EncryptUtil = {
    */
   symmetricEncryptToTripleDes(value: string = '', pwd: string = '', options?: any): string {
     if (!value || !pwd) return '';
-    
+
     return symmetricEncrypt('TripleDes', pwd.trim(), value.trim(), options);
   },
 
@@ -428,7 +454,7 @@ const EncryptUtil = {
    */
   symmetricDecryptToAES(value: string = '', pwd: string = '', options?: any): string {
     if (!value || !pwd) return '';
-    
+
     return symmetricDecrypt('AES', pwd.trim(), value.trim(), options);
   },
 
@@ -442,7 +468,7 @@ const EncryptUtil = {
    */
   symmetricDecryptToDES(value: string = '', pwd: string = '', options?: any): string {
     if (!value || !pwd) return '';
-    
+
     return symmetricDecrypt('DES', pwd.trim(), value.trim(), options);
   },
 
@@ -456,7 +482,7 @@ const EncryptUtil = {
    */
   symmetricDecryptToRC4(value: string = '', pwd: string = '', options?: any): string {
     if (!value || !pwd) return '';
-    
+
     return symmetricDecrypt('RC4', pwd.trim(), value.trim(), options);
   },
 
@@ -470,7 +496,7 @@ const EncryptUtil = {
    */
   symmetricDecryptToRabbit(value: string = '', pwd: string = '', options?: any): string {
     if (!value || !pwd) return '';
-    
+
     return symmetricDecrypt('Rabbit', pwd.trim(), value.trim(), options);
   },
 
@@ -484,7 +510,7 @@ const EncryptUtil = {
    */
   symmetricDecryptToTripleDes(value: string = '', pwd: string = '', options?: any): string {
     if (!value || !pwd) return '';
-    
+
     return symmetricDecrypt('TripleDes', pwd.trim(), value.trim(), options);
   },
 

@@ -73,6 +73,9 @@ declare const _default: {
     getPathName(publicPath?: string, router?: "hash" | "browser"): string;
     getSearch(router?: "hash" | "browser"): string;
     getFullPath(): string;
+    isIPv4(host: string): boolean;
+    isIPv6(host: string): boolean;
+    shouldEnhance(url: string): boolean;
     treeToArray: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], config: {
         parentIdAttr: string;
         rootParentId: string | number;

@@ -3,6 +3,7 @@
  * @description 提供 URL 解析、拼接、路由相关的工具函数
  */
 import { IUrlConfig } from './types';
+import Url from './url';
 
 export const defaultConfig: IUrlConfig = {
   ignoreInvalid: true,
@@ -140,6 +141,50 @@ const UrlUtil = {
    */
   getFullPath(): string {
     return `${UrlUtil.getPathName()}${UrlUtil.getSearch()}`;
+  },
+
+  /**
+   * isIPv4
+   * @description 判断host是否是ipv4
+   * @param {string} host
+   * @return {boolean}
+   */
+  isIPv4(host: string): boolean {
+    const parts = String(host || '').split('.');
+    if (parts.length !== 4) return false;
+    return parts.every((p) => /^\d+$/.test(p) && Number(p) >= 0 && Number(p) <= 255);
+  },
+
+  /**
+   * isIPv6
+   * @description 判断host是否是ipv6
+   * @param {string} host
+   * @return {boolean}
+   */
+  isIPv6(host: string): boolean {
+    return /:/.test(String(host || ''));
+  },
+
+  /**
+   * shouldEnhance
+   * @description 当前Url和origin是否是同一个
+   * @param {string} url
+   * @return boolean
+   */
+  shouldEnhance(url: string): boolean {
+    if (typeof window === 'undefined' || !url) return false;
+    try {
+      const parsed = new URL(url, window.location.origin);
+      const srcOrigin = parsed.origin;
+      const locOrigin = window.location && window.location.origin;
+      const srcHost = parsed.hostname;
+      const locHost = window.location && window.location.hostname;
+      const srcIsIP = UrlUtil.isIPv4(srcHost) || UrlUtil.isIPv6(srcHost);
+      const locIsIP = UrlUtil.isIPv4(locHost) || UrlUtil.isIPv6(locHost);
+      return srcIsIP && locIsIP && srcOrigin !== locOrigin;
+    } catch (e) {
+      return false;
+    }
   },
 };
 
