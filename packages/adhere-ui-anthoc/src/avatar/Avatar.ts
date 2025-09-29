@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const AvatarHOC: typeof Avatar & {
   defaultProps?: Partial<AvatarProps>;
+  override?: (props: Partial<AvatarProps>) => Partial<AvatarProps>;
 } = createFactory<AvatarProps>(Avatar, {});
 
 AvatarHOC.displayName = 'Avatar';

@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const InputHOC: typeof Input & {
   defaultProps?: Partial<InputProps>;
+  override?: (props: Partial<InputProps>) => Partial<InputProps>;
 } = createFactory<InputProps>(Input, {
   allowClear: true,
   maxLength: 1000,

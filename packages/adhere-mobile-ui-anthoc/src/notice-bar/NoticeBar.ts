@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const NoticeBarHOC: typeof NoticeBar & {
   defaultProps?: Partial<NoticeBarProps>;
+  override?: (props: Partial<NoticeBarProps>) => Partial<NoticeBarProps>;
 } = createFactory<NoticeBarProps>(NoticeBar, {});
 
 NoticeBarHOC.displayName = 'NoticeBar';

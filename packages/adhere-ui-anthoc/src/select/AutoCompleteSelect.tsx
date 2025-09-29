@@ -8,7 +8,7 @@ import type { DisplayNameInternal } from '../types';
 
 const { useTheme } = ConfigProvider;
 
-type InternalAutoCompleteSelectType = AutoCompleteProps & {
+export type InternalAutoCompleteSelectType = AutoCompleteProps & {
   wrapperClassName?: string;
   wrapperStyle?: CSSProperties;
 };

@@ -4,6 +4,9 @@ import ValueHOC from './ValueHOC';
 
 const TimePickerFormatValueHOC: typeof ValueHOC & {
   defaultProps?: Partial<TimePickerFormatValueHOCProps>;
+  override?: (
+    props: Partial<TimePickerFormatValueHOCProps>,
+  ) => Partial<TimePickerFormatValueHOCProps>;
 } = createFactory<TimePickerFormatValueHOCProps>(ValueHOC, {});
 
 TimePickerFormatValueHOC.displayName = 'TimePickerFormatValueHOC';

@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const GridHOC: typeof Grid & {
   defaultProps?: Partial<GridProps>;
+  override?: (props: Partial<GridProps>) => Partial<GridProps>;
 } = createFactory<GridProps>(Grid, {});
 
 GridHOC.displayName = 'Grid';

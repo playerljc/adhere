@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const RowHOC: typeof Row & {
   defaultProps?: Partial<RowProps>;
+  override?: (props: Partial<RowProps>) => Partial<RowProps>;
 } = createFactory<RowProps>(Row, {});
 
 RowHOC.displayName = 'Row';

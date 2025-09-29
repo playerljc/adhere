@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const MentionsHOC: typeof Mentions & {
   defaultProps?: Partial<MentionProps>;
+  override?: (props: Partial<MentionProps>) => Partial<MentionProps>;
 } = createFactory<MentionProps>(Mentions, {});
 
 MentionsHOC.displayName = 'Mentions';

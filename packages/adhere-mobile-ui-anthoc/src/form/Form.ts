@@ -1,9 +1,14 @@
-import { Form } from 'antd-mobile';
+import { Form, type FormItemProps } from 'antd-mobile';
 import type { FormProps } from 'antd-mobile';
 
 import Validator from '@baifendian/adhere-util-validator';
 
-import type { FormHOCComponent, FormValidatorRulesType } from '../types';
+import type {
+  CustomWrapperFormItemProps,
+  FormHOCComponent,
+  FormValidatorRulesType,
+  InternalNestingFormItemProps,
+} from '../types';
 import { createFactory } from '../util';
 import CustomWrapperFormItem from './CustomWrapperFormItem';
 import FormItem from './FormItem';
@@ -87,9 +92,15 @@ let ValidatorRules: FormValidatorRulesType;
 })();
 
 FormHOC.ValidatorRules = ValidatorRules;
-FormHOC.Item = FormItem;
-FormHOC.NestingFormItem = NestingFormItem;
-FormHOC.CustomWrapperFormItem = CustomWrapperFormItem;
+FormHOC.Item = createFactory<FormItemProps>(FormItem, {});
+FormHOC.NestingFormItem = createFactory<InternalNestingFormItemProps>(NestingFormItem, {});
+FormHOC.CustomWrapperFormItem = createFactory<CustomWrapperFormItemProps>(
+  CustomWrapperFormItem,
+  {},
+);
+
+FormHOC.Item.displayName = 'FormItem';
+FormHOC.CustomWrapperFormItem.displayName = 'CustomWrapperFormItem';
 FormHOC.displayName = 'Form';
 
 export default FormHOC;

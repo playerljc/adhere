@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const FloatingBubbleHOC: typeof FloatingBubble & {
   defaultProps?: Partial<FloatingBubbleProps>;
+  override?: (props: Partial<FloatingBubbleProps>) => Partial<FloatingBubbleProps>;
 } = createFactory<FloatingBubbleProps>(FloatingBubble, {});
 
 FloatingBubbleHOC.displayName = 'FloatingBubble';

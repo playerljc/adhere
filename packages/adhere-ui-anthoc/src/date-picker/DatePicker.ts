@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const DatePickerHOC: typeof DatePicker & {
   defaultProps?: Partial<DatePickerProps>;
+  override?: (props: Partial<DatePickerProps>) => Partial<DatePickerProps>;
 } = createFactory<DatePickerProps>(DatePicker, {
   allowClear: true,
   placement: 'bottomLeft',

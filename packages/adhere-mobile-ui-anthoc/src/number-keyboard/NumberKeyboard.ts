@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const NumberKeyboardHOC: typeof NumberKeyboard & {
   defaultProps?: Partial<NumberKeyboardProps>;
+  override?: (props: Partial<NumberKeyboardProps>) => Partial<NumberKeyboardProps>;
 } = createFactory<NumberKeyboardProps>(NumberKeyboard, {});
 
 NumberKeyboardHOC.displayName = 'NumberKeyboard';

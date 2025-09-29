@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const PickerViewHOC: typeof PickerView & {
   defaultProps?: Partial<PickerViewProps>;
+  override?: (props: Partial<PickerViewProps>) => Partial<PickerViewProps>;
 } = createFactory<PickerViewProps>(PickerView, {});
 
 PickerViewHOC.displayName = 'PickerView';

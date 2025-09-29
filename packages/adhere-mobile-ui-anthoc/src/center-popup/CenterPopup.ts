@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const CenterPopupHOC: typeof CenterPopup & {
   defaultProps?: Partial<CenterPopupProps>;
+  override?: (props: Partial<CenterPopupProps>) => Partial<CenterPopupProps>;
 } = createFactory<CenterPopupProps>(CenterPopup, {});
 
 CenterPopupHOC.displayName = 'CenterPopup';

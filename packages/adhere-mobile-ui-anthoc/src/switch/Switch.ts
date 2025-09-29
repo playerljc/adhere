@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const SwitchHOC: typeof Switch & {
   defaultProps?: Partial<SwitchProps>;
+  override?: (props: Partial<SwitchProps>) => Partial<SwitchProps>;
 } = createFactory<SwitchProps>(Switch, {});
 
 SwitchHOC.displayName = 'Switch';

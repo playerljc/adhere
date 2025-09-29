@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const DescriptionsHOC: typeof Descriptions & {
   defaultProps?: Partial<DescriptionsProps>;
+  override?: (props: Partial<DescriptionsProps>) => Partial<DescriptionsProps>;
 } = createFactory<DescriptionsProps>(Descriptions, {});
 
 DescriptionsHOC.displayName = 'Descriptions';

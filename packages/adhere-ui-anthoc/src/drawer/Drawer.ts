@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const DrawerHOC: typeof Drawer & {
   defaultProps?: Partial<DrawerProps>;
+  override?: (props: Partial<DrawerProps>) => Partial<DrawerProps>;
 } = createFactory<DrawerProps>(Drawer, {});
 
 DrawerHOC.displayName = 'Drawer';

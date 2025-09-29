@@ -2,5 +2,6 @@ import { Popover } from 'antd-mobile';
 import type { PopoverProps } from 'antd-mobile';
 declare const PopoverHOC: typeof Popover & {
     defaultProps?: Partial<PopoverProps>;
+    override?: (props: Partial<PopoverProps>) => Partial<PopoverProps>;
 };
 export default PopoverHOC;

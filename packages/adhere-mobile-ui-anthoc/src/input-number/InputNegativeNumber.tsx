@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const InputNegativeNumberHOC: typeof Input & {
   defaultProps?: Partial<InputProps>;
+  override?: (props: Partial<InputProps>) => Partial<InputProps>;
 } = createFactory<InputProps>(Input, { max: 0, type: 'number' });
 
 InputNegativeNumberHOC.displayName = 'InputNegativeNumber';

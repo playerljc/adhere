@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const ResultPageHOC: typeof ResultPage & {
   defaultProps?: Partial<ResultPageProps>;
+  override?: (props: Partial<ResultPageProps>) => Partial<ResultPageProps>;
 } = createFactory<ResultPageProps>(ResultPage, {});
 
 ResultPageHOC.displayName = 'ResultPage';

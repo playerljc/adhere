@@ -10,33 +10,30 @@ const InternalTransfer: TransferHOCComponent = createFactory<
   }
 >(Transfer, {});
 
-const TransferHOC: TransferHOCComponent = ({
-  dataSource,
-  selectedKeys,
-  targetKeys,
-  isHideInvalidValue = true,
-  ...resetProps
-}) => {
-  const realSelectedKeys = useMemo(
-    () =>
-      isHideInvalidValue ? getTransferValue({ value: selectedKeys, dataSource }) : selectedKeys,
-    [selectedKeys, dataSource],
-  );
+const TransferHOC: TransferHOCComponent = createFactory(
+  ({ dataSource, selectedKeys, targetKeys, isHideInvalidValue = true, ...resetProps }) => {
+    const realSelectedKeys = useMemo(
+      () =>
+        isHideInvalidValue ? getTransferValue({ value: selectedKeys, dataSource }) : selectedKeys,
+      [selectedKeys, dataSource],
+    );
 
-  const realTargetKeys = useMemo(
-    () => (isHideInvalidValue ? getTransferValue({ value: targetKeys, dataSource }) : targetKeys),
-    [targetKeys, dataSource],
-  );
+    const realTargetKeys = useMemo(
+      () => (isHideInvalidValue ? getTransferValue({ value: targetKeys, dataSource }) : targetKeys),
+      [targetKeys, dataSource],
+    );
 
-  return (
-    <InternalTransfer
-      {...resetProps}
-      dataSource={dataSource}
-      selectedKeys={realSelectedKeys}
-      targetKeys={realTargetKeys}
-    />
-  );
-};
+    return (
+      <InternalTransfer
+        {...resetProps}
+        dataSource={dataSource}
+        selectedKeys={realSelectedKeys}
+        targetKeys={realTargetKeys}
+      />
+    );
+  },
+  {},
+);
 
 TransferHOC.displayName = 'Transfer';
 

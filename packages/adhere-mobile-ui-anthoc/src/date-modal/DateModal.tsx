@@ -4,6 +4,7 @@ import InternalDateModal from './InternalDateModal';
 
 const DateModalHOC: typeof InternalDateModal & {
   defaultProps?: Partial<DateModalProps>;
+  override?: (props: Partial<DateModalProps>) => Partial<DateModalProps>;
 } = createFactory<DateModalProps>(InternalDateModal, {});
 
 DateModalHOC.displayName = 'DateModal';

@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const LoadingHOC: typeof Loading & {
   defaultProps?: Partial<LoadingProps>;
+  override?: (props: Partial<LoadingProps>) => Partial<LoadingProps>;
 } = createFactory<LoadingProps>(Loading, {});
 
 LoadingHOC.displayName = 'Loading';

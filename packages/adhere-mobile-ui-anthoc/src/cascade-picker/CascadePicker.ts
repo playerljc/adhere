@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const CascadePickerHOC: typeof CascadePicker & {
   defaultProps?: Partial<CascadePickerProps>;
+  override?: (props: Partial<CascadePickerProps>) => Partial<CascadePickerProps>;
 } = createFactory<CascadePickerProps>(CascadePicker, {});
 
 CascadePickerHOC.displayName = 'CascadePicker';

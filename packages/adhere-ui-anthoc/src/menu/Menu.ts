@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const MenuHOC: typeof Menu & {
   defaultProps?: Partial<MenuProps>;
+  override?: (props: Partial<MenuProps>) => Partial<MenuProps>;
 } = createFactory<MenuProps>(Menu, {});
 
 MenuHOC.displayName = 'Menu';

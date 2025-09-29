@@ -1,6 +1,9 @@
+import { createFactory } from '../util';
 import InputMultipleDialog from './InputMultipleDialog';
 import InputMultiple from './InputMultipleHOC';
 
-InputMultiple.Dialog = InputMultipleDialog;
+InputMultiple.Dialog = createFactory(InputMultipleDialog, {});
+
+InputMultiple.Dialog.displayName = 'InputMultipleDialog';
 
 export default InputMultiple;

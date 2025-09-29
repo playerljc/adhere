@@ -4,6 +4,7 @@ import InternalArrayEntityValueHOC from './InternalArrayEntityValueHOC';
 
 const ArrayEntityValueHOC: typeof InternalArrayEntityValueHOC & {
   defaultProps?: Partial<ArrayEntityValueHOCProps>;
+  override?: (props: Partial<ArrayEntityValueHOCProps>) => Partial<ArrayEntityValueHOCProps>;
 } = createFactory<ArrayEntityValueHOCProps>(InternalArrayEntityValueHOC, {});
 
 ArrayEntityValueHOC.displayName = 'ArrayEntityValueHOC';

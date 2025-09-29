@@ -4,6 +4,9 @@ import ValueHOC from './ValueHOC';
 
 const RangePickerTimestampValueHOC: typeof ValueHOC & {
   defaultProps?: Partial<RangePickerTimestampValueHOCProps>;
+  override?: (
+    props: Partial<RangePickerTimestampValueHOCProps>,
+  ) => Partial<RangePickerTimestampValueHOCProps>;
 } = createFactory<RangePickerTimestampValueHOCProps>(ValueHOC, {});
 
 RangePickerTimestampValueHOC.displayName = 'RangePickerTimestampValueHOC';

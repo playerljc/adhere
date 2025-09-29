@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const SwiperHOC: typeof Swiper & {
   defaultProps?: Partial<SwiperProps>;
+  override?: (props: Partial<SwiperProps>) => Partial<SwiperProps>;
 } = createFactory<SwiperProps>(Swiper, {});
 
 SwiperHOC.displayName = 'Swiper';

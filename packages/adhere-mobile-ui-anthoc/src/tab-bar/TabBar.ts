@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const TabBarHOC: typeof TabBar & {
   defaultProps?: Partial<TabBarProps>;
+  override?: (props: Partial<TabBarProps>) => Partial<TabBarProps>;
 } = createFactory<TabBarProps>(TabBar, {});
 
 TabBarHOC.displayName = 'TabBar';

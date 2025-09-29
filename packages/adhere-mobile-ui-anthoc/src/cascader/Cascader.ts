@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const CascaderHOC: typeof Cascader & {
   defaultProps?: Partial<CascaderProps>;
+  override?: (props: Partial<CascaderProps>) => Partial<CascaderProps>;
 } = createFactory<CascaderProps>(Cascader, {});
 
 CascaderHOC.displayName = 'Cascader';

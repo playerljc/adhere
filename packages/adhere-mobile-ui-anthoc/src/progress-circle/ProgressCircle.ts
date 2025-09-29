@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const ProgressCircleHOC: typeof ProgressCircle & {
   defaultProps?: Partial<ProgressCircleProps>;
+  override?: (props: Partial<ProgressCircleProps>) => Partial<ProgressCircleProps>;
 } = createFactory<ProgressCircleProps>(ProgressCircle, {});
 
 ProgressCircleHOC.displayName = 'ProgressCircle';

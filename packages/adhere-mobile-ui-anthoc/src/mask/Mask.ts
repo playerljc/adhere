@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const MaskHOC: typeof Mask & {
   defaultProps?: Partial<MaskProps>;
+  override?: (props: Partial<MaskProps>) => Partial<MaskProps>;
 } = createFactory<MaskProps>(Mask, {});
 
 MaskHOC.displayName = 'Mask';

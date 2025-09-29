@@ -1,3 +1,8 @@
+import type { TreeAutoCompleteProps } from '@baifendian/adhere-mobile-ui-auto-complete';
+import type { TreeSelectProps } from '@baifendian/adhere-mobile-ui-tree/es/types';
+
+import type { AsyncTreeLeafSelectProps, AsyncTreeSelectProps } from '../types';
+import { createFactory } from '../util';
 import AsyncTreeLeafSelect from './AsyncTreeLeafSelect';
 import AsyncTreeSelect from './AsyncTreeSelect';
 import AsyncTreeShowAllSelect from './AsyncTreeShowAllSelect';
@@ -11,16 +16,31 @@ import TreeSelect from './TreeSelect';
 import TreeShowAllSelect from './TreeShowAllSelect';
 import TreeShowChildSelect from './TreeShowChildSelect';
 
-TreeSelect.TreeLeafSelect = TreeLeafSelect;
-TreeSelect.TreeShowAllSelect = TreeShowAllSelect;
-TreeSelect.TreeShowChildSelect = TreeShowChildSelect;
-TreeSelect.AsyncTreeSelect = AsyncTreeSelect;
-TreeSelect.AsyncTreeLeafSelect = AsyncTreeLeafSelect;
-TreeSelect.AsyncTreeShowAllSelect = AsyncTreeShowAllSelect;
-TreeSelect.AsyncTreeShowChildSelect = AsyncTreeShowChildSelect;
-TreeSelect.AutoCompleteTreeSelect = AutoCompleteTreeSelect;
-TreeSelect.AutoCompleteTreeLeafSelect = AutoCompleteTreeLeafSelect;
-TreeSelect.AutoCompleteTreeShowAllSelect = AutoCompleteTreeShowAllSelect;
-TreeSelect.AutoCompleteTreeShowChildSelect = AutoCompleteTreeShowChildSelect;
+TreeSelect.TreeLeafSelect = createFactory<TreeSelectProps>(TreeLeafSelect, {});
+TreeSelect.TreeShowAllSelect = createFactory<TreeSelectProps>(TreeShowAllSelect, {});
+TreeSelect.TreeShowChildSelect = createFactory<TreeSelectProps>(TreeShowChildSelect, {});
+TreeSelect.AsyncTreeSelect = createFactory<AsyncTreeSelectProps>(AsyncTreeSelect, {});
+TreeSelect.AsyncTreeLeafSelect = createFactory<AsyncTreeLeafSelectProps>(AsyncTreeLeafSelect, {});
+TreeSelect.AsyncTreeShowAllSelect = createFactory<AsyncTreeSelectProps>(AsyncTreeShowAllSelect, {});
+TreeSelect.AsyncTreeShowChildSelect = createFactory<AsyncTreeSelectProps>(
+  AsyncTreeShowChildSelect,
+  {},
+);
+TreeSelect.AutoCompleteTreeSelect = createFactory<TreeAutoCompleteProps>(
+  AutoCompleteTreeSelect,
+  {},
+);
+TreeSelect.AutoCompleteTreeLeafSelect = createFactory<TreeAutoCompleteProps>(
+  AutoCompleteTreeLeafSelect,
+  {},
+);
+TreeSelect.AutoCompleteTreeShowAllSelect = createFactory<TreeAutoCompleteProps>(
+  AutoCompleteTreeShowAllSelect,
+  {},
+);
+TreeSelect.AutoCompleteTreeShowChildSelect = createFactory<TreeAutoCompleteProps>(
+  AutoCompleteTreeShowChildSelect,
+  {},
+);
 
 export default TreeSelect;

@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const ProgressBarHOC: typeof ProgressBar & {
   defaultProps?: Partial<ProgressBarProps>;
+  override?: (props: Partial<ProgressBarProps>) => Partial<ProgressBarProps>;
 } = createFactory<ProgressBarProps>(ProgressBar, {});
 
 ProgressBarHOC.displayName = 'ProgressBar';

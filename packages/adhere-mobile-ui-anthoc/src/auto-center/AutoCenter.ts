@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const AutoCenterHOC: typeof AutoCenter & {
   defaultProps?: Partial<AutoCenterProps>;
+  override?: (props: Partial<AutoCenterProps>) => Partial<AutoCenterProps>;
 } = createFactory<AutoCenterProps>(AutoCenter, {});
 
 AutoCenterHOC.displayName = 'AutoCenter';

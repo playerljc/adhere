@@ -7,6 +7,7 @@ const { RangePicker } = DatePicker;
 
 const RangePickerHOC: typeof RangePicker & {
   defaultProps?: Partial<RangePickerProps>;
+  override?: (props: Partial<RangePickerProps>) => Partial<RangePickerProps>;
 } = createFactory<RangePickerProps>(RangePicker, {
   allowClear: true,
   placement: 'bottomLeft',

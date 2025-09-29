@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const NavBarHOC: typeof NavBar & {
   defaultProps?: Partial<NavBarProps>;
+  override?: (props: Partial<NavBarProps>) => Partial<NavBarProps>;
 } = createFactory<NavBarProps>(NavBar, {});
 
 NavBarHOC.displayName = 'NavBar';

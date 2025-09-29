@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const PageIndicatorHOC: typeof PageIndicator & {
   defaultProps?: Partial<PageIndicatorProps>;
+  override?: (props: Partial<PageIndicatorProps>) => Partial<PageIndicatorProps>;
 } = createFactory<PageIndicatorProps>(PageIndicator, {});
 
 PageIndicatorHOC.displayName = 'PageIndicator';

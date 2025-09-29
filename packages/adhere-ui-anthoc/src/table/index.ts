@@ -1,3 +1,20 @@
+import type {
+  AutoCompleteTablePagingSelectProps,
+  AutoCompleteTableSelectProps,
+  AutoCompleteTreeTablePagingSelectProps,
+  AutoCompleteTreeTableSelectProps,
+  CheckboxTableProps,
+  CheckboxTreeTableProps,
+  RadioTableProps,
+  RadioTreeTableProps,
+  TableExtProps,
+  TablePagingProps,
+  TablePagingSelectProps,
+  TableSelectProps,
+  TreeTablePagingSelectProps,
+  TreeTableSelectProps,
+} from '../types';
+import { createFactory } from '../util';
 import AutoCompleteTablePagingSelect from './AutoCompleteTablePagingSelect';
 import AutoCompleteTableSelect from './AutoCompleteTableSelect';
 import AutoCompleteTreeTablePagingSelect from './AutoCompleteTreeTablePagingSelect';
@@ -14,19 +31,31 @@ import TableSelect from './TableSelect';
 import TreeTablePagingSelect from './TreeTablePagingSelect';
 import TreeTableSelect from './TreeTableSelect';
 
-Table.AutoCompleteTablePagingSelect = AutoCompleteTablePagingSelect;
-Table.AutoCompleteTreeTablePagingSelect = AutoCompleteTreeTablePagingSelect;
-Table.AutoCompleteTableSelect = AutoCompleteTableSelect;
-Table.AutoCompleteTreeTableSelect = AutoCompleteTreeTableSelect;
-Table.TableSelect = TableSelect;
-Table.TablePagingSelect = TablePagingSelect;
-Table.TablePaging = TablePaging;
-Table.RadioTable = RadioTable;
-Table.CheckboxTable = CheckboxTable;
-Table.RadioTreeTable = RadioTreeTable;
-Table.CheckboxTreeTable = CheckboxTreeTable;
-Table.TreeTableSelect = TreeTableSelect;
-Table.TreeTablePagingSelect = TreeTablePagingSelect;
-Table.TableExt = TableExt;
+Table.AutoCompleteTablePagingSelect = createFactory<AutoCompleteTablePagingSelectProps>(
+  AutoCompleteTablePagingSelect,
+  {},
+);
+Table.AutoCompleteTreeTablePagingSelect = createFactory<AutoCompleteTreeTablePagingSelectProps>(
+  AutoCompleteTreeTablePagingSelect,
+  {},
+);
+Table.AutoCompleteTableSelect = createFactory<AutoCompleteTableSelectProps>(
+  AutoCompleteTableSelect,
+  {},
+);
+Table.AutoCompleteTreeTableSelect = createFactory<AutoCompleteTreeTableSelectProps>(
+  AutoCompleteTreeTableSelect,
+  {},
+);
+Table.TableSelect = createFactory<TableSelectProps>(TableSelect, {});
+Table.TablePagingSelect = createFactory<TablePagingSelectProps<any>>(TablePagingSelect, {});
+Table.TablePaging = createFactory<TablePagingProps<any>>(TablePaging, {});
+Table.RadioTable = createFactory<RadioTableProps>(RadioTable, {});
+Table.CheckboxTable = createFactory<CheckboxTableProps>(CheckboxTable, {});
+Table.RadioTreeTable = createFactory<RadioTreeTableProps>(RadioTreeTable, {});
+Table.CheckboxTreeTable = createFactory<CheckboxTreeTableProps>(CheckboxTreeTable, {});
+Table.TreeTableSelect = createFactory<TreeTableSelectProps>(TreeTableSelect, {});
+Table.TreeTablePagingSelect = createFactory<TreeTablePagingSelectProps>(TreeTablePagingSelect, {});
+Table.TableExt = createFactory<TableExtProps>(TableExt, {});
 
 export default Table;

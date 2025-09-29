@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const StatisticHOC: typeof Statistic & {
   defaultProps?: Partial<StatisticProps>;
+  override?: (props: Partial<StatisticProps>) => Partial<StatisticProps>;
 } = createFactory<StatisticProps>(Statistic, {});
 
 StatisticHOC.displayName = 'Statistic';

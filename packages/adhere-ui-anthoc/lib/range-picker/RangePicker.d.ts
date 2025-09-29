@@ -15,5 +15,6 @@ declare const RangePicker: import("react").ForwardRefExoticComponent<Omit<import
 } & import("react").RefAttributes<import("rc-picker").PickerRef>>;
 declare const RangePickerHOC: typeof RangePicker & {
     defaultProps?: Partial<RangePickerProps>;
+    override?: (props: Partial<RangePickerProps>) => Partial<RangePickerProps>;
 };
 export default RangePickerHOC;

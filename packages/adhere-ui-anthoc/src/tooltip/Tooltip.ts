@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const TooltipHOC: typeof Tooltip & {
   defaultProps?: Partial<TooltipProps>;
+  override?: (props: Partial<TooltipProps>) => Partial<TooltipProps>;
 } = createFactory<TooltipProps>(Tooltip, {});
 
 TooltipHOC.displayName = 'Tooltip';

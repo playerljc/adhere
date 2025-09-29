@@ -7,6 +7,7 @@ import InputPositiveNumber from './InputPositiveNumber';
 
 const InputNumberHOC: typeof Input & {
   defaultProps?: Partial<InputProps>;
+  override?: (props: Partial<InputProps>) => Partial<InputProps>;
   InputNegativeNumber: typeof InputNegativeNumber;
   InputPositiveNumber: typeof InputPositiveNumber;
 } = createFactory<InputProps>(Input, {}, (props) => ({

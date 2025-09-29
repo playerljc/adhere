@@ -4,6 +4,9 @@ import InternalAsyncTreeEntityValueHOC from './InternalAsyncTreeEntityValueHOC';
 
 const AsyncTreeEntityValueHOC: typeof InternalAsyncTreeEntityValueHOC & {
   defaultProps?: Partial<AsyncTreeEntityValueHOCProps>;
+  override?: (
+    props: Partial<AsyncTreeEntityValueHOCProps>,
+  ) => Partial<AsyncTreeEntityValueHOCProps>;
 } = createFactory<AsyncTreeEntityValueHOCProps>(InternalAsyncTreeEntityValueHOC, {});
 
 AsyncTreeEntityValueHOC.displayName = 'AsyncTreeEntityValueHOC';

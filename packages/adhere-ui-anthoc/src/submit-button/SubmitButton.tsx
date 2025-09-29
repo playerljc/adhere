@@ -6,6 +6,7 @@ import InternalSubmitButton from './InternalSubmitButton';
 
 const SubmitButtonHOC: typeof Button & {
   defaultProps?: Partial<ButtonProps>;
+  override?: (props: Partial<ButtonProps>) => Partial<ButtonProps>;
 } = createFactory<ButtonProps>(InternalSubmitButton, {});
 
 SubmitButtonHOC.displayName = 'SubmitButton';

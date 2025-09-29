@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const CollapseHOC: typeof Collapse & {
   defaultProps?: Partial<CollapseProps>;
+  override?: (props: Partial<CollapseProps>) => Partial<CollapseProps>;
 } = createFactory<CollapseProps>(Collapse, {});
 
 CollapseHOC.displayName = 'Collapse';

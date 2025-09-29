@@ -4,6 +4,7 @@ import ValueHOC from './ValueHOC';
 
 const CalendarFormatValueHOC: typeof ValueHOC & {
   defaultProps?: Partial<CalendarFormatValueHOCProps>;
+  override?: (props: Partial<CalendarFormatValueHOCProps>) => Partial<CalendarFormatValueHOCProps>;
 } = createFactory<CalendarFormatValueHOCProps>(ValueHOC, {});
 
 CalendarFormatValueHOC.displayName = 'CalendarFormatValueHOC';

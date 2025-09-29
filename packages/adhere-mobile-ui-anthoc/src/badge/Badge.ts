@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const BadgeHOC: typeof Badge & {
   defaultProps?: Partial<BadgeProps>;
+  override?: (props: Partial<BadgeProps>) => Partial<BadgeProps>;
 } = createFactory<BadgeProps>(Badge, {});
 
 BadgeHOC.displayName = 'Badge';

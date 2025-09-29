@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["image-viewer-multi/index.js"],"sourcesContent":["import ImageViewerMulti from './ImageViewerMulti';\nexport default ImageViewerMulti;"],"names":["ImageViewerMulti"],"mappings":"OAAOA,qBAAsB,oCACdA"}

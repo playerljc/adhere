@@ -4,6 +4,7 @@ import InternalTimeModal from './InternalTimeModal';
 
 const TimeModalHOC: typeof InternalTimeModal & {
   defaultProps?: Partial<TimeModalProps>;
+  override?: (props: Partial<TimeModalProps>) => Partial<TimeModalProps>;
 } = createFactory<TimeModalProps>(InternalTimeModal, {});
 
 TimeModalHOC.displayName = 'TimeModal';

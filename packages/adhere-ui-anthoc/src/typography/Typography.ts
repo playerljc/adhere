@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const TypographyHOC: typeof Typography & {
   defaultProps?: Partial<TypographyProps>;
+  override?: (props: Partial<TypographyProps>) => Partial<TypographyProps>;
 } = createFactory<TypographyProps>(Typography, {});
 
 TypographyHOC.displayName = 'Typography';

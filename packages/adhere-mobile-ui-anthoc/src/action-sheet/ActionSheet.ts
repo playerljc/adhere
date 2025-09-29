@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const ActionSheetHOC: typeof ActionSheet & {
   defaultProps?: Partial<ActionSheetProps>;
+  override?: (props: Partial<ActionSheetProps>) => Partial<ActionSheetProps>;
 } = createFactory<ActionSheetProps>(ActionSheet, {});
 
 ActionSheetHOC.displayName = 'ActionSheet';

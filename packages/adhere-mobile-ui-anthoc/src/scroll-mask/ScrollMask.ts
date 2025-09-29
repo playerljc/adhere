@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const ScrollMaskHOC: typeof ScrollMask & {
   defaultProps?: Partial<ScrollMaskProps>;
+  override?: (props: Partial<ScrollMaskProps>) => Partial<ScrollMaskProps>;
 } = createFactory<ScrollMaskProps>(ScrollMask, {});
 
 ScrollMaskHOC.displayName = 'ScrollMask';

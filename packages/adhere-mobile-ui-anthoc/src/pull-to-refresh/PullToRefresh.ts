@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const PullToRefreshHOC: typeof PullToRefresh & {
   defaultProps?: Partial<PullToRefreshProps>;
+  override?: (props: Partial<PullToRefreshProps>) => Partial<PullToRefreshProps>;
 } = createFactory<PullToRefreshProps>(PullToRefresh, {});
 
 PullToRefreshHOC.displayName = 'PullToRefresh';

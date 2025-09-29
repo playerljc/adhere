@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const TagHOC: typeof Tag & {
   defaultProps?: Partial<TagProps>;
+  override?: (props: Partial<TagProps>) => Partial<TagProps>;
 } = createFactory<TagProps>(Tag, {});
 
 TagHOC.displayName = 'Tag';

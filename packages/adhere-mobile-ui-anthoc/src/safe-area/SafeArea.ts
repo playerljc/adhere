@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const SafeAreaHOC: typeof SafeArea & {
   defaultProps?: Partial<SafeAreaProps>;
+  override?: (props: Partial<SafeAreaProps>) => Partial<SafeAreaProps>;
 } = createFactory<SafeAreaProps>(SafeArea, {});
 
 SafeAreaHOC.displayName = 'SafeArea';

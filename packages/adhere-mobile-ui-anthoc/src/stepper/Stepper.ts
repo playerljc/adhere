@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const StepperHOC: typeof Stepper & {
   defaultProps?: Partial<StepperProps>;
+  override?: (props: Partial<StepperProps>) => Partial<StepperProps>;
 } = createFactory<StepperProps>(Stepper, {});
 
 StepperHOC.displayName = 'Stepper';

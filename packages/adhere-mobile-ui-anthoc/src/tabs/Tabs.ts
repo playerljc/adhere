@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const TabsHOC: typeof Tabs & {
   defaultProps?: Partial<TabsProps>;
+  override?: (props: Partial<TabsProps>) => Partial<TabsProps>;
 } = createFactory<TabsProps>(Tabs, {});
 
 TabsHOC.displayName = 'Tabs';

@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const FlexHOC: typeof Flex & {
   defaultProps?: Partial<FlexProps>;
+  override?: (props: Partial<FlexProps>) => Partial<FlexProps>;
 } = createFactory<FlexProps>(Flex, {});
 
 FlexHOC.displayName = 'Flex';

@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const InfiniteScrollHOC: typeof InfiniteScroll & {
   defaultProps?: Partial<InfiniteScrollProps>;
+  override?: (props: Partial<InfiniteScrollProps>) => Partial<InfiniteScrollProps>;
 } = createFactory<InfiniteScrollProps>(InfiniteScroll, {});
 
 InfiniteScrollHOC.displayName = 'InfiniteScroll';

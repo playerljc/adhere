@@ -24,37 +24,40 @@ const InternalTreeSelect: TreeSelectHOCComponent = createFactory<
   }),
 );
 
-const TreeSelectHOC: TreeSelectHOCComponent = ({
-  treeData,
-  defaultValue,
-  value,
-  isHideInvalidValue = true,
-  treeDataSimpleMode,
-  ...restProps
-}) => {
-  const targetDefaultValue = useMemo(
-    () =>
-      isHideInvalidValue
-        ? getTreeValue({ value: defaultValue, treeData, treeDataSimpleMode })
-        : defaultValue,
-    [defaultValue, treeData, treeDataSimpleMode, isHideInvalidValue],
-  );
+const TreeSelectHOC: TreeSelectHOCComponent = createFactory(
+  ({
+    treeData,
+    defaultValue,
+    value,
+    isHideInvalidValue = true,
+    treeDataSimpleMode,
+    ...restProps
+  }) => {
+    const targetDefaultValue = useMemo(
+      () =>
+        isHideInvalidValue
+          ? getTreeValue({ value: defaultValue, treeData, treeDataSimpleMode })
+          : defaultValue,
+      [defaultValue, treeData, treeDataSimpleMode, isHideInvalidValue],
+    );
 
-  const targetValue = useMemo(
-    () => (isHideInvalidValue ? getTreeValue({ value, treeData, treeDataSimpleMode }) : value),
-    [value, treeData, treeDataSimpleMode, isHideInvalidValue],
-  );
+    const targetValue = useMemo(
+      () => (isHideInvalidValue ? getTreeValue({ value, treeData, treeDataSimpleMode }) : value),
+      [value, treeData, treeDataSimpleMode, isHideInvalidValue],
+    );
 
-  return (
-    <InternalTreeSelect
-      {...restProps}
-      defaultValue={targetDefaultValue}
-      value={targetValue}
-      treeData={treeData}
-      treeDataSimpleMode={treeDataSimpleMode}
-    />
-  );
-};
+    return (
+      <InternalTreeSelect
+        {...restProps}
+        defaultValue={targetDefaultValue}
+        value={targetValue}
+        treeData={treeData}
+        treeDataSimpleMode={treeDataSimpleMode}
+      />
+    );
+  },
+  {},
+);
 
 TreeSelectHOC.displayName = 'TreeSelect';
 

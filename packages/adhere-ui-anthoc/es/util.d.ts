@@ -10,8 +10,9 @@ import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/e
  * @param override
  * @return {function(*)}
  */
-export declare function createFactory<P>(Component: any, defaultProps: Partial<P>, override?: (props: Partial<P>) => Partial<P>): typeof Component & {
+export declare function createFactory<P>(Component: any, defaultProps: Partial<P>, override?: (props: Partial<P>) => Partial<P> | Promise<Partial<P>>): typeof Component & {
     defaultProps?: Partial<P>;
+    override?: (props: Partial<P>) => Partial<P> | Promise<Partial<P>>;
 };
 /**
  * @typedef {ConfigProviderProps['media]} Media

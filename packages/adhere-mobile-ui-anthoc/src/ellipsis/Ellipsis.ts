@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const EllipsisHOC: typeof Ellipsis & {
   defaultProps?: Partial<EllipsisProps>;
+  override?: (props: Partial<EllipsisProps>) => Partial<EllipsisProps>;
 } = createFactory<EllipsisProps>(Ellipsis, {});
 
 EllipsisHOC.displayName = 'Ellipsis';

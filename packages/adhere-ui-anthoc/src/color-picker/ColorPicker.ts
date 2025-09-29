@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const ColorPickerHOC: typeof ColorPicker & {
   defaultProps?: Partial<ColorPickerProps>;
+  override?: (props: Partial<ColorPickerProps>) => Partial<ColorPickerProps>;
 } = createFactory<ColorPickerProps>(ColorPicker, {});
 
 ColorPickerHOC.displayName = 'ColorPicker';

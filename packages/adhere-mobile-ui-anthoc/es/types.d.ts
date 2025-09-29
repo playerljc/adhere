@@ -572,6 +572,7 @@ export type ValueHOCHandle = {
 };
 export type FormHOCComponent = typeof Form & {
     defaultProps?: Partial<FormProps>;
+    override?: (props: Partial<FormProps>) => Partial<FormProps>;
 } & {
     ValidatorRules: FormValidatorRulesType;
     NestingFormItem: typeof NestingFormItem;

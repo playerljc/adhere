@@ -1,4 +1,4 @@
-import React, { cloneElement, forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import React, { cloneElement, forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
@@ -17,14 +17,41 @@ const { useScrollLayout } = FlexLayout;
 export function createFactory<P>(
   Component: any,
   defaultProps: Partial<P>,
-  override?: (props: Partial<P>) => Partial<P>,
+  override?: (props: Partial<P>) => Partial<P> | Promise<Partial<P>>,
 ): typeof Component & {
   defaultProps?: Partial<P>;
+  override?: (props: Partial<P>) => Partial<P> | Promise<Partial<P>>;
 } {
   const fn = (_props) => {
     const { getEl } = useScrollLayout();
 
-    const props = { ...defaultProps, ..._props, ...(override?.(_props) ?? {}) };
+    const [overrideProps, setOverrideProps] = useState<Partial<P> | undefined>(undefined);
+
+    useEffect(() => {
+      let cancelled = false;
+      const run = async () => {
+        if (!fn.override) {
+          setOverrideProps(undefined);
+          return;
+        }
+        try {
+          const result = await fn.override({ ...(_props ?? {}) });
+          if (!cancelled) {
+            setOverrideProps(result ?? undefined);
+          }
+        } catch (e) {
+          if (!cancelled) {
+            setOverrideProps(undefined);
+          }
+        }
+      };
+      run();
+      return () => {
+        cancelled = true;
+      };
+    }, [_props]);
+
+    const props = { ...fn.defaultProps, ..._props, ...(overrideProps ?? {}) };
 
     if (!('getPopupContainer' in props)) {
       props.getPopupContainer = (el) => {
@@ -40,6 +67,8 @@ export function createFactory<P>(
   Object.assign(fn, Component);
 
   fn.defaultProps = defaultProps;
+
+  fn.override = override;
 
   return fn;
 }

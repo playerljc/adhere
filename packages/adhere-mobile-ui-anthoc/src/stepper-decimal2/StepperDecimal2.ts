@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const StepperDecimal2: typeof Stepper & {
   defaultProps?: Partial<StepperProps>;
+  override?: (props: Partial<StepperProps>) => Partial<StepperProps>;
 } = createFactory<StepperProps>(Stepper, { digits: 2 });
 
 StepperDecimal2.displayName = 'StepperDecimal2';

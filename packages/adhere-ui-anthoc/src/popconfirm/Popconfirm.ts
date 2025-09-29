@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const PopconfirmHOC: typeof Popconfirm & {
   defaultProps?: Partial<PopconfirmProps>;
+  override?: (props: Partial<PopconfirmProps>) => Partial<PopconfirmProps>;
 } = createFactory<PopconfirmProps>(Popconfirm, {});
 
 PopconfirmHOC.displayName = 'Popconfirm';

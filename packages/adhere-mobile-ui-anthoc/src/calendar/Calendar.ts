@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const CalendarHOC: typeof Calendar & {
   defaultProps?: Partial<CalendarProps>;
+  override?: (props: Partial<CalendarProps>) => Partial<CalendarProps>;
 } = createFactory<CalendarProps>(Calendar, {});
 
 CalendarHOC.displayName = 'Calendar';

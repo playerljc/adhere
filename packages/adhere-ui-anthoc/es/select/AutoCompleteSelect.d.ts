@@ -1,7 +1,7 @@
 import React, { type CSSProperties } from 'react';
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 import type { DisplayNameInternal } from '../types';
-type InternalAutoCompleteSelectType = AutoCompleteProps & {
+export type InternalAutoCompleteSelectType = AutoCompleteProps & {
     wrapperClassName?: string;
     wrapperStyle?: CSSProperties;
 };

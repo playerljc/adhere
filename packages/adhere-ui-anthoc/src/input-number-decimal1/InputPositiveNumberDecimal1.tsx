@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const InputPositiveNumberDecimal1HOC: typeof InputNumber & {
   defaultProps?: Partial<InputNumberProps>;
+  override?: (props: Partial<InputNumberProps>) => Partial<InputNumberProps>;
 } = createFactory<InputNumberProps>(InputNumber, { min: 0, precision: 1 });
 
 InputPositiveNumberDecimal1HOC.displayName = 'InputPositiveNumberDecimal1';

@@ -4,5 +4,6 @@ import { RefAttributes } from 'react';
 type SegmentedProps = Omit<AntdSegmentedProps, 'ref'> & RefAttributes<HTMLDivElement>;
 declare const SegmentedHOC: typeof Segmented & {
     defaultProps?: Partial<SegmentedProps>;
+    override?: (props: Partial<SegmentedProps>) => Partial<SegmentedProps>;
 };
 export default SegmentedHOC;

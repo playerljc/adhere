@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const TreeHOC: typeof Tree & {
   defaultProps?: Partial<TreeProps>;
+  override?: (props: Partial<TreeProps>) => Partial<TreeProps>;
 } = createFactory<TreeProps>(Tree, {});
 
 // @ts-ignore

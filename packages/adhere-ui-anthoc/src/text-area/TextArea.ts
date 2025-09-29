@@ -7,6 +7,7 @@ const { TextArea } = Input;
 
 const TextAreaHOC: typeof TextArea & {
   defaultProps?: Partial<TextAreaProps>;
+  override?: (props: Partial<TextAreaProps>) => Partial<TextAreaProps>;
 } = createFactory<TextAreaProps>(TextArea, {
   allowClear: true,
   maxLength: 1000,

@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const ErrorBlockHOC: typeof ErrorBlock & {
   defaultProps?: Partial<ErrorBlockProps>;
+  override?: (props: Partial<ErrorBlockProps>) => Partial<ErrorBlockProps>;
 } = createFactory<ErrorBlockProps>(ErrorBlock, {});
 
 ErrorBlockHOC.displayName = 'ErrorBlock';

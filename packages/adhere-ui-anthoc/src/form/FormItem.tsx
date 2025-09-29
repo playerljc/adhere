@@ -121,4 +121,8 @@ const FormItem: FC<FormItemProps> = ({
   );
 };
 
-export default createFactory<FormItemProps>(FormItem, {});
+const FormItemHOC = createFactory<FormItemProps>(FormItem, {});
+
+FormItemHOC.displayName = 'FormItem';
+
+export default FormItemHOC;

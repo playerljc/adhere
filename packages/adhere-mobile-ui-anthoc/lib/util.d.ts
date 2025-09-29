@@ -8,7 +8,8 @@ import type { ValueHOCHandle, ValueHOCProps } from './types';
  * @param override
  * @return {function(*)}
  */
-export declare function createFactory<P>(Component: any, defaultProps: Partial<P>, override?: (props: Partial<P>) => Partial<P>): typeof Component & {
+export declare function createFactory<P>(Component: any, defaultProps: Partial<P>, override?: (props: Partial<P>) => Partial<P> | Promise<Partial<P>>): typeof Component & {
     defaultProps?: Partial<P>;
+    override?: (props: Partial<P>) => Partial<P> | Promise<Partial<P>>;
 };
 export declare const ValueHOC: React.ForwardRefExoticComponent<Omit<ValueHOCProps, "ref"> & React.RefAttributes<ValueHOCHandle>>;

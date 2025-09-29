@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["upload-dragger/index.js"],"sourcesContent":["import UploadDragger from './UploadDragger';\nexport default UploadDragger;"],"names":["UploadDragger"],"mappings":"OAAOA,kBAAmB,iCACXA"}

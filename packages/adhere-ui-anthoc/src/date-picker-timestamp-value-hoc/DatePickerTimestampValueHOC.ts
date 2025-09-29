@@ -4,6 +4,9 @@ import ValueHOC from './ValueHOC';
 
 const DatePickerTimestampValueHOC: typeof ValueHOC & {
   defaultProps?: Partial<DatePickerTimestampValueHOCProps>;
+  override?: (
+    props: Partial<DatePickerTimestampValueHOCProps>,
+  ) => Partial<DatePickerTimestampValueHOCProps>;
 } = createFactory<DatePickerTimestampValueHOCProps>(ValueHOC, {});
 
 DatePickerTimestampValueHOC.displayName = 'DatePickerTimestampValueHOC';

@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const FooterHOC: typeof Footer & {
   defaultProps?: Partial<FooterProps>;
+  override?: (props: Partial<FooterProps>) => Partial<FooterProps>;
 } = createFactory<FooterProps>(Footer, {});
 
 FooterHOC.displayName = 'Footer';

@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const DotLoadingHOC: typeof DotLoading & {
   defaultProps?: Partial<DotLoadingProps>;
+  override?: (props: Partial<DotLoadingProps>) => Partial<DotLoadingProps>;
 } = createFactory<DotLoadingProps>(DotLoading, {});
 
 DotLoadingHOC.displayName = 'DotLoading';

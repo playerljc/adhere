@@ -4,6 +4,7 @@ import ValueHOC from './ValueHOC';
 
 const TimeFormatValueHOC: typeof ValueHOC & {
   defaultProps?: Partial<TimeFormatValueHOCProps>;
+  override?: (props: Partial<TimeFormatValueHOCProps>) => Partial<TimeFormatValueHOCProps>;
 } = createFactory<TimeFormatValueHOCProps>(ValueHOC, {});
 
 TimeFormatValueHOC.displayName = 'TimeFormatValueHOC';

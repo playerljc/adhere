@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const JumboTabsHOC: typeof JumboTabs & {
   defaultProps?: Partial<JumboTabsProps>;
+  override?: (props: Partial<JumboTabsProps>) => Partial<JumboTabsProps>;
 } = createFactory<JumboTabsProps>(JumboTabs, {});
 
 JumboTabsHOC.displayName = 'JumboTabs';

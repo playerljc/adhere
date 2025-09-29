@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const QRCodeHOC: typeof QRCode & {
   defaultProps?: Partial<QRCodeProps>;
+  override?: (props: Partial<QRCodeProps>) => Partial<QRCodeProps>;
 } = createFactory<QRCodeProps>(QRCode, {});
 
 QRCodeHOC.displayName = 'QRCode';

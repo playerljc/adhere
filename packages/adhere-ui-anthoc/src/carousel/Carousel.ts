@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const CarouselHOC: typeof Carousel & {
   defaultProps?: Partial<CarouselProps>;
+  override?: (props: Partial<CarouselProps>) => Partial<CarouselProps>;
 } = createFactory<CarouselProps>(Carousel, {});
 
 CarouselHOC.displayName = 'Carousel';

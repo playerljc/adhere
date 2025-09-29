@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const WatermarkHOC: typeof Watermark & {
   defaultProps?: Partial<WatermarkProps>;
+  override?: (props: Partial<WatermarkProps>) => Partial<WatermarkProps>;
 } = createFactory<WatermarkProps>(Watermark, {});
 
 WatermarkHOC.displayName = 'Watermark';

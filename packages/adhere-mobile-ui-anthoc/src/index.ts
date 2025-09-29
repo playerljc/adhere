@@ -42,6 +42,7 @@ import Grid from './grid';
 import Image from './image';
 import ImageUploader from './image-uploader';
 import ImageViewer from './image-viewer';
+import ImageViewerMulti from './image-viewer-multi';
 import IndexBar from './index-bar';
 import InfiniteScroll from './infinite-scroll';
 import Input from './input';
@@ -143,6 +144,7 @@ export {
   Image,
   ImageUploader,
   ImageViewer,
+  ImageViewerMulti,
   IndexBar,
   InfiniteScroll,
   Input,

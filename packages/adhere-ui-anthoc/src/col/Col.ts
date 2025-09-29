@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const ColHOC: typeof Col & {
   defaultProps?: Partial<ColProps>;
+  override?: (props: Partial<ColProps>) => Partial<ColProps>;
 } = createFactory<ColProps>(Col, {});
 
 ColHOC.displayName = 'Col';

@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const DatePickerViewHOC: typeof DatePickerView & {
   defaultProps?: Partial<DatePickerViewProps>;
+  override?: (props: Partial<DatePickerViewProps>) => Partial<DatePickerViewProps>;
 } = createFactory<DatePickerViewProps>(DatePickerView, {});
 
 DatePickerViewHOC.displayName = 'DatePickerView';

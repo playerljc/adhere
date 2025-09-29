@@ -4,6 +4,7 @@ import InternalDatePopup from './InternalDatePopup';
 
 const DatePopupHOC: typeof InternalDatePopup & {
   defaultProps?: Partial<DatePopupProps>;
+  override?: (props: Partial<DatePopupProps>) => Partial<DatePopupProps>;
 } = createFactory<DatePopupProps>(InternalDatePopup, {});
 
 DatePopupHOC.displayName = 'DatePopup';

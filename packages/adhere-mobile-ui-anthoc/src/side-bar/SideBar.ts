@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const SideBarHOC: typeof SideBar & {
   defaultProps?: Partial<SideBarProps>;
+  override?: (props: Partial<SideBarProps>) => Partial<SideBarProps>;
 } = createFactory<SideBarProps>(SideBar, {});
 
 SideBarHOC.displayName = 'SideBar';

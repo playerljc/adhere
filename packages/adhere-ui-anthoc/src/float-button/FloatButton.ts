@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const FloatButtonHOC: typeof FloatButton & {
   defaultProps?: Partial<FloatButtonProps>;
+  override?: (props: Partial<FloatButtonProps>) => Partial<FloatButtonProps>;
 } = createFactory<FloatButtonProps>(FloatButton, {});
 
 FloatButtonHOC.displayName = 'FloatButton';

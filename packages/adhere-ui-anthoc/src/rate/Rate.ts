@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const RateHOC: typeof Rate & {
   defaultProps?: Partial<RateProps>;
+  override?: (props: Partial<RateProps>) => Partial<RateProps>;
 } = createFactory<RateProps>(Rate, {});
 
 RateHOC.displayName = 'Rate';

@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const SpaceHOC: typeof Space & {
   defaultProps?: Partial<SpaceProps>;
+  override?: (props: Partial<SpaceProps>) => Partial<SpaceProps>;
 } = createFactory<SpaceProps>(Space, {});
 
 SpaceHOC.displayName = 'Space';

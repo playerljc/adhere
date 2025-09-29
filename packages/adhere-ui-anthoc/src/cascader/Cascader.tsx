@@ -19,32 +19,30 @@ const InternalCascader: CascaderHOCComponent = createFactory<CascaderProps>(Casc
   placement: 'bottomLeft',
 });
 
-const CascaderHOC: CascaderHOCComponent = ({
-  options,
-  defaultValue,
-  value,
-  isHideInvalidValue = true,
-  ...restProps
-}) => {
-  const targetDefaultValue = useMemo(
-    () => (isHideInvalidValue ? getCascaderValue({ value: defaultValue, options }) : defaultValue),
-    [defaultValue, options, isHideInvalidValue],
-  );
+const CascaderHOC: CascaderHOCComponent = createFactory(
+  ({ options, defaultValue, value, isHideInvalidValue = true, ...restProps }) => {
+    const targetDefaultValue = useMemo(
+      () =>
+        isHideInvalidValue ? getCascaderValue({ value: defaultValue, options }) : defaultValue,
+      [defaultValue, options, isHideInvalidValue],
+    );
 
-  const targetValue = useMemo(
-    () => (isHideInvalidValue ? getCascaderValue({ value, options }) : value),
-    [value, options, isHideInvalidValue],
-  );
+    const targetValue = useMemo(
+      () => (isHideInvalidValue ? getCascaderValue({ value, options }) : value),
+      [value, options, isHideInvalidValue],
+    );
 
-  return (
-    <InternalCascader
-      {...restProps}
-      defaultValue={targetDefaultValue}
-      value={targetValue}
-      options={options}
-    />
-  );
-};
+    return (
+      <InternalCascader
+        {...restProps}
+        defaultValue={targetDefaultValue}
+        value={targetValue}
+        options={options}
+      />
+    );
+  },
+  {},
+);
 
 CascaderHOC.displayName = 'Cascader';
 

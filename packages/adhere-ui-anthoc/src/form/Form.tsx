@@ -5,10 +5,12 @@ import React, { memo, useMemo } from 'react';
 import Validator from '@baifendian/adhere-util-validator';
 
 import type {
+  CustomWrapperFormItemProps,
   FormComponent,
   FormHOCComponent,
   FormInternalProps,
   FormValidatorRulesType,
+  InternalNestingFormItemProps,
   ProxyFormInstance,
 } from '../types';
 import { createFactory } from '../util';
@@ -222,8 +224,11 @@ let ValidatorRules: FormValidatorRulesType;
 })();
 
 FormHOC.ValidatorRules = ValidatorRules;
-FormHOC.NestingFormItem = NestingFormItem;
-FormHOC.CustomWrapperFormItem = CustomWrapperFormItem;
+FormHOC.NestingFormItem = createFactory<InternalNestingFormItemProps>(NestingFormItem, {});
+FormHOC.CustomWrapperFormItem = createFactory<CustomWrapperFormItemProps>(
+  CustomWrapperFormItem,
+  {},
+);
 FormHOC.Item = FormItem;
 FormHOC.displayName = 'Form';
 

@@ -7,6 +7,7 @@ import InputPositiveNumberDecimal1 from './InputPositiveNumberDecimal1';
 
 const InputNumberDecimal1HOC: typeof InputNumber & {
   defaultProps?: Partial<InputNumberProps>;
+  override?: (props: Partial<InputNumberProps>) => Partial<InputNumberProps>;
   InputNegativeNumberDecimal1: typeof InputNegativeNumberDecimal1;
   InputPositiveNumberDecimal1: typeof InputPositiveNumberDecimal1;
 } = createFactory<InputNumberProps>(InputNumber, { precision: 1 });

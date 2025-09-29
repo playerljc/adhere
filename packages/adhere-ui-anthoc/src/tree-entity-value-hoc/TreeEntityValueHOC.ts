@@ -4,6 +4,7 @@ import InternalTreeEntityValueHOC from './InternalTreeEntityValueHOC';
 
 const TreeEntityValueHOC: typeof InternalTreeEntityValueHOC & {
   defaultProps?: Partial<TreeEntityValueHOCProps>;
+  override?: (props: Partial<TreeEntityValueHOCProps>) => Partial<TreeEntityValueHOCProps>;
 } = createFactory<TreeEntityValueHOCProps>(InternalTreeEntityValueHOC, {});
 
 TreeEntityValueHOC.displayName = 'TreeEntityValueHOC';

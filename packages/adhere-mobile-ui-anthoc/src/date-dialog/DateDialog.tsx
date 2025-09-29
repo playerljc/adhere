@@ -4,6 +4,7 @@ import InternalDateDialog from './InternalDateDialog';
 
 const DateDialogHOC: typeof InternalDateDialog & {
   defaultProps?: Partial<DateDialogProps>;
+  override?: (props: Partial<DateDialogProps>) => Partial<DateDialogProps>;
 } = createFactory<DateDialogProps>(InternalDateDialog, {});
 
 DateDialogHOC.displayName = 'DateDialog';

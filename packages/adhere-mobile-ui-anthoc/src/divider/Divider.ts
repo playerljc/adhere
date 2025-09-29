@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const DividerHOC: typeof Divider & {
   defaultProps?: Partial<DividerProps>;
+  override?: (props: Partial<DividerProps>) => Partial<DividerProps>;
 } = createFactory<DividerProps>(Divider, {});
 
 DividerHOC.displayName = 'Divider';

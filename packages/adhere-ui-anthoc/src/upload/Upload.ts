@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const UploadHOC: typeof Upload & {
   defaultProps?: Partial<UploadProps>;
+  override?: (props: Partial<UploadProps>) => Partial<UploadProps>;
 } = createFactory<UploadProps>(Upload, { name: 'file', withCredentials: true });
 
 UploadHOC.displayName = 'Upload';

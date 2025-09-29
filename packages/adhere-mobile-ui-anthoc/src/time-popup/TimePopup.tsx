@@ -4,6 +4,7 @@ import InternalTimePopup from './InternalTimePopup';
 
 const TimePopupHOC: typeof InternalTimePopup & {
   defaultProps?: Partial<TimePopupProps>;
+  override?: (props: Partial<TimePopupProps>) => Partial<TimePopupProps>;
 } = createFactory<TimePopupProps>(InternalTimePopup, {});
 
 TimePopupHOC.displayName = 'TimePopup';

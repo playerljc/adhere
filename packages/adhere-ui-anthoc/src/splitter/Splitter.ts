@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const SplitterHOC: typeof Splitter & {
   defaultProps?: Partial<SplitterProps>;
+  override?: (props: Partial<SplitterProps>) => Partial<SplitterProps>;
 } = createFactory<SplitterProps>(Splitter, {});
 
 SplitterHOC.displayName = 'Splitter';

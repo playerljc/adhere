@@ -84,6 +84,7 @@ import TreeEntityValueHOC from './tree-entity-value-hoc';
 import TreeSelect from './tree-select';
 import Typography from './typography';
 import Upload from './upload';
+import UploadDragger from './upload-dragger';
 import useArrayEntityValueHOC from './useArrayEntityValueHOC';
 import Watermark from './watermark';
 
@@ -170,6 +171,7 @@ export {
   TreeSelect,
   Typography,
   Upload,
+  UploadDragger,
   Watermark,
   ArrayEntityValueHOC,
   PagingEntityValueHOC,

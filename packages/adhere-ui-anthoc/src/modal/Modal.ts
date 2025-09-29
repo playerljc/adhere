@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const ModalHOC: typeof Modal & {
   defaultProps?: Partial<ModalProps>;
+  override?: (props: Partial<ModalProps>) => Partial<ModalProps>;
 } = createFactory<ModalProps>(Modal, {
   closable: true,
   centered: true,

@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const SliderHOC: typeof Slider & {
   defaultProps?: Partial<SliderProps>;
+  override?: (props: Partial<SliderProps>) => Partial<SliderProps>;
 } = createFactory<SliderProps>(Slider, {});
 
 SliderHOC.displayName = 'Slider';

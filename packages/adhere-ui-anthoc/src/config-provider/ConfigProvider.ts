@@ -8,6 +8,7 @@ const reducer = [DatePicker];
 
 const ConfigProviderHOC: typeof ConfigProvider & {
   defaultProps?: Partial<ConfigProviderProps>;
+  override?: (props: Partial<ConfigProviderProps>) => Partial<ConfigProviderProps>;
 } = createFactory<ConfigProviderProps>(
   ConfigProvider,
   {},

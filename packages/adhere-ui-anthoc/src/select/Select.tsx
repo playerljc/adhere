@@ -29,48 +29,51 @@ const InternalSelect: SelectHOCComponent = createFactory<
   }),
 );
 
-const SelectHOC: SelectHOCComponent = ({
-  wrapperClassName,
-  wrapperStyle,
-  options,
-  defaultValue,
-  isHideInvalidValue = true,
-  value,
-  ...restProps
-}) => {
-  const wrapperRef = useRef<HTMLElement | undefined>();
+const SelectHOC: SelectHOCComponent = createFactory(
+  ({
+    wrapperClassName,
+    wrapperStyle,
+    options,
+    defaultValue,
+    isHideInvalidValue = true,
+    value,
+    ...restProps
+  }) => {
+    const wrapperRef = useRef<HTMLElement | undefined>();
 
-  const targetValue = useMemo(
-    () => (isHideInvalidValue ? getOptionsValue(value, options) : defaultValue),
-    [value, options, isHideInvalidValue],
-  );
+    const targetValue = useMemo(
+      () => (isHideInvalidValue ? getOptionsValue(value, options) : defaultValue),
+      [value, options, isHideInvalidValue],
+    );
 
-  const targetDefaultValue = useMemo(
-    () => (isHideInvalidValue ? getOptionsValue(defaultValue, options) : defaultValue),
-    [defaultValue, options, isHideInvalidValue],
-  );
+    const targetDefaultValue = useMemo(
+      () => (isHideInvalidValue ? getOptionsValue(defaultValue, options) : defaultValue),
+      [defaultValue, options, isHideInvalidValue],
+    );
 
-  useTheme<HTMLElement>({
-    elRef: wrapperRef,
-    group: 'normal-hoc',
-  });
+    useTheme<HTMLElement>({
+      elRef: wrapperRef,
+      group: 'normal-hoc',
+    });
 
-  return (
-    <div
-      // @ts-ignore
-      ref={wrapperRef}
-      className={wrapperClassName}
-      style={wrapperStyle ?? {}}
-    >
-      <InternalSelect
-        {...restProps}
-        defaultValue={targetDefaultValue}
-        value={targetValue}
-        options={options}
-      />
-    </div>
-  );
-};
+    return (
+      <div
+        // @ts-ignore
+        ref={wrapperRef}
+        className={wrapperClassName}
+        style={wrapperStyle ?? {}}
+      >
+        <InternalSelect
+          {...restProps}
+          defaultValue={targetDefaultValue}
+          value={targetValue}
+          options={options}
+        />
+      </div>
+    );
+  },
+  {},
+);
 
 SelectHOC.displayName = 'Select';
 

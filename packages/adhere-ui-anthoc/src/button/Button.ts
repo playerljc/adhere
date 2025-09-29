@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const ButtonHOC: typeof Button & {
   defaultProps?: Partial<ButtonProps>;
+  override?: (props: Partial<ButtonProps>) => Partial<ButtonProps>;
 } = createFactory<ButtonProps>(Button, {});
 
 ButtonHOC.displayName = 'Button';

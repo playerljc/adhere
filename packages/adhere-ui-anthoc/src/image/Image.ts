@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const ImageHOC: typeof Image & {
   defaultProps?: Partial<ImageProps>;
+  override?: (props: Partial<ImageProps>) => Partial<ImageProps>;
 } = createFactory<ImageProps>(Image, {});
 
 ImageHOC.displayName = 'Image';

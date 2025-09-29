@@ -4,6 +4,9 @@ import ValueHOC from './ValueHOC';
 
 const RangePickerFormatValueHOC: typeof ValueHOC & {
   defaultProps?: Partial<RangePickerFormatValueHOCProps>;
+  override?: (
+    props: Partial<RangePickerFormatValueHOCProps>,
+  ) => Partial<RangePickerFormatValueHOCProps>;
 } = createFactory<RangePickerFormatValueHOCProps>(ValueHOC, {});
 
 RangePickerFormatValueHOC.displayName = 'RangePickerFormatValueHOC';

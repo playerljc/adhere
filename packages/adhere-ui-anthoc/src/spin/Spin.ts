@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const SpinHOC: typeof Spin & {
   defaultProps?: Partial<SpinProps>;
+  override?: (props: Partial<SpinProps>) => Partial<SpinProps>;
 } = createFactory<SpinProps>(Spin, {});
 
 SpinHOC.displayName = 'Spin';

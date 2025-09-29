@@ -5,6 +5,7 @@ import { createFactory } from '../util';
 
 const PasscodeInputHOC: typeof PasscodeInput & {
   defaultProps?: Partial<PasscodeInputProps>;
+  override?: (props: Partial<PasscodeInputProps>) => Partial<PasscodeInputProps>;
 } = createFactory<PasscodeInputProps>(PasscodeInput, {});
 
 PasscodeInputHOC.displayName = 'PasscodeInput';

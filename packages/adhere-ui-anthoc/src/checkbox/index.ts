@@ -1,3 +1,19 @@
+import {
+  AutoCompleteCheckAllCheckboxSelectProps,
+  AutoCompleteCheckAllCustomCheckboxSelectProps,
+  AutoCompleteCheckboxSelectProps,
+  AutoCompleteCustomCheckboxSelectProps,
+  type CheckAllCheckboxSelectProps,
+  type CheckAllCustomCheckboxSelectProps,
+  type CheckboxGroupExtProps,
+  type CheckboxSelectProps,
+  type CustomCheckAllCheckboxProps,
+  type CustomCheckboxProps,
+  type CustomCheckboxSelectProps,
+  type HorizontalCheckAllCheckboxProps,
+  type VerticalCheckAllCheckboxProps,
+} from '../types';
+import { createFactory } from '../util';
 import AutoCompleteCheckAllCheckboxSelect from './AutoCompleteCheckAllCheckboxSelect';
 import AutoCompleteCheckAllCustomCheckboxSelect from './AutoCompleteCheckAllCustomCheckboxSelect';
 import AutoCompleteCheckboxSelect from './AutoCompleteCheckboxSelect';
@@ -15,19 +31,46 @@ import HorizontalCheckbox from './HorizontalCheckbox';
 import VerticalCheckAllCheckbox from './VerticalCheckAllCheckbox';
 import VerticalCheckbox from './VerticalCheckbox';
 
-Checkbox.AutoCompleteCheckAllCheckboxSelect = AutoCompleteCheckAllCheckboxSelect;
-Checkbox.AutoCompleteCheckAllCustomCheckboxSelect = AutoCompleteCheckAllCustomCheckboxSelect;
-Checkbox.AutoCompleteCheckboxSelect = AutoCompleteCheckboxSelect;
-Checkbox.AutoCompleteCustomCheckboxSelect = AutoCompleteCustomCheckboxSelect;
-Checkbox.CheckAllCheckboxSelect = CheckAllCheckboxSelect;
-Checkbox.CheckAllCustomCheckboxSelect = CheckAllCustomCheckboxSelect;
-Checkbox.CheckboxSelect = CheckboxSelect;
-Checkbox.CustomCheckbox = CustomCheckbox;
-Checkbox.CustomCheckAllCheckbox = CustomCheckAllCheckbox;
-Checkbox.CustomCheckboxSelect = CustomCheckboxSelect;
-Checkbox.HorizontalCheckAllCheckbox = HorizontalCheckAllCheckbox;
-Checkbox.HorizontalCheckbox = HorizontalCheckbox;
-Checkbox.VerticalCheckAllCheckbox = VerticalCheckAllCheckbox;
-Checkbox.VerticalCheckbox = VerticalCheckbox;
-Checkbox.CheckboxGroupExt = CheckboxGroupExt;
+Checkbox.AutoCompleteCheckAllCheckboxSelect =
+  createFactory<AutoCompleteCheckAllCheckboxSelectProps>(AutoCompleteCheckAllCheckboxSelect, {});
+Checkbox.AutoCompleteCheckAllCustomCheckboxSelect =
+  createFactory<AutoCompleteCheckAllCustomCheckboxSelectProps>(
+    AutoCompleteCheckAllCustomCheckboxSelect,
+    {},
+  );
+Checkbox.AutoCompleteCheckboxSelect = createFactory<AutoCompleteCheckboxSelectProps>(
+  AutoCompleteCheckboxSelect,
+  {},
+);
+Checkbox.AutoCompleteCustomCheckboxSelect = createFactory<AutoCompleteCustomCheckboxSelectProps>(
+  AutoCompleteCustomCheckboxSelect,
+  {},
+);
+Checkbox.CheckAllCheckboxSelect = createFactory<CheckAllCheckboxSelectProps>(
+  CheckAllCheckboxSelect,
+  {},
+);
+Checkbox.CheckAllCustomCheckboxSelect = createFactory<CheckAllCustomCheckboxSelectProps>(
+  CheckAllCustomCheckboxSelect,
+  {},
+);
+Checkbox.CheckboxSelect = createFactory<CheckboxSelectProps>(CheckboxSelect, {});
+Checkbox.CustomCheckbox = createFactory<CustomCheckboxProps>(CustomCheckbox, {});
+Checkbox.CustomCheckAllCheckbox = createFactory<CustomCheckAllCheckboxProps>(
+  CustomCheckAllCheckbox,
+  {},
+);
+Checkbox.CustomCheckboxSelect = createFactory<CustomCheckboxSelectProps>(CustomCheckboxSelect, {});
+Checkbox.HorizontalCheckAllCheckbox = createFactory<HorizontalCheckAllCheckboxProps>(
+  HorizontalCheckAllCheckbox,
+  {},
+);
+Checkbox.HorizontalCheckbox = createFactory<CheckboxGroupExtProps>(HorizontalCheckbox, {});
+Checkbox.VerticalCheckAllCheckbox = createFactory<VerticalCheckAllCheckboxProps>(
+  VerticalCheckAllCheckbox,
+  {},
+);
+Checkbox.VerticalCheckbox = createFactory<CheckboxGroupExtProps>(VerticalCheckbox, {});
+Checkbox.CheckboxGroupExt = createFactory<CheckboxGroupExtProps>(CheckboxGroupExt, {});
+
 export default Checkbox;
