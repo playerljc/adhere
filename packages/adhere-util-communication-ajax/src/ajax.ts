@@ -841,7 +841,7 @@ function sendPrepare(
   const xhr = createXHR();
 
   // open
-  xhr.open(method, `${baseURL}/${path}`, true);
+  xhr.open(method, baseURL ? `${baseURL}/${path}` : path!, true);
 
   // timeout
   xhr.timeout = timeout!;
