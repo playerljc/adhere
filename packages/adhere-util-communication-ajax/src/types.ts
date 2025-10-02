@@ -319,7 +319,7 @@ export interface SendResult extends Prepare {
 /**
  * 请求拦截器类型
  */
-export type RequestInterceptor = (params: ISendArg) => ISendArg;
+export type RequestInterceptor = (params: ISendArg) => ISendArg | Promise<ISendArg>;
 
 /**
  * 响应拦截器参数接口
@@ -339,7 +339,8 @@ export interface ResponseInterceptorReturn extends ISendArg {
 /**
  * 响应拦截器类型
  */
-export type ResponseInterceptor = (params: ResponseInterceptorParams) => ResponseInterceptorReturn;
+export type ResponseInterceptor =
+  (params: ResponseInterceptorParams) => ResponseInterceptorReturn | Promise<ResponseInterceptorReturn>;
 
 export type ResolveDataParams = {
   /** 是否显示loading */

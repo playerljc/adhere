@@ -99,10 +99,14 @@ class Interceptors {
    * @param params - 请求参数
    * @returns 处理后的请求参数
    */
-  requestReducer(params: ISendArg): ISendArg {
-    return Array.from(this.requestInterceptors).reduce((result, interceptor) => {
-      return interceptor(result);
-    }, params);
+  async requestReducer(params: ISendArg): Promise<ISendArg> {
+    let result = params;
+    for (const interceptor of Array.from(this.requestInterceptors)) {
+      // 顺序等待每个拦截器（支持同步与异步返回）
+      // eslint-disable-next-line no-await-in-loop
+      result = await interceptor(result);
+    }
+    return result;
   }
 
   /**
@@ -110,10 +114,16 @@ class Interceptors {
    * @param params - 响应参数
    * @returns 处理后的响应参数
    */
-  responseReducer(params: Parameters<ResponseInterceptor>[0]): ReturnType<ResponseInterceptor> {
-    return Array.from(this.responseInterceptors).reduce((result, interceptor) => {
-      return interceptor(result);
-    }, params);
+  async responseReducer(
+    params: Parameters<ResponseInterceptor>[0],
+  ): Promise<Awaited<ReturnType<ResponseInterceptor>>> {
+    let result: any = params;
+    for (const interceptor of Array.from(this.responseInterceptors)) {
+      // 顺序等待每个拦截器（支持同步与异步返回）
+      // eslint-disable-next-line no-await-in-loop
+      result = await interceptor(result as any);
+    }
+    return result;
   }
 }
 
@@ -249,40 +259,43 @@ class Ajax {
    * @param params - 请求参数
    * @returns 请求结果
    */
-  protected getCore(this: Ajax, { data, ...arg }: ISendArg): Promise<SendResult> {
-    let prepare: Prepare = {};
-
+  protected async getCore(this: Ajax, { data, ...arg }: ISendArg): Promise<SendResult> {
     const self = this;
 
+    let resolveFn: (value: any) => void;
+    let rejectFn: (reason?: any) => void;
+
     const promise = new Promise((resolve, reject) => {
-      prepare = sendPrepare.call(
-        self,
-        {
-          // 默认配置
-          ...getDefaultConfig.call(self),
-          // 用户构造函数传的配置
-          ...self.config,
-          method: 'get',
-          // get方法传的参数
-          ...arg,
-        },
-        {
-          resolve,
-          reject,
-        },
-      );
-
-      const { xhr } = prepare;
-
-      if (xhr) {
-        xhr.send(null);
-      }
+      resolveFn = resolve;
+      rejectFn = reject;
     });
 
-    return Promise.resolve({
+    const prepare = await sendPrepare.call(
+      self,
+      {
+        // 默认配置
+        ...getDefaultConfig.call(self),
+        // 用户构造函数传的配置
+        ...self.config,
+        method: 'get',
+        // get方法传的参数
+        ...arg,
+      },
+      {
+        resolve: resolveFn!,
+        reject: rejectFn!,
+      },
+    );
+
+    const { xhr } = prepare;
+    if (xhr) {
+      xhr.send(null);
+    }
+
+    return {
       ...prepare,
       promise,
-    });
+    };
   }
 
   /**
@@ -333,12 +346,13 @@ class Ajax {
     this: Ajax,
     { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
   ): Promise<SendResult> {
-    const call = enableDebounce
-      ? this.debounceRequest(this.getCore.bind(this), {
-          filterData: debounceFilterData,
-          filterHeaders: debounceFilterHeaders,
-        })
-      : this.getCore;
+    const call =
+      typeof arg.path === 'string' && Util.isIPv4(arg.path) && enableDebounce
+        ? this.debounceRequest(this.getCore.bind(this), {
+            filterData: debounceFilterData,
+            filterHeaders: debounceFilterHeaders,
+          })
+        : this.getCore;
 
     return call.call(this, arg);
   }
@@ -355,12 +369,13 @@ class Ajax {
     this: Ajax,
     { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
   ): Promise<SendResult> {
-    const call = enableDebounce
-      ? this.debounceRequest(this.postCore.bind(this), {
-          filterData: debounceFilterData,
-          filterHeaders: debounceFilterHeaders,
-        })
-      : this.postCore;
+    const call =
+      typeof arg.path === 'string' && Util.isIPv4(arg.path) && enableDebounce
+        ? this.debounceRequest(this.postCore.bind(this), {
+            filterData: debounceFilterData,
+            filterHeaders: debounceFilterHeaders,
+          })
+        : this.postCore;
 
     return call.call(this, arg);
   }
@@ -377,12 +392,13 @@ class Ajax {
     this: Ajax,
     { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
   ): Promise<SendResult> {
-    const call = enableDebounce
-      ? this.debounceRequest(this.patchCore.bind(this), {
-          filterData: debounceFilterData,
-          filterHeaders: debounceFilterHeaders,
-        })
-      : this.patchCore;
+    const call =
+      typeof arg.path === 'string' && Util.isIPv4(arg.path) && enableDebounce
+        ? this.debounceRequest(this.patchCore.bind(this), {
+            filterData: debounceFilterData,
+            filterHeaders: debounceFilterHeaders,
+          })
+        : this.patchCore;
 
     return call.call(this, arg);
   }
@@ -399,12 +415,13 @@ class Ajax {
     this: Ajax,
     { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
   ): Promise<SendResult> {
-    const call = enableDebounce
-      ? this.debounceRequest(this.putCore.bind(this), {
-          filterData: debounceFilterData,
-          filterHeaders: debounceFilterHeaders,
-        })
-      : this.putCore;
+    const call =
+      typeof arg.path === 'string' && Util.isIPv4(arg.path) && enableDebounce
+        ? this.debounceRequest(this.putCore.bind(this), {
+            filterData: debounceFilterData,
+            filterHeaders: debounceFilterHeaders,
+          })
+        : this.putCore;
 
     return call.call(this, arg);
   }
@@ -421,12 +438,13 @@ class Ajax {
     this: Ajax,
     { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
   ): Promise<SendResult> {
-    const call = enableDebounce
-      ? this.debounceRequest(this.deleteCore.bind(this), {
-          filterData: debounceFilterData,
-          filterHeaders: debounceFilterHeaders,
-        })
-      : this.deleteCore;
+    const call =
+      typeof arg.path === 'string' && Util.isIPv4(arg.path) && enableDebounce
+        ? this.debounceRequest(this.deleteCore.bind(this), {
+            filterData: debounceFilterData,
+            filterHeaders: debounceFilterHeaders,
+          })
+        : this.deleteCore;
 
     return call.call(this, arg);
   }
@@ -619,7 +637,7 @@ function transformStringHeadersToObject(stringHeaders: string) {
  * onreadystatechange事件处理
  * @param params - 事件处理参数
  */
-function onreadystatechange(
+async function onreadystatechange(
   this: Ajax,
   {
     xhr,
@@ -630,13 +648,13 @@ function onreadystatechange(
     reject,
     interceptorsConfig,
   }: EventHandlerParams,
-): void {
+): Promise<void> {
   const targetGlobalIndicator = getGlobalIndicator(terminal);
 
   // readyState === 4
   if (xhr.readyState === Ajax.READY_STATE_DONE) {
     /** 调用response过滤器 **/
-    const { response, responseXML, responseText } = this.interceptors.responseReducer({
+    const { response, responseXML, responseText } = await this.interceptors.responseReducer({
       ...interceptorsConfig,
       headers: transformStringHeadersToObject(xhr.getAllResponseHeaders()),
       response: xhr.response,
@@ -754,7 +772,7 @@ function getGlobalIndicator(
  * @param promiseHandlers - Promise处理器
  * @returns 准备结果
  */
-function sendPrepare(
+async function sendPrepare(
   this: Ajax,
   {
     // 当前方法独有
@@ -762,11 +780,11 @@ function sendPrepare(
     ...params
   }: ISendPrepareArg,
   { resolve, reject }: PrepareFunctionParams,
-): Prepare {
+): Promise<Prepare> {
   let indicator: any;
 
   /** 调用request拦截器，返回新的interceptorsConfig **/
-  const interceptorsConfig = this.interceptors.requestReducer({
+  const interceptorsConfig = await this.interceptors.requestReducer({
     ...params,
     method,
   });
@@ -1005,39 +1023,42 @@ function getSendParams({
  * @param params - 请求参数
  * @returns 请求结果
  */
-function complexRequest(this: Ajax, method: Method, params: ISendArg): SendResult {
-  let prepare: Prepare = {};
+async function complexRequest(this: Ajax, method: Method, params: ISendArg): Promise<SendResult> {
+  let resolveFn: (value: any) => void;
+  let rejectFn: (reason?: any) => void;
 
   const promise = new Promise((resolve, reject) => {
-    prepare = sendPrepare.call(
-      this,
-      {
-        // 缺省的
-        ...getDefaultConfig.call(this),
-        // 构造函数给的
-        ...this.config,
-        method,
-        // 方法传的
-        ...params,
-      },
-      {
-        resolve,
-        reject,
-      },
-    );
-
-    const { xhr, contentType, interceptorsConfig } = prepare;
-
-    if (xhr) {
-      xhr.send(
-        getSendParams({
-          data: interceptorsConfig?.data,
-          contentType: contentType!,
-          customSendJSONStringify: params.customSendJSONStringify,
-        }),
-      );
-    }
+    resolveFn = resolve;
+    rejectFn = reject;
   });
+
+  const prepare = await sendPrepare.call(
+    this,
+    {
+      // 缺省的
+      ...getDefaultConfig.call(this),
+      // 构造函数给的
+      ...this.config,
+      method,
+      // 方法传的
+      ...params,
+    },
+    {
+      resolve: resolveFn!,
+      reject: rejectFn!,
+    },
+  );
+
+  const { xhr, contentType, interceptorsConfig } = prepare;
+  if (xhr) {
+    xhr.send(
+      getSendParams({
+        data: interceptorsConfig?.data,
+        contentType: contentType!,
+        customSendJSONStringify: params.customSendJSONStringify,
+      }),
+    );
+  }
 
   return {
     ...prepare,

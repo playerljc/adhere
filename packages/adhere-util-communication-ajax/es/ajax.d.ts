@@ -30,13 +30,13 @@ declare class Interceptors {
      * @param params - 请求参数
      * @returns 处理后的请求参数
      */
-    requestReducer(params: ISendArg): ISendArg;
+    requestReducer(params: ISendArg): Promise<ISendArg>;
     /**
      * 对响应参数进行拦截器处理
      * @param params - 响应参数
      * @returns 处理后的响应参数
      */
-    responseReducer(params: Parameters<ResponseInterceptor>[0]): ReturnType<ResponseInterceptor>;
+    responseReducer(params: Parameters<ResponseInterceptor>[0]): Promise<Awaited<ReturnType<ResponseInterceptor>>>;
 }
 /**
  * Ajax类
