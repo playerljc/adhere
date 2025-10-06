@@ -653,13 +653,18 @@ async function onreadystatechange(
 
   // readyState === 4
   if (xhr.readyState === Ajax.READY_STATE_DONE) {
+    /** 根据responseType安全获取响应数据 **/
+    const responseType = xhr.responseType || '';
+    const canAccessText = responseType === '' || responseType === 'text';
+    const canAccessXML = responseType === '' || responseType === 'document';
+
     /** 调用response过滤器 **/
     const { response, responseXML, responseText } = await this.interceptors.responseReducer({
       ...interceptorsConfig,
       headers: transformStringHeadersToObject(xhr.getAllResponseHeaders()),
       response: xhr.response,
-      responseText: xhr.responseText,
-      responseXML: xhr.responseXML,
+      responseText: canAccessText ? xhr.responseText : '',
+      responseXML: canAccessXML ? xhr.responseXML : null,
     });
 
     // status success
