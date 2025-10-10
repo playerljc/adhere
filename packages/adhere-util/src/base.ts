@@ -383,8 +383,11 @@ export default {
       return name;
     }
 
-    const result = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, `$1${symbol}$2`);
-    return (result.startsWith(symbol) ? result.substring(1) : result).toLowerCase();
+    // 在数字前也插入分隔符
+    const result = name.replace(/([a-z])([A-Z])/g, `$1${symbol}$2`)
+                       .replace(/([A-Z]+)([A-Z][a-z])/g, `$1${symbol}$2`)
+                       .replace(/([a-zA-Z])(\d)/g, `$1${symbol}$2`);
+    return result.toLowerCase();
   },
 
   /**
