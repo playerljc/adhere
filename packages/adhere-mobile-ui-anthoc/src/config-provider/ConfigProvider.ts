@@ -1,13 +1,17 @@
-import { ConfigProvider } from 'antd-mobile';
-import type { ConfigProviderProps } from 'antd-mobile';
-
 import { createFactory } from '../util';
+import Context from './Context';
+import InternalConfigProvider, { getToken } from './InternalConfigProvider';
+import type { InternalConfigProviderProps } from './types';
 
-const ConfigProviderHOC: typeof ConfigProvider & {
-  defaultProps?: Partial<ConfigProviderProps>;
-  override?: (props: Partial<ConfigProviderProps>) => Partial<ConfigProviderProps>;
-} = createFactory<ConfigProviderProps>(ConfigProvider, {});
+const ConfigProvider: typeof InternalConfigProvider & {
+  Context: typeof Context;
+  getToken: typeof getToken;
+  defaultProps?: Partial<InternalConfigProviderProps>;
+  override?: (props: Partial<InternalConfigProviderProps>) => Partial<InternalConfigProviderProps>;
+} = createFactory<InternalConfigProviderProps>(InternalConfigProvider, {});
 
-ConfigProviderHOC.displayName = 'ConfigProvider';
+ConfigProvider.displayName = 'ConfigProvider';
+ConfigProvider.Context = Context;
+ConfigProvider.getToken = getToken;
 
-export default ConfigProviderHOC;
+export default ConfigProvider;

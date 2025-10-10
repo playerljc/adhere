@@ -1,2 +1,2 @@
-import _ConfigProvider from"antd-mobile/es/components/config-provider";import{createFactory}from"../util";var ConfigProviderHOC=createFactory(_ConfigProvider,{});ConfigProviderHOC.displayName="ConfigProvider";export default ConfigProviderHOC;
+import{createFactory}from"../util";import Context from"./Context";import InternalConfigProvider,{getToken}from"./InternalConfigProvider";var ConfigProvider=createFactory(InternalConfigProvider,{});ConfigProvider.displayName="ConfigProvider",ConfigProvider.Context=Context,ConfigProvider.getToken=getToken;export default ConfigProvider;
 //# sourceMappingURL=ConfigProvider.js.map
