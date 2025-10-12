@@ -86,14 +86,14 @@ function init(curTheme) {
     // colorPrimary
     const varName = Util.capitalized(Util.toCamelCase(_key, '-', true));
 
-    exportObj[`setAntd${varName}`](mapToken[_key]);
+    exportObj[`setAntd${varName}`]?.(mapToken[_key]);
   });
 
   Object.keys(designToken).forEach((_key) => {
     // colorPrimary
     const varName = Util.capitalized(Util.toCamelCase(_key, '-', true));
 
-    exportObj[`setAntd${varName}`](designToken[_key]);
+    exportObj[`setAntd${varName}`]?.(designToken[_key]);
   });
 }
 
