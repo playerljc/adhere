@@ -1,5 +1,6 @@
 import React, { memo, forwardRef } from 'react';
 
+import Ratio from './Ratio';
 import { ContourBlockProps } from './types';
 
 const selectorPrefix = 'adhere-ui-contour-block';
@@ -15,6 +16,11 @@ const selectorPrefix = 'adhere-ui-contour-block';
  * <ContourBlock className="custom-class" style={{ padding: '20px' }}>
  *   <p>这是轮廓块内的内容</p>
  * </ContourBlock>
+ * 
+ * // 使用 Ratio 组件
+ * <ContourBlock.Ratio aspectRatio="16:9" origin="width">
+ *   <div>内容</div>
+ * </ContourBlock.Ratio>
  * ```
  * 
  * @param props - 组件属性
@@ -45,4 +51,11 @@ const ContourBlock = memo(
 
 ContourBlock.displayName = 'ContourBlock';
 
-export default ContourBlock;
+// 将 Ratio 组件作为 ContourBlock 的静态属性
+const ContourBlockWithRatio = ContourBlock as typeof ContourBlock & {
+  Ratio: typeof Ratio;
+};
+
+ContourBlockWithRatio.Ratio = Ratio;
+
+export default ContourBlockWithRatio;

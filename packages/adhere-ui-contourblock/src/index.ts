@@ -1,5 +1,7 @@
 import ContourBlock from './ContourBlock';
-import type { ContourBlockProps } from './types';
+import Ratio from './Ratio';
+import type { ContourBlockProps, RatioProps } from './types';
 
 export default ContourBlock;
-export type { ContourBlockProps };
+export { Ratio };
+export type { ContourBlockProps, RatioProps };

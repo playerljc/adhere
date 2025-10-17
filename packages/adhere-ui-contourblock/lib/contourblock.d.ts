@@ -1,4 +1,5 @@
 import React from 'react';
+import Ratio from './Ratio';
 import { ContourBlockProps } from './types';
 /**
  * ContourBlock 组件
@@ -11,6 +12,11 @@ import { ContourBlockProps } from './types';
  * <ContourBlock className="custom-class" style={{ padding: '20px' }}>
  *   <p>这是轮廓块内的内容</p>
  * </ContourBlock>
+ *
+ * // 使用 Ratio 组件
+ * <ContourBlock.Ratio aspectRatio="16:9" origin="width">
+ *   <div>内容</div>
+ * </ContourBlock.Ratio>
  * ```
  *
  * @param props - 组件属性
@@ -21,4 +27,7 @@ import { ContourBlockProps } from './types';
  * @returns JSX.Element
  */
 declare const ContourBlock: React.MemoExoticComponent<React.ForwardRefExoticComponent<ContourBlockProps & React.RefAttributes<HTMLDivElement>>>;
-export default ContourBlock;
+declare const ContourBlockWithRatio: typeof ContourBlock & {
+    Ratio: typeof Ratio;
+};
+export default ContourBlockWithRatio;
