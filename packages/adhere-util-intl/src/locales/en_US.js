@@ -30,7 +30,7 @@ export default [
     medium: 'Medium',
     large: 'Large',
     extra_large: 'Extra large',
-    serial_number: 'Serial number',
+    serial_number: 'No',
     search: 'Search',
     reset: 'Reset',
     pagination_info: 'Currently {page}-{pageSize} / Total {total} items',
