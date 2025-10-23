@@ -20,7 +20,7 @@ export default function UseDND({ mode, dataSource, reset, rowKey, total }: {
         total: any;
     };
     isUseDNDMode: boolean;
-    finish: () => DNDChangeValue;
+    finish: () => DNDChangeValue | undefined;
     cancel: () => void;
     move: ({ oldIndex, newIndex }: {
         oldIndex: any;

@@ -1,8 +1,8 @@
 import React from 'react';
-import { MagicPanelProps } from './types';
+import type { MagicPanelProps } from './types';
 /**
- * 魔法面板组件
- * @description 一个响应式的面板组件，能够根据容器尺寸变化自动调整内部元素的位置和大小
+ * MagicPanel
+ * @description 魔法面板组件，一个响应式的面板组件，能够根据容器尺寸变化自动调整内部元素的位置和大小
  * @param props - 组件属性
  * @returns React 元素
  * @example

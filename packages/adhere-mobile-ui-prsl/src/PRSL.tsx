@@ -727,7 +727,9 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
 
                 const changeResult = dndFinish();
 
-                onDNDChange?.(changeResult);
+                if (changeResult) {
+                  onDNDChange?.(changeResult);
+                }
               }}
               onCancel={dndCancel}
             />

@@ -23,7 +23,7 @@ export default function UseDND({ mode, dataSource, reset, rowKey, total }) {
   const isUseDNDMode = useMemo(() => mode === 'dnd', [mode]);
 
   const finish = () => {
-    return optionDataSourceRef.current.reduce<DNDChangeValue>((result, optionRecord, _index) => {
+    return optionDataSourceRef?.current?.reduce<DNDChangeValue>((result, optionRecord, _index) => {
       const preValue = dataSourceRef.current[_index][rowKey];
       const currentValue = optionRecord[rowKey];
 

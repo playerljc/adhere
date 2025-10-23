@@ -18,7 +18,7 @@ declare const _default: {
     renderInputNumber: React.NamedExoticComponent<InputNumberProps<import("rc-input-number").ValueType>>;
     renderRadio: React.NamedExoticComponent<RadioGroupProps>;
     renderCheckbox: React.NamedExoticComponent<CheckboxGroupProps<any>>;
-    renderSelect: React.NamedExoticComponent<SelectProps<any, import("antd/es/select").DefaultOptionType> & {
+    renderSelect: React.NamedExoticComponent<SelectProps<any, import("rc-select/lib/Select").DefaultOptionType> & {
         optGroup?: Array<OptionProps[]>;
         renderOption?: (v: OptionProps) => ReactElement;
         autoComplete?: boolean;
