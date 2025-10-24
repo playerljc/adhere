@@ -198,11 +198,13 @@ abstract class Search<
     return (
       <div className={`${selectorPrefix}-search-tool-bar-title-inner`}>
         <div className={`${selectorPrefix}-search-tool-bar-title-content`}>{title}</div>
-        <div className={`${selectorPrefix}-search-tool-bar-title-info`}>
-          <Tooltip title={typeof title === 'string' ? title : titleToolTip}>
-            <InfoCircleOutlined />
-          </Tooltip>
-        </div>
+        {!!titleToolTip && (
+          <div className={`${selectorPrefix}-search-tool-bar-title-info`}>
+            <Tooltip title={typeof title === 'string' ? title : titleToolTip}>
+              <InfoCircleOutlined />
+            </Tooltip>
+          </div>
+        )}
       </div>
     );
   }
