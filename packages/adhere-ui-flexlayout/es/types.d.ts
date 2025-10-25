@@ -80,10 +80,12 @@ export interface FlexLayoutFunction<P> extends NamedExoticComponent<P> {
         LCBLayout: typeof LCBLayout;
         LCLayout: typeof LCLayout;
         LCRBLayout: typeof LCRBLayout;
+        LCRLayout: typeof LCRLayout;
         LRTCBLayout: typeof LRTCBLayout;
         LTCBLayout: typeof LTCBLayout;
         LTCLayout: typeof LTCLayout;
         TBLCRLayout: typeof TBLCRLayout;
+        TCBLayout: typeof TCBLayout;
         TCBRLayout: typeof TCBRLayout;
         TCLayout: typeof TCLayout;
         TCRLayout: typeof TCRLayout;
@@ -380,7 +382,7 @@ export interface TBLRCLayoutProps extends FlexLayoutProps {
 /**
  * FlexLayout 组件类型
  */
-export type FlexLayoutComponent = NamedExoticComponent<PropsWithoutRef<FlexLayoutProps> & RefAttributes<HTMLElement>> & {
+export type FlexLayoutComponent = NamedExoticComponent<PropsWithoutRef<FlexLayoutProps> & RefAttributes<HTMLDivElement>> & {
     selectorPrefix: string;
     Context: typeof FlexContext;
     Fixed: typeof Fixed;
@@ -402,19 +404,19 @@ export type FlexLayoutComponent = NamedExoticComponent<PropsWithoutRef<FlexLayou
         LBCLayout: typeof LBCLayout;
         LCBLayout: typeof LCBLayout;
         LCLayout: typeof LCLayout;
-        LCRLayout: typeof LCRLayout;
         LCRBLayout: typeof LCRBLayout;
+        LCRLayout: typeof LCRLayout;
         LRTCBLayout: typeof LRTCBLayout;
         LTCBLayout: typeof LTCBLayout;
         LTCLayout: typeof LTCLayout;
         TBLCRLayout: typeof TBLCRLayout;
+        TCBLayout: typeof TCBLayout;
         TCBRLayout: typeof TCBRLayout;
         TCLayout: typeof TCLayout;
         TCRLayout: typeof TCRLayout;
         TLCLayout: typeof TLCLayout;
         TLRCLayout: typeof TLRCLayout;
         TRCLayout: typeof TRCLayout;
-        TCBLayout: typeof TCBLayout;
     };
 };
 /**

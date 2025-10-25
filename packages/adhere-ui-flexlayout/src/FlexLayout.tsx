@@ -1,5 +1,13 @@
 import classNames from 'classnames';
-import React, { MutableRefObject, forwardRef, memo, useCallback, useContext, useMemo } from 'react';
+import React, {
+  MutableRefObject,
+  forwardRef,
+  memo,
+  useCallback,
+  useContext,
+  useMemo,
+  useRef,
+} from 'react';
 import type { PropsWithoutRef, RefAttributes } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -16,7 +24,7 @@ import * as TRBLC from './TRBLC';
 import ToolBarLayout from './ToolBarLayout';
 import { getValueWithUnit } from './Util';
 import VerticalFlexLayout from './VerticalFlexLayout';
-import type { FlexLayoutComponent, FlexLayoutProps, FlexDirection, GutterType } from './types';
+import type { FlexDirection, FlexLayoutComponent, FlexLayoutProps, GutterType } from './types';
 
 export const selectorPrefix = 'adhere-ui-flex-layout';
 
@@ -24,7 +32,7 @@ const { useTheme } = ConfigProvider;
 
 /**
  * 内部 FlexLayout 组件
- * 
+ *
  * @param {FlexLayoutProps} props - 组件属性
  * @param {React.Ref<HTMLDivElement>} ref - 组件引用
  * @returns {JSX.Element} FlexLayout 组件
@@ -35,8 +43,10 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
 
     const { media } = useContext(ConfigProvider.Context);
 
+    const innerRef = useRef<HTMLDivElement | null>(null);
+
     useTheme<HTMLDivElement>({
-      elRef: ref as MutableRefObject<HTMLDivElement | null>,
+      elRef: innerRef as MutableRefObject<HTMLDivElement | null>,
       group: 'normal',
       displayName: 'FlexLayout',
     });
@@ -118,7 +128,16 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
         }}
       >
         <div
-          ref={ref}
+          ref={(node) => {
+            innerRef.current = node;
+            if (ref) {
+              if (typeof ref === 'function') {
+                ref(node);
+              } else {
+                ref.current = node;
+              }
+            }
+          }}
           {...attrs}
           className={classList}
           style={styleList}
