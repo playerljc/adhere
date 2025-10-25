@@ -3,7 +3,7 @@ import { DatePicker, Radio } from 'antd';
 import classNames from 'classnames';
 import dayjs, { UnitType } from 'dayjs';
 import quarterOfYear from 'dayjs/plugin/quarterOfYear';
-import React, { type MutableRefObject, forwardRef, memo, useMemo, useState } from 'react';
+import React, { type MutableRefObject, forwardRef, memo, useMemo, useRef, useState } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Intl from '@baifendian/adhere-util-intl';
@@ -102,7 +102,7 @@ export const stringValue = (dateValue: DateValue | undefined): string | undefine
  * @returns dayjs 对象数组，如果输入无效则返回 null
  */
 export const numberToDayjs = (
-  dateValue: [number | undefined, number | undefined]
+  dateValue: [number | undefined, number | undefined],
 ): [dayjs.Dayjs, dayjs.Dayjs] | null => {
   if (!dateValue.filter((t) => !!t).length) return null;
 
@@ -115,7 +115,7 @@ export const numberToDayjs = (
  * @returns 时间戳数组 [start, end]
  */
 export const datesToNumbers = (
-  _value: [dayjs.Dayjs, dayjs.Dayjs] | null | undefined
+  _value: [dayjs.Dayjs, dayjs.Dayjs] | null | undefined,
 ): [number | undefined, number | undefined] => {
   if (!_value || !_value.length) return [undefined, undefined];
 
@@ -127,7 +127,9 @@ export const datesToNumbers = (
  * @param stringValue - 字符串值，格式为 "type,value"
  * @returns 日期实体对象
  */
-export const getValueEntityByStringValue = (stringValue: string): { type: DateType; value: number } => {
+export const getValueEntityByStringValue = (
+  stringValue: string,
+): { type: DateType; value: number } => {
   const arr = stringValue.split(',');
   const type = arr[0] as DateType;
   const value = Number(arr[1]);
@@ -146,7 +148,7 @@ export const getValueEntityByStringValue = (stringValue: string): { type: DateTy
  */
 export const getDataRangeByValue = (
   type: DateType,
-  typeValue: number
+  typeValue: number,
 ): [number | undefined, number | undefined] => {
   const arr = type.split('-');
   const direction = arr[0];
@@ -155,7 +157,10 @@ export const getDataRangeByValue = (
 
   if (direction === 'b') {
     // 未来时间：从当前时间减去指定单位到当前时间
-    return [currentTime.subtract(typeValue, unit).valueOf(), currentTime.valueOf()] as [number, number];
+    return [currentTime.subtract(typeValue, unit).valueOf(), currentTime.valueOf()] as [
+      number,
+      number,
+    ];
   }
 
   if (direction === 'a') {
@@ -209,8 +214,10 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
       { className, style, config, value, onChange, radioGroupProps, rangePickerProps, children },
       ref,
     ) => {
+      const innerRef = useRef<HTMLDivElement | null>(null);
+
       useTheme<HTMLElement>({
-        elRef: ref as MutableRefObject<HTMLElement>,
+        elRef: innerRef as MutableRefObject<HTMLElement>,
         group: 'normal',
         displayName: 'QuickRangeDate',
       });
@@ -314,8 +321,16 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
 
       return (
         <div
-          // @ts-ignore
-          ref={ref}
+          ref={(node) => {
+            innerRef.current = node;
+            if (ref) {
+              if (typeof ref === 'function') {
+                ref(node);
+              } else {
+                ref.current = node;
+              }
+            }
+          }}
           className={classNames(selectorPrefix, className ?? '')}
           style={style ?? {}}
         >
