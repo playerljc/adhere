@@ -573,7 +573,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         //   ...t,
         // });
         return {
-          ellipsis: 'ellipsis' in t ? t.ellipsis : true,
+          ellipsis: 'ellipsis' in t ? t.ellipsis : !this.isColumnMaxContent(),
           ...t,
         };
       });

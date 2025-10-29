@@ -308,6 +308,7 @@ export interface SearchProps extends SuspenseProps {
     searchFormToolBarClassName?: string;
     searchToolbarClassName?: string;
     searchFormExpandClassName?: string;
+    isColumnMaxContent?: boolean;
 }
 /**
  * SearchState

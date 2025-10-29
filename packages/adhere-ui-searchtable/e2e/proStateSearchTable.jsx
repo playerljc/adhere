@@ -106,33 +106,33 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
     ]);
   }
 
-  isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing() {
-    return true;
-  }
-
-  isSearchFormToolBarItemEllipsesShowOnlyOneAfterCollapsing() {
-    return true;
-  }
-
-  isShowNumber() {
-    return false;
-  }
-
-  renderSearchFooterItemsMore() {
-    return <span>111</span>;
-  }
-
-  renderSearchFormToolBarMore() {
-    return <span>222</span>;
-  }
-
-  renderSearchFormToolBarSearchItem(cb) {
-    return <span onClick={cb}>Search</span>;
-  }
-
-  renderSearchFormToolBarResetItem(cb) {
-    return <span onClick={cb}>Reset</span>;
-  }
+  // isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing() {
+  //   return true;
+  // }
+  //
+  // isSearchFormToolBarItemEllipsesShowOnlyOneAfterCollapsing() {
+  //   return true;
+  // }
+  //
+  // isShowNumber() {
+  //   return false;
+  // }
+  //
+  // renderSearchFooterItemsMore() {
+  //   return <span>111</span>;
+  // }
+  //
+  // renderSearchFormToolBarMore() {
+  //   return <span>222</span>;
+  // }
+  //
+  // renderSearchFormToolBarSearchItem(cb) {
+  //   return <span onClick={cb}>Search</span>;
+  // }
+  //
+  // renderSearchFormToolBarResetItem(cb) {
+  //   return <span onClick={cb}>Reset</span>;
+  // }
 
   /**
    * Table的列
@@ -145,7 +145,7 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
         title: () => <div style={{ color: 'red' }}>姓名</div>,
         dataIndex: 'name',
         key: 'name',
-        width: 150,
+        width: 200,
         // align: 'left',
         // render: (val) => <div style={{ color: 'red' }}>{val}</div>,
         $search: {
@@ -179,7 +179,8 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
         dataIndex: 'sex',
         key: 'sex',
         $tip: '性别',
-        width: 150,
+        titleToString: `性别我`,
+        width: {},
         render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
         $search: {
           type: 'dict',
@@ -211,14 +212,14 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
             });
           },
         },
-        $hide: true,
+        // $hide: true,
       },
       {
         title: '身高',
         dataIndex: 'height',
         key: 'height',
         align: 'center',
-        width: 150,
+        width: {},
         sorter: true,
         sortOrder: this.sortOrder('height'),
         $search: {
@@ -244,14 +245,16 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
             });
           },
         },
-        $hide: true,
+        // $hide: true,
       },
       {
         title: '体重',
         dataIndex: 'width',
         key: 'width',
         align: 'center',
-        width: 150,
+        width: {
+          minWidth: 300,
+        },
         sorter: true,
         sortOrder: this.sortOrder('width'),
         $search: {
@@ -277,14 +280,16 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
             });
           },
         },
-        $hide: true,
+        // $hide: true,
       },
       {
         title: '籍贯',
         dataIndex: 'homeTown',
         key: 'homeTown',
-        ellipsis: true,
-        width: 200,
+        ellipsis: false,
+        width: {
+          maxWidth: 1000,
+        },
         $search: {
           type: 'input',
           visible: true,
@@ -308,7 +313,7 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
             });
           },
         },
-        $hide: true,
+        // $hide: true,
       },
       // {
       //   title: '出生年月',
@@ -349,7 +354,7 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
         title: '现居住地',
         dataIndex: 'address',
         key: 'address',
-        width: 300,
+        width: {},
         $search: {
           type: 'input',
           visible: true,
@@ -376,13 +381,13 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
             });
           },
         },
-        $hide: true,
+        // $hide: true,
       },
       {
         title: '操作',
         dataIndex: this.getOptionsColumnDataIndex(),
         key: this.getOptionsColumnDataIndex(),
-        width: 260,
+        width: {},
         render: (v, record) => (
           <OptionsWrap
             style={{ justifyContent: 'center' }}
@@ -436,5 +441,11 @@ const Wrap = SearchTableStateImplementFactory({
 })(ProSearchStateTableImpl);
 
 export default () => {
-  return <Wrap FieldGeneratorToDict={FieldGeneratorToDict} isShowExpandSearch={false} />;
+  return (
+    <Wrap
+      FieldGeneratorToDict={FieldGeneratorToDict}
+      isShowExpandSearch={false}
+      isColumnMaxContent={true}
+    />
+  );
 };

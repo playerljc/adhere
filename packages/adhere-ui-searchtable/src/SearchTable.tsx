@@ -1,5 +1,5 @@
-import { Button, Checkbox, Dropdown, Switch, Table, theme } from 'antd';
 import type { SwitchProps } from 'antd';
+import { Button, Checkbox, Dropdown, Switch, Table, theme } from 'antd';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
 import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import type { TableProps } from 'antd/es/table/InternalTable';
@@ -12,6 +12,7 @@ import type {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import classNames from 'classnames';
+import lodashCloneDeep from 'lodash.clonedeep';
 // import debounce from 'lodash.debounce';
 import difference from 'lodash.difference';
 import memoize from 'lodash.memoize';
@@ -366,9 +367,19 @@ abstract class SearchTable<
     this.onExpandedRowsChange = this.onExpandedRowsChange.bind(this);
     this.onBodyKeyup = this.onBodyKeyup.bind(this);
 
-    this.getWidthByHacker = memoize(this.getWidthByHacker, (obj) => JSON.stringify(obj));
-    this.getColumnWidth = memoize(this.getColumnWidth, (obj) => JSON.stringify(obj));
-
+    this.getCellsWidth = memoize(this.getCellsWidth, (obj) => lodashCloneDeep(obj));
+    this.getWidthByHacker = memoize(this.getWidthByHacker, (obj) => lodashCloneDeep(obj));
+    this.getCellText = memoize(this.getCellText, (obj) => lodashCloneDeep(obj));
+    // this.setColumnWidth = memoize(this.setColumnWidth, (obj) => {
+    //   return JSON.stringify({
+    //     // dataIndex: obj.columnConfig.key,
+    //     // width: obj.columnConfig.width,
+    //     // minWidth: obj.columnConfig.minWidth,
+    //     column: lodashCloneDeep(obj.columnConfig),
+    //     dataSource: obj.dataSource,
+    //     media: obj.media,
+    //   });
+    // });
     // this.validateAllEditableRow = debounce(this.validateAllEditableRow, 300);
   }
 
@@ -438,8 +449,8 @@ abstract class SearchTable<
    */
   effectWithExpandedRowKeys(nextProps: SearchTableProps) {
     if (
-      JSON.stringify(sortBy(this.state.expandedRowKeys ?? [])) !==
-      JSON.stringify(sortBy(nextProps?.antdTableProps?.expandable?.expandedRowKeys ?? []))
+      lodashCloneDeep(sortBy(this.state.expandedRowKeys ?? [])) !==
+      lodashCloneDeep(sortBy(nextProps?.antdTableProps?.expandable?.expandedRowKeys ?? []))
     ) {
       // @ts-ignore
       this.setState({
@@ -1084,12 +1095,13 @@ abstract class SearchTable<
   /**
    * pxToRem
    * @param size
+   * @param media
    * @protected
    */
-  protected pxToRem(size) {
+  protected pxToRem(size: number | string, media: ConfigProviderProps['media']) {
     if (Util.isNumber(size)) {
-      if (this?._context?.media?.isUseMedia) {
-        return Util.pxToRem(size as number, this?._context?.media?.designWidth as number);
+      if (media?.isUseMedia) {
+        return Util.pxToRem(size as number, media?.designWidth as number);
       }
 
       return `${size}px`;
@@ -1098,11 +1110,25 @@ abstract class SearchTable<
     return size as string;
   }
 
+  getCellsWidth({ dataSource, columnConfig }: { columnConfig: ColumnTypeExt; dataSource: any[] }) {
+    const widthConfig = columnConfig.width as ColumnWidthMaxContent;
+
+    return dataSource.map((record, rowIndex) =>
+      this.getWidthByHacker({
+        text: this.getCellText({ columnConfig, record, rowIndex }), //record[columnConfig.dataIndex],
+        font: widthConfig.cellFontSize ?? this.getDefaultCellFontSize(),
+        family: widthConfig.cellFontFamily ?? this.getDefaultCellFontFamily(),
+        spacing: widthConfig.cellSpacing ?? this.getDefaultCellSpacing(),
+        space: widthConfig.cellSpacingSpace ?? this.getDefaultCellSpace(),
+      }),
+    );
+  }
+
   /**
-   * getColumnWidth
+   * setColumnWidth
    * @private
    */
-  getColumnWidth({
+  setColumnWidth({
     columnConfig,
     dataSource,
     media,
@@ -1115,6 +1141,7 @@ abstract class SearchTable<
 
     // console.time('setColumnWidth');
     // console.log('columnConfig', columnConfig, typeof columnConfig.width === 'number');
+    if (!media) return;
 
     if (
       !('width' in columnConfig) ||
@@ -1122,18 +1149,18 @@ abstract class SearchTable<
       columnConfig.width === null ||
       columnConfig.width === ''
     ) {
-      return undefined;
+      return;
     }
 
     if (typeof columnConfig.width === 'number') {
-      columnConfig.width = this.pxToRem(columnConfig.width);
+      columnConfig.width = this.pxToRem(columnConfig.width, media);
       // console.timeEnd('setColumnWidth');
-      return undefined;
+      return;
     }
 
     if (typeof columnConfig.width != 'object') {
       // console.timeEnd('setColumnWidth');
-      return undefined;
+      return;
     }
 
     // max-content的实现
@@ -1287,11 +1314,15 @@ abstract class SearchTable<
       !('titleToString' in columnConfig)
     ) {
       console.timeEnd('setColumnWidth');
-      return undefined;
+      return;
     }
 
     // console.log('columnConfig.width', columnConfig.width);
     // 渲染是对象且没有字符串渲染
+
+    // if (dataSource.length) {
+    //   console.log('setColumnWidth', columnConfig, media);
+    // }
 
     const widthConfig = columnConfig.width as ColumnWidthMaxContent;
 
@@ -1308,64 +1339,121 @@ abstract class SearchTable<
       spacing: widthConfig.titleSpacing ?? this.getDefaultColumnSpacing(),
       space: widthConfig.titleSpacingSpace ?? this.getDefaultColumnSpace(),
     });
-    // console.log('titleWidth', titleWidth);
 
-    const cellsWidth = dataSource.map((record, rowIndex) =>
-      this.getWidthByHacker({
-        text: this.getCellText({ columnConfig, record, rowIndex }), //record[columnConfig.dataIndex],
-        font: widthConfig.cellFontSize ?? this.getDefaultCellFontSize(),
-        family: widthConfig.cellFontFamily ?? this.getDefaultCellFontFamily(),
-        spacing: widthConfig.cellSpacing ?? this.getDefaultCellSpacing(),
-        space: widthConfig.cellSpacingSpace ?? this.getDefaultCellSpace(),
-      }),
-    );
+    // const cellsWidth = dataSource.map((record, rowIndex) =>
+    //   this.getWidthByHacker({
+    //     text: this.getCellText({ columnConfig, record, rowIndex }), //record[columnConfig.dataIndex],
+    //     font: widthConfig.cellFontSize ?? this.getDefaultCellFontSize(),
+    //     family: widthConfig.cellFontFamily ?? this.getDefaultCellFontFamily(),
+    //     spacing: widthConfig.cellSpacing ?? this.getDefaultCellSpacing(),
+    //     space: widthConfig.cellSpacingSpace ?? this.getDefaultCellSpace(),
+    //   }),
+    // );
     // console.log('cellsWidth', cellsWidth);
 
-    const cellMaxWidth = Math.max(...cellsWidth);
+    // const cellMaxWidth = Math.max(...cellsWidth);
 
-    const titleAndCellMaxWidth = Math.max(titleWidth, cellMaxWidth);
+    // const titleAndCellMaxWidth = Math.max(titleWidth, cellMaxWidth);
 
     // console.log('cellMaxWidth', cellMaxWidth);
 
     // console.log('titleAndCellMaxWidth', titleAndCellMaxWidth);
 
-    let _width: number = -1;
-    let targetWidth = '';
-
+    // 设置了区间值
     if (widthConfig.minWidth && widthConfig.maxWidth) {
-      if (titleAndCellMaxWidth <= widthConfig.minWidth) {
-        _width = widthConfig.minWidth;
-      } else if (titleAndCellMaxWidth >= widthConfig.maxWidth) {
-        _width = widthConfig.maxWidth;
+      // const titleAndCellMaxWidth = Math.max(
+      //   titleWidth,
+      //   Math.max(...this.getCellsWidth({ dataSource, columnConfig })),
+      // );
+      //
+      // if (titleWidth <= widthConfig.minWidth) {
+      //   _width = widthConfig.minWidth;
+      // } else if (titleAndCellMaxWidth >= widthConfig.maxWidth) {
+      //   _width = widthConfig.maxWidth;
+      //   setMethodName = 'width';
+      // } else {
+      //   _width = titleWidth;
+      // }
+      const titleAndCellMaxWidth = Math.max(
+        titleWidth,
+        Math.max(...this.getCellsWidth({ dataSource, columnConfig })),
+      );
+
+      let _minWidth = -1;
+      let _width = -1;
+
+      if (titleWidth <= widthConfig.minWidth) {
+        _minWidth = widthConfig.minWidth;
       } else {
-        _width = titleAndCellMaxWidth;
+        _minWidth = titleWidth;
       }
-    } else if (widthConfig.minWidth) {
-      if (titleAndCellMaxWidth <= widthConfig.minWidth) {
-        _width = widthConfig.minWidth;
-      } else {
-        _width = titleAndCellMaxWidth;
-      }
-    } else if (widthConfig.maxWidth) {
+
       if (titleAndCellMaxWidth >= widthConfig.maxWidth) {
         _width = widthConfig.maxWidth;
-      } else {
-        _width = titleAndCellMaxWidth;
       }
-    } else {
-      _width = titleAndCellMaxWidth;
+
+      if (_minWidth !== -1) {
+        // @ts-ignore
+        columnConfig.minWidth = this.pxToRem(_minWidth, media);
+      }
+
+      if (_width !== -1) {
+        columnConfig.width = this.pxToRem(_width, media);
+      }
     }
+    // 其他的情况
+    else {
+      let _width: number = -1;
+      let setMethodName = 'minWidth';
+      let targetWidth = '';
 
-    // console.log('_width===', _width);
+      // 只设置了最大值
+      if (widthConfig.minWidth) {
+        if (titleWidth <= widthConfig.minWidth) {
+          _width = widthConfig.minWidth;
+        } else {
+          _width = titleWidth;
+        }
+      }
+      // 只设置了最大值
+      else if (widthConfig.maxWidth) {
+        const titleAndCellMaxWidth = Math.max(
+          titleWidth,
+          Math.max(...this.getCellsWidth({ dataSource, columnConfig })),
+        );
 
-    if (_width !== -1) {
-      // console.log('_width1===', this.pxToRem(_width));
-      /*columnConfig.width*/ targetWidth = this.pxToRem(_width);
+        if (titleAndCellMaxWidth >= widthConfig.maxWidth) {
+          _width = widthConfig.maxWidth;
+          setMethodName = 'width';
+        } else {
+          _width = titleWidth;
+        }
+      }
+      // 另外
+      else {
+        _width = titleWidth;
+      }
+
+      // console.log('_width===', _width);
+
+      if (_width !== -1) {
+        // console.log('_width1===', this.pxToRem(_width));
+        /*columnConfig.width*/
+
+        targetWidth = this.pxToRem(_width, media);
+      }
+
+      // console.timeEnd('setColumnWidth');
+
+      // return targetWidth;
+      console.log('targetWidth', setMethodName, _width, targetWidth, columnConfig.dataIndex);
+
+      columnConfig[setMethodName] = targetWidth;
+
+      if (setMethodName === 'minWidth') {
+        delete columnConfig.width;
+      }
     }
-
-    // console.timeEnd('setColumnWidth');
-
-    return targetWidth;
   }
 
   protected getDefaultColumnTitleFontSize(): number {
@@ -1417,7 +1505,6 @@ abstract class SearchTable<
    */
   getTableColumnsAll(): any[] {
     const childrenColumnName = this.getChildrenColumnName();
-    const dataSource = this.getDataSource();
 
     // 对权限进行过滤
     const columns = this.getColumns()
@@ -1457,54 +1544,46 @@ abstract class SearchTable<
 
         return res.value;
       })
-      // width 功能
-      .map((columnConfig: ColumnTypeExt) => {
-        const self = this;
-
-        function loop(columns: ColumnTypeExt[]) {
-          return columns.map((_columnConfig) => {
-            if ('children' in _columnConfig && Array.isArray(_columnConfig.children)) {
-              _columnConfig.children = loop(_columnConfig.children as ColumnTypeExt[]);
-
-              return _columnConfig;
-            }
-
-            if ('width' in _columnConfig) {
-              const targetWidth = self.getColumnWidth({
-                columnConfig: _columnConfig,
-                dataSource,
-                media: self?._context?.media,
-              });
-
-              if (targetWidth !== undefined) {
-                _columnConfig.width = targetWidth;
-              }
-            }
-
-            return _columnConfig;
-          });
-        }
-
-        if ('children' in columnConfig && Array.isArray(columnConfig.children)) {
-          columnConfig.children = loop(columnConfig.children as ColumnTypeExt[]);
-
-          return columnConfig;
-        }
-
-        if ('width' in columnConfig) {
-          const targetWidth = this.getColumnWidth({
-            columnConfig,
-            dataSource,
-            media: this?._context?.media,
-          });
-
-          if (targetWidth !== undefined) {
-            columnConfig.width = targetWidth;
-          }
-        }
-
-        return columnConfig;
-      })
+      // // width 功能
+      // .map((columnConfig: ColumnTypeExt) => {
+      //   const self = this;
+      //
+      //   function loop(columns: ColumnTypeExt[]) {
+      //     return columns.map((_columnConfig) => {
+      //       if ('children' in _columnConfig && Array.isArray(_columnConfig.children)) {
+      //         _columnConfig.children = loop(_columnConfig.children as ColumnTypeExt[]);
+      //
+      //         return _columnConfig;
+      //       }
+      //
+      //       if ('width' in _columnConfig) {
+      //         self.setColumnWidth({
+      //           columnConfig: _columnConfig,
+      //           dataSource,
+      //           media: self?._context?.media,
+      //         });
+      //       }
+      //
+      //       return _columnConfig;
+      //     });
+      //   }
+      //
+      //   if ('children' in columnConfig && Array.isArray(columnConfig.children)) {
+      //     columnConfig.children = loop(columnConfig.children as ColumnTypeExt[]);
+      //
+      //     return columnConfig;
+      //   }
+      //
+      //   if ('width' in columnConfig) {
+      //     this.setColumnWidth({
+      //       columnConfig,
+      //       dataSource,
+      //       media: this?._context?.media,
+      //     });
+      //   }
+      //
+      //   return columnConfig;
+      // })
       // @ts-ignore
       .map((columnConfig: ColumnTypeExt) => {
         return {
@@ -2645,6 +2724,18 @@ abstract class SearchTable<
   }
 
   /**
+   * isColumnMaxContent
+   * @description 是否开启列自适应宽度
+   */
+  isColumnMaxContent() {
+    if ('isColumnMaxContent' in this.props) {
+      return this.props.isColumnMaxContent;
+    }
+
+    return true;
+  }
+
+  /**
    * renderTable
    * @description - 认选表格体
    * @return {ReactElement}
@@ -2656,7 +2747,11 @@ abstract class SearchTable<
 
     const isShowColumnSetting = this.renderColumnSetting();
 
-    const columns = this.getTableColumns()
+    const dataSource = this.getDataSource();
+
+    const isColumnMaxContent = this.isColumnMaxContent();
+
+    let columns = this.getTableColumns()
       .map((column, index) => {
         if (isShowColumnSetting) {
           return {
@@ -2671,7 +2766,51 @@ abstract class SearchTable<
           sore: index,
         };
       })
-      .filter((column) => column.display);
+      .filter((column) => !!column.display); // width 功能
+
+    if (isColumnMaxContent && dataSource.length !== 0) {
+      columns = columns.map((columnConfig: ColumnTypeExt) => {
+        const self = this;
+
+        function loop(columns: ColumnTypeExt[]) {
+          return columns.map((_columnConfig) => {
+            if ('children' in _columnConfig && Array.isArray(_columnConfig.children)) {
+              _columnConfig.children = loop(_columnConfig.children as ColumnTypeExt[]);
+
+              return _columnConfig;
+            }
+
+            if ('width' in _columnConfig) {
+              self.setColumnWidth({
+                columnConfig: _columnConfig,
+                dataSource,
+                media: self?._context?.media,
+              });
+            }
+
+            return _columnConfig;
+          });
+        }
+
+        if ('children' in columnConfig && Array.isArray(columnConfig.children)) {
+          columnConfig.children = loop(columnConfig.children as ColumnTypeExt[]);
+
+          return columnConfig;
+        }
+
+        if ('width' in columnConfig) {
+          console.log('setColumnWidth', columnConfig);
+
+          this.setColumnWidth({
+            columnConfig,
+            dataSource,
+            media: this?._context?.media,
+          });
+        }
+
+        return columnConfig;
+      });
+    }
 
     columns.sort((c1, c2) => {
       if (c1.sort > c2.sort) return 1;
@@ -2720,7 +2859,10 @@ abstract class SearchTable<
       tableProps.scroll = {};
     }
 
-    // tableProps.scroll.x = 'max-content';
+    if (isColumnMaxContent) {
+      tableProps.tableLayout = 'auto';
+      tableProps.scroll.x = 'max-content';
+    }
 
     this.tableRowComponentReducers = this.onTableRowComponentReducers(columns);
     this.tableCellComponentReducers = this.onTableCellComponentReducers(columns);
@@ -2766,6 +2908,7 @@ abstract class SearchTable<
    * @return {ReactElement}
    */
   render(): ReactElement {
+    // console.log('render------');
     const _self = this;
 
     return (

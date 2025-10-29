@@ -35,15 +35,17 @@ export const fetchList = (() => {
       //   loading: {
       //     show: false,
       //   },
-      // }).promise;
+      // }).then(res => res.promise);
 
-      return request.get({
-        path: fetchData(params),
-        mock: true,
-        loading: {
-          show: false,
-        },
-      }).promise;
+      return request
+        .get({
+          path: fetchData(params),
+          mock: true,
+          loading: {
+            show: false,
+          },
+        })
+        .then((res) => res.promise);
     },
     defaultResult: () => ({
       total: 0,
@@ -55,13 +57,15 @@ export const fetchList = (() => {
 export const fetchTreeList = (() => {
   return {
     call: (params) => {
-      return request.get({
-        path: fetchTreeData(params),
-        mock: true,
-        loading: {
-          show: false,
-        },
-      }).promise;
+      return request
+        .get({
+          path: fetchTreeData(params),
+          mock: true,
+          loading: {
+            show: false,
+          },
+        })
+        .then((res) => res.promise);
     },
     defaultResult: () => ({
       total: 0,
@@ -73,13 +77,15 @@ export const fetchTreeList = (() => {
 export const fetchSSQList = (() => {
   return {
     call: (params) => {
-      return request.get({
-        path: fetchSSQData(params),
-        mock: true,
-        loading: {
-          show: false,
-        },
-      }).promise;
+      return request
+        .get({
+          path: fetchSSQData(params),
+          mock: true,
+          loading: {
+            show: false,
+          },
+        })
+        .then((res) => res.promise);
     },
     defaultResult: () => ({
       total: 0,
@@ -91,13 +97,15 @@ export const fetchSSQList = (() => {
 export const fetchSList = (() => {
   return {
     call: (params) => {
-      return request.get({
-        path: fetchSListData(params),
-        mock: true,
-        loading: {
-          show: false,
-        },
-      }).promise;
+      return request
+        .get({
+          path: fetchSListData(params),
+          mock: true,
+          loading: {
+            show: false,
+          },
+        })
+        .then((res) => res.promise);
     },
     defaultResult: () => ({
       total: 0,

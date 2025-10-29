@@ -439,6 +439,8 @@ export interface SearchProps extends SuspenseProps {
   searchFormToolBarClassName?: string;
   searchToolbarClassName?: string;
   searchFormExpandClassName?: string;
+  // 是否开启列自适应宽度
+  isColumnMaxContent?: boolean;
 }
 
 /**

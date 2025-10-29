@@ -370,18 +370,23 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     /**
      * pxToRem
      * @param size
+     * @param media
      * @protected
      */
-    protected pxToRem(size: any): string;
+    protected pxToRem(size: number | string, media: ConfigProviderProps['media']): string;
+    getCellsWidth({ dataSource, columnConfig }: {
+        columnConfig: ColumnTypeExt;
+        dataSource: any[];
+    }): number[];
     /**
-     * getColumnWidth
+     * setColumnWidth
      * @private
      */
-    getColumnWidth({ columnConfig, dataSource, media, }: {
+    setColumnWidth({ columnConfig, dataSource, media, }: {
         columnConfig: ColumnTypeExt;
         dataSource: any[];
         media: ConfigProviderProps['media'];
-    }): string | undefined;
+    }): void;
     protected getDefaultColumnTitleFontSize(): number;
     protected getDefaultColumnFontFamily(): string;
     protected getDefaultColumnSpacing(): number;
@@ -624,6 +629,11 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @return {ReactNode}
      */
     renderSearchBarActions(): ReactNode;
+    /**
+     * isColumnMaxContent
+     * @description 是否开启列自适应宽度
+     */
+    isColumnMaxContent(): any;
     /**
      * renderTable
      * @description - 认选表格体
