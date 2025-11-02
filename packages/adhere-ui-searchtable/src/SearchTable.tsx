@@ -2736,6 +2736,56 @@ abstract class SearchTable<
   }
 
   /**
+   * columnMaxContent
+   * @descriptionn 实现列的max-content操作
+   * @param columns
+   * @param dataSource
+   */
+  columnMaxContent({ columns, dataSource }) {
+    return columns.map((columnConfig: ColumnTypeExt) => {
+      const self = this;
+
+      function loop(columns: ColumnTypeExt[]) {
+        return columns.map((_columnConfig) => {
+          if ('children' in _columnConfig && Array.isArray(_columnConfig.children)) {
+            _columnConfig.children = loop(_columnConfig.children as ColumnTypeExt[]);
+
+            return _columnConfig;
+          }
+
+          if ('width' in _columnConfig) {
+            self.setColumnWidth({
+              columnConfig: _columnConfig,
+              dataSource,
+              media: self?._context?.media,
+            });
+          }
+
+          return _columnConfig;
+        });
+      }
+
+      if ('children' in columnConfig && Array.isArray(columnConfig.children)) {
+        columnConfig.children = loop(columnConfig.children as ColumnTypeExt[]);
+
+        return columnConfig;
+      }
+
+      if ('width' in columnConfig) {
+        // console.log('setColumnWidth', columnConfig);
+
+        this.setColumnWidth({
+          columnConfig,
+          dataSource,
+          media: this?._context?.media,
+        });
+      }
+
+      return columnConfig;
+    });
+  }
+
+  /**
    * renderTable
    * @description - 认选表格体
    * @return {ReactElement}
@@ -2769,47 +2819,7 @@ abstract class SearchTable<
       .filter((column) => !!column.display); // width 功能
 
     if (isColumnMaxContent && dataSource.length !== 0) {
-      columns = columns.map((columnConfig: ColumnTypeExt) => {
-        const self = this;
-
-        function loop(columns: ColumnTypeExt[]) {
-          return columns.map((_columnConfig) => {
-            if ('children' in _columnConfig && Array.isArray(_columnConfig.children)) {
-              _columnConfig.children = loop(_columnConfig.children as ColumnTypeExt[]);
-
-              return _columnConfig;
-            }
-
-            if ('width' in _columnConfig) {
-              self.setColumnWidth({
-                columnConfig: _columnConfig,
-                dataSource,
-                media: self?._context?.media,
-              });
-            }
-
-            return _columnConfig;
-          });
-        }
-
-        if ('children' in columnConfig && Array.isArray(columnConfig.children)) {
-          columnConfig.children = loop(columnConfig.children as ColumnTypeExt[]);
-
-          return columnConfig;
-        }
-
-        if ('width' in columnConfig) {
-          console.log('setColumnWidth', columnConfig);
-
-          this.setColumnWidth({
-            columnConfig,
-            dataSource,
-            media: this?._context?.media,
-          });
-        }
-
-        return columnConfig;
-      });
+      columns = this.columnMaxContent({ columns, dataSource });
     }
 
     columns.sort((c1, c2) => {

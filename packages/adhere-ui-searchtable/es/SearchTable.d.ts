@@ -635,6 +635,16 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     isColumnMaxContent(): any;
     /**
+     * columnMaxContent
+     * @descriptionn 实现列的max-content操作
+     * @param columns
+     * @param dataSource
+     */
+    columnMaxContent({ columns, dataSource }: {
+        columns: any;
+        dataSource: any;
+    }): any;
+    /**
      * renderTable
      * @description - 认选表格体
      * @return {ReactElement}
