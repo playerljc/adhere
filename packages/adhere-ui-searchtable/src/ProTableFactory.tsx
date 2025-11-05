@@ -39,7 +39,7 @@ const { TextArea } = Input;
 const { renderGridSearchFormGroup, Label, Value } = TableGridLayout;
 const _selectorPrefix = `${selectorPrefix}-pro-table`;
 
-export default (SuperClass, searchAndPaginParamsMemo) =>
+export default (SuperClass, searchAndPaginationParamsMemo) =>
   class extends SuperClass {
     static displayName = '';
 
@@ -53,27 +53,25 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       this.unlisten = null;
 
       // 获取浏览器地址栏上默认的searchQuery和分页参数
-      let defaultSearchAndPaginParams = {
+      let defaultSearchAndPaginationParams = {
         search: {},
         page: 1,
         limit: this.getLimit(),
       };
 
       if (this.isUseMemo()) {
-        defaultSearchAndPaginParams = this.initSearchAndPaginParams();
+        defaultSearchAndPaginationParams = this.initSearchAndPaginationParams();
       }
-
-      // const defaultSearchAndPaginParams = this.initSearchAndPaginParams();
 
       // state create
       this.state = {
         ...this.state,
-        ...defaultSearchAndPaginParams.search,
-        page: defaultSearchAndPaginParams.page,
-        limit: defaultSearchAndPaginParams.limit,
+        ...defaultSearchAndPaginationParams.search,
+        page: defaultSearchAndPaginationParams.page,
+        limit: defaultSearchAndPaginationParams.limit,
         searchParams: {
           ...this.state.searchParams,
-          ...defaultSearchAndPaginParams.search,
+          ...defaultSearchAndPaginationParams.search,
         },
       };
 
@@ -142,7 +140,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //
       //     // if (this.isOnlyLastSegmentDifferent(top, this.lastPathname)) {
       //     // 卸载的时候处理查询和分页参数的缓存
-      //     this.unMountSearchAndPaginParamsDeal();
+      //     this.unMountSearchAndPaginationParamsDeal();
       //     // }
       //   }
       //   // 如果是出操作则清空缓存数据
@@ -158,10 +156,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           hasCommonPathRelation(this.pathname, this.lastPathname)
         ) {
           // 是一个体系中的保存缓存数据
-          this.unMountSearchAndPaginParamsDeal();
+          this.unMountSearchAndPaginationParamsDeal();
         } else {
           // 不是则清空全部的缓存
-          searchAndPaginParamsMemo.clearAll();
+          searchAndPaginationParamsMemo.clearAll();
         }
       }
     }
@@ -201,10 +199,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     }
 
     /**
-     * unMountSearchAndPaginParamsDeal
+     * unMountSearchAndPaginationParamsDeal
      * @description - 卸载的时候处理查询和分页参数的缓存
      */
-    unMountSearchAndPaginParamsDeal() {
+    unMountSearchAndPaginationParamsDeal() {
       // 查询条件
       const searchParams = this.state.searchParams ?? {};
 
@@ -212,13 +210,13 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
       const componentId = this.getComponentId();
 
-      if (searchAndPaginParamsMemo.isEmpty()) {
+      if (searchAndPaginationParamsMemo.isEmpty()) {
         // console.log('===================s1:', pathname, componentId, {
         //   search: searchParams,
         //   page: this.state.page,
         //   limit: this.state.limit,
         // });
-        searchAndPaginParamsMemo.add(pathname, {
+        searchAndPaginationParamsMemo.add(pathname, {
           [componentId]: {
             search: searchParams,
             page: this.state.page,
@@ -226,7 +224,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           },
         });
       } else {
-        const item = searchAndPaginParamsMemo.findByPath(pathname);
+        const item = searchAndPaginationParamsMemo.findByPath(pathname);
 
         if (item && item?.components?.[componentId]) {
           item.components[componentId].search = searchParams;
@@ -240,7 +238,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           //   item.components[componentId],
           // );
         } else {
-          searchAndPaginParamsMemo.add(pathname, {
+          searchAndPaginationParamsMemo.add(pathname, {
             [componentId]: {
               search: searchParams,
               page: this.state.page,
@@ -288,11 +286,11 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     }
 
     /**
-     * initSearchAndPaginParams
+     * initSearchAndPaginationParams
      * @description - 初始化组件的查询和分页参数
      * @param queryReduce 查询参数的处理
      */
-    initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any) {
+    initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any) {
       const query = qs.parse(this.getSearch(), { ignoreQueryPrefix: true });
 
       const queryParams = {};
@@ -301,7 +299,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         queryParams[key] = queryReduce ? queryReduce(key, query[key]) : query[key];
       });
 
-      if (searchAndPaginParamsMemo.isEmpty()) {
+      if (searchAndPaginationParamsMemo.isEmpty()) {
         return {
           search: { ...queryParams },
           page: 1,
@@ -313,7 +311,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
       // console.log('================pathName:', pathname);
 
-      const item = searchAndPaginParamsMemo.findByPath(pathname);
+      const item = searchAndPaginationParamsMemo.findByPath(pathname);
 
       // console.log('================item:', item);
 
@@ -422,7 +420,16 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
       loop(this.getTableColumnsAll());
 
-      return params;
+      const query = qs.parse(this.getSearch(), { ignoreQueryPrefix: true });
+      const queryParams = {};
+      Object.keys(query).forEach((key) => {
+        queryParams[key] = query[key];
+      });
+
+      return {
+        ...queryParams,
+        ...params,
+      };
     }
 
     /**
@@ -495,10 +502,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     }
 
     /**
-     * getFetchDataParams
+     * getFetchDateParams
      * @description 获取列表接口查询参数
      */
-    getFetchDataParams() {
+    getFetchDateParams() {
       const { searchParams } = this.state;
 
       const dateSearchParams = {};

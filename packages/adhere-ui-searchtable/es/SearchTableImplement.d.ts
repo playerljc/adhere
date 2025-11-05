@@ -78,12 +78,12 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      */
     getServiceName(): string;
     /**
-     * getFetchDataParams
+     * getFetchDateParams
      * @override
      * @description - 获取调用数据接口的参数
      * @return {object}
      */
-    getFetchDataParams(): object;
+    getFetchDateParams(): object;
     /**
      * isShowNumber
      * @description - 是否线上序号列

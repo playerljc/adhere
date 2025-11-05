@@ -174,12 +174,12 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   }
 
   /**
-   * getFetchDataParams
+   * getFetchDateParams
    * @override
    * @description - 获取调用数据接口的参数
    * @return {object}
    */
-  getFetchDataParams(): object {
+  getFetchDateParams(): object {
     return {};
   }
 
@@ -463,7 +463,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
         page,
         limit,
         ...searchParams,
-        ...this.getFetchDataParams(),
+        ...this.getFetchDateParams(),
       },
     };
   }

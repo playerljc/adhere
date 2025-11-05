@@ -1,3 +1,5 @@
+import qs from 'qs';
+
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 
 const { ProTableFactory } = SearchTable;
@@ -39,7 +41,16 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
       loop(this.getColumns());
 
-      return params;
+      const query = qs.parse(this.getSearch(), { ignoreQueryPrefix: true });
+      const queryParams = {};
+      Object.keys(query).forEach((key) => {
+        queryParams[key] = query[key];
+      });
+
+      return {
+        ...queryParams,
+        ...params,
+      };
     }
 
     getColumns() {

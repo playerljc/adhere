@@ -60,9 +60,9 @@ declare const _default: {
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -73,7 +73,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -129,9 +129,9 @@ declare const _default: {
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -142,7 +142,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -198,9 +198,9 @@ declare const _default: {
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -211,7 +211,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -267,9 +267,9 @@ declare const _default: {
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -280,7 +280,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -336,9 +336,9 @@ declare const _default: {
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -349,7 +349,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -405,9 +405,9 @@ declare const _default: {
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -418,7 +418,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -474,9 +474,9 @@ declare const _default: {
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -487,7 +487,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -543,9 +543,9 @@ declare const _default: {
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -556,7 +556,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -612,9 +612,9 @@ declare const _default: {
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -625,7 +625,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -681,9 +681,9 @@ declare const _default: {
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -694,7 +694,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -750,9 +750,9 @@ declare const _default: {
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -763,7 +763,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -819,9 +819,9 @@ declare const _default: {
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -832,7 +832,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -888,9 +888,9 @@ declare const _default: {
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -901,7 +901,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -957,9 +957,9 @@ declare const _default: {
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -970,7 +970,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -1026,9 +1026,9 @@ declare const _default: {
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -1039,7 +1039,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -1095,9 +1095,9 @@ declare const _default: {
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -1108,7 +1108,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -1157,16 +1157,16 @@ declare const _default: {
         [x: string]: any;
         displayName: string;
     };
-    ProTableFactory: (SuperClass: any, searchAndPaginParamsMemo: any) => {
+    ProTableFactory: (SuperClass: any, searchAndPaginationParamsMemo: any) => {
         new (props: any): {
             [x: string]: any;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
             onSearchPanelCollapseBefore(): void;
-            unMountSearchAndPaginParamsDeal(): void;
+            unMountSearchAndPaginationParamsDeal(): void;
             isUseMemo(): any;
-            initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+            initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
             hasAdvancedSearch(): boolean;
             hasNumberColumnFixed(): boolean;
             hasOptionColumnFixed(): boolean;
@@ -1177,7 +1177,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;

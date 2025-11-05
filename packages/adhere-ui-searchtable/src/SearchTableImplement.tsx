@@ -177,12 +177,12 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   }
 
   /**
-   * getFetchDataParams
+   * getFetchDateParams
    * @override
    * @description - 获取调用数据接口的参数
    * @return {object}
    */
-  getFetchDataParams(): object {
+  getFetchDateParams(): object {
     return {};
   }
 
@@ -618,7 +618,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
         ...searchParams,
         [this.getOrderProp()]: order === 'descend' ? 'desc' : 'asc',
         [this.getOrderFieldProp()]: this.state?.[this.getOrderFieldProp()],
-        ...this.getFetchDataParams(),
+        ...this.getFetchDateParams(),
       },
     };
   }

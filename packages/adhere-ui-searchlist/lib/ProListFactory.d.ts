@@ -24,7 +24,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
         getDataKey(): string;
         getTotalKey(): string;
         getLimit(): number;
-        getFetchDataParams(): {};
+        getFetchDateParams(): {};
         getTableColumns(): any;
         getTableColumnSearchHeaderIcon(column: import("@baifendian/adhere-ui-searchtable/es/types").ColumnTypeExt): import("react").JSX.Element;
         getOptionsColumnDataIndex(): string;

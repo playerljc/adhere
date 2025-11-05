@@ -7,13 +7,15 @@ const data = require('../mock.js').default;
 export const fetchList = (() => {
   return {
     call: () => {
-      return request.get({
-        path: JSON.parse(JSON.stringify(data)),
-        mock: true,
-        loading: {
-          show: false,
-        },
-      }).promise;
+      return request
+        .get({
+          path: JSON.parse(JSON.stringify(data)),
+          mock: true,
+          loading: {
+            show: false,
+          },
+        })
+        .then((res) => res.promise);
     },
     defaultResult: () => ({
       total: 0,

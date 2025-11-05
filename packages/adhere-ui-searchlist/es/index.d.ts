@@ -37,7 +37,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("@baifendian/adhere-ui-searchtable/es/types").ColumnTypeExt): import("react").JSX.Element;
             getOptionsColumnDataIndex(): string;
@@ -105,7 +105,7 @@ declare const _default: {
             getDataKey(): string;
             getTotalKey(): string;
             getLimit(): number;
-            getFetchDataParams(): {};
+            getFetchDateParams(): {};
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("@baifendian/adhere-ui-searchtable/es/types").ColumnTypeExt): import("react").JSX.Element;
             getOptionsColumnDataIndex(): string;

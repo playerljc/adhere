@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import React from 'react';
 import type { LayoutType, TableGridLayoutProps } from '@baifendian/adhere-ui-tablegridlayout/lib/types';
 import type { ColumnTypeExt } from './types';
-declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
+declare const _default: (SuperClass: any, searchAndPaginationParamsMemo: any) => {
     new (props: any): {
         [x: string]: any;
         componentDidMount(): void;
@@ -20,10 +20,10 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          */
         onSearchPanelCollapseBefore(): void;
         /**
-         * unMountSearchAndPaginParamsDeal
+         * unMountSearchAndPaginationParamsDeal
          * @description - 卸载的时候处理查询和分页参数的缓存
          */
-        unMountSearchAndPaginParamsDeal(): void;
+        unMountSearchAndPaginationParamsDeal(): void;
         /**
          * isUseMemo
          * @description 是否开启了缓存
@@ -31,11 +31,11 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          */
         isUseMemo(): any;
         /**
-         * initSearchAndPaginParams
+         * initSearchAndPaginationParams
          * @description - 初始化组件的查询和分页参数
          * @param queryReduce 查询参数的处理
          */
-        initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+        initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
         /**
          * hasAdvancedSearchPanel
          * @description 是否开启高级搜索
@@ -95,10 +95,10 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          */
         getLimit(): number;
         /**
-         * getFetchDataParams
+         * getFetchDateParams
          * @description 获取列表接口查询参数
          */
-        getFetchDataParams(): {};
+        getFetchDateParams(): {};
         /**
          * getColumns
          * @param columns
