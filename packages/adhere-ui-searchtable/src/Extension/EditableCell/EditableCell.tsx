@@ -118,7 +118,7 @@ const EditableCell: TableCellComponentReducer = (props) => {
   //   };
   // }, []);
 
-  return (tdREL) => {
+  return (tdREL: React.ReactElement<any>) => {
     let res = tdREL;
 
     let editable;

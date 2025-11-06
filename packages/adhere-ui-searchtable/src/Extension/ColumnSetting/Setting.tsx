@@ -1,41 +1,96 @@
 import { Checkbox } from 'antd';
 import { arrayMoveImmutable } from 'array-move';
 import PropTypes from 'prop-types';
-import React from 'react';
-import {
-  SortableContainer as SortableContainerHOC,
-  SortableElement,
-  SortableHandle,
-} from 'react-sortable-hoc';
+import React, { createContext, useContext, useMemo } from 'react';
+import { DndContext, PointerSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
+import { CSS } from '@dnd-kit/utilities';
+import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
 import Intl from '@baifendian/adhere-util-intl';
 
 import { selectorPrefix } from '../../SearchTable';
 
-const DragHandle = SortableHandle(() => (
-  <img
-    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBhcmlhLWhpZGRlbj0idHJ1ZSIgcm9sZT0iaW1nIiBjbGFzcz0iaWNvbmlmeSBpY29uaWZ5LS1pYyIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0IiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiNjY2MiIGQ9Ik0xMSAxOGMwIDEuMS0uOSAyLTIgMnMtMi0uOS0yLTJzLjktMiAyLTJzMiAuOSAyIDJ6bS0yLThjLTEuMSAwLTIgLjktMiAycy45IDIgMiAyczItLjkgMi0ycy0uOS0yLTItMnptMC02Yy0xLjEgMC0yIC45LTIgMnMuOSAyIDIgMnMyLS45IDItMnMtLjktMi0yLTJ6bTYgNGMxLjEgMCAyLS45IDItMnMtLjktMi0yLTJzLTIgLjktMiAycy45IDIgMiAyem0wIDJjLTEuMSAwLTIgLjktMiAycy45IDIgMiAyczItLjkgMi0ycy0uOS0yLTItMnptMCA2Yy0xLjEgMC0yIC45LTIgMnMuOSAyIDIgMnMyLS45IDItMnMtLjktMi0yLTJ6Ij48L3BhdGg+PC9zdmc+DQo="
-    alt=""
-  />
-)) as React.ComponentClass<any>;
+type Column = { key: string; title: React.ReactNode; display: boolean };
 
-const SortableItem = SortableElement(({ column, onDisplayColumn }) => (
-  <li>
-    <DragHandle />
-    <Checkbox
-      checked={column.display}
-      onChange={(e) => {
-        onDisplayColumn(column, e.target.checked);
+const SortableItemContext = createContext<{
+  attributes: Record<string, any>;
+  listeners: Record<string, any>;
+  setActivatorNodeRef: (el: HTMLElement | null) => void;
+}>({ attributes: {}, listeners: {}, setActivatorNodeRef: () => {} });
+
+const DragHandle: React.FC = () => {
+  const { attributes, listeners, setActivatorNodeRef } = useContext(SortableItemContext);
+  return (
+    <img
+      ref={setActivatorNodeRef as any}
+      {...attributes}
+      {...listeners}
+      src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBhcmlhLWhpZGRlbj0idHJ1ZSIgcm9sZT0iaW1nIiBjbGFzcz0iaWNvbmlmeSBpY29uaWZ5LS1pYyIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0IiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiNjY2MiIGQ9Ik0xMSAxOGMwIDEuMS0uOSAyLTIgMnMtMi0uOS0yLTJzLjktMiAyLTJzMiAuOSAyIDJ6bS0yLThjLTEuMSAwLTIgLjktMiAycy45IDIgMiAyczItLjkgMi0ycy0uOS0yLTItMnptMC02Yy0xLjEgMC0yIC45LTIgMnMuOSAyIDIgMnMyLS45IDItMnMtLjktMi0yLTJ6bTYgNGMxLjEgMCAyLS45IDItMnMtLjktMi0yLTJzLTIgLjktMiAycy45IDIgMiAyem0wIDJjLTEuMSAwLTIgLjktMiAycy45IDIgMiAyczItLjkgMi0ycy0uOS0yLTItMnptMCA2Yy0xLjEgMC0yIC45LTIgMnMuOSAyIDIgMnMyLS45IDItMnMtLjktMi0yLTJ6Ij48L3BhdGg+PC9zdmc+DQo="
+      alt=""
+      style={{ cursor: 'grab' }}
+    />
+  );
+};
+
+const SortableItem: React.FC<{ column: Column; onDisplayColumn: (c: Column, checked: boolean) => void }> = ({
+  column,
+  onDisplayColumn,
+}) => {
+  const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition } =
+    useSortable({ id: column.key });
+
+  const style: React.CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <SortableItemContext.Provider value={{ attributes: attributes ?? {}, listeners: listeners ?? {}, setActivatorNodeRef }}>
+      <li ref={setNodeRef} style={style}>
+        <DragHandle />
+        <Checkbox
+          checked={column.display}
+          onChange={(e) => {
+            onDisplayColumn(column, (e as any).target.checked);
+          }}
+        >
+          {column.title}
+        </Checkbox>
+      </li>
+    </SortableItemContext.Provider>
+  );
+};
+
+const SortableContainer: React.FC<{
+  children?: React.ReactNode;
+  onSortEnd?: ({ oldIndex, newIndex }: { oldIndex: number; newIndex: number }) => void;
+}> = ({ children, onSortEnd }) => {
+  const sensors = useSensors(useSensor(PointerSensor));
+
+  const items = useMemo(() => {
+    const childArr = React.Children.toArray(children) as any[];
+    return childArr.map((c) => c?.props?.column?.key).filter((k) => k != null);
+  }, [children]);
+
+  return (
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={({ active, over }) => {
+        if (!active || !over || active.id === over.id) return;
+        const oldIndex = items.indexOf(active.id);
+        const newIndex = items.indexOf(over.id);
+        if (oldIndex !== -1 && newIndex !== -1 && oldIndex !== newIndex) {
+          onSortEnd?.({ oldIndex, newIndex });
+        }
       }}
     >
-      {column.title}
-    </Checkbox>
-  </li>
-)) as React.ComponentClass<any>;
-
-const SortableContainer = SortableContainerHOC(({ children }) => (
-  <ul>{children}</ul>
-)) as React.ComponentClass<any>;
+      <SortableContext items={items} strategy={verticalListSortingStrategy}>
+        <ul>{children}</ul>
+      </SortableContext>
+    </DndContext>
+  );
+};
 
 /**
  * ColumnSetting
@@ -75,14 +130,10 @@ function ColumnSetting({ columns, onShowColumns, onReset, onDisplayColumn, onSor
 
             onSortEnd(map);
           }}
-          useDragHandle
-          // lockToContainerEdges
-          helperClass={`${selectorPrefix}-sortable-helper`}
         >
-          {columns.map((column, index) => (
+          {columns.map((column) => (
             <SortableItem
               key={column.key}
-              index={index}
               column={column}
               onDisplayColumn={onDisplayColumn}
             />

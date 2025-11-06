@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import type { ExpandableConfig } from 'rc-table/lib/interface';
 import React, { ReactElement, ReactNode, RefObject } from 'react';
 import Suspense from '@baifendian/adhere-ui-suspense';
@@ -14,7 +13,7 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
     static propTypes: any;
     props: any;
     state: any;
-    protected searchFormRef: RefObject<HTMLElement>;
+    protected searchFormRef: RefObject<HTMLElement | null>;
     protected constructor(props: any);
     /**
      * renderSearchBefore
@@ -221,16 +220,16 @@ export declare const defaultProps: {
     autoFixed: boolean;
 };
 export declare const propTypes: {
-    className: PropTypes.Requireable<string>;
-    style: PropTypes.Requireable<object>;
-    searchClassName: PropTypes.Requireable<string>;
-    searchStyle: PropTypes.Requireable<object>;
-    reset: PropTypes.Requireable<boolean>;
-    firstLoading: PropTypes.Requireable<PropTypes.ReactNodeLike>;
-    isShowExpandSearch: PropTypes.Requireable<boolean>;
-    defaultExpandSearchCollapse: PropTypes.Requireable<boolean>;
-    fitBody: PropTypes.Requireable<boolean>;
-    autoFixed: PropTypes.Requireable<boolean>;
-    title: PropTypes.Requireable<string>;
+    className: any;
+    style: any;
+    searchClassName: any;
+    searchStyle: any;
+    reset: any;
+    firstLoading: any;
+    isShowExpandSearch: any;
+    defaultExpandSearchCollapse: any;
+    fitBody: any;
+    autoFixed: any;
+    title: any;
 };
 export default Search;

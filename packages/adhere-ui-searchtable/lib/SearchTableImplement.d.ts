@@ -13,7 +13,7 @@ export declare const selectorPrefix = "adhere-ui-search-table-implement";
  */
 export declare class SearchTableImplement<P extends SearchTableProps, S extends SearchTableState> extends SearchTable<SearchTableImplementProps, SearchTableImplementState> implements ISearchTableImplement {
     static displayName: string;
-    innerWrapRef: RefObject<HTMLDivElement>;
+    innerWrapRef: RefObject<HTMLDivElement | null>;
     constructor(props: any);
     componentDidMount(): void;
     /**
@@ -445,7 +445,7 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
         expanded: any;
         onExpand: any;
         record: any;
-    }): ReactElement<any, string | React.JSXElementConstructor<any>> | null;
+    }): ReactElement<unknown, string | React.JSXElementConstructor<any>> | null;
     /**
      * reloadData
      * @description 重新加载节点的数据

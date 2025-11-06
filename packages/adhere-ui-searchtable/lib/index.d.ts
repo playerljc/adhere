@@ -1254,7 +1254,7 @@ declare const _default: {
             isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
             renderEllipsis: any;
             children: any;
-        }): JSX.Element;
+        }): React.ReactElement;
         displayName: string;
     };
     EditableContext: import("react").Context<import("antd").FormInstance<any> | null>;

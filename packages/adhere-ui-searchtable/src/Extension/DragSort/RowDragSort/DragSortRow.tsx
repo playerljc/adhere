@@ -167,7 +167,7 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig, record, co
     rowDragSortConfig.dropConfig = defaultRowDragSortConfig.dropConfig();
   }
 
-  let drag: ConnectDragSource | ((arg0: React.RefObject<HTMLTableRowElement>) => any);
+  let drag: ConnectDragSource | ((arg0: React.RefObject<HTMLTableRowElement | null>) => any);
   let isOver: any,
     dropClassName:
       | string
@@ -199,7 +199,7 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig, record, co
     console.log(e);
   }
 
-  return (trREL: ReactElement) => {
+  return (trREL: ReactElement<any>) => {
     const defaultStyle = {
       cursor:
         'canDrag' in rowDragSortConfig.dragConfig && !rowDragSortConfig.dragConfig.canDrag()

@@ -29,7 +29,7 @@ const EditableRow: TableRowComponentReducer = ({ columns = [], rowIndex }) => {
     context?.context?.setEditableRowForm(rowIndex, form);
   }, []);
 
-  return (trREL: ReactElement) => {
+  return (trREL: React.ReactElement<any>) => {
     let res = trREL;
 
     if ((columns || []).some((column) => !!column?.$editable?.editable)) {

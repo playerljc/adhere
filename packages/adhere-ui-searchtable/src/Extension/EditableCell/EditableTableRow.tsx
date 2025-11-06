@@ -34,7 +34,7 @@ const EditableTableRow: TableRowComponentReducer = ({ columns = [], rowIndex, ro
     };
   } | null>(SearchTableContext);
 
-  return (trREL: ReactElement) => {
+  return (trREL: React.ReactElement<any>) => {
     let res = trREL;
 
     const nameItemPath = [

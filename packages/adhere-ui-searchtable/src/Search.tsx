@@ -34,7 +34,7 @@ abstract class Search<
 
   state: any;
 
-  protected searchFormRef: RefObject<HTMLElement> = createRef();
+  protected searchFormRef: RefObject<HTMLElement | null> = createRef<HTMLElement | null>();
 
   protected constructor(props) {
     super(props);

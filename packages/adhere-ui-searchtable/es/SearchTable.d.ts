@@ -1,7 +1,6 @@
 import type { SwitchProps } from 'antd';
 import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig } from 'antd/es/table/interface';
-import PropTypes from 'prop-types';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React from 'react';
 import type { ConfigProviderContext, ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
@@ -41,7 +40,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     static CHECKED_STRATEGY_SHOW_CHILD: symbol;
     private _hackerElement;
     protected _context: ConfigProviderContext | undefined;
-    protected tableWrapRef: RefObject<HTMLDivElement>;
+    protected tableWrapRef: RefObject<HTMLDivElement | null>;
     protected editableRowForms: Map<number, FormInstance<any>>;
     protected components: {
         header: {
@@ -58,7 +57,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     protected cellConfigReducers: CellConfigReducer[];
     protected tableRowComponentReducers: string[];
     protected tableCellComponentReducers: string[];
-    protected childrenWrapRef: RefObject<HTMLDivElement>;
+    protected childrenWrapRef: RefObject<HTMLDivElement | null>;
     /**
      * isShowNumber
      * @description 表格是否显示序号
@@ -204,7 +203,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * onRowSelectionSelectAll
      */
     abstract onRowSelectionSelectAll(selected: boolean, selectedRows: object[], changeRows: object[]): void;
-    switchColumnElRef: RefObject<HTMLDivElement | undefined>;
+    switchColumnElRef: RefObject<HTMLDivElement | null | undefined>;
     constructor(props: any);
     componentDidMount(): void;
     componentWillUnmount(): void;
@@ -766,19 +765,19 @@ export declare const defaultProps: {
     fixedTableSpaceBetween: boolean;
 };
 export declare const propTypes: {
-    className: PropTypes.Requireable<string>;
-    style: PropTypes.Requireable<object>;
-    searchClassName: PropTypes.Requireable<string>;
-    searchStyle: PropTypes.Requireable<object>;
-    reset: PropTypes.Requireable<boolean>;
-    firstLoading: PropTypes.Requireable<PropTypes.ReactNodeLike>;
-    isShowExpandSearch: PropTypes.Requireable<boolean>;
-    defaultExpandSearchCollapse: PropTypes.Requireable<boolean>;
-    fitBody: PropTypes.Requireable<boolean>;
-    autoFixed: PropTypes.Requireable<boolean>;
-    title: PropTypes.Requireable<string>;
-    antdTableProps: PropTypes.Requireable<object>;
-    fixedHeaderAutoTable: PropTypes.Requireable<boolean>;
-    fixedTableSpaceBetween: PropTypes.Requireable<boolean>;
+    className: any;
+    style: any;
+    searchClassName: any;
+    searchStyle: any;
+    reset: any;
+    firstLoading: any;
+    isShowExpandSearch: any;
+    defaultExpandSearchCollapse: any;
+    fitBody: any;
+    autoFixed: any;
+    title: any;
+    antdTableProps: any;
+    fixedHeaderAutoTable: any;
+    fixedTableSpaceBetween: any;
 };
 export default SearchTable;

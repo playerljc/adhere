@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 /**
  * SearchTableResizableTitle.tsx
@@ -9,9 +8,9 @@ import React from 'react';
 declare function SearchTableResizableTitle(props: any): React.JSX.Element;
 declare namespace SearchTableResizableTitle {
     var propTypes: {
-        width: PropTypes.Requireable<number>;
-        onResize: PropTypes.Requireable<(...args: any[]) => any>;
-        column: PropTypes.Requireable<object>;
+        width: any;
+        onResize: any;
+        column: any;
     };
     var displayName: string;
 }

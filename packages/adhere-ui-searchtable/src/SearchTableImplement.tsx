@@ -42,7 +42,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 {
   static displayName = 'SearchTableImplement';
 
-  innerWrapRef: RefObject<HTMLDivElement> = createRef();
+  innerWrapRef: RefObject<HTMLDivElement | null> = createRef<HTMLDivElement | null>();
 
   constructor(props) {
     super(props);

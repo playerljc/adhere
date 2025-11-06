@@ -80,7 +80,7 @@ const EditableTableCell: TableCellComponentReducer = (props) => {
     setStatus(editableConfig?.defaultStatus as string);
   }, [editableConfig?.defaultStatus]);
 
-  return (tdREL: ReactElement) => {
+  return (tdREL: React.ReactElement<any>) => {
     let res = tdREL;
 
     // 单元格不是可编辑的单元格

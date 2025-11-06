@@ -119,7 +119,7 @@ abstract class SearchTable<
 
   protected _context: ConfigProviderContext | undefined = undefined;
 
-  protected tableWrapRef: RefObject<HTMLDivElement> = createRef();
+  protected tableWrapRef: RefObject<HTMLDivElement | null> = createRef<HTMLDivElement | null>();
 
   // 存放editableRow的forms实例
   protected editableRowForms = new Map<number, FormInstance>();
@@ -159,7 +159,7 @@ abstract class SearchTable<
   // 处理TableCell的reducer
   protected tableCellComponentReducers: string[] = [];
 
-  protected childrenWrapRef: RefObject<HTMLDivElement> = createRef();
+  protected childrenWrapRef: RefObject<HTMLDivElement | null> = createRef<HTMLDivElement | null>();
 
   /**
    * isShowNumber

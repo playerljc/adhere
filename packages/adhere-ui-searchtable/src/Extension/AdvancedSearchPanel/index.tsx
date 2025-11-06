@@ -14,6 +14,7 @@ import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import SlideLayout from '@baifendian/adhere-ui-slidelayout';
+import { SlideLayoutHandle } from '@baifendian/adhere-ui-slidelayout/es/types';
 import Space from '@baifendian/adhere-ui-space';
 import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import Intl from '@baifendian/adhere-util-intl';
@@ -55,7 +56,7 @@ const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
 
   const [collapse, setCollapse] = useState(overlayProps.collapse);
 
-  const overlayRef = useRef();
+  const overlayRef = useRef<SlideLayoutHandle>({} as SlideLayoutHandle);
 
   useEffect(() => {
     setCollapse(overlayProps.collapse);

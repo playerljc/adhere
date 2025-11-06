@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 /**
  * ColumnSetting
@@ -17,11 +16,11 @@ declare namespace ColumnSetting {
         columns: never[];
     };
     var propTypes: {
-        columns: PropTypes.Requireable<any[]>;
-        onShowColumns: PropTypes.Requireable<(...args: any[]) => any>;
-        onReset: PropTypes.Requireable<(...args: any[]) => any>;
-        onDisplayColumn: PropTypes.Requireable<(...args: any[]) => any>;
-        onSortEnd: PropTypes.Requireable<(...args: any[]) => any>;
+        columns: any;
+        onShowColumns: any;
+        onReset: any;
+        onDisplayColumn: any;
+        onSortEnd: any;
     };
 }
 export default ColumnSetting;

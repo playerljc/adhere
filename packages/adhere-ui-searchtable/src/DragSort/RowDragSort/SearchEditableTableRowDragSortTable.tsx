@@ -51,8 +51,8 @@ const SearchEditableTableRowDragSortTable = RowDragSortMultiExtend<
       const searchEditableTableREL = SearchEditableTable.prototype.render.call(this);
 
       return React.cloneElement(
-        searchRowDragSortTableREL,
-        searchRowDragSortTableREL.props,
+        searchRowDragSortTableREL as React.ReactElement<any>,
+        (searchRowDragSortTableREL as any)?.props,
         searchEditableTableREL,
       );
     },

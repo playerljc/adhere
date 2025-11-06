@@ -27,7 +27,7 @@ const OptionsWrap = ({
   isEllipsesShowOnlyOneAfterCollapsing = false,
   renderEllipsis,
   children,
-}): JSX.Element => {
+}): React.ReactElement => {
   let result;
 
   if (children.length <= 1) {
@@ -36,16 +36,19 @@ const OptionsWrap = ({
     const cloneChildren = React.Children.toArray(children);
 
     let currentChildren = cloneChildren.filter((t) => {
-      if (typeof t === 'object' && 'props' in t && 'conditional' in t.props) {
-        if (t.props.conditional) return true;
+      if (React.isValidElement(t)) {
+        const props: any = (t as any).props;
+        if (props && 'conditional' in props) {
+          if (props.conditional) return true;
 
-        if ('noMatch' in t.props) {
-          if (t.props.noMatch instanceof Function) {
-            return !!t.props.noMatch();
+          if ('noMatch' in props) {
+            if (typeof props.noMatch === 'function') {
+              return !!props.noMatch();
+            }
           }
-        }
 
-        return false;
+          return false;
+        }
       }
 
       return true;

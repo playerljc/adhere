@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { TableDensity } from '../../types';
 /**
@@ -16,9 +15,9 @@ declare namespace TableDensitySetting {
         density: TableDensity;
     };
     var propTypes: {
-        density: PropTypes.Requireable<string>;
-        onReset: PropTypes.Requireable<(...args: any[]) => any>;
-        onChange: PropTypes.Requireable<(...args: any[]) => any>;
+        density: any;
+        onReset: any;
+        onChange: any;
     };
     var displayName: string;
 }
