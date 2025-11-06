@@ -36,7 +36,7 @@ function useSetState<S>(
   initialState: S | (() => S),
 ): [MutableRefObject<S>, Dispatch<SetStateAction<S>>] {
   const [valueRef, setValue] = useLatestState<S>(initialState);
-  const callbackRef = useRef<SetStateCallback>({} as SetStateCallback);
+  const callbackRef = useRef<SetStateCallback>((() => {}) as SetStateCallback);
 
   // 状态更新后执行回调
   useLayoutEffect(() => {
@@ -46,7 +46,9 @@ function useSetState<S>(
   return [
     valueRef,
     (_value, callback) => {
-      callbackRef.current = callback;
+      if (callback) {
+        callbackRef.current = callback;
+      }
       setValue(_value);
     },
   ];
