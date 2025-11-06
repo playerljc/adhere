@@ -46,9 +46,9 @@ const InternalDropdownRenderSelect = memo<DropdownRenderSelectProps>(
 
     const [open, setOpen] = useState(false);
 
-    const currentOriginNode = useRef<ReactElement>();
+    const currentOriginNode = useRef<ReactElement | undefined>(undefined);
 
-    const dropdownRenderElement = useRef<ReactElement>();
+    const dropdownRenderElement = useRef<ReactElement | undefined>(undefined);
 
     const filterOptions = useMemo(() => {
       if (inputValue) {

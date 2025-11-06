@@ -97,14 +97,8 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
 
       // 确保children是ReactElement类型
       if (React.isValidElement(children)) {
-        return React.cloneElement(
-          children,
-          {
-            ...children.props,
-            value,
-          },
-          children.props.children,
-        );
+        const element = children as React.ReactElement<any>;
+        return React.cloneElement(element, { value } as any);
       }
 
       return children;

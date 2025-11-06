@@ -1,6 +1,6 @@
 import { SideBar } from 'antd-mobile';
 import classNames from 'classnames';
-import React, { memo, useRef, useCallback } from 'react';
+import React, { memo, useCallback, useRef } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
@@ -13,17 +13,17 @@ const selectorPrefix = 'adhere-ui-tabs-side-tabs';
 
 /**
  * 内部侧边栏标签页组件
- * 
+ *
  * @param props - 组件属性
  * @returns JSX元素
  */
 const InternalSystemSideTabs = memo<SystemSideTabsProps>(
   ({ className, style, items, ...props }) => {
-    const wrapperRef = useRef<HTMLDivElement | undefined>();
+    const wrapperRef = useRef<HTMLDivElement | undefined>(undefined);
 
     /**
      * 渲染侧边栏头部
-     * 
+     *
      * @returns JSX元素
      */
     const renderHeader = useCallback(() => {
@@ -38,7 +38,7 @@ const InternalSystemSideTabs = memo<SystemSideTabsProps>(
 
     /**
      * 渲染侧边栏内容
-     * 
+     *
      * @returns JSX元素数组
      */
     const renderBody = useCallback(() => {

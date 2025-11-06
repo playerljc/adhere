@@ -35,7 +35,7 @@ const InternalPopoverMenu = memo<PopoverMenuProps>(
     children,
   }) => {
     const refs = useRef<PopoverRef[]>([]);
-    const popoverRef = useRef<PopoverRef>();
+    const popoverRef = useRef<PopoverRef>({} as PopoverRef);
 
     // 计算弹出位置
     const placement = useMemo(() => {

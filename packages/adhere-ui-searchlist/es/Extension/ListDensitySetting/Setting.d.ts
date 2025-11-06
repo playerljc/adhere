@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 /**
  * ListDensitySetting
@@ -15,9 +14,9 @@ declare namespace ListDensitySetting {
         density: string;
     };
     var propTypes: {
-        density: PropTypes.Requireable<string>;
-        onReset: PropTypes.Requireable<(...args: any[]) => any>;
-        onChange: PropTypes.Requireable<(...args: any[]) => any>;
+        density: any;
+        onReset: any;
+        onChange: any;
     };
 }
 export default ListDensitySetting;

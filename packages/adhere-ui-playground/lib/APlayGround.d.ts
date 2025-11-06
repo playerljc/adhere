@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { Requireable } from 'react';
 import { PlayGroundProps, PlayGroundState } from './types';
 export declare const selectPrefix = "adhere-ui-playground";
@@ -9,7 +8,7 @@ export declare const selectPrefix = "adhere-ui-playground";
  */
 declare abstract class APlayGround<P extends PlayGroundProps = PlayGroundProps, S extends PlayGroundState = PlayGroundState> extends React.PureComponent<P, S> {
     protected isFirst: boolean;
-    protected clipboardRef: React.RefObject<HTMLDivElement>;
+    protected clipboardRef: React.RefObject<HTMLDivElement | null>;
     protected actionConfig: (() => React.JSX.Element)[];
     static defaultProps: PlayGroundProps;
     static propTypes: {
@@ -54,25 +53,9 @@ declare abstract class APlayGround<P extends PlayGroundProps = PlayGroundProps, 
 }
 export declare const APlayGroundDefaultProps: PlayGroundProps;
 export declare const APlayGroundPropTypes: {
-    id: PropTypes.Requireable<string>;
-    cardProps: PropTypes.Requireable<PropTypes.InferProps<{
-        className: PropTypes.Requireable<string>;
-        style: PropTypes.Requireable<object>;
-        headerClassName: PropTypes.Requireable<string>;
-        headerStyle: PropTypes.Requireable<object>;
-        bodyClassName: PropTypes.Requireable<string>;
-        bodyStyle: PropTypes.Requireable<object>;
-        actionClassName: PropTypes.Requireable<string>;
-        actionStyle: PropTypes.Requireable<object>;
-        title: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
-        extra: PropTypes.Requireable<PropTypes.ReactNodeLike>;
-        actions: PropTypes.Requireable<PropTypes.ReactNodeLike[]>;
-        description: PropTypes.Requireable<PropTypes.InferProps<{
-            title: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
-            info: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
-        }>>;
-    }>>;
-    isActive: PropTypes.Requireable<boolean>;
-    expand: PropTypes.Requireable<boolean>;
+    id: any;
+    cardProps: any;
+    isActive: any;
+    expand: any;
 };
 export default APlayGround;

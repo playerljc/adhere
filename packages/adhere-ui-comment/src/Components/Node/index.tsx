@@ -81,7 +81,13 @@ const Node = memo<NodeProps>((props) => {
       ),
     ];
 
-    if (!actions.find((t) => React.isValidElement(t) && t.props?.children?.key === 'reply')) {
+    if (
+      !actions.find((t) => {
+        if (!React.isValidElement(t)) return false;
+        const child = (t.props as any)?.children;
+        return React.isValidElement(child) && child.key === 'reply';
+      })
+    ) {
       actions.push(
         <li
           key="reply"

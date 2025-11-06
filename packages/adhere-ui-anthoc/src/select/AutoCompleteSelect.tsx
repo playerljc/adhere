@@ -20,7 +20,7 @@ export type InternalAutoCompleteSelectType = AutoCompleteProps & {
  */
 const InternalAutoCompleteSelect = memo<InternalAutoCompleteSelectType>(
   ({ wrapperClassName, wrapperStyle, ...props }) => {
-    const wrapperRef = useRef<HTMLElement | undefined>();
+    const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
     useTheme<HTMLElement>({
       elRef: wrapperRef,

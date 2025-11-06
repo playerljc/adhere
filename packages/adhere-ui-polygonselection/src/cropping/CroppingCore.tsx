@@ -83,11 +83,11 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
 
     const clipCanvasEL = useRef<HTMLCanvasElement | null>(null);
 
-    const clipCanvasCtx = useRef<CanvasRenderingContext2D>();
+    const clipCanvasCtx = useRef<CanvasRenderingContext2D | null>(null);
 
     const geometryRef = useRef<HTMLDivElement | null>(null);
 
-    const polygonSelection = useRef<IPolygonSelection>();
+    const polygonSelection = useRef<IPolygonSelection | null>(null);
 
     const curAction = useRef<IAction | null>(null);
 

@@ -49,7 +49,7 @@ const InputMultiple: FC<InputMultipleProps> = ({
   value,
   onChange,
 }) => {
-  const wrapperRef = useRef<HTMLElement | undefined>();
+  const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
   const [inputValue, setInputValue] = useState('');
 

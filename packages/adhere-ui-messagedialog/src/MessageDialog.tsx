@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import { produce } from 'immer';
 import React, { ReactNode, createRef } from 'react';
-import ReactDOM, { Root } from 'react-dom/client';
+import { Root, createRoot } from 'react-dom/client';
 
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -328,7 +328,7 @@ const MessageDialogFactory = {
     };
 
     const el = document.createElement('div');
-    const root = ReactDOM.createRoot(el);
+    const root = createRoot(el);
 
     /**
      * 渲染对话框内容
@@ -405,7 +405,7 @@ const MessageDialogFactory = {
     };
 
     const el = document.createElement('div');
-    const root = ReactDOM.createRoot(el);
+    const root = createRoot(el);
 
     /**
      * 渲染对话框内容

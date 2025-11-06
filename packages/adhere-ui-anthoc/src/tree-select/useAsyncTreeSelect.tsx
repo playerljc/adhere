@@ -25,7 +25,7 @@ const useAsyncTreeSelect: UseAsyncTreeSelect = ({
 }) => {
   const [treeData, setTreeData] = useState<TreeSelectProps['treeData']>([]);
 
-  const changeValue = useRef();
+  const changeValue = useRef<any>(undefined);
 
   /**
    * findNodeById

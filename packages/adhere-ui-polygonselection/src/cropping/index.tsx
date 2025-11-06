@@ -39,7 +39,7 @@ const InternalCropping = memo<PropsWithoutRef<CroppingProps> & RefAttributes<Cro
     ) => {
       const coreRef = useRef<CroppingCoreHandle | null>(null);
 
-      const wrapperRef = useRef<HTMLElement | undefined>();
+      const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
       useTheme<HTMLElement>({
         elRef: wrapperRef,

@@ -1,3 +1,4 @@
+import './compatible';
 declare const _default: {
     PC: ({ children, lang, locales, theme, curTheme, direction, }: {
         children: any;

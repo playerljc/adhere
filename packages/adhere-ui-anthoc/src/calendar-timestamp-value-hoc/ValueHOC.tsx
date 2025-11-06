@@ -115,7 +115,7 @@ const ValueHOC: FC<CalendarTimestampValueHOC> = ({
 
   return (
     <Calendar
-      {...props}
+      {...(props as any)}
       defaultValue={targetDefaultValue}
       value={targetValue}
       validRange={targetValidRange}

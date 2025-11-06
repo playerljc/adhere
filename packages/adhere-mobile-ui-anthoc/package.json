@@ -21,16 +21,16 @@
     "umd"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
+    "postbuildpackage": "node ./script/style.js",
     "buildpackage:cjs": "ctbuild buildpackagets-babel -c ctbuild.package.ts.cjs.config.js -o lib",
     "postbuildpackage:cjs": "tsc --declaration -p ./ --emitDeclarationOnly --outDir lib",
     "buildpackage:esm": "ctbuild buildpackagets-babel -c ctbuild.package.ts.esm.config.js -o es",
     "postbuildpackage:esm": "tsc --declaration -p ./ --emitDeclarationOnly --outDir es",
-    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
-    "postbuildpackage": "node ./script/style.js",
     "buildumd": "ctbuild buildumd --packagename AdhereAntMobileHOC --define alias=@,evnVars=true",
-    "generatorchangelog": "bd changelog/CHANGELOG.html",
     "e2e": "cross-env mobile=true e2e",
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "upgrade": "yarn upgrade",
     "upgrade-interactive": "yarn upgrade-interactive"
   },
@@ -44,12 +44,12 @@
     "@baifendian/adhere-util": "^2.11.0",
     "@baifendian/adhere-util-intl": "^2.11.0",
     "@baifendian/adhere-util-validator": "^2.11.0",
-    "antd-mobile": "^5.39.0",
+    "antd-mobile": "^5.41.1",
     "dayjs": "^1.11.13",
     "lodash.debounce": "^4.0.8",
     "lodash.difference": "^4.5.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "use-immer": "^0.10.0"
   },
   "devDependencies": {
@@ -58,19 +58,19 @@
     "@baifendian/adhere-mock": "^2.11.0",
     "@baifendian/adhere-ui-anthoc": "^2.11.0",
     "@ctsj/build": "6.4.1",
-    "@types/react": "^18.3.1",
-    "@types/react-dom": "^18.3.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
     "babel-plugin-import": "^1.13.8",
     "ejs": "^3.1.9",
     "npm-run-all": "^4.1.5",
-    "react-highlight-words": "^0.17.0",
+    "react-highlight-words": "^0.21.0",
     "rimraf": "^5.0.5",
     "typescript": "^5.6.2"
   },
   "peerDependencies": {
     "antd-mobile": ">=5.0.0 - <6.0.0",
-    "react": ">=18.0.0 - <19.0.0",
-    "react-dom": ">=18.0.0 - <19.0.0"
+    "react": ">=18.0.0 - <20.0.0",
+    "react-dom": ">=18.0.0 - <20.0.0"
   },
   "publishConfig": {
     "access": "public"

@@ -33,7 +33,7 @@ function TreeFilter({
 }: TreeFilterProps) {
   const [filterValue, setFilterValue] = useState<string>('');
 
-  const wrapperRef = useRef<HTMLElement | undefined>();
+  const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
   useTheme<HTMLElement>({
     elRef: wrapperRef,

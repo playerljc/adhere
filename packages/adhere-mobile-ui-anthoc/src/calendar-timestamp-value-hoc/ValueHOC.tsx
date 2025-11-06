@@ -121,20 +121,20 @@ const ValueHOC: FC<CalendarTimestampValueHOCProps> = ({
     onChange?.(_date);
   };
 
-  return useMemo(
-    () =>
-      cloneElement(
-        children,
-        {
-          ...props,
-          defaultValue: targetDefaultValue,
-          value: targetValue,
-          onChange: _onChange,
-        },
-        children.props.children,
-      ),
-    [props, targetDefaultValue, targetValue, children],
-  );
+  return useMemo(() => {
+    if (!React.isValidElement(children)) return children as any;
+    const el = children as React.ReactElement<any>;
+    return cloneElement(
+      el,
+      {
+        ...(props as any),
+        defaultValue: targetDefaultValue,
+        value: targetValue,
+        onChange: _onChange,
+      } as any,
+      (el.props as any)?.children,
+    );
+  }, [props, targetDefaultValue, targetValue, children, _onChange]);
 };
 
 export default ValueHOC;

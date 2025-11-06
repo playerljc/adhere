@@ -22,7 +22,7 @@ const { useTheme } = ConfigProvider;
  */
 const InternalRadioList = memo<RadioListProps>(
   ({ wrapperClassName, wrapperStyle, value, onChange, options, ...props }) => {
-    const wrapperRef = useRef<HTMLElement | undefined>();
+    const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
     useTheme<HTMLElement>({
       elRef: wrapperRef,

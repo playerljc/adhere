@@ -72,9 +72,9 @@ const PRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>>(
         return renderNormal();
       }
 
-      const wrapperRef = useRef<HTMLElement | undefined>();
+      const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
-      const scrollLoadRef = useRef<ScrollLoadRefHandle>();
+      const scrollLoadRef = useRef<ScrollLoadRefHandle>({} as ScrollLoadRefHandle);
 
       const isFirst = useRef(true);
 

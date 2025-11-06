@@ -36,7 +36,7 @@ const SubMenu: FC<SubMenuProps> = ({
   items = [],
   maxCount,
 }) => {
-  const popoverRef = useRef<PopoverRef>();
+  const popoverRef = useRef<PopoverRef>({} as PopoverRef);
   const { refs } = useContext(Context);
 
   // 计算弹出位置

@@ -26,7 +26,7 @@ import { ContourBlockProps } from './types';
  * @param props.attrs - 其他 HTML div 属性
  * @returns JSX.Element
  */
-declare const ContourBlock: React.MemoExoticComponent<React.ForwardRefExoticComponent<ContourBlockProps & React.RefAttributes<HTMLDivElement>>>;
+declare const ContourBlock: React.NamedExoticComponent<ContourBlockProps & React.RefAttributes<HTMLDivElement>>;
 declare const ContourBlockWithRatio: typeof ContourBlock & {
     Ratio: typeof Ratio;
 };

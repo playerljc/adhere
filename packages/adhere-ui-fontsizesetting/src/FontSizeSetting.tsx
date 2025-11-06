@@ -60,7 +60,7 @@ const FontSizeSetting = memo<FontSizeSettingProps>((props) => {
     ...restProps 
   } = props;
 
-  const wrapperRef = useRef<HTMLElement>();
+  const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
   const [value, setValue] = useState<number>(propValue ?? min);
 

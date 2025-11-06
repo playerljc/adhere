@@ -12,13 +12,13 @@ const selectorPrefix = 'adhere-ui-tabs-capsule-tabs';
 
 /**
  * 内部胶囊标签页组件
- * 
+ *
  * @param props - 组件属性
  * @returns JSX元素
  */
 const InternalSystemCapsuleTabs = memo<SystemCapsuleTabsProps>(
   ({ className, style, innerClassName, innerStyle, items, ...props }) => {
-    const wrapperRef = useRef<HTMLDivElement | undefined>();
+    const wrapperRef = useRef<HTMLDivElement | undefined>(undefined);
 
     useTheme<HTMLElement>({
       elRef: wrapperRef,

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { memo, useCallback, useContext } from 'react';
-import ReactDOM from 'react-dom';
+import ContextMenu from './ContextMenu';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -38,7 +38,9 @@ const MenuItem = memo<MenuItemProps>((props) => {
 
     if (handler) {
       handler(id, attribute);
-      ReactDOM.unmountComponentAtNode(el as HTMLElement);
+      if (el) {
+        ContextMenu.close(el as HTMLDivElement);
+      }
     }
   }
 

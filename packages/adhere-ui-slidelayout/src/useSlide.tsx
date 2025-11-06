@@ -36,7 +36,7 @@ interface UseSlideReturn {
  */
 export default function useSlide(
   props: OverlayProps,
-  el: RefObject<HTMLDivElement>,
+  el: RefObject<HTMLDivElement | null>,
   positionConfig: MutableRefObject<PositionConfig>,
 ): UseSlideReturn {
   const {

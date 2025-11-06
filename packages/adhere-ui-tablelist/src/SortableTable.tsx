@@ -7,14 +7,25 @@
  */
 import { Table } from 'antd';
 import React from 'react';
-import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+import { DndContext, PointerSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
+import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 import { selectorPrefix } from './TableList';
 import type { TSortTableProps, SortableTableState } from './types';
 
-const SortableItem = SortableElement((props: any) => <tr {...props} />);
+const DraggableRow: React.FC<any> = (props: any) => {
+  const id = props['data-row-key'];
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
-const SortableWrapper = SortableContainer((props: any) => <tbody {...props} />);
+  const style: React.CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    ...(props.style || {}),
+  };
+
+  return <tr ref={setNodeRef} style={style} {...attributes} {...listeners} {...props} />;
+};
 
 /**
  * 可排序表格组件
@@ -63,16 +74,8 @@ class SortableTable<RecordType extends object = any> extends React.Component<
    * @returns 可拖拽行JSX
    */
   DraggableBodyRow = ({ className, style, ...restProps }: any) => {
-    const { dataSource } = this.state;
-    const { rowKey = 'id' } = this.props;
-    const index = dataSource.findIndex((x: any) => {
-      const key = rowKey && typeof rowKey === 'function' ? rowKey(x) : rowKey;
-      return x[key] === restProps['data-row-key'];
-    });
-    
     return (
-      <SortableItem
-        index={index}
+      <DraggableRow
         {...(this.props.sortable &&
           typeof this.props.sortable !== 'boolean' &&
           this.props.sortable.itemProps)}
@@ -87,17 +90,38 @@ class SortableTable<RecordType extends object = any> extends React.Component<
    * @param containerProps - 容器属性
    * @returns 可拖拽容器JSX
    */
-  DraggableContainer = (containerProps: any) => (
-    <SortableWrapper
-      helperClass={`${selectorPrefix}-row-dragging`}
-      onSortEnd={this.onSortEnd}
-      distance={2}
-      {...(this.props.sortable &&
-        typeof this.props.sortable !== 'boolean' &&
-        this.props.sortable.containerProps)}
-      {...containerProps}
-    />
-  );
+  DraggableContainer = (containerProps: any) => {
+    const sensors = useSensors(useSensor(PointerSensor));
+    const { rowKey = 'id' } = this.props;
+    const items = (this.state.dataSource || []).map((x: any) =>
+      rowKey && typeof rowKey === 'function' ? rowKey(x) : x[rowKey],
+    );
+
+    return (
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={({ active, over }) => {
+          if (!active || !over || active.id === over.id) return;
+          const oldIndex = items.indexOf(active.id);
+          const newIndex = items.indexOf(over.id);
+          if (oldIndex !== -1 && newIndex !== -1 && oldIndex !== newIndex) {
+            this.onSortEnd({ oldIndex, newIndex });
+          }
+        }}
+      >
+        <SortableContext items={items} strategy={verticalListSortingStrategy}>
+          <tbody
+            className={`${selectorPrefix}-row-dragging`}
+            {...(this.props.sortable &&
+              typeof this.props.sortable !== 'boolean' &&
+              this.props.sortable.containerProps)}
+            {...containerProps}
+          />
+        </SortableContext>
+      </DndContext>
+    );
+  };
 
   /**
    * 拖拽完成时更改dataSource

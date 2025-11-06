@@ -36,7 +36,7 @@ const SearchKeyWord = memo<SearchKeyWordProps>(
   }) => {
     const triggerRef = useRef<SearchBarRef | null>(null);
 
-    const searchRef = useRef<SearchBarRef | null>();
+    const searchRef = useRef<SearchBarRef | null>(null);
 
     const [historyData, dispatch] = useImmerReducer<SearchHistoryData, SearchHistoryAction>(
       SearchHistoryReducer(searchKeyWordHistoryMaxSize),

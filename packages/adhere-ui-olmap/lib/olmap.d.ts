@@ -1,5 +1,4 @@
 import { Style } from 'ol/style.js';
-import PropTypes from 'prop-types';
 import React from 'react';
 import GeoLayer from './GeoLayer';
 import type { GeoJSONStyle, MapInstance, OLMapProps, OLMapState } from './types';
@@ -14,16 +13,16 @@ export declare class OlMap extends React.Component<OLMapProps, OLMapState> imple
     map: any;
     static defaultProps: Partial<OLMapProps>;
     static propTypes: {
-        type: PropTypes.Requireable<"administrative" | "satellite">;
-        mapConfig: PropTypes.Requireable<object>;
-        maxZoom: PropTypes.Requireable<NonNullable<string | number | null | undefined>>;
-        zoom: PropTypes.Requireable<NonNullable<string | number | null | undefined>>;
-        fitZoom: PropTypes.Requireable<NonNullable<string | number | null | undefined>>;
-        minZoom: PropTypes.Requireable<NonNullable<string | number | null | undefined>>;
-        center: PropTypes.Requireable<(number | null | undefined)[]>;
-        extent: PropTypes.Requireable<((number | null | undefined)[] | null | undefined)[]>;
-        layers: PropTypes.Requireable<any[]>;
-        onAllTileloadend: PropTypes.Requireable<(...args: any[]) => any>;
+        type: any;
+        mapConfig: any;
+        maxZoom: any;
+        zoom: any;
+        fitZoom: any;
+        minZoom: any;
+        center: any;
+        extent: any;
+        layers: any;
+        onAllTileloadend: any;
     };
     constructor(props: OLMapProps);
     /**

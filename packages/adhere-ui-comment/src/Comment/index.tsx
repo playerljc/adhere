@@ -76,7 +76,7 @@ const Comment = memo<CommentProps>((props) => {
     emojiPickerProps,
   } = props;
 
-  const wrapperRef = useRef<HTMLElement | undefined>();
+  const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
   useTheme<HTMLElement>({
     elRef: wrapperRef,

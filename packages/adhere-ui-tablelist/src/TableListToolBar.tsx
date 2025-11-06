@@ -6,8 +6,10 @@
  * @LastEditTime: 2021-05-06 14:25:16
  */
 import { Checkbox, Popover, Tooltip } from 'antd';
-import React from 'react';
-import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+import React, { useMemo } from 'react';
+import { DndContext, PointerSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
+import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 import { ReloadOutlined, SettingOutlined } from '@ant-design/icons';
 import Intl from '@baifendian/adhere-util-intl';
@@ -136,9 +138,51 @@ export const ToolbarSetting: React.FC<ToolbarSettingComponentProps> = ({
   onSettingSortEnd,
   selectedColumnKeys,
 }) => {
-  const SortableItem = SortableElement((props: any) => <Checkbox {...props} />);
+  const SortableItem: React.FC<any> = (props: any) => {
+    const { setNodeRef, attributes, listeners, transform, transition } = useSortable({
+      id: props.value,
+    });
 
-  const SortableWrapper = SortableContainer((props: any) => <Checkbox.Group {...props} />);
+    const style: React.CSSProperties = {
+      transform: CSS.Transform.toString(transform),
+      transition,
+    };
+
+    return (
+      <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+        <Checkbox {...props} />
+      </div>
+    );
+  };
+
+  const SortableWrapper: React.FC<any> = ({ children, value, onChange, onSortEnd, ...rest }: any) => {
+    const sensors = useSensors(useSensor(PointerSensor));
+    const items = useMemo(() => {
+      const arr = React.Children.toArray(children) as any[];
+      return arr.map((c) => c?.props?.value).filter((k) => k != null);
+    }, [children]);
+
+    return (
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={({ active, over }) => {
+          if (!active || !over || active.id === over.id) return;
+          const oldIndex = items.indexOf(active.id);
+          const newIndex = items.indexOf(over.id);
+          if (oldIndex !== -1 && newIndex !== -1 && oldIndex !== newIndex) {
+            onSortEnd?.({ oldIndex, newIndex });
+          }
+        }}
+      >
+        <SortableContext items={items} strategy={verticalListSortingStrategy}>
+          <Checkbox.Group value={value} onChange={onChange} {...rest}>
+            {children}
+          </Checkbox.Group>
+        </SortableContext>
+      </DndContext>
+    );
+  };
 
   /**
    * 设置标题组件属性接口
@@ -201,7 +245,6 @@ export const ToolbarSetting: React.FC<ToolbarSettingComponentProps> = ({
         value={selectedColumnKeys}
         onChange={onChange}
         onSortEnd={onSortEnd}
-        distance={2}
       >
         {columns.map((item: any, index: number) => (
           // @ts-ignore

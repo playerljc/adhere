@@ -1,3 +1,4 @@
 import React from 'react';
-declare const _default: React.ComponentClass<unknown, any>;
-export default _default;
+export default function DragHandle({ children }: {
+    children?: React.ReactNode;
+}): React.JSX.Element;

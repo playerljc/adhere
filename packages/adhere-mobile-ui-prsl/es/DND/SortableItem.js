@@ -1,2 +1,2 @@
-import{SortableElement}from"react-sortable-hoc";export default SortableElement(function(e){return e.children});
+import React from"react";import{useSortable}from"@dnd-kit/sortable";import{CSS}from"@dnd-kit/utilities";import{SortableItemContext}from"./SortableItemContext";export default function SortableItem(t){var e=t.index,t=t.children,e=useSortable({id:e}),r=e.attributes,o=e.listeners,i=e.setNodeRef,a=e.setActivatorNodeRef,n=e.transition,e={transform:CSS.Transform.toString(e.transform),transition:n};return React.createElement(SortableItemContext.Provider,{value:{attributes:null!=r?r:{},listeners:null!=o?o:{},setActivatorNodeRef:a}},React.createElement("div",{ref:i,style:e},t))}
 //# sourceMappingURL=SortableItem.js.map

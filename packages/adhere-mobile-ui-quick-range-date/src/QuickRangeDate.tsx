@@ -73,7 +73,7 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
     ...adhereQuickRangeDateProps
   }) => {
     /** 外层容器引用 */
-    const wrapperRef = useRef<HTMLElement | undefined>();
+    const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
     /** 内部状态值 */
     const [selfValue, setSelfValue] = useState<DateValue | undefined>(

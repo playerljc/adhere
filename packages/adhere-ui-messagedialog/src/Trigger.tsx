@@ -59,14 +59,8 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
 
       // 检查是否为ReactElement
       if (React.isValidElement(children)) {
-        return React.cloneElement(
-          children,
-          {
-            ...children.props,
-            value,
-          },
-          children.props.children,
-        );
+        const element = children as React.ReactElement<any>;
+        return React.cloneElement(element, { value } as any);
       }
 
       return children;

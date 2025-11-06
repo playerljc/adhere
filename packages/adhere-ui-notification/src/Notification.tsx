@@ -1,5 +1,5 @@
 import React, { ReactNode, useContext, useEffect, useRef } from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { v1 } from 'uuid';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -207,7 +207,7 @@ class Notification implements NotificationInstance {
       );
     };
 
-    const root = ReactDOM.createRoot(notificationElement);
+    const root = createRoot(notificationElement);
     const component = renderToWrapper ? (
       renderToWrapper(() => <CustomComponent />)
     ) : (
@@ -279,7 +279,7 @@ class Notification implements NotificationInstance {
       );
     };
 
-    const root = ReactDOM.createRoot(notificationElement);
+    const root = createRoot(notificationElement);
     const component = renderToWrapper ? (
       renderToWrapper(() => <StandardComponent />)
     ) : (

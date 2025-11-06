@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { CodePanelProps } from './types';
 /**
@@ -12,7 +11,7 @@ export declare const CodePanelDefaultProps: {
     theme: string;
 };
 export declare const CodePanelPropTypes: {
-    codeText: PropTypes.Requireable<string>;
-    theme: PropTypes.Requireable<string>;
+    codeText: any;
+    theme: any;
 };
 export default CodePanel;

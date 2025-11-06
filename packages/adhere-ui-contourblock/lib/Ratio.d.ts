@@ -27,5 +27,5 @@ import { RatioProps } from './types';
  * @param props.children - 子元素内容
  * @returns JSX.Element
  */
-declare const Ratio: React.MemoExoticComponent<React.ForwardRefExoticComponent<RatioProps & React.RefAttributes<HTMLDivElement>>>;
+declare const Ratio: React.NamedExoticComponent<RatioProps & React.RefAttributes<HTMLDivElement>>;
 export default Ratio;

@@ -34,27 +34,27 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.4.0",
+    "@ant-design/icons": "^6.1.0",
     "@baifendian/adhere-ui-configprovider": "^2.11.0",
     "@baifendian/adhere-ui-hooks": "^2.11.0",
     "@baifendian/adhere-ui-space": "^2.11.0",
     "@baifendian/adhere-util": "^2.11.0",
     "@baifendian/adhere-util-intl": "^2.11.0",
     "ahooks": "^3.8.4",
-    "antd-mobile": "^5.39.0",
+    "antd-mobile": "^5.41.1",
     "antd-mobile-icons": "^0.3.0",
     "classnames": "^2.5.1",
     "lodash.uniq": "^4.5.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.2.0"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
     "@baifendian/adhere-e2e": "^2.11.0",
     "@baifendian/adhere-mock": "^2.11.0",
     "@ctsj/build": "6.4.1",
-    "@types/react": "^18.3.1",
-    "@types/react-dom": "^18.3.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
     "babel-plugin-import": "^1.13.8",
     "mockjs": "^1.1.0",
     "npm-run-all": "^4.1.5",
@@ -62,8 +62,8 @@
   },
   "peerDependencies": {
     "antd-mobile": ">=5.0.0 - <6.0.0",
-    "react": ">=18.0.0 - <19.0.0",
-    "react-dom": ">=18.0.0 - <19.0.0"
+    "react": ">=18.0.0 - <20.0.0",
+    "react-dom": ">=18.0.0 - <20.0.0"
   },
   "publishConfig": {
     "access": "public"

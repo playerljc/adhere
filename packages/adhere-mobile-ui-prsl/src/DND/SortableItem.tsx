@@ -1,6 +1,28 @@
 import React from 'react';
-import { SortableElement } from 'react-sortable-hoc';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
-import type { SortableElementProps } from '../types';
+import { SortableItemContext } from './SortableItemContext';
 
-export default SortableElement<SortableElementProps>(({ children }) => children);
+type Props = {
+  index: number;
+  children?: React.ReactNode;
+};
+
+export default function SortableItem({ index, children }: Props) {
+  const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition } =
+    useSortable({ id: index });
+
+  const style: React.CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <SortableItemContext.Provider value={{ attributes: attributes ?? {}, listeners: listeners ?? {}, setActivatorNodeRef }}>
+      <div ref={setNodeRef} style={style}>
+        {children}
+      </div>
+    </SortableItemContext.Provider>
+  );
+}

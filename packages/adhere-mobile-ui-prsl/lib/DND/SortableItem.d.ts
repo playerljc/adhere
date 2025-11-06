@@ -1,4 +1,7 @@
 import React from 'react';
-import type { SortableElementProps } from '../types';
-declare const _default: React.ComponentClass<SortableElementProps & import("react-sortable-hoc").SortableElementProps, any>;
-export default _default;
+type Props = {
+    index: number;
+    children?: React.ReactNode;
+};
+export default function SortableItem({ index, children }: Props): React.JSX.Element;
+export {};

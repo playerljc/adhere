@@ -1,5 +1,4 @@
 import { ListSize } from 'antd/es/list';
-import PropTypes from 'prop-types';
 import React, { type ReactElement, type ReactNode, type RefObject } from 'react';
 import { ConfigProviderContext } from '@baifendian/adhere-ui-configprovider/es/types';
 import type { Metas, SearchListProps, SearchListState } from './types';
@@ -17,8 +16,8 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
     static NUMBER_GENERATOR_RULE_CONTINUITY: symbol;
     static defaultProps: any;
     static propTypes: any;
-    protected listWrapRef: RefObject<HTMLDivElement>;
-    protected childrenWrapRef: RefObject<HTMLDivElement>;
+    protected listWrapRef: RefObject<HTMLDivElement | null>;
+    protected childrenWrapRef: RefObject<HTMLDivElement | null>;
     protected configProviderContextValue: ConfigProviderContext | undefined;
     /**
      * isShowNumber
@@ -268,9 +267,9 @@ export declare const defaultProps: {
     fixedListSpaceBetween: boolean;
 };
 export declare const propTypes: {
-    title: PropTypes.Requireable<string>;
-    antdListProps: PropTypes.Requireable<object>;
-    fixedSelectionHeaderAutoList: PropTypes.Requireable<boolean>;
-    fixedListSpaceBetween: PropTypes.Requireable<boolean>;
+    title: any;
+    antdListProps: any;
+    fixedSelectionHeaderAutoList: any;
+    fixedListSpaceBetween: any;
 };
 export default SearchList;

@@ -22,35 +22,12 @@ declare class PlayGroundTab extends APlayGround<PlayGroundTabProps, PlayGroundTa
 }
 export declare const PlayGroundTabDefaultProps: PlayGroundTabProps;
 export declare const PlayGroundTabPropTypes: {
-    active: import("prop-types").Requireable<string>;
-    config: import("prop-types").Requireable<(import("prop-types").InferProps<{
-        className: import("prop-types").Requireable<string>;
-        style: import("prop-types").Requireable<object>;
-        key: import("prop-types").Requireable<string>;
-        title: import("prop-types").Requireable<NonNullable<import("prop-types").ReactNodeLike>>;
-        codeText: import("prop-types").Requireable<string>;
-        theme: import("prop-types").Requireable<string>;
-    }> | null | undefined)[]>;
-    onChange: import("prop-types").Requireable<(...args: any[]) => any>;
-    id: import("prop-types").Requireable<string>;
-    cardProps: import("prop-types").Requireable<import("prop-types").InferProps<{
-        className: import("prop-types").Requireable<string>;
-        style: import("prop-types").Requireable<object>;
-        headerClassName: import("prop-types").Requireable<string>;
-        headerStyle: import("prop-types").Requireable<object>;
-        bodyClassName: import("prop-types").Requireable<string>;
-        bodyStyle: import("prop-types").Requireable<object>;
-        actionClassName: import("prop-types").Requireable<string>;
-        actionStyle: import("prop-types").Requireable<object>;
-        title: import("prop-types").Requireable<NonNullable<import("prop-types").ReactNodeLike>>;
-        extra: import("prop-types").Requireable<import("prop-types").ReactNodeLike>;
-        actions: import("prop-types").Requireable<import("prop-types").ReactNodeLike[]>;
-        description: import("prop-types").Requireable<import("prop-types").InferProps<{
-            title: import("prop-types").Requireable<NonNullable<import("prop-types").ReactNodeLike>>;
-            info: import("prop-types").Requireable<NonNullable<import("prop-types").ReactNodeLike>>;
-        }>>;
-    }>>;
-    isActive: import("prop-types").Requireable<boolean>;
-    expand: import("prop-types").Requireable<boolean>;
+    active: any;
+    config: any;
+    onChange: any;
+    id: any;
+    cardProps: any;
+    isActive: any;
+    expand: any;
 };
 export default PlayGroundTab;

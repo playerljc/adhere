@@ -158,6 +158,7 @@ declare const _default: {
                 confirm: string;
                 start: string;
                 end: string;
+                startAndEnd: string;
                 today: string;
                 markItems: string[];
                 yearAndMonth: string;
@@ -440,6 +441,7 @@ declare const _default: {
                 confirm: string;
                 start: string;
                 end: string;
+                startAndEnd: string;
                 today: string;
                 markItems: string[];
                 yearAndMonth: string;
@@ -722,6 +724,7 @@ declare const _default: {
                 confirm: string;
                 start: string;
                 end: string;
+                startAndEnd: string;
                 today: string;
                 markItems: string[];
                 yearAndMonth: string;

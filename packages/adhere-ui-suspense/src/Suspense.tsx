@@ -40,7 +40,7 @@ abstract class Suspense<
   isFirstLoading = false;
 
   /** 子组件包装器的引用 */
-  protected childrenWrapRef: RefObject<HTMLDivElement> = createRef();
+  protected childrenWrapRef: RefObject<HTMLDivElement | null> = createRef<HTMLDivElement | null>();
 
   /** 配置提供者上下文 */
   protected _context: ConfigProviderContext | undefined = undefined;

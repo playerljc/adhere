@@ -29,7 +29,7 @@ function Paging<Option>({
   onDataSourceChange,
   ...prslProps
 }: PagingProps<Option>) {
-  const pagingRef = useRef<PRSLHandle>();
+  const pagingRef = useRef<PRSLHandle>({} as PRSLHandle);
   const callbackHandler = useRef<Function | null>(null);
   const status = useRef(ScrollLoad.NORMAL);
 

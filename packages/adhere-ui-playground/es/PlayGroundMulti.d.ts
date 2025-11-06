@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import APlayGround from './APlayGround';
 import { PlayGroundMultiProps, PlayGroundMultiState } from './types';
@@ -34,40 +33,10 @@ declare class PlayGroundMulti extends APlayGround<PlayGroundMultiProps, PlayGrou
 }
 export declare const PlayGroundMultiDefaultProps: PlayGroundMultiProps;
 export declare const PlayGroundMultiPropTypes: {
-    id: PropTypes.Requireable<string>;
-    cardProps: PropTypes.Requireable<PropTypes.InferProps<{
-        className: PropTypes.Requireable<string>;
-        style: PropTypes.Requireable<object>;
-        headerClassName: PropTypes.Requireable<string>;
-        headerStyle: PropTypes.Requireable<object>;
-        bodyClassName: PropTypes.Requireable<string>;
-        bodyStyle: PropTypes.Requireable<object>;
-        actionClassName: PropTypes.Requireable<string>;
-        actionStyle: PropTypes.Requireable<object>;
-        title: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
-        extra: PropTypes.Requireable<PropTypes.ReactNodeLike>;
-        actions: PropTypes.Requireable<PropTypes.ReactNodeLike[]>;
-        description: PropTypes.Requireable<PropTypes.InferProps<{
-            title: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
-            info: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
-        }>>;
-    }>>;
-    isActive: PropTypes.Requireable<boolean>;
-    expand: PropTypes.Requireable<boolean>;
-    config: PropTypes.Requireable<(NonNullable<PropTypes.InferProps<{
-        codeText: PropTypes.Requireable<string>;
-        theme: PropTypes.Requireable<string>;
-    }> | PropTypes.InferProps<{
-        active: PropTypes.Requireable<string>;
-        config: PropTypes.Requireable<(PropTypes.InferProps<{
-            className: PropTypes.Requireable<string>;
-            style: PropTypes.Requireable<object>;
-            key: PropTypes.Requireable<string>;
-            title: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
-            codeText: PropTypes.Requireable<string>;
-            theme: PropTypes.Requireable<string>;
-        }> | null | undefined)[]>;
-        onChange: PropTypes.Requireable<(...args: any[]) => any>;
-    }> | null | undefined> | null | undefined)[]>;
+    id: any;
+    cardProps: any;
+    isActive: any;
+    expand: any;
+    config: any;
 };
 export default PlayGroundMulti;

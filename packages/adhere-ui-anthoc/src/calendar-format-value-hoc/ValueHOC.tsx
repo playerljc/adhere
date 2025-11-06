@@ -101,7 +101,7 @@ const ValueHOC: FC<CalendarFormatValueHOCProps> = ({
 
   return (
     <Calendar
-      {...props}
+      {...(props as any)}
       defaultValue={targetDefaultValue}
       value={targetValue}
       validRange={targetValidRange}

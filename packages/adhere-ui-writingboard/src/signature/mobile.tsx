@@ -40,7 +40,7 @@ const InternalMobileSignature = memo<
     ({ className, style, value, onChange, modalProps, coreProps }, ref) => {
       const coreRef = useRef<SignatureCoreHandle>(null);
 
-      const wrapperRef = useRef<HTMLElement | undefined>();
+      const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
       useTheme<HTMLElement>({
         elRef: wrapperRef,

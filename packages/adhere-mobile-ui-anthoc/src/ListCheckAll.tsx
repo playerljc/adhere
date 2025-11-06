@@ -26,7 +26,7 @@ const ListCheckAll: FC<ListCheckAllProps> = ({
   selectorPrefix,
   childrenOrigin,
 }) => {
-  const wrapperRef = useRef<HTMLElement | undefined>();
+  const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
   useTheme<HTMLElement>({
     elRef: wrapperRef,

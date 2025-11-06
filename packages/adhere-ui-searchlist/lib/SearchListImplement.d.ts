@@ -8,7 +8,7 @@ import type { ISearchListImplement, ListExpandable, SearchListImplementFactoryFu
 export declare const selectorPrefix = "adhere-ui-search-table-implement";
 export declare class SearchListImplement<P extends SearchListProps, S extends SearchListState> extends SearchList<SearchListImplementProps, SearchListImplementState> implements ISearchListImplement {
     static displayName: string;
-    innerWrapRef: RefObject<HTMLDivElement>;
+    innerWrapRef: RefObject<HTMLDivElement | null>;
     constructor(props: any);
     componentDidMount(): void;
     /**

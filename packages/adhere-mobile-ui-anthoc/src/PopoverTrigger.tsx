@@ -32,7 +32,7 @@ const PopoverTrigger: FC<PopoverTriggerProps> = ({
   disabled = false,
   beforeTrigger,
 }) => {
-  const wrapperRef = useRef<HTMLElement | undefined>();
+  const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
   useTheme<HTMLElement>({
     elRef: wrapperRef,

@@ -20,7 +20,7 @@ const { useTheme } = ConfigProvider;
  * @returns JSX元素
  */
 const View = memo<ViewProps>(({ wrapClassName, wrapStyle, value, ...ellipsisProps }) => {
-  const wrapperRef = useRef<HTMLElement | undefined>();
+  const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
   useTheme<HTMLElement>({
     elRef: wrapperRef,

@@ -51,7 +51,7 @@ const ListStandard = memo<ListStandardProps>((props) => {
     page: 1,
     limit,
   });
-  const callbackHandler = useRef<(params?: any) => void>();
+  const callbackHandler = useRef<(params?: any) => void>(undefined);
   const status = useRef<string>(ScrollLoad.NORMAL);
   const mainRef = useRef<HTMLDivElement | null>(null);
 

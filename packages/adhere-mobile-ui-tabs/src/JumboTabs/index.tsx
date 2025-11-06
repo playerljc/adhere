@@ -12,13 +12,13 @@ const selectorPrefix = 'adhere-ui-tabs-jumbo-tabs';
 
 /**
  * 内部巨型标签页组件
- * 
+ *
  * @param props - 组件属性
  * @returns JSX元素
  */
 const InternalSystemJumboTabs = memo<SystemJumboTabsProps>(
   ({ className, style, innerClassName, innerStyle, items, ...props }) => {
-    const wrapperRef = useRef<HTMLDivElement | undefined>();
+    const wrapperRef = useRef<HTMLDivElement | undefined>(undefined);
 
     useTheme<HTMLElement>({
       elRef: wrapperRef,

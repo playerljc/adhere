@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import ReactDOM, { Root } from 'react-dom/client';
+import { Root, createRoot } from 'react-dom/client';
 import { v1 } from 'uuid';
 
 import Util from '@baifendian/adhere-util';
@@ -21,6 +21,13 @@ let el: HTMLElement | null = null;
 
 /** 渲染包装器函数 */
 let renderToWrapper: ((children: () => ReactNode) => ReactNode) | null = null;
+
+function MountEffect({ onMounted, children }: { onMounted?: () => void; children: ReactNode }) {
+  React.useEffect(() => {
+    onMounted?.();
+  }, []);
+  return <>{children}</>;
+}
 
 /**
  * Popup弹窗类
@@ -82,24 +89,25 @@ export class Popup {
     this.popupEl.className = selectorPrefix;
     this.popupEl.style.zIndex = String(zIndex || 11000);
 
-    this.root = ReactDOM.createRoot(this.popupEl);
+    this.root = createRoot(this.popupEl);
 
-    const element = React.cloneElement(children as React.ReactElement, {
-      ref: () => {
-        this.el.appendChild(this.popupEl!);
+    const element = (
+      <MountEffect
+        onMounted={() => {
+          this.el.appendChild(this.popupEl!);
 
-        const configProviderEL = Util.getTopDom(
-          this.popupEl!,
-          'adhere-ui-config-provider',
-        );
+          const configProviderEL = Util.getTopDom(this.popupEl!, 'adhere-ui-config-provider');
 
-        if (configProviderEL) {
-          this.popupEl!.style.cssText = configProviderEL.style.cssText;
-        }
+          if (configProviderEL) {
+            this.popupEl!.style.cssText = configProviderEL.style.cssText;
+          }
 
-        this.trigger('onCreate');
-      },
-    });
+          this.trigger('onCreate');
+        }}
+      >
+        {children as React.ReactElement}
+      </MountEffect>
+    );
 
     this.root.render(renderToWrapper?.(() => element) ?? element);
     this.popupHandlers.set(this.popupEl, this.root);
@@ -125,22 +133,23 @@ export class Popup {
     const { children } = this.config;
     const elementToRender = newChildren ?? children;
 
-    const element = React.cloneElement(elementToRender as React.ReactElement, {
-      ref: () => {
-        this.el.appendChild(this.popupEl!);
+    const element = (
+      <MountEffect
+        onMounted={() => {
+          this.el.appendChild(this.popupEl!);
 
-        const configProviderEL = Util.getTopDom(
-          this.popupEl!,
-          'adhere-ui-config-provider',
-        );
+          const configProviderEL = Util.getTopDom(this.popupEl!, 'adhere-ui-config-provider');
 
-        if (configProviderEL) {
-          this.popupEl!.style.cssText = configProviderEL.style.cssText;
-        }
+          if (configProviderEL) {
+            this.popupEl!.style.cssText = configProviderEL.style.cssText;
+          }
 
-        this.trigger('onUpdate');
-      },
-    });
+          this.trigger('onUpdate');
+        }}
+      >
+        {elementToRender as React.ReactElement}
+      </MountEffect>
+    );
 
     this.root?.render(renderToWrapper?.(() => element) ?? element);
   }
@@ -217,12 +226,14 @@ export class Popup {
     const promise = this.config.onBeforeClose?.();
 
     if (promise && typeof promise.then === 'function') {
-      promise.then(() => {
-        this.removeModalClasses();
-      }).catch((error) => {
-        console.error('Error in onBeforeClose:', error);
-        this.removeModalClasses();
-      });
+      promise
+        .then(() => {
+          this.removeModalClasses();
+        })
+        .catch((error) => {
+          console.error('Error in onBeforeClose:', error);
+          this.removeModalClasses();
+        });
     } else {
       this.removeModalClasses();
     }

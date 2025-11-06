@@ -25,7 +25,7 @@ const useAsyncCascader: UseAsyncCascader = ({
 }) => {
   const [treeData, setTreeData] = useState<CascaderProps['options']>([]);
 
-  const changeValue = useRef();
+  const changeValue = useRef<any>(undefined);
 
   /**
    * findNodeById

@@ -23,7 +23,7 @@ function ListFilter<Option>({
   bodyWrapperStyle,
   renderEmpty,
 }: ListFilterProps<Option>) {
-  const wrapperRef = useRef<HTMLElement | undefined>();
+  const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
   const [filterValue, setFilterValue] = useState<string>('');
 

@@ -1,4 +1,11 @@
 import React from 'react';
-import type { SortableContainerProps } from '../types';
-declare const _default: React.ComponentClass<SortableContainerProps & import("react-sortable-hoc").SortableContainerProps, any>;
-export default _default;
+type Props = {
+    children?: React.ReactNode;
+    onSortEnd?: (params: {
+        oldIndex: number;
+        newIndex: number;
+    }) => void;
+    useDragHandle?: boolean;
+};
+export default function SortableContainer({ children, onSortEnd }: Props): React.JSX.Element;
+export {};

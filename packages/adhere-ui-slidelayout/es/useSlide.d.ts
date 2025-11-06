@@ -23,5 +23,5 @@ interface UseSlideReturn {
  * const { getDuration, maskEl } = useSlide(props, elRef, positionConfig);
  * ```
  */
-export default function useSlide(props: OverlayProps, el: RefObject<HTMLDivElement>, positionConfig: MutableRefObject<PositionConfig>): UseSlideReturn;
+export default function useSlide(props: OverlayProps, el: RefObject<HTMLDivElement | null>, positionConfig: MutableRefObject<PositionConfig>): UseSlideReturn;
 export {};

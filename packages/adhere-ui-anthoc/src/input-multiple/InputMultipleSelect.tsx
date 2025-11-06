@@ -20,7 +20,7 @@ const InputMultipleSelect: FC<InputMultipleSelectProps> = ({
   selectProps,
   ...inputMultipleSelectProps
 }) => {
-  const wrapperRef = useRef<HTMLElement | undefined>();
+  const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
   const [targetValue, setTargetValue] = usePropToState(inputMultipleSelectProps.value);
 

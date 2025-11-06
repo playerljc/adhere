@@ -49,6 +49,7 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
   );
 
   useTheme<HTMLElement>({
+    // @ts-ignore
     elRef: wrapperRef,
     group: 'mobile',
     displayName: 'Tabs',
@@ -145,20 +146,11 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
       >
         {ConditionalRender.conditionalRender({
           conditional: !!swiper,
-          match: children?.map?.((reactElement) => {
-            const {
-              props: { children: elementChildren, ...elementProps },
-              ...elementRest
-            } = reactElement;
-
-            return {
-              ...elementRest,
-              props: {
-                ...elementProps,
-                children: null,
-              },
-            };
-          }),
+          match: children?.map?.((reactElement) =>
+            React.isValidElement(reactElement)
+              ? React.cloneElement(reactElement, { children: null } as any)
+              : reactElement,
+          ),
           noMatch: children,
         })}
       </Tabs>
@@ -166,11 +158,15 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
       {!!showArrowMore && (
         <ArrowMore
           zIndex={arrowZIndex ?? 100}
+          // @ts-ignore
           wrapRef={wrapperRef}
-          data={children?.map?.((reactElement) => ({
-            key: reactElement.key,
-            title: reactElement.props.title,
-          }))}
+          data={children
+            ?.map?.((reactElement) =>
+              React.isValidElement(reactElement)
+                ? { key: reactElement.key as any, title: (reactElement.props as any)?.title }
+                : null,
+            )
+            ?.filter(Boolean) as any}
           activeKey={activeKey}
           swiper={!!swiper}
           getActiveIndexByKey={getActiveIndexByKey}
@@ -188,18 +184,21 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
           loop={false}
           {...(swiperProps ?? {})}
         >
-          {children?.map?.((reactElement) => {
+          {children
+            ?.map?.((reactElement) => {
+            if (!React.isValidElement(reactElement)) return null;
+            const el = reactElement as React.ReactElement<any>;
             const {
               key,
               props: { children: elementChildren },
-            } = reactElement;
+            } = el;
 
             if (key === activeKey) {
               swiperLoad.current.set(key as string, true);
             }
 
             return (
-              <Swiper.Item key={key}>
+              <Swiper.Item key={key as string}>
                 <ConditionalRender
                   conditional={!!(key === activeKey || swiperLoad.current.get(key as string))}
                 >
@@ -207,7 +206,8 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
                 </ConditionalRender>
               </Swiper.Item>
             );
-          })}
+            })
+            ?.filter(Boolean) as any}
         </Swiper>
       )}
     </div>

@@ -1,12 +1,18 @@
 import { UnorderedListOutline } from 'antd-mobile-icons';
-import React from 'react';
-import { SortableHandle } from 'react-sortable-hoc';
+import React, { useContext } from 'react';
 
-export default SortableHandle(
-  ({ children }) =>
-    children ?? (
-      <span>
-        <UnorderedListOutline />
-      </span>
-    ),
-);
+import { SortableItemContext } from './SortableItemContext';
+
+export default function DragHandle({ children }: { children?: React.ReactNode }) {
+  const { attributes, listeners, setActivatorNodeRef } = useContext(SortableItemContext);
+
+  return (
+    <span ref={setActivatorNodeRef} {...attributes} {...listeners}>
+      {children ?? (
+        <span>
+          <UnorderedListOutline />
+        </span>
+      )}
+    </span>
+  );
+}

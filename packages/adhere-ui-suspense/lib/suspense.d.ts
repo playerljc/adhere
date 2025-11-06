@@ -22,7 +22,7 @@ declare abstract class Suspense<P extends SuspenseProps = SuspenseProps, S exten
     /** 是否为第一次加载状态 */
     isFirstLoading: boolean;
     /** 子组件包装器的引用 */
-    protected childrenWrapRef: RefObject<HTMLDivElement>;
+    protected childrenWrapRef: RefObject<HTMLDivElement | null>;
     /** 配置提供者上下文 */
     protected _context: ConfigProviderContext | undefined;
     static displayName: string;

@@ -37,7 +37,7 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
   static propTypes: any;
 
   /** 搜索表单引用 */
-  private readonly searchFormRef: React.RefObject<FormInstance>;
+  private readonly searchFormRef: React.RefObject<FormInstance | null>;
   /** 获取模式属性方法 */
   private readonly getModeProps: Function;
   /** 获取默认选中列键方法 */
@@ -99,7 +99,7 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
     this.onSettingSortEnd = util.onSettingSortEnd;
     this.onTableChange = util.onTableChange;
 
-    this.searchFormRef = React.createRef<FormInstance>();
+    this.searchFormRef = React.createRef<FormInstance | null>();
     const modeProps = this.getModeProps();
     
     this.state = {

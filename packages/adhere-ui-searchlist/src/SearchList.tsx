@@ -51,9 +51,9 @@ abstract class SearchList<
   static defaultProps: any;
   static propTypes: any;
 
-  protected listWrapRef: RefObject<HTMLDivElement> = createRef();
+  protected listWrapRef: RefObject<HTMLDivElement | null> = createRef<HTMLDivElement | null>();
 
-  protected childrenWrapRef: RefObject<HTMLDivElement> = createRef();
+  protected childrenWrapRef: RefObject<HTMLDivElement | null> = createRef<HTMLDivElement | null>();
 
   protected configProviderContextValue: ConfigProviderContext | undefined;
 
