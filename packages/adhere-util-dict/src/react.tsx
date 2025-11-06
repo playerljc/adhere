@@ -49,7 +49,7 @@ const FunctionComponent: (
       isPending: true,
     });
 
-    const asyncRef = useRef<SuspenseAsync>();
+    const asyncRef = useRef<SuspenseAsync>({} as SuspenseAsync);
 
     const props = useMemo(() => {
       const _props: any = { ...rest };
@@ -173,26 +173,29 @@ const PromiseComponent: (
       return _props;
     }, [firstLoading, renderNormalLoading, renderEmpty, isEmpty, rest]);
 
-    const fetchData = useCallback(() =>
-      Dict.value[key]?.value
-        .then((res) => {
-          setData({
-            data: res,
-            isValidate: true,
-            isPending: false,
-          });
+    const fetchData = useCallback(
+      () =>
+        Dict.value[key]?.value
+          .then((res) => {
+            setData({
+              data: res,
+              isValidate: true,
+              isPending: false,
+            });
 
-          return res;
-        })
-        .catch((error) => {
-          setData({
-            data: error,
-            isValidate: false,
-            isPending: false,
-          });
+            return res;
+          })
+          .catch((error) => {
+            setData({
+              data: error,
+              isValidate: false,
+              isPending: false,
+            });
 
-          return error;
-        }), [key]);
+            return error;
+          }),
+      [key],
+    );
 
     return (
       <Suspense.ASync

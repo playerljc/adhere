@@ -43,8 +43,8 @@ const SwipeOut = memo<SwipeOutProps>((props) => {
     children,
   } = props;
 
-  const ref = useRef<HTMLDivElement>(null);
-  const swiper = useRef<SwiperRef>();
+  const ref = useRef<HTMLDivElement | null>(null);
+  const swiper = useRef<SwiperRef>({} as SwiperRef);
 
   /**
    * 滑动状态映射表

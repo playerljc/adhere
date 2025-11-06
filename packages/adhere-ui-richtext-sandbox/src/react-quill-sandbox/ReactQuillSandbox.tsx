@@ -59,7 +59,7 @@ const InternalReactQuillSandbox = memo<
 
     const value = useRef<string>(props.value as string);
 
-    const reactQuillRef = useRef<ReactQuill>();
+    const reactQuillRef = useRef<ReactQuill>({} as ReactQuill);
 
     /**
      * renderQuill

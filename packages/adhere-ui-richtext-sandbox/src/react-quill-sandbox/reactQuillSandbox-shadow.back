@@ -2084,7 +2084,7 @@ const ReactQuillSandbox: ForwardRefRenderFunction<
   ReactQuillSandboxHandler,
   ReactQuillSandboxProps
 > = ({ wrapStyle, wrapClassName, ...props }, ref): ReactElement => {
-  const quillSandboxRef = useRef<QuillSandbox>();
+  const quillSandboxRef = useRef<QuillSandbox>({} as QuillSandbox);
 
   useImperativeHandle(ref, () => ({
     focus() {

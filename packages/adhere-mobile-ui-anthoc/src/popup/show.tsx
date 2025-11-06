@@ -2,7 +2,7 @@ import { Button, Popup } from 'antd-mobile';
 import classNames from 'classnames';
 import React from 'react';
 import type { ReactElement } from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import type { Root } from 'react-dom/client';
 
 import type { PopupShowHandler, PopupShowProps } from '../types';
@@ -135,7 +135,7 @@ export function show(props: PopupShowProps): PopupShowHandler {
 
   document.body.appendChild(el);
 
-  const root = ReactDOM.createRoot(el);
+  const root = createRoot(el);
 
   render(false);
 

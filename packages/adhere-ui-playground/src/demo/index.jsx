@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import { DelConfirm } from '@baifendian/adhere';
 
@@ -492,4 +492,4 @@ const Com = () => {
   );
 };
 
-ReactDOM.render(<Com />, document.getElementById('app'));
+ReactDOM.createRoot(document.getElementById('app')).render(<Com />);

@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import ReactDOM, { Root } from 'react-dom/client';
+import { Root, createRoot } from 'react-dom/client';
 import { v1 } from 'uuid';
 
 import Util from '@baifendian/adhere-util';
@@ -82,16 +82,13 @@ export class Popup {
     this.popupEl.className = selectorPrefix;
     this.popupEl.style.zIndex = String(zIndex || 11000);
 
-    this.root = ReactDOM.createRoot(this.popupEl);
+    this.root = createRoot(this.popupEl);
 
     const element = React.cloneElement(children as React.ReactElement, {
       ref: () => {
         this.el.appendChild(this.popupEl!);
 
-        const configProviderEL = Util.getTopDom(
-          this.popupEl!,
-          'adhere-ui-config-provider',
-        );
+        const configProviderEL = Util.getTopDom(this.popupEl!, 'adhere-ui-config-provider');
 
         if (configProviderEL) {
           this.popupEl!.style.cssText = configProviderEL.style.cssText;
@@ -129,10 +126,7 @@ export class Popup {
       ref: () => {
         this.el.appendChild(this.popupEl!);
 
-        const configProviderEL = Util.getTopDom(
-          this.popupEl!,
-          'adhere-ui-config-provider',
-        );
+        const configProviderEL = Util.getTopDom(this.popupEl!, 'adhere-ui-config-provider');
 
         if (configProviderEL) {
           this.popupEl!.style.cssText = configProviderEL.style.cssText;
@@ -217,12 +211,14 @@ export class Popup {
     const promise = this.config.onBeforeClose?.();
 
     if (promise && typeof promise.then === 'function') {
-      promise.then(() => {
-        this.removeModalClasses();
-      }).catch((error) => {
-        console.error('Error in onBeforeClose:', error);
-        this.removeModalClasses();
-      });
+      promise
+        .then(() => {
+          this.removeModalClasses();
+        })
+        .catch((error) => {
+          console.error('Error in onBeforeClose:', error);
+          this.removeModalClasses();
+        });
     } else {
       this.removeModalClasses();
     }

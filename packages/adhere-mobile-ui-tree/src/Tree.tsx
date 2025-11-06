@@ -84,7 +84,7 @@ const InternalTree = memo<TreeProps>(
     onExpand,
     onCheck,
   }) => {
-    const wrapperRef = useRef<HTMLElement | undefined>();
+    const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
     useTheme<HTMLElement>({
       elRef: wrapperRef,

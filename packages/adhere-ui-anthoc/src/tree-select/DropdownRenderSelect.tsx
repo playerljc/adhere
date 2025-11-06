@@ -16,9 +16,9 @@ const treeTransformConfig = {
 
 const InternalDropdownRenderSelect = memo<TreeDropdownRenderSelectProps>(
   ({ children, emptyContent, shouldRenderEmptyData = false, isUsePath, ...props }) => {
-    const currentOriginNode = useRef<ReactElement>();
+    const currentOriginNode = useRef<ReactElement | undefined>(undefined);
 
-    const dropdownRenderElement = useRef<ReactElement>();
+    const dropdownRenderElement = useRef<ReactElement | undefined>(undefined);
 
     function getPathsByValues(_values) {
       const _targetValues = Array.isArray(_values) ? _values : [_values];

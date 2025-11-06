@@ -12,9 +12,9 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
         componentWillUnmount(): void;
         onSubTableChange(pagination: any, filters: any, sorter: any): void;
         onSearchPanelCollapseBefore(): void;
-        unMountSearchAndPaginParamsDeal(): void;
+        unMountSearchAndPaginationParamsDeal(): void;
         isUseMemo(): any;
-        initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
+        initSearchAndPaginationParams(queryReduce?: (key: string, v: any) => any): any;
         hasAdvancedSearch(): boolean;
         hasNumberColumnFixed(): boolean;
         hasOptionColumnFixed(): boolean;

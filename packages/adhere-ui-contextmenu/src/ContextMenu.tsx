@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { type ReactNode, forwardRef, useImperativeHandle, useRef } from 'react';
-import ReactDOM, { Root } from 'react-dom/client';
+import { Root, createRoot } from 'react-dom/client';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
@@ -28,9 +28,9 @@ const ContextMenuComponentFunction = forwardRef<
 >((props, ref) => {
   const { data = [], config, el } = props;
 
-  const wrapperRef = useRef<HTMLElement | undefined>();
+  const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
-  const menuIns = useRef<MenuRefHandle>();
+  const menuIns = useRef<MenuRefHandle>({} as MenuRefHandle);
 
   useTheme<HTMLElement>({
     elRef: wrapperRef,
@@ -140,7 +140,7 @@ const ContextMenu: ContextMenuComponent = {
 
     document.body.appendChild(parentEl);
 
-    const root = ReactDOM.createRoot(
+    const root = createRoot(
       parentEl,
       // () => contextMenuIns.current?.mount(),
     );

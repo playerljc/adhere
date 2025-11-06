@@ -23,12 +23,12 @@ interface UseSlideReturn {
 /**
  * 滑动布局自定义Hook
  * 管理滑动面板的状态、动画和遮罩层
- * 
+ *
  * @param props - 滑动布局属性
  * @param el - 滑动面板DOM元素引用
  * @param positionConfig - 位置配置对象
  * @returns 包含工具函数和遮罩层引用的对象
- * 
+ *
  * @example
  * ```typescript
  * const { getDuration, maskEl } = useSlide(props, elRef, positionConfig);
@@ -50,7 +50,7 @@ export default function useSlide(
   } = props;
 
   const [collapse, setCollapse] = useState<boolean>(props.collapse ?? false);
-  const maskEl = useRef<HTMLDivElement>();
+  const maskEl = useRef<HTMLDivElement | undefined>(undefined);
 
   /**
    * 关闭滑动面板
@@ -132,10 +132,7 @@ export default function useSlide(
         maskEl.current = createMask(zIndex, close);
 
         if (el.current?.parentElement && maskEl.current) {
-          (el.current.parentElement as HTMLDivElement).insertBefore(
-            maskEl.current,
-            el.current,
-          );
+          (el.current.parentElement as HTMLDivElement).insertBefore(maskEl.current, el.current);
         }
       } catch (error) {
         console.error('useSlide: 创建遮罩层失败', error);
@@ -176,7 +173,7 @@ export default function useSlide(
 
   /**
    * 获取动画持续时间
-   * 
+   *
    * @param _time - 指定的时间值
    * @returns 动画持续时间（毫秒）
    */

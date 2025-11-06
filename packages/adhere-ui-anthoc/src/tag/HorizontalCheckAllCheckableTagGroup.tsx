@@ -31,7 +31,7 @@ const InternalHorizontalCheckAllCheckableTagGroup = memo<HorizontalCheckableTagG
     render,
     ...props
   }) => {
-    const wrapperRef = useRef<HTMLElement | undefined>();
+    const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
     useTheme<HTMLElement>({
       elRef: wrapperRef,

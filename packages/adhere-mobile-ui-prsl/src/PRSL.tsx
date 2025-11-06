@@ -200,7 +200,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
 
       const status = useRef<typeof ScrollLoad.NORMAL | typeof ScrollLoad.EMPTY>(ScrollLoad.NORMAL);
 
-      const scrollLoadRef = useRef<ScrollLoadRefHandle>();
+      const scrollLoadRef = useRef<ScrollLoadRefHandle>({} as ScrollLoadRefHandle);
 
       const pagingRef = useRef({
         page:

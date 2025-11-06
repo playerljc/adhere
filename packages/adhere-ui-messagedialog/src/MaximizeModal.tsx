@@ -26,7 +26,7 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
     ...restProps
   } = props;
 
-  // const wrapperRef = useRef<HTMLElement | undefined>();
+  // const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
   const draggableRef = useRef<any>(null);
 

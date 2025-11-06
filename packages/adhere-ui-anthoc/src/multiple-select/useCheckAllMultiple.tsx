@@ -26,9 +26,9 @@ const useCheckAllMultiple: UseCheckAllMultiple = ({
   render,
   renderLoading,
 }) => {
-  const currentOriginNode = useRef<ReactNode>();
+  const currentOriginNode = useRef<ReactNode>({} as ReactNode);
 
-  const dropdownRenderElement = useRef<ReactNode>();
+  const dropdownRenderElement = useRef<ReactNode>({} as ReactNode);
 
   const fetchLoading = useAutoCompleteFetchLoading(renderLoading);
 

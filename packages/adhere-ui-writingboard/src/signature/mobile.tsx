@@ -40,7 +40,7 @@ const InternalMobileSignature = memo<
     ({ className, style, value, onChange, modalProps, coreProps }, ref) => {
       const coreRef = useRef<SignatureCoreHandle>(null);
 
-      const wrapperRef = useRef<HTMLElement | undefined>();
+      const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
       useTheme<HTMLElement>({
         elRef: wrapperRef,
@@ -53,14 +53,14 @@ const InternalMobileSignature = memo<
           <Modal.TriggerPrompt
             title={Intl.get('edit_signature')}
             popoverTriggerProps={{
-                              renderTrigger: () =>
-                  value ? (
-                    <img src={value} alt="签名" />
-                  ) : (
-                    <div className={classNames(`${selectorPrefix}-mask`)}>
-                      {Intl.get('edit_signature')}
-                    </div>
-                  ),
+              renderTrigger: () =>
+                value ? (
+                  <img src={value} alt="签名" />
+                ) : (
+                  <div className={classNames(`${selectorPrefix}-mask`)}>
+                    {Intl.get('edit_signature')}
+                  </div>
+                ),
             }}
             actions={[
               {

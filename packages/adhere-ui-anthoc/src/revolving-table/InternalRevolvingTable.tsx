@@ -45,7 +45,7 @@ const InternalRevolvingTable = memo<
       },
       ref,
     ) => {
-      const wrapperRef = useRef<HTMLElement | undefined>();
+      const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
       const { media } = useContext(ConfigProvider.Context);
 

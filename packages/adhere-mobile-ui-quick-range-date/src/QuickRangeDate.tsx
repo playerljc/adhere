@@ -21,7 +21,10 @@ const selectorPrefix = 'adhere-mobile-ui-quick-range-date';
  * @param end - 结束时间戳
  * @returns 日期数组或undefined
  */
-function numbersToDate(start: number | undefined, end: number | undefined): [Date, Date] | undefined {
+function numbersToDate(
+  start: number | undefined,
+  end: number | undefined,
+): [Date, Date] | undefined {
   if (start && end) {
     return [new Date(start), new Date(end)];
   }
@@ -73,11 +76,11 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
     ...adhereQuickRangeDateProps
   }) => {
     /** 外层容器引用 */
-    const wrapperRef = useRef<HTMLElement | undefined>();
+    const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
     /** 内部状态值 */
     const [selfValue, setSelfValue] = useState<DateValue | undefined>(
-      AdhereQuickRangeDate.sync(value)
+      AdhereQuickRangeDate.sync(value),
     );
 
     /** 目标配置项，使用传入的配置或默认配置 */
@@ -109,13 +112,13 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
                 popoverTriggerProps={{
                   renderTrigger: (_value: string[]) => {
                     return AdhereQuickRangeDate.getLabel(
-                      selfValue as Omit<DateValue, 'start' | 'end'>
+                      selfValue as Omit<DateValue, 'start' | 'end'>,
                     );
                   },
                 }}
                 onChange={(_value: string[]) => {
                   const { type, value } = AdhereQuickRangeDate.getValueEntityByStringValue(
-                    _value[0]
+                    _value[0],
                   );
 
                   onChange({
@@ -170,7 +173,7 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
         modalTriggerPromptProps,
         innerClassName,
         innerStyle,
-      ]
+      ],
     );
 
     /** 使用主题配置 */
@@ -196,8 +199,8 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
         {...(adhereQuickRangeDateProps ?? {})}
       >
         {({ defaultElement: originDefaultElement, value, onChange }) => {
-          const defaultElement = renderDefaultElement({ 
-            onChange: onChange || (() => {}) 
+          const defaultElement = renderDefaultElement({
+            onChange: onChange || (() => {}),
           });
 
           if (children) {
@@ -208,7 +211,7 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
         }}
       </AdhereQuickRangeDate>
     );
-  }
+  },
 );
 
 /**

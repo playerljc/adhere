@@ -30,7 +30,7 @@ const InternalCustomCheckAllCheckbox = memo<CustomCheckAllCheckboxProps>(
     render,
     ...props
   }) => {
-    const wrapperRef = useRef<HTMLElement | undefined>();
+    const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
     const CheckAllOrigin = useMemo(
       () => (

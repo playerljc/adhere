@@ -31,7 +31,7 @@ const InternalDialogTrigger = memo<DialogTriggerProps<any>>(
   }) => {
     const [visible, setVisible] = useState(false);
 
-    const valueHOCRef = useRef<ValueHOCHandle>();
+    const valueHOCRef = useRef<ValueHOCHandle>({} as ValueHOCHandle);
 
     /**
      * onConfirm

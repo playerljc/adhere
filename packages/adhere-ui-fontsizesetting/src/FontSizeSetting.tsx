@@ -5,7 +5,7 @@ import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Intl from '@baifendian/adhere-util-intl';
 
-import type { FontSizeSettingProps, FontSizePreset, FontSizePresetConfig } from './types';
+import type { FontSizePreset, FontSizePresetConfig, FontSizeSettingProps } from './types';
 
 const selectorPrefix = 'adhere-ui-font-size-setting';
 
@@ -23,9 +23,9 @@ const FONT_SIZE_PRESETS: Record<FontSizePreset, FontSizePresetConfig> = {
 
 /**
  * 字体大小设置组件
- * 
+ *
  * 提供字体大小调节功能，包含预设选项和滑动条控制
- * 
+ *
  * @component
  * @param {FontSizeSettingProps} props - 组件属性
  * @param {string} [props.className] - 自定义CSS类名
@@ -36,7 +36,7 @@ const FONT_SIZE_PRESETS: Record<FontSizePreset, FontSizePresetConfig> = {
  * @param {number} [props.value] - 当前字体大小值
  * @param {(value: number) => void} [props.onChange] - 字体大小变化回调
  * @returns {JSX.Element} 字体大小设置组件
- * 
+ *
  * @example
  * ```tsx
  * <FontSizeSetting
@@ -49,18 +49,18 @@ const FONT_SIZE_PRESETS: Record<FontSizePreset, FontSizePresetConfig> = {
  * ```
  */
 const FontSizeSetting = memo<FontSizeSettingProps>((props) => {
-  const { 
-    className, 
-    style, 
-    onChange, 
-    min = 0, 
-    max = 100, 
+  const {
+    className,
+    style,
+    onChange,
+    min = 0,
+    max = 100,
     step = 1,
     value: propValue,
-    ...restProps 
+    ...restProps
   } = props;
 
-  const wrapperRef = useRef<HTMLElement>();
+  const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
   const [value, setValue] = useState<number>(propValue ?? min);
 
@@ -104,15 +104,11 @@ const FontSizeSetting = memo<FontSizeSettingProps>((props) => {
   }, [propValue]);
 
   return (
-    <div
-      ref={wrapperRef as any}
-      className={classNames(selectorPrefix, className)}
-      style={style}
-    >
+    <div ref={wrapperRef as any} className={classNames(selectorPrefix, className)} style={style}>
       <div className={`${selectorPrefix}-range-wrap`}>
         <div className={`${selectorPrefix}-separated-tool`}>
           {Object.entries(FONT_SIZE_PRESETS).map(([preset, config]) => (
-            <div 
+            <div
               key={preset}
               className={`${selectorPrefix}-separated`}
               onClick={() => handlePresetClick(preset as FontSizePreset)}

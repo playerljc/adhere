@@ -7,7 +7,7 @@
 import { ConfigProvider as AntdMobileConfigProvider } from 'antd-mobile';
 import 'antd-mobile/es/global';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 
 import {
   StyleProvider,
@@ -166,5 +166,5 @@ export default ({
   ContextMenu.setRenderToWrapper(renderToFragmentWrapper);
   Notification.setRenderToWrapper(renderToFragmentWrapper);
 
-  ReactDOM.createRoot(document.getElementById('app')).render(renderToWrapper(() => children));
+  createRoot(document.getElementById('app')).render(renderToWrapper(() => children));
 };

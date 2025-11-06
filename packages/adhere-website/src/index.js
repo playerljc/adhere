@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 
 import {
   StyleProvider,
@@ -216,7 +216,7 @@ function render() {
   });
 
   // 设置root
-  root = ReactDOM.createRoot(document.getElementById('app'));
+  root = createRoot(document.getElementById('app'));
 
   // render
   render();

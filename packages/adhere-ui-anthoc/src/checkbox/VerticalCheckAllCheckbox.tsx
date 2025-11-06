@@ -31,7 +31,7 @@ const InternalVerticalCheckAllCheckbox = memo<VerticalCheckAllCheckboxProps>(
     render,
     ...props
   }) => {
-    const wrapperRef = useRef<HTMLElement | undefined>();
+    const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
     const CheckAllOrigin = useMemo(
       () => (
