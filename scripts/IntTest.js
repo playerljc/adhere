@@ -74,8 +74,66 @@ function gen() {
   });
 }
 
+(function rewriteInternalDepsToFile() {
+  /**
+   * 将 @baifendian/* 依赖改写为 file: 本地相对路径
+   */
+  function rewriteOnePackage(packageName) {
+    const targetPkgDir = path.join(IntTestPath, rootName, packageName);
+    const pkgJsonPath = path.join(targetPkgDir, 'package.json');
+
+    if (!fs.existsSync(pkgJsonPath)) return;
+
+    const json = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
+
+    const fields = [
+      'dependencies',
+      'devDependencies',
+      'peerDependencies',
+      'optionalDependencies',
+    ];
+
+    let changed = false;
+
+    fields.forEach((field) => {
+      const deps = json[field];
+      if (!deps) return;
+      Object.keys(deps).forEach((depName) => {
+        if (typeof depName === 'string' && depName.startsWith(`${rootName}/`)) {
+          const depPackageName = depName.split('/')[1];
+          const depDir = path.join(IntTestPath, rootName, depPackageName);
+          const rel = path
+            .relative(targetPkgDir, depDir)
+            .split(path.sep)
+            .join('/');
+          deps[depName] = `file:${rel}`;
+          changed = true;
+        }
+      });
+    });
+
+    if (changed) {
+      fs.writeFileSync(pkgJsonPath, JSON.stringify(json, null, 2));
+      console.log(`rewrite deps to file: in ${pkgJsonPath}`);
+    }
+  }
+
+  function rewriteAll() {
+    targetPackageNames.forEach((name) => rewriteOnePackage(name));
+  }
+
+  module.exports = {
+    rewriteInternalDepsToFile: rewriteAll,
+  };
+})();
+
 (function () {
   clear();
 
   gen();
+
+  // 复制完成后，重写内部依赖为 file: 本地路径
+  if (module.exports && module.exports.rewriteInternalDepsToFile) {
+    module.exports.rewriteInternalDepsToFile();
+  }
 })();
