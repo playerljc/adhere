@@ -21,13 +21,13 @@
     "umd"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
     "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
-    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
-    "generatorchangelog": "bd changelog/CHANGELOG.html",
     "buildumd": "ctbuild buildumd --packagename AdhereHooks --define alias=@,evnVars=true",
     "e2e": "cross-env e2e media=true",
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "upgrade": "yarn upgrade",
     "upgrade-interactive": "yarn upgrade-interactive"
   },
@@ -36,7 +36,7 @@
     "ahooks": "^3.8.4",
     "react": "^18.3.1",
     "react-dom": "^18.2.0",
-    "use-immer": "^0.10.0"
+    "use-immer": "^0.11.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

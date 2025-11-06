@@ -21,15 +21,15 @@
     "umd"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildpackage:cjs": "ctbuild buildpackagets-babel -c ctbuild.package.ts.cjs.config.js -o lib",
     "postbuildpackage:cjs": "tsc --declaration -p ./ --emitDeclarationOnly --outDir lib",
     "buildpackage:esm": "ctbuild buildpackagets-babel -c ctbuild.package.ts.esm.config.js -o es",
     "postbuildpackage:esm": "tsc --declaration -p ./ --emitDeclarationOnly --outDir es",
-    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename AdhereAutoComplete --define alias=@,evnVars=true",
     "e2e": "cross-env e2e",
     "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "upgrade": "yarn upgrade",
     "upgrade-interactive": "yarn upgrade-interactive"
   },
@@ -41,7 +41,7 @@
     "lodash.uniqby": "^4.7.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "use-immer": "^0.10.0"
+    "use-immer": "^0.11.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

@@ -35,7 +35,7 @@ const TableExt: FC<TableExtProps> = ({
 
   const _hackerElement = useRef<HTMLSpanElement | null>(null);
 
-  const tableWrapRef = useRef<HTMLElement | null>({} as HTMLElement);
+  const tableWrapRef = useRef<HTMLElement | null>(null);
 
   useTheme<HTMLElement>({
     elRef: tableWrapRef,
