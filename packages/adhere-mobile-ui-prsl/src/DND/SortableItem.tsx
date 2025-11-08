@@ -16,6 +16,10 @@ export default function SortableItem({ index, children }: Props) {
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
     transition,
+    // 移动端优化：防止触摸时的默认行为
+    touchAction: 'none',
+    WebkitUserSelect: 'none',
+    userSelect: 'none',
   };
 
   return (

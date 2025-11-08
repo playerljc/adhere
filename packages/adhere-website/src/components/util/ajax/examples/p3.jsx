@@ -53,7 +53,7 @@ export default () => {
                   setPercent(100);
                 },
               })
-              .promise.then((res) => {
+              .then((res) => {
                 setPercent(100);
 
                 if (res) {

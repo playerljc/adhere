@@ -131,7 +131,7 @@ export default () => {
         </button>
       </div>
 
-      <WangEditorSandbox
+      {/*<WangEditorSandbox
         ref={ref}
         wrapStyle={{
           height: 500,
@@ -142,7 +142,7 @@ export default () => {
           setValue(v);
         }}
         readOnly
-      />
+      />*/}
 
       <Form name="userForm" form={form}>
         <Form.Item

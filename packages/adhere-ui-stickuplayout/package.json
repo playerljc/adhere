@@ -36,9 +36,7 @@
     "@baifendian/adhere-util": "^2.11.0",
     "@juggle/resize-observer": "^3.4.0",
     "classnames": "^2.5.1",
-    "lodash.debounce": "^4.0.8",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "lodash.debounce": "^4.0.8"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

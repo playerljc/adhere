@@ -38,14 +38,10 @@
     "@baifendian/adhere-ui-css": "^2.11.0",
     "@baifendian/adhere-util": "^2.11.0",
     "@baifendian/adhere-util-intl": "^2.11.0",
-    "antd": "^5.28.0",
-    "antd-mobile": "^5.41.1",
     "antd-mobile-icons": "^0.3.0",
     "classnames": "^2.5.1",
     "lodash.debounce": "^4.0.8",
     "omit.js": "^2.0.2",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

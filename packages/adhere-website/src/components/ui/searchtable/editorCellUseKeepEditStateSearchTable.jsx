@@ -56,7 +56,7 @@ class EditableCellUseKeepEditStateSearchTable extends ProEditableCellSearchState
    * @protected
    */
   getTotalKey() {
-    return 'totalCount';
+    return 'total';
   }
 
   /**

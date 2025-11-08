@@ -1,4 +1,5 @@
-import React, { Requireable } from 'react';
+import { Requireable } from 'prop-types';
+import React from 'react';
 import { PlayGroundProps, PlayGroundState } from './types';
 export declare const selectPrefix = "adhere-ui-playground";
 /**

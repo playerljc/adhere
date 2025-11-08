@@ -77,6 +77,14 @@ module.exports = {
       /packages[\\/]adhere-.{1,}[\\/]es[\\/].*\.less/,
     );
 
+    // 强制将 react 与 react-dom 解析到顶层 node_modules，避免多份 React 导致运行时报错
+    webpackConfig.resolve = webpackConfig.resolve || {};
+    webpackConfig.resolve.alias = {
+      ...(webpackConfig.resolve.alias || {}),
+      react: path.resolve(__dirname, '../../node_modules/react'),
+      'react-dom': path.resolve(__dirname, '../../node_modules/react-dom'),
+    };
+
     // 变量的引入
     webpackConfig.plugins.push(
       new webpack.DefinePlugin({

@@ -11,5 +11,5 @@ import P7 from './p7';
 import Test from './test';
 
 e2e.PC({
-  children: <Test />,
+  children: <TriggerUpdate />,
 });

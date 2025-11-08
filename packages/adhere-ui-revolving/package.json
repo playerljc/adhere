@@ -33,8 +33,6 @@
   },
   "dependencies": {
     "classnames": "^2.5.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
     "swiper": "^10.1.0",
     "lodash.merge": "^4.6.2"
   },

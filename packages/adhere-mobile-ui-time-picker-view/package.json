@@ -36,11 +36,8 @@
   "dependencies": {
     "@baifendian/adhere-ui-configprovider": "^2.11.0",
     "ahooks": "^3.8.4",
-    "antd-mobile": "^5.41.1",
     "classnames": "^2.5.1",
-    "dayjs": "^1.11.13",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "dayjs": "^1.11.13"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

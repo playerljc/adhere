@@ -40,11 +40,10 @@
     "@baifendian/adhere-util": "^2.11.0",
     "@baifendian/adhere-util-intl": "^2.11.0",
     "classnames": "^2.5.1",
-    "component-playground": "^3.2.1",
     "copy-to-clipboard": "^3.3.1",
-    "qrcode": "^1.5.3",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "prism-react-renderer": "^2.4.1",
+    "react-live": "^4.1.8",
+    "qrcode": "^1.5.3"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

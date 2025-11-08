@@ -1,5 +1,4 @@
-import { unstableSetRender } from 'antd-mobile';
-// Support since version ^5.40.0
+import { unstableSetRender } from 'antd-mobile/es/utils/unstable-render';
 import { createRoot } from 'react-dom/client';
 
 import '@ant-design/v5-patch-for-react-19';

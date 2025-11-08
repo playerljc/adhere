@@ -37,11 +37,8 @@
     "@baifendian/adhere-mobile-ui-tree": "^2.11.0",
     "@baifendian/adhere-ui-configprovider": "^2.11.0",
     "@baifendian/adhere-util-intl": "^2.11.0",
-    "antd-mobile": "^5.41.1",
     "antd-mobile-icons": "^0.3.0",
-    "classnames": "^2.5.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "classnames": "^2.5.1"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

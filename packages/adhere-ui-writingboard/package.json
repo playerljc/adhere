@@ -42,13 +42,9 @@
     "@baifendian/adhere-util-intl": "^2.11.0",
     "@juggle/resize-observer": "^3.3.1",
     "ahooks": "^3.8.4",
-    "antd": "^5.28.0",
-    "antd-mobile": "^5.41.1",
     "classnames": "^2.5.1",
     "lodash.debounce": "^4.0.8",
-    "react": "^19.2.0",
-    "react-color": "^2.19.3",
-    "react-dom": "^19.2.0"
+    "react-color": "^2.19.3"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
@@ -61,6 +57,8 @@
     "typescript": "^5.6.2"
   },
   "peerDependencies": {
+    "antd": ">=5.0.0 - <6.0.0",
+    "antd-mobile": ">=5.0.0 - <6.0.0",
     "react": ">=18.0.0 - <20.0.0",
     "react-dom": ">=18.0.0 - <20.0.0"
   },

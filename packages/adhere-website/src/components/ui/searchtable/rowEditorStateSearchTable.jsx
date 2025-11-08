@@ -57,7 +57,7 @@ class RowEditableStateSearchTable extends ProEditableRowSearchStateTable {
    * @protected
    */
   getTotalKey() {
-    return 'totalCount';
+    return 'total';
   }
 
   /**

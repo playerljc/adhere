@@ -9,7 +9,7 @@ export default () => {
       type="primary"
       onClick={() => {
         MessageDialog.InputPrompt({
-          title: '提示',
+          title: '提示（自定义栅格布局）',
           config: {
             schema: {
               properties: {
@@ -19,8 +19,13 @@ export default () => {
                 },
               },
             },
+            // 自定义 labelCol 和 wrapperCol
+            layout: {
+              labelCol: { span: 8 },
+              wrapperCol: { span: 16 },
+            },
           },
-          width: 300,
+          width: 400,
           zIndex: 1000,
           local: 'zh_CN',
           onSuccess: (value) => {

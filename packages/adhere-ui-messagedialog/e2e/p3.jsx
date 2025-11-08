@@ -9,7 +9,7 @@ export default () => {
       type="primary"
       onClick={() => {
         MessageDialog.Prompt({
-          title: '提示',
+          title: '提示（默认布局）',
           config: {
             schema: {
               properties: {
@@ -43,6 +43,7 @@ export default () => {
                 },
               },
             },
+            // 使用默认布局配置 (labelCol: 6, wrapperCol: 18, layout: 'horizontal')
           },
           width: 300,
           zIndex: 1000,

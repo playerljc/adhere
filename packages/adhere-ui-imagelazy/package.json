@@ -32,9 +32,7 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "lazysizes": "^5.3.2",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "lazysizes": "^5.3.2"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

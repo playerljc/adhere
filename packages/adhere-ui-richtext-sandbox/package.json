@@ -40,8 +40,6 @@
     "ahooks": "^3.8.4",
     "classnames": "^2.5.1",
     "omit.js": "^2.0.2",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
     "react-quill": "^2.0.0"
   },
   "devDependencies": {

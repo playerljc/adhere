@@ -22,8 +22,8 @@ import type { ConfigProviderContext } from '@baifendian/adhere-ui-configprovider
 import Util from '@baifendian/adhere-util';
 import type { IDomEditor } from '@wangeditor/editor';
 
-import ReactDOMStr from '../common-lib/react-dom.production.min';
-import ReactStr from '../common-lib/react.production.min';
+import ReactDOMStr from '../common-lib/react-dom.18.3.1production.min.js';
+import ReactStr from '../common-lib/react.18.3.1.production.min.js';
 import WangEditorStr from './lib/wang-editor-5.1.23';
 import WangEditorReactStr from './lib/wang-editor-react-1.0.6';
 import type {
@@ -70,6 +70,8 @@ const InternalWangEditorSandbox = memo<
     const editor = useRef<IDomEditor | null>(null);
 
     const isTriggerChange = useRef(false);
+
+    const reactRootRef = useRef<any>(null);
 
     // @ts-ignore
     const configProvider = useContext<ConfigProviderContext>(ConfigProvider.Context);
@@ -177,58 +179,157 @@ const InternalWangEditorSandbox = memo<
           // 切换国际化
           i18nChangeLanguage(langMap.get(props.lang || configProvider.intl?.lang || 'zh_CN'));
 
+          // 检查依赖是否加载
+          // @ts-ignore
+          if (!window.WangEditorForReact) {
+            console.error('[WangEditorSandbox] WangEditorForReact is not loaded on window');
+            return;
+          }
+
+          // @ts-ignore
+          if (!window.ReactDOM) {
+            console.error('[WangEditorSandbox] ReactDOM is not loaded on window');
+            return;
+          }
+
+          // @ts-ignore
+          if (!window.React) {
+            console.error('[WangEditorSandbox] React is not loaded on window');
+            return;
+          }
+
           const {
             // @ts-ignore
-            WangEditorForReact: { Editor, Toolbar },
+            WangEditorForReact,
             // @ts-ignore
             ReactDOM,
           } = window;
 
-          ReactDOM.render(
-            <>
-              <Toolbar
-                editor={editor.current}
-                {...defaultToolBarConfig}
-                {...(props.toolBarProps ?? {})}
-              />
-              <Editor
-                ref={ref}
-                {...defaultEditorProps}
-                {...(props.editorProps ?? {})}
-                onCreated={(_editor) => {
-                  editor.current = _editor;
-                  render().then(() => {
-                    if (editorProps?.onCreated) {
-                      editorProps.onCreated(_editor);
+          const { Editor, Toolbar } = WangEditorForReact;
+
+          // 检查组件是否存在
+          if (!Editor || !Toolbar) {
+            console.error('[WangEditorSandbox] Editor or Toolbar component is undefined');
+            return;
+          }
+
+          if ((ReactDOM as any)?.createRoot) {
+            if (!reactRootRef.current) {
+              reactRootRef.current = (ReactDOM as any).createRoot(wrap);
+            }
+
+            try {
+              // @ts-ignore
+              const React = window.React;
+              
+              const element = React.createElement(
+                React.Fragment,
+                null,
+                React.createElement(Toolbar, {
+                  editor: editor.current,
+                  ...defaultToolBarConfig,
+                  ...(props.toolBarProps ?? {}),
+                }),
+                React.createElement(Editor, {
+                  ref: ref,
+                  ...defaultEditorProps,
+                  ...(props.editorProps ?? {}),
+                  onCreated: (_editor) => {
+                    editor.current = _editor;
+                    render().then(() => {
+                      if (editorProps?.onCreated) {
+                        editorProps.onCreated(_editor);
+                      }
+
+                      onRender?.();
+                    });
+                  },
+                  value: value.current,
+                  onChange: (_editor) => {
+                    if (!isTriggerChange.current) {
+                      isTriggerChange.current = true;
+                      return;
                     }
 
-                    onRender?.();
-                  });
-                }}
-                value={value.current}
-                onChange={(_editor) => {
-                  if (!isTriggerChange.current) {
-                    isTriggerChange.current = true;
-                    return;
-                  }
+                    if (props.onChange) {
+                      props.onChange(_editor.getHtml());
+                    }
+                  },
+                }),
+              );
+              
+              reactRootRef.current.render(element);
+            } catch (error) {
+              console.error('[WangEditorSandbox] Render error:', error);
+              throw error;
+            }
 
-                  if (props.onChange) {
-                    props.onChange(_editor.getHtml());
-                  }
-                }}
-              />
-            </>,
-            wrap,
-            () => {
-              isMount.current = true;
+            isMount.current = true;
 
-              resolve({
-                document,
-                window,
+            resolve({
+              document,
+              window,
+              wrap,
+            });
+          } else {
+            try {
+              // @ts-ignore
+              const React = window.React;
+              
+              const element = React.createElement(
+                React.Fragment,
+                null,
+                React.createElement(Toolbar, {
+                  editor: editor.current,
+                  ...defaultToolBarConfig,
+                  ...(props.toolBarProps ?? {}),
+                }),
+                React.createElement(Editor, {
+                  ref: ref,
+                  ...defaultEditorProps,
+                  ...(props.editorProps ?? {}),
+                  onCreated: (_editor) => {
+                    editor.current = _editor;
+                    render().then(() => {
+                      if (editorProps?.onCreated) {
+                        editorProps.onCreated(_editor);
+                      }
+
+                      onRender?.();
+                    });
+                  },
+                  value: value.current,
+                  onChange: (_editor) => {
+                    if (!isTriggerChange.current) {
+                      isTriggerChange.current = true;
+                      return;
+                    }
+
+                    if (props.onChange) {
+                      props.onChange(_editor.getHtml());
+                    }
+                  },
+                }),
+              );
+              
+              ReactDOM.render(
+                element,
                 wrap,
-              });
-            },
-          );
+                () => {
+                  isMount.current = true;
+
+                  resolve({
+                    document,
+                    window,
+                    wrap,
+                  });
+                },
+              );
+            } catch (error) {
+              console.error('[WangEditorSandbox] Render error (legacy):', error);
+              throw error;
+            }
+          }
         },
       );
     }
@@ -514,6 +615,11 @@ const InternalWangEditorSandbox = memo<
         URL.revokeObjectURL(reactDOMUrl);
         URL.revokeObjectURL(wangEditorUrl);
         URL.revokeObjectURL(wangEditorReactUrl);
+
+        if (reactRootRef.current && typeof reactRootRef.current.unmount === 'function') {
+          reactRootRef.current.unmount();
+          reactRootRef.current = null;
+        }
 
         if (resizeObserverRef.current) {
           resizeObserverRef.current.disconnect();

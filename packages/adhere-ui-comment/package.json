@@ -47,11 +47,8 @@
     "@emoji-mart/data": "^1.0.3",
     "@emoji-mart/react": "^1.0.0",
     "@types/emoji-mart": "^3.0.9",
-    "antd": "^5.28.0",
     "classnames": "^2.5.1",
-    "emoji-mart": "^5.2.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "emoji-mart": "^5.2.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

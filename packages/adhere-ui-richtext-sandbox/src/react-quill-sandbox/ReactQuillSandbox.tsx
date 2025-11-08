@@ -14,8 +14,8 @@ import React, {
 import ReactQuill from 'react-quill';
 
 import PropTypesStr from '../common-lib/prop-types.min';
-import ReactDOMStr from '../common-lib/react-dom.production.min';
-import ReactStr from '../common-lib/react.production.min';
+import ReactDOMStr from '../common-lib/react-dom.18.3.1production.min.js';
+import ReactStr from '../common-lib/react.18.3.1.production.min.js';
 import QuillBubbleCssStr from './lib/quill.bubble';
 import QuillSnowCssStr from './lib/quill.snow';
 import ReactQuillStr from './lib/react-quill';
@@ -59,7 +59,9 @@ const InternalReactQuillSandbox = memo<
 
     const value = useRef<string>(props.value as string);
 
-    const reactQuillRef = useRef<ReactQuill>();
+    const reactQuillRef = useRef<ReactQuill | null>(null);
+
+  const reactRootRef = useRef<any>(null);
 
     /**
      * renderQuill
@@ -75,34 +77,88 @@ const InternalReactQuillSandbox = memo<
 
           const wrap = document.getElementById(editorId) as HTMLDivElement;
 
+          // 检查依赖是否加载
           // @ts-ignore
-          window.ReactDOM.render(
-            // @ts-ignore
-            <window.ReactQuill
-              ref={reactQuillRef}
-              {..._props}
-              value={value.current ?? ''}
-              onChange={(params) => {
-                if (!isMount.current) return;
-                // console.log('onChange', params);
+          if (!window.React) {
+            console.error('[ReactQuillSandbox] React is not loaded on window');
+            return;
+          }
 
-                if (props.onChange) {
-                  // @ts-ignore
-                  props?.onChange?.(params);
-                }
-              }}
-            />,
-            wrap,
-            () => {
-              isMount.current = true;
+          // @ts-ignore
+          if (!window.ReactDOM) {
+            console.error('[ReactQuillSandbox] ReactDOM is not loaded on window');
+            return;
+          }
 
-              resolve({
-                document,
-                window,
-                wrap,
+          // @ts-ignore
+          if (!window.ReactQuill) {
+            console.error('[ReactQuillSandbox] ReactQuill is not loaded on window');
+            return;
+          }
+
+          // @ts-ignore
+          const React = window.React;
+          // @ts-ignore
+          const ReactQuillComponent = window.ReactQuill;
+          // @ts-ignore
+          const ReactDOM = window.ReactDOM;
+
+          // React 18 优先使用 createRoot；否则回退到 render
+          if (ReactDOM?.createRoot) {
+            if (!reactRootRef.current) {
+              reactRootRef.current = ReactDOM.createRoot(wrap);
+            }
+
+            try {
+              const element = React.createElement(ReactQuillComponent, {
+                ref: reactQuillRef,
+                ..._props,
+                value: value.current ?? '',
+                onChange: (value, delta, source, editor) => {
+                  if (!isMount.current) return;
+                  if (props.onChange) {
+                    props.onChange(value, delta, source, editor);
+                  }
+                },
               });
-            },
-          );
+
+              reactRootRef.current.render(element);
+            } catch (error) {
+              console.error('[ReactQuillSandbox] Render error:', error);
+              throw error;
+            }
+
+            isMount.current = true;
+            resolve({ document, window, wrap });
+          } else {
+            // 兼容旧版
+            try {
+              const element = React.createElement(ReactQuillComponent, {
+                ref: reactQuillRef,
+                ..._props,
+                value: value.current ?? '',
+                onChange: (value, delta, source, editor) => {
+                  if (!isMount.current) return;
+                  if (props.onChange) {
+                    props.onChange(value, delta, source, editor);
+                  }
+                },
+              });
+
+              ReactDOM.render(element, wrap, () => {
+                isMount.current = true;
+
+                resolve({
+                  document,
+                  window,
+                  wrap,
+                });
+              });
+            } catch (error) {
+              console.error('[ReactQuillSandbox] Render error (legacy):', error);
+              throw error;
+            }
+          }
         },
       );
     }
@@ -315,6 +371,11 @@ const InternalReactQuillSandbox = memo<
         URL.revokeObjectURL(reactDOMUrl);
         URL.revokeObjectURL(reactQuillUrl);
         URL.revokeObjectURL(propTypesUrl);
+
+        if (reactRootRef.current && typeof reactRootRef.current.unmount === 'function') {
+          reactRootRef.current.unmount();
+          reactRootRef.current = null;
+        }
 
         if (resizeObserverRef.current) {
           resizeObserverRef.current.disconnect();

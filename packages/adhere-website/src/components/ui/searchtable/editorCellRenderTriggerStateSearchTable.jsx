@@ -58,7 +58,7 @@ class EditableCellRenderTriggerStateSearchTable extends ProEditableCellSearchSta
    * @protected
    */
   getTotalKey() {
-    return 'totalCount';
+    return 'total';
   }
 
   /**

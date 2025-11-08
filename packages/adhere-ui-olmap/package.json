@@ -38,8 +38,6 @@
     "algebra.js": "^0.2.6",
     "ol": "6.5.0",
     "ol-wind": "1.1.1-alpha.2",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

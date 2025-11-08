@@ -56,7 +56,7 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
    * @protected
    */
   getTotalKey() {
-    return 'totalCount';
+    return 'total';
   }
 
   /**

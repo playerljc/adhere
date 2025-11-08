@@ -9,7 +9,7 @@ export default () => {
       type="primary"
       onClick={() => {
         MessageDialog.NumberPrompt({
-          title: '提示',
+          title: '提示（自定义布局 + 无冒号）',
           config: {
             schema: {
               properties: {
@@ -22,8 +22,15 @@ export default () => {
                 },
               },
             },
+            // 自定义布局配置，不显示冒号
+            layout: {
+              type: 'horizontal',
+              labelCol: { span: 4 },
+              wrapperCol: { span: 20 },
+              colon: false,
+            },
           },
-          width: 300,
+          width: 400,
           zIndex: 1000,
           local: 'zh_CN',
           onSuccess: (value) => {

@@ -17,7 +17,7 @@ export default () => {
               show: true,
             },
           })
-          .promise.then((res) => {
+          .then((res) => {
             if (res) {
               if (res.data.code === 200) {
                 alert(JSON.stringify(res.data.data));

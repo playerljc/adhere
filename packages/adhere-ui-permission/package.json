@@ -31,9 +31,7 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^2.11.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "@baifendian/adhere-ui-conditionalrender": "^2.11.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

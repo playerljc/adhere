@@ -35,9 +35,7 @@
     "@baifendian/adhere-ui-stickuplayout": "^2.11.0",
     "@types/iscroll": "^5.2.8",
     "classnames": "^2.5.1",
-    "iscroll": "^5.2.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "iscroll": "^5.2.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

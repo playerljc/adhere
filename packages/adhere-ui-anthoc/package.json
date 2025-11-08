@@ -46,7 +46,6 @@
     "@baifendian/adhere-util-intl": "^2.11.0",
     "@baifendian/adhere-util-validator": "^2.11.0",
     "ahooks": "^3.8.4",
-    "antd": "^5.28.0",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.13",
     "immer": "^9.0.21",
@@ -55,8 +54,6 @@
     "lodash.merge": "^4.6.2",
     "lodash.uniqby": "^4.7.0",
     "lodash.xorby": "^4.7.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
     "swiper": "^10.1.0",
     "react-is": "^19.2.0"
   },

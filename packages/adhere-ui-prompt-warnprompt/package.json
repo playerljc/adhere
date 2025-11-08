@@ -33,10 +33,7 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@baifendian/adhere-util-intl": "^2.11.0",
-    "antd": "^5.28.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "@baifendian/adhere-util-intl": "^2.11.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

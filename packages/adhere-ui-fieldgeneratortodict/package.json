@@ -46,12 +46,9 @@
     "@baifendian/adhere-util-watchmemoized": "^2.11.0",
     "@ctsj/state": "^2.0.24",
     "ahooks": "^3.8.4",
-    "antd": "^5.28.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.debounce": "^4.0.8",
-    "lodash.merge": "^4.6.2",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

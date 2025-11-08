@@ -13,7 +13,7 @@ export const fetchList = (() => {
         loading: {
           show: false,
         },
-      }).promise;
+      }).then((res) => res.promise);
     },
     defaultResult: () => ({
       total: 0,
@@ -31,7 +31,7 @@ export const fetchTreeList = (() => {
         loading: {
           show: false,
         },
-      }).promise;
+      }).then((res) => res.promise);
     },
     defaultResult: () => ({
       total: 0,
@@ -49,7 +49,7 @@ export const fetchSSQList = (() => {
         loading: {
           show: false,
         },
-      }).promise;
+      }).then((res) => res.promise);
     },
     defaultResult: () => ({
       total: 0,

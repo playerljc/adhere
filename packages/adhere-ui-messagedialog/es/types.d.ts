@@ -1,7 +1,5 @@
 import type { ButtonProps } from 'antd';
-import type { FormInstance } from 'antd/es/form';
 import type { ModalProps } from 'antd/lib/modal/interface';
-import type { FRProps } from 'form-render/lib/type';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
 /**
  * 警告对话框参数接口
@@ -154,7 +152,50 @@ export interface DialogHandle {
     /** 更新内容方法 */
     update: (children?: ReactNode) => void;
 }
-export type PromptFormProps = Omit<FRProps, 'form'>;
+/**
+ * Prompt 表单的简化 Schema（适配原有 form-render 的最常用子集）
+ */
+export type PromptFormProps = {
+    /**
+     * 表单 Schema：仅支持 object/properties + 基础字段
+     * - 支持的 widget: input | textArea | inputNumber
+     */
+    schema: {
+        type?: 'object';
+        properties: Record<string, {
+            /** 字段标题 */
+            title?: ReactNode;
+            /** 字段类型（string | number） */
+            type?: 'string' | 'number';
+            /** 控件类型（与旧 form-render 对齐的命名） */
+            widget?: 'input' | 'textArea' | 'inputNumber';
+            /** 是否必填（兼容旧写法） */
+            required?: boolean;
+            /** 透传给控件的属性 */
+            props?: Record<string, any>;
+        }>;
+    };
+    /** 初始值（兼容旧 form-render 的 formData） */
+    initialValues?: Record<string, any>;
+    /** 表单布局配置 */
+    layout?: {
+        /** 表单布局模式 */
+        type?: 'horizontal' | 'vertical' | 'inline';
+        /** 标签栅格布局配置 */
+        labelCol?: {
+            span?: number;
+            offset?: number;
+        };
+        /** 控件栅格布局配置 */
+        wrapperCol?: {
+            span?: number;
+            offset?: number;
+        };
+        /** 是否显示冒号 */
+        colon?: boolean;
+    };
+};
 export type PromptFormRefHandle = {
-    validateFields: FormInstance['validateFields'];
+    /** 校验并返回表单值 */
+    validateFields: () => Promise<Record<string, any>>;
 };

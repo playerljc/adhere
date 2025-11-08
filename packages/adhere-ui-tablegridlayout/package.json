@@ -36,9 +36,7 @@
     "@baifendian/adhere-ui-configprovider": "^2.11.0",
     "@baifendian/adhere-ui-css": "^2.11.0",
     "@baifendian/adhere-util": "^2.11.0",
-    "classnames": "^2.5.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "classnames": "^2.5.1"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

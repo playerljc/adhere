@@ -1,5 +1,4 @@
 import { Button } from 'antd';
-import type { FormInstance } from 'antd/es/form';
 import { produce } from 'immer';
 import React, { ReactNode, createRef } from 'react';
 import { Root, createRoot } from 'react-dom/client';
@@ -12,7 +11,7 @@ import ModalDialog, { selectorPrefix } from './Modal';
 import PromptForm from './PromptForm';
 import Trigger from './Trigger';
 import TriggerPrompt from './TriggerPrompt';
-import type { AlertArgv, ConfirmArgv, DialogHandle, ModalArgv, PromptArgv } from './types';
+import type { AlertArgv, ConfirmArgv, DialogHandle, ModalArgv, PromptArgv, PromptFormRefHandle } from './types';
 
 /**
  * 渲染带图标的组件
@@ -169,7 +168,7 @@ const MessageDialogFactory = {
     local,
     onSuccess,
   }: PromptArgv): DialogHandle | void {
-    const ref = createRef<FormInstance>();
+    const ref = createRef<PromptFormRefHandle>();
 
     const result = this.Modal({
       config: {

@@ -31,10 +31,6 @@
     "upgrade": "yarn upgrade",
     "upgrade-interactive": "yarn upgrade-interactive"
   },
-  "dependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
-  },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
     "@baifendian/adhere-e2e": "^2.11.0",

@@ -63,7 +63,7 @@ class EditableCellStateSearchTable extends ProEditableCellSearchStateTable {
    * @protected
    */
   getTotalKey() {
-    return 'totalCount';
+    return 'total';
   }
 
   /**

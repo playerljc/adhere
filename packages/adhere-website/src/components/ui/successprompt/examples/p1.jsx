@@ -7,6 +7,7 @@ export default () => (
   <Button
     type="primary"
     onClick={() => {
+      debugger
       SuccessPrompt.openSuccessMessage('操作成功');
     }}
   >

@@ -56,7 +56,7 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
    * @protected
    */
   getTotalKey() {
-    return 'totalCount';
+    return 'total';
   }
 
   /**

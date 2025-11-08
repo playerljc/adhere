@@ -350,5 +350,17 @@ module.exports = {
     webpackConfig.module.rules[3].include.push(e2ePath, srcPath);
 
     webpackConfig.resolve.alias['@'] = e2ePath;
+
+    // // 避免 React 19 下 rc-trigger(findDOMNode) 引发的告警：将 rc-color-picker 指向本地 shim
+    // webpackConfig.resolve.alias['rc-color-picker'] = path.join(
+    //   __dirname,
+    //   'src/shims/rc-color-picker.js',
+    // );
+    //
+    // // 避免样式从 rc-color-picker/assets 引入，指向空样式
+    // webpackConfig.resolve.alias['rc-color-picker/assets/index.css'] = path.join(
+    //   __dirname,
+    //   'src/shims/empty.css',
+    // );
   },
 };

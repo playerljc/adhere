@@ -37,9 +37,7 @@
     "@baifendian/adhere-util-watchmemoized": "^2.11.0",
     "classnames": "^2.5.1",
     "lodash.merge": "^4.6.2",
-    "lodash.startcase": "^4.4.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "lodash.startcase": "^4.4.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

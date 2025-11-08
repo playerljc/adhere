@@ -1,10 +1,25 @@
-import PlayGroundExt from 'component-playground';
+import { themes } from 'prism-react-renderer';
 import PropTypes from 'prop-types';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
+import { LiveEditor, LivePreview, LiveProvider } from 'react-live';
 
 import { CodePanelProps } from './types';
 
 const selectPrefix = 'adhere-ui-playground-code-panel';
+
+// 主题映射，将component-playground的主题名称映射到prism-react-renderer的主题
+const getTheme = (themeName?: string) => {
+  const themeMap: Record<string, any> = {
+    monokai: themes.vsDark,
+    dracula: themes.dracula,
+    'night-owl': themes.nightOwl,
+    'oceanic-next': themes.oceanicNext,
+    github: themes.github,
+    'vs-dark': themes.vsDark,
+  };
+
+  return themeMap[themeName || 'monokai'] || themes.vsDark;
+};
 
 /**
  * CodePanel
@@ -12,17 +27,25 @@ const selectPrefix = 'adhere-ui-playground-code-panel';
  * @constructor
  */
 const CodePanel = memo<CodePanelProps>((props) => {
+  const { codeText = '', theme = 'monokai', ...restProps } = props;
+
+  const prismTheme = useMemo(() => getTheme(theme), [theme]);
+
   return (
     <div className={selectPrefix}>
-      <PlayGroundExt
-        docClass={null}
-        propDescriptionMap={null}
-        scope={{ React }}
-        collapsableCode={false}
-        initiallyExpanded={false}
-        es6Console={false}
-        {...props}
-      />
+      <LiveProvider code={codeText} theme={prismTheme} scope={{ React }} disabled {...restProps}>
+        <div className={`${selectPrefix}-wrapper`}>
+          <div className={`${selectPrefix}-preview`}>
+            <LivePreview />
+          </div>
+          {/* <div className={`${selectPrefix}-error`}>
+            <LiveError />
+          </div> */}
+          <div className={`${selectPrefix}-editor`}>
+            <LiveEditor />
+          </div>
+        </div>
+      </LiveProvider>
     </div>
   );
 });

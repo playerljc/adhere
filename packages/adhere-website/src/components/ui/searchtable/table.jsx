@@ -310,8 +310,8 @@ class TableImpl extends TableImplement {
               .get({
                 mock: true,
                 path: require('./mock.js').default.data,
-              })
-              .promise.then((result) => {
+              }).then((res) => res.promise)
+              .then((result) => {
                 this.setState(
                   {
                     dataSource: {

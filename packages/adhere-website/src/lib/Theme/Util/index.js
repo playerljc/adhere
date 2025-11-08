@@ -153,7 +153,9 @@ const init = (theme, useStore) => {
     // colorPrimary
     const varName = Util.capitalized(Util.toCamelCase(_key, '-', true));
 
-    exportObj[`setAntd${varName}`](designToken[_key]);
+    try {
+      exportObj[`setAntd${varName}`](designToken[_key]);
+    } catch (e) {}
   });
 };
 
