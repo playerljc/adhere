@@ -22,7 +22,7 @@ const { useTheme } = ConfigProvider;
  */
 export class OlMap extends React.Component<OLMapProps, OLMapState> implements MapInstance {
   public mainGeoLayer: GeoLayer | undefined;
-  public readonly el: React.RefObject<HTMLDivElement>;
+  public readonly el: React.RefObject<HTMLDivElement | null>;
   public map: any;
 
   static defaultProps: Partial<OLMapProps> = {
