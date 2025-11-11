@@ -653,90 +653,106 @@ async function onreadystatechange(
 
   // readyState === 4
   if (xhr.readyState === Ajax.READY_STATE_DONE) {
-    /** 根据responseType安全获取响应数据 **/
-    const responseType = xhr.responseType || '';
-    const canAccessText = responseType === '' || responseType === 'text';
-    const canAccessXML = responseType === '' || responseType === 'document';
+    try {
+      /** 根据responseType安全获取响应数据 **/
+      const responseType = xhr.responseType || '';
+      const canAccessText = responseType === '' || responseType === 'text';
+      const canAccessXML = responseType === '' || responseType === 'document';
 
-    /** 调用response过滤器 **/
-    const { response, responseXML, responseText } = await this.interceptors.responseReducer({
-      ...interceptorsConfig,
-      headers: transformStringHeadersToObject(xhr.getAllResponseHeaders()),
-      response: xhr.response,
-      responseText: canAccessText ? xhr.responseText : '',
-      responseXML: canAccessXML ? xhr.responseXML : null,
-    });
+      /** 调用response过滤器 **/
+      const { response, responseXML, responseText } = await this.interceptors.responseReducer({
+        ...interceptorsConfig,
+        headers: transformStringHeadersToObject(xhr.getAllResponseHeaders()),
+        response: xhr.response,
+        responseText: canAccessText ? xhr.responseText : '',
+        responseXML: canAccessXML ? xhr.responseXML : null,
+      });
 
-    // status success
-    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
-      // 获取contentType
-      const contentType = xhr.getResponseHeader('Content-type') || '';
+      // status success
+      if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+        // 获取contentType
+        const contentType = xhr.getResponseHeader('Content-type') || '';
 
-      /** response ContentType是application/json **/
-      if (contentType.indexOf(Ajax.CONTENT_TYPE_APPLICATION_JSON) !== -1) {
-        /** 只有application/json才进行三大值的判断 **/
-        const jsonObj = JSON.parse(responseText);
+        /** response ContentType是application/json **/
+        if (contentType.indexOf(Ajax.CONTENT_TYPE_APPLICATION_JSON) !== -1) {
+          /** 只有application/json才进行三大值的判断 **/
+          const jsonObj = JSON.parse(responseText);
 
-        if (showWarn && codeKey in jsonObj && jsonObj[codeKey] !== codeSuccess) {
-          warnInfo(Intl.get('hint'), jsonObj[messageKey]);
+          if (showWarn && codeKey in jsonObj && jsonObj[codeKey] !== codeSuccess) {
+            warnInfo(Intl.get('hint'), jsonObj[messageKey]);
+          }
+
+          resolve(resolveData.call(this, { show, terminal, data: jsonObj, indicator, xhr }));
         }
-
-        resolve(resolveData.call(this, { show, terminal, data: jsonObj, indicator, xhr }));
+        //
+        else if (
+          /** response ContentType是xml **/
+          contentType === Ajax.CONTENT_TYPE_TEXT_XML ||
+          contentType === Ajax.CONTENT_TYPE_APPLICATION_XML
+        ) {
+          resolve(
+            resolveData.call(this, {
+              show,
+              terminal,
+              data: responseXML,
+              indicator,
+              xhr,
+            }),
+          );
+        }
+        //
+        else {
+          /** response ContentType是其他 **/
+          resolve(
+            resolveData.call(this, {
+              show,
+              terminal,
+              data: response,
+              indicator,
+              xhr,
+            }),
+          );
+        }
       }
-      //
-      else if (
-        /** response ContentType是xml **/
-        contentType === Ajax.CONTENT_TYPE_TEXT_XML ||
-        contentType === Ajax.CONTENT_TYPE_APPLICATION_XML
-      ) {
-        resolve(
-          resolveData.call(this, {
-            show,
-            terminal,
-            data: responseXML,
-            indicator,
-            xhr,
-          }),
-        );
-      }
-      //
+      // status error
       else {
-        /** response ContentType是其他 **/
-        resolve(
-          resolveData.call(this, {
-            show,
-            terminal,
-            data: response,
-            indicator,
-            xhr,
-          }),
-        );
+        // 3xx, 4xx, 5xx
+
+        // 拦截器
+        interceptor({
+          status: xhr.status as HttpStatusCode,
+          statusText: xhr.statusText,
+          response,
+          responseText,
+        });
+
+        // catch
+        reject({
+          status: xhr.status,
+          statusText: xhr.statusText,
+          response,
+          responseText,
+        });
+
+        // 取消遮罩
+        if (show && indicator) {
+          targetGlobalIndicator.hide(indicator);
+        }
       }
-    }
-    // status error
-    else {
-      // 3xx, 4xx, 5xx
-
-      // 拦截器
-      interceptor({
-        status: xhr.status as HttpStatusCode,
-        statusText: xhr.statusText,
-        response,
-        responseText,
-      });
-
-      // catch
-      reject({
-        status: xhr.status,
-        statusText: xhr.statusText,
-        response,
-        responseText,
-      });
+    } catch (error) {
+      // 处理 responseReducer 或其他异步操作中的异常
+      reject(error);
 
       // 取消遮罩
       if (show && indicator) {
         targetGlobalIndicator.hide(indicator);
       }
+
+      // 显示错误提示
+      errorInfo(
+        Intl.get('hint'),
+        (error as Error)?.message || Intl.get('request_error'),
+      );
     }
   }
 }
@@ -787,12 +803,26 @@ async function sendPrepare(
   { resolve, reject }: PrepareFunctionParams,
 ): Promise<Prepare> {
   let indicator: any;
+  let interceptorsConfig: ISendArg;
 
-  /** 调用request拦截器，返回新的interceptorsConfig **/
-  const interceptorsConfig = await this.interceptors.requestReducer({
-    ...params,
-    method,
-  });
+  try {
+    /** 调用request拦截器，返回新的interceptorsConfig **/
+    interceptorsConfig = await this.interceptors.requestReducer({
+      ...params,
+      method,
+    });
+  } catch (error) {
+    // 处理 requestReducer 中的异常
+    reject(error);
+
+    // 显示错误提示
+    errorInfo(
+      Intl.get('hint'),
+      (error as Error)?.message || Intl.get('request_error'),
+    );
+
+    return { xhr: null, contentType: '' };
+  }
 
   const {
     // get|post|patch|put|delete方法独有

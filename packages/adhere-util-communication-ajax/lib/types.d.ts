@@ -228,6 +228,7 @@ export interface ResponseInterceptorReturn extends ISendArg {
     response: XMLHttpRequest['response'];
     responseText: XMLHttpRequest['responseText'];
     responseXML: XMLHttpRequest['responseXML'];
+    xhr: XMLHttpRequest;
 }
 /**
  * 响应拦截器类型
