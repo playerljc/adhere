@@ -223,6 +223,7 @@ export interface ResponseInterceptorParams extends ISendArg {
     response: XMLHttpRequest['response'];
     responseText: XMLHttpRequest['responseText'];
     responseXML: XMLHttpRequest['responseXML'];
+    xhr: XMLHttpRequest;
 }
 export interface ResponseInterceptorReturn extends ISendArg {
     response: XMLHttpRequest['response'];

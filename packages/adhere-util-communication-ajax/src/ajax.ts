@@ -666,6 +666,7 @@ async function onreadystatechange(
         response: xhr.response,
         responseText: canAccessText ? xhr.responseText : '',
         responseXML: canAccessXML ? xhr.responseXML : null,
+        xhr
       });
 
       // status success
