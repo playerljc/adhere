@@ -444,7 +444,7 @@ export default () => {
   return (
     <Wrap
       FieldGeneratorToDict={FieldGeneratorToDict}
-      isShowExpandSearch={false}
+      // isShowExpandSearch={false}
       isColumnMaxContent={true}
     />
   );
