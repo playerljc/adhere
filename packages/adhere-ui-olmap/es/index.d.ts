@@ -49,6 +49,7 @@ declare const defaultExport: {
         createModifyInteraction({ map, vectorSource, onModifyEnd, }: import("./types").CreateModifyInteractionParams): import("ol/interaction/Modify").default;
         removeFeature(vectorSource: import("ol/source").Vector, feature: import("ol").Feature): void;
         removeAllFeature(vectorSource: import("ol/source").Vector): void;
+        removeFeaturesByType(vectorSource: import("ol/source").Vector, type: string): void;
         removeAllOverlay(map: import("ol").Map): void;
         removeInteraction(map: import("ol").Map, interaction: any): void;
         removeInteractionAll(map: import("ol").Map): void;

@@ -1,32 +1,34 @@
-.adhere-mobile-ui-ant-hoc-prsl {
-  .adhere-mobile-ui-ant-hoc-prsl-first-loading {
-    height: 100%;
-    overflow-y: hidden;
-  }
-
-  .adhere-mobile-ui-ant-hoc-prsl-loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    //padding: 10px 0;
-    padding: var(--prsl-loading-padding, 10px 0);
-
-    > .adhere-mobile-ui-ant-hoc-prsl-loading-dot {
-      //margin-right: 20px;
-      margin-right: var(--prsl-loading-dot-margin-right, 20px);
+@layer adhere {
+  .adhere-mobile-ui-ant-hoc-prsl {
+    .adhere-mobile-ui-ant-hoc-prsl-first-loading {
+      height: 100%;
+      overflow-y: hidden;
     }
-  }
 
-  .adm-pull-to-refresh {
-    height: 100%;
+    .adhere-mobile-ui-ant-hoc-prsl-loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      //padding: 10px 0;
+      padding: var(--prsl-loading-padding, 10px 0);
 
-    > .adm-pull-to-refresh-content {
+      > .adhere-mobile-ui-ant-hoc-prsl-loading-dot {
+        //margin-right: 20px;
+        margin-right: var(--prsl-loading-dot-margin-right, 20px);
+      }
+    }
+
+    .adm-pull-to-refresh {
+      height: 100%;
+
+      > .adm-pull-to-refresh-content {
+        height: 100%;
+      }
+    }
+
+    .adhere-mobile-ui-ant-hoc-prsl-scroll-load {
       height: 100%;
     }
-  }
-
-  .adhere-mobile-ui-ant-hoc-prsl-scroll-load {
-    height: 100%;
   }
 }

@@ -1,33 +1,35 @@
-.adhere-mobile-ui-popover-menu {
-  .adhere-mobile-ui-popover-menu-menu {
-    .adhere-mobile-ui-popover-menu-menu-item {
-      position: relative;
-      display: flex;
-      align-items: center;
-      //padding-left: 20px;
-      padding-left: var(--menu-item-padding-left, 20px);
+@layer adhere {
+  .adhere-mobile-ui-popover-menu {
+    .adhere-mobile-ui-popover-menu-menu {
+      .adhere-mobile-ui-popover-menu-menu-item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        //padding-left: 20px;
+        padding-left: var(--menu-item-padding-left, 20px);
 
-      &.adhere-mobile-ui-popover-menu-menu-item-disabled {
-        color: var(--adhere-color-text-quaternary);
-      }
+        &.adhere-mobile-ui-popover-menu-menu-item-disabled {
+          color: var(--adhere-color-text-quaternary);
+        }
 
-      > .adhere-mobile-ui-popover-menu-menu-item-icon {
-        flex-shrink: 0;
-        //padding-right: 8px;
-        padding-right: var(--menu-item-icon-pading-right, 8px);
-        //font-size: 20px;
-        font-size: var(--menu-item-icon-font-size, 20px);
-      }
+        > .adhere-mobile-ui-popover-menu-menu-item-icon {
+          flex-shrink: 0;
+          //padding-right: 8px;
+          padding-right: var(--menu-item-icon-pading-right, 8px);
+          //font-size: 20px;
+          font-size: var(--menu-item-icon-font-size, 20px);
+        }
 
-      > .adhere-mobile-ui-popover-menu-menu-item-text {
-        flex: 1;
-        min-width: 0;
-        //padding: 14px 20px 14px 0;
-        padding: var(--menu-item-text-padding, 14px 20px 14px 0);
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        border-bottom: 1px solid var(--adhere-color-border-base);
+        > .adhere-mobile-ui-popover-menu-menu-item-text {
+          flex: 1;
+          min-width: 0;
+          //padding: 14px 20px 14px 0;
+          padding: var(--menu-item-text-padding, 14px 20px 14px 0);
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          border-bottom: 1px solid var(--adhere-color-border-base);
+        }
       }
     }
   }

@@ -1,140 +1,145 @@
-//@import '~@baifendian/adhere-ui-css/es/vars';
+@layer adhere {
+  //@import '~@baifendian/adhere-ui-css/es/vars';
 
-.adhere-ui-playground-table {
-  @adhere-ui-playground-table-font-color: #595959;
-  @adhere-ui-playground-table-highlight-color: #f2f4f5;
-  @adhere-ui-playground-table-header-column-color: #5c6b77;
-  @adhere-ui-playground-table-row-hover-color: rgb(60, 90, 100);
+  .adhere-ui-playground-table {
+    @adhere-ui-playground-table-font-color: #595959;
+    @adhere-ui-playground-table-highlight-color: #f2f4f5;
+    @adhere-ui-playground-table-header-column-color: #5c6b77;
+    @adhere-ui-playground-table-row-hover-color: rgb(60, 90, 100);
 
-  > .adhere-ui-playground-table-inner {
-    width: 100%;
-    //margin: 2em 0;
-    margin: var(--table-inner-margin, 2em 0);
-    overflow-x: auto;
-    overflow-y: hidden;
-    //font-size: 13px;
-    font-size: var(--table-inner-font-size, 13px);
-    //line-height: 1.5715;
-    line-height: var(--table-inner-line-height, 1.5715);
-    direction: ltr;
-    empty-cells: show;
-    //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-    border: var(
-      --table-inner-border,
-      var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
-    );
-    border-collapse: collapse;
-    border-spacing: 0;
+    > .adhere-ui-playground-table-inner {
+      width: 100%;
+      //margin: 2em 0;
+      margin: var(--table-inner-margin, 2em 0);
+      overflow-x: auto;
+      overflow-y: hidden;
+      //font-size: 13px;
+      font-size: var(--table-inner-font-size, 13px);
+      //line-height: 1.5715;
+      line-height: var(--table-inner-line-height, 1.5715);
+      direction: ltr;
+      empty-cells: show;
+      //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+      border: var(
+        --table-inner-border,
+        var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+      );
+      border-collapse: collapse;
+      border-spacing: 0;
 
-    > thead {
-      > .adhere-ui-playground-table-header {
-        > .adhere-ui-playground-table-header-column {
-          //padding: 14px 12px 12px;
-          padding: var(--table-header-column-padding, 14px 12px 12px);
-          //color: @adhere-ui-playground-table-header-column-color;
-          color: var(--table-header-column-color, @adhere-ui-playground-table-header-column-color);
-          //font-weight: 500;
-          font-weight: var(--table-header-column-font-weight, 500);
-          white-space: nowrap;
-          text-align: left;
-          //background: rgb(0 0 0 / 2%);
-          background: var(--table-header-column-background, rgb(0 0 0 / 2%));
-          //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-          border: var(
-            --table-header-column-border,
-            var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
-          );
-
-          &:first-child {
-            //border-left: var(--adhere-line-width) var(--adhere-line-type)
-            //  var(--adhere-color-border-base);
-            border-left: var(
-              --table-header-column-first-child-border-left,
+      > thead {
+        > .adhere-ui-playground-table-header {
+          > .adhere-ui-playground-table-header-column {
+            //padding: 14px 12px 12px;
+            padding: var(--table-header-column-padding, 14px 12px 12px);
+            //color: @adhere-ui-playground-table-header-column-color;
+            color: var(
+              --table-header-column-color,
+              @adhere-ui-playground-table-header-column-color
+            );
+            //font-weight: 500;
+            font-weight: var(--table-header-column-font-weight, 500);
+            white-space: nowrap;
+            text-align: left;
+            //background: rgb(0 0 0 / 2%);
+            background: var(--table-header-column-background, rgb(0 0 0 / 2%));
+            //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+            border: var(
+              --table-header-column-border,
               var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
             );
-          }
 
-          &:last-child {
-            //border-right: var(--adhere-line-width) var(--adhere-line-type)
-            //  var(--adhere-color-border-base);
-            border-right: var(
-              --table-header-column-first-child-border-right,
-              var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
-            );
+            &:first-child {
+              //border-left: var(--adhere-line-width) var(--adhere-line-type)
+              //  var(--adhere-color-border-base);
+              border-left: var(
+                --table-header-column-first-child-border-left,
+                var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+              );
+            }
+
+            &:last-child {
+              //border-right: var(--adhere-line-width) var(--adhere-line-type)
+              //  var(--adhere-color-border-base);
+              border-right: var(
+                --table-header-column-first-child-border-right,
+                var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+              );
+            }
           }
         }
       }
-    }
 
-    > tbody {
-      > .adhere-ui-playground-table-row {
-        transition: all 0.3s;
+      > tbody {
+        > .adhere-ui-playground-table-row {
+          transition: all 0.3s;
 
-        &:hover {
-          //background: rgb(@adhere-ui-playground-table-row-hover-color 0.04);
-          background: var(
-            --table-row-hover-background,
-            rgb(@adhere-ui-playground-table-row-hover-color 0.04)
-          );
-        }
-
-        > .adhere-ui-playground-table-cell {
-          //padding: 12px;
-          padding: var(--table-cell-padding, 12px);
-          //color: @adhere-ui-playground-table-font-color;
-          color: var(--table-cell-color, @adhere-ui-playground-table-font-color);
-          white-space: normal;
-          text-align: left;
-          word-wrap: break-word;
-          word-break: break-word;
-          //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-          border: var(
-            --table-cell-border,
-            var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
-          );
-
-          &:first-child {
-            //width: 18%;
-            width: var(--table-cell-first-child-width, 18%);
-            //font-weight: 600;
-            font-weight: var(--table-cell-first-child-font-weight, 600);
-            white-space: nowrap;
-            //border-left: var(--adhere-line-width) var(--adhere-line-type)
-            //  var(--adhere-color-border-base);
-            border-left: var(
-              --table-cell-first-child-border-left,
-              var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
-            );
-          }
-
-          &:last-child {
-            //border-right: var(--adhere-line-width) var(--adhere-line-type)
-            //  var(--adhere-color-border-base);
-            border-right: var(
-              --table-cell-last-child-border-right,
-              var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
-            );
-          }
-
-          code {
-            //margin: 0 1px;
-            margin: var(--table-cell-code-margin, 0 1px);
-            //padding: 0.2em 0.4em;
-            padding: var(--table-cell-code-padding, 0.2em 0.4em);
-            //font-size: 0.9em;
-            font-size: var(--table-cell-code-font-size, 0.9em);
-            //background: @adhere-ui-playground-table-highlight-color;
+          &:hover {
+            //background: rgb(@adhere-ui-playground-table-row-hover-color 0.04);
             background: var(
-              --table-cell-code-font-size,
-              @adhere-ui-playground-table-highlight-color
+              --table-row-hover-background,
+              rgb(@adhere-ui-playground-table-row-hover-color 0.04)
             );
+          }
+
+          > .adhere-ui-playground-table-cell {
+            //padding: 12px;
+            padding: var(--table-cell-padding, 12px);
+            //color: @adhere-ui-playground-table-font-color;
+            color: var(--table-cell-color, @adhere-ui-playground-table-font-color);
+            white-space: normal;
+            text-align: left;
+            word-wrap: break-word;
+            word-break: break-word;
             //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
             border: var(
-              --table-cell-code-border,
+              --table-cell-border,
               var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
             );
-            //border-radius: 3px;
-            border-radius: var(--table-cell-code-border-radius, 3px);
+
+            &:first-child {
+              //width: 18%;
+              width: var(--table-cell-first-child-width, 18%);
+              //font-weight: 600;
+              font-weight: var(--table-cell-first-child-font-weight, 600);
+              white-space: nowrap;
+              //border-left: var(--adhere-line-width) var(--adhere-line-type)
+              //  var(--adhere-color-border-base);
+              border-left: var(
+                --table-cell-first-child-border-left,
+                var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+              );
+            }
+
+            &:last-child {
+              //border-right: var(--adhere-line-width) var(--adhere-line-type)
+              //  var(--adhere-color-border-base);
+              border-right: var(
+                --table-cell-last-child-border-right,
+                var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+              );
+            }
+
+            code {
+              //margin: 0 1px;
+              margin: var(--table-cell-code-margin, 0 1px);
+              //padding: 0.2em 0.4em;
+              padding: var(--table-cell-code-padding, 0.2em 0.4em);
+              //font-size: 0.9em;
+              font-size: var(--table-cell-code-font-size, 0.9em);
+              //background: @adhere-ui-playground-table-highlight-color;
+              background: var(
+                --table-cell-code-font-size,
+                @adhere-ui-playground-table-highlight-color
+              );
+              //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+              border: var(
+                --table-cell-code-border,
+                var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+              );
+              //border-radius: 3px;
+              border-radius: var(--table-cell-code-border-radius, 3px);
+            }
           }
         }
       }

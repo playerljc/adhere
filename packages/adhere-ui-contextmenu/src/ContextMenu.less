@@ -1,14 +1,16 @@
 @import './SubMenu';
 
-.adhere-ui-context-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
+@layer adhere {
+  .adhere-ui-context-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
 
-  .adhere-ui-context-menu-sub-menu {
-    .adhere-ui-context-menu-sub-menu();
+    .adhere-ui-context-menu-sub-menu {
+      .adhere-ui-context-menu-sub-menu();
+    }
   }
 }

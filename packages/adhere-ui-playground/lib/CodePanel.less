@@ -1,67 +1,69 @@
-.adhere-ui-playground-code-panel {
-  &-wrapper {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &-preview {
-    display: none; // 默认隐藏预览，保持与原有逻辑一致
-    padding: 16px;
-    border: 1px solid #e8e8e8;
-    border-bottom: none;
-  }
-
-  &-error {
-    color: #ff4d4f;
-    padding: 8px 16px;
-    background-color: #fff1f0;
-    border: 1px solid #ffccc7;
-    border-bottom: none;
-    font-family: monospace;
-    white-space: pre-wrap;
-    word-break: break-word;
-
-    &:empty {
-      display: none;
-    }
-  }
-
-  &-editor {
-    // react-live的编辑器样式
-    textarea,
-    pre {
-      font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
-      font-size: 14px !important;
-      line-height: 1.5 !important;
+@layer adhere {
+  .adhere-ui-playground-code-panel {
+    &-wrapper {
+      display: flex;
+      flex-direction: column;
     }
 
-    // 禁用滚动条，保持与原有逻辑一致
-    pre {
-      overflow-y: hidden !important;
-      
-      &::-webkit-scrollbar {
-        display: none !important;
+    &-preview {
+      display: none; // 默认隐藏预览，保持与原有逻辑一致
+      padding: 16px;
+      border: 1px solid #e8e8e8;
+      border-bottom: none;
+    }
+
+    &-error {
+      padding: 8px 16px;
+      color: #ff4d4f;
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-break: break-word;
+      background-color: #fff1f0;
+      border: 1px solid #ffccc7;
+      border-bottom: none;
+
+      &:empty {
+        display: none;
       }
     }
-  }
 
-  // 兼容原有的playground类名（如果有其他地方引用）
-  .playground {
-    > .playgroundCode {
-      > .playgroundStage {
-        > .CodeMirror {
-          height: auto;
-          overflow-y: hidden;
+    &-editor {
+      // react-live的编辑器样式
+      textarea,
+      pre {
+        font-size: 14px !important;
+        font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+        line-height: 1.5 !important;
+      }
 
-          > .CodeMirror-vscrollbar {
-            display: none !important;
-          }
+      // 禁用滚动条，保持与原有逻辑一致
+      pre {
+        overflow-y: hidden !important;
+
+        &::-webkit-scrollbar {
+          display: none !important;
         }
       }
     }
 
-    > .playgroundPreview {
-      display: none;
+    // 兼容原有的playground类名（如果有其他地方引用）
+    .playground {
+      > .playgroundCode {
+        > .playgroundStage {
+          > .CodeMirror {
+            height: auto;
+            overflow-y: hidden;
+
+            > .CodeMirror-vscrollbar {
+              display: none !important;
+            }
+          }
+        }
+      }
+
+      > .playgroundPreview {
+        display: none;
+      }
     }
   }
 }

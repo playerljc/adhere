@@ -1,17 +1,18 @@
-/**
+@layer adhere {
+  /**
  * Adhere UI Space 组件样式
  *
  * 提供基础的间距组件样式，主要通过内联样式控制间距大小
  */
 
-.adhere-ui-space {
-  /* 基础尺寸设置为 0，通过 margin 控制间距 */
-  width: 0;
-  height: 0;
+  .adhere-ui-space {
+    /* 确保元素不会影响布局流 */
+    box-sizing: border-box;
+    /* 基础尺寸设置为 0，通过 margin 控制间距 */
+    width: 0;
+    height: 0;
 
-  /* 确保元素不会影响布局流 */
-  box-sizing: border-box;
-
-  /* 防止元素被选中 */
-  user-select: none;
+    /* 防止元素被选中 */
+    user-select: none;
+  }
 }

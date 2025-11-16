@@ -1,104 +1,106 @@
 @import '~@baifendian/adhere-ui-space/es/index.less';
 
-.adhere-mobile-ui-tree-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+@layer adhere {
+  .adhere-mobile-ui-tree-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 
-  > .adhere-mobile-ui-tree-search {
-    flex-shrink: 0;
-    //padding: 15px 0;
-    padding: var(--search-padding, 15px 0);
+    > .adhere-mobile-ui-tree-search {
+      flex-shrink: 0;
+      //padding: 15px 0;
+      padding: var(--search-padding, 15px 0);
+    }
+
+    > .adhere-mobile-ui-tree-body {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+    }
   }
 
-  > .adhere-mobile-ui-tree-body {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-  }
-}
+  .adhere-mobile-ui-tree {
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    white-space: nowrap;
+    list-style: none;
 
-.adhere-mobile-ui-tree {
-  margin: 0;
-  padding: 0;
-  overflow: auto;
-  white-space: nowrap;
-  list-style: none;
+    .adhere-mobile-ui-tree-node {
+      &.adhere-mobile-ui-tree-node-disabled {
+        > .adhere-mobile-ui-tree-node-info {
+          > .adhere-mobile-ui-tree-node-info-title-wrapper {
+            //color: var(--adhere-color-text-quaternary);
+            color: var(--node-info-title-wrapper-color, var(--adhere-color-text-quaternary));
+          }
+        }
+      }
 
-  .adhere-mobile-ui-tree-node {
-    &.adhere-mobile-ui-tree-node-disabled {
       > .adhere-mobile-ui-tree-node-info {
-        > .adhere-mobile-ui-tree-node-info-title-wrapper {
-          //color: var(--adhere-color-text-quaternary);
-          color: var(--node-info-title-wrapper-color, var(--adhere-color-text-quaternary));
-        }
-      }
-    }
+        //line-height: 2em;
 
-    > .adhere-mobile-ui-tree-node-info {
-      //line-height: 2em;
-
-      > .adhere-mobile-ui-tree-node-info-checkbox {
-        display: inline-block;
-        //text-align: center;
-        text-align: var(--node-info-checkbox-text-align, center);
-        //vertical-align: middle;
-        vertical-align: var(--node-info-checkbox-vertical-align, middle);
-        //width: 20px;
-        //margin-right: 5px;
-      }
-
-      > .adhere-mobile-ui-tree-node-info-expanded {
-        //font-weight: bold;
-        font-weight: var(--node-info-expanded-font-weight, bold);
-        //font-size: 20px;
-        font-size: var(--node-info-expanded-font-size, 20px);
-        //vertical-align: middle;
-        vertical-align: var(--node-info-expanded-vertical-align, middle);
-
-        > .adhere-mobile-ui-tree-node-info-load {
-          //color: var(--adhere-color-primary);
-          color: var(--node-info-load-color, var(--adhere-color-primary));
-        }
-      }
-
-      > .adhere-mobile-ui-tree-node-info-title-wrapper {
-        //padding: 5px;
-        //vertical-align: middle;
-        vertical-align: var(--node-info-title-wrapper-vertical-align, middle);
-
-        &.adhere-mobile-ui-tree-node-info-title-selected {
-          //background-color: rgba(var(--adhere-color-primary-rgb), 0.1);
-          background-color: var(
-            --node-info-title-selected-background-color,
-            rgba(var(--adhere-color-primary-rgb), 0.1)
-          );
-        }
-
-        > .adhere-mobile-ui-tree-node-info-icon {
+        > .adhere-mobile-ui-tree-node-info-checkbox {
+          display: inline-block;
+          //text-align: center;
+          text-align: var(--node-info-checkbox-text-align, center);
+          //vertical-align: middle;
+          vertical-align: var(--node-info-checkbox-vertical-align, middle);
+          //width: 20px;
           //margin-right: 5px;
-          //font-weight: bold;
-          font-weight: var(--node-info-icon-font-weight, bold);
-          //font-size: 20px;
-          font-size: var(--node-info-icon-font-size, 20px);
-          //vertical-align: middle;
-          vertical-align: var(--node-info-icon-vertical-align, middle);
         }
 
-        > .adhere-mobile-ui-tree-node-info-title {
-          //font-size: 16px;
-          font-size: var(--node-info-title-font-size, 16px);
+        > .adhere-mobile-ui-tree-node-info-expanded {
+          //font-weight: bold;
+          font-weight: var(--node-info-expanded-font-weight, bold);
+          //font-size: 20px;
+          font-size: var(--node-info-expanded-font-size, 20px);
           //vertical-align: middle;
-          vertical-align: var(--node-info-title-vertical-align, middle);
+          vertical-align: var(--node-info-expanded-vertical-align, middle);
+
+          > .adhere-mobile-ui-tree-node-info-load {
+            //color: var(--adhere-color-primary);
+            color: var(--node-info-load-color, var(--adhere-color-primary));
+          }
+        }
+
+        > .adhere-mobile-ui-tree-node-info-title-wrapper {
+          //padding: 5px;
+          //vertical-align: middle;
+          vertical-align: var(--node-info-title-wrapper-vertical-align, middle);
+
+          &.adhere-mobile-ui-tree-node-info-title-selected {
+            //background-color: rgba(var(--adhere-color-primary-rgb), 0.1);
+            background-color: var(
+              --node-info-title-selected-background-color,
+              rgba(var(--adhere-color-primary-rgb), 0.1)
+            );
+          }
+
+          > .adhere-mobile-ui-tree-node-info-icon {
+            //margin-right: 5px;
+            //font-weight: bold;
+            font-weight: var(--node-info-icon-font-weight, bold);
+            //font-size: 20px;
+            font-size: var(--node-info-icon-font-size, 20px);
+            //vertical-align: middle;
+            vertical-align: var(--node-info-icon-vertical-align, middle);
+          }
+
+          > .adhere-mobile-ui-tree-node-info-title {
+            //font-size: 16px;
+            font-size: var(--node-info-title-font-size, 16px);
+            //vertical-align: middle;
+            vertical-align: var(--node-info-title-vertical-align, middle);
+          }
         }
       }
-    }
 
-    > .adhere-mobile-ui-tree-node-children {
-      //margin: 0;
-      margin: var(--node-children-margin, 0);
-      //padding-left: 30px;
-      list-style: none;
+      > .adhere-mobile-ui-tree-node-children {
+        //margin: 0;
+        margin: var(--node-children-margin, 0);
+        //padding-left: 30px;
+        list-style: none;
+      }
     }
   }
 }

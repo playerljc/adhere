@@ -1,132 +1,134 @@
 @import '~@baifendian/adhere-ui-css/es/mixin';
 
-.adhere-ui-message-dialog-maximize-modal {
-  //max-height: calc(100vh * var(--adhere-device-pixel-ratio));
-  //max-height: 100vh;
-  max-height: var(--maximize-modal-max-height, 100vh);
+@layer adhere {
+  .adhere-ui-message-dialog-maximize-modal {
+    //max-height: calc(100vh * var(--adhere-device-pixel-ratio));
+    //max-height: 100vh;
+    max-height: var(--maximize-modal-max-height, 100vh);
 
-  &.adhere-ui-message-dialog-maximize-modal-maximize {
-    width: 100% !important;
-    max-width: 100%;
-    height: 100%;
+    &.adhere-ui-message-dialog-maximize-modal-maximize {
+      width: 100% !important;
+      max-width: 100%;
+      height: 100%;
 
-    // 最大化了
-    .adhere-ui-message-dialog-maximize-modal-inner {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      //max-width: calc(100vw * var(--adhere-device-pixel-ratio));
-      //max-height: calc(100vh * var(--adhere-device-pixel-ratio));
-      //max-width: 100vw;
-      max-width: var(--maximize-modal-inner-max-width, 100vw);
-      //max-height: 100vh;
-      max-height: var(--maximize-modal-inner-max-height, 100vh);
-      //border-radius: 0;
-      border-radius: var(--maximize-modal-inner-border-radius, 0);
-      transform: translate3d(0, 0, 0) !important;
+      // 最大化了
+      .adhere-ui-message-dialog-maximize-modal-inner {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        //max-width: calc(100vw * var(--adhere-device-pixel-ratio));
+        //max-height: calc(100vh * var(--adhere-device-pixel-ratio));
+        //max-width: 100vw;
+        max-width: var(--maximize-modal-inner-max-width, 100vw);
+        //max-height: 100vh;
+        max-height: var(--maximize-modal-inner-max-height, 100vh);
+        //border-radius: 0;
+        border-radius: var(--maximize-modal-inner-border-radius, 0);
+        transform: translate3d(0, 0, 0) !important;
+      }
     }
-  }
 
-  .adhere-ui-message-dialog-maximize-modal-inner {
-    display: flex;
-    flex-direction: column;
-    //max-width: calc(96vw * var(--adhere-device-pixel-ratio));
-    //max-height: calc(96vh * var(--adhere-device-pixel-ratio));
-    //max-width: 96vw;
-    max-width: var(--maximize-modal-inner-max-width, 96vw);
-    //max-height: 96vh;
-    max-height: var(--maximize-modal-inner-max-height, 96vh);
-    //padding: calc(var(--antd-padding-m-d) * 1px) calc(var(--antd-padding-l-g) * 1px);
-    padding: var(--maximize-modal-inner-padding, 20px 24px);
-    //background-color: #fff;
-    background-color: var(--maximize-modal-inner-background-color, inherit);
-    //border-radius: calc(var(--antd-border-radius-l-g) * 1px);
-    border-radius: var(--maximize-modal-inner-border-radius, 8px);
-    //box-shadow: var(--antd-box-shadow);
-    box-shadow: var(
-      --maximize-modal-inner-box-shadow,
-      0 6px 16px 0 rgba(0, 0, 0, 0.08),
-      0 3px 6px -4px rgba(0, 0, 0, 0.12),
-      0 9px 28px 8px rgba(0, 0, 0, 0.05)
-    );
-    pointer-events: auto;
-
-    > .adhere-ui-message-dialog-maximize-modal-header {
+    .adhere-ui-message-dialog-maximize-modal-inner {
       display: flex;
-      flex-shrink: 0;
-      //gap: 20px;
-      gap: var(--maximize-modal-header-gap, 20);
-      //padding-bottom: 20px;
-      padding-bottom: var(--maximize-modal-header-padding-bottom, 20px);
+      flex-direction: column;
+      //max-width: calc(96vw * var(--adhere-device-pixel-ratio));
+      //max-height: calc(96vh * var(--adhere-device-pixel-ratio));
+      //max-width: 96vw;
+      max-width: var(--maximize-modal-inner-max-width, 96vw);
+      //max-height: 96vh;
+      max-height: var(--maximize-modal-inner-max-height, 96vh);
+      //padding: calc(var(--antd-padding-m-d) * 1px) calc(var(--antd-padding-l-g) * 1px);
+      padding: var(--maximize-modal-inner-padding, 20px 24px);
+      //background-color: #fff;
+      background-color: var(--maximize-modal-inner-background-color, inherit);
+      //border-radius: calc(var(--antd-border-radius-l-g) * 1px);
+      border-radius: var(--maximize-modal-inner-border-radius, 8px);
+      //box-shadow: var(--antd-box-shadow);
+      box-shadow: var(
+        --maximize-modal-inner-box-shadow,
+        0 6px 16px 0 rgba(0, 0, 0, 0.08),
+        0 3px 6px -4px rgba(0, 0, 0, 0.12),
+        0 9px 28px 8px rgba(0, 0, 0, 0.05)
+      );
+      pointer-events: auto;
 
-      &.adhere-ui-message-dialog-maximize-modal-header-draggable {
-        cursor: move;
-      }
-
-      > .adhere-ui-message-dialog-maximize-modal-header-title {
-        flex: 1;
-        min-width: 0;
-        //margin: 0;
-        margin: var(--maximize-modal-header-title-margin, 0);
-        //color: var(--antd-color-text);
-        color: var(--maximize-modal-header-title-color, inherit /*var(--antd-color-text)*/);
-        //font-weight: var(--antd-font-weight-strong);
-        font-weight: var(--maximize-modal-header-title-font-weight, 600);
-        //font-size: calc(var(--antd-font-size-l-g) * 1px);
-        font-size: var(--maximize-modal-header-title-font-size, 16px);
-        //line-height: var(--antd-line-height);
-        line-height: var(--maximize-modal-header-title-line-height, 1.5714285714285714);
-        //word-wrap: break-word;
-        .adhere-text-inline-overflow();
-      }
-
-      > .adhere-ui-message-dialog-maximize-modal-header-actions {
+      > .adhere-ui-message-dialog-maximize-modal-header {
         display: flex;
         flex-shrink: 0;
-        align-items: center;
-        justify-content: flex-end;
+        //gap: 20px;
+        gap: var(--maximize-modal-header-gap, 20);
+        //padding-bottom: 20px;
+        padding-bottom: var(--maximize-modal-header-padding-bottom, 20px);
 
-        > .adhere-ui-message-dialog-maximize-modal-header-action {
-          //font-size: 18px;
-          font-size: var(--maximize-modal-header-action-font-size, 18px);
+        &.adhere-ui-message-dialog-maximize-modal-header-draggable {
+          cursor: move;
+        }
 
-          &:hover {
-            cursor: pointer;
+        > .adhere-ui-message-dialog-maximize-modal-header-title {
+          flex: 1;
+          min-width: 0;
+          //margin: 0;
+          margin: var(--maximize-modal-header-title-margin, 0);
+          //color: var(--antd-color-text);
+          color: var(--maximize-modal-header-title-color, inherit /*var(--antd-color-text)*/);
+          //font-weight: var(--antd-font-weight-strong);
+          font-weight: var(--maximize-modal-header-title-font-weight, 600);
+          //font-size: calc(var(--antd-font-size-l-g) * 1px);
+          font-size: var(--maximize-modal-header-title-font-size, 16px);
+          //line-height: var(--antd-line-height);
+          line-height: var(--maximize-modal-header-title-line-height, 1.5714285714285714);
+          //word-wrap: break-word;
+          .adhere-text-inline-overflow();
+        }
+
+        > .adhere-ui-message-dialog-maximize-modal-header-actions {
+          display: flex;
+          flex-shrink: 0;
+          align-items: center;
+          justify-content: flex-end;
+
+          > .adhere-ui-message-dialog-maximize-modal-header-action {
+            //font-size: 18px;
+            font-size: var(--maximize-modal-header-action-font-size, 18px);
+
+            &:hover {
+              cursor: pointer;
+            }
           }
         }
       }
-    }
 
-    > .adhere-ui-message-dialog-maximize-modal-body {
-      display: flex;
-      flex: 1;
-      min-height: 0;
-
-      .ant-modal-content {
+      > .adhere-ui-message-dialog-maximize-modal-body {
         display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: auto;
-        //padding: 0;
-        padding: var(--maximize-modal-body-ant-modal-content-padding, 0);
-        //border-radius: 0;
-        border-radius: var(--maximize-modal-body-ant-modal-content-border-radius, 0);
-        box-shadow: none;
+        flex: 1;
+        min-height: 0;
 
-        > .ant-modal-body {
-          flex: 1;
-          min-height: 0;
+        .ant-modal-content {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          height: auto;
+          //padding: 0;
+          padding: var(--maximize-modal-body-ant-modal-content-padding, 0);
+          //border-radius: 0;
+          border-radius: var(--maximize-modal-body-ant-modal-content-border-radius, 0);
+          box-shadow: none;
+
+          > .ant-modal-body {
+            flex: 1;
+            min-height: 0;
+          }
+
+          > .ant-modal-footer {
+            flex-shrink: 0;
+          }
         }
 
-        > .ant-modal-footer {
-          flex-shrink: 0;
+        .ant-modal-close {
+          display: none;
         }
-      }
-
-      .ant-modal-close {
-        display: none;
       }
     }
   }

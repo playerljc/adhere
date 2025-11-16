@@ -1,151 +1,153 @@
-/**
+@layer adhere {
+  /**
  * 滑块刻度组件样式
  * 
  * 包含滑块轨道、滑块手柄、刻度线和刻度值的样式定义
  * 支持 CSS 变量自定义，提供良好的主题定制能力
  */
 
-.adhere-ui-slider-scale {
-  // 滑块轨道背景色变量
-  @adhere-ui-slider-scale-range-slider-runnable-track-color: #f2f2f2;
+  .adhere-ui-slider-scale {
+    // 滑块轨道背景色变量
+    @adhere-ui-slider-scale-range-slider-runnable-track-color: #f2f2f2;
 
-  position: relative;
-  //margin-top: 15px;
-  margin-top: var(--margin-top, 15px);
-  //padding: 0;
-  padding: var(--padding, 0);
-
-  // 滑块输入框容器
-  > .adhere-ui-slider-scale-range {
-    display: block;
-    width: 100%;
-    //margin: 0;
-    margin: var(--range-margin, 0);
+    position: relative;
+    //margin-top: 15px;
+    margin-top: var(--margin-top, 15px);
     //padding: 0;
-    padding: var(--range-padding, 0);
-    //border: 0;
-    border: var(--range-border, 0);
-    outline: none;
-    appearance: none;
+    padding: var(--padding, 0);
 
-    /* 滑块手柄样式 */
-    &::-webkit-slider-thumb {
-      width: 0;
-      height: 0;
-      //margin-top: -10px;
-      margin-top: var(--slider-thumb-margin-top, -10px);
-      //border-top: 18px var(--adhere-line-type) rgb(0 0 0 / 50%);
-      border-top: var(--slider-thumb-border-top, 18px var(--adhere-line-type) rgb(0 0 0 / 50%));
-      //border-right: 10px var(--adhere-line-type) transparent;
-      border-right: var(--slider-thumb-border-right, 10px var(--adhere-line-type) transparent);
-      //border-left: 10px var(--adhere-line-type) transparent;
-      border-left: var(--slider-thumb-border-right, 10px var(--adhere-line-type) transparent);
+    // 滑块输入框容器
+    > .adhere-ui-slider-scale-range {
+      display: block;
+      width: 100%;
+      //margin: 0;
+      margin: var(--range-margin, 0);
+      //padding: 0;
+      padding: var(--range-padding, 0);
+      //border: 0;
+      border: var(--range-border, 0);
+      outline: none;
       appearance: none;
-    }
 
-    /* 滑块轨道样式 */
-    &::-webkit-slider-runnable-track {
-      width: 100%;
-      //height: 30px;
-      height: var(--slider-runnable-track-height, 30px);
-      //background-color: @adhere-ui-slider-scale-range-slider-runnable-track-color;
-      background-color: var(
-        --slider-runnable-track-background-color,
-        @adhere-ui-slider-scale-range-slider-runnable-track-color
-      );
-      //border-radius: 5px;
-      border-radius: var(--slider-runnable-track-border-radius, 5px);
-    }
-  }
-
-  // 刻度容器
-  > .adhere-ui-slider-scale-scale {
-    position: absolute;
-    //right: 10px;
-    right: var(--scale-right, 10px);
-    //left: 10px;
-    left: var(--scale-left, 10px);
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    height: 100%;
-
-    // 刻度项
-    > .adhere-ui-slider-scale-scale-item {
-      position: relative;
-      box-sizing: border-box;
-      width: 100%;
-      //height: 10%;
-      height: var(--scale-item-height, 10%);
-      //background-color: transparent;
-      background-color: var(--scale-item-background-color, transparent);
-
-      // 刻度点样式（带数值的刻度）
-      &.adhere-ui-slider-scale-scale-item-point {
-        //height: 30%;
-        height: var(--scale-item-point-height, 30%);
+      /* 滑块手柄样式 */
+      &::-webkit-slider-thumb {
+        width: 0;
+        height: 0;
+        //margin-top: -10px;
+        margin-top: var(--slider-thumb-margin-top, -10px);
+        //border-top: 18px var(--adhere-line-type) rgb(0 0 0 / 50%);
+        border-top: var(--slider-thumb-border-top, 18px var(--adhere-line-type) rgb(0 0 0 / 50%));
+        //border-right: 10px var(--adhere-line-type) transparent;
+        border-right: var(--slider-thumb-border-right, 10px var(--adhere-line-type) transparent);
+        //border-left: 10px var(--adhere-line-type) transparent;
+        border-left: var(--slider-thumb-border-right, 10px var(--adhere-line-type) transparent);
+        appearance: none;
       }
 
-      // 刻度线伪元素
-      &::before,
-      &::after {
-        position: absolute;
-        top: 0;
-        height: 100%;
-        content: '';
-      }
-
-      // 右侧刻度线
-      &::after {
-        right: 0;
-        //border-left: var(--adhere-line-width) var(--adhere-line-type) rgb(0 0 0 50%);
-        border-left: var(
-          --scale-item-after-border-left,
-          var(--adhere-line-width) var(--adhere-line-type) rgb(0 0 0 50%)
+      /* 滑块轨道样式 */
+      &::-webkit-slider-runnable-track {
+        width: 100%;
+        //height: 30px;
+        height: var(--slider-runnable-track-height, 30px);
+        //background-color: @adhere-ui-slider-scale-range-slider-runnable-track-color;
+        background-color: var(
+          --slider-runnable-track-background-color,
+          @adhere-ui-slider-scale-range-slider-runnable-track-color
         );
+        //border-radius: 5px;
+        border-radius: var(--slider-runnable-track-border-radius, 5px);
       }
+    }
 
-      // 第一个刻度项特殊处理
-      &:first-child {
-        // 左侧刻度线
-        &::before {
-          left: 0;
-          //height: 300%;
-          height: var(--scale-item-first-child-before-height, 300%);
+    // 刻度容器
+    > .adhere-ui-slider-scale-scale {
+      position: absolute;
+      //right: 10px;
+      right: var(--scale-right, 10px);
+      //left: 10px;
+      left: var(--scale-left, 10px);
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      height: 100%;
+
+      // 刻度项
+      > .adhere-ui-slider-scale-scale-item {
+        position: relative;
+        box-sizing: border-box;
+        width: 100%;
+        //height: 10%;
+        height: var(--scale-item-height, 10%);
+        //background-color: transparent;
+        background-color: var(--scale-item-background-color, transparent);
+
+        // 刻度点样式（带数值的刻度）
+        &.adhere-ui-slider-scale-scale-item-point {
+          //height: 30%;
+          height: var(--scale-item-point-height, 30%);
+        }
+
+        // 刻度线伪元素
+        &::before,
+        &::after {
+          position: absolute;
+          top: 0;
+          height: 100%;
+          content: '';
+        }
+
+        // 右侧刻度线
+        &::after {
+          right: 0;
           //border-left: var(--adhere-line-width) var(--adhere-line-type) rgb(0 0 0 50%);
           border-left: var(
-            --scale-item-first-child-before-border-left,
+            --scale-item-after-border-left,
             var(--adhere-line-width) var(--adhere-line-type) rgb(0 0 0 50%)
           );
         }
 
-        // 第一个刻度值的定位
-        > .adhere-ui-slider-scale-scale-item-value {
-          //top: 300%;
-          top: var(--scale-item-value-top, 300%);
-          right: auto;
-          left: 0;
-          //margin-left: -6px;
-          margin-left: var(--scale-item-value-margin-left, -6px);
-        }
-      }
+        // 第一个刻度项特殊处理
+        &:first-child {
+          // 左侧刻度线
+          &::before {
+            left: 0;
+            //height: 300%;
+            height: var(--scale-item-first-child-before-height, 300%);
+            //border-left: var(--adhere-line-width) var(--adhere-line-type) rgb(0 0 0 50%);
+            border-left: var(
+              --scale-item-first-child-before-border-left,
+              var(--adhere-line-width) var(--adhere-line-type) rgb(0 0 0 50%)
+            );
+          }
 
-      // 刻度值文本
-      > .adhere-ui-slider-scale-scale-item-value {
-        position: absolute;
-        //right: 0;
-        right: var(--scale-item-value-right, 0);
-        //bottom: -15px;
-        bottom: var(--scale-item-value-bottom, -15px);
-        //width: 12px;
-        width: var(--scale-item-value-width, 12px);
-        //margin-right: -6px;
-        margin-right: var(--scale-item-value-margin-right, -6px);
-        //color: var(--adhere-color-text-tertiary);
-        color: var(--scale-item-value-color, var(--adhere-color-text-tertiary));
-        //font-size: var(--adhere-font-size-sm);
-        font-size: var(--scale-item-value-font-size, var(--adhere-font-size-sm));
-        text-align: center;
+          // 第一个刻度值的定位
+          > .adhere-ui-slider-scale-scale-item-value {
+            //top: 300%;
+            top: var(--scale-item-value-top, 300%);
+            right: auto;
+            left: 0;
+            //margin-left: -6px;
+            margin-left: var(--scale-item-value-margin-left, -6px);
+          }
+        }
+
+        // 刻度值文本
+        > .adhere-ui-slider-scale-scale-item-value {
+          position: absolute;
+          //right: 0;
+          right: var(--scale-item-value-right, 0);
+          //bottom: -15px;
+          bottom: var(--scale-item-value-bottom, -15px);
+          //width: 12px;
+          width: var(--scale-item-value-width, 12px);
+          //margin-right: -6px;
+          margin-right: var(--scale-item-value-margin-right, -6px);
+          //color: var(--adhere-color-text-tertiary);
+          color: var(--scale-item-value-color, var(--adhere-color-text-tertiary));
+          //font-size: var(--adhere-font-size-sm);
+          font-size: var(--scale-item-value-font-size, var(--adhere-font-size-sm));
+          text-align: center;
+        }
       }
     }
   }

@@ -1,17 +1,19 @@
 @import './cropping/index';
 
-.adhere-ui-polygon-selection,
-.adhere-ui-polygon-selection-assist {
-  position: absolute;
-  top: 0;
-  left: 0;
-  user-select: none;
-}
+@layer adhere {
+  .adhere-ui-polygon-selection,
+  .adhere-ui-polygon-selection-assist {
+    position: absolute;
+    top: 0;
+    left: 0;
+    user-select: none;
+  }
 
-.adhere-ui-polygon-selection {
-  z-index: 3;
-}
+  .adhere-ui-polygon-selection {
+    z-index: 3;
+  }
 
-.adhere-ui-polygon-selection-assist {
-  z-index: 1;
+  .adhere-ui-polygon-selection-assist {
+    z-index: 1;
+  }
 }

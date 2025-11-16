@@ -2,11 +2,13 @@
 @import './MenuItem';
 @import './SubMenu';
 
-.adhere-mobile-ui-popover-menu {
-  > .adm-popover-inner {
-    > .adm-popover-inner-content {
-      //padding: 0;
-      padding: var(--adm-popover-inner-content-padding, 0);
+@layer adhere {
+  .adhere-mobile-ui-popover-menu {
+    > .adm-popover-inner {
+      > .adm-popover-inner-content {
+        //padding: 0;
+        padding: var(--adm-popover-inner-content-padding, 0);
+      }
     }
   }
 }

@@ -1,24 +1,29 @@
-.adhere-ui-search-table-editor-row-control {
-  .adhere-ui-search-table-editor-row-control-save-cancel {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+@layer adhere {
+  .adhere-ui-search-table-editor-row-control {
+    .adhere-ui-search-table-editor-row-control-save-cancel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-    > .adhere-ui-search-table-editor-row-control-save-cancel-item {
-      &:not(:last-child) {
-        //margin-right: 10px;
-        margin-right: var(--editor-row-control-save-cancel-item-not-last-child-margin-right, 10px);
+      > .adhere-ui-search-table-editor-row-control-save-cancel-item {
+        &:not(:last-child) {
+          //margin-right: 10px;
+          margin-right: var(
+            --editor-row-control-save-cancel-item-not-last-child-margin-right,
+            10px
+          );
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
       }
+    }
 
+    .adhere-ui-search-table-editor-row-control-edit {
       &:hover {
         cursor: pointer;
       }
-    }
-  }
-
-  .adhere-ui-search-table-editor-row-control-edit {
-    &:hover {
-      cursor: pointer;
     }
   }
 }

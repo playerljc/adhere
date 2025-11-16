@@ -1,72 +1,74 @@
 //@import "~@baifendian/adhere-ui-css/es/vars";
 @import '~ol/ol.css';
 
-.adhere-ui-ol-map {
-  position: relative;
-  width: 100%;
-  height: 100%;
+@layer adhere {
+  .adhere-ui-ol-map {
+    position: relative;
+    width: 100%;
+    height: 100%;
 
-  .ol-viewport {
-    position: absolute;
-  }
+    .ol-viewport {
+      position: absolute;
+    }
 
-  .ol-zoom {
-    top: auto;
-    //right: 0.5em;
-    right: var(--ol-zoom-right, 0.5em);
-    //bottom: 0.5em;
-    bottom: var(--ol-zoom-bottom, 0.5em);
-    //left: auto;
-    left: var(--ol-zoom-left, auto);
-  }
+    .ol-zoom {
+      top: auto;
+      //right: 0.5em;
+      right: var(--ol-zoom-right, 0.5em);
+      //bottom: 0.5em;
+      bottom: var(--ol-zoom-bottom, 0.5em);
+      //left: auto;
+      left: var(--ol-zoom-left, auto);
+    }
 
-  .ol-full-screen {
-    //top: auto;
-    top: var(--ol-full-screen-top, auto);
-    //right: 7px;
-    right: var(--ol-full-screen-right, 7px);
-    //bottom: 4em;
-    bottom: var(--ol-full-screen-bottom, 4em);
-    //left: auto;
-    left: var(--ol-full-screen-left, auto);
-  }
+    .ol-full-screen {
+      //top: auto;
+      top: var(--ol-full-screen-top, auto);
+      //right: 7px;
+      right: var(--ol-full-screen-right, 7px);
+      //bottom: 4em;
+      bottom: var(--ol-full-screen-bottom, 4em);
+      //left: auto;
+      left: var(--ol-full-screen-left, auto);
+    }
 
-  .ol-attribution {
-    display: none;
-  }
+    .ol-attribution {
+      display: none;
+    }
 
-  .ol-scale-line {
-    //top: auto;
-    top: var(--ol-scale-line-top, auto);
-    //right: 3em;
-    right: var(--ol-scale-line-right, 3em);
-    //bottom: 0.5em;
-    bottom: var(--ol-scale-line-bottom, 0.5em);
-    //left: auto;
-    left: var(--ol-scale-line-left, auto);
-  }
+    .ol-scale-line {
+      //top: auto;
+      top: var(--ol-scale-line-top, auto);
+      //right: 3em;
+      right: var(--ol-scale-line-right, 3em);
+      //bottom: 0.5em;
+      bottom: var(--ol-scale-line-bottom, 0.5em);
+      //left: auto;
+      left: var(--ol-scale-line-left, auto);
+    }
 
-  .ol-mouse-position {
-    top: auto;
-    //right: 3.5em;
-    right: var(--ol-mouse-position-right, 3.5em);
-    //bottom: 3em;
-    bottom: var(--ol-mouse-position-bottom, 3em);
-    left: auto;
-    //padding: 0 5px;
-    padding: var(--ol-mouse-position-padding, 0 5px);
-    //color: var(--adhere-color-border-base);
-    color: var(--ol-mouse-position-color, var(--adhere-color-border-base));
-    //font-size: var(--adhere-font-size-sm);
-    font-size: var(--ol-mouse-position-font-size, var(--adhere-font-size-sm));
-    //background: rgb(0 60 136 / 30%);
-    background: var(--ol-mouse-position-background, rgb(0 60 136 / 30%));
-    //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-    border: var(
-      --ol-mouse-position-border,
-      var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
-    );
-    //border-radius: var(--adhere-border-radius-base);
-    border-radius: var(--ol-mouse-position-border-radius, var(--adhere-border-radius-base));
+    .ol-mouse-position {
+      top: auto;
+      //right: 3.5em;
+      right: var(--ol-mouse-position-right, 3.5em);
+      //bottom: 3em;
+      bottom: var(--ol-mouse-position-bottom, 3em);
+      left: auto;
+      //padding: 0 5px;
+      padding: var(--ol-mouse-position-padding, 0 5px);
+      //color: var(--adhere-color-border-base);
+      color: var(--ol-mouse-position-color, var(--adhere-color-border-base));
+      //font-size: var(--adhere-font-size-sm);
+      font-size: var(--ol-mouse-position-font-size, var(--adhere-font-size-sm));
+      //background: rgb(0 60 136 / 30%);
+      background: var(--ol-mouse-position-background, rgb(0 60 136 / 30%));
+      //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+      border: var(
+        --ol-mouse-position-border,
+        var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+      );
+      //border-radius: var(--adhere-border-radius-base);
+      border-radius: var(--ol-mouse-position-border-radius, var(--adhere-border-radius-base));
+    }
   }
 }

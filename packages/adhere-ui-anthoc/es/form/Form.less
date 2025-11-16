@@ -1,26 +1,28 @@
-.adhere-ui-anthoc-form-item-fit {
-  height: 100%;
-
-  .ant-row.ant-form-item-row {
+@layer adhere {
+  .adhere-ui-anthoc-form-item-fit {
     height: 100%;
-    .ant-col.ant-form-item-control {
+
+    .ant-row.ant-form-item-row {
       height: 100%;
-      .ant-form-item-control-input {
+      .ant-col.ant-form-item-control {
         height: 100%;
-        .ant-form-item-control-input-content {
+        .ant-form-item-control-input {
           height: 100%;
+          .ant-form-item-control-input-content {
+            height: 100%;
+          }
         }
       }
     }
   }
-}
 
-.adhere-ui-anthoc-form-nesting-form-item {
-  height: 100%;
-}
+  .adhere-ui-anthoc-form-nesting-form-item {
+    height: 100%;
+  }
 
-.adhere-ui-anthoc-form-scroll-margin-top {
-  * {
-    scroll-margin-top: inherit;
+  .adhere-ui-anthoc-form-scroll-margin-top {
+    * {
+      scroll-margin-top: inherit;
+    }
   }
 }

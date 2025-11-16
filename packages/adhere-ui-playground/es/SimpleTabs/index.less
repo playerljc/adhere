@@ -1,67 +1,69 @@
-//@import '~@baifendian/adhere-ui-css/es/vars';
+@layer adhere {
+  //@import '~@baifendian/adhere-ui-css/es/vars';
 
-.adhere-ui-playground-simple-tabs {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-
-  > .adhere-ui-playground-simple-tabs-head {
+  .adhere-ui-playground-simple-tabs {
     display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    //margin: 0 0 30px;
-    margin: var(--simple-tabs-head-margin, 0 0 30px);
-    //padding: 0;
-    padding: var(--simple-tabs-head-padding, 0);
-    list-style: none;
-    //border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-    border-bottom: var(
-      --simple-tabs-head-border-bottom,
-      var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
-    );
+    flex-direction: column;
+    width: 100%;
 
-    > li {
-      position: relative;
-      //padding: 10px 0;
-      padding: var(--simple-tabs-head-li-padding, 10px 0);
-      text-align: center;
+    > .adhere-ui-playground-simple-tabs-head {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+      //margin: 0 0 30px;
+      margin: var(--simple-tabs-head-margin, 0 0 30px);
+      //padding: 0;
+      padding: var(--simple-tabs-head-padding, 0);
+      list-style: none;
+      //border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+      border-bottom: var(
+        --simple-tabs-head-border-bottom,
+        var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+      );
 
-      &:not(:first-child) {
-        //margin-left: 20px;
-        margin-left: var(--simple-tabs-head-li-not-first-child-margin-left, 20px);
-      }
+      > li {
+        position: relative;
+        //padding: 10px 0;
+        padding: var(--simple-tabs-head-li-padding, 10px 0);
+        text-align: center;
 
-      &.active {
-        //color: var(--adhere-color-primary);
-        color: var(--simple-tabs-head-li-active-color, var(--adhere-color-primary));
-        transition: all 0.2s;
+        &:not(:first-child) {
+          //margin-left: 20px;
+          margin-left: var(--simple-tabs-head-li-not-first-child-margin-left, 20px);
+        }
 
-        &::before {
-          position: absolute;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          //height: 2px;
-          height: var(--simple-tabs-head-li-active-before-height, 2px);
-          //background-color: var(--adhere-color-primary);
-          background-color: var(
-            --simple-tabs-head-li-active-before-background-color,
-            var(--adhere-color-primary)
-          );
-          content: '';
+        &.active {
+          //color: var(--adhere-color-primary);
+          color: var(--simple-tabs-head-li-active-color, var(--adhere-color-primary));
+          transition: all 0.2s;
+
+          &::before {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            //height: 2px;
+            height: var(--simple-tabs-head-li-active-before-height, 2px);
+            //background-color: var(--adhere-color-primary);
+            background-color: var(
+              --simple-tabs-head-li-active-before-background-color,
+              var(--adhere-color-primary)
+            );
+            content: '';
+          }
+        }
+
+        &:hover {
+          cursor: pointer;
         }
       }
-
-      &:hover {
-        cursor: pointer;
-      }
     }
-  }
 
-  > .adhere-ui-playground-simple-tabs-body {
-    flex-grow: 1;
-    min-height: 0;
-    overflow-y: auto;
+    > .adhere-ui-playground-simple-tabs-body {
+      flex-grow: 1;
+      min-height: 0;
+      overflow-y: auto;
+    }
   }
 }

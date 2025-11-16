@@ -1,21 +1,23 @@
-.adhere-ui-ant-hoc-checkbox-list,
-.adhere-ui-ant-hoc-radio-list {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  //padding: 5px 5px 5px 0;
-  padding: var(--checkbox-list-radio-list-padding, 5px 5px 5px 0);
+@layer adhere {
+  .adhere-ui-ant-hoc-checkbox-list,
+  .adhere-ui-ant-hoc-radio-list {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    //padding: 5px 5px 5px 0;
+    padding: var(--checkbox-list-radio-list-padding, 5px 5px 5px 0);
 
-  > .adhere-ui-ant-hoc-checkbox-list-extra,
-  > .adhere-ui-ant-hoc-radio-list-extra {
-    flex-shrink: 0;
-    //margin-right: 5px;
-    margin-right: var(--checkbox-list-extra-radio-list-extra-margin-right, 5px);
-  }
+    > .adhere-ui-ant-hoc-checkbox-list-extra,
+    > .adhere-ui-ant-hoc-radio-list-extra {
+      flex-shrink: 0;
+      //margin-right: 5px;
+      margin-right: var(--checkbox-list-extra-radio-list-extra-margin-right, 5px);
+    }
 
-  > .adhere-ui-ant-hoc-checkbox-list-body,
-  > .adhere-ui-ant-hoc-radio-list-body {
-    flex: 1;
-    min-width: 0;
+    > .adhere-ui-ant-hoc-checkbox-list-body,
+    > .adhere-ui-ant-hoc-radio-list-body {
+      flex: 1;
+      min-width: 0;
+    }
   }
 }

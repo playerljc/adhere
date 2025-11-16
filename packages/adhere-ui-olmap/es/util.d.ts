@@ -362,6 +362,13 @@ declare const _default: {
      */
     removeAllFeature(vectorSource: VectorSource): void;
     /**
+     * removeFeaturesByType
+     * @description 删除指定类型的feature
+     * @param {VectorSource} vectorSource
+     * @param {string} type
+     */
+    removeFeaturesByType(vectorSource: VectorSource, type: string): void;
+    /**
      * 删除所有覆盖物
      * 清空地图上的所有覆盖物（Overlay）
      *

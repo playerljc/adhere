@@ -1,89 +1,94 @@
-//@import '~@baifendian/adhere-ui-css/es/vars';
+@layer adhere {
+  //@import '~@baifendian/adhere-ui-css/es/vars';
 
-.adhere-ui-playground-message {
-  @adhere-ui-playground-message-notice-content-box-shadow: 0 3px 6px -4px #0000001f,
-    0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
-  @adhere-ui-playground-message-success-color: #52c41a;
+  .adhere-ui-playground-message {
+    @adhere-ui-playground-message-notice-content-box-shadow: 0 3px 6px -4px #0000001f,
+      0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
+    @adhere-ui-playground-message-success-color: #52c41a;
 
-  position: fixed;
-  //top: 8px;
-  top: var(--message-top, 8px);
-  //left: 0;
-  left: var(--message-left, 0);
-  //z-index: 1010;
-  z-index: var(--message-z-index, 1010);
-  box-sizing: border-box;
-  width: 100%;
-  //margin: 0;
-  margin: var(--message-margin, 0);
-  //padding: 0;
-  padding: var(--message-padding, 0);
-  //color: var(--adhere-color-text);
-  color: var(--message-color, var(--adhere-color-text));
-  //font-size: var(--adhere-font-size-base);
-  font-size: var(--message-font-size, var(--adhere-font-size-base));
-  font-variant: tabular-nums;
-  //line-height: 1.5715;
-  line-height: var(--message-line-height, 1.5715);
-  list-style: none;
-  pointer-events: none;
-  font-feature-settings: 'tnum';
+    position: fixed;
+    //top: 8px;
+    top: var(--message-top, 8px);
+    //left: 0;
+    left: var(--message-left, 0);
+    //z-index: 1010;
+    z-index: var(--message-z-index, 1010);
+    box-sizing: border-box;
+    width: 100%;
+    //margin: 0;
+    margin: var(--message-margin, 0);
+    //padding: 0;
+    padding: var(--message-padding, 0);
+    //color: var(--adhere-color-text);
+    color: var(--message-color, var(--adhere-color-text));
+    //font-size: var(--adhere-font-size-base);
+    font-size: var(--message-font-size, var(--adhere-font-size-base));
+    font-variant: tabular-nums;
+    //line-height: 1.5715;
+    line-height: var(--message-line-height, 1.5715);
+    list-style: none;
+    pointer-events: none;
+    font-feature-settings: 'tnum';
 
-  .adhere-ui-playground-message-notice {
-    //padding: 8px;
-    padding: var(--message-notice-padding, 8px);
-    text-align: center;
+    .adhere-ui-playground-message-notice {
+      //padding: 8px;
+      padding: var(--message-notice-padding, 8px);
+      text-align: center;
 
-    &adhere-ui-playground-message-move-up-leave {
-      animation-name: MessageMoveOut;
-      animation-duration: 0.3s;
-    }
+      &adhere-ui-playground-message-move-up-leave {
+        animation-name: MessageMoveOut;
+        animation-duration: 0.3s;
+      }
 
-    > .adhere-ui-playground-message-notice-content {
-      display: inline-block;
-      //padding: 10px 16px;
-      padding: var(--message-notice-content-padding, 10px 16px);
-      //background: #fff;
-      //border-radius: 2px;
-      border-radius: var(--message-notice-content-border-radius, 2px);
-      //box-shadow: @adhere-ui-playground-message-notice-content-box-shadow;
-      box-shadow: var(
-        --message-notice-content-box-shadow,
-        @adhere-ui-playground-message-notice-content-box-shadow
-      );
-      pointer-events: all;
+      > .adhere-ui-playground-message-notice-content {
+        display: inline-block;
+        //padding: 10px 16px;
+        padding: var(--message-notice-content-padding, 10px 16px);
+        //background: #fff;
+        //border-radius: 2px;
+        border-radius: var(--message-notice-content-border-radius, 2px);
+        //box-shadow: @adhere-ui-playground-message-notice-content-box-shadow;
+        box-shadow: var(
+          --message-notice-content-box-shadow,
+          @adhere-ui-playground-message-notice-content-box-shadow
+        );
+        pointer-events: all;
 
-      > .adhere-ui-playground-message-success {
-        //margin: 0;
-        margin: var(--message-success-margin, 0);
-        //padding: 0;
-        padding: var(--message-success-padding, 0);
+        > .adhere-ui-playground-message-success {
+          //margin: 0;
+          margin: var(--message-success-margin, 0);
+          //padding: 0;
+          padding: var(--message-success-padding, 0);
 
-        > .anticon {
-          position: relative;
-          top: 1px;
-          //margin-right: 8px;
-          margin-right: var(--message-success-anticon-margin-right, 8px);
-          //color: @adhere-ui-playground-message-success-color;
-          color: var(--message-success-anticon-color, @adhere-ui-playground-message-success-color);
-          //font-size: var(--adhere-font-size-lg);
-          font-size: var(--message-success-anticon-font-size, var(--adhere-font-size-lg));
+          > .anticon {
+            position: relative;
+            top: 1px;
+            //margin-right: 8px;
+            margin-right: var(--message-success-anticon-margin-right, 8px);
+            //color: @adhere-ui-playground-message-success-color;
+            color: var(
+              --message-success-anticon-color,
+              @adhere-ui-playground-message-success-color
+            );
+            //font-size: var(--adhere-font-size-lg);
+            font-size: var(--message-success-anticon-font-size, var(--adhere-font-size-lg));
+          }
         }
       }
     }
   }
-}
 
-@keyframes MessageMoveOut {
-  0% {
-    max-height: 150px;
-    padding: 8px;
-    opacity: 1;
-  }
+  @keyframes MessageMoveOut {
+    0% {
+      max-height: 150px;
+      padding: 8px;
+      opacity: 1;
+    }
 
-  100% {
-    max-height: 0;
-    padding: 0;
-    opacity: 0;
+    100% {
+      max-height: 0;
+      padding: 0;
+      opacity: 0;
+    }
   }
 }
