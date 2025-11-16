@@ -40,7 +40,7 @@ declare const defaultExport: {
         drawRegularShapePoint({ id, pos, points, fillOpt, strokeOpt, text, textOpt, zIndex, properties, ...rest }: import("./types").DrawRegularShapePointParams): import("ol").Feature;
         drawImagePoint({ id, pos, zIndex, src, color, opacity, scale, anchor, rotation, offset, offsetOrigin, size, text, textOpt, properties, }: import("./types").DrawImagePointParams): import("ol").Feature;
         createRegularPolygonCurve(origin: number[], radius: number, sides: number, r: number, angel: number): import("ol/geom").Polygon;
-        setMapCenterAnimate({ map, point, duration }: import("./types").SetMapCenterAnimateParams): void;
+        setMapCenterAnimate({ map, point, duration, ...rest }: import("./types").SetMapCenterAnimateParams): void;
         createInteraction({ map, config }: import("./types").CreateInteractionParams): import("ol/interaction/Draw").default;
         polygonInteraction({ map, freehand, vectorSource, onDrawEnd, ...rest }: import("./types").PolygonInteractionParams): import("ol/interaction/Draw").default;
         circleInteraction({ map, vectorSource, onDrawEnd, ...rest }: import("./types").CircleInteractionParams): import("ol/interaction/Draw").default;

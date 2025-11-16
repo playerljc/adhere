@@ -9,7 +9,7 @@ import type { GeoJSONStyle, MapInstance, OLMapProps, OLMapState } from './types'
  */
 export declare class OlMap extends React.Component<OLMapProps, OLMapState> implements MapInstance {
     mainGeoLayer: GeoLayer | undefined;
-    readonly el: React.RefObject<HTMLDivElement>;
+    readonly el: React.RefObject<HTMLDivElement | null>;
     map: any;
     static defaultProps: Partial<OLMapProps>;
     static propTypes: {
