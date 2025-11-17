@@ -132,143 +132,143 @@
  字母以大写开头
  ----重点间隔也算是重新开头
 */
-.adhere-text-capitalize {
+.adhere-text-capitalize() {
   text-transform: capitalize;
 }
 
 /*
  字母全部大写
  */
-.adhere-text-uppercase {
+.adhere-text-uppercase() {
   text-transform: uppercase;
 }
 
 /*
  字母全部小写
  */
-.adhere-text-lowercase {
+.adhere-text-lowercase() {
   text-transform: lowercase;
 }
 
-.adhere-display-flex {
+.adhere-display-flex() {
   display: flex;
 }
 
-.adhere-flex-row {
+.adhere-flex-row() {
   flex-direction: row;
 }
 
-.adhere-flex-row-reverse {
+.adhere-flex-row-reverse() {
   flex-direction: row-reverse;
 }
 
-.adhere-flex-col {
+.adhere-flex-col() {
   flex-direction: column;
 }
 
-.adhere-flex-col-reverse {
+.adhere-flex-col-reverse() {
   flex-direction: column-reverse;
 }
 
-.adhere-justify-start {
+.adhere-justify-start() {
   justify-content: start;
 }
 
-.adhere-justify-end {
+.adhere-justify-end() {
   justify-content: end;
 }
 
 // 块级元素水平居中
-.adhere-justify-center {
+.adhere-justify-center() {
   justify-content: center;
 }
 
-.adhere-justify-between {
+.adhere-justify-between() {
   justify-content: space-between;
 }
 
-.adhere-justify-around {
+.adhere-justify-around() {
   justify-content: space-around;
 }
 
-.adhere-justify-evenly {
+.adhere-justify-evenly() {
   justify-content: space-evenly;
 }
 
-.adhere-justify-stretch {
+.adhere-justify-stretch() {
   justify-content: stretch;
 }
 
-.adhere-items-start {
+.adhere-items-start() {
   align-items: flex-start;
 }
 
-.adhere-items-end {
+.adhere-items-end() {
   align-items: flex-end;
 }
 
 // 块级元素垂直居中
-.adhere-items-center {
+.adhere-items-center() {
   align-items: center;
 }
 
-.adhere-items-baseline {
+.adhere-items-baseline() {
   align-items: baseline;
 }
 
-.adhere-items-stretch {
+.adhere-items-stretch() {
   align-items: stretch;
 }
 
 // 固定
-.adhere-flex-fixed {
+.adhere-flex-fixed() {
   flex-shrink: 0;
 }
 
 // 最小是剩余，肯能比剩余还大
-.adhere-flex-auto {
+.adhere-flex-auto() {
   flex-grow: 1;
 }
 
 // width剩余
-.adhere-flex-w-auto {
+.adhere-flex-w-auto() {
   flex: 1;
   min-width: 0;
 }
 
 // height剩余
-.adhere-flex-h-auto {
+.adhere-flex-h-auto() {
   flex: 1;
   min-height: 0;
 }
 
 // auto部分最大是剩余
-.adhere-flex-auto-normal {
+.adhere-flex-auto-normal() {
   flex: 0 1 auto;
 }
 
-.adhere-display-inline-flex {
+.adhere-display-inline-flex() {
   display: inline-flex;
 }
 
-.adhere-text-left {
+.adhere-text-left() {
   text-align: left;
 }
 
 // 行级元素水平居中
-.adhere-text-center {
+.adhere-text-center() {
   text-align: center;
 }
 
-.adhere-text-right {
+.adhere-text-right() {
   text-align: right;
 }
 
-.adhere-text-start {
+.adhere-text-start() {
   text-align: start;
 }
 
-.adhere-text-end {
+.adhere-text-end() {
   text-align: end;
 }
 
@@ -283,73 +283,73 @@
   line-height: @height;
 }
 
-.adhere-fill-h {
+.adhere-fill-h() {
   height: 100%;
 }
 
-.adhere-fill-w {
+.adhere-fill-w() {
   width: 100%;
 }
 
-.adhere-scroll {
+.adhere-scroll() {
   height: 100%;
   overflow: auto;
 }
 
-.adhere-scroll-x {
+.adhere-scroll-x() {
   width: 100%;
   overflow-x: auto;
 }
 
-.adhere-scroll-y {
+.adhere-scroll-y() {
   height: 100%;
   overflow-y: auto;
 }
 
-.adhere-fit-h {
+.adhere-fit-h() {
   display: flex;
 }
 
-.adhere-fit-w {
+.adhere-fit-w() {
   display: flex;
   flex-direction: column;
 }
 
 // 穿透点击
-.adhere-penetrate {
+.adhere-penetrate() {
   pointer-events: none;
 }
 
 // 不穿透点击
-.adhere-no-penetrate {
+.adhere-no-penetrate() {
   pointer-events: auto;
 }
 
-.adhere-hide {
+.adhere-hide() {
   display: none;
 }
 
-.adhere-visible {
+.adhere-visible() {
   visibility: visible;
 }
 
-.adhere-hidden {
+.adhere-hidden() {
   visibility: hidden;
 }
 
-.adhere-va-center {
+.adhere-va-center() {
   vertical-align: middle;
 }
 
 // 任意元素水平居中
-.adhere-ele-w-center {
+.adhere-ele-w-center() {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
 }
 
 // 任意元素垂直居中
-.adhere-ele-h-center {
+.adhere-ele-h-center() {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
