@@ -1,26 +1,24 @@
-@layer adhere {
-  /**
+/**
  * 删除确认组件样式
  * 提供基础的交互样式，包括悬停效果和点击状态
  */
 
-  .adhere-ui-mobile-del-confirm {
-    position: relative;
-    display: inline-block; // 确保组件只占用必要的空间
+.adhere-ui-mobile-del-confirm {
+  position: relative;
+  display: inline-block; // 确保组件只占用必要的空间
 
-    // 悬停效果
-    &:hover {
-      cursor: pointer;
-    }
+  // 悬停效果
+  &:hover {
+    cursor: pointer;
+  }
 
-    // 点击状态
-    &:active {
-      opacity: 0.8;
-    }
+  // 点击状态
+  &:active {
+    opacity: 0.8;
+  }
 
-    // 确保子元素可以正常显示
-    > * {
-      pointer-events: none; // 防止子元素阻止点击事件
-    }
+  // 确保子元素可以正常显示
+  > * {
+    pointer-events: none; // 防止子元素阻止点击事件
   }
 }

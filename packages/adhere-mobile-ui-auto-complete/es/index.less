@@ -1,70 +1,68 @@
-@layer adhere {
-  .adhere-mobile-ui-auto-complete {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+.adhere-mobile-ui-auto-complete {
+  position: relative;
+  display: flex;
+  flex-direction: column;
 
-    > .adhere-mobile-ui-auto-complete-search-bar {
-      flex-shrink: 0;
-      //padding: 15px;
-      padding: var(--search-bar-padding, 15px);
-    }
+  > .adhere-mobile-ui-auto-complete-search-bar {
+    flex-shrink: 0;
+    //padding: 15px;
+    padding: var(--search-bar-padding, 15px);
+  }
 
-    > .adhere-mobile-ui-auto-complete-body {
-      flex: 1;
-      min-height: 0;
-      //padding: 15px;
-      padding: var(--body-padding, 15px);
-      overflow-y: auto;
-    }
+  > .adhere-mobile-ui-auto-complete-body {
+    flex: 1;
+    min-height: 0;
+    //padding: 15px;
+    padding: var(--body-padding, 15px);
+    overflow-y: auto;
+  }
 
-    .adm-floating-panel {
-      position: absolute;
+  .adm-floating-panel {
+    position: absolute;
+    width: 100%;
+
+    &:after {
       width: 100%;
+    }
 
-      &:after {
-        width: 100%;
-      }
+    > .adm-floating-panel-content {
+      min-height: 0;
+      overflow-y: hidden;
 
-      > .adm-floating-panel-content {
-        min-height: 0;
-        overflow-y: hidden;
+      > .adhere-mobile-ui-auto-complete-result {
+        flex-shrink: 0;
+        height: 100%;
+        //padding: 15px;
+        padding: var(--result-padding, 15px);
+        overflow-y: auto;
+        white-space: nowrap;
+        //border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+        border-top: var(
+          --result-border-top,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+        );
 
-        > .adhere-mobile-ui-auto-complete-result {
-          flex-shrink: 0;
-          height: 100%;
-          //padding: 15px;
-          padding: var(--result-padding, 15px);
-          overflow-y: auto;
-          white-space: nowrap;
-          //border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-          border-top: var(
-            --result-border-top,
-            var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
-          );
+        > .adm-list {
+          > .adm-list-body {
+            > .adm-list-body-inner {
+              > .adm-list-item {
+                > .adm-list-item-content {
+                  > .adm-list-item-content-main {
+                    position: relative;
+                    width: 100%;
 
-          > .adm-list {
-            > .adm-list-body {
-              > .adm-list-body-inner {
-                > .adm-list-item {
-                  > .adm-list-item-content {
-                    > .adm-list-item-content-main {
-                      position: relative;
-                      width: 100%;
-
-                      > .adhere-mobile-ui-auto-complete-result-item-close {
-                        position: absolute;
-                        top: 0;
-                        right: 0;
-                        //z-index: 9999;
-                        z-index: var(--result-item-close-z-index, 9999);
-                        //color: red;
-                        color: var(--result-item-close-color, red);
-                        //font-weight: bold;
-                        font-weight: var(--result-item-close-font-weight, bold);
-                        //font-size: 20px;
-                        font-size: var(--result-item-close-font-size, 20px);
-                      }
+                    > .adhere-mobile-ui-auto-complete-result-item-close {
+                      position: absolute;
+                      top: 0;
+                      right: 0;
+                      //z-index: 9999;
+                      z-index: var(--result-item-close-z-index, 9999);
+                      //color: red;
+                      color: var(--result-item-close-color, red);
+                      //font-weight: bold;
+                      font-weight: var(--result-item-close-font-weight, bold);
+                      //font-size: 20px;
+                      font-size: var(--result-item-close-font-size, 20px);
                     }
                   }
                 }

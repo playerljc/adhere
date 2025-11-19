@@ -1,20 +1,17 @@
 @import '~swiper/less';
+.adhere-ui-swipe-out {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
 
-@layer adhere {
-  .adhere-ui-swipe-out {
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
+  > .swiper-wrapper {
+    > .swiper-slide {
+      width: auto;
+      height: auto;
+    }
 
-    > .swiper-wrapper {
-      > .swiper-slide {
-        width: auto;
-        height: auto;
-      }
-
-      > .swiper-slide.adhere-ui-swipe-out-content {
-        width: 100%;
-      }
+    > .swiper-slide.adhere-ui-swipe-out-content {
+      width: 100%;
     }
   }
 }

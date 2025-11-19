@@ -1,48 +1,45 @@
 @import './Items/NormalItem/index';
 @import './Items/SortItem/index';
+.adhere-mobile-ui-prsl-toolbar-wrapper {
+  flex-shrink: 0;
 
-@layer adhere {
-  .adhere-mobile-ui-prsl-toolbar-wrapper {
-    flex-shrink: 0;
+  > .adhere-mobile-ui-prsl-toolbar-inner {
+    display: flex;
+    //padding: 5px 10px;
+    padding: var(--toolbar-inner-padding, 5px 10px);
 
-    > .adhere-mobile-ui-prsl-toolbar-inner {
+    > .adhere-mobile-ui-prsl-toolbar-show-total {
       display: flex;
-      //padding: 5px 10px;
-      padding: var(--toolbar-inner-padding, 5px 10px);
+      flex-shrink: 0;
+      //align-items: center;
+      align-items: var(--toolbar-show-total-align-items, center);
+      //justify-content: center;
+      justify-content: var(--toolbar-show-total-justify-content, center);
+    }
 
-      > .adhere-mobile-ui-prsl-toolbar-show-total {
-        display: flex;
-        flex-shrink: 0;
-        //align-items: center;
-        align-items: var(--toolbar-show-total-align-items, center);
-        //justify-content: center;
-        justify-content: var(--toolbar-show-total-justify-content, center);
-      }
+    > .adhere-mobile-ui-prsl-toolbar-tool-items {
+      display: flex;
+      flex: 1;
+      //justify-content: flex-end;
+      justify-content: var(--toolbar-tool-items-justify-content, flex-end);
+      min-width: 0;
 
-      > .adhere-mobile-ui-prsl-toolbar-tool-items {
-        display: flex;
-        flex: 1;
-        //justify-content: flex-end;
-        justify-content: var(--toolbar-tool-items-justify-content, flex-end);
-        min-width: 0;
-
-        > .adhere-mobile-ui-prsl-toolbar-tool-item {
-          &:not(:last-child) {
-            //margin-right: 10px;
-            margin-right: var(--toolbar-tool-item-margin-right, 10px);
-          }
+      > .adhere-mobile-ui-prsl-toolbar-tool-item {
+        &:not(:last-child) {
+          //margin-right: 10px;
+          margin-right: var(--toolbar-tool-item-margin-right, 10px);
         }
       }
+    }
 
-      > .adhere-mobile-ui-prsl-toolbar-tool-menu-trigger {
-        flex-shrink: 0;
-        //margin-left: 10px;
-        margin-left: var(--toolbar-tool-menu-trigger-margin-left, 10px);
-        //font-weight: bold;
-        font-weight: var(--toolbar-tool-menu-trigger-font-weight, bold);
-        //font-size: 20px;
-        font-size: var(--toolbar-tool-menu-trigger-font-size, 20px);
-      }
+    > .adhere-mobile-ui-prsl-toolbar-tool-menu-trigger {
+      flex-shrink: 0;
+      //margin-left: 10px;
+      margin-left: var(--toolbar-tool-menu-trigger-margin-left, 10px);
+      //font-weight: bold;
+      font-weight: var(--toolbar-tool-menu-trigger-font-weight, bold);
+      //font-size: 20px;
+      font-size: var(--toolbar-tool-menu-trigger-font-size, 20px);
     }
   }
 }

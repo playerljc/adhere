@@ -1,5 +1,4 @@
-@layer adhere {
-  /**
+/**
  * Adhere Mobile Error Prompt 样式文件
  * 
  * CSS变量说明：
@@ -9,43 +8,42 @@
  * --dialog-content-color: 内容文字颜色，默认继承--adhere-color-text-base
  */
 
-  // 注释掉antd-mobile样式导入，避免重复引入
-  //@import '~antd-mobile/es/components/toast/toast.css';
-  //@import '~antd-mobile/es/components/modal/modal.css';
-  //@import '~antd-mobile/es/components/modal/modal.patch.css';
+// 注释掉antd-mobile样式导入，避免重复引入
+//@import '~antd-mobile/es/components/toast/toast.css';
+//@import '~antd-mobile/es/components/modal/modal.css';
+//@import '~antd-mobile/es/components/modal/modal.patch.css';
 
-  /**
+/**
  * 错误提示对话框容器
  * 使用flex布局，图标和内容水平排列
  */
-  .adhere-mobile-error-prompt {
-    display: flex;
-    align-items: center;
-    width: 100%;
+.adhere-mobile-error-prompt {
+  display: flex;
+  align-items: center;
+  width: 100%;
 
-    /**
+  /**
    * 错误图标容器
    * 固定宽度，不参与flex收缩
    */
-    .adhere-mobile-error-prompt-dialog-icon {
-      flex-shrink: 0;
-      margin-right: var(--dialog-icon-margin-right, 15px);
-      color: var(--dialog-icon-color, #ff4d4f);
-      font-size: var(--dialog-icon-font-size, 22px);
-    }
+  .adhere-mobile-error-prompt-dialog-icon {
+    flex-shrink: 0;
+    margin-right: var(--dialog-icon-margin-right, 15px);
+    color: var(--dialog-icon-color, #ff4d4f);
+    font-size: var(--dialog-icon-font-size, 22px);
+  }
 
-    /**
+  /**
    * 错误内容容器
    * 占据剩余空间，支持文字换行
    */
-    .adhere-mobile-error-prompt-dialog-content {
-      flex: 1;
-      min-width: 0;
-      color: var(--dialog-content-color, var(--adhere-color-text-base));
-      line-height: 1.5;
-      white-space: normal;
-      word-wrap: break-word;
-      word-break: break-word;
-    }
+  .adhere-mobile-error-prompt-dialog-content {
+    flex: 1;
+    min-width: 0;
+    color: var(--dialog-content-color, var(--adhere-color-text-base));
+    line-height: 1.5;
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-word;
   }
 }

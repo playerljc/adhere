@@ -1,216 +1,214 @@
-@layer adhere {
-  .adhere-ui-expression {
-    position: relative;
-    //min-height: 32px;
-    min-height: var(--expression-min-height, 32px);
+.adhere-ui-expression {
+  position: relative;
+  //min-height: 32px;
+  min-height: var(--expression-min-height, 32px);
 
-    > .adhere-ui-expression-editor {
-      box-sizing: border-box;
-      width: 100%;
-      min-width: 0;
-      height: 100%;
-      //padding: 4px 11px;
-      padding: var(--editor-padding, 4px 11px);
-      overflow: hidden;
-      //color: var(--adhere-color-text);
-      color: var(--editor-color, var(--adhere-color-text));
-      //line-height: 22px;
-      line-height: var(--editor-line-height, 22px);
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      word-break: break-all;
-      //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-      border: var(
-        --editor-border,
-        var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
-      );
-      //border-radius: 6px;
-      border-radius: var(--editor-border-radius, 6px);
-      //transition: all 0.2s;
-      transition: var(--editor-transition, all 0.2s);
+  > .adhere-ui-expression-editor {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    //padding: 4px 11px;
+    padding: var(--editor-padding, 4px 11px);
+    overflow: hidden;
+    //color: var(--adhere-color-text);
+    color: var(--editor-color, var(--adhere-color-text));
+    //line-height: 22px;
+    line-height: var(--editor-line-height, 22px);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    border: var(
+      --editor-border,
+      var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+    );
+    //border-radius: 6px;
+    border-radius: var(--editor-border-radius, 6px);
+    //transition: all 0.2s;
+    transition: var(--editor-transition, all 0.2s);
 
-      &.adhere-ui-expression-editor-show-clear {
-        //padding-right: 50px;
-        padding-right: var(--editor-show-clear-padding-right, 50px);
-      }
-
-      &:focus {
-        //border-color: var(--adhere-color-primary);
-        border-color: var(--editor-focus-border-color, var(--adhere-color-primary));
-        outline: 0;
-        //box-shadow: 0 0 0 2px rgb(5 145 255 / 10%);
-        box-shadow: var(--editor-focus-box-shadow, 0 0 0 2px rgb(5 145 255 / 10%));
-        //border-inline-end-width: 1px;
-        border-inline-end-width: var(--editor-focus-border-inline-end-width, 1px);
-      }
-
-      .text {
-        //color: var(--adhere-color-text);
-        color: var(--editor-text-color, var(--adhere-color-text));
-      }
-
-      .operator {
-        //color: var(--adhere-color-primary);
-        color: var(--editor-operator-color, var(--adhere-color-primary));
-        //font-weight: bold;
-        font-weight: var(--editor-operator-font-weight, bold);
-      }
+    &.adhere-ui-expression-editor-show-clear {
+      //padding-right: 50px;
+      padding-right: var(--editor-show-clear-padding-right, 50px);
     }
 
-    > .adhere-ui-expression-editor-placeholder {
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: none;
-      box-sizing: border-box;
-      width: 100%;
-      height: 100%;
-      //padding: 4px 11px;
-      padding: var(--editor-placeholder-padding, 4px 11px);
-      overflow: hidden;
-      //color: #999;
-      color: var(--editor-placeholder-color, #999);
-      //line-height: 22px;
-      line-height: var(--editor-placeholder-line-height, 22px);
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      pointer-events: none;
-
-      &.adhere-ui-expression-editor-placeholder--show {
-        display: block;
-      }
+    &:focus {
+      //border-color: var(--adhere-color-primary);
+      border-color: var(--editor-focus-border-color, var(--adhere-color-primary));
+      outline: 0;
+      //box-shadow: 0 0 0 2px rgb(5 145 255 / 10%);
+      box-shadow: var(--editor-focus-box-shadow, 0 0 0 2px rgb(5 145 255 / 10%));
+      //border-inline-end-width: 1px;
+      border-inline-end-width: var(--editor-focus-border-inline-end-width, 1px);
     }
 
-    > .adhere-ui-expression-editor-clear {
-      position: absolute;
-      top: 0;
-      right: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      //width: 50px;
-      width: var(--editor-clear-width, 50px);
-      height: 100%;
-
-      > span {
-        margin: 0;
-        //color: #fff;
-        color: var(--editor-clear-span-color, #fff);
-        //font-size: 12px;
-        font-size: var(--editor-clear-span-font-size, 12px);
-        vertical-align: -1px;
-        //background: #999;
-        background-color: var(--editor-clear-span-background-color, #999);
-        //border-radius: 50%;
-        border-radius: var(--editor-clear-span-border-radius, 50%);
-        cursor: pointer;
-        //transition: color 0.3s;
-        transition: var(--editor-clear-span-transition, color 0.3s);
-      }
-    }
-
-    > .adhere-ui-expression-operators,
-    > .adhere-ui-expression-quick-tips {
-      position: fixed;
-      //z-index: 2000;
-      z-index: var(--operators-quick-tips-z-index, 2000);
-      display: none;
-      //width: 300px;
-      width: var(--operators-quick-tips-width, 300px);
-      //margin: 0;
-      margin: var(--operators-quick-tips-margin, 0);
-      list-style: none;
-      //background-color: #fafafa;
-      background-color: var(--operators-quick-tips-background-color, #fafafa);
-      //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-      border: var(
-        --operators-quick-tips-border,
-        var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
-      );
-      //border-radius: 8px;
-      border-radius: var(--operators-quick-tips-border-radius, 8px);
-      //box-shadow: rgb(0 0 0 / 20%) 4px 4px 4px 1px;
-      box-shadow: var(--operators-quick-tips-box-shadow, rgb(0 0 0 / 20%) 4px 4px 4px 1px);
-
-      &.adhere-ui-expression-operators--show,
-      &.adhere-ui-expression-quick-tips--show {
-        display: block;
-      }
-
-      > .adhere-ui-expression-operators-header,
-      > .adhere-ui-expression-quick-tips-header {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: right;
-        //height: 32px;
-        height: var(--operators-quick-tips-header-height, 32px);
-        //padding: 5px;
-        padding: var(--operators-quick-tips-header-padding, 5px);
-        //border-bottom: var(--adhere-line-width) var(--adhere-line-type)
-        //  var(--adhere-color-border-base);
-        border-bottom: var(
-          --operators-quick-tips-header-border-bottom,
-          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
-        );
-
-        &:hover {
-          //background-color: transparent;
-          //cursor: default;
-          background-color: var(--operators-quick-tips-header-hover-background-color, transparent);
-          cursor: var(--operators-quick-tips-header-hover-cursor, default);
-        }
-
-        > i {
-          //font-size: 20px;
-          font-size: var(--operators-quick-tips-header-i-font-size, 20px);
-
-          &:hover {
-            cursor: pointer;
-          }
-        }
-      }
-
-      > .adhere-ui-expression-operators-main,
-      > .adhere-ui-expression-quick-tips-main {
-        //max-height: 200px;
-        max-height: var(--operators-quick-tips-main-max-height, 200px);
-        overflow-y: auto;
-
-        > li {
-          //padding: 10px;
-          padding: var(--operators-quick-tips-main-li-padding, 10px);
-          //color: var(--adhere-color-primary);
-          color: var(--operators-quick-tips-main-li-color, var(--adhere-color-primary));
-          //font-weight: 600;
-          font-weight: var(--operators-quick-tips-main-li-font-weight, 600);
-          //font-size: var(--adhere-font-size-xl);
-          font-size: var(--operators-quick-tips-main-li-font-size, var(--adhere-font-size-xl));
-
-          &:hover {
-            //background-color: rgb(var(--adhere-color-primary-rgb) 0.3);
-            background-color: var(
-              --operators-quick-tips-main-li-hover-background-color,
-              rgb(var(--adhere-color-primary-rgb) 0.3)
-            );
-            cursor: pointer;
-          }
-        }
-      }
-    }
-  }
-
-  .adhere-ui-expression-view {
     .text {
       //color: var(--adhere-color-text);
-      color: var(--view-text-color, var(--adhere-color-text));
+      color: var(--editor-text-color, var(--adhere-color-text));
     }
 
     .operator {
       //color: var(--adhere-color-primary);
-      color: var(--view-operator-color, var(--adhere-color-primary));
+      color: var(--editor-operator-color, var(--adhere-color-primary));
       //font-weight: bold;
-      font-weight: var(--view-operator-font-weight, bold);
+      font-weight: var(--editor-operator-font-weight, bold);
     }
+  }
+
+  > .adhere-ui-expression-editor-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    //padding: 4px 11px;
+    padding: var(--editor-placeholder-padding, 4px 11px);
+    overflow: hidden;
+    //color: #999;
+    color: var(--editor-placeholder-color, #999);
+    //line-height: 22px;
+    line-height: var(--editor-placeholder-line-height, 22px);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    pointer-events: none;
+
+    &.adhere-ui-expression-editor-placeholder--show {
+      display: block;
+    }
+  }
+
+  > .adhere-ui-expression-editor-clear {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    //width: 50px;
+    width: var(--editor-clear-width, 50px);
+    height: 100%;
+
+    > span {
+      margin: 0;
+      //color: #fff;
+      color: var(--editor-clear-span-color, #fff);
+      //font-size: 12px;
+      font-size: var(--editor-clear-span-font-size, 12px);
+      vertical-align: -1px;
+      //background: #999;
+      background-color: var(--editor-clear-span-background-color, #999);
+      //border-radius: 50%;
+      border-radius: var(--editor-clear-span-border-radius, 50%);
+      cursor: pointer;
+      //transition: color 0.3s;
+      transition: var(--editor-clear-span-transition, color 0.3s);
+    }
+  }
+
+  > .adhere-ui-expression-operators,
+  > .adhere-ui-expression-quick-tips {
+    position: fixed;
+    //z-index: 2000;
+    z-index: var(--operators-quick-tips-z-index, 2000);
+    display: none;
+    //width: 300px;
+    width: var(--operators-quick-tips-width, 300px);
+    //margin: 0;
+    margin: var(--operators-quick-tips-margin, 0);
+    list-style: none;
+    //background-color: #fafafa;
+    background-color: var(--operators-quick-tips-background-color, #fafafa);
+    //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    border: var(
+      --operators-quick-tips-border,
+      var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+    );
+    //border-radius: 8px;
+    border-radius: var(--operators-quick-tips-border-radius, 8px);
+    //box-shadow: rgb(0 0 0 / 20%) 4px 4px 4px 1px;
+    box-shadow: var(--operators-quick-tips-box-shadow, rgb(0 0 0 / 20%) 4px 4px 4px 1px);
+
+    &.adhere-ui-expression-operators--show,
+    &.adhere-ui-expression-quick-tips--show {
+      display: block;
+    }
+
+    > .adhere-ui-expression-operators-header,
+    > .adhere-ui-expression-quick-tips-header {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: right;
+      //height: 32px;
+      height: var(--operators-quick-tips-header-height, 32px);
+      //padding: 5px;
+      padding: var(--operators-quick-tips-header-padding, 5px);
+      //border-bottom: var(--adhere-line-width) var(--adhere-line-type)
+      //  var(--adhere-color-border-base);
+      border-bottom: var(
+        --operators-quick-tips-header-border-bottom,
+        var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+      );
+
+      &:hover {
+        //background-color: transparent;
+        //cursor: default;
+        background-color: var(--operators-quick-tips-header-hover-background-color, transparent);
+        cursor: var(--operators-quick-tips-header-hover-cursor, default);
+      }
+
+      > i {
+        //font-size: 20px;
+        font-size: var(--operators-quick-tips-header-i-font-size, 20px);
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    > .adhere-ui-expression-operators-main,
+    > .adhere-ui-expression-quick-tips-main {
+      //max-height: 200px;
+      max-height: var(--operators-quick-tips-main-max-height, 200px);
+      overflow-y: auto;
+
+      > li {
+        //padding: 10px;
+        padding: var(--operators-quick-tips-main-li-padding, 10px);
+        //color: var(--adhere-color-primary);
+        color: var(--operators-quick-tips-main-li-color, var(--adhere-color-primary));
+        //font-weight: 600;
+        font-weight: var(--operators-quick-tips-main-li-font-weight, 600);
+        //font-size: var(--adhere-font-size-xl);
+        font-size: var(--operators-quick-tips-main-li-font-size, var(--adhere-font-size-xl));
+
+        &:hover {
+          //background-color: rgb(var(--adhere-color-primary-rgb) 0.3);
+          background-color: var(
+            --operators-quick-tips-main-li-hover-background-color,
+            rgb(var(--adhere-color-primary-rgb) 0.3)
+          );
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.adhere-ui-expression-view {
+  .text {
+    //color: var(--adhere-color-text);
+    color: var(--view-text-color, var(--adhere-color-text));
+  }
+
+  .operator {
+    //color: var(--adhere-color-primary);
+    color: var(--view-operator-color, var(--adhere-color-primary));
+    //font-weight: bold;
+    font-weight: var(--view-operator-font-weight, bold);
   }
 }

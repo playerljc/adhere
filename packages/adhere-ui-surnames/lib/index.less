@@ -1,293 +1,279 @@
-@layer adhere {
-  .adhere-ui-surnames {
-    @adhere-ui-surnames-group-title-background-color: rgb(247, 247, 247);
+.adhere-ui-surnames {
+  @adhere-ui-surnames-group-title-background-color: rgb(247, 247, 247);
 
-    position: relative;
-    display: flex;
-    height: 100%;
-    overflow: hidden;
+  position: relative;
+  display: flex;
+  height: 100%;
+  overflow: hidden;
 
-    &.adhere-ui-surnames-config-position-right,
-    &.adhere-ui-surnames-config-position-left {
-      flex-direction: row;
-
-      > .adhere-ui-surnames-highlighted {
-        &::after {
-          //top: 4px;
-          top: var(--config-position-right-left-highlighted-after-top, 4px);
-        }
-      }
-
-      > .adhere-ui-surnames-index {
-        > .adhere-ui-surnames-index-inner {
-          flex-direction: column;
-        }
-      }
-
-      > .adhere-ui-surnames-content {
-        min-width: 0;
-      }
-    }
-
-    &.adhere-ui-surnames-config-position-right {
-      > .adhere-ui-surnames-highlighted {
-        //right: 20px;
-        right: var(--config-position-right-highlighted-right, 20px);
-
-        &::after {
-          //right: -9px;
-          right: var(--config-position-right-highlighted-after-right, -9px);
-          //border-color: transparent transparent transparent var(--adhere-color-primary);
-          border-color: var(
-            --config-position-right-highlighted-after-border-color,
-            transparent transparent transparent var(--adhere-color-primary)
-          );
-          //border-width: 18px 0 18px 18px;
-          border-width: var(
-            --config-position-right-highlighted-after-border-width,
-            18px 0 18px 18px
-          );
-        }
-      }
-
-      > .adhere-ui-surnames-index {
-        order: 1;
-      }
-
-      > .adhere-ui-surnames-content {
-        order: 0;
-      }
-    }
-
-    &.adhere-ui-surnames-config-position-left {
-      > .adhere-ui-surnames-highlighted {
-        //left: 20px;
-        left: var(--config-position-left-highlighted-left, 20px);
-
-        &::after {
-          //left: -9px;
-          left: var(--config-position-left-highlighted-after-left, -9px);
-          //border-color: transparent var(--adhere-color-primary) transparent transparent;
-          border-color: var(
-            --config-position-left-highlighted-after-border-color,
-            transparent var(--adhere-color-primary) transparent transparent
-          );
-          //border-width: 18px 18px 18px 0;
-          border-width: var(
-            --config-position-left-highlighted-after-border-width,
-            18px 18px 18px 0
-          );
-        }
-      }
-
-      > .adhere-ui-surnames-index {
-        order: 0;
-      }
-
-      > .adhere-ui-surnames-content {
-        order: 1;
-      }
-    }
-
-    &.adhere-ui-surnames-config-position-top,
-    &.adhere-ui-surnames-config-position-bottom {
-      flex-direction: column;
-
-      > .adhere-ui-surnames-highlighted {
-        &::after {
-          //left: 4px;
-          left: var(--config-position-top-bottom-highlighted-after-left, 4px);
-        }
-      }
-
-      > .adhere-ui-surnames-index {
-        > .adhere-ui-surnames-index-inner {
-          flex-direction: row;
-
-          > .adhere-ui-surnames-index-item {
-            //padding-top: 0;
-            padding-top: var(--config-position-top-bottom-index-item-padding-top, 0);
-            //padding-bottom: 0;
-            padding-bottom: var(--config-position-top-bottom-index-item-padding-bottom, 0);
-
-            &:not(:last-of-type) {
-              //padding-right: 10px;
-              padding-right: var(
-                --config-position-top-bottom-index-item-not-last-of-type-padding-right,
-                10px
-              );
-            }
-          }
-        }
-      }
-
-      > .adhere-ui-surnames-content {
-        min-height: 0;
-      }
-    }
-
-    &.adhere-ui-surnames-config-position-top {
-      > .adhere-ui-surnames-highlighted {
-        //top: 20px;
-        top: var(--config-position-top-highlighted-top, 20px);
-
-        &::after {
-          //top: -9px;
-          top: var(--config-position-top-highlighted-after-top, -9px);
-          //border-color: transparent transparent var(--adhere-color-primary) transparent;
-          border-color: var(
-            --config-position-top-highlighted-after-border-color,
-            transparent transparent var(--adhere-color-primary) transparent
-          );
-          //border-width: 0 18px 18px;
-          border-width: var(--config-position-top-highlighted-after-border-width, 0 18px 18px);
-        }
-      }
-
-      > .adhere-ui-surnames-index {
-        order: 0;
-      }
-
-      > .adhere-ui-surnames-content {
-        order: 1;
-      }
-    }
-
-    &.adhere-ui-surnames-config-position-bottom {
-      > .adhere-ui-surnames-highlighted {
-        //bottom: 20px;
-        bottom: var(--config-position-bottom-highlighted, 20px);
-
-        &::after {
-          //bottom: -9px;
-          bottom: var(--config-position-bottom-highlighted-after-bottom, -9px);
-          //border-color: var(--adhere-color-primary) transparent transparent transparent;
-          border-color: var(
-            --config-position-bottom-highlighted-after-border-color,
-            var(--adhere-color-primary) transparent transparent transparent
-          );
-          //border-width: 18px 18px 0;
-          border-width: var(--config-position-bottom-highlighted-after-border-width, 18px 18px 0);
-        }
-      }
-
-      > .adhere-ui-surnames-index {
-        order: 1;
-      }
-
-      > .adhere-ui-surnames-content {
-        order: 0;
-      }
-    }
+  &.adhere-ui-surnames-config-position-right,
+  &.adhere-ui-surnames-config-position-left {
+    flex-direction: row;
 
     > .adhere-ui-surnames-highlighted {
-      position: absolute;
-      //z-index: 9998;
-      z-index: var(--highlighted-z-index, 9998);
-      display: none;
-      //width: 44px;
-      width: var(--highlighted-width, 44px);
-      //height: 44px;
-      height: var(--highlighted-height, 44px);
-      //color: #fff;
-      color: var(--highlighted-color, #fff);
-      //font-weight: bold;
-      font-weight: var(--highlighted-font-weight, bold);
-      //font-size: var(--adhere-font-size-base);
-      font-size: var(--highlighted-font-size, var(--adhere-font-size-base));
-      //line-height: 44px;
-      line-height: var(--highlighted-line-height, 44px);
-      text-align: center;
-      //background-color: var(--adhere-color-primary);
-      background-color: var(--highlighted-background-color, var(--adhere-color-primary));
-      border-radius: 50%;
-      transform: translate3d(0, 0, 0);
-
       &::after {
-        position: absolute;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        content: '';
+        //top: 4px;
+        top: var(--config-position-right-left-highlighted-after-top, 4px);
       }
     }
 
     > .adhere-ui-surnames-index {
-      display: flex;
-      flex-shrink: 0;
-      align-items: center;
-      justify-content: center;
-
       > .adhere-ui-surnames-index-inner {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        user-select: none;
+        flex-direction: column;
+      }
+    }
+
+    > .adhere-ui-surnames-content {
+      min-width: 0;
+    }
+  }
+
+  &.adhere-ui-surnames-config-position-right {
+    > .adhere-ui-surnames-highlighted {
+      //right: 20px;
+      right: var(--config-position-right-highlighted-right, 20px);
+
+      &::after {
+        //right: -9px;
+        right: var(--config-position-right-highlighted-after-right, -9px);
+        //border-color: transparent transparent transparent var(--adhere-color-primary);
+        border-color: var(
+          --config-position-right-highlighted-after-border-color,
+          transparent transparent transparent var(--adhere-color-primary)
+        );
+        //border-width: 18px 0 18px 18px;
+        border-width: var(--config-position-right-highlighted-after-border-width, 18px 0 18px 18px);
+      }
+    }
+
+    > .adhere-ui-surnames-index {
+      order: 1;
+    }
+
+    > .adhere-ui-surnames-content {
+      order: 0;
+    }
+  }
+
+  &.adhere-ui-surnames-config-position-left {
+    > .adhere-ui-surnames-highlighted {
+      //left: 20px;
+      left: var(--config-position-left-highlighted-left, 20px);
+
+      &::after {
+        //left: -9px;
+        left: var(--config-position-left-highlighted-after-left, -9px);
+        //border-color: transparent var(--adhere-color-primary) transparent transparent;
+        border-color: var(
+          --config-position-left-highlighted-after-border-color,
+          transparent var(--adhere-color-primary) transparent transparent
+        );
+        //border-width: 18px 18px 18px 0;
+        border-width: var(--config-position-left-highlighted-after-border-width, 18px 18px 18px 0);
+      }
+    }
+
+    > .adhere-ui-surnames-index {
+      order: 0;
+    }
+
+    > .adhere-ui-surnames-content {
+      order: 1;
+    }
+  }
+
+  &.adhere-ui-surnames-config-position-top,
+  &.adhere-ui-surnames-config-position-bottom {
+    flex-direction: column;
+
+    > .adhere-ui-surnames-highlighted {
+      &::after {
+        //left: 4px;
+        left: var(--config-position-top-bottom-highlighted-after-left, 4px);
+      }
+    }
+
+    > .adhere-ui-surnames-index {
+      > .adhere-ui-surnames-index-inner {
+        flex-direction: row;
 
         > .adhere-ui-surnames-index-item {
-          box-sizing: border-box;
-          width: 100%;
-          //padding: 2px;
-          padding: var(--index-item-padding, 2px);
-          //color: var(--adhere-color-primary);
-          color: var(--index-item-color, var(--adhere-color-primary));
-          //font-weight: bold;
-          font-weight: var(--index-item-font-weight, bold);
-          //font-size: var(--adhere-font-size-base);
-          font-size: var(--index-item-font-size, var(--adhere-font-size-base));
-          text-align: center;
+          //padding-top: 0;
+          padding-top: var(--config-position-top-bottom-index-item-padding-top, 0);
+          //padding-bottom: 0;
+          padding-bottom: var(--config-position-top-bottom-index-item-padding-bottom, 0);
 
-          &:active {
-            //background-color: var(--adhere-color-primary);
-            background-color: var(
-              --index-item-active-background-color,
-              var(--adhere-color-primary)
+          &:not(:last-of-type) {
+            //padding-right: 10px;
+            padding-right: var(
+              --config-position-top-bottom-index-item-not-last-of-type-padding-right,
+              10px
             );
-            border-radius: 50%;
           }
         }
       }
     }
 
     > .adhere-ui-surnames-content {
-      position: relative;
-      flex-grow: 1;
-      overflow-x: hidden;
-      overflow-y: auto;
-      overflow-scrolling: touch;
+      min-height: 0;
+    }
+  }
 
-      > .adhere-ui-surnames-group {
-        > .adhere-ui-surnames-group-title {
-          display: block;
-          //height: 20px;
-          height: var(--group-title-height, 20px);
-          //color: var(--adhere-color-text-secondary);
-          color: var(--group-title-color, var(--adhere-color-text-secondary));
-          //line-height: 20px;
-          line-height: var(--group-title-line-height, 20px);
-          //text-indent: 14px;
-          text-indent: var(--group-title-text-indent, 14px);
-          //background: @adhere-ui-surnames-group-title-background-color;
-          background: var(
-            --group-title-background,
-            @adhere-ui-surnames-group-title-background-color
-          );
+  &.adhere-ui-surnames-config-position-top {
+    > .adhere-ui-surnames-highlighted {
+      //top: 20px;
+      top: var(--config-position-top-highlighted-top, 20px);
+
+      &::after {
+        //top: -9px;
+        top: var(--config-position-top-highlighted-after-top, -9px);
+        //border-color: transparent transparent var(--adhere-color-primary) transparent;
+        border-color: var(
+          --config-position-top-highlighted-after-border-color,
+          transparent transparent var(--adhere-color-primary) transparent
+        );
+        //border-width: 0 18px 18px;
+        border-width: var(--config-position-top-highlighted-after-border-width, 0 18px 18px);
+      }
+    }
+
+    > .adhere-ui-surnames-index {
+      order: 0;
+    }
+
+    > .adhere-ui-surnames-content {
+      order: 1;
+    }
+  }
+
+  &.adhere-ui-surnames-config-position-bottom {
+    > .adhere-ui-surnames-highlighted {
+      //bottom: 20px;
+      bottom: var(--config-position-bottom-highlighted, 20px);
+
+      &::after {
+        //bottom: -9px;
+        bottom: var(--config-position-bottom-highlighted-after-bottom, -9px);
+        //border-color: var(--adhere-color-primary) transparent transparent transparent;
+        border-color: var(
+          --config-position-bottom-highlighted-after-border-color,
+          var(--adhere-color-primary) transparent transparent transparent
+        );
+        //border-width: 18px 18px 0;
+        border-width: var(--config-position-bottom-highlighted-after-border-width, 18px 18px 0);
+      }
+    }
+
+    > .adhere-ui-surnames-index {
+      order: 1;
+    }
+
+    > .adhere-ui-surnames-content {
+      order: 0;
+    }
+  }
+
+  > .adhere-ui-surnames-highlighted {
+    position: absolute;
+    //z-index: 9998;
+    z-index: var(--highlighted-z-index, 9998);
+    display: none;
+    //width: 44px;
+    width: var(--highlighted-width, 44px);
+    //height: 44px;
+    height: var(--highlighted-height, 44px);
+    //color: #fff;
+    color: var(--highlighted-color, #fff);
+    //font-weight: bold;
+    font-weight: var(--highlighted-font-weight, bold);
+    //font-size: var(--adhere-font-size-base);
+    font-size: var(--highlighted-font-size, var(--adhere-font-size-base));
+    //line-height: 44px;
+    line-height: var(--highlighted-line-height, 44px);
+    text-align: center;
+    //background-color: var(--adhere-color-primary);
+    background-color: var(--highlighted-background-color, var(--adhere-color-primary));
+    border-radius: 50%;
+    transform: translate3d(0, 0, 0);
+
+    &::after {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      content: '';
+    }
+  }
+
+  > .adhere-ui-surnames-index {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+
+    > .adhere-ui-surnames-index-inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      user-select: none;
+
+      > .adhere-ui-surnames-index-item {
+        box-sizing: border-box;
+        width: 100%;
+        //padding: 2px;
+        padding: var(--index-item-padding, 2px);
+        //color: var(--adhere-color-primary);
+        color: var(--index-item-color, var(--adhere-color-primary));
+        //font-weight: bold;
+        font-weight: var(--index-item-font-weight, bold);
+        //font-size: var(--adhere-font-size-base);
+        font-size: var(--index-item-font-size, var(--adhere-font-size-base));
+        text-align: center;
+
+        &:active {
+          //background-color: var(--adhere-color-primary);
+          background-color: var(--index-item-active-background-color, var(--adhere-color-primary));
+          border-radius: 50%;
         }
       }
     }
   }
 
-  /* 用于切换时的遮罩 */
-  .adhere-ui-surnames-mask {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-    display: none;
-    width: 100%;
-    height: 100%;
-    background: transparent;
+  > .adhere-ui-surnames-content {
+    position: relative;
+    flex-grow: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overflow-scrolling: touch;
+
+    > .adhere-ui-surnames-group {
+      > .adhere-ui-surnames-group-title {
+        display: block;
+        //height: 20px;
+        height: var(--group-title-height, 20px);
+        //color: var(--adhere-color-text-secondary);
+        color: var(--group-title-color, var(--adhere-color-text-secondary));
+        //line-height: 20px;
+        line-height: var(--group-title-line-height, 20px);
+        //text-indent: 14px;
+        text-indent: var(--group-title-text-indent, 14px);
+        //background: @adhere-ui-surnames-group-title-background-color;
+        background: var(--group-title-background, @adhere-ui-surnames-group-title-background-color);
+      }
+    }
   }
+}
+
+/* 用于切换时的遮罩 */
+.adhere-ui-surnames-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background: transparent;
 }

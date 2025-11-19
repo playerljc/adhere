@@ -6,101 +6,99 @@
 // 导入spin.js的基础样式
 @import '~spin.js/spin.css';
 
-@layer adhere {
-  /**
+/**
  * Spin组件主容器样式
  * @description 提供全屏覆盖的加载遮罩层
  */
-  .adhere-ui-spin {
-    position: absolute;
-    top: 0;
-    left: 0;
+.adhere-ui-spin {
+  position: absolute;
+  top: 0;
+  left: 0;
 
-    // 确保组件在最上层
-    z-index: var(--adhere-spin-z-index, 1000);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
+  // 确保组件在最上层
+  z-index: var(--adhere-spin-z-index, 1000);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 
-    // 背景色，支持CSS变量自定义
-    background-color: var(--adhere-spin-background-color, rgb(255 255 255 / 50%));
+  // 背景色，支持CSS变量自定义
+  background-color: var(--adhere-spin-background-color, rgb(255 255 255 / 50%));
 
-    // 添加过渡动画
-    transition: opacity 0.2s ease-in-out;
+  // 添加过渡动画
+  transition: opacity 0.2s ease-in-out;
 
-    /**
+  /**
    * 加载文本样式
    * @description 显示在旋转动画下方的提示文本
    */
-    > .adhere-ui-spin-text {
-      margin-top: 8px;
+  > .adhere-ui-spin-text {
+    margin-top: 8px;
 
-      // 文本颜色，支持CSS变量自定义
-      color: var(--adhere-spin-text-color, var(--adhere-color-primary, #1890ff));
-      font-size: 14px;
-      line-height: 1.5;
-      text-align: center;
+    // 文本颜色，支持CSS变量自定义
+    color: var(--adhere-spin-text-color, var(--adhere-color-primary, #1890ff));
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
 
-      // 文本阴影，提高可读性
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
+    // 文本阴影，提高可读性
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
 
-    /**
+  /**
    * 旋转点容器样式
    * @description 包含spin.js生成的旋转动画元素
    */
-    > .adhere-ui-spin-dot {
-      position: relative;
+  > .adhere-ui-spin-dot {
+    position: relative;
 
-      // 确保动画元素居中
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    // 确保动画元素居中
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-      // 尺寸，支持CSS变量自定义
-      width: var(--adhere-spin-dot-width, 50px);
-      height: var(--adhere-spin-dot-height, 60px);
+    // 尺寸，支持CSS变量自定义
+    width: var(--adhere-spin-dot-width, 50px);
+    height: var(--adhere-spin-dot-height, 60px);
 
-      // 旋转中心点
-      transform-origin: center center;
+    // 旋转中心点
+    transform-origin: center center;
 
-      // 旋转动画
-      animation: adhere-ui-spin-rotate 1.2s infinite linear;
-    }
+    // 旋转动画
+    animation: adhere-ui-spin-rotate 1.2s infinite linear;
   }
+}
 
-  /**
+/**
  * 旋转动画关键帧
  * @description 定义360度旋转动画
  */
-  @keyframes adhere-ui-spin-rotate {
-    0% {
-      transform: rotate(0deg);
-    }
-
-    100% {
-      transform: rotate(360deg);
-    }
+@keyframes adhere-ui-spin-rotate {
+  0% {
+    transform: rotate(0deg);
   }
 
-  /**
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/**
  * 响应式设计支持
  * @description 在小屏幕设备上调整尺寸
  */
-  @media (max-width: 768px) {
-    .adhere-ui-spin {
-      > .adhere-ui-spin-text {
-        margin-top: 6px;
-        font-size: 12px;
-      }
+@media (max-width: 768px) {
+  .adhere-ui-spin {
+    > .adhere-ui-spin-text {
+      margin-top: 6px;
+      font-size: 12px;
+    }
 
-      > .adhere-ui-spin-dot {
-        width: var(--adhere-spin-dot-width-mobile, 40px);
-        height: var(--adhere-spin-dot-height-mobile, 48px);
-      }
+    > .adhere-ui-spin-dot {
+      width: var(--adhere-spin-dot-width-mobile, 40px);
+      height: var(--adhere-spin-dot-height-mobile, 48px);
     }
   }
 }

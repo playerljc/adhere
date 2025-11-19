@@ -1,44 +1,41 @@
 @import '~spin.js/spin.css';
+.adhere-ui-global-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  //background-color: rgb(255 255 255 / 50%);
+  background-color: var(--background-color, rgb(255 255 255 / 50%));
 
-@layer adhere {
-  .adhere-ui-global-indicator {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    //background-color: rgb(255 255 255 / 50%);
-    background-color: var(--background-color, rgb(255 255 255 / 50%));
-
-    > .adhere-ui-global-indicator-text {
-      //color: var(--adhere-color-primary);
-      color: var(--text-color, var(--adhere-color-primary));
-      //font-size: var(--adhere-font-size-base);
-      font-size: var(--text-font-size, var(--adhere-font-size-base));
-    }
-
-    > .adhere-ui-global-indicator-dot {
-      position: relative;
-      //width: 50px;
-      width: var(--dot-width, 50px);
-      //height: 60px;
-      height: var(--dot-height, 60px);
-      transform-origin: center center;
-      animation: adhere-ui-global-indicator-rotate 1.2s infinite linear;
-    }
+  > .adhere-ui-global-indicator-text {
+    //color: var(--adhere-color-primary);
+    color: var(--text-color, var(--adhere-color-primary));
+    //font-size: var(--adhere-font-size-base);
+    font-size: var(--text-font-size, var(--adhere-font-size-base));
   }
 
-  @keyframes adhere-ui-global-indicator-rotate {
-    0% {
-      transform: rotate(0deg);
-    }
+  > .adhere-ui-global-indicator-dot {
+    position: relative;
+    //width: 50px;
+    width: var(--dot-width, 50px);
+    //height: 60px;
+    height: var(--dot-height, 60px);
+    transform-origin: center center;
+    animation: adhere-ui-global-indicator-rotate 1.2s infinite linear;
+  }
+}
 
-    100% {
-      transform: rotate(360deg);
-    }
+@keyframes adhere-ui-global-indicator-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }

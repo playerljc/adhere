@@ -1,21 +1,19 @@
-@layer adhere {
-  .adhere-mobile-ui-popover-menu {
-    //max-width: 200px;
-    max-width: var(--max-width);
+.adhere-mobile-ui-popover-menu {
+  //max-width: 200px;
+  max-width: var(--max-width);
 
-    .adhere-mobile-ui-popover-menu-menu {
-      //margin: 0;
-      margin: var(--menu-margin, 0);
-      //padding: 0;
-      padding: var(--menu-padding, 0);
-      list-style: none;
+  .adhere-mobile-ui-popover-menu-menu {
+    //margin: 0;
+    margin: var(--menu-margin, 0);
+    //padding: 0;
+    padding: var(--menu-padding, 0);
+    list-style: none;
 
-      > li {
-        &:last-child {
-          > .adhere-mobile-ui-popover-menu-menu-item-text {
-            //border-bottom-width: 0;
-            border-bottom-width: var(--menu-item-text-border-bottom-width, 0);
-          }
+    > li {
+      &:last-child {
+        > .adhere-mobile-ui-popover-menu-menu-item-text {
+          //border-bottom-width: 0;
+          border-bottom-width: var(--menu-item-text-border-bottom-width, 0);
         }
       }
     }

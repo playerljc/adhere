@@ -1,137 +1,132 @@
-@layer adhere {
-  //@import '~@baifendian/adhere-ui-css/es/vars';
+//@import '~@baifendian/adhere-ui-css/es/vars';
 
-  .adhere-ui-playground-card {
-    position: relative;
-    //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-    border: var(
-      --card-border,
+.adhere-ui-playground-card {
+  position: relative;
+  //border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+  border: var(
+    --card-border,
+    var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+  );
+  //border-radius: 2px;
+  border-radius: var(--border-radius, 2px);
+
+  > .adhere-ui-playground-card-header {
+    display: flex;
+    align-items: center;
+    //min-height: 48px;
+    min-height: var(--card-header-min-height, 48px);
+    //margin-bottom: -1px;
+    margin-bottom: var(--card-header-margin-bottom, -1px);
+    //padding: 0 24px;
+    padding: var(--card-header-padding, 0 24px);
+    //color: var(--adhere-color-text);
+    color: var(--card-header-color, var(--adhere-color-text));
+    //font-weight: 500;
+    font-weight: var(--card-header-font-weight, 500);
+    //font-size: var(--adhere-font-size-lg);
+    font-size: var(--card-header-font-size, var(--adhere-font-size-lg));
+    //background: 0 0;
+    background: var(--card-header-background, 0 0);
+    //border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    border-bottom: var(
+      --card-header-border-bottom,
       var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
     );
-    //border-radius: 2px;
-    border-radius: var(--border-radius, 2px);
+    //border-radius: 2px 2px 0 0;
+    border-radius: var(--card-header-border-radius, 2px 2px 0 0);
 
-    > .adhere-ui-playground-card-header {
-      display: flex;
-      align-items: center;
-      //min-height: 48px;
-      min-height: var(--card-header-min-height, 48px);
-      //margin-bottom: -1px;
-      margin-bottom: var(--card-header-margin-bottom, -1px);
-      //padding: 0 24px;
-      padding: var(--card-header-padding, 0 24px);
+    > .adhere-ui-playground-card-header-title {
+      display: inline-block;
+      flex: 1;
+      //padding: 16px 0;
+      padding: var(--card-header-title-padding, 16px 0);
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    > .adhere-ui-playground-card-header-extra {
+      float: right;
+      margin-left: auto;
+      //padding: 16px 0;
+      padding: var(--card-header-extra-padding, 16px 0);
       //color: var(--adhere-color-text);
-      color: var(--card-header-color, var(--adhere-color-text));
-      //font-weight: 500;
-      font-weight: var(--card-header-font-weight, 500);
-      //font-size: var(--adhere-font-size-lg);
-      font-size: var(--card-header-font-size, var(--adhere-font-size-lg));
-      //background: 0 0;
-      background: var(--card-header-background, 0 0);
-      //border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-      border-bottom: var(
-        --card-header-border-bottom,
-        var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
-      );
+      color: var(--card-header-extra-color, var(--adhere-color-text));
+      //font-weight: 400;
+      font-weight: var(--card-header-extra-font-weight, 400);
+      //font-size: var(--adhere-font-size-base);
+      font-size: var(--card-header-extra-font-size, var(--adhere-font-size-base));
+    }
+  }
+
+  > .adhere-ui-playground-card-body {
+    //padding: 16px 24px;
+    padding: var(--card-body-padding, 16px 24px);
+  }
+
+  > .adhere-ui-playground-card-description {
+    position: relative;
+    //padding: 18px 24px 12px;
+    padding: var(--card-description-padding, 18px 24px 12px);
+    //border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    border-top: var(
+      --card-description-border-top,
+      var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+    );
+
+    > .adhere-ui-playground-card-description-title {
+      position: absolute;
+      //top: -14px;
+      top: var(--card-description-title-top, -14px);
+      //max-width: 90%;
+      max-width: var(--card-description-title-max-width, 90%);
+      //margin-left: 16px;
+      margin-left: var(--card-description-title-margin-left, 16px);
+      //padding: 1px 8px;
+      padding: var(--card-description-title-padding, 1px 8px);
+      overflow: hidden;
+      //color: var(--adhere-color-text-tertiary);
+      color: var(--card-description-title-color, var(--adhere-color-text-tertiary));
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      //background-color: var(--adhere-color-bg-base);
+      background-color: var(--card-description-title-background-color, var(--adhere-color-bg-base));
       //border-radius: 2px 2px 0 0;
-      border-radius: var(--card-header-border-radius, 2px 2px 0 0);
-
-      > .adhere-ui-playground-card-header-title {
-        display: inline-block;
-        flex: 1;
-        //padding: 16px 0;
-        padding: var(--card-header-title-padding, 16px 0);
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
-
-      > .adhere-ui-playground-card-header-extra {
-        float: right;
-        margin-left: auto;
-        //padding: 16px 0;
-        padding: var(--card-header-extra-padding, 16px 0);
-        //color: var(--adhere-color-text);
-        color: var(--card-header-extra-color, var(--adhere-color-text));
-        //font-weight: 400;
-        font-weight: var(--card-header-extra-font-weight, 400);
-        //font-size: var(--adhere-font-size-base);
-        font-size: var(--card-header-extra-font-size, var(--adhere-font-size-base));
-      }
+      border-radius: var(--card-description-title-border-radius, 2px 2px 0 0);
+      //transition: background-color 0.4s;
+      transition: var(--card-description-title-transition, background-color 0.4s);
     }
+  }
 
-    > .adhere-ui-playground-card-body {
-      //padding: 16px 24px;
-      padding: var(--card-body-padding, 16px 24px);
-    }
+  > .adhere-ui-playground-card-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    //margin: 0;
+    margin: var(--card-action-margin, 0);
+    //padding: 0;
+    padding: var(--card-action-padding, 0);
+    list-style: none;
+    //border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    border-top: var(
+      --card-action-border-top,
+      var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
+    );
 
-    > .adhere-ui-playground-card-description {
-      position: relative;
-      //padding: 18px 24px 12px;
-      padding: var(--card-description-padding, 18px 24px 12px);
-      //border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-      border-top: var(
-        --card-description-border-top,
-        var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
-      );
+    > .adhere-ui-playground-card-action-item {
+      //margin: 12px 0;
+      margin: var(--card-action-item-margin, 12px 0);
+      //color: var(--adhere-color-text);
+      color: var(--card-action-item-color, var(--adhere-color-text));
+      text-align: center;
 
-      > .adhere-ui-playground-card-description-title {
-        position: absolute;
-        //top: -14px;
-        top: var(--card-description-title-top, -14px);
-        //max-width: 90%;
-        max-width: var(--card-description-title-max-width, 90%);
-        //margin-left: 16px;
-        margin-left: var(--card-description-title-margin-left, 16px);
-        //padding: 1px 8px;
-        padding: var(--card-description-title-padding, 1px 8px);
-        overflow: hidden;
-        //color: var(--adhere-color-text-tertiary);
-        color: var(--card-description-title-color, var(--adhere-color-text-tertiary));
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        //background-color: var(--adhere-color-bg-base);
-        background-color: var(
-          --card-description-title-background-color,
-          var(--adhere-color-bg-base)
+      &:not(:last-child) {
+        //border-right: var(--adhere-line-width) var(--adhere-line-type)
+        //  var(--adhere-color-border-base);
+        border-right: var(
+          --card-action-item-not-last-child-border-right,
+          var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
         );
-        //border-radius: 2px 2px 0 0;
-        border-radius: var(--card-description-title-border-radius, 2px 2px 0 0);
-        //transition: background-color 0.4s;
-        transition: var(--card-description-title-transition, background-color 0.4s);
-      }
-    }
-
-    > .adhere-ui-playground-card-action {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      //margin: 0;
-      margin: var(--card-action-margin, 0);
-      //padding: 0;
-      padding: var(--card-action-padding, 0);
-      list-style: none;
-      //border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-      border-top: var(
-        --card-action-border-top,
-        var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
-      );
-
-      > .adhere-ui-playground-card-action-item {
-        //margin: 12px 0;
-        margin: var(--card-action-item-margin, 12px 0);
-        //color: var(--adhere-color-text);
-        color: var(--card-action-item-color, var(--adhere-color-text));
-        text-align: center;
-
-        &:not(:last-child) {
-          //border-right: var(--adhere-line-width) var(--adhere-line-type)
-          //  var(--adhere-color-border-base);
-          border-right: var(
-            --card-action-item-not-last-child-border-right,
-            var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base)
-          );
-        }
       }
     }
   }

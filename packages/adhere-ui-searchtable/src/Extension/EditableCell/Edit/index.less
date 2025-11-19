@@ -1,69 +1,67 @@
-@layer adhere {
-  .adhere-ui-search-table-editable-cell-edit {
-    position: relative;
-    display: flex;
+.adhere-ui-search-table-editable-cell-edit {
+  position: relative;
+  display: flex;
 
-    &:hover {
-      > .adhere-ui-search-table-editable-cell-edit-trigger {
-        > .adhere-ui-search-table-editable-cell-edit-trigger-inner {
-          display: flex;
-        }
-      }
-    }
-
-    > .adhere-ui-search-table-editable-cell-edit-inner {
-      display: flex;
-      flex-grow: 1;
-      align-items: center;
-      min-width: 0;
-
-      .ant-form-item {
-        width: 100%;
-        margin-bottom: 0;
-      }
-    }
-
+  &:hover {
     > .adhere-ui-search-table-editable-cell-edit-trigger {
-      flex-shrink: 0;
-      //width: 20px;
-      width: var(--editable-cell-edit-trigger-width, 20px);
-      //color: var(--adhere-color-primary);
-      color: var(--editable-cell-edit-trigger-color, var(--adhere-color-primary));
-      //font-size: var(--adhere-font-size-base);
-      font-size: var(--editable-cell-edit-trigger-font-size, var(--adhere-font-size-base));
-
       > .adhere-ui-search-table-editable-cell-edit-trigger-inner {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
+        display: flex;
+      }
+    }
+  }
 
-        > .adhere-ui-search-table-editable-cell-edit-trigger-save {
-          //height: 14px;
-          height: var(--editable-cell-edit-trigger-save-height, 14px);
-          //font-weight: bold;
-          font-weight: var(--editable-cell-edit-trigger-save-font-weight, bold);
-          //line-height: 14px;
-          line-height: var(--editable-cell-edit-trigger-save-line-height, 14px);
+  > .adhere-ui-search-table-editable-cell-edit-inner {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    min-width: 0;
 
-          &:hover {
-            cursor: pointer;
-          }
+    .ant-form-item {
+      width: 100%;
+      margin-bottom: 0;
+    }
+  }
+
+  > .adhere-ui-search-table-editable-cell-edit-trigger {
+    flex-shrink: 0;
+    //width: 20px;
+    width: var(--editable-cell-edit-trigger-width, 20px);
+    //color: var(--adhere-color-primary);
+    color: var(--editable-cell-edit-trigger-color, var(--adhere-color-primary));
+    //font-size: var(--adhere-font-size-base);
+    font-size: var(--editable-cell-edit-trigger-font-size, var(--adhere-font-size-base));
+
+    > .adhere-ui-search-table-editable-cell-edit-trigger-inner {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+
+      > .adhere-ui-search-table-editable-cell-edit-trigger-save {
+        //height: 14px;
+        height: var(--editable-cell-edit-trigger-save-height, 14px);
+        //font-weight: bold;
+        font-weight: var(--editable-cell-edit-trigger-save-font-weight, bold);
+        //line-height: 14px;
+        line-height: var(--editable-cell-edit-trigger-save-line-height, 14px);
+
+        &:hover {
+          cursor: pointer;
         }
+      }
 
-        > .adhere-ui-search-table-editable-cell-edit-trigger-cancel {
-          //height: 14px;
-          height: var(--editable-cell-edit-trigger-cancel-height, 14px);
-          //font-weight: bold;
-          font-weight: var(--editable-cell-edit-trigger-cancel-font-weight, bold);
-          //line-height: 14px;
-          line-height: var(--editable-cell-edit-trigger-cancel-line-height, 14px);
+      > .adhere-ui-search-table-editable-cell-edit-trigger-cancel {
+        //height: 14px;
+        height: var(--editable-cell-edit-trigger-cancel-height, 14px);
+        //font-weight: bold;
+        font-weight: var(--editable-cell-edit-trigger-cancel-font-weight, bold);
+        //line-height: 14px;
+        line-height: var(--editable-cell-edit-trigger-cancel-line-height, 14px);
 
-          &:hover {
-            cursor: pointer;
-          }
+        &:hover {
+          cursor: pointer;
         }
       }
     }

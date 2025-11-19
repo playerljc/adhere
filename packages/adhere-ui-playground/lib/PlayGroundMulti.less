@@ -1,17 +1,14 @@
 @import './APlayGround';
+.adhere-ui-playground-multi-code-view-wrap {
+  //margin-bottom: 20px;
+  margin-bottom: var(--multi-code-view-wrap-margin-bottom, 20px);
 
-@layer adhere {
-  .adhere-ui-playground-multi-code-view-wrap {
+  > .adhere-ui-playground-multi-code-view-wrap-title {
     //margin-bottom: 20px;
-    margin-bottom: var(--multi-code-view-wrap-margin-bottom, 20px);
-
-    > .adhere-ui-playground-multi-code-view-wrap-title {
-      //margin-bottom: 20px;
-      margin-bottom: var(--multi-code-view-wrap-title-margin-bottom, 20px);
-      //font-weight: bold;
-      font-weight: var(--multi-code-view-wrap-title-font-weight, bold);
-      //font-size: var(--adhere-font-size-lg);
-      font-size: var(--multi-code-view-wrap-title-font-size, var(--adhere-font-size-lg));
-    }
+    margin-bottom: var(--multi-code-view-wrap-title-margin-bottom, 20px);
+    //font-weight: bold;
+    font-weight: var(--multi-code-view-wrap-title-font-weight, bold);
+    //font-size: var(--adhere-font-size-lg);
+    font-size: var(--multi-code-view-wrap-title-font-size, var(--adhere-font-size-lg));
   }
 }
