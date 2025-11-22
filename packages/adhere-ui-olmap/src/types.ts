@@ -215,6 +215,7 @@ export interface MapInstance {
     layer: any,
     hit: (feature: Feature | any) => void,
     unHit: (feature: Feature | any) => void,
+    clickUnFeature: () => void,
   ): void;
   /** 添加覆盖物 */
   addOverlay(config: any): Overlay;

@@ -21,7 +21,7 @@ declare const defaultExport: {
         transformLonLat: (point: number[]) => number[];
         createMap: (Config: import("./Util").CreateMapConfig) => import("ol").Map;
         setOverlayState: (overlay: import("ol").Overlay, point: number[]) => void;
-        addClickListener: (mapInstance: import("ol").Map, listeningLayer: import("ol/layer").Vector<any>, hitCallback: ((feature: import("ol").Feature | any) => void) | undefined, unHitCallback: ((feature: import("ol").Feature | any) => void) | undefined, setCursor: (cursor: string) => void) => void;
+        addClickListener: (mapInstance: import("ol").Map, listeningLayer: import("ol/layer").Vector<any>, hitCallback: ((feature: import("ol").Feature | any) => void) | undefined, unHitCallback: ((feature: import("ol").Feature | any) => void) | undefined, clickUnFeature: () => void, setCursor: (cursor: string) => void) => void;
         addHoverListener: (mapInstance: import("ol").Map, listeningLayer: import("ol/layer").Vector<any>, hitCallback: (feature: import("ol").Feature | any) => void, unHitCallback: (feature: import("ol").Feature | any) => void) => void;
         addGeoLayer: (mapInstance: import("ol").Map, geoJsonData: any, getStyleConfig?: any, zIndex?: number) => GeoLayer;
         addWindLayer: (mapInstance: import("ol").Map, data: any, config: any, zIndex?: number) => import("./WindLayer").default;

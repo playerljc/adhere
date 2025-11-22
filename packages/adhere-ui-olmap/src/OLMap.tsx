@@ -190,13 +190,15 @@ export class OlMap extends React.Component<OLMapProps, OLMapState> implements Ma
    * @param layer - 图层
    * @param hit - 点击回调
    * @param unHit - 未点击回调
+   * @param clickUnFeature
    */
   addClickListener = (
     layer: any,
     hit: (feature: any) => void,
     unHit: (feature?: any) => void,
+    clickUnFeature: () => void,
   ): void => {
-    Util.addClickListener(this.map, layer, hit, unHit, this.setCursor);
+    Util.addClickListener(this.map, layer, hit, unHit, clickUnFeature, this.setCursor);
   };
 
   /**

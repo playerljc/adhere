@@ -81,8 +81,9 @@ export declare class OlMap extends React.Component<OLMapProps, OLMapState> imple
      * @param layer - 图层
      * @param hit - 点击回调
      * @param unHit - 未点击回调
+     * @param clickUnFeature
      */
-    addClickListener: (layer: any, hit: (feature: any) => void, unHit: (feature?: any) => void) => void;
+    addClickListener: (layer: any, hit: (feature: any) => void, unHit: (feature?: any) => void, clickUnFeature: () => void) => void;
     /**
      * 添加一个Overlay对象
      * @param config - 覆盖物配置

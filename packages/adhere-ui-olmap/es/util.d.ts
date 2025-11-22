@@ -94,7 +94,7 @@ declare const _default: {
      * @param unHitCallback - 未点击到要素时的回调函数
      * @param setCursor - 设置鼠标样式的函数
      */
-    addClickListener: (mapInstance: Map, listeningLayer: VectorLayer<any>, hitCallback: ((feature: Feature | any) => void) | undefined, unHitCallback: ((feature: Feature | any) => void) | undefined, setCursor: (cursor: string) => void) => void;
+    addClickListener: (mapInstance: Map, listeningLayer: VectorLayer<any>, hitCallback: ((feature: Feature | any) => void) | undefined, unHitCallback: ((feature: Feature | any) => void) | undefined, clickUnFeature: () => void, setCursor: (cursor: string) => void) => void;
     /**
      * 添加悬停监听器
      * 监听鼠标悬停事件，判断鼠标是否悬停在指定图层的要素上

@@ -222,10 +222,14 @@ export default {
       listeningLayer: VectorLayer<any>,
       hitCallback: (feature: Feature | any) => void = () => {},
       unHitCallback: (feature: Feature | any) => void = () => {},
+      clickUnFeature: () => void,
       setCursor: (cursor: string) => void,
     ): void {
+      let isClickFeature = false; // 标记：是否点击了要素
+
       const displayFeatureInfo = (pixel: number[]): void => {
         mapInstance.forEachFeatureAtPixel(pixel, (feature, layer) => {
+          isClickFeature = true;
           if (layer === listeningLayer) {
             hitCallback(feature);
           } else {
@@ -233,6 +237,10 @@ export default {
           }
           return true;
         });
+
+        if(!isClickFeature) {
+          clickUnFeature?.();
+        }
       };
       if (onClick) {
         mapInstance.un('click', onClick);
@@ -785,7 +793,7 @@ export default {
       },
     });
     drawPolygonInteraction.on('drawend', (e) => {
-      e.feature.setId(v4());
+      e.feature.setId(rest.id ?? v4());
       const geometry = e.feature.getGeometry() as any;
       const lonLats: number[][] = [];
       const coordinates = geometry.getCoordinates()[0].map((v: number[]) => {
@@ -798,8 +806,8 @@ export default {
           e,
           geometry,
           coordinates,
-          lonLats,
           centerP,
+          lonLats,
           transformCenterP: centerP ? transformLonLat(centerP) : undefined,
         });
       }
@@ -831,7 +839,8 @@ export default {
       const geometry = e.feature.getGeometry() as any;
       const radius = geometry.getRadius();
       const center = geometry.getCenter();
-      e.feature.setId(v4());
+
+      e.feature.setId(rest.id ?? v4());
       if (onDrawEnd) {
         onDrawEnd({
           e,
@@ -867,16 +876,24 @@ export default {
       },
     });
     drawBoxInteraction.on('drawend', (e) => {
-      e.feature.setId(v4());
+      e.feature.setId(rest.id ?? v4());
       const geometry = e.feature.getGeometry() as any;
-      const coordinates = geometry.getCoordinates()[0].map((v: number[]) => v);
       const centerP = map.getView().getCenter();
+
+      const lonLats: number[][] = [];
+      const coordinates = geometry.getCoordinates()[0].map((v: number[]) => {
+        lonLats.push(transformLonLat(v));
+        return v;
+      });
+
       if (onDrawEnd) {
         onDrawEnd({
           e,
           geometry,
           coordinates,
+          lonLats,
           centerP,
+          transformCenterP: centerP ? transformLonLat(centerP) : undefined,
         });
       }
     });
@@ -911,7 +928,7 @@ export default {
       },
     });
     drawPolygonInteraction.on('drawend', (e) => {
-      e.feature.setId(v4());
+      e.feature.setId(rest.id ?? v4());
       const geometry = e.feature.getGeometry() as any;
       const lonLats: number[][] = [];
       const coordinates = geometry.getCoordinates().map((v: number[]) => {
@@ -993,9 +1010,11 @@ export default {
   removeFeaturesByType(vectorSource: VectorSource, type: string): void {
     const features = vectorSource.getFeatures();
 
-    features.filter((feature) => feature.getGeometry()?.getType() === type).forEach((feature) => {
-      vectorSource.removeFeature(feature);
-    });
+    features
+      .filter((feature) => feature.getGeometry()?.getType() === type)
+      .forEach((feature) => {
+        vectorSource.removeFeature(feature);
+      });
   },
 
   /**

@@ -199,7 +199,7 @@ export interface MapInstance {
     /** 添加缩放监听器 */
     addZoomListener(handler: (zoom: number) => void): void;
     /** 添加点击监听器 */
-    addClickListener(layer: any, hit: (feature: Feature | any) => void, unHit: (feature: Feature | any) => void): void;
+    addClickListener(layer: any, hit: (feature: Feature | any) => void, unHit: (feature: Feature | any) => void, clickUnFeature: () => void): void;
     /** 添加覆盖物 */
     addOverlay(config: any): Overlay;
     /** 设置覆盖物状态 */
