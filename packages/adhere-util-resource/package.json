@@ -35,7 +35,6 @@
     "@baifendian/adhere-util": "^2.11.0",
     "@baifendian/adhere-util-dict": "^2.11.0",
     "@baifendian/adhere-util-intl": "^2.11.0",
-    "antd": "^5.28.0",
     "antd-mobile": "^5.41.1",
     "dayjs": "^1.11.13"
   },
@@ -47,7 +46,8 @@
     "typescript": "^5.6.2"
   },
   "peerDependencies": {
-    "antd": ">=4.22.2"
+    "antd": ">=5.0.0 - <6.0.0",
+    "antd-mobile": ">=5.0.0 - <6.0.0"
   },
   "publishConfig": {
     "access": "public"

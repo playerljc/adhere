@@ -21,14 +21,14 @@
     "umd"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
     "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
-    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
-    "generatorchangelog": "bd changelog/CHANGELOG.html"
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@antv/g6": "^4.2.5",
+    "@antv/g6": "^5.0.50",
     "classnames": "^2.5.1",
     "omit.js": "^2.0.2",
     "react": "^19.2.0",
