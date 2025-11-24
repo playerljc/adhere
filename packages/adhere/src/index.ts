@@ -39,6 +39,7 @@ import Hooks from '@baifendian/adhere-ui-hooks';
 import ImageLazy from '@baifendian/adhere-ui-imagelazy';
 import JdCategoryTab from '@baifendian/adhere-ui-jdcategorytab';
 import MagicPanel from '@baifendian/adhere-ui-magic-panel';
+import MediaQuery from '@baifendian/adhere-ui-media-query';
 import MessageDialog from '@baifendian/adhere-ui-messagedialog';
 import Notification from '@baifendian/adhere-ui-notification';
 import OLMap from '@baifendian/adhere-ui-olmap';
@@ -69,9 +70,9 @@ import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
 import TableList from '@baifendian/adhere-ui-tablelist';
 import WritingBoard from '@baifendian/adhere-ui-writingboard';
-import MediaQuery from '@baifendian/adhere-ui-media-query';
 import Util from '@baifendian/adhere-util';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
+import BroadCastChannelIO from '@baifendian/adhere-util-broadcastchannel-io';
 import Browsersniff from '@baifendian/adhere-util-browsersniff';
 import Ajax from '@baifendian/adhere-util-communication-ajax';
 import Decorators from '@baifendian/adhere-util-decorators';
@@ -129,6 +130,7 @@ export {
   ImageLazy,
   JdCategoryTab,
   MagicPanel,
+  MediaQuery,
   MessageDialog,
   Notification,
   OLMap,
@@ -159,9 +161,9 @@ export {
   TableHeadSearch,
   TableList,
   WritingBoard,
-  MediaQuery,
   Util,
   AdapterScreen,
+  BroadCastChannelIO,
   Browsersniff,
   Ajax,
   Decorators,

@@ -3,6 +3,11 @@ import Request from './Request';
 import Response from './Response';
 
 /**
+ * Headers
+ */
+export type Headers = Record<string, string>;
+
+/**
  * 状态码类型定义
  */
 export type StateCode = 0 | 200 | 404 | 500;
@@ -32,7 +37,7 @@ export interface SendOptions {
   /** 发送的数据 */
   data?: any;
   /** 请求头 */
-  headers?: Record<string, string>;
+  headers?: Headers;
 }
 
 /**
@@ -42,7 +47,7 @@ export interface RequestOptions {
   /** 请求路径 */
   pathname: string;
   /** 请求头 */
-  headers?: Record<string, string>;
+  headers?: Headers;
   /** 状态码 */
   statusCode?: StateCode;
   /** 状态消息 */
@@ -60,7 +65,7 @@ export interface ResponseOptions {
   /** 请求ID */
   requestId: string;
   /** 响应头 */
-  headers: Record<string, string>;
+  headers: Headers;
   /** 状态码 */
   statusCode: StateCode;
   /** 状态消息 */
@@ -82,7 +87,7 @@ export interface MessageEventData {
   /** 路径名 */
   pathname?: string;
   /** 请求头 */
-  headers?: Record<string, string>;
+  headers?: Headers;
   /** 状态码 */
   statusCode?: StateCode;
   /** 状态消息 */

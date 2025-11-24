@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["broad-cast-channel-io/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-broadcastchannel-io/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,iEACHA"}

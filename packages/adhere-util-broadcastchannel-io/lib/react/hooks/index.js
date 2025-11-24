@@ -1,0 +1,2 @@
+var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}},useFetch_1=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.useFetch=exports.useServer=void 0,__importDefault(require("./useFetch"))),useServer_1=(exports.useFetch=useFetch_1.default,__importDefault(require("./useServer")));exports.useServer=useServer_1.default;
+//# sourceMappingURL=index.js.map

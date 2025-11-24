@@ -92,6 +92,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-util-validator', 'Validator'],
   ['@baifendian/adhere-util-reactutil', 'ReactUtil'],
   ['@baifendian/adhere-util-iframeio', 'IframeIO'],
+  ['@baifendian/adhere-util-broadcastchannel-io', 'BroadCastChannelIO'],
   ['@baifendian/adhere-mobile-ui-auto-complete', 'MobileAutoComplete'],
   ['@baifendian/adhere-mobile-ui-confirm-delconfirm', 'MobileDelConfirm'],
   ['@baifendian/adhere-mobile-ui-confirm-importantconfirm', 'MobileImportantConfirm'],

@@ -1,0 +1,2 @@
+var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}},react_1=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=useFetch,require("react")),fetch_1=__importDefault(require("../../fetch"));function useFetch(e){return(0,react_1.useMemo)(function(){return{fetch:new fetch_1.default(window.location.origin),targetOrigin:e}},[e])}
+//# sourceMappingURL=useFetch.js.map

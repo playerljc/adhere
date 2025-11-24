@@ -1,26 +1,28 @@
 {
+  "name": "root",
+  "version": "2.11.0",
   "private": true,
+  "description": "一个基于React的通用组件库，这个是在平时做的项目中沉淀出来的公共组件，包括UI、功能和其他",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc <playerljc@163.com>",
   "workspaces": [
     "packages/*"
   ],
-  "name": "root",
-  "version": "2.11.0",
-  "description": "一个基于React的通用组件库，这个是在平时做的项目中沉淀出来的公共组件，包括UI、功能和其他",
   "scripts": {
-    "clean": "lerna clean",
-    "changed": "lerna changed",
-    "list": "lerna list",
-    "publish-packages": "lerna publish",
-    "publish-form-package": "lerna publish from-package",
-    "publish:next": "lerna publish --dist-tag next",
-    "publish:beta": "lerna publish --dist-tag beta",
-    "publish:alpha": "lerna publish --dist-tag alpha",
-    "changelog": "lerna version --conventional-commits",
-    "release": "lerna version --conventional-commits --create-release github",
     "buildpackages": "lerna run buildpackage --ignore adhere-ui-formdesign",
     "buildumd": "node scripts/buildumd.js",
-    "generatorchangelog": "lerna run generatorchangelog",
+    "changed": "lerna changed",
+    "changelog": "lerna version --conventional-commits",
+    "clean": "lerna clean",
     "gen-in-test": "node scripts/IntTest.js",
+    "generatorchangelog": "lerna run generatorchangelog",
     "init:husky": "npx husky add .husky/pre-commit \"npm run lint-staged\"",
     "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
     "lint-staged": "lint-staged",
@@ -29,9 +31,16 @@
     "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./packages/**/src",
     "lint:prettier": "check-prettier lint",
     "lint:style": "stylelint --fix \"packages/**/src/**/*.less\" --syntax less",
+    "list": "lerna list",
     "prepare": "husky install",
     "prettier": "prettier -c --write \"**/*\"",
     "prettier-json": "prettier -c --write \"**/*.json\"",
+    "publish-form-package": "lerna publish from-package",
+    "publish-packages": "lerna publish",
+    "publish:alpha": "lerna publish --dist-tag alpha",
+    "publish:beta": "lerna publish --dist-tag beta",
+    "publish:next": "lerna publish --dist-tag next",
+    "release": "lerna version --conventional-commits --create-release github",
     "upgrade": "yarn upgrade",
     "upgrade-interactive": "yarn upgrade-interactive"
   },
@@ -42,57 +51,6 @@
       "git add"
     ],
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js"
-  },
-  "author": "playerljc <playerljc@163.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/playerljc/adhere"
-  },
-  "bugs": {
-    "url": "https://github.com/playerljc/adhere/issues"
-  },
-  "license": "ISC",
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^4.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.48.0",
-    "@umijs/fabric": "^3.0.0",
-    "core-js": "^3.27.1",
-    "cz-conventional-changelog": "^3.3.0",
-    "cz-conventional-changelog-zh": "^0.0.2",
-    "eslint": "^8.31.0",
-    "eslint-plugin-comments": "^1.0.0",
-    "eslint-plugin-eslint-comments": "^3.2.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jest": "^27.2.0",
-    "eslint-plugin-react": "^7.31.11",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-unicorn": "^45.0.2",
-    "eslint-plugin-unused-imports": "^2.0.0",
-    "fs-extra": "^11.1.0",
-    "husky": "^8.0.3",
-    "lerna": "^8.1.8",
-    "lint-staged": "^13.1.0",
-    "postcss": "^8.4.20",
-    "postcss-less": "^6.0.0",
-    "prettier": "^2.8.1",
-    "rimraf": "^3.0.2",
-    "stylelint": "^14.16.1",
-    "stylelint-config-css-modules": "^4.1.0",
-    "stylelint-config-prettier": "^9.0.4",
-    "stylelint-config-standard": "^29.0.0",
-    "stylelint-declaration-block-no-ignored-properties": "^2.6.0"
   },
   "config": {
     "commitizen": {
@@ -162,8 +120,54 @@
       }
     }
   },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "resolutions": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "@umijs/fabric": "^3.0.0",
+    "core-js": "^3.27.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-conventional-changelog-zh": "^0.0.2",
+    "eslint": "^8.31.0",
+    "eslint-plugin-comments": "^1.0.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^27.2.0",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-unicorn": "^45.0.2",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "fs-extra": "^11.1.0",
+    "husky": "^8.0.3",
+    "lerna": "^8.1.8",
+    "lint-staged": "^13.1.0",
+    "postcss": "^8.4.20",
+    "postcss-less": "^6.0.0",
+    "prettier": "^2.8.1",
+    "rimraf": "^3.0.2",
+    "stylelint": "^14.16.1",
+    "stylelint-config-css-modules": "^4.1.0",
+    "stylelint-config-prettier": "^9.0.4",
+    "stylelint-config-standard": "^29.0.0",
+    "stylelint-declaration-block-no-ignored-properties": "^2.6.0"
+  },
   "engines": {
     "node": ">=12.0.0"
-  },
-  "dependencies": {}
+  }
 }
