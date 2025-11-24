@@ -65,6 +65,7 @@ function run() {
     cwd: runtimePath,
     encoding: 'utf-8',
     env: getTargetEnv(),
+    shell: isWin32(),
   });
 
   cpProcess.stdout.on('data', (data) => {

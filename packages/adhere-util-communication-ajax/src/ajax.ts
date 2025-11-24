@@ -463,7 +463,7 @@ function errorInfo(title: string, message: string): void {
 
   errorInfoHandler = setTimeout(() => {
     notification.error({
-      message: title,
+      title,
       description: message,
     });
   }, NOTIFICATION_THROTTLING_TIME);
@@ -482,7 +482,7 @@ function warnInfo(title: string, message: string): void {
 
   warnInfoHandler = setTimeout(() => {
     notification.warning({
-      message: title,
+      title,
       description: message,
     });
   }, NOTIFICATION_THROTTLING_TIME);

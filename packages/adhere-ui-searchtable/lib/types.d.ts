@@ -2,7 +2,7 @@ import type { FormInstance } from 'antd/es/form';
 import type { TableProps } from 'antd/es/table/InternalTable';
 import type { Rule } from 'antd/lib/form/index';
 import type { ColumnType, TableRowSelection } from 'antd/lib/table/interface';
-import type { DataIndex } from 'rc-table/lib/interface';
+import type { DataIndex } from '@rc-component/table/lib/interface';
 import type { CSSProperties, ForwardRefExoticComponent, PropsWithoutRef, ReactElement, ReactNode, RefAttributes, RefObject } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';

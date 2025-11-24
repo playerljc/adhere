@@ -1,9 +1,8 @@
 import { Modal, message } from 'antd';
-import React from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
-import { ErrorDialog, ErrorMessage, JointContent, Duration } from './types';
+import type { ErrorDialog, ErrorMessage, JointContent, Duration } from './types';
 
 /**
  * 定时器句柄，用于管理错误对话框的自动关闭

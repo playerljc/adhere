@@ -46,7 +46,7 @@
     "@baifendian/adhere-ui-richtext-sandbox": "^2.11.0",
     "@ctsj/router": "^1.0.5",
     "@ctsj/state": "^2.0.24",
-    "antd": "^5.29.1",
+    "antd": "^6.0.0",
     "bmap-wind": "1.1.1-alpha.2",
     "classnames": "^2.5.1",
     "component-playground": "^3.2.1",
@@ -77,7 +77,7 @@
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
     "@baifendian/adhere-mock": "^2.11.0",
-    "@ctsj/build": "6.4.1",
+    "@ctsj/build": "6.4.4",
     "@ctsj/less-media-query-loader": "^1.0.1",
     "@trivago/prettier-plugin-sort-imports": "^4.0.0",
     "@types/react": "^19.2.2",

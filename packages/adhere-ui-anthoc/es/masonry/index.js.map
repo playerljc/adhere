@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["masonry/index.js"],"sourcesContent":["import Masonry from './Masonry';\nexport default Masonry;"],"names":["Masonry"],"mappings":"OAAOA,YAAa,2BACLA"}

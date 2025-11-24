@@ -1,9 +1,8 @@
 import { Modal, message } from 'antd';
-import React from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
-import { JointContent, WarnDialog, WarnMessage, Duration } from './types';
+import type { JointContent, WarnDialog, WarnMessage, Duration } from './types';
 
 /** 全局定时器句柄，用于管理自动关闭的定时器 */
 let autoCloseHandler: NodeJS.Timeout | null = null;

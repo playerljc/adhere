@@ -8,7 +8,7 @@ import type {
 import classNames from 'classnames';
 import sortBy from 'lodash.sortby';
 import PropTypes from 'prop-types';
-import type { ExpandableConfig } from 'rc-table/lib/interface';
+import type { ExpandableConfig } from 'antd/es/table/interface';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createRef, forwardRef } from 'react';
 

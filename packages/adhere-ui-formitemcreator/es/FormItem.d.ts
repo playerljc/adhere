@@ -15,10 +15,10 @@ declare const _default: {
     renderSearch: React.NamedExoticComponent<InputProps>;
     renderPassword: React.NamedExoticComponent<InputProps>;
     renderInputArea: React.NamedExoticComponent<TextAreaProps>;
-    renderInputNumber: React.NamedExoticComponent<InputNumberProps<import("rc-input-number").ValueType>>;
+    renderInputNumber: React.NamedExoticComponent<InputNumberProps<import("@rc-component/mini-decimal").ValueType>>;
     renderRadio: React.NamedExoticComponent<RadioGroupProps>;
     renderCheckbox: React.NamedExoticComponent<CheckboxGroupProps<any>>;
-    renderSelect: React.NamedExoticComponent<SelectProps<any, import("rc-select/lib/Select").DefaultOptionType> & {
+    renderSelect: React.NamedExoticComponent<SelectProps<any, import("antd/es/select").DefaultOptionType> & {
         optGroup?: Array<OptionProps[]>;
         renderOption?: (v: OptionProps) => ReactElement;
         autoComplete?: boolean;
@@ -27,7 +27,7 @@ declare const _default: {
     renderRangePicker: React.NamedExoticComponent<RangePickerProps>;
     renderTimePicker: React.NamedExoticComponent<TimePickerProps>;
     renderSwitch: React.NamedExoticComponent<SwitchProps>;
-    renderTreeSelect: React.NamedExoticComponent<TreeSelectProps<any, import("rc-tree-select/lib/interface").DataNode>>;
+    renderTreeSelect: React.NamedExoticComponent<TreeSelectProps<any, import("@rc-component/tree-select/lib/interface").DataNode>>;
     renderSlider: React.NamedExoticComponent<SliderSingleProps>;
     renderRate: React.NamedExoticComponent<RateProps>;
     renderTag: React.NamedExoticComponent<TagItemProps>;

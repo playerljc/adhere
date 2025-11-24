@@ -31,6 +31,7 @@ function buildUmd(packageName) {
     const npmProcess = spawn(command, ['run', 'buildumd'], {
       cwd: path.join(contextPath, packageName),
       encoding: 'utf-8',
+      shell: isWin32(),
     });
 
     npmProcess.stdout.on('data', (data) => {

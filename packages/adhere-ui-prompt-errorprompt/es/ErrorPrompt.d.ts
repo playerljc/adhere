@@ -1,4 +1,4 @@
-import { ErrorDialog, ErrorMessage } from './types';
+import type { ErrorDialog, ErrorMessage } from './types';
 /**
  * 打开错误对话框
  *

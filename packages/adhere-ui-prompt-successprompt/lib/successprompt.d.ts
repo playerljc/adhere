@@ -1,4 +1,4 @@
-import { JointContent, SuccessDialog, Duration, SuccessMessageParams } from './types';
+import type { JointContent, SuccessDialog, Duration, SuccessMessageParams } from './types';
 /**
  * 打开成功对话框
  *

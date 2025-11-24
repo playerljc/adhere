@@ -39,6 +39,7 @@ import InputNumberDecimal2 from './input-number-decimal2';
 import InputNumberInteger from './input-number-integer';
 import Layout from './layout';
 import List from './list';
+import Masonry from './masonry';
 import Mentions from './mentions';
 import Menu from './menu';
 import Modal from './modal';
@@ -130,6 +131,7 @@ export {
   InputNumberInteger,
   Layout,
   List,
+  Masonry,
   Mentions,
   Menu,
   Modal,

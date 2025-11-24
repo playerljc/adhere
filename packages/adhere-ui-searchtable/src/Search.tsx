@@ -1,7 +1,7 @@
 import { Tooltip } from 'antd';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import type { ExpandableConfig } from 'rc-table/lib/interface';
+import type { ExpandableConfig } from 'antd/es/table/interface';
 import React, { ReactElement, ReactNode, RefObject, createRef } from 'react';
 
 import { InfoCircleOutlined } from '@ant-design/icons';

@@ -24,7 +24,6 @@ import type { CheckboxGroupProps, CheckboxOptionType } from 'antd/es/checkbox';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import useForm, { FormInstance } from 'antd/es/form/hooks/useForm';
 import type { RadioGroupProps } from 'antd/es/radio';
-import type { StepProps } from 'antd/es/steps';
 import type { CheckableTagProps } from 'antd/es/tag';
 import type { ColumnType } from 'antd/lib/table/interface';
 import dayjs from 'dayjs';
@@ -1339,7 +1338,7 @@ export type TableExtProps = Omit<TableProps, 'columns'> & {
   defaultCellSpacing?: number;
 };
 
-export type StepsSwiperItemProps = StepProps & {
+export type StepsSwiperItemProps = StepsProps & {
   _visited?: boolean;
   children?: ReactNode;
 };

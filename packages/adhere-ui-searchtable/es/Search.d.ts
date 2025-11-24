@@ -1,4 +1,4 @@
-import type { ExpandableConfig } from 'rc-table/lib/interface';
+import type { ExpandableConfig } from 'antd/es/table/interface';
 import React, { ReactElement, ReactNode, RefObject } from 'react';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import { SearchProps, SearchState, TableRowSelectionExt } from './types';

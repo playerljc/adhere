@@ -9,7 +9,7 @@ import type {
   // TablePaginationConfig,
   // TableRowSelection,
 } from 'antd/lib/table/interface';
-import type { DataIndex } from 'rc-table/lib/interface';
+import type { DataIndex } from '@rc-component/table/lib/interface';
 import type {
   CSSProperties,
   ForwardRefExoticComponent,

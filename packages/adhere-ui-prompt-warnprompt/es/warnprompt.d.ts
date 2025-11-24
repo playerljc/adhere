@@ -1,4 +1,4 @@
-import { WarnDialog, WarnMessage } from './types';
+import type { WarnDialog, WarnMessage } from './types';
 /**
  * 打开警告对话框
  *

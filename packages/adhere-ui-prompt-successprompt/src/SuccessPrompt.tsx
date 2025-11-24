@@ -1,9 +1,8 @@
 import { Modal, message } from 'antd';
-import React from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
-import { JointContent, SuccessDialog, Duration, SuccessMessageParams } from './types';
+import type { JointContent, SuccessDialog, Duration, SuccessMessageParams } from './types';
 
 /**
  * 全局定时器句柄
@@ -25,7 +24,7 @@ const DEFAULT_CONFIG = {
 
 /**
  * 打开成功对话框
- * 
+ *
  * @description 显示一个成功提示对话框，支持自动关闭功能
  * @param props - 对话框配置属性
  * @param props.duration - 自动关闭持续时间（毫秒），默认为3000ms，设为0或false禁用自动关闭
@@ -35,31 +34,31 @@ const DEFAULT_CONFIG = {
  * @param props.maskClosable - 点击遮罩是否可关闭，默认为true
  * @param props.footer - 底部按钮，默认为null（不显示）
  * @returns ModalFunc的返回结果，包含destroy等方法
- * 
+ *
  * @example
  * ```typescript
  * // 基本用法
  * const result = openSuccessDialog();
- * 
+ *
  * // 自定义配置
  * const result = openSuccessDialog({
  *   duration: 5000,
  *   title: '操作成功',
  *   content: '数据已保存',
  * });
- * 
+ *
  * // 手动关闭
  * result.destroy();
  * ```
  */
-export const openSuccessDialog: SuccessDialog = ({ 
-  duration = DEFAULT_CONFIG.DEFAULT_DURATION, 
+export const openSuccessDialog: SuccessDialog = ({
+  duration = DEFAULT_CONFIG.DEFAULT_DURATION,
   title = Intl.get(DEFAULT_CONFIG.DEFAULT_TITLE),
   content = Intl.get(DEFAULT_CONFIG.DEFAULT_CONTENT),
   mask = false,
   maskClosable = true,
   footer = null,
-  ...props 
+  ...props
 }) => {
   // 清除之前的定时器
   if (autoCloseHandler) {
@@ -89,21 +88,21 @@ export const openSuccessDialog: SuccessDialog = ({
 
 /**
  * 显示成功消息提示
- * 
+ *
  * @description 在页面顶部显示一个成功消息提示，支持自动消失
  * @param content - 消息内容，可选，默认为国际化成功文本
  * @param duration - 显示持续时间，可选，使用antd默认值
  * @param onClose - 关闭回调函数，可选
  * @returns void
- * 
+ *
  * @example
  * ```typescript
  * // 基本用法
  * openSuccessMessage();
- * 
+ *
  * // 自定义内容
  * openSuccessMessage('操作成功完成');
- * 
+ *
  * // 自定义持续时间和回调
  * openSuccessMessage('保存成功', 3000, () => {
  *   console.log('消息已关闭');
@@ -121,14 +120,14 @@ export const openSuccessMessage = (
 
 /**
  * 显示成功消息提示（对象参数版本）
- * 
+ *
  * @description 使用对象参数的方式显示成功消息，提供更好的类型支持
  * @param params - 消息参数对象
  * @param params.content - 消息内容
  * @param params.duration - 显示持续时间
  * @param params.onClose - 关闭回调函数
  * @returns void
- * 
+ *
  * @example
  * ```typescript
  * openSuccessMessageWithParams({
@@ -145,10 +144,10 @@ export const openSuccessMessageWithParams = (params: SuccessMessageParams): void
 
 /**
  * 清理全局定时器
- * 
+ *
  * @description 手动清理成功对话框的自动关闭定时器
  * 通常在组件卸载或需要立即关闭对话框时使用
- * 
+ *
  * @example
  * ```typescript
  * // 在组件卸载时清理

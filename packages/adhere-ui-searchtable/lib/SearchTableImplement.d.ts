@@ -1,5 +1,5 @@
 import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig } from 'antd/lib/table/interface';
-import type { ExpandableConfig } from 'rc-table/lib/interface';
+import type { ExpandableConfig } from 'antd/es/table/interface';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React from 'react';
 import SearchTable from './SearchTable';
