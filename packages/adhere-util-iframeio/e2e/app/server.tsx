@@ -3,10 +3,8 @@ import FileSaver from 'file-saver';
 // @ts-ignore
 import React, { useEffect, useRef, useState } from 'react';
 
-// @ts-ignore
 import Iframe from '../../src/index';
 
-// @ts-ignore
 import './server.less';
 
 type FileUpLoad = {
@@ -31,17 +29,15 @@ export default function () {
   const [image, setImage] = useState('');
   const [uploadList, setUploadList] = useState<FileUpLoad[]>([]);
 
-  const ref = useRef();
-  const server = useRef();
-  const router = useRef();
+  const ref = useRef(null);
+  const server = useRef(null);
+  const router = useRef(null);
 
   const sourceOrigin = window.location.origin;
   const whiteList = [sourceOrigin];
 
   useEffect(() => {
-    // @ts-ignore
     router.current = new Iframe.Router();
-    // @ts-ignore
     router.current
       /**
        * /display
@@ -59,7 +55,6 @@ export default function () {
        */
       .controller('/task/getDoc', (ctx, next) => {
         debugger;
-        // @ts-ignore
         ctx.response.setBody(ref.current.outerHTML);
         ctx.response.setStatusCode(200);
         ctx.response.setStatusMessage('ok');
@@ -124,7 +119,6 @@ export default function () {
         next();
       });
 
-    // @ts-ignore
     server.current = new Iframe.Server(whiteList, window, sourceOrigin);
 
     // //
@@ -159,20 +153,16 @@ export default function () {
     //     }),
     // );
 
-    // @ts-ignore
     server.current.use(router.current.routers());
 
-    // @ts-ignore
     server.current.start();
 
     return () => {
-      // @ts-ignore
       server?.current?.close?.();
     };
   }, []);
 
   return (
-    // @ts-ignore
     <div className="Wrap" ref={ref}>
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
         <Card title="将输入框值设置到iframe里">

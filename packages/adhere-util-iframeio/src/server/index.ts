@@ -1,4 +1,3 @@
-// import Util from '@baifendian/adhere-util';
 import { ERROR_MESSAGE, OK_MESSAGE } from '../Constant';
 import Context from '../Context';
 import Request from '../Request';

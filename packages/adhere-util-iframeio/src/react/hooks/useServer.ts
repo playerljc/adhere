@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import Server from '../../server';
 import Router from '../../server/router';
-import type { UseServerConfig, RouteController } from '../../types';
+import type { RouteController, UseServerConfig } from '../../types';
 
 /**
  * 使用服务器的React Hook
@@ -10,8 +10,8 @@ import type { UseServerConfig, RouteController } from '../../types';
  * @param config - 服务器配置
  */
 export default function useServer(config: UseServerConfig): void {
-  const server = useRef<Server>();
-  const router = useRef<Router>();
+  const server = useRef<Server>({} as Server);
+  const router = useRef<Router>({} as Router);
 
   useEffect(() => {
     router.current = new Router();

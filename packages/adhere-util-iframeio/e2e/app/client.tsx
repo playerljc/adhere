@@ -3,10 +3,8 @@ import { Button, Card, Input, Progress, Space } from 'antd';
 import React, { useRef, useState } from 'react';
 import { v4 } from 'uuid';
 
-// @ts-ignore
 import Iframe from '../../src/index';
 
-// @ts-ignore
 import './client.less';
 
 type UpLoadItem = {
@@ -21,7 +19,7 @@ export default function () {
   const [uploadList, setUploadList] = useState<UpLoadItem[]>([]);
 
   const [iframeReady, setIframeReady] = useState(false);
-  const iframeRef = useRef();
+  const iframeRef = useRef(null);
 
   const sourceOrigin = window.location.origin;
   const targetOrigin = window.location.origin;
@@ -38,7 +36,6 @@ export default function () {
    */
   function onSend() {
     fetch.current
-      // @ts-ignore
       .put(iframeRef?.current?.contentWindow, targetOrigin, '/display', {
         data: value,
       });
@@ -49,7 +46,6 @@ export default function () {
    */
   function onGetDoc() {
     fetch.current
-      // @ts-ignore
       .get(iframeRef?.current?.contentWindow, targetOrigin, '/task/getDoc', {
         data: value,
       })
@@ -71,9 +67,7 @@ export default function () {
 
     reader.addEventListener('load', (e1) => {
       fetch.current
-        // @ts-ignore
         .put(iframeRef?.current?.contentWindow, targetOrigin, '/uploadImg', {
-          // @ts-ignore
           data: e1.target.result,
         });
     });
@@ -100,7 +94,6 @@ export default function () {
 
     const reader = new FileReader();
     reader.addEventListener('load', (e1) => {
-      // @ts-ignore
       const buffer = e1.target.result as ArrayBuffer;
 
       // 段的大小 1kb
@@ -135,7 +128,6 @@ export default function () {
         console.log(`第${index + 1}次上传开始`);
 
         fetch.current
-          // @ts-ignore
           .get(iframeRef?.current?.contentWindow, targetOrigin, '/progressUploadFile', {
             data: {
               segmentSize,
@@ -183,7 +175,6 @@ export default function () {
             <div
               onClick={() => {
                 fetch.current
-                  // @ts-ignore
                   .get(iframeRef?.current?.contentWindow, targetOrigin, '/document/approval', {
                     data: '123',
                   })
@@ -250,7 +241,6 @@ export default function () {
         <h1 style={{ textAlign: 'center' }}>Iframe</h1>
         <iframe
           name="server"
-          // @ts-ignore
           ref={iframeRef}
           className="Iframe"
           src="/server"
@@ -259,7 +249,6 @@ export default function () {
 
         {/*<iframe
           name="server"
-          // @ts-ignore
           ref={iframeRef}
           className={styles.Iframe}
           src={`${targetOrigin}/documentMaking/approval?isiframe=true&id=235`}
