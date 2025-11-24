@@ -24,8 +24,6 @@ npm-debug
 
 .zip
 
-.vscode
-
 **/.idea
 **/node_modules
 **/dist
