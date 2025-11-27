@@ -36,10 +36,18 @@ declare class Server {
      */
     private service;
     /**
+     * keepAlive
+     * @description 心跳的接口
+     * @private
+     */
+    private keepAlive;
+    /**
      * 启动服务
      * @returns Promise<void>
      */
-    start(): Promise<void>;
+    start({ startKeepAlive }: {
+        startKeepAlive?: boolean;
+    }): Promise<void>;
     /**
      * 关闭服务
      * @returns Promise<void>

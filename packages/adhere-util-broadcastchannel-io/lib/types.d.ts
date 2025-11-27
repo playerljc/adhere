@@ -8,7 +8,7 @@ export type Headers = Record<string, string | string[]>;
 /**
  * 状态码类型定义
  */
-export type StateCode = 0 | 200 | 404 | 500;
+export type StateCode = 0 | 200 | 500 | 408 | 404 | 406;
 /**
  * 上下文选项接口
  */
@@ -33,6 +33,8 @@ export interface SendOptions {
     data?: any;
     /** 请求头 */
     headers?: Headers;
+    /** 超时时间 */
+    timeOut?: number;
 }
 /**
  * 请求选项接口
@@ -119,6 +121,7 @@ export interface UseServerConfig {
     controllers: RouteController[];
     /** 启动后的回调函数 */
     startAfterCB?: () => void;
+    startKeepAlive?: boolean;
 }
 /**
  * Fetch 配置接口

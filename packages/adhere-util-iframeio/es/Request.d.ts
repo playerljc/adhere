@@ -1,4 +1,4 @@
-import type { RequestOptions, StateCode } from './types';
+import type { Headers, RequestOptions, StateCode } from './types';
 /**
  * 请求对象类
  * @class Request
@@ -26,7 +26,7 @@ declare class Request {
      * 获取请求头
      * @returns 请求头的副本
      */
-    getHeaders(): Record<string, string>;
+    getHeaders(): Headers;
     /**
      * 获取请求体
      * @returns 请求体数据

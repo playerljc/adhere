@@ -11,7 +11,7 @@ class Context {
   /** 请求对象 */
   private readonly request: Request;
   /** 响应对象 */
-  private readonly response: Response;
+  readonly response: Response;
 
   /**
    * 构造函数

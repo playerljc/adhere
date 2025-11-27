@@ -1,4 +1,4 @@
-import type { ResponseOptions, StateCode } from './types';
+import type { Headers, ResponseOptions, StateCode } from './types';
 
 /**
  * 响应对象类
@@ -10,7 +10,7 @@ class Response {
   private requestId: string = '';
 
   /** 响应头 */
-  private readonly headers: Record<string, string> = {};
+  private readonly headers: Headers = {};
 
   /** 状态码 */
   private statusCode: StateCode = 0;
@@ -46,7 +46,7 @@ class Response {
    * 获取响应头
    * @returns 响应头的副本
    */
-  getHeaders(): Record<string, string> {
+  getHeaders(): Headers {
     return { ...this.headers };
   }
 

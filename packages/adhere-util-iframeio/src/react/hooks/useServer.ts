@@ -22,7 +22,7 @@ export default function useServer(config: UseServerConfig): void {
 
     server.current = new Server(config.whitelist, window, window.location.origin);
     server.current.use(router.current.routers());
-    server.current.start().then(() => {
+    server.current.start({ startKeepAlive: config.startKeepAlive }).then(() => {
       config?.startAfterCB?.();
     });
 

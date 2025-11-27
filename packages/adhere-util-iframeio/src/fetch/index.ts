@@ -1,7 +1,15 @@
-import { ERROR_MESSAGE } from '../Constant';
+import {
+  ERROR_MESSAGE,
+  KEEP_ALIVE_SERVICE_NAME,
+  STATUS_CODE_ERROR,
+  STATUS_CODE_INIT,
+  STATUS_CODE_NOT_ACCEPTABLE,
+  STATUS_CODE_OK,
+  STATUS_CODE_TIME_OUT,
+} from '../Constant';
 import Request from '../Request';
 import Response from '../Response';
-import type { SendOptions, MessageEventData } from '../types';
+import type { MessageEventData, SendOptions } from '../types';
 
 /**
  * 客户端发送消息类
@@ -39,6 +47,7 @@ class Fetch {
     options?: SendOptions,
   ): Promise<Response> {
     return new Promise<Response>((resolve, reject) => {
+      // 构造一个请求对象
       const request = new Request({
         pathname,
         headers: {
@@ -46,59 +55,109 @@ class Fetch {
           origin: this.origin,
           referer: this.source instanceof Window ? (this.source as Window).location.href : '',
         },
-        statusCode: 0,
+        statusCode: STATUS_CODE_INIT,
         stateMessage: ERROR_MESSAGE,
         body: options?.data,
         type: 'request',
       });
 
+      // 回调
       const onMessage = (evt: Event): void => {
-        const messageEvent = evt as MessageEvent;
-        try {
-          const data: MessageEventData = JSON.parse(messageEvent.data);
-          const response = new Response({
-            requestId: data.requestId,
-            headers: data.headers ?? {},
-            statusCode: data.statusCode ?? 0,
-            stateMessage: data.stateMessage ?? '',
-            body: data.body,
-            type: 'response',
-          });
+        // 在超时时间内返回了响应，则取消超时监听
+        if (timeoutHandler !== 0) {
+          clearTimeout(timeoutHandler);
+          timeoutHandler = 0;
+        }
 
+        const messageEvent = evt as MessageEvent;
+
+        const data: MessageEventData = JSON.parse(messageEvent.data);
+
+        const response = new Response({
+          requestId: data.requestId,
+          headers: data.headers ?? {},
+          statusCode: data.statusCode ?? STATUS_CODE_OK,
+          stateMessage: data.stateMessage ?? '',
+          body: data.body,
+          type: 'response',
+        });
+
+        try {
           if (
             messageEvent.origin !== targetOrigin ||
             messageEvent.source !== targetWindow ||
             request.getRequestId() !== response.getRequestId()
           ) {
+            response.setStatusCode(STATUS_CODE_NOT_ACCEPTABLE);
+            reject(response);
             return;
           }
 
           if (data?.type === 'request') {
+            response.setStatusCode(STATUS_CODE_NOT_ACCEPTABLE);
+            reject(response);
             return;
           }
 
           this.source.removeEventListener('message', onMessage);
 
-          if (response.getStatusCode() === 500) {
+          if (response.getStatusCode() === STATUS_CODE_ERROR) {
+            response.setStatusCode(STATUS_CODE_ERROR);
             reject(response);
             return;
           }
 
           resolve(response);
         } catch (e) {
-          console.warn('解析响应数据失败:', e);
+          console.warn('Failed to parse response data:', e);
+          response.setStatusCode(STATUS_CODE_ERROR);
+          reject(response);
         }
       };
 
+      // 注册回调
       this.source.addEventListener('message', onMessage);
 
+      // 超时时间
+      const timeOut = options?.timeOut ?? 0;
+      let timeoutHandler: number = 0;
+
       try {
+        // 如果设置了超时时间
+        if (timeOut !== 0) {
+          // 开启超时监听
+          timeoutHandler = window.setTimeout(() => {
+            // 到了超时时间, 还没有接收到响应则超时
+            timeoutHandler = 0;
+            this.source.removeEventListener('message', onMessage);
+            reject(
+              new Response({
+                requestId: request.getRequestId(),
+                headers: request.getHeaders(),
+                statusCode: STATUS_CODE_TIME_OUT,
+                stateMessage: 'Request time out',
+                body: null,
+                type: 'response',
+              }),
+            );
+          }, timeOut);
+        }
+
         // @ts-ignore - postMessage方法在MessageEventSource上可能不存在
         targetWindow.postMessage(JSON.stringify(request), targetOrigin);
       } catch (e) {
-        console.error('发送消息失败:', e);
+        console.error('Failed to send message:', e);
         this.source.removeEventListener('message', onMessage);
-        reject(new Error('发送消息失败'));
+        reject(
+          new Response({
+            requestId: request.getRequestId(),
+            headers: request.getHeaders(),
+            statusCode: STATUS_CODE_ERROR,
+            stateMessage: 'Failed to send message',
+            body: null,
+            type: 'response',
+          }),
+        );
       }
     });
   }
@@ -152,6 +211,48 @@ class Fetch {
     options?: SendOptions,
   ): Promise<Response> {
     return this.send(targetWindow, targetOrigin, pathname, options);
+  }
+
+  /**
+   * 发送ping请求
+   * @param targetWindow - 目标窗口对象
+   * @param targetOrigin - 目标域名
+   * @param success - 成功的回调
+   * @param error - 失败的回调
+   * @param options - 附加参数
+   */
+  ping(
+    targetWindow: MessageEventSource,
+    targetOrigin: string,
+    success: () => void,
+    error: () => void,
+    options?: Omit<SendOptions, 'timeOut'> & {
+      interval?: number;
+    },
+  ): void {
+    // ping间隔
+    const interval = options?.interval ?? 3000;
+
+    const _self = this;
+
+    function _ping(): Promise<Response> {
+      return _self.send(targetWindow, targetOrigin, `/${KEEP_ALIVE_SERVICE_NAME}`, {
+        ...options,
+        // 设置超时时间为10秒
+        timeOut: 1000 * 10,
+      });
+    }
+
+    function keepAlive(): void {
+      _ping()
+        .then(() => {
+          success();
+          setTimeout(keepAlive, interval);
+        })
+        .catch(error);
+    }
+
+    keepAlive();
   }
 }
 

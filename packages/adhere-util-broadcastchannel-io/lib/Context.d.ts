@@ -10,7 +10,7 @@ declare class Context {
     /** 请求对象 */
     private readonly request;
     /** 响应对象 */
-    private readonly response;
+    readonly response: Response;
     /**
      * 构造函数
      * @param options - 上下文选项

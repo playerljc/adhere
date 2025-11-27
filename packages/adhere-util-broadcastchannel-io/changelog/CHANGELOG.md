@@ -12,4 +12,4 @@
 
 2022-08-31
 
-* 加入adhere-util-iframeio
+* 加入adhere-util-broadcastchannel-io

@@ -1,4 +1,4 @@
-import type { ResponseOptions, StateCode } from './types';
+import type { Headers, ResponseOptions, StateCode } from './types';
 /**
  * 响应对象类
  * @class Response
@@ -30,7 +30,7 @@ declare class Response {
      * 获取响应头
      * @returns 响应头的副本
      */
-    getHeaders(): Record<string, string>;
+    getHeaders(): Headers;
     /**
      * 获取响应体
      * @returns 响应体数据

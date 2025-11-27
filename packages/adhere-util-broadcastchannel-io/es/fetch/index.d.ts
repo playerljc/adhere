@@ -47,5 +47,15 @@ declare class Fetch {
      * @returns Promise<Response> 响应对象
      */
     delete(targetOrigin: string[], pathname: string, options?: SendOptions): Promise<Response>;
+    /**
+     * 发送ping请求
+     * @param targetOrigin - 目标域名
+     * @param success - 成功的回调
+     * @param error - 失败的回调
+     * @param options - 附加参数
+     */
+    ping(targetOrigin: string[], success: () => void, error: () => void, options?: Omit<SendOptions, 'timeOut'> & {
+        interval?: number;
+    }): void;
 }
 export default Fetch;

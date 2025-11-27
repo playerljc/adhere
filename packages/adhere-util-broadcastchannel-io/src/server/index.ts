@@ -1,7 +1,15 @@
-import { CHANNEL_NAME, ERROR_MESSAGE, OK_MESSAGE } from '../Constant';
+import {
+  CHANNEL_NAME,
+  ERROR_MESSAGE,
+  KEEP_ALIVE_SERVICE_NAME,
+  OK_MESSAGE,
+  STATUS_CODE_INIT,
+  STATUS_CODE_OK,
+} from '../Constant';
 import Context from '../Context';
 import Request from '../Request';
 import Response from '../Response';
+import Router from '../server/router';
 import type { MessageEventData, Middleware } from '../types';
 import Compose from './compose';
 
@@ -40,7 +48,6 @@ class Server {
    */
   private onMessage(evt: Event): void {
     try {
-      debugger;
       const messageEvent = evt as MessageEvent;
       const data: MessageEventData = JSON.parse(messageEvent.data);
 
@@ -65,7 +72,7 @@ class Server {
 
       this.service(data);
     } catch (e) {
-      console.warn('处理消息失败:', e);
+      console.warn('Failed to process message:', e);
     }
   }
 
@@ -88,13 +95,13 @@ class Server {
     const request = new Request({
       pathname: data.pathname || '',
       headers: data.headers || {},
-      statusCode: 200,
+      statusCode: STATUS_CODE_OK,
       stateMessage: OK_MESSAGE,
       body: data.body,
       type: 'request',
     });
     request.setRequestId(data.requestId);
-    request.setStatusCode(200);
+    request.setStatusCode(STATUS_CODE_OK);
     request.setStatusMessage(OK_MESSAGE);
 
     // 如果中间件为空
@@ -107,7 +114,7 @@ class Server {
       request,
       response: new Response({
         requestId: request.getRequestId(),
-        statusCode: 0,
+        statusCode: STATUS_CODE_INIT,
         stateMessage: ERROR_MESSAGE,
         headers: {
           pathname: request.getPathname(),
@@ -129,16 +136,37 @@ class Server {
         // 发送回调
         _self?.bc?.postMessage?.(JSON.stringify(context.getResponse()));
       } catch (e) {
-        console.error('发送响应失败:', e);
+        console.error('Failed to send response:', e);
       }
     });
+  }
+
+  /**
+   * keepAlive
+   * @description 心跳的接口
+   * @private
+   */
+  private keepAlive() {
+    const router = new Router();
+
+    router.controller(`/${KEEP_ALIVE_SERVICE_NAME}`, (ctx: Context) => {
+      ctx.response.setStatusCode(STATUS_CODE_OK);
+      ctx.response.setStatusMessage(OK_MESSAGE);
+    });
+
+    return router;
   }
 
   /**
    * 启动服务
    * @returns Promise<void>
    */
-  start(): Promise<void> {
+  start({ startKeepAlive = false }: { startKeepAlive?: boolean }): Promise<void> {
+    // 如果开启了KeepAlive
+    if (startKeepAlive) {
+      this.use(this.keepAlive().routers());
+    }
+
     return new Promise<void>((resolve) => {
       // 监听
       this.bc?.addEventListener('message', this.onMessage);

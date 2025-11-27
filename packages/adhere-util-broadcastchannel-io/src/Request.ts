@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 
-import type { RequestOptions, StateCode } from './types';
+import type { Headers, RequestOptions, StateCode } from './types';
 
 /**
  * 请求对象类
@@ -15,7 +15,7 @@ class Request {
   private pathname: string = '';
 
   /** 请求头 */
-  private readonly headers: Record<string, string> = {};
+  private headers: Headers = {};
 
   /** 状态码 */
   private statusCode: StateCode = 0;
@@ -42,7 +42,7 @@ class Request {
    * 获取请求头
    * @returns 请求头的副本
    */
-  getHeaders(): Record<string, string> {
+  getHeaders(): Headers {
     return { ...this.headers };
   }
 
