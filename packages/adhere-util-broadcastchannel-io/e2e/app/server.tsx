@@ -25,16 +25,30 @@ type FileUpLoad = {
 };
 
 export default function () {
+  const sourceOrigin = '/server';
+  const whiteList = ['/client'];
+
   const [displayValue, setDisplayValue] = useState('');
   const [image, setImage] = useState('');
   const [uploadList, setUploadList] = useState<FileUpLoad[]>([]);
+
+  const fetch = useRef(new BroadCastChannel.Fetch(sourceOrigin));
 
   const ref = useRef(null);
   const server = useRef(null);
   const router = useRef(null);
 
-  const sourceOrigin = '/server';
-  const whiteList = ['/client'];
+  function ping() {
+    fetch.current.ping(
+      ['/client'],
+      () => {
+        console.log('server ping client success');
+      },
+      () => {
+        console.log('error');
+      },
+    );
+  }
 
   useEffect(() => {
     router.current = new BroadCastChannel.Router();
@@ -118,44 +132,31 @@ export default function () {
         ctx.response.setStatusMessage('ok');
         next();
       });
-
+    // 1.注册了 window postMessage
     server.current = new BroadCastChannel.Server(whiteList, sourceOrigin);
-
-    // //
-    // server.current.use((ctx, next) => {
-    //   console.log(' > use1');
-    //   next();
-    //   console.log(' < use1');
-    // });
-    //
-    // //
-    // server.current.use((ctx, next) => {
-    //   console.log(' > use2');
-    //   next();
-    //   console.log(' < use2');
-    // });
-    //
-    // //
-    // server.current.use(
-    //   (ctx, next) =>
-    //     new Promise((resolve) => {
-    //       setTimeout(() => {
-    //         const p = next();
-    //
-    //         if (p && p.then) {
-    //           p.then(() => {
-    //             resolve();
-    //           });
-    //         } else {
-    //           resolve();
-    //         }
-    //       }, 2000);
-    //     }),
-    // );
-
     server.current.use(router.current.routers());
+    server.current.accept((ctx, next) => {
+      ctx.response.setStatusCode(200);
+      ctx.response.setStatusMessage('ok');
+      next();
 
-    server.current.start();
+      setTimeout(() => {
+        console.log('client掉线了，重新连接后');
+
+        ping();
+      }, 1000);
+    });
+    server.current.start({
+      startKeepAlive: true,
+    });
+
+    // 调接口
+    // 2.注册了 window postMessage
+    fetch.current.accept(['/client']).then((res) => {
+      console.log('我已经通知了client，我上线了', res);
+
+      ping();
+    });
 
     return () => {
       server?.current?.close?.();

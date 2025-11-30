@@ -7,9 +7,17 @@ export declare const OK_MESSAGE: string;
  */
 export declare const ERROR_MESSAGE: string;
 /**
+ * 超时的消息
+ */
+export declare const TIME_OUT_MESSAGE: string;
+/**
  * 心跳服务的action名称
  */
 export declare const KEEP_ALIVE_SERVICE_NAME = "_keep-alive";
+/**
+ * 客户端链接成功
+ */
+export declare const ACCEPT_SERVICE_NAME = "_accept";
 /**
  * CHANNEL_NAME
  */

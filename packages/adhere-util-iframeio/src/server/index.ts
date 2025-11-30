@@ -1,8 +1,7 @@
 import {
-  ERROR_MESSAGE,
+  ACCEPT_SERVICE_NAME,
   KEEP_ALIVE_SERVICE_NAME,
   OK_MESSAGE,
-  STATUS_CODE_INIT,
   STATUS_CODE_OK,
 } from '../Constant';
 import Context from '../Context';
@@ -41,8 +40,10 @@ class Server {
   }
 
   /**
-   * 消息处理函数
-   * @param evt - 消息事件
+   * onMessage
+   * @description 消息处理函数
+   * @param {Event} evt 消息事件
+   * @returns {void}
    */
   private onMessage(evt: Event): void {
     try {
@@ -75,9 +76,10 @@ class Server {
   }
 
   /**
-   * 对中间件进行迭代
-   * @param ctx - 上下文对象
-   * @returns Promise<void>
+   * middleWareQueueReduce
+   * @description 对中间件进行迭代
+   * @param {Context} ctx 上下文对象
+   * @returns {Promise<void>}
    */
   private middleWareQueueReduce(ctx: Context): Promise<void> {
     const middleWareCompose = Compose(this.middleWareQueue);
@@ -85,9 +87,11 @@ class Server {
   }
 
   /**
-   * 具体的请求处理
-   * @param evt - 消息事件
-   * @param data - 消息数据
+   * service
+   * @description 具体的请求处理
+   * @param {MessageEvent} evt 消息事件
+   * @param {MessageEventData} data 消息数据
+   * @returns {void}
    */
   private service(evt: MessageEvent, data: MessageEventData): void {
     // 设置request的statusCode和statusMessage
@@ -100,8 +104,6 @@ class Server {
       type: 'request',
     });
     request.setRequestId(data.requestId);
-    request.setStatusCode(STATUS_CODE_OK);
-    request.setStatusMessage(OK_MESSAGE);
 
     // 如果中间件为空
     if (!this.middleWareQueue.length) {
@@ -113,8 +115,8 @@ class Server {
       request,
       response: new Response({
         requestId: request.getRequestId(),
-        statusCode: STATUS_CODE_INIT,
-        stateMessage: ERROR_MESSAGE,
+        statusCode: STATUS_CODE_OK,
+        stateMessage: OK_MESSAGE,
         headers: {
           pathname: request.getPathname(),
           date: new Date().toString(),
@@ -141,41 +143,64 @@ class Server {
    * keepAlive
    * @description 心跳的接口
    * @private
+   * @returns {Router}
    */
-  private keepAlive() {
+  private keepAlive(): Router {
     const router = new Router();
 
-    router.controller(`/${KEEP_ALIVE_SERVICE_NAME}`, (ctx: Context) => {
-      ctx.response.setStatusCode(STATUS_CODE_OK);
-      ctx.response.setStatusMessage(OK_MESSAGE);
-    });
+    router.controller(
+      `/${KEEP_ALIVE_SERVICE_NAME}`,
+      (ctx: Context, next?: () => Promise<void> | void) => {
+        ctx.response.setStatusCode(STATUS_CODE_OK);
+        ctx.response.setStatusMessage(OK_MESSAGE);
+        next?.();
+      },
+    );
 
     return router;
   }
 
   /**
-   * 启动服务
-   * @param {{
-   *   // 是否开启KeepAlive
-   *   startKeepAlive?: boolean;
-   * }}
-   * @returns Promise<void>
+   * accept
+   * @description 接受连接成功回调注册
+   * @private
+   * @param {(ctc: Context, next?: () => Promise<void> | void) => void} [cb] 回调
+   * @returns {void}
+   */
+  accept(cb?: (ctc: Context, next?: () => Promise<void> | void) => void) {
+    const router = new Router();
+
+    router.controller(`/${ACCEPT_SERVICE_NAME}`, (ctx: Context, next) => {
+      ctx.response.setStatusCode(STATUS_CODE_OK);
+      ctx.response.setStatusMessage(OK_MESSAGE);
+      cb?.(ctx, next);
+    });
+
+    this.use(router.routers());
+  }
+
+  /**
+   * start
+   * @description 启动服务
+   * @param {{startKeepAlive?: boolean}} options 启动选项
+   * @returns {Promise<void>}
    */
   start({ startKeepAlive = false }: { startKeepAlive?: boolean }): Promise<void> {
-    // 如果开启了KeepAlive
-    if (startKeepAlive) {
-      this.use(this.keepAlive().routers());
-    }
-
     return new Promise<void>((resolve) => {
+      // 如果开启了KeepAlive
+      if (startKeepAlive) {
+        this.use(this.keepAlive().routers());
+      }
+
       this.source.addEventListener('message', this.onMessage);
       resolve();
     });
   }
 
   /**
-   * 关闭服务
-   * @returns Promise<void>
+   * close
+   * @description 关闭服务
+   * @returns {Promise<void>}
    */
   close(): Promise<void> {
     return new Promise<void>((resolve) => {
@@ -185,9 +210,10 @@ class Server {
   }
 
   /**
-   * 添加中间件
-   * @param middleWare - 中间件函数或中间件数组
-   * @returns this - 返回当前实例，支持链式调用
+   * use
+   * @description 添加中间件
+   * @param {Middleware | Middleware[]} middleWare 中间件函数或中间件数组
+   * @returns {this} 返回当前实例，支持链式调用
    */
   use(middleWare: Middleware | Middleware[]): this {
     if (Array.isArray(middleWare)) {

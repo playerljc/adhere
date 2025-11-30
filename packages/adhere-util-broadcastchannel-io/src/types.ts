@@ -128,6 +128,7 @@ export interface RouteController {
 export interface UseServerConfig {
   /** 白名单域名列表 */
   whitelist: string[];
+  origin: string;
   /** 控制器列表 */
   controllers: RouteController[];
   /** 启动后的回调函数 */

@@ -15,6 +15,7 @@ type UpLoadItem = {
 };
 
 export default function () {
+  const server = useRef(null);
   const [value, setValue] = useState('');
   const [uploadList, setUploadList] = useState<UpLoadItem[]>([]);
 
@@ -35,10 +36,9 @@ export default function () {
    * @description 将输入框值设置到iframe里
    */
   function onSend() {
-    fetch.current
-      .put(iframeRef?.current?.contentWindow, targetOrigin, '/display', {
-        data: value,
-      });
+    fetch.current.put(iframeRef?.current?.contentWindow, targetOrigin, '/display', {
+      data: value,
+    });
   }
 
   /**
@@ -66,10 +66,9 @@ export default function () {
     const reader = new FileReader();
 
     reader.addEventListener('load', (e1) => {
-      fetch.current
-        .put(iframeRef?.current?.contentWindow, targetOrigin, '/uploadImg', {
-          data: e1.target.result,
-        });
+      fetch.current.put(iframeRef?.current?.contentWindow, targetOrigin, '/uploadImg', {
+        data: e1.target.result,
+      });
     });
 
     reader.readAsDataURL(file);
@@ -165,6 +164,31 @@ export default function () {
    */
   function onIframeLoad() {
     setIframeReady(true);
+
+    const contentWindow = iframeRef?.current?.contentWindow;
+
+    server.current = new Iframe.Server([window.location.origin], window, sourceOrigin);
+    server.current.accept((ctx, next) => {
+      ctx.response.setStatusCode(200);
+      ctx.response.setStatusMessage('ok');
+      next();
+
+      setTimeout(() => {
+        fetch.current.ping(
+          contentWindow,
+          targetOrigin,
+          () => {
+            console.log('client ping server success');
+          },
+          () => {
+            console.log('error');
+          },
+        );
+      }, 1000);
+    });
+    server.current.start({
+      startKeepAlive: true,
+    });
   }
 
   return (

@@ -1,6 +1,6 @@
 import { Button, Card, Input, Progress, Space } from 'antd';
 // @ts-ignore
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { v4 } from 'uuid';
 
 import BroadCastChannel from '../../src/index';
@@ -19,6 +19,7 @@ const targetOrigin = ['/server'];
 const bc = new BroadCastChannel.Fetch(sourceOrigin);
 
 export default function () {
+  const server = useRef(null);
   const [value, setValue] = useState('');
   const [uploadList, setUploadList] = useState<UpLoadItem[]>([]);
 
@@ -151,6 +152,44 @@ export default function () {
     });
     reader.readAsArrayBuffer(file);
   }
+
+  function ping() {
+    fetch.current.ping(
+      targetOrigin,
+      () => {
+        console.log('client ping server success');
+      },
+      () => {
+        console.log('error');
+      },
+    );
+  }
+
+  useEffect(() => {
+    server.current = new BroadCastChannel.Server(targetOrigin, sourceOrigin);
+    server.current.accept((ctx, next) => {
+      ctx.response.setStatusCode(200);
+      ctx.response.setStatusMessage('ok');
+      next();
+
+      setTimeout(() => {
+        console.log('server掉线了，重新连接后');
+
+        ping();
+      }, 1000);
+    });
+    server.current.start({
+      startKeepAlive: true,
+    });
+
+    // 调接口
+    // 2.注册了 window postMessage
+    fetch.current.accept(['/server']).then((res) => {
+      console.log('我已经通知了server，我上线了', res);
+
+      ping();
+    });
+  }, []);
 
   return (
     <div className="Wrap">

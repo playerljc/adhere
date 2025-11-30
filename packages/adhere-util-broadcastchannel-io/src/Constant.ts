@@ -9,9 +9,19 @@ export const OK_MESSAGE: string = 'ok';
 export const ERROR_MESSAGE: string = 'error';
 
 /**
+ * 超时的消息
+ */
+export const TIME_OUT_MESSAGE: string = 'Request time out';
+
+/**
  * 心跳服务的action名称
  */
 export const KEEP_ALIVE_SERVICE_NAME = '_keep-alive';
+
+/**
+ * 客户端链接成功
+ */
+export const ACCEPT_SERVICE_NAME = '_accept';
 
 /**
  * CHANNEL_NAME

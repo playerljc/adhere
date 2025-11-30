@@ -1,4 +1,7 @@
+import { OK_MESSAGE, TIME_OUT_MESSAGE } from '@baifendian/adhere-util-iframeio/lib/Constant';
+
 import {
+  ACCEPT_SERVICE_NAME,
   CHANNEL_NAME,
   ERROR_MESSAGE,
   KEEP_ALIVE_SERVICE_NAME,
@@ -25,8 +28,9 @@ class Fetch {
   protected bc: BroadcastChannel | undefined;
 
   /**
-   * 构造函数
-   * @param origin - 源域名
+   * constructor
+   * @description 构造函数
+   * @param {string} origin 源域名
    */
   constructor(origin: string) {
     // 发送方
@@ -37,11 +41,12 @@ class Fetch {
   }
 
   /**
-   * 发送请求
-   * @param targetOrigin - 接收方
-   * @param pathname - 接口地址
-   * @param options - 发送选项
-   * @returns Promise<Response> 响应对象
+   * send
+   * @description 发送请求
+   * @param {string[]} targetOrigin 接收方
+   * @param {string} pathname 接口地址
+   * @param {SendOptions} [options] 发送选项
+   * @returns {Promise<Response>} 响应对象
    */
   private send(targetOrigin: string[], pathname: string, options?: SendOptions): Promise<Response> {
     return new Promise<Response>((resolve, reject) => {
@@ -68,20 +73,27 @@ class Fetch {
 
         const messageEvent = evt as MessageEvent;
 
-        const data: MessageEventData = JSON.parse(messageEvent.data);
+        let data: MessageEventData | null = null;
+
+        try {
+          data = JSON.parse(messageEvent.data);
+        } catch (e) {
+          console.log(e);
+          return;
+        }
 
         const response = new Response({
-          requestId: data.requestId,
-          headers: data.headers ?? {},
-          statusCode: data.statusCode ?? STATUS_CODE_OK,
-          stateMessage: data.stateMessage ?? '',
-          body: data.body,
+          requestId: data?.requestId as string,
+          headers: data?.headers ?? {},
+          statusCode: data?.statusCode ?? STATUS_CODE_OK,
+          stateMessage: data?.stateMessage ?? OK_MESSAGE,
+          body: data?.body,
           type: 'response',
         });
 
         try {
           if (
-            !targetOrigin.includes(data.headers?.origin as string) ||
+            !targetOrigin.includes(data?.headers?.origin as string) ||
             request.getRequestId() !== response.getRequestId()
           ) {
             response.setStatusCode(STATUS_CODE_NOT_ACCEPTABLE);
@@ -91,6 +103,7 @@ class Fetch {
 
           if (data?.type === 'request') {
             response.setStatusCode(STATUS_CODE_NOT_ACCEPTABLE);
+            response.setStatusCode(STATUS_CODE_NOT_ACCEPTABLE);
             reject(response);
             return;
           }
@@ -99,6 +112,7 @@ class Fetch {
 
           if (response.getStatusCode() === STATUS_CODE_ERROR) {
             response.setStatusCode(STATUS_CODE_ERROR);
+            response.setStatusMessage(ERROR_MESSAGE);
             reject(response);
             return;
           }
@@ -107,6 +121,7 @@ class Fetch {
         } catch (e) {
           console.warn('Failed to parse response data:', e);
           response.setStatusCode(STATUS_CODE_ERROR);
+          response.setStatusMessage(ERROR_MESSAGE);
           reject(response);
         }
       };
@@ -114,6 +129,7 @@ class Fetch {
       // 注册回调
       this.bc?.addEventListener('message', onMessage);
 
+      // 超时时间
       const timeOut = options?.timeOut ?? 0;
       let timeoutHandler: number = 0;
 
@@ -130,7 +146,7 @@ class Fetch {
                 requestId: request.getRequestId(),
                 headers: request.getHeaders(),
                 statusCode: STATUS_CODE_TIME_OUT,
-                stateMessage: 'Request time out',
+                stateMessage: TIME_OUT_MESSAGE,
                 body: null,
                 type: 'response',
               }),
@@ -148,7 +164,7 @@ class Fetch {
             requestId: request.getRequestId(),
             headers: request.getHeaders(),
             statusCode: STATUS_CODE_ERROR,
-            stateMessage: 'Failed to send message',
+            stateMessage: ERROR_MESSAGE,
             body: null,
             type: 'response',
           }),
@@ -158,44 +174,49 @@ class Fetch {
   }
 
   /**
-   * GET请求
-   * @param targetOrigin - 目标域名
-   * @param pathname - 请求路径
-   * @param options - 发送选项
-   * @returns Promise<Response> 响应对象
+   * get
+   * @description GET请求
+   * @param {string[]} targetOrigin 目标域名
+   * @param {string} pathname 请求路径
+   * @param {SendOptions} [options] 发送选项
+   * @returns {Promise<Response>} 响应对象
    */
   get(targetOrigin: string[], pathname: string, options?: SendOptions): Promise<Response> {
     return this.send(targetOrigin, pathname, options);
   }
 
   /**
-   * PUT请求
-   * @param targetOrigin - 目标域名
-   * @param pathname - 请求路径
-   * @param options - 发送选项
-   * @returns Promise<Response> 响应对象
+   * put
+   * @description PUT请求
+   * @param {string[]} targetOrigin 目标域名
+   * @param {string} pathname 请求路径
+   * @param {SendOptions} [options] 发送选项
+   * @returns {Promise<Response>} 响应对象
    */
   put(targetOrigin: string[], pathname: string, options?: SendOptions): Promise<Response> {
     return this.send(targetOrigin, pathname, options);
   }
 
   /**
-   * DELETE请求
-   * @param targetOrigin - 目标域名
-   * @param pathname - 请求路径
-   * @param options - 发送选项
-   * @returns Promise<Response> 响应对象
+   * delete
+   * @description DELETE请求
+   * @param {string[]} targetOrigin 目标域名
+   * @param {string} pathname 请求路径
+   * @param {SendOptions} [options] 发送选项
+   * @returns {Promise<Response>} 响应对象
    */
   delete(targetOrigin: string[], pathname: string, options?: SendOptions): Promise<Response> {
     return this.send(targetOrigin, pathname, options);
   }
 
   /**
-   * 发送ping请求
-   * @param targetOrigin - 目标域名
-   * @param success - 成功的回调
-   * @param error - 失败的回调
-   * @param options - 附加参数
+   * ping
+   * @description 发送ping请求
+   * @param {string[]} targetOrigin 目标域名
+   * @param {() => void} success 成功的回调
+   * @param {() => void} error 失败的回调
+   * @param {Omit<SendOptions, 'timeOut'> & { interval?: number }} [options] 附加参数
+   * @returns {void}
    */
   ping(
     targetOrigin: string[],
@@ -228,6 +249,17 @@ class Fetch {
     }
 
     keepAlive();
+  }
+
+  /**
+   * accept
+   * @description 发送链接成功的请求
+   * @param {string[]} targetOrigin 目标域名
+   * @param {SendOptions} [options] 发送选项
+   * @returns {Promise<Response>} 响应对象
+   */
+  accept(targetOrigin: string[], options?: SendOptions): Promise<Response> {
+    return this.send(targetOrigin, `/${ACCEPT_SERVICE_NAME}`, options);
   }
 }
 

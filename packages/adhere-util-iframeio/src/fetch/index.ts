@@ -1,11 +1,15 @@
+import merge from 'lodash.merge';
+
 import {
+  ACCEPT_SERVICE_NAME,
   ERROR_MESSAGE,
   KEEP_ALIVE_SERVICE_NAME,
+  OK_MESSAGE,
   STATUS_CODE_ERROR,
-  STATUS_CODE_INIT,
   STATUS_CODE_NOT_ACCEPTABLE,
   STATUS_CODE_OK,
   STATUS_CODE_TIME_OUT,
+  TIME_OUT_MESSAGE,
 } from '../Constant';
 import Request from '../Request';
 import Response from '../Response';
@@ -23,9 +27,10 @@ class Fetch {
   private readonly origin: string;
 
   /**
-   * 构造函数
-   * @param source - 源窗口对象
-   * @param origin - 源域名
+   * constructor
+   * @description 构造函数
+   * @param {MessageEventSource} source 源窗口对象
+   * @param {string} origin 源域名
    */
   constructor(source: MessageEventSource, origin: string) {
     this.source = source;
@@ -33,12 +38,13 @@ class Fetch {
   }
 
   /**
-   * 发送请求
-   * @param targetWindow - 目标窗口对象
-   * @param targetOrigin - 目标域名
-   * @param pathname - 请求路径
-   * @param options - 发送选项
-   * @returns Promise<Response> 响应对象
+   * send
+   * @description 发送请求
+   * @param {MessageEventSource} targetWindow 目标窗口对象
+   * @param {string} targetOrigin 目标域名
+   * @param {string} pathname 请求路径
+   * @param {SendOptions} [options] 发送选项
+   * @returns {Promise<Response>} 响应对象
    */
   private send(
     targetWindow: MessageEventSource,
@@ -55,8 +61,8 @@ class Fetch {
           origin: this.origin,
           referer: this.source instanceof Window ? (this.source as Window).location.href : '',
         },
-        statusCode: STATUS_CODE_INIT,
-        stateMessage: ERROR_MESSAGE,
+        statusCode: STATUS_CODE_OK,
+        stateMessage: OK_MESSAGE,
         body: options?.data,
         type: 'request',
       });
@@ -71,14 +77,21 @@ class Fetch {
 
         const messageEvent = evt as MessageEvent;
 
-        const data: MessageEventData = JSON.parse(messageEvent.data);
+        let data: MessageEventData | null = null;
+
+        try {
+          data = JSON.parse(messageEvent.data);
+        } catch (e) {
+          console.log(e);
+          return;
+        }
 
         const response = new Response({
-          requestId: data.requestId,
-          headers: data.headers ?? {},
-          statusCode: data.statusCode ?? STATUS_CODE_OK,
-          stateMessage: data.stateMessage ?? '',
-          body: data.body,
+          requestId: data?.requestId as string,
+          headers: data?.headers ?? {},
+          statusCode: data?.statusCode ?? STATUS_CODE_OK,
+          stateMessage: data?.stateMessage ?? OK_MESSAGE,
+          body: data?.body,
           type: 'response',
         });
 
@@ -95,6 +108,7 @@ class Fetch {
 
           if (data?.type === 'request') {
             response.setStatusCode(STATUS_CODE_NOT_ACCEPTABLE);
+            response.setStatusMessage(ERROR_MESSAGE);
             reject(response);
             return;
           }
@@ -103,6 +117,7 @@ class Fetch {
 
           if (response.getStatusCode() === STATUS_CODE_ERROR) {
             response.setStatusCode(STATUS_CODE_ERROR);
+            response.setStatusMessage(ERROR_MESSAGE);
             reject(response);
             return;
           }
@@ -111,6 +126,7 @@ class Fetch {
         } catch (e) {
           console.warn('Failed to parse response data:', e);
           response.setStatusCode(STATUS_CODE_ERROR);
+          response.setStatusMessage(ERROR_MESSAGE);
           reject(response);
         }
       };
@@ -135,7 +151,7 @@ class Fetch {
                 requestId: request.getRequestId(),
                 headers: request.getHeaders(),
                 statusCode: STATUS_CODE_TIME_OUT,
-                stateMessage: 'Request time out',
+                stateMessage: TIME_OUT_MESSAGE,
                 body: null,
                 type: 'response',
               }),
@@ -153,7 +169,7 @@ class Fetch {
             requestId: request.getRequestId(),
             headers: request.getHeaders(),
             statusCode: STATUS_CODE_ERROR,
-            stateMessage: 'Failed to send message',
+            stateMessage: ERROR_MESSAGE,
             body: null,
             type: 'response',
           }),
@@ -163,12 +179,13 @@ class Fetch {
   }
 
   /**
-   * GET请求
-   * @param targetWindow - 目标窗口对象
-   * @param targetOrigin - 目标域名
-   * @param pathname - 请求路径
-   * @param options - 发送选项
-   * @returns Promise<Response> 响应对象
+   * get
+   * @description GET请求
+   * @param {MessageEventSource} targetWindow 目标窗口对象
+   * @param {string} targetOrigin 目标域名
+   * @param {string} pathname 请求路径
+   * @param {SendOptions} [options] 发送选项
+   * @returns {Promise<Response>} 响应对象
    */
   get(
     targetWindow: MessageEventSource,
@@ -180,12 +197,13 @@ class Fetch {
   }
 
   /**
-   * PUT请求
-   * @param targetWindow - 目标窗口对象
-   * @param targetOrigin - 目标域名
-   * @param pathname - 请求路径
-   * @param options - 发送选项
-   * @returns Promise<Response> 响应对象
+   * put
+   * @description PUT请求
+   * @param {MessageEventSource} targetWindow 目标窗口对象
+   * @param {string} targetOrigin 目标域名
+   * @param {string} pathname 请求路径
+   * @param {SendOptions} [options] 发送选项
+   * @returns {Promise<Response>} 响应对象
    */
   put(
     targetWindow: MessageEventSource,
@@ -197,12 +215,13 @@ class Fetch {
   }
 
   /**
-   * DELETE请求
-   * @param targetWindow - 目标窗口对象
-   * @param targetOrigin - 目标域名
-   * @param pathname - 请求路径
-   * @param options - 发送选项
-   * @returns Promise<Response> 响应对象
+   * delete
+   * @description DELETE请求
+   * @param {MessageEventSource} targetWindow 目标窗口对象
+   * @param {string} targetOrigin 目标域名
+   * @param {string} pathname 请求路径
+   * @param {SendOptions} [options] 发送选项
+   * @returns {Promise<Response>} 响应对象
    */
   delete(
     targetWindow: MessageEventSource,
@@ -214,12 +233,14 @@ class Fetch {
   }
 
   /**
-   * 发送ping请求
-   * @param targetWindow - 目标窗口对象
-   * @param targetOrigin - 目标域名
-   * @param success - 成功的回调
-   * @param error - 失败的回调
-   * @param options - 附加参数
+   * ping
+   * @description 发送ping请求
+   * @param {MessageEventSource} targetWindow 目标窗口对象
+   * @param {string} targetOrigin 目标域名
+   * @param {() => void} success 成功的回调
+   * @param {() => void} error 失败的回调
+   * @param {Omit<SendOptions, 'timeOut'> & { interval?: number }} [options] 附加参数
+   * @returns {void}
    */
   ping(
     targetWindow: MessageEventSource,
@@ -237,7 +258,11 @@ class Fetch {
 
     function _ping(): Promise<Response> {
       return _self.send(targetWindow, targetOrigin, `/${KEEP_ALIVE_SERVICE_NAME}`, {
-        ...options,
+        ...merge({}, options, {
+          data: JSON.stringify({
+            timestamp: Date.now(),
+          }),
+        }),
         // 设置超时时间为10秒
         timeOut: 1000 * 10,
       });
@@ -253,6 +278,22 @@ class Fetch {
     }
 
     keepAlive();
+  }
+
+  /**
+   * accept
+   * @description 发送链接成功的请求
+   * @param {MessageEventSource} targetWindow 目标窗口对象
+   * @param {string} targetOrigin 目标域名
+   * @param {SendOptions} [options] 发送选项
+   * @returns {Promise<Response>} 响应对象
+   */
+  accept(
+    targetWindow: MessageEventSource,
+    targetOrigin: string,
+    options?: SendOptions,
+  ): Promise<Response> {
+    return this.send(targetWindow, targetOrigin, `/${ACCEPT_SERVICE_NAME}`, options);
   }
 }
 

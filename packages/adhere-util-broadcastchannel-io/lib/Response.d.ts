@@ -1,4 +1,4 @@
-import type { Headers, ResponseOptions, StateCode } from './types';
+import type { Headers, MessageEventData, ResponseOptions, StateCode } from './types';
 /**
  * 响应对象类
  * @class Response
@@ -7,6 +7,8 @@ import type { Headers, ResponseOptions, StateCode } from './types';
 declare class Response {
     /** 请求ID */
     private requestId;
+    /** 请求类型 */
+    private type;
     /** 响应头 */
     private headers;
     /** 状态码 */
@@ -16,60 +18,89 @@ declare class Response {
     /** 响应体 */
     private body;
     /**
-     * 构造函数
-     * @param options - 响应选项
+     * constructor
+     * @description 构造函数
+     * @param {ResponseOptions} options 响应选项
      */
     constructor(options: ResponseOptions);
     /**
-     * 设置响应头
-     * @param key - 响应头键名
-     * @param value - 响应头值
+     * setHeader
+     * @description 设置响应头
+     * @param {string} key 响应头键名
+     * @param {string} value 响应头值
+     * @returns {void}
      */
     setHeader(key: string, value: string): void;
     /**
-     * 获取响应头
-     * @returns 响应头的副本
+     * getHeaders
+     * @description 获取响应头
+     * @returns {Headers} 响应头的副本
      */
     getHeaders(): Headers;
     /**
-     * 获取响应体
-     * @returns 响应体数据
+     * getBody
+     * @description 获取响应体
+     * @returns {any} 响应体数据
      */
     getBody(): any;
     /**
-     * 获取状态码
-     * @returns 状态码
+     * getStatusCode
+     * @description 获取状态码
+     * @returns {StateCode} 状态码
      */
     getStatusCode(): StateCode;
     /**
-     * 获取状态消息
-     * @returns 状态消息
+     * getStatusMessage
+     * @description 获取状态消息
+     * @returns {string} 状态消息
      */
     getStatusMessage(): string;
     /**
-     * 获取请求ID
-     * @returns 请求ID
+     * getRequestId
+     * @description 获取请求ID
+     * @returns {string} 请求ID
      */
     getRequestId(): string;
     /**
-     * 设置响应体
-     * @param body - 响应体数据
+     * getType
+     * @description 获取请求类型
+     * @returns {MessageEventData['type']} 请求类型
+     */
+    getType(): "request" | "response";
+    /**
+     * setBody
+     * @description 设置响应体
+     * @param {any} body 响应体数据
+     * @returns {void}
      */
     setBody(body: any): void;
     /**
-     * 设置状态码
-     * @param statusCode - 状态码
+     * setStatusCode
+     * @description 设置状态码
+     * @param {StateCode} statusCode 状态码
+     * @returns {void}
      */
     setStatusCode(statusCode: StateCode): void;
     /**
-     * 设置状态消息
-     * @param statusMessage - 状态消息
+     * setStatusMessage
+     * @description 设置状态消息
+     * @param {string} statusMessage 状态消息
+     * @returns {void}
      */
     setStatusMessage(statusMessage: string): void;
     /**
-     * 设置请求ID
-     * @param requestId - 请求ID
+     * setRequestId
+     * @description 设置请求ID
+     * @param {string} requestId 请求ID
+     * @returns {void}
      */
     setRequestId(requestId: string): void;
+    /**
+     * setType
+     * @description 设置请求类型
+     * @param {MessageEventData['type']} type 请求类型
+     * @returns {void}
+     */
+    setType(type: MessageEventData['type']): void;
 }
 export default Response;

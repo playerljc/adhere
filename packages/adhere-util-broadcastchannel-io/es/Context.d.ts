@@ -12,18 +12,21 @@ declare class Context {
     /** 响应对象 */
     readonly response: Response;
     /**
-     * 构造函数
-     * @param options - 上下文选项
+     * constructor
+     * @description 构造函数
+     * @param {ContextOptions} options 上下文选项
      */
     constructor(options: ContextOptions);
     /**
-     * 获取请求对象
-     * @returns 请求对象
+     * getRequest
+     * @description 获取请求对象
+     * @returns {Request} 请求对象
      */
     getRequest(): Request;
     /**
-     * 获取响应对象
-     * @returns 响应对象
+     * getResponse
+     * @description 获取响应对象
+     * @returns {Response} 响应对象
      */
     getResponse(): Response;
 }

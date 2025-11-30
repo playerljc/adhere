@@ -2,10 +2,10 @@ import type { Middleware } from '../../types';
 import type Context from '../../Context';
 
 /**
- * 组合中间件函数
+ * Compose
  * @description 将多个中间件函数组合成一个函数，按顺序执行
- * @param middlewares - 中间件数组
- * @returns 组合后的中间件函数
+ * @param {Middleware[]} middlewares 中间件数组
+ * @returns {(ctx: Context, next?: () => Promise<void> | void) => Promise<void>} 组合后的中间件函数
  */
 function Compose(middlewares: Middleware[]) {
   return (ctx: Context, next?: () => Promise<void> | void) =>
@@ -18,8 +18,9 @@ function Compose(middlewares: Middleware[]) {
       }).fill(undefined);
 
       /**
-       * 迭代方法
-       * @returns unknown - 中间件执行结果
+       * loop
+       * @description 迭代方法
+       * @returns {unknown} 中间件执行结果
        */
       const loop = (): unknown => {
         // 迭代完成了

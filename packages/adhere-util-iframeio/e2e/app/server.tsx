@@ -29,6 +29,8 @@ export default function () {
   const [image, setImage] = useState('');
   const [uploadList, setUploadList] = useState<FileUpLoad[]>([]);
 
+  const fetch = useRef(new Iframe.Fetch(window, window.location.origin));
+
   const ref = useRef(null);
   const server = useRef(null);
   const router = useRef(null);
@@ -43,7 +45,6 @@ export default function () {
        * /display
        */
       .controller('/display', (ctx, next) => {
-        debugger;
         const body = ctx.request.getBody();
         setDisplayValue(body);
         ctx.response.setStatusCode(200);
@@ -118,8 +119,27 @@ export default function () {
         ctx.response.setStatusMessage('ok');
         next();
       });
-
+    // 1.注册了 window postMessage
     server.current = new Iframe.Server(whiteList, window, sourceOrigin);
+    server.current.use(router.current.routers());
+    server.current.start({ startKeepAlive: true });
+
+    // 调接口
+    // 2.注册了 window postMessage
+    fetch.current.accept(window.parent, window.location.origin).then((res) => {
+      console.log('我已经通知了client，我上线了', res);
+
+      fetch.current.ping(
+        window.parent,
+        window.location.origin,
+        () => {
+          console.log('server ping client success');
+        },
+        () => {
+          console.log('error');
+        },
+      );
+    });
 
     // //
     // server.current.use((ctx, next) => {
@@ -152,10 +172,6 @@ export default function () {
     //       }, 2000);
     //     }),
     // );
-
-    server.current.use(router.current.routers());
-
-    server.current.start();
 
     return () => {
       server?.current?.close?.();
