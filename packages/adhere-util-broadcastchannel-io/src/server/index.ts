@@ -51,7 +51,6 @@ class Server {
    * @returns {void}
    */
   private onMessage(evt: Event): void {
-    debugger;
     try {
       const messageEvent = evt as MessageEvent;
       const data: MessageEventData = JSON.parse(messageEvent.data);

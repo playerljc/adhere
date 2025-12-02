@@ -1,6 +1,6 @@
 import { Button, Card, Input, Progress, Space } from 'antd';
 // @ts-ignore
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { v4 } from 'uuid';
 
 import Iframe from '../../src/index';
@@ -20,15 +20,11 @@ export default function () {
   const [value, setValue] = useState('');
   const [uploadList, setUploadList] = useState<UpLoadItem[]>([]);
 
-  const [iframeReady, setIframeReady] = useState(false);
-  const iframeRef = useRef(null);
+  const [frameReady, setFrameReady] = useState(false);
+  const frameRef = useRef(null);
 
   const sourceOrigin = window.location.origin;
   const targetOrigin = window.location.origin;
-
-  // const sourceOrigin = window.location.origin;
-  // const targetOrigin = 'http://10.9.7.194:8000'; //window.location.origin;
-  // const targetOrigin = 'http://10.9.2.202:8000'; //window.location.origin;
 
   const fetch = useRef(new Iframe.Fetch(window, sourceOrigin));
 
@@ -37,9 +33,13 @@ export default function () {
    * @description 将输入框值设置到iframe里
    */
   function onSend() {
-    fetch.current.put(iframeRef?.current?.contentWindow, targetOrigin, '/display', {
-      data: value,
-    });
+    fetch.current
+      .put(frameRef?.current, targetOrigin, '/display', {
+        data: value,
+      })
+      .then((res) => {
+        console.log('onSend then');
+      });
   }
 
   /**
@@ -47,7 +47,7 @@ export default function () {
    */
   function onGetDoc() {
     fetch.current
-      .get(iframeRef?.current?.contentWindow, targetOrigin, '/task/getDoc', {
+      .get(frameRef?.current, targetOrigin, '/task/getDoc', {
         data: value,
       })
       .then((res) => {
@@ -67,7 +67,7 @@ export default function () {
     const reader = new FileReader();
 
     reader.addEventListener('load', (e1) => {
-      fetch.current.put(iframeRef?.current?.contentWindow, targetOrigin, '/uploadImg', {
+      fetch.current.put(frameRef?.current, targetOrigin, '/uploadImg', {
         data: e1.target.result,
       });
     });
@@ -128,7 +128,7 @@ export default function () {
         console.log(`第${index + 1}次上传开始`);
 
         fetch.current
-          .get(iframeRef?.current?.contentWindow, targetOrigin, '/progressUploadFile', {
+          .get(frameRef?.current, targetOrigin, '/progressUploadFile', {
             data: {
               segmentSize,
               segmentCount,
@@ -160,47 +160,59 @@ export default function () {
     reader.readAsArrayBuffer(file);
   }
 
-  /**
-   * onIframeLoad
-   */
-  function onIframeLoad() {
-    setIframeReady(true);
+  function ping() {
+    fetch.current.ping(
+      frameRef?.current,
+      targetOrigin,
+      () => {
+        console.log('client ping server success');
+      },
+      (e) => {
+        console.log('error1', e);
+      },
+    );
+  }
 
-    const contentWindow = iframeRef?.current?.contentWindow;
-
+  useEffect(() => {
     server.current = new Iframe.Server([window.location.origin], window, sourceOrigin);
+    // service告诉我上线了
     server.current.accept((ctx, next) => {
       ctx.response.setStatusCode(200);
       ctx.response.setStatusMessage('ok');
       next();
 
       setTimeout(() => {
-        fetch.current.ping(
-          contentWindow,
-          targetOrigin,
-          () => {
-            console.log('client ping server success');
-          },
-          () => {
-            console.log('error');
-          },
-        );
+        console.log('server通知我');
+
+        ping();
       }, 1000);
     });
     server.current.start({
       startKeepAlive: true,
     });
-  }
+  }, []);
+
+  useEffect(() => {
+    if (frameReady) {
+      // 调接口
+      // 2.注册了 window postMessage
+      fetch.current.accept(frameRef?.current, window.location.origin).then((res) => {
+        console.log('我已经通知了server，我上线了', res);
+
+        ping();
+      });
+    }
+  }, [frameReady]);
 
   return (
     <div className="Wrap">
-      {iframeReady && (
+      {frameReady && (
         <div className="Inner">
           <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
             <div
               onClick={() => {
                 fetch.current
-                  .get(iframeRef?.current?.contentWindow, targetOrigin, '/document/approval', {
+                  .get(frameRef?.current, targetOrigin, '/document/approval', {
                     data: '123',
                   })
                   .then((res) => {
@@ -262,7 +274,18 @@ export default function () {
         </div>
       )}
 
-      <div className="IframeWrap">
+      <div>
+        <Button
+          onClick={() => {
+            frameRef.current = window.open('/windowopenserver', 'server');
+
+            setFrameReady(true);
+          }}
+        >
+          打开
+        </Button>
+      </div>
+      {/*<div className="IframeWrap">
         <h1 style={{ textAlign: 'center' }}>Iframe</h1>
         <iframe
           name="server"
@@ -271,15 +294,7 @@ export default function () {
           src="/server"
           onLoad={onIframeLoad}
         />
-
-        {/*<iframe
-          name="server"
-          ref={iframeRef}
-          className={styles.Iframe}
-          src={`${targetOrigin}/documentMaking/approval?isiframe=true&id=235`}
-          onLoad={onIframeLoad}
-        />*/}
-      </div>
+      </div>*/}
     </div>
   );
 }

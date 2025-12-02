@@ -4,6 +4,7 @@ import FileSaver from 'file-saver';
 import React, { useEffect, useRef, useState } from 'react';
 
 import BroadCastChannel from '../../src/index';
+import { base64ToArrayBuffer } from '../util';
 
 import './server.less';
 
@@ -57,7 +58,6 @@ export default function () {
        * /display
        */
       .controller('/display', (ctx, next) => {
-        debugger;
         const body = ctx.request.getBody();
         setDisplayValue(body);
         ctx.response.setStatusCode(200);
@@ -68,7 +68,6 @@ export default function () {
        * /getDoc
        */
       .controller('/task/getDoc', (ctx, next) => {
-        debugger;
         ctx.response.setBody(ref.current.outerHTML);
         ctx.response.setStatusCode(200);
         ctx.response.setStatusMessage('ok');
@@ -78,7 +77,6 @@ export default function () {
        * uploadImg
        */
       .controller('/uploadImg', (ctx, next) => {
-        debugger;
         const body = ctx.request.getBody();
         setImage(body);
         ctx.response.setStatusCode(200);
@@ -91,13 +89,15 @@ export default function () {
       .controller('/progressUploadFile', (ctx, next) => {
         const fileUpload = ctx.request.getBody() as FileUpLoad;
 
+        const buffer = base64ToArrayBuffer(fileUpload.buffer);
+
         // 一个文件的开始
         if (fileUpload.currentIndex === 0) {
           setUploadList((list) => {
             list.push({
               ...fileUpload,
               status: 'active',
-              fileBuffer: [fileUpload.buffer],
+              fileBuffer: [buffer],
             });
             return [...list];
           });
@@ -110,7 +110,7 @@ export default function () {
             list[index] = {
               ...fileUpload,
               status: 'success',
-              fileBuffer: [...list[index].fileBuffer, fileUpload.buffer],
+              fileBuffer: [...list[index].fileBuffer, buffer],
             };
             return [...list];
           });
@@ -122,7 +122,7 @@ export default function () {
 
             list[index] = {
               ...fileUpload,
-              fileBuffer: [...list[index].fileBuffer, fileUpload.buffer],
+              fileBuffer: [...list[index].fileBuffer, buffer],
             };
             return [...list];
           });

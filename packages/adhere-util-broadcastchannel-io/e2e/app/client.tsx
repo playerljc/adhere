@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { v4 } from 'uuid';
 
 import BroadCastChannel from '../../src/index';
+import { arrayBufferToBase64 } from '../util';
 
 import './client.less';
 
@@ -30,9 +31,13 @@ export default function () {
    * @description 将输入框值设置到iframe里
    */
   function onSend() {
-    fetch.current.put(targetOrigin, '/display', {
-      data: value,
-    });
+    fetch.current
+      .put(targetOrigin, '/display', {
+        data: value,
+      })
+      .then((res) => {
+        console.log('onSend then');
+      });
   }
 
   /**
@@ -129,7 +134,7 @@ export default function () {
               fileId,
               fileName: file.name,
               size: file.size,
-              buffer: uploadBuffer,
+              buffer: arrayBufferToBase64(uploadBuffer),
             },
           })
           .then((res) => {

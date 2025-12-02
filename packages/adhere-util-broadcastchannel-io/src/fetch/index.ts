@@ -1,15 +1,17 @@
-import { OK_MESSAGE, TIME_OUT_MESSAGE } from '@baifendian/adhere-util-iframeio/lib/Constant';
+import merge from 'lodash.merge';
 
 import {
   ACCEPT_SERVICE_NAME,
   CHANNEL_NAME,
   ERROR_MESSAGE,
   KEEP_ALIVE_SERVICE_NAME,
+  OK_MESSAGE,
   STATUS_CODE_ERROR,
   STATUS_CODE_INIT,
   STATUS_CODE_NOT_ACCEPTABLE,
   STATUS_CODE_OK,
   STATUS_CODE_TIME_OUT,
+  TIME_OUT_MESSAGE,
 } from '../Constant';
 import Request from '../Request';
 import Response from '../Response';
@@ -66,15 +68,11 @@ class Fetch {
       });
 
       const onMessage = (evt: Event): void => {
-        if (timeoutHandler !== 0) {
-          clearTimeout(timeoutHandler);
-          timeoutHandler = 0;
-        }
-
         const messageEvent = evt as MessageEvent;
 
         let data: MessageEventData | null = null;
 
+        // 处理返回的数据
         try {
           data = JSON.parse(messageEvent.data);
         } catch (e) {
@@ -82,6 +80,7 @@ class Fetch {
           return;
         }
 
+        // 构造response对象
         const response = new Response({
           requestId: data?.requestId as string,
           headers: data?.headers ?? {},
@@ -91,40 +90,45 @@ class Fetch {
           type: 'response',
         });
 
-        try {
-          if (
-            !targetOrigin.includes(data?.headers?.origin as string) ||
-            request.getRequestId() !== response.getRequestId()
-          ) {
-            response.setStatusCode(STATUS_CODE_NOT_ACCEPTABLE);
-            reject(response);
-            return;
-          }
+        // 不和请求对应
+        if (
+          !targetOrigin.includes(data?.headers?.origin as string) ||
+          request.getRequestId() !== response.getRequestId()
+        ) {
+          // response.setStatusCode(STATUS_CODE_NOT_ACCEPTABLE);
+          // reject(response);
+          return;
+        }
 
-          if (data?.type === 'request') {
-            response.setStatusCode(STATUS_CODE_NOT_ACCEPTABLE);
-            response.setStatusCode(STATUS_CODE_NOT_ACCEPTABLE);
-            reject(response);
-            return;
-          }
+        // 不是响应
+        if (data?.type === 'request') {
+          // response.setStatusCode(STATUS_CODE_NOT_ACCEPTABLE);
+          // response.setStatusCode(STATUS_CODE_NOT_ACCEPTABLE);
+          // reject(response);
+          return;
+        }
 
-          this.bc?.removeEventListener('message', onMessage);
+        // 在超时时间内返回了响应，则取消超时监听
+        if (timeoutHandler !== 0) {
+          clearTimeout(timeoutHandler);
+          timeoutHandler = 0;
+        }
 
-          if (response.getStatusCode() === STATUS_CODE_ERROR) {
-            response.setStatusCode(STATUS_CODE_ERROR);
-            response.setStatusMessage(ERROR_MESSAGE);
-            reject(response);
-            return;
-          }
+        // 删除监听
+        this.bc?.removeEventListener('message', onMessage);
 
-          resolve(response);
-        } catch (e) {
-          console.warn('Failed to parse response data:', e);
+        // 出错了
+        if (response.getStatusCode() === STATUS_CODE_ERROR) {
           response.setStatusCode(STATUS_CODE_ERROR);
           response.setStatusMessage(ERROR_MESSAGE);
           reject(response);
+          return;
         }
+
+        // 对了
+        resolve(response);
       };
+      // end onMessage
 
       // 注册回调
       this.bc?.addEventListener('message', onMessage);
@@ -259,7 +263,17 @@ class Fetch {
    * @returns {Promise<Response>} 响应对象
    */
   accept(targetOrigin: string[], options?: SendOptions): Promise<Response> {
-    return this.send(targetOrigin, `/${ACCEPT_SERVICE_NAME}`, options);
+    return this.send(
+      targetOrigin,
+      `/${ACCEPT_SERVICE_NAME}`,
+      merge(
+        {},
+        {
+          timeOut: 1000 * 2,
+        },
+        options ?? {},
+      ),
+    );
   }
 }
 

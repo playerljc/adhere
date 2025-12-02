@@ -6,7 +6,6 @@ import {
   KEEP_ALIVE_SERVICE_NAME,
   OK_MESSAGE,
   STATUS_CODE_ERROR,
-  STATUS_CODE_NOT_ACCEPTABLE,
   STATUS_CODE_OK,
   STATUS_CODE_TIME_OUT,
   TIME_OUT_MESSAGE,
@@ -69,16 +68,11 @@ class Fetch {
 
       // 回调
       const onMessage = (evt: Event): void => {
-        // 在超时时间内返回了响应，则取消超时监听
-        if (timeoutHandler !== 0) {
-          clearTimeout(timeoutHandler);
-          timeoutHandler = 0;
-        }
-
         const messageEvent = evt as MessageEvent;
 
         let data: MessageEventData | null = null;
 
+        // 处理返回的数据
         try {
           data = JSON.parse(messageEvent.data);
         } catch (e) {
@@ -86,6 +80,7 @@ class Fetch {
           return;
         }
 
+        // 构造response对象
         const response = new Response({
           requestId: data?.requestId as string,
           headers: data?.headers ?? {},
@@ -95,41 +90,46 @@ class Fetch {
           type: 'response',
         });
 
-        try {
-          if (
-            messageEvent.origin !== targetOrigin ||
-            messageEvent.source !== targetWindow ||
-            request.getRequestId() !== response.getRequestId()
-          ) {
-            response.setStatusCode(STATUS_CODE_NOT_ACCEPTABLE);
-            reject(response);
-            return;
-          }
+        // 不和请求对应
+        if (
+          messageEvent.origin !== targetOrigin ||
+          messageEvent.source !== targetWindow ||
+          request.getRequestId() !== response.getRequestId()
+        ) {
+          // console.log('4061', messageEvent.origin, targetOrigin);
+          // console.log('4061', messageEvent.source === targetWindow);
+          // console.log('4061', request.getRequestId(), response.getRequestId());
+          // console.log('4061', request.getPathname(), response.getHeaders());
+          return;
+        }
 
-          if (data?.type === 'request') {
-            response.setStatusCode(STATUS_CODE_NOT_ACCEPTABLE);
-            response.setStatusMessage(ERROR_MESSAGE);
-            reject(response);
-            return;
-          }
+        // 不是响应
+        if (data?.type === 'request') {
+          // console.log('4062', response);
+          return;
+        }
 
-          this.source.removeEventListener('message', onMessage);
+        // 在超时时间内返回了响应，则取消超时监听
+        if (timeoutHandler !== 0) {
+          clearTimeout(timeoutHandler);
+          timeoutHandler = 0;
+        }
 
-          if (response.getStatusCode() === STATUS_CODE_ERROR) {
-            response.setStatusCode(STATUS_CODE_ERROR);
-            response.setStatusMessage(ERROR_MESSAGE);
-            reject(response);
-            return;
-          }
+        // 删除监听
+        this.source.removeEventListener('message', onMessage);
 
-          resolve(response);
-        } catch (e) {
-          console.warn('Failed to parse response data:', e);
+        // 出错了
+        if (response.getStatusCode() === STATUS_CODE_ERROR) {
           response.setStatusCode(STATUS_CODE_ERROR);
           response.setStatusMessage(ERROR_MESSAGE);
           reject(response);
+          return;
         }
+
+        // 对了
+        resolve(response);
       };
+      // end onMessage
 
       // 注册回调
       this.source.addEventListener('message', onMessage);
@@ -160,7 +160,7 @@ class Fetch {
         }
 
         // @ts-ignore - postMessage方法在MessageEventSource上可能不存在
-        targetWindow.postMessage(JSON.stringify(request), targetOrigin);
+        targetWindow?.postMessage(JSON.stringify(request), targetOrigin);
       } catch (e) {
         console.error('Failed to send message:', e);
         this.source.removeEventListener('message', onMessage);
@@ -293,7 +293,18 @@ class Fetch {
     targetOrigin: string,
     options?: SendOptions,
   ): Promise<Response> {
-    return this.send(targetWindow, targetOrigin, `/${ACCEPT_SERVICE_NAME}`, options);
+    return this.send(
+      targetWindow,
+      targetOrigin,
+      `/${ACCEPT_SERVICE_NAME}`,
+      merge(
+        {},
+        {
+          timeOut: 1000 * 2,
+        },
+        options ?? {},
+      ),
+    );
   }
 }
 

@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-util": "^2.11.0",
+    "lodash.merge": "^4.6.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

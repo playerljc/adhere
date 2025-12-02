@@ -39,6 +39,19 @@ export default function () {
   const sourceOrigin = window.location.origin;
   const whiteList = [sourceOrigin];
 
+  function ping() {
+    fetch.current.ping(
+      window.opener,
+      window.location.origin,
+      () => {
+        console.log('server ping client success');
+      },
+      (e) => {
+        console.log('error2', e);
+      },
+    );
+  }
+
   useEffect(() => {
     router.current = new Iframe.Router();
     router.current
@@ -120,59 +133,23 @@ export default function () {
         ctx.response.setStatusMessage('ok');
         next();
       });
+
     // 1.注册了 window postMessage
     server.current = new Iframe.Server(whiteList, window, sourceOrigin);
     server.current.use(router.current.routers());
     server.current.start({ startKeepAlive: true });
 
-    // 调接口
-    // 2.注册了 window postMessage
-    fetch.current.accept(window.parent, window.location.origin).then((res) => {
-      console.log('我已经通知了client，我上线了', res);
+    if (!!window.opener) {
+      // 调接口
+      // 2.注册了 window postMessage
+      fetch.current.accept(window.opener, window.location.origin).then((res) => {
+        console.log('我已经通知了client，我上线了', window.opener);
 
-      fetch.current.ping(
-        window.parent,
-        window.location.origin,
-        () => {
-          console.log('server ping client success');
-        },
-        () => {
-          console.log('error');
-        },
-      );
-    });
-
-    // //
-    // server.current.use((ctx, next) => {
-    //   console.log(' > use1');
-    //   next();
-    //   console.log(' < use1');
-    // });
-    //
-    // //
-    // server.current.use((ctx, next) => {
-    //   console.log(' > use2');
-    //   next();
-    //   console.log(' < use2');
-    // });
-    //
-    // //
-    // server.current.use(
-    //   (ctx, next) =>
-    //     new Promise((resolve) => {
-    //       setTimeout(() => {
-    //         const p = next();
-    //
-    //         if (p && p.then) {
-    //           p.then(() => {
-    //             resolve();
-    //           });
-    //         } else {
-    //           resolve();
-    //         }
-    //       }, 2000);
-    //     }),
-    // );
+        setTimeout(() => {
+          ping();
+        }, 1000);
+      });
+    }
 
     return () => {
       server?.current?.close?.();

@@ -3,6 +3,8 @@ import { browserConfig } from '@ctsj/router';
 
 import Client from './app/client';
 import Server from './app/server';
+import WindowOpenClient from './appWindowOpen/client';
+import WindowOpenServer from './appWindowOpen/server';
 
 import 'antd/dist/reset.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -14,7 +16,7 @@ e2e.PC({
     [
       {
         path: '/',
-        redirect: '/client',
+        redirect: '/windowopenclient',
       },
       {
         path: '/client',
@@ -23,6 +25,14 @@ e2e.PC({
       {
         path: '/server',
         component: Server,
+      },
+      {
+        path: '/windowopenclient',
+        component: WindowOpenClient,
+      },
+      {
+        path: '/windowopenserver',
+        component: WindowOpenServer,
       },
     ],
     () => {},
