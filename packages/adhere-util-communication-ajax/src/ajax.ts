@@ -43,54 +43,52 @@ let warnInfoHandler: string | number | NodeJS.Timeout | null | undefined;
  */
 class Interceptors {
   /** 请求拦截器容器 */
-  protected requestInterceptors = new Set<RequestInterceptor>();
+  protected requestInterceptors = new Map<string, RequestInterceptor>();
 
   /** 响应拦截器容器 */
-  protected responseInterceptors = new Set<ResponseInterceptor>();
+  protected responseInterceptors = new Map<string, ResponseInterceptor>();
 
   /**
-   * 添加一个或多个请求拦截器
-   * @param handler - 请求拦截器函数或函数数组
+   * 添加一个请求拦截器
+   * @param key - 拦截器标识
+   * @param handler - 请求拦截器函数
    * @returns 拦截器集合
    */
-  addRequest(handler: RequestInterceptor | RequestInterceptor[]): Set<RequestInterceptor> {
-    if (Array.isArray(handler)) {
-      handler.forEach((_handler) => {
-        this.requestInterceptors.add(_handler);
-      });
-      return this.requestInterceptors;
-    }
-
-    this.requestInterceptors.add(handler);
+  addRequest(key: string, handler: RequestInterceptor): Map<string, RequestInterceptor> {
+    this.requestInterceptors.set(key, handler);
     return this.requestInterceptors;
   }
 
   /**
-   * 添加一个或多个响应拦截器
-   * @param handler - 响应拦截器函数或函数数组
+   * 添加一个响应拦截器
+   * @param key - 拦截器标识
+   * @param handler - 响应拦截器函数
    * @returns 拦截器集合
    */
-  addResponse(handler: ResponseInterceptor | ResponseInterceptor[]): Set<ResponseInterceptor> {
-    if (Array.isArray(handler)) {
-      handler.forEach((_handler) => {
-        this.responseInterceptors.add(_handler);
-      });
-      return this.responseInterceptors;
-    }
-
-    this.responseInterceptors.add(handler);
+  addResponse(key: string, handler: ResponseInterceptor): Map<string, ResponseInterceptor> {
+    this.responseInterceptors.set(key, handler);
     return this.responseInterceptors;
   }
 
   /**
-   * 删除拦截器
-   * @param handler - 要删除的拦截器函数
+   * removeRequestInterceptor
+   * @description 删除请求拦截器
+   * @param {string} key - 要删除的拦截器key
    */
-  remove(handler: RequestInterceptor | ResponseInterceptor): void {
-    if (this.requestInterceptors.has(handler as RequestInterceptor)) {
-      this.requestInterceptors.delete(handler as RequestInterceptor);
-    } else if (this.responseInterceptors.has(handler as ResponseInterceptor)) {
-      this.responseInterceptors.delete(handler as ResponseInterceptor);
+  removeRequestInterceptor(key: string): void {
+    if (this.requestInterceptors.has(key)) {
+      this.requestInterceptors.delete(key);
+    }
+  }
+
+  /**
+   * removeResponseInterceptor
+   * @description 删除响应拦截器
+   * @param {string} key - 要删除的拦截器key
+   */
+  removeResponseInterceptor(key: string): void {
+    if (this.responseInterceptors.has(key)) {
+      this.responseInterceptors.delete(key);
     }
   }
 
@@ -101,11 +99,21 @@ class Interceptors {
    */
   async requestReducer(params: ISendArg): Promise<ISendArg> {
     let result = params;
-    for (const interceptor of Array.from(this.requestInterceptors)) {
-      // 顺序等待每个拦截器（支持同步与异步返回）
-      // eslint-disable-next-line no-await-in-loop
-      result = await interceptor(result);
+
+    // 掠过请求拦截器的keys
+    const skipRequestInterceptors = result.skipRequestInterceptors ?? [];
+
+    // 所有的请求拦截器keys
+    const keys = this.requestInterceptors.keys();
+
+    for (const key of Array.from(keys)) {
+      // 没掠过的才执行
+      if (!skipRequestInterceptors.includes(key)) {
+        // 顺序等待每个拦截器（支持同步与异步返回）
+        result = await (this.requestInterceptors.get(key) as RequestInterceptor)(result);
+      }
     }
+
     return result;
   }
 
@@ -118,10 +126,19 @@ class Interceptors {
     params: Parameters<ResponseInterceptor>[0],
   ): Promise<Awaited<ReturnType<ResponseInterceptor>>> {
     let result: any = params;
-    for (const interceptor of Array.from(this.responseInterceptors)) {
-      // 顺序等待每个拦截器（支持同步与异步返回）
-      // eslint-disable-next-line no-await-in-loop
-      result = await interceptor(result as any);
+
+    // 掠过响应拦截器的keys
+    const skipResponseInterceptors = result.skipResponseInterceptors ?? [];
+
+    // 所有的响应拦截器keys
+    const keys = this.responseInterceptors.keys();
+
+    for (const key of Array.from(keys)) {
+      // 没掠过的才执行
+      if (!skipResponseInterceptors.includes(key)) {
+        // 顺序等待每个拦截器（支持同步与异步返回）
+        result = await (this.responseInterceptors.get(key) as ResponseInterceptor)(result);
+      }
     }
     return result;
   }
@@ -666,7 +683,7 @@ async function onreadystatechange(
         response: xhr.response,
         responseText: canAccessText ? xhr.responseText : '',
         responseXML: canAccessXML ? xhr.responseXML : null,
-        xhr
+        xhr,
       });
 
       // status success
@@ -750,10 +767,7 @@ async function onreadystatechange(
       }
 
       // 显示错误提示
-      errorInfo(
-        Intl.get('hint'),
-        (error as Error)?.message || Intl.get('request_error'),
-      );
+      errorInfo(Intl.get('hint'), (error as Error)?.message || Intl.get('request_error'));
     }
   }
 }
@@ -817,10 +831,7 @@ async function sendPrepare(
     reject(error);
 
     // 显示错误提示
-    errorInfo(
-      Intl.get('hint'),
-      (error as Error)?.message || Intl.get('request_error'),
-    );
+    errorInfo(Intl.get('hint'), (error as Error)?.message || Intl.get('request_error'));
 
     return { xhr: null, contentType: '' };
   }

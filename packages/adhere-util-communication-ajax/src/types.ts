@@ -259,6 +259,12 @@ export interface IConfig {
    * @returns 处理后的值
    */
   customSendJSONStringify?: CustomJSONStringify;
+
+  /** 请求拦截器id的数组 */
+  skipRequestInterceptors?: string[];
+
+  /** 响应拦截器id的数组 */
+  skipResponseInterceptors?: string[];
 }
 
 /**
@@ -341,8 +347,9 @@ export interface ResponseInterceptorReturn extends ISendArg {
 /**
  * 响应拦截器类型
  */
-export type ResponseInterceptor =
-  (params: ResponseInterceptorParams) => ResponseInterceptorReturn | Promise<ResponseInterceptorReturn>;
+export type ResponseInterceptor = (
+  params: ResponseInterceptorParams,
+) => ResponseInterceptorReturn | Promise<ResponseInterceptorReturn>;
 
 export type ResolveDataParams = {
   /** 是否显示loading */

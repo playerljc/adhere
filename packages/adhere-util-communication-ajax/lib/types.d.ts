@@ -166,6 +166,10 @@ export interface IConfig {
      * @returns 处理后的值
      */
     customSendJSONStringify?: CustomJSONStringify;
+    /** 请求拦截器id的数组 */
+    skipRequestInterceptors?: string[];
+    /** 响应拦截器id的数组 */
+    skipResponseInterceptors?: string[];
 }
 /**
  * 请求参数接口

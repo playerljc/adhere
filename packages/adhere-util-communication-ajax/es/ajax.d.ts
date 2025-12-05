@@ -5,26 +5,35 @@ import { HttpStatusCode, IConfig, ISendArg, RequestInterceptor, ResponseIntercep
  */
 declare class Interceptors {
     /** 请求拦截器容器 */
-    protected requestInterceptors: Set<RequestInterceptor>;
+    protected requestInterceptors: Map<string, RequestInterceptor>;
     /** 响应拦截器容器 */
-    protected responseInterceptors: Set<ResponseInterceptor>;
+    protected responseInterceptors: Map<string, ResponseInterceptor>;
     /**
-     * 添加一个或多个请求拦截器
-     * @param handler - 请求拦截器函数或函数数组
+     * 添加一个请求拦截器
+     * @param key - 拦截器标识
+     * @param handler - 请求拦截器函数
      * @returns 拦截器集合
      */
-    addRequest(handler: RequestInterceptor | RequestInterceptor[]): Set<RequestInterceptor>;
+    addRequest(key: string, handler: RequestInterceptor): Map<string, RequestInterceptor>;
     /**
-     * 添加一个或多个响应拦截器
-     * @param handler - 响应拦截器函数或函数数组
+     * 添加一个响应拦截器
+     * @param key - 拦截器标识
+     * @param handler - 响应拦截器函数
      * @returns 拦截器集合
      */
-    addResponse(handler: ResponseInterceptor | ResponseInterceptor[]): Set<ResponseInterceptor>;
+    addResponse(key: string, handler: ResponseInterceptor): Map<string, ResponseInterceptor>;
     /**
-     * 删除拦截器
-     * @param handler - 要删除的拦截器函数
+     * removeRequest
+     * @description 删除请求拦截器
+     * @param {string} key - 要删除的拦截器key
      */
-    remove(handler: RequestInterceptor | ResponseInterceptor): void;
+    removeRequest(key: string): void;
+    /**
+     * removeResponse
+     * @description 删除响应拦截器
+     * @param {string} key - 要删除的拦截器key
+     */
+    removeResponse(key: string): void;
     /**
      * 对请求参数进行拦截器处理
      * @param params - 请求参数
