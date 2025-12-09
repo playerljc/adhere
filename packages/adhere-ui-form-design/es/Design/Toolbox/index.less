@@ -1,0 +1,36 @@
+@import '../../constant.less';
+
+@import './DraggableItem';
+@import './ToolboxItem';
+@import './ToolboxItemDragOverlay';
+
+.@{prefix-cls}-design-toolbox {
+  display: flex;
+  flex-direction: column;
+
+  > .@{prefix-cls}-design-toolbox-search-wrapper {
+    flex-shrink: 0;
+  }
+
+  > .@{prefix-cls}-design-toolbox-body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+
+    > .@{prefix-cls}-design-toolbox-group {
+      > .@{prefix-cls}-design-toolbox-group-title {
+      }
+
+      > .@{prefix-cls}-design-toolbox-group-body {
+        > .@{prefix-cls}-design-toolbox-group-list {
+          display: grid;
+          grid-row-gap: 6px;
+          grid-column-gap: 6px;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+      }
+    }
+  }
+}

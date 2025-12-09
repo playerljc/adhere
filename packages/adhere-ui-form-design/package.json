@@ -1,0 +1,79 @@
+{
+  "name": "@baifendian/adhere-ui-form-design",
+  "version": "2.11.0",
+  "description": "FormDesign",
+  "homepage": "https://github.com/playerljc/adhere",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "typings": "es/index.d.ts",
+  "files": [
+    "lib",
+    "es",
+    "umd"
+  ],
+  "scripts": {
+    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
+    "buildpackage:cjs": "ctbuild buildpackagets-babel -c ctbuild.package.ts.cjs.config.js -o lib",
+    "postbuildpackage:cjs": "tsc --declaration -p ./ --emitDeclarationOnly --outDir lib",
+    "buildpackage:esm": "ctbuild buildpackagets-babel -c ctbuild.package.ts.esm.config.js -o es",
+    "postbuildpackage:esm": "tsc --declaration -p ./ --emitDeclarationOnly --outDir es",
+    "buildumd": "ctbuild buildumd --packagename AdhereFormDesign --define alias=@,evnVars=true",
+    "e2e": "cross-env e2e",
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "upgrade": "yarn upgrade",
+    "upgrade-interactive": "yarn upgrade-interactive"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^6.1.0",
+    "@baifendian/adhere-mobile-ui-anthoc": "^2.11.0",
+    "@baifendian/adhere-ui-anthoc": "^2.11.0",
+    "@baifendian/adhere-ui-configprovider": "^2.11.0",
+    "@baifendian/adhere-ui-hooks": "^2.11.0",
+    "@baifendian/adhere-ui-tablegridlayout": "^2.11.0",
+    "@baifendian/adhere-util": "^2.11.0",
+    "@baifendian/adhere-util-intl": "^2.11.0",
+    "@baifendian/adhere-util-dict": "^2.11.0",
+    "@baifendian/adhere-ui-fieldgeneratortodict": "^2.11.0",
+    "@baifendian/adhere-ui-forceupdate": "^2.11.0",
+    "@baifendian/adhere-ui-flexlayout": "^2.11.0",
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/modifiers": "^9.0.0",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "3.2.2",
+    "@monaco-editor/react": "^4.7.0",
+    "ahooks": "^3.9.6",
+    "classnames": "^2.5.1",
+    "lodash.merge": "^4.6.2",
+    "react-is": "^19.2.0"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.25.6",
+    "@baifendian/adhere-e2e": "^2.11.0",
+    "@ctsj/build": "6.4.4",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "babel-plugin-import": "^1.13.8",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.6.2"
+  },
+  "peerDependencies": {
+    "antd": ">=5.0.0 - <=6.x",
+    "antd-mobile": ">=5.0.0 - <6.0.0",
+    "react": ">=18.0.0 - <20.0.0",
+    "react-dom": ">=18.0.0 - <20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "2c41cdf692eba92b1ba6ed19d1b6349356083a2c"
+}

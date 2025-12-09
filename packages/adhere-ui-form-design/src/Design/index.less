@@ -1,0 +1,36 @@
+@import '../constant.less';
+@import './Toolbar';
+@import './Toolbox';
+@import './DesignEditor';
+@import './Properties';
+
+.@{prefix-cls}-design-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  > .@{prefix-cls}-design-toolbar-wrapper {
+    flex-shrink: 0;
+  }
+
+  > .@{prefix-cls}-design-body-wrapper {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+
+    > .@{prefix-cls}-design-toolbox-wrapper {
+      display: flex;
+      flex-shrink: 0;
+    }
+
+    > .@{prefix-cls}-design-editor-wrapper {
+      display: flex;
+      flex: 1;
+      min-width: 0;
+    }
+
+    > .@{prefix-cls}-design-properties-wrapper {
+      display: flex;
+      flex-shrink: 0;
+    }
+  }
+}

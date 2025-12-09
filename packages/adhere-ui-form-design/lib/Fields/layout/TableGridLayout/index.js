@@ -1,0 +1,2 @@
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.define=define;var _constant=require("./constant"),_renderDesign=require("./renderDesign"),_renderDesignToMobile=require("./renderDesignToMobile"),_renderProperty=require("./renderProperty");function define(){return{type:_constant.TYPE,renderDesign:_renderDesign.renderDesign,renderDesignToMobile:_renderDesignToMobile.renderDesignToMobile,renderProperty:_renderProperty.renderProperty}}
+//# sourceMappingURL=index.js.map

@@ -1,0 +1,16 @@
+@import '../../constant.less';
+
+@import './PropertiesTab';
+@import './StyleTab';
+
+.@{prefix-cls}-design-properties {
+  position: relative;
+  display: flex;
+
+  &.@{prefix-cls}-design-properties-no-selected {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

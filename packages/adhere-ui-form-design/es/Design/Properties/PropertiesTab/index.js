@@ -1,0 +1,2 @@
+import classNames from"classnames";import React from"react";import{parseMainProperty}from"../../../Fields/parse";import{SELECT_PREFIX}from"../../../constant";var selectPrefix="".concat(SELECT_PREFIX,"-design-properties-props-tab"),PropertiesTab=function(e){e.activeFieldId;var a=e.activeDesignFieldValue,r=e.dispatch,e=e.items;return React.createElement("div",{className:classNames(selectPrefix)},parseMainProperty({value:a,items:e,dispatch:r}))};export default PropertiesTab;
+//# sourceMappingURL=index.js.map

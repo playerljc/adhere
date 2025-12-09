@@ -1,0 +1,2 @@
+export*from"./Design";export*from"./Editor";export*from"./Field";export*from"./Fields";export*from"./FormItem";export*from"./Item";export*from"./Style";export*from"./ToolBox";export*from"./types";export*from"./Properties";
+//# sourceMappingURL=index.js.map

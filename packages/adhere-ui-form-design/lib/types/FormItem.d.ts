@@ -1,0 +1,1 @@
+export type FormItemProps = any;

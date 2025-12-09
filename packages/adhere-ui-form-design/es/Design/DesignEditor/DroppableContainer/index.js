@@ -1,0 +1,2 @@
+import classNames from"classnames";import React from"react";import{useDroppable}from"@dnd-kit/core";import{SELECT_PREFIX}from"../../../constant";var selectPrefix="".concat(SELECT_PREFIX,"-design-editor"),DroppableContainer=function(e){var r=e.id,e=e.children,r=useDroppable({id:r}),a=r.setNodeRef,r=r.isOver;return React.createElement("div",{ref:a,className:classNames("".concat(selectPrefix,"-droppable-container"),((a={})["".concat(selectPrefix,"-droppable-container-over")]=r,a))},e)};export default DroppableContainer;
+//# sourceMappingURL=index.js.map

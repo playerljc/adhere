@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/layout/TableGridLayout/constant.js"],"sourcesContent":["export var TYPE = 'table-grid-layout';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,2BAAPA,IAA0B"}

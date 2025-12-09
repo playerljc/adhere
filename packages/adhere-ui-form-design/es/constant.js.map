@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["constant.js"],"sourcesContent":["export var SELECT_PREFIX = 'adhere-ui-fd';"],"names":["SELECT_PREFIX"],"mappings":"AAAO,IAAIA,cAAgB,sBAAhBA,aAA8B"}

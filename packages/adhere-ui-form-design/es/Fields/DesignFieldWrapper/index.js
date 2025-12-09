@@ -1,0 +1,2 @@
+import classNames from"classnames";import React from"react";import{SELECT_PREFIX}from"../../constant";var selectPrefix="".concat(SELECT_PREFIX,"-design-field-wrapper"),DesignFieldWrapper=function(e){var a,c=e.id,i=e.onActiveFieldById,r=e.activeFieldId,e=e.children;return React.createElement("div",{className:classNames(selectPrefix,((a={})["".concat(selectPrefix,"-active")]=c===r,a)),onClick:function(){i(c)}},e)};export default DesignFieldWrapper;
+//# sourceMappingURL=index.js.map

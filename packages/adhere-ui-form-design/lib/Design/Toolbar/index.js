@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_classnames=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0,_interopRequireDefault(require("classnames"))),_react=_interopRequireDefault(require("react")),_constant=require("../../constant"),selectPrefix="".concat(_constant.SELECT_PREFIX,"-design-toolbar"),Toolbar=function(){return _react.default.createElement("div",{className:(0,_classnames.default)(selectPrefix)},"Toolbar")},_default=exports.default=Toolbar;
+//# sourceMappingURL=index.js.map

@@ -1,0 +1,28 @@
+@import '../../constant';
+@import './ModeChange';
+@import './DroppableContainer';
+@import './Actions';
+
+.@{prefix-cls}-design-editor {
+  display: flex;
+  flex-direction: column;
+
+  > .@{prefix-cls}-design-editor-header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+
+    > .@{prefix-cls}-design-editor-mode {
+    }
+
+    > .@{prefix-cls}-design-editor-actions {
+    }
+  }
+
+  .@{prefix-cls}-design-editor-body {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+  }
+}

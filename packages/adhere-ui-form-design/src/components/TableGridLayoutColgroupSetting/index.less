@@ -1,0 +1,31 @@
+@import '../../constant';
+
+.@{prefix-cls}-components-table-grid-layout-colgroup-setting {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  .@{prefix-cls}-components-table-grid-layout-colgroup-setting-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .@{prefix-cls}-components-table-grid-layout-colgroup-setting-item-title {
+    }
+
+    .@{prefix-cls}-components-table-grid-layout-colgroup-setting-item-setting {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+
+      .@{prefix-cls}-components-table-grid-layout-colgroup-setting-item-setting-label {
+        flex-shrink: 0;
+      }
+
+      .@{prefix-cls}-components-table-grid-layout-colgroup-setting-item-setting-value {
+        flex: 1;
+        min-width: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,83 @@
+import React, { type ReactNode, useContext, useEffect } from 'react';
+
+import { Form } from '@baifendian/adhere-ui-anthoc';
+import Intl from '@baifendian/adhere-util-intl';
+
+import { DesignContext } from '../../../Design/Context';
+import PropertiesGridLayout, {
+  Label,
+  Value,
+} from '../../../Design/Properties/PropertiesGridLayout';
+import { MonacoEditorFormItem } from '../../../components';
+import type { DesignValueProps } from '../../../types';
+
+/**
+ * StyleProperty
+ * @param {DesignValueProps} props
+ */
+function StyleProperty(props: DesignValueProps) {
+  // 表单的instance
+  const [form] = Form.useForm();
+
+  const {
+    // 获取当前激活的控件的id(也就是Editor中选中的控件)
+    getActiveFieldId,
+    // 设置控件的属性
+    setFieldProps,
+  } = useContext(DesignContext);
+
+  const { styleProps } = props;
+
+  function onFieldsChange(/*changedFields: FieldData[], allFields: FieldData[]*/) {
+    const values = form.getFieldsValue();
+
+    setFieldProps(getActiveFieldId() as string, {
+      ...values,
+    });
+  }
+
+  useEffect(() => {
+    // 设置控件的数据到表单
+    form.setFieldsValue({
+      styles: styleProps,
+    });
+  }, [styleProps]);
+
+  return (
+    <Form name="tableGridLayoutStyleProperty" form={form} onFieldsChange={onFieldsChange}>
+      <PropertiesGridLayout
+        layout="vertical"
+        data={[
+          {
+            name: 'g1',
+            width: '100%',
+            columnCount: 1,
+            colgroup: ['auto'],
+            data: [
+              {
+                key: 'styles',
+                require: false,
+                label: <Label>{Intl.get('style')}：</Label>,
+                value: (
+                  <Value>
+                    <Form.Item name="styles">
+                      <MonacoEditorFormItem language="css" />
+                    </Form.Item>
+                  </Value>
+                ),
+              },
+            ],
+          },
+        ]}
+      ></PropertiesGridLayout>
+    </Form>
+  );
+}
+/**
+ * renderStyleProperty
+ * @description 我觉得直接写代码就行，不需要那么多的可视化设置
+ * @param props
+ */
+export function renderStyleProperty(props: DesignValueProps): ReactNode {
+  return <StyleProperty {...props} />;
+}

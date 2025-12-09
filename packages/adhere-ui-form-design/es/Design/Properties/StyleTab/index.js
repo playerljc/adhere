@@ -1,0 +1,2 @@
+import classNames from"classnames";import React from"react";import{parseStyleProperty}from"../../../Fields/parse";import{SELECT_PREFIX}from"../../../constant";var selectPrefix="".concat(SELECT_PREFIX,"-design-properties-style-tab"),StyleTab=function(e){e.activeFieldId;var t=e.activeDesignFieldValue,a=e.items,e=e.dispatch;return React.createElement("div",{className:classNames(selectPrefix)},parseStyleProperty({value:t,items:a,dispatch:e}))};export default StyleTab;
+//# sourceMappingURL=index.js.map
