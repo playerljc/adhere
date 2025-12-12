@@ -1,5 +1,5 @@
 import React from 'react';
-import { RatioProps } from './types';
+import type { RatioProps } from './types';
 /**
  * Ratio 组件
  *
