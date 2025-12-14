@@ -11,6 +11,7 @@ const selectPrefix = `${SELECT_PREFIX}-design-editor`;
 
 /**
  * DroppableContainer
+ * @description 在设计器中能进行拖放中的放容器，用于放置控件
  */
 const DroppableContainer: FC<DroppableContainerProps> = ({ id, children }) => {
   const { setNodeRef, isOver } = useDroppable({ id });

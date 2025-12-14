@@ -1,18 +1,17 @@
 import type {
   CSSProperties,
-  Dispatch,
   NamedExoticComponent,
   PropsWithoutRef,
   ReactNode,
   RefAttributes,
 } from 'react';
 
-import type { DesignValueAction } from '../Design/DesignValueReducer';
+import type { ActionsProps } from './Actions';
 import type { FieldProps, FieldType } from './Field';
 import type { FormItemProps } from './FormItem';
 import type { DesignItem } from './Item';
 import type { StyleProps } from './Style';
-import { DraggableToolItemProps, ToolBoxOption } from './ToolBox';
+import type { DraggableToolItemProps, ToolBoxOption } from './ToolBox';
 import type { Styles, Terminal } from './types';
 
 export type DesignFieldWrapperProps = {
@@ -33,6 +32,9 @@ export type DesignValueProps = {
 
   // 控件样式的props
   styleProps?: StyleProps;
+
+  // 控件事件的props
+  actionsProps?: ActionsProps;
 
   // 控件下的子项(一般是布局控件才有children)
   children?: DesignValue[];
@@ -94,6 +96,7 @@ export interface DesignContextType {
   setFormItemProps: (id: string, props: FormItemProps) => void;
   setFieldProps: (id: string, props: FieldProps) => void;
   setStyleProps: (id: string, props: StyleProps) => void;
+  setActionsProps: (id: string, props: ActionsProps) => void;
 }
 
 /**

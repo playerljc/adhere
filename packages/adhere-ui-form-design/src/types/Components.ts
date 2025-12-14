@@ -1,4 +1,4 @@
-import type { ReactElement, ReactNode } from 'react';
+import type { ReactElement } from 'react';
 
 import type { LayoutType } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 
@@ -37,8 +37,8 @@ export interface I18nChangeFormItemProps {
   getTriggerContainer?: () => HTMLElement | null | undefined;
   children?: (args: {
     id?: string | number | undefined;
-    value: string | null | undefined;
+    value: any;
     targetSelectValue: string;
-    onChange: (value: string | null | undefined) => void;
+    onChange: Function;
   }) => ReactElement;
 }

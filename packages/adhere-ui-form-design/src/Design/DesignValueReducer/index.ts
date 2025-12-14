@@ -13,7 +13,8 @@ export type DesignValueAction =
         props:
           | DesignValue['props']['fieldProps']
           | DesignValue['props']['formItemProps']
-          | DesignValue['props']['styleProps'];
+          | DesignValue['props']['styleProps']
+          | DesignValue['props']['actionsProps'];
       };
     }
   | {
@@ -52,10 +53,8 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
     case REDUCER_ACTION_TYPE.updateFormItemProps: {
       const designValue = findDesignValueById(action.payload.id, state as DesignValue);
       if (designValue) {
-        designValue.props.formItemProps = {
-          ...designValue.props.formItemProps,
-          ...action.payload.props,
-        };
+        designValue.props.formItemProps = action.payload
+          .props as DesignValue['props']['formItemProps'];
       }
 
       return state;
@@ -65,10 +64,7 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
     case REDUCER_ACTION_TYPE.updateFieldProps: {
       const designValue = findDesignValueById(action.payload.id, state as DesignValue);
       if (designValue) {
-        designValue.props.fieldProps = {
-          ...designValue.props.fieldProps,
-          ...action.payload.props,
-        };
+        designValue.props.fieldProps = action.payload.props as DesignValue['props']['fieldProps'];
       }
 
       return state;
@@ -78,10 +74,18 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
     case REDUCER_ACTION_TYPE.updateStyleProps: {
       const designValue = findDesignValueById(action.payload.id, state as DesignValue);
       if (designValue) {
-        designValue.props.styleProps = {
-          ...designValue.props.styleProps,
-          ...action.payload.props,
-        };
+        designValue.props.styleProps = action.payload.props as DesignValue['props']['styleProps'];
+      }
+
+      return state;
+    }
+
+    // 修改控件Actions的props
+    case REDUCER_ACTION_TYPE.updateActionsProps: {
+      const designValue = findDesignValueById(action.payload.id, state as DesignValue);
+      if (designValue) {
+        designValue.props.actionsProps = action.payload
+          .props as DesignValue['props']['actionsProps'];
       }
 
       return state;

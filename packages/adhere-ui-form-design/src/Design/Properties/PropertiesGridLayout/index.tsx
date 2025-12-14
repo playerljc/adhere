@@ -1,5 +1,4 @@
-import classNames from 'classnames';
-import React, { forwardRef, memo } from 'react';
+import React, { memo } from 'react';
 import type { FC } from 'react';
 
 import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
@@ -18,38 +17,6 @@ const PropertiesGridLayout: FC<PropertiesGridLayoutProps> = (props) => {
   return <TableGridLayout {...props} />;
 };
 
-export const SlotStartLabel = memo<LabelProps>(
-  forwardRef<HTMLDivElement, LabelProps>(({ children, ...props }, ref) => {
-    return (
-      <TableGridLayout.Label
-        // @ts-ignore
-        valign="middle"
-        {...props}
-      >
-        <div className={classNames(`${selectPrefix}-sloat-label-wrapper`)}>
-          <div className={classNames(`${selectPrefix}-sloat-label`)} ref={ref}></div>
-          <div className={classNames(`${selectPrefix}-sloat-label`)}>{children}</div>
-        </div>
-      </TableGridLayout.Label>
-    );
-  }),
-);
-export const SlotEndLabel = memo<LabelProps>(
-  forwardRef<HTMLDivElement, LabelProps>(({ children, ...props }, ref) => {
-    return (
-      <TableGridLayout.Label
-        // @ts-ignore
-        valign="middle"
-        {...props}
-      >
-        <div className={classNames(`${selectPrefix}-sloat-label-wrapper`)}>
-          <div className={classNames(`${selectPrefix}-sloat-label`)}>{children}</div>
-          <div className={classNames(`${selectPrefix}-sloat-label`)} ref={ref}></div>
-        </div>
-      </TableGridLayout.Label>
-    );
-  }),
-);
 export const Label = memo<LabelProps>((props) => (
   <TableGridLayout.Label
     // @ts-ignore

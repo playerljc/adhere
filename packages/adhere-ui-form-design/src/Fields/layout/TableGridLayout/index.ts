@@ -13,5 +13,6 @@ export function define(): DesignItem {
     renderMainProperty,
     renderStyleProperty,
     hasFormProperty: false,
+    hasActionsProperty: false,
   };
 }

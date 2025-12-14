@@ -27,6 +27,11 @@ export interface DesignItem extends BaseItem {
   hasFormProperty: boolean;
   // 表单属性的渲染
   renderFormProperty?: (defaultValue: DesignValueProps) => ReactNode;
+
+  // 是否有Actions属性
+  hasActionsProperty: boolean;
+  // 是否有Actions属性
+  renderActionsProperty?: (defaultValue: DesignValueProps) => ReactNode;
 }
 
 // 表单的Item

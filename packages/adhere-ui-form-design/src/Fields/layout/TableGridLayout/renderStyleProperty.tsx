@@ -13,6 +13,11 @@ import type { DesignValueProps } from '../../../types';
 
 /**
  * StyleProperty
+ *
+ * @description
+ * 现在样式的设置用的是完全使用@monaco-editor来实现
+ * 也就是说都需要在编辑器中手写css代码的方式实现
+ *
  * @param {DesignValueProps} props
  */
 function StyleProperty(props: DesignValueProps) {

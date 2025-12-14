@@ -51,4 +51,4 @@ export const EmptyValidator = (tip: string) => ({
   },
 });
 
-export default memo(MonacoEditorFormItem);
+export default memo<MonacoEditorFormItemProps>(MonacoEditorFormItem);

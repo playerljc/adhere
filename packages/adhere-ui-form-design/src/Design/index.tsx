@@ -19,6 +19,7 @@ import { define as tableGridLayoutDefine } from '../Fields/layout/TableGridLayou
 import { TYPE } from '../Fields/layout/TableGridLayout/constant';
 import { REDUCER_ACTION_TYPE, SELECT_PREFIX } from '../constant';
 import {
+  type ActionsProps,
   DesignComponent,
   DesignHandler,
   DesignItem,
@@ -173,6 +174,10 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         setActiveToolItemData(null);
 
         if (!over) return;
+
+        // 拖拽结束，结束后应该在editor中多一个控件的实例
+        // active是拖拽对象
+        // over是放置对象
       }
 
       function getDesignValue() {
@@ -206,6 +211,16 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       function setFormItemProps(id: string, props: FormItemProps) {
         dispatch({
           type: REDUCER_ACTION_TYPE.updateFormItemProps,
+          payload: {
+            id,
+            props,
+          },
+        });
+      }
+
+      function setActionsProps(id: string, props: ActionsProps) {
+        dispatch({
+          type: REDUCER_ACTION_TYPE.updateActionsProps,
           payload: {
             id,
             props,
@@ -253,10 +268,10 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
               getItems,
               getOverlayCursor,
               getActiveToolItemData,
-              //
               setCurrentTerminal,
               setActiveFieldId,
               setFormItemProps,
+              setActionsProps,
               setFieldProps,
               setStyleProps,
             }}

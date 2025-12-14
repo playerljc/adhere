@@ -31,7 +31,7 @@ const ColgroupValueSetting: FC<ColgroupValueSettingProps> = ({ value, onChange }
               onChange?.('auto');
             }
           }}
-          placeholder="请选择"
+          placeholder={Intl.get('please_select')}
           options={[
             {
               value: 'number',

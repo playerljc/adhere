@@ -8,6 +8,7 @@ import Intl from '@baifendian/adhere-util-intl';
 import { SELECT_PREFIX } from '../../constant';
 import type { PropertiesProps } from '../../types';
 import { DesignContext } from '../Context';
+import ActionsTab from './ActionsTab';
 import FormTab from './FormTab';
 import PropertiesTab from './PropertiesTab';
 import StyleTab from './StyleTab';
@@ -65,6 +66,16 @@ const Properties: FC<PropertiesProps> = () => {
               label: Intl.get('style'),
               children: <StyleTab />,
             },
+            // 控件事件属性修改面板
+            ...(item.hasActionsProperty
+              ? [
+                  {
+                    key: 'ActionsPropertyTab',
+                    label: Intl.get('actions'),
+                    children: <ActionsTab />,
+                  },
+                ]
+              : []),
           ]}
         />
       )}

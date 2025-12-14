@@ -11,6 +11,7 @@ import { parseDesign } from '../../parse';
 
 /**
  * InternalTableGridLayout
+ * @description TableGridLayout的内部实现
  */
 const InternalTableGridLayout: FC<InternalTableGridLayout> = ({ children, ...props }) => {
   const { getTerminal, getItems } = useContext(DesignContext);
@@ -20,7 +21,10 @@ const InternalTableGridLayout: FC<InternalTableGridLayout> = ({ children, ...pro
   const items = getItems();
 
   const targetProps = useMemo<TableGridLayoutProps>(() => {
+    // 基本的数据在props中都给了
     const tableGridLayoutProps = merge({}, props);
+
+    // 对children进行解析
     tableGridLayoutProps.data[0].data = children?.map(
       (_item) =>
         parseDesign({
