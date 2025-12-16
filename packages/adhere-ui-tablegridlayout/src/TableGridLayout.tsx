@@ -12,6 +12,7 @@ import Value from './Value';
 import type {
   DataItem,
   DataItemRow,
+  DensityType,
   GroupRenderDetail,
   RenderDetail,
   RenderGridSearchForm,
@@ -23,9 +24,6 @@ import type {
   RowCountRef,
   TableGridLayoutComponent,
   TableGridLayoutProps,
-  DensityType,
-  LayoutType,
-  ModeType,
 } from './types';
 
 /** CSS selector prefix for the component */
@@ -44,12 +42,14 @@ const DENSITY_CLASS_MAP = new Map<DensityType, string>([
 
 /**
  * Renders horizontal layout for table grid
- * 
+ *
  * @description Creates a horizontal table layout where labels and values are in the same row
  * @param params - Rendering parameters
  * @returns Object containing rendered elements and detail information
  */
-const renderHorizontal: RenderHorizontal = (params: RenderHorizontalParams): RenderHorizontalResult => {
+const renderHorizontal: RenderHorizontal = (
+  params: RenderHorizontalParams,
+): RenderHorizontalResult => {
   const {
     data: { columnCount: _columnCount, data: _data },
     rowCountRef,
@@ -73,6 +73,7 @@ const renderHorizontal: RenderHorizontal = (params: RenderHorizontalParams): Ren
 
       if (columnsCount !== columnCount) {
         if (item) {
+          // @ts-ignore
           if ('colSpan' in item.props && typeof item.props.colSpan === 'number') {
             columnsCount += item.props.colSpan;
           } else {
@@ -93,7 +94,9 @@ const renderHorizontal: RenderHorizontal = (params: RenderHorizontalParams): Ren
       Array.from({ length: columnCount - columnsCount })
         .fill(0)
         .forEach(() => {
-          tdJSXChildren.push(<td key={`empty-${_index}`} className={`${selectorPrefix}-table-no-border`} />);
+          tdJSXChildren.push(
+            <td key={`empty-${_index}`} className={`${selectorPrefix}-table-no-border`} />,
+          );
         });
     }
 
@@ -139,12 +142,15 @@ const renderHorizontal: RenderHorizontal = (params: RenderHorizontalParams): Ren
       label = React.cloneElement(
         label,
         {
+          // @ts-ignore
           ...label.props,
           className: classNames(
             'require',
+            // @ts-ignore
             label.props.className ?? '',
           ),
         },
+        // @ts-ignore
         label.props.children,
       );
     }
@@ -168,13 +174,16 @@ const renderHorizontal: RenderHorizontal = (params: RenderHorizontalParams): Ren
 
 /**
  * Renders vertical layout for table grid
- * 
+ *
  * @description Creates a vertical table layout where labels and values are in separate rows
  * @param data - Data configuration
  * @param rowCountRef - Row count reference
  * @returns Object containing rendered elements and detail information
  */
-const renderVertical: RenderVertical = (data: DataItem, rowCountRef: RowCountRef): RenderHorizontalResult => {
+const renderVertical: RenderVertical = (
+  data: DataItem,
+  rowCountRef: RowCountRef,
+): RenderHorizontalResult => {
   const { columnCount: _columnCount, data: _data } = data;
 
   /**
@@ -195,6 +204,7 @@ const renderVertical: RenderVertical = (data: DataItem, rowCountRef: RowCountRef
 
       if (columnsCount !== columnCount) {
         if (item) {
+          // @ts-ignore
           if ('colSpan' in item.value.props && typeof item.value.props.colSpan === 'number') {
             columnsCount += item.value.props.colSpan;
           } else {
@@ -219,17 +229,25 @@ const renderVertical: RenderVertical = (data: DataItem, rowCountRef: RowCountRef
         .forEach((_, index) => {
           const key = `empty-${_index}-${index}`;
           tdLabelJSXS.push(<td key={key} className={`${selectorPrefix}-table-no-border`} />);
-          tdValueJSXS.push(<td key={`${key}-value`} className={`${selectorPrefix}-table-no-border`} />);
+          tdValueJSXS.push(
+            <td key={`${key}-value`} className={`${selectorPrefix}-table-no-border`} />,
+          );
         });
     }
 
     const labelRowJSX = (
-      <tr key={`label-row-${rowCountRef.current}`} className={classNames(`${selectorPrefix}-table-row`, 'even')}>
+      <tr
+        key={`label-row-${rowCountRef.current}`}
+        className={classNames(`${selectorPrefix}-table-row`, 'even')}
+      >
         {tdLabelJSXS}
       </tr>
     );
     const valueRowJSX = (
-      <tr key={`value-row-${rowCountRef.current}`} className={classNames(`${selectorPrefix}-table-row`, 'odd')}>
+      <tr
+        key={`value-row-${rowCountRef.current}`}
+        className={classNames(`${selectorPrefix}-table-row`, 'odd')}
+      >
         {tdValueJSXS}
       </tr>
     );
@@ -261,12 +279,15 @@ const renderVertical: RenderVertical = (data: DataItem, rowCountRef: RowCountRef
       item.label = React.cloneElement(
         label,
         {
+          // @ts-ignore
           ...label.props,
           className: classNames(
             'require',
+            // @ts-ignore
             label.props.className ?? '',
           ),
         },
+        // @ts-ignore
         label.props.children,
       );
     }
@@ -286,12 +307,14 @@ const renderVertical: RenderVertical = (data: DataItem, rowCountRef: RowCountRef
 
 /**
  * Renders a single table grid
- * 
+ *
  * @description Creates a table element with proper styling and layout
  * @param params - Rendering parameters
  * @returns Table element
  */
-const renderGridSearchForm: RenderGridSearchForm = (params: RenderGridSearchFormParams): ReactElement => {
+const renderGridSearchForm: RenderGridSearchForm = (
+  params: RenderGridSearchFormParams,
+): ReactElement => {
   const {
     data: { className, style, width, colgroup, defaultLabelWidth = 120 },
     layout,
@@ -356,19 +379,21 @@ const renderGridSearchForm: RenderGridSearchForm = (params: RenderGridSearchForm
     >
       <colgroup>{colgroupJSX}</colgroup>
 
-      <ConditionalRender
-        conditional={layout === 'horizontal'}
-        noMatch={() => renderVertical(params.data, rowCountRef).element}
-      >
-        {() => renderHorizontal(params).element}
-      </ConditionalRender>
+      <tbody>
+        <ConditionalRender
+          conditional={layout === 'horizontal'}
+          noMatch={() => renderVertical(params.data, rowCountRef).element}
+        >
+          {() => renderHorizontal(params).element}
+        </ConditionalRender>
+      </tbody>
     </table>
   );
 };
 
 /**
  * Renders a group of table grids
- * 
+ *
  * @description Creates multiple table grids with proper grouping and styling
  * @param data - Array of data items for each table
  * @param props - Component props
@@ -431,7 +456,7 @@ function renderGridSearchFormGroup(
 
 /**
  * Gets render detail information for table grids
- * 
+ *
  * @description Calculates and returns detailed information about the rendering structure
  * @param data - Array of data items
  * @param props - Component props
@@ -448,10 +473,10 @@ function getRenderDetail(
     ...renderGridSearchFormProps
   } = props ?? {};
 
-  const result: RenderDetail = { 
-    rowCount: 0, 
-    layout: props.layout, 
-    detail: [] 
+  const result: RenderDetail = {
+    rowCount: 0,
+    layout: props.layout,
+    detail: [],
   };
 
   data.forEach((group) => {
@@ -485,11 +510,11 @@ function getRenderDetail(
 
 /**
  * TableGridLayout component
- * 
+ *
  * @description A flexible table grid layout component that supports both horizontal and vertical layouts
  * @param props - Component props
  * @returns TableGridLayout component
- * 
+ *
  * @example
  * ```tsx
  * <TableGridLayout
@@ -535,11 +560,7 @@ const InternalTableGridLayout = memo<TableGridLayoutProps>(
     });
 
     return (
-      <div
-        ref={wrapperRef}
-        className={classNames(selectorPrefix, className)}
-        style={style ?? {}}
-      >
+      <div ref={wrapperRef} className={classNames(selectorPrefix, className)} style={style ?? {}}>
         {renderGridSearchFormGroup(targetData, props, configProvider.media)}
       </div>
     );
@@ -552,21 +573,21 @@ TableGridLayout.displayName = 'TableGridLayout';
 
 /**
  * Label sub-component for table grid layout
- * 
+ *
  * @description Renders a table cell with label styling
  */
 TableGridLayout.Label = Label;
 
 /**
  * Value sub-component for table grid layout
- * 
+ *
  * @description Renders a table cell with value styling
  */
 TableGridLayout.Value = Value;
 
 /**
  * Renders a group of table grids
- * 
+ *
  * @description Static method to render multiple table grids with proper grouping
  * @param data - Array of data items for each table
  * @param props - Component props
@@ -577,7 +598,7 @@ TableGridLayout.renderGridSearchFormGroup = renderGridSearchFormGroup;
 
 /**
  * Gets render detail information for table grids
- * 
+ *
  * @description Static method to calculate detailed information about the rendering structure
  * @param data - Array of data items
  * @param props - Component props
