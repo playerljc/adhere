@@ -23,17 +23,17 @@ declare class Interceptors {
      */
     addResponse(key: string, handler: ResponseInterceptor): Map<string, ResponseInterceptor>;
     /**
-     * removeRequest
+     * removeRequestInterceptor
      * @description 删除请求拦截器
      * @param {string} key - 要删除的拦截器key
      */
-    removeRequest(key: string): void;
+    removeRequestInterceptor(key: string): void;
     /**
-     * removeResponse
+     * removeResponseInterceptor
      * @description 删除响应拦截器
      * @param {string} key - 要删除的拦截器key
      */
-    removeResponse(key: string): void;
+    removeResponseInterceptor(key: string): void;
     /**
      * 对请求参数进行拦截器处理
      * @param params - 请求参数
