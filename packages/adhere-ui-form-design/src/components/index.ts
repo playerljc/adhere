@@ -1,6 +1,9 @@
 import ActionsFormItem from './ActionsFormItem';
+import ColgroupValueSetting from './ColgroupValueSetting';
 import { DensitySelectStandardDict } from './Density';
+import DesignFieldWrapper from './DesignFieldWrapper';
 import { DirectionSelectStandardDict } from './Direction';
+import DroppableContainer from './DroppableContainer';
 import I18nChangeFormItem, {
   payloadToValues,
   transformPayloadI18n,
@@ -12,6 +15,7 @@ import { InputTypeSelectStandardDict } from './InputType';
 import MonacoEditorFormItem, {
   EmptyValidator as MonacoEditorFormItemEmptyValidator,
 } from './MonacoEditorFormItem';
+import PropertiesGridLayout from './PropertiesGridLayout';
 import { RulesMenuStandardDict } from './Rules';
 import RulesSettingFormItem from './RulesSettingFormItem';
 import { SlotEndLabel, SlotStartLabel } from './SlotLabel';
@@ -41,4 +45,8 @@ export {
   SlotStartLabel,
   SlotEndLabel,
   ActionsFormItem,
+  ColgroupValueSetting,
+  DesignFieldWrapper,
+  DroppableContainer,
+  PropertiesGridLayout,
 };

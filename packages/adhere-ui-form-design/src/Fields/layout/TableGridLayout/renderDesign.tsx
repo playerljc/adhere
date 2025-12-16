@@ -3,29 +3,23 @@ import type { ReactNode } from 'react';
 
 import type { TableGridLayoutProps } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 
-import DroppableContainer from '../../../Design/DesignEditor/DroppableContainer';
+import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
+import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignValue } from '../../../types';
-import { styleCodeStringToCSSProperties } from '../../../utils/styleCodeStringToCSSProperties';
-import DesignFieldWrapper from '../../DesignFieldWrapper';
+import { styleCodeStringToCSSProperties } from '../../../utils';
 import InternalTableGridLayout from './InternalTableGridLayout';
 
-/**
- * renderDesign
- * @param props
- */
-export function renderDesign({
-  value: {
+function TableGridLayoutDesign({ value }: { value: DesignValue }) {
+  const {
     id,
-    props: { fieldProps, children, styleProps },
-  },
-}: {
-  value: DesignValue;
-}): ReactNode {
+    props: { children, styleProps, fieldProps },
+  } = value;
+
   const style = useMemo(() => styleCodeStringToCSSProperties(styleProps ?? ''), [styleProps]);
 
   return (
     <DesignFieldWrapper id={id}>
-      <DroppableContainer id={id}>
+      <DroppableContainer id={id} value={value}>
         <InternalTableGridLayout
           {...(fieldProps as TableGridLayoutProps)}
           style={style ?? {}}
@@ -34,4 +28,12 @@ export function renderDesign({
       </DroppableContainer>
     </DesignFieldWrapper>
   );
+}
+
+/**
+ * renderDesign
+ * @param props
+ */
+export function renderDesign({ value }: { value: DesignValue }): ReactNode {
+  return <TableGridLayoutDesign value={value} />;
 }

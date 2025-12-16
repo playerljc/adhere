@@ -1,4 +1,5 @@
 import type { Reducer } from 'react';
+import clone from 'rfdc';
 
 import { REDUCER_ACTION_TYPE } from '../../constant';
 import type { DesignValue } from '../../types';
@@ -14,7 +15,8 @@ export type DesignValueAction =
           | DesignValue['props']['fieldProps']
           | DesignValue['props']['formItemProps']
           | DesignValue['props']['styleProps']
-          | DesignValue['props']['actionsProps'];
+          | DesignValue['props']['actionsProps']
+          | DesignValue['props']['children'];
       };
     }
   | {
@@ -28,7 +30,7 @@ export type DesignValueAction =
  * @param {DesignValue} designValue
  * @return {DesignValue | undefined}
  */
-function findDesignValueById(id: string, designValue: DesignValue): DesignValue | undefined {
+export function findDesignValueById(id: string, designValue: DesignValue): DesignValue | undefined {
   if (designValue.id === id) {
     return designValue;
   }
@@ -43,6 +45,27 @@ function findDesignValueById(id: string, designValue: DesignValue): DesignValue 
     }
   }
 }
+
+/**
+ * findDesignValueByIdToClone
+ * @description 递归查找设计值中指定id的设计值的clone版本
+ * @param {string} id
+ * @param {DesignValue} designValue
+ * @return {DesignValue | undefined}
+ */
+export function findDesignValueByIdToClone(
+  id: string,
+  designValue: DesignValue,
+): DesignValue | undefined {
+  const _designValue = findDesignValueById(id, designValue);
+
+  if (!!_designValue) {
+    return clone()(_designValue);
+  }
+
+  return _designValue;
+}
+
 /**
  * reducer
  * @description 对设计值进行修改
@@ -86,6 +109,16 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
       if (designValue) {
         designValue.props.actionsProps = action.payload
           .props as DesignValue['props']['actionsProps'];
+      }
+
+      return state;
+    }
+
+    // 修改控件children
+    case REDUCER_ACTION_TYPE.updateChildrenProps: {
+      const designValue = findDesignValueById(action.payload.id, state as DesignValue);
+      if (designValue) {
+        designValue.props.children = action.payload.props as DesignValue['props']['children'];
       }
 
       return state;

@@ -1,14 +1,13 @@
-import type { NamedExoticComponent, PropsWithoutRef, ReactNode, RefAttributes } from 'react';
+import type { CSSProperties, NamedExoticComponent, PropsWithoutRef, ReactNode, RefAttributes } from 'react';
+import type { ActionsProps } from './Actions';
 import type { FieldProps, FieldType } from './Field';
 import type { FormItemProps } from './FormItem';
 import type { DesignItem } from './Item';
 import type { StyleProps } from './Style';
-import type { ToolBoxOption } from './ToolBox';
+import type { DraggableToolItemProps, ToolBoxOption } from './ToolBox';
 import type { Styles, Terminal } from './types';
 export type DesignFieldWrapperProps = {
     id: string;
-    activeFieldId: string | null | undefined;
-    onActiveFieldById: (id: string) => void;
     children?: ReactNode;
 };
 export type ToolbarProps = {};
@@ -16,6 +15,7 @@ export type DesignValueProps = {
     formItemProps?: FormItemProps;
     fieldProps: FieldProps;
     styleProps?: StyleProps;
+    actionsProps?: ActionsProps;
     children?: DesignValue[];
 };
 /**
@@ -44,6 +44,21 @@ export interface DesignProps {
     items: DesignItem[];
 }
 export interface DesignHandler {
+}
+export interface DesignContextType {
+    getDesignValue: () => DesignValue | undefined;
+    getTerminal: () => Terminal;
+    getActiveFieldId: () => string | null | undefined;
+    getActiveDesignFieldValue: () => DesignValue | null;
+    getItems: () => DesignItem[];
+    getOverlayCursor: () => CSSProperties['cursor'];
+    getActiveToolItemData: () => DraggableToolItemProps['data'] | null;
+    setCurrentTerminal: (terminal: Terminal) => void;
+    setActiveFieldId: (activeFieldId: string) => void;
+    setFormItemProps: (id: string, props: FormItemProps) => void;
+    setFieldProps: (id: string, props: FieldProps) => void;
+    setStyleProps: (id: string, props: StyleProps) => void;
+    setActionsProps: (id: string, props: ActionsProps) => void;
 }
 /**
  * DesignComponent

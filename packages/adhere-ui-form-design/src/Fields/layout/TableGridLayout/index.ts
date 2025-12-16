@@ -1,5 +1,7 @@
 import type { DesignItem } from '../../../types';
 import { TYPE } from './constant';
+import { layoutReducerToAdd } from './layoutReducerToAdd';
+import { layoutReducerToRemove } from './layoutReducerToRemove';
 import { renderDesign } from './renderDesign';
 import { renderDesignToMobile } from './renderDesignToMobile';
 import { renderMainProperty } from './renderMainProperty';
@@ -14,5 +16,7 @@ export function define(): DesignItem {
     renderStyleProperty,
     hasFormProperty: false,
     hasActionsProperty: false,
+    layoutReducerToAdd,
+    layoutReducerToRemove,
   };
 }

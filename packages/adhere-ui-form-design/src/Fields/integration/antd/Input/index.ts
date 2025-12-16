@@ -18,5 +18,11 @@ export function define(): DesignItem {
     renderActionsProperty,
     hasFormProperty: true,
     hasActionsProperty: true,
+    defaultValue: {
+      formItemProps: {},
+      fieldProps: {
+        readOnly: true,
+      },
+    },
   };
 }

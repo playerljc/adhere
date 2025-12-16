@@ -55,12 +55,19 @@ const RulesSettingFormItem: FC<RulesSettingFormItemProps> = ({
   onChange,
 }) => {
   const menuItems = useMemo(() => {
-    return values?.Rules?.value
-      ?.map((item) => ({
+    const menus =
+      values?.Rules?.value?.map((item) => ({
         key: item.value,
         label: item.label,
-      }))
-      .filter(({ key }) => (value ?? []).some((rule) => rule.type !== key));
+      })) ?? [];
+
+    const targetValue = value ?? [];
+
+    if (targetValue.length >= 0) {
+      return menus;
+    }
+
+    return menus.filter(({ key }) => (value ?? []).some((rule) => rule.type !== key));
   }, [value]);
 
   const changeValue = useEffectEvent((type: RuleType, _value: RuleConfig) => {

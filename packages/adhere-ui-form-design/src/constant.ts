@@ -5,5 +5,6 @@ export enum REDUCER_ACTION_TYPE {
   updateFieldProps = 'update_field_props',
   updateStyleProps = 'update_style_props',
   updateActionsProps = 'update_actions_props',
+  updateChildrenProps = 'update_children_props',
   noop = 'noop',
 }

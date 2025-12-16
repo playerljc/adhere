@@ -38,7 +38,7 @@ const DesignEditor: FC<DesignEditorProps> = () => {
       </div>
 
       <div className={classNames(`${selectPrefix}-body`)}>
-        <Form name="editor" form={form}>
+        <Form name="editor" form={form} className={classNames(`${selectPrefix}-form`)}>
           {
             // 对value进行解析
             parseDesign({

@@ -5,10 +5,6 @@ import Hooks from '@baifendian/adhere-ui-hooks';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
-import PropertiesGridLayout, {
-  Label,
-  Value,
-} from '../../../../Design/Properties/PropertiesGridLayout';
 import {
   InputEventsSelectStandardDict,
   RulesSettingFormItem,
@@ -17,6 +13,7 @@ import {
   WhetherRadioHorizontalDict,
 } from '../../../../components';
 import I18nChangeFormItem from '../../../../components/I18nChangeFormItem';
+import PropertiesGridLayout, { Label, Value } from '../../../../components/PropertiesGridLayout';
 import type { DesignValueProps } from '../../../../types';
 
 const { useItemsRef } = Hooks;

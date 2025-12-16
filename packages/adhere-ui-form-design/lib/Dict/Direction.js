@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_adhereUtilIntl=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.Direction=void 0,_interopRequireDefault(require("@baifendian/adhere-util-intl"))),Direction=exports.Direction={handler:function(){return[{label:_adhereUtilIntl.default.get("horizontal"),value:"horizontal"},{label:_adhereUtilIntl.default.get("vertical"),value:"vertical"}]}};
+//# sourceMappingURL=Direction.js.map

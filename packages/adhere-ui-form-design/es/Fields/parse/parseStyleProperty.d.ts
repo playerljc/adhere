@@ -1,5 +1,4 @@
-import type { Dispatch, ReactNode } from 'react';
-import type { DesignValueAction } from '../../Design/DesignValueReducer';
+import type { ReactNode } from 'react';
 import type { DesignProps, DesignValue } from '../../types';
 /**
  * parseStyleProperty
@@ -10,8 +9,7 @@ import type { DesignProps, DesignValue } from '../../types';
  * }} params
  * @return ReactElement
  */
-export declare function parseStyleProperty({ value, items, dispatch, }: {
+export declare function parseStyleProperty({ value, items, }: {
     value: DesignValue;
     items: DesignProps['items'];
-    dispatch: Dispatch<DesignValueAction>;
 }): ReactNode;

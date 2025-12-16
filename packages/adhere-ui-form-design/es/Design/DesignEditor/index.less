@@ -1,11 +1,11 @@
 @import '../../constant';
 @import './ModeChange';
-@import './DroppableContainer';
 @import './Actions';
 
 .@{prefix-cls}-design-editor {
   display: flex;
   flex-direction: column;
+  width: 100%;
 
   > .@{prefix-cls}-design-editor-header {
     display: flex;
@@ -24,5 +24,9 @@
     display: flex;
     flex: 1;
     min-height: 0;
+
+    .@{prefix-cls}-design-editor-form {
+      width: 100%;
+    }
   }
 }

@@ -1,2 +1,2 @@
-function parseMainProperty(r){var e=r.value,n=r.items,r=r.dispatch,n=n.find(function(r){return r.type===e.type});return null==n?void 0:n.renderMainProperty(e,r)}export{parseMainProperty};
+function parseMainProperty(r){var e=r.value,r=r.items.find(function(r){return r.type===e.type});return null==r?void 0:r.renderMainProperty(e.props)}export{parseMainProperty};
 //# sourceMappingURL=parseMainProperty.js.map

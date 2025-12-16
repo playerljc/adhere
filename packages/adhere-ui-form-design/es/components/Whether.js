@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,WhetherRadioHorizontalDict=Components[genDictComponentName(names.Whether,ComponentNames.Radio.Horizontal)];export{WhetherRadioHorizontalDict};
+//# sourceMappingURL=Whether.js.map

@@ -1,0 +1,2 @@
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.formItemToProps=formItemToProps;var _rulesSettingToRules=require("./rulesSettingToRules");function formItemToProps(e,r){return{name:e.name,hidden:e.hidden,noStyle:e.noStyle,valuePropName:e.valuePropName,validateFirst:e.validateFirst,validateTrigger:e.validateTrigger,rules:(0,_rulesSettingToRules.rulesSettingToRules)(null!=(e=e.rules)?e:[],r)}}
+//# sourceMappingURL=formItemToProps.js.map

@@ -8,5 +8,8 @@ export interface DesignEditorProps {
 
 export interface DroppableContainerProps {
   id: string;
+  value: DesignValue;
   children: ReactNode;
 }
+
+export interface ModeChangeProps {}

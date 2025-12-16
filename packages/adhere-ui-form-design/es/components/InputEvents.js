@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,InputEventsSelectStandardDict=Components[genDictComponentName(names.InputEvents,ComponentNames.Select.Standard)];export{InputEventsSelectStandardDict};
+//# sourceMappingURL=InputEvents.js.map

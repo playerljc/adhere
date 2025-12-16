@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,DensitySelectStandardDict=Components[genDictComponentName(names.Density,ComponentNames.Select.Standard)];export{DensitySelectStandardDict};
+//# sourceMappingURL=Density.js.map

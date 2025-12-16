@@ -12,10 +12,8 @@ import type { DesignProps, DesignValue, Terminal } from '../../types';
  * }} params
  * @return ReactElement
  */
-export declare function parseDesign({ terminal, value, items, onActiveFieldById, activeFieldId, }: {
+export declare function parseDesign({ terminal, value, items, }: {
     terminal: Terminal;
     value: DesignValue;
     items: DesignProps['items'];
-    activeFieldId: string | null | undefined;
-    onActiveFieldById: (id: string) => void;
 }): DataItemRow | ReactNode;

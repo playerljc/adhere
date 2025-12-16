@@ -1,0 +1,2 @@
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.MouseEvents=void 0;var MouseEvents=exports.MouseEvents={handler:function(){return[{label:"onClick",value:"onClick"},{label:"onDoubleClick",value:"onDoubleClick"},{label:"onContextMenu",value:"onContextMenu"},{label:"onMouseDown",value:"onMouseDown"},{label:"onMouseUp",value:"onMouseUp"},{label:"onMouseEnter",value:"onMouseEnter"},{label:"onMouseLeave ",value:"onMouseLeave"},{label:"onMouseMove ",value:"onMouseMove"}]}};
+//# sourceMappingURL=MouseEvents.js.map

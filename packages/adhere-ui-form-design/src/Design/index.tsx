@@ -25,10 +25,13 @@ import {
   DesignItem,
   DesignProps,
   DesignValue,
+  DesignValueProps,
   DraggableToolItemProps,
   type FieldProps,
+  type FieldType,
   type FormItemProps,
   type StyleProps,
+  ToolBoxItem,
 } from '../types';
 import { DesignContext } from './Context';
 import Editor from './DesignEditor';
@@ -90,6 +93,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                   },
                 ],
               },
+              children: [],
             },
           };
         }
@@ -175,9 +179,43 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
 
         if (!over) return;
 
+        console.log('over======', active, over);
+
         // 拖拽结束，结束后应该在editor中多一个控件的实例
-        // active是拖拽对象
-        // over是放置对象
+        // active是拖拽对象 一般是toolbox中的item
+        // over是放置对象 一般是TableGridLayout的布局对象
+
+        // 拖动的toolBox
+        const activeItem = active.data.current as ToolBoxItem;
+        // 放置的容器对象(一般是TableGridLayout)
+        const overItem = over.data.current as DesignValue;
+
+        const sourceItem = getItemByType(activeItem.type);
+        const targetItem = getItemByType(overItem.type);
+
+        const filedId = Util.uuid();
+
+        // 追加布局的data数据
+        dispatch({
+          type: REDUCER_ACTION_TYPE.updateChildrenProps,
+          payload: {
+            id: overItem.id,
+            props: targetItem?.layoutReducerToAdd?.(designValue as DesignValue, {
+              sourceDesignValue: {
+                id: filedId,
+                type: activeItem.type,
+                props: sourceItem?.defaultValue as DesignValueProps,
+              },
+              targetId: overItem.id,
+            }) as DesignValue[],
+          },
+        });
+
+        setActiveFieldId(filedId);
+      }
+
+      function getItemByType(type: FieldType) {
+        return getItems().find((item) => item.type === type);
       }
 
       function getDesignValue() {

@@ -1,0 +1,2 @@
+import Intl from"@baifendian/adhere-util-intl";import{define as InputDefine}from"./Input";var Input=InputDefine();function install(){return{toolBox:[{id:"base",label:Intl.get("base_controls"),tooltip:Intl.get("base_controls"),items:[{type:Input.type,label:Intl.get("single_line_text"),searchLabel:Intl.get("single_line_text"),tooltip:Intl.get("single_line_text")}]}],designItems:[Input]}}export{install};
+//# sourceMappingURL=index.js.map

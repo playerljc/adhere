@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_adhereUtilIntl=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.Whether=void 0,_interopRequireDefault(require("@baifendian/adhere-util-intl"))),Whether=exports.Whether={handler:function(){return[{label:_adhereUtilIntl.default.get("yes"),value:!0},{label:_adhereUtilIntl.default.get("no"),value:!1}]}};
+//# sourceMappingURL=Whether.js.map

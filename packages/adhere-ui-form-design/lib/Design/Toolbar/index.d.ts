@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { ToolbarProps } from '../../types/Design';
+import type { ToolbarProps } from '../../types';
 /**
  * Toolbar
  */

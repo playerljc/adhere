@@ -32,13 +32,19 @@ const ActionsFormItem: FC<ActionsFormItemProps> = ({
   onChange,
 }) => {
   const menuItems = useMemo(() => {
-    return actions
-      .map((item) => ({
-        key: item.value,
-        label: item.label,
-      }))
-      .filter(({ key }) => (value ?? []).some((a) => a.type !== key));
+    const menus = actions.map((item) => ({
+      key: item.value,
+      label: item.label,
+    }));
+
+    const targetValue = value ?? [];
+
+    if (targetValue.length <= 0) return menus;
+
+    return menus.filter(({ key }) => (value ?? []).some((a) => a.type !== key));
   }, [value, actions]);
+
+  debugger;
 
   return (
     <div className={classNames(selectorPrefix, className)} style={style ?? {}}>

@@ -1,2 +1,2 @@
-var SELECT_PREFIX="adhere-ui-fd";export{SELECT_PREFIX};
+var REDUCER_ACTION_TYPE,SELECT_PREFIX="adhere-ui-fd",SELECT_VALUE_KEY_NAME="selectValue";(p=>{p.updateFormItemProps="update_form_item_props",p.updateFieldProps="update_field_props",p.updateStyleProps="update_style_props",p.updateActionsProps="update_actions_props",p.updateChildrenProps="update_children_props",p.noop="noop"})(REDUCER_ACTION_TYPE=REDUCER_ACTION_TYPE||{});export{SELECT_PREFIX,SELECT_VALUE_KEY_NAME,REDUCER_ACTION_TYPE};
 //# sourceMappingURL=constant.js.map

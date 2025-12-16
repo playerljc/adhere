@@ -4,11 +4,8 @@ import { Form } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../Design/Context';
-import PropertiesGridLayout, {
-  Label,
-  Value,
-} from '../../../Design/Properties/PropertiesGridLayout';
 import { MonacoEditorFormItem } from '../../../components';
+import PropertiesGridLayout, { Label, Value } from '../../../components/PropertiesGridLayout';
 import type { DesignValueProps } from '../../../types';
 
 /**

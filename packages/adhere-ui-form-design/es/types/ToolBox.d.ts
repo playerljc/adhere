@@ -28,9 +28,6 @@ export type DraggableToolItemProps = {
     children: ReactNode;
     data?: ToolBoxItem;
 };
-export type ToolboxItemDragOverlayProps = {
-    activeToolItemData: DraggableToolItemProps['data'];
-    cursor: string;
-};
+export type ToolboxItemDragOverlayProps = {};
 export type ToolboxItemProps = Styles & ToolBoxItem;
 export type ToolBoxOption = ToolBoxGroup[];

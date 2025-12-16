@@ -1,0 +1,2 @@
+import Intl from"@baifendian/adhere-util-intl";import{define as defineTableGridLayout}from"./TableGridLayout";var TableGridLayout=defineTableGridLayout();function install(){return{toolBox:[{id:"layout",label:Intl.get("layout"),tooltip:Intl.get("layout"),items:[{type:TableGridLayout.type,label:Intl.get("table_grid_layout"),searchLabel:Intl.get("table_grid_layout"),tooltip:Intl.get("table_grid_layout")}]}],designItems:[TableGridLayout]}}export{install};
+//# sourceMappingURL=index.js.map

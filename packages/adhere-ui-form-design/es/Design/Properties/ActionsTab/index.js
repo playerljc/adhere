@@ -1,0 +1,2 @@
+import classNames from"classnames";import React,{useContext}from"react";import{parseActionsProperty}from"../../../Fields";import{SELECT_PREFIX}from"../../../constant";import{DesignContext}from"../../Context";var selectPrefix="".concat(SELECT_PREFIX,"-design-properties-actions-tab"),FormTab=function(){var e=useContext(DesignContext),t=e.getActiveDesignFieldValue,e=e.getItems,t=t(),e=e();return React.createElement("div",{className:classNames(selectPrefix)},parseActionsProperty({value:t,items:e}))};export default FormTab;
+//# sourceMappingURL=index.js.map

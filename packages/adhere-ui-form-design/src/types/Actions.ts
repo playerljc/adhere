@@ -4,4 +4,4 @@ export type Action = {
   value: string;
 };
 
-export type ActionsProps = Action[];
+export type ActionsProps = {};

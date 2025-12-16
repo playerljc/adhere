@@ -4,15 +4,12 @@ import { Form, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
-import PropertiesGridLayout, {
-  Label,
-  Value,
-} from '../../../../Design/Properties/PropertiesGridLayout';
 import {
   DensitySelectStandardDict,
   InputTypeSelectStandardDict,
   WhetherRadioHorizontalDict,
 } from '../../../../components';
+import PropertiesGridLayout, { Label, Value } from '../../../../components/PropertiesGridLayout';
 import type { DesignValueProps } from '../../../../types';
 
 /**
@@ -96,7 +93,7 @@ function MainProperty(props: DesignValueProps) {
               {
                 key: 'maxLength',
                 require: false,
-                label: <Label>{Intl.get('maxLength')}：</Label>,
+                label: <Label>{Intl.get('max_length')}：</Label>,
                 value: (
                   <Value>
                     <Form.Item name="maxLength">

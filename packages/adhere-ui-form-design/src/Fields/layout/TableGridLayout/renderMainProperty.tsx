@@ -5,12 +5,7 @@ import { Form, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import type { TableGridLayoutProps } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
-// import type { FieldData } from '@rc-component/form/es/interface';
 import { DesignContext } from '../../../Design/Context';
-import PropertiesGridLayout, {
-  Label,
-  Value,
-} from '../../../Design/Properties/PropertiesGridLayout';
 import {
   DensitySelectStandardDict,
   DirectionSelectStandardDict,
@@ -18,6 +13,7 @@ import {
   TableGridLayoutModeTypeSelectStandardDict,
   WhetherRadioHorizontalDict,
 } from '../../../components';
+import PropertiesGridLayout, { Label, Value } from '../../../components/PropertiesGridLayout';
 import type { DesignValueProps } from '../../../types';
 
 /**

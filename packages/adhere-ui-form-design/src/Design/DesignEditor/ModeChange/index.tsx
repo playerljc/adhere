@@ -12,7 +12,7 @@ const ModeChange: FC<ModeChangeProps> = () => {
   const { getTerminal, setCurrentTerminal } = useContext(DesignContext);
   const terminals = getTerminal();
 
-  return <div className={classNames(`${selectPrefix}-mode-change`)}></div>;
+  return <div className={classNames(`${selectPrefix}-mode-change`)}>ModeChange</div>;
 };
 
 export default ModeChange;

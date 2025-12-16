@@ -1,21 +1,12 @@
 import type { ReactNode } from 'react';
-import type { DesignProps, DesignValue } from './Design';
-import type { Terminal } from './types';
+import type { DesignValue } from './Design';
 export interface DesignEditorProps {
-    items: DesignProps['items'];
-    value: DesignValue;
-    activeFieldId: string | null | undefined;
-    terminal: Terminal;
-    onTerminalChange: (terminal: Terminal) => void;
-    onActiveFieldById: (id: string) => void;
+    value?: DesignValue;
 }
 export interface DroppableContainerProps {
     id: string;
-    children?: ReactNode;
+    value: DesignValue;
+    children: ReactNode;
 }
 export interface ModeChangeProps {
-    terminal: Terminal;
-    onChange: (terminal: Terminal) => void;
-}
-export interface ActionsProps {
 }

@@ -1,13 +1,20 @@
 import Design from './Design';
-import PropertiesGridLayout from './Design/Properties/PropertiesGridLayout';
+import * as parse from './Fields';
+import * as Plugins from './Fields/integration';
+import * as Layout from './Fields/layout';
+import * as Components from './components';
+import * as Util from './utils';
 
 // import Form from './Form';
 // import View from './View';
-
-export { Design, PropertiesGridLayout /*Form, View*/ };
 
 export default {
   Design,
   // Form,
   // View,
+  Components,
+  Util,
+  parse,
+  Layout,
+  Plugins,
 };

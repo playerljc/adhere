@@ -109,6 +109,7 @@ const Toolbox: FC<ToolboxProps> = ({ toolBox }) => {
 
                     return (
                       <DraggableItem
+                        key={type}
                         id={type}
                         disabled={itemDisabled ?? disabled}
                         data={{

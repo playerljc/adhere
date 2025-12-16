@@ -3,7 +3,7 @@ import React from 'react';
 import type { FC } from 'react';
 
 import { SELECT_PREFIX } from '../../constant';
-import type { ToolbarProps } from '../../types/Design';
+import type { ToolbarProps } from '../../types';
 
 const selectPrefix = `${SELECT_PREFIX}-design-toolbar`;
 
