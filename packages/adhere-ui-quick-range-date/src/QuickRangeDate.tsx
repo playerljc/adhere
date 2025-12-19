@@ -3,7 +3,7 @@ import { DatePicker, Radio } from 'antd';
 import classNames from 'classnames';
 import dayjs, { UnitType } from 'dayjs';
 import quarterOfYear from 'dayjs/plugin/quarterOfYear';
-import React, { type MutableRefObject, forwardRef, memo, useMemo, useRef, useState } from 'react';
+import React, { type RefObject, forwardRef, memo, useMemo, useRef, useState } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Intl from '@baifendian/adhere-util-intl';
@@ -217,7 +217,7 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
       const innerRef = useRef<HTMLDivElement | null>(null);
 
       useTheme<HTMLElement>({
-        elRef: innerRef as MutableRefObject<HTMLElement>,
+        elRef: innerRef as RefObject<HTMLElement>,
         group: 'normal',
         displayName: 'QuickRangeDate',
       });

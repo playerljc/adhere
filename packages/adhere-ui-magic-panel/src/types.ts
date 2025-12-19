@@ -1,4 +1,4 @@
-import { CSSProperties, MutableRefObject, ReactElement, ReactNode } from 'react';
+import { CSSProperties, ReactElement, ReactNode, RefObject } from 'react';
 
 /**
  * 面板项目配置接口
@@ -212,7 +212,7 @@ export interface MagicPanelProps {
   /** 元数据，包含原始元素信息和尺寸 */
   metaData?: MetaData;
   /** 渲染主体内容的函数，接收元素引用并返回 React 元素 */
-  renderBody: (ref: MutableRefObject<HTMLElement | null>) => ReactElement;
+  renderBody: (ref: RefObject<HTMLElement | null>) => ReactElement;
   renderClip?: () => ReactElement;
   /** 自定义渲染函数，接收主体元素、新元素数据和项目元素数组 */
   children?: (

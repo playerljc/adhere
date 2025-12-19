@@ -75,7 +75,7 @@ const Properties: FC<PropertiesProps> = () => {
 
   useUpdateEffect(() => {
     setActiveTab(tabItems[0].key);
-  }, [tabItems]);
+  }, [activeFieldId]);
 
   return (
     <div className={classNames(selectPrefix)}>

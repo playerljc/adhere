@@ -1,4 +1,4 @@
-import React, { MutableRefObject, RefObject } from 'react';
+import React, { RefObject } from 'react';
 import type { OverlayProps, PositionConfig } from './types';
 /**
  * 滑动布局Hook返回值接口
@@ -7,7 +7,7 @@ interface UseSlideReturn {
     /** 获取动画持续时间 */
     getDuration: (time?: number | string | null | undefined) => number;
     /** 遮罩层元素引用 */
-    maskEl: React.MutableRefObject<HTMLDivElement | undefined>;
+    maskEl: React.RefObject<HTMLDivElement | undefined>;
 }
 /**
  * 滑动布局自定义Hook
@@ -23,5 +23,5 @@ interface UseSlideReturn {
  * const { getDuration, maskEl } = useSlide(props, elRef, positionConfig);
  * ```
  */
-export default function useSlide(props: OverlayProps, el: RefObject<HTMLDivElement | null>, positionConfig: MutableRefObject<PositionConfig>): UseSlideReturn;
+export default function useSlide(props: OverlayProps, el: RefObject<HTMLDivElement | null>, positionConfig: RefObject<PositionConfig>): UseSlideReturn;
 export {};

@@ -1,5 +1,5 @@
 import { BarSeriesOption, BoxplotSeriesOption, CandlestickSeriesOption, FunnelSeriesOption, GaugeSeriesOption, HeatmapSeriesOption, LineSeriesOption, PieSeriesOption, RadarSeriesOption, SankeySeriesOption, ScatterSeriesOption, SunburstSeriesOption } from 'echarts/charts';
-import type { AreaStyle, Radius, RoseType, BaseChartOption } from './types';
+import type { AreaStyle, BaseChartOption, Radius } from './types';
 /**
  * ECharts 配置选项集合
  * @description 提供各种图表类型的配置选项生成函数
@@ -66,7 +66,7 @@ declare const Options: {
      * @param step - 阶梯类型
      * @returns 阶梯线图系列配置
      */
-    readonly lineToStepOption: (step: string) => LineSeriesOption;
+    readonly lineToStepOption: (step: LineSeriesOption["step"]) => LineSeriesOption;
     /**
      * 饼图基础配置
      * @returns 饼图系列配置
@@ -83,7 +83,7 @@ declare const Options: {
      * @param roseType - 玫瑰图类型
      * @returns 玫瑰图系列配置
      */
-    readonly pieToRoseOption: (roseType: RoseType) => PieSeriesOption;
+    readonly pieToRoseOption: (roseType: PieSeriesOption["roseType"]) => PieSeriesOption;
     /**
      * 散点图基础配置
      * @returns 散点图系列配置
@@ -199,7 +199,7 @@ declare const Options: {
      * @param series - 系列配置数组
      * @returns 完整的阶梯线图配置
      */
-    readonly lineChartToStep: (step: string | string[], series?: LineSeriesOption[]) => BaseChartOption;
+    readonly lineChartToStep: (step: LineSeriesOption["step"] | LineSeriesOption["step"][], series?: LineSeriesOption[]) => BaseChartOption;
     /**
      * 生成横向折线图完整配置
      * @param series - 系列配置数组
@@ -232,7 +232,7 @@ declare const Options: {
      * @param series - 系列配置数组
      * @returns 完整的横向阶梯线图配置
      */
-    readonly lineChartToStepValueToX: (step: string | string[], series?: LineSeriesOption[]) => BaseChartOption;
+    readonly lineChartToStepValueToX: (step: LineSeriesOption["step"] | LineSeriesOption["step"][], series?: LineSeriesOption[]) => BaseChartOption;
     /**
      * 生成饼图完整配置
      * @param series - 系列配置数组
@@ -252,7 +252,7 @@ declare const Options: {
      * @param series - 系列配置数组
      * @returns 完整的玫瑰图配置
      */
-    readonly pieChartToRose: (roseType: RoseType | RoseType[], series?: PieSeriesOption[]) => BaseChartOption;
+    readonly pieChartToRose: (roseType: PieSeriesOption["roseType"] | PieSeriesOption["roseType"][], series?: PieSeriesOption[]) => BaseChartOption;
     /**
      * 生成散点图完整配置
      * @param series - 系列配置数组

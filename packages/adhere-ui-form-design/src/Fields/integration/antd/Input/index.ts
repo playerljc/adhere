@@ -19,9 +19,20 @@ export function define(): DesignItem {
     hasFormProperty: true,
     hasActionsProperty: true,
     defaultValue: {
-      formItemProps: {},
+      formItemProps: {
+        hidden: false,
+        noStyle: false,
+        valuePropName: 'value',
+        validateFirst: false,
+        validateTrigger: 'onChange',
+      },
       fieldProps: {
         readOnly: true,
+        type: 'text',
+        allowClear: true,
+        disabled: false,
+        showCount: false,
+        size: 'middle',
       },
     },
   };

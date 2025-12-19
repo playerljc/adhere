@@ -8,12 +8,12 @@ import type { UsePrevious } from './types';
  * @template T - 值的类型
  * @param {T} value - 当前值
  * @returns {T | undefined} 返回上一次的值
- * 
+ *
  * @example
  * ```tsx
  * const [count, setCount] = useState(0);
  * const previousCount = usePrevious(count);
- * 
+ *
  * useEffect(() => {
  *   if (previousCount !== undefined && previousCount !== count) {
  *     console.log(`Count changed from ${previousCount} to ${count}`);
@@ -22,7 +22,7 @@ import type { UsePrevious } from './types';
  * ```
  */
 const usePrevious: UsePrevious = <T>(value: T): T | undefined => {
-  const ref = useRef<T>();
+  const ref = useRef<T>(undefined);
 
   useEffect(() => {
     ref.current = value;

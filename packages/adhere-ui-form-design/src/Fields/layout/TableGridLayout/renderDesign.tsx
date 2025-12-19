@@ -17,6 +17,8 @@ function TableGridLayoutDesign({ value }: { value: DesignValue }) {
 
   const style = useMemo(() => styleCodeStringToCSSProperties(styleProps ?? ''), [styleProps]);
 
+  console.log('fieldProps', fieldProps);
+
   return (
     <DesignFieldWrapper id={id}>
       <DroppableContainer id={id} value={value}>

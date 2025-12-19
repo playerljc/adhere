@@ -13,7 +13,7 @@ import {
   TableGridLayoutModeTypeSelectStandardDict,
   WhetherRadioHorizontalDict,
 } from '../../../components';
-import PropertiesGridLayout, { Label, Value } from '../../../components/PropertiesGridLayout';
+import PropertiesGridLayout, { Label, Value } from '../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../types';
 
 /**
@@ -36,7 +36,7 @@ function MainProperty(props: DesignValueProps) {
   const { fieldProps } = props;
   const gridLayoutProps: TableGridLayoutProps = fieldProps as TableGridLayoutProps;
 
-  function onFieldsChange(/*changedFields: FieldData[], allFields: FieldData[]*/) {
+  function onFieldsChange() {
     const { columnCount, width, ...rest } = form.getFieldsValue();
 
     setFieldProps(
@@ -56,7 +56,7 @@ function MainProperty(props: DesignValueProps) {
   useEffect(() => {
     // 设置控件的数据到表单
     form.setFieldsValue({
-      direction: gridLayoutProps.layout,
+      layout: gridLayoutProps.layout,
       bordered: gridLayoutProps.bordered,
       density: gridLayoutProps.density,
       mode: gridLayoutProps.mode,

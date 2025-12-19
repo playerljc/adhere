@@ -35,6 +35,8 @@ export interface SuspenseProps {
         children: ReactNode;
         loading: boolean;
     }) => ReactNode;
+    /** 是否需要首次加载数据 */
+    isUseFirstFetchData?: boolean;
 }
 /**
  * Suspense 基础状态

@@ -214,7 +214,7 @@ export default () => {
 | 属性 | 说明 | 类型 | 默认值 | 必填 |
 |------|------|------|--------|------|
 | metaData | 元数据，包含原始元素信息和尺寸 | `MetaData` | - | 否 |
-| renderBody | 渲染主体内容的函数 | `(ref: MutableRefObject<HTMLElement \| null>) => ReactElement` | - | 是 |
+| renderBody | 渲染主体内容的函数 | `(ref: RefObject<HTMLElement \| null>) => ReactElement` | - | 是 |
 | renderClip | 渲染裁剪区域内容的函数 | `() => ReactElement` | - | 否 |
 | items | 面板项目配置数组 | `Item[]` | - | 否 |
 | children | 自定义渲染函数 | `(bodyElement: ReactElement, newElements: ElementInfo[], items?: ReactElement[]) => ReactNode` | - | 否 |

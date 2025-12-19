@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, {
-  MutableRefObject,
+  RefObject,
   forwardRef,
   memo,
   useCallback,
@@ -46,7 +46,7 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
     const innerRef = useRef<HTMLDivElement | null>(null);
 
     useTheme<HTMLDivElement>({
-      elRef: innerRef as MutableRefObject<HTMLDivElement | null>,
+      elRef: innerRef as RefObject<HTMLDivElement | null>,
       group: 'normal',
       displayName: 'FlexLayout',
     });

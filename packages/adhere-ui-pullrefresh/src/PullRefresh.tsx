@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import debounce from 'lodash.debounce';
 import React, {
   type PropsWithoutRef,
+  ReactElement,
   type RefAttributes,
   forwardRef,
   memo,
@@ -22,11 +23,7 @@ import Intl from '@baifendian/adhere-util-intl';
 import Resource from '@baifendian/adhere-util-resource';
 import { ResizeObserver } from '@juggle/resize-observer';
 
-import type { 
-  PullRefreshProps, 
-  PullRefreshRefHandle, 
-  PullRefreshState 
-} from './types';
+import type { PullRefreshProps, PullRefreshRefHandle, PullRefreshState } from './types';
 
 const selectorPrefix = 'adhere-ui-pull-refresh';
 
@@ -43,7 +40,7 @@ const { useSetState } = Hooks;
 /**
  * PullRefresh 组件
  * 提供下拉刷新功能的 React 组件
- * 
+ *
  * @param props - 组件属性
  * @param ref - 组件引用
  * @returns JSX.Element
@@ -63,13 +60,15 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
       updateTimeFormat = Resource.Dict.value.ResourceMomentFormat18?.value(),
       children,
     } = props;
-    
+
     const update = useUpdate();
 
     // 引用对象
     const ro = useRef<ResizeObserver>({} as ResizeObserver);
     const [isCanRef, setCan] = useSetState<PullRefreshState['isCanRef']>(false);
-    const [preUpdateTimeRef, setPreUpdateTime] = useSetState<PullRefreshState['preUpdateTime']>(dayjs().valueOf());
+    const [preUpdateTimeRef, setPreUpdateTime] = useSetState<PullRefreshState['preUpdateTime']>(
+      dayjs().valueOf(),
+    );
 
     // DOM 元素引用
     const rootEl = useRef<HTMLDivElement>(null);
@@ -98,7 +97,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
      * @returns JSX.Element
      */
     const _renderIcon = useCallback(
-      (): JSX.Element => (
+      (): ReactElement => (
         <ConditionalRender
           conditional={!!renderIcon}
           noMatch={() => (
@@ -129,7 +128,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
      * @returns JSX.Element
      */
     const _renderLabel = useCallback(
-      (): JSX.Element => (
+      (): ReactElement => (
         <p className={`${selectorPrefix}-trigger-label`}>
           <ConditionalRender conditional={isCanRef.current} noMatch={() => renderLabel?.()}>
             {() => renderCanLabel?.()}
@@ -141,10 +140,10 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
 
     /**
      * 渲染更新时间
-     * @returns JSX.Element
+     * @returns ReactElement
      */
     const renderUpdateTime = useCallback(
-      (): JSX.Element => (
+      (): ReactElement => (
         <ConditionalRender conditional={isShowUpdateTime}>
           {() => (
             <p className={`${selectorPrefix}-trigger-update`}>
@@ -161,10 +160,10 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
 
     /**
      * 渲染加载动画
-     * @returns JSX.Element
+     * @returns ReactElement
      */
     const _renderLoadingAnimation = useCallback(
-      (): JSX.Element => (
+      (): ReactElement => (
         <ConditionalRender conditional={!!renderLoadingAnimation}>
           {() => (
             <ConditionalRender
@@ -228,7 +227,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
       if (!scrollElement) return 200;
 
       const height = propPullHeight || 200;
-      
+
       if (height <= 0) {
         return 200;
       } else if (height > scrollElement.clientHeight) {
@@ -255,14 +254,21 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
      * @param action - 回调函数名称
      * @param params - 回调参数
      */
-    const trigger = useCallback((action: keyof Pick<PullRefreshProps, 
-      'onPullStart' | 'onPullCanRefresh' | 'onPullRefresh' | 'onPullBottom' | 'onPullRebound'>, 
-      params?: any): void => {
-      const callback = props[action];
-      if (typeof callback === 'function') {
-        callback();
-      }
-    }, [props]);
+    const trigger = useCallback(
+      (
+        action: keyof Pick<
+          PullRefreshProps,
+          'onPullStart' | 'onPullCanRefresh' | 'onPullRefresh' | 'onPullBottom' | 'onPullRebound'
+        >,
+        params?: any,
+      ): void => {
+        const callback = props[action];
+        if (typeof callback === 'function') {
+          callback();
+        }
+      },
+      [props],
+    );
 
     /**
      * 设置元素的 Y 轴平移
@@ -374,11 +380,14 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
      * @param updateTime - 新的更新时间戳
      * @returns Promise<void>
      */
-    const resetUpdateTime = useCallback((updateTime: number): Promise<void> => {
-      return new Promise((resolve) =>
-        setPreUpdateTime(updateTime || dayjs().valueOf(), () => resolve()),
-      );
-    }, [setPreUpdateTime]);
+    const resetUpdateTime = useCallback(
+      (updateTime: number): Promise<void> => {
+        return new Promise((resolve) =>
+          setPreUpdateTime(updateTime || dayjs().valueOf(), () => resolve()),
+        );
+      },
+      [setPreUpdateTime],
+    );
 
     /**
      * 获取当前更新时间
@@ -403,133 +412,151 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
      * 触摸开始事件处理
      * @param e - 触摸事件
      */
-    const onTouchStart = useCallback((e: TouchEvent | MouseEvent): void => {
-      trigger('onPullStart');
+    const onTouchStart = useCallback(
+      (e: TouchEvent | MouseEvent): void => {
+        trigger('onPullStart');
 
-      const touchEvent = e as TouchEvent;
-      const mouseEvent = e as MouseEvent;
-      startPageY.current = touchEvent.changedTouches ? touchEvent.changedTouches[0].pageY : mouseEvent.pageY;
+        const touchEvent = e as TouchEvent;
+        const mouseEvent = e as MouseEvent;
+        startPageY.current = touchEvent.changedTouches
+          ? touchEvent.changedTouches[0].pageY
+          : mouseEvent.pageY;
 
-      const scrollElement = scrollEl.current;
-      if (!scrollElement) return;
+        const scrollElement = scrollEl.current;
+        if (!scrollElement) return;
 
-      scrollElement.addEventListener('touchmove', onTouchMove);
-      scrollElement.addEventListener('mousemove', onTouchMove);
-      scrollElement.addEventListener('touchend', onTouchEnd);
-      scrollElement.addEventListener('mouseup', onTouchEnd);
-    }, [trigger]);
+        scrollElement.addEventListener('touchmove', onTouchMove);
+        scrollElement.addEventListener('mousemove', onTouchMove);
+        scrollElement.addEventListener('touchend', onTouchEnd);
+        scrollElement.addEventListener('mouseup', onTouchEnd);
+      },
+      [trigger],
+    );
 
     /**
      * 触摸移动事件处理
      * @param e - 触摸事件
      */
-    const onTouchMove = useCallback((e: TouchEvent | MouseEvent): void => {
-      const scrollElement = scrollEl.current as HTMLElement;
-      if (!scrollElement) return;
+    const onTouchMove = useCallback(
+      (e: TouchEvent | MouseEvent): void => {
+        const scrollElement = scrollEl.current as HTMLElement;
+        if (!scrollElement) return;
 
-      scrollElement.style.overflow = 'hidden';
+        scrollElement.style.overflow = 'hidden';
 
-      const touchEvent = e as TouchEvent;
-      const mouseEvent = e as MouseEvent;
-      const targetY = touchEvent.changedTouches ? touchEvent.changedTouches[0].pageY : mouseEvent.pageY;
-      const difference = targetY - startPageY.current;
-      const distance = Math.abs(difference);
+        const touchEvent = e as TouchEvent;
+        const mouseEvent = e as MouseEvent;
+        const targetY = touchEvent.changedTouches
+          ? touchEvent.changedTouches[0].pageY
+          : mouseEvent.pageY;
+        const difference = targetY - startPageY.current;
+        const distance = Math.abs(difference);
 
-      // 向下拉动
-      if (difference > 0) {
-        e.preventDefault();
-        isDownPull.current = true;
+        // 向下拉动
+        if (difference > 0) {
+          e.preventDefault();
+          isDownPull.current = true;
 
-        // 正常拉动范围
-        if (distance < pullHeight.current) {
-          const elElement = el.current as HTMLDivElement;
-          
-          translateY(scrollElement, `${distance}px`, 0);
-          translateY(elElement, `calc(-100% + ${distance}px)`, 0);
+          // 正常拉动范围
+          if (distance < pullHeight.current) {
+            const elElement = el.current as HTMLDivElement;
 
-          // 达到刷新条件
-          if (distance >= refreshHeight.current + 80) {
-            if (iconEl.current) rotateIcon(iconEl.current, 0, 150);
-            setCan(true, () => trigger('onPullCanRefresh'));
+            translateY(scrollElement, `${distance}px`, 0);
+            translateY(elElement, `calc(-100% + ${distance}px)`, 0);
+
+            // 达到刷新条件
+            if (distance >= refreshHeight.current + 80) {
+              if (iconEl.current) rotateIcon(iconEl.current, 0, 150);
+              setCan(true, () => trigger('onPullCanRefresh'));
+            } else {
+              if (iconEl.current) rotateIcon(iconEl.current, 180, 150);
+              setCan(false);
+            }
+
+            if (el.current) el.current.style.display = 'flex';
           } else {
-            if (iconEl.current) rotateIcon(iconEl.current, 180, 150);
-            setCan(false);
+            // 超出拉动范围
+            const elElement = el.current as HTMLDivElement;
+
+            translateY(scrollElement, `${pullHeight.current}px`, 0);
+            translateY(elElement, `calc(-100% + ${pullHeight.current}px)`, 0);
+
+            if (iconEl.current) rotateIcon(iconEl.current, 0, 150);
+            setCan(true, () => trigger('onPullBottom'));
           }
+        } else if (isDownPull.current) {
+          // 向上回弹
+          e.preventDefault();
 
-          if (el.current) el.current.style.display = 'flex';
-        } else {
-          // 超出拉动范围
           const elElement = el.current as HTMLDivElement;
-          
-          translateY(scrollElement, `${pullHeight.current}px`, 0);
-          translateY(elElement, `calc(-100% + ${pullHeight.current}px)`, 0);
 
-          if (iconEl.current) rotateIcon(iconEl.current, 0, 150);
-          setCan(true, () => trigger('onPullBottom'));
+          translateY(scrollElement, '0px', 0);
+          translateY(elElement, 'calc(-100% + 0px)', 0);
+
+          if (iconEl.current) rotateIcon(iconEl.current, 180, 0);
+        } else {
+          clear();
         }
-      } else if (isDownPull.current) {
-        // 向上回弹
-        e.preventDefault();
-
-        const elElement = el.current as HTMLDivElement;
-        
-        translateY(scrollElement, '0px', 0);
-        translateY(elElement, 'calc(-100% + 0px)', 0);
-
-        if (iconEl.current) rotateIcon(iconEl.current, 180, 0);
-      } else {
-        clear();
-      }
-    }, [pullHeight, refreshHeight, setCan, trigger, translateY, rotateIcon, clear]);
+      },
+      [pullHeight, refreshHeight, setCan, trigger, translateY, rotateIcon, clear],
+    );
 
     /**
      * 触摸结束事件处理
      * @param e - 触摸事件
      */
-    const onTouchEnd = useCallback((e: TouchEvent | MouseEvent): void => {
-      const touchEvent = e as TouchEvent;
-      const mouseEvent = e as MouseEvent;
-      const targetY = touchEvent.changedTouches ? touchEvent.changedTouches[0].pageY : mouseEvent.pageY;
-      const difference = targetY - startPageY.current;
-      const distance = Math.abs(difference);
+    const onTouchEnd = useCallback(
+      (e: TouchEvent | MouseEvent): void => {
+        const touchEvent = e as TouchEvent;
+        const mouseEvent = e as MouseEvent;
+        const targetY = touchEvent.changedTouches
+          ? touchEvent.changedTouches[0].pageY
+          : mouseEvent.pageY;
+        const difference = targetY - startPageY.current;
+        const distance = Math.abs(difference);
 
-      // 向下拉动
-      if (difference > 0) {
-        // 正常拉动范围
-        if (distance < pullHeight.current) {
-          if (distance >= refreshHeight.current + 80) {
-            refresh();
+        // 向下拉动
+        if (difference > 0) {
+          // 正常拉动范围
+          if (distance < pullHeight.current) {
+            if (distance >= refreshHeight.current + 80) {
+              refresh();
+            } else {
+              trigger('onPullRebound');
+              reset();
+            }
           } else {
-            trigger('onPullRebound');
-            reset();
+            refresh();
           }
         } else {
-          refresh();
+          clear();
         }
-      } else {
-        clear();
-      }
-    }, [pullHeight, refreshHeight, refresh, trigger, reset, clear]);
+      },
+      [pullHeight, refreshHeight, refresh, trigger, reset, clear],
+    );
 
     /**
      * 滚动事件处理
      * @param e - 滚动事件
      */
-    const onScroll = useCallback((e: Event): void => {
-      const scrollElement = scrollEl.current;
-      if (!scrollElement) return;
+    const onScroll = useCallback(
+      (e: Event): void => {
+        const scrollElement = scrollEl.current;
+        if (!scrollElement) return;
 
-      const target = e.target as HTMLElement;
-      if (target.scrollTop === 0) {
-        isTop.current = true;
-        scrollElement.addEventListener('touchstart', onTouchStart);
-        scrollElement.addEventListener('mousedown', onTouchStart);
-      } else if (isTop.current) {
-        isTop.current = false;
-        scrollElement.removeEventListener('touchstart', onTouchStart);
-        scrollElement.removeEventListener('mousedown', onTouchStart);
-      }
-    }, [onTouchStart]);
+        const target = e.target as HTMLElement;
+        if (target.scrollTop === 0) {
+          isTop.current = true;
+          scrollElement.addEventListener('touchstart', onTouchStart);
+          scrollElement.addEventListener('mousedown', onTouchStart);
+        } else if (isTop.current) {
+          isTop.current = false;
+          scrollElement.removeEventListener('touchstart', onTouchStart);
+          scrollElement.removeEventListener('mousedown', onTouchStart);
+        }
+      },
+      [onTouchStart],
+    );
 
     /**
      * 初始化组件尺寸
@@ -543,12 +570,16 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
     }, [getPullHeight]);
 
     // 暴露组件方法
-    useImperativeHandle(ref, () => ({
-      refresh,
-      reset,
-      resetUpdateTime,
-      getUpdateTime,
-    }), [refresh, reset, resetUpdateTime, getUpdateTime]);
+    useImperativeHandle(
+      ref,
+      () => ({
+        refresh,
+        reset,
+        resetUpdateTime,
+        getUpdateTime,
+      }),
+      [refresh, reset, resetUpdateTime, getUpdateTime],
+    );
 
     // 监听更新时间变化
     useEffect(() => {

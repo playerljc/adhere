@@ -36,19 +36,19 @@ function isArray(element: unknown): element is unknown[] {
  * @param value - CSS属性值
  * @returns 处理后的React元素
  */
-function processElementStyle(
-  element: ReactElement,
-  prop: string,
-  value: string,
-): ReactElement {
+function processElementStyle(element: ReactElement, prop: string, value: string): ReactElement {
   const { props } = element;
-  
+
   // 如果没有style属性，创建一个空的style对象
-  const newStyle = props.style ? { ...props.style } : {};
+  const newStyle = (props as any).style ? { ...(props as any).style } : {};
   newStyle[prop] = value;
 
   // 克隆元素并应用新的style
-  return React.cloneElement(element, { ...props, style: newStyle }, props.children);
+  return React.cloneElement(
+    element,
+    { ...(props as any), style: newStyle },
+    (props as any).children,
+  );
 }
 
 /**
@@ -73,17 +73,13 @@ function processElementArrayStyle(
  * @param value - CSS属性值
  * @returns 处理后的React Fragment
  */
-function processFragmentStyle(
-  fragment: ReactElement,
-  prop: string,
-  value: string,
-): ReactElement {
+function processFragmentStyle(fragment: ReactElement, prop: string, value: string): ReactElement {
   const { props } = fragment;
-  const processedChildren = processElement(props.children, prop, value);
-  
+  const processedChildren = processElement((props as any).children, prop, value);
+
   return React.cloneElement(
     fragment,
-    { ...props, children: processedChildren },
+    { ...(props as any), children: processedChildren },
     processedChildren as ReactElement[],
   );
 }
@@ -95,11 +91,7 @@ function processFragmentStyle(
  * @param value - CSS属性值
  * @returns 处理后的元素
  */
-function processElement(
-  element: ReactNode,
-  prop: string,
-  value: string,
-): DealResult {
+function processElement(element: ReactNode, prop: string, value: string): DealResult {
   if (!element) {
     return element as DealResult;
   }
@@ -119,7 +111,7 @@ function processElement(
     if (isReactFragment(element)) {
       return processFragmentStyle(element, prop, value);
     }
-    
+
     // 处理普通React元素
     return processElementStyle(element, prop, value);
   }
@@ -137,7 +129,7 @@ function processElement(
  * @param params.prop - CSS属性名
  * @param params.value - CSS属性值
  * @returns 处理后的React元素或元素数组
- * 
+ *
  * @example
  * ```tsx
  * // 隐藏元素
@@ -147,7 +139,7 @@ function processElement(
  *   prop: 'display',
  *   value: 'none'
  * });
- * 
+ *
  * // 显示元素
  * deal({
  *   element: <div>内容</div>,
@@ -157,11 +149,6 @@ function processElement(
  * });
  * ```
  */
-export function deal({
-  element,
-  conditional,
-  prop,
-  value,
-}: Deal): DealResult {
+export function deal({ element, conditional, prop, value }: Deal): DealResult {
   return processElement(element, prop, value);
 }

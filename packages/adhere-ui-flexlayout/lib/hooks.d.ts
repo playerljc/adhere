@@ -1,4 +1,4 @@
-import React, { MutableRefObject } from 'react';
+import React, { RefObject } from 'react';
 import type { FixedProps, GutterType } from './types';
 /**
  * 判断是否使用了栅格系统
@@ -17,7 +17,7 @@ export declare const useGap: (gutter: GutterType) => boolean;
  */
 interface UseTriggerParams extends Pick<FixedProps, 'trigger' | 'collapseDirection' | 'collapsedSize' | 'defaultCollapsible' | 'onCollapse'> {
     /** 元素引用 */
-    elRef: MutableRefObject<HTMLDivElement | null>;
+    elRef: RefObject<HTMLDivElement | null>;
     /** 选择器前缀 */
     selectorPrefix: string;
 }

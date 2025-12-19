@@ -14,7 +14,7 @@ import {
 } from 'echarts/charts';
 
 import merge from './merge';
-import type { AreaStyle, Radius, RoseType, BaseChartOption } from './types';
+import type { AreaStyle, BaseChartOption, Radius } from './types';
 
 /**
  * ECharts 配置选项集合
@@ -141,7 +141,7 @@ const Options = {
    * @param step - 阶梯类型
    * @returns 阶梯线图系列配置
    */
-  lineToStepOption: (step: string): LineSeriesOption =>
+  lineToStepOption: (step: LineSeriesOption['step']): LineSeriesOption =>
     merge(Options.lineOption(), {
       step,
     }),
@@ -173,7 +173,7 @@ const Options = {
    * @param roseType - 玫瑰图类型
    * @returns 玫瑰图系列配置
    */
-  pieToRoseOption: (roseType: RoseType): PieSeriesOption =>
+  pieToRoseOption: (roseType: PieSeriesOption['roseType']): PieSeriesOption =>
     merge(Options.pieOption(), {
       roseType,
     }),
@@ -348,7 +348,10 @@ const Options = {
    * @param series - 系列配置数组
    * @returns 完整的横向堆叠柱状图配置
    */
-  barChartToStackValueToX: (stack: string | string[], series?: BarSeriesOption[]): BaseChartOption => {
+  barChartToStackValueToX: (
+    stack: string | string[],
+    series?: BarSeriesOption[],
+  ): BaseChartOption => {
     if (!series || !series.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToXOption(),
@@ -434,7 +437,10 @@ const Options = {
    * @param series - 系列配置数组
    * @returns 完整的区域面积图配置
    */
-  lineChartToArea: (areaStyle: AreaStyle | AreaStyle[], series?: LineSeriesOption[]): BaseChartOption => {
+  lineChartToArea: (
+    areaStyle: AreaStyle | AreaStyle[],
+    series?: LineSeriesOption[],
+  ): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToYOption(),
@@ -475,18 +481,21 @@ const Options = {
    * @param series - 系列配置数组
    * @returns 完整的阶梯线图配置
    */
-  lineChartToStep: (step: string | string[], series?: LineSeriesOption[]): BaseChartOption => {
+  lineChartToStep: (
+    step: LineSeriesOption['step'] | LineSeriesOption['step'][],
+    series?: LineSeriesOption[],
+  ): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToYOption(),
-        series: [Options.lineToStepOption(step as string)],
+        series: [Options.lineToStepOption(step as LineSeriesOption['step'])],
       });
     }
 
     return merge(Options.baseOption(), {
       ...Options.valueToYOption(),
       series: series.map((s, _index) =>
-        merge(Options.lineToStepOption((step as string)[_index]), s),
+        merge(Options.lineToStepOption((step as LineSeriesOption['step'][])[_index]), s),
       ),
     });
   },
@@ -516,7 +525,10 @@ const Options = {
    * @param series - 系列配置数组
    * @returns 完整的横向堆叠折线图配置
    */
-  lineChartToStackValueToX: (stack: string | string[], series?: LineSeriesOption[]): BaseChartOption => {
+  lineChartToStackValueToX: (
+    stack: string | string[],
+    series?: LineSeriesOption[],
+  ): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToXOption(),
@@ -538,7 +550,10 @@ const Options = {
    * @param series - 系列配置数组
    * @returns 完整的横向区域面积图配置
    */
-  lineChartToAreaValueToX: (areaStyle: AreaStyle | AreaStyle[], series?: LineSeriesOption[]): BaseChartOption => {
+  lineChartToAreaValueToX: (
+    areaStyle: AreaStyle | AreaStyle[],
+    series?: LineSeriesOption[],
+  ): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToXOption(),
@@ -579,18 +594,21 @@ const Options = {
    * @param series - 系列配置数组
    * @returns 完整的横向阶梯线图配置
    */
-  lineChartToStepValueToX: (step: string | string[], series?: LineSeriesOption[]): BaseChartOption => {
+  lineChartToStepValueToX: (
+    step: LineSeriesOption['step'] | LineSeriesOption['step'][],
+    series?: LineSeriesOption[],
+  ): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
         ...Options.valueToXOption(),
-        series: [Options.lineToStepOption(step as string)],
+        series: [Options.lineToStepOption(step as LineSeriesOption['step'])],
       });
     }
 
     return merge(Options.baseOption(), {
       ...Options.valueToXOption(),
       series: series.map((s, _index) =>
-        merge(Options.lineToStepOption((step as string[])[_index]), s),
+        merge(Options.lineToStepOption((step as LineSeriesOption['step'][])[_index]), s),
       ),
     });
   },
@@ -642,16 +660,19 @@ const Options = {
    * @param series - 系列配置数组
    * @returns 完整的玫瑰图配置
    */
-  pieChartToRose: (roseType: RoseType | RoseType[], series?: PieSeriesOption[]): BaseChartOption => {
+  pieChartToRose: (
+    roseType: PieSeriesOption['roseType'] | PieSeriesOption['roseType'][],
+    series?: PieSeriesOption[],
+  ): BaseChartOption => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
-        series: [Options.pieToRoseOption(roseType as RoseType)],
+        series: [Options.pieToRoseOption(roseType as PieSeriesOption['roseType'])],
       });
     }
 
     return merge(Options.baseOption(), {
       series: series.map((s, _index) =>
-        merge(Options.pieToRoseOption((roseType as RoseType[])[_index]), s),
+        merge(Options.pieToRoseOption((roseType as PieSeriesOption['roseType'][])[_index]), s),
       ),
     });
   },

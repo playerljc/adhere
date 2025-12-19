@@ -1,10 +1,10 @@
-import type { ForwardedRef, MutableRefObject } from 'react';
+import type { ForwardedRef, RefObject } from 'react';
 /**
  * useTheme 钩子参数接口
  */
 export interface UseThemeParams<T extends HTMLElement> {
     /** 元素引用 */
-    elRef: MutableRefObject<T | null | undefined> | ForwardedRef<T | null | undefined> | MutableRefObject<T | null | undefined>[];
+    elRef: RefObject<T | null | undefined> | ForwardedRef<T | null | undefined> | RefObject<T | null | undefined>[];
     /** 组件分组 */
     group: string;
     /** 组件显示名称 */

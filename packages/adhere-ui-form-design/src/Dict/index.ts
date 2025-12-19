@@ -5,6 +5,7 @@ import { Density } from './Density';
 import { Direction } from './Direction';
 import { FocusEvents } from './FocusEvents';
 import { InputEvents } from './InputEvents';
+import { InputSize } from './InputSize';
 import { InputType } from './InputType';
 import { KeyboardEvents } from './KeyboardEvents';
 import { MouseEvents } from './MouseEvents';
@@ -28,6 +29,7 @@ const dictImpls = {
   Rules,
   TableGridLayoutModeType,
   ValuePropName,
+  InputSize,
 };
 
 const { names, values } = genModuleDict(dictImpls);

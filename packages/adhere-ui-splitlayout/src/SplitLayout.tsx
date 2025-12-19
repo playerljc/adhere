@@ -1,17 +1,17 @@
 import classNames from 'classnames';
-import React, { memo, useContext, useLayoutEffect, useRef, useCallback } from 'react';
+import React, { memo, useCallback, useContext, useLayoutEffect, useRef } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
 import * as TRBLC from './TRBLC';
-import type { 
-  SplitLayoutComponent, 
-  SplitLayoutProps, 
-  DragEventParams,
+import type {
   DirectionProps,
+  DragEventParams,
   FixedElementPosition,
-  ResizeCursor
+  ResizeCursor,
+  SplitLayoutComponent,
+  SplitLayoutProps,
 } from './types';
 
 const FlexContext = FlexLayout.Context;
@@ -56,7 +56,7 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
   const el = useRef<HTMLDivElement | null>(null);
   const fixedEl = useRef<HTMLElement | null>(null);
   const autoEl = useRef<HTMLElement | null>(null);
-  const containerEl = useRef<HTMLElement | null>();
+  const containerEl = useRef<HTMLElement | null>(null);
 
   // 支持的分割线组合情况
   const situation = useRef(
@@ -142,7 +142,7 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
    * @returns 方向属性配置
    */
   const getProps = useCallback((): DirectionProps => {
-    return direction === 'vertical' 
+    return direction === 'vertical'
       ? { page: 'pageY', dimension: 'height', offset: 'offsetHeight' }
       : { page: 'pageX', dimension: 'width', offset: 'offsetWidth' };
   }, [direction]);
@@ -219,125 +219,146 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
    * @param targetValue - 目标尺寸
    * @returns 拖拽事件参数
    */
-  const createDragEventParams = useCallback((event: MouseEvent, targetValue: number): DragEventParams => {
-    const { page } = getProps();
-    return {
-      event,
-      currentPosition: event[page],
-      startPosition: startVal.current,
-      delta: changeVal.current,
-      targetSize: targetValue,
-    };
-  }, [getProps]);
+  const createDragEventParams = useCallback(
+    (event: MouseEvent, targetValue: number): DragEventParams => {
+      const { page } = getProps();
+      return {
+        event,
+        currentPosition: event[page],
+        startPosition: startVal.current,
+        delta: changeVal.current,
+        targetSize: targetValue,
+      };
+    },
+    [getProps],
+  );
 
   /**
    * 鼠标进入事件处理
    * @param e - 鼠标事件
    */
-  const onMouseenter = useCallback((e: MouseEvent) => {
-    el.current?.classList.add(`${selectorPrefix}-${getResizeClass()}`);
-    isOut.current = false;
-    isEnter.current = true;
-    onCanDrag?.(createDragEventParams(e, 0));
-  }, [getResizeClass, onCanDrag, createDragEventParams]);
+  const onMouseenter = useCallback(
+    (e: MouseEvent) => {
+      el.current?.classList.add(`${selectorPrefix}-${getResizeClass()}`);
+      isOut.current = false;
+      isEnter.current = true;
+      onCanDrag?.(createDragEventParams(e, 0));
+    },
+    [getResizeClass, onCanDrag, createDragEventParams],
+  );
 
   /**
    * 鼠标按下事件处理
    * @param e - 鼠标事件
    */
-  const onMousedown = useCallback((e: MouseEvent) => {
-    el.current?.classList.remove(`${selectorPrefix}-${getResizeClass()}`);
+  const onMousedown = useCallback(
+    (e: MouseEvent) => {
+      el.current?.classList.remove(`${selectorPrefix}-${getResizeClass()}`);
 
-    if (isEnter.current) {
-      isDown.current = true;
-      startVal.current = e[getProps().page];
-      fixedValue.current = fixedEl.current?.[getProps().offset] || 0;
-      onDragStarted?.(createDragEventParams(e, 0));
-    }
-  }, [getResizeClass, getProps, onDragStarted, createDragEventParams]);
+      if (isEnter.current) {
+        isDown.current = true;
+        startVal.current = e[getProps().page];
+        fixedValue.current = fixedEl.current?.[getProps().offset] || 0;
+        onDragStarted?.(createDragEventParams(e, 0));
+      }
+    },
+    [getResizeClass, getProps, onDragStarted, createDragEventParams],
+  );
 
   /**
    * 鼠标抬起事件处理
    * @param e - 鼠标事件
    */
-  const onMouseup = useCallback((e: MouseEvent) => {
-    el.current?.classList.add(`${selectorPrefix}-${getResizeClass()}`);
+  const onMouseup = useCallback(
+    (e: MouseEvent) => {
+      el.current?.classList.add(`${selectorPrefix}-${getResizeClass()}`);
 
-    if (isDown.current) {
-      isDown.current = false;
-      isMove.current = false;
-      isEnter.current = !isOut.current;
-      startVal.current = 0;
-      changeBaseVal.current = changeBaseVal.current + changeVal.current;
-      onDragFinished?.(createDragEventParams(e, 0));
-    }
-  }, [getResizeClass, onDragFinished, createDragEventParams]);
+      if (isDown.current) {
+        isDown.current = false;
+        isMove.current = false;
+        isEnter.current = !isOut.current;
+        startVal.current = 0;
+        changeBaseVal.current = changeBaseVal.current + changeVal.current;
+        onDragFinished?.(createDragEventParams(e, 0));
+      }
+    },
+    [getResizeClass, onDragFinished, createDragEventParams],
+  );
 
   /**
    * 鼠标离开容器事件处理
    * @param e - 鼠标事件
    */
-  const onMouseleave = useCallback((e: MouseEvent) => {
-    if (isDown.current) {
-      isDown.current = false;
-      isMove.current = false;
-      isEnter.current = false;
-      startVal.current = 0;
-      changeBaseVal.current += changeVal.current;
-      onDragFinished?.(createDragEventParams(e, 0));
-    }
-  }, [onDragFinished, createDragEventParams]);
+  const onMouseleave = useCallback(
+    (e: MouseEvent) => {
+      if (isDown.current) {
+        isDown.current = false;
+        isMove.current = false;
+        isEnter.current = false;
+        startVal.current = 0;
+        changeBaseVal.current += changeVal.current;
+        onDragFinished?.(createDragEventParams(e, 0));
+      }
+    },
+    [onDragFinished, createDragEventParams],
+  );
 
   /**
    * 鼠标移动事件处理
    * @param e - 鼠标事件
    */
-  const onMousemove = useCallback((e: MouseEvent) => {
-    if (isEnter.current && isDown.current) {
-      isMove.current = true;
+  const onMousemove = useCallback(
+    (e: MouseEvent) => {
+      if (isEnter.current && isDown.current) {
+        isMove.current = true;
 
-      const { page } = getProps();
-      const end = e[page];
-      changeVal.current = end - startVal.current;
+        const { page } = getProps();
+        const end = e[page];
+        changeVal.current = end - startVal.current;
 
-      const position = getFixedElPosition();
-      const computedValue =
-        position === 'prev'
-          ? fixedValue.current + changeVal.current
-          : fixedValue.current - changeVal.current;
+        const position = getFixedElPosition();
+        const computedValue =
+          position === 'prev'
+            ? fixedValue.current + changeVal.current
+            : fixedValue.current - changeVal.current;
 
-      const maxSize = getMaxSize();
-      const minSize = getMinSize();
+        const maxSize = getMaxSize();
+        const minSize = getMinSize();
 
-      let targetValue: number;
-      if (computedValue >= maxSize) {
-        targetValue = maxSize;
-      } else if (computedValue <= minSize) {
-        targetValue = minSize;
-      } else {
-        targetValue = computedValue;
+        let targetValue: number;
+        if (computedValue >= maxSize) {
+          targetValue = maxSize;
+        } else if (computedValue <= minSize) {
+          targetValue = minSize;
+        } else {
+          targetValue = computedValue;
+        }
+
+        if (fixedEl.current) {
+          fixedEl.current.style[getProps().dimension] = `${targetValue}px`;
+        }
+
+        onChange?.(createDragEventParams(e, targetValue));
       }
-
-      if (fixedEl.current) {
-        fixedEl.current.style[getProps().dimension] = `${targetValue}px`;
-      }
-
-      onChange?.(createDragEventParams(e, targetValue));
-    }
-  }, [getProps, getFixedElPosition, getMaxSize, getMinSize, onChange, createDragEventParams]);
+    },
+    [getProps, getFixedElPosition, getMaxSize, getMinSize, onChange, createDragEventParams],
+  );
 
   /**
    * 鼠标离开事件处理
    * @param e - 鼠标事件
    */
-  const onMouseout = useCallback((e: MouseEvent) => {
-    isOut.current = true;
+  const onMouseout = useCallback(
+    (e: MouseEvent) => {
+      isOut.current = true;
 
-    if (!isDown.current) {
-      isEnter.current = false;
-      onOut?.(createDragEventParams(e, 0));
-    }
-  }, [onOut, createDragEventParams]);
+      if (!isDown.current) {
+        isEnter.current = false;
+        onOut?.(createDragEventParams(e, 0));
+      }
+    },
+    [onOut, createDragEventParams],
+  );
 
   /**
    * 初始化事件监听器
@@ -349,7 +370,7 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
     el.current?.addEventListener('mouseenter', onMouseenter);
     el.current?.addEventListener('mousedown', onMousedown);
 
-    elements.forEach(element => {
+    elements.forEach((element) => {
       element.addEventListener('mousemove', onMousemove);
       element.addEventListener('mouseout', onMouseout);
       element.addEventListener('mouseup', onMouseup);
@@ -368,7 +389,7 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
     el.current?.removeEventListener('mouseenter', onMouseenter);
     el.current?.removeEventListener('mousedown', onMousedown);
 
-    elements.forEach(element => {
+    elements.forEach((element) => {
       element.removeEventListener('mousemove', onMousemove);
       element.removeEventListener('mouseout', onMouseout);
       element.removeEventListener('mouseup', onMouseup);

@@ -28,4 +28,4 @@ import type { Deal, DealResult } from './types';
  * });
  * ```
  */
-export declare function deal({ element, conditional, prop, value, }: Deal): DealResult;
+export declare function deal({ element, conditional, prop, value }: Deal): DealResult;

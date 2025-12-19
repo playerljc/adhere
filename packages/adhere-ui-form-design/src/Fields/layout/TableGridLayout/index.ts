@@ -18,5 +18,14 @@ export function define(): DesignItem {
     hasActionsProperty: false,
     layoutReducerToAdd,
     layoutReducerToRemove,
+    defaultValue: {
+      fieldProps: {
+        layout: 'vertical',
+        bordered: false,
+        density: 'default',
+        mode: 'normal',
+        columnCount: 2,
+      },
+    },
   };
 }

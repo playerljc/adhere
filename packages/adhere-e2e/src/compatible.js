@@ -1,7 +1,7 @@
 import { unstableSetRender } from 'antd-mobile/es/utils/unstable-render';
 import { createRoot } from 'react-dom/client';
 
-import '@ant-design/v5-patch-for-react-19';
+// import '@ant-design/v5-patch-for-react-19';
 
 unstableSetRender((node, container) => {
   container._reactRoot ||= createRoot(container);

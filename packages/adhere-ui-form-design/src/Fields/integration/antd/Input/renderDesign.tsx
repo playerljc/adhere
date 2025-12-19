@@ -47,7 +47,12 @@ function ValueDesign({
     <Value>
       <DesignFieldWrapper id={id}>
         <Form.Item {...formProps}>
-          <Input {...(fieldProps as InputProps)} style={style ?? {}} {...actions} />
+          <Input
+            {...(fieldProps as InputProps)}
+            style={style ?? {}}
+            {...actions}
+            value={(formItemProps as InputProps)?.value}
+          />
         </Form.Item>
       </DesignFieldWrapper>
     </Value>

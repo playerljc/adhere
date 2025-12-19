@@ -5,7 +5,7 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../Design/Context';
 import { MonacoEditorFormItem } from '../../../components';
-import PropertiesGridLayout, { Label, Value } from '../../../components/PropertiesGridLayout';
+import PropertiesGridLayout, { Label, Value } from '../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../types';
 
 /**

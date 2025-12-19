@@ -1,11 +1,11 @@
 import { useLatest } from 'ahooks';
-import { type Dispatch, type MutableRefObject, type SetStateAction, useState } from 'react';
+import { type Dispatch, type RefObject, type SetStateAction, useState } from 'react';
 
 /**
  * useLatestState hook 返回类型
  * @template S - 状态类型
  */
-type UseLatestStateReturn<S> = [MutableRefObject<S>, Dispatch<SetStateAction<S>>];
+type UseLatestStateReturn<S> = [RefObject<S>, Dispatch<SetStateAction<S>>];
 
 /**
  * useLatestState hook
@@ -33,7 +33,7 @@ function useLatestState<S>(initialState: S | (() => S)): UseLatestStateReturn<S>
   // 显式指定useLatest的泛型类型为S
   const latestRef = useLatest<S>(value);
 
-  return [latestRef as MutableRefObject<S>, setValue];
+  return [latestRef as RefObject<S>, setValue];
 }
 
 export default useLatestState;

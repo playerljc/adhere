@@ -1,5 +1,5 @@
 import React, {
-  MutableRefObject,
+  RefObject,
   RefObject,
   useEffect,
   useLayoutEffect,
@@ -17,7 +17,7 @@ interface UseSlideReturn {
   /** 获取动画持续时间 */
   getDuration: (time?: number | string | null | undefined) => number;
   /** 遮罩层元素引用 */
-  maskEl: React.MutableRefObject<HTMLDivElement | undefined>;
+  maskEl: React.RefObject<HTMLDivElement | undefined>;
 }
 
 /**
@@ -37,7 +37,7 @@ interface UseSlideReturn {
 export default function useSlide(
   props: OverlayProps,
   el: RefObject<HTMLDivElement | null>,
-  positionConfig: MutableRefObject<PositionConfig>,
+  positionConfig: RefObject<PositionConfig>,
 ): UseSlideReturn {
   const {
     time = 300,

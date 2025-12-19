@@ -30,7 +30,8 @@ const Vertical: FC<TableGridLayoutVerticalColgroupSetting> = ({ columnCount, val
               <ColgroupValueSetting
                 value={targetValue[index]}
                 onChange={(_value) => {
-                  onChange?.(targetValue.map((item, i) => (i === index ? _value : item)));
+                  const newValue = targetValue.map((item, i) => (i === index ? _value : item));
+                  onChange?.(newValue);
                 }}
               />
             </div>

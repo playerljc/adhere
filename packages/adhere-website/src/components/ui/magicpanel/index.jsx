@@ -114,7 +114,7 @@ export default () => {
               {
                 params: 'renderBody',
                 desc: '渲染主体元素',
-                type: '(ref: MutableRefObject<HTMLElement | null>) => ReactElement',
+                type: '(ref: RefObject<HTMLElement | null>) => ReactElement',
                 defaultVal: '',
               },
               {

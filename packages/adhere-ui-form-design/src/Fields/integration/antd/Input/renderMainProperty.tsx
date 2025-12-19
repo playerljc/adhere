@@ -5,11 +5,11 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
 import {
-  DensitySelectStandardDict,
+  InputSizeSelectStandardDict,
   InputTypeSelectStandardDict,
   WhetherRadioHorizontalDict,
 } from '../../../../components';
-import PropertiesGridLayout, { Label, Value } from '../../../../components/PropertiesGridLayout';
+import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
 
 /**
@@ -72,7 +72,19 @@ function MainProperty(props: DesignValueProps) {
                 label: <Label>{Intl.get('allow_clear')}：</Label>,
                 value: (
                   <Value>
-                    <Form.Item name="allowClear" initialValue={true}>
+                    <Form.Item name="allowClear">
+                      <WhetherRadioHorizontalDict />
+                    </Form.Item>
+                  </Value>
+                ),
+              },
+              {
+                key: 'readOnly',
+                require: false,
+                label: <Label>{Intl.get('read_only')}：</Label>,
+                value: (
+                  <Value>
+                    <Form.Item name="readOnly">
                       <WhetherRadioHorizontalDict />
                     </Form.Item>
                   </Value>
@@ -84,7 +96,7 @@ function MainProperty(props: DesignValueProps) {
                 label: <Label>{Intl.get('disabled')}：</Label>,
                 value: (
                   <Value>
-                    <Form.Item name="disabled" initialValue={false}>
+                    <Form.Item name="disabled">
                       <WhetherRadioHorizontalDict />
                     </Form.Item>
                   </Value>
@@ -97,7 +109,7 @@ function MainProperty(props: DesignValueProps) {
                 value: (
                   <Value>
                     <Form.Item name="maxLength">
-                      <InputNumberInteger.InputNegativeNumberInteger
+                      <InputNumberInteger.InputPositiveNumberInteger
                         placeholder={Intl.get('max_length')}
                       />
                     </Form.Item>
@@ -123,7 +135,7 @@ function MainProperty(props: DesignValueProps) {
                 value: (
                   <Value>
                     <Form.Item name="size">
-                      <DensitySelectStandardDict />
+                      <InputSizeSelectStandardDict />
                     </Form.Item>
                   </Value>
                 ),

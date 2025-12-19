@@ -24,7 +24,7 @@ const configFilePath = path.join(__dirname, '../', 'ctbuild.e2e.config.js');
 
 /**
  * getDefine
- * @return {string[]}
+ * @return {string}
  */
 function getDefine() {
   // define

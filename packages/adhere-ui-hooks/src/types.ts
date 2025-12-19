@@ -61,7 +61,7 @@ export type SetStateCallback = () => void;
  * @template T - 状态类型
  */
 export type UseSetStateReturn<T> = [
-  React.MutableRefObject<T>,
+  React.RefObject<T>,
   (value: T | ((prevState: T) => T), callback?: SetStateCallback) => void,
 ];
 
@@ -87,10 +87,7 @@ export type UsePropToState = <T>(propValue: T) => UsePropToStateReturn<T>;
  * useLatestState hook 返回类型
  * @template T - 状态类型
  */
-export type UseLatestStateReturn<T> = [
-  React.MutableRefObject<T>,
-  React.Dispatch<React.SetStateAction<T>>,
-];
+export type UseLatestStateReturn<T> = [React.RefObject<T>, React.Dispatch<React.SetStateAction<T>>];
 
 /**
  * useLatestState hook 类型定义
@@ -146,7 +143,7 @@ export type UseTriggerQueryReturn<T extends Record<string, any>> = {
   /** 当前字段值 */
   fieldsValue: React.RefObject<T>;
   /** 搜索参数 */
-  searchParams: React.MutableRefObject<T>;
+  searchParams: React.RefObject<T>;
   /** 执行搜索 */
   search: (callback?: () => void) => void;
   /** 重置搜索 */

@@ -13,7 +13,10 @@ import type { PropsWithoutRef, ReactElement, RefAttributes } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import StickupLayout from '@baifendian/adhere-ui-stickuplayout';
-import type { StickupLayoutHandle } from '@baifendian/adhere-ui-stickuplayout/lib/types';
+import type {
+  StickupLayoutHandle,
+  StickupLayoutItemProps,
+} from '@baifendian/adhere-ui-stickuplayout/lib/types';
 
 import type {
   CascadeComparedHandle,
@@ -415,7 +418,11 @@ const CascadeCompared = memo<
           style={masterStyle}
         >
           <StickupLayout {...stickupLayoutProps}>
-            {master.map((config, index) => renderMasterGroup(config, index))}
+            {
+              master.map((config, index) =>
+                renderMasterGroup(config, index),
+              ) as React.ReactElement<StickupLayoutItemProps>[]
+            }
           </StickupLayout>
         </div>
       );

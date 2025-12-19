@@ -13,7 +13,7 @@ const selectorPrefix = 'adhere-ui-suspense';
 
 /**
  * Suspense - 抽象基类组件
- * 
+ *
  * 这是一个抽象基类，提供了 Suspense 组件的核心功能。
  * 子类需要实现以下抽象方法：
  * - fetchData: 数据获取方法
@@ -21,7 +21,7 @@ const selectorPrefix = 'adhere-ui-suspense';
  * - showLoading: 是否显示加载状态
  * - onFirstFetchDataBefore: 第一次数据获取前的回调
  * - onFirstFetchDataAfter: 第一次数据获取后的回调
- * 
+ *
  * @template P - 属性类型，继承自 SuspenseProps
  * @template S - 状态类型，继承自 SuspenseState
  * @abstract
@@ -134,7 +134,7 @@ abstract class Suspense<
    * 初始化数据获取
    * @private
    */
-  private initializeDataFetch(): void {
+  private async initializeDataFetch(): Promise<void> {
     const fetchDataChain = async (): Promise<void> => {
       try {
         await this.onFirstFetchDataBefore();
@@ -145,7 +145,7 @@ abstract class Suspense<
       }
     };
 
-    fetchDataChain();
+    await fetchDataChain();
   }
 
   /**
@@ -239,6 +239,8 @@ abstract class Suspense<
   render(): ReactElement {
     const _self = this;
 
+    const { isUseFirstFetchData = true } = this.props;
+
     return (
       <ConfigProvider.Context.Consumer>
         {(context) => {
@@ -250,7 +252,14 @@ abstract class Suspense<
               className={classNames(selectorPrefix, this.props.className)}
               style={this.props.style ?? {}}
             >
-              {this.renderDispatch()}
+              {
+                // 使用第一次加载数据
+                isUseFirstFetchData && this.renderDispatch()
+              }
+              {
+                // 不使用用第一次加载数据
+                !isUseFirstFetchData && this.renderNormal()
+              }
             </div>
           );
         }}
@@ -265,6 +274,7 @@ Suspense.defaultProps = {
   style: {},
   reset: false,
   firstLoading: null,
+  isUseFirstFetchData: true,
 };
 
 // 属性类型验证
@@ -274,6 +284,7 @@ Suspense.propTypes = {
   reset: PropTypes.bool,
   firstLoading: PropTypes.node,
   renderNormalLoading: PropTypes.func,
+  isUseFirstFetchData: PropTypes.bool,
 };
 
 export default Suspense;

@@ -26,27 +26,27 @@ InternalConditionalRender.displayName = 'InternalConditionalRender';
 /**
  * 条件渲染组件
  * @description 一个功能丰富的条件渲染组件，支持多种渲染模式
- * 
+ *
  * @example
  * ```tsx
  * // 基本用法
  * <ConditionalRender conditional={isVisible}>
  *   {() => <div>显示的内容</div>}
  * </ConditionalRender>
- * 
+ *
  * // 带noMatch的用法
- * <ConditionalRender 
+ * <ConditionalRender
  *   conditional={isVisible}
  *   noMatch={() => <div>隐藏时的内容</div>}
  * >
  *   {() => <div>显示的内容</div>}
  * </ConditionalRender>
- * 
+ *
  * // 使用Show子组件（通过display控制）
  * <ConditionalRender.Show conditional={isVisible}>
  *   <div>显示的内容</div>
  * </ConditionalRender.Show>
- * 
+ *
  * // 使用Visibility子组件（通过visibility控制）
  * <ConditionalRender.Visibility conditional={isVisible}>
  *   <div>显示的内容</div>
@@ -67,7 +67,7 @@ ConditionalRender.Visibility = ConditionalRenderVisibility;
  * @param params.match - 条件满足时的返回值
  * @param params.noMatch - 条件不满足时的返回值
  * @returns 根据条件返回match或noMatch的值
- * 
+ *
  * @example
  * ```tsx
  * // 基本用法
@@ -76,7 +76,7 @@ ConditionalRender.Visibility = ConditionalRenderVisibility;
  *   match: '显示',
  *   noMatch: '隐藏'
  * });
- * 
+ *
  * // 返回JSX
  * const element = ConditionalRender.conditionalRender({
  *   conditional: isVisible,
@@ -94,7 +94,7 @@ ConditionalRender.conditionalRender = function ({ conditional, match, noMatch })
  * @description 静态方法：过滤包含条件渲染属性的React元素数组
  * @param arr - 要过滤的React元素数组
  * @returns 过滤后的React元素数组
- * 
+ *
  * @example
  * ```tsx
  * const elements = [
@@ -102,7 +102,7 @@ ConditionalRender.conditionalRender = function ({ conditional, match, noMatch })
  *   <ConditionalRender conditional={false}>内容2</ConditionalRender>,
  *   <div>普通内容</div>
  * ];
- * 
+ *
  * const filtered = ConditionalRender.conditionalArr(elements);
  * // 结果：只包含条件为true的元素和普通元素
  * ```
@@ -110,9 +110,9 @@ ConditionalRender.conditionalRender = function ({ conditional, match, noMatch })
 ConditionalRender.conditionalArr = function (arr: React.ReactElement[]): React.ReactElement[] {
   return arr.filter((element) => {
     // 检查元素是否有conditional属性
-    if (element.props && 'conditional' in element.props) {
-      const { conditional, noMatch } = element.props;
-      
+    if (element.props && 'conditional' in (element as any).props) {
+      const { conditional, noMatch } = element.props as any;
+
       // 如果条件不满足，检查是否有noMatch且noMatch不为null
       if (!conditional) {
         return noMatch && (typeof noMatch === 'function' ? noMatch() : noMatch) !== null;
@@ -128,14 +128,14 @@ ConditionalRender.conditionalArr = function (arr: React.ReactElement[]): React.R
  * @description 静态方法：过滤数组中的null和undefined值
  * @param arr - 要过滤的数组
  * @returns 过滤后的数组
- * 
+ *
  * @example
  * ```tsx
  * const arr = [1, null, 2, undefined, 3];
  * const filtered = ConditionalRender.conditionalNotEmptyArr(arr);
  * // 结果：[1, 2, 3]
  * ```
- * 
+ *
  * @deprecated 建议使用原生的Array.filter方法替代
  */
 ConditionalRender.conditionalNotEmptyArr = function <T>(arr: (T | null | undefined)[]): T[] {

@@ -1,6 +1,6 @@
 import { useMount, useUpdateEffect } from 'ahooks';
 import { useContext } from 'react';
-import type { ForwardedRef, MutableRefObject } from 'react';
+import type { ForwardedRef, RefObject } from 'react';
 
 import { Context } from './Context';
 import { themeCSSVariablesInjectToTheme } from './themeCSSVariablesInjectToTheme';
@@ -11,9 +11,9 @@ import { themeCSSVariablesInjectToTheme } from './themeCSSVariablesInjectToTheme
 export interface UseThemeParams<T extends HTMLElement> {
   /** 元素引用 */
   elRef:
-    | MutableRefObject<T | null | undefined>
+    | RefObject<T | null | undefined>
     | ForwardedRef<T | null | undefined>
-    | MutableRefObject<T | null | undefined>[];
+    | RefObject<T | null | undefined>[];
   /** 组件分组 */
   group: string;
   /** 组件显示名称 */
@@ -51,11 +51,11 @@ function useTheme<T extends HTMLElement>({ elRef, group, displayName }: UseTheme
     }
 
     if (Array.isArray(elRef)) {
-      if (!(elRef as MutableRefObject<T | null | undefined>[]).length) {
+      if (!(elRef as RefObject<T | null | undefined>[]).length) {
         console.warn('useTheme: elRef array is empty');
         return;
       }
-    } else if (!(elRef as MutableRefObject<T | null | undefined>).current) {
+    } else if (!(elRef as RefObject<T | null | undefined>).current) {
       console.warn('useTheme: elRef.current is null or undefined');
       return;
     }
@@ -106,11 +106,11 @@ function useTheme<T extends HTMLElement>({ elRef, group, displayName }: UseTheme
     let els: HTMLElement[] = [];
 
     if (Array.isArray(elRef)) {
-      els = (elRef as MutableRefObject<HTMLElement>[])
+      els = (elRef as RefObject<HTMLElement>[])
         .map((ref) => ref.current)
         .filter((el): el is HTMLElement => el !== null && el !== undefined);
     } else {
-      const current = (elRef as MutableRefObject<HTMLElement>).current;
+      const current = (elRef as RefObject<HTMLElement>).current;
       if (current) {
         els = [current];
       }

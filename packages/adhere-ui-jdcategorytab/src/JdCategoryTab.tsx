@@ -16,7 +16,12 @@ import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Hooks from '@baifendian/adhere-ui-hooks';
 
 import JdCategoryTabItem from './Item';
-import type { JdCategoryTabComponent, JdCategoryTabProps, JdCategoryTabRefHandle, MenuDataItem } from './types';
+import type {
+  JdCategoryTabComponent,
+  JdCategoryTabProps,
+  JdCategoryTabRefHandle,
+  MenuDataItem,
+} from './types';
 
 const selectorPrefix = 'adhere-ui-jd-category-tab';
 
@@ -25,7 +30,7 @@ const { useTheme } = ConfigProvider;
 /**
  * JdCategoryTab组件
  * 一个支持横向滚动的分类标签组件，常用于电商类应用的分类导航
- * 
+ *
  * @example
  * ```tsx
  * <JdCategoryTab
@@ -84,17 +89,22 @@ const InternalJdCategoryTab = memo<
      * @param key - 菜单项的key
      * @returns 对应的DOM元素或null
      */
-    const findElByKey = useCallback((key: string): HTMLElement | null => {
-      const index = menuData.findIndex((item: MenuDataItem) => item.key === key);
-      
-      if (index === -1 || !menuInnerEl.current) {
-        return null;
-      }
+    const findElByKey = useCallback(
+      (key: string): HTMLElement | null => {
+        const index = menuData.findIndex((item: MenuDataItem) => item.key === key);
 
-      const menuItems = menuInnerEl.current.querySelectorAll<HTMLElement>(`.${selectorPrefix}-menu-item`);
-      
-      return menuItems[index] || null;
-    }, [menuData]);
+        if (index === -1 || !menuInnerEl.current) {
+          return null;
+        }
+
+        const menuItems = menuInnerEl.current.querySelectorAll<HTMLElement>(
+          `.${selectorPrefix}-menu-item`,
+        );
+
+        return menuItems[index] || null;
+      },
+      [menuData],
+    );
 
     /**
      * 滚动到指定key对应的菜单项
@@ -102,28 +112,31 @@ const InternalJdCategoryTab = memo<
      * @param time - 滚动动画时长（毫秒），默认250ms
      * @param easing - 缓动函数，默认使用circular缓动
      */
-    const scrollTo = useCallback((key: string, time: number = 250, _easing?: any): void => {
-      const easing = _easing || ease.current.circular;
+    const scrollTo = useCallback(
+      (key: string, time: number = 250, _easing?: any): void => {
+        const easing = _easing || ease.current.circular;
 
-      // 检查是否可以切换
-      if (onBeforeChange && !onBeforeChange(currentActiveKey, key)) {
-        return;
-      }
+        // 检查是否可以切换
+        if (onBeforeChange && !onBeforeChange(currentActiveKey, key)) {
+          return;
+        }
 
-      const targetEl = findElByKey(key);
-      if (!targetEl || !scroll.current) {
-        return;
-      }
+        const targetEl = findElByKey(key);
+        if (!targetEl || !scroll.current) {
+          return;
+        }
 
-      // 执行滚动动画
-      scroll.current.scrollToElement(targetEl, time, null, null, easing);
+        // 执行滚动动画
+        scroll.current.scrollToElement(targetEl, time, null, null, easing);
 
-      // 延迟更新状态，等待动画完成
-      setTimeout(() => {
-        setCurrentActiveKey(key);
-        onChange?.(key);
-      }, time);
-    }, [currentActiveKey, findElByKey, onBeforeChange, onChange]);
+        // 延迟更新状态，等待动画完成
+        setTimeout(() => {
+          setCurrentActiveKey(key);
+          onChange?.(key);
+        }, time);
+      },
+      [currentActiveKey, findElByKey, onBeforeChange, onChange],
+    );
 
     /**
      * 渲染菜单项
@@ -165,11 +178,11 @@ const InternalJdCategoryTab = memo<
 
       return childrenItems.map((child: React.ReactElement) => {
         const isActive = child.key === currentActiveKey;
-        
+
         if (isActive) {
           return React.cloneElement(child, {
-            ...child.props,
-            className: classNames(child.props?.className, 'active'),
+            ...(child.props as any),
+            className: classNames((child.props as any)?.className, 'active'),
           });
         }
 
@@ -185,8 +198,8 @@ const InternalJdCategoryTab = memo<
     // 初始化IScroll
     useEffect(() => {
       if (!scroll.current && menuEl.current) {
-        scroll.current = new IScroll(menuEl.current, { 
-          mouseWheel: true, 
+        scroll.current = new IScroll(menuEl.current, {
+          mouseWheel: true,
           click: true,
           scrollX: true,
           scrollY: false,
@@ -208,16 +221,16 @@ const InternalJdCategoryTab = memo<
     }, []);
 
     // 暴露scrollTo方法给父组件
-    useImperativeHandle(ref, () => ({
-      scrollTo,
-    }), [scrollTo]);
+    useImperativeHandle(
+      ref,
+      () => ({
+        scrollTo,
+      }),
+      [scrollTo],
+    );
 
     return (
-      <div
-        ref={wrapperRef}
-        className={classNames(selectorPrefix, className)}
-        style={style}
-      >
+      <div ref={wrapperRef} className={classNames(selectorPrefix, className)} style={style}>
         <div
           ref={menuEl}
           className={classNames(`${selectorPrefix}-menu`, menuClassName)}
@@ -232,10 +245,7 @@ const InternalJdCategoryTab = memo<
           </ul>
         </div>
 
-        <ul
-          className={classNames(`${selectorPrefix}-tab`, tabClassName)}
-          style={tabStyle}
-        >
+        <ul className={classNames(`${selectorPrefix}-tab`, tabClassName)} style={tabStyle}>
           {renderItem()}
         </ul>
       </div>

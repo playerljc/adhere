@@ -13,7 +13,7 @@ import {
   WhetherRadioHorizontalDict,
 } from '../../../../components';
 import I18nChangeFormItem from '../../../../components/I18nChangeFormItem';
-import PropertiesGridLayout, { Label, Value } from '../../../../components/PropertiesGridLayout';
+import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
 
 const { useItemsRef } = Hooks;
@@ -40,10 +40,12 @@ function FormProperty(props: DesignValueProps) {
 
   const { formItemProps } = props;
 
+  const activeFieldId = getActiveFieldId();
+
   function onFieldsChange() {
     const values = form.getFieldsValue();
 
-    setFormItemProps(getActiveFieldId() as string, {
+    setFormItemProps(activeFieldId as string, {
       ...values,
     });
   }
@@ -107,12 +109,24 @@ function FormProperty(props: DesignValueProps) {
                 ),
               },
               {
+                key: 'value',
+                require: true,
+                label: <Label>{Intl.get('initial_value')}：</Label>,
+                value: (
+                  <Value>
+                    <Form.Item name="value">
+                      <Input placeholder={Intl.get('initial_value')} />
+                    </Form.Item>
+                  </Value>
+                ),
+              },
+              {
                 key: 'hidden',
                 require: false,
                 label: <Label>{Intl.get('is_hidden')}：</Label>,
                 value: (
                   <Value>
-                    <Form.Item name="hidden" initValue={false}>
+                    <Form.Item name="hidden">
                       <WhetherRadioHorizontalDict />
                     </Form.Item>
                   </Value>
@@ -124,7 +138,7 @@ function FormProperty(props: DesignValueProps) {
                 label: <Label>{Intl.get('no_style')}：</Label>,
                 value: (
                   <Value>
-                    <Form.Item name="noStyle" initValue={false}>
+                    <Form.Item name="noStyle">
                       <WhetherRadioHorizontalDict />
                     </Form.Item>
                   </Value>
@@ -136,7 +150,7 @@ function FormProperty(props: DesignValueProps) {
                 label: <Label>{Intl.get('value_propname')}：</Label>,
                 value: (
                   <Value>
-                    <Form.Item name="valuePropName" initValue="value">
+                    <Form.Item name="valuePropName">
                       <ValuePropNameSelectStandardDict />
                     </Form.Item>
                   </Value>
@@ -148,7 +162,7 @@ function FormProperty(props: DesignValueProps) {
                 label: <Label>{Intl.get('validate_first')}：</Label>,
                 value: (
                   <Value>
-                    <Form.Item name="validateFirst" initValue={false}>
+                    <Form.Item name="validateFirst">
                       <WhetherRadioHorizontalDict />
                     </Form.Item>
                   </Value>
@@ -160,7 +174,7 @@ function FormProperty(props: DesignValueProps) {
                 label: <Label>{Intl.get('validate_trigger')}：</Label>,
                 value: (
                   <Value>
-                    <Form.Item name="validateTrigger" initValue="onChange">
+                    <Form.Item name="validateTrigger">
                       <InputEventsSelectStandardDict />
                     </Form.Item>
                   </Value>
@@ -181,7 +195,7 @@ function FormProperty(props: DesignValueProps) {
             ],
           },
         ]}
-      ></PropertiesGridLayout>
+      />
     </Form>
   );
 }

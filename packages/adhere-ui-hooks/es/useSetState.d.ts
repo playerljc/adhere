@@ -1,4 +1,4 @@
-import { type MutableRefObject } from 'react';
+import { type RefObject } from 'react';
 import type { SetStateCallback } from './types';
 type SetStateAction<S> = S | ((prevState: S) => S);
 type Dispatch<A> = (value: A, callback?: SetStateCallback) => void;
@@ -28,5 +28,5 @@ type Dispatch<A> = (value: A, callback?: SetStateCallback) => void;
  * }, []);
  * ```
  */
-declare function useSetState<S>(initialState: S | (() => S)): [MutableRefObject<S>, Dispatch<SetStateAction<S>>];
+declare function useSetState<S>(initialState: S | (() => S)): [RefObject<S>, Dispatch<SetStateAction<S>>];
 export default useSetState;

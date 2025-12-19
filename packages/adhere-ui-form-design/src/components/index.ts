@@ -11,14 +11,15 @@ import I18nChangeFormItem, {
   valuesToPayload,
 } from './I18nChangeFormItem';
 import { InputEventsSelectStandardDict } from './InputEvents';
+import { InputSizeSelectStandardDict } from './InputSize';
 import { InputTypeSelectStandardDict } from './InputType';
 import MonacoEditorFormItem, {
   EmptyValidator as MonacoEditorFormItemEmptyValidator,
 } from './MonacoEditorFormItem';
-import PropertiesGridLayout from './PropertiesGridLayout';
 import { RulesMenuStandardDict } from './Rules';
 import RulesSettingFormItem from './RulesSettingFormItem';
 import { SlotEndLabel, SlotStartLabel } from './SlotLabel';
+import PropertiesGridLayout from './TableGridLayout';
 import TableGridLayoutColgroupSetting from './TableGridLayoutColgroupSetting';
 import { TableGridLayoutModeTypeSelectStandardDict } from './TableGridLayoutModeType';
 import { ValuePropNameSelectStandardDict } from './ValuePropName';
@@ -49,4 +50,5 @@ export {
   DesignFieldWrapper,
   DroppableContainer,
   PropertiesGridLayout,
+  InputSizeSelectStandardDict,
 };

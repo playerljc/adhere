@@ -1,6 +1,6 @@
 import { useUpdateEffect } from 'ahooks';
 import classNames from 'classnames';
-import React, { MutableRefObject, useCallback, useContext, useMemo, useState } from 'react';
+import React, { RefObject, useCallback, useContext, useMemo, useState } from 'react';
 
 import { DownOutlined, LeftOutlined, RightOutlined, UpOutlined } from '@ant-design/icons';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -84,7 +84,7 @@ interface UseTriggerParams
     'trigger' | 'collapseDirection' | 'collapsedSize' | 'defaultCollapsible' | 'onCollapse'
   > {
   /** 元素引用 */
-  elRef: MutableRefObject<HTMLDivElement | null>;
+  elRef: RefObject<HTMLDivElement | null>;
   /** 选择器前缀 */
   selectorPrefix: string;
 }

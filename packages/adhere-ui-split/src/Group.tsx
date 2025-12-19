@@ -6,10 +6,10 @@ import type { SplitGroupProps } from './types';
 
 /**
  * SplitGroup组件 - 自动在子元素之间插入分割条
- * 
+ *
  * @param props - SplitGroup组件的属性
  * @returns 渲染后的组件，在子元素之间自动插入分割条
- * 
+ *
  * @example
  * ```tsx
  * <SplitGroup direction="vertical" size={10}>
@@ -40,8 +40,9 @@ const SplitGroup: FC<SplitGroupProps> = ({ children, ...props }) => {
       React.Children.map(_children, (child) => {
         if (ReactIs.isFragment(child)) {
           // 如果是Fragment，递归处理其子元素
-          const fragmentChildren = (React.isValidElement(child) ? child.props?.children : []) || [];
-          const validChildren = Array.isArray(fragmentChildren) 
+          const fragmentChildren =
+            (React.isValidElement(child) ? (child.props as any)?.children : []) || [];
+          const validChildren = Array.isArray(fragmentChildren)
             ? fragmentChildren.filter((t: any) => t != null)
             : [fragmentChildren].filter((t: any) => t != null);
           loop(validChildren);

@@ -34,6 +34,8 @@ export interface SuspenseProps {
   firstLoading: ReactElement;
   /** 自定义正常加载状态的渲染函数 */
   renderNormalLoading?: (params: { children: ReactNode; loading: boolean }) => ReactNode;
+  /** 是否需要首次加载数据 */
+  isUseFirstFetchData?: boolean;
 }
 
 /**

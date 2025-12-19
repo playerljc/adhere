@@ -83,12 +83,16 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
             props: {
               fieldProps: {
                 layout: 'vertical',
+                bordered: false,
+                density: 'default',
+                mode: 'normal',
+                columnCount: 2,
                 data: [
                   {
                     name: 'g1',
                     width: '100%',
                     columnCount: terminal === 'desktop' ? 2 : 1,
-                    colgroup: ['auto'],
+                    colgroup: terminal === 'desktop' ? ['auto', 'auto'] : ['auto'],
                     data: [],
                   },
                 ],
@@ -347,7 +351,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                   )}
                   style={propertiesStyle}
                 >
-                  <Properties />
+                  <Properties key={activeFieldId} />
                 </div>
               </div>
             </div>

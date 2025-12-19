@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { MutableRefObject, createContext, memo, useContext, useRef } from 'react';
+import React, { RefObject, createContext, memo, useContext, useRef } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
@@ -20,7 +20,7 @@ export const ScrollLayoutContext = createContext<ScrollLayoutContextType>({
 /**
  * 使用 ScrollLayout Hook
  * 获取滚动布局上下文信息
- * 
+ *
  * @returns {ScrollLayoutContextType} 滚动布局上下文
  */
 export const useScrollLayout = (): ScrollLayoutContextType => {
@@ -31,7 +31,7 @@ export const useScrollLayout = (): ScrollLayoutContextType => {
 /**
  * ScrollLayout 组件
  * 提供滚动功能的布局容器
- * 
+ *
  * @param {ScrollLayoutProps} props - 组件属性
  * @returns {JSX.Element} ScrollLayout 组件
  */
@@ -56,9 +56,9 @@ const ScrollLayout = memo<ScrollLayoutProps>((props) => {
         ref={wrapperRef}
         {...attrs}
         className={classNames(selectorPrefix, className ?? '')}
-        style={{ 
-          overflowY: scrollY ? 'auto' : 'hidden', 
-          ...(style ?? {}) 
+        style={{
+          overflowY: scrollY ? 'auto' : 'hidden',
+          ...(style ?? {}),
         }}
       >
         {children}

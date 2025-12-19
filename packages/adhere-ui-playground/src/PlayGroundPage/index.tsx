@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import React, {
-  MutableRefObject,
   type PropsWithoutRef,
   type ReactElement,
   type RefAttributes,
+  RefObject,
   forwardRef,
   memo,
   useContext,
@@ -52,7 +52,7 @@ const InternalPlayGroundPage = memo<
     const { scrollEl } = useContext(PlayGroundPageContext);
 
     useTheme<HTMLElement>({
-      elRef: ref as MutableRefObject<HTMLElement | null>,
+      elRef: ref as RefObject<HTMLElement | null>,
       group: 'normal',
       displayName: 'Playground',
     });

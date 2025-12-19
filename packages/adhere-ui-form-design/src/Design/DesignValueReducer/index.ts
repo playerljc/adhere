@@ -80,7 +80,7 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
           .props as DesignValue['props']['formItemProps'];
       }
 
-      return state;
+      return clone()(state);
     }
 
     // 修改控件本身的props
@@ -90,7 +90,7 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
         designValue.props.fieldProps = action.payload.props as DesignValue['props']['fieldProps'];
       }
 
-      return state;
+      return clone()(state);
     }
 
     // 修改控件样式的props
@@ -100,7 +100,7 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
         designValue.props.styleProps = action.payload.props as DesignValue['props']['styleProps'];
       }
 
-      return state;
+      return clone()(state);
     }
 
     // 修改控件Actions的props
@@ -111,7 +111,7 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
           .props as DesignValue['props']['actionsProps'];
       }
 
-      return state;
+      return clone()(state);
     }
 
     // 修改控件children
@@ -121,7 +121,7 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
         designValue.props.children = action.payload.props as DesignValue['props']['children'];
       }
 
-      return state;
+      return clone()(state);
     }
 
     // 什么都不做
