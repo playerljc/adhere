@@ -1,6 +1,10 @@
 import React from 'react';
 
+
+
 import e2e from '@baifendian/adhere-e2e';
+
+
 
 import ArrayEntityValueHOC from './ArrayEntityValueHOC';
 import AsyncTreeEntityValueHOC from './AsyncTreeEntityValueHOC';
@@ -65,9 +69,12 @@ import Anchor from './anchor';
 import FormRulesTest from './formRulesTest';
 import AntHOC from './test';
 
+
+
 import '../src/index.less';
+
 
 e2e.PC({
   // children: <TransferSelect />,
-  children: <CheckAllMultipleSelect />,
+  children: <StepsSwiper />,
 });

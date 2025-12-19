@@ -1,10 +1,10 @@
 import { useUpdateEffect } from 'ahooks';
 import classNames from 'classnames';
-import React, { ReactElement, memo, useMemo, useRef, useState } from 'react';
+import React, { ReactElement, memo, useCallback, useMemo, useRef, useState } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
-import type { DisplayNameInternal, StepsSwiperProps } from '../types';
+import { DisplayNameInternal, StepsSwiperItemProps, StepsSwiperProps } from '../types';
 import Steps from './index';
 
 const selectorPrefix = 'adhere-ui-anthoc-steps-swiper';
@@ -25,15 +25,19 @@ const InternalStepsSwiper = memo<StepsSwiperProps>(
     indicatorWrapperStyle,
     contentClassName,
     contentStyle,
+    navigationClassName,
+    navigationStyle,
     direction,
     isFullWidth,
     isFullHeight,
     itemRenderMode,
     itemLayoutMode,
     items,
+    onChange,
+    navigation,
     ...stepsProps
   }) => {
-    function fillItems(items, initial) {
+    function fillItems(items: StepsSwiperItemProps[], initial: number): StepsSwiperItemProps[] {
       return items.map((_, _index) => ({
         ..._,
         _visited: _index === initial,
@@ -84,7 +88,7 @@ const InternalStepsSwiper = memo<StepsSwiperProps>(
 
     const targetInitial = useMemo(() => targetStepsProps.initial, [targetStepsProps.initial]);
 
-    const [targetItems, setTargetItems] = useState(fillItems(items, targetInitial));
+    const [targetItems, setTargetItems] = useState(fillItems(items ?? [], targetInitial ?? 0));
 
     const indicator = useMemo(() => {
       let direction = 'horizontal';
@@ -101,11 +105,18 @@ const InternalStepsSwiper = memo<StepsSwiperProps>(
           items={_items}
         />
       );
-    }, [targetStepsProps, targetDirection, targetItems, indicatorClassName, indicatorStyle]);
+    }, [
+      targetStepsProps,
+      targetDirection,
+      targetItems,
+      indicatorClassName,
+      indicatorStyle,
+      onChange,
+    ]);
 
     const swiper = useMemo(() => {
       if (targetItemRenderMode === 'forceRecreate') {
-        return targetItems.map((item, _index) => {
+        return targetItems.map((_, _index) => {
           if (_index === targetCurrent) {
             return (
               <div key={targetCurrent} className={`${selectorPrefix}-item`}>
@@ -143,6 +154,40 @@ const InternalStepsSwiper = memo<StepsSwiperProps>(
       }
     }, [targetItems, targetItemRenderMode, targetCurrent]);
 
+    // 是否有前一页
+    const isShowPrev = useMemo(() => {
+      return targetCurrent > 0;
+    }, [targetCurrent]);
+
+    // 是否有下一页
+    const isShowNext = useMemo(() => {
+      return targetCurrent < targetItems.length - 1;
+    }, [targetCurrent, targetItems]);
+
+    // 前一页
+    const prev = useCallback(() => {
+      const item = targetItems[targetCurrent];
+
+      return item.onPrev();
+    }, [targetItems, targetCurrent]);
+
+    // 后一页
+    const next = useCallback(() => {
+      const item = targetItems[targetCurrent];
+
+      return item.onNext();
+    }, [targetItems, targetCurrent]);
+
+    // 导航栏
+    const targetNavigation = useMemo(() => {
+      return navigation?.({
+        next,
+        prev,
+        isShowPrev,
+        isShowNext,
+      });
+    }, [navigation, isShowPrev, isShowNext, prev, next, targetCurrent]);
+
     const layout = useMemo<ReactElement>(
       () => (
         <div
@@ -166,12 +211,22 @@ const InternalStepsSwiper = memo<StepsSwiperProps>(
           >
             {indicator}
           </div>
+
           <div
             className={classNames(`${selectorPrefix}-content`, contentClassName)}
             style={contentStyle ?? {}}
           >
             {swiper}
           </div>
+
+          {!!targetNavigation && (
+            <div
+              className={classNames(`${selectorPrefix}-navigation`, navigationClassName)}
+              style={navigationStyle ?? {}}
+            >
+              {targetNavigation}
+            </div>
+          )}
         </div>
       ),
       [
@@ -187,11 +242,12 @@ const InternalStepsSwiper = memo<StepsSwiperProps>(
         isTargetFillWidth,
         isTargetFillHeight,
         targetDirection,
+        targetNavigation,
       ],
     );
 
     useUpdateEffect(() => {
-      setTargetItems(fillItems(items, targetInitial));
+      setTargetItems(fillItems(items ?? [], targetInitial ?? 0));
     }, [items, targetInitial]);
 
     useUpdateEffect(() => {

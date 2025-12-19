@@ -1,5 +1,5 @@
 import React from 'react';
-import type { DisplayNameInternal, StepsSwiperProps } from '../types';
+import { DisplayNameInternal, StepsSwiperProps } from '../types';
 /**
  * StepsSwiper
  * @description

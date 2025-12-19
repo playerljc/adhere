@@ -1341,6 +1341,8 @@ export type TableExtProps = Omit<TableProps, 'columns'> & {
 export type StepsSwiperItemProps = StepsProps & {
   _visited?: boolean;
   children?: ReactNode;
+  onNext: () => Promise<void>;
+  onPrev: () => Promise<void>;
 };
 
 export type StepsSwiperProps = {
@@ -1352,6 +1354,8 @@ export type StepsSwiperProps = {
   indicatorWrapperStyle?: CSSProperties;
   contentClassName?: string;
   contentStyle?: CSSProperties;
+  navigationClassName?: string;
+  navigationStyle?: CSSProperties;
 
   // 指示器的方向
   direction?: 'top' | 'bottom' | 'left' | 'right';
@@ -1369,6 +1373,18 @@ export type StepsSwiperProps = {
   itemLayoutMode?: 'auto' | 'grow' | 'surplus' | 'normal';
   // 切换的面板
   items?: StepsSwiperItemProps[];
+
+  // 导航栏
+  navigation?: (params: {
+    // 下一页
+    next: () => Promise<void>;
+    // 上一页
+    prev: () => Promise<void>;
+    // 是否显示上一页
+    isShowPrev: boolean;
+    // 是否显示下一页
+    isShowNext: boolean;
+  }) => ReactNode;
 } & Omit<StepsProps, 'direction' | 'items' | 'className' | 'style'>;
 
 export type StepsHOCComponent = ReturnType<typeof createFactory<StepsProps>> & {

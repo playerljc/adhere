@@ -957,6 +957,8 @@ export type TableExtProps = Omit<TableProps, 'columns'> & {
 export type StepsSwiperItemProps = StepsProps & {
     _visited?: boolean;
     children?: ReactNode;
+    onNext: () => Promise<void>;
+    onPrev: () => Promise<void>;
 };
 export type StepsSwiperProps = {
     className?: string;
@@ -967,12 +969,20 @@ export type StepsSwiperProps = {
     indicatorWrapperStyle?: CSSProperties;
     contentClassName?: string;
     contentStyle?: CSSProperties;
+    navigationClassName?: string;
+    navigationStyle?: CSSProperties;
     direction?: 'top' | 'bottom' | 'left' | 'right';
     isFullWidth?: boolean;
     isFullHeight?: boolean;
     itemRenderMode?: 'lazy' | 'forceRecreate';
     itemLayoutMode?: 'auto' | 'grow' | 'surplus' | 'normal';
     items?: StepsSwiperItemProps[];
+    navigation?: (params: {
+        next: () => Promise<void>;
+        prev: () => Promise<void>;
+        isShowPrev: boolean;
+        isShowNext: boolean;
+    }) => ReactNode;
 } & Omit<StepsProps, 'direction' | 'items' | 'className' | 'style'>;
 export type StepsHOCComponent = ReturnType<typeof createFactory<StepsProps>> & {
     StepsSwiper: typeof StepsSwiper;
