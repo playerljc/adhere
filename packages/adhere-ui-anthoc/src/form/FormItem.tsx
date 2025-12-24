@@ -100,8 +100,9 @@ const FormItem: FC<FormItemProps> = ({
           {({ status, errors, ...rest }) => {
             if (children) {
               return React.cloneElement(children as any, {
-                ...((children as any)?.props ?? {}),
                 ...(rest ?? {}),
+                ...((children as any)?.props ?? {}),
+                ref: (children as any).ref,
                 status,
                 errors,
               });

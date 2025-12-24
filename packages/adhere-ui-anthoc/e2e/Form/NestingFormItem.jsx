@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
 import { Button, Form, Input } from '../../src';
+import NestingFormItem from '../../src/form/NestingFormItem';
 
 import '@baifendian/adhere-ui-flexlayout/lib/index.less';
 
@@ -22,6 +23,8 @@ export default () => {
   }
 
   useEffect(() => {
+    console.log('obj1Ref', obj1Ref);
+    console.log('obj2Ref', obj2Ref);
     // form.setFieldsValue(JSON.parse('{"name":"1","obj1":{"a":"2","b":{"b.1":"3","b.2":"4"}}}'));
   }, []);
 
@@ -54,7 +57,7 @@ export default () => {
             },
           ]}
         >
-          <Form.NestingFormItem ref={obj1Ref}>
+          <NestingFormItem ref={obj1Ref}>
             <Form.Item
               name="a1"
               label="a1"
@@ -107,7 +110,7 @@ export default () => {
                 </Form.Item>
               </Form.NestingFormItem>
             </Form.Item>
-          </Form.NestingFormItem>
+          </NestingFormItem>
         </Form.Item>
 
         <Form.List name="array">
