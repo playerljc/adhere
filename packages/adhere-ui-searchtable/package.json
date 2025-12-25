@@ -65,6 +65,7 @@
     "dayjs": "^1.11.13",
     "exceljs": "^4.3.0",
     "file-saver": "^2.0.5",
+    "immer": "^11.1.0",
     "immutability-helper": "^3.1.1",
     "lodash.clone": "^4.5.0",
     "lodash.clonedeep": "^4.5.0",
@@ -77,12 +78,12 @@
     "lodash.uniq": "^4.5.0",
     "lodash.uniqby": "^4.7.0",
     "omit.js": "^2.0.2",
+    "qs": "^6.10.3",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-is": "^19.2.0",
     "react-resizable": "^3.0.5",
-    "rfdc": "^1.4.1",
-    "qs": "^6.10.3"
+    "rfdc": "^1.4.1"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

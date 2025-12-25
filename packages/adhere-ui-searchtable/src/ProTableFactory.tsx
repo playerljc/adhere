@@ -365,8 +365,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
      * @description 不同路由模式下获取pathname的方法
      */
     getPathName() {
-      const publicPath = this.props.publicPath ?? '/';
-      const router = this.props.router ?? 'browser';
+      const publicPath = this?.props?.publicPath ?? '/';
+      const router = this?.props?.router ?? 'browser';
 
       return Util.getPathName(publicPath, router); /*window.location.pathname;*/
     }
@@ -376,7 +376,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
      * @description 不同路由模式下获取search的方法
      */
     getSearch() {
-      return Util.getSearch(this.props.router ?? 'browser') ?? ''; /*window.location.search;*/
+      return Util.getSearch(this?.props?.router ?? 'browser') ?? ''; /*window.location.search;*/
     }
 
     /**

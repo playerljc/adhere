@@ -98,9 +98,7 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
     const id = record.id;
 
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(City[id] ? City[id] : County[id]);
-      }, 1000);
+      resolve(City[id] ? City[id] : County[id]);
     });
   }
 }

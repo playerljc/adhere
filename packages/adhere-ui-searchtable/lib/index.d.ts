@@ -1263,6 +1263,6 @@ declare const _default: {
     SearchAndPaginParams: typeof SearchAndPaginParams;
     cloneDeep: (obj: {
         [x: string]: any;
-    }) => any;
+    }) => {};
 };
 export default _default;

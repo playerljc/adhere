@@ -1,3 +1,4 @@
+import type { ExpandableConfig } from 'antd/es/table/interface';
 import type {
   ColumnType,
   FilterValue,
@@ -6,9 +7,9 @@ import type {
   TablePaginationConfig,
 } from 'antd/lib/table/interface';
 import classNames from 'classnames';
+import { produce } from 'immer';
 import sortBy from 'lodash.sortby';
 import PropTypes from 'prop-types';
-import type { ExpandableConfig } from 'antd/es/table/interface';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createRef, forwardRef } from 'react';
 
@@ -480,6 +481,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @return {ReactElement | null}
    */
   renderInner() {
+    // console.log('state', this.state.loadDataKeys);
     const innerJSX = super.renderInner();
     return (
       <div ref={this.innerWrapRef} className={`${selectorPrefix}-table-wrapper`}>
@@ -737,7 +739,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   fetchDataExecute(searchParams: object): Promise<any> {
     // console.log('searchParams', searchParams);
 
-    return this.props?.[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
+    return this.props?.[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`]?.(
       searchParams,
     );
   }
@@ -883,9 +885,11 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
      */
     function beforeLoadData() {
       _self.setState((state: any) => {
-        state.loadDataKeys.push(key);
+        return produce(state, (draft) => {
+          draft.loadDataKeys.push(key);
+        });
 
-        return cloneDeep(state);
+        // return cloneDeep(state);
       });
     }
 
@@ -901,27 +905,48 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
         _self.setState(
           (state: any) => {
-            state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
+            return produce(state, (draft) => {
+              draft.loadDataKeys.splice(draft.loadDataKeys.indexOf(key), 1);
 
-            state.loadDataSuccessKeys.push(key);
+              draft.loadDataSuccessKeys.push(key);
 
-            if (!isCanSync) {
-              // 获取当前节点的选中状态
-              const currentNodeChecked = state.selectedRowKeys.includes(record[rowKey]);
-              // 如果是选中状态
-              // 则需要将孩子也选中
-              if (currentNodeChecked) {
-                state.selectedRowKeys = [
-                  ...state.selectedRowKeys,
-                  ...childrenData.map((t: any) => t[rowKey]),
-                ];
+              if (!isCanSync) {
+                // 获取当前节点的选中状态
+                const currentNodeChecked = draft.selectedRowKeys.includes(record[rowKey]);
+                // 如果是选中状态
+                // 则需要将孩子也选中
+                if (currentNodeChecked) {
+                  draft.selectedRowKeys = [
+                    ...draft.selectedRowKeys,
+                    ...childrenData.map((t: any) => t[rowKey]),
+                  ];
 
-                state.selectedRows = [...state.selectedRows, ...childrenData];
+                  draft.selectedRows = [...draft.selectedRows, ...childrenData];
+                }
               }
-            }
+            });
+
+            // state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
+            //
+            // state.loadDataSuccessKeys.push(key);
+            //
+            // if (!isCanSync) {
+            //   // 获取当前节点的选中状态
+            //   const currentNodeChecked = state.selectedRowKeys.includes(record[rowKey]);
+            //   // 如果是选中状态
+            //   // 则需要将孩子也选中
+            //   if (currentNodeChecked) {
+            //     state.selectedRowKeys = [
+            //       ...state.selectedRowKeys,
+            //       ...childrenData.map((t: any) => t[rowKey]),
+            //     ];
+            //
+            //     state.selectedRows = [...state.selectedRows, ...childrenData];
+            //   }
+            // }
 
             // console.log('===state', state);
-            return cloneDeep(state);
+            // return cloneDeep(state);
           },
           () => {
             if (isCanSync) {
@@ -942,9 +967,13 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
       return new Promise<void>((resolve) => {
         _self.setState(
           (state: any) => {
-            state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
+            return produce(state, (draft) => {
+              draft.loadDataKeys.splice(draft.loadDataKeys.indexOf(key), 1);
+            });
 
-            return cloneDeep(state);
+            // state.loadDataKeys.splice(state.loadDataKeys.indexOf(key), 1);
+
+            // return cloneDeep(state);
           },
           () => {
             resolve();
@@ -980,24 +1009,20 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
       // @ts-ignore
       this.loadData(record)
         ?.then((childrenData) => {
-          // console.log('=======childrenData', childrenData);
-
           // 更新当前近节点的children数据
           this.setData((preData) => {
-            const _targetRecord = Util.findNodeByKey(preData as any[], key, {
-              keyAttr: rowKey,
-              childrenKey: this.getChildrenColumnName(),
+            return produce(preData, (draft) => {
+              const _targetRecord = Util.findNodeByKey(draft as any[], key, {
+                keyAttr: rowKey,
+                childrenKey: this.getChildrenColumnName(),
+              });
+
+              const childrenColumnName = this.getChildrenColumnName();
+
+              if (_targetRecord) {
+                _targetRecord[childrenColumnName] = childrenData;
+              }
             });
-
-            const childrenColumnName = this.getChildrenColumnName();
-
-            if (_targetRecord) {
-              _targetRecord[childrenColumnName] = childrenData;
-            }
-
-            // console.log('======preData', preData);
-
-            return [...preData];
           })
             .then((dataSource) => {
               // console.log('======dataSource', dataSource);
@@ -1135,11 +1160,17 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     return new Promise<void>((resolve) => {
       this.setState(
         (state: any) => {
-          state.expandedRowKeys = state.expandedRowKeys.filter((key) => key !== id);
-          state.loadDataSuccessKeys = state.loadDataSuccessKeys.filter((key) => key !== id);
-          state.loadDataKeys = state.loadDataKeys.filter((key) => key !== id);
+          return produce(state, (draft) => {
+            draft.expandedRowKeys = draft.expandedRowKeys.filter((key) => key !== id);
+            draft.loadDataSuccessKeys = draft.loadDataSuccessKeys.filter((key) => key !== id);
+            draft.loadDataKeys = draft.loadDataKeys.filter((key) => key !== id);
+          });
 
-          return cloneDeep(state);
+          // state.expandedRowKeys = state.expandedRowKeys.filter((key) => key !== id);
+          // state.loadDataSuccessKeys = state.loadDataSuccessKeys.filter((key) => key !== id);
+          // state.loadDataKeys = state.loadDataKeys.filter((key) => key !== id);
+
+          // return cloneDeep(state);
         },
         () => {
           const record = this.getRecordById(id);
@@ -1147,9 +1178,12 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
           (this.onExpand(true, record) as Promise<void>).then(() => {
             this.setState(
               (state: any) => {
-                state.expandedRowKeys = [...state.expandedRowKeys, id];
-
-                return cloneDeep(state);
+                return produce(state, (draft) => {
+                  draft.expandedRowKeys = [...draft.expandedRowKeys, id];
+                });
+                // state.expandedRowKeys = [...state.expandedRowKeys, id];
+                //
+                // return cloneDeep(state);
               },
               () => {
                 resolve();

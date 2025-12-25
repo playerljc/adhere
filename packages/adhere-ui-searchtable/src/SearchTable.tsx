@@ -11,7 +11,9 @@ import type {
   TableCurrentDataSource,
   TablePaginationConfig,
 } from 'antd/es/table/interface';
+import type { ExpandableConfig } from 'antd/es/table/interface';
 import classNames from 'classnames';
+import { produce } from 'immer';
 import lodashCloneDeep from 'lodash.clonedeep';
 // import debounce from 'lodash.debounce';
 import difference from 'lodash.difference';
@@ -20,8 +22,6 @@ import sortBy from 'lodash.sortby';
 import uniq from 'lodash.uniq';
 import uniqBy from 'lodash.uniqby';
 import PropTypes from 'prop-types';
-import qs from 'qs';
-import type { ExpandableConfig } from 'antd/es/table/interface';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createContext, createRef } from 'react';
 import * as ReactIs from 'react-is';
@@ -1447,7 +1447,7 @@ abstract class SearchTable<
       // console.timeEnd('setColumnWidth');
 
       // return targetWidth;
-      console.log('targetWidth', setMethodName, _width, targetWidth, columnConfig.dataIndex);
+      // console.log('targetWidth', setMethodName, _width, targetWidth, columnConfig.dataIndex);
 
       columnConfig[setMethodName] = targetWidth;
 
@@ -2545,24 +2545,24 @@ abstract class SearchTable<
           checked={defaultValue}
           onChange={(checked, e) => {
             this.setData((dataSource) => {
-              const _record = dataSource.find((t) => t[rowKey] === record[rowKey]);
+              return produce(dataSource, (draft) => {
+                const _record = draft.find((t) => t[rowKey] === record[rowKey]);
 
-              if (_record) {
-                _record[dataIndex] = valueMap.get(checked);
-              }
-
-              return [...dataSource];
+                if (_record) {
+                  _record[dataIndex] = valueMap.get(checked);
+                }
+              });
             }).then(() => {
               if (onChange) {
                 onChange(checked, e, this.switchColumnElRef.current as HTMLElement)?.catch?.(() => {
                   this.setData((dataSource) => {
-                    const item = dataSource.find((t) => t[rowKey] === record[rowKey]);
+                    return produce(dataSource, (draft) => {
+                      const item = draft.find((t) => t[rowKey] === record[rowKey]);
 
-                    if (item) {
-                      item[dataIndex] = valueMap.get(defaultValue);
-                    }
-
-                    return [...dataSource];
+                      if (item) {
+                        item[dataIndex] = valueMap.get(defaultValue);
+                      }
+                    });
                   });
                 });
               }
@@ -2729,6 +2729,8 @@ abstract class SearchTable<
    * @description 是否开启列自适应宽度
    */
   isColumnMaxContent() {
+    if (!this.props) return true;
+
     if ('isColumnMaxContent' in this.props) {
       return this.props.isColumnMaxContent;
     }
@@ -3023,11 +3025,13 @@ abstract class SearchTable<
   appendData<T extends object>(data: T | T[]) {
     return new Promise<void>((resolve) => {
       this.setData((preDataSource) => {
-        if (Array.isArray(data)) {
-          return cloneDeep([...preDataSource, ...data]);
-        }
-
-        return cloneDeep([...preDataSource, data]);
+        return produce(preDataSource, (draft) => {
+          if (Array.isArray(data)) {
+            draft.push(...data);
+          } else {
+            draft.push(data);
+          }
+        });
       }).then(() => {
         resolve();
       });
@@ -3038,28 +3042,26 @@ abstract class SearchTable<
 
     return new Promise<void>((resolve) => {
       this.setData((preData) => {
-        const targetRecord = Util.findNodeByKey(preData as any[], pId, {
-          keyAttr: rowKey,
-          childrenKey: this.getChildrenColumnName(),
+        return produce(preData, (draft) => {
+          const targetRecord = Util.findNodeByKey(draft as any[], pId, {
+            keyAttr: rowKey,
+            childrenKey: this.getChildrenColumnName(),
+          });
+
+          const childrenColumnName = this.getChildrenColumnName();
+
+          if (targetRecord) {
+            if (!targetRecord[childrenColumnName]) {
+              targetRecord[childrenColumnName] = [];
+            }
+
+            if (Array.isArray(data)) {
+              targetRecord[childrenColumnName] = [...targetRecord[childrenColumnName], ...data];
+            } else {
+              targetRecord[childrenColumnName] = [...targetRecord[childrenColumnName], data];
+            }
+          }
         });
-
-        const childrenColumnName = this.getChildrenColumnName();
-
-        if (targetRecord) {
-          if (!targetRecord[childrenColumnName]) {
-            targetRecord[childrenColumnName] = [];
-          }
-
-          if (Array.isArray(data)) {
-            targetRecord[childrenColumnName] = [...targetRecord[childrenColumnName], ...data];
-          } else {
-            targetRecord[childrenColumnName] = [...targetRecord[childrenColumnName], data];
-          }
-
-          return cloneDeep(preData);
-        }
-
-        return preData;
       }).then(() => {
         resolve();
       });
@@ -3073,11 +3075,13 @@ abstract class SearchTable<
   prependData<T extends object>(data: T | T[]) {
     return new Promise<void>((resolve) => {
       this.setData((preDataSource) => {
-        if (Array.isArray(data)) {
-          return cloneDeep([...data, ...preDataSource]);
-        }
-
-        return cloneDeep([data, ...preDataSource]);
+        return produce(preDataSource, (draft) => {
+          if (Array.isArray(data)) {
+            draft.unshift(...data);
+          } else {
+            draft.push(preDataSource);
+          }
+        });
       }).then(() => {
         resolve();
       });
@@ -3088,28 +3092,26 @@ abstract class SearchTable<
 
     return new Promise<void>((resolve) => {
       this.setData((preData) => {
-        const targetRecord = Util.findNodeByKey(preData as any[], pId, {
-          keyAttr: rowKey,
-          childrenKey: this.getChildrenColumnName(),
+        return produce(preData, (draft) => {
+          const targetRecord = Util.findNodeByKey(draft as any[], pId, {
+            keyAttr: rowKey,
+            childrenKey: this.getChildrenColumnName(),
+          });
+
+          const childrenColumnName = this.getChildrenColumnName();
+
+          if (targetRecord) {
+            if (!targetRecord[childrenColumnName]) {
+              targetRecord[childrenColumnName] = [];
+            }
+
+            if (Array.isArray(data)) {
+              targetRecord[childrenColumnName] = [...data, ...targetRecord[childrenColumnName]];
+            } else {
+              targetRecord[childrenColumnName] = [data, ...targetRecord[childrenColumnName]];
+            }
+          }
         });
-
-        const childrenColumnName = this.getChildrenColumnName();
-
-        if (targetRecord) {
-          if (!targetRecord[childrenColumnName]) {
-            targetRecord[childrenColumnName] = [];
-          }
-
-          if (Array.isArray(data)) {
-            targetRecord[childrenColumnName] = [...data, ...targetRecord[childrenColumnName]];
-          } else {
-            targetRecord[childrenColumnName] = [data, ...targetRecord[childrenColumnName]];
-          }
-
-          return cloneDeep(preData);
-        }
-
-        return preData;
       }).then(() => {
         resolve();
       });
@@ -3126,15 +3128,15 @@ abstract class SearchTable<
 
     return new Promise<void>((resolve) => {
       this.setData((preDataSource) => {
-        const index = preDataSource.findIndex((record) => record[rowKey] === id);
+        return produce(preDataSource, (draft) => {
+          const index = draft.findIndex((record) => record[rowKey] === id);
 
-        if (Array.isArray(data)) {
-          preDataSource.splice(index, 0, ...data);
-        } else {
-          preDataSource.splice(index, 0, data);
-        }
-
-        return cloneDeep(preDataSource);
+          if (Array.isArray(data)) {
+            draft.splice(index, 0, ...data);
+          } else {
+            draft.splice(index, 0, data);
+          }
+        });
       }).then(() => {
         resolve();
       });
@@ -3145,32 +3147,30 @@ abstract class SearchTable<
 
     return new Promise<void>((resolve) => {
       this.setData((preData) => {
-        const targetRecord = Util.findNodeByKey(preData as any[], pId, {
-          keyAttr: rowKey,
-          childrenKey: this.getChildrenColumnName(),
+        return produce(preData, (draft) => {
+          const targetRecord = Util.findNodeByKey(draft as any[], pId, {
+            keyAttr: rowKey,
+            childrenKey: this.getChildrenColumnName(),
+          });
+
+          const childrenColumnName = this.getChildrenColumnName();
+
+          if (targetRecord) {
+            if (!targetRecord[childrenColumnName]) {
+              targetRecord[childrenColumnName] = [];
+            }
+
+            const index = targetRecord[childrenColumnName].findIndex(
+              (record) => record[rowKey] === id,
+            );
+
+            if (Array.isArray(data)) {
+              targetRecord[childrenColumnName].splice(index, 0, ...data);
+            } else {
+              targetRecord[childrenColumnName].splice(index, 0, data);
+            }
+          }
         });
-
-        const childrenColumnName = this.getChildrenColumnName();
-
-        if (targetRecord) {
-          if (!targetRecord[childrenColumnName]) {
-            targetRecord[childrenColumnName] = [];
-          }
-
-          const index = targetRecord[childrenColumnName].findIndex(
-            (record) => record[rowKey] === id,
-          );
-
-          if (Array.isArray(data)) {
-            targetRecord[childrenColumnName].splice(index, 0, ...data);
-          } else {
-            targetRecord[childrenColumnName].splice(index, 0, data);
-          }
-
-          return cloneDeep(preData);
-        }
-
-        return preData;
       }).then(() => {
         resolve();
       });
@@ -3185,15 +3185,15 @@ abstract class SearchTable<
 
     return new Promise<void>((resolve) => {
       this.setData((preDataSource) => {
-        const index = preDataSource.findIndex((record) => record[rowKey] === id);
+        return produce(preDataSource, (draft) => {
+          const index = draft.findIndex((record) => record[rowKey] === id);
 
-        if (Array.isArray(data)) {
-          preDataSource.splice(index, 1, ...data);
-        } else {
-          preDataSource.splice(index, 1, data);
-        }
-
-        return cloneDeep(preDataSource);
+          if (Array.isArray(data)) {
+            draft.splice(index, 1, ...data);
+          } else {
+            draft.splice(index, 1, data);
+          }
+        });
       }).then(() => {
         resolve();
       });
@@ -3204,32 +3204,30 @@ abstract class SearchTable<
 
     return new Promise<void>((resolve) => {
       this.setData((preData) => {
-        const targetRecord = Util.findNodeByKey(preData as any[], pId, {
-          keyAttr: rowKey,
-          childrenKey: this.getChildrenColumnName(),
+        return produce(preData, (draft) => {
+          const targetRecord = Util.findNodeByKey(draft as any[], pId, {
+            keyAttr: rowKey,
+            childrenKey: this.getChildrenColumnName(),
+          });
+
+          const childrenColumnName = this.getChildrenColumnName();
+
+          if (targetRecord) {
+            if (!targetRecord[childrenColumnName]) {
+              targetRecord[childrenColumnName] = [];
+            }
+
+            const index = targetRecord[childrenColumnName].findIndex(
+              (record) => record[rowKey] === id,
+            );
+
+            if (Array.isArray(data)) {
+              targetRecord[childrenColumnName].splice(index, 1, ...data);
+            } else {
+              targetRecord[childrenColumnName].splice(index, 1, data);
+            }
+          }
         });
-
-        const childrenColumnName = this.getChildrenColumnName();
-
-        if (targetRecord) {
-          if (!targetRecord[childrenColumnName]) {
-            targetRecord[childrenColumnName] = [];
-          }
-
-          const index = targetRecord[childrenColumnName].findIndex(
-            (record) => record[rowKey] === id,
-          );
-
-          if (Array.isArray(data)) {
-            targetRecord[childrenColumnName].splice(index, 1, ...data);
-          } else {
-            targetRecord[childrenColumnName].splice(index, 1, data);
-          }
-
-          return cloneDeep(preData);
-        }
-
-        return preData;
       }).then(() => {
         resolve();
       });
@@ -3257,9 +3255,9 @@ abstract class SearchTable<
           }
         }
 
-        loop(preData);
-
-        return cloneDeep(preData);
+        return produce(preData, (draft) => {
+          loop(draft);
+        });
       }).then(() => {
         resolve();
       });
@@ -3270,24 +3268,20 @@ abstract class SearchTable<
 
     return new Promise<void>((resolve) => {
       this.setData((preData) => {
-        const targetRecord = Util.findNodeByKey(preData as any[], pId, {
-          keyAttr: rowKey,
-          childrenKey: this.getChildrenColumnName(),
-        });
+        return produce(preData, (draft) => {
+          const targetRecord = Util.findNodeByKey(draft as any[], pId, {
+            keyAttr: rowKey,
+            childrenKey: this.getChildrenColumnName(),
+          });
 
-        const childrenColumnName = this.getChildrenColumnName();
+          const childrenColumnName = this.getChildrenColumnName();
 
-        if (targetRecord) {
-          if (targetRecord[childrenColumnName]) {
-            delete targetRecord[childrenColumnName];
-
-            return cloneDeep(preData);
+          if (targetRecord) {
+            if (targetRecord[childrenColumnName]) {
+              delete targetRecord[childrenColumnName];
+            }
           }
-
-          return preData;
-        }
-
-        return preData;
+        });
       }).then(() => {
         resolve();
       });
@@ -3298,24 +3292,20 @@ abstract class SearchTable<
 
     return new Promise<void>((resolve) => {
       this.setData((preData) => {
-        const targetRecord = Util.findNodeByKey(preData as any[], pId, {
-          keyAttr: rowKey,
-          childrenKey: this.getChildrenColumnName(),
-        });
+        return produce(preData, (draft) => {
+          const targetRecord = Util.findNodeByKey(draft as any[], pId, {
+            keyAttr: rowKey,
+            childrenKey: this.getChildrenColumnName(),
+          });
 
-        const childrenColumnName = this.getChildrenColumnName();
+          const childrenColumnName = this.getChildrenColumnName();
 
-        if (targetRecord) {
-          if (targetRecord[childrenColumnName]) {
-            targetRecord[childrenColumnName] = [];
-
-            return cloneDeep(preData);
+          if (targetRecord) {
+            if (targetRecord[childrenColumnName]) {
+              targetRecord[childrenColumnName] = [];
+            }
           }
-
-          return preData;
-        }
-
-        return preData;
+        });
       }).then(() => {
         resolve();
       });

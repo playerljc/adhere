@@ -62,7 +62,7 @@ export declare const createTreeDataChildren: (tdREL: any, subChildren: any) => a
 export declare const createChildren: (tdREL: any, subChildren: any) => any[];
 export declare const cloneDeep: (obj: {
     [x: string]: any;
-}) => any;
+}) => {};
 /**
  * hasCommonPathRelation
  * @param path1

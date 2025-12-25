@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ProSearchStateTableImpl from './proStateSearchTable.jsx';
+import ProSearchStateTableImpl from './asyncLoadDataSSQTable.jsx';
 
 export default () => (
   <div style={{ display: 'flex', height: 700 }}>

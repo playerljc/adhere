@@ -1,5 +1,6 @@
 import lodashClone from 'lodash.clone';
-import lodashCloneDeep from 'lodash.clonedeep';
+// import lodashCloneDeep from 'lodash.clonedeep';
+import cloneDeepWith from 'lodash/cloneDeepWith';
 import deepClone from 'rfdc';
 
 /**
@@ -152,14 +153,56 @@ export const createChildren = (tdREL, subChildren) => {
 };
 
 export const cloneDeep = (obj: { [x: string]: any }) => {
-  const targetObj = Object.keys(obj).reduce((cloneObj, prop) => {
-    if (!prop.startsWith('_')) {
-      cloneObj[prop] = obj[prop];
-    }
-    return cloneObj;
-  }, {});
+  // const targetObj = Object.keys(obj).reduce((cloneObj, prop) => {
+  //   if (!prop.startsWith('_')) {
+  //     cloneObj[prop] = obj[prop];
+  //   }
+  //   return cloneObj;
+  // }, {});
+  //
+  // return lodashCloneDeep(targetObj);
 
-  return lodashCloneDeep(targetObj);
+  // return structuredClone(obj);
+
+  if (obj === null || typeof obj !== 'object') return obj;
+
+  const root = Array.isArray(obj) ? [] : {};
+  const stack: Array<{ parent: any; key: string | number | undefined; data: any }> = [];
+  const map = new WeakMap(); // 循环引用记录
+
+  map.set(obj, root);
+  stack.push({ parent: root, key: undefined, data: obj });
+
+  while (stack.length) {
+    const { parent, key, data } = stack.pop()!;
+    const target = key === undefined ? parent : (parent[key] = Array.isArray(data) ? [] : {});
+
+    for (const k in data) {
+      if (!Object.prototype.hasOwnProperty.call(data, k)) continue;
+      const val = data[k];
+
+      if (
+        typeof val === 'function' ||
+        typeof val === 'symbol' ||
+        (typeof HTMLElement !== 'undefined' && val instanceof HTMLElement) ||
+        (typeof Node !== 'undefined' && val instanceof Node)
+      ) {
+        target[k] = val; // 保留引用
+      } else if (val && typeof val === 'object') {
+        if (map.has(val)) {
+          target[k] = map.get(val); // 循环引用处理
+        } else {
+          target[k] = Array.isArray(val) ? [] : {};
+          map.set(val, target[k]);
+          stack.push({ parent: target, key: k, data: val });
+        }
+      } else {
+        target[k] = val; // 原始类型
+      }
+    }
+  }
+
+  return root;
 };
 
 /**
