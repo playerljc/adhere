@@ -118,12 +118,14 @@ const ProxyComponent = new Proxy<{
   {},
   {
     get(target: {}, p: string, receiver: any) {
+      console.log('p======', p);
       // p
       // p = SystemAppBasicLayoutRectifyTransferListSectionSelectDynamicMultiFormItem
       // p = SystemAppBasicLayoutRectifyTransferListSectionSelectDynamic + MultiFormItem
       // (业务名 + 组件名 + 功能名)
       // p = SystemAppBasicLayoutRectifyTransferListSection + SelectDynamic + MultiFormItem
 
+      if (typeof p === 'symbol') return Reflect.get(target, p, receiver);
       if (p === '$$typeof') return Reflect.get(target, p, receiver);
       // 存在则返回
       if (p in target && !!target[p]) return Reflect.get(target, p, receiver);
