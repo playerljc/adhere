@@ -194,6 +194,8 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
     onClear(): Promise<any>;
     isUseSearchWrapperGap(): any;
     isUseSearchFormToolBarGap(): any;
+    getSearchFormBeforeClassName(): any;
+    getSearchFormAfterClassName(): any;
     getSearchFormToolBarClassName(): any;
     getSearchToolbarClassName(): any;
     getSearchFormExpandClassName(): any;

@@ -2,6 +2,7 @@ import React from 'react';
 
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 
+import SearchTable from '../../src';
 import sage from '../saga';
 
 export default () => {
@@ -69,6 +70,9 @@ export default () => {
       },
     },
     sage,
+    SearchClass: SearchTable,
+    SuperClass: SearchTable.ProSearchStateTable,
+    FieldGeneratorToDict,
   });
 
   return <DictComponent />;

@@ -1,7 +1,7 @@
 import { Tooltip } from 'antd';
+import type { ExpandableConfig } from 'antd/es/table/interface';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import type { ExpandableConfig } from 'antd/es/table/interface';
 import React, { ReactElement, ReactNode, RefObject, createRef } from 'react';
 
 import { InfoCircleOutlined } from '@ant-design/icons';
@@ -352,6 +352,16 @@ abstract class Search<
     return isUseSearchFormToolBarGap;
   }
 
+  getSearchFormBeforeClassName() {
+    const { searchFormBeforeClassName } = this.props;
+    return searchFormBeforeClassName;
+  }
+
+  getSearchFormAfterClassName() {
+    const { searchFormAfterClassName } = this.props;
+    return searchFormAfterClassName;
+  }
+
   getSearchFormToolBarClassName() {
     const { searchFormToolBarClassName } = this.props;
     return searchFormToolBarClassName;
@@ -392,6 +402,9 @@ abstract class Search<
     const isUseSearchWrapperGap = this.isUseSearchWrapperGap();
     const isUseSearchFormToolBarGap = this.isUseSearchFormToolBarGap();
     const bodyClassName = this.getBodyClassName();
+
+    const searchFormBeforeClassName = this.getSearchFormBeforeClassName();
+    const searchFormAfterClassName = this.getSearchFormAfterClassName();
     const searchFormToolBarClassName = this.getSearchFormToolBarClassName();
     const searchToolbarClassName = this.getSearchToolbarClassName();
     const searchFormExpandClassName = this.getSearchFormExpandClassName();
@@ -427,7 +440,12 @@ abstract class Search<
             style={{ ...(searchStyle ?? {}) }}
           >
             {!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.() && (
-              <Fixed className={`${selectorPrefix}-search-form-before`}>
+              <Fixed
+                className={classNames(
+                  `${selectorPrefix}-search-form-before`,
+                  searchFormBeforeClassName,
+                )}
+              >
                 {this.renderSearchFormBefore?.()}
               </Fixed>
             )}
@@ -480,7 +498,12 @@ abstract class Search<
             )}
 
             {!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.() && (
-              <Fixed className={`${selectorPrefix}-search-form-after`}>
+              <Fixed
+                className={classNames(
+                  `${selectorPrefix}-search-form-after`,
+                  searchFormAfterClassName,
+                )}
+              >
                 {this.renderSearchFormAfter?.()}
               </Fixed>
             )}

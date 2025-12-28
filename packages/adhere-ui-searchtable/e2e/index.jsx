@@ -58,7 +58,7 @@ const store = createStore(null, {}, applyMiddleware(createLoggerMiddleware(), sa
 registerModels();
 
 const ProSearchStateTableImpl = lazy(() =>
-  import(/* webpackChunkName: "conditionalrender" */ './asyncLoadDataTable'),
+  import(/* webpackChunkName: "conditionalrender" */ './fieldgenerator/searchtable.jsx'),
 );
 
 e2e.PC({
