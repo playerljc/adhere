@@ -1,13 +1,14 @@
 import { Input, type InputProps } from 'antd';
-import React, { useContext } from 'react';
+import React, { type CSSProperties, type ReactNode, useContext } from 'react';
 
 import { Form } from '@baifendian/adhere-ui-anthoc';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 
+import { DesignContext } from '../../../../Design/Context';
 import DesignFieldWrapper from '../../../../components/DesignFieldWrapper';
-import type { DesignValue, FormItemProps } from '../../../../types';
+import type { DesignValue, FieldProps, FormItemProps } from '../../../../types';
 import {
   actionsCodeStringToEvents,
   formItemToProps,
@@ -17,7 +18,7 @@ import {
 
 const { Label, Value } = TableGridLayout;
 
-function LabelDesign({ formItemProps }: { formItemProps?: FormItemProps }) {
+export function LabelDesign({ formItemProps }: { formItemProps?: FormItemProps }) {
   const ConfigProviderContext = useContext(ConfigProvider.Context);
 
   const lang = ConfigProviderContext.intl.lang!;
@@ -27,32 +28,42 @@ function LabelDesign({ formItemProps }: { formItemProps?: FormItemProps }) {
   return <Label>{label}</Label>;
 }
 
-function ValueDesign({
+export function ValueDesign({
   value: {
     id,
     props: { formItemProps, fieldProps, styleProps, actionsProps },
   },
+  children,
 }: {
   value: DesignValue;
+  children: (params: {
+    fieldProps: FieldProps;
+    style: CSSProperties;
+    actions: Record<string, (...args: any[]) => any>;
+  }) => ReactNode;
 }) {
   const ConfigProviderContext = useContext(ConfigProvider.Context);
 
+  const designContext = useContext(DesignContext);
+
   const lang = ConfigProviderContext.intl.lang!;
 
-  const style = styleCodeStringToCSSProperties(styleProps ?? '');
-  const actions = actionsCodeStringToEvents(actionsProps ?? []);
+  const style = styleCodeStringToCSSProperties(styleProps?.styles ?? '');
+  const actions = actionsCodeStringToEvents({
+    actions: actionsProps?.actions ?? [],
+    designContext,
+  });
   const formProps = formItemToProps(formItemProps ?? {}, lang);
 
   return (
     <Value>
       <DesignFieldWrapper id={id}>
         <Form.Item {...formProps}>
-          <Input
-            {...(fieldProps as InputProps)}
-            style={style ?? {}}
-            {...actions}
-            value={(formItemProps as InputProps)?.value}
-          />
+          {children({
+            fieldProps,
+            style,
+            actions,
+          })}
         </Form.Item>
       </DesignFieldWrapper>
     </Value>
@@ -73,6 +84,17 @@ export function renderDesign({ value }: { value: DesignValue }): DataItemRow {
     key: id,
     require: true,
     label: <LabelDesign formItemProps={formItemProps} />,
-    value: <ValueDesign value={value} />,
+    value: (
+      <ValueDesign value={value}>
+        {({ fieldProps, style, actions }) => (
+          <Input
+            {...(fieldProps as InputProps)}
+            style={style ?? {}}
+            {...actions}
+            value={(formItemProps as InputProps)?.value}
+          />
+        )}
+      </ValueDesign>
+    ),
   };
 }

@@ -21,7 +21,7 @@ const selectPrefix = `${SELECT_PREFIX}-design-field-wrapper`;
  *  1.捕获组件的click事件
  *  2.显示控件的在设计视图中的工具栏(如删除控件,clone控件......) 当id === getActiveFieldId()时，显示工具栏
  */
-const DesignFieldWrapper: FC<DesignFieldWrapperProps> = ({ id, children }) => {
+const DesignFieldWrapper: FC<DesignFieldWrapperProps> = ({ id, className, style, children }) => {
   const { getActiveFieldId, setActiveFieldId } = useContext(DesignContext);
 
   const activeFieldId = getActiveFieldId();
@@ -36,9 +36,10 @@ const DesignFieldWrapper: FC<DesignFieldWrapperProps> = ({ id, children }) => {
 
   return (
     <div
-      className={classNames(selectPrefix, {
+      className={classNames(selectPrefix, className, {
         [`${selectPrefix}-active`]: isActive,
       })}
+      style={style ?? {}}
       onClick={onClick}
     >
       {isActive && <div className={`${selectPrefix}-actions`}></div>}

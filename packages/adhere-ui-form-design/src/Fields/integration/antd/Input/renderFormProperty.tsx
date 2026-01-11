@@ -2,6 +2,7 @@ import React, { type ReactNode, useContext, useEffect } from 'react';
 
 import { Form, Input } from '@baifendian/adhere-ui-anthoc';
 import Hooks from '@baifendian/adhere-ui-hooks';
+import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
@@ -25,7 +26,13 @@ const { useItemsRef } = Hooks;
  *
  * @param {DesignValueProps} props
  */
-function FormProperty(props: DesignValueProps) {
+export function FormProperty({
+  designValue,
+  renderFormItems,
+}: {
+  designValue: DesignValueProps;
+  renderFormItems?: (defaultFormItems: DataItemRow[]) => DataItemRow[];
+}) {
   // 表单的instance
   const [form] = Form.useForm();
 
@@ -38,9 +45,139 @@ function FormProperty(props: DesignValueProps) {
     setFormItemProps,
   } = useContext(DesignContext);
 
-  const { formItemProps } = props;
+  const { formItemProps } = designValue;
 
   const activeFieldId = getActiveFieldId();
+
+  const defaultFormItems: DataItemRow[] = [
+    {
+      key: 'label',
+      require: false,
+      label: (
+        <SlotEndLabel
+          ref={(node) => {
+            set('label', node);
+          }}
+        >
+          {Intl.get('label')}：
+        </SlotEndLabel>
+      ),
+      value: (
+        <Value>
+          <Form.Item name="label">
+            <I18nChangeFormItem getTriggerContainer={() => get('label') as HTMLElement}>
+              {({ onChange, value }) => (
+                <Input
+                  value={value}
+                  placeholder={Intl.get('label')}
+                  maxLength={200}
+                  onChange={(e) => {
+                    onChange(e.target.value);
+                  }}
+                />
+              )}
+            </I18nChangeFormItem>
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'name',
+      require: true,
+      label: <Label>{Intl.get('name')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="name">
+            <Input placeholder={Intl.get('name')} />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'value',
+      require: true,
+      label: <Label>{Intl.get('initial_value')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="value">
+            <Input placeholder={Intl.get('initial_value')} />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'hidden',
+      require: false,
+      label: <Label>{Intl.get('is_hidden')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="hidden">
+            <WhetherRadioHorizontalDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'noStyle',
+      require: false,
+      label: <Label>{Intl.get('no_style')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="noStyle">
+            <WhetherRadioHorizontalDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'valuePropName',
+      require: false,
+      label: <Label>{Intl.get('value_propname')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="valuePropName">
+            <ValuePropNameSelectStandardDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'validateFirst',
+      require: false,
+      label: <Label>{Intl.get('validate_first')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="validateFirst">
+            <WhetherRadioHorizontalDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'validateTrigger',
+      require: false,
+      label: <Label>{Intl.get('validate_trigger')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="validateTrigger">
+            <InputEventsSelectStandardDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'rules',
+      require: false,
+      label: <Label>{Intl.get('rules')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="rules">
+            <RulesSettingFormItem />
+          </Form.Item>
+        </Value>
+      ),
+    },
+  ];
 
   function onFieldsChange() {
     const values = form.getFieldsValue();
@@ -64,135 +201,7 @@ function FormProperty(props: DesignValueProps) {
             width: '100%',
             columnCount: 1,
             colgroup: ['auto'],
-            data: [
-              {
-                key: 'label',
-                require: false,
-                label: (
-                  <SlotEndLabel
-                    ref={(node) => {
-                      set('label', node);
-                    }}
-                  >
-                    {Intl.get('label')}：
-                  </SlotEndLabel>
-                ),
-                value: (
-                  <Value>
-                    <Form.Item name="label">
-                      <I18nChangeFormItem getTriggerContainer={() => get('label') as HTMLElement}>
-                        {({ onChange, value }) => (
-                          <Input
-                            value={value}
-                            placeholder={Intl.get('label')}
-                            maxLength={200}
-                            onChange={(e) => {
-                              onChange(e.target.value);
-                            }}
-                          />
-                        )}
-                      </I18nChangeFormItem>
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'name',
-                require: true,
-                label: <Label>{Intl.get('name')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="name">
-                      <Input placeholder={Intl.get('name')} />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'value',
-                require: true,
-                label: <Label>{Intl.get('initial_value')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="value">
-                      <Input placeholder={Intl.get('initial_value')} />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'hidden',
-                require: false,
-                label: <Label>{Intl.get('is_hidden')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="hidden">
-                      <WhetherRadioHorizontalDict />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'noStyle',
-                require: false,
-                label: <Label>{Intl.get('no_style')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="noStyle">
-                      <WhetherRadioHorizontalDict />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'valuePropName',
-                require: false,
-                label: <Label>{Intl.get('value_propname')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="valuePropName">
-                      <ValuePropNameSelectStandardDict />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'validateFirst',
-                require: false,
-                label: <Label>{Intl.get('validate_first')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="validateFirst">
-                      <WhetherRadioHorizontalDict />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'validateTrigger',
-                require: false,
-                label: <Label>{Intl.get('validate_trigger')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="validateTrigger">
-                      <InputEventsSelectStandardDict />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'rules',
-                require: false,
-                label: <Label>{Intl.get('rules')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="rules">
-                      <RulesSettingFormItem />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-            ],
+            data: renderFormItems ? renderFormItems(defaultFormItems) : defaultFormItems,
           },
         ]}
       />
@@ -205,5 +214,5 @@ function FormProperty(props: DesignValueProps) {
  * @param props
  */
 export function renderFormProperty(props: DesignValueProps): ReactNode {
-  return <FormProperty {...props} />;
+  return <FormProperty designValue={props} />;
 }

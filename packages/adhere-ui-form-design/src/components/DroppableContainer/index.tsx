@@ -13,15 +13,22 @@ const selectPrefix = `${SELECT_PREFIX}-design-editor`;
  * DroppableContainer
  * @description 在设计器中能进行拖放中的放容器，用于放置控件
  */
-const DroppableContainer: FC<DroppableContainerProps> = ({ id, value, children }) => {
+const DroppableContainer: FC<DroppableContainerProps> = ({
+  id,
+  value,
+  className,
+  style,
+  children,
+}) => {
   const { setNodeRef, isOver } = useDroppable({ id, data: value });
 
   return (
     <div
       ref={setNodeRef}
-      className={classNames(`${selectPrefix}-droppable-container`, {
+      className={classNames(`${selectPrefix}-droppable-container`, className, {
         [`${selectPrefix}-droppable-container-over`]: isOver,
       })}
+      style={style ?? {}}
     >
       {children}
     </div>

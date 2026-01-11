@@ -44,8 +44,6 @@ const ActionsFormItem: FC<ActionsFormItemProps> = ({
     return menus.filter(({ key }) => (value ?? []).some((a) => a.type !== key));
   }, [value, actions]);
 
-  debugger;
-
   return (
     <div className={classNames(selectorPrefix, className)} style={style ?? {}}>
       <div className={`${selectorPrefix}-action`}>
@@ -83,6 +81,7 @@ const ActionsFormItem: FC<ActionsFormItemProps> = ({
               }
             >
               <MonacoEditorFormItem
+                language="javascript"
                 value={actionValue}
                 onChange={(_changeValue) => {
                   onChange?.(

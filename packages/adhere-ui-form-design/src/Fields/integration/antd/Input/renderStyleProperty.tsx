@@ -4,7 +4,7 @@ import { Form } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
-import { MonacoEditorFormItem } from '../../../../components';
+import { MonacoCSSEditorFormItem } from '../../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
 
@@ -61,7 +61,7 @@ function StyleProperty(props: DesignValueProps) {
                 value: (
                   <Value>
                     <Form.Item name="styles">
-                      <MonacoEditorFormItem language="css" />
+                      <MonacoCSSEditorFormItem language="css" />
                     </Form.Item>
                   </Value>
                 ),

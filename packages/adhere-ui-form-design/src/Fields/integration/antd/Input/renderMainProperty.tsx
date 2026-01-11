@@ -1,6 +1,7 @@
 import React, { type ReactNode, useContext, useEffect } from 'react';
 
-import { Form, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
+import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
+import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
@@ -17,7 +18,13 @@ import type { DesignValueProps } from '../../../../types';
  * @description 控件的属性面板，如果控件是TableGridLayout，那么属性面板就是TableGridLayout的属性面板
  * @param {DesignValueProps} props
  */
-function MainProperty(props: DesignValueProps) {
+export function MainProperty({
+  designValue,
+  renderFormItems,
+}: {
+  designValue: DesignValueProps;
+  renderFormItems?: (defaultFormItems: DataItemRow[]) => DataItemRow[];
+}) {
   // 表单的instance
   const [form] = Form.useForm();
 
@@ -29,7 +36,106 @@ function MainProperty(props: DesignValueProps) {
   } = useContext(DesignContext);
 
   // 控件的数据
-  const { fieldProps } = props;
+  const { fieldProps } = designValue;
+
+  const defaultFormItems: DataItemRow[] = [
+    {
+      key: 'type',
+      require: false,
+      label: <Label>{Intl.get('type')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="type">
+            <InputTypeSelectStandardDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'placeholder',
+      require: false,
+      label: <Label>{Intl.get('placeholder')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="placeholder">
+            <Input placeholder={Intl.get('placeholder')} maxLength={50} />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'allowClear',
+      require: false,
+      label: <Label>{Intl.get('allow_clear')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="allowClear">
+            <WhetherRadioHorizontalDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'readOnly',
+      require: false,
+      label: <Label>{Intl.get('read_only')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="readOnly">
+            <WhetherRadioHorizontalDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'disabled',
+      require: false,
+      label: <Label>{Intl.get('disabled')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="disabled">
+            <WhetherRadioHorizontalDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'maxLength',
+      require: false,
+      label: <Label>{Intl.get('max_length')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="maxLength">
+            <InputNumberInteger.InputPositiveNumberInteger placeholder={Intl.get('max_length')} />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'showCount',
+      require: false,
+      label: <Label>{Intl.get('show_count')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="showCount">
+            <WhetherRadioHorizontalDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'size',
+      require: false,
+      label: <Label>{Intl.get('input_size')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="size">
+            <InputSizeSelectStandardDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
+  ];
 
   function onFieldsChange() {
     const values = form.getFieldsValue();
@@ -53,94 +159,7 @@ function MainProperty(props: DesignValueProps) {
             width: '100%',
             columnCount: 1,
             colgroup: ['auto'],
-            data: [
-              {
-                key: 'type',
-                require: false,
-                label: <Label>{Intl.get('type')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="type">
-                      <InputTypeSelectStandardDict />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'allowClear',
-                require: false,
-                label: <Label>{Intl.get('allow_clear')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="allowClear">
-                      <WhetherRadioHorizontalDict />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'readOnly',
-                require: false,
-                label: <Label>{Intl.get('read_only')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="readOnly">
-                      <WhetherRadioHorizontalDict />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'disabled',
-                require: false,
-                label: <Label>{Intl.get('disabled')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="disabled">
-                      <WhetherRadioHorizontalDict />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'maxLength',
-                require: false,
-                label: <Label>{Intl.get('max_length')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="maxLength">
-                      <InputNumberInteger.InputPositiveNumberInteger
-                        placeholder={Intl.get('max_length')}
-                      />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'showCount',
-                require: false,
-                label: <Label>{Intl.get('show_count')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="showCount">
-                      <WhetherRadioHorizontalDict />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'size',
-                require: false,
-                label: <Label>{Intl.get('input_size')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="size">
-                      <InputSizeSelectStandardDict />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-            ],
+            data: renderFormItems ? renderFormItems(defaultFormItems) : defaultFormItems,
           },
         ]}
       />
@@ -154,5 +173,5 @@ function MainProperty(props: DesignValueProps) {
  * @return ReactElement
  */
 export function renderMainProperty(props: DesignValueProps): ReactNode {
-  return <MainProperty {...props} />;
+  return <MainProperty designValue={props} />;
 }

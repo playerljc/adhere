@@ -13,6 +13,7 @@ import I18nChangeFormItem, {
 import { InputEventsSelectStandardDict } from './InputEvents';
 import { InputSizeSelectStandardDict } from './InputSize';
 import { InputTypeSelectStandardDict } from './InputType';
+import MonacoCSSEditorFormItem from './MonacoCSSEditorFormItem';
 import MonacoEditorFormItem, {
   EmptyValidator as MonacoEditorFormItemEmptyValidator,
 } from './MonacoEditorFormItem';
@@ -34,6 +35,7 @@ export {
   InputTypeSelectStandardDict,
   MonacoEditorFormItem,
   MonacoEditorFormItemEmptyValidator,
+  MonacoCSSEditorFormItem,
   I18nChangeFormItem,
   payloadToValues,
   transformPayloadI18n,

@@ -6,6 +6,7 @@ import Intl from '@baifendian/adhere-util-intl';
 import { DesignContext } from '../../../../Design/Context';
 import { values } from '../../../../Dict';
 import { ActionsFormItem } from '../../../../components';
+import { ActionItem } from '../../../../components/ActionsFormItem';
 import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
 
@@ -16,7 +17,13 @@ import type { DesignValueProps } from '../../../../types';
  *
  * @param {DesignValueProps} props
  */
-function ActionsProperty(props: DesignValueProps) {
+export function ActionsProperty({
+  designValue,
+  actions,
+}: {
+  designValue: DesignValueProps;
+  actions: ActionItem[];
+}) {
   // 表单的instance
   const [form] = Form.useForm();
 
@@ -27,7 +34,7 @@ function ActionsProperty(props: DesignValueProps) {
     setActionsProps,
   } = useContext(DesignContext);
 
-  const { actionsProps } = props;
+  const { actionsProps } = designValue;
 
   function onFieldsChange() {
     const values = form.getFieldsValue();
@@ -60,7 +67,7 @@ function ActionsProperty(props: DesignValueProps) {
                 value: (
                   <Value>
                     <Form.Item name="actions">
-                      <ActionsFormItem actions={values.InputEvents?.value ?? []} />
+                      <ActionsFormItem actions={actions} />
                     </Form.Item>
                   </Value>
                 ),
@@ -78,5 +85,5 @@ function ActionsProperty(props: DesignValueProps) {
  * @param props
  */
 export function renderActionsProperty(props: DesignValueProps): ReactNode {
-  return <ActionsProperty {...props} />;
+  return <ActionsProperty designValue={props} actions={values.InputEvents?.value ?? []} />;
 }

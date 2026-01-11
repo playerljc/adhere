@@ -8589,6 +8589,11 @@ console-control-strings@^1.1.0:
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
   integrity sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==
 
+constrained-editor-plugin@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/constrained-editor-plugin/-/constrained-editor-plugin-1.4.0.tgz#cdfff93cf84208a7905d846ae534321482f1a7d2"
+  integrity sha512-OXZrivIHbMqFVDNF1/wBI3SBWQCPPesGoeBJ7Cev0KHnnxN9Oei2I8OXfOv5ROzliCXDYA5x4RWtDuByFDY2vQ==
+
 content-disposition@0.5.4:
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/content-disposition/-/content-disposition-0.5.4.tgz#8b82b4efac82512a02bb0b1dcec9d2c5e8eb5bfe"

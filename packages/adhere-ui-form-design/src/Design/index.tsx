@@ -15,8 +15,9 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 
-import { define as tableGridLayoutDefine } from '../Fields/layout/TableGridLayout';
-import { TYPE } from '../Fields/layout/TableGridLayout/constant';
+import { define as flowLayoutDefine } from '../Fields/layout/FlowLayout';
+import { TYPE } from '../Fields/layout/FlowLayout/constant';
+import { TYPE as TableGridLayoutType } from '../Fields/layout/TableGridLayout/constant';
 import { REDUCER_ACTION_TYPE, SELECT_PREFIX } from '../constant';
 import {
   type ActionsProps,
@@ -33,6 +34,7 @@ import {
   type StyleProps,
   ToolBoxItem,
 } from '../types';
+import { isLayoutItem } from '../utils';
 import { DesignContext } from './Context';
 import Editor from './DesignEditor';
 import DesignValueReducer from './DesignValueReducer';
@@ -82,20 +84,20 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
             type: TYPE,
             props: {
               fieldProps: {
-                layout: 'vertical',
-                bordered: false,
-                density: 'default',
-                mode: 'normal',
-                columnCount: 2,
-                data: [
-                  {
-                    name: 'g1',
-                    width: '100%',
-                    columnCount: terminal === 'desktop' ? 2 : 1,
-                    colgroup: terminal === 'desktop' ? ['auto', 'auto'] : ['auto'],
-                    data: [],
-                  },
-                ],
+                // layout: 'vertical',
+                // bordered: false,
+                // density: 'default',
+                // mode: 'normal',
+                // columnCount: 2,
+                // data: [
+                //   {
+                //     name: 'g1',
+                //     width: '100%',
+                //     columnCount: terminal === 'desktop' ? 2 : 1,
+                //     colgroup: terminal === 'desktop' ? ['auto', 'auto'] : ['auto'],
+                //     data: [],
+                //   },
+                // ],
               },
               children: [],
             },
@@ -181,9 +183,20 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         const { active, over } = event;
         setActiveToolItemData(null);
 
+        console.log('active', active);
+        console.log('over', over);
+
         if (!over) return;
 
-        console.log('over======', active, over);
+        // active是控件, over不是TableGridLayout
+        if (
+          !isLayoutItem(active?.data?.current?.type as string) &&
+          over?.data?.current?.type !== TableGridLayoutType
+        ) {
+          return;
+        }
+
+        console.log('ok');
 
         // 拖拽结束，结束后应该在editor中多一个控件的实例
         // active是拖拽对象 一般是toolbox中的item
@@ -239,7 +252,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       }
 
       function getItems(): DesignItem[] {
-        return [tableGridLayoutDefine(), ...(items ?? [])];
+        return [flowLayoutDefine(), ...(items ?? [])];
       }
 
       function getOverlayCursor() {
@@ -295,6 +308,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
 
       return (
         <DndContext
+          autoScroll
           sensors={sensors}
           collisionDetection={pointerWithin}
           onDragStart={handleDragStart}
@@ -303,6 +317,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         >
           <DesignContext
             value={{
+              // getter
               getDesignValue,
               getTerminal,
               getActiveFieldId,
@@ -310,12 +325,13 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
               getItems,
               getOverlayCursor,
               getActiveToolItemData,
+              // setter
               setCurrentTerminal,
               setActiveFieldId,
               setFormItemProps,
-              setActionsProps,
               setFieldProps,
               setStyleProps,
+              setActionsProps,
             }}
           >
             <div className={classNames(`${SELECT_PREFIX}-design-wrapper`, className)} style={style}>

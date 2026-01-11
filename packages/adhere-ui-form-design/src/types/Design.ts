@@ -15,6 +15,8 @@ import type { DraggableToolItemProps, ToolBoxOption } from './ToolBox';
 import type { Styles, Terminal } from './types';
 
 export type DesignFieldWrapperProps = {
+  className?: string;
+  style?: CSSProperties;
   id: string;
   children?: ReactNode;
 };

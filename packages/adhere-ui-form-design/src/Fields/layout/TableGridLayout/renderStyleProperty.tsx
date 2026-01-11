@@ -17,7 +17,7 @@ import type { DesignValueProps } from '../../../types';
  *
  * @param {DesignValueProps} props
  */
-function StyleProperty(props: DesignValueProps) {
+export function StyleProperty(props: DesignValueProps) {
   // 表单的instance
   const [form] = Form.useForm();
 

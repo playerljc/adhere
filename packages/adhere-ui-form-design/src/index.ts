@@ -1,4 +1,5 @@
 import Design from './Design';
+import * as Dict from './Dict';
 import * as parse from './Fields';
 import * as Plugins from './Fields/integration';
 import * as Layout from './Fields/layout';
@@ -17,4 +18,5 @@ export default {
   parse,
   Layout,
   Plugins,
+  Dict,
 };

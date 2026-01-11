@@ -15,13 +15,22 @@ function TableGridLayoutDesign({ value }: { value: DesignValue }) {
     props: { children, styleProps, fieldProps },
   } = value;
 
-  const style = useMemo(() => styleCodeStringToCSSProperties(styleProps ?? ''), [styleProps]);
-
-  console.log('fieldProps', fieldProps);
+  const style = useMemo(
+    () => styleCodeStringToCSSProperties(styleProps?.styles ?? ''),
+    [styleProps],
+  );
 
   return (
     <DesignFieldWrapper id={id}>
-      <DroppableContainer id={id} value={value}>
+      <DroppableContainer
+        id={id}
+        value={value}
+        style={
+          {
+            // backgroundColor: 'red',
+          }
+        }
+      >
         <InternalTableGridLayout
           {...(fieldProps as TableGridLayoutProps)}
           style={style ?? {}}

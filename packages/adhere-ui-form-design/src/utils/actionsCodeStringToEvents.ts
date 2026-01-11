@@ -1,13 +1,22 @@
-import type { ActionsProps } from '../types';
+import type { ActionsProps, DesignContextType } from '../types';
 
-export function actionsCodeStringToEvents(
-  actionsCodeString: ActionsProps,
-): Record<string, (...args: any[]) => any> {
-  if (!Array.isArray(actionsCodeString) || actionsCodeString.length === 0) return {};
+/**
+ * actionsCodeStringToEvents
+ * @param actions
+ * @param designContext
+ */
+export function actionsCodeStringToEvents({
+  actions,
+  designContext,
+}: {
+  actions: ActionsProps['actions'];
+  designContext: DesignContextType;
+}): Record<string, (...args: any[]) => any> {
+  if (!Array.isArray(actions) || actions.length === 0) return {};
 
   const events: Record<string, (...args: any[]) => any> = {};
 
-  actionsCodeString.forEach(({ type, value }) => {
+  actions.forEach(({ type, value }) => {
     if (!type) return;
 
     const code = String(value ?? '').trim();
@@ -32,13 +41,15 @@ export function actionsCodeStringToEvents(
     }
 
     try {
-      const handler = new Function('event', 'return (function(){' + code + '}).call(this)') as (
-        event: any,
-      ) => any;
+      const handler = new Function(
+        'event',
+        'designContext',
+        'return (function(){' + code + '}).call(designContext)',
+      ) as (event: any, designContext: any) => any;
 
       events[type] = (event: any) => {
         try {
-          return handler(event);
+          return handler(event, designContext);
         } catch {}
       };
     } catch {}

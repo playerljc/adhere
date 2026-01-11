@@ -1,5 +1,14 @@
 import classNames from 'classnames';
-import React, { forwardRef, memo, useImperativeHandle, useRef } from 'react';
+import merge from 'lodash.merge';
+import React, {
+  type PropsWithoutRef,
+  type RefAttributes,
+  forwardRef,
+  memo,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+} from 'react';
 
 import { Editor } from '@monaco-editor/react';
 import type { EditorProps, OnMount } from '@monaco-editor/react';
@@ -13,23 +22,58 @@ export interface MonacoEditorFormItemProps extends Omit<EditorProps, 'value' | '
   style?: React.CSSProperties;
 }
 
+export interface MonacoEditorFormItemHandle {
+  editor: Parameters<OnMount>[0] | null;
+}
+
 const selectorPrefix = `${SELECT_PREFIX}-components-monaco-editor-form-item`;
 
-const MonacoEditorFormItem = forwardRef<HTMLDivElement, MonacoEditorFormItemProps>(
-  ({ value, onChange, className, style, onMount, ...rest }, ref) => {
-    const editorRef = useRef<any>(null);
+const MonacoEditorFormItem = forwardRef<MonacoEditorFormItemHandle, MonacoEditorFormItemProps>(
+  ({ value, onChange, className, style, onMount, options, ...rest }, ref) => {
+    const editorRef = useRef<Parameters<OnMount>[0] | null>(null);
 
-    useImperativeHandle(ref, () => ({ editor: editorRef.current } as any));
+    useImperativeHandle(ref, () => ({ editor: editorRef.current }));
 
     const handleMount: OnMount = (editor, monaco) => {
       editorRef.current = editor;
       onMount?.(editor, monaco);
     };
 
+    const targetOptions = useMemo(() => {
+      return merge(
+        {
+          // 核心配置：将悬浮窗设置为 Fixed 布局，防止被父容器 overflow:hidden 遮挡
+          fixedOverflowWidgets: true,
+          // 关键辅助：允许提示窗口超出编辑器的物理边界显示
+          suggest: {
+            showMethods: true,
+            showFunctions: true,
+            // 确保提示框不会被编辑器容器限制
+            container: undefined,
+          },
+
+          lineNumbers: 'off', // 1. 关闭行号
+          glyphMargin: false, // 2. 关闭左侧图标边距（断点、错误图标区域）
+          folding: false, // 3. 关闭代码折叠功能（隐藏折叠箭头）
+          lineDecorationsWidth: 0, // 4. 将行修饰宽度设为 0（彻底移除左侧留白）
+          lineNumbersMinChars: 0, // 5. 设置行号最小字符数为 0
+          hideCursorInOverviewRuler: true, // 可选：隐藏概览标尺中的光标标识
+          scrollbar: {
+            vertical: 'hidden', // 可选：如果你也不想要右侧滚动条
+          },
+          minimap: { enabled: false }, // 建议：通常去掉行号时也会关闭右侧小地图
+        },
+        options ?? {},
+      );
+    }, [options]);
+
     return (
-      <div ref={ref} className={classNames(selectorPrefix, className)} style={style}>
+      <div className={classNames(selectorPrefix, className)} style={style}>
         <Editor
+          height={300}
+          theme="light" // 可选: 'light' 或 'vs-dark'
           {...rest}
+          options={targetOptions}
           value={value}
           onChange={(v) => onChange?.(v ?? '')}
           onMount={handleMount}
@@ -51,4 +95,6 @@ export const EmptyValidator = (tip: string) => ({
   },
 });
 
-export default memo<MonacoEditorFormItemProps>(MonacoEditorFormItem);
+export default memo<
+  PropsWithoutRef<MonacoEditorFormItemProps> & RefAttributes<MonacoEditorFormItemHandle>
+>(MonacoEditorFormItem);

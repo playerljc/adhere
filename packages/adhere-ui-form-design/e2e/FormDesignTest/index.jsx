@@ -1,3 +1,4 @@
+import merge from 'lodash.merge';
 import React from 'react';
 
 import FormDesign from '../../src';
@@ -5,17 +6,29 @@ import FormDesign from '../../src';
 import '../../src/index.less';
 import './index.less';
 
-const { Design, Plugins, Layout } = FormDesign;
+const { Design, Dict, Plugins, Layout } = FormDesign;
 
 const antd = Plugins.installAntd();
 const layout = Layout.install();
 
 export default () => {
+  const toolBox = merge(
+    [...Dict.values.DefaultToolBox.value],
+    [
+      {
+        items: [...antd.toolBox],
+      },
+      {
+        items: [...layout.toolBox],
+      },
+    ],
+  );
+
   return (
     <Design
       className="Design"
       terminal="desktop"
-      toolBox={[...layout.toolBox, ...antd.toolBox]}
+      toolBox={toolBox}
       items={[...layout.designItems, ...antd.designItems]}
     />
   );

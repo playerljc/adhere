@@ -25,6 +25,15 @@ export function define(): DesignItem {
         density: 'default',
         mode: 'normal',
         columnCount: 2,
+        data: [
+          {
+            name: 'g1',
+            width: '100%',
+            columnCount: 2,
+            colgroup: ['auto', 'auto'],
+            data: [],
+          },
+        ],
       },
     },
   };

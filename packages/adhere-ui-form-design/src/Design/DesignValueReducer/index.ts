@@ -121,6 +121,8 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
         designValue.props.children = action.payload.props as DesignValue['props']['children'];
       }
 
+      console.log('state', state);
+
       return clone()(state);
     }
 
