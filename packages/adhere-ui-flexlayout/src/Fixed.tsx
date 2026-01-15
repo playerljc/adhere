@@ -26,7 +26,7 @@ export interface FixedRef {
 /**
  * Fixed 组件
  * 固定尺寸的布局组件，支持栅格系统和折叠功能
- * 
+ *
  * @param {FixedProps} props - 组件属性
  * @param {React.Ref<FixedRef>} ref - 组件引用
  * @returns {JSX.Element} Fixed 组件
@@ -90,9 +90,9 @@ const Fixed = memo<FixedProps>(
         : {};
 
       return {
-        ...defaultStyle,
         ...gridStyle,
         ...(collapseStyle ?? {}),
+        ...defaultStyle,
       };
     }, [style, gutter, collapseStyle, isUseGap, direction, media, span, contextChildren]);
 
