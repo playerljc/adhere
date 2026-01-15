@@ -8,8 +8,11 @@ import SearchTable from '../src/index';
 import { names } from './config/dict/dict/dict.test.config';
 import './serviceRegister';
 
-const { ProEditableCellSearchStateTable, OptionsWrap, SearchTableStateImplementFactory } =
-  SearchTable;
+const {
+  ProSearchStateTable,
+  /*ProEditableCellSearchStateTable,*/ OptionsWrap,
+  SearchTableStateImplementFactory,
+} = SearchTable;
 const { ComponentNames, genDictComponentName } = FieldGeneratorToDict;
 const serviceName = 'user';
 
@@ -18,7 +21,7 @@ const serviceName = 'user';
  * @class ProSearchStateTableImpl
  * @classdesc ProSearchStateTableImpl
  */
-class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
+class ProSearchStateTableImpl extends ProSearchStateTable {
   // getComponentId() {
   //   return 'ProSearchStateTableImpl';
   // }

@@ -1,5 +1,6 @@
 import { Button, ColorPicker, Input, InputNumber, Rate, Slider, Switch } from 'antd';
 import dayjs from 'dayjs';
+import debounce from 'lodash.debounce';
 import merge from 'lodash.merge';
 import omit from 'omit.js';
 import qs from 'qs';
@@ -97,6 +98,38 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       const code = RouteListen.getCode();
       // 先初始化数据在清空缓存
       !!code && code();
+
+      this.handleSearchInputChangeDebounced = debounce((dataIndex: string, value: any) => {
+        const searchParams = {
+          ...(this.state.searchParams ?? {}),
+          [dataIndex]: value,
+        };
+
+        this.setState({
+          [dataIndex]: value,
+          searchParams,
+        });
+      }, 300);
+
+      this.handleSearchRangeChangeDebounced = debounce(
+        ([startName, endName]: [string, string], values: any[]) => {
+          const start = values?.[0] ? values[0] : null;
+          const end = values?.[1] ? values[1] : null;
+
+          const searchParams = {
+            ...(this.state.searchParams ?? {}),
+            [startName]: start,
+            [endName]: end,
+          };
+
+          this.setState({
+            [startName]: start,
+            [endName]: end,
+            searchParams,
+          });
+        },
+        300,
+      );
     }
 
     componentDidMount() {
@@ -1264,11 +1297,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
 
       const renderInput = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <Input
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onInputChange(dataIndex, e)}
+            defaultValue={value}
+            onChange={(e) => this.handleSearchInputChangeDebounced(dataIndex, e.target.value)}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1277,11 +1314,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderTextArea = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <TextArea
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onInputChange(dataIndex, e)}
+            defaultValue={value}
+            onChange={(e) => this.handleSearchInputChangeDebounced(dataIndex, e.target.value)}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1290,11 +1331,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderInputNumber = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <InputNumber
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            defaultValue={value}
+            onChange={(v) => this.handleSearchInputChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1303,11 +1348,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderInputNumberDecimal1 = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <InputNumberDecimal1
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            defaultValue={value}
+            onChange={(v) => this.handleSearchInputChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1316,11 +1365,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderInputNegativeNumberDecimal1 = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <InputNumberDecimal1.InputNegativeNumberDecimal1
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            defaultValue={value}
+            onChange={(v) => this.handleSearchInputChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1329,11 +1382,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderInputPositiveNumberDecimal1 = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <InputNumberDecimal1.InputPositiveNumberDecimal1
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            defaultValue={value}
+            onChange={(v) => this.handleSearchInputChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1342,11 +1399,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderInputNumberDecimal2 = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <InputNumberDecimal2
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            defaultValue={value}
+            onChange={(v) => this.handleSearchInputChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1355,11 +1416,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderInputNegativeNumberDecimal2 = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <InputNumberDecimal2.InputNegativeNumberDecimal2
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            defaultValue={value}
+            onChange={(v) => this.handleSearchInputChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1368,11 +1433,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderInputPositiveNumberDecimal2 = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <InputNumberDecimal2.InputPositiveNumberDecimal2
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            defaultValue={value}
+            onChange={(v) => this.handleSearchInputChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1381,11 +1450,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderInputNumberInteger = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <InputNumberInteger
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            defaultValue={value}
+            onChange={(v) => this.handleSearchInputChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1394,11 +1467,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderInputNegativeNumberInteger = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <InputNumberInteger.InputNegativeNumberInteger
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            defaultValue={value}
+            onChange={(v) => this.handleSearchInputChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1407,11 +1484,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderInputPositiveNumberInteger = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <InputNumberInteger.InputPositiveNumberInteger
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            defaultValue={value}
+            onChange={(v) => this.handleSearchInputChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1420,15 +1501,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderDatePicker = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <DatePicker
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(dayjs) => {
-              this.setState({
-                [dataIndex]: dayjs ? dayjs : null,
-              });
-            }}
+            defaultValue={value}
+            onChange={(d) => this.handleSearchInputChangeDebounced(dataIndex, d ? d : null)}
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1436,15 +1517,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderTimePicker = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <TimePicker
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(dayjs) => {
-              this.setState({
-                [dataIndex]: dayjs ? dayjs : null,
-              });
-            }}
+            defaultValue={value}
+            onChange={(d) => this.handleSearchInputChangeDebounced(dataIndex, d ? d : null)}
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1454,13 +1535,18 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       const renderRangePicker = ({ searchConfig }) => {
         const { startName, endName } = searchConfig;
 
+        const startValue = this.state[startName];
+        const endValue = this.state[endName];
+        const inputKey = `${startName}-${startValue ?? ''}-${endName}-${endValue ?? ''}`;
+
         return (
           <RangePicker
+            key={inputKey}
             {...commonProps}
-            value={[this.state[startName], this.state[endName]]}
-            onChange={(dayjs) => {
-              this.onDateTimeRangeChange([startName, endName], dayjs);
-            }}
+            defaultValue={[startValue, endValue]}
+            onChange={(values) =>
+              this.handleSearchRangeChangeDebounced([startName, endName], values)
+            }
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1468,11 +1554,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderSlider = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <Slider
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            defaultValue={value}
+            onChange={(v) => this.handleSearchInputChangeDebounced(dataIndex, v)}
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1480,12 +1570,16 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderSliderRange = ({ searchConfig }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${Array.isArray(value) ? value.join('-') : value ?? ''}`;
+
         return (
           <Slider
+            key={inputKey}
             {...commonProps}
             range
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            defaultValue={value}
+            onChange={(v) => this.handleSearchInputChangeDebounced(dataIndex, v)}
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1493,11 +1587,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderRate = ({ searchConfig }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <Rate
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            defaultValue={value}
+            onChange={(v) => this.handleSearchInputChangeDebounced(dataIndex, v)}
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1505,11 +1603,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderSwitch = ({ searchConfig }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <Switch
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            defaultChecked={!!value}
+            onChange={(checked) => this.handleSearchInputChangeDebounced(dataIndex, checked)}
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1517,11 +1619,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         );
       };
       const renderColorPicker = ({ searchConfig }) => {
+        const value = this.state[dataIndex];
+        const inputKey = `${dataIndex}-${value ?? ''}`;
+
         return (
           <ColorPicker
+            key={inputKey}
             {...commonProps}
-            value={this.state[dataIndex]}
-            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            defaultValue={value}
+            onChange={(v) => this.handleSearchInputChangeDebounced(dataIndex, v)}
             {...{
               ...(searchConfig.props ?? {}),
             }}
