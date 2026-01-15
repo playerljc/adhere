@@ -118,7 +118,6 @@ const ProxyComponent = new Proxy<{
   {},
   {
     get(target: {}, p: string, receiver: any) {
-      console.log('p======', p);
       // p
       // p = SystemAppBasicLayoutRectifyTransferListSectionSelectDynamicMultiFormItem
       // p = SystemAppBasicLayoutRectifyTransferListSectionSelectDynamic + MultiFormItem
