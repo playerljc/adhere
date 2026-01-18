@@ -204,6 +204,13 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     abstract onRowSelectionSelectAll(selected: boolean, selectedRows: object[], changeRows: object[]): void;
     switchColumnElRef: RefObject<HTMLDivElement | null | undefined>;
+    private _cachedColumns;
+    private _cachedColumnsKey;
+    private _cachedProcessedColumns;
+    private _cachedProcessedColumnsKey;
+    private _cachedTableProps;
+    private _cachedTablePropsKey;
+    private _boundOnTableChange;
     constructor(props: any);
     componentDidMount(): void;
     componentWillUnmount(): void;

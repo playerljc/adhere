@@ -56,6 +56,12 @@ declare const _default: {
     ProSearchTable: {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -125,6 +131,12 @@ declare const _default: {
     ProSearchStateTable: {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -194,6 +206,12 @@ declare const _default: {
     ProEditableCellSearchStateTable: {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -263,6 +281,12 @@ declare const _default: {
     ProEditableCellSearchTable: {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -332,6 +356,12 @@ declare const _default: {
     ProEditableRowSearchStateTable: {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -401,6 +431,12 @@ declare const _default: {
     ProEditableRowSearchTable: {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -470,6 +506,12 @@ declare const _default: {
     ProEditableSearchStateTable: {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -539,6 +581,12 @@ declare const _default: {
     ProEditableSearchTable: {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -608,6 +656,12 @@ declare const _default: {
     ProSearchRowDragSortStateTable: {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -677,6 +731,12 @@ declare const _default: {
     ProSearchRowDragSortTable: {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -746,6 +806,12 @@ declare const _default: {
     ProSearchEditableCellRowDragSortStateTable: {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -815,6 +881,12 @@ declare const _default: {
     ProSearchEditableCellRowDragSortTable: {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -884,6 +956,12 @@ declare const _default: {
     ProSearchEditableRowDragSortTable: {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -953,6 +1031,12 @@ declare const _default: {
     ProSearchEditableRowDragSortStateTable: {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -1022,6 +1106,12 @@ declare const _default: {
     ProSearchEditableTableRowDragSortTable: {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -1091,6 +1181,12 @@ declare const _default: {
     ProSearchEditableTableRowDragSortStateTable: {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -1160,6 +1256,12 @@ declare const _default: {
     ProTableFactory: (SuperClass: any, searchAndPaginationParamsMemo: any) => {
         new (props: any): {
             [x: string]: any;
+            _cachedTableColumns: any[] | null;
+            _cachedTableColumnsKey: string;
+            _cachedHasSearch: boolean | null;
+            _cachedHasSearchKey: string;
+            _cachedGridSearchFormGroupParams: any[] | null;
+            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;

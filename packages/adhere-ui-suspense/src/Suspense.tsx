@@ -106,7 +106,7 @@ abstract class Suspense<
       this.forceUpdate();
     }
 
-    this.updateTheme();
+    // this.updateTheme();
   }
 
   /**
@@ -245,6 +245,10 @@ abstract class Suspense<
       <ConfigProvider.Context.Consumer>
         {(context) => {
           _self._context = context;
+
+          if (_self?.childrenWrapRef?.current) {
+            _self.updateTheme();
+          }
 
           return (
             <div

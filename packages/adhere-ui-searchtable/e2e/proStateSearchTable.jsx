@@ -39,6 +39,19 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
   }
 
   /**
+   * hasAdvancedSearch
+   * @description 是否有高级搜索
+   * @returns {boolean}
+   */
+  // hasAdvancedSearch() {
+  //   return false;
+  // }
+
+  // hasOptionColumnFixed() {
+  //   return !this.isMobile();
+  // }
+
+  /**
    * getDataKey
    * @description - 获取数据的key
    * @protected
@@ -446,9 +459,16 @@ const Wrap = SearchTableStateImplementFactory({
 export default () => {
   return (
     <Wrap
+      style={{
+        height: '100%',
+      }}
       FieldGeneratorToDict={FieldGeneratorToDict}
       // isShowExpandSearch={false}
       isColumnMaxContent={true}
+      isShowExpandSearch={!false}
+      autoFixed={!false}
+      fixedHeaderAutoTable={!false}
+      fixedTableSpaceBetween={!false}
     />
   );
 };

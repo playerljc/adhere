@@ -341,6 +341,19 @@ abstract class SearchTable<
 
   switchColumnElRef = React.createRef<HTMLDivElement | undefined>();
 
+  // 缓存列配置相关
+  private _cachedColumns: any[] | null = null;
+  private _cachedColumnsKey: string = '';
+  private _cachedProcessedColumns: any[] | null = null;
+  private _cachedProcessedColumnsKey: string = '';
+
+  // 缓存 tableProps 相关
+  private _cachedTableProps: TableProps<any> | null = null;
+  private _cachedTablePropsKey: string = '';
+
+  // 绑定的回调方法（避免每次 render 创建新函数）
+  private _boundOnTableChange: any;
+
   constructor(props) {
     super(props);
 
@@ -367,6 +380,9 @@ abstract class SearchTable<
     this.onClear = this.onClear.bind(this);
     this.onExpandedRowsChange = this.onExpandedRowsChange.bind(this);
     this.onBodyKeyup = this.onBodyKeyup.bind(this);
+
+    // 优化：绑定 Table 回调方法，避免每次 render 创建新函数
+    this._boundOnTableChange = this.onTableChange.bind(this);
 
     this.getCellsWidth = memoize(this.getCellsWidth, (obj) => lodashCloneDeep(obj));
     this.getWidthByHacker = memoize(this.getWidthByHacker, (obj) => lodashCloneDeep(obj));
@@ -423,16 +439,25 @@ abstract class SearchTable<
     // @ts-ignore
     // super.componentWillReceiveProps(nextProps);
 
-    ConfigProvider.theme({
-      elRef: this.childrenWrapRef,
-      group: 'normal',
-      displayName: 'SearchTable',
-      theme: this._context?.theme || {},
-    });
+    // ConfigProvider.theme({
+    //   elRef: this.childrenWrapRef,
+    //   group: 'normal',
+    //   displayName: 'SearchTable',
+    //   theme: this._context?.theme || {},
+    // });
 
     this.effectWithExpandedRowKeys(nextProps);
 
     this.effectWithColumnSetting(nextProps);
+
+    // 优化：清空列配置缓存，因为 props 可能已改变
+    this._cachedColumns = null;
+    this._cachedColumnsKey = '';
+    this._cachedProcessedColumns = null;
+    this._cachedProcessedColumnsKey = '';
+    // 清空 tableProps 缓存
+    this._cachedTableProps = null;
+    this._cachedTablePropsKey = '';
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -441,6 +466,15 @@ abstract class SearchTable<
 
     this.searchTableResizableEffectLayout();
     this.fixedHeaderAutoTableEffectLayout(prevProps, prevState);
+
+    // 清空列配置缓存，因为状态可能已改变
+    this._cachedColumns = null;
+    this._cachedColumnsKey = '';
+    this._cachedProcessedColumns = null;
+    this._cachedProcessedColumnsKey = '';
+    // 清空 tableProps 缓存
+    this._cachedTableProps = null;
+    this._cachedTablePropsKey = '';
   }
 
   /**
@@ -707,26 +741,36 @@ abstract class SearchTable<
     if (this.props.fixedHeaderAutoTable) {
       const dataSource = this.getData();
 
-      if (
+      // 优化：添加更多条件判断，避免不必要的 DOM 查询和 setState
+      const shouldRecalculate =
         dataSource &&
         dataSource.length &&
         ((prevState.scrollY === 0 && this.state.scrollY === 0) ||
           prevState.scrollY !== this.state.scrollY ||
-          prevState.expand !== this.state.expand)
-      ) {
+          prevState.expand !== this.state.expand ||
+          prevProps.fixedHeaderAutoTable !== this.props.fixedHeaderAutoTable);
+
+      if (shouldRecalculate) {
         const tableWrapRef = this.tableWrapRef.current as HTMLElement;
+        if (!tableWrapRef) return;
 
         const tableHeaderHeight =
           (tableWrapRef.querySelector('.ant-table-thead') as HTMLElement)?.offsetHeight || 0;
 
         const tablePaginationHeight =
           (tableWrapRef.querySelector('.ant-table-pagination') as HTMLElement)?.offsetHeight || 0;
-        // @ts-ignore
-        this.setState({
-          scrollY:
-            tableWrapRef.clientHeight -
-            (tableHeaderHeight + (tablePaginationHeight ? tablePaginationHeight + 16 * 2 : 0)),
-        });
+
+        const newScrollY =
+          tableWrapRef.clientHeight -
+          (tableHeaderHeight + (tablePaginationHeight ? tablePaginationHeight + 16 * 2 : 0));
+
+        // 优化：只有值真正改变时才调用 setState
+        if (newScrollY !== this.state.scrollY) {
+          // @ts-ignore
+          this.setState({
+            scrollY: newScrollY,
+          });
+        }
       }
     }
   }
@@ -1592,7 +1636,9 @@ abstract class SearchTable<
           // 每个单元格都会调用
           // 给TableCell传递的props参数
           onCell: (record, rowIndex) => {
-            const _column = cloneDeep(columnConfig);
+            // 优化：使用浅拷贝替代深拷贝，减少性能开销
+            // 只有在需要修改时才进行深拷贝
+            const _column = { ...columnConfig };
 
             return {
               // 行的索引
@@ -2745,6 +2791,11 @@ abstract class SearchTable<
    * @param dataSource
    */
   columnMaxContent({ columns, dataSource }) {
+    // 优化：如果数据源为空，直接返回列配置
+    if (!dataSource || dataSource.length === 0) {
+      return columns;
+    }
+
     return columns.map((columnConfig: ColumnTypeExt) => {
       const self = this;
 
@@ -2756,7 +2807,8 @@ abstract class SearchTable<
             return _columnConfig;
           }
 
-          if ('width' in _columnConfig) {
+          // 优化：只在配置中有 width 属性时才计算
+          if ('width' in _columnConfig && _columnConfig.width) {
             self.setColumnWidth({
               columnConfig: _columnConfig,
               dataSource,
@@ -2774,9 +2826,8 @@ abstract class SearchTable<
         return columnConfig;
       }
 
-      if ('width' in columnConfig) {
-        // console.log('setColumnWidth', columnConfig);
-
+      // 优化：只在配置中有 width 属性时才计算
+      if ('width' in columnConfig && columnConfig.width) {
         this.setColumnWidth({
           columnConfig,
           dataSource,
@@ -2795,88 +2846,137 @@ abstract class SearchTable<
    */
   renderBody() {
     const { antdTableProps, fixedHeaderAutoTable } = this.props;
-
-    const { columnSetting = [], tableDensity } = this.state;
+    const { columnSetting = [], tableDensity, scrollY } = this.state;
 
     const isShowColumnSetting = this.renderColumnSetting();
-
+    // 优化：只调用一次 getDataSource，复用结果
     const dataSource = this.getDataSource();
-
     const isColumnMaxContent = this.isColumnMaxContent();
 
-    let columns = this.getTableColumns()
-      .map((column, index) => {
-        if (isShowColumnSetting) {
-          return {
-            ...columnSetting[index],
-            ...column,
-          };
-        }
-
-        return {
-          ...column,
-          display: true,
-          sore: index,
-        };
-      })
-      .filter((column) => !!column.display); // width 功能
-
-    if (isColumnMaxContent && dataSource.length !== 0) {
-      columns = this.columnMaxContent({ columns, dataSource });
-    }
-
-    columns.sort((c1, c2) => {
-      if (c1.sort > c2.sort) return 1;
-      if (c1.sort < c2.sort) return -1;
-      return 0;
+    // 优化：生成缓存 key，用于判断是否需要重新计算列配置
+    const columnsCacheKey = JSON.stringify({
+      columnSettingLength: columnSetting.length,
+      columnSettingKeys: columnSetting.map((c) => c.key).join(','),
+      dataSourceLength: dataSource.length,
+      isColumnMaxContent,
+      isShowColumnSetting: !!isShowColumnSetting,
+      tableDensity,
     });
 
-    // Table的antdProps配置
-    const tableProps: TableProps<any> = {
-      rowKey: this.getRowKey(),
-      columns,
-      dataSource: this.getDataSource(),
-      // 分页
-      pagination: this.getPagination(),
-      // 行选择
-      rowSelection: this.getRowSelection(),
-      // Tree展开
-      expandable: this.getExpandable(),
-      // 给TableRow的props参数
-      components: this.components, // this.onComponents(columns, this.components),
-      // 组件
-      size: tableDensity as SizeType,
-      // @ts-ignore
-      onChange: (...params) => this.onTableChange(...params),
-      // onRow
-      onRow: (...params) => this.onTableRow(columns, ...params),
-      ...(antdTableProps ?? {}),
-    };
+    // 优化：如果缓存 key 未改变，直接使用缓存的列配置
+    let columns: any[];
+    if (this._cachedProcessedColumns && this._cachedProcessedColumnsKey === columnsCacheKey) {
+      columns = this._cachedProcessedColumns;
+    } else {
+      // 重新计算列配置
+      columns = this.getTableColumns()
+        .map((column, index) => {
+          if (isShowColumnSetting) {
+            return {
+              ...columnSetting[index],
+              ...column,
+            };
+          }
 
-    // 是否支持锁定列头，表格体滚动
-    if (fixedHeaderAutoTable) {
-      const { scrollY } = this.state;
+          return {
+            ...column,
+            display: true,
+            sore: index,
+          };
+        })
+        .filter((column) => !!column.display); // width 功能
 
-      if (antdTableProps) {
-        if (antdTableProps.scroll) {
-          (tableProps as any).scroll.y = scrollY;
-        } else {
-          tableProps.scroll = { y: scrollY };
-        }
-      } else {
-        tableProps.scroll = { y: scrollY };
+      // 优化：只在数据源真正变化或首次渲染时计算 columnMaxContent
+      if (isColumnMaxContent && dataSource.length !== 0) {
+        columns = this.columnMaxContent({ columns, dataSource });
       }
+
+      columns.sort((c1, c2) => {
+        if (c1.sort > c2.sort) return 1;
+        if (c1.sort < c2.sort) return -1;
+        return 0;
+      });
+
+      // 缓存处理后的列配置
+      this._cachedProcessedColumns = columns;
+      this._cachedProcessedColumnsKey = columnsCacheKey;
     }
 
-    if (!tableProps.scroll) {
-      tableProps.scroll = {};
+    // 优化：生成 tableProps 缓存 key，包含所有影响 tableProps 的因素
+    const tablePropsBaseCacheKey = JSON.stringify({
+      columnsCacheKey,
+      dataSourceLength: dataSource.length,
+      tableDensity,
+      fixedHeaderAutoTable: !!fixedHeaderAutoTable,
+      scrollY,
+      isColumnMaxContent,
+      // 包含 antdTableProps 的关键属性
+      hasAntdTableProps: !!antdTableProps,
+      antdTablePropsKeys: antdTableProps ? Object.keys(antdTableProps).sort().join(',') : '',
+    });
+
+    // 优化：检查 tableProps 缓存
+    let tableProps: TableProps<any>;
+    if (this._cachedTableProps && this._cachedTablePropsKey === tablePropsBaseCacheKey) {
+      // 使用缓存的 tableProps，但需要更新动态的引用（columns 可能变化）
+      tableProps = {
+        ...this._cachedTableProps,
+        columns,
+        dataSource,
+        // 优化：使用绑定的方法创建 onRow（columns 作为闭包变量）
+        // @ts-ignore
+        onRow: (record: any, index: any) => this.onTableRow(columns, record, index),
+      };
+    } else {
+      // 重新构建 tableProps
+      // 优化：预先构建 scroll 对象，避免后续多次修改
+      let scrollConfig: any = {};
+      if (fixedHeaderAutoTable) {
+        scrollConfig.y = scrollY;
+      }
+      if (isColumnMaxContent) {
+        scrollConfig.x = 'max-content';
+      }
+      // 合并 antdTableProps 中的 scroll
+      if (antdTableProps?.scroll) {
+        scrollConfig = { ...antdTableProps.scroll, ...scrollConfig };
+      }
+
+      // Table的antdProps配置
+      tableProps = {
+        rowKey: this.getRowKey(),
+        columns,
+        dataSource,
+        pagination: this.getPagination(),
+        rowSelection: this.getRowSelection(),
+        expandable: this.getExpandable(),
+        components: this.components,
+        size: tableDensity as SizeType,
+        // 优化：使用绑定的实例方法，避免每次创建新函数
+        // @ts-ignore
+        onChange: this._boundOnTableChange,
+        // 优化：onRow 需要 columns，每次都需要创建（但在缓存命中时可以复用大部分）
+        // @ts-ignore
+        onRow: (record: any, index: any) => this.onTableRow(columns, record, index),
+        // 优化：只在有 scroll 配置时才添加 scroll 属性
+        ...(Object.keys(scrollConfig).length > 0 ? { scroll: scrollConfig } : {}),
+        // 优化：isColumnMaxContent 时添加 tableLayout
+        ...(isColumnMaxContent ? { tableLayout: 'auto' as const } : {}),
+        // 优化：合并 antdTableProps（排除已处理的 scroll）
+        ...(antdTableProps ? { ...antdTableProps, scroll: scrollConfig } : {}),
+      };
+
+      // 缓存 tableProps（不包含 columns 和 dataSource 的引用，因为这些会频繁变化）
+      this._cachedTableProps = {
+        ...tableProps,
+        columns: undefined as any,
+        dataSource: undefined as any,
+        onRow: undefined as any,
+      };
+      this._cachedTablePropsKey = tablePropsBaseCacheKey;
     }
 
-    if (isColumnMaxContent) {
-      tableProps.tableLayout = 'auto';
-      tableProps.scroll.x = 'max-content';
-    }
-
+    // 优化：这两个操作依赖 columns，但不影响 tableProps，保持在最后执行
     this.tableRowComponentReducers = this.onTableRowComponentReducers(columns);
     this.tableCellComponentReducers = this.onTableCellComponentReducers(columns);
 
@@ -2933,6 +3033,15 @@ abstract class SearchTable<
         <ConfigProvider.Context.Consumer>
           {(context) => {
             _self._context = context;
+
+            if (_self?.childrenWrapRef.current) {
+              ConfigProvider.theme({
+                elRef: _self.childrenWrapRef,
+                group: 'normal',
+                displayName: 'SearchTable',
+                theme: _self._context?.theme || {},
+              });
+            }
 
             return this.renderChildren();
           }}

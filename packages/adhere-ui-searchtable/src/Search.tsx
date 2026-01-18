@@ -222,26 +222,33 @@ abstract class Search<
    * @return {ReactNode}
    */
   renderSearchToolBar(): ReactNode {
+    // 优化：缓存 render 方法调用结果，避免重复执行
+    const titleContent = this.renderTitle?.();
+    const searchBarExtraContent = this.renderSearchBarExtra?.();
+    const searchBarActionsContent = this.renderSearchBarActions?.();
+
+    // 优化：预先判断是否需要渲染 auto 容器
+    const hasAutoContent = !!searchBarExtraContent || !!searchBarActionsContent;
+
     return (
       <>
-        {this.props.title && !!this.renderTitle && !!this.renderTitle?.() && (
+        {this.props.title && titleContent && (
           <div className={classNames(`${selectorPrefix}-search-tool-bar-title`)}>
-            {this.renderTitle()}
+            {titleContent}
           </div>
         )}
 
-        {((!!this.renderSearchBarExtra && !!this.renderSearchBarExtra?.()) ||
-          (!!this.renderSearchBarActions && !!this.renderSearchBarActions?.())) && (
+        {hasAutoContent && (
           <div className={classNames(`${selectorPrefix}-search-tool-bar-auto`)}>
-            {!!this.renderSearchBarExtra && !!this.renderSearchBarExtra?.() && (
+            {searchBarExtraContent && (
               <div className={classNames(`${selectorPrefix}-search-tool-bar-extra`)}>
-                {this.renderSearchBarExtra()}
+                {searchBarExtraContent}
               </div>
             )}
 
-            {!!this.renderSearchBarActions && !!this.renderSearchBarActions?.() && (
+            {searchBarActionsContent && (
               <div className={classNames(`${selectorPrefix}-search-tool-bar-actions`)}>
-                {this.renderSearchBarActions()}
+                {searchBarActionsContent}
               </div>
             )}
           </div>
@@ -390,6 +397,9 @@ abstract class Search<
    * @return {ReactElement}
    */
   renderInner(bodyWrapRef?: any, className?: string) {
+    // 性能监控：记录开始时间
+    // const startTime = performance.now();
+
     const {
       style,
       bodyStyle,
@@ -399,17 +409,59 @@ abstract class Search<
       autoFixed = true,
     } = this.props;
 
+    // 性能监控：记录每个部分的执行时间
+    // const renderTimings: { [key: string]: number } = {};
+
+    // 优化：提前获取所有 className，减少重复调用
+    let t0 = performance.now();
     const isUseSearchWrapperGap = this.isUseSearchWrapperGap();
     const isUseSearchFormToolBarGap = this.isUseSearchFormToolBarGap();
     const bodyClassName = this.getBodyClassName();
-
     const searchFormBeforeClassName = this.getSearchFormBeforeClassName();
     const searchFormAfterClassName = this.getSearchFormAfterClassName();
     const searchFormToolBarClassName = this.getSearchFormToolBarClassName();
     const searchToolbarClassName = this.getSearchToolbarClassName();
     const searchFormExpandClassName = this.getSearchFormExpandClassName();
+    // renderTimings['getClassNames'] = performance.now() - t0;
 
     const { expand = false } = this.state;
+
+    // 优化：缓存 render 方法调用结果，避免重复执行
+
+    // let t1 = performance.now();
+    const searchFormBeforeContent = this.renderSearchFormBefore?.();
+    // renderTimings['renderSearchFormBefore'] = performance.now() - t1;
+
+    // t1 = performance.now();
+    const searchFormContent = this.renderSearchForm?.();
+    // renderTimings['renderSearchForm'] = performance.now() - t1;
+
+    // t1 = performance.now();
+    const searchFormToolBarContent = this.renderSearchFormToolBar?.();
+    // renderTimings['renderSearchFormToolBar'] = performance.now() - t1;
+
+    // t1 = performance.now();
+    const searchToolBarContent = this.renderSearchToolBar?.();
+    // renderTimings['renderSearchToolBar'] = performance.now() - t1;
+
+    // t1 = performance.now();
+    const searchFormAfterContent = this.renderSearchFormAfter?.();
+    // renderTimings['renderSearchFormAfter'] = performance.now() - t1;
+
+    // t1 = performance.now();
+    const searchHeaderContent = this.renderSearchHeader?.();
+    // renderTimings['renderSearchHeader'] = performance.now() - t1;
+
+    // t1 = performance.now();
+    const searchFooterContent = this.renderSearchFooter?.();
+    // renderTimings['renderSearchFooter'] = performance.now() - t1;
+
+    // 优化：预先判断是否需要渲染 search wrapper，避免在 JSX 中重复调用
+    const hasSearchWrapper =
+      !!searchFormBeforeContent ||
+      !!searchFormContent ||
+      !!searchToolBarContent ||
+      !!searchFormAfterContent;
 
     // SearchFormBefore
     // SearchForm
@@ -419,16 +471,66 @@ abstract class Search<
     // SearchHeader
     // SearchBody
     // SearchFooter
+
+    // 性能监控：计算总执行时间
+    // const endTime = performance.now();
+    // const duration = endTime - startTime;
+
+    // 监控 renderBody 执行时间
+    // t1 = performance.now();
+    const bodyContent = this.renderBody();
+    // renderTimings['renderBody'] = performance.now() - t1;
+
+    // 找出最慢的方法
+    // let slowestMethod = '';
+    // let slowestTime = 0;
+    // const sortedTimings: Array<[string, number]> = [];
+
+    // for (const [method, time] of Object.entries(renderTimings)) {
+    //   sortedTimings.push([method, time]);
+    //   if (time > slowestTime) {
+    //     slowestTime = time;
+    //     slowestMethod = method;
+    //   }
+    // }
+
+    // 按执行时间降序排序
+    // sortedTimings.sort((a, b) => b[1] - a[1]);
+
+    // 输出性能数据
+    // console.group(`[Performance] Search.renderInner 总执行时间: ${duration.toFixed(3)}ms`);
+    // console.log('📊 各方法执行时间排序（从慢到快）：');
+    // console.table(Object.fromEntries(sortedTimings));
+
+    // if (slowestMethod) {
+    //   console.warn(
+    //     `⚠️ 最慢的方法: ${slowestMethod} (${slowestTime.toFixed(3)}ms) - 占比 ${(
+    //       (slowestTime / duration) *
+    //       100
+    //     ).toFixed(1)}%`,
+    //   );
+    // }
+
+    // 输出占比超过 10% 的方法
+    // const slowMethods = sortedTimings.filter(([_, time]) => time / duration > 0.1);
+    // if (slowMethods.length > 0) {
+    //   console.log('🐌 耗时占比超过 10% 的方法：');
+    //   slowMethods.forEach(([method, time]) => {
+    //     console.log(
+    //       `  - ${method}: ${time.toFixed(3)}ms (${((time / duration) * 100).toFixed(1)}%)`,
+    //     );
+    //   });
+    // }
+
+    // console.groupEnd();
+
     return (
       <FlexLayout
         direction="vertical"
         className={classNames(selectorPrefix, className ?? '')}
-        style={{ ...(style ?? {}) }}
+        style={style ?? {}}
       >
-        {((!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.()) ||
-          (!!this.renderSearchForm && !!this.renderSearchForm?.()) ||
-          (!!this.renderSearchToolBar && !!this.renderSearchToolBar?.()) ||
-          (!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.())) && (
+        {hasSearchWrapper && (
           <Fixed
             className={classNames(
               `${selectorPrefix}-search-wrapper`,
@@ -437,21 +539,21 @@ abstract class Search<
               },
               searchClassName,
             )}
-            style={{ ...(searchStyle ?? {}) }}
+            style={searchStyle ?? {}}
           >
-            {!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.() && (
+            {searchFormBeforeContent && (
               <Fixed
                 className={classNames(
                   `${selectorPrefix}-search-form-before`,
                   searchFormBeforeClassName,
                 )}
               >
-                {this.renderSearchFormBefore?.()}
+                {searchFormBeforeContent}
               </Fixed>
             )}
 
             {/* 查询 */}
-            {!!this.renderSearchForm && !!this.renderSearchForm?.() && expand && (
+            {searchFormContent && expand && (
               <Fixed
                 // @ts-ignore
                 ref={this.searchFormRef}
@@ -460,29 +562,27 @@ abstract class Search<
                   [searchFormExpandClassName]: !!searchFormExpandClassName && expand,
                 })}
               >
-                {this.renderSearchForm()}
+                {searchFormContent}
               </Fixed>
             )}
+
             {/* 查询的工具栏 */}
-            {!!this.renderSearchForm &&
-              !!this.renderSearchForm?.() &&
-              !!this.renderSearchFormToolBar &&
-              !!this.renderSearchFormToolBar?.() && (
-                <Fixed
-                  className={classNames(
-                    `${selectorPrefix}-search-form-tool-bar`,
-                    {
-                      [`${selectorPrefix}-search-form-tool-bar-gap`]: isUseSearchFormToolBarGap,
-                    },
-                    searchFormToolBarClassName,
-                  )}
-                >
-                  {this.renderSearchFormToolBar()}
-                </Fixed>
-              )}
+            {searchFormContent && searchFormToolBarContent && (
+              <Fixed
+                className={classNames(
+                  `${selectorPrefix}-search-form-tool-bar`,
+                  {
+                    [`${selectorPrefix}-search-form-tool-bar-gap`]: isUseSearchFormToolBarGap,
+                  },
+                  searchFormToolBarClassName,
+                )}
+              >
+                {searchFormToolBarContent}
+              </Fixed>
+            )}
 
             {/* 工具栏 */}
-            {!!this.renderSearchToolBar && !!this.renderSearchToolBar?.() && (
+            {searchToolBarContent && (
               <Fixed
                 data-title={this.props.title}
                 className={classNames(
@@ -493,31 +593,31 @@ abstract class Search<
                   searchToolbarClassName,
                 )}
               >
-                {this.renderSearchToolBar()}
+                {searchToolBarContent}
               </Fixed>
             )}
 
-            {!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.() && (
+            {searchFormAfterContent && (
               <Fixed
                 className={classNames(
                   `${selectorPrefix}-search-form-after`,
                   searchFormAfterClassName,
                 )}
               >
-                {this.renderSearchFormAfter?.()}
+                {searchFormAfterContent}
               </Fixed>
             )}
           </Fixed>
         )}
 
         {/* Header */}
-        {!!this.renderSearchHeader && !!this.renderSearchHeader?.() && (
-          <Fixed className={`${selectorPrefix}-search-header`}>{this.renderSearchHeader?.()}</Fixed>
+        {searchHeaderContent && (
+          <Fixed className={`${selectorPrefix}-search-header`}>{searchHeaderContent}</Fixed>
         )}
 
         {/* Body */}
         <Auto
-          style={{ ...(bodyStyle ?? {}) }}
+          style={bodyStyle ?? {}}
           className={classNames(`${selectorPrefix}-auto-wrapper`, bodyClassName, {
             ['autofixed']: autoFixed,
           })}
@@ -525,13 +625,13 @@ abstract class Search<
           autoFixed={autoFixed}
         >
           <div ref={bodyWrapRef} className={`${selectorPrefix}-table-wrapper`}>
-            {this.renderBody()}
+            {bodyContent}
           </div>
         </Auto>
 
         {/* Footer */}
-        {!!this.renderSearchFooter && !!this.renderSearchFooter?.() && (
-          <Fixed className={`${selectorPrefix}-search-footer`}>{this.renderSearchFooter?.()}</Fixed>
+        {searchFooterContent && (
+          <Fixed className={`${selectorPrefix}-search-footer`}>{searchFooterContent}</Fixed>
         )}
       </FlexLayout>
     );

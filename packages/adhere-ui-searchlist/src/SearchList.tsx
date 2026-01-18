@@ -161,12 +161,12 @@ abstract class SearchList<
       super.componentWillReceiveProps(nextProps);
     }
 
-    ConfigProvider.theme({
-      elRef: this.childrenWrapRef,
-      group: 'normal',
-      displayName: 'SearchList',
-      theme: this.configProviderContextValue?.theme!,
-    });
+    // ConfigProvider.theme({
+    //   elRef: this.childrenWrapRef,
+    //   group: 'normal',
+    //   displayName: 'SearchList',
+    //   theme: this.configProviderContextValue?.theme!,
+    // });
   }
 
   /**
@@ -581,12 +581,12 @@ abstract class SearchList<
    */
   appendData<T extends object>(data: T | T[]) {
     return new Promise<void>((resolve) => {
-      this.setData((preDataSource) => {
+      this.setData((preDataSource: object[]) => {
         if (Array.isArray(data)) {
-          return cloneDeep([...preDataSource, ...data]);
+          return cloneDeep([...preDataSource, ...data]) as object[];
         }
 
-        return cloneDeep([...preDataSource, data]);
+        return cloneDeep([...preDataSource, data]) as object[];
       }).then(() => {
         resolve();
       });
@@ -599,12 +599,12 @@ abstract class SearchList<
    */
   prependData<T extends object>(data: T | T[]) {
     return new Promise<void>((resolve) => {
-      this.setData((preDataSource) => {
+      this.setData((preDataSource: object[]) => {
         if (Array.isArray(data)) {
-          return cloneDeep([...data, ...preDataSource]);
+          return cloneDeep([...data, ...preDataSource]) as object[];
         }
 
-        return cloneDeep([data, ...preDataSource]);
+        return cloneDeep([data, ...preDataSource]) as object[];
       }).then(() => {
         resolve();
       });
@@ -620,7 +620,7 @@ abstract class SearchList<
     const rowKey = this.getRowKey();
 
     return new Promise<void>((resolve) => {
-      this.setData((preDataSource) => {
+      this.setData((preDataSource: object[]) => {
         const index = preDataSource.findIndex((record) => record[rowKey] === id);
 
         if (Array.isArray(data)) {
@@ -629,7 +629,7 @@ abstract class SearchList<
           preDataSource.splice(index, 0, data);
         }
 
-        return cloneDeep(preDataSource);
+        return cloneDeep(preDataSource) as object[];
       }).then(() => {
         resolve();
       });
@@ -643,7 +643,7 @@ abstract class SearchList<
     const rowKey = this.getRowKey();
 
     return new Promise<void>((resolve) => {
-      this.setData((preDataSource) => {
+      this.setData((preDataSource: object[]) => {
         const index = preDataSource.findIndex((record) => record[rowKey] === id);
 
         if (Array.isArray(data)) {
@@ -652,7 +652,7 @@ abstract class SearchList<
           preDataSource.splice(index, 1, data);
         }
 
-        return cloneDeep(preDataSource);
+        return cloneDeep(preDataSource) as object[];
       }).then(() => {
         resolve();
       });
@@ -667,13 +667,13 @@ abstract class SearchList<
     return new Promise<void>((resolve) => {
       const rowKey = this.getRowKey();
 
-      this.setData((preData) => {
+      this.setData((preData: object[]) => {
         preData.splice(
           preData.findIndex((record) => record[rowKey] === id),
           1,
         );
 
-        return cloneDeep(preData);
+        return cloneDeep(preData) as object[];
       }).then(() => {
         resolve();
       });
@@ -741,6 +741,8 @@ abstract class SearchList<
    * @return {ReactElement}
    */
   render(): ReactElement {
+    const _self = this;
+
     return (
       <SearchListContext.Provider
         value={{
@@ -750,6 +752,15 @@ abstract class SearchList<
         <ConfigProvider.Context.Consumer>
           {(value) => {
             this.configProviderContextValue = value;
+
+            if (_self?.childrenWrapRef?.current) {
+              ConfigProvider.theme({
+                elRef: _self.childrenWrapRef,
+                group: 'normal',
+                displayName: 'SearchList',
+                theme: _self.configProviderContextValue?.theme!,
+              });
+            }
 
             return this.renderChildren();
           }}

@@ -77,7 +77,7 @@ e2e.PC({
       >
         {() => {
           return (
-            <div style={{ height: 1000 }}>
+            <div style={{ height: '100%' }}>
               <Suspense fallback={<div>loading</div>}>
                 <ProSearchStateTableImpl
                   pagination={true}

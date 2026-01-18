@@ -44,6 +44,16 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
   class extends SuperClass {
     static displayName = '';
 
+    // 缓存列配置（使用下划线前缀表示内部使用）
+    _cachedTableColumns: any[] | null = null;
+    _cachedTableColumnsKey: string = '';
+
+    // 缓存搜索表单相关数据
+    _cachedHasSearch: boolean | null = null;
+    _cachedHasSearchKey: string = '';
+    _cachedGridSearchFormGroupParams: any[] | null = null;
+    _cachedGridSearchFormGroupParamsKey: string = '';
+
     constructor(props) {
       super(props);
 
@@ -1065,21 +1075,62 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
      * @override
      */
     renderSearchForm() {
-      let hasSearch = true;
+      // 优化：生成缓存 key，基于列配置的关键信息
+      const columns = this.getTableColumnsAll ? this.getTableColumnsAll() : [];
+      const columnsCacheKey = JSON.stringify({
+        columnsLength: columns.length,
+        columnsKeys: columns.map((c) => c.key || c.dataIndex).join(','),
+        searchColumns: columns
+          .filter((c) => '$search' in c)
+          .map((c) => `${c.key || c.dataIndex}:${c.$search?.visible}`)
+          .join(','),
+      });
 
-      if (this.getTableColumnsAll) {
-        hasSearch = this.getTableColumnsAll().some((_column) => {
-          return (
-            '$search' in _column && 'visible' in _column.$search && _column.$search.visible
-            // || !('visible' in _column.$search)
-          );
-        });
+      // 优化：检查是否有搜索项，使用缓存避免重复遍历
+      let hasSearch = true;
+      if (this._cachedHasSearch !== null && this._cachedHasSearchKey === columnsCacheKey) {
+        hasSearch = this._cachedHasSearch;
+      } else {
+        if (this.getTableColumnsAll) {
+          hasSearch = columns.some((_column) => {
+            return (
+              '$search' in _column && 'visible' in _column.$search && _column.$search.visible
+              // || !('visible' in _column.$search)
+            );
+          });
+        }
+        // 缓存结果
+        this._cachedHasSearch = hasSearch;
+        this._cachedHasSearchKey = columnsCacheKey;
       }
 
-      if (hasSearch) {
-        // @ts-ignore
-        return this.renderGridSearchFormGroup(...this.getGridSearchFormGroupParams());
-      } else return null;
+      if (!hasSearch) {
+        return null;
+      }
+
+      // 优化：缓存 GridSearchFormGroupParams，避免重复计算
+      // 生成缓存 key，包含列配置和相关状态
+      const paramsCacheKey = JSON.stringify({
+        columnsCacheKey,
+        expand: this.state?.expand,
+        searchParams: Object.keys(this.state?.searchParams || {}).join(','),
+      });
+
+      let gridSearchFormGroupParams: any[];
+      if (
+        this._cachedGridSearchFormGroupParams !== null &&
+        this._cachedGridSearchFormGroupParamsKey === paramsCacheKey
+      ) {
+        gridSearchFormGroupParams = this._cachedGridSearchFormGroupParams;
+      } else {
+        gridSearchFormGroupParams = this.getGridSearchFormGroupParams();
+        // 缓存结果
+        this._cachedGridSearchFormGroupParams = gridSearchFormGroupParams;
+        this._cachedGridSearchFormGroupParamsKey = paramsCacheKey;
+      }
+
+      // @ts-ignore
+      return this.renderGridSearchFormGroup(...gridSearchFormGroupParams);
     }
 
     /**
