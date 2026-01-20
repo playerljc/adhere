@@ -99,26 +99,23 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       // 先初始化数据在清空缓存
       !!code && code();
 
-      this.onInputChangeDebounced = debounce((dataIndex: string, e: any) => {
+      this.onInputChangeDebounced = (dataIndex: string, e: any) => {
         this.onInputChange(dataIndex, e);
-      }, 300);
+      };
 
-      this.onSelectChangeDebounced = debounce((dataIndex: string, e: any) => {
+      this.onSelectChangeDebounced = (dataIndex: string, e: any) => {
         this.onSelectChange(dataIndex, e);
-      }, 300);
+      };
 
-      this.onDateChangeDebounced = debounce((dataIndex: string, dayjs: any) => {
+      this.onDateChangeDebounced = (dataIndex: string, dayjs: any) => {
         this.setState({
           [dataIndex]: dayjs ? dayjs : null,
         });
-      }, 300);
+      };
 
-      this.onDateTimeRangeChangeDebounced = debounce(
-        (dayjs: any, startName: string, endName: string) => {
-          this.onDateTimeRangeChange([startName, endName], dayjs);
-        },
-        300,
-      );
+      this.onDateTimeRangeChangeDebounced = (dayjs: any, startName: string, endName: string) => {
+        this.onDateTimeRangeChange([startName, endName], dayjs);
+      };
     }
 
     componentDidMount() {
@@ -1292,7 +1289,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <Input
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(e) => this.onInputChangeDebounced(dataIndex, e)}
             {...{
               placeholder: searchConfig.title ?? column.title,
@@ -1308,7 +1305,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <TextArea
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(e) => this.onInputChangeDebounced(dataIndex, e)}
             {...{
               placeholder: searchConfig.title ?? column.title,
@@ -1324,7 +1321,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <InputNumber
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
@@ -1340,7 +1337,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <InputNumberDecimal1
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
@@ -1356,7 +1353,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <InputNumberDecimal1.InputNegativeNumberDecimal1
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
@@ -1372,7 +1369,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <InputNumberDecimal1.InputPositiveNumberDecimal1
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
@@ -1388,7 +1385,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <InputNumberDecimal2
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
@@ -1404,7 +1401,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <InputNumberDecimal2.InputNegativeNumberDecimal2
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
@@ -1420,7 +1417,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <InputNumberDecimal2.InputPositiveNumberDecimal2
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
@@ -1436,7 +1433,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <InputNumberInteger
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
@@ -1452,7 +1449,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <InputNumberInteger.InputNegativeNumberInteger
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
@@ -1468,7 +1465,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <InputNumberInteger.InputPositiveNumberInteger
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
             {...{
               placeholder: searchConfig.title ?? column.title,
@@ -1484,7 +1481,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <DatePicker
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(d) => this.onDateChangeDebounced(dataIndex, d)}
             {...{
               ...(searchConfig.props ?? {}),
@@ -1499,7 +1496,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <TimePicker
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(d) => this.onDateChangeDebounced(dataIndex, d)}
             {...{
               ...(searchConfig.props ?? {}),
@@ -1518,7 +1515,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <RangePicker
             key={inputKey}
             {...commonProps}
-            defaultValue={[startValue, endValue]}
+            value={[startValue, endValue]}
             onChange={(values) => this.onDateTimeRangeChangeDebounced(values, startName, endName)}
             {...{
               ...(searchConfig.props ?? {}),
@@ -1533,7 +1530,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <Slider
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
             {...{
               ...(searchConfig.props ?? {}),
@@ -1549,7 +1546,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             range
-            defaultValue={value}
+            value={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
             {...{
               ...(searchConfig.props ?? {}),
@@ -1564,7 +1561,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <Rate
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
             {...{
               ...(searchConfig.props ?? {}),
@@ -1579,7 +1576,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <Switch
             key={dataIndex}
             {...commonProps}
-            defaultChecked={!!value}
+            checked={!!value}
             onChange={(checked) => this.onSelectChangeDebounced(dataIndex, checked)}
             {...{
               ...(searchConfig.props ?? {}),
@@ -1594,7 +1591,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <ColorPicker
             key={dataIndex}
             {...commonProps}
-            defaultValue={value}
+            value={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
             {...{
               ...(searchConfig.props ?? {}),
