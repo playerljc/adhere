@@ -1287,11 +1287,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
 
       const renderInput = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <Input
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(e) => this.onInputChangeDebounced(dataIndex, e)}
@@ -1304,11 +1303,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderTextArea = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <TextArea
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(e) => this.onInputChangeDebounced(dataIndex, e)}
@@ -1321,11 +1319,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderInputNumber = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <InputNumber
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
@@ -1338,11 +1335,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderInputNumberDecimal1 = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <InputNumberDecimal1
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
@@ -1355,11 +1351,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderInputNegativeNumberDecimal1 = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <InputNumberDecimal1.InputNegativeNumberDecimal1
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
@@ -1372,11 +1367,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderInputPositiveNumberDecimal1 = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <InputNumberDecimal1.InputPositiveNumberDecimal1
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
@@ -1389,11 +1383,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderInputNumberDecimal2 = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <InputNumberDecimal2
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
@@ -1406,11 +1399,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderInputNegativeNumberDecimal2 = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <InputNumberDecimal2.InputNegativeNumberDecimal2
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
@@ -1423,11 +1415,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderInputPositiveNumberDecimal2 = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <InputNumberDecimal2.InputPositiveNumberDecimal2
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
@@ -1440,11 +1431,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderInputNumberInteger = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <InputNumberInteger
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
@@ -1457,11 +1447,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderInputNegativeNumberInteger = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <InputNumberInteger.InputNegativeNumberInteger
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
@@ -1474,11 +1463,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderInputPositiveNumberInteger = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <InputNumberInteger.InputPositiveNumberInteger
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
@@ -1491,11 +1479,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderDatePicker = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <DatePicker
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(d) => this.onDateChangeDebounced(dataIndex, d)}
@@ -1507,11 +1494,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderTimePicker = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <TimePicker
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(d) => this.onDateChangeDebounced(dataIndex, d)}
@@ -1526,7 +1512,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
 
         const startValue = this.state[startName];
         const endValue = this.state[endName];
-        const inputKey = `${startName}-${startValue ?? ''}-${endName}-${endValue ?? ''}`;
+        const inputKey = `${startName}-${endName}`;
 
         return (
           <RangePicker
@@ -1542,11 +1528,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderSlider = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <Slider
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
@@ -1558,11 +1543,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderSliderRange = ({ searchConfig }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${Array.isArray(value) ? value.join('-') : value ?? ''}`;
 
         return (
           <Slider
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             range
             defaultValue={value}
@@ -1575,11 +1559,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderRate = ({ searchConfig }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <Rate
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
@@ -1591,11 +1574,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderSwitch = ({ searchConfig }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <Switch
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultChecked={!!value}
             onChange={(checked) => this.onSelectChangeDebounced(dataIndex, checked)}
@@ -1607,11 +1589,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderColorPicker = ({ searchConfig }) => {
         const value = this.state[dataIndex];
-        const inputKey = `${dataIndex}-${value ?? ''}`;
 
         return (
           <ColorPicker
-            key={inputKey}
+            key={dataIndex}
             {...commonProps}
             defaultValue={value}
             onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
