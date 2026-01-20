@@ -7,6 +7,8 @@ const request = new Ajax('');
 export const fetchList = (() => {
   return {
     call: (params) => {
+      console.log(params);
+
       // const _localAddDataMap = params._localAddDataMap;
       //
       // const addCount = Array.from(_localAddDataMap.values()).flat().length;
