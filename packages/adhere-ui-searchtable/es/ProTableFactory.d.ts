@@ -5,12 +5,6 @@ import type { ColumnTypeExt } from './types';
 declare const _default: (SuperClass: any, searchAndPaginationParamsMemo: any) => {
     new (props: any): {
         [x: string]: any;
-        _cachedTableColumns: any[] | null;
-        _cachedTableColumnsKey: string;
-        _cachedHasSearch: boolean | null;
-        _cachedHasSearchKey: string;
-        _cachedGridSearchFormGroupParams: any[] | null;
-        _cachedGridSearchFormGroupParamsKey: string;
         componentDidMount(): void;
         componentWillUnmount(): void;
         /**

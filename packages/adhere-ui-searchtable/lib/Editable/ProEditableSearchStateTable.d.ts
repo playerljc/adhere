@@ -7,12 +7,6 @@ export declare const SearchAndPaginParamsMemo: any;
 declare const _default: {
     new (props: any): {
         [x: string]: any;
-        _cachedTableColumns: any[] | null;
-        _cachedTableColumnsKey: string;
-        _cachedHasSearch: boolean | null;
-        _cachedHasSearchKey: string;
-        _cachedGridSearchFormGroupParams: any[] | null;
-        _cachedGridSearchFormGroupParamsKey: string;
         componentDidMount(): void;
         componentWillUnmount(): void;
         onSubTableChange(pagination: any, filters: any, sorter: any): void;

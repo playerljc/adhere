@@ -413,7 +413,7 @@ abstract class Search<
     // const renderTimings: { [key: string]: number } = {};
 
     // 优化：提前获取所有 className，减少重复调用
-    let t0 = performance.now();
+    // let t0 = performance.now();
     const isUseSearchWrapperGap = this.isUseSearchWrapperGap();
     const isUseSearchFormToolBarGap = this.isUseSearchFormToolBarGap();
     const bodyClassName = this.getBodyClassName();

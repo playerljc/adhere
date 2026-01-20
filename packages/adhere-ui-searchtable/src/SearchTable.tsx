@@ -342,15 +342,11 @@ abstract class SearchTable<
   switchColumnElRef = React.createRef<HTMLDivElement | undefined>();
 
   // 缓存列配置相关
-  private _cachedColumns: any[] | null = null;
-  private _cachedColumnsKey: string = '';
   private _cachedProcessedColumns: any[] | null = null;
   private _cachedProcessedColumnsKey: string = '';
-
   // 缓存 tableProps 相关
   private _cachedTableProps: TableProps<any> | null = null;
   private _cachedTablePropsKey: string = '';
-
   // 绑定的回调方法（避免每次 render 创建新函数）
   private _boundOnTableChange: any;
 
@@ -451,8 +447,6 @@ abstract class SearchTable<
     this.effectWithColumnSetting(nextProps);
 
     // 优化：清空列配置缓存，因为 props 可能已改变
-    this._cachedColumns = null;
-    this._cachedColumnsKey = '';
     this._cachedProcessedColumns = null;
     this._cachedProcessedColumnsKey = '';
     // 清空 tableProps 缓存
@@ -468,8 +462,6 @@ abstract class SearchTable<
     this.fixedHeaderAutoTableEffectLayout(prevProps, prevState);
 
     // 清空列配置缓存，因为状态可能已改变
-    this._cachedColumns = null;
-    this._cachedColumnsKey = '';
     this._cachedProcessedColumns = null;
     this._cachedProcessedColumnsKey = '';
     // 清空 tableProps 缓存

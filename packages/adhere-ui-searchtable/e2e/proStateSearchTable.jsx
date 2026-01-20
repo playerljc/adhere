@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import React from 'react';
 
-import { DelConfirm, Resource } from '@baifendian/adhere';
+import { DateDisplay, DelConfirm, Resource } from '@baifendian/adhere';
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 
 import SearchTable from '../src/index';
@@ -43,9 +43,9 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
    * @description 是否有高级搜索
    * @returns {boolean}
    */
-  // hasAdvancedSearch() {
-  //   return false;
-  // }
+  hasAdvancedSearch() {
+    return false;
+  }
 
   // hasOptionColumnFixed() {
   //   return !this.isMobile();
@@ -203,9 +203,9 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
           visible: true,
           // dictName: `SystemTestTree${FieldGeneratorToDict.ComponentNames.Tree.Standard}`,
           dictName: `${genDictComponentName(names.SystemTestSex, ComponentNames.Select.Standard)}`,
-          props: {
-            isHideInvalidValue: false,
-          },
+          // props: {
+          //   isHideInvalidValue: false,
+          // },
         },
         $editable: {
           editable: true,
@@ -331,41 +331,41 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         },
         // $hide: true,
       },
-      // {
-      //   title: '出生年月',
-      //   dataIndex: 'birthday',
-      //   key: 'birthday',
-      //   align: 'center',
-      //   width: 200,
-      //   sorter: true,
-      //   sortOrder: this.sortOrder('birthday'),
-      //   render: (val) => <DateDisplay.DateDisplay10 value={val} />,
-      //   $search: {
-      //     type: 'rangePicker',
-      //     visible: true,
-      //     startName: 'birthDayStart',
-      //     endName: 'birthDayEnd',
-      //   },
-      //   $editable: {
-      //     editable: true,
-      //     type: 'datePicker',
-      //     rules: [
-      //       {
-      //         required: true,
-      //         message: '请选择',
-      //       },
-      //     ],
-      //     onSave: ({ record, dataIndex, value }) => {
-      //       return new Promise((resolve) => {
-      //         this.updateEditorCellDateData({
-      //           record,
-      //           dataIndex,
-      //           value,
-      //         }).then(() => resolve());
-      //       });
-      //     },
-      //   },
-      // },
+      {
+        title: '出生年月',
+        dataIndex: 'birthday',
+        key: 'birthday',
+        align: 'center',
+        width: 200,
+        sorter: true,
+        sortOrder: this.sortOrder('birthday'),
+        render: (val) => <DateDisplay.DateDisplay10 value={val} />,
+        $search: {
+          type: 'rangePicker',
+          visible: true,
+          startName: 'birthDayStart',
+          endName: 'birthDayEnd',
+        },
+        $editable: {
+          editable: true,
+          type: 'datePicker',
+          rules: [
+            {
+              required: true,
+              message: '请选择',
+            },
+          ],
+          onSave: ({ record, dataIndex, value }) => {
+            return new Promise((resolve) => {
+              this.updateEditorCellDateData({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
+            });
+          },
+        },
+      },
       {
         title: '现居住地',
         dataIndex: 'address',
