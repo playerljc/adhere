@@ -1,4 +1,4 @@
-import type { SwitchProps } from 'antd';
+import type { DropdownProps, SwitchProps } from 'antd';
 import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig } from 'antd/es/table/interface';
 import type { ReactElement, ReactNode, RefObject } from 'react';
@@ -621,6 +621,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @param cb
      */
     renderSearchFormToolBarResetItem(cb: any): React.JSX.Element;
+    getSearchFormToolBarMore(): DropdownProps;
     /**
      * renderSearchFormToolBar
      * @description 渲染查询表单的工具栏

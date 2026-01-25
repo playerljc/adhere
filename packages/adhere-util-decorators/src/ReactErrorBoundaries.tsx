@@ -109,9 +109,9 @@ function ReactErrorBoundariesHOC<ComponentProps extends Record<string, any> = Re
 
       // 处理代码分割加载错误，自动刷新页面
       if (String(error).includes('Loading chunk')) {
-        const hash = +new Date();
-        const separator = window.location.search ? '&' : '?';
-        window.location.href = `${window.location.href}${separator}_ijt=${hash}`;
+        // const hash = +new Date();
+        // const separator = window.location.search ? '&' : '?';
+        // window.location.href = `${window.location.href}${separator}_ijt=${hash}`;
       }
     }
 

@@ -69,5 +69,5 @@ import '../src/index.less';
 
 e2e.PC({
   // children: <TransferSelect />,
-  children: <NestingFormItem />,
+  children: <Select />,
 });

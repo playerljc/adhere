@@ -1,3 +1,4 @@
+import { type DropdownProps } from 'antd';
 import type { ReactNode } from 'react';
 import React from 'react';
 import type { LayoutType, TableGridLayoutProps } from '@baifendian/adhere-ui-tablegridlayout/lib/types';
@@ -209,7 +210,7 @@ declare const _default: (SuperClass: any, searchAndPaginationParamsMemo: any) =>
          * @param _defaultItems
          * @return {*}
          */
-        renderSearchFooterItems(_defaultItems: any): any[];
+        renderSearchFooterItems(_defaultItems: any): any;
         /**
          * getSearchFooterItemsEllipsisCount
          * @description 获取SearchFooterItems省略的个数
@@ -227,12 +228,13 @@ declare const _default: (SuperClass: any, searchAndPaginationParamsMemo: any) =>
          * @description 渲染renderSearchFooterItems的more
          */
         renderSearchFooterItemsMore(): React.JSX.Element;
+        getSearchFooterItemsMore(): DropdownProps;
         /**
          * renderSearchFooterItemsImpl
          * @param defaultItems
          * @return {*}
          */
-        renderSearchFooterItemsImpl(defaultItems: any): any[];
+        renderSearchFooterItemsImpl(defaultItems: any): any;
         /**
          * renderGridSearchFormGroupDataItem
          * @description 渲染GridSearchForm的查询项

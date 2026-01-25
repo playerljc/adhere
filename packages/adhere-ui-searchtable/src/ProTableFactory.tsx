@@ -1,8 +1,16 @@
-import { Button, ColorPicker, Input, InputNumber, Rate, Slider, Switch } from 'antd';
+import {
+  Button,
+  ColorPicker,
+  type DropdownProps,
+  Input,
+  InputNumber,
+  Rate,
+  Slider,
+  Switch,
+} from 'antd';
 import type { InputProps } from 'antd';
 import type { TextAreaProps } from 'antd/es/input';
 import dayjs from 'dayjs';
-import debounce from 'lodash.debounce';
 import merge from 'lodash.merge';
 import omit from 'omit.js';
 import qs from 'qs';
@@ -69,7 +77,6 @@ const OptimizedInput = React.memo(({ value, onChange, ...restProps }: InputProps
         currentTarget: { value: deferredValue },
       } as React.ChangeEvent<HTMLInputElement>;
 
-      console.log('deferredValue', deferredValue);
       onChange?.(syntheticEvent);
     }
   }, [deferredValue, value, onChange]);
@@ -1279,12 +1286,16 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       );
     }
 
+    getSearchFooterItemsMore(): DropdownProps {
+      return {};
+    }
+
     /**
      * renderSearchFooterItemsImpl
      * @param defaultItems
      * @return {*}
      */
-    renderSearchFooterItemsImpl(defaultItems) {
+    renderSearchFooterItemsImpl(defaultItems): any {
       let currentDefaultItems = [...defaultItems];
 
       let searchFooterItemsEllipsisCount = this.getSearchFooterItemsEllipsisCount() ?? 5;
@@ -1315,6 +1326,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
                       label: value,
                     })),
                   }}
+                  {...this.getSearchFooterItemsMore()}
                 >
                   {this.renderSearchFooterItemsMore()}
                 </Dropdown>
@@ -1698,10 +1710,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
 
         // popUp控件的缺省props
         const popUpDefaultProps = {
-          dropdownStyle: {
-            zIndex: 1051,
-          },
-          popupStyle: {
+          root: {
             zIndex: 1051,
           },
         };

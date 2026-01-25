@@ -54,11 +54,12 @@ declare const _default: {
         renderSearchForm(): React.JSX.Element | null;
         renderSearchFormToolBarItems(_defaultItems: any): any[];
         renderSearchFormToolBarDefaultPanel(): React.JSX.Element | null;
-        renderSearchFooterItems(_defaultItems: any): any[];
+        renderSearchFooterItems(_defaultItems: any): any;
         getSearchFooterItemsEllipsisCount(): number;
         isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
         renderSearchFooterItemsMore(): React.JSX.Element;
-        renderSearchFooterItemsImpl(defaultItems: any): any[];
+        getSearchFooterItemsMore(): import("antd").DropDownProps;
+        renderSearchFooterItemsImpl(defaultItems: any): any;
         renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex, layout, currentTitle }: {
             searchConfig: any;
             column: any;

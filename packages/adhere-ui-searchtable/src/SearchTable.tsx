@@ -1,4 +1,4 @@
-import type { SwitchProps } from 'antd';
+import type { DropdownProps, SwitchProps } from 'antd';
 import { Button, Checkbox, Dropdown, Switch, Table, theme } from 'antd';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
 import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
@@ -2678,6 +2678,10 @@ abstract class SearchTable<
     );
   }
 
+  getSearchFormToolBarMore(): DropdownProps {
+    return {};
+  }
+
   /**
    * renderSearchFormToolBar
    * @description 渲染查询表单的工具栏
@@ -2717,6 +2721,7 @@ abstract class SearchTable<
                 label: item,
               })),
             }}
+            {...this.getSearchFormToolBarMore()}
           >
             {this.renderSearchFormToolBarMore()}
           </Dropdown>,

@@ -1,4 +1,13 @@
 /**
+ * Location object interface
+ */
+export interface LocationObject {
+    pathname: string;
+    search?: string;
+    hash?: string;
+    state?: any;
+}
+/**
  * History object interface for navigation
  */
 export interface HistoryObject {
@@ -8,10 +17,12 @@ export interface HistoryObject {
     back?: () => void;
     forward?: () => void;
     length?: number;
+    location?: LocationObject;
+    listen?: (listener: (location: any) => void) => () => void;
 }
 /**
  * Function type for handling history back navigation
  * @param history - History object for navigation control
  * @param routePath - Fallback route path when no history available
  */
-export type HistoryFunction = (history: HistoryObject, routePath?: string) => void;
+export type HistoryFunction = (history: HistoryObject, routePath: string) => void;

@@ -1,13 +1,24 @@
-import { Dropdown } from 'antd';
+import type { DropdownProps } from 'antd';
 import classNames from 'classnames';
 import React from 'react';
 
 import { EllipsisOutlined } from '@ant-design/icons';
+import { Dropdown } from '@baifendian/adhere-ui-anthoc';
 import Split from '@baifendian/adhere-ui-split';
 
 import { selectorPrefix } from '../../SearchTable';
 
 const _selectorPrefix = `${selectorPrefix}-options-wrap`;
+
+export interface OptionsWrapProps {
+  className?: string;
+  style?: React.CSSProperties;
+  ellipsisCount?: number;
+  isEllipsesShowOnlyOneAfterCollapsing?: boolean;
+  renderEllipsis?: () => React.ReactElement;
+  children?: any;
+  more?: DropdownProps;
+}
 
 /**
  * OptionsWrap
@@ -18,15 +29,17 @@ const _selectorPrefix = `${selectorPrefix}-options-wrap`;
  * @param ellipsisCount
  * @param isEllipsesShowOnlyOneAfterCollapsing
  * @param renderEllipsis
+ * @param more
  * @return {JSX.Element}
  */
-const OptionsWrap = ({
+const OptionsWrap: React.FC<OptionsWrapProps> = ({
   className = '',
   style = {},
   ellipsisCount = 5,
   isEllipsesShowOnlyOneAfterCollapsing = false,
   renderEllipsis,
   children,
+  more,
 }): React.ReactElement => {
   let result;
 
@@ -67,6 +80,12 @@ const OptionsWrap = ({
         currentChildren = [
           ...currentChildren.slice(0, displayEndIndex),
           <Dropdown
+            styles={{
+              root: {
+                zIndex: 19999,
+              },
+            }}
+            {...(more ?? {})}
             key="menu"
             menu={{
               items: currentChildren.slice(ellipseStartIndex).map((_v) => ({
