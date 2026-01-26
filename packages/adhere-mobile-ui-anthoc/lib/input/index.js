@@ -1,2 +1,2 @@
-var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},Input_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./Input")));exports.default=Input_1.default;
+var __importDefault=function(t){return t&&t.__esModule?t:{default:t}},Input_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./Input"))),OptimizedInput_1=__importDefault(require("./OptimizedInput")),OptimizedTextArea_1=__importDefault(require("./OptimizedTextArea")),InputWithStaticProps=Input_1.default;InputWithStaticProps.OptimizedInput=OptimizedInput_1.default,InputWithStaticProps.OptimizedTextArea=OptimizedTextArea_1.default,exports.default=InputWithStaticProps;
 //# sourceMappingURL=index.js.map
