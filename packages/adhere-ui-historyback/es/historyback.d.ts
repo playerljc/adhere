@@ -51,7 +51,8 @@ export declare const initHistoryListener: (history: HistoryObject) => (() => voi
  * - Hash mode: http://example.com/#/user/profile
  *
  * @param history - History object from React Router
- * @param routePath - Target route path for fallback (no need for # prefix, auto-adapted)
+ * @param initialPathname - Initial pathname at function entry for sibling path comparison
+ * @param routePath - (Optional) Target route path for fallback (no need for # prefix, auto-adapted)
  *
  * @example
  * ```typescript
@@ -72,14 +73,26 @@ export declare const initHistoryListener: (history: HistoryObject) => (() => voi
  * // 2. Use back navigation in components (same usage for both modes)
  * const MyComponent = () => {
  *   const history = useHistory();
+ *   const location = useLocation();
  *
- *   const handleBack = () => {
+ *   const handleBackWithFallback = () => {
+ *     // Pass current pathname, history object, and fallback route
  *     // History mode will navigate to: /dashboard
  *     // Hash mode will navigate to: #/dashboard
- *     historyBack(history, '/dashboard');
+ *     historyBack(history, location.pathname, '/dashboard');
  *   };
  *
- *   return <button onClick={handleBack}>Back</button>;
+ *   const handleBackOnly = () => {
+ *     // routePath is optional, will only execute back operation
+ *     historyBack(history, location.pathname);
+ *   };
+ *
+ *   return (
+ *     <>
+ *       <button onClick={handleBackWithFallback}>Back with Fallback</button>
+ *       <button onClick={handleBackOnly}>Back Only</button>
+ *     </>
+ *   );
  * };
  * ```
  *

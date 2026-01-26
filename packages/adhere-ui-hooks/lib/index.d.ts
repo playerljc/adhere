@@ -15,5 +15,6 @@ declare const Hooks: {
     readonly useLatestState: typeof useLatestState;
     readonly useItemsRef: typeof useItemsRef;
     readonly useSafeRef: typeof useSafeRef;
+    readonly useHistoryBack: import("./types").UseHistoryBack;
 };
 export default Hooks;

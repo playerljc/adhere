@@ -133,3 +133,32 @@ export type UseTriggerQueryReturn<T extends Record<string, any>> = {
  * @template T - 查询参数类型
  */
 export type UseTriggerQuery = <T extends Record<string, any>>(defaultValue: T) => UseTriggerQueryReturn<T>;
+/**
+ * History object interface for navigation
+ */
+export interface HistoryObject {
+    replace: (path: string) => void;
+    push?: (path: string) => void;
+    go?: (n: number) => void;
+    back?: () => void;
+    forward?: () => void;
+    length?: number;
+    location?: {
+        pathname: string;
+        search?: string;
+        hash?: string;
+        state?: any;
+    };
+    listen?: (listener: (location: any) => void) => () => void;
+}
+/**
+ * useHistoryBack hook 返回类型
+ */
+export type UseHistoryBackReturn = {
+    /** 返回函数 */
+    back: () => void;
+};
+/**
+ * useHistoryBack hook 类型定义
+ */
+export type UseHistoryBack = (history: HistoryObject, initialPathname: string, routePath?: string) => UseHistoryBackReturn;

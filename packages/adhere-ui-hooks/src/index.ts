@@ -1,6 +1,7 @@
 import use from './use';
 import useFirst from './useFirst';
 import useForceUpdate from './useForceUpdate';
+import useHistoryBack from './useHistoryBack';
 import useItemsRef from './useItemsRef';
 import useLatestState from './useLatestState';
 import usePrevious from './usePrevious';
@@ -20,6 +21,7 @@ const Hooks = {
   useLatestState,
   useItemsRef,
   useSafeRef,
+  useHistoryBack,
 } as const;
 
 export default Hooks;

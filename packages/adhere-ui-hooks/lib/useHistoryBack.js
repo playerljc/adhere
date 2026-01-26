@@ -1,0 +1,2 @@
+var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}},react_1=(Object.defineProperty(exports,"__esModule",{value:!0}),require("react")),adhere_ui_historyback_1=__importDefault(require("@baifendian/adhere-ui-historyback")),useHistoryBack=function(e,t,r){var a=(0,react_1.useState)(e)[0],u=(0,react_1.useState)(t)[0],i=(0,react_1.useState)(r)[0];return{back:function(){(0,adhere_ui_historyback_1.default)(a,u,i)}}};exports.default=useHistoryBack;
+//# sourceMappingURL=useHistoryBack.js.map

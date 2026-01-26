@@ -23,6 +23,7 @@ export interface HistoryObject {
 /**
  * Function type for handling history back navigation
  * @param history - History object for navigation control
- * @param routePath - Fallback route path when no history available
+ * @param initialPathname - Initial pathname for sibling path comparison
+ * @param routePath - Fallback route path when no history available (optional)
  */
-export type HistoryFunction = (history: HistoryObject, routePath: string) => void;
+export type HistoryFunction = (history: HistoryObject, initialPathname: string, routePath?: string) => void;

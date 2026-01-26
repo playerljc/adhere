@@ -32,6 +32,7 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
+    "@baifendian/adhere-ui-historyback": "^2.11.0",
     "@baifendian/adhere-util-adapterscreen": "^2.11.0",
     "ahooks": "^3.8.4",
     "use-immer": "^0.10.0"
