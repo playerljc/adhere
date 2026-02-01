@@ -1,0 +1,2 @@
+import _InputNumber from"antd/es/input-number";import Util from"@baifendian/adhere-util";import{createFactory}from"../util";var InputNumberDecimal2FrenchHOC=createFactory(_InputNumber,{precision:2,formatter:function(r){return Util.FrenchNumberFormatter(null!=r?r:"",2)},parser:function(r){return Util.FrenchNumberParse(null!=r?r:"")}});InputNumberDecimal2FrenchHOC.displayName="InputNumberDecimal2French";export default InputNumberDecimal2FrenchHOC;
+//# sourceMappingURL=InputNumberDecimal2French.js.map

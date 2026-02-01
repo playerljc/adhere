@@ -1,0 +1,2 @@
+import _InputNumber from"antd/es/input-number";import Util from"@baifendian/adhere-util";import{createFactory}from"../util";var InputNumberDecimal1USHOC=createFactory(_InputNumber,{precision:1,formatter:function(r){return Util.USNumberFormatter(null!=r?r:"",1)},parser:function(r){return Util.USNumberParse(null!=r?r:"")}});InputNumberDecimal1USHOC.displayName="InputNumberDecimal1US";export default InputNumberDecimal1USHOC;
+//# sourceMappingURL=InputNumberDecimal1US.js.map

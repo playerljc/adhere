@@ -1,0 +1,2 @@
+import _InputNumber from"antd/es/input-number";import Util from"@baifendian/adhere-util";import{createFactory}from"../util";var InputNumberIntegerInternationalHOC=createFactory(_InputNumber,{precision:0,formatter:function(t){return Util.InternationalNumberFormatter(null!=t?t:"",0)},parser:function(t){return Util.InternationalNumberParse(null!=t?t:"")}});InputNumberIntegerInternationalHOC.displayName="InputNumberIntegerInternational";export default InputNumberIntegerInternationalHOC;
+//# sourceMappingURL=InputNumberIntegerInternational.js.map

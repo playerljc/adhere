@@ -300,5 +300,97 @@ declare const _default: {
      * @param rem
      */
     remToPx(rem: number): number;
+    /**
+     * GermanNumberFormatter
+     * @description 德国数字格式化（千分位: `.`, 小数点: `,`）
+     * @param {string | number} value - 要格式化的数值
+     * @param {number} precision - 小数精度
+     * @return {string} 格式化后的字符串，例如: 1.234.567,89
+     * @example
+     * ```typescript
+     * GermanNumberFormatter(1234567.89, 2) // "1.234.567,89"
+     * ```
+     */
+    GermanNumberFormatter(value: string | number, precision?: number): string;
+    /**
+     * GermanNumberParse
+     * @description 解析德国格式的数字字符串（千分位: `.`, 小数点: `,`）
+     * @param {string} value - 德国格式的数字字符串
+     * @return {string} 标准数字字符串
+     * @example
+     * ```typescript
+     * GermanNumberParse("1.234.567,89") // "1234567.89"
+     * ```
+     */
+    GermanNumberParse(value: string): string;
+    /**
+     * USNumberFormatter
+     * @description 美国/中国数字格式化（千分位: `,`, 小数点: `.`）
+     * @param {string | number} value - 要格式化的数值
+     * @param {number} precision - 小数精度
+     * @return {string} 格式化后的字符串，例如: 1,234,567.89
+     * @example
+     * ```typescript
+     * USNumberFormatter(1234567.89, 2) // "1,234,567.89"
+     * ```
+     */
+    USNumberFormatter(value: string | number, precision?: number): string;
+    /**
+     * USNumberParse
+     * @description 解析美国/中国格式的数字字符串（千分位: `,`, 小数点: `.`）
+     * @param {string} value - 美国/中国格式的数字字符串
+     * @return {string} 标准数字字符串
+     * @example
+     * ```typescript
+     * USNumberParse("1,234,567.89") // "1234567.89"
+     * ```
+     */
+    USNumberParse(value: string): string;
+    /**
+     * FrenchNumberFormatter
+     * @description 法国数字格式化（千分位: 空格, 小数点: `,`）
+     * @param {string | number} value - 要格式化的数值
+     * @param {number} precision - 小数精度
+     * @return {string} 格式化后的字符串，例如: 1 234 567,89
+     * @example
+     * ```typescript
+     * FrenchNumberFormatter(1234567.89, 2) // "1 234 567,89"
+     * ```
+     */
+    FrenchNumberFormatter(value: string | number, precision?: number): string;
+    /**
+     * FrenchNumberParse
+     * @description 解析法国格式的数字字符串（千分位: 空格, 小数点: `,`）
+     * @param {string} value - 法国格式的数字字符串
+     * @return {string} 标准数字字符串
+     * @example
+     * ```typescript
+     * FrenchNumberParse("1 234 567,89") // "1234567.89"
+     * ```
+     */
+    FrenchNumberParse(value: string): string;
+    /**
+     * InternationalNumberFormatter
+     * @description 国际标准数字格式化（千分位: 空格, 小数点: `.`）
+     * @param {string | number} value - 要格式化的数值
+     * @param {number} precision - 小数精度
+     * @return {string} 格式化后的字符串，例如: 1 234 567.89
+     * @example
+     * ```typescript
+     * InternationalNumberFormatter(1234567.89, 2) // "1 234 567.89"
+     * ```
+     */
+    InternationalNumberFormatter(value: string | number, precision?: number): string;
+    /**
+     * InternationalNumberParse
+     * @description 解析国际标准格式的数字字符串（千分位: 空格, 小数点: `.`）
+     * @param {string} value - 国际标准格式的数字字符串
+     * @return {string} 标准数字字符串
+     * @example
+     * ```typescript
+     * InternationalNumberParse("1 234 567.89") // "1234567.89"
+     * ```
+     */
+    InternationalNumberParse(value: string): string;
 };
 export default _default;

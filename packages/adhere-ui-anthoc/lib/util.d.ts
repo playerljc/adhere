@@ -50,3 +50,67 @@ export declare function getTransferValue({ value, dataSource, }: {
     value: TransferProps['selectedKeys'];
     dataSource: TransferProps['dataSource'];
 }): React.Key[] | undefined;
+/**
+ * GermanNumberFormatter
+ * @description 德国数字格式化（千分位: `.`, 小数点: `,`）
+ * @param {string | number} value - 要格式化的数值
+ * @param {number} precision - 小数精度
+ * @return {string}
+ */
+export declare function GermanNumberFormatter(value: string | number, precision?: number): string;
+/**
+ * GermanNumberParse
+ * @description 解析德国格式的数字字符串
+ * @param {string} value
+ * @return {string}
+ */
+export declare function GermanNumberParse(value: string): string;
+/**
+ * USNumberFormatter
+ * @description 美国/中国数字格式化（千分位: `,`, 小数点: `.`）
+ * @param {string | number} value - 要格式化的数值
+ * @param {number} precision - 小数精度
+ * @return {string}
+ */
+export declare function USNumberFormatter(value: string | number, precision?: number): string;
+/**
+ * USNumberParse
+ * @description 解析美国/中国格式的数字字符串
+ * @param {string} value
+ * @return {string}
+ */
+export declare function USNumberParse(value: string): string;
+/**
+ * FrenchNumberFormatter
+ * @description 法国数字格式化（千分位: 空格, 小数点: `,`）
+ * @param {string | number} value - 要格式化的数值
+ * @param {number} precision - 小数精度
+ * @return {string}
+ */
+export declare function FrenchNumberFormatter(value: string | number, precision?: number): string;
+/**
+ * FrenchNumberParse
+ * @description 解析法国格式的数字字符串
+ * @param {string} value
+ * @return {string}
+ */
+export declare function FrenchNumberParse(value: string): string;
+/**
+ * InternationalNumberFormatter
+ * @description 国际标准数字格式化（千分位: 空格, 小数点: `.`）
+ * @param {string | number} value - 要格式化的数值
+ * @param {number} precision - 小数精度
+ * @return {string}
+ */
+export declare function InternationalNumberFormatter(value: string | number, precision?: number): string;
+/**
+ * InternationalNumberParse
+ * @description 解析国际标准格式的数字字符串
+ * @param {string} value
+ * @return {string}
+ */
+export declare function InternationalNumberParse(value: string): string;
+/** @deprecated 请使用 GermanNumberFormatter */
+export declare const EuroNumberFormatter: typeof GermanNumberFormatter;
+/** @deprecated 请使用 GermanNumberParse */
+export declare const EuroNumberParse: typeof GermanNumberParse;

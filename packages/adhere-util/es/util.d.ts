@@ -228,6 +228,14 @@ declare const _default: {
     pxToRemNumber(px: number, base: number): number;
     pxToRem(px: number, base: number, media?: import("@baifendian/adhere-ui-configprovider/es/types").ConfigProviderProps["media"]): string;
     remToPx(rem: number): number;
+    GermanNumberFormatter(value: string | number, precision?: number): string;
+    GermanNumberParse(value: string): string;
+    USNumberFormatter(value: string | number, precision?: number): string;
+    USNumberParse(value: string): string;
+    FrenchNumberFormatter(value: string | number, precision?: number): string;
+    FrenchNumberParse(value: string): string;
+    InternationalNumberFormatter(value: string | number, precision?: number): string;
+    InternationalNumberParse(value: string): string;
     isTextNode(el: Node): boolean;
     isCommentNode(el: Node): boolean;
     isElementNode(el: Node): boolean;

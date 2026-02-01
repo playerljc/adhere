@@ -230,3 +230,93 @@ export function getTransferValue({
     (_value) => (dataSource ?? []).findIndex(({ key }) => key === _value) !== -1,
   );
 }
+
+/**
+ * GermanNumberFormatter
+ * @description 德国数字格式化（千分位: `.`, 小数点: `,`）
+ * @param {string | number} value - 要格式化的数值
+ * @param {number} precision - 小数精度
+ * @return {string}
+ */
+export function GermanNumberFormatter(value: string | number, precision?: number) {
+  return Util.GermanNumberFormatter(value, precision);
+}
+
+/**
+ * GermanNumberParse
+ * @description 解析德国格式的数字字符串
+ * @param {string} value
+ * @return {string}
+ */
+export function GermanNumberParse(value: string) {
+  return Util.GermanNumberParse(value);
+}
+
+/**
+ * USNumberFormatter
+ * @description 美国/中国数字格式化（千分位: `,`, 小数点: `.`）
+ * @param {string | number} value - 要格式化的数值
+ * @param {number} precision - 小数精度
+ * @return {string}
+ */
+export function USNumberFormatter(value: string | number, precision?: number) {
+  return Util.USNumberFormatter(value, precision);
+}
+
+/**
+ * USNumberParse
+ * @description 解析美国/中国格式的数字字符串
+ * @param {string} value
+ * @return {string}
+ */
+export function USNumberParse(value: string) {
+  return Util.USNumberParse(value);
+}
+
+/**
+ * FrenchNumberFormatter
+ * @description 法国数字格式化（千分位: 空格, 小数点: `,`）
+ * @param {string | number} value - 要格式化的数值
+ * @param {number} precision - 小数精度
+ * @return {string}
+ */
+export function FrenchNumberFormatter(value: string | number, precision?: number) {
+  return Util.FrenchNumberFormatter(value, precision);
+}
+
+/**
+ * FrenchNumberParse
+ * @description 解析法国格式的数字字符串
+ * @param {string} value
+ * @return {string}
+ */
+export function FrenchNumberParse(value: string) {
+  return Util.FrenchNumberParse(value);
+}
+
+/**
+ * InternationalNumberFormatter
+ * @description 国际标准数字格式化（千分位: 空格, 小数点: `.`）
+ * @param {string | number} value - 要格式化的数值
+ * @param {number} precision - 小数精度
+ * @return {string}
+ */
+export function InternationalNumberFormatter(value: string | number, precision?: number) {
+  return Util.InternationalNumberFormatter(value, precision);
+}
+
+/**
+ * InternationalNumberParse
+ * @description 解析国际标准格式的数字字符串
+ * @param {string} value
+ * @return {string}
+ */
+export function InternationalNumberParse(value: string) {
+  return Util.InternationalNumberParse(value);
+}
+
+// 保持向后兼容
+/** @deprecated 请使用 GermanNumberFormatter */
+export const EuroNumberFormatter = GermanNumberFormatter;
+/** @deprecated 请使用 GermanNumberParse */
+export const EuroNumberParse = GermanNumberParse;

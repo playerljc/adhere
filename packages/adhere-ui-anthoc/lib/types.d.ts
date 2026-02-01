@@ -41,9 +41,11 @@ import HorizontalCheckAllCheckbox from './checkbox/HorizontalCheckAllCheckbox';
 import HorizontalCheckbox from './checkbox/HorizontalCheckbox';
 import VerticalCheckAllCheckbox from './checkbox/VerticalCheckAllCheckbox';
 import VerticalCheckbox from './checkbox/VerticalCheckbox';
+import CheckboxWrapperFormItm from './form/CheckboxWrapperFormItm';
 import CustomWrapperFormItem from './form/CustomWrapperFormItem';
 import FormItem from './form/FormItem';
 import NestingFormItem from './form/NestingFormItem';
+import SubmitButton from './form/SubmitButton';
 import AutoCompleteCheckAllListSelect from './list/AutoCompleteCheckAllListSelect';
 import AutoCompleteListPagingSelect from './list/AutoCompleteListPagingSelect';
 import AutoCompleteListSelect from './list/AutoCompleteListSelect';
@@ -609,7 +611,9 @@ export type FormHOCComponent = ReturnType<typeof createFactory<FormProps>> & {
     ValidatorRules: FormValidatorRulesType;
     NestingFormItem: typeof NestingFormItem;
     CustomWrapperFormItem: typeof CustomWrapperFormItem;
+    CheckboxWrapperFormItm: typeof CheckboxWrapperFormItm;
     Item: typeof FormItem;
+    SubmitButton: typeof SubmitButton;
 };
 export type FormComponent = NamedExoticComponent<FormProps> & {
     useForm: <Values = any>(form?: FormInstance<Values>) => [FormInstance<Values>];
@@ -622,6 +626,11 @@ export interface FormItemProps extends AntFormItemProps {
 export type FormInternalProps = FormProps & {
     useForm: typeof useForm;
     scrollMarginTop?: number;
+    /**
+     * 启用滚动到错误时的抖动动画
+     * @default true
+     */
+    enableShakeAnimation?: boolean;
 };
 export type ListHOCComponent = ReturnType<typeof createFactory<ListProps<any>>> & {
     AutoCompleteCheckAllListSelect: typeof AutoCompleteCheckAllListSelect;

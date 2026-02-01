@@ -1,0 +1,2 @@
+import _InputNumber from"antd/es/input-number";import Util from"@baifendian/adhere-util";import{createFactory}from"../util";var InputNumberDecimal1InternationalHOC=createFactory(_InputNumber,{precision:1,formatter:function(t){return Util.InternationalNumberFormatter(null!=t?t:"",1)},parser:function(t){return Util.InternationalNumberParse(null!=t?t:"")}});InputNumberDecimal1InternationalHOC.displayName="InputNumberDecimal1International";export default InputNumberDecimal1InternationalHOC;
+//# sourceMappingURL=InputNumberDecimal1International.js.map

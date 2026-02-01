@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(r){for(var t,a=1,e=arguments.length;a<e;a++)for(var i in t=arguments[a])Object.prototype.hasOwnProperty.call(t,i)&&(r[i]=t[i]);return r}).apply(this,arguments)};import dayjs from"dayjs";import React from"react";import DatePicker from"./DatePicker";var BirthdayPicker=function(r){return React.createElement(DatePicker,__assign({disabledDate:function(r){return!!r&&(r.isSame(dayjs(),"day")||r.isAfter(dayjs(),"day"))}},r))};export default BirthdayPicker;
+//# sourceMappingURL=BirthdayPicker.js.map

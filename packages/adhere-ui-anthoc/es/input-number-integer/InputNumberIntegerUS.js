@@ -1,0 +1,2 @@
+import _InputNumber from"antd/es/input-number";import Util from"@baifendian/adhere-util";import{createFactory}from"../util";var InputNumberIntegerUSHOC=createFactory(_InputNumber,{precision:0,formatter:function(r){return Util.USNumberFormatter(null!=r?r:"",0)},parser:function(r){return Util.USNumberParse(null!=r?r:"")}});InputNumberIntegerUSHOC.displayName="InputNumberIntegerUS";export default InputNumberIntegerUSHOC;
+//# sourceMappingURL=InputNumberIntegerUS.js.map

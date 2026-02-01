@@ -14,9 +14,11 @@ import type {
   ProxyFormInstance,
 } from '../types';
 import { createFactory } from '../util';
+import CheckboxWrapperFormItm, { type CheckboxWrapperFormItmProps } from './CheckboxWrapperFormItm';
 import CustomWrapperFormItem from './CustomWrapperFormItem';
 import FormItem from './FormItem';
 import NestingFormItem from './NestingFormItem';
+import SubmitButton from './SubmitButton';
 
 const selectorPrefix = 'adhere-ui-anthoc-form';
 
@@ -52,6 +54,10 @@ const FormInternal = memo<FormInternalProps>((props) => {
    * @param errorInfo
    */
   function onFinishFailed(errorInfo) {
+    console.log('errorInfo', errorInfo);
+    console.log('props.name', props.name);
+    console.log('errorInfo?.errorFields', errorInfo?.errorFields);
+    console.log('props.scrollToFirstError', props.scrollToFirstError);
     if (
       errorInfo &&
       errorInfo?.errorFields?.length > 0 &&
@@ -59,10 +65,25 @@ const FormInternal = memo<FormInternalProps>((props) => {
       !!props.scrollToFirstError
     ) {
       // 具体要使用哪个元素进行scroll的操作，还需要对errorFields进行进一步判断
-      const firstErrorId = [props.name, ...genPrefixId(errorInfo?.errorFields[0])].join('_');
+      const firstErrorId = [props.name, ...genPrefixId(errorInfo?.errorFields[0]), 'help'].join(
+        '_',
+      );
+
       const firstErrorEL = document.getElementById(firstErrorId);
       if (firstErrorEL) {
         firstErrorEL.scrollIntoView(true);
+        
+        // 如果启用了抖动动画，则添加动画效果（默认为 true）
+        if (props.enableShakeAnimation !== false) {
+          firstErrorEL.classList.add(`${selectorPrefix}-shake-animation`);
+          
+          // 动画结束后移除类名，以便可以重复触发
+          const handleAnimationEnd = () => {
+            firstErrorEL.classList.remove(`${selectorPrefix}-shake-animation`);
+            firstErrorEL.removeEventListener('animationend', handleAnimationEnd);
+          };
+          firstErrorEL.addEventListener('animationend', handleAnimationEnd);
+        }
       }
     }
 
@@ -229,7 +250,12 @@ FormHOC.CustomWrapperFormItem = createFactory<CustomWrapperFormItemProps>(
   CustomWrapperFormItem,
   {},
 );
+FormHOC.CheckboxWrapperFormItm = createFactory<CheckboxWrapperFormItmProps>(
+  CheckboxWrapperFormItm,
+  {},
+);
 FormHOC.Item = FormItem;
+FormHOC.SubmitButton = SubmitButton;
 FormHOC.displayName = 'Form';
 
 export default FormHOC;

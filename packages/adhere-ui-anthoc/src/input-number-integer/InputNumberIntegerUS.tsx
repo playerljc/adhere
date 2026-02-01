@@ -1,0 +1,19 @@
+import type { InputNumberProps } from 'antd';
+import { InputNumber } from 'antd';
+
+import Util from '@baifendian/adhere-util';
+
+import { createFactory } from '../util';
+
+const InputNumberIntegerUSHOC: typeof InputNumber & {
+  defaultProps?: Partial<InputNumberProps>;
+  override?: (props: Partial<InputNumberProps>) => Partial<InputNumberProps>;
+} = createFactory<InputNumberProps>(InputNumber, {
+  precision: 0,
+  formatter: (value) => Util.USNumberFormatter(value ?? '', 0),
+  parser: (value) => Util.USNumberParse(value ?? ''),
+});
+
+InputNumberIntegerUSHOC.displayName = 'InputNumberIntegerUS';
+
+export default InputNumberIntegerUSHOC;
