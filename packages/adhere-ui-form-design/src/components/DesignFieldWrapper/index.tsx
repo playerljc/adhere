@@ -5,12 +5,13 @@
  *   1.2 点击后显示此控件的工具栏
  */
 import classNames from 'classnames';
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import type { FC } from 'react';
 
 import { DesignContext } from '../../Design/Context';
 import { SELECT_PREFIX } from '../../constant';
-import { DesignFieldWrapperProps } from '../../types';
+import { DesignFieldWrapperProps, DesignItem } from '../../types';
+import { isDesktop } from '../../utils/isDesktop';
 
 const selectPrefix = `${SELECT_PREFIX}-design-field-wrapper`;
 
@@ -22,11 +23,23 @@ const selectPrefix = `${SELECT_PREFIX}-design-field-wrapper`;
  *  2.显示控件的在设计视图中的工具栏(如删除控件,clone控件......) 当id === getActiveFieldId()时，显示工具栏
  */
 const DesignFieldWrapper: FC<DesignFieldWrapperProps> = ({ id, className, style, children }) => {
-  const { getActiveFieldId, setActiveFieldId } = useContext(DesignContext);
+  const { getActiveFieldId, setActiveFieldId, getItems, getDesignValue, getTerminal } =
+    useContext(DesignContext);
+
+  const items = getItems() ?? [];
+
+  const designValue = getDesignValue();
+
+  const terminal = getTerminal();
 
   const activeFieldId = getActiveFieldId();
 
   const isActive = id === activeFieldId;
+
+  const item: DesignItem | undefined = useMemo(
+    () => items.find((_item) => _item.type === designValue?.type),
+    [items, designValue],
+  );
 
   function onClick(e) {
     e.stopPropagation();
@@ -42,7 +55,18 @@ const DesignFieldWrapper: FC<DesignFieldWrapperProps> = ({ id, className, style,
       style={style ?? {}}
       onClick={onClick}
     >
-      {isActive && <div className={`${selectPrefix}-actions`}></div>}
+      {/* desktop actions */}
+      {!!item && isActive && isDesktop(terminal) && (
+        <div className={classNames(`${selectPrefix}-actions`)}>{item?.renderActions?.(id)}</div>
+      )}
+
+      {/* mobile actions */}
+      {!!item && isActive && !isDesktop(terminal) && (
+        <div className={classNames(`${selectPrefix}-actions`)}>
+          {item?.renderActionsToMobile?.(id)}
+        </div>
+      )}
+
       {children}
     </div>
   );

@@ -2,17 +2,25 @@
 
 .@{prefix-cls}-design-field-wrapper {
   position: relative;
+  box-sizing: border-box;
+  padding: 2px;
 
   // hover的样式
-  &.hover {
-
+  &:hover {
+    //background-color: var(--design-field-wrapper-active-hover-background-color, fade(@highlight-color, 5%));
+    border: var(--design-field-wrapper-active-border-color, 3px dashed @highlight-color);
   }
 
   // 点击了控件后的激活状态，一般是边框的样式会变类型和颜色
   &.@{prefix-cls}-design-field-wrapper-active {
+    border: var(--design-field-wrapper-active-border-color, 2px solid @highlight-color);
   }
 
   // 激活的工具栏
   > .@{prefix-cls}-design-field-wrapper-actions {
+    position: absolute;
+    z-index: 5;
+    bottom: 0;
+    right: 0;
   }
 }

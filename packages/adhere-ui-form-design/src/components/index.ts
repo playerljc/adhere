@@ -1,6 +1,7 @@
 import ActionsFormItem from './ActionsFormItem';
 import ColgroupValueSetting from './ColgroupValueSetting';
 import { DensitySelectStandardDict } from './Density';
+import DesignFieldActions from './DesignFieldActions';
 import DesignFieldWrapper from './DesignFieldWrapper';
 import { DirectionSelectStandardDict } from './Direction';
 import DroppableContainer from './DroppableContainer';
@@ -53,4 +54,5 @@ export {
   DroppableContainer,
   PropertiesGridLayout,
   InputSizeSelectStandardDict,
+  DesignFieldActions,
 };

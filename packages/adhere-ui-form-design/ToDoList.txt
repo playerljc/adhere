@@ -1,0 +1,15 @@
+基本
+.field激活状态下的样式(ok)
+.field激活状态下的工具栏(进行中)
+.FlowLayout的MainProperty面板
+.FlowLayout的StyleProperty面板
+.TableGridLayout的StyleProperty面板
+.antd-input的MainProperty词条缺失
+.整体样式
+.Toolbox样式
+.右侧属性面板样式
+.Design工具栏(terminal切换)
+
+高级
+.大纲视图
+.控件互换位置

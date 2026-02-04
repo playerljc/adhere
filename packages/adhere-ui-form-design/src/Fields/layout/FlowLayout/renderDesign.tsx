@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { useMemo } from 'react';
 import type { ReactNode } from 'react';
 
@@ -21,7 +22,7 @@ function FlowLayoutDesign({ value }: { value: DesignValue }) {
   );
 
   return (
-    <DesignFieldWrapper id={id} className={`${selectorPrefix}-design-field-wrapper`}>
+    <DesignFieldWrapper id={id} className={classNames(`${selectorPrefix}-design-field-wrapper`)}>
       <DroppableContainer
         id={id}
         value={value}

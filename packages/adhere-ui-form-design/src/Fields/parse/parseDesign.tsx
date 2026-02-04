@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 
 import type { DesignProps, DesignValue, Terminal } from '../../types';
+import { isDesktop } from '../../utils/isDesktop';
 
 /**
  * parseDesign
@@ -28,7 +29,7 @@ export function parseDesign({
 }): DataItemRow | ReactNode {
   const item = items.find((_item) => _item.type === value.type);
 
-  if (terminal === 'desktop') {
+  if (isDesktop(terminal)) {
     return item?.renderDesign({
       value,
     });

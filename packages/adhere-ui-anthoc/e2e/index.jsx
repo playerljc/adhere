@@ -13,6 +13,7 @@ import DatePickerValueHOCInFormTest from './DatePickerValueHOCInFormTest';
 import DatePickerValueHOCTest from './DatePickerValueHOCTest';
 import FormErrorContainer from './Form/FormErrorContainer';
 import NestingFormItem from './Form/NestingFormItem';
+import ScrollFirstError from './Form/ScrollFirstError';
 import InputMultipleForm from './Input/Form';
 import InputMultiple from './Input/InputMultiple';
 import InputMultipleSelect from './Input/InputMultipleSelect';
@@ -69,5 +70,5 @@ import '../src/index.less';
 
 e2e.PC({
   // children: <TransferSelect />,
-  children: <Select />,
+  children: <ScrollFirstError />,
 });

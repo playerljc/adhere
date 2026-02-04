@@ -34,7 +34,8 @@ import {
   type StyleProps,
   ToolBoxItem,
 } from '../types';
-import { isLayoutItem } from '../utils';
+// import { isLayoutItem } from '../utils';
+import { isDragEnd } from '../utils';
 import { DesignContext } from './Context';
 import Editor from './DesignEditor';
 import DesignValueReducer from './DesignValueReducer';
@@ -188,16 +189,18 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
 
         if (!over) return;
 
-        // active是控件, over不是TableGridLayout
         if (
-          !isLayoutItem(active?.data?.current?.type as string) &&
-          over?.data?.current?.type !== TableGridLayoutType
+          !isDragEnd({
+            activeType: active?.data?.current?.type as string,
+            overType: over?.data?.current?.type,
+          })
         ) {
           return;
         }
 
         console.log('ok');
 
+        debugger;
         // 拖拽结束，结束后应该在editor中多一个控件的实例
         // active是拖拽对象 一般是toolbox中的item
         // over是放置对象 一般是TableGridLayout的布局对象
@@ -212,19 +215,23 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
 
         const filedId = Util.uuid();
 
+        debugger;
+
+        const props = targetItem?.layoutReducerToAdd?.(designValue as DesignValue, {
+          sourceDesignValue: {
+            id: filedId,
+            type: activeItem.type,
+            props: sourceItem?.defaultValue as DesignValueProps,
+          },
+          targetId: overItem.id,
+        }) as DesignValue[];
+
         // 追加布局的data数据
         dispatch({
           type: REDUCER_ACTION_TYPE.updateChildrenProps,
           payload: {
             id: overItem.id,
-            props: targetItem?.layoutReducerToAdd?.(designValue as DesignValue, {
-              sourceDesignValue: {
-                id: filedId,
-                type: activeItem.type,
-                props: sourceItem?.defaultValue as DesignValueProps,
-              },
-              targetId: overItem.id,
-            }) as DesignValue[],
+            props,
           },
         });
 

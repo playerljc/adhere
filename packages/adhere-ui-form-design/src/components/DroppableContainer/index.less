@@ -1,11 +1,10 @@
 @import '../../constant';
 
 .@{prefix-cls}-design-editor-droppable-container {
-  //display: flex;
-  min-height: 60px;
-  border: 1px solid #ddd;
+  min-height: var(--droppable-container-min-height, 60px);
+  border: var(--droppable-container-border, 1px solid @border-color);
 
   &.@{prefix-cls}-design-editor-droppable-container-over {
-    border-color: orange;
+    border-color: var(--droppable-container-over-border-color, @highlight-color);
   }
 }

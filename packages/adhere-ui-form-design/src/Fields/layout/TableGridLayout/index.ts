@@ -2,6 +2,8 @@ import type { DesignItem } from '../../../types';
 import { TYPE } from './constant';
 import { layoutReducerToAdd } from './layoutReducerToAdd';
 import { layoutReducerToRemove } from './layoutReducerToRemove';
+import { renderActions } from './renderActions';
+import { renderActionsToMobile } from './renderActionsToMobile';
 import { renderDesign } from './renderDesign';
 import { renderDesignToMobile } from './renderDesignToMobile';
 import { renderMainProperty } from './renderMainProperty';
@@ -18,6 +20,8 @@ export function define(): DesignItem {
     hasActionsProperty: false,
     layoutReducerToAdd,
     layoutReducerToRemove,
+    renderActions,
+    renderActionsToMobile,
     defaultValue: {
       fieldProps: {
         layout: 'vertical',
@@ -35,6 +39,7 @@ export function define(): DesignItem {
           },
         ],
       },
+      children: [],
     },
   };
 }

@@ -98,16 +98,46 @@ const FormItem: FC<FormItemProps> = ({
       >
         <ErrorWrapper onErrorChange={setErrors}>
           {({ status, errors, ...rest }) => {
-            if (children) {
+            if (!children) {
+              return children;
+            }
+
+            // 处理单个 React 元素
+            if (React.isValidElement(children)) {
+              const childProps = (children as any)?.props ?? {};
+
+              // 只有当 children 没有提供 status/errors 时，才使用 ErrorWrapper 的值
+              // 这样可以支持用户手动传入自定义的 errors（如 Form.ErrorList）
               return React.cloneElement(children as any, {
-                ...((children as any)?.props ?? {}),
+                ...childProps,
                 ...(rest ?? {}),
                 ref: (children as any).ref,
-                status,
-                errors,
+                // 如果 children 已有 status/errors，则不覆盖
+                ...(childProps.status === undefined && { status }),
+                ...(childProps.errors === undefined && { errors }),
               });
             }
 
+            // 处理数组
+            if (Array.isArray(children)) {
+              return React.Children.map(children, (child) => {
+                if (!React.isValidElement(child)) {
+                  return child;
+                }
+
+                const childProps = (child as any)?.props ?? {};
+
+                return React.cloneElement(child as any, {
+                  ...childProps,
+                  ...(rest ?? {}),
+                  ref: (child as any).ref,
+                  ...(childProps.status === undefined && { status }),
+                  ...(childProps.errors === undefined && { errors }),
+                });
+              });
+            }
+
+            // 其他类型（字符串、数字等）直接返回
             return children;
           }}
         </ErrorWrapper>

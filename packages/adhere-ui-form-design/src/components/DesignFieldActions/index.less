@@ -1,0 +1,25 @@
+@import '../../constant';
+
+.@{prefix-cls}-design-field-actions {
+  > ul {
+    display: flex;
+    gap: var(--design-field-actions-gap, 5px);
+    margin: var(--design-field-actions-margin, 0);
+    padding: var(--design-field-actions-padding, 5px);
+    list-style: none;
+
+    > li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      color: var(--design-field-actions-li-color, #fff);
+      background-color: var(--design-field-actions-li-background-color, @highlight-color);
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

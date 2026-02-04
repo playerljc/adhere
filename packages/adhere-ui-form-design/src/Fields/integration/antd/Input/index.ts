@@ -1,6 +1,8 @@
 import type { DesignItem } from '../../../../types';
 import { TYPE } from './constant';
+import { renderActions } from './renderActions';
 import { renderActionsProperty } from './renderActionsProperty';
+import { renderActionsToMobile } from './renderActionsToMobile';
 import { renderDesign } from './renderDesign';
 import { renderDesignToMobile } from './renderDesignToMobile';
 import { renderFormProperty } from './renderFormProperty';
@@ -16,6 +18,8 @@ export function define(): DesignItem {
     renderMainProperty,
     renderStyleProperty,
     renderActionsProperty,
+    renderActions,
+    renderActionsToMobile,
     hasFormProperty: true,
     hasActionsProperty: true,
     defaultValue: {
