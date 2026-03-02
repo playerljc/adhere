@@ -2,13 +2,13 @@ import type { FormInstance } from 'antd/es/form';
 import type { TableProps } from 'antd/es/table/InternalTable';
 import type { Rule } from 'antd/lib/form/index';
 import type { ColumnType, TableRowSelection } from 'antd/lib/table/interface';
-import type { DataIndex } from '@rc-component/table/lib/interface';
 import type { CSSProperties, ForwardRefExoticComponent, PropsWithoutRef, ReactElement, ReactNode, RefAttributes, RefObject } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
+import type { DataIndex } from '@rc-component/table/lib/interface';
 import type SearchTableImplement from './SearchTableImplement';
 import type { SearchTableStateImplement } from './SearchTableStateImplement';
-export type FormItemType = 'input' | 'textArea' | 'inputNumber' | 'inputNumberDecimal1' | 'inputNumberDecimal2' | 'inputNumberInteger' | 'datePicker' | 'timePicker' | 'rangePicker' | 'slider' | 'sliderRange' | 'rate' | 'switch' | 'dict' | 'custom' | string;
+export type FormItemType = 'dict' | 'input' | 'textArea' | 'inputNumber' | 'inputNumberDecimal1' | 'inputNegativeNumberDecimal1' | 'inputPositiveNumberDecimal1' | 'inputNumberDecimal1French' | 'inputNumberDecimal1German' | 'inputNumberDecimal1International' | 'inputNumberDecimal1US' | 'inputNumberDecimal2' | 'inputNegativeNumberDecimal2' | 'inputPositiveNumberDecimal2' | 'inputNumberDecimal2French' | 'inputNumberDecimal2German' | 'inputNumberDecimal2International' | 'inputNumberDecimal2US' | 'inputNumberInteger' | 'inputNegativeNumberInteger' | 'inputPositiveNumberInteger' | 'inputNumberIntegerFrench' | 'inputNumberIntegerGerman' | 'inputNumberIntegerInternational' | 'inputNumberIntegerUS' | 'datePicker' | 'birthdayPicker' | 'boundedTimePicker' | 'timePicker' | 'rangePicker' | 'slider' | 'sliderRange' | 'rate' | 'switch' | 'colorPicker' | string;
 /**
  * ColumnSearchConfig
  * @description 列的查询设置

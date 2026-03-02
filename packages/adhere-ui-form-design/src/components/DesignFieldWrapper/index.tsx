@@ -11,6 +11,7 @@ import type { FC } from 'react';
 import { DesignContext } from '../../Design/Context';
 import { SELECT_PREFIX } from '../../constant';
 import { DesignFieldWrapperProps, DesignItem } from '../../types';
+import { findTypeById } from '../../utils/findTypeById';
 import { isDesktop } from '../../utils/isDesktop';
 
 const selectPrefix = `${SELECT_PREFIX}-design-field-wrapper`;
@@ -36,16 +37,17 @@ const DesignFieldWrapper: FC<DesignFieldWrapperProps> = ({ id, className, style,
 
   const isActive = id === activeFieldId;
 
-  const item: DesignItem | undefined = useMemo(
-    () => items.find((_item) => _item.type === designValue?.type),
-    [items, designValue],
-  );
+  const item: DesignItem | undefined = useMemo(() => {
+    const type = findTypeById({ id, designValue });
+    return items.find((_item) => _item.type === type);
+  }, [items, designValue]);
 
   function onClick(e) {
     e.stopPropagation();
 
     setActiveFieldId(id);
   }
+
 
   return (
     <div

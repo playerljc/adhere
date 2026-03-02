@@ -448,13 +448,15 @@ setItem<CascaderTreeSelectProps, CascaderTreeSelectProps['options']>(
 setItem<AsyncCascaderProps, CascaderProps['options']>(
   'CascaderAsync',
   'Standard',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<CascaderProps['options']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<CascaderProps['options']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <Cascader.AsyncCascader {...props} fetchData={fetchData} />;
-  },
+      return <Cascader.AsyncCascader {...props} fetchData={fetchData} />;
+    },
 );
 
 /**
@@ -463,13 +465,15 @@ setItem<AsyncCascaderProps, CascaderProps['options']>(
 setItem<AsyncCascaderProps, CascaderProps['options']>(
   'CascaderAsync',
   'Multi',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<CascaderProps['options']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<CascaderProps['options']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <Cascader.AsyncCascaderMulti {...props} fetchData={fetchData} />;
-  },
+      return <Cascader.AsyncCascaderMulti {...props} fetchData={fetchData} />;
+    },
 );
 
 /**
@@ -478,13 +482,15 @@ setItem<AsyncCascaderProps, CascaderProps['options']>(
 setItem<AsyncCascaderProps, CascaderProps['options']>(
   'CascaderAsync',
   'ShowChild',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<CascaderProps['options']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<CascaderProps['options']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <Cascader.AsyncCascaderShowChild {...props} fetchData={fetchData} />;
-  },
+      return <Cascader.AsyncCascaderShowChild {...props} fetchData={fetchData} />;
+    },
 );
 
 /**
@@ -493,13 +499,15 @@ setItem<AsyncCascaderProps, CascaderProps['options']>(
 setItem<AsyncCascaderProps, CascaderProps['options']>(
   'CascaderAsync',
   'ShowParent',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<CascaderProps['options']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<CascaderProps['options']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <Cascader.AsyncCascaderShowParent {...props} fetchData={fetchData} />;
-  },
+      return <Cascader.AsyncCascaderShowParent {...props} fetchData={fetchData} />;
+    },
 );
 
 /**
@@ -508,13 +516,15 @@ setItem<AsyncCascaderProps, CascaderProps['options']>(
 setItem<AsyncCascaderProps, CascaderProps['options']>(
   'CascaderAsync',
   'ChangeOnSelect',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<CascaderProps['options']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<CascaderProps['options']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <Cascader.AsyncCascaderChangeOnSelect {...props} fetchData={fetchData} />;
-  },
+      return <Cascader.AsyncCascaderChangeOnSelect {...props} fetchData={fetchData} />;
+    },
 );
 
 /**
@@ -523,13 +533,15 @@ setItem<AsyncCascaderProps, CascaderProps['options']>(
 setItem<AsyncCascaderProps, CascaderProps['options']>(
   'CascaderAsync',
   'FlatStandard',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<CascaderProps['options']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<CascaderProps['options']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <Cascader.AsyncCascader {...props} fetchData={fetchData} treeDataSimpleMode />;
-  },
+      return <Cascader.AsyncCascader {...props} fetchData={fetchData} treeDataSimpleMode />;
+    },
 );
 
 /**
@@ -538,13 +550,15 @@ setItem<AsyncCascaderProps, CascaderProps['options']>(
 setItem<AsyncCascaderProps, CascaderProps['options']>(
   'CascaderAsync',
   'FlatMulti',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<CascaderProps['options']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<CascaderProps['options']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <Cascader.AsyncCascaderMulti {...props} fetchData={fetchData} treeDataSimpleMode />;
-  },
+      return <Cascader.AsyncCascaderMulti {...props} fetchData={fetchData} treeDataSimpleMode />;
+    },
 );
 
 /**
@@ -553,13 +567,17 @@ setItem<AsyncCascaderProps, CascaderProps['options']>(
 setItem<AsyncCascaderProps, CascaderProps['options']>(
   'CascaderAsync',
   'FlatShowChild',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<CascaderProps['options']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<CascaderProps['options']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <Cascader.AsyncCascaderShowChild {...props} fetchData={fetchData} treeDataSimpleMode />;
-  },
+      return (
+        <Cascader.AsyncCascaderShowChild {...props} fetchData={fetchData} treeDataSimpleMode />
+      );
+    },
 );
 
 /**
@@ -568,13 +586,17 @@ setItem<AsyncCascaderProps, CascaderProps['options']>(
 setItem<AsyncCascaderProps, CascaderProps['options']>(
   'CascaderAsync',
   'FlatShowParent',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<CascaderProps['options']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<CascaderProps['options']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <Cascader.AsyncCascaderShowParent {...props} fetchData={fetchData} treeDataSimpleMode />;
-  },
+      return (
+        <Cascader.AsyncCascaderShowParent {...props} fetchData={fetchData} treeDataSimpleMode />
+      );
+    },
 );
 
 /**
@@ -583,13 +605,15 @@ setItem<AsyncCascaderProps, CascaderProps['options']>(
 setItem<AsyncCascaderProps, CascaderProps['options']>(
   'CascaderAsync',
   'FlatChangeOnSelect',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<CascaderProps['options']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<CascaderProps['options']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return (
-      <Cascader.AsyncCascaderChangeOnSelect {...props} fetchData={fetchData} treeDataSimpleMode />
-    );
-  },
+      return (
+        <Cascader.AsyncCascaderChangeOnSelect {...props} fetchData={fetchData} treeDataSimpleMode />
+      );
+    },
 );

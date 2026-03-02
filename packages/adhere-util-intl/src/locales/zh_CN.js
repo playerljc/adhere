@@ -186,5 +186,6 @@ export default [
     auto: '自动',
     initial_value: '缺省值',
     placeholder: '占位符',
+    delete: '删除',
   },
 ];

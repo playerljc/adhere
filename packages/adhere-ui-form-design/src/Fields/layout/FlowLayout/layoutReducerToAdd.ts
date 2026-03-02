@@ -1,5 +1,5 @@
-import { findDesignValueByIdToClone } from '../../../Design/DesignValueReducer';
 import type { DesignValue } from '../../../types';
+import { findDesignValueByIdToClone } from '../../../utils';
 
 /**
  * layoutReducerToAdd

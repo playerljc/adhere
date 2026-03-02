@@ -1,13 +1,19 @@
-import { ColorPicker, Input, InputNumber, Rate, Slider, Switch } from 'antd';
+// import { ColorPicker, Input, InputNumber, Rate, Slider, Switch } from 'antd';
+import { InputNumber } from 'antd';
 import type { ReactNode } from 'react';
 import React from 'react';
 
 import {
+  ColorPicker,
   DatePicker,
+  Input,
   InputNumberDecimal1,
   InputNumberDecimal2,
   InputNumberInteger,
   RangePicker,
+  Rate,
+  Slider,
+  Switch,
   TimePicker,
 } from '@baifendian/adhere-ui-anthoc';
 
@@ -26,8 +32,6 @@ export default {
    * @param props 控件的props
    * @param dictName distName
    * @param form 表单的form实例
-   * @param dataIndex
-   * @param rowIndex
    * @param FieldGeneratorToDict
    */
   render({
@@ -68,6 +72,23 @@ export default {
         <InputNumberDecimal1.InputPositiveNumberDecimal1 {...defaultProps} {...(props ?? {})} />
       );
     };
+    const renderInputNumberDecimal1French = () => {
+      return <InputNumberDecimal1.InputNumberDecimal1French {...defaultProps} {...(props ?? {})} />;
+    };
+    const renderInputNumberDecimal1German = () => {
+      return <InputNumberDecimal1.InputNumberDecimal1German {...defaultProps} {...(props ?? {})} />;
+    };
+    const renderInputNumberDecimal1International = () => {
+      return (
+        <InputNumberDecimal1.InputNumberDecimal1International
+          {...defaultProps}
+          {...(props ?? {})}
+        />
+      );
+    };
+    const renderInputNumberDecimal1US = () => {
+      return <InputNumberDecimal1.InputNumberDecimal1US {...defaultProps} {...(props ?? {})} />;
+    };
     const renderInputNumberDecimal2 = () => {
       return <InputNumberDecimal2 {...defaultProps} {...(props ?? {})} />;
     };
@@ -81,6 +102,23 @@ export default {
         <InputNumberDecimal2.InputPositiveNumberDecimal2 {...defaultProps} {...(props ?? {})} />
       );
     };
+    const renderInputNumberDecimal2French = () => {
+      return <InputNumberDecimal2.InputNumberDecimal2French {...defaultProps} {...(props ?? {})} />;
+    };
+    const renderInputNumberDecimal2German = () => {
+      return <InputNumberDecimal2.InputNumberDecimal2German {...defaultProps} {...(props ?? {})} />;
+    };
+    const renderInputNumberDecimal2International = () => {
+      return (
+        <InputNumberDecimal2.InputNumberDecimal2International
+          {...defaultProps}
+          {...(props ?? {})}
+        />
+      );
+    };
+    const renderInputNumberDecimal2US = () => {
+      return <InputNumberDecimal2.InputNumberDecimal2US {...defaultProps} {...(props ?? {})} />;
+    };
     const renderInputNumberInteger = () => {
       return <InputNumberInteger {...defaultProps} {...(props ?? {})} />;
     };
@@ -90,8 +128,28 @@ export default {
     const renderInputPositiveNumberInteger = () => {
       return <InputNumberInteger.InputPositiveNumberInteger {...defaultProps} {...(props ?? {})} />;
     };
+    const renderInputNumberIntegerFrench = () => {
+      return <InputNumberInteger.InputNumberIntegerFrench {...defaultProps} {...(props ?? {})} />;
+    };
+    const renderInputNumberIntegerGerman = () => {
+      return <InputNumberInteger.InputNumberIntegerGerman {...defaultProps} {...(props ?? {})} />;
+    };
+    const renderInputNumberIntegerInternational = () => {
+      return (
+        <InputNumberInteger.InputNumberIntegerInternational {...defaultProps} {...(props ?? {})} />
+      );
+    };
+    const renderInputNumberIntegerUS = () => {
+      return <InputNumberInteger.InputNumberIntegerUS {...defaultProps} {...(props ?? {})} />;
+    };
     const renderDatePicker = () => {
       return <DatePicker {...defaultProps} {...(props ?? {})} />;
+    };
+    const renderBirthdayPicker = () => {
+      return <DatePicker.BirthdayPicker {...defaultProps} {...(props ?? {})} />;
+    };
+    const renderBoundedTimePicker = () => {
+      return <DatePicker.BoundedTimePicker {...defaultProps} {...(props ?? {})} />;
     };
     const renderTimePicker = () => {
       return <TimePicker {...defaultProps} {...(props ?? {})} />;
@@ -183,13 +241,27 @@ export default {
       ['inputNumberDecimal1', renderInputNumberDecimal1],
       ['inputNegativeNumberDecimal1', renderInputNegativeNumberDecimal1],
       ['inputPositiveNumberDecimal1', renderInputPositiveNumberDecimal1],
+      ['inputNumberDecimal1French', renderInputNumberDecimal1French],
+      ['inputNumberDecimal1German', renderInputNumberDecimal1German],
+      ['inputNumberDecimal1International', renderInputNumberDecimal1International],
+      ['inputNumberDecimal1US', renderInputNumberDecimal1US],
       ['inputNumberDecimal2', renderInputNumberDecimal2],
       ['inputNegativeNumberDecimal2', renderInputNegativeNumberDecimal2],
       ['inputPositiveNumberDecimal2', renderInputPositiveNumberDecimal2],
+      ['inputNumberDecimal2French', renderInputNumberDecimal2French],
+      ['inputNumberDecimal2German', renderInputNumberDecimal2German],
+      ['inputNumberDecimal2International', renderInputNumberDecimal2International],
+      ['inputNumberDecimal2US', renderInputNumberDecimal2US],
       ['inputNumberInteger', renderInputNumberInteger],
       ['inputNegativeNumberInteger', renderInputNegativeNumberInteger],
       ['inputPositiveNumberInteger', renderInputPositiveNumberInteger],
+      ['inputNumberIntegerFrench', renderInputNumberIntegerFrench],
+      ['inputNumberIntegerGerman', renderInputNumberIntegerGerman],
+      ['inputNumberIntegerInternational', renderInputNumberIntegerInternational],
+      ['inputNumberIntegerUS', renderInputNumberIntegerUS],
       ['datePicker', renderDatePicker],
+      ['birthdayPicker', renderBirthdayPicker],
+      ['boundedTimePicker', renderBoundedTimePicker],
       ['timePicker', renderTimePicker],
       ['rangePicker', renderRangePicker],
       ['slider', renderSlider],

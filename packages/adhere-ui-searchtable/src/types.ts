@@ -9,7 +9,6 @@ import type {
   // TablePaginationConfig,
   // TableRowSelection,
 } from 'antd/lib/table/interface';
-import type { DataIndex } from '@rc-component/table/lib/interface';
 import type {
   CSSProperties,
   ForwardRefExoticComponent,
@@ -22,6 +21,7 @@ import type {
 import { useDrag, useDrop } from 'react-dnd';
 
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
+import type { DataIndex } from '@rc-component/table/lib/interface';
 
 import type SearchTableImplement from './SearchTableImplement';
 import type { SearchTableStateImplement } from './SearchTableStateImplement';
@@ -61,23 +61,41 @@ export type FormItemType =
   // | 'cascaderMultiSelect'
   // | 'cascaderSelectLeaf'
   // | 'cascaderMultiSelectLeaf'
+  | 'dict'
   | 'input'
   | 'textArea'
   | 'inputNumber'
   | 'inputNumberDecimal1'
+  | 'inputNegativeNumberDecimal1'
+  | 'inputPositiveNumberDecimal1'
+  | 'inputNumberDecimal1French'
+  | 'inputNumberDecimal1German'
+  | 'inputNumberDecimal1International'
+  | 'inputNumberDecimal1US'
   | 'inputNumberDecimal2'
+  | 'inputNegativeNumberDecimal2'
+  | 'inputPositiveNumberDecimal2'
+  | 'inputNumberDecimal2French'
+  | 'inputNumberDecimal2German'
+  | 'inputNumberDecimal2International'
+  | 'inputNumberDecimal2US'
   | 'inputNumberInteger'
+  | 'inputNegativeNumberInteger'
+  | 'inputPositiveNumberInteger'
+  | 'inputNumberIntegerFrench'
+  | 'inputNumberIntegerGerman'
+  | 'inputNumberIntegerInternational'
+  | 'inputNumberIntegerUS'
   | 'datePicker'
+  | 'birthdayPicker'
+  | 'boundedTimePicker'
   | 'timePicker'
   | 'rangePicker'
   | 'slider'
   | 'sliderRange'
   | 'rate'
   | 'switch'
-  // 字典类型
-  | 'dict'
-  // 自定义类型
-  | 'custom'
+  | 'colorPicker'
   | string;
 
 /**

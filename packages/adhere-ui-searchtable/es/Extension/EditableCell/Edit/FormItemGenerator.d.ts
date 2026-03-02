@@ -9,8 +9,6 @@ declare const _default: {
      * @param props 控件的props
      * @param dictName distName
      * @param form 表单的form实例
-     * @param dataIndex
-     * @param rowIndex
      * @param FieldGeneratorToDict
      */
     render({ type, props, dictName, searchFieldGeneratorProps, FieldGeneratorToDict, }: FormItemGeneratorConfig): ReactNode;

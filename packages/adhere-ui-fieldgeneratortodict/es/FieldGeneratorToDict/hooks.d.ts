@@ -63,8 +63,9 @@ export declare function useAutoCompletePaging<D>({ dictName, cascadeParams, onDa
  * useAsyncTree
  * @description TreeSelece或Cascader的Async
  * @param {string} dictName 字典名称
+ * @param cascadeParams
  */
-export declare function useAsyncTree<D>({ dictName, }: UseDictParams<D>): AsyncTreeSelectProps['fetchData'] | AsyncCascaderProps['fetchData'] | MobileAsyncTreeLeafSelectProps['loadData'] | MobileAsyncTreeSelectProps['loadData'];
+export declare function useAsyncTree<D>({ dictName, cascadeParams, }: UseDictParams<D>): AsyncTreeSelectProps['fetchData'] | AsyncCascaderProps['fetchData'] | MobileAsyncTreeLeafSelectProps['loadData'] | MobileAsyncTreeSelectProps['loadData'];
 /**
  * useMobileAsyncTree
  * @param {string} dictName

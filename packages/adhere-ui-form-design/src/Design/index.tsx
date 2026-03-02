@@ -17,7 +17,6 @@ import {
 
 import { define as flowLayoutDefine } from '../Fields/layout/FlowLayout';
 import { TYPE } from '../Fields/layout/FlowLayout/constant';
-import { TYPE as TableGridLayoutType } from '../Fields/layout/TableGridLayout/constant';
 import { REDUCER_ACTION_TYPE, SELECT_PREFIX } from '../constant';
 import {
   type ActionsProps,
@@ -34,7 +33,6 @@ import {
   type StyleProps,
   ToolBoxItem,
 } from '../types';
-// import { isLayoutItem } from '../utils';
 import { isDragEnd } from '../utils';
 import { DesignContext } from './Context';
 import Editor from './DesignEditor';
@@ -44,6 +42,7 @@ import Toolbar from './Toolbar';
 import Toolbox from './Toolbox';
 import ToolboxItemDragOverlay from './Toolbox/ToolboxItemDragOverlay';
 
+// import { isLayoutItem } from '../utils';
 const { usePropToState } = Hooks;
 
 /**
@@ -200,7 +199,6 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
 
         console.log('ok');
 
-        debugger;
         // 拖拽结束，结束后应该在editor中多一个控件的实例
         // active是拖拽对象 一般是toolbox中的item
         // over是放置对象 一般是TableGridLayout的布局对象
@@ -214,8 +212,6 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         const targetItem = getItemByType(overItem.type);
 
         const filedId = Util.uuid();
-
-        debugger;
 
         const props = targetItem?.layoutReducerToAdd?.(designValue as DesignValue, {
           sourceDesignValue: {

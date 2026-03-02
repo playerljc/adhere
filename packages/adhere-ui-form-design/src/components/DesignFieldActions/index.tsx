@@ -4,17 +4,23 @@ import { SELECT_PREFIX } from '../../constant';
 
 const selectorPrefix = `${SELECT_PREFIX}-design-field-actions`;
 
-interface DesignFieldAction {
+export interface DesignFieldAction {
   key: string;
   label: string;
   icon?: React.ReactNode;
   handler?: () => void;
 }
 
-interface DesignFieldActionsProps {
+export interface DesignFieldActionsProps {
   items: DesignFieldAction[];
 }
 
+/**
+ * DesignFieldActions
+ * @description Field工具栏
+ * @param items
+ * @constructor
+ */
 const DesignFieldActions: FC<DesignFieldActionsProps> = ({ items }) => {
   return (
     <div className={selectorPrefix}>

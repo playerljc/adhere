@@ -995,17 +995,54 @@ const { names, values } = genModuleDict({
   },
   SystemDepartment: {
     handler: () => (pid, cascadeParams) => {
+      debugger;
+
       if (!pid) {
         return Promise.resolve(
-          Province.map((t) => ({
-            title: t.name,
-            label: t.name,
-            value: t.id,
-            key: t.id,
-            id: t.id,
-            pId: 0,
-            isLeaf: false,
-          })),
+          Province.map((t) => {
+            const result = {
+              title: t.name,
+              label: t.name,
+              value: t.id,
+              key: t.id,
+              id: t.id,
+              pId: 0,
+              isLeaf: false,
+            };
+
+            const provinceId = cascadeParams?.[0];
+            const cityId = cascadeParams?.[1];
+
+            if (t.id === provinceId) {
+              result.children = City[t.id].map((t) => {
+                const result1 = {
+                  title: t.name,
+                  label: t.name,
+                  value: t.id,
+                  key: t.id,
+                  id: t.id,
+                  pId: t.id,
+                  isLeaf: false,
+                };
+
+                if (t.id === cityId) {
+                  result1.children = County[t.id].map((t) => ({
+                    title: t.name,
+                    label: t.name,
+                    value: t.id,
+                    key: t.id,
+                    id: t.id,
+                    pId: t.id,
+                    isLeaf: true,
+                  }));
+                }
+
+                return result1;
+              });
+            }
+
+            return result;
+          }),
         );
       }
 

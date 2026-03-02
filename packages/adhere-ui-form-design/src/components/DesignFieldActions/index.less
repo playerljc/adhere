@@ -3,9 +3,10 @@
 .@{prefix-cls}-design-field-actions {
   > ul {
     display: flex;
-    gap: var(--design-field-actions-gap, 5px);
+    gap: var(--design-field-actions-gap, 10px);
     margin: var(--design-field-actions-margin, 0);
     padding: var(--design-field-actions-padding, 5px);
+    background-color: var(--design-field-actions-background-color, @highlight-color);
     list-style: none;
 
     > li {
@@ -15,7 +16,6 @@
       width: 14px;
       height: 14px;
       color: var(--design-field-actions-li-color, #fff);
-      background-color: var(--design-field-actions-li-background-color, @highlight-color);
 
       &:hover {
         cursor: pointer;

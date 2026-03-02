@@ -90,11 +90,13 @@ setItem<FilterCascaderViewProps, FilterCascaderViewProps['options']>(
 setItem<AsyncCascaderViewProps, AsyncCascaderViewProps['options']>(
   'MobileCascaderViewAsync',
   'Standard',
-  (dictName) => (props) => {
-    const loadData = useAsyncTree<AsyncCascaderViewProps['options']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const loadData = useAsyncTree<AsyncCascaderViewProps['options']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <CascaderView.AsyncCascaderView {...props} loadData={loadData} />;
-  },
+      return <CascaderView.AsyncCascaderView {...props} loadData={loadData} />;
+    },
 );

@@ -3,12 +3,18 @@ import clone from 'rfdc';
 
 import { REDUCER_ACTION_TYPE } from '../../constant';
 import type { DesignValue } from '../../types';
+import { deleteDesignValueByIdInChildren, findDesignValueById } from '../../utils';
 
 export type DesignValueState = DesignValue | undefined;
 
 export type DesignValueAction =
   | {
-      type: REDUCER_ACTION_TYPE;
+      type:
+        | REDUCER_ACTION_TYPE.updateFormItemProps
+        | REDUCER_ACTION_TYPE.updateFieldProps
+        | REDUCER_ACTION_TYPE.updateStyleProps
+        | REDUCER_ACTION_TYPE.updateActionsProps
+        | REDUCER_ACTION_TYPE.updateChildrenProps;
       payload: {
         id: string;
         props:
@@ -20,51 +26,21 @@ export type DesignValueAction =
       };
     }
   | {
+      type: REDUCER_ACTION_TYPE.addChildrenById;
+      payload: {
+        id: string;
+        child: DesignValue;
+      };
+    }
+  | {
+      type: REDUCER_ACTION_TYPE.deleteChildrenById;
+      payload: {
+        id: string;
+      };
+    }
+  | {
       type: 'noop';
     };
-
-/**
- * findDesignValueById
- * @description 递归查找设计值中指定id的设计值
- * @param {string} id
- * @param {DesignValue} designValue
- * @return {DesignValue | undefined}
- */
-export function findDesignValueById(id: string, designValue: DesignValue): DesignValue | undefined {
-  if (designValue.id === id) {
-    return designValue;
-  }
-
-  if (designValue.props.children) {
-    for (let i = 0; i < designValue.props.children.length; i++) {
-      const child = designValue.props.children[i];
-      const result = findDesignValueById(id, child);
-      if (result) {
-        return result;
-      }
-    }
-  }
-}
-
-/**
- * findDesignValueByIdToClone
- * @description 递归查找设计值中指定id的设计值的clone版本
- * @param {string} id
- * @param {DesignValue} designValue
- * @return {DesignValue | undefined}
- */
-export function findDesignValueByIdToClone(
-  id: string,
-  designValue: DesignValue,
-): DesignValue | undefined {
-  const _designValue = findDesignValueById(id, designValue);
-
-  if (!!_designValue) {
-    return clone()(_designValue);
-  }
-
-  return _designValue;
-}
 
 /**
  * reducer
@@ -121,7 +97,31 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
         designValue.props.children = action.payload.props as DesignValue['props']['children'];
       }
 
-      console.log('state', state);
+      return clone()(state);
+    }
+
+    // 在children中增加一个元素
+    case REDUCER_ACTION_TYPE.addChildrenById: {
+      if (!state) return state;
+
+      const designValue = findDesignValueById(action.payload.id, state as DesignValue);
+
+      if (designValue) {
+        if (!designValue.props.children) {
+          designValue.props.children = [];
+        }
+
+        designValue.props.children.push(action.payload.child);
+      }
+
+      return clone()(state);
+    }
+
+    // 删除指定id的children
+    case REDUCER_ACTION_TYPE.deleteChildrenById: {
+      if (!state) return state;
+
+      deleteDesignValueByIdInChildren(action.payload.id, state as DesignValue);
 
       return clone()(state);
     }

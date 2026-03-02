@@ -5,6 +5,11 @@ import { isDragEnd } from './isDragEnd';
 import { isLayoutItem } from './isLayoutItem';
 import { rulesSettingToRules } from './rulesSettingToRules';
 import { styleCodeStringToCSSProperties } from './styleCodeStringToCSSProperties';
+import {
+  deleteDesignValueByIdInChildren,
+  findDesignValueById,
+  findDesignValueByIdToClone,
+} from './designValue';
 
 export {
   actionsCodeStringToEvents,
@@ -14,4 +19,7 @@ export {
   styleCodeStringToCSSProperties,
   isLayoutItem,
   isDragEnd,
+  findDesignValueById,
+  deleteDesignValueByIdInChildren,
+  findDesignValueByIdToClone,
 };

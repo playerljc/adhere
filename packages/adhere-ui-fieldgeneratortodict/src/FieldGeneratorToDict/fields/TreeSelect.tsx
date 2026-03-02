@@ -535,13 +535,15 @@ setItem<TreeSelectProps, TreeSelectProps['treeData']>(
 setItem<AsyncTreeSelectProps, AsyncTreeSelectProps['treeData']>(
   'TreeAsync',
   'Standard',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<AsyncTreeSelectProps['treeData']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<AsyncTreeSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <TreeSelect.AsyncTreeSelect {...props} fetchData={fetchData} />;
-  },
+      return <TreeSelect.AsyncTreeSelect {...props} fetchData={fetchData} />;
+    },
 );
 
 /**
@@ -550,13 +552,15 @@ setItem<AsyncTreeSelectProps, AsyncTreeSelectProps['treeData']>(
 setItem<AsyncTreeMultiSelectProps, AsyncTreeMultiSelectProps['treeData']>(
   'TreeAsync',
   'Multi',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<AsyncTreeMultiSelectProps['treeData']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<AsyncTreeMultiSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <TreeSelect.AsyncTreeMultiSelect {...props} fetchData={fetchData} />;
-  },
+      return <TreeSelect.AsyncTreeMultiSelect {...props} fetchData={fetchData} />;
+    },
 );
 
 /**
@@ -565,13 +569,15 @@ setItem<AsyncTreeMultiSelectProps, AsyncTreeMultiSelectProps['treeData']>(
 setItem<AsyncTreeLeafSelectProps, AsyncTreeLeafSelectProps['treeData']>(
   'TreeAsync',
   'Leaf',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<AsyncTreeLeafSelectProps['treeData']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<AsyncTreeLeafSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <TreeSelect.AsyncTreeLeafSelect {...props} fetchData={fetchData} />;
-  },
+      return <TreeSelect.AsyncTreeLeafSelect {...props} fetchData={fetchData} />;
+    },
 );
 
 /**
@@ -580,13 +586,15 @@ setItem<AsyncTreeLeafSelectProps, AsyncTreeLeafSelectProps['treeData']>(
 setItem<AsyncTreeMultiLeafSelectProps, AsyncTreeMultiLeafSelectProps['treeData']>(
   'TreeAsync',
   'LeafMulti',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<AsyncTreeMultiLeafSelectProps['treeData']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<AsyncTreeMultiLeafSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <TreeSelect.AsyncTreeMultiLeafSelect {...props} fetchData={fetchData} />;
-  },
+      return <TreeSelect.AsyncTreeMultiLeafSelect {...props} fetchData={fetchData} />;
+    },
 );
 
 /**
@@ -595,13 +603,15 @@ setItem<AsyncTreeMultiLeafSelectProps, AsyncTreeMultiLeafSelectProps['treeData']
 setItem<AsyncTreeSelectProps, AsyncTreeSelectProps['treeData']>(
   'TreeAsync',
   'CheckedShowAll',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<AsyncTreeSelectProps['treeData']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<AsyncTreeSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <TreeSelect.AsyncTreeCheckedShowAllSelect {...props} fetchData={fetchData} />;
-  },
+      return <TreeSelect.AsyncTreeCheckedShowAllSelect {...props} fetchData={fetchData} />;
+    },
 );
 
 /**
@@ -610,13 +620,15 @@ setItem<AsyncTreeSelectProps, AsyncTreeSelectProps['treeData']>(
 setItem<AsyncTreeSelectProps, AsyncTreeSelectProps['treeData']>(
   'TreeAsync',
   'CheckedShowChild',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<AsyncTreeSelectProps['treeData']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<AsyncTreeSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <TreeSelect.AsyncTreeCheckedShowChildSelect {...props} fetchData={fetchData} />;
-  },
+      return <TreeSelect.AsyncTreeCheckedShowChildSelect {...props} fetchData={fetchData} />;
+    },
 );
 
 /**
@@ -625,13 +637,15 @@ setItem<AsyncTreeSelectProps, AsyncTreeSelectProps['treeData']>(
 setItem<AsyncTreeSelectProps, AsyncTreeSelectProps['treeData']>(
   'TreeAsync',
   'CheckedShowParent',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<AsyncTreeSelectProps['treeData']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<AsyncTreeSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <TreeSelect.AsyncTreeCheckedShowParentSelect {...props} fetchData={fetchData} />;
-  },
+      return <TreeSelect.AsyncTreeCheckedShowParentSelect {...props} fetchData={fetchData} />;
+    },
 );
 
 /**
@@ -640,13 +654,15 @@ setItem<AsyncTreeSelectProps, AsyncTreeSelectProps['treeData']>(
 setItem<AsyncTreeSelectProps, AsyncTreeSelectProps['treeData']>(
   'TreeAsync',
   'FlatStandard',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<AsyncTreeSelectProps['treeData']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<AsyncTreeSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <TreeSelect.AsyncTreeSelect {...props} fetchData={fetchData} treeDataSimpleMode />;
-  },
+      return <TreeSelect.AsyncTreeSelect {...props} fetchData={fetchData} treeDataSimpleMode />;
+    },
 );
 
 /**
@@ -655,13 +671,17 @@ setItem<AsyncTreeSelectProps, AsyncTreeSelectProps['treeData']>(
 setItem<AsyncTreeMultiSelectProps, AsyncTreeMultiSelectProps['treeData']>(
   'TreeAsync',
   'FlatMulti',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<AsyncTreeMultiSelectProps['treeData']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<AsyncTreeMultiSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <TreeSelect.AsyncTreeMultiSelect {...props} fetchData={fetchData} treeDataSimpleMode />;
-  },
+      return (
+        <TreeSelect.AsyncTreeMultiSelect {...props} fetchData={fetchData} treeDataSimpleMode />
+      );
+    },
 );
 
 /**
@@ -670,13 +690,15 @@ setItem<AsyncTreeMultiSelectProps, AsyncTreeMultiSelectProps['treeData']>(
 setItem<AsyncTreeLeafSelectProps, AsyncTreeLeafSelectProps['treeData']>(
   'TreeAsync',
   'FlatLeaf',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<AsyncTreeLeafSelectProps['treeData']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<AsyncTreeLeafSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return <TreeSelect.AsyncTreeLeafSelect {...props} fetchData={fetchData} treeDataSimpleMode />;
-  },
+      return <TreeSelect.AsyncTreeLeafSelect {...props} fetchData={fetchData} treeDataSimpleMode />;
+    },
 );
 
 /**
@@ -685,15 +707,17 @@ setItem<AsyncTreeLeafSelectProps, AsyncTreeLeafSelectProps['treeData']>(
 setItem<AsyncTreeMultiLeafSelectProps, AsyncTreeMultiLeafSelectProps['treeData']>(
   'TreeAsync',
   'FlatLeafMulti',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<AsyncTreeMultiLeafSelectProps['treeData']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<AsyncTreeMultiLeafSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return (
-      <TreeSelect.AsyncTreeMultiLeafSelect {...props} fetchData={fetchData} treeDataSimpleMode />
-    );
-  },
+      return (
+        <TreeSelect.AsyncTreeMultiLeafSelect {...props} fetchData={fetchData} treeDataSimpleMode />
+      );
+    },
 );
 
 /**
@@ -702,19 +726,21 @@ setItem<AsyncTreeMultiLeafSelectProps, AsyncTreeMultiLeafSelectProps['treeData']
 setItem<AsyncTreeSelectProps, AsyncTreeSelectProps['treeData']>(
   'TreeAsync',
   'FlatCheckedShowAll',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<AsyncTreeSelectProps['treeData']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<AsyncTreeSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return (
-      <TreeSelect.AsyncTreeCheckedShowAllSelect
-        {...props}
-        fetchData={fetchData}
-        treeDataSimpleMode
-      />
-    );
-  },
+      return (
+        <TreeSelect.AsyncTreeCheckedShowAllSelect
+          {...props}
+          fetchData={fetchData}
+          treeDataSimpleMode
+        />
+      );
+    },
 );
 
 /**
@@ -723,19 +749,21 @@ setItem<AsyncTreeSelectProps, AsyncTreeSelectProps['treeData']>(
 setItem<AsyncTreeSelectProps, AsyncTreeSelectProps['treeData']>(
   'TreeAsync',
   'FlatCheckedShowChild',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<AsyncTreeSelectProps['treeData']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<AsyncTreeSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return (
-      <TreeSelect.AsyncTreeCheckedShowChildSelect
-        {...props}
-        fetchData={fetchData}
-        treeDataSimpleMode
-      />
-    );
-  },
+      return (
+        <TreeSelect.AsyncTreeCheckedShowChildSelect
+          {...props}
+          fetchData={fetchData}
+          treeDataSimpleMode
+        />
+      );
+    },
 );
 
 /**
@@ -744,19 +772,21 @@ setItem<AsyncTreeSelectProps, AsyncTreeSelectProps['treeData']>(
 setItem<AsyncTreeSelectProps, AsyncTreeSelectProps['treeData']>(
   'TreeAsync',
   'FlatCheckedShowParent',
-  (dictName) => (props) => {
-    const fetchData = useAsyncTree<AsyncTreeSelectProps['treeData']>({
-      dictName,
-    });
+  (dictName) =>
+    ({ cascadeParams, ...props }) => {
+      const fetchData = useAsyncTree<AsyncTreeSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+      });
 
-    return (
-      <TreeSelect.AsyncTreeCheckedShowParentSelect
-        {...props}
-        fetchData={fetchData}
-        treeDataSimpleMode
-      />
-    );
-  },
+      return (
+        <TreeSelect.AsyncTreeCheckedShowParentSelect
+          {...props}
+          fetchData={fetchData}
+          treeDataSimpleMode
+        />
+      );
+    },
 );
 
 setItem<TreeAutoCompleteProps, TreeAutoCompleteProps['treeData']>(

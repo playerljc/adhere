@@ -172,5 +172,5 @@ import '../src/index.less';
 // });
 
 e2e.Mobile({
-  children: <MobileCheckListDynamicCheckAll />,
+  children: <MobileCascaderViewAsyncStandard />,
 });

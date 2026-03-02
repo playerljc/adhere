@@ -1261,7 +1261,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
      * @description 获取SearchFooterItems省略的个数
      * @return {Number}
      */
-    getSearchFooterItemsEllipsisCount() {
+    getSearchFooterItemsEllipsisCount(): number {
       return 5;
     }
 
@@ -1270,7 +1270,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
      * @description 是否折叠后只显示一个操作按钮
      * @return {boolean}
      */
-    isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing() {
+    isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean {
       return false;
     }
 
@@ -1473,6 +1473,70 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           />
         );
       };
+      const renderInputNumberDecimal1French = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+
+        return (
+          <InputNumberDecimal1.InputNumberDecimal1French
+            key={dataIndex}
+            {...commonProps}
+            value={value}
+            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
+      const renderInputNumberDecimal1German = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+
+        return (
+          <InputNumberDecimal1.InputNumberDecimal1German
+            key={dataIndex}
+            {...commonProps}
+            value={value}
+            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
+      const renderInputNumberDecimal1International = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+
+        return (
+          <InputNumberDecimal1.InputNumberDecimal1International
+            key={dataIndex}
+            {...commonProps}
+            value={value}
+            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
+      const renderInputNumberDecimal1US = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+
+        return (
+          <InputNumberDecimal1.InputNumberDecimal1US
+            key={dataIndex}
+            {...commonProps}
+            value={value}
+            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
       const renderInputNumberDecimal2 = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
 
@@ -1510,6 +1574,70 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
 
         return (
           <InputNumberDecimal2.InputPositiveNumberDecimal2
+            key={dataIndex}
+            {...commonProps}
+            value={value}
+            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
+      const renderInputNumberDecimal2French = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+
+        return (
+          <InputNumberDecimal2.InputNumberDecimal2French
+            key={dataIndex}
+            {...commonProps}
+            value={value}
+            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
+      const renderInputNumberDecimal2German = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+
+        return (
+          <InputNumberDecimal2.InputNumberDecimal2German
+            key={dataIndex}
+            {...commonProps}
+            value={value}
+            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
+      const renderInputNumberDecimal2International = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+
+        return (
+          <InputNumberDecimal2.InputNumberDecimal2International
+            key={dataIndex}
+            {...commonProps}
+            value={value}
+            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
+      const renderInputNumberDecimal2US = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+
+        return (
+          <InputNumberDecimal2.InputNumberDecimal2US
             key={dataIndex}
             {...commonProps}
             value={value}
@@ -1569,11 +1697,105 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           />
         );
       };
+      const renderInputNumberIntegerFrench = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+
+        return (
+          <InputNumberInteger.InputNumberIntegerFrench
+            key={dataIndex}
+            {...commonProps}
+            value={value}
+            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
+      const renderInputNumberIntegerGerman = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+
+        return (
+          <InputNumberInteger.InputNumberIntegerGerman
+            key={dataIndex}
+            {...commonProps}
+            value={value}
+            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
+      const renderInputNumberIntegerInternational = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+
+        return (
+          <InputNumberInteger.InputNumberIntegerInternational
+            key={dataIndex}
+            {...commonProps}
+            value={value}
+            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
+      const renderInputNumberIntegerUS = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+
+        return (
+          <InputNumberInteger.InputNumberIntegerUS
+            key={dataIndex}
+            {...commonProps}
+            value={value}
+            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
       const renderDatePicker = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
 
         return (
           <DatePicker
+            key={dataIndex}
+            {...commonProps}
+            value={value}
+            onChange={(d) => this.onDateChangeDebounced(dataIndex, d)}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
+      const renderBirthdayPicker = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+
+        return (
+          <DatePicker.BirthdayPicker
+            key={dataIndex}
+            {...commonProps}
+            value={value}
+            onChange={(d) => this.onDateChangeDebounced(dataIndex, d)}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
+          />
+        );
+      };
+      const renderBoundedTimePicker = ({ searchConfig, dataIndex }) => {
+        const value = this.state[dataIndex];
+
+        return (
+          <DatePicker.BoundedTimePicker
             key={dataIndex}
             {...commonProps}
             value={value}
@@ -1785,13 +2007,27 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         ['inputNumberDecimal1', renderInputNumberDecimal1],
         ['inputNegativeNumberDecimal1', renderInputNegativeNumberDecimal1],
         ['inputPositiveNumberDecimal1', renderInputPositiveNumberDecimal1],
+        ['inputNumberDecimal1French', renderInputNumberDecimal1French],
+        ['inputNumberDecimal1German', renderInputNumberDecimal1German],
+        ['inputNumberDecimal1International', renderInputNumberDecimal1International],
+        ['inputNumberDecimal1US', renderInputNumberDecimal1US],
         ['inputNumberDecimal2', renderInputNumberDecimal2],
         ['inputNegativeNumberDecimal2', renderInputNegativeNumberDecimal2],
         ['inputPositiveNumberDecimal2', renderInputPositiveNumberDecimal2],
+        ['inputNumberDecimal2French', renderInputNumberDecimal2French],
+        ['inputNumberDecimal2German', renderInputNumberDecimal2German],
+        ['inputNumberDecimal2International', renderInputNumberDecimal2International],
+        ['inputNumberDecimal2US', renderInputNumberDecimal2US],
         ['inputNumberInteger', renderInputNumberInteger],
         ['inputNegativeNumberInteger', renderInputNegativeNumberInteger],
         ['inputPositiveNumberInteger', renderInputPositiveNumberInteger],
+        ['inputNumberIntegerFrench', renderInputNumberIntegerFrench],
+        ['inputNumberIntegerGerman', renderInputNumberIntegerGerman],
+        ['inputNumberIntegerInternational', renderInputNumberIntegerInternational],
+        ['inputNumberIntegerUS', renderInputNumberIntegerUS],
         ['datePicker', renderDatePicker],
+        ['birthdayPicker', renderBirthdayPicker],
+        ['boundedTimePicker', renderBoundedTimePicker],
         ['timePicker', renderTimePicker],
         ['rangePicker', renderRangePicker],
         ['slider', renderSlider],
