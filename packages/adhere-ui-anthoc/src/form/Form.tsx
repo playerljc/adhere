@@ -175,12 +175,12 @@ FormInternalComponent.useForm = (...params) => {
     config?: ValidateOptions,
     { scrollToFirstError = true }: ValidateFieldsExtraConfig = {},
   ): Promise<any> => {
-    return await form.validateFields(nameList, config).catch((errors) => {
+    return form.validateFields(nameList, config).catch((errors) => {
       if (scrollToFirstError && !!errors && errors?.errorFields?.length > 0) {
         form.scrollToField(errors?.errorFields[0].name, { focus: true });
       }
 
-      return errors;
+      throw errors;
     });
   }) as unknown as typeof form.validateFields;
 
