@@ -4,7 +4,7 @@ import { Form } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../Design/Context';
-import { MonacoEditorFormItem } from '../../../components';
+import { MonacoCSSEditorFormItem } from '../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../types';
 
@@ -25,28 +25,26 @@ export function StyleProperty(props: DesignValueProps) {
     // 获取当前激活的控件的id(也就是Editor中选中的控件)
     getActiveFieldId,
     // 设置控件的属性
-    setFieldProps,
+    setStyleProps,
   } = useContext(DesignContext);
 
   const { styleProps } = props;
 
-  function onFieldsChange(/*changedFields: FieldData[], allFields: FieldData[]*/) {
+  function onFieldsChange() {
     const values = form.getFieldsValue();
 
-    setFieldProps(getActiveFieldId() as string, {
+    setStyleProps(getActiveFieldId() as string, {
       ...values,
     });
   }
 
   useEffect(() => {
     // 设置控件的数据到表单
-    form.setFieldsValue({
-      styles: styleProps,
-    });
+    form.setFieldsValue(styleProps);
   }, [styleProps]);
 
   return (
-    <Form name="tableGridLayoutStyleProperty" form={form} onFieldsChange={onFieldsChange}>
+    <Form name="antInputStyleProperty" form={form} onFieldsChange={onFieldsChange}>
       <PropertiesGridLayout
         layout="vertical"
         data={[
@@ -63,7 +61,7 @@ export function StyleProperty(props: DesignValueProps) {
                 value: (
                   <Value>
                     <Form.Item name="styles">
-                      <MonacoEditorFormItem language="css" />
+                      <MonacoCSSEditorFormItem language="css" />
                     </Form.Item>
                   </Value>
                 ),

@@ -99,6 +99,10 @@ export interface DesignContextType {
   setFieldProps: (id: string, props: FieldProps) => void;
   setStyleProps: (id: string, props: StyleProps) => void;
   setActionsProps: (id: string, props: ActionsProps) => void;
+  // --------- add -----------
+  addChildrenById: (id: string, child: DesignValue) => void;
+  // --------- delete -----------
+  deleteFieldByChildren: (id: string) => void;
 }
 
 /**

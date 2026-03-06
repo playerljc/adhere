@@ -8,6 +8,7 @@ import Intl from '@baifendian/adhere-util-intl';
 import { DesignContext } from '../../../../Design/Context';
 import {
   InputEventsSelectStandardDict,
+  NameFormItemWrapper,
   RulesSettingFormItem,
   SlotEndLabel,
   ValuePropNameSelectStandardDict,
@@ -87,9 +88,10 @@ export function FormProperty({
       label: <Label>{Intl.get('name')}：</Label>,
       value: (
         <Value>
-          <Form.Item name="name">
-            <Input placeholder={Intl.get('name')} />
-          </Form.Item>
+          <NameFormItemWrapper />
+          {/*<Form.Item name="name">*/}
+          {/*  <Input placeholder={Intl.get('name')} />*/}
+          {/*</Form.Item>*/}
         </Value>
       ),
     },

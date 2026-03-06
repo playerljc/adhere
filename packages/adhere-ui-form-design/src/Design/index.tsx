@@ -306,6 +306,25 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         });
       }
 
+      function deleteFieldByChildren(id: string) {
+        dispatch({
+          type: REDUCER_ACTION_TYPE.deleteChildrenById,
+          payload: {
+            id,
+          },
+        });
+      }
+
+      function addChildrenById(id: string, child: DesignValue) {
+        dispatch({
+          type: REDUCER_ACTION_TYPE.addChildrenById,
+          payload: {
+            id,
+            child,
+          },
+        });
+      }
+
       // 提供对外的方法
       useImperativeHandle(ref, () => ({} as DesignHandler));
 
@@ -335,6 +354,10 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
               setFieldProps,
               setStyleProps,
               setActionsProps,
+              // add
+              addChildrenById,
+              // delete
+              deleteFieldByChildren,
             }}
           >
             <div className={classNames(`${SELECT_PREFIX}-design-wrapper`, className)} style={style}>

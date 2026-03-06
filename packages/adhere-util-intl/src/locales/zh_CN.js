@@ -187,5 +187,6 @@ export default [
     initial_value: '缺省值',
     placeholder: '占位符',
     delete: '删除',
+    name_duplicate_please_use_other_name: '名称 "{value}" 已存在，请使用其他名称',
   },
 ];

@@ -1,4 +1,4 @@
-import { Copy } from './copy';
-import { Delete } from './delete';
+import Copy from './copy';
+import Delete from './delete';
 
 export { Copy, Delete };

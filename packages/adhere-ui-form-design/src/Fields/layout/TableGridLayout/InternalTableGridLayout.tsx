@@ -20,15 +20,12 @@ const InternalTableGridLayout: FC<InternalTableGridLayout> = ({ children, ...pro
 
   const items = getItems();
 
-  debugger;
-
   const targetProps = useMemo<TableGridLayoutProps>(() => {
     // 基本的数据在props中都给了
     const tableGridLayoutProps = merge({}, props);
 
     // 对children进行解析
     tableGridLayoutProps.data[0].data = children?.map((_item) => {
-      debugger;
       return parseDesign({
         terminal,
         value: _item,

@@ -18,6 +18,7 @@ import MonacoCSSEditorFormItem from './MonacoCSSEditorFormItem';
 import MonacoEditorFormItem, {
   EmptyValidator as MonacoEditorFormItemEmptyValidator,
 } from './MonacoEditorFormItem';
+import NameFormItemWrapper from './NameFormItemWrapper';
 import { RulesMenuStandardDict } from './Rules';
 import RulesSettingFormItem from './RulesSettingFormItem';
 import { SlotEndLabel, SlotStartLabel } from './SlotLabel';
@@ -55,4 +56,5 @@ export {
   PropertiesGridLayout,
   InputSizeSelectStandardDict,
   DesignFieldActions,
+  NameFormItemWrapper,
 };
