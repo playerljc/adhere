@@ -26,6 +26,7 @@ import PropertiesGridLayout from './TableGridLayout';
 import TableGridLayoutColgroupSetting from './TableGridLayoutColgroupSetting';
 import { TableGridLayoutModeTypeSelectStandardDict } from './TableGridLayoutModeType';
 import { ValuePropNameSelectStandardDict } from './ValuePropName';
+import { VariantSelectStandardDict } from './Variant';
 import { WhetherRadioHorizontalDict } from './Whether';
 
 export {
@@ -55,6 +56,7 @@ export {
   DroppableContainer,
   PropertiesGridLayout,
   InputSizeSelectStandardDict,
+  VariantSelectStandardDict,
   DesignFieldActions,
   NameFormItemWrapper,
 };

@@ -37,6 +37,7 @@ export function define(): DesignItem {
         disabled: false,
         showCount: false,
         size: 'middle',
+        variant: 'outlined',
       },
     },
   };

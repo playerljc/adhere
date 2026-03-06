@@ -8,6 +8,7 @@ import { DesignContext } from '../../../../Design/Context';
 import {
   InputSizeSelectStandardDict,
   InputTypeSelectStandardDict,
+  VariantSelectStandardDict,
   WhetherRadioHorizontalDict,
 } from '../../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
@@ -131,6 +132,18 @@ export function MainProperty({
         <Value>
           <Form.Item name="size">
             <InputSizeSelectStandardDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'variant',
+      require: false,
+      label: <Label>{Intl.get('input_variant')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="variant">
+            <VariantSelectStandardDict />
           </Form.Item>
         </Value>
       ),

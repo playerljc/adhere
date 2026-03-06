@@ -14,6 +14,7 @@ import { MouseEvents } from './MouseEvents';
 import { Rules } from './Rules';
 import { TableGridLayoutModeType } from './TableGridLayoutModeType';
 import { ValuePropName } from './ValuePropName';
+import { Variant } from './Variant';
 import { Whether } from './Whether';
 
 const { genModuleDict } = Dict;
@@ -34,6 +35,7 @@ const dictImpls = {
   InputSize,
   DefaultToolBox,
   LayoutItemsType,
+  Variant,
 };
 
 const { names, values } = genModuleDict(dictImpls);
