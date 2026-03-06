@@ -1,8 +1,6 @@
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
-import type { DesignValue } from '../../../../types';
 /**
- * Mobile uses Input (antd-mobile has no Search), same as Input field
+ * renderDesignToMobile
+ * @param params
  */
-export declare function renderDesignToMobile({ value }: {
-    value: DesignValue;
-}): DataItemRow;
+export declare function renderDesignToMobile(params: any): DataItemRow;

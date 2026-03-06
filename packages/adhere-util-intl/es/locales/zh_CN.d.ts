@@ -38,6 +38,8 @@ declare const _default: {
     crop_star: string;
     crop_triangle: string;
     custom: string;
+    checkbox_indeterminate: string;
+    checkbox_input: string;
     data_loading: string;
     default: string;
     default_value: string;
@@ -89,9 +91,21 @@ declare const _default: {
     input_limit_100_chars: string;
     input_no_spaces: string;
     input_range_1_200: string;
+    input_number_change_on_blur: string;
+    input_number_change_on_wheel: string;
+    input_number_controls: string;
+    input_number_decimal_separator: string;
+    input_number_keyboard: string;
+    input_number_max: string;
+    input_number_min: string;
+    input_number_mode: string;
+    input_number_precision: string;
+    input_number_step: string;
+    input_number_string_mode: string;
     input_size: string;
     input_status: string;
     input_variant: string;
+    initial_checked: string;
     initial_value: string;
     is_hidden: string;
     kilometer: string;
@@ -114,6 +128,7 @@ declare const _default: {
     moderate: string;
     multi_line_text: string;
     name: string;
+    number_input: string;
     name_duplicate_please_use_other_name: string;
     no_more: string;
     no_style: string;
@@ -152,6 +167,7 @@ declare const _default: {
     refresh: string;
     release_to_refresh: string;
     reply: string;
+    radio_input: string;
     request_aborted: string;
     request_error: string;
     request_no_response: string;
@@ -178,6 +194,9 @@ declare const _default: {
     sort: string;
     starting_point: string;
     style: string;
+    switch_input: string;
+    switch_loading: string;
+    switch_size: string;
     system_exception: string;
     table_grid_layout: string;
     textarea_auto_size: string;

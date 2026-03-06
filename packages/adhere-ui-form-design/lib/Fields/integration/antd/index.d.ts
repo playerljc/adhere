@@ -1,5 +1,5 @@
-import { DesignItem, ToolBoxOption } from '../../../types';
+import { DesignItem, ToolBoxGroup } from '../../../types';
 export declare function install(): {
-    toolBox: ToolBoxOption;
+    toolBox: ToolBoxGroup['items'];
     designItems: DesignItem[];
 };

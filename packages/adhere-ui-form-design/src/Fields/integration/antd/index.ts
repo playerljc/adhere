@@ -1,17 +1,25 @@
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignItem, ToolBoxGroup } from '../../../types';
+import { define as CheckboxDefine } from './Checkbox';
 import { define as InputDefine } from './Input';
+import { define as InputNumberDefine } from './InputNumber';
 import { define as InputOTPDefine } from './InputOTP';
 import { define as InputSearchDefine } from './InputSearch';
 import { define as PasswordDefine } from './Password';
+import { define as RadioDefine } from './Radio';
+import { define as SwitchDefine } from './Switch';
 import { define as TextAreaDefine } from './TextArea';
 
 const Input = InputDefine();
+const InputNumber = InputNumberDefine();
 const TextArea = TextAreaDefine();
 const InputSearch = InputSearchDefine();
 const Password = PasswordDefine();
 const InputOTP = InputOTPDefine();
+const Switch = SwitchDefine();
+const Checkbox = CheckboxDefine();
+const Radio = RadioDefine();
 
 export function install(): {
   toolBox: ToolBoxGroup['items'];
@@ -49,7 +57,31 @@ export function install(): {
         searchLabel: Intl.get('otp_input'),
         tooltip: Intl.get('otp_input'),
       },
+      {
+        type: InputNumber.type,
+        label: Intl.get('number_input'),
+        searchLabel: Intl.get('number_input'),
+        tooltip: Intl.get('number_input'),
+      },
+      {
+        type: Switch.type,
+        label: Intl.get('switch_input'),
+        searchLabel: Intl.get('switch_input'),
+        tooltip: Intl.get('switch_input'),
+      },
+      {
+        type: Checkbox.type,
+        label: Intl.get('checkbox_input'),
+        searchLabel: Intl.get('checkbox_input'),
+        tooltip: Intl.get('checkbox_input'),
+      },
+      {
+        type: Radio.type,
+        label: Intl.get('radio_input'),
+        searchLabel: Intl.get('radio_input'),
+        tooltip: Intl.get('radio_input'),
+      },
     ],
-    designItems: [Input, TextArea, InputSearch, Password, InputOTP],
+    designItems: [Input, TextArea, InputSearch, Password, InputOTP, InputNumber, Switch, Checkbox, Radio],
   };
 }
