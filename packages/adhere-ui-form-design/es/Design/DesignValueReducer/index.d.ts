@@ -3,30 +3,25 @@ import { REDUCER_ACTION_TYPE } from '../../constant';
 import type { DesignValue } from '../../types';
 export type DesignValueState = DesignValue | undefined;
 export type DesignValueAction = {
-    type: REDUCER_ACTION_TYPE;
+    type: REDUCER_ACTION_TYPE.updateFormItemProps | REDUCER_ACTION_TYPE.updateFieldProps | REDUCER_ACTION_TYPE.updateStyleProps | REDUCER_ACTION_TYPE.updateActionsProps | REDUCER_ACTION_TYPE.updateChildrenProps;
     payload: {
         id: string;
         props: DesignValue['props']['fieldProps'] | DesignValue['props']['formItemProps'] | DesignValue['props']['styleProps'] | DesignValue['props']['actionsProps'] | DesignValue['props']['children'];
     };
 } | {
+    type: REDUCER_ACTION_TYPE.addChildrenById;
+    payload: {
+        id: string;
+        child: DesignValue;
+    };
+} | {
+    type: REDUCER_ACTION_TYPE.deleteChildrenById;
+    payload: {
+        id: string;
+    };
+} | {
     type: 'noop';
 };
-/**
- * findDesignValueById
- * @description 递归查找设计值中指定id的设计值
- * @param {string} id
- * @param {DesignValue} designValue
- * @return {DesignValue | undefined}
- */
-export declare function findDesignValueById(id: string, designValue: DesignValue): DesignValue | undefined;
-/**
- * findDesignValueByIdToClone
- * @description 递归查找设计值中指定id的设计值的clone版本
- * @param {string} id
- * @param {DesignValue} designValue
- * @return {DesignValue | undefined}
- */
-export declare function findDesignValueByIdToClone(id: string, designValue: DesignValue): DesignValue | undefined;
 /**
  * reducer
  * @description 对设计值进行修改

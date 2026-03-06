@@ -24,10 +24,10 @@
       > .@{prefix-cls}-design-toolbox-group-body {
         > .@{prefix-cls}-design-toolbox-group-list {
           display: grid;
-          grid-row-gap: 6px;
-          grid-column-gap: 6px;
-          margin: 0;
-          padding: 0;
+          grid-row-gap: var(--tool-box-group-body-list-grid-row-gap, 6px);
+          grid-column-gap: var(--tool-box-group-body-list-grid-column-gap, 6px);
+          margin: var(--tool-box-group-body-list-margin, 0);
+          padding: var(--tool-box-group-body-list-padding, 0);
           list-style: none;
         }
       }

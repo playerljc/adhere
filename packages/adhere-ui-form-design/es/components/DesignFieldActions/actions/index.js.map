@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["components/DesignFieldActions/actions/index.js"],"sourcesContent":["import Copy from './copy';\nimport Delete from './delete';\nexport { Copy, Delete };"],"names":["Copy","Delete"],"mappings":"OAAOA,SAAU,gBACVC,WAAY,kBACVD,KAAMC,MAAQ"}

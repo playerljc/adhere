@@ -25,6 +25,9 @@ export interface DesignItem extends BaseItem {
     renderMainProperty: (defaultValue: DesignValueProps) => ReactNode;
     /***--- 控件样式属性 ---***/
     renderStyleProperty: (defaultValue: DesignValueProps) => ReactNode;
+    /***--- 控件的工具菜单，在设计视图中的激活状态下显示，特殊的组件是没有工具栏的，如FlowLayout就没有，所以是可选属性 ---***/
+    renderActions?: (id: string) => ReactNode;
+    renderActionsToMobile?: (id: string) => ReactNode;
     /***--- 控件事件属性 ---***/
     hasActionsProperty: boolean;
     renderActionsProperty?: (defaultValue: DesignValueProps) => ReactNode;

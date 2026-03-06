@@ -1,7 +1,13 @@
 @import '../../constant';
 
 .@{prefix-cls}-components-colgroup-value-setting {
-  display: flex;
-  gap: 15px;
-  align-items: center;
+  margin: var(--colgroup-value-setting-margin, 0);
+  padding: var(--colgroup-value-setting-padding, 0);
+  list-style: none;
+
+  > li {
+    &:not(:last-child) {
+      margin-bottom: var(--colgroup-value-setting-li-not-last-child-margin-bottom, 15px);
+    }
+  }
 }

@@ -1,1 +1,3 @@
-export type StyleProps = string;
+export type StyleProps = {
+    styles?: string;
+};

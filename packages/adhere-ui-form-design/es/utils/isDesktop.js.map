@@ -1,0 +1,1 @@
+{"version":3,"file":"isDesktop.js","sources":["utils/isDesktop.js"],"sourcesContent":["export function isDesktop(terminal) {\n  return terminal === 'desktop';\n}"],"names":["isDesktop","terminal"],"mappings":"AAAO,SAASA,UAAUC,GACxB,MAAoB,YAAbA,CACT,QAFgBD,SAEhB"}

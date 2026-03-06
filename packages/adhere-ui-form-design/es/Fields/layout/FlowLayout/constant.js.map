@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/layout/FlowLayout/constant.js"],"sourcesContent":["export var TYPE = 'flow-layout';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,qBAAPA,IAAoB"}

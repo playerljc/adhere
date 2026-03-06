@@ -1,21 +1,28 @@
 @import '../../constant';
 
 .@{prefix-cls}-components-table-grid-layout-colgroup-setting {
-  margin: 0;
-  padding: 0;
+  margin: var(--table-grid-layout-colgroup-setting-margin, 0);
+  padding: var(--table-grid-layout-colgroup-setting-padding, 0);
   list-style: none;
 
   .@{prefix-cls}-components-table-grid-layout-colgroup-setting-item {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: var(--table-grid-layout-colgroup-setting-item-gap, 10px);
+
+    &:not(:last-child) {
+      margin-bottom: var(
+        --table-grid-layout-colgroup-setting-item-not-last-child-margin-bottom,
+        15px
+      );
+    }
 
     .@{prefix-cls}-components-table-grid-layout-colgroup-setting-item-title {
     }
 
     .@{prefix-cls}-components-table-grid-layout-colgroup-setting-item-setting {
       display: flex;
-      gap: 10px;
+      gap: var(--table-grid-layout-colgroup-setting-item-setting-gap, 10px);
       align-items: center;
 
       .@{prefix-cls}-components-table-grid-layout-colgroup-setting-item-setting-label {

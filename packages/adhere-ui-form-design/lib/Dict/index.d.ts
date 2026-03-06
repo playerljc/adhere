@@ -70,5 +70,28 @@ declare const names: Partial<{
             value: string;
         }[];
     };
+    InputSize: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    DefaultToolBox: {
+        value: {
+            id: string;
+            label: string;
+            tooltip: string;
+            items: never[];
+        }[];
+    };
+    LayoutItemsType: {
+        value: string[];
+    };
+    Variant: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
 }>;
 export { names, values };

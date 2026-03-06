@@ -1,0 +1,2 @@
+import React from"react";import{SELECT_PREFIX}from"../../constant";var selectorPrefix="".concat(SELECT_PREFIX,"-design-field-actions"),DesignFieldActions=function(e){e=e.items;return React.createElement("div",{className:selectorPrefix},React.createElement("ul",null,e.map(function(e){var t=e.key;return React.createElement("li",{key:t,title:e.label},e.el)})))};export default DesignFieldActions;
+//# sourceMappingURL=index.js.map

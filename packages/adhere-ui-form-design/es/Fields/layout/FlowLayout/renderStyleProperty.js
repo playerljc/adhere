@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(r){for(var t,e=1,n=arguments.length;e<n;e++)for(var o in t=arguments[e])Object.prototype.hasOwnProperty.call(t,o)&&(r[o]=t[o]);return r}).apply(this,arguments)};import React from"react";import{StyleProperty}from"../TableGridLayout/renderStyleProperty";function renderStyleProperty(r){return React.createElement(StyleProperty,__assign({},r))}export{renderStyleProperty};
+//# sourceMappingURL=renderStyleProperty.js.map

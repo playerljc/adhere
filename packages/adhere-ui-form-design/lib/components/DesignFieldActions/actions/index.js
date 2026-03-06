@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_copy=(Object.defineProperty(exports,"__esModule",{value:!0}),Object.defineProperty(exports,"Copy",{enumerable:!0,get:function(){return _copy.default}}),Object.defineProperty(exports,"Delete",{enumerable:!0,get:function(){return _delete.default}}),_interopRequireDefault(require("./copy"))),_delete=_interopRequireDefault(require("./delete"));
+//# sourceMappingURL=index.js.map

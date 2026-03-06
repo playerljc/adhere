@@ -7,6 +7,8 @@ import type { StyleProps } from './Style';
 import type { DraggableToolItemProps, ToolBoxOption } from './ToolBox';
 import type { Styles, Terminal } from './types';
 export type DesignFieldWrapperProps = {
+    className?: string;
+    style?: CSSProperties;
     id: string;
     children?: ReactNode;
 };
@@ -59,6 +61,8 @@ export interface DesignContextType {
     setFieldProps: (id: string, props: FieldProps) => void;
     setStyleProps: (id: string, props: StyleProps) => void;
     setActionsProps: (id: string, props: ActionsProps) => void;
+    addChildrenById: (id: string, child: DesignValue) => void;
+    deleteFieldByChildren: (id: string) => void;
 }
 /**
  * DesignComponent

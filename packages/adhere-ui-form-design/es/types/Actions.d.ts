@@ -2,4 +2,6 @@ export type Action = {
     type: string;
     value: string;
 };
-export type ActionsProps = {};
+export type ActionsProps = {
+    actions?: Action[];
+};

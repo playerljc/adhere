@@ -90,6 +90,7 @@ declare const _default: {
     input_no_spaces: string;
     input_range_1_200: string;
     input_size: string;
+    input_status: string;
     input_variant: string;
     initial_value: string;
     is_hidden: string;
@@ -111,6 +112,7 @@ declare const _default: {
     modified_time: string;
     mode: string;
     moderate: string;
+    multi_line_text: string;
     name: string;
     name_duplicate_please_use_other_name: string;
     no_more: string;
@@ -122,10 +124,15 @@ declare const _default: {
     open: string;
     operation_successful: string;
     others: string;
+    otp_input: string;
+    otp_length: string;
+    otp_mask: string;
     pagination_info: string;
     parameter: string;
     parameter_description: string;
     parity: string;
+    password_input: string;
+    password_visibility_toggle: string;
     past_days: string;
     past_hours: string;
     past_milliseconds: string;
@@ -156,6 +163,8 @@ declare const _default: {
     rules: string;
     save: string;
     search: string;
+    search_input: string;
+    search_loading: string;
     search_history: string;
     select_all: string;
     select_field_to_edit_properties: string;
@@ -171,6 +180,7 @@ declare const _default: {
     style: string;
     system_exception: string;
     table_grid_layout: string;
+    textarea_auto_size: string;
     total_count: string;
     total_length: string;
     total_results: string;

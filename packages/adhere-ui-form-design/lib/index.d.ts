@@ -1,3 +1,4 @@
+import * as Dict from './Dict';
 import * as parse from './Fields';
 import * as Plugins from './Fields/integration';
 import * as Layout from './Fields/layout';
@@ -10,5 +11,6 @@ declare const _default: {
     parse: typeof parse;
     Layout: typeof Layout;
     Plugins: typeof Plugins;
+    Dict: typeof Dict;
 };
 export default _default;

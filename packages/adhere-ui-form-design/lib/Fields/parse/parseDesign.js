@@ -1,2 +1,2 @@
-function parseDesign(e){var n=e.terminal,r=e.value,e=e.items.find(function(e){return e.type===r.type});return"desktop"===n?null==e?void 0:e.renderDesign({value:r}):null==e?void 0:e.renderDesignToMobile({value:r})}Object.defineProperty(exports,"__esModule",{value:!0}),exports.parseDesign=parseDesign;
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.parseDesign=parseDesign;var _isDesktop=require("../../utils/isDesktop");function parseDesign(e){var s=e.terminal,i=e.value,e=e.items.find(function(e){return e.type===i.type});return(0,_isDesktop.isDesktop)(s)?null==e?void 0:e.renderDesign({value:i}):null==e?void 0:e.renderDesignToMobile({value:i})}
 //# sourceMappingURL=parseDesign.js.map
