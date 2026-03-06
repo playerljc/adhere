@@ -23,12 +23,7 @@ export function renderDesignToMobile({ value }: { value: DesignValue }): DataIte
     value: (
       <ValueDesign value={value}>
         {({ fieldProps, style, actions }) => (
-          <Input
-            {...(fieldProps as InputProps)}
-            style={style ?? {}}
-            {...actions}
-            type="number"
-          />
+          <Input {...(fieldProps as InputProps)} style={style ?? {}} {...actions} type="number" />
         )}
       </ValueDesign>
     ),

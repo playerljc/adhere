@@ -8,6 +8,8 @@ import { define as InputOTPDefine } from './InputOTP';
 import { define as InputSearchDefine } from './InputSearch';
 import { define as PasswordDefine } from './Password';
 import { define as RadioDefine } from './Radio';
+import { define as RateDefine } from './Rate';
+import { define as SliderDefine } from './Slider';
 import { define as SwitchDefine } from './Switch';
 import { define as TextAreaDefine } from './TextArea';
 
@@ -20,6 +22,8 @@ const InputOTP = InputOTPDefine();
 const Switch = SwitchDefine();
 const Checkbox = CheckboxDefine();
 const Radio = RadioDefine();
+const Rate = RateDefine();
+const Slider = SliderDefine();
 
 export function install(): {
   toolBox: ToolBoxGroup['items'];
@@ -81,7 +85,31 @@ export function install(): {
         searchLabel: Intl.get('radio_input'),
         tooltip: Intl.get('radio_input'),
       },
+      {
+        type: Rate.type,
+        label: Intl.get('rate_input'),
+        searchLabel: Intl.get('rate_input'),
+        tooltip: Intl.get('rate_input'),
+      },
+      {
+        type: Slider.type,
+        label: Intl.get('slider_input'),
+        searchLabel: Intl.get('slider_input'),
+        tooltip: Intl.get('slider_input'),
+      },
     ],
-    designItems: [Input, TextArea, InputSearch, Password, InputOTP, InputNumber, Switch, Checkbox, Radio],
+    designItems: [
+      Input,
+      TextArea,
+      InputSearch,
+      Password,
+      InputOTP,
+      InputNumber,
+      Switch,
+      Checkbox,
+      Radio,
+      Rate,
+      Slider,
+    ],
   };
 }
