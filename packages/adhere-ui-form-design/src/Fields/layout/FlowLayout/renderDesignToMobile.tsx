@@ -1,6 +1,6 @@
-import type { DesignValue } from '../../../types';
+import type { DesignContextType } from '../../../types';
 import { renderDesign } from './renderDesign';
 
-export function renderDesignToMobile(params: { value: DesignValue }) {
+export function renderDesignToMobile(params: { context: DesignContextType }) {
   return renderDesign(params);
 }

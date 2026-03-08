@@ -1,4 +1,3 @@
-import merge from 'lodash.merge';
 import React, { type ReactNode, useContext, useEffect } from 'react';
 
 import { Form, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
@@ -36,21 +35,24 @@ function MainProperty(props: DesignValueProps) {
   const { fieldProps } = props;
   const gridLayoutProps: TableGridLayoutProps = fieldProps as TableGridLayoutProps;
 
+  const columnCount =
+    Form.useWatch('columnCount', form) ?? (gridLayoutProps?.data?.[0]?.columnCount as number);
+
+  const layout = Form.useWatch('layout', form) ?? gridLayoutProps?.layout;
+
   function onFieldsChange() {
     const { columnCount, width, ...rest } = form.getFieldsValue();
 
-    setFieldProps(
-      getActiveFieldId() as string,
-      merge({}, gridLayoutProps, {
-        ...rest,
-        data: [
-          {
-            columnCount,
-            colgroup: width,
-          },
-        ],
-      }),
-    );
+    setFieldProps(getActiveFieldId() as string, {
+      ...rest,
+      data: [
+        {
+          ...gridLayoutProps?.data?.[0],
+          columnCount,
+          colgroup: width,
+        },
+      ],
+    });
   }
 
   useEffect(() => {
@@ -145,10 +147,7 @@ function MainProperty(props: DesignValueProps) {
                 value: (
                   <Value>
                     <Form.Item name="width">
-                      <TableGridLayoutColgroupSetting
-                        columnCount={gridLayoutProps?.data?.[0]?.columnCount as number}
-                        layout={gridLayoutProps?.layout}
-                      />
+                      <TableGridLayoutColgroupSetting columnCount={columnCount} layout={layout} />
                     </Form.Item>
                   </Value>
                 ),

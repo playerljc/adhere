@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 
-import type { DesignProps, DesignValue, Terminal } from '../../types';
+import type { DesignContextType, DesignProps, DesignValue, Terminal } from '../../types';
 import { isDesktop } from '../../utils/isDesktop';
 
 /**
@@ -17,25 +17,32 @@ import { isDesktop } from '../../utils/isDesktop';
  * @return ReactElement
  */
 export function parseDesign({
-  terminal,
-  // 设置的值
+  parentId,
   value,
-  // 所有控件
-  items,
+  context,
 }: {
-  terminal: Terminal;
+  parentId?: string;
   value: DesignValue;
-  items: DesignProps['items'];
+  context: DesignContextType;
 }): DataItemRow | ReactNode {
+  const { getTerminal, getItems } = context;
+
+  const terminal = getTerminal();
+  const items = getItems();
+
   const item = items.find((_item) => _item.type === value.type);
 
   if (isDesktop(terminal)) {
     return item?.renderDesign({
+      parentId,
       value,
+      context,
     });
   }
 
   return item?.renderDesignToMobile({
+    parentId,
     value,
+    context,
   });
 }

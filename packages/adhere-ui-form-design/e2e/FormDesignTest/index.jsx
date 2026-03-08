@@ -24,8 +24,6 @@ export default () => {
     ],
   );
 
-  debugger;
-
   return (
     <Design
       className="Design"

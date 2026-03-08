@@ -28,7 +28,6 @@ export function define(): DesignItem {
         bordered: false,
         density: 'default',
         mode: 'normal',
-        columnCount: 2,
         data: [
           {
             name: 'g1',

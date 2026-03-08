@@ -66,6 +66,30 @@ function StyleProperty(props: DesignValueProps) {
                   </Value>
                 ),
               },
+              {
+                key: 'labelStyles',
+                require: false,
+                label: <Label>{Intl.get('label_style')}：</Label>,
+                value: (
+                  <Value>
+                    <Form.Item name="labelStyles">
+                      <MonacoCSSEditorFormItem language="css" />
+                    </Form.Item>
+                  </Value>
+                ),
+              },
+              {
+                key: 'valueStyles',
+                require: false,
+                label: <Label>{Intl.get('value_style')}：</Label>,
+                value: (
+                  <Value>
+                    <Form.Item name="valueStyles">
+                      <MonacoCSSEditorFormItem language="css" />
+                    </Form.Item>
+                  </Value>
+                ),
+              },
             ],
           },
         ]}

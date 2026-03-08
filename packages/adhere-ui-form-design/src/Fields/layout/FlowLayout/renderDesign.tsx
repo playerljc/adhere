@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import DroppableContainer from '../../../components/DroppableContainer';
-import type { DesignValue } from '../../../types';
+import type { DesignContextType, DesignValue } from '../../../types';
 import { styleCodeStringToCSSProperties } from '../../../utils';
 import InternalFlowLayout, { type InternalFlowLayoutProps } from './InternalFlowLayout';
 

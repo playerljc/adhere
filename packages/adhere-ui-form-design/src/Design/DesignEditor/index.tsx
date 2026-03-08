@@ -19,11 +19,11 @@ const selectPrefix = `${SELECT_PREFIX}-design-editor`;
 const DesignEditor: FC<DesignEditorProps> = () => {
   const [form] = Form.useForm();
 
-  const { getItems, getDesignValue, getTerminal } = useContext(DesignContext);
+  const context = useContext(DesignContext);
 
-  const items = getItems();
+  const { getDesignValue } = context;
+
   const value = getDesignValue() as DesignValue;
-  const terminal = getTerminal();
 
   return (
     <div className={classNames(selectPrefix)}>
@@ -42,9 +42,9 @@ const DesignEditor: FC<DesignEditorProps> = () => {
           {
             // 对value进行解析
             parseDesign({
+              parentId: undefined,
               value,
-              terminal,
-              items,
+              context,
             }) as ReactNode
           }
         </Form>

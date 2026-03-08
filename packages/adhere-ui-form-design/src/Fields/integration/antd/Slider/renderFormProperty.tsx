@@ -114,6 +114,18 @@ export function FormProperty({
       ),
     },
     {
+      key: 'colSpan',
+      require: false,
+      label: <Label>{Intl.get('colspan')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="colSpan">
+            <InputNumberInteger.InputPositiveNumberInteger placeholder={Intl.get('colspan')} />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
       key: 'valuePropName',
       require: false,
       label: <Label>{Intl.get('value_propname')}：</Label>,

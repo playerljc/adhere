@@ -1,6 +1,6 @@
 import React, { type ReactNode, useContext, useEffect } from 'react';
 
-import { Form, Input } from '@baifendian/adhere-ui-anthoc';
+import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import Intl from '@baifendian/adhere-util-intl';
@@ -105,6 +105,18 @@ export function FormProperty({
         <Value>
           <Form.Item name="noStyle">
             <WhetherRadioHorizontalDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'colSpan',
+      require: false,
+      label: <Label>{Intl.get('colspan')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="colSpan">
+            <InputNumberInteger.InputPositiveNumberInteger placeholder={Intl.get('colspan')} />
           </Form.Item>
         </Value>
       ),

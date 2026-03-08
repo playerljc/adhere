@@ -17,11 +17,7 @@ const selectorPrefix = 'adhere-ui-fd-flow-layout';
  * InternalFlowLayout
  */
 const InternalFlowLayout: FC<InternalFlowLayoutProps> = ({ children, ...props }) => {
-  const { getTerminal, getItems } = useContext(DesignContext);
-
-  const terminal = getTerminal();
-
-  const items = getItems();
+  const context = useContext(DesignContext);
 
   const targetProps = useMemo(() => {
     // 基本的数据在props中都给了
@@ -30,9 +26,8 @@ const InternalFlowLayout: FC<InternalFlowLayoutProps> = ({ children, ...props })
     // 对children进行解析
     layoutProps.children = children?.map((_item) =>
       parseDesign({
-        terminal,
         value: _item,
-        items,
+        context,
       }),
     );
 

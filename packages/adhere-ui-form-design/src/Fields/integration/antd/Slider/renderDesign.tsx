@@ -5,18 +5,46 @@ import React from 'react';
 
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
-import type { DesignValue } from '../../../../types';
+import type { DesignContextType, DesignValue } from '../../../../types';
+import { findDesignValueById } from '../../../../utils';
 import { LabelDesign, ValueDesign } from '../Input/renderDesign';
 
 /**
  * renderDesign - Slider, Form binds value (number or [number, number] when range)
  * @see https://ant.design/components/slider-cn#api
  */
-export function renderDesign({ value }: { value: DesignValue }): DataItemRow {
+export function renderDesign({
+  parentId,
+  value,
+  context,
+}: {
+  parentId: string;
+  value: DesignValue;
+  context: DesignContextType;
+}): DataItemRow {
   const {
     id,
-    props: { formItemProps, fieldProps },
+    props: { formItemProps, styleProps, fieldProps },
   } = value;
+
+  const { getDesignValue } = context;
+  const designValue = getDesignValue() as DesignValue;
+  const parent = findDesignValueById(parentId, designValue) as DesignValue;
+
+  let labelColSpan = 1;
+  let valueColSpan = 1;
+  if (!!parent) {
+    const parentFieldProps = parent.props.fieldProps;
+    if (formItemProps?.colSpan) {
+      if (parentFieldProps.layout === 'vertical') {
+        labelColSpan = formItemProps.colSpan;
+        valueColSpan = formItemProps.colSpan;
+      } else if (parentFieldProps.layout === 'horizontal') {
+        valueColSpan = formItemProps.colSpan;
+      }
+    }
+  }
+
   const range = (fieldProps as { range?: boolean })?.range;
   const rawValue = (formItemProps as { value?: number | [number, number] })?.value;
   const sliderValueSingle =
@@ -28,7 +56,9 @@ export function renderDesign({ value }: { value: DesignValue }): DataItemRow {
   return {
     key: id,
     require: true,
-    label: <LabelDesign formItemProps={formItemProps} />,
+    labelColSpan,
+    valueColSpan,
+    label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
         {({ fieldProps: fp, style, actions }) =>

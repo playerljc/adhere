@@ -1,3 +1,4 @@
+import { useUpdateEffect } from 'ahooks';
 import React, { type FC } from 'react';
 
 import type { TableGridLayoutColgroupSettingProps } from '../../types';
@@ -14,6 +15,17 @@ const TableGridLayoutColgroupSetting: FC<TableGridLayoutColgroupSettingProps> = 
   layout,
   ...props
 }) => {
+  useUpdateEffect(() => {
+    if (layout === 'vertical') {
+      props?.onChange?.(Array.from({ length: props.columnCount }, () => 'auto'));
+    } else if (layout === 'horizontal') {
+      props?.onChange?.(
+        // @ts-ignore
+        Array.from({ length: props.columnCount }, () => [undefined, 'auto']).flat(),
+      );
+    }
+  }, [layout, props.columnCount]);
+
   if (layout === 'horizontal') {
     return <Horizontal {...props} />;
   }

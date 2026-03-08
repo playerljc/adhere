@@ -5,9 +5,11 @@ import React, {
   type RefAttributes,
   forwardRef,
   memo,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useRef,
+  useState,
 } from 'react';
 
 import { Editor } from '@monaco-editor/react';
@@ -31,8 +33,30 @@ const selectorPrefix = `${SELECT_PREFIX}-components-monaco-editor-form-item`;
 const MonacoEditorFormItem = forwardRef<MonacoEditorFormItemHandle, MonacoEditorFormItemProps>(
   ({ value, onChange, className, style, onMount, options, ...rest }, ref) => {
     const editorRef = useRef<Parameters<OnMount>[0] | null>(null);
+    const lastEmittedValueRef = useRef<string | undefined>(undefined);
+    const isFirstSyncRef = useRef(true);
+    const [internalValue, setInternalValue] = useState<string>(() => value ?? '');
+    // 仅在「非首次」外部重新载入 value 时递增，使 Editor 通过 key remount，避免受控/插件导致无法编辑
+    const [mountKey, setMountKey] = useState(0);
 
     useImperativeHandle(ref, () => ({ editor: editorRef.current }));
+
+    useEffect(() => {
+      const next = value ?? '';
+      if (next !== lastEmittedValueRef.current) {
+        lastEmittedValueRef.current = next;
+        setInternalValue(next);
+        if (!isFirstSyncRef.current) setMountKey((k) => k + 1);
+        else isFirstSyncRef.current = false;
+      }
+    }, [value]);
+
+    const handleChange = (v: string | undefined) => {
+      const next = v ?? '';
+      lastEmittedValueRef.current = next;
+      setInternalValue(next);
+      onChange?.(next);
+    };
 
     const handleMount: OnMount = (editor, monaco) => {
       editorRef.current = editor;
@@ -70,12 +94,13 @@ const MonacoEditorFormItem = forwardRef<MonacoEditorFormItemHandle, MonacoEditor
     return (
       <div className={classNames(selectorPrefix, className)} style={style}>
         <Editor
+          key={mountKey}
           height={300}
           theme="light" // 可选: 'light' 或 'vs-dark'
           {...rest}
           options={targetOptions}
-          value={value}
-          onChange={(v) => onChange?.(v ?? '')}
+          value={internalValue}
+          onChange={handleChange}
           onMount={handleMount}
         />
       </div>

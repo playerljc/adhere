@@ -5,8 +5,9 @@ import type { TableGridLayoutProps } from '@baifendian/adhere-ui-tablegridlayout
 
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import DroppableContainer from '../../../components/DroppableContainer';
-import type { DesignValue } from '../../../types';
+import type { DesignContextType, DesignValue } from '../../../types';
 import { styleCodeStringToCSSProperties } from '../../../utils';
+import { TableGridLayoutContext } from './Context';
 import InternalTableGridLayout from './InternalTableGridLayout';
 
 function TableGridLayoutDesign({ value }: { value: DesignValue }) {
@@ -22,20 +23,19 @@ function TableGridLayoutDesign({ value }: { value: DesignValue }) {
 
   return (
     <DesignFieldWrapper id={id}>
-      <DroppableContainer
-        id={id}
-        value={value}
-        style={
-          {
-            // backgroundColor: 'red',
-          }
-        }
-      >
-        <InternalTableGridLayout
-          {...(fieldProps as TableGridLayoutProps)}
-          style={style ?? {}}
-          children={children}
-        />
+      <DroppableContainer id={id} value={value}>
+        <TableGridLayoutContext.Provider
+          value={{
+            fieldProps: fieldProps as TableGridLayoutProps,
+          }}
+        >
+          <InternalTableGridLayout
+            {...(fieldProps as TableGridLayoutProps)}
+            id={id}
+            style={style ?? {}}
+            children={children}
+          />
+        </TableGridLayoutContext.Provider>
       </DroppableContainer>
     </DesignFieldWrapper>
   );

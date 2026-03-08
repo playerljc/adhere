@@ -116,6 +116,18 @@ export function FormProperty({
       ),
     },
     {
+      key: 'colSpan',
+      require: false,
+      label: <Label>{Intl.get('colspan')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="colSpan">
+            <InputNumberInteger.InputPositiveNumberInteger placeholder={Intl.get('colspan')} />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
       key: 'validateFirst',
       require: false,
       label: <Label>{Intl.get('validate_first')}：</Label>,
@@ -135,18 +147,6 @@ export function FormProperty({
         <Value>
           <Form.Item name="valuePropName">
             <Input placeholder="value" maxLength={50} />
-          </Form.Item>
-        </Value>
-      ),
-    },
-    {
-      key: 'validateFirst',
-      require: false,
-      label: <Label>{Intl.get('validate_first')}：</Label>,
-      value: (
-        <Value>
-          <Form.Item name="validateFirst">
-            <WhetherRadioHorizontalDict />
           </Form.Item>
         </Value>
       ),

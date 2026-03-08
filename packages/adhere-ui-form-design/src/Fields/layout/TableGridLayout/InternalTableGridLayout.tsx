@@ -13,12 +13,8 @@ import { parseDesign } from '../../parse';
  * InternalTableGridLayout
  * @description TableGridLayout的内部实现
  */
-const InternalTableGridLayout: FC<InternalTableGridLayout> = ({ children, ...props }) => {
-  const { getTerminal, getItems } = useContext(DesignContext);
-
-  const terminal = getTerminal();
-
-  const items = getItems();
+const InternalTableGridLayout: FC<InternalTableGridLayout> = ({ children, id, ...props }) => {
+  const context = useContext(DesignContext);
 
   const targetProps = useMemo<TableGridLayoutProps>(() => {
     // 基本的数据在props中都给了
@@ -27,12 +23,13 @@ const InternalTableGridLayout: FC<InternalTableGridLayout> = ({ children, ...pro
     // 对children进行解析
     tableGridLayoutProps.data[0].data = children?.map((_item) => {
       return parseDesign({
-        terminal,
+        parentId: id,
         value: _item,
-        items,
+        context,
       }) as DataItemRow;
     });
 
+    console.log('111', tableGridLayoutProps);
     return tableGridLayoutProps;
   }, [children, props]);
 
