@@ -1,4 +1,10 @@
-import type { CSSProperties, NamedExoticComponent, ReactElement, ReactNode, HTMLAttributes } from 'react';
+import type {
+  CSSProperties,
+  HTMLAttributes,
+  NamedExoticComponent,
+  ReactElement,
+  ReactNode,
+} from 'react';
 
 import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
 
@@ -55,10 +61,7 @@ export type RenderHorizontal = (params: RenderHorizontalParams) => RenderHorizon
 /**
  * Vertical rendering function type
  */
-export type RenderVertical = (
-  data: DataItem,
-  rowCountRef: RowCountRef,
-) => RenderHorizontalResult;
+export type RenderVertical = (data: DataItem, rowCountRef: RowCountRef) => RenderHorizontalResult;
 
 /**
  * Parameters for grid search form rendering
@@ -115,6 +118,10 @@ export interface DataItemRow {
   value: ReactElement;
   /** Whether to show this item */
   show?: boolean;
+  /** Column span for label cell (use when colSpan is set dynamically so layout can account for it) */
+  labelColSpan?: number;
+  /** Column span for value cell (use when colSpan is set dynamically so layout can account for it) */
+  valueColSpan?: number;
 }
 
 /**

@@ -31,6 +31,17 @@ export const selectorPrefix = 'adhere-ui-table-grid-layout';
 
 const { useTheme } = ConfigProvider;
 
+/** Get column span from a React element (props.colSpan), default 1 */
+function getColSpanFromElement(el: React.ReactNode): number {
+  if (!el || typeof el !== 'object' || !('props' in el)) return 1;
+  const props = (el as ReactElement).props;
+  if (!props || typeof props !== 'object') return 1;
+  const p = props as Record<string, unknown>;
+  const span = p.colSpan ?? p.colspan;
+  const n = typeof span === 'number' && span > 0 ? span : Number(span);
+  return Number.isFinite(n) && n > 0 ? n : 1;
+}
+
 /**
  * Density class mapping
  */
@@ -68,34 +79,38 @@ const renderHorizontal: RenderHorizontal = (
     let columnsCount = 0;
 
     while (_index < flatData.length) {
-      // Label or value element
       const item = flatData[_index];
+      // Prefer flatSpans (from data item valueColSpan/labelColSpan), fallback to element.props.colSpan
+      const span = flatSpans[_index] ?? getColSpanFromElement(item) ?? 1;
 
-      if (columnsCount !== columnCount) {
-        if (item) {
-          // @ts-ignore
-          if ('colSpan' in item.props && typeof item.props.colSpan === 'number') {
-            columnsCount += item.props.colSpan;
-          } else {
-            columnsCount += 1;
-          }
-
-          tdJSXChildren.push(item);
-        }
-
-        _index++;
-      } else {
+      if (columnsCount === columnCount) {
         break;
       }
+      // If adding this item would exceed row capacity, finish current row and leave item for next row
+      if (columnsCount + span > columnCount) {
+        break;
+      }
+
+      if (item) {
+        columnsCount += span;
+        tdJSXChildren.push(item);
+      } else {
+        columnsCount += 1;
+        tdJSXChildren.push(
+          <td key={`empty-${_index}`} className={`${selectorPrefix}-table-no-border`} />,
+        );
+      }
+      _index++;
     }
 
-    // Fill remaining columns if needed
+    // Fill remaining columns if needed (keep same columns per row for table alignment)
     if (columnsCount < columnCount) {
-      Array.from({ length: columnCount - columnsCount })
+      const fillCount = columnCount - columnsCount;
+      Array.from({ length: fillCount })
         .fill(0)
-        .forEach(() => {
+        .forEach((_, index) => {
           tdJSXChildren.push(
-            <td key={`empty-${_index}`} className={`${selectorPrefix}-table-no-border`} />,
+            <td key={`empty-${_index}-${index}`} className={`${selectorPrefix}-table-no-border`} />,
           );
         });
     }
@@ -132,8 +147,9 @@ const renderHorizontal: RenderHorizontal = (
   // Number of columns per row (label + value = 2 columns per data item)
   const columnCount = (_columnCount as number) * 2;
 
-  // Flattened data array
+  // Flattened data array and span per cell (so colSpan from data item is used when element.props is not enough, e.g. dynamic colSpan)
   const flatData: ReactElement[] = [];
+  const flatSpans: number[] = [];
 
   (_data || []).forEach((item: DataItemRow) => {
     let label = item.label;
@@ -155,8 +171,13 @@ const renderHorizontal: RenderHorizontal = (
       );
     }
 
+    const labelSpan = item.labelColSpan ?? getColSpanFromElement(label);
+    const valueSpan = item.valueColSpan ?? getColSpanFromElement(item.value);
+
     flatData.push(label);
+    flatSpans.push(labelSpan);
     flatData.push(item.value);
+    flatSpans.push(valueSpan);
   });
 
   // Current iteration index
@@ -186,39 +207,37 @@ const renderVertical: RenderVertical = (
 ): RenderHorizontalResult => {
   const { columnCount: _columnCount, data: _data } = data;
 
+  // Per-item column span (labelColSpan/valueColSpan or from element.props.colSpan) for layout count
+  const itemSpans: number[] = [];
+  (_data || []).forEach((item: DataItemRow) => {
+    const labelSpan = item.labelColSpan ?? getColSpanFromElement(item.label);
+    const valueSpan = item.valueColSpan ?? getColSpanFromElement(item.value);
+    itemSpans.push(Math.max(labelSpan, valueSpan));
+  });
+
   /**
    * Creates a single row in vertical layout
    */
   function createRow(): void {
-    // All columns in one row
     const tdLabelJSXS: ReactElement[] = [];
     const tdValueJSXS: ReactElement[] = [];
 
-    // Column count for current row
     let columnsCount = 0;
-
     const startIndex = _index;
 
     while (_index < (_data || []).length) {
       const item = (_data || [])[_index];
+      const span = itemSpans[_index] ?? 1;
 
-      if (columnsCount !== columnCount) {
-        if (item) {
-          // @ts-ignore
-          if ('colSpan' in item.value.props && typeof item.value.props.colSpan === 'number') {
-            columnsCount += item.value.props.colSpan;
-          } else {
-            columnsCount += 1;
-          }
+      if (columnsCount === columnCount) break;
+      if (columnsCount + span > columnCount) break;
 
-          tdLabelJSXS.push(item.label);
-          tdValueJSXS.push(item.value);
-        }
-
-        _index++;
-      } else {
-        break;
+      if (item) {
+        columnsCount += span;
+        tdLabelJSXS.push(item.label);
+        tdValueJSXS.push(item.value);
       }
+      _index++;
     }
 
     // Fill remaining columns if needed
@@ -316,7 +335,7 @@ const renderGridSearchForm: RenderGridSearchForm = (
   params: RenderGridSearchFormParams,
 ): ReactElement => {
   const {
-    data: { className, style, width, colgroup, defaultLabelWidth = 120 },
+    data: { className, style, width, colgroup, defaultLabelWidth = 120, columnCount },
     layout,
     density,
     mode,
@@ -368,6 +387,7 @@ const renderGridSearchForm: RenderGridSearchForm = (
 
   return (
     <table
+      key={`${layout}_${columnCount}`}
       className={classNames(
         `${selectorPrefix}-table`,
         `${selectorPrefix}-table-${layout}`,
