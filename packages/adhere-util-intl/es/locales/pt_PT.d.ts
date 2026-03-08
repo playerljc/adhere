@@ -24,6 +24,7 @@ declare const _default: {
     column_display: string;
     column_number: string;
     column_settings: string;
+    colspan: string;
     complete: string;
     compressed: string;
     confirm: string;
@@ -95,6 +96,7 @@ declare const _default: {
     is_hidden: string;
     kilometer: string;
     label: string;
+    label_style: string;
     large: string;
     layout: string;
     load_more_replies: string;
@@ -179,6 +181,7 @@ declare const _default: {
     validate_first: string;
     validate_trigger: string;
     value_propname: string;
+    value_style: string;
     vertical: string;
     video: string;
     view: string;
