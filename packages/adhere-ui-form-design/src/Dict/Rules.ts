@@ -4,12 +4,12 @@ import Intl from '@baifendian/adhere-util-intl';
 export const Rules = {
   handler: () => {
     return [
-      { label: Intl.get('required'), value: 'required' },
-      { label: Intl.get('whitespace'), value: 'whitespace' },
-      { label: Intl.get('max'), value: 'max' },
-      { label: Intl.get('min'), value: 'min' },
-      { label: Intl.get('pattern'), value: 'pattern' },
-      { label: Intl.get('custom'), value: 'custom' },
+      { label: 'required', value: 'required' },
+      { label: 'whitespace', value: 'whitespace' },
+      { label: 'max', value: 'max' },
+      { label: 'min', value: 'min' },
+      { label: 'pattern', value: 'pattern' },
+      { label: 'custom', value: 'custom' },
     ];
   },
 };

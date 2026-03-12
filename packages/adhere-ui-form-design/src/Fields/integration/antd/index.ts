@@ -2,6 +2,9 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignItem, ToolBoxGroup } from '../../../types';
 import { define as CheckboxDefine } from './Checkbox';
+import { define as ColorPickerDefine } from './ColorPicker';
+import { define as DatePickerDefine } from './DatePicker';
+import { define as DateRangePickerDefine } from './DateRangePicker';
 import { define as InputDefine } from './Input';
 import { define as InputNumberDefine } from './InputNumber';
 import { define as InputOTPDefine } from './InputOTP';
@@ -12,8 +15,15 @@ import { define as RateDefine } from './Rate';
 import { define as SliderDefine } from './Slider';
 import { define as SwitchDefine } from './Switch';
 import { define as TextAreaDefine } from './TextArea';
+import { define as TimePickerDefine } from './TimePicker';
+import { define as TimeRangePickerDefine } from './TimeRangePicker';
 
 const Input = InputDefine();
+const DatePicker = DatePickerDefine();
+const DateRangePicker = DateRangePickerDefine();
+const TimePicker = TimePickerDefine();
+const TimeRangePicker = TimeRangePickerDefine();
+const ColorPicker = ColorPickerDefine();
 const InputNumber = InputNumberDefine();
 const TextArea = TextAreaDefine();
 const InputSearch = InputSearchDefine();
@@ -68,6 +78,36 @@ export function install(): {
         tooltip: Intl.get('number_input'),
       },
       {
+        type: DatePicker.type,
+        label: Intl.get('date_picker'),
+        searchLabel: Intl.get('date_picker'),
+        tooltip: Intl.get('date_picker'),
+      },
+      {
+        type: DateRangePicker.type,
+        label: Intl.get('date_range_picker'),
+        searchLabel: Intl.get('date_range_picker'),
+        tooltip: Intl.get('date_range_picker'),
+      },
+      {
+        type: TimePicker.type,
+        label: Intl.get('time_picker'),
+        searchLabel: Intl.get('time_picker'),
+        tooltip: Intl.get('time_picker'),
+      },
+      {
+        type: TimeRangePicker.type,
+        label: Intl.get('time_range_picker'),
+        searchLabel: Intl.get('time_range_picker'),
+        tooltip: Intl.get('time_range_picker'),
+      },
+      {
+        type: ColorPicker.type,
+        label: Intl.get('color_picker'),
+        searchLabel: Intl.get('color_picker'),
+        tooltip: Intl.get('color_picker'),
+      },
+      {
         type: Switch.type,
         label: Intl.get('switch_input'),
         searchLabel: Intl.get('switch_input'),
@@ -105,6 +145,11 @@ export function install(): {
       Password,
       InputOTP,
       InputNumber,
+      DatePicker,
+      DateRangePicker,
+      TimePicker,
+      TimeRangePicker,
+      ColorPicker,
       Switch,
       Checkbox,
       Radio,

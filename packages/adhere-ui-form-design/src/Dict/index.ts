@@ -1,6 +1,9 @@
 import Dict from '@baifendian/adhere-util-dict';
 
 import { ClipboardEvents } from './ClipboardEvents';
+import { ColorPickerEvents } from './ColorPickerEvents';
+import { DatePickerEvents } from './DatePickerEvents';
+import { DateRangePickerEvents } from './DateRangePickerEvents';
 import { DefaultToolBox } from './DefaultToolBox';
 import { Density } from './Density';
 import { Direction } from './Direction';
@@ -11,10 +14,17 @@ import { InputType } from './InputType';
 import { KeyboardEvents } from './KeyboardEvents';
 import { LayoutItemsType } from './LayoutItemsType';
 import { MouseEvents } from './MouseEvents';
+import { Picker } from './Picker';
+import { Placement } from './Placement';
 import { Rules } from './Rules';
+import { Size } from './Size';
 import { TableGridLayoutModeType } from './TableGridLayoutModeType';
+import { Thousands } from './Thousands';
+import { TimePickerEvents } from './TimePickerEvents';
+import { TimeRangePickerEvents } from './TimeRangePickerEvents';
 import { ValuePropName } from './ValuePropName';
 import { Variant } from './Variant';
+import { VerificationStatus } from './VerificationStatus';
 import { Whether } from './Whether';
 
 const { genModuleDict } = Dict;
@@ -23,6 +33,11 @@ const dictImpls = {
   Direction,
   Whether,
   ClipboardEvents,
+  DatePickerEvents,
+  DateRangePickerEvents,
+  TimePickerEvents,
+  TimeRangePickerEvents,
+  ColorPickerEvents,
   Density,
   FocusEvents,
   InputEvents,
@@ -36,6 +51,11 @@ const dictImpls = {
   DefaultToolBox,
   LayoutItemsType,
   Variant,
+  Thousands,
+  Size,
+  VerificationStatus,
+  Placement,
+  Picker,
 };
 
 const { names, values } = genModuleDict(dictImpls);

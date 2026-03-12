@@ -4,9 +4,9 @@ import React from 'react';
 
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
+import { LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { findDesignValueById } from '../../../../utils';
-import { LabelDesign, ValueDesign } from '../Input/renderDesign';
+import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
 
 const { OTP } = Input;
 
@@ -32,19 +32,7 @@ export function renderDesign({
   const designValue = getDesignValue() as DesignValue;
   const parent = findDesignValueById(parentId, designValue) as DesignValue;
 
-  let labelColSpan = 1;
-  let valueColSpan = 1;
-  if (!!parent) {
-    const fieldProps = parent.props.fieldProps;
-    if (formItemProps?.colSpan) {
-      if (fieldProps.layout === 'vertical') {
-        labelColSpan = formItemProps.colSpan;
-        valueColSpan = formItemProps.colSpan;
-      } else if (fieldProps.layout === 'horizontal') {
-        valueColSpan = formItemProps.colSpan;
-      }
-    }
-  }
+  const { labelColSpan, valueColSpan } = computeLabelValueColSpan(parent, formItemProps);
 
   return {
     key: id,

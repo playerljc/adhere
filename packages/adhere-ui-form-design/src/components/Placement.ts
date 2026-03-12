@@ -1,0 +1,8 @@
+import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
+
+import { names } from '../Dict';
+
+const { ComponentNames, Components, genDictComponentName } = FieldGeneratorToDict;
+
+export const PlacementSelectStandardDict =
+  Components[genDictComponentName(names.Placement as string, ComponentNames.Select.Standard)];

@@ -5,15 +5,15 @@ export const TableGridLayoutModeType = {
   handler: () => {
     return [
       {
-        label: Intl.get('normal'),
+        label: 'normal',
         value: 'normal',
       },
       {
-        label: Intl.get('parity'),
+        label: 'parity',
         value: 'parity',
       },
       {
-        label: Intl.get('bordered'),
+        label: 'bordered',
         value: 'bordered',
       },
     ];

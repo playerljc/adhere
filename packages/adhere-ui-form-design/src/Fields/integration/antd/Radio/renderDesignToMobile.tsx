@@ -4,8 +4,8 @@ import React from 'react';
 
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
+import { LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignValue } from '../../../../types';
-import { LabelDesign, ValueDesign } from '../Input/renderDesign';
 
 export function renderDesignToMobile({ value }: { value: DesignValue }): DataItemRow {
   const {

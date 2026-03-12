@@ -5,11 +5,11 @@ export const Direction = {
   handler: () => {
     return [
       {
-        label: Intl.get('horizontal'),
+        label: 'horizontal',
         value: 'horizontal',
       },
       {
-        label: Intl.get('vertical'),
+        label: 'vertical',
         value: 'vertical',
       },
     ];

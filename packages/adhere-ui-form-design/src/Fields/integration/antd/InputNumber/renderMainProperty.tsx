@@ -7,6 +7,7 @@ import Intl from '@baifendian/adhere-util-intl';
 import { DesignContext } from '../../../../Design/Context';
 import {
   InputSizeSelectStandardDict,
+  ThousandsSelectStandardDict,
   VariantSelectStandardDict,
   WhetherRadioHorizontalDict,
 } from '../../../../components';
@@ -104,6 +105,18 @@ export function MainProperty({
             <InputNumberInteger.InputPositiveNumberInteger
               placeholder={Intl.get('input_number_precision')}
             />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'thousands',
+      require: false,
+      label: <Label>{Intl.get('thousands')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="thousands">
+            <ThousandsSelectStandardDict placeholder={Intl.get('thousands')} />
           </Form.Item>
         </Value>
       ),

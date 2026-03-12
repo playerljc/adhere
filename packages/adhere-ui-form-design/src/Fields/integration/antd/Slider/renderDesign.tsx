@@ -5,9 +5,9 @@ import React from 'react';
 
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
+import { LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { findDesignValueById } from '../../../../utils';
-import { LabelDesign, ValueDesign } from '../Input/renderDesign';
+import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
 
 /**
  * renderDesign - Slider, Form binds value (number or [number, number] when range)
@@ -31,19 +31,7 @@ export function renderDesign({
   const designValue = getDesignValue() as DesignValue;
   const parent = findDesignValueById(parentId, designValue) as DesignValue;
 
-  let labelColSpan = 1;
-  let valueColSpan = 1;
-  if (!!parent) {
-    const parentFieldProps = parent.props.fieldProps;
-    if (formItemProps?.colSpan) {
-      if (parentFieldProps.layout === 'vertical') {
-        labelColSpan = formItemProps.colSpan;
-        valueColSpan = formItemProps.colSpan;
-      } else if (parentFieldProps.layout === 'horizontal') {
-        valueColSpan = formItemProps.colSpan;
-      }
-    }
-  }
+  const { labelColSpan, valueColSpan } = computeLabelValueColSpan(parent, formItemProps);
 
   const range = (fieldProps as { range?: boolean })?.range;
   const rawValue = (formItemProps as { value?: number | [number, number] })?.value;

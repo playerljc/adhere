@@ -5,15 +5,15 @@ export const Density = {
   handler: () => {
     return [
       {
-        label: Intl.get('default'),
+        label: 'default',
         value: 'default',
       },
       {
-        label: Intl.get('middle'),
+        label: 'middle',
         value: 'middle',
       },
       {
-        label: Intl.get('small'),
+        label: 'small',
         value: 'small',
       },
     ];

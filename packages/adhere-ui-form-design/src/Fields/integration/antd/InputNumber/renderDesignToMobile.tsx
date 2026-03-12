@@ -4,8 +4,8 @@ import React from 'react';
 
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
+import { LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignValue } from '../../../../types';
-import { LabelDesign, ValueDesign } from '../Input/renderDesign';
 
 /**
  * Mobile fallback: use Input (antd-mobile has no InputNumber), inputMode="decimal"

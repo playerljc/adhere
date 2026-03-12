@@ -1,0 +1,95 @@
+import { DatePicker } from 'antd';
+import type { DatePickerProps } from 'antd';
+import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
+import React from 'react';
+
+import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
+
+import { LabelDesign, ValueDesign } from '../../../../components';
+import type { DesignContextType, DesignValue } from '../../../../types';
+import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
+
+export type DatePickerFieldProps = {
+  isBirthday?: boolean;
+  dateBoundMode?: 'none' | 'before' | 'after';
+  dateBoundBaseValue?: string;
+  dateBoundIncludeBase?: boolean;
+};
+
+function getDisabledDate(
+  fieldProps: DatePickerProps & DatePickerFieldProps,
+): DatePickerProps['disabledDate'] {
+  const { isBirthday, dateBoundMode, dateBoundBaseValue, dateBoundIncludeBase } = fieldProps;
+  if (isBirthday) {
+    return (current) =>
+      !!current && (current.isSame(dayjs(), 'day') || current.isAfter(dayjs(), 'day'));
+  }
+  if (dateBoundMode === 'before' || dateBoundMode === 'after') {
+    const baseValue = dateBoundBaseValue ? dayjs(dateBoundBaseValue) : dayjs();
+    const includeBase = dateBoundIncludeBase !== false;
+    return (current) => {
+      if (!current) return false;
+      if (dateBoundMode === 'before') {
+        if (includeBase)
+          return current.isAfter(baseValue, 'day') || current.isSame(baseValue, 'day');
+        return current.isAfter(baseValue, 'day');
+      }
+      if (includeBase)
+        return current.isBefore(baseValue, 'day') || current.isSame(baseValue, 'day');
+      return current.isBefore(baseValue, 'day');
+    };
+  }
+  return undefined;
+}
+
+/**
+ * renderDesign - DatePicker design mode (desktop)
+ */
+export function renderDesign({
+  parentId,
+  value,
+  context,
+}: {
+  parentId: string;
+  value: DesignValue;
+  context: DesignContextType;
+}): DataItemRow {
+  const {
+    id,
+    props: { formItemProps, styleProps },
+  } = value;
+
+  const { getDesignValue } = context;
+  const designValue = getDesignValue() as DesignValue;
+  const parent = findDesignValueById(parentId, designValue) as DesignValue;
+  const { labelColSpan, valueColSpan } = computeLabelValueColSpan(parent, formItemProps);
+
+  const fieldProps = value.props?.fieldProps as
+    | (DatePickerProps & DatePickerFieldProps)
+    | undefined;
+  const rawValue = (formItemProps as { value?: string })?.value;
+  const valueDayjs = rawValue ? dayjs(rawValue) : null;
+  const disabledDate = getDisabledDate(fieldProps ?? {});
+
+  return {
+    key: id,
+    require: true,
+    labelColSpan,
+    valueColSpan,
+    label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
+    value: (
+      <ValueDesign value={value}>
+        {({ fieldProps: fp, style, actions }) => (
+          <DatePicker
+            {...(fp as DatePickerProps)}
+            disabledDate={disabledDate}
+            style={style ?? {}}
+            {...actions}
+            value={valueDayjs}
+          />
+        )}
+      </ValueDesign>
+    ),
+  };
+}

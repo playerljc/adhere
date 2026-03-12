@@ -3,10 +3,15 @@ import type { InputNumberProps } from 'antd';
 import React from 'react';
 
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
+import Util from '@baifendian/adhere-util';
 
+import { LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { findDesignValueById } from '../../../../utils';
-import { LabelDesign, ValueDesign } from '../Input/renderDesign';
+import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
+
+export type InputNumberDesignProps = InputNumberProps & {
+  thousands: 'French' | 'German' | 'US' | 'International';
+};
 
 /**
  * renderDesign
@@ -30,19 +35,7 @@ export function renderDesign({
   const designValue = getDesignValue() as DesignValue;
   const parent = findDesignValueById(parentId, designValue) as DesignValue;
 
-  let labelColSpan = 1;
-  let valueColSpan = 1;
-  if (!!parent) {
-    const fieldProps = parent.props.fieldProps;
-    if (formItemProps?.colSpan) {
-      if (fieldProps.layout === 'vertical') {
-        labelColSpan = formItemProps.colSpan;
-        valueColSpan = formItemProps.colSpan;
-      } else if (fieldProps.layout === 'horizontal') {
-        valueColSpan = formItemProps.colSpan;
-      }
-    }
-  }
+  const { labelColSpan, valueColSpan } = computeLabelValueColSpan(parent, formItemProps);
 
   return {
     key: id,
@@ -52,14 +45,43 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions }) => (
-          <InputNumber
-            {...(fieldProps as InputNumberProps)}
-            style={style ?? {}}
-            {...actions}
-            value={(formItemProps as { value?: InputNumberProps['value'] })?.value}
-          />
-        )}
+        {({ fieldProps, style, actions }) => {
+          const { thousands, ...inputNumberProps } = fieldProps as InputNumberDesignProps;
+
+          let thousandsProps = {};
+
+          if (thousands === 'French') {
+            thousandsProps = {
+              formatter: (value) => Util.FrenchNumberFormatter(value ?? '', 0),
+              parser: (value) => Util.FrenchNumberParse(value ?? ''),
+            };
+          } else if (thousands === 'US') {
+            thousandsProps = {
+              formatter: (value) => Util.USNumberFormatter(value ?? '', 0),
+              parser: (value) => Util.USNumberParse(value ?? ''),
+            };
+          } else if (thousands === 'German') {
+            thousandsProps = {
+              formatter: (value) => Util.GermanNumberFormatter(value ?? '', 0),
+              parser: (value) => Util.GermanNumberParse(value ?? ''),
+            };
+          } else if (thousands === 'International') {
+            thousandsProps = {
+              formatter: (value) => Util.InternationalNumberFormatter(value ?? '', 0),
+              parser: (value) => Util.InternationalNumberParse(value ?? ''),
+            };
+          }
+
+          return (
+            <InputNumber
+              {...(inputNumberProps as InputNumberProps)}
+              {...actions}
+              style={style ?? {}}
+              value={(formItemProps as { value?: InputNumberProps['value'] })?.value}
+              {...thousandsProps}
+            />
+          );
+        }}
       </ValueDesign>
     ),
   };

@@ -1,4 +1,5 @@
 import { actionsCodeStringToEvents } from './actionsCodeStringToEvents';
+import { computeLabelValueColSpan } from './computeLabelValueColSpan';
 import {
   deleteDesignValueByIdInChildren,
   findDesignValueById,
@@ -15,6 +16,7 @@ import { styleCodeStringToCSSProperties } from './styleCodeStringToCSSProperties
 
 export {
   actionsCodeStringToEvents,
+  computeLabelValueColSpan,
   formItemToProps,
   getLabel,
   rulesSettingToRules,
@@ -27,3 +29,4 @@ export {
   findParentIdById,
   genNewName,
 };
+export type { LabelValueColSpan } from './computeLabelValueColSpan';

@@ -43,6 +43,12 @@ declare const _default: {
     checkbox_input: string;
     data_loading: string;
     default: string;
+    date_bound_base_value: string;
+    date_bound_include_base: string;
+    date_bound_mode: string;
+    date_format: string;
+    date_picker: string;
+    date_range_picker: string;
     default_value: string;
     delete: string;
     density: string;
@@ -108,6 +114,7 @@ declare const _default: {
     input_variant: string;
     initial_checked: string;
     initial_value: string;
+    is_birthday: string;
     is_hidden: string;
     kilometer: string;
     label: string;
@@ -135,6 +142,7 @@ declare const _default: {
     no_more: string;
     no_style: string;
     none: string;
+    no: string;
     normal: string;
     number: string;
     on_change: string;
@@ -160,6 +168,7 @@ declare const _default: {
     past_weeks: string;
     past_years: string;
     pattern: string;
+    placement: string;
     placeholder: string;
     please_enter: string;
     please_select: string;
@@ -207,8 +216,10 @@ declare const _default: {
     settings: string;
     show_count: string;
     show_reply_content: string;
+    show_time: string;
     single_line_text: string;
     small: string;
+    color_picker: string;
     sort: string;
     starting_point: string;
     style: string;
@@ -218,8 +229,11 @@ declare const _default: {
     system_exception: string;
     table_grid_layout: string;
     textarea_auto_size: string;
+    thousands: string;
     total_count: string;
     total_length: string;
+    time_picker: string;
+    time_range_picker: string;
     total_results: string;
     type: string;
     update_time: string;
@@ -233,5 +247,14 @@ declare const _default: {
     whitespace: string;
     width: string;
     yes: string;
+    need_confirm: string;
+    multiple: string;
+    show_week: string;
+    change_on_scroll: string;
+    minute_step: string;
+    hour_step: string;
+    second_step: string;
+    show_now: string;
+    date_order: string;
 }[];
 export default _default;
