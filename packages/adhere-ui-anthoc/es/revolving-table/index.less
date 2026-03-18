@@ -151,7 +151,7 @@
     > .adhere-ui-anthoc-revolving-table-header-cell {
       position: relative;
       //color: var(--header-cell-color);
-      color: var(--revolving-table-header-cell-color, var(--header-cell-color));
+      color: var(--revolving-table-header-cell-color, var(--header-cell-text-color));
       //font-weight: 600;
       font-weight: var(--revolving-table-header-cell-font-weight, 600);
       //background-color: var(--header-cell-bg);
@@ -216,6 +216,7 @@
               display: flex;
               align-items: center;
               background-color: var(--body-cell-bg);
+              color: var(--body-cel-color, var(--body-cell-text-color));
 
               &.adhere-ui-anthoc-revolving-table-row-cell-ellipsis {
                 .ellipsis();
