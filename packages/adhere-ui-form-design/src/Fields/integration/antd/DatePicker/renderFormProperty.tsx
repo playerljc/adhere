@@ -37,7 +37,15 @@ export function FormProperty({
     {
       key: 'label',
       require: false,
-      label: <SlotEndLabel ref={(node) => set('label', node)}>{Intl.get('label')}：</SlotEndLabel>,
+      label: (
+        <SlotEndLabel
+          ref={(node) => {
+            set('label', node);
+          }}
+        >
+          {Intl.get('label')}：
+        </SlotEndLabel>
+      ),
       value: (
         <Value>
           <Form.Item name="label">

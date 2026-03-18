@@ -1,0 +1,2 @@
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.ColorPickerEvents=void 0;var ColorPickerEvents=exports.ColorPickerEvents={handler:function(){return[{label:"onChange",value:"onChange"},{label:"onChangeComplete",value:"onChangeComplete"},{label:"onFormatChange",value:"onFormatChange"},{label:"onOpenChange",value:"onOpenChange"},{label:"onClear",value:"onClear"}]}};
+//# sourceMappingURL=ColorPickerEvents.js.map

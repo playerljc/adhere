@@ -37,7 +37,7 @@ export function define(): DesignItem {
         disabled: false,
         showTime: false,
         isBirthday: false,
-        dateBoundMode: 'none' as const,
+        dateBoundMode: '' as const,
         dateBoundBaseValue: undefined as string | undefined,
         dateBoundIncludeBase: true,
       },

@@ -7,7 +7,7 @@ import { renderDesign } from './renderDesign';
  * renderDesignToMobile - reuse desktop design render
  */
 export function renderDesignToMobile(params: {
-  parentId: string;
+  parentId?: string;
   value: DesignValue;
   context: DesignContextType;
 }): DataItemRow {

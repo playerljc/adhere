@@ -1,0 +1,2 @@
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.ButtonEvents=void 0;var ButtonEvents=exports.ButtonEvents={handler:function(){return[{label:"onClick",value:"onClick"},{label:"onDoubleClick",value:"onDoubleClick"},{label:"onMouseEnter",value:"onMouseEnter"},{label:"onMouseLeave",value:"onMouseLeave"},{label:"onFocus",value:"onFocus"},{label:"onBlur",value:"onBlur"}]}};
+//# sourceMappingURL=ButtonEvents.js.map

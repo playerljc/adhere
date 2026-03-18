@@ -27,6 +27,7 @@ import { PickerSelectStandardDict } from './Picker';
 import { PlacementSelectStandardDict } from './Placement';
 import { RulesMenuStandardDict } from './Rules';
 import RulesSettingFormItem from './RulesSettingFormItem';
+import { SelectModeSelectStandardDict } from './SelectMode';
 import { SizeSelectStandardDict } from './Size';
 import { SlotEndLabel, SlotStartLabel } from './SlotLabel';
 import PropertiesGridLayout from './TableGridLayout';
@@ -82,4 +83,5 @@ export {
   VerificationStatusSelectStandardDict,
   PlacementSelectStandardDict,
   PickerSelectStandardDict,
+  SelectModeSelectStandardDict,
 };

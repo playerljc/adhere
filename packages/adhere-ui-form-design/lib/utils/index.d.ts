@@ -1,4 +1,5 @@
 import { actionsCodeStringToEvents } from './actionsCodeStringToEvents';
+import { computeLabelValueColSpan } from './computeLabelValueColSpan';
 import { deleteDesignValueByIdInChildren, findDesignValueById, findDesignValueByIdToClone, findParentIdById, genNewName } from './designValue';
 import { formItemToProps } from './formItemToProps';
 import { getLabel } from './getLabel';
@@ -6,4 +7,5 @@ import { isDragEnd } from './isDragEnd';
 import { isLayoutItem } from './isLayoutItem';
 import { rulesSettingToRules } from './rulesSettingToRules';
 import { styleCodeStringToCSSProperties } from './styleCodeStringToCSSProperties';
-export { actionsCodeStringToEvents, formItemToProps, getLabel, rulesSettingToRules, styleCodeStringToCSSProperties, isLayoutItem, isDragEnd, findDesignValueById, deleteDesignValueByIdInChildren, findDesignValueByIdToClone, findParentIdById, genNewName, };
+export { actionsCodeStringToEvents, computeLabelValueColSpan, formItemToProps, getLabel, rulesSettingToRules, styleCodeStringToCSSProperties, isLayoutItem, isDragEnd, findDesignValueById, deleteDesignValueByIdInChildren, findDesignValueByIdToClone, findParentIdById, genNewName, };
+export type { LabelValueColSpan } from './computeLabelValueColSpan';

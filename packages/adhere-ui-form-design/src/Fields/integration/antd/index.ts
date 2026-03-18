@@ -10,9 +10,14 @@ import { define as InputNumberDefine } from './InputNumber';
 import { define as InputOTPDefine } from './InputOTP';
 import { define as InputSearchDefine } from './InputSearch';
 import { define as PasswordDefine } from './Password';
+import { define as AlertDefine } from './Alert';
+import { define as ButtonDefine } from './Button';
 import { define as RadioDefine } from './Radio';
 import { define as RateDefine } from './Rate';
 import { define as SliderDefine } from './Slider';
+import { define as LinkDefine } from './Link';
+import { define as SubmitButtonDefine } from './SubmitButton';
+import { define as TextDefine } from './Text';
 import { define as SwitchDefine } from './Switch';
 import { define as TextAreaDefine } from './TextArea';
 import { define as TimePickerDefine } from './TimePicker';
@@ -28,6 +33,11 @@ const InputNumber = InputNumberDefine();
 const TextArea = TextAreaDefine();
 const InputSearch = InputSearchDefine();
 const Password = PasswordDefine();
+const Text = TextDefine();
+const Alert = AlertDefine();
+const Link = LinkDefine();
+const Button = ButtonDefine();
+const SubmitButton = SubmitButtonDefine();
 const InputOTP = InputOTPDefine();
 const Switch = SwitchDefine();
 const Checkbox = CheckboxDefine();
@@ -108,6 +118,36 @@ export function install(): {
         tooltip: Intl.get('color_picker'),
       },
       {
+        type: Text.type,
+        label: Intl.get('text'),
+        searchLabel: Intl.get('text'),
+        tooltip: Intl.get('text'),
+      },
+      {
+        type: Alert.type,
+        label: Intl.get('alert'),
+        searchLabel: Intl.get('alert'),
+        tooltip: Intl.get('alert'),
+      },
+      {
+        type: Link.type,
+        label: Intl.get('link'),
+        searchLabel: Intl.get('link'),
+        tooltip: Intl.get('link'),
+      },
+      {
+        type: Button.type,
+        label: Intl.get('button'),
+        searchLabel: Intl.get('button'),
+        tooltip: Intl.get('button'),
+      },
+      {
+        type: SubmitButton.type,
+        label: Intl.get('submit_button'),
+        searchLabel: Intl.get('submit_button'),
+        tooltip: Intl.get('submit_button'),
+      },
+      {
         type: Switch.type,
         label: Intl.get('switch_input'),
         searchLabel: Intl.get('switch_input'),
@@ -150,6 +190,11 @@ export function install(): {
       TimePicker,
       TimeRangePicker,
       ColorPicker,
+      Text,
+      Alert,
+      Link,
+      Button,
+      SubmitButton,
       Switch,
       Checkbox,
       Radio,

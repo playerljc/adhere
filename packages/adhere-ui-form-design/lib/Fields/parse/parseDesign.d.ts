@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
-import type { DesignProps, DesignValue, Terminal } from '../../types';
+import type { DesignContextType, DesignValue } from '../../types';
 /**
  * parseDesign
  * @description 对designValue进行解析
@@ -12,8 +12,8 @@ import type { DesignProps, DesignValue, Terminal } from '../../types';
  * }} params
  * @return ReactElement
  */
-export declare function parseDesign({ terminal, value, items, }: {
-    terminal: Terminal;
+export declare function parseDesign({ parentId, value, context, }: {
+    parentId?: string;
     value: DesignValue;
-    items: DesignProps['items'];
+    context: DesignContextType;
 }): DataItemRow | ReactNode;

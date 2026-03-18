@@ -1,2 +1,2 @@
-var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_adhereUtilIntl=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.Density=void 0,_interopRequireDefault(require("@baifendian/adhere-util-intl"))),Density=exports.Density={handler:function(){return[{label:_adhereUtilIntl.default.get("default"),value:"default"},{label:_adhereUtilIntl.default.get("middle"),value:"middle"},{label:_adhereUtilIntl.default.get("small"),value:"small"}]}};
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.Density=void 0;var Density=exports.Density={handler:function(){return[{label:"default",value:"default"},{label:"middle",value:"middle"},{label:"small",value:"small"}]}};
 //# sourceMappingURL=Density.js.map

@@ -1,6 +1,7 @@
 import Dict from '@baifendian/adhere-util-dict';
 
 import { ClipboardEvents } from './ClipboardEvents';
+import { ButtonEvents } from './ButtonEvents';
 import { ColorPickerEvents } from './ColorPickerEvents';
 import { DatePickerEvents } from './DatePickerEvents';
 import { DateRangePickerEvents } from './DateRangePickerEvents';
@@ -17,6 +18,7 @@ import { MouseEvents } from './MouseEvents';
 import { Picker } from './Picker';
 import { Placement } from './Placement';
 import { Rules } from './Rules';
+import { SelectMode } from './SelectMode';
 import { Size } from './Size';
 import { TableGridLayoutModeType } from './TableGridLayoutModeType';
 import { Thousands } from './Thousands';
@@ -33,6 +35,7 @@ const dictImpls = {
   Direction,
   Whether,
   ClipboardEvents,
+  ButtonEvents,
   DatePickerEvents,
   DateRangePickerEvents,
   TimePickerEvents,
@@ -56,6 +59,7 @@ const dictImpls = {
   VerificationStatus,
   Placement,
   Picker,
+  SelectMode,
 };
 
 const { names, values } = genModuleDict(dictImpls);

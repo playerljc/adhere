@@ -1,6 +1,7 @@
+import dayjs from 'dayjs';
 import React, { type ReactNode, useContext, useEffect, useMemo } from 'react';
 
-import { Form, Input, Select } from '@baifendian/adhere-ui-anthoc';
+import { DatePicker, Form, Input, Select } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -33,7 +34,9 @@ export function MainProperty({
 
   const pickerValue = Form.useWatch('picker', form) as string | undefined;
 
-  const defaultFormItems: DataItemRow[] = [
+  const dateBoundMode = (Form.useWatch('dateBoundMode', form) as string | undefined) ?? '';
+
+  const defaultFormItems: (DataItemRow | false)[] = [
     {
       key: 'disabled',
       require: false,
@@ -224,7 +227,7 @@ export function MainProperty({
               placeholder={Intl.get('please_select')}
               allowClear
               options={[
-                { label: Intl.get('none'), value: 'none' },
+                { label: Intl.get('none'), value: '' },
                 { label: 'before', value: 'before' },
                 { label: 'after', value: 'after' },
               ]}
@@ -233,19 +236,19 @@ export function MainProperty({
         </Value>
       ),
     },
-    {
+    !!dateBoundMode && {
       key: 'dateBoundBaseValue',
       require: false,
       label: <Label>{Intl.get('date_bound_base_value')}：</Label>,
       value: (
         <Value>
           <Form.Item name="dateBoundBaseValue">
-            <Input placeholder={Intl.get('date_bound_base_value')} />
+            <DatePicker placeholder={Intl.get('date_bound_base_value')} />
           </Form.Item>
         </Value>
       ),
     },
-    {
+    !!dateBoundMode && {
       key: 'dateBoundIncludeBase',
       require: false,
       label: <Label>{Intl.get('date_bound_include_base')}：</Label>,
@@ -257,18 +260,36 @@ export function MainProperty({
         </Value>
       ),
     },
-  ];
+  ].filter(Boolean);
 
   const finalFormItems = useMemo(() => {
-    return renderFormItems ? renderFormItems(defaultFormItems) : defaultFormItems;
+    return renderFormItems ? renderFormItems(defaultFormItems as DataItemRow[]) : defaultFormItems;
   }, [defaultFormItems, renderFormItems]);
 
+  function payloadToValues(payload: any) {
+    if (!!payload.dateBoundBaseValue) {
+      payload.dateBoundBaseValue = dayjs(payload.dateBoundBaseValue);
+    }
+
+    return payload;
+  }
+
+  function valuesToPayload(values: any) {
+    if (!!values.dateBoundBaseValue) {
+      values.dateBoundBaseValue = values.dateBoundBaseValue.valueOf();
+    }
+
+    return values;
+  }
+
   function onFieldsChange() {
-    setFieldProps(getActiveFieldId() as string, { ...form.getFieldsValue() });
+    // 控件改变设置值
+    setFieldProps(getActiveFieldId() as string, { ...valuesToPayload(form.getFieldsValue()) });
   }
 
   useEffect(() => {
-    form.setFieldsValue(fieldProps);
+    // 初始化设置值
+    form.setFieldsValue(payloadToValues(fieldProps));
   }, [fieldProps]);
 
   return (
@@ -281,7 +302,7 @@ export function MainProperty({
             width: '100%',
             columnCount: 1,
             colgroup: ['auto'],
-            data: finalFormItems,
+            data: finalFormItems as DataItemRow[],
           },
         ]}
       />

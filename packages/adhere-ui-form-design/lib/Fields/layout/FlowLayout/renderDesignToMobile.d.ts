@@ -1,4 +1,4 @@
-import type { DesignValue } from '../../../types';
+import type { DesignContextType } from '../../../types';
 export declare function renderDesignToMobile(params: {
-    value: DesignValue;
+    context: DesignContextType;
 }): import("react").ReactNode;

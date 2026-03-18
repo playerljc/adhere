@@ -19,6 +19,42 @@ declare const names: Partial<{
             value: string;
         }[];
     };
+    ButtonEvents: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    DatePickerEvents: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    DateRangePickerEvents: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    TimePickerEvents: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    TimeRangePickerEvents: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    ColorPickerEvents: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
     Density: {
         value: {
             label: string;
@@ -88,6 +124,42 @@ declare const names: Partial<{
         value: string[];
     };
     Variant: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    Thousands: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    Size: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    VerificationStatus: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    Placement: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    Picker: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    SelectMode: {
         value: {
             label: string;
             value: string;

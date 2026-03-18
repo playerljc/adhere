@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_adhereUtilIntl=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.Thousands=void 0,_interopRequireDefault(require("@baifendian/adhere-util-intl"))),Thousands=exports.Thousands={handler:function(){return[{label:_adhereUtilIntl.default.get("none"),value:""},{label:"French",value:"French"},{label:"German",value:"German"},{label:"US",value:"US"},{label:"International",value:"International"}]}};
+//# sourceMappingURL=Thousands.js.map

@@ -134,6 +134,8 @@ function MainProperty(props: DesignValueProps) {
                   <Value>
                     <Form.Item name="columnCount">
                       <InputNumberInteger.InputPositiveNumberInteger
+                        max={5}
+                        min={1}
                         placeholder={Intl.get('column_count')}
                       />
                     </Form.Item>

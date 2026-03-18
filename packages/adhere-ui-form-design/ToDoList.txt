@@ -22,10 +22,10 @@
        German
        US
        International
-
   ColorPicker
   DatePicker
   TimePicker
+
   文本
   alert文本提示
   超链接

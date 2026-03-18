@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
-import type { DesignValue, DesignValueProps } from './Design';
+import type { DesignContextType, DesignValue, DesignValueProps } from './Design';
 import type { FieldProps, FieldType } from './Field';
 export interface BaseItem {
     type: FieldType;
@@ -10,10 +10,14 @@ export interface DesignItem extends BaseItem {
         控件的渲染
     ***/
     renderDesign: (props: {
+        parentId?: string;
         value: DesignValue;
+        context: DesignContextType;
     }) => DataItemRow | ReactNode;
     renderDesignToMobile: (props: {
+        parentId?: string;
         value: DesignValue;
+        context: DesignContextType;
     }) => DataItemRow | ReactNode;
     /***
         控件属性的设置

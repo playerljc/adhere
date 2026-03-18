@@ -19,7 +19,7 @@ export function renderDesign({
   value,
   context,
 }: {
-  parentId: string;
+  parentId?: string;
   value: DesignValue;
   context: DesignContextType;
 }): DataItemRow {
@@ -30,7 +30,7 @@ export function renderDesign({
 
   const { getDesignValue } = context;
   const designValue = getDesignValue() as DesignValue;
-  const parent = findDesignValueById(parentId, designValue) as DesignValue;
+  const parent = findDesignValueById(parentId as string, designValue) as DesignValue;
   const { labelColSpan, valueColSpan } = computeLabelValueColSpan(parent, formItemProps);
 
   const rawValue = (formItemProps as { value?: [string, string] })?.value;

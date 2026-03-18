@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_typography=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.renderDesign=void 0,_interopRequireDefault(require("@baifendian/adhere-ui-anthoc/lib/typography"))),_createSimpleFieldRenderDesign=require("../feedback/createSimpleFieldRenderDesign"),renderDesign=exports.renderDesign=(0,_createSimpleFieldRenderDesign.createSimpleFieldRenderDesign)(_typography.default.Text);
+//# sourceMappingURL=renderDesign.js.map
