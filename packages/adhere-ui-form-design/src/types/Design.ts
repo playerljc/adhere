@@ -43,6 +43,40 @@ export type DesignValueProps = {
 };
 
 /**
+ * DataSourceItemConfig
+ * 一个数据源的配置
+ */
+export type DataSourceItemConfig = {
+  // 数据源的id
+  id: string;
+  // 数据源的名字
+  name: string;
+  request: {
+    url: string;
+    method: 'get' | 'post' | 'put' | 'delete';
+    headers?: Record<string, string>;
+    data?: Record<string, any>;
+    // 响应状态的key
+    codeKey: string;
+    // 响应状态的key
+    codeSuccess: number;
+    // 响应数据的key
+    dataKey: string;
+  };
+  response: {
+    headers?: Record<string, string>;
+    labelKey?: string;
+    valueKey?: string;
+  };
+};
+
+/**
+ * DataSourceConfig
+ * 数据源的配置
+ */
+export type DataSourceConfig = DataSourceItemConfig[];
+
+/**
  * 设计值
  * 设置应该用一个布局开始
  */
@@ -55,6 +89,9 @@ export type DesignValue = {
 
   // 控件的props
   props: DesignValueProps;
+
+  // 数据源管理
+  dataSourceConfig?: DataSourceConfig;
 };
 
 // 设计器属性

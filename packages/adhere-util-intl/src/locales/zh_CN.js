@@ -289,5 +289,8 @@ export default [
     button_disabled: '禁用',
     button_block: '块级按钮',
     submit_button_text: '提交按钮文本',
+    static: '静态',
+    dynamic: '动态',
+    data_source_manager: '数据源管理',
   },
 ];

@@ -6,6 +6,7 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
 import {
+  DataSourceManagerFormItem,
   PlacementSelectStandardDict,
   SelectModeSelectStandardDict,
   SizeSelectStandardDict,
@@ -196,6 +197,18 @@ export function MainProperty({
         <Value>
           <Form.Item name="checkAll">
             <WhetherRadioHorizontalDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'config',
+      require: false,
+      label: <Label>{Intl.get('config')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="config">
+            <DataSourceManagerFormItem />
           </Form.Item>
         </Value>
       ),

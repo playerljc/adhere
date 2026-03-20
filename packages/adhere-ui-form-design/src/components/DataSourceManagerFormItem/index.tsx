@@ -1,15 +1,81 @@
+import { Segmented } from 'antd';
 import React, { type FC } from 'react';
 
-export interface DataSourceManagerFormItemProps {
-  // 静态数据和动态数据
-  type: 'static' | 'dynamic';
+import Intl from '@baifendian/adhere-util-intl';
+
+import { SELECT_PREFIX } from '../../constant';
+import Dynamic from './Dynamic';
+import Static from './Static';
+
+export interface DataSourceItem {
+  label: string;
+  value: string | number;
+  [key: string]: any;
 }
+
+export type DataSource = DataSourceItem[];
+
+export type DataSourceManagerFormItemValue = {
+  type: 'static' | 'dynamic';
+  dataSource?: DataSource;
+  dynamicConfigId?: string;
+  // request?: {
+  //   url: string;
+  //   method: 'get' | 'post' | 'put' | 'delete';
+  //   headers?: Record<string, string>;
+  //   // 响应状态的key
+  //   codeKey?: string;
+  //   // 响应状态的key
+  //   codeSuccess?: number;
+  //   // 响应数据的key
+  //   dataKey?: string;
+  // };
+  // response?: {
+  //   headers?: Record<string, string>;
+  // };
+};
+
+export interface DataSourceManagerFormItemProps {
+  value?: DataSourceManagerFormItemValue;
+  onChange?: (value: DataSourceManagerFormItemValue) => void;
+}
+
+const selectorPrefix = `${SELECT_PREFIX}-design-field-data-source-form-item`;
 
 /**
  * DataSourceManagerFormItem
  */
-const DataSourceManagerFormItem: FC<DataSourceManagerFormItemProps> = () => {
-  return <div>111</div>;
+const DataSourceManagerFormItem: FC<DataSourceManagerFormItemProps> = ({ value, onChange }) => {
+  return (
+    <div className={selectorPrefix}>
+      <div className={`${selectorPrefix}-actions`}>
+        <Segmented
+          onChange={(_value) => {
+            onChange?.({
+              ...(value ?? {}),
+              type: _value as DataSourceManagerFormItemValue['type'],
+            });
+          }}
+          options={[
+            {
+              label: Intl.get('static'),
+              value: 'static',
+            },
+            {
+              label: Intl.get('dynamic'),
+              value: 'dynamic',
+            },
+          ]}
+        />
+      </div>
+
+      <div className={`${selectorPrefix}-body`}>
+        {value?.type === 'static' && <Static value={value} onChange={onChange} />}
+
+        {value?.type === 'dynamic' && <Dynamic value={value} onChange={onChange} />}
+      </div>
+    </div>
+  );
 };
 
 export default DataSourceManagerFormItem;

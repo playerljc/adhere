@@ -1,6 +1,7 @@
 import ActionsFormItem from './ActionsFormItem';
 import ColgroupValueSetting from './ColgroupValueSetting';
 import { ColorPickerEventsSelectStandardDict } from './ColorPickerEvents';
+import DataSourceManagerFormItem from './DataSourceManagerFormItem';
 import { DatePickerEventsSelectStandardDict } from './DatePickerEvents';
 import { DateRangePickerEventsSelectStandardDict } from './DateRangePickerEvents';
 import { DensitySelectStandardDict } from './Density';
@@ -84,4 +85,5 @@ export {
   PlacementSelectStandardDict,
   PickerSelectStandardDict,
   SelectModeSelectStandardDict,
+  DataSourceManagerFormItem,
 };

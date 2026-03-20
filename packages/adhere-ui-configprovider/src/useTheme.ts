@@ -1,5 +1,5 @@
-import { useMount, useUpdateEffect } from 'ahooks';
-import { useContext } from 'react';
+import { useUpdateEffect } from 'ahooks';
+import { useContext, useEffect } from 'react';
 import type { ForwardedRef, RefObject } from 'react';
 
 import { Context } from './Context';
@@ -129,7 +129,7 @@ function useTheme<T extends HTMLElement>({ elRef, group, displayName }: UseTheme
   }
 
   // 组件挂载时注入CSS变量
-  useMount(() => {
+  useEffect(() => {
     injectCSSVariables();
   });
 
