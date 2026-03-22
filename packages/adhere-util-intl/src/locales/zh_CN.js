@@ -292,5 +292,10 @@ export default [
     static: '静态',
     dynamic: '动态',
     data_source_manager: '数据源管理',
+    wrap: '换行',
+    gap: '间隙',
+    justify_content: '主轴上的对齐方式',
+    align_items: '交叉轴上的对齐方式',
+    align_content: '多根轴线的对齐方式',
   },
 ];

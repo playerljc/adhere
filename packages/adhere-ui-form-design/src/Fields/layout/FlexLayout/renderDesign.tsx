@@ -6,11 +6,11 @@ import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignContextType, DesignValue } from '../../../types';
 import { styleCodeStringToCSSProperties } from '../../../utils';
-import InternalFlowLayout, { type InternalFlowLayoutProps } from './InternalFlowLayout';
+import InternalFlexLayout, { type InternalFlexLayoutProps } from './InternalFlexLayout';
 
-const selectorPrefix = 'adhere-ui-fd-flow-layout';
+const selectorPrefix = 'adhere-ui-fd-flex-layout';
 
-function FlowLayoutDesign({ value }: { value: DesignValue }) {
+function FlexLayoutDesign({ value }: { value: DesignValue }) {
   const {
     id,
     props: { children, styleProps, fieldProps },
@@ -31,8 +31,8 @@ function FlowLayoutDesign({ value }: { value: DesignValue }) {
           overflow: 'auto',
         }}
       >
-        <InternalFlowLayout
-          {...(fieldProps as InternalFlowLayoutProps)}
+        <InternalFlexLayout
+          {...(fieldProps as InternalFlexLayoutProps)}
           style={style ?? {}}
           children={children}
         />
@@ -46,5 +46,5 @@ function FlowLayoutDesign({ value }: { value: DesignValue }) {
  * @param props
  */
 export function renderDesign({ value }: { value: DesignValue }): ReactNode {
-  return <FlowLayoutDesign value={value} />;
+  return <FlexLayoutDesign value={value} />;
 }

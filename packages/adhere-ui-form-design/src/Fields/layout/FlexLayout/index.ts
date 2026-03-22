@@ -19,7 +19,14 @@ export function define(): DesignItem {
     layoutReducerToAdd,
     layoutReducerToRemove,
     defaultValue: {
-      fieldProps: {},
+      fieldProps: {
+        direction: 'horizontal',
+        wrap: false,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        alignContent: '',
+        gap: 0,
+      },
     },
   };
 }

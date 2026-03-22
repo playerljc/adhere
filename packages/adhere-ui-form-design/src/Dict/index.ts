@@ -1,7 +1,9 @@
 import Dict from '@baifendian/adhere-util-dict';
 
-import { ClipboardEvents } from './ClipboardEvents';
+import { AlignContent } from './AlignContent';
+import { AlignItems } from './AlignItems';
 import { ButtonEvents } from './ButtonEvents';
+import { ClipboardEvents } from './ClipboardEvents';
 import { ColorPickerEvents } from './ColorPickerEvents';
 import { DatePickerEvents } from './DatePickerEvents';
 import { DateRangePickerEvents } from './DateRangePickerEvents';
@@ -12,6 +14,7 @@ import { FocusEvents } from './FocusEvents';
 import { InputEvents } from './InputEvents';
 import { InputSize } from './InputSize';
 import { InputType } from './InputType';
+import { JustifyContent } from './JustifyContent';
 import { KeyboardEvents } from './KeyboardEvents';
 import { LayoutItemsType } from './LayoutItemsType';
 import { MouseEvents } from './MouseEvents';
@@ -60,6 +63,9 @@ const dictImpls = {
   Placement,
   Picker,
   SelectMode,
+  JustifyContent,
+  AlignItems,
+  AlignContent,
 };
 
 const { names, values } = genModuleDict(dictImpls);
