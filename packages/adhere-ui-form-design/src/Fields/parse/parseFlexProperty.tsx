@@ -22,5 +22,5 @@ export function parseFlexProperty({
 }): ReactNode {
   const item = items.find((_item) => _item.type === value.type);
 
-  return item?.renderFormProperty!(value.props);
+  return item?.renderFlexProperty!(value.props);
 }

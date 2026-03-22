@@ -1,15 +1,10 @@
 import React, { type ReactNode, useContext, useEffect } from 'react';
 
-import { Form, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
+import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../Design/Context';
-import {
-  DensitySelectStandardDict,
-  DirectionSelectStandardDict,
-  TableGridLayoutModeTypeSelectStandardDict,
-  WhetherRadioHorizontalDict,
-} from '../../../components';
+import { AlignSelfSelectStandardDict } from '../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../types';
 
@@ -55,65 +50,69 @@ export function FlexProperty(props: DesignValueProps) {
             colgroup: ['auto'],
             data: [
               {
-                key: 'layout',
+                key: 'flexGrow',
                 require: false,
-                label: <Label>{Intl.get('direction')}：</Label>,
+                label: <Label>{Intl.get('flex_grow')}：</Label>,
                 value: (
                   <Value>
-                    <Form.Item name="layout">
-                      <DirectionSelectStandardDict placeholder={Intl.get('direction')} />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'bordered',
-                require: false,
-                label: <Label>{Intl.get('bordered')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="bordered">
-                      <WhetherRadioHorizontalDict />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'density',
-                require: false,
-                label: <Label>{Intl.get('density')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="density">
-                      <DensitySelectStandardDict />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'mode',
-                require: false,
-                label: <Label>{Intl.get('mode')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="mode">
-                      <TableGridLayoutModeTypeSelectStandardDict />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'columnCount',
-                require: false,
-                label: <Label>{Intl.get('column_count')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="columnCount">
+                    <Form.Item name="flexGrow">
                       <InputNumberInteger.InputPositiveNumberInteger
-                        max={5}
+                        max={50}
                         min={1}
-                        placeholder={Intl.get('column_count')}
+                        placeholder={Intl.get('flex_grow')}
                       />
+                    </Form.Item>
+                  </Value>
+                ),
+              },
+              {
+                key: 'flexShrink',
+                require: false,
+                label: <Label>{Intl.get('flex_shrink')}：</Label>,
+                value: (
+                  <Value>
+                    <Form.Item name="flexShrink">
+                      <InputNumberInteger.InputPositiveNumberInteger
+                        max={50}
+                        min={1}
+                        placeholder={Intl.get('flex_shrink')}
+                      />
+                    </Form.Item>
+                  </Value>
+                ),
+              },
+              {
+                key: 'flexBasis',
+                require: false,
+                label: <Label>{Intl.get('flex_basis')}：</Label>,
+                value: (
+                  <Value>
+                    <Form.Item name="flexBasis">
+                      <Input placeholder={Intl.get('flex_basis')} />
+                    </Form.Item>
+                  </Value>
+                ),
+              },
+              {
+                key: 'alignSelf',
+                require: false,
+                label: <Label>{Intl.get('align_self')}：</Label>,
+                value: (
+                  <Value>
+                    <Form.Item name="alignSelf">
+                      <AlignSelfSelectStandardDict placeholder={Intl.get('align_self')} />
+                    </Form.Item>
+                  </Value>
+                ),
+              },
+              {
+                key: 'order',
+                require: false,
+                label: <Label>{Intl.get('order')}：</Label>,
+                value: (
+                  <Value>
+                    <Form.Item name="order">
+                      <InputNumberInteger max={1000} min={1} placeholder={Intl.get('order')} />
                     </Form.Item>
                   </Value>
                 ),

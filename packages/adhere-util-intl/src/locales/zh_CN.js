@@ -298,5 +298,10 @@ export default [
     align_items: '交叉轴上的对齐方式',
     align_content: '多根轴线的对齐方式',
     flex: '弹性布局',
+    flex_grow: '剩余空间放大',
+    flex_shrink: '空间不足缩小',
+    flex_basis: '初始化大小',
+    align_self: '单独对齐方式',
+    order: '排序',
   },
 ];

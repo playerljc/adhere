@@ -22,6 +22,7 @@ import type { InternalFlexLayoutProps } from './InternalFlexLayout';
  * @param {DesignValueProps} props
  */
 function MainProperty(props: DesignValueProps) {
+  debugger;
   // 表单的instance
   const [form] = Form.useForm();
 

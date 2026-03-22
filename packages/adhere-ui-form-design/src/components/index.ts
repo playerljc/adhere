@@ -1,4 +1,7 @@
 import ActionsFormItem from './ActionsFormItem';
+import { AlignContentSelectStandardDict } from './AlignContent';
+import { AlignItemsSelectStandardDict } from './AlignItems';
+import { AlignSelfSelectStandardDict } from './AlignSelf';
 import ColgroupValueSetting from './ColgroupValueSetting';
 import { ColorPickerEventsSelectStandardDict } from './ColorPickerEvents';
 import DataSourceManagerFormItem from './DataSourceManagerFormItem';
@@ -18,6 +21,7 @@ import I18nChangeFormItem, {
 import { InputEventsSelectStandardDict } from './InputEvents';
 import { InputSizeSelectStandardDict } from './InputSize';
 import { InputTypeSelectStandardDict } from './InputType';
+import { JustifyContentSelectStandardDict } from './JustifyContent';
 import { LabelDesign, ValueDesign } from './LabelValueDesign';
 import MonacoCSSEditorFormItem from './MonacoCSSEditorFormItem';
 import MonacoEditorFormItem, {
@@ -41,9 +45,6 @@ import { ValuePropNameSelectStandardDict } from './ValuePropName';
 import { VariantSelectStandardDict } from './Variant';
 import { VerificationStatusSelectStandardDict } from './VerificationStatus';
 import { WhetherRadioHorizontalDict } from './Whether';
-import { JustifyContentSelectStandardDict } from './JustifyContent';
-import { AlignItemsSelectStandardDict } from './AlignItems';
-import { AlignContentSelectStandardDict } from './AlignContent';
 
 export {
   LabelDesign,
@@ -92,4 +93,5 @@ export {
   JustifyContentSelectStandardDict,
   AlignItemsSelectStandardDict,
   AlignContentSelectStandardDict,
+  AlignSelfSelectStandardDict,
 };

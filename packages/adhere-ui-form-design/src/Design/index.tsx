@@ -85,20 +85,12 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
             type: TYPE,
             props: {
               fieldProps: {
-                // layout: 'vertical',
-                // bordered: false,
-                // density: 'default',
-                // mode: 'normal',
-                // columnCount: 2,
-                // data: [
-                //   {
-                //     name: 'g1',
-                //     width: '100%',
-                //     columnCount: terminal === 'desktop' ? 2 : 1,
-                //     colgroup: terminal === 'desktop' ? ['auto', 'auto'] : ['auto'],
-                //     data: [],
-                //   },
-                // ],
+                direction: 'vertical',
+                wrap: false,
+                justifyContent: 'flex-start',
+                alignItems: 'stretch',
+                alignContent: 'normal',
+                gap: 8,
               },
               children: [],
             },

@@ -46,7 +46,7 @@ export interface DesignItem extends BaseItem {
   // 控件样式属性的渲染
   renderStyleProperty: (defaultValue: DesignValueProps) => ReactNode;
 
-  /***--- 控件的工具菜单，在设计视图中的激活状态下显示，特殊的组件是没有工具栏的，如FlowLayout就没有，所以是可选属性 ---***/
+  /***--- 控件的工具菜单，在设计视图中的激活状态下显示，特殊的组件是没有工具栏的，如FlexLayout就没有，所以是可选属性 ---***/
   // desktop的渲染
   renderActions?: (id: string) => ReactNode;
   // mobile的渲染

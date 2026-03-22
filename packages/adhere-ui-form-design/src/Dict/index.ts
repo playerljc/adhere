@@ -2,6 +2,7 @@ import Dict from '@baifendian/adhere-util-dict';
 
 import { AlignContent } from './AlignContent';
 import { AlignItems } from './AlignItems';
+import { AlignSelf } from './AlignSelf';
 import { ButtonEvents } from './ButtonEvents';
 import { ClipboardEvents } from './ClipboardEvents';
 import { ColorPickerEvents } from './ColorPickerEvents';
@@ -66,6 +67,7 @@ const dictImpls = {
   JustifyContent,
   AlignItems,
   AlignContent,
+  AlignSelf,
 };
 
 const { names, values } = genModuleDict(dictImpls);
