@@ -96,7 +96,7 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
     case REDUCER_ACTION_TYPE.updateFlexProps: {
       const designValue = findDesignValueById(action.payload.id, state as DesignValue);
       if (designValue) {
-        designValue.props.fieldProps = action.payload.props as DesignValue['props']['fieldProps'];
+        designValue.props.flexProps = action.payload.props as DesignValue['props']['fieldProps'];
       }
 
       return clone()(state);

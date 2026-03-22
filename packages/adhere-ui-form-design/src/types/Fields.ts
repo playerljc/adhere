@@ -2,7 +2,7 @@ import type { TableGridLayoutProps } from '@baifendian/adhere-ui-tablegridlayout
 
 import type { DesignValue } from './Design';
 
-export interface InternalTableGridLayout extends TableGridLayoutProps {
+export interface InternalTableGridLayoutProps extends TableGridLayoutProps {
   id: string;
   // terminal: Terminal;
   children?: DesignValue[];

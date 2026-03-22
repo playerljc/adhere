@@ -2,6 +2,7 @@
 
 .@{prefix-cls}-design-field-wrapper {
   position: relative;
+  display: flex;
   box-sizing: border-box;
   padding: var(--design-field-wrapper-padding, 2px);
 
@@ -20,8 +21,8 @@
   // 激活的工具栏
   > .@{prefix-cls}-design-field-wrapper-actions {
     position: absolute;
-    z-index: 5;
-    bottom: 0;
     right: 0;
+    bottom: 0;
+    z-index: 5;
   }
 }

@@ -5,7 +5,7 @@ import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 
 import { DesignContext } from '../Design/Context';
-import DesignFieldWrapper from './DesignFieldWrapper';
+import { TableGridLayoutContext } from '../Fields/layout/TableGridLayout/Context';
 import type { DesignValue, FieldProps, FormItemProps, StyleProps } from '../types';
 import {
   actionsCodeStringToEvents,
@@ -13,7 +13,7 @@ import {
   getLabel,
   styleCodeStringToCSSProperties,
 } from '../utils';
-import { TableGridLayoutContext } from '../Fields/layout/TableGridLayout/Context';
+import DesignFieldWrapper from './DesignFieldWrapper';
 
 const { Label, Value } = TableGridLayout;
 
@@ -72,6 +72,7 @@ export function ValueDesign({
   });
   const formProps = formItemToProps(formItemProps ?? {}, lang);
   const colSpan = formItemProps?.colSpan;
+  const fill = formItemProps?.fill;
 
   return (
     <Value
@@ -80,7 +81,7 @@ export function ValueDesign({
       colSpan={colSpan}
     >
       <DesignFieldWrapper id={id}>
-        <Form.Item {...formProps}>
+        <Form.Item {...formProps} style={{ flex: fill ? '1' : 'none' }}>
           {children({
             fieldProps,
             style,

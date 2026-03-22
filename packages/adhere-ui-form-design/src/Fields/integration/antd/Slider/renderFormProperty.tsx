@@ -33,7 +33,6 @@ export function FormProperty({
   const { formItemProps } = designValue;
   const activeFieldId = getActiveFieldId();
   const { fieldProps } = designValue;
-  const range = (fieldProps as { range?: boolean })?.range ?? false;
   const min = (fieldProps as { min?: number })?.min ?? 0;
   const max = (fieldProps as { max?: number })?.max ?? 100;
 
@@ -114,18 +113,6 @@ export function FormProperty({
       ),
     },
     {
-      key: 'colSpan',
-      require: false,
-      label: <Label>{Intl.get('colspan')}：</Label>,
-      value: (
-        <Value>
-          <Form.Item name="colSpan">
-            <InputNumberInteger.InputPositiveNumberInteger placeholder={Intl.get('colspan')} />
-          </Form.Item>
-        </Value>
-      ),
-    },
-    {
       key: 'valuePropName',
       require: false,
       label: <Label>{Intl.get('value_propname')}：</Label>,
@@ -145,6 +132,30 @@ export function FormProperty({
         <Value>
           <Form.Item name="validateFirst">
             <WhetherRadioHorizontalDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'colSpan',
+      require: false,
+      label: <Label>{Intl.get('colspan')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="colSpan">
+            <InputNumberInteger.InputPositiveNumberInteger placeholder={Intl.get('colspan')} />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'fill',
+      require: false,
+      label: <Label>{Intl.get('fill')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="fill">
+            <WhetherRadioHorizontalDict placeholder={Intl.get('fill')} />
           </Form.Item>
         </Value>
       ),
@@ -178,6 +189,7 @@ export function FormProperty({
   function onFieldsChange() {
     setFormItemProps(activeFieldId as string, { ...form.getFieldsValue() });
   }
+
   useEffect(() => {
     const formProps = formItemProps as Record<string, unknown> | undefined;
     const value = formProps?.value;

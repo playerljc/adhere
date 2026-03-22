@@ -303,5 +303,6 @@ export default [
     flex_basis: '初始化大小',
     align_self: '单独对齐方式',
     order: '排序',
+    fill: '充满父元素',
   },
 ];

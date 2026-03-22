@@ -302,5 +302,6 @@ declare const _default: {
     flex_basis: string;
     align_self: string;
     order: string;
+    fill: string;
 }[];
 export default _default;

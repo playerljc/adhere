@@ -7,6 +7,7 @@ import type { DesignValue } from '../../../types';
 import { parseDesign } from '../../parse';
 
 export interface InternalFlexLayoutProps {
+  id?: string;
   style?: CSSProperties;
   children?: DesignValue[];
   direction?: 'horizontal' | 'vertical';
@@ -22,7 +23,18 @@ const selectorPrefix = 'adhere-ui-fd-flex-layout';
 /**
  * InternalFlexLayout
  */
-const InternalFlexLayout: FC<InternalFlexLayoutProps> = ({ children, style, ...props }) => {
+const InternalFlexLayout: FC<InternalFlexLayoutProps> = ({
+  id,
+  children,
+  style,
+  direction,
+  wrap,
+  justifyContent,
+  alignItems,
+  alignContent,
+  gap,
+  ...props
+}) => {
   const context = useContext(DesignContext);
 
   const targetProps = useMemo(() => {
@@ -31,36 +43,36 @@ const InternalFlexLayout: FC<InternalFlexLayoutProps> = ({ children, style, ...p
 
     const targetStyle: CSSProperties = { ...style };
 
-    if (props.direction === 'horizontal') {
+    if (direction === 'horizontal') {
       targetStyle.flexDirection = 'row';
     }
 
-    if (props.direction === 'vertical') {
+    if (direction === 'vertical') {
       targetStyle.flexDirection = 'column';
     }
 
-    if (props.wrap) {
+    if (wrap) {
       targetStyle.flexWrap = 'wrap';
     }
 
-    if (!props.wrap) {
+    if (!wrap) {
       targetStyle.flexWrap = 'nowrap';
     }
 
-    if (props.justifyContent) {
-      targetStyle.justifyContent = props.justifyContent;
+    if (justifyContent) {
+      targetStyle.justifyContent = justifyContent;
     }
 
-    if (props.alignItems) {
-      targetStyle.alignItems = props.alignItems;
+    if (alignItems) {
+      targetStyle.alignItems = alignItems;
     }
 
-    if (props.alignContent) {
-      targetStyle.alignContent = props.alignContent;
+    if (alignContent) {
+      targetStyle.alignContent = alignContent;
     }
 
-    if (props.gap !== null && props.gap !== undefined && props.gap !== '') {
-      targetStyle.gap = props.gap;
+    if (gap !== null && gap !== undefined && gap !== '') {
+      targetStyle.gap = gap;
     }
 
     // 对样式的处理
@@ -69,13 +81,14 @@ const InternalFlexLayout: FC<InternalFlexLayoutProps> = ({ children, style, ...p
     // 对children进行解析
     layoutProps.children = children?.map((_item) =>
       parseDesign({
+        parentId: id,
         value: _item,
         context,
       }),
     );
 
     return layoutProps;
-  }, [children, style, props]);
+  }, [children, style, direction, wrap, justifyContent, alignItems, alignContent, gap, props]);
 
   return <div className={selectorPrefix} {...targetProps} />;
 };

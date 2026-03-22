@@ -22,6 +22,7 @@ export function define(): DesignItem {
     defaultValue: {
       formItemProps: {
         noStyle: true,
+        fill: true,
       },
       fieldProps: {
         message: 'Alert',

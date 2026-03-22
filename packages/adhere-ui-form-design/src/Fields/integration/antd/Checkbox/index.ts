@@ -27,6 +27,7 @@ export function define(): DesignItem {
       formItemProps: {
         hidden: false,
         noStyle: false,
+        fill: true,
         valuePropName: 'checked',
         validateFirst: false,
         validateTrigger: 'onChange',

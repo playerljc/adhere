@@ -165,6 +165,18 @@ export function FormProperty({
       ),
     },
     {
+      key: 'fill',
+      require: false,
+      label: <Label>{Intl.get('fill')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="fill">
+            <WhetherRadioHorizontalDict placeholder={Intl.get('fill')} />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
       key: 'validateTrigger',
       require: false,
       label: <Label>{Intl.get('validate_trigger')}：</Label>,

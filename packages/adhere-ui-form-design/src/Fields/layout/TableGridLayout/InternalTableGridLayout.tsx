@@ -6,14 +6,14 @@ import TableGridLayout, { type DataItemRow } from '@baifendian/adhere-ui-tablegr
 import type { TableGridLayoutProps } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 
 import { DesignContext } from '../../../Design/Context';
-import type { InternalTableGridLayout } from '../../../types';
+import type { InternalTableGridLayoutProps } from '../../../types';
 import { parseDesign } from '../../parse';
 
 /**
  * InternalTableGridLayout
  * @description TableGridLayout的内部实现
  */
-const InternalTableGridLayout: FC<InternalTableGridLayout> = ({ children, id, ...props }) => {
+const InternalTableGridLayout: FC<InternalTableGridLayoutProps> = ({ children, id, ...props }) => {
   const context = useContext(DesignContext);
 
   const targetProps = useMemo<TableGridLayoutProps>(() => {
@@ -29,7 +29,6 @@ const InternalTableGridLayout: FC<InternalTableGridLayout> = ({ children, id, ..
       }) as DataItemRow;
     });
 
-    console.log('111', tableGridLayoutProps);
     return tableGridLayoutProps;
   }, [children, props]);
 

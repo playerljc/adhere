@@ -35,7 +35,7 @@ export function FlexProperty(props: DesignValueProps) {
 
   useEffect(() => {
     // 设置控件的数据到表单
-    form.setFieldsValue({});
+    form.setFieldsValue(flexProps);
   }, [flexProps]);
 
   return (
@@ -58,7 +58,7 @@ export function FlexProperty(props: DesignValueProps) {
                     <Form.Item name="flexGrow">
                       <InputNumberInteger.InputPositiveNumberInteger
                         max={50}
-                        min={1}
+                        min={0}
                         placeholder={Intl.get('flex_grow')}
                       />
                     </Form.Item>
@@ -74,7 +74,7 @@ export function FlexProperty(props: DesignValueProps) {
                     <Form.Item name="flexShrink">
                       <InputNumberInteger.InputPositiveNumberInteger
                         max={50}
-                        min={1}
+                        min={0}
                         placeholder={Intl.get('flex_shrink')}
                       />
                     </Form.Item>

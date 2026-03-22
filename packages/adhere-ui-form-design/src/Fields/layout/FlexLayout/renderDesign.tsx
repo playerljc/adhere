@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import DroppableContainer from '../../../components/DroppableContainer';
-import type { DesignContextType, DesignValue } from '../../../types';
+import type { DesignValue } from '../../../types';
 import { styleCodeStringToCSSProperties } from '../../../utils';
 import InternalFlexLayout, { type InternalFlexLayoutProps } from './InternalFlexLayout';
 
@@ -13,7 +13,7 @@ const selectorPrefix = 'adhere-ui-fd-flex-layout';
 function FlexLayoutDesign({ value }: { value: DesignValue }) {
   const {
     id,
-    props: { children, styleProps, fieldProps },
+    props: { children, styleProps, fieldProps, flexProps },
   } = value;
 
   const style = useMemo(
@@ -22,7 +22,11 @@ function FlexLayoutDesign({ value }: { value: DesignValue }) {
   );
 
   return (
-    <DesignFieldWrapper id={id} className={classNames(`${selectorPrefix}-design-field-wrapper`)}>
+    <DesignFieldWrapper
+      id={id}
+      className={classNames(`${selectorPrefix}-design-field-wrapper`)}
+      style={flexProps ?? {}}
+    >
       <DroppableContainer
         id={id}
         value={value}
@@ -33,6 +37,7 @@ function FlexLayoutDesign({ value }: { value: DesignValue }) {
       >
         <InternalFlexLayout
           {...(fieldProps as InternalFlexLayoutProps)}
+          id={id}
           style={style ?? {}}
           children={children}
         />

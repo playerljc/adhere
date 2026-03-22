@@ -116,13 +116,13 @@ export function FormProperty({
       ),
     },
     {
-      key: 'colSpan',
+      key: 'valuePropName',
       require: false,
-      label: <Label>{Intl.get('colspan')}：</Label>,
+      label: <Label>{Intl.get('value_propname')}：</Label>,
       value: (
         <Value>
-          <Form.Item name="colSpan">
-            <InputNumberInteger.InputPositiveNumberInteger placeholder={Intl.get('colspan')} />
+          <Form.Item name="valuePropName">
+            <Input placeholder="value" maxLength={50} />
           </Form.Item>
         </Value>
       ),
@@ -140,13 +140,25 @@ export function FormProperty({
       ),
     },
     {
-      key: 'valuePropName',
+      key: 'colSpan',
       require: false,
-      label: <Label>{Intl.get('value_propname')}：</Label>,
+      label: <Label>{Intl.get('colspan')}：</Label>,
       value: (
         <Value>
-          <Form.Item name="valuePropName">
-            <Input placeholder="value" maxLength={50} />
+          <Form.Item name="colSpan">
+            <InputNumberInteger.InputPositiveNumberInteger placeholder={Intl.get('colspan')} />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'fill',
+      require: false,
+      label: <Label>{Intl.get('fill')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="fill">
+            <WhetherRadioHorizontalDict placeholder={Intl.get('fill')} />
           </Form.Item>
         </Value>
       ),
@@ -180,6 +192,7 @@ export function FormProperty({
   function onFieldsChange() {
     setFormItemProps(activeFieldId as string, { ...form.getFieldsValue() });
   }
+
   useEffect(() => {
     form.setFieldsValue(formItemProps);
   }, [formItemProps]);

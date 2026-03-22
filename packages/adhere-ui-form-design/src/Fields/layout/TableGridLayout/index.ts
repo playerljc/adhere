@@ -34,7 +34,7 @@ export function define(): DesignItem {
         data: [
           {
             name: 'g1',
-            width: '100%',
+            width: 'auto',
             columnCount: 2,
             colgroup: ['auto', 'auto'],
             data: [],
