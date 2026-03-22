@@ -18,6 +18,7 @@ export function define(): DesignItem {
     renderActionsToMobile,
     hasFormProperty: false,
     hasActionsProperty: false,
+    hasFlexProperty: false,
     defaultValue: {
       formItemProps: {
         noStyle: true,

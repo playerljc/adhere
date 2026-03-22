@@ -15,11 +15,11 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 
-import { define as flowLayoutDefine } from '../Fields/layout/FlowLayout';
-import { TYPE } from '../Fields/layout/FlowLayout/constant';
+import { define as flexLayoutDefine } from '../Fields/layout/FlexLayout';
+import { TYPE } from '../Fields/layout/FlexLayout/constant';
 import { REDUCER_ACTION_TYPE, SELECT_PREFIX } from '../constant';
 import {
-  type ActionsProps,
+  ActionsProps,
   DesignComponent,
   DesignHandler,
   DesignItem,
@@ -29,6 +29,7 @@ import {
   DraggableToolItemProps,
   type FieldProps,
   type FieldType,
+  type FlexProps,
   type FormItemProps,
   type StyleProps,
   ToolBoxItem,
@@ -255,7 +256,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       }
 
       function getItems(): DesignItem[] {
-        return [flowLayoutDefine(), ...(items ?? [])];
+        return [flexLayoutDefine(), ...(items ?? [])];
       }
 
       function getOverlayCursor() {
@@ -279,6 +280,16 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       function setActionsProps(id: string, props: ActionsProps) {
         dispatch({
           type: REDUCER_ACTION_TYPE.updateActionsProps,
+          payload: {
+            id,
+            props,
+          },
+        });
+      }
+
+      function setFlexProps(id: string, props: FlexProps) {
+        dispatch({
+          type: REDUCER_ACTION_TYPE.updateFlexProps,
           payload: {
             id,
             props,
@@ -354,6 +365,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
               setFieldProps,
               setStyleProps,
               setActionsProps,
+              setFlexProps,
               // add
               addChildrenById,
               // delete

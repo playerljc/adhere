@@ -22,6 +22,7 @@ export function define(): DesignItem {
     renderActionsToMobile,
     hasFormProperty: true,
     hasActionsProperty: true,
+    hasFlexProperty: false,
     defaultValue: {
       formItemProps: {
         hidden: false,

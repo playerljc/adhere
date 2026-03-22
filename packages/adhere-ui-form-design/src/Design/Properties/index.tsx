@@ -10,6 +10,7 @@ import { SELECT_PREFIX } from '../../constant';
 import type { PropertiesProps } from '../../types';
 import { DesignContext } from '../Context';
 import ActionsTab from './ActionsTab';
+import FlexTab from './FlexTab';
 import FormTab from './FormTab';
 import PropertiesTab from './PropertiesTab';
 import StyleTab from './StyleTab';
@@ -52,6 +53,16 @@ const Properties: FC<PropertiesProps> = () => {
         label: Intl.get('main'),
         children: <PropertiesTab />,
       },
+      // Flex布局属性面板
+      ...(item?.hasFlexProperty
+        ? [
+            {
+              key: 'FlexPropertyTab',
+              label: Intl.get('flex'),
+              children: <FlexTab />,
+            },
+          ]
+        : []),
       // 控件样式修改面板
       {
         key: 'StyleTab',

@@ -55,8 +55,14 @@ export interface DesignItem extends BaseItem {
   /***--- 控件事件属性 ---***/
   // 是否有Actions属性
   hasActionsProperty: boolean;
-  // 是否有Actions属性
+  // Actions属性的渲染
   renderActionsProperty?: (defaultValue: DesignValueProps) => ReactNode;
+
+  /***--- 控件Flex属性 ---***/
+  // 是否有Flex属性
+  hasFlexProperty: boolean;
+  // Flex属性的渲染
+  renderFlexProperty?: (defaultValue: DesignValueProps) => ReactNode;
 
   /***
     以下是对容器布局reducer进行的处理

@@ -8,6 +8,7 @@ import type {
 
 import type { ActionsProps } from './Actions';
 import type { FieldProps, FieldType } from './Field';
+import type { FlexProps } from './Flex';
 import type { FormItemProps } from './FormItem';
 import type { DesignItem } from './Item';
 import type { StyleProps } from './Style';
@@ -37,6 +38,9 @@ export type DesignValueProps = {
 
   // 控件事件的props
   actionsProps?: ActionsProps;
+
+  // flex的props
+  flexProps?: FlexProps;
 
   // 控件下的子项(一般是布局控件才有children)
   children?: DesignValue[];
@@ -136,6 +140,7 @@ export interface DesignContextType {
   setFieldProps: (id: string, props: FieldProps) => void;
   setStyleProps: (id: string, props: StyleProps) => void;
   setActionsProps: (id: string, props: ActionsProps) => void;
+  setFlexProps: (id: string, props: FlexProps) => void;
   // --------- add -----------
   addChildrenById: (id: string, child: DesignValue) => void;
   // --------- delete -----------

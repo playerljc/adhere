@@ -14,6 +14,7 @@ export type DesignValueAction =
         | REDUCER_ACTION_TYPE.updateFieldProps
         | REDUCER_ACTION_TYPE.updateStyleProps
         | REDUCER_ACTION_TYPE.updateActionsProps
+        | REDUCER_ACTION_TYPE.updateFlexProps
         | REDUCER_ACTION_TYPE.updateChildrenProps;
       payload: {
         id: string;
@@ -22,6 +23,7 @@ export type DesignValueAction =
           | DesignValue['props']['formItemProps']
           | DesignValue['props']['styleProps']
           | DesignValue['props']['actionsProps']
+          | DesignValue['props']['flexProps']
           | DesignValue['props']['children'];
       };
     }
@@ -85,6 +87,16 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
       if (designValue) {
         designValue.props.actionsProps = action.payload
           .props as DesignValue['props']['actionsProps'];
+      }
+
+      return clone()(state);
+    }
+
+    // 修改控件Flex的props
+    case REDUCER_ACTION_TYPE.updateFlexProps: {
+      const designValue = findDesignValueById(action.payload.id, state as DesignValue);
+      if (designValue) {
+        designValue.props.fieldProps = action.payload.props as DesignValue['props']['fieldProps'];
       }
 
       return clone()(state);

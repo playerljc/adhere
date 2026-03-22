@@ -6,6 +6,7 @@ import { renderActions } from './renderActions';
 import { renderActionsToMobile } from './renderActionsToMobile';
 import { renderDesign } from './renderDesign';
 import { renderDesignToMobile } from './renderDesignToMobile';
+import { renderFlexProperty } from './renderFlexProperty';
 import { renderMainProperty } from './renderMainProperty';
 import { renderStyleProperty } from './renderStyleProperty';
 
@@ -18,10 +19,12 @@ export function define(): DesignItem {
     renderStyleProperty,
     hasFormProperty: false,
     hasActionsProperty: false,
+    hasFlexProperty: true,
     layoutReducerToAdd,
     layoutReducerToRemove,
     renderActions,
     renderActionsToMobile,
+    renderFlexProperty,
     defaultValue: {
       fieldProps: {
         layout: 'vertical',

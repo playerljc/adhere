@@ -1,5 +1,6 @@
 import { parseActionsProperty } from './parseActionsProperty';
 import { parseDesign } from './parseDesign';
+import { parseFlexProperty } from './parseFlexProperty';
 import { parseFormProperty } from './parseFormProperty';
 import { parseMainProperty } from './parseMainProperty';
 import { parseStyleProperty } from './parseStyleProperty';
@@ -10,4 +11,5 @@ export {
   parseStyleProperty,
   parseFormProperty,
   parseActionsProperty,
+  parseFlexProperty,
 };

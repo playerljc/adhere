@@ -297,5 +297,6 @@ export default [
     justify_content: '主轴上的对齐方式',
     align_items: '交叉轴上的对齐方式',
     align_content: '多根轴线的对齐方式',
+    flex: '弹性布局',
   },
 ];

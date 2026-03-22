@@ -41,6 +41,9 @@ import { ValuePropNameSelectStandardDict } from './ValuePropName';
 import { VariantSelectStandardDict } from './Variant';
 import { VerificationStatusSelectStandardDict } from './VerificationStatus';
 import { WhetherRadioHorizontalDict } from './Whether';
+import { JustifyContentSelectStandardDict } from './JustifyContent';
+import { AlignItemsSelectStandardDict } from './AlignItems';
+import { AlignContentSelectStandardDict } from './AlignContent';
 
 export {
   LabelDesign,
@@ -86,4 +89,7 @@ export {
   PickerSelectStandardDict,
   SelectModeSelectStandardDict,
   DataSourceManagerFormItem,
+  JustifyContentSelectStandardDict,
+  AlignItemsSelectStandardDict,
+  AlignContentSelectStandardDict,
 };

@@ -1,6 +1,11 @@
 @import '../../../constant.less';
 
-.@{prefix-cls}-flow-layout {
+.@{prefix-cls}-flex-layout {
+  display: flex;
   width: 100%;
-  //overflow: auto;
+  overflow: auto;
+
+  > * {
+    width: 100%;
+  }
 }
