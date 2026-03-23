@@ -38,6 +38,7 @@ export function define(): DesignItem {
         minSize: true,
         scroll: true,
       },
+      children: [],
     },
   };
 }
