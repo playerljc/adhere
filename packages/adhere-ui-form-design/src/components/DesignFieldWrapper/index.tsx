@@ -11,8 +11,7 @@ import type { FC } from 'react';
 import { DesignContext } from '../../Design/Context';
 import { SELECT_PREFIX } from '../../constant';
 import { DesignFieldWrapperProps, DesignItem } from '../../types';
-import { findTypeById } from '../../utils/findTypeById';
-import { isDesktop } from '../../utils/isDesktop';
+import { findTypeById, getLabelByType, isDesktop, isRootFieldId } from '../../utils';
 
 const selectPrefix = `${SELECT_PREFIX}-design-field-wrapper`;
 
@@ -24,7 +23,7 @@ const selectPrefix = `${SELECT_PREFIX}-design-field-wrapper`;
  *  2.显示控件的在设计视图中的工具栏(如删除控件,clone控件......) 当id === getActiveFieldId()时，显示工具栏
  */
 const DesignFieldWrapper: FC<DesignFieldWrapperProps> = ({ id, className, style, children }) => {
-  const { getActiveFieldId, setActiveFieldId, getItems, getDesignValue, getTerminal } =
+  const { getActiveFieldId, setActiveFieldId, getItems, getDesignValue, getTerminal, getToolBox } =
     useContext(DesignContext);
 
   const items = getItems() ?? [];
@@ -37,17 +36,18 @@ const DesignFieldWrapper: FC<DesignFieldWrapperProps> = ({ id, className, style,
 
   const isActive = id === activeFieldId;
 
+  const toolbox = getToolBox();
+
   const item: DesignItem | undefined = useMemo(() => {
     const type = findTypeById({ id, designValue });
     return items.find((_item) => _item.type === type);
-  }, [items, designValue]);
+  }, [items, designValue, id]);
 
   function onClick(e) {
     e.stopPropagation();
 
     setActiveFieldId(id);
   }
-
 
   return (
     <div
@@ -57,8 +57,14 @@ const DesignFieldWrapper: FC<DesignFieldWrapperProps> = ({ id, className, style,
       style={style ?? {}}
       onClick={onClick}
     >
+      {!!item && isActive && isDesktop(terminal) && !isRootFieldId(id) && (
+        <div className={classNames(`${selectPrefix}-label`)}>
+          {getLabelByType(findTypeById({ id, designValue }), toolbox)}
+        </div>
+      )}
+
       {/* desktop actions */}
-      {!!item && isActive && isDesktop(terminal) && (
+      {!!item && isActive && isDesktop(terminal) && !isRootFieldId(id) && (
         <div className={classNames(`${selectPrefix}-actions`)}>{item?.renderActions?.(id)}</div>
       )}
 

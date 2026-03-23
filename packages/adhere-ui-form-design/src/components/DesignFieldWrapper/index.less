@@ -6,6 +6,15 @@
   box-sizing: border-box;
   padding: var(--design-field-wrapper-padding, 2px);
 
+  > .@{prefix-cls}-design-field-wrapper-label {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: var(--design-field-wrapper-label-background-color, @highlight-color);
+    color: var(--design-field-wrapper-label-color, #fff);
+    padding: var(--design-field-wrapper-label-padding, 0 5px);
+  }
+
   // hover的样式
   &:hover {
     //background-color: var(--design-field-wrapper-active-hover-background-color, fade(@highlight-color, 5%));

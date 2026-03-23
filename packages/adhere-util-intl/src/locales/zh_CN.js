@@ -304,5 +304,8 @@ export default [
     align_self: '单独对齐方式',
     order: '排序',
     fill: '充满父元素',
+    flex_layout: 'flex布局',
+    min_size: '子项的大小不会小于其内容',
+    scroll: '滚动',
   },
 ];

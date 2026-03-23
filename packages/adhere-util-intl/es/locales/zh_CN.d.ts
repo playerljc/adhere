@@ -303,5 +303,8 @@ declare const _default: {
     align_self: string;
     order: string;
     fill: string;
+    flex_layout: string;
+    min_size: string;
+    scroll: string;
 }[];
 export default _default;

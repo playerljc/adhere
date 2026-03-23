@@ -15,8 +15,8 @@
   &-row {
     display: flex;
     flex-direction: row;
-    align-items: center;
     gap: 8px;
+    align-items: center;
     width: 100%;
 
     &-dragging {
@@ -32,17 +32,17 @@
   &-handle,
   &-remove {
     display: inline-flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
     width: 32px;
     height: 32px;
     padding: 0;
-    border: none;
-    background: transparent;
     color: var(--ant-color-icon, rgba(0, 0, 0, 0.45));
-    cursor: grab;
+    background: transparent;
+    border: none;
     border-radius: 4px;
+    cursor: grab;
     transition: color 0.2s, background 0.2s;
 
     &:hover {

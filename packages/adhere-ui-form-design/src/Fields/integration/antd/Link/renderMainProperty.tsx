@@ -11,46 +11,61 @@ import { createStandardMainProperty } from '../../../../utils/createStandardMain
 const MainProperty = createStandardMainProperty({
   formName: 'antLinkMainProperty',
   buildRows: () => [
-        {
-  key: 'children',
-  require: false,
-  label: <Label>{Intl.get('link_text')}:</Label>,
-  value: (
-    <Value>
-      <Form.Item name="children"><Input placeholder={Intl.get('link_text')} /></Form.Item>
-    </Value>
-  ),
-},
-{
-  key: 'href',
-  require: false,
-  label: <Label>{Intl.get('link_href')}:</Label>,
-  value: (
-    <Value>
-      <Form.Item name="href"><Input placeholder={Intl.get('link_href')} /></Form.Item>
-    </Value>
-  ),
-},
-{
-  key: 'target',
-  require: false,
-  label: <Label>{Intl.get('link_target')}:</Label>,
-  value: (
-    <Value>
-      <Form.Item name="target"><Select placeholder={Intl.get('please_select')} allowClear options={[{ label: '_self', value: '_self' }, { label: '_blank', value: '_blank' }]} /></Form.Item>
-    </Value>
-  ),
-},
-{
-  key: 'disabled',
-  require: false,
-  label: <Label>{Intl.get('disabled')}:</Label>,
-  value: (
-    <Value>
-      <Form.Item name="disabled"><WhetherRadioHorizontalDict /></Form.Item>
-    </Value>
-  ),
-},
+    {
+      key: 'children',
+      require: false,
+      label: <Label>{Intl.get('link_text')}:</Label>,
+      value: (
+        <Value>
+          <Form.Item name="children">
+            <Input placeholder={Intl.get('link_text')} />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'href',
+      require: false,
+      label: <Label>{Intl.get('link_href')}:</Label>,
+      value: (
+        <Value>
+          <Form.Item name="href">
+            <Input placeholder={Intl.get('link_href')} />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'target',
+      require: false,
+      label: <Label>{Intl.get('link_target')}:</Label>,
+      value: (
+        <Value>
+          <Form.Item name="target">
+            <Select
+              placeholder={Intl.get('please_select')}
+              allowClear
+              options={[
+                { label: '_self', value: '_self' },
+                { label: '_blank', value: '_blank' },
+              ]}
+            />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'disabled',
+      require: false,
+      label: <Label>{Intl.get('disabled')}:</Label>,
+      value: (
+        <Value>
+          <Form.Item name="disabled">
+            <WhetherRadioHorizontalDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
   ],
 });
 

@@ -34,7 +34,7 @@ import {
   type StyleProps,
   ToolBoxItem,
 } from '../types';
-import { isDragEnd } from '../utils';
+import { genRootFieldId, isDragEnd } from '../utils';
 import { DesignContext } from './Context';
 import Editor from './DesignEditor';
 import DesignValueReducer from './DesignValueReducer';
@@ -81,7 +81,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         // 如果designValue是null，那么需要创建一个默认的布局(布局需要这个包提供一个TableGridLayout布局)，否则直接返回即可
         if (!designValue) {
           return {
-            id: Util.uuid(),
+            id: genRootFieldId(),
             type: TYPE,
             props: {
               fieldProps: {
@@ -259,6 +259,10 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         return activeToolItemData;
       }
 
+      function getToolBox() {
+        return toolBox;
+      }
+
       function setFormItemProps(id: string, props: FormItemProps) {
         dispatch({
           type: REDUCER_ACTION_TYPE.updateFormItemProps,
@@ -350,6 +354,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
               getItems,
               getOverlayCursor,
               getActiveToolItemData,
+              getToolBox,
               // setter
               setCurrentTerminal,
               setActiveFieldId,

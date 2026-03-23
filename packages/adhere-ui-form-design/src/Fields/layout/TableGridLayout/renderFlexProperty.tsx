@@ -4,7 +4,7 @@ import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../Design/Context';
-import { AlignSelfSelectStandardDict } from '../../../components';
+import { AlignSelfSelectStandardDict, WhetherRadioHorizontalDict } from '../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../types';
 
@@ -113,6 +113,30 @@ export function FlexProperty(props: DesignValueProps) {
                   <Value>
                     <Form.Item name="order">
                       <InputNumberInteger max={1000} min={1} placeholder={Intl.get('order')} />
+                    </Form.Item>
+                  </Value>
+                ),
+              },
+              {
+                key: 'minSize',
+                require: false,
+                label: <Label>{Intl.get('min_size')}：</Label>,
+                value: (
+                  <Value>
+                    <Form.Item name="minSize">
+                      <WhetherRadioHorizontalDict placeholder={Intl.get('min_size')} />
+                    </Form.Item>
+                  </Value>
+                ),
+              },
+              {
+                key: 'scroll',
+                require: false,
+                label: <Label>{Intl.get('scroll')}：</Label>,
+                value: (
+                  <Value>
+                    <Form.Item name="scroll">
+                      <WhetherRadioHorizontalDict placeholder={Intl.get('scroll')} />
                     </Form.Item>
                   </Value>
                 ),

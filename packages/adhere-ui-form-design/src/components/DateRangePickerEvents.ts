@@ -8,4 +8,3 @@ export const DateRangePickerEventsSelectStandardDict =
   Components[
     genDictComponentName(names.DateRangePickerEvents as string, ComponentNames.Select.Standard)
   ];
-

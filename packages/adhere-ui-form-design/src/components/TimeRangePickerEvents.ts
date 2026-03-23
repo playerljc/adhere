@@ -8,4 +8,3 @@ export const TimeRangePickerEventsSelectStandardDict =
   Components[
     genDictComponentName(names.TimeRangePickerEvents as string, ComponentNames.Select.Standard)
   ];
-

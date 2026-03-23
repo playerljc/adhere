@@ -1,6 +1,8 @@
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignItem, ToolBoxGroup } from '../../../types';
+import { define as AlertDefine } from './Alert';
+import { define as ButtonDefine } from './Button';
 import { define as CheckboxDefine } from './Checkbox';
 import { define as ColorPickerDefine } from './ColorPicker';
 import { define as DatePickerDefine } from './DatePicker';
@@ -9,16 +11,14 @@ import { define as InputDefine } from './Input';
 import { define as InputNumberDefine } from './InputNumber';
 import { define as InputOTPDefine } from './InputOTP';
 import { define as InputSearchDefine } from './InputSearch';
+import { define as LinkDefine } from './Link';
 import { define as PasswordDefine } from './Password';
-import { define as AlertDefine } from './Alert';
-import { define as ButtonDefine } from './Button';
 import { define as RadioDefine } from './Radio';
 import { define as RateDefine } from './Rate';
 import { define as SliderDefine } from './Slider';
-import { define as LinkDefine } from './Link';
 import { define as SubmitButtonDefine } from './SubmitButton';
-import { define as TextDefine } from './Text';
 import { define as SwitchDefine } from './Switch';
+import { define as TextDefine } from './Text';
 import { define as TextAreaDefine } from './TextArea';
 import { define as TimePickerDefine } from './TimePicker';
 import { define as TimeRangePickerDefine } from './TimeRangePicker';

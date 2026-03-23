@@ -132,6 +132,7 @@ export interface DesignContextType {
   getItems: () => DesignItem[];
   getOverlayCursor: () => CSSProperties['cursor'];
   getActiveToolItemData: () => DraggableToolItemProps['data'] | null;
+  getToolBox: () => ToolBoxOption;
   // getDispatch: () => Dispatch<DesignValueAction>;
   // --------- setters ---------
   setCurrentTerminal: (terminal: Terminal) => void;

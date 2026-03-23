@@ -1,5 +1,5 @@
 import { constrainedEditor } from 'constrained-editor-plugin';
-import React, { forwardRef, memo, useMemo, useRef, useEffect } from 'react';
+import React, { forwardRef, memo, useEffect, useMemo, useRef } from 'react';
 
 import type { OnMount } from '@monaco-editor/react';
 
@@ -33,8 +33,7 @@ function applyRestrictions(
   const lineCount = model.getLineCount();
   if (lineCount < 2) return;
   const endLine = lineCount >= 3 ? lineCount - 1 : 2;
-  const endColumn =
-    lineCount >= 3 ? model.getLineContent(endLine).length + 1 : 1;
+  const endColumn = lineCount >= 3 ? model.getLineContent(endLine).length + 1 : 1;
   const restrictions: Array<{ range: number[]; allowMultiline: boolean; label: string }> = [
     { range: [2, 1, endLine, endColumn], allowMultiline: true, label: 'funcDefinition' },
   ];

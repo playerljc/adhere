@@ -5,5 +5,6 @@ import { names } from '../Dict';
 const { ComponentNames, Components, genDictComponentName } = FieldGeneratorToDict;
 
 export const TimePickerEventsSelectStandardDict =
-  Components[genDictComponentName(names.TimePickerEvents as string, ComponentNames.Select.Standard)];
-
+  Components[
+    genDictComponentName(names.TimePickerEvents as string, ComponentNames.Select.Standard)
+  ];

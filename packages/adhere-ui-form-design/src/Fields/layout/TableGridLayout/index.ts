@@ -41,6 +41,10 @@ export function define(): DesignItem {
           },
         ],
       },
+      flexProps: {
+        minSize: true,
+        scroll: true,
+      },
       children: [],
     },
   };

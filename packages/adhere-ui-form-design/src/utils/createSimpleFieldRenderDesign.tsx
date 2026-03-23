@@ -56,4 +56,3 @@ export function createSimpleFieldRenderDesign(Component: ElementType) {
     };
   };
 }
-
