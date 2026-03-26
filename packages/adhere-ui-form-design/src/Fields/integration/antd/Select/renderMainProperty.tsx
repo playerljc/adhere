@@ -202,12 +202,12 @@ export function MainProperty({
       ),
     },
     {
-      key: 'config',
+      key: 'selectOptions',
       require: false,
-      label: <Label>{Intl.get('config')}：</Label>,
+      label: <Label>{Intl.get('select_options')}：</Label>,
       value: (
         <Value>
-          <Form.Item name="config">
+          <Form.Item name="selectOptions">
             <DataSourceManagerFormItem />
           </Form.Item>
         </Value>

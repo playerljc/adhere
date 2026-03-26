@@ -1,6 +1,6 @@
 export interface FlexProps {
   /** flex-grow property - controls how much the item will grow relative to other items */
-  flexGrow?: number | string;
+  flex?: number | string;
 
   /** flex-shrink property - controls how much the item will shrink relative to other items */
   flexShrink?: number | string;

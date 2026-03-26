@@ -307,5 +307,7 @@ export default [
     flex_layout: 'flex布局',
     min_size: '子项的大小不会小于其内容',
     scroll: '滚动',
+    select_text: '下拉框',
+    select_options: '数据',
   },
 ];

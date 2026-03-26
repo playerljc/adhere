@@ -37,7 +37,7 @@ export function define(): DesignItem {
         disabled: false,
         defaultActiveFirstOption: true,
         listHeight: 256,
-        config: {
+        selectOptions: {
           type: 'static',
           dataSource: [],
         },

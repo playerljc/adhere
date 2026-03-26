@@ -15,6 +15,7 @@ import { define as LinkDefine } from './Link';
 import { define as PasswordDefine } from './Password';
 import { define as RadioDefine } from './Radio';
 import { define as RateDefine } from './Rate';
+import { define as SelectDefine } from './Select';
 import { define as SliderDefine } from './Slider';
 import { define as SubmitButtonDefine } from './SubmitButton';
 import { define as SwitchDefine } from './Switch';
@@ -44,6 +45,7 @@ const Checkbox = CheckboxDefine();
 const Radio = RadioDefine();
 const Rate = RateDefine();
 const Slider = SliderDefine();
+const Select = SelectDefine();
 
 export function install(): {
   toolBox: ToolBoxGroup['items'];
@@ -177,6 +179,12 @@ export function install(): {
         searchLabel: Intl.get('slider_input'),
         tooltip: Intl.get('slider_input'),
       },
+      {
+        type: Select.type,
+        label: Intl.get('select_text'),
+        searchLabel: Intl.get('select_text'),
+        tooltip: Intl.get('select_text'),
+      },
     ],
     designItems: [
       Input,
@@ -200,6 +208,7 @@ export function install(): {
       Radio,
       Rate,
       Slider,
+      Select,
     ],
   };
 }

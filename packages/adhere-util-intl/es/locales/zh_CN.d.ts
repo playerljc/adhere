@@ -306,5 +306,7 @@ declare const _default: {
     flex_layout: string;
     min_size: string;
     scroll: string;
+    select_text: string;
+    select_options: string;
 }[];
 export default _default;

@@ -4,11 +4,12 @@ import React, { type FC } from 'react';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { SELECT_PREFIX } from '../../constant';
+import type { I18nValue } from '../../types';
 import Dynamic from './Dynamic';
 import Static from './Static';
 
 export interface DataSourceItem {
-  label: string;
+  label: string | I18nValue;
   value: string | number;
   [key: string]: any;
 }

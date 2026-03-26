@@ -50,12 +50,12 @@ export function FlexProperty(props: DesignValueProps) {
             colgroup: ['auto'],
             data: [
               {
-                key: 'flexGrow',
+                key: 'flex',
                 require: false,
                 label: <Label>{Intl.get('flex_grow')}：</Label>,
                 value: (
                   <Value>
-                    <Form.Item name="flexGrow">
+                    <Form.Item name="flex">
                       <InputNumberInteger.InputPositiveNumberInteger
                         max={50}
                         min={0}

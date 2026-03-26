@@ -1,8 +1,9 @@
 import classNames from 'classnames';
-import React, { type FC, useLayoutEffect, useMemo } from 'react';
+import React, { type FC, useContext, useLayoutEffect, useMemo, useRef } from 'react';
 
 import { DeleteOutlined, HolderOutlined } from '@ant-design/icons';
 import { Button, Input } from '@baifendian/adhere-ui-anthoc';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Intl from '@baifendian/adhere-util-intl';
 import {
   DndContext,
@@ -23,7 +24,9 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-import { SELECT_PREFIX } from '../../../constant';
+import { SELECT_PREFIX, SELECT_VALUE_KEY_NAME } from '../../../constant';
+import type { I18nValue } from '../../../types';
+import I18nChangeFormItem from '../../I18nChangeFormItem';
 import { type DataSourceItem, type DataSourceManagerFormItemProps } from '../index';
 
 export type StaticProps = DataSourceManagerFormItemProps;
@@ -33,14 +36,14 @@ const selectorPrefix = `${SELECT_PREFIX}-design-field-data-source-form-item-stat
 type SortableRowProps = {
   item: DataSourceItem;
   sortId: string;
-  onLabelChange: (sortId: string, label: string) => void;
+  onLabelChange: (sortId: string, label: I18nValue) => void;
   onValueChange: (sortId: string, value: string) => void;
   onRemove: (sortId: string) => void;
 };
 
 type RowContentProps = {
   item: DataSourceItem;
-  onLabelChange: (label: string) => void;
+  onLabelChange: (label: I18nValue) => void;
   onValueChange: (value: string) => void;
   onRemove: () => void;
   handleNode: React.ReactNode;
@@ -68,6 +71,22 @@ function normalizeValue(item: DataSourceItem, raw: string): string | number {
   return raw;
 }
 
+function toI18nLabel(
+  label: DataSourceItem['label'],
+  lang: string,
+  localesKeys: string[],
+): I18nValue {
+  if (label && typeof label === 'object' && SELECT_VALUE_KEY_NAME in label) {
+    return label as I18nValue;
+  }
+
+  const next: Record<string, string | null | undefined> = { [SELECT_VALUE_KEY_NAME]: lang };
+  localesKeys.forEach((key) => {
+    next[key] = key === lang ? (typeof label === 'string' ? label : '') : null;
+  });
+  return next as I18nValue;
+}
+
 const RowContent: FC<RowContentProps> = ({
   item,
   onLabelChange,
@@ -75,29 +94,56 @@ const RowContent: FC<RowContentProps> = ({
   onRemove,
   handleNode,
 }) => {
+  const { intl } = useContext(ConfigProvider.Context);
+  const lang = intl.lang!;
+  const localesKeys = Object.keys(intl.locales);
+  const triggerRef = useRef<HTMLDivElement | null>(null);
+  const labelValue = toI18nLabel(item.label, lang, localesKeys);
+
   return (
     <>
-      <Input
-        className={`${selectorPrefix}-input`}
-        value={item.label ?? ''}
-        placeholder={Intl.get('label')}
-        onChange={(e) => onLabelChange(e.target.value)}
-      />
-      <Input
-        className={`${selectorPrefix}-input`}
-        value={item.value === undefined || item.value === null ? '' : String(item.value)}
-        placeholder={Intl.get('return_value')}
-        onChange={(e) => onValueChange(e.target.value)}
-      />
-      {handleNode}
-      <button
-        type="button"
-        className={`${selectorPrefix}-remove`}
-        aria-label={Intl.get('delete')}
-        onClick={onRemove}
-      >
-        <DeleteOutlined />
-      </button>
+      <div>
+        <div ref={triggerRef}></div>
+
+        <I18nChangeFormItem
+          getTriggerContainer={() => triggerRef.current}
+          value={labelValue}
+          onChange={(next) => onLabelChange(next)}
+        >
+          {({ onChange, value }) => (
+            <Input
+              className={`${selectorPrefix}-input`}
+              value={value ?? ''}
+              placeholder={Intl.get('label')}
+              onChange={(e) => {
+                onChange(e.target.value);
+              }}
+              showCount={false}
+            />
+          )}
+        </I18nChangeFormItem>
+      </div>
+
+      <div className={`${selectorPrefix}-row-combination`}>
+        <Input
+          className={`${selectorPrefix}-input`}
+          value={item.value === undefined || item.value === null ? '' : String(item.value)}
+          placeholder={Intl.get('return_value')}
+          onChange={(e) => onValueChange(e.target.value)}
+          showCount={false}
+        />
+
+        {handleNode}
+
+        <button
+          type="button"
+          className={`${selectorPrefix}-remove`}
+          aria-label={Intl.get('delete')}
+          onClick={onRemove}
+        >
+          <DeleteOutlined />
+        </button>
+      </div>
     </>
   );
 };
@@ -187,7 +233,7 @@ const Static: FC<StaticProps> = ({ value, onChange }) => {
     });
   };
 
-  const onLabelChange = (sortId: string, label: string) => {
+  const onLabelChange = (sortId: string, label: I18nValue) => {
     const next = dataSource.map((item) => (getSortId(item) === sortId ? { ...item, label } : item));
     emitDataSource(next);
   };
