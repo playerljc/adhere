@@ -2,7 +2,7 @@ import type { Reducer } from 'react';
 import clone from 'rfdc';
 
 import { REDUCER_ACTION_TYPE } from '../../constant';
-import type { DesignValue } from '../../types';
+import type { DataSourceConfig, DesignValue } from '../../types';
 import { deleteDesignValueByIdInChildren, findDesignValueById } from '../../utils';
 
 export type DesignValueState = DesignValue | undefined;
@@ -38,6 +38,13 @@ export type DesignValueAction =
       type: REDUCER_ACTION_TYPE.deleteChildrenById;
       payload: {
         id: string;
+      };
+    }
+  | {
+      type: REDUCER_ACTION_TYPE.updateDataSourceConfig;
+      payload: {
+        id: string;
+        dataSourceConfig: DataSourceConfig;
       };
     }
   | {
@@ -134,6 +141,15 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
       if (!state) return state;
 
       deleteDesignValueByIdInChildren(action.payload.id, state as DesignValue);
+
+      return clone()(state);
+    }
+
+    case REDUCER_ACTION_TYPE.updateDataSourceConfig: {
+      const designValue = findDesignValueById(action.payload.id, state as DesignValue);
+      if (designValue) {
+        designValue.dataSourceConfig = action.payload.dataSourceConfig;
+      }
 
       return clone()(state);
     }

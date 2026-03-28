@@ -4,11 +4,16 @@ import { AlignItemsSelectStandardDict } from './AlignItems';
 import { AlignSelfSelectStandardDict } from './AlignSelf';
 import ColgroupValueSetting from './ColgroupValueSetting';
 import { ColorPickerEventsSelectStandardDict } from './ColorPickerEvents';
+import DataSourceManager from './DataSourceManager';
 import DataSourceManagerFormItem from './DataSourceManagerFormItem';
 import { DatePickerEventsSelectStandardDict } from './DatePickerEvents';
 import { DateRangePickerEventsSelectStandardDict } from './DateRangePickerEvents';
 import { DensitySelectStandardDict } from './Density';
 import DesignFieldActions from './DesignFieldActions';
+import {
+  DesignPreviewFieldWithDataSource,
+  WithDesignFieldDataSourceOptions,
+} from './DesignFieldDataSourceOptions';
 import DesignFieldWrapper from './DesignFieldWrapper';
 import { DirectionSelectStandardDict } from './Direction';
 import DroppableContainer from './DroppableContainer';
@@ -77,6 +82,8 @@ export {
   ActionsFormItem,
   ColgroupValueSetting,
   DesignFieldWrapper,
+  WithDesignFieldDataSourceOptions,
+  DesignPreviewFieldWithDataSource,
   DroppableContainer,
   PropertiesGridLayout,
   InputSizeSelectStandardDict,
@@ -89,6 +96,7 @@ export {
   PlacementSelectStandardDict,
   PickerSelectStandardDict,
   SelectModeSelectStandardDict,
+  DataSourceManager,
   DataSourceManagerFormItem,
   JustifyContentSelectStandardDict,
   AlignItemsSelectStandardDict,

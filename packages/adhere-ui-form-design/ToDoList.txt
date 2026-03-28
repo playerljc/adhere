@@ -33,6 +33,17 @@
   提交按钮
 
  数据源
+  Select
+  CheckboxGroup
+  RadioGroup
+  Segmented
+  Transfer
+  Tree
+  Cascader
+  TreeSelect
+  CheckSelect
+  RadioSelect
+  AutoComplete
 
  布局
   Card

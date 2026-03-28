@@ -1,15 +1,160 @@
 @import '../../constant.less';
 
+/* 弹窗内容区固定高度，本身不滚动；左右两栏各自滚动 */
+.@{prefix-cls}-design-field-data-source-manager-modal-body-inner {
+  height: calc(100vh - 200px);
+  max-height: calc(100vh - 200px);
+  min-height: 320px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  > .@{prefix-cls}-design-field-data-source-manager {
+    flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
+  }
+}
+
 .@{prefix-cls}-design-field-data-source-manager {
   display: flex;
-  gap: 8px;
+  gap: 12px;
+  align-items: stretch;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
 
-  .@{prefix-cls}-design-field-data-source-manager-menus {
+  .@{prefix-cls}-design-field-data-source-manager-fix {
+    display: flex;
+    flex: 0 0 300px;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-list-actions {
+    flex-shrink: 0;
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-list {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    list-style: none;
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-list-item {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-list-item-active {
+    background: rgba(22, 119, 255, 0.12);
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-list-item-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-list-item-actions {
+    display: flex;
+    flex: 0 0 auto;
+    flex-shrink: 0;
+    gap: 0;
+    align-items: center;
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-auto {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-actions {
     flex-shrink: 0;
   }
 
   .@{prefix-cls}-design-field-data-source-manager-info {
-    flex: 1;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-info-empty {
+    padding: 24px;
+    color: rgba(0, 0, 0, 0.45);
+    text-align: center;
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-pair-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-pair-block {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px dotted @border-color;
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-pair-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
+    align-items: center;
+    width: 100%;
+
+    .ant-form-item {
+      margin-bottom: 0;
+    }
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-pair-key {
+    flex: 0 0 140px;
     min-width: 0;
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-pair-value {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-pair-remove {
+    flex-shrink: 0;
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-pair-add {
+    margin-top: 2px;
+  }
+
+  .@{prefix-cls}-design-field-data-source-manager-pair-add-btn {
+    padding: 0;
+    height: auto;
   }
 }

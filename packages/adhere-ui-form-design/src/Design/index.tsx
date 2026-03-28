@@ -27,6 +27,7 @@ import {
   DesignValue,
   DesignValueProps,
   DraggableToolItemProps,
+  type DataSourceConfig,
   type FieldProps,
   type FieldType,
   type FlexProps,
@@ -332,6 +333,16 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         });
       }
 
+      function setDataSourceConfig(id: string, dataSourceConfig: DataSourceConfig) {
+        dispatch({
+          type: REDUCER_ACTION_TYPE.updateDataSourceConfig,
+          payload: {
+            id,
+            dataSourceConfig,
+          },
+        });
+      }
+
       // 提供对外的方法
       useImperativeHandle(ref, () => ({} as DesignHandler));
 
@@ -363,6 +374,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
               setStyleProps,
               setActionsProps,
               setFlexProps,
+              setDataSourceConfig,
               // add
               addChildrenById,
               // delete

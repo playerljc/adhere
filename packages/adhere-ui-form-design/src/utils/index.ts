@@ -17,6 +17,7 @@ import { isLayoutItem } from './isLayoutItem';
 import { genRootFieldId, getRootFieldId, isRootFieldId } from './rootFieldId';
 import { rulesSettingToRules } from './rulesSettingToRules';
 import { styleCodeStringToCSSProperties } from './styleCodeStringToCSSProperties';
+import { useDesignFieldDataSourceOptions } from './useDesignFieldDataSourceOptions';
 
 export {
   actionsCodeStringToEvents,
@@ -38,5 +39,18 @@ export {
   isRootFieldId,
   getLabelByType,
   findTypeById,
+  useDesignFieldDataSourceOptions,
 };
 export type { LabelValueColSpan } from './computeLabelValueColSpan';
+export type {
+  DesignFieldDataSourceOption,
+} from './dataSourceOptions';
+export {
+  fetchDataSourceItemConfigAsOptions,
+  findDataSourceItemConfigByDynamicId,
+  omitFieldPropsDesignKey,
+  parseDataSourceManagerValueFromFieldProps,
+  resolveDataSourceOptionLabel,
+  staticDataSourceToDesignOptions,
+} from './dataSourceOptions';
+export type { UseDesignFieldDataSourceOptionsResult } from './useDesignFieldDataSourceOptions';

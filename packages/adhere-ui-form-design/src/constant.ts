@@ -9,5 +9,6 @@ export enum REDUCER_ACTION_TYPE {
   updateChildrenProps = 'update_children_props',
   addChildrenById = 'add_children_by_id',
   deleteChildrenById = 'delete_children_by_id',
+  updateDataSourceConfig = 'update_data_source_config',
   noop = 'noop',
 }

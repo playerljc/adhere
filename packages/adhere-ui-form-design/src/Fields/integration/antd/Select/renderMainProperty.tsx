@@ -111,7 +111,7 @@ export function MainProperty({
       label: <Label>{Intl.get('mode')}：</Label>,
       value: (
         <Value>
-          <Form.Item name="type">
+          <Form.Item name="mode">
             <SelectModeSelectStandardDict placeholder={Intl.get('mode')} />
           </Form.Item>
         </Value>

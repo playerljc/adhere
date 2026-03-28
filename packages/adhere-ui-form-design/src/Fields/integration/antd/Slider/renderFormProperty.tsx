@@ -77,12 +77,12 @@ export function FormProperty({
       ),
     },
     {
-      key: 'value',
+      key: 'defaultValue',
       require: true,
       label: <Label>{Intl.get('initial_value')}：</Label>,
       value: (
         <Value>
-          <Form.Item name="value">
+          <Form.Item name="defaultValue">
             <InputNumberInteger placeholder={Intl.get('initial_value')} min={min} max={max} />
           </Form.Item>
         </Value>

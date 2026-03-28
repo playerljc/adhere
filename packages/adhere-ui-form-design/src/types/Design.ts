@@ -142,6 +142,7 @@ export interface DesignContextType {
   setStyleProps: (id: string, props: StyleProps) => void;
   setActionsProps: (id: string, props: ActionsProps) => void;
   setFlexProps: (id: string, props: FlexProps) => void;
+  setDataSourceConfig: (id: string, config: DataSourceConfig) => void;
   // --------- add -----------
   addChildrenById: (id: string, child: DesignValue) => void;
   // --------- delete -----------

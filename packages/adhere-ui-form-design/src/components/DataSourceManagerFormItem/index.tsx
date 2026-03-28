@@ -51,9 +51,12 @@ const DataSourceManagerFormItem: FC<DataSourceManagerFormItemProps> = ({ value, 
     <div className={selectorPrefix}>
       <div className={`${selectorPrefix}-actions`}>
         <Segmented
+          value={value?.type}
           onChange={(_value) => {
             onChange?.({
-              ...(value ?? {}),
+              // ...(value ?? {}),
+              dataSource: [],
+              dynamicConfigId: undefined,
               type: _value as DataSourceManagerFormItemValue['type'],
             });
           }}

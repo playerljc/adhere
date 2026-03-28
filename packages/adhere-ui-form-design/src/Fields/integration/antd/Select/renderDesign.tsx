@@ -1,9 +1,8 @@
-import { Input, type InputProps } from 'antd';
+import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
+import { Select, type SelectProps } from 'antd';
 import React from 'react';
 
-import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
-
-import { LabelDesign, ValueDesign } from '../../../../components';
+import { DesignPreviewFieldWithDataSource, LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
 import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
 
@@ -27,9 +26,8 @@ export function renderDesign({
 
   const { getDesignValue } = context;
 
-  const designValue = getDesignValue() as DesignValue;
-
-  const parent = findDesignValueById(parentId as string, designValue) as DesignValue;
+  const root = getDesignValue();
+  const parent = parentId && root ? findDesignValueById(parentId, root) : undefined;
 
   const { labelColSpan, valueColSpan } = computeLabelValueColSpan(parent, formItemProps);
 
@@ -42,12 +40,23 @@ export function renderDesign({
     value: (
       <ValueDesign value={value}>
         {({ fieldProps, style, actions }) => (
-          <Input
-            {...(fieldProps as InputProps)}
+          <DesignPreviewFieldWithDataSource
+            fieldProps={fieldProps}
+            formItemProps={formItemProps}
             style={style ?? {}}
-            {...actions}
-            value={(formItemProps as InputProps)?.value}
-          />
+            actions={actions}
+          >
+            {({ restFieldProps, options, loading, style: fieldStyle, actions: fieldActions, previewValue }) => (
+              <Select
+                {...(restFieldProps as SelectProps)}
+                loading={loading || undefined}
+                options={options}
+                style={fieldStyle}
+                {...fieldActions}
+                value={previewValue as SelectProps['value']}
+              />
+            )}
+          </DesignPreviewFieldWithDataSource>
         )}
       </ValueDesign>
     ),

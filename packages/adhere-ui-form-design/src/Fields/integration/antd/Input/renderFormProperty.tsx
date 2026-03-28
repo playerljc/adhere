@@ -93,12 +93,12 @@ export function FormProperty({
       ),
     },
     {
-      key: 'value',
+      key: 'defaultValue',
       require: true,
       label: <Label>{Intl.get('initial_value')}：</Label>,
       value: (
         <Value>
-          <Form.Item name="value">
+          <Form.Item name="defaultValue">
             <Input placeholder={Intl.get('initial_value')} />
           </Form.Item>
         </Value>

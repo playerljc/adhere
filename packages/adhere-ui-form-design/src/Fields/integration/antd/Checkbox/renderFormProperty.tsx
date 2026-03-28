@@ -74,12 +74,12 @@ export function FormProperty({
       ),
     },
     {
-      key: 'value',
+      key: 'defaultValue',
       require: true,
       label: <Label>{Intl.get('initial_checked')}：</Label>,
       value: (
         <Value>
-          <Form.Item name="value">
+          <Form.Item name="defaultValue">
             <WhetherRadioHorizontalDict />
           </Form.Item>
         </Value>
