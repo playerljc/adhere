@@ -4,6 +4,7 @@ import { DesignItem, ToolBoxGroup } from '../../../types';
 import { define as AlertDefine } from './Alert';
 import { define as ButtonDefine } from './Button';
 import { define as CheckboxDefine } from './Checkbox';
+import { define as CheckboxGroupDefine } from './CheckboxGroup';
 import { define as ColorPickerDefine } from './ColorPicker';
 import { define as DatePickerDefine } from './DatePicker';
 import { define as DateRangePickerDefine } from './DateRangePicker';
@@ -14,7 +15,9 @@ import { define as InputSearchDefine } from './InputSearch';
 import { define as LinkDefine } from './Link';
 import { define as PasswordDefine } from './Password';
 import { define as RadioDefine } from './Radio';
+import { define as RadioGroupDefine } from './RadioGroup';
 import { define as RateDefine } from './Rate';
+import { define as SegmentedDefine } from './Segmented';
 import { define as SelectDefine } from './Select';
 import { define as SliderDefine } from './Slider';
 import { define as SubmitButtonDefine } from './SubmitButton';
@@ -42,9 +45,12 @@ const SubmitButton = SubmitButtonDefine();
 const InputOTP = InputOTPDefine();
 const Switch = SwitchDefine();
 const Checkbox = CheckboxDefine();
+const CheckboxGroup = CheckboxGroupDefine();
 const Radio = RadioDefine();
+const RadioGroup = RadioGroupDefine();
 const Rate = RateDefine();
 const Slider = SliderDefine();
+const Segmented = SegmentedDefine();
 const Select = SelectDefine();
 
 export function install(): {
@@ -162,10 +168,22 @@ export function install(): {
         tooltip: Intl.get('checkbox_input'),
       },
       {
+        type: CheckboxGroup.type,
+        label: Intl.get('checkbox_group_input'),
+        searchLabel: Intl.get('checkbox_group_input'),
+        tooltip: Intl.get('checkbox_group_input'),
+      },
+      {
         type: Radio.type,
         label: Intl.get('radio_input'),
         searchLabel: Intl.get('radio_input'),
         tooltip: Intl.get('radio_input'),
+      },
+      {
+        type: RadioGroup.type,
+        label: Intl.get('radio_group_input'),
+        searchLabel: Intl.get('radio_group_input'),
+        tooltip: Intl.get('radio_group_input'),
       },
       {
         type: Rate.type,
@@ -178,6 +196,12 @@ export function install(): {
         label: Intl.get('slider_input'),
         searchLabel: Intl.get('slider_input'),
         tooltip: Intl.get('slider_input'),
+      },
+      {
+        type: Segmented.type,
+        label: Intl.get('segmented_input'),
+        searchLabel: Intl.get('segmented_input'),
+        tooltip: Intl.get('segmented_input'),
       },
       {
         type: Select.type,
@@ -205,9 +229,12 @@ export function install(): {
       SubmitButton,
       Switch,
       Checkbox,
+      CheckboxGroup,
       Radio,
+      RadioGroup,
       Rate,
       Slider,
+      Segmented,
       Select,
     ],
   };

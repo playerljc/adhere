@@ -120,6 +120,7 @@ declare const _default: {
     label: string;
     label_style: string;
     large: string;
+    medium: string;
     layout: string;
     load_more_replies: string;
     loading: string;
@@ -322,5 +323,15 @@ declare const _default: {
     scroll: string;
     select_text: string;
     select_options: string;
+    whether_option_wrap: string;
+    checkbox_group_input: string;
+    radio_group_input: string;
+    radio_group_option_type: string;
+    radio_group_button_style: string;
+    radio_group_button_outline: string;
+    radio_group_button_solid: string;
+    segmented_input: string;
+    segmented_shape: string;
+    segmented_shape_round: string;
 }[];
 export default _default;

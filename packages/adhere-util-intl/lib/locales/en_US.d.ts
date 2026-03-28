@@ -260,5 +260,15 @@ declare const _default: {
     button_disabled: string;
     button_block: string;
     submit_button_text: string;
+    whether_option_wrap: string;
+    checkbox_group_input: string;
+    radio_group_input: string;
+    radio_group_option_type: string;
+    radio_group_button_style: string;
+    radio_group_button_outline: string;
+    radio_group_button_solid: string;
+    segmented_input: string;
+    segmented_shape: string;
+    segmented_shape_round: string;
 }[];
 export default _default;
