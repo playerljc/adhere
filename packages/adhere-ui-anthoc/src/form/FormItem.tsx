@@ -118,7 +118,7 @@ const FormItem: FC<FormItemProps> = ({
                 // 这个地方很关键，截取onChange事件, 先执行控件本身的onChange,然后在执行FormItem的onChange
                 onChange: (...args) => {
                   childProps?.onChange?.(...args);
-                  rest?.onChange(...args);
+                  rest?.onChange?.(...args);
                 },
               });
             }
