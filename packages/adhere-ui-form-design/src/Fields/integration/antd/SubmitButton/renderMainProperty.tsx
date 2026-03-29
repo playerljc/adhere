@@ -1,9 +1,14 @@
 import React, { type ReactNode } from 'react';
 
-import { Form, Input, Select } from '@baifendian/adhere-ui-anthoc';
+import { Form, Input } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { WhetherRadioHorizontalDict } from '../../../../components';
+import {
+  ButtonShapeSelectStandardDict,
+  ButtonTypeSelectStandardDict,
+  InputSizeSelectStandardDict,
+  WhetherRadioHorizontalDict,
+} from '../../../../components';
 import { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
 import { createStandardMainProperty } from '../../../../utils/createStandardMainProperty';
@@ -30,17 +35,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="type">
-            <Select
-              placeholder={Intl.get('please_select')}
-              allowClear
-              options={[
-                { label: 'default', value: 'default' },
-                { label: 'primary', value: 'primary' },
-                { label: 'dashed', value: 'dashed' },
-                { label: 'link', value: 'link' },
-                { label: 'text', value: 'text' },
-              ]}
-            />
+            <ButtonTypeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),
@@ -52,15 +47,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="shape">
-            <Select
-              placeholder={Intl.get('please_select')}
-              allowClear
-              options={[
-                { label: 'default', value: 'default' },
-                { label: 'circle', value: 'circle' },
-                { label: 'round', value: 'round' },
-              ]}
-            />
+            <ButtonShapeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),
@@ -72,15 +59,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="size">
-            <Select
-              placeholder={Intl.get('please_select')}
-              allowClear
-              options={[
-                { label: 'large', value: 'large' },
-                { label: 'middle', value: 'middle' },
-                { label: 'small', value: 'small' },
-              ]}
-            />
+            <InputSizeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),
@@ -92,7 +71,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="ghost">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('button_ghost')} />
           </Form.Item>
         </Value>
       ),
@@ -104,7 +83,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="danger">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('button_danger')} />
           </Form.Item>
         </Value>
       ),
@@ -116,7 +95,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="loading">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('button_loading')} />
           </Form.Item>
         </Value>
       ),
@@ -128,7 +107,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('button_disabled')} />
           </Form.Item>
         </Value>
       ),
@@ -140,7 +119,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="block">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('button_block')} />
           </Form.Item>
         </Value>
       ),

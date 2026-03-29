@@ -1,9 +1,9 @@
 import React, { type ReactNode } from 'react';
 
-import { Form, Select, TextArea } from '@baifendian/adhere-ui-anthoc';
+import { Form, TextArea } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { WhetherRadioHorizontalDict } from '../../../../components';
+import { TextTypeSelectStandardDict, WhetherRadioHorizontalDict } from '../../../../components';
 import { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
 import { createStandardMainProperty } from '../../../../utils/createStandardMainProperty';
@@ -30,16 +30,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="type">
-            <Select
-              placeholder={Intl.get('please_select')}
-              allowClear
-              options={[
-                { label: 'secondary', value: 'secondary' },
-                { label: 'success', value: 'success' },
-                { label: 'warning', value: 'warning' },
-                { label: 'danger', value: 'danger' },
-              ]}
-            />
+            <TextTypeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),
@@ -51,7 +42,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="strong">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('strong')} />
           </Form.Item>
         </Value>
       ),
@@ -63,7 +54,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="underline">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('underline')} />
           </Form.Item>
         </Value>
       ),
@@ -75,7 +66,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="delete">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('delete')} />
           </Form.Item>
         </Value>
       ),
@@ -87,7 +78,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),
@@ -99,7 +90,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="ellipsis">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('ellipsis')} />
           </Form.Item>
         </Value>
       ),

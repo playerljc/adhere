@@ -1,11 +1,11 @@
 import React, { type ReactNode, useContext, useEffect } from 'react';
 
-import { Form, Select } from '@baifendian/adhere-ui-anthoc';
+import { Form } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
-import { WhetherRadioHorizontalDict } from '../../../../components';
+import { SwitchSizeSelectStandardDict, WhetherRadioHorizontalDict } from '../../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
 
@@ -56,14 +56,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="size">
-            <Select
-              placeholder={Intl.get('please_select')}
-              allowClear
-              options={[
-                { label: 'default', value: 'default' },
-                { label: 'small', value: 'small' },
-              ]}
-            />
+            <SwitchSizeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),

@@ -47,7 +47,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="type">
-            <InputTypeSelectStandardDict />
+            <InputTypeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),
@@ -131,7 +131,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="size">
-            <InputSizeSelectStandardDict />
+            <InputSizeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),
@@ -143,7 +143,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="variant">
-            <VariantSelectStandardDict />
+            <VariantSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),

@@ -1,11 +1,16 @@
 import React, { type ReactNode, useContext, useEffect } from 'react';
 
-import { Form, Select } from '@baifendian/adhere-ui-anthoc';
+import { Form } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
-import { SizeSelectStandardDict, WhetherRadioHorizontalDict } from '../../../../components';
+import {
+  ColorPickerFormatSelectStandardDict,
+  ColorPickerTriggerSelectStandardDict,
+  SizeSelectStandardDict,
+  WhetherRadioHorizontalDict,
+} from '../../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
 
@@ -28,7 +33,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),
@@ -40,7 +45,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="allowClear">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('allow_clear')} />
           </Form.Item>
         </Value>
       ),
@@ -52,15 +57,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="format">
-            <Select
-              placeholder={Intl.get('please_select')}
-              allowClear
-              options={[
-                { label: 'hex', value: 'hex' },
-                { label: 'rgb', value: 'rgb' },
-                { label: 'hsb', value: 'hsb' },
-              ]}
-            />
+            <ColorPickerFormatSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),
@@ -72,15 +69,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="defaultFormat">
-            <Select
-              placeholder={Intl.get('please_select')}
-              allowClear
-              options={[
-                { label: 'hex', value: 'hex' },
-                { label: 'rgb', value: 'rgb' },
-                { label: 'hsb', value: 'hsb' },
-              ]}
-            />
+            <ColorPickerFormatSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),
@@ -92,14 +81,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="trigger">
-            <Select
-              placeholder={Intl.get('please_select')}
-              allowClear
-              options={[
-                { label: 'click', value: 'click' },
-                { label: 'hover', value: 'hover' },
-              ]}
-            />
+            <ColorPickerTriggerSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),
@@ -123,7 +105,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="showText">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('show_text')} />
           </Form.Item>
         </Value>
       ),
@@ -135,7 +117,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="disabledAlpha">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled_alpha')} />
           </Form.Item>
         </Value>
       ),
@@ -147,7 +129,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="disabledFormat">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled_format')} />
           </Form.Item>
         </Value>
       ),

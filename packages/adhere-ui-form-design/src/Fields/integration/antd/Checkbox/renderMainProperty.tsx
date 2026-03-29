@@ -34,7 +34,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),
@@ -46,7 +46,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="indeterminate">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('checkbox_indeterminate')} />
           </Form.Item>
         </Value>
       ),

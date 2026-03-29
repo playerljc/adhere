@@ -17,9 +17,11 @@ export default () => {
     [
       {
         items: [...antd.toolBox],
+        columns: 2,
       },
       {
         items: [...layout.toolBox],
+        columns: 2,
       },
     ],
   );

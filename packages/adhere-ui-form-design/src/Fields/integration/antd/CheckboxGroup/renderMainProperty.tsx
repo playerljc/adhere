@@ -5,10 +5,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
-import {
-  DataSourceManagerFormItem,
-  WhetherRadioHorizontalDict,
-} from '../../../../components';
+import { DataSourceManagerFormItem, WhetherRadioHorizontalDict } from '../../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps, FieldProps } from '../../../../types';
 
@@ -52,7 +49,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),
@@ -76,7 +73,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="optionWrap">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('whether_option_wrap')} />
           </Form.Item>
         </Value>
       ),
@@ -114,10 +111,7 @@ export function MainProperty({
   function onFieldsChange() {
     const raw = form.getFieldsValue() as CheckboxGroupFieldProps;
     const next = normalizeLayoutProps(raw);
-    if (
-      next.columnCount !== raw.columnCount ||
-      next.optionWrap !== raw.optionWrap
-    ) {
+    if (next.columnCount !== raw.columnCount || next.optionWrap !== raw.optionWrap) {
       form.setFieldsValue(next);
     }
     setFieldProps(getActiveFieldId() as string, next);
@@ -137,9 +131,7 @@ export function MainProperty({
             width: '100%',
             columnCount: 1,
             colgroup: ['auto'],
-            data: renderFormItems
-              ? renderFormItems(defaultFormItems)
-              : defaultFormItems,
+            data: renderFormItems ? renderFormItems(defaultFormItems) : defaultFormItems,
           },
         ]}
       />

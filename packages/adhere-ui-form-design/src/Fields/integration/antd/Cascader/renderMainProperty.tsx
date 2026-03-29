@@ -38,7 +38,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="allowClear">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('allow_clear')} />
           </Form.Item>
         </Value>
       ),
@@ -50,7 +50,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="changeOnSelect">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('change_on_select')} />
           </Form.Item>
         </Value>
       ),
@@ -62,7 +62,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),
@@ -74,7 +74,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="multiple">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('multiple')} />
           </Form.Item>
         </Value>
       ),
@@ -124,7 +124,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="showSearch">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('show_search')} />
           </Form.Item>
         </Value>
       ),
@@ -136,7 +136,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="size">
-            <SizeSelectStandardDict />
+            <SizeSelectStandardDict placeholder={Intl.get('input_size')} />
           </Form.Item>
         </Value>
       ),
@@ -160,7 +160,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="variant">
-            <VariantSelectStandardDict />
+            <VariantSelectStandardDict placeholder={Intl.get('input_variant')} />
           </Form.Item>
         </Value>
       ),
@@ -198,9 +198,7 @@ export function MainProperty({
             width: '100%',
             columnCount: 1,
             colgroup: ['auto'],
-            data: renderFormItems
-              ? renderFormItems(defaultFormItems)
-              : defaultFormItems,
+            data: renderFormItems ? renderFormItems(defaultFormItems) : defaultFormItems,
           },
         ]}
       />

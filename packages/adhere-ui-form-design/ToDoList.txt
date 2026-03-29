@@ -37,13 +37,14 @@
   CheckboxGroup
   RadioGroup
   Segmented
-
   TreeSelect
   Cascader
 
   Transfer
-  Tree
   AutoComplete
+
+  EditorTable
+  TreeTable
 
  布局
   Card

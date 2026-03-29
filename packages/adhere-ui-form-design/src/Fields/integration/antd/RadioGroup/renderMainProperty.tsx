@@ -3,11 +3,12 @@ import React, { type ReactNode, useContext, useEffect } from 'react';
 import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
-import { Select } from 'antd';
 
 import { DesignContext } from '../../../../Design/Context';
 import {
   DataSourceManagerFormItem,
+  RadioGroupButtonStyleSelectStandardDict,
+  RadioGroupOptionTypeSelectStandardDict,
   SizeSelectStandardDict,
   WhetherRadioHorizontalDict,
 } from '../../../../components';
@@ -61,7 +62,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),
@@ -85,13 +86,9 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="optionType">
-            <Select
+            <RadioGroupOptionTypeSelectStandardDict
               allowClear={false}
               placeholder={Intl.get('radio_group_option_type')}
-              options={[
-                { label: Intl.get('default'), value: 'default' },
-                { label: Intl.get('button'), value: 'button' },
-              ]}
             />
           </Form.Item>
         </Value>
@@ -104,13 +101,9 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="buttonStyle">
-            <Select
+            <RadioGroupButtonStyleSelectStandardDict
               allowClear={false}
               placeholder={Intl.get('radio_group_button_style')}
-              options={[
-                { label: Intl.get('radio_group_button_outline'), value: 'outline' },
-                { label: Intl.get('radio_group_button_solid'), value: 'solid' },
-              ]}
             />
           </Form.Item>
         </Value>
@@ -123,7 +116,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="block">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('button_block')} />
           </Form.Item>
         </Value>
       ),
@@ -135,7 +128,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="size">
-            <SizeSelectStandardDict />
+            <SizeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),
@@ -147,7 +140,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="optionWrap">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('whether_option_wrap')} />
           </Form.Item>
         </Value>
       ),

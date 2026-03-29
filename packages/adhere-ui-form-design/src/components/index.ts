@@ -1,10 +1,17 @@
 import ActionsFormItem from './ActionsFormItem';
+import { AlertTypeSelectStandardDict } from './AlertType';
 import { AlignContentSelectStandardDict } from './AlignContent';
 import { AlignItemsSelectStandardDict } from './AlignItems';
 import { AlignSelfSelectStandardDict } from './AlignSelf';
+import { ButtonHtmlTypeSelectStandardDict } from './ButtonHtmlType';
+import { ButtonShapeSelectStandardDict } from './ButtonShape';
+import { ButtonTypeSelectStandardDict } from './ButtonType';
 import ColgroupValueSetting from './ColgroupValueSetting';
 import { ColorPickerEventsSelectStandardDict } from './ColorPickerEvents';
+import { ColorPickerFormatSelectStandardDict } from './ColorPickerFormat';
+import { ColorPickerTriggerSelectStandardDict } from './ColorPickerTrigger';
 import DataSourceManager from './DataSourceManager';
+import { DateBoundModeSelectStandardDict } from './DateBoundMode';
 import DataSourceManagerFormItem from './DataSourceManagerFormItem';
 import TreeDataSourceManagerFormItem from './TreeDataSourceManagerFormItem';
 export type { TreeDataSourceManagerFormItemValue, TreeDataSourceManagerFormItemProps } from './TreeDataSourceManagerFormItem';
@@ -26,10 +33,12 @@ import I18nChangeFormItem, {
   valuesToPayload,
 } from './I18nChangeFormItem';
 import { InputEventsSelectStandardDict } from './InputEvents';
+import { InputNumberModeSelectStandardDict } from './InputNumberMode';
 import { InputSizeSelectStandardDict } from './InputSize';
 import { InputTypeSelectStandardDict } from './InputType';
 import { JustifyContentSelectStandardDict } from './JustifyContent';
 import { LabelDesign, ValueDesign } from './LabelValueDesign';
+import { LinkTargetSelectStandardDict } from './LinkTarget';
 import MonacoCSSEditorFormItem from './MonacoCSSEditorFormItem';
 import MonacoEditorFormItem, {
   EmptyValidator as MonacoEditorFormItemEmptyValidator,
@@ -37,17 +46,25 @@ import MonacoEditorFormItem, {
 import NameFormItemWrapper from './NameFormItemWrapper';
 import { PickerSelectStandardDict } from './Picker';
 import { PlacementSelectStandardDict } from './Placement';
+import { RadioGroupButtonStyleSelectStandardDict } from './RadioGroupButtonStyle';
+import { RadioGroupOptionTypeSelectStandardDict } from './RadioGroupOptionType';
+import { RateSizeSelectStandardDict } from './RateSize';
 import { RulesMenuStandardDict } from './Rules';
 import RulesSettingFormItem from './RulesSettingFormItem';
+import { SegmentedShapeSelectStandardDict } from './SegmentedShape';
 import { SelectModeSelectStandardDict } from './SelectMode';
 import { TreeSelectShowCheckedStrategySelectStandardDict } from './TreeSelectShowCheckedStrategy';
 import { CascaderShowCheckedStrategySelectStandardDict } from './CascaderShowCheckedStrategy';
 import { SizeSelectStandardDict } from './Size';
 import { SlotEndLabel, SlotStartLabel } from './SlotLabel';
+import { SwitchSizeSelectStandardDict } from './SwitchSize';
 import PropertiesGridLayout from './TableGridLayout';
 import TableGridLayoutColgroupSetting from './TableGridLayoutColgroupSetting';
 import { TableGridLayoutModeTypeSelectStandardDict } from './TableGridLayoutModeType';
+import { TextTypeSelectStandardDict } from './TextType';
 import { ThousandsSelectStandardDict } from './Thousands';
+import { TimeHourStepSelectStandardDict } from './TimeHourStep';
+import { TimeMinuteSecondStepSelectStandardDict } from './TimeMinuteSecondStep';
 import { TimePickerEventsSelectStandardDict } from './TimePickerEvents';
 import { TimeRangePickerEventsSelectStandardDict } from './TimeRangePickerEvents';
 import { ValuePropNameSelectStandardDict } from './ValuePropName';
@@ -60,6 +77,7 @@ export { FormPropertyShell, mapSliderFormPropertyFormValues } from './FormProper
 export {
   LabelDesign,
   ValueDesign,
+  AlertTypeSelectStandardDict,
   DirectionSelectStandardDict,
   WhetherRadioHorizontalDict,
   DensitySelectStandardDict,
@@ -111,4 +129,20 @@ export {
   AlignItemsSelectStandardDict,
   AlignContentSelectStandardDict,
   AlignSelfSelectStandardDict,
+  ButtonTypeSelectStandardDict,
+  ButtonShapeSelectStandardDict,
+  ButtonHtmlTypeSelectStandardDict,
+  ColorPickerFormatSelectStandardDict,
+  ColorPickerTriggerSelectStandardDict,
+  DateBoundModeSelectStandardDict,
+  InputNumberModeSelectStandardDict,
+  LinkTargetSelectStandardDict,
+  RadioGroupButtonStyleSelectStandardDict,
+  RadioGroupOptionTypeSelectStandardDict,
+  RateSizeSelectStandardDict,
+  SegmentedShapeSelectStandardDict,
+  SwitchSizeSelectStandardDict,
+  TextTypeSelectStandardDict,
+  TimeHourStepSelectStandardDict,
+  TimeMinuteSecondStepSelectStandardDict,
 };

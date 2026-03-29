@@ -1,11 +1,12 @@
 import React, { type ReactNode, useContext, useEffect } from 'react';
 
-import { Form, Input, InputNumberInteger, Select } from '@baifendian/adhere-ui-anthoc';
+import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
 import {
+  InputNumberModeSelectStandardDict,
   InputSizeSelectStandardDict,
   ThousandsSelectStandardDict,
   VariantSelectStandardDict,
@@ -128,13 +129,9 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="mode">
-            <Select
+            <InputNumberModeSelectStandardDict
               placeholder={Intl.get('please_select')}
               allowClear
-              options={[
-                { label: 'input', value: 'input' },
-                { label: 'spinner', value: 'spinner' },
-              ]}
             />
           </Form.Item>
         </Value>
@@ -231,7 +228,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="size">
-            <InputSizeSelectStandardDict />
+            <InputSizeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),
@@ -243,7 +240,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="variant">
-            <VariantSelectStandardDict />
+            <VariantSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),

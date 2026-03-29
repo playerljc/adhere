@@ -1,4 +1,3 @@
-import { Select } from 'antd';
 import React, { type ReactNode, useContext, useEffect } from 'react';
 
 import { Form, Input } from '@baifendian/adhere-ui-anthoc';
@@ -9,6 +8,7 @@ import { DesignContext } from '../../../../Design/Context';
 import {
   DataSourceManagerFormItem,
   DirectionSelectStandardDict,
+  SegmentedShapeSelectStandardDict,
   SizeSelectStandardDict,
   WhetherRadioHorizontalDict,
 } from '../../../../components';
@@ -39,7 +39,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),
@@ -51,7 +51,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="block">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('button_block')} />
           </Form.Item>
         </Value>
       ),
@@ -99,13 +99,9 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="shape">
-            <Select
+            <SegmentedShapeSelectStandardDict
               allowClear={false}
               placeholder={Intl.get('segmented_shape')}
-              options={[
-                { label: Intl.get('default'), value: 'default' },
-                { label: Intl.get('segmented_shape_round'), value: 'round' },
-              ]}
             />
           </Form.Item>
         </Value>

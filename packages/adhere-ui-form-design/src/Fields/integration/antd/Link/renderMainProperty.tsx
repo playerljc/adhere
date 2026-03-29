@@ -1,9 +1,9 @@
 import React, { type ReactNode } from 'react';
 
-import { Form, Input, Select } from '@baifendian/adhere-ui-anthoc';
+import { Form, Input } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { WhetherRadioHorizontalDict } from '../../../../components';
+import { LinkTargetSelectStandardDict, WhetherRadioHorizontalDict } from '../../../../components';
 import { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
 import { createStandardMainProperty } from '../../../../utils/createStandardMainProperty';
@@ -42,14 +42,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="target">
-            <Select
-              placeholder={Intl.get('please_select')}
-              allowClear
-              options={[
-                { label: '_self', value: '_self' },
-                { label: '_blank', value: '_blank' },
-              ]}
-            />
+            <LinkTargetSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),
@@ -61,7 +54,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),

@@ -1,11 +1,11 @@
 import React, { type ReactNode, useContext, useEffect } from 'react';
 
-import { Form, InputNumberInteger, Select } from '@baifendian/adhere-ui-anthoc';
+import { Form, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
-import { WhetherRadioHorizontalDict } from '../../../../components';
+import { RateSizeSelectStandardDict, WhetherRadioHorizontalDict } from '../../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
 
@@ -96,14 +96,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="size">
-            <Select
-              placeholder={Intl.get('please_select')}
-              allowClear
-              options={[
-                { label: 'small', value: 'small' },
-                { label: 'middle', value: 'middle' },
-              ]}
-            />
+            <RateSizeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),

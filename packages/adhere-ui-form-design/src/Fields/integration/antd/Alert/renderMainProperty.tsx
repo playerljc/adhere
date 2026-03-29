@@ -1,9 +1,9 @@
 import React, { type ReactNode } from 'react';
 
-import { Form, Input, Select, TextArea } from '@baifendian/adhere-ui-anthoc';
+import { Form, Input, TextArea } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { WhetherRadioHorizontalDict } from '../../../../components';
+import { AlertTypeSelectStandardDict, WhetherRadioHorizontalDict } from '../../../../components';
 import { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
 import { createStandardMainProperty } from '../../../../utils/createStandardMainProperty';
@@ -42,16 +42,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="type">
-            <Select
-              placeholder={Intl.get('please_select')}
-              allowClear
-              options={[
-                { label: 'info', value: 'info' },
-                { label: 'success', value: 'success' },
-                { label: 'warning', value: 'warning' },
-                { label: 'error', value: 'error' },
-              ]}
-            />
+            <AlertTypeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),
@@ -63,7 +54,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="closable">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('alert_closable')} />
           </Form.Item>
         </Value>
       ),
@@ -75,7 +66,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="showIcon">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('alert_show_icon')} />
           </Form.Item>
         </Value>
       ),

@@ -1,12 +1,13 @@
 import dayjs from 'dayjs';
 import React, { type ReactNode, useContext, useEffect, useMemo } from 'react';
 
-import { DatePicker, Form, Input, Select } from '@baifendian/adhere-ui-anthoc';
+import { DatePicker, Form, Input } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
 import {
+  DateBoundModeSelectStandardDict,
   PickerSelectStandardDict,
   PlacementSelectStandardDict,
   SizeSelectStandardDict,
@@ -143,7 +144,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="showTime">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('show_time')} />
           </Form.Item>
         </Value>
       ),
@@ -155,7 +156,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="needConfirm">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('need_confirm')} />
           </Form.Item>
         </Value>
       ),
@@ -169,7 +170,7 @@ export function MainProperty({
             value: (
               <Value>
                 <Form.Item name="multiple">
-                  <WhetherRadioHorizontalDict />
+                  <WhetherRadioHorizontalDict placeholder={Intl.get('multiple')} />
                 </Form.Item>
               </Value>
             ),
@@ -185,7 +186,7 @@ export function MainProperty({
             value: (
               <Value>
                 <Form.Item name="showWeek">
-                  <WhetherRadioHorizontalDict />
+                  <WhetherRadioHorizontalDict placeholder={Intl.get('show_week')} />
                 </Form.Item>
               </Value>
             ),
@@ -199,7 +200,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="allowClear">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('allow_clear')} />
           </Form.Item>
         </Value>
       ),
@@ -211,7 +212,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="isBirthday">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('is_birthday')} />
           </Form.Item>
         </Value>
       ),
@@ -223,15 +224,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="dateBoundMode">
-            <Select
-              placeholder={Intl.get('please_select')}
-              allowClear
-              options={[
-                { label: Intl.get('none'), value: '' },
-                { label: 'before', value: 'before' },
-                { label: 'after', value: 'after' },
-              ]}
-            />
+            <DateBoundModeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),
@@ -255,7 +248,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="dateBoundIncludeBase">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('date_bound_include_base')} />
           </Form.Item>
         </Value>
       ),

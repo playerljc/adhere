@@ -74,7 +74,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="multiple">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('multiple')} />
           </Form.Item>
         </Value>
       ),
@@ -110,7 +110,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="showSearch">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('show_search')} />
           </Form.Item>
         </Value>
       ),
@@ -122,7 +122,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="size">
-            <SizeSelectStandardDict />
+            <SizeSelectStandardDict placeholder={Intl.get('input_size')} />
           </Form.Item>
         </Value>
       ),
@@ -146,7 +146,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="labelInValue">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('label_in_value')} />
           </Form.Item>
         </Value>
       ),
@@ -158,7 +158,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="treeCheckable">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('tree_checkable')} />
           </Form.Item>
         </Value>
       ),
@@ -184,7 +184,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="treeDefaultExpandAll">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('tree_default_expand_all')} />
           </Form.Item>
         </Value>
       ),
@@ -196,7 +196,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="treeLine">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('tree_line')} />
           </Form.Item>
         </Value>
       ),
@@ -208,7 +208,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="virtual">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('virtual_scroll')} />
           </Form.Item>
         </Value>
       ),
@@ -220,7 +220,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="variant">
-            <VariantSelectStandardDict />
+            <VariantSelectStandardDict placeholder={Intl.get('input_variant')} />
           </Form.Item>
         </Value>
       ),
@@ -258,9 +258,7 @@ export function MainProperty({
             width: '100%',
             columnCount: 1,
             colgroup: ['auto'],
-            data: renderFormItems
-              ? renderFormItems(defaultFormItems)
-              : defaultFormItems,
+            data: renderFormItems ? renderFormItems(defaultFormItems) : defaultFormItems,
           },
         ]}
       />

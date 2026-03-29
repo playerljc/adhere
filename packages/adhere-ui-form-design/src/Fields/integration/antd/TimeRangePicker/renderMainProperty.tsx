@@ -1,6 +1,6 @@
 import React, { type ReactNode, useContext, useEffect } from 'react';
 
-import { Form, Input, Select } from '@baifendian/adhere-ui-anthoc';
+import { Form, Input } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -8,6 +8,8 @@ import { DesignContext } from '../../../../Design/Context';
 import {
   PlacementSelectStandardDict,
   SizeSelectStandardDict,
+  TimeHourStepSelectStandardDict,
+  TimeMinuteSecondStepSelectStandardDict,
   VariantSelectStandardDict,
   VerificationStatusSelectStandardDict,
   WhetherRadioHorizontalDict,
@@ -169,16 +171,9 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="minuteStep">
-            <Select
+            <TimeMinuteSecondStepSelectStandardDict
               placeholder={Intl.get('please_select')}
               allowClear
-              options={[
-                { label: '1', value: 1 },
-                { label: '5', value: 5 },
-                { label: '10', value: 10 },
-                { label: '15', value: 15 },
-                { label: '30', value: 30 },
-              ]}
             />
           </Form.Item>
         </Value>
@@ -191,18 +186,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="hourStep">
-            <Select
-              placeholder={Intl.get('please_select')}
-              allowClear
-              options={[
-                { label: '1', value: 1 },
-                { label: '2', value: 2 },
-                { label: '3', value: 3 },
-                { label: '4', value: 4 },
-                { label: '6', value: 6 },
-                { label: '12', value: 12 },
-              ]}
-            />
+            <TimeHourStepSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),
@@ -214,16 +198,9 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="secondStep">
-            <Select
+            <TimeMinuteSecondStepSelectStandardDict
               placeholder={Intl.get('please_select')}
               allowClear
-              options={[
-                { label: '1', value: 1 },
-                { label: '5', value: 5 },
-                { label: '10', value: 10 },
-                { label: '15', value: 15 },
-                { label: '30', value: 30 },
-              ]}
             />
           </Form.Item>
         </Value>
