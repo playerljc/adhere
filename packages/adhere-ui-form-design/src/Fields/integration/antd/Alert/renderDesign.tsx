@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Alert } from '@baifendian/adhere-ui-anthoc';
 
 import { createSimpleFieldRenderDesign } from '../../../../utils/createSimpleFieldRenderDesign';

@@ -347,5 +347,11 @@ declare const _default: {
     virtual_scroll: string;
     tree_data_setting: string;
     cascader_show_checked_strategy: string;
+    format: string;
+    default_format: string;
+    trigger: string;
+    show_text: string;
+    disabled_alpha: string;
+    disabled_format: string;
 }[];
 export default _default;

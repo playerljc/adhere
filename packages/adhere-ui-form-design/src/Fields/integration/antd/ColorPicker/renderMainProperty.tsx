@@ -53,11 +53,14 @@ export function MainProperty({
     {
       key: 'format',
       require: false,
-      label: <Label>format：</Label>,
+      label: <Label>{Intl.get('format')}：</Label>,
       value: (
         <Value>
           <Form.Item name="format">
-            <ColorPickerFormatSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
+            <ColorPickerFormatSelectStandardDict
+              placeholder={Intl.get('please_select')}
+              allowClear
+            />
           </Form.Item>
         </Value>
       ),
@@ -65,11 +68,14 @@ export function MainProperty({
     {
       key: 'defaultFormat',
       require: false,
-      label: <Label>defaultFormat：</Label>,
+      label: <Label>{Intl.get('default_format')}：</Label>,
       value: (
         <Value>
           <Form.Item name="defaultFormat">
-            <ColorPickerFormatSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
+            <ColorPickerFormatSelectStandardDict
+              placeholder={Intl.get('please_select')}
+              allowClear
+            />
           </Form.Item>
         </Value>
       ),
@@ -77,11 +83,14 @@ export function MainProperty({
     {
       key: 'trigger',
       require: false,
-      label: <Label>trigger：</Label>,
+      label: <Label>{Intl.get('trigger')}：</Label>,
       value: (
         <Value>
           <Form.Item name="trigger">
-            <ColorPickerTriggerSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
+            <ColorPickerTriggerSelectStandardDict
+              placeholder={Intl.get('please_select')}
+              allowClear
+            />
           </Form.Item>
         </Value>
       ),
@@ -101,7 +110,7 @@ export function MainProperty({
     {
       key: 'showText',
       require: false,
-      label: <Label>showText：</Label>,
+      label: <Label>{Intl.get('show_text')}：</Label>,
       value: (
         <Value>
           <Form.Item name="showText">
@@ -113,7 +122,7 @@ export function MainProperty({
     {
       key: 'disabledAlpha',
       require: false,
-      label: <Label>disabledAlpha：</Label>,
+      label: <Label>{Intl.get('disabled_alpha')}：</Label>,
       value: (
         <Value>
           <Form.Item name="disabledAlpha">
@@ -125,7 +134,7 @@ export function MainProperty({
     {
       key: 'disabledFormat',
       require: false,
-      label: <Label>disabledFormat：</Label>,
+      label: <Label>{Intl.get('disabled_format')}：</Label>,
       value: (
         <Value>
           <Form.Item name="disabledFormat">

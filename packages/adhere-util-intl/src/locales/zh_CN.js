@@ -348,5 +348,11 @@ export default [
     virtual_scroll: '虚拟滚动',
     tree_data_setting: '配置数据',
     cascader_show_checked_strategy: '回填方式',
+    format: '格式化',
+    default_format: '默认格式化',
+    trigger: '触发',
+    show_text: '是否显示文本',
+    disabled_alpha: '禁用alpha',
+    disabled_format: '禁用格式化',
   },
 ];
