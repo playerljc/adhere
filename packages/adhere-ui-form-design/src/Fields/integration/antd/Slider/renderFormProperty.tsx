@@ -9,7 +9,6 @@ import {
   FormPropertyShell,
   mapSliderFormPropertyFormValues,
   buildFormPropertyColSpanRow,
-  buildFormPropertyFillRow,
   buildFormPropertyHiddenRow,
   buildFormPropertyLabelRow,
   buildFormPropertyNameRow,
@@ -60,7 +59,6 @@ export function FormProperty({
     buildFormPropertyValuePropNamePlainInputRow(),
     buildFormPropertyValidateFirstRow(),
     buildFormPropertyColSpanRow(),
-    buildFormPropertyFillRow(),
     buildFormPropertyValidateTriggerRow(),
     buildFormPropertyRulesRow(),
   ];

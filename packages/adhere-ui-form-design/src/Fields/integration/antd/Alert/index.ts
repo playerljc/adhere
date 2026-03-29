@@ -22,7 +22,6 @@ export function define(): DesignItem {
     defaultValue: {
       formItemProps: {
         noStyle: true,
-        fill: true,
       },
       fieldProps: {
         message: 'Alert',
@@ -30,6 +29,7 @@ export function define(): DesignItem {
         type: 'info',
         closable: false,
         showIcon: true,
+        fill: true,
       },
     },
   };

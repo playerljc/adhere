@@ -28,7 +28,6 @@ export function define(): DesignItem {
         require: false,
         hidden: false,
         noStyle: false,
-        fill: true,
         valuePropName: 'value',
         validateFirst: false,
         validateTrigger: 'onChange',
@@ -48,6 +47,7 @@ export function define(): DesignItem {
           type: 'static',
           treeDataJson: undefined,
         },
+        fill: true,
       },
     },
   };

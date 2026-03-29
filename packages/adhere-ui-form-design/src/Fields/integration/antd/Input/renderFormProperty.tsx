@@ -9,7 +9,6 @@ import {
   FormPropertyShell,
   ValuePropNameSelectStandardDict,
   buildFormPropertyColSpanRow,
-  buildFormPropertyFillRow,
   buildFormPropertyHiddenRow,
   buildFormPropertyLabelRow,
   buildFormPropertyNameRow,
@@ -70,7 +69,6 @@ export function FormProperty({
     },
     buildFormPropertyValidateFirstRow(),
     buildFormPropertyColSpanRow(),
-    buildFormPropertyFillRow(),
     buildFormPropertyValidateTriggerRow(),
     buildFormPropertyRulesRow(),
   ];

@@ -8,7 +8,6 @@ import Intl from '@baifendian/adhere-util-intl';
 import {
   FormPropertyShell,
   buildFormPropertyColSpanRow,
-  buildFormPropertyFillRow,
   buildFormPropertyHiddenRow,
   buildFormPropertyLabelRow,
   buildFormPropertyNameRow,
@@ -62,7 +61,6 @@ export function FormProperty({
     buildFormPropertyValuePropNamePlainInputRow(),
     buildFormPropertyValidateFirstRow(),
     buildFormPropertyColSpanRow(),
-    buildFormPropertyFillRow(),
     buildFormPropertyValidateTriggerRow(),
     buildFormPropertyRulesRow(),
   ];

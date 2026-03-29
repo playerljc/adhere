@@ -75,7 +75,7 @@ export function ValueDesign({
   });
   const formProps = formItemToProps(formItemProps ?? {}, lang);
   const colSpan = formItemProps?.colSpan;
-  const fill = formItemProps?.fill;
+  const fill = fieldProps?.fill;
 
   return (
     <Value

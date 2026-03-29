@@ -5,7 +5,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
-import { WhetherRadioHorizontalDict } from '../../../../components';
+import { WhetherRadioHorizontalDict, buildFormPropertyFillRow } from '../../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
 
@@ -51,6 +51,7 @@ export function MainProperty({
         </Value>
       ),
     },
+    buildFormPropertyFillRow(),
   ];
   function onFieldsChange() {
     setFieldProps(getActiveFieldId() as string, { ...form.getFieldsValue() });

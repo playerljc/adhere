@@ -22,7 +22,6 @@ export function define(): DesignItem {
     defaultValue: {
       formItemProps: {
         noStyle: true,
-        fill: true,
       },
       fieldProps: {
         children: 'Text',
@@ -32,6 +31,7 @@ export function define(): DesignItem {
         delete: false,
         disabled: false,
         ellipsis: false,
+        fill: true,
       },
     },
   };

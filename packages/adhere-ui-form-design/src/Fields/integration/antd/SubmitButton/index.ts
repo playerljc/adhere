@@ -24,7 +24,6 @@ export function define(): DesignItem {
     defaultValue: {
       formItemProps: {
         noStyle: true,
-        fill: true,
       },
       fieldProps: {
         children: 'Submit',
@@ -37,6 +36,7 @@ export function define(): DesignItem {
         loading: false,
         disabled: false,
         block: false,
+        fill: true,
       },
     },
   };

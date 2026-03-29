@@ -28,7 +28,6 @@ export function define(): DesignItem {
         require: false,
         hidden: false,
         noStyle: false,
-        fill: true,
         valuePropName: 'checked',
         validateFirst: false,
         validateTrigger: 'onChange',
@@ -36,6 +35,7 @@ export function define(): DesignItem {
       } as FormItemProps & { value?: boolean },
       fieldProps: {
         disabled: false,
+        fill: true,
       },
     },
   };

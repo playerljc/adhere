@@ -22,13 +22,13 @@ export function define(): DesignItem {
     defaultValue: {
       formItemProps: {
         noStyle: true,
-        fill: true,
       },
       fieldProps: {
         children: 'Link',
         href: '',
         target: '_blank',
         disabled: false,
+        fill: true,
       },
     },
   };

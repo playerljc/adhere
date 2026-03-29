@@ -28,7 +28,6 @@ export function define(): DesignItem {
         require: false,
         hidden: false,
         noStyle: false,
-        fill: true,
         valuePropName: 'value',
         validateFirst: false,
         validateTrigger: 'onChange',
@@ -41,6 +40,7 @@ export function define(): DesignItem {
         disabled: false,
         keyboard: true,
         size: 'middle',
+        fill: true,
       },
     },
   };
