@@ -6,4 +6,6 @@ export type FormItemProps = AntdFormItemProps & {
   colSpan?: number;
   // 是否充满父容器
   fill?: boolean;
+  // 设计视图中 label 是否显示必填星号
+  require?: boolean;
 };

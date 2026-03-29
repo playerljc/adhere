@@ -1,8 +1,12 @@
 import React from 'react';
 
+
+
 import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import Intl from '@baifendian/adhere-util-intl';
+
+
 
 import I18nChangeFormItem from './I18nChangeFormItem';
 import { InputEventsSelectStandardDict } from './InputEvents';
@@ -11,6 +15,7 @@ import RulesSettingFormItem from './RulesSettingFormItem';
 import { SlotEndLabel } from './SlotLabel';
 import PropertiesGridLayout, { Label, Value } from './TableGridLayout';
 import { WhetherRadioHorizontalDict } from './Whether';
+
 
 export type FormPropertyLabelSlotRef = {
   get: (key: string) => unknown;
@@ -156,6 +161,22 @@ export function buildFormPropertyValidateTriggerRow(): DataItemRow {
       <Value>
         <Form.Item name="validateTrigger">
           <InputEventsSelectStandardDict />
+        </Form.Item>
+      </Value>
+    ),
+  };
+}
+
+/** 设计视图中 label 是否显示必填星号 */
+export function buildFormPropertyRequireRow(): DataItemRow {
+  return {
+    key: 'require',
+    require: false,
+    label: <Label>{Intl.get('required')}：</Label>,
+    value: (
+      <Value>
+        <Form.Item name="require">
+          <WhetherRadioHorizontalDict />
         </Form.Item>
       </Value>
     ),

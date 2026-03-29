@@ -13,6 +13,7 @@ import {
   buildFormPropertyLabelRow,
   buildFormPropertyNameRow,
   buildFormPropertyNoStyleRow,
+  buildFormPropertyRequireRow,
   buildFormPropertyRulesRow,
   buildFormPropertyValidateFirstRow,
   buildFormPropertyValidateTriggerRow,
@@ -55,6 +56,7 @@ export function FormProperty({
         </Value>
       ),
     },
+    buildFormPropertyRequireRow(),
     buildFormPropertyHiddenRow(),
     buildFormPropertyNoStyleRow(),
     buildFormPropertyValuePropNamePlainInputRow(),

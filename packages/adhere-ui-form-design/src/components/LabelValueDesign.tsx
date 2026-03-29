@@ -20,9 +20,11 @@ const { Label, Value } = TableGridLayout;
 export function LabelDesign({
   formItemProps,
   styleProps,
+  className,
 }: {
   formItemProps?: FormItemProps;
   styleProps?: StyleProps;
+  className?: string;
 }) {
   const ConfigProviderContext = useContext(ConfigProvider.Context);
   const { fieldProps } = useContext(TableGridLayoutContext);
@@ -37,6 +39,7 @@ export function LabelDesign({
 
   return (
     <Label
+      className={className}
       style={style ?? {}}
       // @ts-ignore
       colSpan={colSpan}

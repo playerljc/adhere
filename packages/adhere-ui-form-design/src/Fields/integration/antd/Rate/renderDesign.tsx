@@ -34,7 +34,7 @@ export function renderDesign({
 
   return {
     key: id,
-    require: true,
+    require: formItemProps?.require ?? false,
     labelColSpan,
     valueColSpan,
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,

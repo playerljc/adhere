@@ -73,8 +73,7 @@ function renderCheckboxGroupBody(
 }
 
 /**
- * renderDesign — Checkbox.Group，选项来自数据源；布局参考 antd 文档中的 Group + Row/Col 与换行排布
- */
+ * renderDesign �?Checkbox.Group，选项来自数据源；布局参�?antd 文档中的 Group + Row/Col 与换行排�? */
 export function renderDesign({
   parentId,
   value,
@@ -98,7 +97,7 @@ export function renderDesign({
 
   return {
     key: id,
-    require: true,
+    require: formItemProps?.require ?? false,
     labelColSpan,
     valueColSpan,
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,

@@ -25,6 +25,7 @@ export function define(): DesignItem {
     hasFlexProperty: false,
     defaultValue: {
       formItemProps: {
+        require: false,
         hidden: false,
         noStyle: false,
         fill: true,

@@ -76,7 +76,7 @@ function renderRadioGroupBody(
 }
 
 /**
- * renderDesign — Radio.Group，选项来自数据源；布局参考 antd 文档
+ * renderDesign �?Radio.Group，选项来自数据源；布局参�?antd 文档
  */
 export function renderDesign({
   parentId,
@@ -101,7 +101,7 @@ export function renderDesign({
 
   return {
     key: id,
-    require: true,
+    require: formItemProps?.require ?? false,
     labelColSpan,
     valueColSpan,
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
