@@ -1,0 +1,11 @@
+import Intl from '@baifendian/adhere-util-intl';
+
+export const TreeSelectShowCheckedStrategy = {
+  handler: () => {
+    return [
+      { label: Intl.get('show_all'), value: 'SHOW_ALL' },
+      { label: Intl.get('show_parent'), value: 'SHOW_PARENT' },
+      { label: Intl.get('show_child'), value: 'SHOW_CHILD' },
+    ];
+  },
+};

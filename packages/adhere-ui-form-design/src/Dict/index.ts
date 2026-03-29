@@ -23,6 +23,8 @@ import { Picker } from './Picker';
 import { Placement } from './Placement';
 import { Rules } from './Rules';
 import { SelectMode } from './SelectMode';
+import { TreeSelectShowCheckedStrategy } from './TreeSelectShowCheckedStrategy';
+import { CascaderShowCheckedStrategy } from './CascaderShowCheckedStrategy';
 import { Size } from './Size';
 import { TableGridLayoutModeType } from './TableGridLayoutModeType';
 import { Thousands } from './Thousands';
@@ -64,6 +66,8 @@ const dictImpls = {
   Placement,
   Picker,
   SelectMode,
+  TreeSelectShowCheckedStrategy,
+  CascaderShowCheckedStrategy,
   JustifyContent,
   AlignItems,
   AlignContent,

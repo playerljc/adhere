@@ -19,6 +19,8 @@ import { define as RadioGroupDefine } from './RadioGroup';
 import { define as RateDefine } from './Rate';
 import { define as SegmentedDefine } from './Segmented';
 import { define as SelectDefine } from './Select';
+import { define as TreeSelectDefine } from './TreeSelect';
+import { define as CascaderDefine } from './Cascader';
 import { define as SliderDefine } from './Slider';
 import { define as SubmitButtonDefine } from './SubmitButton';
 import { define as SwitchDefine } from './Switch';
@@ -52,6 +54,8 @@ const Rate = RateDefine();
 const Slider = SliderDefine();
 const Segmented = SegmentedDefine();
 const Select = SelectDefine();
+const TreeSelect = TreeSelectDefine();
+const Cascader = CascaderDefine();
 
 export function install(): {
   toolBox: ToolBoxGroup['items'];
@@ -209,6 +213,18 @@ export function install(): {
         searchLabel: Intl.get('select_text'),
         tooltip: Intl.get('select_text'),
       },
+      {
+        type: TreeSelect.type,
+        label: Intl.get('tree_select_text'),
+        searchLabel: Intl.get('tree_select_text'),
+        tooltip: Intl.get('tree_select_text'),
+      },
+      {
+        type: Cascader.type,
+        label: Intl.get('cascader_text'),
+        searchLabel: Intl.get('cascader_text'),
+        tooltip: Intl.get('cascader_text'),
+      },
     ],
     designItems: [
       Input,
@@ -236,6 +252,8 @@ export function install(): {
       Slider,
       Segmented,
       Select,
+      TreeSelect,
+      Cascader,
     ],
   };
 }

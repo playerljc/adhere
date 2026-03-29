@@ -6,6 +6,8 @@ import ColgroupValueSetting from './ColgroupValueSetting';
 import { ColorPickerEventsSelectStandardDict } from './ColorPickerEvents';
 import DataSourceManager from './DataSourceManager';
 import DataSourceManagerFormItem from './DataSourceManagerFormItem';
+import TreeDataSourceManagerFormItem from './TreeDataSourceManagerFormItem';
+export type { TreeDataSourceManagerFormItemValue, TreeDataSourceManagerFormItemProps } from './TreeDataSourceManagerFormItem';
 import { DatePickerEventsSelectStandardDict } from './DatePickerEvents';
 import { DateRangePickerEventsSelectStandardDict } from './DateRangePickerEvents';
 import { DensitySelectStandardDict } from './Density';
@@ -38,6 +40,8 @@ import { PlacementSelectStandardDict } from './Placement';
 import { RulesMenuStandardDict } from './Rules';
 import RulesSettingFormItem from './RulesSettingFormItem';
 import { SelectModeSelectStandardDict } from './SelectMode';
+import { TreeSelectShowCheckedStrategySelectStandardDict } from './TreeSelectShowCheckedStrategy';
+import { CascaderShowCheckedStrategySelectStandardDict } from './CascaderShowCheckedStrategy';
 import { SizeSelectStandardDict } from './Size';
 import { SlotEndLabel, SlotStartLabel } from './SlotLabel';
 import PropertiesGridLayout from './TableGridLayout';
@@ -98,8 +102,11 @@ export {
   PlacementSelectStandardDict,
   PickerSelectStandardDict,
   SelectModeSelectStandardDict,
+  TreeSelectShowCheckedStrategySelectStandardDict,
+  CascaderShowCheckedStrategySelectStandardDict,
   DataSourceManager,
   DataSourceManagerFormItem,
+  TreeDataSourceManagerFormItem,
   JustifyContentSelectStandardDict,
   AlignItemsSelectStandardDict,
   AlignContentSelectStandardDict,

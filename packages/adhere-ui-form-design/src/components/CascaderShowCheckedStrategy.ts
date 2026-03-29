@@ -1,0 +1,13 @@
+import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
+
+import { names } from '../Dict';
+
+const { ComponentNames, Components, genDictComponentName } = FieldGeneratorToDict;
+
+export const CascaderShowCheckedStrategySelectStandardDict =
+  Components[
+    genDictComponentName(
+      names.CascaderShowCheckedStrategy as string,
+      ComponentNames.Select.Standard,
+    )
+  ];

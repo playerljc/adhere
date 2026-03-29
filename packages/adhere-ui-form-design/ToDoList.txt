@@ -38,12 +38,11 @@
   RadioGroup
   Segmented
 
+  TreeSelect
+  Cascader
+
   Transfer
   Tree
-  Cascader
-  TreeSelect
-  CheckSelect
-  RadioSelect
   AutoComplete
 
  布局
