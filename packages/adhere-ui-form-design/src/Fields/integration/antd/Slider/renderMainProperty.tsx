@@ -1,34 +1,20 @@
-import React, { type ReactNode, useContext, useEffect } from 'react';
+import React from 'react';
 
-import { Form, InputNumberInteger, Select } from '@baifendian/adhere-ui-anthoc';
+import { Form, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { DesignContext } from '../../../../Design/Context';
+import { DirectionSelectStandardDict, WhetherRadioHorizontalDict } from '../../../../components';
+import { Label, Value } from '../../../../components/TableGridLayout';
 import {
-  DirectionSelectStandardDict,
-  WhetherRadioHorizontalDict,
-  buildFormPropertyFillRow,
-} from '../../../../components';
-import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
+  createMainProperty,
+  renderMainPropertyWithCreate,
+} from '../../../../utils';
 import type { DesignValueProps } from '../../../../types';
 
-/**
- * MainProperty - Slider basic props per https://ant.design/components/slider-cn#api
- * Basic only: disabled, keyboard, min, max, step, orientation (horizontal|vertical), reverse, dots, included, range (boolean)
- */
-export function MainProperty({
-  designValue,
-  renderFormItems,
-}: {
-  designValue: DesignValueProps;
-  renderFormItems?: (defaultFormItems: DataItemRow[]) => DataItemRow[];
-}) {
-  const [form] = Form.useForm();
-  const { getActiveFieldId, setFieldProps } = useContext(DesignContext);
-  const { fieldProps } = designValue;
-
-  const defaultFormItems: DataItemRow[] = [
+const MainProperty = createMainProperty({
+  formName: 'antSliderMainProperty',
+  getDefaultFormItems: (): DataItemRow[] => [
     {
       key: 'disabled',
       require: false,
@@ -152,34 +138,10 @@ export function MainProperty({
         </Value>
       ),
     },
-    buildFormPropertyFillRow(),
-  ];
+  ],
+  autoFill: true,
+});
 
-  function onFieldsChange() {
-    setFieldProps(getActiveFieldId() as string, { ...form.getFieldsValue() });
-  }
-  useEffect(() => {
-    form.setFieldsValue(fieldProps);
-  }, [fieldProps]);
-
-  return (
-    <Form name="antSliderMainProperty" form={form} onFieldsChange={onFieldsChange}>
-      <PropertiesGridLayout
-        layout="vertical"
-        data={[
-          {
-            name: 'g1',
-            width: '100%',
-            columnCount: 1,
-            colgroup: ['auto'],
-            data: renderFormItems ? renderFormItems(defaultFormItems) : defaultFormItems,
-          },
-        ]}
-      />
-    </Form>
-  );
-}
-
-export function renderMainProperty(props: DesignValueProps): ReactNode {
-  return <MainProperty designValue={props} />;
+export function renderMainProperty(props: DesignValueProps) {
+  return renderMainPropertyWithCreate(MainProperty, props);
 }

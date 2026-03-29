@@ -6,6 +6,7 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
 import {
+  buildFormPropertyFillRow,
   DataSourceManagerFormItem,
   PlacementSelectStandardDict,
   SelectModeSelectStandardDict,
@@ -213,6 +214,7 @@ export function MainProperty({
         </Value>
       ),
     },
+    buildFormPropertyFillRow(),
   ].filter(Boolean);
 
   function onFieldsChange() {

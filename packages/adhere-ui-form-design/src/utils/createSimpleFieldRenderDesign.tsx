@@ -21,7 +21,7 @@ export function createSimpleFieldRenderDesign(Component: ElementType) {
   }): DataItemRow {
     const {
       id,
-      props: { formItemProps, styleProps },
+      props: { formItemProps, fieldProps, styleProps },
     } = value;
 
     const { getDesignValue } = context;
@@ -29,6 +29,8 @@ export function createSimpleFieldRenderDesign(Component: ElementType) {
     const parent = findDesignValueById(parentId as string, designValue) as DesignValue;
 
     const { labelColSpan, valueColSpan } = computeLabelValueColSpan(parent, formItemProps);
+
+    const fill = fieldProps?.fill;
 
     return {
       key: id,
@@ -45,7 +47,10 @@ export function createSimpleFieldRenderDesign(Component: ElementType) {
               Component,
               {
                 ...(rest as FieldProps),
-                style: style ?? {},
+                style: {
+                  flex: fill ? '1' : 'none',
+                  ...(style ?? {}),
+                },
                 ...actions,
               },
               children as ReactNode,

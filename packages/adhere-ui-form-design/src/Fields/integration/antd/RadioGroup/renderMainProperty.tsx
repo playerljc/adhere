@@ -11,6 +11,7 @@ import {
   RadioGroupOptionTypeSelectStandardDict,
   SizeSelectStandardDict,
   WhetherRadioHorizontalDict,
+  buildFormPropertyFillRow,
 } from '../../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps, FieldProps } from '../../../../types';
@@ -173,6 +174,7 @@ export function MainProperty({
         </Value>
       ),
     },
+    buildFormPropertyFillRow(),
   ].filter(Boolean);
 
   function onFieldsChange() {

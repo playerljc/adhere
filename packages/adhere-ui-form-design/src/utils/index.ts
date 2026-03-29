@@ -20,6 +20,12 @@ import { styleCodeStringToCSSProperties } from './styleCodeStringToCSSProperties
 import { useDesignFieldDataSourceOptions } from './useDesignFieldDataSourceOptions';
 
 export {
+  createMainProperty,
+  renderMainProperty as renderMainPropertyWithCreate,
+} from './createMainProperty';
+export type { CreateMainPropertyOptions } from './createMainProperty';
+
+export {
   actionsCodeStringToEvents,
   computeLabelValueColSpan,
   formItemToProps,

@@ -9,6 +9,7 @@ import {
   InputSizeSelectStandardDict,
   VariantSelectStandardDict,
   WhetherRadioHorizontalDict,
+  buildFormPropertyFillRow,
 } from '../../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
@@ -136,6 +137,7 @@ export function MainProperty({
         </Value>
       ),
     },
+    buildFormPropertyFillRow(),
   ];
 
   function onFieldsChange() {

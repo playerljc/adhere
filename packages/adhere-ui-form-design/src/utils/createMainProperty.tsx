@@ -1,4 +1,5 @@
-import React, { useContext, useEffect } from 'react';
+import React, { type ReactNode, useContext, useEffect } from 'react';
+import type { ReactElement } from 'react';
 
 import { Form } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
@@ -7,31 +8,40 @@ import { DesignContext } from '../Design/Context';
 import { buildFormPropertyFillRow, PropertiesGridLayout } from '../components';
 import type { DesignValueProps } from '../types';
 
-export function createStandardMainProperty({
-  formName,
-  buildRows,
-  autoFill = true,
-}: {
+export interface CreateMainPropertyOptions {
+  /** 表单名称 */
   formName: string;
-  buildRows: (props: { designValue: DesignValueProps }) => DataItemRow[];
+  /** 默认表单项数组（不包含 fill） */
+  getDefaultFormItems: (designValue: DesignValueProps) => DataItemRow[];
+  /** 是否自动添加 fill 设置项（默认 true） */
   autoFill?: boolean;
-}) {
-  function MainProperty({
+}
+
+export function createMainProperty(options: CreateMainPropertyOptions) {
+  const { formName, getDefaultFormItems, autoFill = true } = options;
+
+  return function MainProperty({
     designValue,
     renderFormItems,
   }: {
     designValue: DesignValueProps;
     renderFormItems?: (defaultFormItems: DataItemRow[]) => DataItemRow[];
-  }) {
+  }): ReactNode {
     const [form] = Form.useForm();
     const { getActiveFieldId, setFieldProps } = useContext(DesignContext);
     const { fieldProps } = designValue;
 
-    const baseFormItems = buildRows({ designValue });
-    const defaultFormItems = autoFill ? [...baseFormItems, buildFormPropertyFillRow()] : baseFormItems;
+    // 获取默认表单项
+    const baseFormItems = getDefaultFormItems(designValue);
+
+    // 自动添加 fill 设置项
+    const defaultFormItems: DataItemRow[] = autoFill
+      ? [...baseFormItems, buildFormPropertyFillRow()]
+      : baseFormItems;
 
     function onFieldsChange() {
-      setFieldProps(getActiveFieldId() as string, { ...form.getFieldsValue() });
+      const values = form.getFieldsValue();
+      setFieldProps(getActiveFieldId() as string, { ...values });
     }
 
     useEffect(() => {
@@ -54,7 +64,12 @@ export function createStandardMainProperty({
         />
       </Form>
     );
-  }
+  };
+}
 
-  return MainProperty;
+export function renderMainProperty(
+  Component: ReturnType<typeof createMainProperty>,
+  props: DesignValueProps,
+): ReactNode {
+  return <Component designValue={props} />;
 }
