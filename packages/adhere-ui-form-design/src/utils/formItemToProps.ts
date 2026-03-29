@@ -4,7 +4,13 @@ import { rulesSettingToRules } from './rulesSettingToRules';
 
 export function formItemToProps(formItemProps: FormItemProps, lang: string) {
   return {
-    ...formItemProps,
+    name: formItemProps.name,
+    hidden: formItemProps.hidden,
+    noStyle: formItemProps.noStyle,
+    valuePropName: formItemProps.valuePropName,
+    validateFirst: formItemProps.validateFirst,
+    validateTrigger: formItemProps.validateTrigger,
+    initialValue: formItemProps.initialValue,
     rules: rulesSettingToRules((formItemProps.rules ?? []) as unknown as Rule[], lang),
   };
 }

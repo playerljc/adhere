@@ -32,16 +32,10 @@ const ActionsFormItem: FC<ActionsFormItemProps> = ({
   onChange,
 }) => {
   const menuItems = useMemo(() => {
-    const menus = actions.map((item) => ({
-      key: item.value,
-      label: item.label,
-    }));
-
-    const targetValue = value ?? [];
-
-    if (targetValue.length <= 0) return menus;
-
-    return menus.filter(({ key }) => (value ?? []).some((a) => a.type !== key));
+    const usedTypes = new Set((value ?? []).map((a) => a.type));
+    return actions
+      .filter((item) => !usedTypes.has(item.value))
+      .map((item) => ({ key: item.value, label: item.label }));
   }, [value, actions]);
 
   return (

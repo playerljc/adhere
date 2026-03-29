@@ -1,6 +1,6 @@
 import { Button, Card, Dropdown } from 'antd';
 import classNames from 'classnames';
-import React, { type FC, ReactElement, memo, useEffectEvent, useMemo } from 'react';
+import React, { type FC, ReactElement, memo, useCallback, useMemo } from 'react';
 
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import Intl from '@baifendian/adhere-util-intl';
@@ -55,97 +55,91 @@ const RulesSettingFormItem: FC<RulesSettingFormItemProps> = ({
   onChange,
 }) => {
   const menuItems = useMemo(() => {
-    const menus =
-      values?.Rules?.value?.map((item) => ({
-        key: item.value,
-        label: item.label,
-      })) ?? [];
-
-    const targetValue = value ?? [];
-
-    if (targetValue.length >= 0) {
-      return menus;
-    }
-
-    return menus.filter(({ key }) => (value ?? []).some((rule) => rule.type !== key));
+    const usedTypes = new Set((value ?? []).map((r) => r.type));
+    return (
+      values?.Rules?.value
+        ?.filter((item) => !usedTypes.has(item.value as RuleType))
+        .map((item) => ({ key: item.value, label: item.label })) ?? []
+    );
   }, [value]);
 
-  const changeValue = useEffectEvent((type: RuleType, _value: RuleConfig) => {
-    return (value ?? []).map((rule) => {
-      if (rule.type === type) {
-        return {
-          type,
-          config: _value,
-        };
-      }
+  const changeValueAt = useCallback(
+    (index: number, _value: RuleConfig) => {
+      return (value ?? []).map((rule, i) =>
+        i === index
+          ? {
+              ...rule,
+              config: _value,
+            }
+          : rule,
+      );
+    },
+    [value],
+  );
 
-      return rule;
-    });
-  });
-
-  const RuleMap = new Map<RuleType, (ruleConfig: RuleConfig) => ReactElement>([
+  const RuleMap = new Map<RuleType, (ruleConfig: RuleConfig, index: number) => ReactElement>([
     [
       'required',
-      (ruleConfig) => (
+      (ruleConfig, index) => (
         <Required
           rule={ruleConfig}
           onChange={(_value) => {
-            onChange?.(changeValue('required', _value));
+            onChange?.(changeValueAt(index, _value));
           }}
         />
       ),
     ],
     [
       'whitespace',
-      (ruleConfig) => (
+      (ruleConfig, index) => (
         <Whitespace
           rule={ruleConfig}
           onChange={(_value) => {
-            onChange?.(changeValue('whitespace', _value));
+            onChange?.(changeValueAt(index, _value));
           }}
         />
       ),
     ],
     [
       'max',
-      (ruleConfig) => (
+      (ruleConfig, index) => (
         <Max
           rule={ruleConfig}
           onChange={(_value) => {
-            onChange?.(changeValue('max', _value));
+            onChange?.(changeValueAt(index, _value));
           }}
         />
       ),
     ],
     [
       'min',
-      (ruleConfig) => (
+      (ruleConfig, index) => (
         <Min
           rule={ruleConfig}
           onChange={(_value) => {
-            onChange?.(changeValue('min', _value));
+            onChange?.(changeValueAt(index, _value));
           }}
         />
       ),
     ],
     [
       'pattern',
-      (ruleConfig) => (
+      (ruleConfig, index) => (
         <Pattern
           rule={ruleConfig}
           onChange={(_value) => {
-            onChange?.(changeValue('pattern', _value));
+            onChange?.(changeValueAt(index, _value));
           }}
         />
       ),
     ],
     [
       'custom',
-      (ruleConfig) => (
+      (ruleConfig, index) => (
         <Custom
           rule={ruleConfig}
           onChange={(_value) => {
-            onChange?.(changeValue('custom', _value));
+            onChange?.(changeValueAt(index, _value));
           }}
         />
       ),
@@ -176,22 +170,25 @@ const RulesSettingFormItem: FC<RulesSettingFormItemProps> = ({
       </div>
 
       <ul className={`${selectorPrefix}-rules`}>
-        {value?.map(({ type, config }) => (
-          <li key={type} className={`${selectorPrefix}-rule`}>
-            <Card
-              title={values?.Rules?.value.find((t) => t.value === type)?.label}
-              extra={
-                <DeleteOutlined
-                  onClick={() => {
-                    onChange?.(value?.filter((r) => r.type !== type));
-                  }}
-                />
-              }
-            >
-              {RuleMap.get(type)?.(config)}
-            </Card>
-          </li>
-        ))}
+        {value?.map((ruleItem, index) => {
+          const { type, config } = ruleItem;
+          return (
+            <li key={type} className={`${selectorPrefix}-rule`}>
+              <Card
+                title={values?.Rules?.value.find((t) => t.value === type)?.label}
+                extra={
+                  <DeleteOutlined
+                    onClick={() => {
+                      onChange?.(value?.filter((_, i) => i !== index));
+                    }}
+                  />
+                }
+              >
+                {RuleMap.get(type)?.(config, index)}
+              </Card>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

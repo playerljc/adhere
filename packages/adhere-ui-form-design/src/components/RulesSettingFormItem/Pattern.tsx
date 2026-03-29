@@ -36,6 +36,7 @@ const Pattern: FC<PatternProps> = ({ rule, onChange }) => {
               value: (
                 <Value>
                   <Input
+                    showCount={false}
                     value={rule.pattern}
                     onChange={(_value) => {
                       onChange({
@@ -61,17 +62,22 @@ const Pattern: FC<PatternProps> = ({ rule, onChange }) => {
               ),
               value: (
                 <Value>
-                  <I18nChangeFormItem getTriggerContainer={() => get('message') as HTMLElement}>
-                    {({ onChange, value }) => (
+                  <I18nChangeFormItem
+                    value={rule.message}
+                    onChange={(nextMessage) => {
+                      onChange({
+                        ...rule,
+                        message: nextMessage,
+                      });
+                    }}
+                    getTriggerContainer={() => get('message') as HTMLElement}
+                  >
+                    {({ onChange: onMessageChange, value }) => (
                       <TextArea
                         value={value}
                         placeholder={Intl.get('message')}
-                        onChange={(value) => {
-                          onChange({
-                            ...rule,
-                            message: value,
-                          });
-                        }}
+                        showCount={false}
+                        onChange={(e) => onMessageChange(e.target.value)}
                       />
                     )}
                   </I18nChangeFormItem>
