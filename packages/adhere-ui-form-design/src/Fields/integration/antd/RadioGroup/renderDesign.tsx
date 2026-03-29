@@ -40,7 +40,7 @@ function renderRadioGroupBody(
 
   if (optionWrap) {
     return (
-      <Radio.Group {...groupProps} value={previewValue as RadioGroupProps['value']}>
+      <Radio.Group {...groupProps} defaultValue={previewValue as RadioGroupProps['defaultValue']}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, width: '100%' }}>
           {options.map((o) => (
             <OptionTag key={String(o.value)} value={o.value}>
@@ -54,7 +54,7 @@ function renderRadioGroupBody(
 
   if (cols > 0 && span) {
     return (
-      <Radio.Group {...groupProps} value={previewValue as RadioGroupProps['value']}>
+      <Radio.Group {...groupProps} defaultValue={previewValue as RadioGroupProps['defaultValue']}>
         <Row gutter={[8, 8]} style={{ width: '100%' }}>
           {options.map((o) => (
             <Col key={String(o.value)} span={span}>
@@ -70,7 +70,7 @@ function renderRadioGroupBody(
     <Radio.Group
       {...groupProps}
       options={toRadioOptions(options)}
-      value={previewValue as RadioGroupProps['value']}
+      defaultValue={previewValue as RadioGroupProps['defaultValue']}
     />
   );
 }

@@ -70,7 +70,7 @@ export function renderDesign({
                 options={toSegmentedOptions(options)}
                 style={{ width: '100%', ...(fieldStyle ?? {}) }}
                 {...fieldActions}
-                value={previewValue as SegmentedProps['value']}
+                defaultValue={previewValue as SegmentedProps['defaultValue']}
               />
             )}
           </DesignPreviewFieldWithDataSource>

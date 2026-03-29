@@ -45,7 +45,7 @@ export function renderDesign({
             {...(fieldProps as SwitchProps)}
             style={style ?? {}}
             {...actions}
-            checked={(formItemProps as { value?: boolean })?.value}
+            defaultChecked={(formItemProps as { initialValue?: boolean })?.initialValue}
           />
         )}
       </ValueDesign>

@@ -1,6 +1,5 @@
 import { DatePicker } from 'antd';
 import type { DatePickerProps } from 'antd';
-import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import React from 'react';
 
@@ -68,8 +67,8 @@ export function renderDesign({
   const fieldProps = value.props?.fieldProps as
     | (DatePickerProps & DatePickerFieldProps)
     | undefined;
-  const rawValue = (formItemProps as { value?: string })?.value;
-  const valueDayjs = rawValue ? dayjs(rawValue) : null;
+  const rawValue = (formItemProps as { initialValue?: string })?.initialValue;
+  const valueDayjs = rawValue ? dayjs(rawValue) : undefined;
   const disabledDate = getDisabledDate(fieldProps ?? {});
 
   return {
@@ -86,7 +85,7 @@ export function renderDesign({
             disabledDate={disabledDate}
             style={style ?? {}}
             {...actions}
-            value={valueDayjs}
+            defaultValue={valueDayjs}
           />
         )}
       </ValueDesign>

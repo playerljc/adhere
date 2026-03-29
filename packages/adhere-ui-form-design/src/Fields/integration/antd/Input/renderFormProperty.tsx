@@ -1,29 +1,30 @@
-import React, { type ReactNode, useContext, useEffect } from 'react';
+import React, { type ReactNode } from 'react';
 
-import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
+import { Form, Input } from '@baifendian/adhere-ui-anthoc';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { DesignContext } from '../../../../Design/Context';
 import {
-  InputEventsSelectStandardDict,
-  NameFormItemWrapper,
-  RulesSettingFormItem,
-  SlotEndLabel,
+  FormPropertyShell,
   ValuePropNameSelectStandardDict,
-  WhetherRadioHorizontalDict,
+  buildFormPropertyColSpanRow,
+  buildFormPropertyFillRow,
+  buildFormPropertyHiddenRow,
+  buildFormPropertyLabelRow,
+  buildFormPropertyNameRow,
+  buildFormPropertyNoStyleRow,
+  buildFormPropertyRulesRow,
+  buildFormPropertyValidateFirstRow,
+  buildFormPropertyValidateTriggerRow,
 } from '../../../../components';
-import I18nChangeFormItem from '../../../../components/I18nChangeFormItem';
-import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
+import { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
 
 const { useItemsRef } = Hooks;
 
 /**
  * FormProperty
- *
- * @description
  *
  * @param {DesignValueProps} props
  */
@@ -34,100 +35,25 @@ export function FormProperty({
   designValue: DesignValueProps;
   renderFormItems?: (defaultFormItems: DataItemRow[]) => DataItemRow[];
 }) {
-  // 表单的instance
-  const [form] = Form.useForm();
-
   const { get, set } = useItemsRef();
 
-  const {
-    // 获取当前激活的控件的id(也就是Editor中选中的控件)
-    getActiveFieldId,
-    // 设置控件的属性
-    setFormItemProps,
-  } = useContext(DesignContext);
-
-  const { formItemProps } = designValue;
-
-  const activeFieldId = getActiveFieldId();
-
-  const defaultFormItems: DataItemRow[] = [
+  const rows: DataItemRow[] = [
+    buildFormPropertyLabelRow({ get, set }),
+    buildFormPropertyNameRow(),
     {
-      key: 'label',
-      require: false,
-      label: (
-        <SlotEndLabel
-          ref={(node) => {
-            set('label', node);
-          }}
-        >
-          {Intl.get('label')}：
-        </SlotEndLabel>
-      ),
-      value: (
-        <Value>
-          <Form.Item name="label">
-            <I18nChangeFormItem getTriggerContainer={() => get('label') as HTMLElement}>
-              {({ onChange, value }) => (
-                <Input
-                  value={value}
-                  placeholder={Intl.get('label')}
-                  maxLength={200}
-                  onChange={(e) => {
-                    onChange(e.target.value);
-                  }}
-                />
-              )}
-            </I18nChangeFormItem>
-          </Form.Item>
-        </Value>
-      ),
-    },
-    {
-      key: 'name',
-      require: true,
-      label: <Label>{Intl.get('name')}：</Label>,
-      value: (
-        <Value>
-          <NameFormItemWrapper />
-        </Value>
-      ),
-    },
-    {
-      key: 'defaultValue',
+      key: 'initialValue',
       require: true,
       label: <Label>{Intl.get('initial_value')}：</Label>,
       value: (
         <Value>
-          <Form.Item name="defaultValue">
+          <Form.Item name="initialValue">
             <Input placeholder={Intl.get('initial_value')} />
           </Form.Item>
         </Value>
       ),
     },
-    {
-      key: 'hidden',
-      require: false,
-      label: <Label>{Intl.get('is_hidden')}：</Label>,
-      value: (
-        <Value>
-          <Form.Item name="hidden">
-            <WhetherRadioHorizontalDict />
-          </Form.Item>
-        </Value>
-      ),
-    },
-    {
-      key: 'noStyle',
-      require: false,
-      label: <Label>{Intl.get('no_style')}：</Label>,
-      value: (
-        <Value>
-          <Form.Item name="noStyle">
-            <WhetherRadioHorizontalDict />
-          </Form.Item>
-        </Value>
-      ),
-    },
+    buildFormPropertyHiddenRow(),
+    buildFormPropertyNoStyleRow(),
     {
       key: 'valuePropName',
       require: false,
@@ -140,97 +66,23 @@ export function FormProperty({
         </Value>
       ),
     },
-    {
-      key: 'validateFirst',
-      require: false,
-      label: <Label>{Intl.get('validate_first')}：</Label>,
-      value: (
-        <Value>
-          <Form.Item name="validateFirst">
-            <WhetherRadioHorizontalDict />
-          </Form.Item>
-        </Value>
-      ),
-    },
-    {
-      key: 'colSpan',
-      require: false,
-      label: <Label>{Intl.get('colspan')}：</Label>,
-      value: (
-        <Value>
-          <Form.Item name="colSpan">
-            <InputNumberInteger.InputPositiveNumberInteger placeholder={Intl.get('colspan')} />
-          </Form.Item>
-        </Value>
-      ),
-    },
-    {
-      key: 'fill',
-      require: false,
-      label: <Label>{Intl.get('fill')}：</Label>,
-      value: (
-        <Value>
-          <Form.Item name="fill">
-            <WhetherRadioHorizontalDict placeholder={Intl.get('fill')} />
-          </Form.Item>
-        </Value>
-      ),
-    },
-    {
-      key: 'validateTrigger',
-      require: false,
-      label: <Label>{Intl.get('validate_trigger')}：</Label>,
-      value: (
-        <Value>
-          <Form.Item name="validateTrigger">
-            <InputEventsSelectStandardDict />
-          </Form.Item>
-        </Value>
-      ),
-    },
-    {
-      key: 'rules',
-      require: false,
-      label: <Label>{Intl.get('rules')}：</Label>,
-      value: (
-        <Value>
-          <Form.Item name="rules">
-            <RulesSettingFormItem />
-          </Form.Item>
-        </Value>
-      ),
-    },
+    buildFormPropertyValidateFirstRow(),
+    buildFormPropertyColSpanRow(),
+    buildFormPropertyFillRow(),
+    buildFormPropertyValidateTriggerRow(),
+    buildFormPropertyRulesRow(),
   ];
 
-  function onFieldsChange() {
-    const values = form.getFieldsValue();
-
-    setFormItemProps(activeFieldId as string, {
-      ...values,
-    });
-  }
-
-  useEffect(() => {
-    form.setFieldsValue(formItemProps);
-  }, [formItemProps]);
-
   return (
-    <Form name="antInputFormProperty" form={form} onFieldsChange={onFieldsChange}>
-      <PropertiesGridLayout
-        layout="vertical"
-        data={[
-          {
-            name: 'g1',
-            width: '100%',
-            columnCount: 1,
-            colgroup: ['auto'],
-            data: renderFormItems ? renderFormItems(defaultFormItems) : defaultFormItems,
-          },
-        ]}
-      />
-    </Form>
+    <FormPropertyShell
+      formName="antInputFormProperty"
+      designValue={designValue}
+      renderFormItems={renderFormItems}
+      rows={rows}
+    />
   );
 }
+
 /**
  * renderFormProperty
  * @description 对表单的渲染

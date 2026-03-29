@@ -33,10 +33,10 @@ export function renderDesign({
   const parent = findDesignValueById(parentId as string, designValue) as DesignValue;
   const { labelColSpan, valueColSpan } = computeLabelValueColSpan(parent, formItemProps);
 
-  const rawValue = (formItemProps as { value?: [string, string] })?.value;
-  const valueRange: [dayjs.Dayjs, dayjs.Dayjs] | null = rawValue
+  const rawValue = (formItemProps as { initialValue?: [string, string] })?.initialValue;
+  const valueRange: [dayjs.Dayjs, dayjs.Dayjs] | undefined = rawValue
     ? [dayjs(rawValue[0], 'HH:mm:ss'), dayjs(rawValue[1], 'HH:mm:ss')]
-    : null;
+    : undefined;
 
   return {
     key: id,
@@ -51,7 +51,7 @@ export function renderDesign({
             {...(fp as TimeRangePickerProps)}
             style={style ?? {}}
             {...actions}
-            value={valueRange}
+            defaultValue={valueRange}
           />
         )}
       </ValueDesign>

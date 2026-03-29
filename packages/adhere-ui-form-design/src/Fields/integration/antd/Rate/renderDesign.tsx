@@ -45,7 +45,7 @@ export function renderDesign({
             {...(fieldProps as RateProps)}
             style={style ?? {}}
             {...actions}
-            value={(formItemProps as { value?: number })?.value}
+            defaultValue={(formItemProps as { initialValue?: number })?.initialValue}
           />
         )}
       </ValueDesign>

@@ -37,7 +37,7 @@ function renderCheckboxGroupBody(
 
   if (optionWrap) {
     return (
-      <Checkbox.Group {...groupProps} value={previewValue as CheckboxGroupProps['value']}>
+      <Checkbox.Group {...groupProps} defaultValue={previewValue as CheckboxGroupProps['defaultValue']}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, width: '100%' }}>
           {options.map((o) => (
             <Checkbox key={String(o.value)} value={o.value}>
@@ -51,7 +51,7 @@ function renderCheckboxGroupBody(
 
   if (cols > 0 && span) {
     return (
-      <Checkbox.Group {...groupProps} value={previewValue as CheckboxGroupProps['value']}>
+      <Checkbox.Group {...groupProps} defaultValue={previewValue as CheckboxGroupProps['defaultValue']}>
         <Row gutter={[8, 8]} style={{ width: '100%' }}>
           {options.map((o) => (
             <Col key={String(o.value)} span={span}>
@@ -67,7 +67,7 @@ function renderCheckboxGroupBody(
     <Checkbox.Group
       {...groupProps}
       options={toCheckboxOptions(options)}
-      value={previewValue as CheckboxGroupProps['value']}
+      defaultValue={previewValue as CheckboxGroupProps['defaultValue']}
     />
   );
 }

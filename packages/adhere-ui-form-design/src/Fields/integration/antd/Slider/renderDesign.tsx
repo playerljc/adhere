@@ -34,7 +34,7 @@ export function renderDesign({
   const { labelColSpan, valueColSpan } = computeLabelValueColSpan(parent, formItemProps);
 
   const range = (fieldProps as { range?: boolean })?.range;
-  const rawValue = (formItemProps as { value?: number | [number, number] })?.value;
+  const rawValue = (formItemProps as { initialValue?: number | [number, number] })?.initialValue;
   const sliderValueSingle =
     typeof rawValue === 'number' ? rawValue : Array.isArray(rawValue) ? rawValue[0] : 0;
   const sliderValueRange: [number, number] = Array.isArray(rawValue)
@@ -56,14 +56,14 @@ export function renderDesign({
               style={style ?? {}}
               {...actions}
               range
-              value={sliderValueRange}
+              defaultValue={sliderValueRange}
             />
           ) : (
             <Slider
               {...(fp as SliderSingleProps)}
               style={style ?? {}}
               {...actions}
-              value={sliderValueSingle}
+              defaultValue={sliderValueSingle}
             />
           )
         }

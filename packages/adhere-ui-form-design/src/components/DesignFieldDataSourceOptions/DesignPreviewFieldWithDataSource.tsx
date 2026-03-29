@@ -36,7 +36,7 @@ export function DesignPreviewFieldWithDataSource({
   designOptionsKey = 'selectOptions',
   children,
 }: DesignPreviewFieldWithDataSourceProps) {
-  const previewValue = (formItemProps as { value?: unknown } | undefined)?.value;
+  const previewValue = (formItemProps as { initialValue?: unknown } | undefined)?.initialValue;
 
   return (
     <WithDesignFieldDataSourceOptions fieldProps={fieldProps} designOptionsKey={designOptionsKey}>

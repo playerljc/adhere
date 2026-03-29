@@ -47,7 +47,7 @@ export function renderDesign({
             {...(fieldProps as TextAreaProps)}
             style={style ?? {}}
             {...actions}
-            value={(formItemProps as TextAreaProps)?.value}
+            defaultValue={formItemProps?.initialValue as TextAreaProps['defaultValue']}
           />
         )}
       </ValueDesign>

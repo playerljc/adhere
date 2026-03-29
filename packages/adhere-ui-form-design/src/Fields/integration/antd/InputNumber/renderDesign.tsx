@@ -77,7 +77,9 @@ export function renderDesign({
               {...(inputNumberProps as InputNumberProps)}
               {...actions}
               style={style ?? {}}
-              value={(formItemProps as { value?: InputNumberProps['value'] })?.value}
+              defaultValue={
+                (formItemProps as { initialValue?: InputNumberProps['defaultValue'] })?.initialValue
+              }
               {...thousandsProps}
             />
           );

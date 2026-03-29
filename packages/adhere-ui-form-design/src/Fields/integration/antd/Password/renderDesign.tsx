@@ -47,7 +47,7 @@ export function renderDesign({
             {...(fieldProps as PasswordProps)}
             style={style ?? {}}
             {...actions}
-            value={(formItemProps as PasswordProps)?.value}
+            defaultValue={formItemProps?.initialValue as PasswordProps['defaultValue']}
           />
         )}
       </ValueDesign>

@@ -30,7 +30,7 @@ export function renderDesign({
   const parent = findDesignValueById(parentId as string, designValue) as DesignValue;
   const { labelColSpan, valueColSpan } = computeLabelValueColSpan(parent, formItemProps);
 
-  const rawValue = (formItemProps as { value?: string })?.value;
+  const rawValue = (formItemProps as { initialValue?: string })?.initialValue;
 
   return {
     key: id,
@@ -45,7 +45,7 @@ export function renderDesign({
             {...(fp as ColorPickerProps)}
             style={style ?? {}}
             {...actions}
-            value={rawValue}
+            defaultValue={rawValue}
           />
         )}
       </ValueDesign>

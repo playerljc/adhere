@@ -47,7 +47,7 @@ export function renderDesign({
             {...(fieldProps as SearchProps)}
             style={style ?? {}}
             {...actions}
-            value={(formItemProps as SearchProps)?.value}
+            defaultValue={formItemProps?.initialValue as SearchProps['defaultValue']}
           />
         )}
       </ValueDesign>

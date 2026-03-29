@@ -53,7 +53,7 @@ export function renderDesign({
                 options={options}
                 style={fieldStyle}
                 {...fieldActions}
-                value={previewValue as SelectProps['value']}
+                defaultValue={previewValue as SelectProps['defaultValue']}
               />
             )}
           </DesignPreviewFieldWithDataSource>

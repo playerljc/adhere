@@ -46,7 +46,7 @@ export function renderDesign({
             {...(fieldProps as InputProps)}
             style={style ?? {}}
             {...actions}
-            value={(formItemProps as InputProps)?.value}
+            defaultValue={formItemProps?.initialValue as InputProps['defaultValue']}
           />
         )}
       </ValueDesign>

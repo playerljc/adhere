@@ -47,7 +47,7 @@ export function renderDesign({
             {...(fieldProps as OTPProps)}
             style={style ?? {}}
             {...actions}
-            value={(formItemProps as OTPProps)?.value}
+            defaultValue={formItemProps?.initialValue as OTPProps['defaultValue']}
           />
         )}
       </ValueDesign>
