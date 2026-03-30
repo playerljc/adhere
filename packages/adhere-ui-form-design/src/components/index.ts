@@ -15,6 +15,8 @@ import { DateBoundModeSelectStandardDict } from './DateBoundMode';
 import DataSourceManagerFormItem from './DataSourceManagerFormItem';
 import TreeDataSourceManagerFormItem from './TreeDataSourceManagerFormItem';
 export type { TreeDataSourceManagerFormItemValue, TreeDataSourceManagerFormItemProps } from './TreeDataSourceManagerFormItem';
+import TransferDataSourceManagerFormItem from './TransferDataSourceManagerFormItem';
+export type { TransferDataSourceManagerFormItemValue, TransferDataSourceManagerFormItemProps, TransferDataSourceItem } from './TransferDataSourceManagerFormItem';
 import { DatePickerEventsSelectStandardDict } from './DatePickerEvents';
 import { DateRangePickerEventsSelectStandardDict } from './DateRangePickerEvents';
 import { DensitySelectStandardDict } from './Density';
@@ -125,6 +127,7 @@ export {
   DataSourceManager,
   DataSourceManagerFormItem,
   TreeDataSourceManagerFormItem,
+  TransferDataSourceManagerFormItem,
   JustifyContentSelectStandardDict,
   AlignItemsSelectStandardDict,
   AlignContentSelectStandardDict,

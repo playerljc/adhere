@@ -1,21 +1,16 @@
 import React from 'react';
 
-
-
 import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import Intl from '@baifendian/adhere-util-intl';
-
-
 
 import I18nChangeFormItem from './I18nChangeFormItem';
 import { InputEventsSelectStandardDict } from './InputEvents';
 import NameFormItemWrapper from './NameFormItemWrapper';
 import RulesSettingFormItem from './RulesSettingFormItem';
 import { SlotEndLabel } from './SlotLabel';
-import PropertiesGridLayout, { Label, Value } from './TableGridLayout';
+import { Label, Value } from './TableGridLayout';
 import { WhetherRadioHorizontalDict } from './Whether';
-
 
 export type FormPropertyLabelSlotRef = {
   get: (key: string) => unknown;

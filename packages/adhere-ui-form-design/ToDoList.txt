@@ -61,6 +61,7 @@
   MapSelectPoint
   PhoneWithAreaCode
   ImageCode
+  RichEditor
 
 高级
 .大纲视图

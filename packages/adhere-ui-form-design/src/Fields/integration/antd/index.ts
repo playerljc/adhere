@@ -21,6 +21,7 @@ import { define as SegmentedDefine } from './Segmented';
 import { define as SelectDefine } from './Select';
 import { define as TreeSelectDefine } from './TreeSelect';
 import { define as CascaderDefine } from './Cascader';
+import { define as TransferDefine } from './Transfer';
 import { define as SliderDefine } from './Slider';
 import { define as SubmitButtonDefine } from './SubmitButton';
 import { define as SwitchDefine } from './Switch';
@@ -56,6 +57,7 @@ const Segmented = SegmentedDefine();
 const Select = SelectDefine();
 const TreeSelect = TreeSelectDefine();
 const Cascader = CascaderDefine();
+const Transfer = TransferDefine();
 
 export function install(): {
   toolBox: ToolBoxGroup['items'];
@@ -225,6 +227,12 @@ export function install(): {
         searchLabel: Intl.get('cascader_text'),
         tooltip: Intl.get('cascader_text'),
       },
+      {
+        type: Transfer.type,
+        label: Intl.get('transfer_text'),
+        searchLabel: Intl.get('transfer_text'),
+        tooltip: Intl.get('transfer_text'),
+      },
     ],
     designItems: [
       Input,
@@ -254,6 +262,7 @@ export function install(): {
       Select,
       TreeSelect,
       Cascader,
+      Transfer,
     ],
   };
 }
