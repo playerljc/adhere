@@ -6,7 +6,7 @@ import Util from '@baifendian/adhere-util';
 import {
   EditableRowControlTable,
   EditableRowControlTableSuperTable,
-} from '../../../../Components/SearchEditorTableFormItem';
+} from '../../../../components/SearchEditorTableFormItem';
 import { LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
 import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';

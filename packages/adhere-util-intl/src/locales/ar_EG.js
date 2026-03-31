@@ -28,6 +28,7 @@ export default [
     add_column: 'إضافة عمود',
     column_title: 'العنوان',
     column_field: 'حقل العمود',
+    column_field_duplicate: 'يجب أن يكون حقل العمود فريدًا',
     editor_control: 'عنصر التحرير',
     editor_control_setting_not_implemented: 'لم يتم تنفيذ إعدادات عنصر التحرير بعد',
     colspan: 'دمج الأعمدة',

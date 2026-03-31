@@ -26,6 +26,7 @@ declare const _default: {
     add_column: string;
     column_title: string;
     column_field: string;
+    column_field_duplicate: string;
     editor_control: string;
     editor_control_setting_not_implemented: string;
     colspan: string;

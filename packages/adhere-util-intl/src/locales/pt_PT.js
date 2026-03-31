@@ -28,6 +28,7 @@ export default [
     add_column: 'Adicionar coluna',
     column_title: 'Título',
     column_field: 'Campo da coluna',
+    column_field_duplicate: 'O campo da coluna não pode ser duplicado',
     editor_control: 'Controle do editor',
     editor_control_setting_not_implemented: 'As configurações do controle do editor ainda não foram implementadas',
     colspan: 'Mesclar colunas',

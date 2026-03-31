@@ -1,9 +1,10 @@
 import { Button, Input, InputNumber, Modal, Select, Space } from 'antd';
 import classNames from 'classnames';
-import React, { memo, useMemo, useState } from 'react';
+import React, { memo, useContext, useMemo, useRef, useState } from 'react';
 import type { FC } from 'react';
 
 import { DeleteOutlined, HolderOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 import { DndContext, PointerSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
@@ -15,11 +16,11 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-import { SELECT_PREFIX } from '../../constant';
+import { SELECT_PREFIX, SELECT_VALUE_KEY_NAME } from '../../constant';
 import type { I18nValue } from '../../types';
 import I18nChangeFormItem from '../I18nChangeFormItem';
 
-const selectorPrefix = `${SELECT_PREFIX}-components-table-column-setting-form-item`;
+const selectorPrefix = `${SELECT_PREFIX}-form-design-components-table-column-setting-form-item`;
 
 export type TableColumnWidthMode = 'adaptive' | 'auto' | 'percent' | 'number';
 
@@ -92,6 +93,22 @@ function createEmptyColumn(): TableColumnSettingItem {
   };
 }
 
+function toI18nTitle(
+  title: TableColumnSettingItem['title'],
+  lang: string,
+  localesKeys: string[],
+): I18nValue {
+  if (title && typeof title === 'object' && SELECT_VALUE_KEY_NAME in title) {
+    return title as I18nValue;
+  }
+
+  const next: Record<string, string | null | undefined> = { [SELECT_VALUE_KEY_NAME]: lang };
+  localesKeys.forEach((key) => {
+    next[key] = key === lang ? (title as unknown as string) ?? '' : null;
+  });
+  return next as I18nValue;
+}
+
 const EditorTypeOptions: Array<{ label: string; value: TableColumnEditorType }> = [
   'input',
   'textArea',
@@ -131,11 +148,18 @@ const EditorTypeOptions: Array<{ label: string; value: TableColumnEditorType }> 
 
 const SortableItem: FC<{
   item: TableColumnSettingItem;
+  isFieldDuplicate?: boolean;
   onDelete: () => void;
   onSetting: () => void;
   onChangeTitle: (v: I18nValue) => void;
   onChangeField: (v: string) => void;
-}> = ({ item, onDelete, onSetting, onChangeTitle, onChangeField }) => {
+}> = ({ item, isFieldDuplicate, onDelete, onSetting, onChangeTitle, onChangeField }) => {
+  const { intl } = useContext(ConfigProvider.Context);
+  const lang = intl.lang!;
+  const localesKeys = Object.keys(intl.locales);
+  const triggerRef = useRef<HTMLDivElement | null>(null);
+  const titleValue = toI18nTitle(item.title, lang, localesKeys);
+
   const {
     attributes,
     listeners,
@@ -159,42 +183,48 @@ const SortableItem: FC<{
         [`${selectorPrefix}-item-dragging`]: isDragging,
       })}
     >
-      <div className={`${selectorPrefix}-item-handle`} ref={setActivatorNodeRef} {...attributes}>
-        <HolderOutlined {...listeners} />
-      </div>
-
-      <div className={`${selectorPrefix}-item-main`}>
-        <div className={`${selectorPrefix}-item-row`}>
-          <div className={`${selectorPrefix}-item-row-label`}>{Intl.get('column_title')}：</div>
-          <div className={`${selectorPrefix}-item-row-value`}>
-            <I18nChangeFormItem value={item.title} onChange={onChangeTitle}>
-              {({ value, onChange }) => (
-                <Input
-                  value={value as any}
-                  onChange={(e) => onChange?.(e.target.value)}
-                  placeholder={Intl.get('please_enter')}
-                />
-              )}
-            </I18nChangeFormItem>
-          </div>
+      <div className={`${selectorPrefix}-item-row`} ref={setActivatorNodeRef} {...attributes}>
+        <div className={`${selectorPrefix}-item-handle`}>
+          <HolderOutlined {...listeners} />
         </div>
 
-        <div className={`${selectorPrefix}-item-row`}>
-          <div className={`${selectorPrefix}-item-row-label`}>{Intl.get('column_field')}：</div>
-          <div className={`${selectorPrefix}-item-row-value`}>
-            <Input
-              value={item.field}
-              onChange={(e) => onChangeField(e.target.value)}
-              placeholder={Intl.get('please_enter')}
-            />
-          </div>
+        <div className={`${selectorPrefix}-item-title`}>
+          <div ref={triggerRef} />
+          <I18nChangeFormItem
+            getTriggerContainer={() => triggerRef.current}
+            value={titleValue}
+            onChange={(next) => onChangeTitle(next)}
+          >
+            {({ value, onChange }) => (
+              <Input
+                value={value ?? ''}
+                placeholder={Intl.get('column_title')}
+                onChange={(e) => onChange?.(e.target.value)}
+              />
+            )}
+          </I18nChangeFormItem>
         </div>
-      </div>
 
-      <div className={`${selectorPrefix}-item-actions`}>
-        <Space>
-          <Button icon={<SettingOutlined />} onClick={onSetting} />
-          <Button danger icon={<DeleteOutlined />} onClick={onDelete} />
+        <Input
+          className={`${selectorPrefix}-item-field`}
+          value={item.field}
+          placeholder={Intl.get('column_field')}
+          status={isFieldDuplicate ? 'error' : undefined}
+          onChange={(e) => onChangeField(e.target.value)}
+        />
+
+        <Space className={`${selectorPrefix}-item-actions`} size={8}>
+          <Button
+            aria-label={Intl.get('settings')}
+            icon={<SettingOutlined />}
+            onClick={onSetting}
+          />
+          <Button
+            aria-label={Intl.get('delete')}
+            danger
+            icon={<DeleteOutlined />}
+            onClick={onDelete}
+          />
         </Space>
       </div>
     </div>
@@ -209,6 +239,20 @@ const TableColumnSettingFormItem: FC<TableColumnSettingFormItemProps> = ({
 }) => {
   const items = useMemo(() => value ?? [], [value]);
 
+  const fieldDuplicateSet = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const it of items) {
+      const k = (it.field ?? '').trim();
+      if (!k) continue;
+      counts.set(k, (counts.get(k) ?? 0) + 1);
+    }
+    const dup = new Set<string>();
+    counts.forEach((c, k) => {
+      if (c > 1) dup.add(k);
+    });
+    return dup;
+  }, [items]);
+
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   const [settingOpen, setSettingOpen] = useState(false);
@@ -220,6 +264,21 @@ const TableColumnSettingFormItem: FC<TableColumnSettingFormItemProps> = ({
   );
 
   const updateAt = (id: string, patch: Partial<TableColumnSettingItem>) => {
+    if ('field' in patch) {
+      const nextField = String(patch.field ?? '');
+      const key = nextField.trim();
+      if (key) {
+        const exists = items.some((it) => it.id !== id && (it.field ?? '').trim() === key);
+        if (exists) {
+          Modal.warning({
+            title: Intl.get('hint'),
+            content: Intl.get('column_field_duplicate'),
+          });
+          return;
+        }
+      }
+    }
+
     onChange?.(items.map((it) => (it.id === id ? { ...it, ...patch } : it)));
   };
 
@@ -261,6 +320,7 @@ const TableColumnSettingFormItem: FC<TableColumnSettingFormItemProps> = ({
               <SortableItem
                 key={item.id}
                 item={item}
+                isFieldDuplicate={fieldDuplicateSet.has((item.field ?? '').trim())}
                 onDelete={() => onDelete(item.id)}
                 onSetting={() => {
                   setSettingId(item.id);

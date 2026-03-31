@@ -40,6 +40,7 @@ import { SelectMode } from './SelectMode';
 import { Size } from './Size';
 import { SwitchSize } from './SwitchSize';
 import { TableGridLayoutModeType } from './TableGridLayoutModeType';
+import { TableNumberGeneratorRule } from './TableNumberGeneratorRule';
 import { TextType } from './TextType';
 import { Thousands } from './Thousands';
 import { TimeHourStep } from './TimeHourStep';
@@ -106,6 +107,7 @@ const dictImpls = {
   AlignItems,
   AlignContent,
   AlignSelf,
+  TableNumberGeneratorRule,
 };
 
 const { names, values } = genModuleDict(dictImpls);

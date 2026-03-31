@@ -27,6 +27,7 @@ declare const _default: {
     add_column: string;
     column_title: string;
     column_field: string;
+    column_field_duplicate: string;
     editor_control: string;
     editor_control_setting_not_implemented: string;
     colspan: string;
@@ -375,5 +376,11 @@ declare const _default: {
     transfer_item_disabled: string;
     transfer_item_detail: string;
     editor_table_text: string;
+    title: string;
+    operation: string;
+    separate_mode: string;
+    continuous_mode: string;
+    no_gen_rule: string;
+    align: string;
 }[];
 export default _default;

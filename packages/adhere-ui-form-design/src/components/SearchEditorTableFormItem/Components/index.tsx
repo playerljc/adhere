@@ -5,6 +5,7 @@ import DelConfirm from '@baifendian/adhere-ui-confirm-delconfirm';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 import Intl from '@baifendian/adhere-util-intl';
 
+import Model from '../Model';
 import { serviceName } from '../Service';
 
 const {
@@ -14,7 +15,9 @@ const {
   ProEditableCellSearchStateTable,
   ProEditableRowSearchStateTable,
   Table: AdhereSearchTable,
-} = SearchTable;
+} = SearchTable as any;
+
+type AnyRecord = Record<string, any>;
 
 /**
  * createImplFactory
@@ -22,7 +25,7 @@ const {
  * @param {Class} SuperClass - 要包装的超类
  * @returns {Class} 返回扩展后的新类
  */
-function createImplFactory(SuperClass) {
+function createImplFactory(SuperClass: any) {
   return class extends SuperClass {
     getServiceName() {
       return serviceName;
@@ -76,26 +79,26 @@ function createImplFactory(SuperClass) {
       return AdhereSearchTable.NUMBER_GENERATOR_RULE_ALONE;
     }
 
-    onAdd(values) {
-      return this.setData((_data) => {
+    onAdd(values?: AnyRecord) {
+      return this.setData((_data: AnyRecord[]) => {
         return [values, ..._data];
       })
         .then(() => {
           this.props?.onChange?.(this.getData());
         })
-        .catch((err) => {
+        .catch((err: unknown) => {
           throw err;
         });
     }
 
-    async onDel(key) {
-      return this.setData((_data) => {
+    async onDel(key: unknown) {
+      return this.setData((_data: AnyRecord[]) => {
         return _data.filter((record) => record[this.getRowKey()] !== key);
       })
         .then(() => {
           this.props?.onChange?.(this.getData());
         })
-        .catch((err) => {
+        .catch((err: unknown) => {
           throw err;
         });
     }
@@ -107,7 +110,8 @@ function createImplFactory(SuperClass) {
       });
     }
 
-    componentWillReceiveProps(nextProps) {
+    // eslint-disable-next-line react/no-deprecated
+    componentWillReceiveProps(nextProps: AnyRecord) {
       super.componentWillReceiveProps(nextProps);
 
       // 设置数据
@@ -116,13 +120,13 @@ function createImplFactory(SuperClass) {
       });
     }
 
-    renderSearchFooterItems(defaultItems) {
+    renderSearchFooterItems(defaultItems: AnyRecord[]) {
       return super.renderSearchFooterItems([
         {
           key: 'add',
           value: (
             <Button key="add" type="primary" onClick={() => this.onAdd()}>
-              {Intl.get('ADD')}
+              {Intl.get('add')}
             </Button>
           ),
         },
@@ -143,10 +147,10 @@ export class EditableRowControlTable extends createImplFactory(ProEditableRowSea
    * @param values {Record<string, any>}
    * @return {Promise<void>}
    */
-  async onSave(values) {
+  async onSave(values: AnyRecord) {
     const key = this.getRowKey();
 
-    return this.setData((_data) => {
+    return this.setData((_data: AnyRecord[]) => {
       const index = _data.findIndex((record) => record[key] === values[key]);
 
       if (index !== -1) {
@@ -158,7 +162,7 @@ export class EditableRowControlTable extends createImplFactory(ProEditableRowSea
       .then(() => {
         this.props?.onChange?.(this.getData());
       })
-      .catch((err) => {
+      .catch((err: unknown) => {
         throw err;
       });
   }
@@ -167,12 +171,12 @@ export class EditableRowControlTable extends createImplFactory(ProEditableRowSea
     const columns = super.getColumns();
 
     columns.push({
-      title: Intl.get('OPERATION'),
+      title: Intl.get('operation'),
       dataIndex: this.getOptionsColumnDataIndex(),
       key: this.getOptionsColumnDataIndex(),
       width: {},
-      renderToString: () => this.getOptionsColumnString([Intl.get('EDIT'), Intl.get('DELETE')]),
-      render: (_, record) => (
+      renderToString: () => this.getOptionsColumnString([Intl.get('edit'), Intl.get('delete')]),
+      render: (_: unknown, record: AnyRecord) => (
         <OptionsWrap style={{ justifyContent: 'center' }} ellipsisCount={this.getEllipsisCount()}>
           {this.renderOptionColumn([
             {
@@ -182,8 +186,8 @@ export class EditableRowControlTable extends createImplFactory(ProEditableRowSea
                   record={record}
                   rowKey={this.getRowKey()}
                   editorRowId={this.state.editorRowId}
-                  renderEditorRow={() => <a>{Intl.get('EDIT')}</a>}
-                  onSave={(values) => this.onSave(values)}
+                  renderEditorRow={() => <a>{Intl.get('edit')}</a>}
+                  onSave={(values: AnyRecord) => this.onSave(values)}
                 />
               ),
             },
@@ -191,7 +195,7 @@ export class EditableRowControlTable extends createImplFactory(ProEditableRowSea
               key: 'delete',
               value: (
                 <DelConfirm success={() => this.onDel(record[this.getRowKey()])}>
-                  <a>{Intl.get('DELETE')}</a>
+                  <a>{Intl.get('delete')}</a>
                 </DelConfirm>
               ),
             },
@@ -212,12 +216,8 @@ export class EditorCellTable extends createImplFactory(ProEditableCellSearchStat
   /**
    * onCellSave
    * @description 保存单元格数据
-   * @param value
-   * @param record
-   * @param dataIndex
-   * @return {*}
    */
-  onCellSave({ value, record, dataIndex }) {
+  onCellSave({ value, record, dataIndex }: { value: any; record: AnyRecord; dataIndex: any }) {
     // 在此处可以调用接口来更新单元格的值
     return this.updateEditorCellDate({
       record,
@@ -227,7 +227,7 @@ export class EditorCellTable extends createImplFactory(ProEditableCellSearchStat
       .then(() => {
         this.props?.onChange?.(this.getData());
       })
-      .catch((err) => {
+      .catch((err: unknown) => {
         throw err;
       });
   }
@@ -235,12 +235,16 @@ export class EditorCellTable extends createImplFactory(ProEditableCellSearchStat
   /**
    * onCellSaveByDate
    * @description 保存日期单元格数据
-   * @param value
-   * @param record
-   * @param dataIndex
-   * @return {*}
    */
-  onCellSaveByDate({ value, record, dataIndex }) {
+  onCellSaveByDate({
+    value,
+    record,
+    dataIndex,
+  }: {
+    value: any;
+    record: AnyRecord;
+    dataIndex: any;
+  }) {
     return this.updateEditorCellDateData({
       record,
       dataIndex,
@@ -249,7 +253,7 @@ export class EditorCellTable extends createImplFactory(ProEditableCellSearchStat
       .then(() => {
         this.props?.onChange?.(this.getData());
       })
-      .catch((err) => {
+      .catch((err: unknown) => {
         throw err;
       });
   }
@@ -258,19 +262,19 @@ export class EditorCellTable extends createImplFactory(ProEditableCellSearchStat
     const columns = super.getColumns();
 
     columns.push({
-      title: Intl.get('OPERATION'),
+      title: Intl.get('operation'),
       dataIndex: this.getOptionsColumnDataIndex(),
       key: this.getOptionsColumnDataIndex(),
       width: this.isMobile() ? 'auto' : {},
-      renderToString: () => this.getOptionsColumnString([Intl.get('DELETE')]),
-      render: (_, record) => (
+      renderToString: () => this.getOptionsColumnString([Intl.get('delete')]),
+      render: (_: unknown, record: AnyRecord) => (
         <OptionsWrap style={{ justifyContent: 'center' }} ellipsisCount={this.getEllipsisCount()}>
           {this.renderOptionColumn([
             {
               key: 'delete',
               value: (
                 <DelConfirm success={() => this.onDel(record[this.getRowKey()])}>
-                  <a>{Intl.get('DELETE')}</a>
+                  <a>{Intl.get('delete')}</a>
                 </DelConfirm>
               ),
             },
@@ -286,25 +290,26 @@ export class EditorCellTable extends createImplFactory(ProEditableCellSearchStat
 /**
  * StateTable
  * @description 创建基于 SystemBaseSearchTableStateImpl 的状态表格高阶组件，自动加载 Model 和 Service
- * @param {Class} SubClass - 子类组件
- * @returns {Class} 返回包装后的高阶组件
  */
-export const StateTable = (SubClass) => {
-  return SearchTableStateImplementFactory({
+export const StateTable = (SubClass: any) => {
+  return (SearchTableStateImplementFactory as any)({
     serviceNames: [serviceName],
     middleWares: [],
     reducer: null,
     models: (() => {
-      const models = [];
-
-      const requireComponent = require.context('../Model', false, /.*\.(js)$/);
-
-      requireComponent.keys().forEach((fileName) => {
-        const model = requireComponent(fileName);
-        models.push(model.default);
-      });
-
-      return models;
+      return [Model];
+      // const models: any[] = [];
+      //
+      // // webpack require.context - 在调用 StateTable 时才加载/执行 Model
+      // // eslint-disable-next-line @typescript-eslint/no-var-requires
+      // const requireComponent = (require as any).context('../Model', false, /.*\.(ts)$/);
+      //
+      // requireComponent.keys().forEach((fileName: string) => {
+      //   const model = requireComponent(fileName);
+      //   models.push(model.default);
+      // });
+      //
+      // return models;
     })(),
   })(SubClass);
 };

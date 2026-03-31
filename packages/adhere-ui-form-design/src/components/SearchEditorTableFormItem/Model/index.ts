@@ -11,8 +11,9 @@ import { serviceName } from '../Service';
  * Model
  * @description 基于 serviceName 创建并注册状态模型实例
  */
-const Model = Object.assign(ServiceRegister.model(serviceName), {});
+const Model = Object.assign(ServiceRegister.model(serviceName), {}) as Record<string, unknown>;
 
 sage.model(Model);
 
 export default Model;
+

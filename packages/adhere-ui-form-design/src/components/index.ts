@@ -59,6 +59,7 @@ import { TableColumnSettingFormItem } from './TableColumnSettingFormItem';
 import PropertiesGridLayout from './TableGridLayout';
 import TableGridLayoutColgroupSetting from './TableGridLayoutColgroupSetting';
 import { TableGridLayoutModeTypeSelectStandardDict } from './TableGridLayoutModeType';
+import { TableNumberGeneratorRuleSelectStandardDict } from './TableNumberGeneratorRule';
 import { TextTypeSelectStandardDict } from './TextType';
 import { ThousandsSelectStandardDict } from './Thousands';
 import { TimeHourStepSelectStandardDict } from './TimeHourStep';
@@ -159,4 +160,5 @@ export {
   TextTypeSelectStandardDict,
   TimeHourStepSelectStandardDict,
   TimeMinuteSecondStepSelectStandardDict,
+  TableNumberGeneratorRuleSelectStandardDict,
 };

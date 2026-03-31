@@ -27,6 +27,7 @@ export default [
     add_column: 'Add column',
     column_title: 'Title',
     column_field: 'Column field',
+    column_field_duplicate: 'Column field must be unique',
     editor_control: 'Editor control',
     editor_control_setting_not_implemented: 'Editor control settings are not implemented yet',
     colspan: 'Colspan',

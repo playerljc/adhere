@@ -4,6 +4,9 @@ import type { CSSProperties, PropsWithoutRef, RefAttributes } from 'react';
 
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Util from '@baifendian/adhere-util';
+import { createLoggerMiddleware } from '@ctsj/state/lib/middleware';
+import { Provider } from '@ctsj/state/lib/react';
+import { applyMiddleware, createStore } from '@ctsj/state/lib/state';
 import {
   DndContext,
   type DragEndEvent,
@@ -20,6 +23,7 @@ import { TYPE } from '../Fields/layout/FlexLayout/constant';
 import { REDUCER_ACTION_TYPE, SELECT_PREFIX } from '../constant';
 import {
   ActionsProps,
+  type DataSourceConfig,
   DesignComponent,
   DesignHandler,
   DesignItem,
@@ -27,7 +31,6 @@ import {
   DesignValue,
   DesignValueProps,
   DraggableToolItemProps,
-  type DataSourceConfig,
   type FieldProps,
   type FieldType,
   type FlexProps,
@@ -36,6 +39,7 @@ import {
   ToolBoxItem,
 } from '../types';
 import { genRootFieldId, isDragEnd } from '../utils';
+import sage from '../utils/saga';
 import { DesignContext } from './Context';
 import Editor from './DesignEditor';
 import DesignValueReducer from './DesignValueReducer';
@@ -46,6 +50,8 @@ import ToolboxItemDragOverlay from './Toolbox/ToolboxItemDragOverlay';
 
 // import { isLayoutItem } from '../utils';
 const { usePropToState } = Hooks;
+
+const store = createStore(null, {}, applyMiddleware(createLoggerMiddleware(), sage));
 
 /**
  * InternalFormDesign
@@ -347,81 +353,92 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       useImperativeHandle(ref, () => ({} as DesignHandler));
 
       return (
-        <DndContext
-          autoScroll
-          sensors={sensors}
-          collisionDetection={pointerWithin}
-          onDragStart={handleDragStart}
-          onDragOver={handleDragOver}
-          onDragEnd={handleDragEnd}
-        >
-          <DesignContext
-            value={{
-              // getter
-              getDesignValue,
-              getTerminal,
-              getActiveFieldId,
-              getActiveDesignFieldValue,
-              getItems,
-              getOverlayCursor,
-              getActiveToolItemData,
-              getToolBox,
-              // setter
-              setCurrentTerminal,
-              setActiveFieldId,
-              setFormItemProps,
-              setFieldProps,
-              setStyleProps,
-              setActionsProps,
-              setFlexProps,
-              setDataSourceConfig,
-              // add
-              addChildrenById,
-              // delete
-              deleteFieldByChildren,
-            }}
+        <Provider store={store}>
+          <DndContext
+            autoScroll
+            sensors={sensors}
+            collisionDetection={pointerWithin}
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDragEnd={handleDragEnd}
           >
-            <div className={classNames(`${SELECT_PREFIX}-design-wrapper`, className)} style={style}>
+            <DesignContext
+              value={{
+                // getter
+                getDesignValue,
+                getTerminal,
+                getActiveFieldId,
+                getActiveDesignFieldValue,
+                getItems,
+                getOverlayCursor,
+                getActiveToolItemData,
+                getToolBox,
+                // setter
+                setCurrentTerminal,
+                setActiveFieldId,
+                setFormItemProps,
+                setFieldProps,
+                setStyleProps,
+                setActionsProps,
+                setFlexProps,
+                setDataSourceConfig,
+                // add
+                addChildrenById,
+                // delete
+                deleteFieldByChildren,
+              }}
+            >
               <div
-                className={classNames(`${SELECT_PREFIX}-design-toolbar-wrapper`, toolbarClassName)}
-                style={toolbarStyle}
+                className={classNames(`${SELECT_PREFIX}-design-wrapper`, className)}
+                style={style}
               >
-                <Toolbar />
-              </div>
-
-              <div className={classNames(`${SELECT_PREFIX}-design-body-wrapper`)}>
                 <div
                   className={classNames(
-                    `${SELECT_PREFIX}-design-toolbox-wrapper`,
-                    toolboxClassName,
+                    `${SELECT_PREFIX}-design-toolbar-wrapper`,
+                    toolbarClassName,
                   )}
-                  style={toolboxStyle}
+                  style={toolbarStyle}
                 >
-                  <Toolbox toolBox={toolBox} />
+                  <Toolbar />
                 </div>
 
-                <div
-                  className={classNames(`${SELECT_PREFIX}-design-editor-wrapper`, editorClassName)}
-                  style={editorStyle}
-                >
-                  <Editor />
-                </div>
+                <div className={classNames(`${SELECT_PREFIX}-design-body-wrapper`)}>
+                  <div
+                    className={classNames(
+                      `${SELECT_PREFIX}-design-toolbox-wrapper`,
+                      toolboxClassName,
+                    )}
+                    style={toolboxStyle}
+                  >
+                    <Toolbox toolBox={toolBox} />
+                  </div>
 
-                <div
-                  className={classNames(
-                    `${SELECT_PREFIX}-design-properties-wrapper`,
-                    propertiesClassName,
-                  )}
-                  style={propertiesStyle}
-                >
-                  <Properties key={activeFieldId} />
+                  <div
+                    className={classNames(
+                      `${SELECT_PREFIX}-design-editor-wrapper`,
+                      editorClassName,
+                    )}
+                    style={editorStyle}
+                  >
+                    <Editor />
+                  </div>
+
+                  <div
+                    className={classNames(
+                      `${SELECT_PREFIX}-design-properties-wrapper`,
+                      propertiesClassName,
+                    )}
+                    style={propertiesStyle}
+                  >
+                    <Properties key={activeFieldId} />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {activeToolItemData && <ToolboxItemDragOverlay />}
-          </DesignContext>
-        </DndContext>
+              {activeToolItemData && <ToolboxItemDragOverlay />}
+            </DesignContext>
+          </DndContext>
+        </Provider>
       );
     },
   ),
