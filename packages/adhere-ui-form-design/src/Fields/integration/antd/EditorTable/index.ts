@@ -1,3 +1,4 @@
+// import SearchTable from '@baifendian/adhere-ui-searchtable';
 import type { DesignItem } from '../../../../types';
 import { TYPE } from './constant';
 import { renderActions } from './renderActions';
@@ -36,6 +37,7 @@ export function define(): DesignItem {
         bordered: true,
         pagination: false,
         no: true,
+        // noRule: SearchTable.Table.NUMBER_GENERATOR_RULE_ALONE,
         size: 'middle',
         fill: true,
       },

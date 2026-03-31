@@ -66,6 +66,7 @@ export interface TableColumnSettingItem {
   id: string;
   title?: I18nValue;
   field?: string;
+  defaultValue?: any;
   widthMode?: TableColumnWidthMode;
   widthValue?: number;
   align?: TableColumnAlign;
@@ -85,6 +86,7 @@ function createEmptyColumn(): TableColumnSettingItem {
     id: Util.uuid(),
     title: undefined,
     field: '',
+    defaultValue: undefined,
     widthMode: 'adaptive',
     widthValue: undefined,
     align: 'left',
@@ -354,7 +356,7 @@ const TableColumnSettingFormItem: FC<TableColumnSettingFormItemProps> = ({
               <div className={`${selectorPrefix}-modal-row-value`}>
                 <Space wrap>
                   <Select<TableColumnWidthMode>
-                    style={{ width: 160 }}
+                    style={{ width: '100%' }}
                     value={currentSettingItem.widthMode ?? 'adaptive'}
                     options={[
                       { label: Intl.get('adaptive'), value: 'adaptive' },
@@ -372,6 +374,7 @@ const TableColumnSettingFormItem: FC<TableColumnSettingFormItemProps> = ({
 
                   {currentSettingItem.widthMode === 'percent' && (
                     <InputNumber
+                      style={{ width: '100%' }}
                       min={0}
                       max={100}
                       value={currentSettingItem.widthValue}
@@ -386,6 +389,7 @@ const TableColumnSettingFormItem: FC<TableColumnSettingFormItemProps> = ({
 
                   {currentSettingItem.widthMode === 'number' && (
                     <InputNumber
+                      style={{ width: '100%' }}
                       min={0}
                       value={currentSettingItem.widthValue}
                       onChange={(v) =>
@@ -403,7 +407,7 @@ const TableColumnSettingFormItem: FC<TableColumnSettingFormItemProps> = ({
               <div className={`${selectorPrefix}-modal-row-label`}>{Intl.get('align')}：</div>
               <div className={`${selectorPrefix}-modal-row-value`}>
                 <Select<TableColumnAlign>
-                  style={{ width: 160 }}
+                  style={{ width: '100%' }}
                   value={currentSettingItem.align ?? 'left'}
                   options={[
                     { label: 'left', value: 'left' },
@@ -416,6 +420,21 @@ const TableColumnSettingFormItem: FC<TableColumnSettingFormItemProps> = ({
             </div>
 
             <div className={`${selectorPrefix}-modal-row`}>
+              <div className={`${selectorPrefix}-modal-row-label`}>{Intl.get('default_value')}：</div>
+              <div className={`${selectorPrefix}-modal-row-value`}>
+                <Input
+                  value={
+                    currentSettingItem.defaultValue === undefined || currentSettingItem.defaultValue === null
+                      ? ''
+                      : String(currentSettingItem.defaultValue)
+                  }
+                  placeholder={Intl.get('default_value')}
+                  onChange={(e) => updateAt(currentSettingItem.id, { defaultValue: e.target.value })}
+                />
+              </div>
+            </div>
+
+            <div className={`${selectorPrefix}-modal-row`}>
               <div className={`${selectorPrefix}-modal-row-label`}>
                 {Intl.get('editor_control')}：
               </div>
@@ -423,7 +442,7 @@ const TableColumnSettingFormItem: FC<TableColumnSettingFormItemProps> = ({
                 <Space wrap>
                   <Select<TableColumnEditorType>
                     showSearch
-                    style={{ width: 260 }}
+                    style={{ width: '100%' }}
                     value={currentSettingItem.editorType}
                     options={EditorTypeOptions}
                     placeholder={Intl.get('please_select')}
