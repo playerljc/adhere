@@ -31,6 +31,10 @@ function createSubTitle(_params: {
   lang: string;
 }): typeof EditableRowControlTableSuperTable {
   return class extends EditableRowControlTableSuperTable {
+    getEllipsisCount() {
+      return 5;
+    }
+
     onAdd() {
       return super.onAdd(
         (_params?.fieldProps.columnSetting ?? []).reduce(
@@ -89,6 +93,19 @@ function createSubTitle(_params: {
             key: columnConfigconfig?.field,
             align: columnConfigconfig?.align,
             width,
+            $editable: {
+              editable: true,
+              type: columnConfigconfig?.editorType,
+              props: {
+                placeholder: '',
+              },
+              rules: [
+                {
+                  required: true,
+                  message: '',
+                },
+              ],
+            },
           };
         }),
         ...columns,

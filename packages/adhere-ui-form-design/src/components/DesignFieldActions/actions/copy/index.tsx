@@ -38,6 +38,6 @@ export const Copy = ({ id }: { id: string }) => {
 
 export default {
   key: 'copy',
-  label: Intl.v('copy'),
+  label: Intl.get('copy'),
   render: (id: string) => <Copy id={id} />,
 };

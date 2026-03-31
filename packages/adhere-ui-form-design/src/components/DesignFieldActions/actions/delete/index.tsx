@@ -25,6 +25,6 @@ export const Delete = ({ id }: { id: string }) => {
 
 export default {
   key: 'delete',
-  label: Intl.v('delete'),
+  label: Intl.get('delete'),
   render: (id: string) => <Delete id={id} />,
 };

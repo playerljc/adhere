@@ -11,7 +11,16 @@ import React, {
 import clone from 'rfdc';
 
 import { CopyOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Button, Form, Input, InputNumberInteger, Modal, Popconfirm, Radio, Space } from '@baifendian/adhere-ui-anthoc';
+import {
+  Button,
+  Form,
+  Input,
+  InputNumberInteger,
+  Modal,
+  Popconfirm,
+  Radio,
+  Space,
+} from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
@@ -303,56 +312,59 @@ const DataSourceManager: FC<DataSourceManagerProps> = ({
     }
   };
 
-  const renderPairList = useCallback((name: 'headerPairs' | 'paramPairs') => (
-    <Form.List name={name}>
-      {(fields, { add, remove }) => (
-        <div className={`${selectorPrefix}-pair-list`}>
-          {fields.map(({ key, name: rowName, ...restField }) => (
-            <div key={key} className={`${selectorPrefix}-pair-block`}>
-              <div className={`${selectorPrefix}-pair-row`}>
-                <Form.Item
-                  {...restField}
-                  name={[rowName, 'key']}
-                  className={`${selectorPrefix}-pair-key`}
-                >
-                  <Input
-                    placeholder={Intl.get('request_pair_key_placeholder')}
-                    allowClear
-                    showCount={false}
+  const renderPairList = useCallback(
+    (name: 'headerPairs' | 'paramPairs') => (
+      <Form.List name={name}>
+        {(fields, { add, remove }) => (
+          <div className={`${selectorPrefix}-pair-list`}>
+            {fields.map(({ key, name: rowName, ...restField }) => (
+              <div key={key} className={`${selectorPrefix}-pair-block`}>
+                <div className={`${selectorPrefix}-pair-row`}>
+                  <Form.Item
+                    {...restField}
+                    name={[rowName, 'key']}
+                    className={`${selectorPrefix}-pair-key`}
+                  >
+                    <Input
+                      placeholder={Intl.get('request_pair_key_placeholder')}
+                      allowClear
+                      showCount={false}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    name={[rowName, 'value']}
+                    className={`${selectorPrefix}-pair-value`}
+                  >
+                    <Input placeholder={Intl.get('please_enter')} allowClear showCount={false} />
+                  </Form.Item>
+                  <Button
+                    type="text"
+                    danger
+                    className={`${selectorPrefix}-pair-remove`}
+                    icon={<DeleteOutlined />}
+                    aria-label={Intl.get('delete')}
+                    onClick={() => remove(rowName)}
                   />
-                </Form.Item>
-                <Form.Item
-                  {...restField}
-                  name={[rowName, 'value']}
-                  className={`${selectorPrefix}-pair-value`}
-                >
-                  <Input placeholder={Intl.get('please_enter')} allowClear showCount={false} />
-                </Form.Item>
-                <Button
-                  type="text"
-                  danger
-                  className={`${selectorPrefix}-pair-remove`}
-                  icon={<DeleteOutlined />}
-                  aria-label={Intl.get('delete')}
-                  onClick={() => remove(rowName)}
-                />
+                </div>
               </div>
+            ))}
+            <div className={`${selectorPrefix}-pair-add`}>
+              <Button
+                type="link"
+                htmlType="button"
+                className={`${selectorPrefix}-pair-add-btn`}
+                onClick={() => add({ key: '', value: '' })}
+              >
+                + {Intl.get('add')}
+              </Button>
             </div>
-          ))}
-          <div className={`${selectorPrefix}-pair-add`}>
-            <Button
-              type="link"
-              htmlType="button"
-              className={`${selectorPrefix}-pair-add-btn`}
-              onClick={() => add({ key: '', value: '' })}
-            >
-              + {Intl.get('add')}
-            </Button>
           </div>
-        </div>
-      )}
-    </Form.List>
-  ), []);
+        )}
+      </Form.List>
+    ),
+    [],
+  );
 
   /**
    * formRows 完全稳定（renderPairList 为 useCallback 固定引用）。
@@ -477,82 +489,83 @@ const DataSourceManager: FC<DataSourceManagerProps> = ({
       onCancel={handleModalClose}
       footer={null}
       destroyOnHidden
+      zIndex={19999}
     >
       <div className={`${selectorPrefix}-modal-body-inner`}>
         <div className={selectorPrefix}>
           <div className={`${selectorPrefix}-fix`}>
-          <div className={`${selectorPrefix}-list-actions`}>
-            <Button type="primary" onClick={handleAdd}>
-              + {Intl.get('add')}
-            </Button>
-          </div>
+            <div className={`${selectorPrefix}-list-actions`}>
+              <Button type="primary" onClick={handleAdd}>
+                + {Intl.get('add')}
+              </Button>
+            </div>
 
-          <ul className={`${selectorPrefix}-list`}>
-            {editingList.map((item) => (
-              <li
-                key={item.id}
-                className={classNames(`${selectorPrefix}-list-item`, {
-                  [`${selectorPrefix}-list-item-active`]: selectedId === item.id,
-                })}
-                onClick={() => setSelectedId(item.id)}
-              >
-                <span
-                  className={`${selectorPrefix}-list-item-text`}
-                  title={`${item.request.method.toUpperCase()} -> ${item.name}`}
+            <ul className={`${selectorPrefix}-list`}>
+              {editingList.map((item) => (
+                <li
+                  key={item.id}
+                  className={classNames(`${selectorPrefix}-list-item`, {
+                    [`${selectorPrefix}-list-item-active`]: selectedId === item.id,
+                  })}
+                  onClick={() => setSelectedId(item.id)}
                 >
-                  {item.request.method.toUpperCase()} -&gt; {item.name || '—'}
-                </span>
-                <span
-                  className={`${selectorPrefix}-list-item-actions`}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Button
-                    type="link"
-                    size="small"
-                    icon={<CopyOutlined />}
-                    aria-label={Intl.get('copy')}
-                    onClick={() => handleCopy(item)}
-                  />
-                  <Popconfirm title={Intl.get('delete')} onConfirm={() => handleDelete(item.id)}>
+                  <span
+                    className={`${selectorPrefix}-list-item-text`}
+                    title={`${item.request.method.toUpperCase()} -> ${item.name}`}
+                  >
+                    {item.request.method.toUpperCase()} -&gt; {item.name || '—'}
+                  </span>
+                  <span
+                    className={`${selectorPrefix}-list-item-actions`}
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <Button
                       type="link"
                       size="small"
-                      danger
-                      icon={<DeleteOutlined />}
-                      aria-label={Intl.get('delete')}
+                      icon={<CopyOutlined />}
+                      aria-label={Intl.get('copy')}
+                      onClick={() => handleCopy(item)}
                     />
-                  </Popconfirm>
-                </span>
-              </li>
-            ))}
-          </ul>
+                    <Popconfirm title={Intl.get('delete')} onConfirm={() => handleDelete(item.id)}>
+                      <Button
+                        type="link"
+                        size="small"
+                        danger
+                        icon={<DeleteOutlined />}
+                        aria-label={Intl.get('delete')}
+                      />
+                    </Popconfirm>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className={`${selectorPrefix}-auto`}>
-          {selectedId && (
-            <div className={`${selectorPrefix}-actions`}>
-              <Space>
-                <Button type="primary" onClick={handleSave}>
-                  {Intl.get('save')}
-                </Button>
-                <Button onClick={handleTestRequest}>{Intl.get('test_request')}</Button>
-                <Button onClick={handleActionsCancel}>{Intl.get('cancel')}</Button>
-              </Space>
-            </div>
-          )}
-
-          <div className={`${selectorPrefix}-info`}>
-            {selectedId ? (
-              // 不使用 onValuesChange，避免每次输入触发 setEditingList → 组件重渲染 → Form.List 重建
-              <Form form={form} layout="vertical">
-                <PropertiesGridLayout layout="vertical" data={tableGridData} />
-              </Form>
-            ) : (
-              <div className={`${selectorPrefix}-info-empty`}>
-                {Intl.get('data_source_empty_hint')}
+            {selectedId && (
+              <div className={`${selectorPrefix}-actions`}>
+                <Space>
+                  <Button type="primary" onClick={handleSave}>
+                    {Intl.get('save')}
+                  </Button>
+                  <Button onClick={handleTestRequest}>{Intl.get('test_request')}</Button>
+                  <Button onClick={handleActionsCancel}>{Intl.get('cancel')}</Button>
+                </Space>
               </div>
             )}
-          </div>
+
+            <div className={`${selectorPrefix}-info`}>
+              {selectedId ? (
+                // 不使用 onValuesChange，避免每次输入触发 setEditingList → 组件重渲染 → Form.List 重建
+                <Form form={form} layout="vertical">
+                  <PropertiesGridLayout layout="vertical" data={tableGridData} />
+                </Form>
+              ) : (
+                <div className={`${selectorPrefix}-info-empty`}>
+                  {Intl.get('data_source_empty_hint')}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

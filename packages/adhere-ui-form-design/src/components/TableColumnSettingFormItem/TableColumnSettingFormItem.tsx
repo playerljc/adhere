@@ -29,6 +29,7 @@ export type TableColumnAlign = 'left' | 'center' | 'right';
 
 export type TableColumnEditorType =
   | 'input'
+  | 'select'
   | 'textArea'
   | 'inputNumber'
   | 'inputNumberDecimal1'
@@ -113,41 +114,42 @@ function toI18nTitle(
 }
 
 const EditorTypeOptions: Array<{ label: string; value: TableColumnEditorType }> = [
-  'input',
-  'textArea',
-  'inputNumber',
-  'inputNumberDecimal1',
-  'inputNegativeNumberDecimal1',
-  'inputPositiveNumberDecimal1',
-  'inputNumberDecimal1French',
-  'inputNumberDecimal1German',
-  'inputNumberDecimal1International',
-  'inputNumberDecimal1US',
-  'inputNumberDecimal2',
-  'inputNegativeNumberDecimal2',
-  'inputPositiveNumberDecimal2',
-  'inputNumberDecimal2French',
-  'inputNumberDecimal2German',
-  'inputNumberDecimal2International',
-  'inputNumberDecimal2US',
-  'inputNumberInteger',
-  'inputNegativeNumberInteger',
-  'inputPositiveNumberInteger',
-  'inputNumberIntegerFrench',
-  'inputNumberIntegerGerman',
-  'inputNumberIntegerInternational',
-  'inputNumberIntegerUS',
-  'datePicker',
-  'birthdayPicker',
-  'boundedTimePicker',
-  'timePicker',
-  'rangePicker',
-  'slider',
-  'sliderRange',
-  'rate',
-  'switch',
-  'colorPicker',
-].map((v) => ({ label: v, value: v as TableColumnEditorType }));
+  { label: 'Input', value: 'input' },
+  { label: 'Select', value: 'select' },
+  { label: 'TextArea', value: 'textArea' },
+  { label: 'InputNumber', value: 'inputNumber' },
+  { label: 'InputNumberDecimal1', value: 'inputNumberDecimal1' },
+  { label: 'InputNegativeNumberDecimal1', value: 'inputNegativeNumberDecimal1' },
+  { label: 'InputPositiveNumberDecimal1', value: 'inputPositiveNumberDecimal1' },
+  { label: 'InputNumberDecimal1French', value: 'inputNumberDecimal1French' },
+  { label: 'InputNumberDecimal1German', value: 'inputNumberDecimal1German' },
+  { label: 'InputNumberDecimal1International', value: 'inputNumberDecimal1International' },
+  { label: 'InputNumberDecimal1US', value: 'inputNumberDecimal1US' },
+  { label: 'InputNumberDecimal2', value: 'inputNumberDecimal2' },
+  { label: 'InputNegativeNumberDecimal2', value: 'inputNegativeNumberDecimal2' },
+  { label: 'InputPositiveNumberDecimal2', value: 'inputPositiveNumberDecimal2' },
+  { label: 'InputNumberDecimal2French', value: 'inputNumberDecimal2French' },
+  { label: 'InputNumberDecimal2German', value: 'inputNumberDecimal2German' },
+  { label: 'InputNumberDecimal2International', value: 'inputNumberDecimal2International' },
+  { label: 'InputNumberDecimal2US', value: 'inputNumberDecimal2US' },
+  { label: 'InputNumberInteger', value: 'inputNumberInteger' },
+  { label: 'InputNegativeNumberInteger', value: 'inputNegativeNumberInteger' },
+  { label: 'InputPositiveNumberInteger', value: 'inputPositiveNumberInteger' },
+  { label: 'InputNumberIntegerFrench', value: 'inputNumberIntegerFrench' },
+  { label: 'InputNumberIntegerGerman', value: 'inputNumberIntegerGerman' },
+  { label: 'InputNumberIntegerInternational', value: 'inputNumberIntegerInternational' },
+  { label: 'InputNumberIntegerUS', value: 'inputNumberIntegerUS' },
+  { label: 'DatePicker', value: 'datePicker' },
+  { label: 'BirthdayPicker', value: 'birthdayPicker' },
+  { label: 'BoundedTimePicker', value: 'boundedTimePicker' },
+  { label: 'TimePicker', value: 'timePicker' },
+  { label: 'RangePicker', value: 'rangePicker' },
+  { label: 'Slider', value: 'slider' },
+  { label: 'SliderRange', value: 'sliderRange' },
+  { label: 'Rate', value: 'rate' },
+  { label: 'Switch', value: 'switch' },
+  { label: 'ColorPicker', value: 'colorPicker' },
+];
 
 const SortableItem: FC<{
   item: TableColumnSettingItem;

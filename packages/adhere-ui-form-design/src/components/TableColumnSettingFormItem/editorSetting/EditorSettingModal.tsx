@@ -1,4 +1,4 @@
-import { Form, Modal } from 'antd';
+import { Divider, Form, Modal } from 'antd';
 import React, { useEffect } from 'react';
 import type { FC } from 'react';
 
@@ -12,6 +12,8 @@ import InputSection from './sections/Input';
 import InputNumberSection from './sections/InputNumber';
 import RangePickerSection from './sections/RangePicker';
 import RateSection from './sections/Rate';
+import RulesSection from './sections/Rules';
+import SelectSection from './sections/Select';
 import SliderSection from './sections/Slider';
 import SwitchSection from './sections/Switch';
 import TextAreaSection from './sections/TextArea';
@@ -39,6 +41,7 @@ const EditorSettingModal: FC<EditorSettingModalProps> = ({
   const renderBody = (_editorType: TableColumnEditorType | undefined) => {
     if (!_editorType) return null;
     if (_editorType === 'input') return <InputSection />;
+    if (_editorType === 'select') return <SelectSection />;
     if (_editorType === 'textArea') return <TextAreaSection />;
     if (InputNumberEditorTypes.has(_editorType)) return <InputNumberSection />;
     if (DatePickerEditorTypes.has(_editorType))
@@ -71,6 +74,8 @@ const EditorSettingModal: FC<EditorSettingModalProps> = ({
     >
       <Form form={form} layout="vertical" preserve={false}>
         {renderBody(editorType)}
+        <Divider />
+        <RulesSection />
       </Form>
     </Modal>
   );
