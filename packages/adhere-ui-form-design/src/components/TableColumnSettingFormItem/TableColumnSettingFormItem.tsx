@@ -1,4 +1,4 @@
-import { Button, Input, InputNumber, Modal, Select, Space } from 'antd';
+import { Button, Col, Input, InputNumber, Modal, Row, Select, Space } from 'antd';
 import classNames from 'classnames';
 import React, { memo, useContext, useMemo, useRef, useState } from 'react';
 import type { FC } from 'react';
@@ -19,6 +19,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { SELECT_PREFIX, SELECT_VALUE_KEY_NAME } from '../../constant';
 import type { I18nValue } from '../../types';
 import I18nChangeFormItem from '../I18nChangeFormItem';
+import EditorSettingModalFromDir from './editorSetting/EditorSettingModal';
 
 const selectorPrefix = `${SELECT_PREFIX}-form-design-components-table-column-setting-form-item`;
 
@@ -259,6 +260,7 @@ const TableColumnSettingFormItem: FC<TableColumnSettingFormItemProps> = ({
 
   const [settingOpen, setSettingOpen] = useState(false);
   const [settingId, setSettingId] = useState<string | null>(null);
+  const [editorSettingOpen, setEditorSettingOpen] = useState(false);
 
   const currentSettingItem = useMemo(
     () => items.find((t) => t.id === settingId) ?? null,
@@ -339,13 +341,21 @@ const TableColumnSettingFormItem: FC<TableColumnSettingFormItemProps> = ({
       <Modal
         title={Intl.get('settings')}
         open={settingOpen}
+        styles={{
+          body: {
+            maxHeight: '60vh',
+            overflowY: 'auto',
+          },
+        }}
         onCancel={() => {
           setSettingOpen(false);
           setSettingId(null);
+          setEditorSettingOpen(false);
         }}
         onOk={() => {
           setSettingOpen(false);
           setSettingId(null);
+          setEditorSettingOpen(false);
         }}
         destroyOnHidden
       >
@@ -354,52 +364,65 @@ const TableColumnSettingFormItem: FC<TableColumnSettingFormItemProps> = ({
             <div className={`${selectorPrefix}-modal-row`}>
               <div className={`${selectorPrefix}-modal-row-label`}>{Intl.get('width')}：</div>
               <div className={`${selectorPrefix}-modal-row-value`}>
-                <Space wrap>
-                  <Select<TableColumnWidthMode>
-                    style={{ width: '100%' }}
-                    value={currentSettingItem.widthMode ?? 'adaptive'}
-                    options={[
-                      { label: Intl.get('adaptive'), value: 'adaptive' },
-                      { label: Intl.get('auto'), value: 'auto' },
-                      { label: Intl.get('percentage'), value: 'percent' },
-                      { label: Intl.get('number'), value: 'number' },
-                    ]}
-                    onChange={(v) => {
-                      updateAt(currentSettingItem.id, {
-                        widthMode: v,
-                        widthValue: v === 'percent' || v === 'number' ? 0 : undefined,
-                      });
-                    }}
-                  />
+                <Row gutter={8} wrap>
+                  <Col
+                    span={
+                      currentSettingItem.widthMode === 'percent' ||
+                      currentSettingItem.widthMode === 'number'
+                        ? 16
+                        : 24
+                    }
+                  >
+                    <Select<TableColumnWidthMode>
+                      style={{ width: '100%' }}
+                      value={currentSettingItem.widthMode ?? 'adaptive'}
+                      options={[
+                        { label: Intl.get('adaptive'), value: 'adaptive' },
+                        { label: Intl.get('auto'), value: 'auto' },
+                        { label: Intl.get('percentage'), value: 'percent' },
+                        { label: Intl.get('number'), value: 'number' },
+                      ]}
+                      onChange={(v) => {
+                        updateAt(currentSettingItem.id, {
+                          widthMode: v,
+                          widthValue: v === 'percent' || v === 'number' ? 0 : undefined,
+                        });
+                      }}
+                    />
+                  </Col>
 
                   {currentSettingItem.widthMode === 'percent' && (
-                    <InputNumber
-                      style={{ width: '100%' }}
-                      min={0}
-                      max={100}
-                      value={currentSettingItem.widthValue}
-                      onChange={(v) =>
-                        updateAt(currentSettingItem.id, {
-                          widthValue: typeof v === 'number' ? v : 0,
-                        })
-                      }
-                      addonAfter="%"
-                    />
+                    <Col span={8}>
+                      <InputNumber
+                        style={{ width: '100%' }}
+                        min={0}
+                        max={100}
+                        value={currentSettingItem.widthValue}
+                        onChange={(v) =>
+                          updateAt(currentSettingItem.id, {
+                            widthValue: typeof v === 'number' ? v : 0,
+                          })
+                        }
+                        addonAfter="%"
+                      />
+                    </Col>
                   )}
 
                   {currentSettingItem.widthMode === 'number' && (
-                    <InputNumber
-                      style={{ width: '100%' }}
-                      min={0}
-                      value={currentSettingItem.widthValue}
-                      onChange={(v) =>
-                        updateAt(currentSettingItem.id, {
-                          widthValue: typeof v === 'number' ? v : 0,
-                        })
-                      }
-                    />
+                    <Col span={8}>
+                      <InputNumber
+                        style={{ width: '100%' }}
+                        min={0}
+                        value={currentSettingItem.widthValue}
+                        onChange={(v) =>
+                          updateAt(currentSettingItem.id, {
+                            widthValue: typeof v === 'number' ? v : 0,
+                          })
+                        }
+                      />
+                    </Col>
                   )}
-                </Space>
+                </Row>
               </div>
             </div>
 
@@ -420,16 +443,21 @@ const TableColumnSettingFormItem: FC<TableColumnSettingFormItemProps> = ({
             </div>
 
             <div className={`${selectorPrefix}-modal-row`}>
-              <div className={`${selectorPrefix}-modal-row-label`}>{Intl.get('default_value')}：</div>
+              <div className={`${selectorPrefix}-modal-row-label`}>
+                {Intl.get('default_value')}：
+              </div>
               <div className={`${selectorPrefix}-modal-row-value`}>
                 <Input
                   value={
-                    currentSettingItem.defaultValue === undefined || currentSettingItem.defaultValue === null
+                    currentSettingItem.defaultValue === undefined ||
+                    currentSettingItem.defaultValue === null
                       ? ''
                       : String(currentSettingItem.defaultValue)
                   }
                   placeholder={Intl.get('default_value')}
-                  onChange={(e) => updateAt(currentSettingItem.id, { defaultValue: e.target.value })}
+                  onChange={(e) =>
+                    updateAt(currentSettingItem.id, { defaultValue: e.target.value })
+                  }
                 />
               </div>
             </div>
@@ -439,42 +467,50 @@ const TableColumnSettingFormItem: FC<TableColumnSettingFormItemProps> = ({
                 {Intl.get('editor_control')}：
               </div>
               <div className={`${selectorPrefix}-modal-row-value`}>
-                <Space wrap>
-                  <Select<TableColumnEditorType>
-                    showSearch
-                    style={{ width: '100%' }}
-                    value={currentSettingItem.editorType}
-                    options={EditorTypeOptions}
-                    placeholder={Intl.get('please_select')}
-                    onChange={(v) => updateAt(currentSettingItem.id, { editorType: v })}
-                  />
+                <Row gutter={8} wrap>
+                  <Col span={!!currentSettingItem.editorType ? 16 : 24}>
+                    <Select<TableColumnEditorType>
+                      showSearch
+                      style={{ width: '100%' }}
+                      value={currentSettingItem.editorType}
+                      options={EditorTypeOptions}
+                      placeholder={Intl.get('please_select')}
+                      onChange={(v) => updateAt(currentSettingItem.id, { editorType: v })}
+                    />
+                  </Col>
 
                   {!!currentSettingItem.editorType && (
-                    <Button
-                      icon={<SettingOutlined />}
-                      onClick={() => {
-                        Modal.info({
-                          title: Intl.get('settings'),
-                          content: (
-                            <div>
-                              {Intl.get('editor_control')}：{currentSettingItem.editorType}
-                              <br />
-                              {Intl.get('description')}：
-                              {Intl.get('editor_control_setting_not_implemented')}
-                            </div>
-                          ),
-                        });
-                      }}
-                    >
-                      {Intl.get('settings')}
-                    </Button>
+                    <Col span={8}>
+                      <Button
+                        style={{ width: '100%' }}
+                        icon={<SettingOutlined />}
+                        onClick={() => {
+                          setEditorSettingOpen(true);
+                        }}
+                      >
+                        {Intl.get('settings')}
+                      </Button>
+                    </Col>
                   )}
-                </Space>
+                </Row>
               </div>
             </div>
           </div>
         )}
       </Modal>
+
+      <EditorSettingModalFromDir
+        open={editorSettingOpen}
+        editorType={currentSettingItem?.editorType}
+        value={currentSettingItem?.editorSetting}
+        onCancel={() => setEditorSettingOpen(false)}
+        onOk={(next) => {
+          if (currentSettingItem) {
+            updateAt(currentSettingItem.id, { editorSetting: next });
+          }
+          setEditorSettingOpen(false);
+        }}
+      />
     </div>
   );
 };

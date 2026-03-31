@@ -32,13 +32,18 @@ function createSubTitle(_params: {
 }): typeof EditableRowControlTableSuperTable {
   return class extends EditableRowControlTableSuperTable {
     onAdd() {
-      return super.onAdd({
-        id: Util.uuid(),
-        // name: '',
-        // createTime: undefined,
-        // no: '',
-        // cardType: '',
-      });
+      return super.onAdd(
+        (_params?.fieldProps.columnSetting ?? []).reduce(
+          (record, columnConfig) => {
+            record[columnConfig.field] = columnConfig?.defaultValue;
+
+            return record;
+          },
+          {
+            id: Util.uuid(),
+          },
+        ),
+      );
     }
 
     getPagination(): boolean {
