@@ -24,6 +24,11 @@ declare const _default: {
     column_display: string;
     column_number: string;
     column_settings: string;
+    add_column: string;
+    column_title: string;
+    column_field: string;
+    editor_control: string;
+    editor_control_setting_not_implemented: string;
     colspan: string;
     complete: string;
     compressed: string;
@@ -143,6 +148,7 @@ declare const _default: {
     please_enter: string;
     please_select: string;
     preview: string;
+    percentage: string;
     pull_down_to_refresh: string;
     read_only: string;
     refresh: string;

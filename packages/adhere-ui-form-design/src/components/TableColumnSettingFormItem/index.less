@@ -1,0 +1,92 @@
+@import '../../constant.less';
+
+.@{prefix-cls}-form-design-components-table-column-setting-form-item {
+  &-header {
+    margin-bottom: 12px;
+  }
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  &-item-dragging {
+    opacity: 0.75;
+  }
+
+  &-item-handle {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    color: rgba(0, 0, 0, 0.65);
+  }
+
+  &-item-main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &-item-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+
+  &-item-row-label {
+    width: 68px;
+    flex: 0 0 68px;
+    text-align: right;
+    color: rgba(0, 0, 0, 0.65);
+  }
+
+  &-item-row-value {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &-item-actions {
+    flex: 0 0 auto;
+    padding-top: 2px;
+  }
+
+  &-modal-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &:not(:last-child) {
+      margin-bottom: 12px;
+    }
+  }
+
+  &-modal-row-label {
+    width: 72px;
+    flex: 0 0 72px;
+    text-align: right;
+    color: rgba(0, 0, 0, 0.65);
+  }
+
+  &-modal-row-value {
+    flex: 1;
+    min-width: 0;
+  }
+}
+

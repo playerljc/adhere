@@ -3,11 +3,13 @@ import Intl from '@baifendian/adhere-util-intl';
 import { DesignItem, ToolBoxGroup } from '../../../types';
 import { define as AlertDefine } from './Alert';
 import { define as ButtonDefine } from './Button';
+import { define as CascaderDefine } from './Cascader';
 import { define as CheckboxDefine } from './Checkbox';
 import { define as CheckboxGroupDefine } from './CheckboxGroup';
 import { define as ColorPickerDefine } from './ColorPicker';
 import { define as DatePickerDefine } from './DatePicker';
 import { define as DateRangePickerDefine } from './DateRangePicker';
+import { define as EditorTableDefine } from './EditorTable';
 import { define as InputDefine } from './Input';
 import { define as InputNumberDefine } from './InputNumber';
 import { define as InputOTPDefine } from './InputOTP';
@@ -19,9 +21,6 @@ import { define as RadioGroupDefine } from './RadioGroup';
 import { define as RateDefine } from './Rate';
 import { define as SegmentedDefine } from './Segmented';
 import { define as SelectDefine } from './Select';
-import { define as TreeSelectDefine } from './TreeSelect';
-import { define as CascaderDefine } from './Cascader';
-import { define as TransferDefine } from './Transfer';
 import { define as SliderDefine } from './Slider';
 import { define as SubmitButtonDefine } from './SubmitButton';
 import { define as SwitchDefine } from './Switch';
@@ -29,6 +28,8 @@ import { define as TextDefine } from './Text';
 import { define as TextAreaDefine } from './TextArea';
 import { define as TimePickerDefine } from './TimePicker';
 import { define as TimeRangePickerDefine } from './TimeRangePicker';
+import { define as TransferDefine } from './Transfer';
+import { define as TreeSelectDefine } from './TreeSelect';
 
 const Input = InputDefine();
 const DatePicker = DatePickerDefine();
@@ -58,6 +59,7 @@ const Select = SelectDefine();
 const TreeSelect = TreeSelectDefine();
 const Cascader = CascaderDefine();
 const Transfer = TransferDefine();
+const EditorTable = EditorTableDefine();
 
 export function install(): {
   toolBox: ToolBoxGroup['items'];
@@ -233,6 +235,12 @@ export function install(): {
         searchLabel: Intl.get('transfer_text'),
         tooltip: Intl.get('transfer_text'),
       },
+      {
+        type: EditorTable.type,
+        label: Intl.get('editor_table_text'),
+        searchLabel: Intl.get('editor_table_text'),
+        tooltip: Intl.get('editor_table_text'),
+      },
     ],
     designItems: [
       Input,
@@ -263,6 +271,7 @@ export function install(): {
       TreeSelect,
       Cascader,
       Transfer,
+      EditorTable,
     ],
   };
 }

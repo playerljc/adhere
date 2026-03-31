@@ -6,17 +6,14 @@ import { AlignSelfSelectStandardDict } from './AlignSelf';
 import { ButtonHtmlTypeSelectStandardDict } from './ButtonHtmlType';
 import { ButtonShapeSelectStandardDict } from './ButtonShape';
 import { ButtonTypeSelectStandardDict } from './ButtonType';
+import { CascaderShowCheckedStrategySelectStandardDict } from './CascaderShowCheckedStrategy';
 import ColgroupValueSetting from './ColgroupValueSetting';
 import { ColorPickerEventsSelectStandardDict } from './ColorPickerEvents';
 import { ColorPickerFormatSelectStandardDict } from './ColorPickerFormat';
 import { ColorPickerTriggerSelectStandardDict } from './ColorPickerTrigger';
 import DataSourceManager from './DataSourceManager';
-import { DateBoundModeSelectStandardDict } from './DateBoundMode';
 import DataSourceManagerFormItem from './DataSourceManagerFormItem';
-import TreeDataSourceManagerFormItem from './TreeDataSourceManagerFormItem';
-export type { TreeDataSourceManagerFormItemValue, TreeDataSourceManagerFormItemProps } from './TreeDataSourceManagerFormItem';
-import TransferDataSourceManagerFormItem from './TransferDataSourceManagerFormItem';
-export type { TransferDataSourceManagerFormItemValue, TransferDataSourceManagerFormItemProps, TransferDataSourceItem } from './TransferDataSourceManagerFormItem';
+import { DateBoundModeSelectStandardDict } from './DateBoundMode';
 import { DatePickerEventsSelectStandardDict } from './DatePickerEvents';
 import { DateRangePickerEventsSelectStandardDict } from './DateRangePickerEvents';
 import { DensitySelectStandardDict } from './Density';
@@ -55,11 +52,10 @@ import { RulesMenuStandardDict } from './Rules';
 import RulesSettingFormItem from './RulesSettingFormItem';
 import { SegmentedShapeSelectStandardDict } from './SegmentedShape';
 import { SelectModeSelectStandardDict } from './SelectMode';
-import { TreeSelectShowCheckedStrategySelectStandardDict } from './TreeSelectShowCheckedStrategy';
-import { CascaderShowCheckedStrategySelectStandardDict } from './CascaderShowCheckedStrategy';
 import { SizeSelectStandardDict } from './Size';
 import { SlotEndLabel, SlotStartLabel } from './SlotLabel';
 import { SwitchSizeSelectStandardDict } from './SwitchSize';
+import { TableColumnSettingFormItem } from './TableColumnSettingFormItem';
 import PropertiesGridLayout from './TableGridLayout';
 import TableGridLayoutColgroupSetting from './TableGridLayoutColgroupSetting';
 import { TableGridLayoutModeTypeSelectStandardDict } from './TableGridLayoutModeType';
@@ -69,10 +65,24 @@ import { TimeHourStepSelectStandardDict } from './TimeHourStep';
 import { TimeMinuteSecondStepSelectStandardDict } from './TimeMinuteSecondStep';
 import { TimePickerEventsSelectStandardDict } from './TimePickerEvents';
 import { TimeRangePickerEventsSelectStandardDict } from './TimeRangePickerEvents';
+import TransferDataSourceManagerFormItem from './TransferDataSourceManagerFormItem';
+import TreeDataSourceManagerFormItem from './TreeDataSourceManagerFormItem';
+import { TreeSelectShowCheckedStrategySelectStandardDict } from './TreeSelectShowCheckedStrategy';
 import { ValuePropNameSelectStandardDict } from './ValuePropName';
 import { VariantSelectStandardDict } from './Variant';
 import { VerificationStatusSelectStandardDict } from './VerificationStatus';
 import { WhetherRadioHorizontalDict } from './Whether';
+
+export type {
+  TreeDataSourceManagerFormItemValue,
+  TreeDataSourceManagerFormItemProps,
+} from './TreeDataSourceManagerFormItem';
+
+export type {
+  TransferDataSourceManagerFormItemValue,
+  TransferDataSourceManagerFormItemProps,
+  TransferDataSourceItem,
+} from './TransferDataSourceManagerFormItem';
 
 export * from './FormPropertyStandardRows';
 export { FormPropertyShell, mapSliderFormPropertyFormValues } from './FormPropertyShell';
@@ -128,6 +138,7 @@ export {
   DataSourceManagerFormItem,
   TreeDataSourceManagerFormItem,
   TransferDataSourceManagerFormItem,
+  TableColumnSettingFormItem,
   JustifyContentSelectStandardDict,
   AlignItemsSelectStandardDict,
   AlignContentSelectStandardDict,
