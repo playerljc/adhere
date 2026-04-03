@@ -5,14 +5,21 @@ import SearchTable from '@baifendian/adhere-ui-searchtable';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import Util from '@baifendian/adhere-util';
 
+import { DesignContext } from '../../../../Design/Context';
 import { LabelDesign, ValueDesign } from '../../../../components';
+import type { Rule } from '../../../../components/RulesSettingFormItem';
 import {
   EditableRowControlTable,
   EditableRowControlTableSuperTable,
 } from '../../../../components/SearchEditorTableFormItem';
 import { SELECT_VALUE_KEY_NAME } from '../../../../constant';
 import type { DesignContextType, DesignValue, FieldProps, I18nValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
+import {
+  actionsCodeStringToEvents,
+  computeLabelValueColSpan,
+  findDesignValueById,
+  rulesSettingToRules,
+} from '../../../../utils';
 
 function resolveI18nText(value: I18nValue | string | undefined, lang: string): string {
   if (value === undefined || value === null) return '';
@@ -24,11 +31,17 @@ function resolveI18nText(value: I18nValue | string | undefined, lang: string): s
   return '';
 }
 
-function createSubTitle(_params: {
+/**
+ * createSubClass
+ * @param _params
+ * @returns
+ */
+function createSubClass(_params: {
   fieldProps: FieldProps;
   style: React.CSSProperties;
   actions: Record<string, (...args: any[]) => any>;
   lang: string;
+  designContext: DesignContextType;
 }): typeof EditableRowControlTableSuperTable {
   return class extends EditableRowControlTableSuperTable {
     getEllipsisCount() {
@@ -87,6 +100,19 @@ function createSubTitle(_params: {
             }
           }
 
+          const {
+            actions: actionsConfig,
+            rules: rulesConfig,
+            ...editorSetting
+          } = columnConfigconfig.editorSetting;
+
+          const actions = actionsCodeStringToEvents({
+            actions: actionsConfig ?? [],
+            designContext: _params.designContext,
+          });
+
+          const rules = rulesSettingToRules((rulesConfig ?? []) as unknown as Rule[], _params.lang);
+
           return {
             title: resolveI18nText(columnConfigconfig?.title, _params.lang),
             dataIndex: columnConfigconfig?.field,
@@ -97,14 +123,10 @@ function createSubTitle(_params: {
               editable: true,
               type: columnConfigconfig?.editorType,
               props: {
-                placeholder: '',
+                ...editorSetting,
+                ...actions,
               },
-              rules: [
-                {
-                  required: true,
-                  message: '',
-                },
-              ],
+              rules,
             },
           };
         }),
@@ -151,14 +173,16 @@ export function renderDesign({
         {({ fieldProps, style, actions }) => {
           const { intl } = useContext(ConfigProvider.Context);
           const lang = intl.lang!;
+          const designContext = useContext(DesignContext);
 
           return (
             <EditableRowControlTable
-              subClass={createSubTitle({
+              subClass={createSubClass({
                 fieldProps,
                 style,
                 actions,
                 lang,
+                designContext,
               })}
               fieldProps={fieldProps}
             />

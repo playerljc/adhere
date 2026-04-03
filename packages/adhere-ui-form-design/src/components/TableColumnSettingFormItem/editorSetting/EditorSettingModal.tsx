@@ -12,6 +12,7 @@ import InputSection from './sections/Input';
 import InputNumberSection from './sections/InputNumber';
 import RangePickerSection from './sections/RangePicker';
 import RateSection from './sections/Rate';
+import ActionsSection from './sections/Actions';
 import RulesSection from './sections/Rules';
 import SelectSection from './sections/Select';
 import SliderSection from './sections/Slider';
@@ -61,7 +62,7 @@ const EditorSettingModal: FC<EditorSettingModalProps> = ({
       open={open}
       styles={{
         body: {
-          maxHeight: '60vh',
+          maxHeight: '80vh',
           overflowY: 'auto',
         },
       }}
@@ -76,6 +77,8 @@ const EditorSettingModal: FC<EditorSettingModalProps> = ({
         {renderBody(editorType)}
         <Divider />
         <RulesSection />
+        <Divider />
+        <ActionsSection />
       </Form>
     </Modal>
   );

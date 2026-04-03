@@ -147,7 +147,7 @@ export class EditableRowControlTable extends createImplFactory(ProEditableRowSea
    * @param values {Record<string, any>}
    * @return {Promise<void>}
    */
-  async onSave(values: AnyRecord) {
+  async onSave(values: AnyRecord): Promise<void> {
     const key = this.getRowKey();
 
     return this.setData((_data: AnyRecord[]) => {
@@ -298,18 +298,6 @@ export const StateTable = (SubClass: any) => {
     reducer: null,
     models: (() => {
       return [Model];
-      // const models: any[] = [];
-      //
-      // // webpack require.context - 在调用 StateTable 时才加载/执行 Model
-      // // eslint-disable-next-line @typescript-eslint/no-var-requires
-      // const requireComponent = (require as any).context('../Model', false, /.*\.(ts)$/);
-      //
-      // requireComponent.keys().forEach((fileName: string) => {
-      //   const model = requireComponent(fileName);
-      //   models.push(model.default);
-      // });
-      //
-      // return models;
     })(),
   })(SubClass);
 };
