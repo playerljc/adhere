@@ -190,6 +190,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
 
         if (
           !isDragEnd({
+            overId: over.id as string,
             activeType: active?.data?.current?.type as string,
             overType: over?.data?.current?.type,
           })

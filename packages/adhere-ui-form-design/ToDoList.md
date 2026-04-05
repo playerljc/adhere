@@ -43,7 +43,7 @@
 - [x] TreeSelect
 - [x] Cascader
 - [x] Transfer
-- [ ] EditorTable (进行中)
+- [x] EditorTable
 - [ ] AutoComplete
 - [ ] TreeTable
 

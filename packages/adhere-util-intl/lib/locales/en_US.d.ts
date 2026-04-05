@@ -224,6 +224,13 @@ declare const _default: {
     switch_size: string;
     system_exception: string;
     table_grid_layout: string;
+    card_layout: string;
+    card_extra: string;
+    card_variant: string;
+    card_size: string;
+    card_hoverable: string;
+    card_loading: string;
+    card_type: string;
     textarea_auto_size: string;
     total_count: string;
     total_length: string;

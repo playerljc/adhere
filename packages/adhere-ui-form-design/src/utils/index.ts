@@ -15,6 +15,7 @@ import { isDesktop } from './isDesktop';
 import { isDragEnd } from './isDragEnd';
 import { isLayoutItem } from './isLayoutItem';
 import { genRootFieldId, getRootFieldId, isRootFieldId } from './rootFieldId';
+import { resolveI18nText } from './resolveI18nText';
 import { rulesSettingToRules } from './rulesSettingToRules';
 import { styleCodeStringToCSSProperties } from './styleCodeStringToCSSProperties';
 import { useDesignFieldDataSourceOptions } from './useDesignFieldDataSourceOptions';
@@ -46,6 +47,7 @@ export {
   getLabelByType,
   findTypeById,
   useDesignFieldDataSourceOptions,
+  resolveI18nText,
 };
 export type { LabelValueColSpan } from './computeLabelValueColSpan';
 export type {

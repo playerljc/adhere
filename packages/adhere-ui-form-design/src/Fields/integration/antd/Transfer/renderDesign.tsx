@@ -6,19 +6,8 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { LabelDesign, ValueDesign } from '../../../../components';
 import type { TransferDataSourceManagerFormItemValue } from '../../../../components';
-import { SELECT_VALUE_KEY_NAME } from '../../../../constant';
 import type { DesignContextType, DesignValue, I18nValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
-
-function resolveI18nText(value: I18nValue | string | undefined, lang: string): string {
-  if (value === undefined || value === null) return '';
-  if (typeof value === 'string') return value;
-  if (typeof value === 'object' && SELECT_VALUE_KEY_NAME in value) {
-    const i18n = value as I18nValue;
-    return String(i18n[lang] ?? i18n[i18n.selectValue] ?? '');
-  }
-  return '';
-}
+import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
 
 function parseTransferData(
   transferOptions: TransferDataSourceManagerFormItemValue | undefined,

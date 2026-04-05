@@ -326,6 +326,13 @@ declare const _default: {
     order: string;
     fill: string;
     flex_layout: string;
+    card_layout: string;
+    card_extra: string;
+    card_variant: string;
+    card_size: string;
+    card_hoverable: string;
+    card_loading: string;
+    card_type: string;
     min_size: string;
     scroll: string;
     select_text: string;
@@ -382,5 +389,6 @@ declare const _default: {
     continuous_mode: string;
     no_gen_rule: string;
     align: string;
+    auto_height: string;
 }[];
 export default _default;

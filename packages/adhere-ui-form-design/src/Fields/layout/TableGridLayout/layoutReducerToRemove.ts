@@ -1,5 +1,18 @@
-import type { DesignValue, FieldProps } from '../../../types';
+import type { DesignValue } from '../../../types';
+import { findDesignValueByIdToClone } from '../../../utils';
 
-export function layoutReducerToRemove(state: DesignValue, action: { id: string }): FieldProps {
-  return {};
+export function layoutReducerToRemove(
+  state: DesignValue,
+  action: { sourceDesignValue: DesignValue; targetId: string },
+): DesignValue[] {
+  const designValue = findDesignValueByIdToClone(action.targetId, state);
+
+  if (designValue?.props?.children) {
+    designValue.props.children.slice(
+      designValue.props.children.indexOf(action.sourceDesignValue),
+      1,
+    );
+  }
+
+  return [...(designValue?.props?.children ?? [])];
 }

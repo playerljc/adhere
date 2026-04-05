@@ -4,31 +4,56 @@ import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import Util from '@baifendian/adhere-util';
+import { Select, type SelectProps } from 'antd';
 
 import { DesignContext } from '../../../../Design/Context';
-import { LabelDesign, ValueDesign } from '../../../../components';
+import { DesignPreviewFieldWithDataSource, LabelDesign, ValueDesign } from '../../../../components';
 import type { Rule } from '../../../../components/RulesSettingFormItem';
 import {
   EditableRowControlTable,
   EditableRowControlTableSuperTable,
 } from '../../../../components/SearchEditorTableFormItem';
-import { SELECT_VALUE_KEY_NAME } from '../../../../constant';
-import type { DesignContextType, DesignValue, FieldProps, I18nValue } from '../../../../types';
+import type { DesignContextType, DesignValue, FieldProps } from '../../../../types';
 import {
   actionsCodeStringToEvents,
   computeLabelValueColSpan,
   findDesignValueById,
+  resolveI18nText,
   rulesSettingToRules,
 } from '../../../../utils';
 
-function resolveI18nText(value: I18nValue | string | undefined, lang: string): string {
-  if (value === undefined || value === null) return '';
-  if (typeof value === 'string') return value;
-  if (typeof value === 'object' && SELECT_VALUE_KEY_NAME in value) {
-    const i18n = value as I18nValue;
-    return String(i18n[lang] ?? i18n[i18n.selectValue] ?? '');
-  }
-  return '';
+/**
+ * 表格列编辑态：与 Select/renderDesign 一致的数据源 + Select 渲染。
+ * value / onChange 由外层 Form.Item 注入或与 render 参数传入，不使用 defaultValue。
+ */
+function EditorTableColumnSelectEditor({
+  fieldProps,
+  style,
+  actions,
+  value,
+  onChange,
+}: {
+  fieldProps: FieldProps;
+  style: React.CSSProperties;
+  actions: Record<string, (...args: any[]) => any>;
+  value?: SelectProps['value'];
+  onChange?: SelectProps['onChange'];
+}) {
+  return (
+    <DesignPreviewFieldWithDataSource fieldProps={fieldProps} style={style} actions={actions}>
+      {({ restFieldProps, options, loading, style: fieldStyle, actions: fieldActions }) => (
+        <Select
+          {...(restFieldProps as SelectProps)}
+          loading={loading || undefined}
+          options={options}
+          style={{ width: '100%', ...fieldStyle }}
+          {...fieldActions}
+          value={value}
+          onChange={onChange}
+        />
+      )}
+    </DesignPreviewFieldWithDataSource>
+  );
 }
 
 /**
@@ -104,7 +129,7 @@ function createSubClass(_params: {
             actions: actionsConfig,
             rules: rulesConfig,
             ...editorSetting
-          } = columnConfigconfig.editorSetting;
+          } = columnConfigconfig.editorSetting ?? {};
 
           const actions = actionsCodeStringToEvents({
             actions: actionsConfig ?? [],
@@ -113,21 +138,37 @@ function createSubClass(_params: {
 
           const rules = rulesSettingToRules((rulesConfig ?? []) as unknown as Rule[], _params.lang);
 
+          const isSelect = columnConfigconfig?.editorType === 'select';
+
           return {
             title: resolveI18nText(columnConfigconfig?.title, _params.lang),
             dataIndex: columnConfigconfig?.field,
             key: columnConfigconfig?.field,
             align: columnConfigconfig?.align,
             width,
-            $editable: {
-              editable: true,
-              type: columnConfigconfig?.editorType,
-              props: {
-                ...editorSetting,
-                ...actions,
-              },
-              rules,
-            },
+            $editable: isSelect
+              ? {
+                  editable: true,
+                  type: 'custom',
+                  render: ({ value }) => (
+                    <EditorTableColumnSelectEditor
+                      fieldProps={editorSetting}
+                      style={_params.style}
+                      actions={actions}
+                      value={value}
+                    />
+                  ),
+                  rules,
+                }
+              : {
+                  editable: true,
+                  type: columnConfigconfig?.editorType,
+                  props: {
+                    ...editorSetting,
+                    ...actions,
+                  },
+                  rules,
+                },
           };
         }),
         ...columns,

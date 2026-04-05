@@ -66,6 +66,30 @@ export function StyleProperty(props: DesignValueProps) {
                   </Value>
                 ),
               },
+              {
+                key: 'headerStyles',
+                require: false,
+                label: <Label>{Intl.get('header_style')}：</Label>,
+                value: (
+                  <Value>
+                    <Form.Item name="headerStyles">
+                      <MonacoCSSEditorFormItem language="css" />
+                    </Form.Item>
+                  </Value>
+                ),
+              },
+              {
+                key: 'bodyStyles',
+                require: false,
+                label: <Label>{Intl.get('body_style')}：</Label>,
+                value: (
+                  <Value>
+                    <Form.Item name="bodyStyles">
+                      <MonacoCSSEditorFormItem language="css" />
+                    </Form.Item>
+                  </Value>
+                ),
+              },
             ],
           },
         ]}
@@ -76,9 +100,10 @@ export function StyleProperty(props: DesignValueProps) {
 
 /**
  * renderStyleProperty
- * @description 我觉得直接写代码就行，不需要那么多的可视化设置
  * @param props
  */
 export function renderStyleProperty(props: DesignValueProps): ReactNode {
+  // 加入headerStyle
+  // 加入bodyStyle
   return <StyleProperty {...props} />;
 }
