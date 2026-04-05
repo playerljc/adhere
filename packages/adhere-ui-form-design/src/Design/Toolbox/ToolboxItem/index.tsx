@@ -18,6 +18,8 @@ const ToolboxItem: React.FC<ToolboxItemProps> = ({
   label,
   tooltip,
   render,
+  className,
+  style,
 }) => {
   const ConfigProviderContext = useContext(ConfigProvider.Context);
 
@@ -26,9 +28,10 @@ const ToolboxItem: React.FC<ToolboxItemProps> = ({
   return (
     <li
       key={type}
-      className={classNames(`${selectPrefix}-group-list-item`, {
+      className={classNames(`${selectPrefix}-group-list-item`, className, {
         [`${selectPrefix}-group-list-item-disabled`]: disabled,
       })}
+      style={style}
       title={tooltip}
     >
       {!!render && render(lang)}

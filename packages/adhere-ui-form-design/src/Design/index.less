@@ -19,7 +19,16 @@
 
     > .@{prefix-cls}-design-toolbox-wrapper {
       display: flex;
+      flex-direction: column;
       flex-shrink: 0;
+      box-sizing: border-box;
+      width: var(--fd-design-toolbox-width, 240px);
+      min-width: var(--fd-design-toolbox-min-width, 200px);
+      max-width: var(--fd-design-toolbox-max-width, 280px);
+      padding: var(--fd-design-toolbox-padding, 0);
+      background: var(--fd-design-toolbox-bg, #f7f8fa);
+      border-right: 1px solid var(--fd-design-toolbox-border-color, #e8e8e8);
+      box-shadow: var(--fd-design-toolbox-shadow, inset -1px 0 0 rgba(0, 0, 0, 0.04));
     }
 
     > .@{prefix-cls}-design-editor-wrapper {

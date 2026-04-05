@@ -79,7 +79,10 @@ const Toolbox: FC<ToolboxProps> = ({ toolBox }) => {
       </div>
 
       <div className={classNames(`${selectPrefix}-body`)}>
-        {toolBox.map(({ id, label, tooltip, columns, items, disabled }) => (
+        {toolBox.map(({ id, label, tooltip, columns: groupColumns, items, disabled }) => {
+          const columns = groupColumns ?? 2;
+
+          return (
           <dl key={id} className={classNames(`${selectPrefix}-group`)}>
             <dt
               className={classNames(`${selectPrefix}-group-title`)}
@@ -92,8 +95,7 @@ const Toolbox: FC<ToolboxProps> = ({ toolBox }) => {
               <ul
                 className={classNames(`${selectPrefix}-group-list`)}
                 style={{
-                  gridTemplateRows: `repeat(${columns}, 1fr)`,
-                  gridTemplateColumns: `repeat(${columns}, 1fr)`,
+                  gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
                 }}
               >
                 {filterItems(items).map(
@@ -124,7 +126,8 @@ const Toolbox: FC<ToolboxProps> = ({ toolBox }) => {
               </ul>
             </dd>
           </dl>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

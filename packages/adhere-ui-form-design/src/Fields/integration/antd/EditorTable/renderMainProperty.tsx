@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { Form, Input } from '@baifendian/adhere-ui-anthoc';
+import { Form } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
 import {
+  buildFormPropertyTitleRow,
   SizeSelectStandardDict,
   TableColumnSettingFormItem,
   TableNumberGeneratorRuleSelectStandardDict,
@@ -16,20 +17,9 @@ import { createMainProperty, renderMainPropertyWithCreate } from '../../../../ut
 
 const MainProperty = createMainProperty({
   formName: 'antEditorTableMainProperty',
-  getDefaultFormItems: (_designValue, { watchValues }): DataItemRow[] =>
+  getDefaultFormItems: (_designValue, { watchValues, titleLabelSlot }): DataItemRow[] =>
     [
-      {
-        key: 'title',
-        require: false,
-        label: <Label>{Intl.get('title')}：</Label>,
-        value: (
-          <Value>
-            <Form.Item name="title">
-              <Input placeholder={Intl.get('title')} />
-            </Form.Item>
-          </Value>
-        ),
-      },
+      buildFormPropertyTitleRow(titleLabelSlot),
       {
         key: 'bordered',
         require: false,

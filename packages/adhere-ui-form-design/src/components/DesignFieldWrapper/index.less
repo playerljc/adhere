@@ -8,11 +8,38 @@
 
   > .@{prefix-cls}-design-field-wrapper-label {
     position: absolute;
-    left: 0;
     bottom: 0;
-    background-color: var(--design-field-wrapper-label-background-color, @highlight-color);
+    left: 0;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 100%;
+    padding: var(--design-field-wrapper-label-padding, 2px 6px);
     color: var(--design-field-wrapper-label-color, #fff);
-    padding: var(--design-field-wrapper-label-padding, 0 5px);
+    background-color: var(--design-field-wrapper-label-background-color, @highlight-color);
+    gap: var(--design-field-wrapper-label-gap, 4px);
+
+    .@{prefix-cls}-design-field-wrapper-label-icon {
+      display: inline-flex;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--design-field-wrapper-label-icon-size, 14px);
+      line-height: 1;
+      color: inherit;
+
+      .anticon {
+        font-size: inherit;
+        color: inherit;
+      }
+    }
+
+    .@{prefix-cls}-design-field-wrapper-label-text {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 
   // hover的样式

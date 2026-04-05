@@ -1,8 +1,10 @@
-import React, { useMemo } from 'react';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+import React, { useContext, useMemo } from 'react';
 
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 
-import type { FieldProps } from '../../types';
+import type { FieldProps, I18nValue } from '../../types';
+import { resolveI18nText } from '../../utils';
 import { StateTable, EditableRowControlTable as SuperTable } from './Components';
 
 export { SuperTable };
@@ -25,6 +27,15 @@ function EditableRowControlTable({
   onChange,
 }: EditableRowControlTableProps) {
   const List = useMemo(() => StateTable(subClass), [subClass]);
+  const { intl } = useContext(ConfigProvider.Context);
+  const lang = intl?.lang ?? 'zh_CN';
+
+  const tableTitle = useMemo(() => {
+    const t = fieldProps?.title;
+    if (t == null) return undefined;
+    if (React.isValidElement(t)) return t;
+    return resolveI18nText(t as I18nValue | string | undefined, lang) || undefined;
+  }, [fieldProps?.title, lang]);
 
   return (
     <List
@@ -33,7 +44,7 @@ function EditableRowControlTable({
       autoFixed
       fixedHeaderAutoTable
       fixedTableSpaceBetween
-      title={fieldProps?.title}
+      title={tableTitle}
       // form
       value={value}
       onChange={onChange}

@@ -1,13 +1,14 @@
 import type { CardProps } from 'antd';
 import classNames from 'classnames';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import React, { useContext, useMemo } from 'react';
 import type { CSSProperties, FC, ReactNode } from 'react';
 
 import { Card } from '@baifendian/adhere-ui-anthoc';
 
 import { DesignContext } from '../../../Design/Context';
-import type { DesignValue, StyleProps } from '../../../types';
-import { styleCodeStringToCSSProperties } from '../../../utils';
+import type { DesignValue, I18nValue, StyleProps } from '../../../types';
+import { resolveI18nText, styleCodeStringToCSSProperties } from '../../../utils';
 import { parseDesign } from '../../parse';
 
 export interface InternalCardLayoutProps {
@@ -45,6 +46,8 @@ const InternalCard: FC<InternalCardLayoutProps> = ({
   styleProps,
 }) => {
   const context = useContext(DesignContext);
+  const { intl } = useContext(ConfigProvider.Context);
+  const lang = intl?.lang ?? 'zh_CN';
 
   const targetProps = useMemo(() => {
     const parsedChildren = (children?.map((_item) =>
@@ -59,6 +62,13 @@ const InternalCard: FC<InternalCardLayoutProps> = ({
     const headerStyle = styleCodeStringToCSSProperties(styleProps?.headerStyles ?? '');
     const bodyStyle = styleCodeStringToCSSProperties(styleProps?.bodyStyles ?? '');
 
+    const displayTitle =
+      title == null
+        ? undefined
+        : React.isValidElement(title)
+          ? title
+          : resolveI18nText(title as I18nValue | string | undefined, lang) || undefined;
+
     return {
       classNames: {
         root: classNames(selectorPrefix, {}),
@@ -68,7 +78,7 @@ const InternalCard: FC<InternalCardLayoutProps> = ({
         header: headerStyle,
         body: bodyStyle,
       },
-      title,
+      title: displayTitle,
       extra,
       variant,
       size,
@@ -84,6 +94,7 @@ const InternalCard: FC<InternalCardLayoutProps> = ({
     extra,
     hoverable,
     id,
+    lang,
     loading,
     size,
     styleProps,

@@ -21,7 +21,7 @@ const DraggableToolItem: FC<DraggableToolItemProps> = ({ id, data, disabled, chi
   return (
     <div
       ref={setNodeRef}
-      className={classNames(`${selectPrefix}-draggable-item-dragging`, {
+      className={classNames(`${selectPrefix}-draggable-item`, {
         [`${selectPrefix}-draggable-item-dragging`]: isDragging,
       })}
       {...listeners}

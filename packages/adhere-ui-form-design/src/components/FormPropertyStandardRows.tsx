@@ -52,6 +52,41 @@ export function buildFormPropertyLabelRow(slot: FormPropertyLabelSlotRef): DataI
   };
 }
 
+/** 标题（含 i18n），如 Card.title、EditorTable 表格标题 */
+export function buildFormPropertyTitleRow(slot: FormPropertyLabelSlotRef): DataItemRow {
+  return {
+    key: 'title',
+    require: false,
+    label: (
+      <SlotEndLabel
+        ref={(node) => {
+          slot.set('title', node);
+        }}
+      >
+        {Intl.get('title')}：
+      </SlotEndLabel>
+    ),
+    value: (
+      <Value>
+        <Form.Item name="title">
+          <I18nChangeFormItem getTriggerContainer={() => slot.get('title') as HTMLElement}>
+            {({ onChange, value }) => (
+              <Input
+                value={value}
+                placeholder={Intl.get('title')}
+                maxLength={200}
+                onChange={(e) => {
+                  onChange(e.target.value);
+                }}
+              />
+            )}
+          </I18nChangeFormItem>
+        </Form.Item>
+      </Value>
+    ),
+  };
+}
+
 /** 字段 name */
 export function buildFormPropertyNameRow(): DataItemRow {
   return {

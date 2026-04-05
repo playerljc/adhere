@@ -11,7 +11,7 @@ import type { FC } from 'react';
 import { DesignContext } from '../../Design/Context';
 import { SELECT_PREFIX } from '../../constant';
 import { DesignFieldWrapperProps, DesignItem } from '../../types';
-import { findTypeById, getLabelByType, isDesktop, isRootFieldId } from '../../utils';
+import { findTypeById, getLabelByType, getToolBoxItemByType, isDesktop, isRootFieldId } from '../../utils';
 
 const selectPrefix = `${SELECT_PREFIX}-design-field-wrapper`;
 
@@ -38,10 +38,13 @@ const DesignFieldWrapper: FC<DesignFieldWrapperProps> = ({ id, className, style,
 
   const toolbox = getToolBox();
 
+  const fieldType = useMemo(() => findTypeById({ id, designValue }), [designValue, id]);
+
   const item: DesignItem | undefined = useMemo(() => {
-    const type = findTypeById({ id, designValue });
-    return items.find((_item) => _item.type === type);
-  }, [items, designValue, id]);
+    return items.find((_item) => _item.type === fieldType);
+  }, [items, fieldType]);
+
+  const toolBoxItem = useMemo(() => getToolBoxItemByType(fieldType, toolbox), [fieldType, toolbox]);
 
   function onClick(e) {
     e.stopPropagation();
@@ -59,7 +62,12 @@ const DesignFieldWrapper: FC<DesignFieldWrapperProps> = ({ id, className, style,
     >
       {!!item && isActive && isDesktop(terminal) && !isRootFieldId(id) && (
         <div className={classNames(`${selectPrefix}-label`)}>
-          {getLabelByType(findTypeById({ id, designValue }), toolbox)}
+          {!!toolBoxItem?.icon && (
+            <span className={classNames(`${selectPrefix}-label-icon`)}>{toolBoxItem.icon}</span>
+          )}
+          <span className={classNames(`${selectPrefix}-label-text`)}>
+            {getLabelByType(fieldType, toolbox)}
+          </span>
         </div>
       )}
 

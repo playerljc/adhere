@@ -48,7 +48,7 @@
 - [ ] TreeTable
 
 ### 布局
-- [ ] Card
+- [x] Card
 - [ ] Step
 - [ ] Tabs
 - [ ] Collapse

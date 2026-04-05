@@ -1,11 +1,15 @@
-import React, { type ReactNode, useContext, useEffect, useMemo } from 'react';
+import React, { type ReactNode, useContext, useEffect, useMemo, useRef } from 'react';
 import type { ReactElement } from 'react';
 
 import { Form } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 
 import { DesignContext } from '../Design/Context';
-import { buildFormPropertyFillRow, PropertiesGridLayout } from '../components';
+import {
+  buildFormPropertyFillRow,
+  type FormPropertyLabelSlotRef,
+  PropertiesGridLayout,
+} from '../components';
 import type { DesignValueProps } from '../types';
 
 export interface GetDefaultFormItemsCtx {
@@ -16,6 +20,8 @@ export interface GetDefaultFormItemsCtx {
    * - 可能为 `undefined`（首次渲染/尚未 setFieldsValue）
    */
   watchValues: any;
+  /** 与 buildFormPropertyTitleRow 配合，挂载 SlotEndLabel 节点供语言切换弹层定位 */
+  titleLabelSlot: FormPropertyLabelSlotRef;
 }
 
 export interface CreateMainPropertyOptions {
@@ -41,6 +47,17 @@ export function createMainProperty(options: CreateMainPropertyOptions) {
     const { getActiveFieldId, setFieldProps } = useContext(DesignContext);
     const { fieldProps } = designValue;
 
+    const titleSlotStore = useRef<Record<string, unknown>>({});
+    const titleLabelSlot = useMemo<FormPropertyLabelSlotRef>(
+      () => ({
+        get: (key: string) => titleSlotStore.current[key],
+        set: (key: string, value: unknown) => {
+          titleSlotStore.current[key] = value;
+        },
+      }),
+      [],
+    );
+
     // 监听属性面板表单值，用于动态生成表单项
     const watchValues = Form.useWatch([], form);
 
@@ -50,8 +67,9 @@ export function createMainProperty(options: CreateMainPropertyOptions) {
         getDefaultFormItems(designValue, {
           form,
           watchValues,
+          titleLabelSlot,
         }),
-      [designValue, form, getDefaultFormItems, watchValues],
+      [designValue, form, getDefaultFormItems, titleLabelSlot, watchValues],
     );
 
     // 自动添加 fill 设置项

@@ -1,9 +1,10 @@
 import merge from 'lodash.merge';
-import React, { type ReactNode, useContext, useEffect } from 'react';
+import React, { type ReactNode, useContext, useEffect, useMemo, useRef } from 'react';
 
 import { Form, Input, Select, Switch } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
+import { buildFormPropertyTitleRow, type FormPropertyLabelSlotRef } from '../../../components';
 import { DesignContext } from '../../../Design/Context';
 import PropertiesGridLayout, { Label, Value } from '../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../types';
@@ -21,6 +22,19 @@ function MainProperty(props: DesignValueProps) {
   const { fieldProps } = props;
   const cardProps = fieldProps as InternalCardLayoutProps;
 
+  const titleSlotStore = useRef<Record<string, unknown>>({});
+  const titleLabelSlot = useMemo<FormPropertyLabelSlotRef>(
+    () => ({
+      get: (key: string) => titleSlotStore.current[key],
+      set: (key: string, value: unknown) => {
+        titleSlotStore.current[key] = value;
+      },
+    }),
+    [],
+  );
+
+  const titleRow = useMemo(() => buildFormPropertyTitleRow(titleLabelSlot), [titleLabelSlot]);
+
   function onFieldsChange() {
     const values = form.getFieldsValue();
 
@@ -29,7 +43,7 @@ function MainProperty(props: DesignValueProps) {
 
   useEffect(() => {
     form.setFieldsValue({
-      title: typeof cardProps.title === 'string' ? cardProps.title : undefined,
+      title: cardProps.title,
       extra: typeof cardProps.extra === 'string' ? cardProps.extra : undefined,
       variant: cardProps.variant ?? 'outlined',
       size: cardProps.size ?? 'default',
@@ -50,18 +64,7 @@ function MainProperty(props: DesignValueProps) {
             columnCount: 1,
             colgroup: ['auto'],
             data: [
-              {
-                key: 'title',
-                require: false,
-                label: <Label>{Intl.get('title')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="title">
-                      <Input placeholder={Intl.get('title')} allowClear />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
+              titleRow,
               {
                 key: 'extra',
                 require: false,

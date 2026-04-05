@@ -10,7 +10,7 @@ import {
 import { findTypeById } from './findTypeById';
 import { formItemToProps } from './formItemToProps';
 import { getLabel } from './getLabel';
-import { getLabelByType } from './getLabelByType';
+import { getLabelByType, getToolBoxItemByType } from './getLabelByType';
 import { isDesktop } from './isDesktop';
 import { isDragEnd } from './isDragEnd';
 import { isLayoutItem } from './isLayoutItem';
@@ -45,6 +45,7 @@ export {
   getRootFieldId,
   isRootFieldId,
   getLabelByType,
+  getToolBoxItemByType,
   findTypeById,
   useDesignFieldDataSourceOptions,
   resolveI18nText,

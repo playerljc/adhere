@@ -1,6 +1,25 @@
 import type { ReactNode } from 'react';
 
-import type { FieldType, ToolBoxOption } from '../types';
+import type { FieldType, ToolBoxItem, ToolBoxOption } from '../types';
+
+/**
+ * 根据控件类型从 toolbox 中获取完整工具项
+ */
+export function getToolBoxItemByType(
+  type: FieldType | undefined,
+  toolBox: ToolBoxOption = [],
+): ToolBoxItem | undefined {
+  if (!type) return undefined;
+
+  for (const group of toolBox) {
+    const toolItem = group.items?.find((item) => item.type === type);
+    if (toolItem) {
+      return toolItem;
+    }
+  }
+
+  return undefined;
+}
 
 /**
  * 根据控件类型从 toolbox 中获取 label
@@ -11,14 +30,10 @@ export function getLabelByType(
   type: FieldType | undefined,
   toolBox: ToolBoxOption = [],
 ): string | ReactNode {
-  if (!type) return '';
-
-  for (const group of toolBox) {
-    const toolItem = group.items?.find((item) => item.type === type);
-    if (toolItem) {
-      return toolItem.label ?? type;
-    }
+  const toolItem = getToolBoxItemByType(type, toolBox);
+  if (toolItem) {
+    return toolItem.label ?? type ?? '';
   }
 
-  return type;
+  return type ?? '';
 }
