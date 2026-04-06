@@ -56,6 +56,10 @@ import { SizeSelectStandardDict } from './Size';
 import { SlotEndLabel, SlotStartLabel } from './SlotLabel';
 import { SwitchSizeSelectStandardDict } from './SwitchSize';
 import { TableColumnSettingFormItem } from './TableColumnSettingFormItem';
+import { TabsSizeSelectStandardDict } from './TabsSize';
+import { TabsTabPlacementSelectStandardDict } from './TabsTabPlacement';
+import { TabsTabSettingFormItem } from './TabsTabSettingFormItem';
+import { TabsTypeSelectStandardDict } from './TabsType';
 import PropertiesGridLayout from './TableGridLayout';
 import TableGridLayoutColgroupSetting from './TableGridLayoutColgroupSetting';
 import { TableGridLayoutModeTypeSelectStandardDict } from './TableGridLayoutModeType';
@@ -140,6 +144,10 @@ export {
   TreeDataSourceManagerFormItem,
   TransferDataSourceManagerFormItem,
   TableColumnSettingFormItem,
+  TabsTypeSelectStandardDict,
+  TabsSizeSelectStandardDict,
+  TabsTabPlacementSelectStandardDict,
+  TabsTabSettingFormItem,
   JustifyContentSelectStandardDict,
   AlignItemsSelectStandardDict,
   AlignContentSelectStandardDict,

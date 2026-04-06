@@ -72,12 +72,12 @@ export interface DesignItem extends BaseItem {
   layoutReducerToAdd?: (
     state: DesignValue,
     action: { sourceDesignValue: DesignValue; targetId: string },
-  ) => DesignValue[];
+  ) => NonNullable<DesignValueProps['children']>;
   /***--- 布局容器删除一个组件 ---***/
   layoutReducerToRemove?: (
     state: DesignValue,
     action: { sourceDesignValue: DesignValue; targetId: string },
-  ) => DesignValue[];
+  ) => NonNullable<DesignValueProps['children']>;
 
   /***
     组件designValue的默认值

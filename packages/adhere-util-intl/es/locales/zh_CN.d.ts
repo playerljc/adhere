@@ -236,6 +236,20 @@ declare const _default: {
     switch_size: string;
     system_exception: string;
     table_grid_layout: string;
+    tabs_tab_config: string;
+    add_tab: string;
+    tab_key: string;
+    tab_key_duplicate: string;
+    tabs_force_render: string;
+    tabs_destroy_on_hidden: string;
+    tabs_closable: string;
+    tabs_size: string;
+    tabs_tab_placement: string;
+    tabs_centered: string;
+    tabs_default_active_key: string;
+    tabs_tab_bar_gutter: string;
+    tabs_hide_add: string;
+    tabs_animated: string;
     textarea_auto_size: string;
     thousands: string;
     total_count: string;
@@ -390,5 +404,7 @@ declare const _default: {
     no_gen_rule: string;
     align: string;
     auto_height: string;
+    tabs_layout: string;
+    tabs_config: string;
 }[];
 export default _default;

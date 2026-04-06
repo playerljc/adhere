@@ -1,15 +1,19 @@
+import React from 'react';
+
 import { CreditCardOutlined, InsertRowBelowOutlined, LayoutOutlined } from '@ant-design/icons';
 import Intl from '@baifendian/adhere-util-intl';
-import React from 'react';
 
 import type { DesignItem, ToolBoxGroup } from '../../types';
 import { define as defineCardLayout } from './Card';
 import { define as defineFlexLayout } from './FlexLayout';
 import { define as defineTableGridLayout } from './TableGridLayout';
+import { define as defineTabsLayout } from './Tabs';
 
 const TableGridLayout = defineTableGridLayout();
 const FlexLayout = defineFlexLayout();
 const CardLayout = defineCardLayout();
+const TabsLayout = defineTabsLayout();
+
 export function install(): {
   toolBox: ToolBoxGroup['items'];
   designItems: DesignItem[];
@@ -37,7 +41,14 @@ export function install(): {
         searchLabel: Intl.get('card_layout'),
         tooltip: Intl.get('card_layout'),
       },
+      {
+        type: TabsLayout.type,
+        icon: React.createElement(LayoutOutlined),
+        label: Intl.get('tabs_layout'),
+        searchLabel: Intl.get('tabs_layout'),
+        tooltip: Intl.get('tabs_layout'),
+      },
     ],
-    designItems: [TableGridLayout, CardLayout],
+    designItems: [FlexLayout, TableGridLayout, CardLayout, TabsLayout],
   };
 }

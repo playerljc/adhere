@@ -43,7 +43,7 @@ export type DesignValueProps = {
   flexProps?: FlexProps;
 
   // 控件下的子项(一般是布局控件才有children)
-  children?: DesignValue[];
+  children?: (DesignValue | DesignValue[])[];
 };
 
 /**

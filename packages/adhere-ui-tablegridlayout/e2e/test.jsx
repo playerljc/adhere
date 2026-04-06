@@ -111,25 +111,36 @@ export default () => {
         {
           name: 'g1',
           width: '100%',
-          columnCount: 1,
-          colgroup: ['auto'],
+          columnCount: 2,
+          colgroup: ['auto', 'auto'],
           data: [
-            {
-              key: 'UserName',
-              label: null /*<Label>UserName：</Label>*/,
-              value: <Value>Zhou Maomao</Value>,
-              show: true,
-            },
-            {
-              key: 'Telephone',
-              label: <Label>Telephone：</Label>,
-              value: <Value>1810000000</Value>,
-              show: false,
-            },
+            // {
+            //   key: 'UserName',
+            //   label: null /*<Label>UserName：</Label>*/,
+            //   value: <Value>Zhou Maomao</Value>,
+            //   show: true,
+            // },
+            // {
+            //   key: 'Telephone',
+            //   label: <Label>Telephone：</Label>,
+            //   value: <Value>1810000000</Value>,
+            //   show: false,
+            // },
             {
               key: 'Live',
               label: <Label>Live：</Label>,
-              value: <Value>Hangzhou, Zhejiang</Value>,
+              value: (
+                <Value>
+                  {/*Hangzhou, ZhejiangHangzhou, ZhejiangHangzhou, ZhejiangHangzhou, ZhejiangHangzhou,
+                  ZhejiangHangzhou, ZhejiangHangzhou, ZhejiangHangzhou, ZhejiangHangzhou,
+                  ZhejiangHangzhou, ZhejiangHangzhou, ZhejiangHangzhou, ZhejiangHangzhou,
+                  ZhejiangHangzhou, ZhejiangHangzhou, ZhejiangHangzhou, ZhejiangHangzhou,
+                  ZhejiangHangzhou, ZhejiangHangzhou, ZhejiangHangzhou, Zhejiang*/}
+                  <div style={{ width: '100%' }}>
+                    <input style={{ width: '100%' }} />
+                  </div>
+                </Value>
+              ),
               // show: false,
             },
             {

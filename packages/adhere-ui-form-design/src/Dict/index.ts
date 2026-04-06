@@ -39,6 +39,9 @@ import { SegmentedShape } from './SegmentedShape';
 import { SelectMode } from './SelectMode';
 import { Size } from './Size';
 import { SwitchSize } from './SwitchSize';
+import { TabsSize } from './TabsSize';
+import { TabsTabPlacement } from './TabsTabPlacement';
+import { TabsType } from './TabsType';
 import { TableGridLayoutModeType } from './TableGridLayoutModeType';
 import { TableNumberGeneratorRule } from './TableNumberGeneratorRule';
 import { TextType } from './TextType';
@@ -108,6 +111,9 @@ const dictImpls = {
   AlignContent,
   AlignSelf,
   TableNumberGeneratorRule,
+  TabsType,
+  TabsSize,
+  TabsTabPlacement,
 };
 
 const { names, values } = genModuleDict(dictImpls);
