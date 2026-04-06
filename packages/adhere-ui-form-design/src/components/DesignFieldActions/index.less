@@ -1,4 +1,4 @@
-@import '../../constant';
+@import '../../constant.less';
 
 .@{prefix-cls}-design-field-actions {
   > ul {
@@ -7,7 +7,10 @@
     margin: var(--design-field-actions-margin, 0);
     padding: var(--design-field-actions-padding, 5px);
     list-style: none;
-    background-color: var(--design-field-actions-background-color, @highlight-color);
+    background-color: var(
+      --design-field-actions-background-color,
+      var(--antd-color-primary, #1677ff)
+    );
 
     > li {
       display: flex;
@@ -15,7 +18,7 @@
       justify-content: center;
       width: 14px;
       height: 14px;
-      color: var(--design-field-actions-li-color, #fff);
+      color: var(--design-field-actions-li-color, var(--ant-color-text-light-solid, #ffffff));
 
       &:hover {
         cursor: pointer;

@@ -26,7 +26,7 @@ const ToolboxItem: React.FC<ToolboxItemProps> = ({
   const lang = ConfigProviderContext.intl.lang!;
 
   return (
-    <li
+    <div
       key={type}
       className={classNames(`${selectPrefix}-group-list-item`, className, {
         [`${selectPrefix}-group-list-item-disabled`]: disabled,
@@ -42,7 +42,7 @@ const ToolboxItem: React.FC<ToolboxItemProps> = ({
           <span>{label}</span>
         </>
       )}
-    </li>
+    </div>
   );
 };
 

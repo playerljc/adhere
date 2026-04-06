@@ -172,6 +172,7 @@ const RulesSettingFormItem: FC<RulesSettingFormItemProps> = ({
       <ul className={`${selectorPrefix}-rules`}>
         {value?.map((ruleItem, index) => {
           const { type, config } = ruleItem;
+
           return (
             <li key={type} className={`${selectorPrefix}-rule`}>
               <Card

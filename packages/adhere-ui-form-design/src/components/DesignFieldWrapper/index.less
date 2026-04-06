@@ -15,8 +15,11 @@
     align-items: center;
     max-width: 100%;
     padding: var(--design-field-wrapper-label-padding, 2px 6px);
-    color: var(--design-field-wrapper-label-color, #fff);
-    background-color: var(--design-field-wrapper-label-background-color, @highlight-color);
+    color: var(--design-field-wrapper-label-color, var(--ant-color-text-light-solid, #ffffff));
+    background-color: var(
+      --design-field-wrapper-label-background-color,
+      var(--antd-color-primary, #1677ff)
+    );
     gap: var(--design-field-wrapper-label-gap, 4px);
 
     .@{prefix-cls}-design-field-wrapper-label-icon {
@@ -42,16 +45,19 @@
     }
   }
 
-  // hover的样式
   &:hover {
-    //background-color: var(--design-field-wrapper-active-hover-background-color, fade(@highlight-color, 5%));
-    border: var(--design-field-wrapper-active-border-color, 3px dashed @highlight-color);
+    border: var(
+      --design-field-wrapper-hover-border,
+      1px dashed var(--antd-color-primary-border, #91caff)
+    );
   }
 
-  // 点击了控件后的激活状态，一般是边框的样式会变类型和颜色
   &.@{prefix-cls}-design-field-wrapper-active {
-    padding: var(--design-field-wrapper-active-padding, 2px 2px 40px 2px);
-    border: var(--design-field-wrapper-active-border-color, 2px solid @highlight-color);
+    padding: var(--design-field-wrapper-active-padding, 2px 2px 36px 2px);
+    border: var(
+      --design-field-wrapper-active-border,
+      1px solid var(--antd-color-primary, #1677ff)
+    );
   }
 
   // 激活的工具栏

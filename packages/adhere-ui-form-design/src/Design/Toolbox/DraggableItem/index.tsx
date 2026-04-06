@@ -19,7 +19,7 @@ const DraggableToolItem: FC<DraggableToolItemProps> = ({ id, data, disabled, chi
   });
 
   return (
-    <div
+    <li
       ref={setNodeRef}
       className={classNames(`${selectPrefix}-draggable-item`, {
         [`${selectPrefix}-draggable-item-dragging`]: isDragging,
@@ -28,7 +28,7 @@ const DraggableToolItem: FC<DraggableToolItemProps> = ({ id, data, disabled, chi
       {...attributes}
     >
       {children}
-    </div>
+    </li>
   );
 };
 

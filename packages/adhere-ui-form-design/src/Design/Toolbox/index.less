@@ -9,32 +9,29 @@
   flex-direction: column;
   height: 100%;
   min-height: 0;
-  padding: var(--fd-design-toolbox-inner-padding, 10px);
+  padding: var(--fd-design-toolbox-inner-padding, 12px);
   box-sizing: border-box;
 
   > .@{prefix-cls}-design-toolbox-search-wrapper {
     flex-shrink: 0;
-    margin-bottom: var(--fd-design-toolbox-search-margin-bottom, 8px);
+    margin-bottom: var(--fd-design-toolbox-search-margin-bottom, 10px);
 
     .ant-input-affix-wrapper {
-      border-radius: var(--fd-design-toolbox-search-radius, 8px);
+      border-radius: var(--fd-design-toolbox-search-radius, 6px);
       background: var(--fd-design-toolbox-search-bg, #fff);
-      border-color: var(--fd-design-toolbox-search-border-color, #e5e7eb);
-      box-shadow: var(--fd-design-toolbox-search-shadow, 0 1px 2px rgba(15, 23, 42, 0.06));
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      border-color: var(--fd-design-toolbox-search-border-color, #e4e4e7);
+      box-shadow: var(--fd-design-toolbox-search-shadow, none);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
 
       &:hover,
       &:focus-within {
-        border-color: var(--fd-design-toolbox-search-focus-border, #1677ff);
-        box-shadow: var(
-          --fd-design-toolbox-search-focus-shadow,
-          0 0 0 2px rgba(22, 119, 255, 0.12)
-        );
+        border-color: var(--fd-design-toolbox-search-focus-border, #d4d4d8);
+        box-shadow: var(--fd-design-toolbox-search-focus-shadow, 0 0 0 1px rgba(24, 24, 27, 0.08));
       }
     }
 
     .ant-input-search-button {
-      border-radius: 0 var(--fd-design-toolbox-search-radius, 8px) var(--fd-design-toolbox-search-radius, 8px) 0;
+      border-radius: 0 var(--fd-design-toolbox-search-radius, 6px) var(--fd-design-toolbox-search-radius, 6px) 0;
     }
   }
 
@@ -47,12 +44,12 @@
     margin-right: calc(-1 * var(--fd-design-toolbox-body-scroll-padding, 2px));
 
     &::-webkit-scrollbar {
-      width: 6px;
+      width: 5px;
     }
 
     &::-webkit-scrollbar-thumb {
-      background: var(--fd-design-toolbox-scrollbar-thumb, rgba(0, 0, 0, 0.12));
-      border-radius: 3px;
+      background: var(--fd-design-toolbox-scrollbar-thumb, rgba(24, 24, 27, 0.12));
+      border-radius: 4px;
     }
 
     &::-webkit-scrollbar-track {
@@ -61,27 +58,27 @@
 
     > .@{prefix-cls}-design-toolbox-group {
       + .@{prefix-cls}-design-toolbox-group {
-        margin-top: var(--fd-design-toolbox-group-gap, 10px);
+        margin-top: var(--fd-design-toolbox-group-gap, 14px);
       }
 
       > .@{prefix-cls}-design-toolbox-group-title {
         position: relative;
-        margin: 0 0 6px;
-        padding: 0 0 0 10px;
-        font-size: var(--fd-design-toolbox-group-title-size, 12px);
+        margin: 0 0 8px;
+        padding: 0 0 0 9px;
+        font-size: var(--fd-design-toolbox-group-title-size, 14px);
         font-weight: 600;
-        line-height: 1.4;
-        letter-spacing: 0.02em;
-        color: var(--fd-design-toolbox-group-title-color, #595959);
+        line-height: 1.35;
+        letter-spacing: 0.04em;
+        color: var(--fd-design-toolbox-group-title-color, #71717a);
 
         &::before {
           position: absolute;
           top: 50%;
           left: 0;
           width: 3px;
-          height: 12px;
-          background: var(--fd-design-toolbox-group-title-accent, #1677ff);
-          border-radius: 2px;
+          height: 80%;
+          background: var(--fd-design-toolbox-group-title-accent, #d4d4d8);
+          border-radius: 1px;
           transform: translateY(-50%);
           content: '';
         }
@@ -92,7 +89,7 @@
 
         > .@{prefix-cls}-design-toolbox-group-list {
           display: grid;
-          grid-row-gap: var(--tool-box-group-body-list-grid-row-gap, 5px);
+          grid-row-gap: var(--tool-box-group-body-list-grid-row-gap, 6px);
           grid-column-gap: var(--tool-box-group-body-list-grid-column-gap, 6px);
           margin: var(--tool-box-group-body-list-margin, 0);
           padding: var(--tool-box-group-body-list-padding, 0);

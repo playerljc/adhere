@@ -75,17 +75,22 @@ const MonacoEditorFormItem = forwardRef<MonacoEditorFormItemHandle, MonacoEditor
             // 确保提示框不会被编辑器容器限制
             container: undefined,
           },
-
           lineNumbers: 'off', // 1. 关闭行号
           glyphMargin: false, // 2. 关闭左侧图标边距（断点、错误图标区域）
           folding: false, // 3. 关闭代码折叠功能（隐藏折叠箭头）
           lineDecorationsWidth: 0, // 4. 将行修饰宽度设为 0（彻底移除左侧留白）
           lineNumbersMinChars: 0, // 5. 设置行号最小字符数为 0
           hideCursorInOverviewRuler: true, // 可选：隐藏概览标尺中的光标标识
+          scrollBeyondLastLine: false,
           scrollbar: {
             vertical: 'hidden', // 可选：如果你也不想要右侧滚动条
           },
           minimap: { enabled: false }, // 建议：通常去掉行号时也会关闭右侧小地图
+          padding: {
+            top: 0,
+            bottom: 0,
+          },
+          fontSize: 16,
         },
         options ?? {},
       );

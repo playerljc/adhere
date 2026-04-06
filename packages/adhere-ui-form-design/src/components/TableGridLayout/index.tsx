@@ -14,7 +14,7 @@ const selectPrefix = `${SELECT_PREFIX}-design-table-grid-layout`;
  * @param props
  */
 const TableGridLayout: FC<TableGridLayoutProps> = (props) => {
-  return <AdhereTableGridLayout className={selectPrefix} {...props} />;
+  return <AdhereTableGridLayout className={selectPrefix} density="middle" {...props} />;
 };
 
 export const Label = memo<LabelProps>((props) => (
