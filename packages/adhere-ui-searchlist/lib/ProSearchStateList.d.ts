@@ -8,12 +8,6 @@ declare const ProSearchStateList: {
         [x: string]: any;
         getParams(): {};
         getColumns(): never[];
-        _cachedTableColumns: any[] | null;
-        _cachedTableColumnsKey: string;
-        _cachedHasSearch: boolean | null;
-        _cachedHasSearchKey: string;
-        _cachedGridSearchFormGroupParams: any[] | null;
-        _cachedGridSearchFormGroupParamsKey: string;
         componentDidMount(): void;
         componentWillUnmount(): void;
         onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -59,11 +53,12 @@ declare const ProSearchStateList: {
         renderSearchForm(): import("react").JSX.Element | null;
         renderSearchFormToolBarItems(_defaultItems: any): any[];
         renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
-        renderSearchFooterItems(_defaultItems: any): any[];
+        renderSearchFooterItems(_defaultItems: any): any;
         getSearchFooterItemsEllipsisCount(): number;
         isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
         renderSearchFooterItemsMore(): import("react").JSX.Element;
-        renderSearchFooterItemsImpl(defaultItems: any): any[];
+        getSearchFooterItemsMore(): import("antd").DropDownProps;
+        renderSearchFooterItemsImpl(defaultItems: any): any;
         renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex, layout, currentTitle }: {
             searchConfig: any;
             column: any;

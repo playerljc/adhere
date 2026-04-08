@@ -21,12 +21,6 @@ declare const _default: {
             [x: string]: any;
             getParams(): {};
             getColumns(): never[];
-            _cachedTableColumns: any[] | null;
-            _cachedTableColumnsKey: string;
-            _cachedHasSearch: boolean | null;
-            _cachedHasSearchKey: string;
-            _cachedGridSearchFormGroupParams: any[] | null;
-            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -72,11 +66,12 @@ declare const _default: {
             renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
-            renderSearchFooterItems(_defaultItems: any): any[];
+            renderSearchFooterItems(_defaultItems: any): any;
             getSearchFooterItemsEllipsisCount(): number;
             isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsMore(): import("react").JSX.Element;
-            renderSearchFooterItemsImpl(defaultItems: any): any[];
+            getSearchFooterItemsMore(): import("antd").DropDownProps;
+            renderSearchFooterItemsImpl(defaultItems: any): any;
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex, layout, currentTitle }: {
                 searchConfig: any;
                 column: any;
@@ -95,12 +90,6 @@ declare const _default: {
             [x: string]: any;
             getParams(): {};
             getColumns(): never[];
-            _cachedTableColumns: any[] | null;
-            _cachedTableColumnsKey: string;
-            _cachedHasSearch: boolean | null;
-            _cachedHasSearchKey: string;
-            _cachedGridSearchFormGroupParams: any[] | null;
-            _cachedGridSearchFormGroupParamsKey: string;
             componentDidMount(): void;
             componentWillUnmount(): void;
             onSubTableChange(pagination: any, filters: any, sorter: any): void;
@@ -146,11 +135,12 @@ declare const _default: {
             renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
-            renderSearchFooterItems(_defaultItems: any): any[];
+            renderSearchFooterItems(_defaultItems: any): any;
             getSearchFooterItemsEllipsisCount(): number;
             isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsMore(): import("react").JSX.Element;
-            renderSearchFooterItemsImpl(defaultItems: any): any[];
+            getSearchFooterItemsMore(): import("antd").DropDownProps;
+            renderSearchFooterItemsImpl(defaultItems: any): any;
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex, layout, currentTitle }: {
                 searchConfig: any;
                 column: any;
@@ -338,17 +328,7 @@ declare const _default: {
         [x: string]: any;
         displayName: string;
     };
-    OptionsWrap: {
-        ({ className, style, ellipsisCount, isEllipsesShowOnlyOneAfterCollapsing, renderEllipsis, children, }: {
-            className?: string | undefined;
-            style?: {} | undefined;
-            ellipsisCount?: number | undefined;
-            isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
-            renderEllipsis: any;
-            children: any;
-        }): React.ReactElement;
-        displayName: string;
-    };
+    OptionsWrap: import("react").FC<import("@baifendian/adhere-ui-searchtable/es/Extension/OptionsWrap").OptionsWrapProps>;
     DisabledOption: {
         ({ className, style, children }: {
             className: any;
