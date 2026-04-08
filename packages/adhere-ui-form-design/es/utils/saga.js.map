@@ -1,0 +1,1 @@
+{"version":3,"file":"saga.js","sources":["utils/saga.js"],"sourcesContent":["import { createSagaMiddleware } from '@ctsj/state/lib/middleware';\nvar saga = createSagaMiddleware();\nexport default saga;"],"names":["createSagaMiddleware","saga"],"mappings":"OAASA,oBAAwD,KAA5B,6BACrC,IAAIC,KAAOD,qBAAqB,iBACjBC"}

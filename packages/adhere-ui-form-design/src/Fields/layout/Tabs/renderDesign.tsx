@@ -8,7 +8,7 @@ import { DesignContext } from '../../../Design/Context';
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignValue } from '../../../types';
-import { isRootFieldId, resolveI18nText } from '../../../utils';
+import { isReactNode, isRootFieldId, resolveI18nText } from '../../../utils';
 import { parseDesign } from '../../parse';
 import InternalTabs, { type InternalTabsLayoutProps } from './InternalTabs';
 
@@ -47,13 +47,15 @@ function TabsLayoutDesign({ value }: { value: DesignValue }) {
 
       const paneNode = (
         <>
-          {paneChildren.map((child) =>
-            parseDesign({
+          {paneChildren.map((child) => {
+            const rendered = parseDesign({
               parentId: paneParentId,
               value: child,
               context: designContext,
-            }),
-          )}
+            });
+
+            return isReactNode(rendered) ? rendered : null;
+          })}
         </>
       );
 

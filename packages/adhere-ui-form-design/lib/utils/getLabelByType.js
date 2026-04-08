@@ -1,0 +1,2 @@
+function getToolBoxItemByType(t,e){if(void 0===e&&(e=[]),t)for(var o=0,l=e;o<l.length;o++){var n=null==(n=l[o].items)?void 0:n.find(function(e){return e.type===t});if(n)return n}}function getLabelByType(e,t){var t=getToolBoxItemByType(e,t=void 0===t?[]:t);return t?null!=(t=null!=(t=t.label)?t:e)?t:"":null!=e?e:""}Object.defineProperty(exports,"__esModule",{value:!0}),exports.getLabelByType=getLabelByType,exports.getToolBoxItemByType=getToolBoxItemByType;
+//# sourceMappingURL=getLabelByType.js.map

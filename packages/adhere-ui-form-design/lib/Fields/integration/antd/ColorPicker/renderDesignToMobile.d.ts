@@ -1,7 +1,7 @@
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import type { DesignContextType, DesignValue } from '../../../../types';
 export declare function renderDesignToMobile(params: {
-    parentId: string;
+    parentId?: string;
     value: DesignValue;
     context: DesignContextType;
 }): DataItemRow;

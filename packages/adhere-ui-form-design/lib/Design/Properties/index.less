@@ -1,6 +1,7 @@
 @import '../../constant.less';
 
 @import './PropertiesTab';
+@import './FlexTab';
 @import './FormTab';
 @import './StyleTab';
 @import './ActionsTab';
@@ -8,18 +9,48 @@
 .@{prefix-cls}-design-properties {
   position: relative;
   display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
 
   &.@{prefix-cls}-design-properties-no-selected {
     position: absolute;
     top: 50%;
     left: 50%;
+    padding: var(--fd-design-properties-empty-padding, 16px);
+    color: var(--fd-design-properties-empty-color, #8c8c8c);
+    font-size: var(--fd-design-properties-empty-font-size, 13px);
+    text-align: center;
     transform: translate(-50%, -50%);
   }
 
   .@{prefix-cls}-design-properties-tabs {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    padding: var(--fd-design-properties-tabs-padding, 8px 10px 12px);
+    overflow: hidden;
+
+    > .ant-tabs-nav {
+      flex-shrink: 0;
+      margin: 0 0 10px;
+      padding: 0 2px;
+    }
+
     > .ant-tabs-content-holder {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden auto;
+
       > .ant-tabs-content {
         display: flex;
+        min-height: 0;
+      }
+
+      .ant-tabs-tabpane {
+        min-height: 0;
       }
     }
   }

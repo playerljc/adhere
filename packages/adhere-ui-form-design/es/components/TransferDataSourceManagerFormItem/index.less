@@ -1,0 +1,131 @@
+@import '../../constant.less';
+
+.@{prefix-cls}-design-field-transfer-data-source-form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+
+  &-actions {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  &-body {
+    width: 100%;
+  }
+}
+
+.@{prefix-cls}-design-field-transfer-data-source-form-item-static {
+  width: 100%;
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    background: var(--ant-color-fill-tertiary, #f5f5f5);
+    border-radius: 4px;
+
+    &-dragging {
+      opacity: 0.85;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &-row-main {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    width: 100%;
+  }
+
+  &-input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &-i18n-input {
+    width: 100%;
+
+    .ant-input {
+      cursor: pointer;
+    }
+  }
+
+  &-setting,
+  &-handle,
+  &-remove {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    color: var(--ant-color-icon, rgba(0, 0, 0, 0.45));
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+
+    &:hover {
+      color: var(--ant-color-icon-hover, rgba(0, 0, 0, 0.88));
+      background-color: var(--ant-color-fill-quaternary, rgba(0, 0, 0, 0.04));
+    }
+  }
+
+  &-handle {
+    cursor: grab;
+  }
+
+  &-handle-disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  &-footer {
+    margin-top: 8px;
+  }
+
+  &-detail-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 0;
+  }
+
+  &-detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+      font-weight: 500;
+      color: var(--ant-color-text, rgba(0, 0, 0, 0.88));
+    }
+  }
+}
+
+.@{prefix-cls}-design-field-transfer-data-source-form-item-dynamic {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  &-nav {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  &-manager-trigger {
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+}

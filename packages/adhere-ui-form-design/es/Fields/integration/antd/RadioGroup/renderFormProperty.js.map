@@ -1,0 +1,1 @@
+{"version":3,"file":"renderFormProperty.js","sources":["Fields/integration/antd/RadioGroup/renderFormProperty.js"],"sourcesContent":["export { FormProperty, renderFormProperty } from '../Select/renderFormProperty';"],"names":[],"mappings":"sCAA+E,KAA9B"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/DatePicker/constant.js"],"sourcesContent":["export var TYPE = 'FormDesignDatePicker';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,8BAAPA,IAA6B"}

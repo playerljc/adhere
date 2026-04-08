@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_adhereUtilIntl=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.RadioGroupOptionType=void 0,_interopRequireDefault(require("@baifendian/adhere-util-intl"))),RadioGroupOptionType=exports.RadioGroupOptionType={handler:function(){return[{label:_adhereUtilIntl.default.get("default"),value:"default"},{label:_adhereUtilIntl.default.get("button"),value:"button"}]}};
+//# sourceMappingURL=RadioGroupOptionType.js.map

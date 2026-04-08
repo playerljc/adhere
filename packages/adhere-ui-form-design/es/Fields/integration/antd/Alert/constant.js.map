@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Alert/constant.js"],"sourcesContent":["export var TYPE = 'FormDesignAlert';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,yBAAPA,IAAwB"}

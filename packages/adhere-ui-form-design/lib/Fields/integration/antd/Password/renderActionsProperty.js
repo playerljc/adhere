@@ -1,2 +1,2 @@
-Object.defineProperty(exports,"__esModule",{value:!0}),exports.renderActionsProperty=renderActionsProperty;var _renderActionsProperty=require("../Input/renderActionsProperty");function renderActionsProperty(r){return(0,_renderActionsProperty.renderActionsProperty)(r)}
+Object.defineProperty(exports,"__esModule",{value:!0}),Object.defineProperty(exports,"ActionsProperty",{enumerable:!0,get:function(){return _renderActionsProperty.ActionsProperty}}),Object.defineProperty(exports,"renderActionsProperty",{enumerable:!0,get:function(){return _renderActionsProperty.renderActionsProperty}});var _renderActionsProperty=require("../Input/renderActionsProperty");
 //# sourceMappingURL=renderActionsProperty.js.map

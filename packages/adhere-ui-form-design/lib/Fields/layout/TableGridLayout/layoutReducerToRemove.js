@@ -1,2 +1,2 @@
-function layoutReducerToRemove(e,o){return{}}Object.defineProperty(exports,"__esModule",{value:!0}),exports.layoutReducerToRemove=layoutReducerToRemove;
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.layoutReducerToRemove=layoutReducerToRemove;var _utils=require("../../../utils");function layoutReducerToRemove(e,r){var l,e=(0,_utils.findDesignValueByIdToClone)(r.targetId,e);null!=(l=null==e?void 0:e.props)&&l.children&&e.props.children.slice(e.props.children.indexOf(r.sourceDesignValue),1);for(var o=[],u=0,i=null!=(r=null==(l=null==e?void 0:e.props)?void 0:l.children)?r:[];u<i.length;u++){var n=i[u];Array.isArray(n)?o.push.apply(o,n):o.push(n)}return o}
 //# sourceMappingURL=layoutReducerToRemove.js.map

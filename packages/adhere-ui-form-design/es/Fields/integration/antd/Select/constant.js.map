@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Select/constant.js"],"sourcesContent":["export var TYPE = 'antd-select';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,qBAAPA,IAAoB"}

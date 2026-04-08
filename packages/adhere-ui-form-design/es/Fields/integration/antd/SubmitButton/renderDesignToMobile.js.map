@@ -1,0 +1,1 @@
+{"version":3,"file":"renderDesignToMobile.js","sources":["Fields/integration/antd/SubmitButton/renderDesignToMobile.js"],"sourcesContent":["export { renderDesign as renderDesignToMobile } from './renderDesign';"],"names":[],"mappings":"2CAAqE,KAAhB"}

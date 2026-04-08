@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_serviceregister=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0,_interopRequireDefault(require("@ctsj/state/lib/middleware/saga/serviceregister"))),_saga=_interopRequireDefault(require("../../../utils/saga")),_Service=require("../Service"),Model=Object.assign(_serviceregister.default.model(_Service.serviceName),{}),_default=(_saga.default.model(Model),exports.default=Model);
+//# sourceMappingURL=index.js.map

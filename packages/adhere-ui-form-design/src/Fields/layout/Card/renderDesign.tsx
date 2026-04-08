@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignValue } from '../../../types';
-import { isRootFieldId, styleCodeStringToCSSProperties } from '../../../utils';
+import { isRootFieldId, normalizeDesignChildren } from '../../../utils';
 import InternalCard, { type InternalCardLayoutProps } from './InternalCard';
 
 const selectorPrefix = 'adhere-ui-fd-card-layout';
@@ -15,6 +15,10 @@ function CardLayoutDesign({ value }: { value: DesignValue }) {
     id,
     props: { children, styleProps, fieldProps, flexProps },
   } = value;
+
+  const resolvedChildren = useMemo<DesignValue[] | undefined>(() => {
+    return normalizeDesignChildren(children, { returnUndefinedIfEmpty: true });
+  }, [children]);
 
   const targetFlexStyle = useMemo<CSSProperties>(() => {
     const { minSize, scroll, ..._flexProps } = flexProps ?? {};
@@ -59,7 +63,7 @@ function CardLayoutDesign({ value }: { value: DesignValue }) {
           {...(fieldProps as InternalCardLayoutProps)}
           id={id}
           styleProps={styleProps ?? {}}
-          children={children}
+          children={resolvedChildren}
         />
       </DroppableContainer>
     </DesignFieldWrapper>

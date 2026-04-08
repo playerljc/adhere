@@ -1,6 +1,7 @@
 import type { CSSProperties, NamedExoticComponent, PropsWithoutRef, ReactNode, RefAttributes } from 'react';
 import type { ActionsProps } from './Actions';
 import type { FieldProps, FieldType } from './Field';
+import type { FlexProps } from './Flex';
 import type { FormItemProps } from './FormItem';
 import type { DesignItem } from './Item';
 import type { StyleProps } from './Style';
@@ -18,8 +19,36 @@ export type DesignValueProps = {
     fieldProps: FieldProps;
     styleProps?: StyleProps;
     actionsProps?: ActionsProps;
-    children?: DesignValue[];
+    flexProps?: FlexProps;
+    children?: (DesignValue | DesignValue[])[];
 };
+/**
+ * DataSourceItemConfig
+ * 一个数据源的配置
+ */
+export type DataSourceItemConfig = {
+    id: string;
+    name: string;
+    request: {
+        url: string;
+        method: 'get' | 'post' | 'put' | 'delete';
+        headers?: Record<string, string>;
+        data?: Record<string, any>;
+        codeKey: string;
+        codeSuccess: number;
+        dataKey: string;
+    };
+    response: {
+        headers?: Record<string, string>;
+        labelKey?: string;
+        valueKey?: string;
+    };
+};
+/**
+ * DataSourceConfig
+ * 数据源的配置
+ */
+export type DataSourceConfig = DataSourceItemConfig[];
 /**
  * 设计值
  * 设置应该用一个布局开始
@@ -28,6 +57,7 @@ export type DesignValue = {
     id: string;
     type: FieldType;
     props: DesignValueProps;
+    dataSourceConfig?: DataSourceConfig;
 };
 export interface DesignProps {
     className?: Styles['className'];
@@ -55,12 +85,15 @@ export interface DesignContextType {
     getItems: () => DesignItem[];
     getOverlayCursor: () => CSSProperties['cursor'];
     getActiveToolItemData: () => DraggableToolItemProps['data'] | null;
+    getToolBox: () => ToolBoxOption;
     setCurrentTerminal: (terminal: Terminal) => void;
     setActiveFieldId: (activeFieldId: string) => void;
     setFormItemProps: (id: string, props: FormItemProps) => void;
     setFieldProps: (id: string, props: FieldProps) => void;
     setStyleProps: (id: string, props: StyleProps) => void;
     setActionsProps: (id: string, props: ActionsProps) => void;
+    setFlexProps: (id: string, props: FlexProps) => void;
+    setDataSourceConfig: (id: string, config: DataSourceConfig) => void;
     addChildrenById: (id: string, child: DesignValue) => void;
     deleteFieldByChildren: (id: string) => void;
 }

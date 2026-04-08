@@ -14,6 +14,8 @@ import { getLabelByType, getToolBoxItemByType } from './getLabelByType';
 import { isDesktop } from './isDesktop';
 import { isDragEnd } from './isDragEnd';
 import { isLayoutItem } from './isLayoutItem';
+import isReactNode from './isReactNode';
+import normalizeDesignChildren from './normalizeDesignChildren';
 import { genRootFieldId, getRootFieldId, isRootFieldId } from './rootFieldId';
 import { resolveI18nText } from './resolveI18nText';
 import { rulesSettingToRules } from './rulesSettingToRules';
@@ -36,6 +38,8 @@ export {
   isLayoutItem,
   isDragEnd,
   isDesktop,
+  isReactNode,
+  normalizeDesignChildren,
   findDesignValueById,
   deleteDesignValueByIdInChildren,
   findDesignValueByIdToClone,

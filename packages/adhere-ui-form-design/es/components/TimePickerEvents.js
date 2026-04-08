@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,TimePickerEventsSelectStandardDict=Components[genDictComponentName(names.TimePickerEvents,ComponentNames.Select.Standard)];export{TimePickerEventsSelectStandardDict};
+//# sourceMappingURL=TimePickerEvents.js.map

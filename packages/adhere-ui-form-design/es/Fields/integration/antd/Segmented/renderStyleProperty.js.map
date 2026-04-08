@@ -1,0 +1,1 @@
+{"version":3,"file":"renderStyleProperty.js","sources":["Fields/integration/antd/Segmented/renderStyleProperty.js"],"sourcesContent":["export { renderStyleProperty } from '../Select/renderStyleProperty';"],"names":[],"mappings":"0BAAmE,KAA/B"}

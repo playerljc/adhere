@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_adhereUtilIntl=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.CascaderShowCheckedStrategy=void 0,_interopRequireDefault(require("@baifendian/adhere-util-intl"))),CascaderShowCheckedStrategy=exports.CascaderShowCheckedStrategy={handler:function(){return[{label:_adhereUtilIntl.default.get("show_parent"),value:"SHOW_PARENT"},{label:_adhereUtilIntl.default.get("show_child"),value:"SHOW_CHILD"}]}};
+//# sourceMappingURL=CascaderShowCheckedStrategy.js.map

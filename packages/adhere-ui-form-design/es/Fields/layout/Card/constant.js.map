@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/layout/Card/constant.js"],"sourcesContent":["export var TYPE = 'card-layout';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,qBAAPA,IAAoB"}

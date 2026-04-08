@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Button/constant.js"],"sourcesContent":["export var TYPE = 'FormDesignButton';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,0BAAPA,IAAyB"}

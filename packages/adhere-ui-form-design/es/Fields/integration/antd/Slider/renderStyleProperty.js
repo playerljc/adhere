@@ -1,2 +1,2 @@
-import{renderStyleProperty as inputRenderStyleProperty}from"../Input/renderStyleProperty";function renderStyleProperty(r){return inputRenderStyleProperty(r)}export{renderStyleProperty};
+export{renderStyleProperty}from"../Input/renderStyleProperty";
 //# sourceMappingURL=renderStyleProperty.js.map

@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,DateBoundModeSelectStandardDict=Components[genDictComponentName(names.DateBoundMode,ComponentNames.Select.Standard)];export{DateBoundModeSelectStandardDict};
+//# sourceMappingURL=DateBoundMode.js.map

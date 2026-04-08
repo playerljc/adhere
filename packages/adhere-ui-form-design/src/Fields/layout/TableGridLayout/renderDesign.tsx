@@ -6,7 +6,7 @@ import type { TableGridLayoutProps } from '@baifendian/adhere-ui-tablegridlayout
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignValue } from '../../../types';
-import { styleCodeStringToCSSProperties } from '../../../utils';
+import { normalizeDesignChildren, styleCodeStringToCSSProperties } from '../../../utils';
 import { TableGridLayoutContext } from './Context';
 import InternalTableGridLayout from './InternalTableGridLayout';
 
@@ -15,6 +15,10 @@ function TableGridLayoutDesign({ value }: { value: DesignValue }) {
     id,
     props: { children, styleProps, fieldProps, flexProps },
   } = value;
+
+  const normalizedChildren = useMemo<DesignValue[] | undefined>(() => {
+    return normalizeDesignChildren(children, { returnUndefinedIfEmpty: true });
+  }, [children]);
 
   const style = useMemo(
     () => styleCodeStringToCSSProperties(styleProps?.styles ?? ''),
@@ -51,7 +55,7 @@ function TableGridLayoutDesign({ value }: { value: DesignValue }) {
             {...(fieldProps as TableGridLayoutProps)}
             id={id}
             style={style ?? {}}
-            children={children}
+            children={normalizedChildren}
           />
         </TableGridLayoutContext.Provider>
       </DroppableContainer>

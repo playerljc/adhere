@@ -4,8 +4,6 @@ import type { DesignValueProps } from '../../../../types';
 /**
  * FormProperty
  *
- * @description
- *
  * @param {DesignValueProps} props
  */
 export declare function FormProperty({ designValue, renderFormItems, }: {

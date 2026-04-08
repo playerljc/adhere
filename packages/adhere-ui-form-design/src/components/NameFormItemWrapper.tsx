@@ -5,6 +5,7 @@ import { Form, Input } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../Design/Context';
+import type { DesignValue } from '../types';
 
 export default ({
   formItemProps,
@@ -34,7 +35,7 @@ export default ({
             if (!designValue) return;
 
             // 递归查找所有字段的 formItemProps.name
-            const checkDuplicateName = (node: typeof designValue): string | null => {
+            const checkDuplicateName = (node: DesignValue | undefined): string | null => {
               if (!node) return null;
 
               // 跳过当前激活的字段节点（自己）
@@ -51,9 +52,14 @@ export default ({
               // 递归检查子节点
               if (node.props?.children) {
                 for (const child of node.props.children) {
-                  const found = checkDuplicateName(child);
-                  if (found) {
-                    return found;
+                  if (Array.isArray(child)) {
+                    for (const c of child) {
+                      const found = checkDuplicateName(c);
+                      if (found) return found;
+                    }
+                  } else {
+                    const found = checkDuplicateName(child);
+                    if (found) return found;
                   }
                 }
               }

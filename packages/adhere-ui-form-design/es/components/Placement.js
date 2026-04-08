@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,PlacementSelectStandardDict=Components[genDictComponentName(names.Placement,ComponentNames.Select.Standard)];export{PlacementSelectStandardDict};
+//# sourceMappingURL=Placement.js.map

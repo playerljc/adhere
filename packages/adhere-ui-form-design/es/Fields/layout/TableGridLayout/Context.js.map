@@ -1,0 +1,1 @@
+{"version":3,"file":"Context.js","sources":["Fields/layout/TableGridLayout/Context.js"],"sourcesContent":["import { createContext } from 'react';\nexport var TableGridLayoutContext = /*#__PURE__*/createContext({});"],"names":["createContext","TableGridLayoutContext"],"mappings":"OAASA,aAA4B,KAAP,QACvB,IAAIC,uBAAsCD,cAAc,EAAE,SAAtDC,sBAAuD"}

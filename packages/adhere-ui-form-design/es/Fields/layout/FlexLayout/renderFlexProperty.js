@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(r){for(var e,t=1,n=arguments.length;t<n;t++)for(var o in e=arguments[t])Object.prototype.hasOwnProperty.call(e,o)&&(r[o]=e[o]);return r}).apply(this,arguments)};import React from"react";import{FlexProperty}from"../TableGridLayout/renderFlexProperty";function renderFlexProperty(r){return React.createElement(FlexProperty,__assign({},r))}export{renderFlexProperty};
+//# sourceMappingURL=renderFlexProperty.js.map

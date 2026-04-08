@@ -1,4 +1,12 @@
 @import '../../../constant.less';
 
 .@{prefix-cls}-design-toolbox-item-drag-overlay {
+  min-width: 72px;
+  max-width: 112px;
+  cursor: grabbing !important;
+  box-shadow: var(
+    --fd-design-toolbox-drag-overlay-shadow,
+    0 12px 32px rgba(15, 23, 42, 0.1),
+    0 0 0 1px #e4e4e7
+  );
 }

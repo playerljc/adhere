@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["components/TableColumnSettingFormItem/index.js"],"sourcesContent":["export { default } from './TableColumnSettingFormItem';"],"names":[],"mappings":"cAAsD,KAA9B"}

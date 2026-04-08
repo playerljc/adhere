@@ -122,8 +122,15 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
 
           if (_designValue.props.children) {
             for (const item of _designValue.props.children) {
-              const result = find(item, _activeFieldId);
-              if (result) return result;
+              if (Array.isArray(item)) {
+                for (const child of item) {
+                  const result = find(child, _activeFieldId);
+                  if (result) return result;
+                }
+              } else {
+                const result = find(item, _activeFieldId);
+                if (result) return result;
+              }
             }
           }
 

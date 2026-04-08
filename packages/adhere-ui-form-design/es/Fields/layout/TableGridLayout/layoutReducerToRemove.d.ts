@@ -1,4 +1,5 @@
-import type { DesignValue, FieldProps } from '../../../types';
+import type { DesignValue } from '../../../types';
 export declare function layoutReducerToRemove(state: DesignValue, action: {
-    id: string;
-}): FieldProps;
+    sourceDesignValue: DesignValue;
+    targetId: string;
+}): DesignValue[];

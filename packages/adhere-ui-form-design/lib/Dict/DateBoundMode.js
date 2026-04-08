@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_adhereUtilIntl=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.DateBoundMode=void 0,_interopRequireDefault(require("@baifendian/adhere-util-intl"))),DateBoundMode=exports.DateBoundMode={handler:function(){return[{label:_adhereUtilIntl.default.get("none"),value:""},{label:"before",value:"before"},{label:"after",value:"after"}]}};
+//# sourceMappingURL=DateBoundMode.js.map

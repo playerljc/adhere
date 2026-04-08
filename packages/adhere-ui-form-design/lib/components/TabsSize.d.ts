@@ -1,0 +1,1 @@
+export declare const TabsSizeSelectStandardDict: import("react").ForwardRefExoticComponent<Omit<any, "ref"> & import("react").RefAttributes<import("@baifendian/adhere-ui-fieldgeneratortodict/es/types").DictRefreshWrapperFunction>>;

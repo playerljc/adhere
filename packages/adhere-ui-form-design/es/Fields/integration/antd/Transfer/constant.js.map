@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Transfer/constant.js"],"sourcesContent":["export var TYPE = 'antd-transfer';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,uBAAPA,IAAsB"}

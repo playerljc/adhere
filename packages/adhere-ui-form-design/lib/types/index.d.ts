@@ -10,3 +10,4 @@ export * from './types';
 export * from './Properties';
 export * from './Components';
 export * from './Actions';
+export * from './Flex';

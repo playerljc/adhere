@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["components/TabsTabSettingFormItem/index.js"],"sourcesContent":["export { default as TabsTabSettingFormItem } from './TabsTabSettingFormItem';"],"names":[],"mappings":"wCAA4E,KAA1B"}

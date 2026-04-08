@@ -1,29 +1,27 @@
-@import '../../constant';
-@import './ModeChange';
-@import './Actions';
+@import '../../constant.less';
 
 .@{prefix-cls}-design-editor {
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-height: 0;
+  background: var(--fd-design-editor-bg, #ffffff);
 
   > .@{prefix-cls}-design-editor-header {
     display: flex;
     flex-shrink: 0;
     align-items: center;
     justify-content: space-between;
-
-    > .@{prefix-cls}-design-editor-mode {
-    }
-
-    > .@{prefix-cls}-design-editor-actions {
-    }
+    padding: var(--fd-design-editor-header-padding, 8px 12px);
+    background: var(--fd-design-editor-header-bg, #ffffff);
+    border-bottom: 1px solid var(--fd-design-editor-header-border, #e4e4e7);
   }
 
   .@{prefix-cls}-design-editor-body {
     display: flex;
     flex: 1;
     min-height: 0;
+    padding: var(--fd-design-editor-body-padding, 12px);
 
     .@{prefix-cls}-design-editor-form {
       width: 100%;

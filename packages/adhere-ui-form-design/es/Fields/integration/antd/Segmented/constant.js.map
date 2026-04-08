@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Segmented/constant.js"],"sourcesContent":["export var TYPE = 'antd-segmented';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,wBAAPA,IAAuB"}

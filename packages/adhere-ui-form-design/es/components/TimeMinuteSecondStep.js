@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,TimeMinuteSecondStepSelectStandardDict=Components[genDictComponentName(names.TimeMinuteSecondStep,ComponentNames.Select.Standard)];export{TimeMinuteSecondStepSelectStandardDict};
+//# sourceMappingURL=TimeMinuteSecondStep.js.map

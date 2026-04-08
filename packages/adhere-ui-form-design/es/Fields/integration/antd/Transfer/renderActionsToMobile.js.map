@@ -1,0 +1,1 @@
+{"version":3,"file":"renderActionsToMobile.js","sources":["Fields/integration/antd/Transfer/renderActionsToMobile.js"],"sourcesContent":["export { renderActions as renderActionsToMobile } from '../Input/renderActions';"],"names":[],"mappings":"6CAA+E,KAAxB"}

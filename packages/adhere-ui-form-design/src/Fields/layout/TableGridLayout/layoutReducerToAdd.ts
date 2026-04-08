@@ -1,5 +1,5 @@
 import type { DesignValue } from '../../../types';
-import { findDesignValueByIdToClone } from '../../../utils';
+import { findDesignValueByIdToClone, normalizeDesignChildren } from '../../../utils';
 
 /**
  * layoutReducerToAdd
@@ -16,5 +16,5 @@ export function layoutReducerToAdd(
     tableGridLayoutDesignValue.props.children.push(action.sourceDesignValue);
   }
 
-  return [...(tableGridLayoutDesignValue?.props?.children ?? [])];
+  return normalizeDesignChildren(tableGridLayoutDesignValue?.props?.children) ?? [];
 }

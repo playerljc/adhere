@@ -1,0 +1,2 @@
+import React,{useMemo}from"react";import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{StateTable,EditorCellTable as SuperTable}from"./Components";function EditableCellTable(e){var a=e.subClass,t=e.value,e=e.onChange,r=useMemo(function(){return StateTable(a)},[a]);return React.createElement(r,{FieldGeneratorToDict:FieldGeneratorToDict,isShowExpandSearch:!0,autoFixed:!0,fixedHeaderAutoTable:!0,fixedTableSpaceBetween:!0,value:t,onChange:e})}export default EditableCellTable;export{SuperTable};
+//# sourceMappingURL=EditableCellTable.js.map

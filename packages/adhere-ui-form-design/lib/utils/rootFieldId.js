@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_adhereUtil=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.genRootFieldId=genRootFieldId,exports.getRootFieldId=getRootFieldId,exports.isRootFieldId=isRootFieldId,_interopRequireDefault(require("@baifendian/adhere-util"))),rootFieldId="";function genRootFieldId(){return rootFieldId=_adhereUtil.default.uuid()}function getRootFieldId(){return rootFieldId}function isRootFieldId(e){return e===rootFieldId}
+//# sourceMappingURL=rootFieldId.js.map

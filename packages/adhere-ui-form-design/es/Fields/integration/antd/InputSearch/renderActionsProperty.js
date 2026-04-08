@@ -1,2 +1,2 @@
-import{renderActionsProperty as inputRenderActionsProperty}from"../Input/renderActionsProperty";function renderActionsProperty(r){return inputRenderActionsProperty(r)}export{renderActionsProperty};
+export{ActionsProperty,renderActionsProperty}from"../Input/renderActionsProperty";
 //# sourceMappingURL=renderActionsProperty.js.map

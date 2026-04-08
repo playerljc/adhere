@@ -60,6 +60,12 @@ export function renderDesign({
           };
           const options = parseTreeData(treeOptions);
 
+          // antd 的 CascaderProps 在 multiple=true 时会把泛型锁死为 true。
+          // 这里仅在 multiple === true 时传入该属性，避免 boolean 导致类型不匹配。
+          const { multiple, ...restCascaderProps } = restFieldProps as {
+            multiple?: boolean;
+          } & Omit<CascaderProps<any>, 'multiple'>;
+
           const checkedStrategyMap: Record<string, CascaderProps['showCheckedStrategy']> = {
             SHOW_PARENT: Cascader.SHOW_PARENT,
             SHOW_CHILD: Cascader.SHOW_CHILD,
@@ -70,7 +76,8 @@ export function renderDesign({
 
           return (
             <Cascader
-              {...(restFieldProps as CascaderProps)}
+              {...(restCascaderProps as CascaderProps<any>)}
+              {...(multiple === true ? ({ multiple: true } as const) : {})}
               options={options}
               showCheckedStrategy={resolvedStrategy}
               style={style}

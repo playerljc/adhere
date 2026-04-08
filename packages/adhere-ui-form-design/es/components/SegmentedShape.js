@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,SegmentedShapeSelectStandardDict=Components[genDictComponentName(names.SegmentedShape,ComponentNames.Select.Standard)];export{SegmentedShapeSelectStandardDict};
+//# sourceMappingURL=SegmentedShape.js.map

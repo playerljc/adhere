@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_adhereUtilIntl=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.TableNumberGeneratorRule=void 0,_interopRequireDefault(require("@baifendian/adhere-util-intl"))),TableNumberGeneratorRule=exports.TableNumberGeneratorRule={handler:function(){return[{label:_adhereUtilIntl.default.get("separate_mode"),value:"1"},{label:_adhereUtilIntl.default.get("continuous_mode"),value:"2"}]}};
+//# sourceMappingURL=TableNumberGeneratorRule.js.map

@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,ColorPickerTriggerSelectStandardDict=Components[genDictComponentName(names.ColorPickerTrigger,ComponentNames.Select.Standard)];export{ColorPickerTriggerSelectStandardDict};
+//# sourceMappingURL=ColorPickerTrigger.js.map

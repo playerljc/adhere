@@ -1,2 +1,2 @@
-function layoutReducerToRemove(e,o){return{}}export{layoutReducerToRemove};
+import{findDesignValueByIdToClone}from"../../../utils";function layoutReducerToRemove(e,l){var r,e=findDesignValueByIdToClone(l.targetId,e);null!=(r=null==e?void 0:e.props)&&r.children&&e.props.children.slice(e.props.children.indexOf(l.sourceDesignValue),1);for(var o=[],n=0,i=null!=(l=null==(r=null==e?void 0:e.props)?void 0:r.children)?l:[];n<i.length;n++){var u=i[n];Array.isArray(u)?o.push.apply(o,u):o.push(u)}return o}export{layoutReducerToRemove};
 //# sourceMappingURL=layoutReducerToRemove.js.map

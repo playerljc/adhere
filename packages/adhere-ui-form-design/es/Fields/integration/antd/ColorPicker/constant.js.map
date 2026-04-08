@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/ColorPicker/constant.js"],"sourcesContent":["export var TYPE = 'FormDesignColorPicker';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,+BAAPA,IAA8B"}

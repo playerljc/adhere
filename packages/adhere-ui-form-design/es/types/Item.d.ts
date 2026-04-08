@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
-import type { DesignValue, DesignValueProps } from './Design';
-import type { FieldProps, FieldType } from './Field';
+import type { DesignContextType, DesignValue, DesignValueProps } from './Design';
+import type { FieldType } from './Field';
 export interface BaseItem {
     type: FieldType;
 }
@@ -10,10 +10,14 @@ export interface DesignItem extends BaseItem {
         控件的渲染
     ***/
     renderDesign: (props: {
+        parentId?: string;
         value: DesignValue;
+        context: DesignContextType;
     }) => DataItemRow | ReactNode;
     renderDesignToMobile: (props: {
+        parentId?: string;
         value: DesignValue;
+        context: DesignContextType;
     }) => DataItemRow | ReactNode;
     /***
         控件属性的设置
@@ -25,12 +29,15 @@ export interface DesignItem extends BaseItem {
     renderMainProperty: (defaultValue: DesignValueProps) => ReactNode;
     /***--- 控件样式属性 ---***/
     renderStyleProperty: (defaultValue: DesignValueProps) => ReactNode;
-    /***--- 控件的工具菜单，在设计视图中的激活状态下显示，特殊的组件是没有工具栏的，如FlowLayout就没有，所以是可选属性 ---***/
+    /***--- 控件的工具菜单，在设计视图中的激活状态下显示，特殊的组件是没有工具栏的，如FlexLayout就没有，所以是可选属性 ---***/
     renderActions?: (id: string) => ReactNode;
     renderActionsToMobile?: (id: string) => ReactNode;
     /***--- 控件事件属性 ---***/
     hasActionsProperty: boolean;
     renderActionsProperty?: (defaultValue: DesignValueProps) => ReactNode;
+    /***--- 控件Flex属性 ---***/
+    hasFlexProperty: boolean;
+    renderFlexProperty?: (defaultValue: DesignValueProps) => ReactNode;
     /***
       以下是对容器布局reducer进行的处理
      ***/
@@ -38,11 +45,12 @@ export interface DesignItem extends BaseItem {
     layoutReducerToAdd?: (state: DesignValue, action: {
         sourceDesignValue: DesignValue;
         targetId: string;
-    }) => FieldProps;
+    }) => NonNullable<DesignValueProps['children']>;
     /***--- 布局容器删除一个组件 ---***/
     layoutReducerToRemove?: (state: DesignValue, action: {
-        id: string;
-    }) => FieldProps;
+        sourceDesignValue: DesignValue;
+        targetId: string;
+    }) => NonNullable<DesignValueProps['children']>;
     /***
       组件designValue的默认值
      ***/

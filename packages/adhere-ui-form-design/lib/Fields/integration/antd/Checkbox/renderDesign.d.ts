@@ -5,7 +5,7 @@ import type { DesignContextType, DesignValue } from '../../../../types';
  * @see https://ant.design/components/checkbox-cn#api
  */
 export declare function renderDesign({ parentId, value, context, }: {
-    parentId: string;
+    parentId?: string;
     value: DesignValue;
     context: DesignContextType;
 }): DataItemRow;

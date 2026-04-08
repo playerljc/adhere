@@ -1,5 +1,5 @@
 import type { DesignValue } from '../../../types';
-import { findDesignValueByIdToClone } from '../../../utils';
+import { findDesignValueByIdToClone, normalizeDesignChildren } from '../../../utils';
 
 export function layoutReducerToRemove(
   state: DesignValue,
@@ -14,5 +14,5 @@ export function layoutReducerToRemove(
     );
   }
 
-  return [...(designValue?.props?.children ?? [])];
+  return normalizeDesignChildren(designValue?.props?.children) ?? [];
 }

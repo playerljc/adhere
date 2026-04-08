@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,TreeSelectShowCheckedStrategySelectStandardDict=Components[genDictComponentName(names.TreeSelectShowCheckedStrategy,ComponentNames.Select.Standard)];export{TreeSelectShowCheckedStrategySelectStandardDict};
+//# sourceMappingURL=TreeSelectShowCheckedStrategy.js.map

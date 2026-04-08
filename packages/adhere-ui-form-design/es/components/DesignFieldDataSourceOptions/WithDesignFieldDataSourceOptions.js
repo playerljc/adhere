@@ -1,0 +1,2 @@
+import React from"react";import{useDesignFieldDataSourceOptions}from"../../utils/useDesignFieldDataSourceOptions";function WithDesignFieldDataSourceOptions(e){var i=e.fieldProps,t=e.designOptionsKey,e=e.children,i=useDesignFieldDataSourceOptions(i,void 0===t?"selectOptions":t),t=i.source;return React.createElement(React.Fragment,null,e({source:t,options:i.options,loading:i.loading,restFieldProps:i.restFieldProps}))}export{WithDesignFieldDataSourceOptions};
+//# sourceMappingURL=WithDesignFieldDataSourceOptions.js.map

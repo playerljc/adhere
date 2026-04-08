@@ -1,0 +1,1 @@
+{"version":3,"file":"renderActionsProperty.js","sources":["Fields/integration/antd/SubmitButton/renderActionsProperty.js"],"sourcesContent":["export { renderActionsProperty } from '../Button/renderActionsProperty';"],"names":[],"mappings":"4BAAuE,KAAjC"}

@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,DatePickerEventsSelectStandardDict=Components[genDictComponentName(names.DatePickerEvents,ComponentNames.Select.Standard)];export{DatePickerEventsSelectStandardDict};
+//# sourceMappingURL=DatePickerEvents.js.map

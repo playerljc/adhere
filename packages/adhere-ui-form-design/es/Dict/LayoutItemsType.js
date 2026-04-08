@@ -1,2 +1,2 @@
-import{TYPE as FlowLayoutType}from"../Fields/layout/FlowLayout/constant";import{TYPE as TableGridLayoutType}from"../Fields/layout/TableGridLayout/constant";var LayoutItemsType={handler:function(){return[FlowLayoutType,TableGridLayoutType]}};export{LayoutItemsType};
+import{TYPE as CardLayoutType}from"../Fields/layout/Card/constant";import{TYPE as FlexLayoutType}from"../Fields/layout/FlexLayout/constant";import{TYPE as TableGridLayoutType}from"../Fields/layout/TableGridLayout/constant";import{TYPE as TabsLayoutType}from"../Fields/layout/Tabs/constant";var LayoutItemsType={handler:function(){return[FlexLayoutType,TableGridLayoutType,CardLayoutType,TabsLayoutType]}};export{LayoutItemsType};
 //# sourceMappingURL=LayoutItemsType.js.map

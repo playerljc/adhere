@@ -1,1 +1,0 @@
-{"version":3,"file":"layoutReducerToRemove.js","sources":["Fields/layout/FlowLayout/layoutReducerToRemove.js"],"sourcesContent":["export function layoutReducerToRemove(state, action) {\n  return {};\n}"],"names":["layoutReducerToRemove","state","action"],"mappings":"AAAO,SAASA,sBAAsBC,EAAOC,GAC3C,MAAO,EACT,QAFgBF,qBAEhB"}
