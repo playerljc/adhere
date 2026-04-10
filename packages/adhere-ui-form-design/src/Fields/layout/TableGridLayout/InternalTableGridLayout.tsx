@@ -32,8 +32,6 @@ const InternalTableGridLayout: FC<InternalTableGridLayoutProps> = ({ children, i
     return tableGridLayoutProps;
   }, [children, props]);
 
-  console.log('targetProps===', targetProps);
-
   return <TableGridLayout {...targetProps} />;
 };
 

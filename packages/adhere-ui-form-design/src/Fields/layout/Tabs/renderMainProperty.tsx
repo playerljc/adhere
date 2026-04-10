@@ -17,6 +17,59 @@ import PropertiesGridLayout, { Label, Value } from '../../../components/TableGri
 import type { DesignValueProps } from '../../../types';
 import type { InternalTabsLayoutProps } from './InternalTabs';
 
+type TabItemLike = { id?: string; key?: string };
+
+function tabKeys(items: TabItemLike[] | undefined): string[] {
+  return (items ?? []).map((t) => String(t.key ?? '').trim()).filter(Boolean);
+}
+
+function tabItemsSignature(items: TabItemLike[] | undefined): string {
+  return JSON.stringify((items ?? []).map((t) => [t.id, String(t.key ?? '').trim()]));
+}
+
+/**
+ * tabItems 增删改 key 后，校正 defaultActiveKey（对齐 antd 可编辑 Tabs：删当前项时选中同下标或最后一项的前一项；仅新增一项时选中新 key）
+ */
+function resolveTabsDefaultActiveKey(
+  prevItems: TabItemLike[],
+  nextItems: TabItemLike[],
+  prevDefault: string | undefined,
+  formDefault: string | undefined,
+): string | undefined {
+  const nextKeys = tabKeys(nextItems);
+  if (!nextKeys.length) return undefined;
+
+  const fromForm =
+    formDefault != null && String(formDefault).length ? String(formDefault) : undefined;
+  if (fromForm && nextKeys.includes(fromForm)) {
+    return fromForm;
+  }
+
+  const prevDefaultStr =
+    prevDefault != null && String(prevDefault).length ? String(prevDefault) : undefined;
+  if (prevDefaultStr && nextKeys.includes(prevDefaultStr)) {
+    return prevDefaultStr;
+  }
+
+  const oldKeys = tabKeys(prevItems);
+
+  if (nextKeys.length > oldKeys.length) {
+    const added = nextKeys.filter((k) => !oldKeys.includes(k));
+    if (added.length === 1) {
+      return added[0];
+    }
+  }
+
+  const removed = oldKeys.filter((k) => !nextKeys.includes(k));
+  if (removed.length >= 1 && prevDefaultStr && removed.includes(prevDefaultStr)) {
+    const oldIndex = oldKeys.indexOf(prevDefaultStr);
+    const newIndex = Math.min(Math.max(oldIndex, 0), nextKeys.length - 1);
+    return nextKeys[newIndex];
+  }
+
+  return nextKeys[0];
+}
+
 /**
  * MainProperty
  * @param {DesignValueProps} props
@@ -25,7 +78,8 @@ function MainProperty(props: DesignValueProps) {
   const [form] = Form.useForm();
   const tabItemsWatch = Form.useWatch('tabItems', form);
 
-  const { getActiveFieldId, setFieldProps } = useContext(DesignContext);
+  const { getActiveFieldId, setFieldProps, deleteFieldByChildren, addChildrenById } =
+    useContext(DesignContext);
 
   const { fieldProps } = props;
   const tabsProps = fieldProps as InternalTabsLayoutProps;
@@ -46,8 +100,26 @@ function MainProperty(props: DesignValueProps) {
 
   function onFieldsChange() {
     const values = form.getFieldsValue();
+    const next = merge({}, fieldProps, values);
+    const prevItems = ((fieldProps as InternalTabsLayoutProps).tabItems ?? []) as TabItemLike[];
+    // lodash.merge 会按索引合并数组，删除 tabItems 时短数组无法“删掉”长数组尾部项，需整段替换
+    if (values.tabItems !== undefined) {
+      next.tabItems = values.tabItems;
+    }
 
-    setFieldProps(getActiveFieldId() as string, merge({}, fieldProps, values));
+    const nextItems = ((next as InternalTabsLayoutProps).tabItems ?? []) as TabItemLike[];
+    const tabItemsChanged = tabItemsSignature(prevItems) !== tabItemsSignature(nextItems);
+    if (tabItemsChanged) {
+      const prevDefault = (fieldProps as InternalTabsLayoutProps).defaultActiveKey;
+      const formDefault = values.defaultActiveKey as string | undefined;
+      const resolved = resolveTabsDefaultActiveKey(prevItems, nextItems, prevDefault, formDefault);
+      (next as InternalTabsLayoutProps).defaultActiveKey = resolved;
+      if (resolved !== formDefault) {
+        form.setFieldsValue({ defaultActiveKey: resolved });
+      }
+    }
+
+    setFieldProps(getActiveFieldId() as string, next);
   }
 
   useEffect(() => {

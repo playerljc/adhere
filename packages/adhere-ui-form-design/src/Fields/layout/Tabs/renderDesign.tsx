@@ -25,6 +25,8 @@ function TabsLayoutDesign({ value }: { value: DesignValue }) {
     props: { children, styleProps, fieldProps, flexProps, actionsProps },
   } = value;
 
+  console.log('fieldProps======', fieldProps);
+
   const designContext = useContext(DesignContext);
   const { intl } = useContext(ConfigProvider.Context);
   const lang = intl?.lang ?? 'zh_CN';
@@ -105,8 +107,6 @@ function TabsLayoutDesign({ value }: { value: DesignValue }) {
     designContext,
   });
 
-  console.log('actions===', actions);
-
   return (
     <DesignFieldWrapper
       id={id}
@@ -128,6 +128,17 @@ function TabsLayoutDesign({ value }: { value: DesignValue }) {
           id={id}
           styleProps={styleProps ?? {}}
           items={items}
+          onChange={(key) => {
+            if (actions?.onChange) {
+              actions.onChange.call(designContext, key);
+            }
+
+            // 在这块动态修改 defaultActiveKey
+            designContext.setFieldProps(id, {
+              ...fieldProps,
+              defaultActiveKey: key,
+            });
+          }}
         />
       </DroppableContainer>
     </DesignFieldWrapper>

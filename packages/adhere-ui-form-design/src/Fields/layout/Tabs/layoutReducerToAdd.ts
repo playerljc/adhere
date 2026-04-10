@@ -40,5 +40,7 @@ export function layoutReducerToAdd(
   }
   (children[insertIndex] as DesignValue[]).push(action.sourceDesignValue);
 
+  console.log('children===', children);
+
   return [...children];
 }

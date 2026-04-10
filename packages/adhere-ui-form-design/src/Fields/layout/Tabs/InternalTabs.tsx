@@ -14,26 +14,18 @@ import { parseDesign } from '../../parse';
 
 export type { TabsTabSettingItem };
 
-export interface InternalTabsLayoutProps {
+export type InternalTabsLayoutProps = TabsProps & {
   id?: string;
   className?: string;
   style?: CSSProperties;
+  styleProps?: StyleProps;
   children?: DesignValue[];
   /** 标签页配置，与 children 按下标一一对应 */
   tabItems?: TabsTabSettingItem[];
   /** 已构建好的 antd Tabs items（优先级高于 children + tabItems） */
-  items?: TabsProps['items'];
-  type?: TabsProps['type'];
-  size?: TabsProps['size'];
-  tabPlacement?: TabsProps['tabPlacement'];
   centered?: boolean;
   defaultActiveKey?: string;
-  destroyOnHidden?: TabsProps['destroyOnHidden'];
-  tabBarGutter?: TabsProps['tabBarGutter'];
-  hideAdd?: TabsProps['hideAdd'];
-  animated?: TabsProps['animated'];
-  styleProps?: StyleProps;
-}
+};
 
 const selectorPrefix = 'adhere-ui-fd-tabs-layout';
 
