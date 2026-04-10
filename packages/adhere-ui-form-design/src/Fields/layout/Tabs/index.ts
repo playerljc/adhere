@@ -5,6 +5,7 @@ import { TYPE } from './constant';
 import { layoutReducerToAdd } from './layoutReducerToAdd';
 import { layoutReducerToRemove } from './layoutReducerToRemove';
 import { renderActions } from './renderActions';
+import { renderActionsProperty } from './renderActionsProperty';
 import { renderActionsToMobile } from './renderActionsToMobile';
 import { renderDesign } from './renderDesign';
 import { renderDesignToMobile } from './renderDesignToMobile';
@@ -63,8 +64,9 @@ export function define(): DesignItem {
     renderMainProperty,
     renderStyleProperty,
     renderFlexProperty,
+    renderActionsProperty,
     hasFormProperty: false,
-    hasActionsProperty: false,
+    hasActionsProperty: true,
     hasFlexProperty: true,
     layoutReducerToAdd,
     layoutReducerToRemove,

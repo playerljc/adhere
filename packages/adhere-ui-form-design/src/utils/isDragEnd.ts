@@ -1,6 +1,5 @@
 import { TYPE as TableGridLayoutType } from '../Fields/layout/TableGridLayout/constant';
 import { isLayoutItem } from './isLayoutItem';
-import { isRootFieldId } from './rootFieldId';
 
 /**
  * isDragEnd
@@ -17,7 +16,7 @@ export function isDragEnd({
   overId: string;
   activeType: string;
   overType: string;
-}) {
+}): boolean {
   // active是普通控件 over是TableGridLayoutType布局
   if (!isLayoutItem(activeType) && isLayoutItem(overType) && overType === TableGridLayoutType) {
     return true;

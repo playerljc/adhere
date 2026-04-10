@@ -1,16 +1,17 @@
-import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import { useContext, useEffect, useMemo, useState } from 'react';
+
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import { DesignContext } from '../Design/Context';
 import type { DataSourceManagerFormItemValue } from '../components/DataSourceManagerFormItem';
 import type { FieldProps } from '../types';
 import {
+  type DesignFieldDataSourceOption,
   fetchDataSourceItemConfigAsOptions,
   findDataSourceItemConfigByDynamicId,
   omitFieldPropsDesignKey,
   parseDataSourceManagerValueFromFieldProps,
   staticDataSourceToDesignOptions,
-  type DesignFieldDataSourceOption,
 } from './dataSourceOptions';
 
 export type UseDesignFieldDataSourceOptionsResult = {
@@ -25,6 +26,7 @@ export type UseDesignFieldDataSourceOptionsResult = {
 
 /**
  * 设计器内：根据 fieldProps 上的数据源配置（静态 / 动态）得到 options 与 loading
+ * @param fieldProps
  * @param designOptionsKey 如 selectOptions、后续 radioOptions 等
  */
 export function useDesignFieldDataSourceOptions(

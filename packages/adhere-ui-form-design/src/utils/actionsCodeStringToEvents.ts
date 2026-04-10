@@ -23,23 +23,6 @@ export function actionsCodeStringToEvents({
 
     if (!code) return;
 
-    let fn: any;
-
-    try {
-      fn = new Function(`return (${code})`)();
-    } catch {}
-
-    if (typeof fn === 'function') {
-      const handler = fn;
-
-      events[type] = (...args: any[]) => {
-        try {
-          return handler(...args);
-        } catch {}
-      };
-      return;
-    }
-
     try {
       const handler = new Function(
         'event',

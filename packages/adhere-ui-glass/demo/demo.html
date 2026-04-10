@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS八个渐变模拟边框示例</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 50px;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            background-color: #0D102D;
+            background-image:
+                    /* 先尝试加载静态背景图（某些本地预览路由下相对路径会 404） */
+                    url("/@packages/adhere-ui-glass/test/b.png"),
+                    radial-gradient(900px 600px at 20% 15%, rgba(110, 140, 255, 0.35), transparent 60%),
+                    radial-gradient(700px 500px at 85% 35%, rgba(255, 120, 170, 0.22), transparent 55%),
+                    radial-gradient(800px 700px at 50% 90%, rgba(80, 255, 215, 0.16), transparent 60%),
+                    linear-gradient(180deg, #0d102d 0%, #0b0e24 100%);
+            background-repeat: no-repeat;
+            background-size: cover, cover, cover, cover, cover;
+        }
+
+        .border-box-wrapper {
+            /* 可配置变量 */
+            --box-width: 200px;
+            --box-height: 200px;
+            --border-width: 2px;
+            --border-radius: 15px;
+
+            /* 渐变百分比变量 */
+            --gradient-position-start: 0%;
+            --gradient-position-primary: 20%;
+            --gradient-position-secondary: 80%;
+            --gradient-position-end: 100%;
+
+            /* 渐变颜色变量 */
+            --gradient-color-strong: rgba(255, 255, 255, 0.6);
+            --gradient-color-medium: rgba(255, 255, 255, 0.7);
+            --gradient-color-light: rgba(255, 255, 255, 0.1);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: var(--box-width);
+            height: var(--box-height);
+            border-radius: var(--border-radius);
+        }
+
+        .border-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: calc(var(--box-width) - var(--border-width) * 2);
+            height: calc(var(--box-height) - var(--border-width) * 2);
+            border-radius: var(--border-radius);
+        }
+
+        .border-box::before {
+            content: '';
+            position: absolute;
+            top: calc(-1 * var(--border-width));
+            left: calc(-1 * var(--border-width));
+            right: calc(-1 * var(--border-width));
+            bottom: calc(-1 * var(--border-width));
+            border-radius: calc(var(--border-radius) + var(--border-width));
+            z-index: -1;
+
+            /* 八个渐变模拟边框 */
+            background-image:
+                /* 左上角 */
+                radial-gradient(circle at 100% 100%, transparent calc(var(--border-radius) + var(--border-width) - var(--border-width)), var(--gradient-color-strong) calc(var(--border-radius) + var(--border-width) - var(--border-width)), var(--gradient-color-strong) calc(var(--border-radius) + var(--border-width)), transparent calc(var(--border-radius) + var(--border-width))),
+                /* 右上角 */
+                radial-gradient(circle at 0% 100%, transparent calc(var(--border-radius) + var(--border-width) - var(--border-width)),  var(--gradient-color-light) calc(var(--border-radius) + var(--border-width) - var(--border-width)), var(--gradient-color-light) calc(var(--border-radius) + var(--border-width)), transparent calc(var(--border-radius) + var(--border-width))),
+                /* 右下角 */
+                radial-gradient(circle at 0% 0%, transparent calc(var(--border-radius) + var(--border-width) - var(--border-width)), var(--gradient-color-strong) calc(var(--border-radius) + var(--border-width) - var(--border-width)), var(--gradient-color-strong) calc(var(--border-radius) + var(--border-width)), transparent calc(var(--border-radius) + var(--border-width))),
+                /* 左下角 */
+                radial-gradient(circle at 100% 0%, transparent calc(var(--border-radius) + var(--border-width) - var(--border-width)),  var(--gradient-color-light) calc(var(--border-radius) + var(--border-width) - var(--border-width)), var(--gradient-color-light) calc(var(--border-radius) + var(--border-width)), transparent calc(var(--border-radius) + var(--border-width))),
+
+                /* 上中 */
+                linear-gradient(to right, var(--gradient-color-medium) var(--gradient-position-secondary), var(--gradient-color-light) var(--gradient-position-end)),
+                /* 右中 */
+                linear-gradient(to bottom, var(--gradient-color-light) var(--gradient-position-start), var(--gradient-color-medium) var(--gradient-position-primary)),
+                /* 下中 */
+                linear-gradient(to right, var(--gradient-color-light) var(--gradient-position-start), var(--gradient-color-medium) var(--gradient-position-primary)),
+                /* 左中 */
+                linear-gradient(to bottom, var(--gradient-color-medium) var(--gradient-position-secondary), var(--gradient-color-light) var(--gradient-position-end));
+
+            /* 设置每个渐变的大小 */
+            background-size:
+                calc(var(--border-radius) + var(--border-width)) calc(var(--border-radius) + var(--border-width)),      /* 左上角 */
+                calc(var(--border-radius) + var(--border-width)) calc(var(--border-radius) + var(--border-width)),      /* 右上角 */
+                calc(var(--border-radius) + var(--border-width)) calc(var(--border-radius) + var(--border-width)),      /* 右下角 */
+                calc(var(--border-radius) + var(--border-width)) calc(var(--border-radius) + var(--border-width)),      /* 左下角 */
+
+                calc(100% - 2 * (var(--border-radius) + var(--border-width))) var(--border-width),  /* 上中 */
+                var(--border-width) calc(100% - 2 * (var(--border-radius) + var(--border-width))),  /* 右中 */
+                calc(100% - 2 * (var(--border-radius) + var(--border-width))) var(--border-width),  /* 下中 */
+                var(--border-width) calc(100% - 2 * (var(--border-radius) + var(--border-width)));  /* 左中 */
+
+            /* 设置每个渐变的位置 */
+            background-position:
+                0% 0%,          /* 左上角 */
+                100% 0%,        /* 右上角 */
+                100% 100%,      /* 右下角 */
+                0% 100%,        /* 左下角 */
+
+                calc(var(--border-radius) + var(--border-width)) 0%,        /* 上中 */
+                100% calc(var(--border-radius) + var(--border-width)),      /* 右中 */
+                calc(var(--border-radius) + var(--border-width)) 100%,      /* 下中 */
+                0% calc(var(--border-radius) + var(--border-width));        /* 左中 */
+
+            background-repeat: no-repeat;
+        }
+
+        .border-box-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+
+
+    </style>
+</head>
+<body>
+        <div class="border-box-wrapper">
+            <div class="border-box">
+                <div class="border-box-inner">
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-box-wrapper">
+            <div class="border-box">
+                <div class="border-box-inner">
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                    <p>111</p>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

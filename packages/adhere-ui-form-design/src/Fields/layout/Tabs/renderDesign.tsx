@@ -8,7 +8,12 @@ import { DesignContext } from '../../../Design/Context';
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignValue } from '../../../types';
-import { isReactNode, isRootFieldId, resolveI18nText } from '../../../utils';
+import {
+  actionsCodeStringToEvents,
+  isReactNode,
+  isRootFieldId,
+  resolveI18nText,
+} from '../../../utils';
 import { parseDesign } from '../../parse';
 import InternalTabs, { type InternalTabsLayoutProps } from './InternalTabs';
 
@@ -17,7 +22,7 @@ const selectorPrefix = 'adhere-ui-fd-tabs-layout';
 function TabsLayoutDesign({ value }: { value: DesignValue }) {
   const {
     id,
-    props: { children, styleProps, fieldProps, flexProps },
+    props: { children, styleProps, fieldProps, flexProps, actionsProps },
   } = value;
 
   const designContext = useContext(DesignContext);
@@ -95,6 +100,13 @@ function TabsLayoutDesign({ value }: { value: DesignValue }) {
     };
   }, [flexProps, id]);
 
+  const actions = actionsCodeStringToEvents({
+    actions: actionsProps?.actions ?? [],
+    designContext,
+  });
+
+  console.log('actions===', actions);
+
   return (
     <DesignFieldWrapper
       id={id}
@@ -112,6 +124,7 @@ function TabsLayoutDesign({ value }: { value: DesignValue }) {
       >
         <InternalTabs
           {...(fieldProps as InternalTabsLayoutProps)}
+          {...actions}
           id={id}
           styleProps={styleProps ?? {}}
           items={items}

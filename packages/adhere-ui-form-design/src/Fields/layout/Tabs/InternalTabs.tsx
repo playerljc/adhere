@@ -1,16 +1,16 @@
+import type { TabsProps } from 'antd';
 import classNames from 'classnames';
-import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import React, { useContext, useMemo } from 'react';
 import type { CSSProperties, FC, ReactNode } from 'react';
 
 import { Tabs } from '@baifendian/adhere-ui-anthoc';
-import type { TabsProps } from 'antd';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import { DesignContext } from '../../../Design/Context';
+import type { TabsTabSettingItem } from '../../../components/TabsTabSettingFormItem';
 import type { DesignValue, I18nValue, StyleProps } from '../../../types';
 import { resolveI18nText, styleCodeStringToCSSProperties } from '../../../utils';
 import { parseDesign } from '../../parse';
-import type { TabsTabSettingItem } from '../../../components/TabsTabSettingFormItem';
 
 export type { TabsTabSettingItem };
 
@@ -57,6 +57,7 @@ const InternalTabs: FC<InternalTabsLayoutProps> = ({
   hideAdd,
   animated,
   styleProps,
+  ...rest
 }) => {
   const context = useContext(DesignContext);
   const { intl } = useContext(ConfigProvider.Context);
@@ -116,6 +117,7 @@ const InternalTabs: FC<InternalTabsLayoutProps> = ({
         header: headerStyle,
         content: bodyStyle,
       },
+      ...rest,
     };
   }, [
     centered,
@@ -135,6 +137,7 @@ const InternalTabs: FC<InternalTabsLayoutProps> = ({
     tabItems,
     tabPlacement,
     type,
+    rest,
   ]);
 
   return <Tabs {...targetProps} />;
