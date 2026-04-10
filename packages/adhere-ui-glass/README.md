@@ -1,23 +1,21 @@
-# Glass 玻璃的面板
+# Glass 玻璃效果面板
 
-玻璃的面板
+基于多层渐变边框与 `backdrop-filter` 的毛玻璃容器，支持四角亮/暗独立配置、边框色与透明度拆分、圆角与边框宽度可调。
 
-## ✨ 特性
+## 特性
 
-- 支持 React 18.x
-- 支持国际化
-- 支持修改主题
-- 支持动态引入 (babel-plugin-import)
-- 支持 ref 转发
-- 完整的 TypeScript 类型支持
-- 提供 Ratio 组件实现响应式宽高比布局
+- React 18+ / 19（`peerDependencies`：`react`、`react-dom` ≥18 且 &lt;20）
+- TypeScript 类型完整，并导出 `GlassProps` 及相关类型
+- 边框由 4 个角向心渐变 + 4 条边线性渐变拼成，亮暗由 `corners` 驱动
+- `borderColor` 支持任意合法 CSS 颜色；透明度通过 `strongColorAlpha` / `mediumColorAlpha` / `lightColorAlpha` 控制（内部使用 `color-mix`）
+- 根节点、遮罩层、内层可分别传入 `className` / `style`
 
-## 🖥 兼容环境
+## 兼容环境
 
-- 现代浏览器
-- IE11
+- **建议**：支持 [CSS `color-mix`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/color_value/color-mix) 的现代浏览器（如 Chrome 111+、Safari 16.2+、Firefox 113+）
+- **效果依赖**：`backdrop-filter`（毛玻璃）
 
-## 📦 安装
+## 安装
 
 ```bash
 npm install @baifendian/adhere-ui-glass --save
@@ -27,283 +25,164 @@ npm install @baifendian/adhere-ui-glass --save
 yarn add @baifendian/adhere-ui-glass
 ```
 
-## 🔨 使用
+## 引入样式
+
+样式与类名在 `index.less` 中定义，构建后随包提供 `es/index.less` / `lib/index.less`，请在工程中引入其一，例如：
+
+```tsx
+import '@baifendian/adhere-ui-glass/es/index.less';
+```
+
+## 使用
+
+### 默认导出
+
+包**仅默认导出** `Glass` 组件（无 `ContourBlock`、`Ratio` 等子导出）。
+
+```tsx
+import Glass from '@baifendian/adhere-ui-glass';
+import '@baifendian/adhere-ui-glass/es/index.less';
+```
 
 ### 基础用法
 
-```tsx
-import ContourBlock from '@baifendian/adhere-ui-glass';
-
-function App() {
-  return (
-    <ContourBlock>
-      <p>这是轮廓块内的内容</p>
-    </ContourBlock>
-  );
-}
-```
-
-### 自定义样式
+根节点需要明确尺寸（如 `width` / `height`），否则内部按百分比计算时可能无法撑开。
 
 ```tsx
-import ContourBlock from '@baifendian/adhere-ui-glass';
-
-function App() {
-  return (
-    <ContourBlock 
-      className="custom-contour-block"
-      style={{ 
-        padding: '20px',
-        backgroundColor: '#f5f5f5'
-      }}
-    >
-      <p>自定义样式的轮廓块</p>
-    </ContourBlock>
-  );
-}
+<Glass style={{ width: 320, height: 200 }}>
+  <p>内容</p>
+</Glass>
 ```
 
-### 使用 ref
+### 边框颜色与透明度
+
+- **`borderColor`**：任意合法 CSS 颜色（`#fff`、`rgb()`、`hsl()`、颜色关键字、`lab()`、`var(--token)` 等）
+- 未传时默认 `#fff`
+- **`strongColorAlpha` / `mediumColorAlpha` / `lightColorAlpha`**：0～1，分别对应「亮角/强区」「边亮端」「暗角/暗区」的不透明度，默认依次为 `0.6`、`0.7`、`0.1`
 
 ```tsx
-import React, { useRef } from 'react';
-import ContourBlock from '@baifendian/adhere-ui-glass';
-
-function App() {
-  const contourRef = useRef<HTMLDivElement>(null);
-
-  return (
-    <ContourBlock ref={contourRef}>
-      <p>可以通过 ref 访问 DOM 元素</p>
-    </ContourBlock>
-  );
-}
+<Glass
+  style={{ width: 300, height: 180 }}
+  borderColor="dodgerblue"
+  strongColorAlpha={0.55}
+  mediumColorAlpha={0.65}
+  lightColorAlpha={0.12}
+>
+  内容
+</Glass>
 ```
 
-## Ratio 组件
+### 四角亮暗（`corners`）
 
-Ratio 组件用于创建固定宽高比的容器，可以根据容器的宽度自动计算高度，或根据高度自动计算宽度。
+每个角可为 `light` 或 `dark`：
 
-### 基础用法
+- **`light`**：使用 `borderColor` + `strongColorAlpha`
+- **`dark`**：使用 `borderColor` + `lightColorAlpha`
+- 边的渐变由相邻两角共同决定（同亮/同暗则整条边同色；一亮一暗则按参考示例的 stop 过渡）
+
+未传 `corners` 时的默认分布与常见「对角亮、对角暗」一致：
+
+- `leftTop` / `rightBottom`：`light`
+- `rightTop` / `leftBottom`：`dark`
 
 ```tsx
-import ContourBlock from '@baifendian/adhere-ui-glass';
-
-function App() {
-  return (
-    // 根据宽度计算高度，保持 16:9 的宽高比
-    // origin 默认为 'width'，可以省略
-    <ContourBlock.Ratio 
-      aspectRatio="16:9"
-      style={{ width: '100%' }}
-    >
-      <div>视频内容</div>
-    </ContourBlock.Ratio>
-  );
-}
+<Glass
+  style={{ width: 300, height: 180 }}
+  corners={{
+    leftTop: 'light',
+    rightTop: 'dark',
+    rightBottom: 'light',
+    leftBottom: 'dark',
+  }}
+>
+  内容
+</Glass>
 ```
 
-### 独立导入
+### 圆角与边框宽度
 
 ```tsx
-import { Ratio } from '@baifendian/adhere-ui-glass';
-
-function App() {
-  return (
-    // origin 默认为 'width'
-    <Ratio 
-      aspectRatio="16:9"
-      style={{ width: '100%' }}
-    >
-      <div>视频内容</div>
-    </Ratio>
-  );
-}
+<Glass borderWidth={3} borderRadius={20} style={{ width: 280, height: 160 }}>
+  内容
+</Glass>
 ```
 
-### 根据高度计算宽度
+传数字时按 **px** 写入 CSS 变量。
+
+### 分层样式
+
+| 属性 | 作用节点 |
+| --- | --- |
+| `className` / `style` | 最外层 `.adhere-ui-glass` |
+| `boxClassName` / `boxStyle` | `.adhere-ui-glass-mask` |
+| `boxInnerClassName` / `boxInnerStyle` | `.adhere-ui-glass-inner` |
+
+### `autoHeight`
+
+- 默认 `true`：内层会带 `adhere-ui-glass-inner-auto-height`，`overflow` 为 `inherit`，便于高度随内容增长
+- `false`：内层 `overflow: auto`，适合固定高度区域内滚动
 
 ```tsx
-import ContourBlock from '@baifendian/adhere-ui-glass';
-
-function App() {
-  return (
-    // 根据高度计算宽度，保持 4:3 的宽高比
-    <ContourBlock.Ratio 
-      aspectRatio="4:3" 
-      origin="height"
-      style={{ height: '400px' }}
-    >
-      <img src="image.jpg" alt="图片" />
-    </ContourBlock.Ratio>
-  );
-}
+<Glass autoHeight={false} style={{ width: 200, height: 200 }}>
+  {/* 长内容可滚动 */}
+</Glass>
 ```
 
-### 使用数字格式的宽高比
+### 其余 DOM 属性
 
-```tsx
-import ContourBlock from '@baifendian/adhere-ui-glass';
+除上述业务属性外，其余 props 会透传到最外层 `div`（与原生 `div` 一致，如 `id`、`data-*`、`onClick` 等）。
 
-function App() {
-  return (
-    // 使用数字格式（16/9 = 1.777...），origin 省略时默认为 'width'
-    <ContourBlock.Ratio 
-      aspectRatio={16/9}
-      style={{ width: '800px' }}
-    >
-      <video src="video.mp4" controls />
-    </ContourBlock.Ratio>
-  );
-}
+## 导出的 TypeScript 类型
+
+```ts
+import type {
+  GlassProps,
+  GlassCornerKey,
+  GlassCornerMode,
+  GlassCorners,
+  GlassEdgeGradientDirection,
+  GlassGradientStopPair,
+  GlassRootCSSVars,
+} from '@baifendian/adhere-ui-glass';
 ```
 
-### 响应式视频容器
+## API：`GlassProps`
 
-```tsx
-import ContourBlock from '@baifendian/adhere-ui-glass';
-
-function VideoContainer() {
-  return (
-    <div style={{ width: '100%', maxWidth: '1200px' }}>
-      <ContourBlock.Ratio aspectRatio="16:9" origin="width">
-        <iframe
-          src="https://www.youtube.com/embed/xxxxx"
-          style={{ width: '100%', height: '100%', border: 'none' }}
-          allowFullScreen
-        />
-      </ContourBlock.Ratio>
-    </div>
-  );
-}
-```
-
-## 📋 API
-
-### ContourBlockProps
-
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| className | 自定义 CSS 类名 | `string` | - |
-| style | 自定义内联样式 | `CSSProperties` | - |
-| children | 子元素内容 | `ReactNode` | - |
-| ...attrs | 其他 HTML div 属性 | `HTMLAttributes<HTMLDivElement>` | - |
+| `className` | 根节点类名 | `string` | - |
+| `style` | 根节点样式 | `CSSProperties` | - |
+| `boxClassName` | 遮罩层类名 | `string` | - |
+| `boxStyle` | 遮罩层样式 | `CSSProperties` | - |
+| `boxInnerClassName` | 内层类名 | `string` | - |
+| `boxInnerStyle` | 内层样式 | `CSSProperties` | - |
+| `borderWidth` | 边框宽度 | `number \| string` | `2`（px） |
+| `borderRadius` | 圆角 | `number \| string` | `15`（px） |
+| `autoHeight` | 是否内层随内容增高 | `boolean` | `true` |
+| `borderColor` | 边框基础色（任意 CSS 颜色） | `string` | `'#fff'` |
+| `strongColorAlpha` | 亮角等透明度 | `number` | `0.6` |
+| `mediumColorAlpha` | 边「亮」端透明度 | `number` | `0.7` |
+| `lightColorAlpha` | 暗角等透明度 | `number` | `0.1` |
+| `corners` | 四角亮/暗 | `GlassCorners` | 见上文默认 |
+| `children` | 子节点 | `ReactNode` | - |
 
-### RatioProps
+## CSS 类名
 
-| 参数 | 说明 | 类型 | 默认值 | 必填 |
-| --- | --- | --- | --- | --- |
-| aspectRatio | 宽高比，支持数字或字符串格式 | `number \| string` | - | 是 |
-| origin | 基准方向，`width` 表示根据宽度计算高度，`height` 表示根据高度计算宽度 | `'width' \| 'height'` | `'width'` | 否 |
-| className | 自定义 CSS 类名 | `string` | - | 否 |
-| style | 自定义内联样式 | `CSSProperties` | - | 否 |
-| children | 子元素内容 | `ReactNode` | - | 否 |
-| ...attrs | 其他 HTML div 属性 | `HTMLAttributes<HTMLDivElement>` | - | 否 |
+| 类名 | 说明 |
+| --- | --- |
+| `adhere-ui-glass` | 根容器 |
+| `adhere-ui-glass-mask` | 边框渐变所在层（`::before` 绘制边框） |
+| `adhere-ui-glass-inner` | 毛玻璃内容区（`backdrop-filter`） |
+| `adhere-ui-glass-inner-auto-height` | `autoHeight === true` 时加在内层 |
 
-#### aspectRatio 格式说明
+根节点上会设置若干 CSS 变量（如 `--glass-border-color`、`--glass-border-background-image`、`--border-width` 等），与 `index.less` 配套使用。
 
-`aspectRatio` 支持多种格式：
+## 实现说明
 
-- **数字格式**：`16/9`、`1.777`、`4/3` 等
-- **字符串格式**：
-  - 冒号分隔：`"16:9"`、`"4:3"` 等
-  - 斜杠分隔：`"16/9"`、`"4/3"` 等
+- 边框图样由组件计算为 `--glass-border-background-image`，在 `.adhere-ui-glass-mask::before` 中引用。
+- 带透明度的颜色通过 `color-mix(in srgb, var(--glass-border-color) N%, transparent)` 生成，以便支持任意 `borderColor` 写法。
+- 若需兼容极旧浏览器，需自行评估 `color-mix` 与 `backdrop-filter` 的降级策略。
 
-#### origin 说明
+## 相关链接
 
-- **`width`**：固定宽度，根据宽高比自动计算高度
-  - 适用场景：容器宽度确定（如 100% 或固定像素），需要自动计算高度
-  - 示例：响应式视频容器、图片展示等
-
-- **`height`**：固定高度，根据宽高比自动计算宽度
-  - 适用场景：容器高度确定，需要自动计算宽度
-  - 示例：侧边栏图片、垂直布局中的元素等
-
-### 类型定义
-
-```tsx
-interface ContourBlockProps extends HTMLAttributes<HTMLDivElement> {
-  className?: string;
-  style?: CSSProperties;
-  children?: ReactNode;
-}
-
-interface RatioProps extends HTMLAttributes<HTMLDivElement> {
-  className?: string;
-  style?: CSSProperties;
-  children?: ReactNode;
-  aspectRatio: number | string;
-  origin?: 'width' | 'height'; // 默认值为 'width'
-}
-```
-
-## 🎨 CSS 类名
-
-### ContourBlock 组件
-
-- `adhere-ui-contour-block` - 主容器类名
-- `adhere-ui-contour-block-inner` - 内部容器类名
-
-### Ratio 组件
-
-- `adhere-ui-ratio` - Ratio 组件容器类名
-
-## 📝 注意事项
-
-### Ratio 组件使用注意
-
-1. **ResizeObserver 支持**：组件内部使用 ResizeObserver API 监听容器尺寸变化，请确保目标浏览器支持该 API，或使用 polyfill。
-
-2. **origin 为 width 时**：
-   - 需要确保容器的宽度是确定的（如设置 `width: '100%'` 或固定像素值）
-   - 组件会自动计算并设置高度
-   - 不要同时设置固定高度，这可能导致宽高比不正确
-
-3. **origin 为 height 时**：
-   - 需要确保容器的高度是确定的（如设置 `height: '400px'`）
-   - 组件会自动计算并设置宽度
-   - 不要同时设置固定宽度，这可能导致宽高比不正确
-
-4. **性能考虑**：
-   - ResizeObserver 在容器尺寸变化时会触发重新计算
-   - 对于频繁变化的容器，建议使用防抖或节流优化
-
-## 🎯 使用场景
-
-### Ratio 组件适用场景
-
-1. **响应式视频容器**
-   ```tsx
-   <ContourBlock.Ratio aspectRatio="16:9" origin="width" style={{ width: '100%' }}>
-     <video src="video.mp4" controls style={{ width: '100%', height: '100%' }} />
-   </ContourBlock.Ratio>
-   ```
-
-2. **等比例图片展示**
-   ```tsx
-   <ContourBlock.Ratio aspectRatio="1:1" origin="width" style={{ width: '200px' }}>
-     <img src="avatar.jpg" alt="头像" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-   </ContourBlock.Ratio>
-   ```
-
-3. **嵌入式内容（iframe）**
-   ```tsx
-   <ContourBlock.Ratio aspectRatio="16:9" origin="width">
-     <iframe src="https://example.com" style={{ width: '100%', height: '100%' }} />
-   </ContourBlock.Ratio>
-   ```
-
-4. **自适应卡片**
-   ```tsx
-   <ContourBlock.Ratio aspectRatio="4:3" origin="width" style={{ width: '100%' }}>
-     <div style={{ padding: '20px', height: '100%' }}>
-       <h3>卡片标题</h3>
-       <p>卡片内容</p>
-     </div>
-   </ContourBlock.Ratio>
-   ```
-
-## 🔗 相关链接
-
-- [在线演示](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/contourblock)
 - [GitHub 仓库](https://github.com/playerljc/adhere)
