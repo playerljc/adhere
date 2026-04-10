@@ -72,6 +72,7 @@
     "@baifendian/adhere-ui-forceupdate": "^2.11.0",
     "@baifendian/adhere-ui-formitemcreator": "^2.11.0",
     "@baifendian/adhere-ui-globalindicator": "^2.11.0",
+    "@baifendian/adhere-ui-glass": "^2.11.0",
     "@baifendian/adhere-ui-historyback": "^2.11.0",
     "@baifendian/adhere-ui-hooks": "^2.11.0",
     "@baifendian/adhere-ui-imagelazy": "^2.11.0",

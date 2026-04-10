@@ -34,6 +34,7 @@ import FontSizeSetting from '@baifendian/adhere-ui-fontsizesetting';
 import ForceUpdate from '@baifendian/adhere-ui-forceupdate';
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import GlobalIndicator from '@baifendian/adhere-ui-globalindicator';
+import Glass from '@baifendian/adhere-ui-glass';
 import HistoryBack from '@baifendian/adhere-ui-historyback';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import ImageLazy from '@baifendian/adhere-ui-imagelazy';
@@ -125,6 +126,7 @@ export {
   ForceUpdate,
   FormItemCreator,
   GlobalIndicator,
+  Glass,
   HistoryBack,
   Hooks,
   ImageLazy,

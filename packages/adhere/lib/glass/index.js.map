@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["glass/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-glass/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,iDACHA"}

@@ -22,6 +22,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-confirm-delconfirm', 'DelConfirm'],
   ['@baifendian/adhere-ui-confirm-importantconfirm', 'ImportantConfirm'],
   ['@baifendian/adhere-ui-globalindicator', 'GlobalIndicator'],
+  ['@baifendian/adhere-ui-glass', 'Glass'],
   ['@baifendian/adhere-ui-historyback', 'HistoryBack'],
   ['@baifendian/adhere-ui-hooks', 'Hooks'],
   ['@baifendian/adhere-ui-imagelazy', 'ImageLazy'],
