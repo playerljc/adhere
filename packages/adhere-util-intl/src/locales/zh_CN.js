@@ -407,5 +407,7 @@ export default [
     auto_height: '自动高度',
     tabs_layout: '标签页',
     tabs_config: '标签页配置',
+    header_style: 'heder样式',
+    body_style: 'body样式',
   },
 ];

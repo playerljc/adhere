@@ -406,5 +406,7 @@ declare const _default: {
     auto_height: string;
     tabs_layout: string;
     tabs_config: string;
+    header_style: string;
+    body_style: string;
 }[];
 export default _default;
