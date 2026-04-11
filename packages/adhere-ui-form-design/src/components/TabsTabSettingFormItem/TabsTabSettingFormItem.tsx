@@ -221,6 +221,8 @@ const TabsTabSettingFormItem: FC<TabsTabSettingFormItemProps> = ({
           const oldIndex = items.findIndex((t) => t.id === active.id);
           const newIndex = items.findIndex((t) => t.id === over.id);
           if (oldIndex === -1 || newIndex === -1) return;
+          // 先通知父级按「拖拽前」的 tab 顺序重排 children，再更新表单 tabItems
+          onSortChange?.(String(active.id), String(over.id));
           onChange?.(arrayMove(items, oldIndex, newIndex));
         }}
       >

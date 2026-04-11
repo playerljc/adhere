@@ -1,6 +1,7 @@
 import merge from 'lodash.merge';
 import React, { type ReactNode, useContext, useEffect, useMemo, useRef } from 'react';
 
+import { arrayMove } from '@dnd-kit/sortable';
 import { Form, InputNumberInteger, Select, Switch } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -14,7 +15,7 @@ import {
   buildFormPropertyTitleRow,
 } from '../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../components/TableGridLayout';
-import { DesignValue, DesignValueProps } from '../../../types';
+import type { DesignValue, DesignValueProps } from '../../../types';
 import type { InternalTabsLayoutProps } from './InternalTabs';
 
 type TabItemLike = { id?: string; key?: string };
@@ -133,7 +134,22 @@ function MainProperty(props: DesignValueProps) {
     );
   }
 
-  function onSortChange(originId: string, targetId: string) {}
+  /** 与 tabItems 拖拽排序一致，重排 Tabs 的 children（下标与 tab 一一对应） */
+  function onSortChange(originId: string, targetId: string) {
+    const tabList = tabsProps.tabItems ?? [];
+    const oldIndex = tabList.findIndex((t) => t.id === originId);
+    const newIndex = tabList.findIndex((t) => t.id === targetId);
+    if (oldIndex === -1 || newIndex === -1 || oldIndex === newIndex) return;
+
+    const raw = [...(children ?? [])] as NonNullable<DesignValueProps['children']>;
+    if (!raw.length) return;
+    if (oldIndex >= raw.length || newIndex >= raw.length) return;
+
+    const nextChildren = arrayMove(raw, oldIndex, newIndex) as NonNullable<
+      DesignValueProps['children']
+    >;
+    updateChildrenById(getActiveFieldId() as string, nextChildren);
+  }
 
   useEffect(() => {
     form.setFieldsValue({
