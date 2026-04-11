@@ -24,8 +24,9 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-import { SELECT_PREFIX, SELECT_VALUE_KEY_NAME } from '../../../constant';
+import { SELECT_PREFIX } from '../../../constant';
 import type { I18nValue } from '../../../types';
+import { toI18nLabel } from '../../../utils';
 import I18nChangeFormItem from '../../I18nChangeFormItem';
 import { type DataSourceItem, type DataSourceManagerFormItemProps } from '../index';
 
@@ -69,22 +70,6 @@ function normalizeValue(item: DataSourceItem, raw: string): string | number {
   }
 
   return raw;
-}
-
-function toI18nLabel(
-  label: DataSourceItem['label'],
-  lang: string,
-  localesKeys: string[],
-): I18nValue {
-  if (label && typeof label === 'object' && SELECT_VALUE_KEY_NAME in label) {
-    return label as I18nValue;
-  }
-
-  const next: Record<string, string | null | undefined> = { [SELECT_VALUE_KEY_NAME]: lang };
-  localesKeys.forEach((key) => {
-    next[key] = key === lang ? (typeof label === 'string' ? label : '') : null;
-  });
-  return next as I18nValue;
 }
 
 const RowContent: FC<RowContentProps> = ({

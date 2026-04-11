@@ -24,8 +24,9 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-import { SELECT_PREFIX, SELECT_VALUE_KEY_NAME } from '../../../constant';
+import { SELECT_PREFIX } from '../../../constant';
 import type { I18nValue } from '../../../types';
+import { toI18nLabel } from '../../../utils';
 import I18nChangeFormItem from '../../I18nChangeFormItem';
 import { type TransferDataSourceItem, type TransferDataSourceManagerFormItemProps } from '../index';
 
@@ -66,28 +67,10 @@ function getSortId(item: TransferDataSourceItem): string | undefined {
   return (item as unknown as Record<string, unknown>)[SORT_ID_KEY] as string | undefined;
 }
 
-function toI18nLabel(
-  label: string | I18nValue | undefined,
-  lang: string,
-  localesKeys: string[],
-): I18nValue {
-  if (label && typeof label === 'object' && SELECT_VALUE_KEY_NAME in label) {
-    return label as I18nValue;
-  }
-
-  const next: Record<string, string | null | undefined> = { [SELECT_VALUE_KEY_NAME]: lang };
-  localesKeys.forEach((key) => {
-    next[key] = key === lang ? (typeof label === 'string' ? label : '') : null;
-  });
-  return next as I18nValue;
-}
-
 const RowContent: FC<RowContentProps> = ({
   item,
   onKeyChange,
   onTitleChange,
-  onDescriptionChange,
-  onDisabledChange,
   onRemove,
   handleNode,
   onOpenDetail,

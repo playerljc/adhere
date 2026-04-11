@@ -133,6 +133,8 @@ function MainProperty(props: DesignValueProps) {
     );
   }
 
+  function onSortChange(originId: string, targetId: string) {}
+
   useEffect(() => {
     form.setFieldsValue({
       tabItems: tabsProps.tabItems ?? [],
@@ -287,7 +289,11 @@ function MainProperty(props: DesignValueProps) {
                 value: (
                   <Value>
                     <Form.Item name="tabItems" noStyle>
-                      <TabsTabSettingFormItem onAdd={onAddTab} onDelete={onDeleteTab} />
+                      <TabsTabSettingFormItem
+                        onAdd={onAddTab}
+                        onDelete={onDeleteTab}
+                        onSortChange={onSortChange}
+                      />
                     </Form.Item>
                   </Value>
                 ),

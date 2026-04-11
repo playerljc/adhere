@@ -18,6 +18,7 @@ import isReactNode from './isReactNode';
 import normalizeDesignChildren from './normalizeDesignChildren';
 import { genRootFieldId, getRootFieldId, isRootFieldId } from './rootFieldId';
 import { resolveI18nText } from './resolveI18nText';
+import { toI18nLabel } from './toI18nLabel';
 import { rulesSettingToRules } from './rulesSettingToRules';
 import { styleCodeStringToCSSProperties } from './styleCodeStringToCSSProperties';
 import { useDesignFieldDataSourceOptions } from './useDesignFieldDataSourceOptions';
@@ -53,6 +54,7 @@ export {
   findTypeById,
   useDesignFieldDataSourceOptions,
   resolveI18nText,
+  toI18nLabel,
 };
 export type { LabelValueColSpan } from './computeLabelValueColSpan';
 export type {

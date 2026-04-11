@@ -17,8 +17,9 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-import { SELECT_PREFIX, SELECT_VALUE_KEY_NAME } from '../../constant';
+import { SELECT_PREFIX } from '../../constant';
 import type { I18nValue } from '../../types';
+import { toI18nLabel } from '../../utils';
 import I18nChangeFormItem from '../I18nChangeFormItem';
 
 const selectorPrefix = `${SELECT_PREFIX}-form-design-components-tabs-tab-setting-form-item`;
@@ -40,6 +41,7 @@ export interface TabsTabSettingFormItemProps {
   onChange?: (value: TabsTabSettingItem[]) => void;
   onAdd?: () => void;
   onDelete?: (id: string) => void;
+  onSortChange?: (originId: string, targetId: string) => void;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -54,22 +56,6 @@ function createEmptyTab(): TabsTabSettingItem {
     destroyOnHidden: false,
     closable: true,
   };
-}
-
-function toI18nLabel(
-  label: TabsTabSettingItem['label'],
-  lang: string,
-  localesKeys: string[],
-): I18nValue {
-  if (label && typeof label === 'object' && SELECT_VALUE_KEY_NAME in label) {
-    return label as I18nValue;
-  }
-
-  const next: Record<string, string | null | undefined> = { [SELECT_VALUE_KEY_NAME]: lang };
-  localesKeys.forEach((key) => {
-    next[key] = key === lang ? (label as unknown as string) ?? '' : null;
-  });
-  return next as I18nValue;
 }
 
 const SortableItem: FC<{
@@ -154,6 +140,7 @@ const TabsTabSettingFormItem: FC<TabsTabSettingFormItemProps> = ({
   onChange,
   onAdd,
   onDelete,
+  onSortChange,
   className,
   style,
 }) => {
