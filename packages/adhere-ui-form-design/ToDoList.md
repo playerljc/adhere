@@ -8,8 +8,8 @@
 - [x] `.TableGridLayout` 的 `StyleProperty` 面板
 - [x] `antd-input` 的 `MainProperty` 词条缺失
 - [ ] 整体样式
-- [ ] `.Toolbox` 样式
-- [ ] 右侧属性面板样式
+- [x] `.Toolbox` 样式
+- [x] 右侧属性面板样式
 - [ ] `.Design` 工具栏 (terminal 切换)
 
 ## 控件
@@ -25,9 +25,9 @@
     - [x] German
     - [x] US
     - [x] International
-- **ColorPicker**
-- **DatePicker**
-- **TimePicker**
+- [x] ColorPicker
+- [x] DatePicker
+- [x] TimePicker
 
 ### 文本
 - [x] alert 文本提示
@@ -49,8 +49,8 @@
 
 ### 布局
 - [x] Card
+- [x] Tabs
 - [ ] Step
-- [ ] Tabs
 - [ ] Collapse
 
 ### 其他
@@ -62,6 +62,7 @@
 - [ ] PhoneWithAreaCode
 - [ ] ImageCode
 - [ ] RichEditor
+- [ ] 手写组件
 
 ## 高级
 - [ ] 大纲视图

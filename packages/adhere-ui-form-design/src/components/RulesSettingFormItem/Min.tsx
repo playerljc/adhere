@@ -1,6 +1,6 @@
 import React, { type FC } from 'react';
 
-import { InputNumberInteger, TextArea } from '@baifendian/adhere-ui-anthoc';
+import { Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -72,7 +72,7 @@ const Min: FC<MinProps> = ({ rule, onChange }) => {
                     getTriggerContainer={() => get('message') as HTMLElement}
                   >
                     {({ onChange: onMessageChange, value }) => (
-                      <TextArea
+                      <Input.OptimizedTextArea
                         value={value}
                         placeholder={Intl.get('message')}
                         showCount={false}

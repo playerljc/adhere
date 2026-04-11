@@ -1,6 +1,6 @@
 import React, { type ReactNode } from 'react';
 
-import { Form, Input, TextArea } from '@baifendian/adhere-ui-anthoc';
+import { Form, Input } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { AlertTypeSelectStandardDict, WhetherRadioHorizontalDict } from '../../../../components';
@@ -30,7 +30,11 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="description">
-            <TextArea placeholder={Intl.get('description')} autoSize />
+            <Input.OptimizedTextArea
+              showCount={false}
+              placeholder={Intl.get('description')}
+              autoSize
+            />
           </Form.Item>
         </Value>
       ),

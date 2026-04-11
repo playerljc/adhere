@@ -1,7 +1,7 @@
 import { Switch } from 'antd';
 import React, { type FC } from 'react';
 
-import { TextArea } from '@baifendian/adhere-ui-anthoc';
+import { Input } from '@baifendian/adhere-ui-anthoc';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -73,7 +73,7 @@ const Required: FC<RequiredProps> = ({ rule, onChange }) => {
                     getTriggerContainer={() => get('message') as HTMLElement}
                   >
                     {({ onChange: onMessageChange, value }) => (
-                      <TextArea
+                      <Input.OptimizedTextArea
                         value={value}
                         placeholder={Intl.get('message')}
                         showCount={false}
