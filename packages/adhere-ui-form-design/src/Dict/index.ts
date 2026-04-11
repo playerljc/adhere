@@ -37,6 +37,12 @@ import { RateSize } from './RateSize';
 import { Rules } from './Rules';
 import { SegmentedShape } from './SegmentedShape';
 import { SelectMode } from './SelectMode';
+import { StepsSize } from './StepsSize';
+import { StepsStatus } from './StepsStatus';
+import { StepsSwiperDirection } from './StepsSwiperDirection';
+import { StepsSwiperItemLayoutMode } from './StepsSwiperItemLayoutMode';
+import { StepsSwiperItemRenderMode } from './StepsSwiperItemRenderMode';
+import { StepsType } from './StepsType';
 import { Size } from './Size';
 import { SwitchSize } from './SwitchSize';
 import { TabsSize } from './TabsSize';
@@ -111,6 +117,12 @@ const dictImpls = {
   AlignContent,
   AlignSelf,
   TableNumberGeneratorRule,
+  StepsSize,
+  StepsStatus,
+  StepsSwiperDirection,
+  StepsSwiperItemLayoutMode,
+  StepsSwiperItemRenderMode,
+  StepsType,
   TabsType,
   TabsSize,
   TabsTabPlacement,

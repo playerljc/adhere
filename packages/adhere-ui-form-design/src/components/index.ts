@@ -52,12 +52,19 @@ import { RulesMenuStandardDict } from './Rules';
 import RulesSettingFormItem from './RulesSettingFormItem';
 import { SegmentedShapeSelectStandardDict } from './SegmentedShape';
 import { SelectModeSelectStandardDict } from './SelectMode';
+import { StepsSizeSelectStandardDict } from './StepsSize';
+import { StepsStatusSelectStandardDict } from './StepsStatus';
+import { StepsSwiperDirectionSelectStandardDict } from './StepsSwiperDirection';
+import { StepsSwiperItemLayoutModeSelectStandardDict } from './StepsSwiperItemLayoutMode';
+import { StepsSwiperItemRenderModeSelectStandardDict } from './StepsSwiperItemRenderMode';
+import { StepsTypeSelectStandardDict } from './StepsType';
 import { SizeSelectStandardDict } from './Size';
 import { SlotEndLabel, SlotStartLabel } from './SlotLabel';
 import { SwitchSizeSelectStandardDict } from './SwitchSize';
 import { TableColumnSettingFormItem } from './TableColumnSettingFormItem';
 import { TabsSizeSelectStandardDict } from './TabsSize';
 import { TabsTabPlacementSelectStandardDict } from './TabsTabPlacement';
+import { StepsStepSettingFormItem } from './StepsStepSettingFormItem';
 import { TabsTabSettingFormItem } from './TabsTabSettingFormItem';
 import { TabsTypeSelectStandardDict } from './TabsType';
 import PropertiesGridLayout from './TableGridLayout';
@@ -147,6 +154,13 @@ export {
   TabsTypeSelectStandardDict,
   TabsSizeSelectStandardDict,
   TabsTabPlacementSelectStandardDict,
+  StepsStepSettingFormItem,
+  StepsSizeSelectStandardDict,
+  StepsStatusSelectStandardDict,
+  StepsSwiperDirectionSelectStandardDict,
+  StepsSwiperItemLayoutModeSelectStandardDict,
+  StepsSwiperItemRenderModeSelectStandardDict,
+  StepsTypeSelectStandardDict,
   TabsTabSettingFormItem,
   JustifyContentSelectStandardDict,
   AlignItemsSelectStandardDict,

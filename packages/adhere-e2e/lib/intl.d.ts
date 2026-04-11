@@ -413,6 +413,23 @@ declare const _default: {
             auto_height: string;
             tabs_layout: string;
             tabs_config: string;
+            steps_layout: string;
+            steps_step_config: string;
+            add_step: string;
+            steps_description: string;
+            steps_direction: string;
+            steps_is_full_width: string;
+            steps_is_full_height: string;
+            steps_item_render_mode: string;
+            steps_item_layout_mode: string;
+            steps_status: string;
+            steps_label_placement: string;
+            steps_title_placement: string;
+            steps_initial: string;
+            steps_current: string;
+            steps_progress_dot: string;
+            steps_responsive: string;
+            steps_percent: string;
         }[];
         adhereMobile: {
             locale: string;

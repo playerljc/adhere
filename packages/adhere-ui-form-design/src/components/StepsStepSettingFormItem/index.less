@@ -1,0 +1,91 @@
+@import '../../constant.less';
+
+.@{prefix-cls}-form-design-components-steps-step-setting-form-item {
+  &-title {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.88);
+  }
+
+  &-header {
+    margin-bottom: 12px;
+  }
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  &-item-dragging {
+    opacity: 0.75;
+  }
+
+  &-item-handle {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 32px;
+    cursor: grab;
+    color: rgba(0, 0, 0, 0.65);
+  }
+
+  &-item-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &-item-label {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &-item-actions {
+    flex: 0 0 auto;
+  }
+
+  &-modal-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+
+    &:not(:last-child) {
+      margin-bottom: 12px;
+    }
+  }
+
+  &-modal-row-label {
+    width: 100%;
+    flex: 0 0 auto;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.65);
+  }
+
+  &-modal-row-value {
+    width: 100%;
+    flex: 0 0 auto;
+    min-width: 0;
+
+    .ant-select,
+    .ant-input,
+    .ant-input-number,
+    .ant-input-number-affix-wrapper {
+      width: 100%;
+    }
+  }
+}
