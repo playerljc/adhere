@@ -94,6 +94,7 @@ const SortableItem: FC<{
 
         <div className={`${selectorPrefix}-item-label`}>
           <div ref={triggerRef} />
+
           <I18nChangeFormItem
             getTriggerContainer={() => triggerRef.current}
             value={titleValue}
@@ -252,7 +253,10 @@ const StepsStepSettingFormItem: FC<StepsStepSettingFormItemProps> = ({
               <div className={`${selectorPrefix}-modal-row-label`}>
                 {Intl.get('steps_description')}：
               </div>
-              <div className={`${selectorPrefix}-modal-row-value`} ref={descTriggerRef}>
+
+              <div className={`${selectorPrefix}-modal-row-value`}>
+                <div ref={descTriggerRef} className={`${selectorPrefix}-modal-i18n-label`}></div>
+
                 <I18nChangeFormItem
                   getTriggerContainer={() => descTriggerRef.current}
                   value={descriptionValue}
