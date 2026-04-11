@@ -47,7 +47,7 @@ export function FormProperty({
       value: (
         <Value>
           <Form.Item name="initialValue">
-            <Input placeholder={Intl.get('initial_value')} />
+            <Input.OptimizedInput showCount={false} placeholder={Intl.get('initial_value')} />
           </Form.Item>
         </Value>
       ),

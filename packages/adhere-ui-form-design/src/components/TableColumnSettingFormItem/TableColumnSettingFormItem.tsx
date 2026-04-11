@@ -1,9 +1,10 @@
-import { Button, Col, Input, InputNumber, Modal, Row, Select, Space } from 'antd';
+import { Button, Col, InputNumber, Modal, Row, Select, Space } from 'antd';
 import classNames from 'classnames';
 import React, { memo, useContext, useMemo, useRef, useState } from 'react';
 import type { FC } from 'react';
 
 import { DeleteOutlined, HolderOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
+import { Input } from '@baifendian/adhere-ui-anthoc';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
@@ -201,21 +202,23 @@ const SortableItem: FC<{
             onChange={(next) => onChangeTitle(next)}
           >
             {({ value, onChange }) => (
-              <Input
+              <Input.OptimizedInput
                 value={value ?? ''}
                 placeholder={Intl.get('column_title')}
                 onChange={(e) => onChange?.(e.target.value)}
+                showCount={false}
               />
             )}
           </I18nChangeFormItem>
         </div>
 
-        <Input
+        <Input.OptimizedInput
           className={`${selectorPrefix}-item-field`}
           value={item.field}
           placeholder={Intl.get('column_field')}
           status={isFieldDuplicate ? 'error' : undefined}
           onChange={(e) => onChangeField(e.target.value)}
+          showCount={false}
         />
 
         <Space className={`${selectorPrefix}-item-actions`} size={8}>
@@ -449,7 +452,7 @@ const TableColumnSettingFormItem: FC<TableColumnSettingFormItemProps> = ({
                 {Intl.get('default_value')}：
               </div>
               <div className={`${selectorPrefix}-modal-row-value`}>
-                <Input
+                <Input.OptimizedInput
                   value={
                     currentSettingItem.defaultValue === undefined ||
                     currentSettingItem.defaultValue === null
@@ -460,6 +463,7 @@ const TableColumnSettingFormItem: FC<TableColumnSettingFormItemProps> = ({
                   onChange={(e) =>
                     updateAt(currentSettingItem.id, { defaultValue: e.target.value })
                   }
+                  showCount={false}
                 />
               </div>
             </div>

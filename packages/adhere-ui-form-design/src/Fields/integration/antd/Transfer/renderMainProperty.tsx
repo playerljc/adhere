@@ -66,7 +66,7 @@ function I18nInput({
       getTriggerContainer={() => slot.get(slotKey) as HTMLElement}
     >
       {({ onChange: i18nOnChange, value: inputValue }) => (
-        <Input
+        <Input.OptimizedInput
           value={inputValue ?? ''}
           placeholder={placeholder}
           onChange={(e) => i18nOnChange(e.target.value)}

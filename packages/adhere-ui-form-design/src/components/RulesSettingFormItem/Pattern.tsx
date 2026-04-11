@@ -35,7 +35,7 @@ const Pattern: FC<PatternProps> = ({ rule, onChange }) => {
               label: <Label>{Intl.get('pattern')}</Label>,
               value: (
                 <Value>
-                  <Input
+                  <Input.OptimizedInput
                     showCount={false}
                     value={rule.pattern}
                     onChange={(_value) => {

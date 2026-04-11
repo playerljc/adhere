@@ -36,13 +36,14 @@ export function buildFormPropertyLabelRow(slot: FormPropertyLabelSlotRef): DataI
         <Form.Item name="label">
           <I18nChangeFormItem getTriggerContainer={() => slot.get('label') as HTMLElement}>
             {({ onChange, value }) => (
-              <Input
+              <Input.OptimizedInput
                 value={value}
                 placeholder={Intl.get('label')}
                 maxLength={200}
                 onChange={(e) => {
                   onChange(e.target.value);
                 }}
+                showCount={false}
               />
             )}
           </I18nChangeFormItem>
@@ -71,13 +72,14 @@ export function buildFormPropertyTitleRow(slot: FormPropertyLabelSlotRef): DataI
         <Form.Item name="title">
           <I18nChangeFormItem getTriggerContainer={() => slot.get('title') as HTMLElement}>
             {({ onChange, value }) => (
-              <Input
+              <Input.OptimizedInput
                 value={value}
                 placeholder={Intl.get('title')}
                 maxLength={200}
                 onChange={(e) => {
                   onChange(e.target.value);
                 }}
+                showCount={false}
               />
             )}
           </I18nChangeFormItem>
@@ -238,7 +240,7 @@ export function buildFormPropertyValuePropNamePlainInputRow(): DataItemRow {
     value: (
       <Value>
         <Form.Item name="valuePropName">
-          <Input placeholder="value" maxLength={50} />
+          <Input.OptimizedInput placeholder="value" maxLength={50} showCount={false} />
         </Form.Item>
       </Value>
     ),

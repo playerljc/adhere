@@ -6,12 +6,12 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
 import {
-  buildFormPropertyFillRow,
   PlacementSelectStandardDict,
   SizeSelectStandardDict,
   VariantSelectStandardDict,
   VerificationStatusSelectStandardDict,
   WhetherRadioHorizontalDict,
+  buildFormPropertyFillRow,
 } from '../../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
@@ -47,7 +47,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="format">
-            <Input placeholder={Intl.get('date_format')} />
+            <Input.OptimizedInput showCount={false} placeholder={Intl.get('date_format')} />
           </Form.Item>
         </Value>
       ),
@@ -83,7 +83,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="placeholder">
-            <Input placeholder={Intl.get('placeholder')} />
+            <Input.OptimizedInput showCount={false} placeholder={Intl.get('placeholder')} />
           </Form.Item>
         </Value>
       ),

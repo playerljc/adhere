@@ -4,8 +4,8 @@ import React, { type ReactNode, useContext, useEffect, useMemo, useRef } from 'r
 import { Form, Input, Select, Switch } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { buildFormPropertyTitleRow, type FormPropertyLabelSlotRef } from '../../../components';
 import { DesignContext } from '../../../Design/Context';
+import { type FormPropertyLabelSlotRef, buildFormPropertyTitleRow } from '../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../types';
 import type { InternalCardLayoutProps } from './InternalCard';
@@ -72,7 +72,11 @@ function MainProperty(props: DesignValueProps) {
                 value: (
                   <Value>
                     <Form.Item name="extra">
-                      <Input placeholder={Intl.get('card_extra')} allowClear />
+                      <Input.OptimizedInput
+                        showCount={false}
+                        placeholder={Intl.get('card_extra')}
+                        allowClear
+                      />
                     </Form.Item>
                   </Value>
                 ),

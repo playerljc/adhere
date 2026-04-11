@@ -18,7 +18,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="children">
-            <Input placeholder={Intl.get('link_text')} />
+            <Input.OptimizedInput showCount={false} placeholder={Intl.get('link_text')} />
           </Form.Item>
         </Value>
       ),
@@ -30,7 +30,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="href">
-            <Input placeholder={Intl.get('link_href')} />
+            <Input.OptimizedInput showCount={false} placeholder={Intl.get('link_href')} />
           </Form.Item>
         </Value>
       ),

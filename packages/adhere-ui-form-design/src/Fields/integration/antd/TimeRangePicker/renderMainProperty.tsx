@@ -49,7 +49,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="format">
-            <Input placeholder="HH:mm:ss" />
+            <Input.OptimizedInput showCount={false} placeholder="HH:mm:ss" />
           </Form.Item>
         </Value>
       ),
@@ -61,7 +61,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="placeholder">
-            <Input placeholder={Intl.get('placeholder')} />
+            <Input.OptimizedInput showCount={false} placeholder={Intl.get('placeholder')} />
           </Form.Item>
         </Value>
       ),

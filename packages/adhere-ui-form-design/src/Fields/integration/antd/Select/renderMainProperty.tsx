@@ -6,7 +6,6 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
 import {
-  buildFormPropertyFillRow,
   DataSourceManagerFormItem,
   PlacementSelectStandardDict,
   SelectModeSelectStandardDict,
@@ -14,6 +13,7 @@ import {
   VariantSelectStandardDict,
   VerificationStatusSelectStandardDict,
   WhetherRadioHorizontalDict,
+  buildFormPropertyFillRow,
 } from '../../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
@@ -125,7 +125,11 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="placeholder">
-            <Input placeholder={Intl.get('placeholder')} maxLength={50} />
+            <Input.OptimizedInput
+              showCount={false}
+              placeholder={Intl.get('placeholder')}
+              maxLength={50}
+            />
           </Form.Item>
         </Value>
       ),

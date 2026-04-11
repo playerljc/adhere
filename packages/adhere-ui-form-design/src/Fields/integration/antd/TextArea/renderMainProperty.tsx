@@ -35,7 +35,11 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="placeholder">
-            <Input placeholder={Intl.get('placeholder')} maxLength={50} />
+            <Input.OptimizedInput
+              showCount={false}
+              placeholder={Intl.get('placeholder')}
+              maxLength={50}
+            />
           </Form.Item>
         </Value>
       ),

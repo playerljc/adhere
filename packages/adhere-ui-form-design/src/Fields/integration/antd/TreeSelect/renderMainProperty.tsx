@@ -14,11 +14,8 @@ import {
   WhetherRadioHorizontalDict,
 } from '../../../../components';
 import { Label, Value } from '../../../../components/TableGridLayout';
-import {
-  createMainProperty,
-  renderMainPropertyWithCreate,
-} from '../../../../utils';
 import type { DesignValueProps } from '../../../../types';
+import { createMainProperty, renderMainPropertyWithCreate } from '../../../../utils';
 
 const MainProperty = createMainProperty({
   formName: 'antTreeSelectMainProperty',
@@ -78,7 +75,11 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="placeholder">
-            <Input placeholder={Intl.get('placeholder')} maxLength={50} />
+            <Input.OptimizedInput
+              showCount={false}
+              placeholder={Intl.get('placeholder')}
+              maxLength={50}
+            />
           </Form.Item>
         </Value>
       ),

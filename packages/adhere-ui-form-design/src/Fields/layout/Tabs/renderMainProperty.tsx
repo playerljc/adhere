@@ -14,7 +14,7 @@ import {
   buildFormPropertyTitleRow,
 } from '../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../components/TableGridLayout';
-import type { DesignValueProps } from '../../../types';
+import { DesignValue, DesignValueProps } from '../../../types';
 import type { InternalTabsLayoutProps } from './InternalTabs';
 
 type TabItemLike = { id?: string; key?: string };
@@ -78,10 +78,9 @@ function MainProperty(props: DesignValueProps) {
   const [form] = Form.useForm();
   const tabItemsWatch = Form.useWatch('tabItems', form);
 
-  const { getActiveFieldId, setFieldProps, deleteFieldByChildren, addChildrenById } =
-    useContext(DesignContext);
+  const { getActiveFieldId, setFieldProps, updateChildrenById } = useContext(DesignContext);
 
-  const { fieldProps } = props;
+  const { children, fieldProps } = props;
   const tabsProps = fieldProps as InternalTabsLayoutProps;
   const tabItemsForSelect = tabItemsWatch ?? tabsProps.tabItems ?? [];
 
@@ -120,6 +119,18 @@ function MainProperty(props: DesignValueProps) {
     }
 
     setFieldProps(getActiveFieldId() as string, next);
+  }
+
+  function onAddTab() {
+    updateChildrenById(getActiveFieldId() as string, [...(children as DesignValue[][]), []]);
+  }
+
+  function onDeleteTab(id: string) {
+    const index = tabsProps.tabItems?.findIndex((t) => t.id === id);
+    updateChildrenById(
+      getActiveFieldId() as string,
+      children?.filter((_, _index) => _index !== index),
+    );
   }
 
   useEffect(() => {
@@ -276,7 +287,7 @@ function MainProperty(props: DesignValueProps) {
                 value: (
                   <Value>
                     <Form.Item name="tabItems" noStyle>
-                      <TabsTabSettingFormItem />
+                      <TabsTabSettingFormItem onAdd={onAddTab} onDelete={onDeleteTab} />
                     </Form.Item>
                   </Value>
                 ),

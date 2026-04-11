@@ -1,6 +1,6 @@
 import React from 'react';
-import { Form, Input } from 'antd';
 
+import { Form, Input } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
 import {
@@ -19,7 +19,7 @@ export default function RangePickerSection() {
       </Form.Item>
 
       <Form.Item name="format" label={`${Intl.get('date_format')}：`}>
-        <Input placeholder={Intl.get('date_format')} />
+        <Input.OptimizedInput placeholder={Intl.get('date_format')} showCount={false} />
       </Form.Item>
 
       <Form.Item name={['allowEmpty', 0]} label={`${Intl.get('allow_clear')}（start）：`}>
@@ -31,7 +31,7 @@ export default function RangePickerSection() {
       </Form.Item>
 
       <Form.Item name="placeholder" label={`${Intl.get('placeholder')}：`}>
-        <Input placeholder={Intl.get('placeholder')} />
+        <Input.OptimizedInput placeholder={Intl.get('placeholder')} showCount={false} />
       </Form.Item>
 
       <Form.Item name="size" label={`${Intl.get('input_size')}：`}>
@@ -64,4 +64,3 @@ export default function RangePickerSection() {
     </>
   );
 }
-

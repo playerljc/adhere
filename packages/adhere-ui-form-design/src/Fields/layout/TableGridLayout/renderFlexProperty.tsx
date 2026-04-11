@@ -88,7 +88,10 @@ export function FlexProperty(props: DesignValueProps) {
                 value: (
                   <Value>
                     <Form.Item name="flexBasis">
-                      <Input placeholder={Intl.get('flex_basis')} />
+                      <Input.OptimizedInput
+                        showCount={false}
+                        placeholder={Intl.get('flex_basis')}
+                      />
                     </Form.Item>
                   </Value>
                 ),

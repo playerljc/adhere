@@ -144,9 +144,10 @@ export interface DesignContextType {
   setFlexProps: (id: string, props: FlexProps) => void;
   setDataSourceConfig: (id: string, config: DataSourceConfig) => void;
   // --------- add -----------
-  addChildrenById: (id: string, child: DesignValue) => void;
+  addChildrenById: (id: string, child: DesignValue | []) => void;
   // --------- delete -----------
   deleteFieldByChildren: (id: string) => void;
+  updateChildrenById: (id: string, children: DesignValueProps['children']) => void;
 }
 
 /**

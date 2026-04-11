@@ -337,12 +337,22 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         });
       }
 
-      function addChildrenById(id: string, child: DesignValue) {
+      function addChildrenById(id: string, child: DesignValue | []) {
         dispatch({
           type: REDUCER_ACTION_TYPE.addChildrenById,
           payload: {
             id,
             child,
+          },
+        });
+      }
+
+      function updateChildrenById(id: string, children: DesignValueProps['children']) {
+        dispatch({
+          type: REDUCER_ACTION_TYPE.updateChildrenProps,
+          payload: {
+            id,
+            props: children,
           },
         });
       }
@@ -394,6 +404,8 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                 addChildrenById,
                 // delete
                 deleteFieldByChildren,
+                // update
+                updateChildrenById,
               }}
             >
               <div

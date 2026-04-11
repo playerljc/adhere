@@ -1,6 +1,6 @@
 import React from 'react';
-import { Form, Input } from 'antd';
 
+import { Form, Input } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
 import {
@@ -21,11 +21,11 @@ export default function TimePickerSection() {
       </Form.Item>
 
       <Form.Item name="format" label={`${Intl.get('date_format')}：`}>
-        <Input placeholder="HH:mm:ss" />
+        <Input.OptimizedInput placeholder="HH:mm:ss" showCount={false} />
       </Form.Item>
 
       <Form.Item name="placeholder" label={`${Intl.get('placeholder')}：`}>
-        <Input placeholder={Intl.get('placeholder')} />
+        <Input.OptimizedInput placeholder={Intl.get('placeholder')} showCount={false} />
       </Form.Item>
 
       <Form.Item name="size" label={`${Intl.get('input_size')}：`}>
@@ -57,7 +57,10 @@ export default function TimePickerSection() {
       </Form.Item>
 
       <Form.Item name="minuteStep" label={`${Intl.get('minute_step')}：`}>
-        <TimeMinuteSecondStepSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
+        <TimeMinuteSecondStepSelectStandardDict
+          placeholder={Intl.get('please_select')}
+          allowClear
+        />
       </Form.Item>
 
       <Form.Item name="hourStep" label={`${Intl.get('hour_step')}：`}>
@@ -65,7 +68,10 @@ export default function TimePickerSection() {
       </Form.Item>
 
       <Form.Item name="secondStep" label={`${Intl.get('second_step')}：`}>
-        <TimeMinuteSecondStepSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
+        <TimeMinuteSecondStepSelectStandardDict
+          placeholder={Intl.get('please_select')}
+          allowClear
+        />
       </Form.Item>
 
       <Form.Item name="showNow" label={`${Intl.get('show_now')}：`}>
@@ -78,4 +84,3 @@ export default function TimePickerSection() {
     </>
   );
 }
-

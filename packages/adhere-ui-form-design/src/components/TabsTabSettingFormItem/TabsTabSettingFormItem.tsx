@@ -1,9 +1,10 @@
-import { Button, Input, Modal, Space, Switch } from 'antd';
+import { Button, Modal, Space, Switch } from 'antd';
 import classNames from 'classnames';
 import React, { memo, useContext, useMemo, useRef, useState } from 'react';
 import type { FC } from 'react';
 
 import { DeleteOutlined, HolderOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
+import { Input } from '@baifendian/adhere-ui-anthoc';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
@@ -37,6 +38,8 @@ export interface TabsTabSettingItem {
 export interface TabsTabSettingFormItemProps {
   value?: TabsTabSettingItem[];
   onChange?: (value: TabsTabSettingItem[]) => void;
+  onAdd?: () => void;
+  onDelete?: (id: string) => void;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -117,7 +120,8 @@ const SortableItem: FC<{
             onChange={(next) => onChangeLabel(next)}
           >
             {({ value, onChange }) => (
-              <Input
+              <Input.OptimizedInput
+                showCount={false}
                 value={value ?? ''}
                 placeholder={Intl.get('column_title')}
                 allowClear
@@ -133,7 +137,12 @@ const SortableItem: FC<{
             icon={<SettingOutlined />}
             onClick={onSetting}
           />
-          <Button aria-label={Intl.get('delete')} danger icon={<DeleteOutlined />} onClick={onDelete} />
+          <Button
+            aria-label={Intl.get('delete')}
+            danger
+            icon={<DeleteOutlined />}
+            onClick={onDelete}
+          />
         </Space>
       </div>
     </div>
@@ -143,6 +152,8 @@ const SortableItem: FC<{
 const TabsTabSettingFormItem: FC<TabsTabSettingFormItemProps> = ({
   value,
   onChange,
+  onAdd,
+  onDelete,
   className,
   style,
 }) => {
@@ -190,16 +201,18 @@ const TabsTabSettingFormItem: FC<TabsTabSettingFormItemProps> = ({
     onChange?.(items.map((it) => (it.id === id ? { ...it, ...patch } : it)));
   };
 
-  const onAdd = () => {
+  const onInternalAdd = () => {
     onChange?.([...(items ?? []), createEmptyTab()]);
+    onAdd?.();
   };
 
-  const onDelete = (id: string) => {
+  const onInternalDelete = (id: string) => {
     if (settingId === id) {
       setSettingOpen(false);
       setSettingId(null);
     }
     onChange?.(items.filter((t) => t.id !== id));
+    onDelete?.(id);
   };
 
   return (
@@ -207,7 +220,7 @@ const TabsTabSettingFormItem: FC<TabsTabSettingFormItemProps> = ({
       <div className={`${selectorPrefix}-title`}>{Intl.get('tabs_tab_config')}</div>
 
       <div className={`${selectorPrefix}-header`}>
-        <Button icon={<PlusOutlined />} onClick={onAdd}>
+        <Button icon={<PlusOutlined />} onClick={onInternalAdd}>
           {Intl.get('add_tab')}
         </Button>
       </div>
@@ -230,7 +243,7 @@ const TabsTabSettingFormItem: FC<TabsTabSettingFormItemProps> = ({
               <SortableItem
                 key={item.id}
                 item={item}
-                onDelete={() => onDelete(item.id)}
+                onDelete={() => onInternalDelete(item.id)}
                 onSetting={() => {
                   setSettingId(item.id);
                   setSettingOpen(true);
@@ -266,10 +279,13 @@ const TabsTabSettingFormItem: FC<TabsTabSettingFormItemProps> = ({
             <div className={`${selectorPrefix}-modal-row`}>
               <div className={`${selectorPrefix}-modal-row-label`}>{Intl.get('tab_key')}：</div>
               <div className={`${selectorPrefix}-modal-row-value`}>
-                <Input
+                <Input.OptimizedInput
+                  showCount={false}
                   value={currentSettingItem.key}
                   placeholder={Intl.get('tab_key')}
-                  status={keyDuplicateSet.has((currentSettingItem.key ?? '').trim()) ? 'error' : undefined}
+                  status={
+                    keyDuplicateSet.has((currentSettingItem.key ?? '').trim()) ? 'error' : undefined
+                  }
                   onChange={(e) => updateAt(currentSettingItem.id, { key: e.target.value })}
                 />
               </div>
@@ -310,7 +326,9 @@ const TabsTabSettingFormItem: FC<TabsTabSettingFormItemProps> = ({
             </div>
 
             <div className={`${selectorPrefix}-modal-row`}>
-              <div className={`${selectorPrefix}-modal-row-label`}>{Intl.get('tabs_closable')}：</div>
+              <div className={`${selectorPrefix}-modal-row-label`}>
+                {Intl.get('tabs_closable')}：
+              </div>
               <div className={`${selectorPrefix}-modal-row-value`}>
                 <Switch
                   checked={currentSettingItem.closable ?? true}

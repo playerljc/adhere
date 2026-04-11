@@ -1,6 +1,6 @@
 import React from 'react';
-import { Form, Input, InputNumber } from 'antd';
 
+import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { VariantSelectStandardDict, WhetherRadioHorizontalDict } from '../../../index';
@@ -9,7 +9,11 @@ export default function TextAreaSection() {
   return (
     <>
       <Form.Item name="placeholder" label={`${Intl.get('placeholder')}：`}>
-        <Input placeholder={Intl.get('placeholder')} maxLength={50} />
+        <Input.OptimizedInput
+          placeholder={Intl.get('placeholder')}
+          maxLength={50}
+          showCount={false}
+        />
       </Form.Item>
 
       <Form.Item name="allowClear" label={`${Intl.get('allow_clear')}：`}>
@@ -25,7 +29,7 @@ export default function TextAreaSection() {
       </Form.Item>
 
       <Form.Item name="maxLength" label={`${Intl.get('max_length')}：`}>
-        <InputNumber min={0} precision={0} placeholder={Intl.get('max_length')} />
+        <InputNumberInteger min={0} precision={0} placeholder={Intl.get('max_length')} />
       </Form.Item>
 
       <Form.Item name="showCount" label={`${Intl.get('show_count')}：`}>
@@ -42,4 +46,3 @@ export default function TextAreaSection() {
     </>
   );
 }
-

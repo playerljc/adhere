@@ -18,7 +18,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="message">
-            <Input placeholder={Intl.get('message')} />
+            <Input.OptimizedInput showCount={false} placeholder={Intl.get('message')} />
           </Form.Item>
         </Value>
       ),

@@ -1,10 +1,11 @@
+import React from 'react';
+
 import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import Intl from '@baifendian/adhere-util-intl';
-import React from 'react';
 
-import { InputEventsSelectStandardDict } from '../InputEvents';
 import I18nChangeFormItem from '../I18nChangeFormItem';
+import { InputEventsSelectStandardDict } from '../InputEvents';
 import NameFormItemWrapper from '../NameFormItemWrapper';
 import RulesSettingFormItem from '../RulesSettingFormItem';
 import { SlotEndLabel } from '../SlotLabel';
@@ -36,13 +37,14 @@ export function createFormPropertyLabelRow(ref: FormPropertyItemsRef): DataItemR
         <Form.Item name="label">
           <I18nChangeFormItem getTriggerContainer={() => get('label') as HTMLElement}>
             {({ onChange, value }) => (
-              <Input
+              <Input.OptimizedInput
                 value={value}
                 placeholder={Intl.get('label')}
                 maxLength={200}
                 onChange={(e) => {
                   onChange(e.target.value);
                 }}
+                showCount={false}
               />
             )}
           </I18nChangeFormItem>
@@ -118,7 +120,7 @@ export function createFormPropertyValuePropNameInputRow(): DataItemRow {
     value: (
       <Value>
         <Form.Item name="valuePropName">
-          <Input placeholder="value" maxLength={50} />
+          <Input.OptimizedInput placeholder="value" maxLength={50} showCount={false} />
         </Form.Item>
       </Value>
     ),

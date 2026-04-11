@@ -75,7 +75,12 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="name">
-            <Input placeholder={Intl.get('name')} maxLength={200} allowClear />
+            <Input.OptimizedInput
+              showCount={false}
+              placeholder={Intl.get('name')}
+              maxLength={200}
+              allowClear
+            />
           </Form.Item>
         </Value>
       ),
@@ -180,10 +185,7 @@ export function MainProperty({
   function onFieldsChange() {
     const raw = form.getFieldsValue() as RadioGroupFieldProps;
     const next = normalizeLayoutProps(raw);
-    if (
-      next.columnCount !== raw.columnCount ||
-      next.optionWrap !== raw.optionWrap
-    ) {
+    if (next.columnCount !== raw.columnCount || next.optionWrap !== raw.optionWrap) {
       form.setFieldsValue(next);
     }
     setFieldProps(getActiveFieldId() as string, next);

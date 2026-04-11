@@ -40,6 +40,7 @@ export function findDesignValueById(id: string, designValue: DesignValue): Desig
  * @return {boolean} 是否删除成功
  */
 export function deleteDesignValueByIdInChildren(id: string, designValue: DesignValue): boolean {
+  debugger;
   if (!designValue.props.children || !designValue.props.children.length) return false;
 
   const { children } = designValue.props;

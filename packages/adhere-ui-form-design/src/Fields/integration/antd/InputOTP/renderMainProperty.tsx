@@ -100,7 +100,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="status">
-            <Input placeholder="error | warning" maxLength={20} />
+            <Input.OptimizedInput showCount={false} placeholder="error | warning" maxLength={20} />
           </Form.Item>
         </Value>
       ),

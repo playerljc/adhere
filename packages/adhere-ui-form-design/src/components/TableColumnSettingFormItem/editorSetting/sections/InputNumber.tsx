@@ -1,5 +1,5 @@
-import React from 'react';
 import { Form, Input, InputNumber } from 'antd';
+import React from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -15,11 +15,19 @@ export default function InputNumberSection() {
   return (
     <>
       <Form.Item name="placeholder" label={`${Intl.get('placeholder')}：`}>
-        <Input placeholder={Intl.get('placeholder')} maxLength={50} />
+        <Input.OptimizedInput
+          placeholder={Intl.get('placeholder')}
+          maxLength={50}
+          showCount={false}
+        />
       </Form.Item>
 
       <Form.Item name="decimalSeparator" label={`${Intl.get('input_number_decimal_separator')}：`}>
-        <Input placeholder={Intl.get('input_number_decimal_separator')} maxLength={10} />
+        <Input.OptimizedInput
+          placeholder={Intl.get('input_number_decimal_separator')}
+          maxLength={10}
+          showCount={false}
+        />
       </Form.Item>
 
       <Form.Item name="min" label={`${Intl.get('input_number_min')}：`}>
@@ -84,4 +92,3 @@ export default function InputNumberSection() {
     </>
   );
 }
-

@@ -111,7 +111,7 @@ const RowContent: FC<RowContentProps> = ({
           onChange={(next) => onLabelChange(next)}
         >
           {({ onChange, value }) => (
-            <Input
+            <Input.OptimizedInput
               className={`${selectorPrefix}-input`}
               value={value ?? ''}
               placeholder={Intl.get('label')}
@@ -125,7 +125,7 @@ const RowContent: FC<RowContentProps> = ({
       </div>
 
       <div className={`${selectorPrefix}-row-combination`}>
-        <Input
+        <Input.OptimizedInput
           className={`${selectorPrefix}-input`}
           value={item.value === undefined || item.value === null ? '' : String(item.value)}
           placeholder={Intl.get('return_value')}

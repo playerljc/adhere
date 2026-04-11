@@ -1,6 +1,6 @@
 import React from 'react';
-import { Form, Input, InputNumber } from 'antd';
 
+import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
 import {
@@ -38,7 +38,7 @@ export default function SelectSection() {
       </Form.Item>
 
       <Form.Item name="listHeight" label={`${Intl.get('list_height')}：`}>
-        <InputNumber min={0} precision={0} placeholder={Intl.get('list_height')} />
+        <InputNumberInteger min={0} precision={0} placeholder={Intl.get('list_height')} />
       </Form.Item>
 
       <Form.Item name="mode" label={`${Intl.get('mode')}：`}>
@@ -46,7 +46,11 @@ export default function SelectSection() {
       </Form.Item>
 
       <Form.Item name="placeholder" label={`${Intl.get('placeholder')}：`}>
-        <Input placeholder={Intl.get('placeholder')} maxLength={50} />
+        <Input.OptimizedInput
+          placeholder={Intl.get('placeholder')}
+          maxLength={50}
+          showCount={false}
+        />
       </Form.Item>
 
       <Form.Item name="placement" label={`${Intl.get('placement')}：`}>
@@ -81,4 +85,3 @@ export default function SelectSection() {
     </>
   );
 }
-

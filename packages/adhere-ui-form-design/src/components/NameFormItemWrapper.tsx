@@ -81,7 +81,11 @@ export default ({
       ]}
       {...(formItemProps ?? {})}
     >
-      <Input placeholder={Intl.get('name')} {...(inputProps ?? {})} />
+      <Input.OptimizedInput
+        showCount={false}
+        placeholder={Intl.get('name')}
+        {...(inputProps ?? {})}
+      />
     </Form.Item>
   );
 };

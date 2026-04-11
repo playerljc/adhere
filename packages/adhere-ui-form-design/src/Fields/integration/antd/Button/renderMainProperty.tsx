@@ -24,7 +24,7 @@ const MainProperty = createStandardMainProperty({
       value: (
         <Value>
           <Form.Item name="children">
-            <Input placeholder={Intl.get('button_text')} />
+            <Input.OptimizedInput showCount={false} placeholder={Intl.get('button_text')} />
           </Form.Item>
         </Value>
       ),

@@ -42,7 +42,11 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="placeholder">
-            <Input placeholder={Intl.get('placeholder')} maxLength={50} />
+            <Input.OptimizedInput
+              showCount={false}
+              placeholder={Intl.get('placeholder')}
+              maxLength={50}
+            />
           </Form.Item>
         </Value>
       ),
@@ -54,7 +58,11 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="decimalSeparator">
-            <Input placeholder={Intl.get('input_number_decimal_separator')} maxLength={10} />
+            <Input.OptimizedInput
+              showCount={false}
+              placeholder={Intl.get('input_number_decimal_separator')}
+              maxLength={10}
+            />
           </Form.Item>
         </Value>
       ),
@@ -130,10 +138,7 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="mode">
-            <InputNumberModeSelectStandardDict
-              placeholder={Intl.get('please_select')}
-              allowClear
-            />
+            <InputNumberModeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
           </Form.Item>
         </Value>
       ),

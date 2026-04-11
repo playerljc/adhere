@@ -31,7 +31,7 @@ export type DesignValueAction =
       type: REDUCER_ACTION_TYPE.addChildrenById;
       payload: {
         id: string;
-        child: DesignValue;
+        child: DesignValue | [];
       };
     }
   | {

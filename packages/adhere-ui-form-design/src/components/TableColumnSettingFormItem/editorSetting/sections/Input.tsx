@@ -1,5 +1,5 @@
-import React from 'react';
 import { Form, Input, InputNumber } from 'antd';
+import React from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -18,7 +18,11 @@ export default function InputSection() {
       </Form.Item>
 
       <Form.Item name="placeholder" label={`${Intl.get('placeholder')}：`}>
-        <Input placeholder={Intl.get('placeholder')} maxLength={50} />
+        <Input.OptimizedInput
+          placeholder={Intl.get('placeholder')}
+          maxLength={50}
+          showCount={false}
+        />
       </Form.Item>
 
       <Form.Item name="allowClear" label={`${Intl.get('allow_clear')}：`}>
@@ -51,4 +55,3 @@ export default function InputSection() {
     </>
   );
 }
-

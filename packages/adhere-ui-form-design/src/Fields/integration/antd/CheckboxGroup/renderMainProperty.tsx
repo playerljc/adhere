@@ -6,9 +6,9 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
 import {
-  buildFormPropertyFillRow,
   DataSourceManagerFormItem,
   WhetherRadioHorizontalDict,
+  buildFormPropertyFillRow,
 } from '../../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps, FieldProps } from '../../../../types';
@@ -65,7 +65,12 @@ export function MainProperty({
       value: (
         <Value>
           <Form.Item name="name">
-            <Input placeholder={Intl.get('name')} maxLength={200} allowClear />
+            <Input.OptimizedInput
+              showCount={false}
+              placeholder={Intl.get('name')}
+              maxLength={200}
+              allowClear
+            />
           </Form.Item>
         </Value>
       ),

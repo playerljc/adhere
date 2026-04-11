@@ -325,7 +325,7 @@ const DataSourceManager: FC<DataSourceManagerProps> = ({
                     name={[rowName, 'key']}
                     className={`${selectorPrefix}-pair-key`}
                   >
-                    <Input
+                    <Input.OptimizedInput
                       placeholder={Intl.get('request_pair_key_placeholder')}
                       allowClear
                       showCount={false}
@@ -336,7 +336,11 @@ const DataSourceManager: FC<DataSourceManagerProps> = ({
                     name={[rowName, 'value']}
                     className={`${selectorPrefix}-pair-value`}
                   >
-                    <Input placeholder={Intl.get('please_enter')} allowClear showCount={false} />
+                    <Input.OptimizedInput
+                      placeholder={Intl.get('please_enter')}
+                      allowClear
+                      showCount={false}
+                    />
                   </Form.Item>
                   <Button
                     type="text"
@@ -380,7 +384,7 @@ const DataSourceManager: FC<DataSourceManagerProps> = ({
         value: (
           <TopAlignValue>
             <Form.Item name="name" rules={[{ required: true, message: Intl.get('name') }]}>
-              <Input allowClear showCount={false} placeholder={Intl.get('name')} />
+              <Input.OptimizedInput allowClear showCount={false} placeholder={Intl.get('name')} />
             </Form.Item>
           </TopAlignValue>
         ),
@@ -392,7 +396,11 @@ const DataSourceManager: FC<DataSourceManagerProps> = ({
         value: (
           <TopAlignValue>
             <Form.Item name="url" rules={[{ required: true, message: Intl.get('request_url') }]}>
-              <Input allowClear showCount={false} placeholder={Intl.get('request_url')} />
+              <Input.OptimizedInput
+                allowClear
+                showCount={false}
+                placeholder={Intl.get('request_url')}
+              />
             </Form.Item>
           </TopAlignValue>
         ),
@@ -435,7 +443,7 @@ const DataSourceManager: FC<DataSourceManagerProps> = ({
         value: (
           <TopAlignValue>
             <Form.Item name="codeKey">
-              <Input allowClear showCount={false} placeholder="code" />
+              <Input.OptimizedInput allowClear showCount={false} placeholder="code" />
             </Form.Item>
           </TopAlignValue>
         ),
@@ -459,7 +467,7 @@ const DataSourceManager: FC<DataSourceManagerProps> = ({
         value: (
           <TopAlignValue>
             <Form.Item name="dataKey">
-              <Input allowClear showCount={false} placeholder="data" />
+              <Input.OptimizedInput allowClear showCount={false} placeholder="data" />
             </Form.Item>
           </TopAlignValue>
         ),

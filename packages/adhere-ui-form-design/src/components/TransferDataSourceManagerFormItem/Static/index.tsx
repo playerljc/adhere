@@ -102,7 +102,7 @@ const RowContent: FC<RowContentProps> = ({
   return (
     <>
       <div className={`${selectorPrefix}-row-main`}>
-        <Input
+        <Input.OptimizedInput
           className={`${selectorPrefix}-input`}
           value={item.key}
           placeholder={Intl.get('transfer_item_key')}
@@ -117,7 +117,7 @@ const RowContent: FC<RowContentProps> = ({
             getTriggerContainer={() => triggerRef.current}
           >
             {({ onChange: i18nOnChange, value }) => (
-              <Input
+              <Input.OptimizedInput
                 value={value ?? ''}
                 placeholder={Intl.get('transfer_item_title')}
                 onChange={(e) => i18nOnChange(e.target.value)}
@@ -236,11 +236,12 @@ const SortableRow: FC<SortableRowProps> = ({
         <div className={`${selectorPrefix}-detail-form`}>
           <div className={`${selectorPrefix}-detail-item`}>
             <label>{Intl.get('transfer_item_key')}:</label>
-            <Input value={item.key} disabled />
+            <Input.OptimizedInput value={item.key} disabled showCount={false} />
           </div>
           <div className={`${selectorPrefix}-detail-item`}>
             <label>{Intl.get('transfer_item_title')}:</label>
-            <Input
+            <Input.OptimizedInput
+              showCount={false}
               value={typeof item.title === 'string' ? item.title : item.title?.[lang] || ''}
               disabled
             />
@@ -254,7 +255,7 @@ const SortableRow: FC<SortableRowProps> = ({
                 getTriggerContainer={() => descTriggerRef.current}
               >
                 {({ onChange: i18nOnChange, value }) => (
-                  <Input
+                  <Input.OptimizedInput
                     value={value ?? ''}
                     placeholder={Intl.get('transfer_item_description_placeholder')}
                     onChange={(e) => i18nOnChange(e.target.value)}
@@ -302,7 +303,7 @@ const FallbackRow: FC<FallbackRowProps> = ({ item, index, dataSource, onChange }
   return (
     <div className={`${selectorPrefix}-row`}>
       <div className={`${selectorPrefix}-row-main`}>
-        <Input
+        <Input.OptimizedInput
           className={`${selectorPrefix}-input`}
           value={item.key}
           placeholder={Intl.get('transfer_item_key')}
@@ -316,7 +317,7 @@ const FallbackRow: FC<FallbackRowProps> = ({ item, index, dataSource, onChange }
             getTriggerContainer={() => titleTriggerRef.current}
           >
             {({ onChange: i18nOnChange, value }) => (
-              <Input
+              <Input.OptimizedInput
                 value={value ?? ''}
                 placeholder={Intl.get('transfer_item_title')}
                 onChange={(e) => i18nOnChange(e.target.value)}

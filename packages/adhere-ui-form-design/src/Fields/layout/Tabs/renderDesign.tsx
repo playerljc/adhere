@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { type CSSProperties, useContext, useMemo } from 'react';
+import React, { type CSSProperties, useContext, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -25,7 +25,9 @@ function TabsLayoutDesign({ value }: { value: DesignValue }) {
     props: { children, styleProps, fieldProps, flexProps, actionsProps },
   } = value;
 
-  console.log('fieldProps======', fieldProps);
+  const [activeKey, setActiveKey] = useState(
+    (fieldProps as InternalTabsLayoutProps).defaultActiveKey,
+  );
 
   const designContext = useContext(DesignContext);
   const { intl } = useContext(ConfigProvider.Context);
@@ -107,6 +109,10 @@ function TabsLayoutDesign({ value }: { value: DesignValue }) {
     designContext,
   });
 
+  useEffect(() => {
+    setActiveKey((fieldProps as InternalTabsLayoutProps)?.defaultActiveKey);
+  }, [(fieldProps as InternalTabsLayoutProps)?.defaultActiveKey]);
+
   return (
     <DesignFieldWrapper
       id={id}
@@ -125,6 +131,7 @@ function TabsLayoutDesign({ value }: { value: DesignValue }) {
         <InternalTabs
           {...(fieldProps as InternalTabsLayoutProps)}
           {...actions}
+          activeKey={activeKey}
           id={id}
           styleProps={styleProps ?? {}}
           items={items}

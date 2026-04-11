@@ -1,9 +1,8 @@
 import React from 'react';
-import { Form, Input } from 'antd';
 
+import { Form, Input } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
-import type { DatePickerRuntimeState } from '../types';
 import {
   DateBoundModeSelectStandardDict,
   PickerSelectStandardDict,
@@ -13,6 +12,7 @@ import {
   VerificationStatusSelectStandardDict,
   WhetherRadioHorizontalDict,
 } from '../../../index';
+import type { DatePickerRuntimeState } from '../types';
 
 export default function DatePickerSection({ pickerValue, dateBoundMode }: DatePickerRuntimeState) {
   return (
@@ -22,7 +22,7 @@ export default function DatePickerSection({ pickerValue, dateBoundMode }: DatePi
       </Form.Item>
 
       <Form.Item name="format" label={`${Intl.get('date_format')}：`}>
-        <Input placeholder={Intl.get('date_format')} />
+        <Input.OptimizedInput placeholder={Intl.get('date_format')} showCount={false} />
       </Form.Item>
 
       <Form.Item name="picker" label={`${Intl.get('please_select')}（picker）：`}>
@@ -30,7 +30,7 @@ export default function DatePickerSection({ pickerValue, dateBoundMode }: DatePi
       </Form.Item>
 
       <Form.Item name="placeholder" label={`${Intl.get('placeholder')}：`}>
-        <Input placeholder={Intl.get('placeholder')} />
+        <Input.OptimizedInput placeholder={Intl.get('placeholder')} showCount={false} />
       </Form.Item>
 
       <Form.Item name="size" label={`${Intl.get('input_size')}：`}>
@@ -84,7 +84,10 @@ export default function DatePickerSection({ pickerValue, dateBoundMode }: DatePi
       {dateBoundMode ? (
         <>
           <Form.Item name="dateBoundBaseValue" label={`${Intl.get('date_bound_base_value')}：`}>
-            <Input placeholder={Intl.get('date_bound_base_value')} />
+            <Input.OptimizedInput
+              placeholder={Intl.get('date_bound_base_value')}
+              showCount={false}
+            />
           </Form.Item>
 
           <Form.Item name="dateBoundIncludeBase" label={`${Intl.get('date_bound_include_base')}：`}>
@@ -95,4 +98,3 @@ export default function DatePickerSection({ pickerValue, dateBoundMode }: DatePi
     </>
   );
 }
-
