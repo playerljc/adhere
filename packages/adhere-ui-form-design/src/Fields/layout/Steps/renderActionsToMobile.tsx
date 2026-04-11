@@ -1,5 +1,1 @@
-import { renderActions } from './renderActions';
-
-export function renderActionsToMobile(id: string) {
-  return renderActions(id);
-}
+﻿export { renderActions as renderActionsToMobile } from './renderActions';

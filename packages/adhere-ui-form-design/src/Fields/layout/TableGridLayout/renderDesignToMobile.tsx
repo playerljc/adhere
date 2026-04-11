@@ -1,5 +1,1 @@
-import { renderDesign } from './renderDesign';
-
-export function renderDesignToMobile(params) {
-  return renderDesign(params);
-}
+export { renderDesign as renderDesignToMobile } from './renderDesign';

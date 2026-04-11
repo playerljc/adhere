@@ -1,1 +1,1 @@
-export { renderActions as renderActionsToMobile } from '../Input/renderActions';
+﻿export { renderActions as renderActionsToMobile } from './renderActions';
