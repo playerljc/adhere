@@ -1,0 +1,31 @@
+@import '../../../constant.less';
+
+.@{prefix-cls}-collapse-layout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  &.ant-collapse {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .ant-collapse-item {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .ant-collapse-content {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .ant-collapse-content-box {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+  }
+}

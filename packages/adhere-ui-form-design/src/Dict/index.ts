@@ -10,6 +10,9 @@ import { ButtonShape } from './ButtonShape';
 import { ButtonType } from './ButtonType';
 import { CascaderShowCheckedStrategy } from './CascaderShowCheckedStrategy';
 import { ClipboardEvents } from './ClipboardEvents';
+import { CollapseCollapsible } from './CollapseCollapsible';
+import { CollapseExpandIconPlacement } from './CollapseExpandIconPlacement';
+import { CollapseSize } from './CollapseSize';
 import { ColorPickerEvents } from './ColorPickerEvents';
 import { ColorPickerFormat } from './ColorPickerFormat';
 import { ColorPickerTrigger } from './ColorPickerTrigger';
@@ -69,6 +72,9 @@ const dictImpls = {
   Direction,
   Whether,
   ClipboardEvents,
+  CollapseCollapsible,
+  CollapseExpandIconPlacement,
+  CollapseSize,
   ButtonEvents,
   ButtonType,
   ButtonShape,

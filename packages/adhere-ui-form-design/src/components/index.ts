@@ -7,6 +7,10 @@ import { ButtonHtmlTypeSelectStandardDict } from './ButtonHtmlType';
 import { ButtonShapeSelectStandardDict } from './ButtonShape';
 import { ButtonTypeSelectStandardDict } from './ButtonType';
 import { CascaderShowCheckedStrategySelectStandardDict } from './CascaderShowCheckedStrategy';
+import { CollapseCollapsibleSelectStandardDict } from './CollapseCollapsible';
+import { CollapsePanelSettingFormItem } from './CollapsePanelSettingFormItem';
+import { CollapseExpandIconPlacementSelectStandardDict } from './CollapseExpandIconPlacement';
+import { CollapseSizeSelectStandardDict } from './CollapseSize';
 import ColgroupValueSetting from './ColgroupValueSetting';
 import { ColorPickerEventsSelectStandardDict } from './ColorPickerEvents';
 import { ColorPickerFormatSelectStandardDict } from './ColorPickerFormat';
@@ -169,6 +173,10 @@ export {
   ButtonTypeSelectStandardDict,
   ButtonShapeSelectStandardDict,
   ButtonHtmlTypeSelectStandardDict,
+  CollapseCollapsibleSelectStandardDict,
+  CollapseExpandIconPlacementSelectStandardDict,
+  CollapsePanelSettingFormItem,
+  CollapseSizeSelectStandardDict,
   ColorPickerFormatSelectStandardDict,
   ColorPickerTriggerSelectStandardDict,
   DateBoundModeSelectStandardDict,

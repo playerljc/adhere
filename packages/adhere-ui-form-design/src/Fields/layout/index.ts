@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {
+  CaretRightOutlined,
   CreditCardOutlined,
   InsertRowBelowOutlined,
   LayoutOutlined,
@@ -12,6 +13,7 @@ import type { DesignItem, ToolBoxGroup } from '../../types';
 import { define as defineCardLayout } from './Card';
 import { define as defineFlexLayout } from './FlexLayout';
 import { define as defineTableGridLayout } from './TableGridLayout';
+import { define as defineCollapseLayout } from './Collapse';
 import { define as defineStepsLayout } from './Steps';
 import { define as defineTabsLayout } from './Tabs';
 
@@ -19,6 +21,7 @@ const TableGridLayout = defineTableGridLayout();
 const FlexLayout = defineFlexLayout();
 const CardLayout = defineCardLayout();
 const TabsLayout = defineTabsLayout();
+const CollapseLayout = defineCollapseLayout();
 const StepsLayout = defineStepsLayout();
 
 export function install(): {
@@ -56,6 +59,13 @@ export function install(): {
         tooltip: Intl.get('tabs_layout'),
       },
       {
+        type: CollapseLayout.type,
+        icon: React.createElement(CaretRightOutlined),
+        label: Intl.get('collapse_layout'),
+        searchLabel: Intl.get('collapse_layout'),
+        tooltip: Intl.get('collapse_layout'),
+      },
+      {
         type: StepsLayout.type,
         icon: React.createElement(OrderedListOutlined),
         label: Intl.get('steps_layout'),
@@ -63,6 +73,6 @@ export function install(): {
         tooltip: Intl.get('steps_layout'),
       },
     ],
-    designItems: [FlexLayout, TableGridLayout, CardLayout, TabsLayout, StepsLayout],
+    designItems: [FlexLayout, TableGridLayout, CardLayout, TabsLayout, CollapseLayout, StepsLayout],
   };
 }
