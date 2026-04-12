@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["components/CollapsePanelSettingFormItem/index.js"],"sourcesContent":["export { default as CollapsePanelSettingFormItem } from './CollapsePanelSettingFormItem';"],"names":[],"mappings":"8CAAwF,KAAhC"}

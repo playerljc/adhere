@@ -1,9 +1,9 @@
 import Util from '@baifendian/adhere-util';
 
 import type { DesignItem } from '../../../types';
+import { createFlexLayoutDesignValue } from '../FlexLayout';
 import { TYPE } from './constant';
-import { layoutReducerToAdd } from './layoutReducerToAdd';
-import { layoutReducerToRemove } from './layoutReducerToRemove';
+import { isDrop } from './isDrop';
 import { renderActions } from './renderActions';
 import { renderActionsProperty } from './renderActionsProperty';
 import { renderActionsToMobile } from './renderActionsToMobile';
@@ -62,10 +62,9 @@ export function define(): DesignItem {
     hasFormProperty: false,
     hasActionsProperty: true,
     hasFlexProperty: true,
-    layoutReducerToAdd,
-    layoutReducerToRemove,
     renderActions,
     renderActionsToMobile,
+    isDrop,
     defaultValue: {
       fieldProps: {
         stepItems,
@@ -84,7 +83,7 @@ export function define(): DesignItem {
         minSize: true,
         scroll: true,
       },
-      children: stepItems.map(() => []),
+      children: stepItems.map(() => createFlexLayoutDesignValue()),
     },
   };
 }

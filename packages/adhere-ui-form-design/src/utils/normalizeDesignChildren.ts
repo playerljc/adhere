@@ -1,10 +1,10 @@
 import type { DesignValue } from '../types';
 
 /**
- * 把 DesignValueProps.children（(DesignValue | DesignValue[])[]）拍平成一维数组
+ * 将 props.children 规范为一维 DesignValue[]。
  */
 export default function normalizeDesignChildren(
-  children: (DesignValue | DesignValue[])[] | undefined,
+  children: DesignValue[] | undefined,
   options?: {
     /**
      * 为 true 时：children 为空/不存在则返回 undefined
@@ -22,9 +22,7 @@ export default function normalizeDesignChildren(
   const result: DesignValue[] = [];
 
   for (const item of children) {
-    if (Array.isArray(item)) {
-      result.push(...item);
-    } else if (item) {
+    if (item) {
       result.push(item);
     }
   }
@@ -35,4 +33,3 @@ export default function normalizeDesignChildren(
 
   return result;
 }
-

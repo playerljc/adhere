@@ -25,6 +25,24 @@ declare const names: Partial<{
             value: string;
         }[];
     };
+    CollapseCollapsible: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    CollapseExpandIconPlacement: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    CollapseSize: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
     ButtonEvents: {
         value: {
             label: string;
@@ -304,6 +322,42 @@ declare const names: Partial<{
         }[];
     };
     TableNumberGeneratorRule: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    StepsSize: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    StepsStatus: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    StepsSwiperDirection: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    StepsSwiperItemLayoutMode: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    StepsSwiperItemRenderMode: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    StepsType: {
         value: {
             label: string;
             value: string;

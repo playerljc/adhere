@@ -1,4 +1,1 @@
-import type { DesignValue } from '../../../types';
-export declare function renderDesignToMobile(params: {
-    value: DesignValue;
-}): import("react").ReactNode;
+export { renderDesign as renderDesignToMobile } from './renderDesign';

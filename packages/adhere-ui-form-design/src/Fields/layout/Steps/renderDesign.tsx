@@ -9,12 +9,7 @@ import { DesignContext } from '../../../Design/Context';
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignValue, I18nValue } from '../../../types';
-import {
-  actionsCodeStringToEvents,
-  isReactNode,
-  isRootFieldId,
-  resolveI18nText,
-} from '../../../utils';
+import { actionsCodeStringToEvents, isRootFieldId, resolveI18nText } from '../../../utils';
 import { parseDesign } from '../../parse';
 import InternalSteps, { type InternalStepsLayoutProps } from './InternalSteps';
 
@@ -44,38 +39,8 @@ function StepsLayoutDesign({ value }: { value: DesignValue }) {
     const stepItems = _fieldProps.stepItems ?? [];
 
     return stepItems.map((step, index) => {
-      const paneContainer = children?.[index];
-      const paneChildrenRaw = Array.isArray(paneContainer)
-        ? paneContainer
-        : paneContainer?.props?.children ?? [];
-      const paneParentId = Array.isArray(paneContainer) ? id : paneContainer?.id ?? id;
-
-      const paneChildren = paneChildrenRaw.reduce<DesignValue[]>((acc, c) => {
-        if (Array.isArray(c)) {
-          acc.push(...c);
-        } else if (c) {
-          acc.push(c);
-        }
-        return acc;
-      }, []);
-
-      const paneNode = (
-        <>
-          {paneChildren.map((child) => {
-            const rendered = parseDesign({
-              parentId: paneParentId,
-              value: child,
-              context: designContext,
-            });
-
-            return isReactNode(rendered) ? rendered : null;
-          })}
-        </>
-      );
-
       const titleText =
-        resolveI18nText(step.title as I18nValue | string | undefined, lang) ||
-        `Step ${index + 1}`;
+        resolveI18nText(step.title as I18nValue | string | undefined, lang) || `Step ${index + 1}`;
       const descriptionText = resolveI18nText(
         step.description as I18nValue | string | undefined,
         lang,
@@ -87,7 +52,11 @@ function StepsLayoutDesign({ value }: { value: DesignValue }) {
         title: titleText,
         ...(descriptionText ? { description: descriptionText } : {}),
         disabled: step.disabled,
-        children: paneNode,
+        children: parseDesign({
+          parentId: id,
+          value: children?.[index] as DesignValue,
+          context: designContext,
+        }),
         onNext: async () => {
           setCurrent((c) => {
             const n = Math.min(c + 1, lastIndex);

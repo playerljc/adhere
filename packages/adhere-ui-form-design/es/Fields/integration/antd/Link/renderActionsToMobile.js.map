@@ -1,1 +1,1 @@
-{"version":3,"file":"renderActionsToMobile.js","sources":["Fields/integration/antd/Link/renderActionsToMobile.js"],"sourcesContent":["export { renderActionsToMobile } from '../Input/renderActionsToMobile';"],"names":[],"mappings":"4BAAsE,KAAhC"}
+{"version":3,"file":"renderActionsToMobile.js","sources":["Fields/integration/antd/Link/renderActionsToMobile.js"],"sourcesContent":["export { renderActions as renderActionsToMobile } from './renderActions';"],"names":[],"mappings":"6CAAwE,KAAjB"}

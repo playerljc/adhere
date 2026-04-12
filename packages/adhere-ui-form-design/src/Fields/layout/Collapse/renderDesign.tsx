@@ -8,12 +8,7 @@ import { DesignContext } from '../../../Design/Context';
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignValue } from '../../../types';
-import {
-  actionsCodeStringToEvents,
-  isReactNode,
-  isRootFieldId,
-  resolveI18nText,
-} from '../../../utils';
+import { actionsCodeStringToEvents, isRootFieldId, resolveI18nText } from '../../../utils';
 import { parseDesign } from '../../parse';
 import InternalCollapse, { type InternalCollapseLayoutProps } from './InternalCollapse';
 
@@ -27,7 +22,7 @@ function normalizeActiveKeyForCollapse(
 ): ActiveKeyState {
   if (v === undefined || v === null) return undefined;
   if (accordion) {
-    return Array.isArray(v) ? (v[0] ?? undefined) : v;
+    return Array.isArray(v) ? v[0] ?? undefined : v;
   }
   if (Array.isArray(v)) return v;
   return [v];
@@ -55,35 +50,6 @@ function CollapseLayoutDesign({ value }: { value: DesignValue }) {
     const panelItems = _fieldProps.panelItems ?? [];
 
     return panelItems.map((panel, index) => {
-      const paneContainer = children?.[index];
-      const paneChildrenRaw = Array.isArray(paneContainer)
-        ? paneContainer
-        : paneContainer?.props?.children ?? [];
-      const paneParentId = Array.isArray(paneContainer) ? id : paneContainer?.id ?? id;
-
-      const paneChildren = paneChildrenRaw.reduce<DesignValue[]>((acc, c) => {
-        if (Array.isArray(c)) {
-          acc.push(...c);
-        } else if (c) {
-          acc.push(c);
-        }
-        return acc;
-      }, []);
-
-      const paneNode = (
-        <>
-          {paneChildren.map((child) => {
-            const rendered = parseDesign({
-              parentId: paneParentId,
-              value: child,
-              context: designContext,
-            });
-
-            return isReactNode(rendered) ? rendered : null;
-          })}
-        </>
-      );
-
       return {
         key: String(panel.key),
         label: resolveI18nText(panel.label as any, lang) || `Panel ${index + 1}`,
@@ -91,7 +57,11 @@ function CollapseLayoutDesign({ value }: { value: DesignValue }) {
         destroyOnHidden: panel.destroyOnHidden,
         showArrow: panel.showArrow,
         collapsible: panel.collapsible,
-        children: paneNode,
+        children: (parseDesign({
+          parentId: id,
+          value: children?.[index] as DesignValue,
+          context: designContext,
+        }) ?? null) as ReactNode,
       };
     });
   }, [children, designContext, fieldProps, id, lang]);

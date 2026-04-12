@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,CollapseCollapsibleSelectStandardDict=Components[genDictComponentName(names.CollapseCollapsible,ComponentNames.Select.Standard)];export{CollapseCollapsibleSelectStandardDict};
+//# sourceMappingURL=CollapseCollapsible.js.map

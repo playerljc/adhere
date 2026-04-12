@@ -1,5 +1,6 @@
 import type { DesignItem } from '../../../types';
 import { TYPE } from './constant';
+import { isDrop } from './isDrop';
 import { layoutReducerToAdd } from './layoutReducerToAdd';
 import { layoutReducerToRemove } from './layoutReducerToRemove';
 import { renderActions } from './renderActions';
@@ -25,6 +26,7 @@ export function define(): DesignItem {
     layoutReducerToRemove,
     renderActions,
     renderActionsToMobile,
+    isDrop,
     defaultValue: {
       fieldProps: {
         variant: 'outlined',

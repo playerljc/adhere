@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,CollapseSizeSelectStandardDict=Components[genDictComponentName(names.CollapseSize,ComponentNames.Select.Standard)];export{CollapseSizeSelectStandardDict};
+//# sourceMappingURL=CollapseSize.js.map

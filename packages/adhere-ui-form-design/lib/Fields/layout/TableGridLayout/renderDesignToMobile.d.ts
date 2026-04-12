@@ -1,1 +1,1 @@
-export declare function renderDesignToMobile(params: any): import("react").ReactNode;
+export { renderDesign as renderDesignToMobile } from './renderDesign';

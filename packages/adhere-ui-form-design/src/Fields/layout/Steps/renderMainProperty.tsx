@@ -7,8 +7,8 @@ import { arrayMove } from '@dnd-kit/sortable';
 
 import { DesignContext } from '../../../Design/Context';
 import {
-  type FormPropertyLabelSlotRef,
   DirectionSelectStandardDict,
+  type FormPropertyLabelSlotRef,
   StepsSizeSelectStandardDict,
   StepsStatusSelectStandardDict,
   StepsStepSettingFormItem,
@@ -19,7 +19,8 @@ import {
   buildFormPropertyTitleRow,
 } from '../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../components/TableGridLayout';
-import type { DesignValue, DesignValueProps } from '../../../types';
+import type { DesignValueProps } from '../../../types';
+import { createFlexLayoutDesignValue } from '../FlexLayout';
 import type { InternalStepsLayoutProps } from './InternalSteps';
 
 type StepItemLike = { id?: string };
@@ -136,7 +137,10 @@ function MainProperty(props: DesignValueProps) {
   }
 
   function onAddStep() {
-    updateChildrenById(getActiveFieldId() as string, [...(children as DesignValue[][]), []]);
+    updateChildrenById(getActiveFieldId() as string, [
+      ...(children ?? []),
+      createFlexLayoutDesignValue(),
+    ]);
   }
 
   function onDeleteStep(id: string) {
@@ -291,7 +295,10 @@ function MainProperty(props: DesignValueProps) {
                 value: (
                   <Value>
                     <Form.Item name="size">
-                      <StepsSizeSelectStandardDict allowClear placeholder={Intl.get('input_size')} />
+                      <StepsSizeSelectStandardDict
+                        allowClear
+                        placeholder={Intl.get('input_size')}
+                      />
                     </Form.Item>
                   </Value>
                 ),

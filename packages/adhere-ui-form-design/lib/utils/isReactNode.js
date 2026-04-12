@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_react=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=isReactNode,_interopRequireDefault(require("react")));function isReactNode(e){return null==e||"string"==typeof e||"number"==typeof e||"boolean"==typeof e||Array.isArray(e)||_react.default.isValidElement(e)}
+//# sourceMappingURL=isReactNode.js.map

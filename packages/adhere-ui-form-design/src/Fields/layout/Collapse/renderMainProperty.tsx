@@ -1,21 +1,22 @@
 import merge from 'lodash.merge';
 import React, { type ReactNode, useContext, useEffect, useMemo, useRef } from 'react';
 
-import { arrayMove } from '@dnd-kit/sortable';
 import { Form, Select, Switch } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
+import { arrayMove } from '@dnd-kit/sortable';
 
 import { DesignContext } from '../../../Design/Context';
 import {
-  type FormPropertyLabelSlotRef,
   CollapseCollapsibleSelectStandardDict,
   CollapseExpandIconPlacementSelectStandardDict,
   CollapsePanelSettingFormItem,
   CollapseSizeSelectStandardDict,
+  type FormPropertyLabelSlotRef,
   buildFormPropertyTitleRow,
 } from '../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../components/TableGridLayout';
-import type { DesignValue, DesignValueProps } from '../../../types';
+import type { DesignValueProps } from '../../../types';
+import { createFlexLayoutDesignValue } from '../FlexLayout';
 import type { InternalCollapseLayoutProps } from './InternalCollapse';
 
 type PanelItemLike = { id?: string; key?: string | number };
@@ -106,8 +107,8 @@ function resolveCollapseDefaultActiveKey(
       const prevArr = Array.isArray(prevDefault)
         ? prevDefault.map(String)
         : prevDefault != null
-          ? [String(prevDefault)]
-          : [];
+        ? [String(prevDefault)]
+        : [];
       const hitRemoved = prevArr.some((k) => removed.includes(k));
       if (hitRemoved) {
         const filtered = prevArr.filter((k) => nextKeys.includes(k));
@@ -151,7 +152,8 @@ function MainProperty(props: DesignValueProps) {
   function onFieldsChange() {
     const values = form.getFieldsValue();
     const next = merge({}, fieldProps, values);
-    const prevItems = ((fieldProps as InternalCollapseLayoutProps).panelItems ?? []) as PanelItemLike[];
+    const prevItems = ((fieldProps as InternalCollapseLayoutProps).panelItems ??
+      []) as PanelItemLike[];
     if (values.panelItems !== undefined) {
       next.panelItems = values.panelItems;
     }
@@ -160,11 +162,13 @@ function MainProperty(props: DesignValueProps) {
     const nextKeys = panelKeys(nextItems);
     const panelItemsChanged = panelItemsSignature(prevItems) !== panelItemsSignature(nextItems);
 
-    const nextAccordion = values.accordion ?? (next as InternalCollapseLayoutProps).accordion ?? false;
+    const nextAccordion =
+      values.accordion ?? (next as InternalCollapseLayoutProps).accordion ?? false;
     const prevAccordion = (fieldProps as InternalCollapseLayoutProps).accordion ?? false;
 
     if (panelItemsChanged) {
-      const prevDefault = (fieldProps as InternalCollapseLayoutProps).defaultActiveKey as ActiveKeyFormValue;
+      const prevDefault = (fieldProps as InternalCollapseLayoutProps)
+        .defaultActiveKey as ActiveKeyFormValue;
       const formDefault = values.defaultActiveKey as ActiveKeyFormValue;
       const resolved = resolveCollapseDefaultActiveKey(
         prevItems,
@@ -173,7 +177,8 @@ function MainProperty(props: DesignValueProps) {
         prevDefault,
         formDefault,
       );
-      (next as InternalCollapseLayoutProps).defaultActiveKey = resolved as InternalCollapseLayoutProps['defaultActiveKey'];
+      (next as InternalCollapseLayoutProps).defaultActiveKey =
+        resolved as InternalCollapseLayoutProps['defaultActiveKey'];
       if (JSON.stringify(resolved) !== JSON.stringify(formDefault)) {
         form.setFieldsValue({ defaultActiveKey: resolved });
       }
@@ -191,7 +196,10 @@ function MainProperty(props: DesignValueProps) {
   }
 
   function onAddPanel() {
-    updateChildrenById(getActiveFieldId() as string, [...(children as DesignValue[][]), []]);
+    updateChildrenById(getActiveFieldId() as string, [
+      ...(children ?? []),
+      createFlexLayoutDesignValue(),
+    ]);
   }
 
   function onDeletePanel(pid: string) {

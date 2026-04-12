@@ -43,7 +43,7 @@ export type DesignValueProps = {
   flexProps?: FlexProps;
 
   // 控件下的子项(一般是布局控件才有children)
-  children?: (DesignValue | DesignValue[])[];
+  children?: DesignValue[];
 };
 
 /**
@@ -144,7 +144,7 @@ export interface DesignContextType {
   setFlexProps: (id: string, props: FlexProps) => void;
   setDataSourceConfig: (id: string, config: DataSourceConfig) => void;
   // --------- add -----------
-  addChildrenById: (id: string, child: DesignValue | []) => void;
+  addChildrenById: (id: string, child: DesignValue) => void;
   // --------- delete -----------
   deleteFieldByChildren: (id: string) => void;
   updateChildrenById: (id: string, children: DesignValueProps['children']) => void;

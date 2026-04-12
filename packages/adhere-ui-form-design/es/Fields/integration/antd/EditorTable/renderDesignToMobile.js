@@ -1,2 +1,2 @@
-import{renderDesign}from"./renderDesign";function renderDesignToMobile(e){return renderDesign(e)}export{renderDesignToMobile};
+export{renderDesign as renderDesignToMobile}from"./renderDesign";
 //# sourceMappingURL=renderDesignToMobile.js.map

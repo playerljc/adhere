@@ -1,2 +1,2 @@
-import{renderActions}from"./renderActions";function renderActionsToMobile(r){return renderActions(r)}export{renderActionsToMobile};
+export{renderActions as renderActionsToMobile}from"./renderActions";
 //# sourceMappingURL=renderActionsToMobile.js.map

@@ -17,17 +17,8 @@ export function findDesignValueById(id: string, designValue: DesignValue): Desig
   if (designValue.props.children) {
     for (let i = 0; i < designValue.props.children.length; i++) {
       const child = designValue.props.children[i];
-      if (Array.isArray(child)) {
-        for (const c of child) {
-          const result = findDesignValueById(id, c);
-          if (result) return result;
-        }
-      } else {
-        const result = findDesignValueById(id, child);
-        if (result) {
-          return result;
-        }
-      }
+      const result = findDesignValueById(id, child);
+      if (result) return result;
     }
   }
 }
@@ -40,21 +31,13 @@ export function findDesignValueById(id: string, designValue: DesignValue): Desig
  * @return {boolean} 是否删除成功
  */
 export function deleteDesignValueByIdInChildren(id: string, designValue: DesignValue): boolean {
-  debugger;
   if (!designValue.props.children || !designValue.props.children.length) return false;
 
   const { children } = designValue.props;
 
-  // children 里元素可能是 DesignValue 或 DesignValue[]
   for (let i = 0; i < children.length; i++) {
     const child = children[i];
-    if (Array.isArray(child)) {
-      const idx = child.findIndex((c) => c.id === id);
-      if (idx > -1) {
-        child.splice(idx, 1);
-        return true;
-      }
-    } else if (child.id === id) {
+    if (child.id === id) {
       children.splice(i, 1);
       return true;
     }
@@ -62,16 +45,9 @@ export function deleteDesignValueByIdInChildren(id: string, designValue: DesignV
 
   for (let i = 0; i < children.length; i++) {
     const child = children[i];
-    if (Array.isArray(child)) {
-      for (const c of child) {
-        const deleted = deleteDesignValueByIdInChildren(id, c);
-        if (deleted) return true;
-      }
-    } else {
-      const deleted = deleteDesignValueByIdInChildren(id, child);
-      if (deleted) {
-        return true;
-      }
+    const deleted = deleteDesignValueByIdInChildren(id, child);
+    if (deleted) {
+      return true;
     }
   }
 
@@ -110,21 +86,13 @@ export function findParentIdById(id: string, designValue: DesignValue): string |
 
   for (let i = 0; i < designValue.props.children.length; i++) {
     const child = designValue.props.children[i];
-    if (Array.isArray(child)) {
-      for (const c of child) {
-        if (c.id === id) return designValue.id;
-        const parentId = findParentIdById(id, c);
-        if (parentId) return parentId;
-      }
-    } else {
-      if (child.id === id) {
-        return designValue.id;
-      }
+    if (child.id === id) {
+      return designValue.id;
+    }
 
-      const parentId = findParentIdById(id, child);
-      if (parentId) {
-        return parentId;
-      }
+    const parentId = findParentIdById(id, child);
+    if (parentId) {
+      return parentId;
     }
   }
 }
@@ -149,11 +117,7 @@ export function genNewName(name: string, designValue: DesignValue): string {
 
     if (value.props?.children && value.props.children.length > 0) {
       for (const child of value.props.children) {
-        if (Array.isArray(child)) {
-          child.forEach((c) => collectNames(c));
-        } else {
-          collectNames(child);
-        }
+        collectNames(child);
       }
     }
   }

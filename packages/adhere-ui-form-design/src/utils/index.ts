@@ -12,15 +12,14 @@ import { formItemToProps } from './formItemToProps';
 import { getLabel } from './getLabel';
 import { getLabelByType, getToolBoxItemByType } from './getLabelByType';
 import { isDesktop } from './isDesktop';
-import { isDragEnd } from './isDragEnd';
-import { isLayoutItem } from './isLayoutItem';
+import { isLayoutItemByType } from './isLayoutItemByType';
 import isReactNode from './isReactNode';
 import normalizeDesignChildren from './normalizeDesignChildren';
-import { genRootFieldId, getRootFieldId, isRootFieldId } from './rootFieldId';
 import { resolveI18nText } from './resolveI18nText';
-import { toI18nLabel } from './toI18nLabel';
+import { genRootFieldId, getRootFieldId, isRootFieldId } from './rootFieldId';
 import { rulesSettingToRules } from './rulesSettingToRules';
 import { styleCodeStringToCSSProperties } from './styleCodeStringToCSSProperties';
+import { toI18nLabel } from './toI18nLabel';
 import { useDesignFieldDataSourceOptions } from './useDesignFieldDataSourceOptions';
 
 export {
@@ -36,8 +35,7 @@ export {
   getLabel,
   rulesSettingToRules,
   styleCodeStringToCSSProperties,
-  isLayoutItem,
-  isDragEnd,
+  isLayoutItemByType,
   isDesktop,
   isReactNode,
   normalizeDesignChildren,
@@ -57,9 +55,7 @@ export {
   toI18nLabel,
 };
 export type { LabelValueColSpan } from './computeLabelValueColSpan';
-export type {
-  DesignFieldDataSourceOption,
-} from './dataSourceOptions';
+export type { DesignFieldDataSourceOption } from './dataSourceOptions';
 export {
   fetchDataSourceItemConfigAsOptions,
   findDataSourceItemConfigByDynamicId,

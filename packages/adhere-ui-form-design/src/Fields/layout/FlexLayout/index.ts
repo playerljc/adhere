@@ -1,5 +1,7 @@
 import type { DesignItem } from '../../../types';
 import { TYPE } from './constant';
+import { createFlexLayoutDesignValue } from './createFlexLayoutDesignValue';
+import { isDrop } from './isDrop';
 import { layoutReducerToAdd } from './layoutReducerToAdd';
 import { layoutReducerToRemove } from './layoutReducerToRemove';
 import { renderActions } from './renderActions';
@@ -9,6 +11,8 @@ import { renderDesignToMobile } from './renderDesignToMobile';
 import { renderFlexProperty } from './renderFlexProperty';
 import { renderMainProperty } from './renderMainProperty';
 import { renderStyleProperty } from './renderStyleProperty';
+
+export { createFlexLayoutDesignValue };
 
 export function define(): DesignItem {
   return {
@@ -25,6 +29,7 @@ export function define(): DesignItem {
     layoutReducerToRemove,
     renderActions,
     renderActionsToMobile,
+    isDrop,
     defaultValue: {
       fieldProps: {
         direction: 'vertical',

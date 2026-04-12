@@ -1,0 +1,19 @@
+@import '../../../constant.less';
+
+.@{prefix-cls}-steps-layout{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  .adhere-ui-anthoc-steps-swiper-content {
+    .adhere-ui-anthoc-steps-swiper-item {
+      display: flex;
+      flex-direction: column;
+
+      &.adhere-ui-anthoc-steps-swiper-item-active {
+        display: flex;
+      }
+    }
+  }
+}

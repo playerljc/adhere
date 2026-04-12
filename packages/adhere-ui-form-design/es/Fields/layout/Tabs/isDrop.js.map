@@ -1,0 +1,1 @@
+{"version":3,"file":"isDrop.js","sources":["Fields/layout/Tabs/isDrop.js"],"sourcesContent":["/**\n * isDrop\n * @description Tabs中什么都不能放\n */\nexport function isDrop() {\n  return false;\n}"],"names":["isDrop"],"mappings":"AAIO,SAASA,SACd,MAAO,CAAA,CACT,QAFgBA,MAEhB"}

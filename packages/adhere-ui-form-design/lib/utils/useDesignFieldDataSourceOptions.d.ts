@@ -12,6 +12,7 @@ export type UseDesignFieldDataSourceOptionsResult = {
 };
 /**
  * 设计器内：根据 fieldProps 上的数据源配置（静态 / 动态）得到 options 与 loading
+ * @param fieldProps
  * @param designOptionsKey 如 selectOptions、后续 radioOptions 等
  */
 export declare function useDesignFieldDataSourceOptions(fieldProps: FieldProps, designOptionsKey?: string): UseDesignFieldDataSourceOptionsResult;

@@ -38,7 +38,7 @@ import {
   type StyleProps,
   ToolBoxItem,
 } from '../types';
-import { genRootFieldId, isDragEnd } from '../utils';
+import { genRootFieldId } from '../utils';
 import sage from '../utils/saga';
 import { DesignContext } from './Context';
 import Editor from './DesignEditor';
@@ -48,7 +48,6 @@ import Toolbar from './Toolbar';
 import Toolbox from './Toolbox';
 import ToolboxItemDragOverlay from './Toolbox/ToolboxItemDragOverlay';
 
-// import { isLayoutItem } from '../utils';
 const { usePropToState } = Hooks;
 
 const store = createStore(null, {}, applyMiddleware(createLoggerMiddleware(), sage));
@@ -195,12 +194,19 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
 
         if (!over) return;
 
+        // 放置的容器对象(一般是TableGridLayout)
+        const overItem = over.data.current as DesignValue;
+        const targetItem = getItemByType(overItem.type);
+
+        // 不能放置则返回
         if (
-          !isDragEnd({
-            overId: over.id as string,
-            activeType: active?.data?.current?.type as string,
-            overType: over?.data?.current?.type,
-          })
+          // !isDragEnd({
+          //   overId: over.id as string,
+          //   activeType: active?.data?.current?.type as string,
+          //   overType: over?.data?.current?.type,
+          // })
+          targetItem &&
+          !targetItem?.isDrop?.(active?.data?.current?.type)
         ) {
           return;
         }
@@ -213,11 +219,8 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
 
         // 拖动的toolBox
         const activeItem = active.data.current as ToolBoxItem;
-        // 放置的容器对象(一般是TableGridLayout)
-        const overItem = over.data.current as DesignValue;
 
         const sourceItem = getItemByType(activeItem.type);
-        const targetItem = getItemByType(overItem.type);
 
         const filedId = Util.uuid();
 
@@ -337,7 +340,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         });
       }
 
-      function addChildrenById(id: string, child: DesignValue | []) {
+      function addChildrenById(id: string, child: DesignValue) {
         dispatch({
           type: REDUCER_ACTION_TYPE.addChildrenById,
           payload: {

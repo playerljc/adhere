@@ -1,0 +1,1 @@
+{"version":3,"file":"isDrop.js","sources":["Fields/layout/Steps/isDrop.js"],"sourcesContent":["/**\n * isDrop\n * @description Steps中什么都不能放\n */\nexport function isDrop() {\n  return false;\n}"],"names":["isDrop"],"mappings":"AAIO,SAASA,SACd,MAAO,CAAA,CACT,QAFgBA,MAEhB"}

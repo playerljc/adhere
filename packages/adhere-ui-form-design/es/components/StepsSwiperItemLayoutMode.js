@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,StepsSwiperItemLayoutModeSelectStandardDict=Components[genDictComponentName(names.StepsSwiperItemLayoutMode,ComponentNames.Select.Standard)];export{StepsSwiperItemLayoutModeSelectStandardDict};
+//# sourceMappingURL=StepsSwiperItemLayoutMode.js.map

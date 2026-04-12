@@ -1,6 +1,6 @@
-import { Form, Input, InputNumber } from 'antd';
 import React from 'react';
 
+import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
 import {
@@ -38,7 +38,7 @@ export default function InputSection() {
       </Form.Item>
 
       <Form.Item name="maxLength" label={`${Intl.get('max_length')}：`}>
-        <InputNumber min={0} precision={0} placeholder={Intl.get('max_length')} />
+        <InputNumberInteger min={0} precision={0} placeholder={Intl.get('max_length')} />
       </Form.Item>
 
       <Form.Item name="showCount" label={`${Intl.get('show_count')}：`}>

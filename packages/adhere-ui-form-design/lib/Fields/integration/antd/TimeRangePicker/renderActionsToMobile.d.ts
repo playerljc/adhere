@@ -1,2 +1,1 @@
-import { type ReactNode } from 'react';
-export declare function renderActionsToMobile(id: string): ReactNode;
+export { renderActions as renderActionsToMobile } from './renderActions';

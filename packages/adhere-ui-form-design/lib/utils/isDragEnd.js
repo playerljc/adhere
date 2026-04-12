@@ -1,2 +1,0 @@
-Object.defineProperty(exports,"__esModule",{value:!0}),exports.isDragEnd=isDragEnd;var _constant=require("../Fields/layout/TableGridLayout/constant"),_isLayoutItem=require("./isLayoutItem");function isDragEnd(t){var e=t.activeType,t=t.overType;return!((0,_isLayoutItem.isLayoutItem)(e)||!(0,_isLayoutItem.isLayoutItem)(t)||t!==_constant.TYPE)||!(!(0,_isLayoutItem.isLayoutItem)(e)||!(0,_isLayoutItem.isLayoutItem)(t)||t===_constant.TYPE)||(e===_constant.TYPE&&_constant.TYPE,!1)}
-//# sourceMappingURL=isDragEnd.js.map

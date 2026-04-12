@@ -20,7 +20,7 @@ export type DesignValueProps = {
     styleProps?: StyleProps;
     actionsProps?: ActionsProps;
     flexProps?: FlexProps;
-    children?: (DesignValue | DesignValue[])[];
+    children?: DesignValue[];
 };
 /**
  * DataSourceItemConfig
@@ -96,6 +96,7 @@ export interface DesignContextType {
     setDataSourceConfig: (id: string, config: DataSourceConfig) => void;
     addChildrenById: (id: string, child: DesignValue) => void;
     deleteFieldByChildren: (id: string) => void;
+    updateChildrenById: (id: string, children: DesignValueProps['children']) => void;
 }
 /**
  * DesignComponent

@@ -14,6 +14,9 @@ export interface TabsTabSettingItem {
 export interface TabsTabSettingFormItemProps {
     value?: TabsTabSettingItem[];
     onChange?: (value: TabsTabSettingItem[]) => void;
+    onAdd?: () => void;
+    onDelete?: (id: string) => void;
+    onSortChange?: (originId: string, targetId: string) => void;
     className?: string;
     style?: React.CSSProperties;
 }

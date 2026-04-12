@@ -1,6 +1,6 @@
-import { Form, Input, InputNumber } from 'antd';
 import React from 'react';
 
+import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
 import {
@@ -31,19 +31,23 @@ export default function InputNumberSection() {
       </Form.Item>
 
       <Form.Item name="min" label={`${Intl.get('input_number_min')}：`}>
-        <InputNumber placeholder={Intl.get('input_number_min')} />
+        <InputNumberInteger placeholder={Intl.get('input_number_min')} />
       </Form.Item>
 
       <Form.Item name="max" label={`${Intl.get('input_number_max')}：`}>
-        <InputNumber placeholder={Intl.get('input_number_max')} />
+        <InputNumberInteger placeholder={Intl.get('input_number_max')} />
       </Form.Item>
 
       <Form.Item name="step" label={`${Intl.get('input_number_step')}：`}>
-        <InputNumber min={0} placeholder={Intl.get('input_number_step')} />
+        <InputNumberInteger min={0} placeholder={Intl.get('input_number_step')} />
       </Form.Item>
 
       <Form.Item name="precision" label={`${Intl.get('input_number_precision')}：`}>
-        <InputNumber min={0} precision={0} placeholder={Intl.get('input_number_precision')} />
+        <InputNumberInteger
+          min={0}
+          precision={0}
+          placeholder={Intl.get('input_number_precision')}
+        />
       </Form.Item>
 
       <Form.Item name="thousands" label={`${Intl.get('thousands')}：`}>

@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,StepsStatusSelectStandardDict=Components[genDictComponentName(names.StepsStatus,ComponentNames.Select.Standard)];export{StepsStatusSelectStandardDict};
+//# sourceMappingURL=StepsStatus.js.map

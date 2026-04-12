@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/layout/Collapse/constant.js"],"sourcesContent":["export var TYPE = 'collapse-layout';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,yBAAPA,IAAwB"}

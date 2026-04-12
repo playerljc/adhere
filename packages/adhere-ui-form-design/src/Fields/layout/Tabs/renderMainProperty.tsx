@@ -1,9 +1,9 @@
 import merge from 'lodash.merge';
 import React, { type ReactNode, useContext, useEffect, useMemo, useRef } from 'react';
 
-import { arrayMove } from '@dnd-kit/sortable';
 import { Form, InputNumberInteger, Select, Switch } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
+import { arrayMove } from '@dnd-kit/sortable';
 
 import { DesignContext } from '../../../Design/Context';
 import {
@@ -15,7 +15,8 @@ import {
   buildFormPropertyTitleRow,
 } from '../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../components/TableGridLayout';
-import type { DesignValue, DesignValueProps } from '../../../types';
+import type { DesignValueProps } from '../../../types';
+import { createFlexLayoutDesignValue } from '../FlexLayout';
 import type { InternalTabsLayoutProps } from './InternalTabs';
 
 type TabItemLike = { id?: string; key?: string };
@@ -123,7 +124,10 @@ function MainProperty(props: DesignValueProps) {
   }
 
   function onAddTab() {
-    updateChildrenById(getActiveFieldId() as string, [...(children as DesignValue[][]), []]);
+    updateChildrenById(getActiveFieldId() as string, [
+      ...(children ?? []),
+      createFlexLayoutDesignValue(),
+    ]);
   }
 
   function onDeleteTab(id: string) {

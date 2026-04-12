@@ -20,15 +20,8 @@ export function findTypeById({
   if (designValue.props.children) {
     for (let i = 0; i < designValue.props.children.length; i++) {
       const child = designValue.props.children[i];
-      if (Array.isArray(child)) {
-        for (const c of child) {
-          const result = findTypeById({ id, designValue: c });
-          if (result !== undefined) return result;
-        }
-      } else {
-        const result = findTypeById({ id, designValue: child });
-        if (result !== undefined) return result;
-      }
+      const result = findTypeById({ id, designValue: child });
+      if (result !== undefined) return result;
     }
   }
 
