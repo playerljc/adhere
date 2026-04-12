@@ -188,6 +188,12 @@ export interface DesignItem extends BaseItem {
    * 组件designValue的默认值配置
    */
   defaultValue?: DesignValueProps;
+
+  /**
+   * 从工具箱拖入画布时用于生成新的 props（含独立 UUID），避免复用 defaultValue 导致多实例 id 冲突。
+   * 未实现时回退为 defaultValue。
+   */
+  createDefaultValue?: () => DesignValueProps;
 }
 
 /**

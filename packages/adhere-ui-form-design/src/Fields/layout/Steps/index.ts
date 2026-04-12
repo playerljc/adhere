@@ -1,6 +1,6 @@
 import Util from '@baifendian/adhere-util';
 
-import type { DesignItem } from '../../../types';
+import type { DesignItem, DesignValueProps } from '../../../types';
 import { createFlexLayoutDesignValue } from '../FlexLayout';
 import { TYPE } from './constant';
 import { renderActions } from './renderActions';
@@ -12,7 +12,8 @@ import { renderFlexProperty } from './renderFlexProperty';
 import { renderMainProperty } from './renderMainProperty';
 import { renderStyleProperty } from './renderStyleProperty';
 
-export function define(): DesignItem {
+/** 生成一份新的 Steps 设计默认值（含独立 step id 与子 Flex 容器 id） */
+export function createDefaultDesignValueProps(): DesignValueProps {
   const s1Id = Util.uuid();
   const s2Id = Util.uuid();
   const s3Id = Util.uuid();
@@ -51,6 +52,29 @@ export function define(): DesignItem {
   ];
 
   return {
+    fieldProps: {
+      stepItems,
+      current: 0,
+      initial: 0,
+      direction: 'top',
+      type: 'default',
+      size: 'default',
+      itemRenderMode: 'lazy',
+      itemLayoutMode: 'surplus',
+      isFullWidth: true,
+      isFullHeight: true,
+      titlePlacement: 'horizontal',
+    },
+    flexProps: {
+      minSize: true,
+      scroll: true,
+    },
+    children: stepItems.map(() => createFlexLayoutDesignValue()),
+  };
+}
+
+export function define(): DesignItem {
+  return {
     type: TYPE,
     renderDesign,
     renderDesignToMobile,
@@ -63,25 +87,7 @@ export function define(): DesignItem {
     hasFlexProperty: true,
     renderActions,
     renderActionsToMobile,
-    defaultValue: {
-      fieldProps: {
-        stepItems,
-        current: 0,
-        initial: 0,
-        direction: 'top',
-        type: 'default',
-        size: 'default',
-        itemRenderMode: 'lazy',
-        itemLayoutMode: 'surplus',
-        isFullWidth: true,
-        isFullHeight: true,
-        titlePlacement: 'horizontal',
-      },
-      flexProps: {
-        minSize: true,
-        scroll: true,
-      },
-      children: stepItems.map(() => createFlexLayoutDesignValue()),
-    },
+    createDefaultValue: createDefaultDesignValueProps,
+    defaultValue: createDefaultDesignValueProps(),
   };
 }

@@ -224,11 +224,14 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
 
         const filedId = Util.uuid();
 
+        const newFieldProps =
+          sourceItem?.createDefaultValue?.() ?? (sourceItem?.defaultValue as DesignValueProps);
+
         const props = targetItem?.layoutReducerToAdd?.(designValue as DesignValue, {
           sourceDesignValue: {
             id: filedId,
             type: activeItem.type,
-            props: sourceItem?.defaultValue as DesignValueProps,
+            props: newFieldProps,
           },
           targetId: overItem.id,
         }) as DesignValue[];

@@ -1,6 +1,6 @@
 import Util from '@baifendian/adhere-util';
 
-import type { DesignItem } from '../../../types';
+import type { DesignItem, DesignValueProps } from '../../../types';
 import { createFlexLayoutDesignValue } from '../FlexLayout';
 import { TYPE } from './constant';
 import { renderActions } from './renderActions';
@@ -12,7 +12,8 @@ import { renderFlexProperty } from './renderFlexProperty';
 import { renderMainProperty } from './renderMainProperty';
 import { renderStyleProperty } from './renderStyleProperty';
 
-export function define(): DesignItem {
+/** 生成一份新的 Collapse 设计默认值（含独立 panel id 与子 Flex 容器 id） */
+export function createDefaultDesignValueProps(): DesignValueProps {
   const panel1Id = Util.uuid();
   const panel2Id = Util.uuid();
   const panel3Id = Util.uuid();
@@ -63,6 +64,26 @@ export function define(): DesignItem {
   ];
 
   return {
+    fieldProps: {
+      panelItems,
+      defaultActiveKey: ['1'],
+      accordion: false,
+      bordered: true,
+      ghost: false,
+      size: 'medium',
+      expandIconPlacement: 'start',
+      destroyOnHidden: false,
+    },
+    flexProps: {
+      minSize: true,
+      scroll: true,
+    },
+    children: panelItems.map(() => createFlexLayoutDesignValue()),
+  };
+}
+
+export function define(): DesignItem {
+  return {
     type: TYPE,
     renderDesign,
     renderDesignToMobile,
@@ -75,22 +96,7 @@ export function define(): DesignItem {
     hasFlexProperty: true,
     renderActions,
     renderActionsToMobile,
-    defaultValue: {
-      fieldProps: {
-        panelItems,
-        defaultActiveKey: ['1'],
-        accordion: false,
-        bordered: true,
-        ghost: false,
-        size: 'medium',
-        expandIconPlacement: 'start',
-        destroyOnHidden: false,
-      },
-      flexProps: {
-        minSize: true,
-        scroll: true,
-      },
-      children: panelItems.map(() => createFlexLayoutDesignValue()),
-    },
+    createDefaultValue: createDefaultDesignValueProps,
+    defaultValue: createDefaultDesignValueProps(),
   };
 }

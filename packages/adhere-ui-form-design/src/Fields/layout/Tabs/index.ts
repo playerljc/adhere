@@ -1,6 +1,6 @@
 import Util from '@baifendian/adhere-util';
 
-import type { DesignItem } from '../../../types';
+import type { DesignItem, DesignValueProps } from '../../../types';
 import { createFlexLayoutDesignValue } from '../FlexLayout';
 import { TYPE } from './constant';
 import { renderActions } from './renderActions';
@@ -12,7 +12,8 @@ import { renderFlexProperty } from './renderFlexProperty';
 import { renderMainProperty } from './renderMainProperty';
 import { renderStyleProperty } from './renderStyleProperty';
 
-export function define(): DesignItem {
+/** 生成一份新的 Tabs 设计默认值（含独立 tab id 与子 Flex 容器 id） */
+export function createDefaultDesignValueProps(): DesignValueProps {
   const tab1Id = Util.uuid();
   const tab2Id = Util.uuid();
   const tab3Id = Util.uuid();
@@ -57,6 +58,24 @@ export function define(): DesignItem {
   ];
 
   return {
+    fieldProps: {
+      tabItems,
+      defaultActiveKey: tabItems[0].key,
+      type: 'line',
+      size: 'middle',
+      tabPlacement: 'top',
+      centered: false,
+    },
+    flexProps: {
+      minSize: true,
+      scroll: true,
+    },
+    children: tabItems.map(() => createFlexLayoutDesignValue()),
+  };
+}
+
+export function define(): DesignItem {
+  return {
     type: TYPE,
     renderDesign,
     renderDesignToMobile,
@@ -69,20 +88,7 @@ export function define(): DesignItem {
     hasFlexProperty: true,
     renderActions,
     renderActionsToMobile,
-    defaultValue: {
-      fieldProps: {
-        tabItems,
-        defaultActiveKey: tabItems[0].key,
-        type: 'line',
-        size: 'middle',
-        tabPlacement: 'top',
-        centered: false,
-      },
-      flexProps: {
-        minSize: true,
-        scroll: true,
-      },
-      children: tabItems.map(() => createFlexLayoutDesignValue()),
-    },
+    createDefaultValue: createDefaultDesignValueProps,
+    defaultValue: createDefaultDesignValueProps(),
   };
 }
