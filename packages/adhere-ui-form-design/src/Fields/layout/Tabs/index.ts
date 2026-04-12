@@ -3,7 +3,6 @@ import Util from '@baifendian/adhere-util';
 import type { DesignItem } from '../../../types';
 import { createFlexLayoutDesignValue } from '../FlexLayout';
 import { TYPE } from './constant';
-import { isDrop } from './isDrop';
 import { renderActions } from './renderActions';
 import { renderActionsProperty } from './renderActionsProperty';
 import { renderActionsToMobile } from './renderActionsToMobile';
@@ -70,7 +69,6 @@ export function define(): DesignItem {
     hasFlexProperty: true,
     renderActions,
     renderActionsToMobile,
-    isDrop,
     defaultValue: {
       fieldProps: {
         tabItems,

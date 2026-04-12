@@ -8,7 +8,7 @@ import type { DesignValue } from '../../../types';
 import { isRootFieldId, normalizeDesignChildren } from '../../../utils';
 import InternalCard, { type InternalCardLayoutProps } from './InternalCard';
 
-const selectorPrefix = 'adhere-ui-fd-card-layout';
+const selectorPrefix = 'adhere-ui-fd-layout';
 
 function CardLayoutDesign({ value }: { value: DesignValue }) {
   const {

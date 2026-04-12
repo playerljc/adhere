@@ -73,3 +73,5 @@
   - 引深到 Model 中使用的 saga 应该能从全局获取
 - [ ] **event 中的 this 不应该是 designContext，应该是 formContext**
 - [ ] Tabs,Steps,Collapse中项中的FlexLayout布局不能删除
+- [ ] Collapse布局的less完善
+- [ ] Collapse只能激活一个的设置

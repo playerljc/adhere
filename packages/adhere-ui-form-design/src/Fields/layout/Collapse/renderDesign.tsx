@@ -6,13 +6,12 @@ import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import { DesignContext } from '../../../Design/Context';
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
-import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignValue } from '../../../types';
 import { actionsCodeStringToEvents, isRootFieldId, resolveI18nText } from '../../../utils';
 import { parseDesign } from '../../parse';
 import InternalCollapse, { type InternalCollapseLayoutProps } from './InternalCollapse';
 
-const selectorPrefix = 'adhere-ui-fd-collapse-layout';
+const selectorPrefix = 'adhere-ui-fd-layout';
 
 type ActiveKeyState = string | number | Array<string | number> | undefined;
 
@@ -109,12 +108,7 @@ function CollapseLayoutDesign({ value }: { value: DesignValue }) {
       })}
       style={targetFlexStyle}
     >
-      <DroppableContainer
-        id={id}
-        value={value}
-        className={`${selectorPrefix}-droppable-container`}
-        style={targetContainerStyle}
-      >
+      <div className={`${selectorPrefix}-slots-container`} style={targetContainerStyle}>
         <InternalCollapse
           {...(fieldProps as InternalCollapseLayoutProps)}
           {...actions}
@@ -142,7 +136,7 @@ function CollapseLayoutDesign({ value }: { value: DesignValue }) {
             setActiveKey(normalizeActiveKeyForCollapse(nextDefault, isAccordion));
           }}
         />
-      </DroppableContainer>
+      </div>
     </DesignFieldWrapper>
   );
 }

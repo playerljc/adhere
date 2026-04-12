@@ -5,10 +5,14 @@ import type { ReactNode } from 'react';
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignValue } from '../../../types';
-import { isRootFieldId, normalizeDesignChildren, styleCodeStringToCSSProperties } from '../../../utils';
+import {
+  isRootFieldId,
+  normalizeDesignChildren,
+  styleCodeStringToCSSProperties,
+} from '../../../utils';
 import InternalFlexLayout, { type InternalFlexLayoutProps } from './InternalFlexLayout';
 
-const selectorPrefix = 'adhere-ui-fd-flex-layout';
+const selectorPrefix = 'adhere-ui-fd-layout';
 
 function FlexLayoutDesign({ value }: { value: DesignValue }) {
   const {

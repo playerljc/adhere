@@ -6,13 +6,12 @@ import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import { DesignContext } from '../../../Design/Context';
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
-import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignValue } from '../../../types';
 import { actionsCodeStringToEvents, isRootFieldId, resolveI18nText } from '../../../utils';
 import { parseDesign } from '../../parse';
 import InternalTabs, { type InternalTabsLayoutProps } from './InternalTabs';
 
-const selectorPrefix = 'adhere-ui-fd-tabs-layout';
+const selectorPrefix = 'adhere-ui-fd-layout';
 
 function TabsLayoutDesign({ value }: { value: DesignValue }) {
   const {
@@ -91,12 +90,7 @@ function TabsLayoutDesign({ value }: { value: DesignValue }) {
       })}
       style={targetFlexStyle}
     >
-      <DroppableContainer
-        id={id}
-        value={value}
-        className={`${selectorPrefix}-droppable-container`}
-        style={targetContainerStyle}
-      >
+      <div className={`${selectorPrefix}-slots-container`} style={targetContainerStyle}>
         <InternalTabs
           {...(fieldProps as InternalTabsLayoutProps)}
           {...actions}
@@ -116,7 +110,7 @@ function TabsLayoutDesign({ value }: { value: DesignValue }) {
             });
           }}
         />
-      </DroppableContainer>
+      </div>
     </DesignFieldWrapper>
   );
 }

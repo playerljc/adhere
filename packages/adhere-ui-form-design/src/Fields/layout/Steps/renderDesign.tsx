@@ -7,13 +7,12 @@ import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import { DesignContext } from '../../../Design/Context';
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
-import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignValue, I18nValue } from '../../../types';
 import { actionsCodeStringToEvents, isRootFieldId, resolveI18nText } from '../../../utils';
 import { parseDesign } from '../../parse';
 import InternalSteps, { type InternalStepsLayoutProps } from './InternalSteps';
 
-const selectorPrefix = 'adhere-ui-fd-steps-layout';
+const selectorPrefix = 'adhere-ui-fd-layout';
 
 function StepsLayoutDesign({ value }: { value: DesignValue }) {
   const {
@@ -120,12 +119,7 @@ function StepsLayoutDesign({ value }: { value: DesignValue }) {
       })}
       style={targetFlexStyle}
     >
-      <DroppableContainer
-        id={id}
-        value={value}
-        className={`${selectorPrefix}-droppable-container`}
-        style={targetContainerStyle}
-      >
+      <div className={`${selectorPrefix}-slots-container`} style={targetContainerStyle}>
         <InternalSteps
           {...(fieldProps as InternalStepsLayoutProps)}
           {...actions}
@@ -145,7 +139,7 @@ function StepsLayoutDesign({ value }: { value: DesignValue }) {
             });
           }}
         />
-      </DroppableContainer>
+      </div>
     </DesignFieldWrapper>
   );
 }
