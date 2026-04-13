@@ -1,2 +1,2 @@
-export default function normalizeDesignChildren(r,n){n=null!=(n=null==n?void 0:n.returnUndefinedIfEmpty)&&n;if(!r||0===r.length)return n?void 0:[];for(var e=[],l=0,i=r;l<i.length;l++){var t=i[l];Array.isArray(t)?e.push.apply(e,t):t&&e.push(t)}return 0===e.length?n?void 0:[]:e}
+export default function normalizeDesignChildren(n,e){e=null!=(e=null==e?void 0:e.returnUndefinedIfEmpty)&&e;if(!n||0===n.length)return e?void 0:[];for(var r=[],l=0,t=n;l<t.length;l++){var i=t[l];i&&r.push(i)}return 0===r.length?e?void 0:[]:r}
 //# sourceMappingURL=normalizeDesignChildren.js.map

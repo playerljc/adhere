@@ -98,6 +98,38 @@ export function findParentIdById(id: string, designValue: DesignValue): string |
 }
 
 /**
+ * findParentDesignValueById
+ * @description 递归查找设计值中指定id的父级设计值
+ * @param {string} id - 目标子节点的ID
+ * @param {DesignValue} designValue - 当前遍历的设计值节点
+ * @return {DesignValue | undefined} 找到的父级设计值，未找到返回 undefined
+ */
+export function findParentDesignValueById(
+  id: string,
+  designValue: DesignValue,
+): DesignValue | undefined {
+  if (!designValue.props.children || !designValue.props.children.length) {
+    return undefined;
+  }
+
+  for (let i = 0; i < designValue.props.children.length; i++) {
+    const child = designValue.props.children[i];
+    // 如果当前子节点就是目标节点，则当前节点(designValue)即为父节点
+    if (child.id === id) {
+      return designValue;
+    }
+
+    // 递归在子节点中查找
+    const parentDesignValue = findParentDesignValueById(id, child);
+    if (parentDesignValue) {
+      return parentDesignValue;
+    }
+  }
+
+  return undefined;
+}
+
+/**
  * genNewName
  * @description 生成新的不重复的名称，基于 name 参数 + copy 直到 designValue 没有这个 name 为止
  * @param {string} name - 基础名称

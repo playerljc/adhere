@@ -44,6 +44,9 @@ export type DesignValueProps = {
 
   // 控件下的子项(一般是布局控件才有children)
   children?: DesignValue[];
+
+  // 字段的动作类型的集合
+  fieldActionTypes?: string[];
 };
 
 /**

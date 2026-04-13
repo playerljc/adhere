@@ -1,3 +1,4 @@
+import { Copy, Delete } from '../../../../components/DesignFieldActions/actions';
 import type { DesignItem, FormItemProps } from '../../../../types';
 import { TYPE } from './constant';
 import { renderActions } from './renderActions';
@@ -40,6 +41,7 @@ export function define(): DesignItem {
         showText: false,
         fill: true,
       },
+      fieldActionTypes: [Copy.key, Delete.key],
     },
   };
 }

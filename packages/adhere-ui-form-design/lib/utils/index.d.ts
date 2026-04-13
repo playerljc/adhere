@@ -1,6 +1,6 @@
 import { actionsCodeStringToEvents } from './actionsCodeStringToEvents';
 import { computeLabelValueColSpan } from './computeLabelValueColSpan';
-import { deleteDesignValueByIdInChildren, findDesignValueById, findDesignValueByIdToClone, findParentIdById, genNewName } from './designValue';
+import { deleteDesignValueByIdInChildren, findDesignValueById, findDesignValueByIdToClone, findParentDesignValueById, findParentIdById, genNewName } from './designValue';
 import { findTypeById } from './findTypeById';
 import { formItemToProps } from './formItemToProps';
 import { getLabel } from './getLabel';
@@ -17,7 +17,7 @@ import { toI18nLabel } from './toI18nLabel';
 import { useDesignFieldDataSourceOptions } from './useDesignFieldDataSourceOptions';
 export { createMainProperty, renderMainProperty as renderMainPropertyWithCreate, } from './createMainProperty';
 export type { CreateMainPropertyOptions } from './createMainProperty';
-export { actionsCodeStringToEvents, computeLabelValueColSpan, formItemToProps, getLabel, rulesSettingToRules, styleCodeStringToCSSProperties, isLayoutItemByType, isDesktop, isReactNode, normalizeDesignChildren, findDesignValueById, deleteDesignValueByIdInChildren, findDesignValueByIdToClone, findParentIdById, genNewName, genRootFieldId, getRootFieldId, isRootFieldId, getLabelByType, getToolBoxItemByType, findTypeById, useDesignFieldDataSourceOptions, resolveI18nText, toI18nLabel, };
+export { actionsCodeStringToEvents, computeLabelValueColSpan, formItemToProps, getLabel, rulesSettingToRules, styleCodeStringToCSSProperties, isLayoutItemByType, isDesktop, isReactNode, normalizeDesignChildren, findDesignValueById, deleteDesignValueByIdInChildren, findDesignValueByIdToClone, findParentIdById, genNewName, genRootFieldId, getRootFieldId, isRootFieldId, getLabelByType, getToolBoxItemByType, findTypeById, findParentDesignValueById, useDesignFieldDataSourceOptions, resolveI18nText, toI18nLabel, };
 export type { LabelValueColSpan } from './computeLabelValueColSpan';
 export type { DesignFieldDataSourceOption } from './dataSourceOptions';
 export { fetchDataSourceItemConfigAsOptions, findDataSourceItemConfigByDynamicId, omitFieldPropsDesignKey, parseDataSourceManagerValueFromFieldProps, resolveDataSourceOptionLabel, staticDataSourceToDesignOptions, } from './dataSourceOptions';

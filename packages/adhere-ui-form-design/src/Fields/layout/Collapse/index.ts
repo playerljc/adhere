@@ -1,5 +1,6 @@
 import Util from '@baifendian/adhere-util';
 
+import { Delete } from '../../../components/DesignFieldActions/actions';
 import type { DesignItem, DesignValueProps } from '../../../types';
 import { createFlexLayoutDesignValue } from '../FlexLayout';
 import { TYPE } from './constant';
@@ -78,6 +79,7 @@ export function createDefaultDesignValueProps(): DesignValueProps {
       minSize: true,
       scroll: true,
     },
+    fieldActionTypes: [Delete.key],
     children: panelItems.map(() => createFlexLayoutDesignValue()),
   };
 }

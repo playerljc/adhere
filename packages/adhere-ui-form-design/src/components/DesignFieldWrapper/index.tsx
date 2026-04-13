@@ -10,7 +10,7 @@ import type { FC } from 'react';
 
 import { DesignContext } from '../../Design/Context';
 import { SELECT_PREFIX } from '../../constant';
-import { DesignFieldWrapperProps, DesignItem } from '../../types';
+import { DesignFieldWrapperProps, DesignItem, DesignValue } from '../../types';
 import {
   findTypeById,
   getLabelByType,

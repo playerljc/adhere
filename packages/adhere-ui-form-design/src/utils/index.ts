@@ -4,6 +4,7 @@ import {
   deleteDesignValueByIdInChildren,
   findDesignValueById,
   findDesignValueByIdToClone,
+  findParentDesignValueById,
   findParentIdById,
   genNewName,
 } from './designValue';
@@ -50,6 +51,7 @@ export {
   getLabelByType,
   getToolBoxItemByType,
   findTypeById,
+  findParentDesignValueById,
   useDesignFieldDataSourceOptions,
   resolveI18nText,
   toI18nLabel,

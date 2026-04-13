@@ -1,2 +1,2 @@
-function normalizeDesignChildren(e,r){r=null!=(r=null==r?void 0:r.returnUndefinedIfEmpty)&&r;if(!e||0===e.length)return r?void 0:[];for(var n=[],l=0,i=e;l<i.length;l++){var t=i[l];Array.isArray(t)?n.push.apply(n,t):t&&n.push(t)}return 0===n.length?r?void 0:[]:n}Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=normalizeDesignChildren;
+function normalizeDesignChildren(e,n){n=null!=(n=null==n?void 0:n.returnUndefinedIfEmpty)&&n;if(!e||0===e.length)return n?void 0:[];for(var r=[],l=0,i=e;l<i.length;l++){var t=i[l];t&&r.push(t)}return 0===r.length?n?void 0:[]:r}Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=normalizeDesignChildren;
 //# sourceMappingURL=normalizeDesignChildren.js.map

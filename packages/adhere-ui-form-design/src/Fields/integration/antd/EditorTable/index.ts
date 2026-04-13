@@ -1,3 +1,4 @@
+import { Copy, Delete } from '../../../../components/DesignFieldActions/actions';
 // import SearchTable from '@baifendian/adhere-ui-searchtable';
 import type { DesignItem } from '../../../../types';
 import { TYPE } from './constant';
@@ -41,6 +42,7 @@ export function define(): DesignItem {
         size: 'middle',
         fill: true,
       },
+      fieldActionTypes: [Copy.key, Delete.key],
     },
   };
 }

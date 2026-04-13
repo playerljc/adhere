@@ -1,3 +1,4 @@
+import { Delete } from '../../../components/DesignFieldActions/actions';
 import type { DesignItem } from '../../../types';
 import { TYPE } from './constant';
 import { createFlexLayoutDesignValue } from './createFlexLayoutDesignValue';
@@ -44,6 +45,7 @@ export function define(): DesignItem {
         scroll: true,
       },
       children: [],
+      fieldActionTypes: [Delete.key],
     },
   };
 }

@@ -87,13 +87,13 @@ export interface DesignItem extends BaseItem {
      * @param id - 当前组件的ID
      * @returns 返回React节点，通常为操作按钮组
      */
-    renderActions?: (id: string) => ReactNode;
+    renderActions?: (id: string, designValue: DesignValue) => ReactNode;
     /**
      * 渲染移动端（Mobile）下的工具菜单操作项
      * @param id - 当前组件的ID
      * @returns 返回React节点，通常为操作按钮组
      */
-    renderActionsToMobile?: (id: string) => ReactNode;
+    renderActionsToMobile?: (id: string, designValue: DesignValue) => ReactNode;
     /**
      * --- 控件事件属性 ---
      */
@@ -160,6 +160,11 @@ export interface DesignItem extends BaseItem {
      * 组件designValue的默认值配置
      */
     defaultValue?: DesignValueProps;
+    /**
+     * 从工具箱拖入画布时用于生成新的 props（含独立 UUID），避免复用 defaultValue 导致多实例 id 冲突。
+     * 未实现时回退为 defaultValue。
+     */
+    createDefaultValue?: () => DesignValueProps;
 }
 /**
  * 表单模式下的Item接口，定义了控件在表单预览/运行时的渲染行为

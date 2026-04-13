@@ -1,5 +1,6 @@
 import Util from '@baifendian/adhere-util';
 
+import { Delete } from '../../../components/DesignFieldActions/actions';
 import type { DesignItem, DesignValueProps } from '../../../types';
 import { createFlexLayoutDesignValue } from '../FlexLayout';
 import { TYPE } from './constant';
@@ -71,6 +72,7 @@ export function createDefaultDesignValueProps(): DesignValueProps {
       scroll: true,
     },
     children: tabItems.map(() => createFlexLayoutDesignValue()),
+    fieldActionTypes: [Delete.key],
   };
 }
 

@@ -1,3 +1,4 @@
+import { Delete } from '../../../components/DesignFieldActions/actions';
 import type { DesignItem } from '../../../types';
 import { TYPE } from './constant';
 import { isDrop } from './isDrop';
@@ -40,6 +41,7 @@ export function define(): DesignItem {
         scroll: true,
       },
       children: [],
+      fieldActionTypes: [Delete.key],
     },
   };
 }
