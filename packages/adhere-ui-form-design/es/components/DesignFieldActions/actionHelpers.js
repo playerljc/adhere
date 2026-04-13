@@ -1,0 +1,2 @@
+import React from"react";import{DesignFieldActions}from"../index";import{ACTIONS}from"./actions";function isDesignFieldAction(n){return null!==n}function renderActionsByConfig(e,n){n=null!=(n=null==n?void 0:n.map(function(n){return createAction(e,n)}).filter(isDesignFieldAction))?n:[];return React.createElement(DesignFieldActions,{items:n})}function createAction(n,e){return null!=(e=null==(e=ACTIONS.get(e))?void 0:e(n))?e:null}export{renderActionsByConfig,createAction};
+//# sourceMappingURL=actionHelpers.js.map

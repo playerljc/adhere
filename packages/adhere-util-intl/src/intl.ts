@@ -159,24 +159,27 @@ export function getLocales(): MainLocales {
  * @returns Processed locale object
  */
 function processLocaleData(localeData: LocaleData, prefix: string): ProcessedLocale {
-  const stringItems: string[] = [];
-  const objectEntries: Record<string, string>[] = [];
+  const processedLocale: ProcessedLocale = {};
 
-  // Separate strings and objects
+  // Preserve original order so later items override earlier ones
+  let localIndex = 1;
+
   localeData.forEach((item) => {
     if (typeof item === 'string') {
-      stringItems.push(item);
-    } else {
-      objectEntries.push(item);
+      const key = `${prefix}${localIndex}`;
+
+      let value = localKeys.get(key);
+      if (!value) {
+        localKeys.set(key, key);
+        value = key;
+      }
+
+      processedLocale[value] = item;
+      localIndex++;
+      return;
     }
-  });
 
-  // Generate local object from strings
-  const processedLocale = getLocal(prefix, stringItems);
-
-  // Merge object entries
-  objectEntries.forEach((entry) => {
-    Object.assign(processedLocale, entry);
+    Object.assign(processedLocale, item);
   });
 
   return processedLocale;
