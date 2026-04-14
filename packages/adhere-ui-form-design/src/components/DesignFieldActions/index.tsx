@@ -22,15 +22,18 @@ export interface DesignFieldActionsProps {
  */
 const DesignFieldActions: FC<DesignFieldActionsProps> = ({ items }) => {
   return (
-    <div className={selectorPrefix}>
-      <ul>
-        {items.map(({ key, label, el }) => (
-          <li key={key} title={label}>
-            {el}
-          </li>
-        ))}
-      </ul>
-    </div>
+    !!items &&
+    !!items.length && (
+      <div className={selectorPrefix}>
+        <ul>
+          {items.map(({ key, label, el }) => (
+            <li key={key} title={label}>
+              {el}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
   );
 };
 

@@ -22,6 +22,7 @@ export function createFlexLayoutDesignValue(): DesignValue {
         scroll: true,
       },
       children: [],
+      fieldActionTypes: [],
     },
   };
 }

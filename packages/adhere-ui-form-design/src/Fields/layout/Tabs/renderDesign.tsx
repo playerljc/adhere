@@ -16,7 +16,7 @@ const selectorPrefix = 'adhere-ui-fd-layout';
 function TabsLayoutDesign({ value }: { value: DesignValue }) {
   const {
     id,
-    props: { children, styleProps, fieldProps, flexProps, actionsProps },
+    props: { children, styleProps, fieldProps, flexProps, actionsProps, fieldActionTypes },
   } = value;
 
   const [activeKey, setActiveKey] = useState(
@@ -84,6 +84,7 @@ function TabsLayoutDesign({ value }: { value: DesignValue }) {
   return (
     <DesignFieldWrapper
       id={id}
+      fieldActionTypes={fieldActionTypes}
       className={classNames(`${selectorPrefix}-design-field-wrapper`, {
         [`${selectorPrefix}-design-field-wrapper-fill`]: isRootFieldId(id),
         [`${selectorPrefix}-design-field-wrapper-no-border`]: isRootFieldId(id),

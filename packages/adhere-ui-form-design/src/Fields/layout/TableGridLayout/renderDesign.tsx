@@ -13,7 +13,7 @@ import InternalTableGridLayout from './InternalTableGridLayout';
 function TableGridLayoutDesign({ value }: { value: DesignValue }) {
   const {
     id,
-    props: { children, styleProps, fieldProps, flexProps },
+    props: { children, styleProps, fieldProps, flexProps, fieldActionTypes },
   } = value;
 
   const normalizedChildren = useMemo<DesignValue[] | undefined>(() => {
@@ -44,7 +44,7 @@ function TableGridLayoutDesign({ value }: { value: DesignValue }) {
   }, [flexProps]);
 
   return (
-    <DesignFieldWrapper id={id} style={targetFlexStyle}>
+    <DesignFieldWrapper id={id} fieldActionTypes={fieldActionTypes} style={targetFlexStyle}>
       <DroppableContainer id={id} value={value} style={targetContainerStyle}>
         <TableGridLayoutContext.Provider
           value={{

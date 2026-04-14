@@ -1,2 +1,2 @@
-import React from"react";import{DesignFieldActions}from"../../../components";import{Delete}from"../../../components/DesignFieldActions/actions";function Actions(e){e=e.id;return React.createElement(DesignFieldActions,{items:[{key:Delete.key,label:Delete.label,el:Delete.render(e)}]})}function renderActions(e){return React.createElement(Actions,{id:e})}export{renderActions};
+import{renderActionsByConfig}from"../../../components/DesignFieldActions/actionHelpers";function renderActions(n,e){return renderActionsByConfig(n,e)}export{renderActions};
 //# sourceMappingURL=renderActions.js.map

@@ -52,7 +52,7 @@ export function LabelDesign({
 export function ValueDesign({
   value: {
     id,
-    props: { formItemProps, fieldProps, styleProps, actionsProps },
+    props: { formItemProps, fieldProps, styleProps, actionsProps, fieldActionTypes },
   },
   children,
 }: {
@@ -83,7 +83,7 @@ export function ValueDesign({
       // @ts-ignore
       colSpan={colSpan}
     >
-      <DesignFieldWrapper id={id}>
+      <DesignFieldWrapper id={id} fieldActionTypes={fieldActionTypes}>
         <Form.Item {...formProps} style={{ flex: fill ? '1' : 'none' }}>
           {children({
             fieldProps,

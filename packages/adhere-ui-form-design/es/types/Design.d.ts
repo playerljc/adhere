@@ -12,6 +12,7 @@ export type DesignFieldWrapperProps = {
     style?: CSSProperties;
     id: string;
     children?: ReactNode;
+    fieldActionTypes?: DesignValueProps['fieldActionTypes'];
 };
 export type ToolbarProps = {};
 export type DesignValueProps = {
@@ -21,6 +22,7 @@ export type DesignValueProps = {
     actionsProps?: ActionsProps;
     flexProps?: FlexProps;
     children?: DesignValue[];
+    fieldActionTypes?: string[];
 };
 /**
  * DataSourceItemConfig

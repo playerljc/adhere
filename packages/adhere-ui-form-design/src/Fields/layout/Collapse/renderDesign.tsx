@@ -30,7 +30,7 @@ function normalizeActiveKeyForCollapse(
 function CollapseLayoutDesign({ value }: { value: DesignValue }) {
   const {
     id,
-    props: { children, styleProps, fieldProps, flexProps, actionsProps },
+    props: { children, styleProps, fieldProps, flexProps, actionsProps, fieldActionTypes },
   } = value;
 
   const fp = (fieldProps ?? {}) as InternalCollapseLayoutProps;
@@ -102,6 +102,7 @@ function CollapseLayoutDesign({ value }: { value: DesignValue }) {
   return (
     <DesignFieldWrapper
       id={id}
+      fieldActionTypes={fieldActionTypes}
       className={classNames(`${selectorPrefix}-design-field-wrapper`, {
         [`${selectorPrefix}-design-field-wrapper-fill`]: isRootFieldId(id),
         [`${selectorPrefix}-design-field-wrapper-no-border`]: isRootFieldId(id),

@@ -17,7 +17,7 @@ const selectorPrefix = 'adhere-ui-fd-layout';
 function FlexLayoutDesign({ value }: { value: DesignValue }) {
   const {
     id,
-    props: { children, styleProps, fieldProps, flexProps },
+    props: { children, styleProps, fieldProps, flexProps, fieldActionTypes },
   } = value;
 
   const resolvedChildren = useMemo<DesignValue[] | undefined>(() => {
@@ -56,6 +56,7 @@ function FlexLayoutDesign({ value }: { value: DesignValue }) {
   return (
     <DesignFieldWrapper
       id={id}
+      fieldActionTypes={fieldActionTypes}
       className={classNames(`${selectorPrefix}-design-field-wrapper`, {
         [`${selectorPrefix}-design-field-wrapper-fill`]: isRootFieldId(id),
         [`${selectorPrefix}-design-field-wrapper-no-border`]: isRootFieldId(id),

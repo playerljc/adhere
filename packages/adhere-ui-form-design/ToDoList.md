@@ -1,6 +1,7 @@
 # ToDo List
 
 ## 基本
+
 - [x] `.field` 激活状态下的样式
 - [x] `.field` 激活状态下的工具栏 (进行中)
 - [x] `.FlowLayout` 的 `MainProperty` 面板
@@ -15,6 +16,7 @@
 ## 控件
 
 ### 基本
+
 - **Input**
   - [x] 控件属性加入选项：是否是 `OptimizedInput`
 - **TextArea**
@@ -30,12 +32,14 @@
 - [x] TimePicker
 
 ### 文本
+
 - [x] alert 文本提示
 - [x] 超链接
 - [x] 按钮
 - [x] 提交按钮
 
 ### 数据源
+
 - [x] Select
 - [x] CheckboxGroup
 - [x] RadioGroup
@@ -48,12 +52,14 @@
 - [ ] TreeTable
 
 ### 布局
+
 - [x] Card
 - [x] Tabs
 - [x] Step
 - [ ] Collapse
 
 ### 其他
+
 - [ ] QuickRangeDate
 - [ ] QRCode
 - [ ] Upload
@@ -65,14 +71,16 @@
 - [ ] 手写组件
 
 ## 高级
+
 - [ ] 大纲视图
 - [ ] 控件互换位置
 
 ## FAQ
+
 - [ ] **saga 和 store 不应该是局部的**
   - 引深到 Model 中使用的 saga 应该能从全局获取
 - [ ] **event 中的 this 不应该是 designContext，应该是 formContext**
-- [x] Tabs,Steps,Collapse拖拽多副本 uuid重复问题
-- [ ] Tabs,Steps,Collapse中项中的FlexLayout布局不能删除
-- [ ] Collapse布局的less完善
-- [ ] Collapse只能激活一个的设置
+- [x] Tabs,Steps,Collapse 拖拽多副本 uuid 重复问题
+- [x] Tabs,Steps,Collapse 中项中的 FlexLayout 布局不能删除
+- [ ] Collapse 布局的 less 完善
+- [x] Collapse 只能激活一个的设置

@@ -85,15 +85,17 @@ export interface DesignItem extends BaseItem {
     /**
      * 渲染桌面端（Desktop）下的工具菜单操作项
      * @param id - 当前组件的ID
+     * @param fieldActionTypes - 当前组件的fieldActionTypes
      * @returns 返回React节点，通常为操作按钮组
      */
-    renderActions?: (id: string, designValue: DesignValue) => ReactNode;
+    renderActions?: (id: string, fieldActionTypes: DesignValueProps['fieldActionTypes']) => ReactNode;
     /**
      * 渲染移动端（Mobile）下的工具菜单操作项
      * @param id - 当前组件的ID
+     * @param fieldActionTypes - 当前组件的fieldActionTypes
      * @returns 返回React节点，通常为操作按钮组
      */
-    renderActionsToMobile?: (id: string, designValue: DesignValue) => ReactNode;
+    renderActionsToMobile?: (id: string, fieldActionTypes: DesignValueProps['fieldActionTypes']) => ReactNode;
     /**
      * --- 控件事件属性 ---
      */

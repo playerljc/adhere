@@ -360,6 +360,11 @@ export type ResolveDataParams = {
   terminal: string;
   xhr: XMLHttpRequest;
   data: any;
+  /**
+   * 用于生成 retry 的“最终请求参数”
+   * @description 通常传入 requestReducer 处理后的 interceptorsConfig
+   */
+  interceptorsConfig?: ISendArg;
 };
 
 /**
@@ -432,6 +437,8 @@ export interface ResolveDataResult {
   xhr: XMLHttpRequest;
   /** 隐藏指示器函数 */
   hideIndicator?: () => void;
+  /** 重新发送当前请求（支持覆盖部分参数） */
+  retry: (override?: Partial<ISendArg>) => Promise<SendResult>;
 }
 
 /**

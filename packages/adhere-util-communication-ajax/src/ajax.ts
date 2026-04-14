@@ -623,15 +623,47 @@ function initXhrEvents({ xhr, events, reject }: XhrEventsConfig): void {
  * @param params - 响应参数
  * @returns 解析后的数据对象
  */
+function createRetry(
+  ajaxInstance: Ajax,
+  baseParams?: ISendArg,
+): (override?: Partial<ISendArg>) => Promise<SendResult> {
+  return (override?: Partial<ISendArg>) => {
+    const nextParams: ISendArg = {
+      ...(baseParams ?? {}),
+      ...(override ?? {}),
+      headers: {
+        ...(baseParams?.headers ?? {}),
+        ...(override?.headers ?? {}),
+      },
+    };
+
+    switch (nextParams.method) {
+      case 'get':
+        return ajaxInstance.get(nextParams);
+      case 'post':
+        return ajaxInstance.post(nextParams);
+      case 'put':
+        return ajaxInstance.put(nextParams);
+      case 'patch':
+        return ajaxInstance.patch(nextParams);
+      case 'delete':
+        return ajaxInstance.delete(nextParams);
+      default:
+        return Promise.reject(new Error('Invalid request method for retry'));
+    }
+  };
+}
+
 function resolveData(this: Ajax, params: ResolveDataParams): ResolveDataResult {
   // 调用response拦截器
-  const { show, terminal, data, indicator, xhr } = params;
+  const { show, terminal, data, indicator, xhr, interceptorsConfig } = params;
 
   const targetGlobalIndicator = getGlobalIndicator(terminal);
 
   return {
     ...{ xhr, data },
     ...(show ? { hideIndicator: () => targetGlobalIndicator.hide(indicator) } : {}),
+    retry: createRetry(this, interceptorsConfig),
   };
 }
 
@@ -700,7 +732,16 @@ async function onreadystatechange(
             warnInfo(Intl.get('hint'), jsonObj[messageKey]);
           }
 
-          resolve(resolveData.call(this, { show, terminal, data: jsonObj, indicator, xhr }));
+          resolve(
+            resolveData.call(this, {
+              show,
+              terminal,
+              data: jsonObj,
+              indicator,
+              xhr,
+              interceptorsConfig,
+            }),
+          );
         }
         //
         else if (
@@ -715,6 +756,7 @@ async function onreadystatechange(
               data: responseXML,
               indicator,
               xhr,
+              interceptorsConfig,
             }),
           );
         }
@@ -728,6 +770,7 @@ async function onreadystatechange(
               data: response,
               indicator,
               xhr,
+              interceptorsConfig,
             }),
           );
         }
@@ -750,6 +793,7 @@ async function onreadystatechange(
           statusText: xhr.statusText,
           response,
           responseText,
+          retry: createRetry(this, interceptorsConfig),
         });
 
         // 取消遮罩

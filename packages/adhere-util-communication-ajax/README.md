@@ -77,28 +77,78 @@ postResult.promise.then(data => {
 });
 ```
 
+### 请求重试（retry）
+
+在成功（`then`）和失败（`catch`）的回调参数中，都提供了 `retry(override)` 方法，用于在需要时**重新发送本次请求**。`override` 支持覆盖本次请求的部分参数（例如 `headers`、`data`、`path` 等）。
+
+```typescript
+// 失败后重试（例如刷新 token 后重发）
+ajax
+  .get({
+    path: 'users',
+    headers: { Authorization: 'Bearer old_token' },
+  })
+  .promise.then((res) => {
+    console.log('GET响应:', res.data);
+
+    // 成功后也可以重发（例如带上不同 header 再请求一次）
+    return res.retry({
+      headers: { Authorization: 'Bearer new_token' },
+    });
+  })
+  .catch((err) => {
+    console.error('GET错误:', err);
+
+    // 失败后重试（可覆盖参数）
+    return err.retry({
+      headers: { Authorization: 'Bearer new_token' },
+    });
+  })
+  .then((res2) => {
+    console.log('重试后的响应:', res2.data);
+  });
+```
+
 ## 高级功能
 
 ### 拦截器
 
 ```typescript
-// 请求拦截器
-Ajax.interceptors.addRequest((params) => {
-  // 在请求发送前修改参数
-  params.headers = {
-    ...params.headers,
-    'X-Custom-Header': 'value'
+// 请求拦截器（实例级）
+ajax.interceptors.addRequest('auth', (params) => {
+  return {
+    ...params,
+    headers: {
+      ...(params.headers ?? {}),
+      'X-Custom-Header': 'value',
+    },
   };
+});
+
+// 响应拦截器（实例级）
+ajax.interceptors.addResponse('unwrap', (params) => {
+  // 这里只演示：如果后端结构是 { code, message, data }，可在此统一拆包
+  if (params.responseText) {
+    try {
+      const json = JSON.parse(params.responseText);
+      if (json && typeof json === 'object' && 'data' in json) {
+        return {
+          ...params,
+          responseText: JSON.stringify(json.data),
+        };
+      }
+    } catch {
+      // 忽略非 JSON 响应
+    }
+  }
   return params;
 });
 
-// 响应拦截器
-Ajax.interceptors.addResponse((params) => {
-  // 在响应处理前修改数据
-  if (params.data && params.data.code === 200) {
-    params.data = params.data.data;
-  }
-  return params;
+// 跳过指定拦截器
+ajax.get({
+  path: 'users',
+  skipRequestInterceptors: ['auth'],
+  skipResponseInterceptors: ['unwrap'],
 });
 ```
 
@@ -232,6 +282,15 @@ interface ISendArg extends Partial<IConfig> {
   path: string; // 请求路径
   headers?: Record<string, string>; // 请求头
   data?: RequestData; // 请求数据
+
+  // 接口防抖去重（仅在 path 为 IPv4 且 enableDebounce=true 时生效）
+  enableDebounce?: boolean;
+  debounceFilterData?: (data: RequestData) => RequestData;
+  debounceFilterHeaders?: (headers: ISendArg['headers']) => ISendArg['headers'];
+
+  // 跳过拦截器
+  skipRequestInterceptors?: string[];
+  skipResponseInterceptors?: string[];
 }
 ```
 
@@ -241,8 +300,62 @@ interface ISendArg extends Partial<IConfig> {
 interface SendResult {
   xhr?: XMLHttpRequest | null;
   contentType?: string | null;
+  interceptorsConfig?: ISendArg;
   promise: Promise<any>;
 }
+```
+
+### 响应数据结构（ResolveDataResult）
+
+当请求成功（2xx/304）时，`promise` resolve 的对象结构如下：
+
+```typescript
+interface ResolveDataResult {
+  data: any;
+  xhr: XMLHttpRequest;
+  hideIndicator?: () => void;
+  retry: (override?: Partial<ISendArg>) => Promise<SendResult>;
+}
+```
+
+当请求失败（非 2xx/304）时，`promise` reject 的对象会包含 `status/statusText/response/responseText`，并且同样带有 `retry(override)` 方便重发。
+
+### 防抖去重（enableDebounce）
+
+当 `path` 是 IPv4 且 `enableDebounce=true` 时，相同请求会在进行中被合并（复用同一个 `promise`），避免短时间重复发送。
+
+```typescript
+ajax.get({
+  path: '127.0.0.1/api/users',
+  enableDebounce: true,
+  debounceFilterHeaders: (headers) => {
+    // 例如：不把 Authorization 计入去重 key
+    const { Authorization, ...rest } = headers ?? {};
+    return rest;
+  },
+});
+```
+
+### mock 请求
+
+当 `mock=true` 时，会走 mock 分支（适用于本地联调/演示）。
+
+```typescript
+ajax.get({
+  path: 'users',
+  mock: true,
+});
+```
+
+### responseType
+
+可通过 `responseType` 控制 XHR 的响应类型（例如 `blob`、`arraybuffer` 等）。
+
+```typescript
+ajax.get({
+  path: 'download/file',
+  responseType: 'blob',
+});
 ```
 
 ## 类型定义

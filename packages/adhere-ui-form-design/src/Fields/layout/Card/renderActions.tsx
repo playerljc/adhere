@@ -1,22 +1,6 @@
-import React, { type ReactNode } from 'react';
+import { renderActionsByConfig } from '../../../components/DesignFieldActions/actionHelpers';
+import type { DesignValueProps } from '../../../types';
 
-import { DesignFieldActions } from '../../../components';
-import { Delete } from '../../../components/DesignFieldActions/actions';
-
-function Actions({ id }: { id: string }) {
-  return (
-    <DesignFieldActions
-      items={[
-        {
-          key: Delete.key,
-          label: Delete.label,
-          el: Delete.render(id),
-        },
-      ]}
-    />
-  );
-}
-
-export function renderActions(id: string): ReactNode {
-  return <Actions id={id} />;
+export function renderActions(id: string, fieldActionTypes: DesignValueProps['fieldActionTypes']) {
+  return renderActionsByConfig(id, fieldActionTypes);
 }

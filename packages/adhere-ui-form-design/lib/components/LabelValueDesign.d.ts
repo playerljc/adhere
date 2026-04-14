@@ -5,7 +5,7 @@ export declare function LabelDesign({ formItemProps, styleProps, className, }: {
     styleProps?: StyleProps;
     className?: string;
 }): React.JSX.Element;
-export declare function ValueDesign({ value: { id, props: { formItemProps, fieldProps, styleProps, actionsProps }, }, children, }: {
+export declare function ValueDesign({ value: { id, props: { formItemProps, fieldProps, styleProps, actionsProps, fieldActionTypes }, }, children, }: {
     value: DesignValue;
     children: (params: {
         fieldProps: FieldProps;

@@ -20,6 +20,7 @@ export type DesignFieldWrapperProps = {
   style?: CSSProperties;
   id: string;
   children?: ReactNode;
+  fieldActionTypes?: DesignValueProps['fieldActionTypes'];
 };
 
 // Toolbar
