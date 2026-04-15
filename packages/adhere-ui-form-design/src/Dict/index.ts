@@ -44,6 +44,7 @@ import { QRCodeType } from './QRCodeType';
 import { Rules } from './Rules';
 import { SegmentedShape } from './SegmentedShape';
 import { SelectMode } from './SelectMode';
+import { SignaturePadMode } from './SignaturePadMode';
 import { StepsSize } from './StepsSize';
 import { StepsStatus } from './StepsStatus';
 import { StepsSwiperDirection } from './StepsSwiperDirection';
@@ -124,6 +125,7 @@ const dictImpls = {
   Placement,
   Picker,
   SelectMode,
+  SignaturePadMode,
   TreeSelectShowCheckedStrategy,
   CascaderShowCheckedStrategy,
   JustifyContent,

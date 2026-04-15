@@ -60,15 +60,15 @@
 
 ### 其他
 
+- [x] QRCode
+- [ ] 签名组件
+- [ ] ImageCode
 - [ ] QuickRangeDate
-- [ ] QRCode
 - [ ] Upload
 - [ ] ImageCroppingUpload
 - [ ] MapSelectPoint
 - [ ] PhoneWithAreaCode
-- [ ] ImageCode
 - [ ] RichEditor
-- [ ] 手写组件
 
 ## 高级
 

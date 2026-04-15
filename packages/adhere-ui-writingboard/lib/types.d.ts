@@ -1,9 +1,9 @@
-import MobileSignatureCore from './signature/MobileSignatureCore';
 import type { ModalProps } from 'antd/lib/modal/interface';
 import { PropsWithoutRef } from 'react';
 import type { CSSProperties, NamedExoticComponent, RefAttributes } from 'react';
 import type { CenterProps, TBLRCLayoutProps, TBLRProps } from '@baifendian/adhere-ui-flexlayout/es/types';
 import Signature from './signature';
+import MobileSignatureCore from './signature/MobileSignatureCore';
 import SignatureCore from './signature/SignatureCore';
 import MobileSignature from './signature/mobile';
 /**
@@ -114,7 +114,7 @@ export interface SignatureProps {
     /** 签名值(base64字符串) */
     value?: string;
     /** 签名值变化回调 */
-    onChange: (base64?: string) => void;
+    onChange?: (base64?: string) => void;
 }
 /**
  * 签名核心组件包装属性类型

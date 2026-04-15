@@ -60,6 +60,7 @@ import { RulesMenuStandardDict } from './Rules';
 import RulesSettingFormItem from './RulesSettingFormItem';
 import { SegmentedShapeSelectStandardDict } from './SegmentedShape';
 import { SelectModeSelectStandardDict } from './SelectMode';
+import { SignaturePadModeSelectStandardDict } from './SignaturePadMode';
 import { StepsSizeSelectStandardDict } from './StepsSize';
 import { StepsStatusSelectStandardDict } from './StepsStatus';
 import { StepsSwiperDirectionSelectStandardDict } from './StepsSwiperDirection';
@@ -152,6 +153,7 @@ export {
   PlacementSelectStandardDict,
   PickerSelectStandardDict,
   SelectModeSelectStandardDict,
+  SignaturePadModeSelectStandardDict,
   TreeSelectShowCheckedStrategySelectStandardDict,
   CascaderShowCheckedStrategySelectStandardDict,
   DataSourceManager,

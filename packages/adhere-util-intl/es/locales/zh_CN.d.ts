@@ -447,5 +447,12 @@ declare const _default: {
     qr_status: string;
     qr_size: string;
     qr_icon: string;
+    signature_pad: string;
+    pen_color: string;
+    background_color: string;
+    line_width: string;
+    canvas_width: string;
+    canvas_height: string;
+    clear_on_resize: string;
 }[];
 export default _default;

@@ -448,5 +448,12 @@ export default [
     qr_status: '二维码状态',
     qr_size: '二维码大小',
     qr_icon: '二维码中图片的地址',
+    signature_pad: '手写签名',
+    pen_color: '画笔颜色',
+    background_color: '背景颜色',
+    line_width: '线宽',
+    canvas_width: '画布宽度',
+    canvas_height: '画布高度',
+    clear_on_resize: '尺寸变化时清空',
   },
 ];

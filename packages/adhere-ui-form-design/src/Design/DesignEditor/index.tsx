@@ -19,6 +19,12 @@ const selectPrefix = `${SELECT_PREFIX}-design-editor`;
 const DesignEditor: FC<DesignEditorProps> = () => {
   const [form] = Form.useForm();
 
+  console.log('render======');
+
+  const allValues = Form.useWatch([], form);
+
+  console.log('allValues======', allValues);
+
   const context = useContext(DesignContext);
 
   const { getDesignValue } = context;

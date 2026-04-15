@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/SignaturePad/constant.js"],"sourcesContent":["export var TYPE = 'antd-signature-pad';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,4BAAPA,IAA2B"}

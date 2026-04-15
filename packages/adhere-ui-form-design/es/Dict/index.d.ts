@@ -309,6 +309,12 @@ declare const names: Partial<{
             value: string;
         }[];
     };
+    SignaturePadMode: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
     TreeSelectShowCheckedStrategy: {
         value: {
             label: string;

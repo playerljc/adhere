@@ -365,5 +365,12 @@ declare const _default: {
     bg_color: string;
     icon_size: string;
     margin_size: string;
+    signature_pad: string;
+    pen_color: string;
+    background_color: string;
+    line_width: string;
+    canvas_width: string;
+    canvas_height: string;
+    clear_on_resize: string;
 }[];
 export default _default;

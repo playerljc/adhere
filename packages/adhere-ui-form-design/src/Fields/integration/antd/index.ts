@@ -9,6 +9,7 @@ import {
   CheckSquareOutlined,
   ClockCircleOutlined,
   ColumnWidthOutlined,
+  EditOutlined,
   FieldNumberOutlined,
   FieldTimeOutlined,
   FontColorsOutlined,
@@ -50,6 +51,7 @@ import { define as InputSearchDefine } from './InputSearch';
 import { define as LinkDefine } from './Link';
 import { define as PasswordDefine } from './Password';
 import { define as QRCodeDefine } from './QRCode';
+import { define as SignaturePadDefine } from './SignaturePad';
 import { define as RadioDefine } from './Radio';
 import { define as RadioGroupDefine } from './RadioGroup';
 import { define as RateDefine } from './Rate';
@@ -79,6 +81,7 @@ const Text = TextDefine();
 const Alert = AlertDefine();
 const Link = LinkDefine();
 const QRCode = QRCodeDefine();
+const SignaturePad = SignaturePadDefine();
 const Button = ButtonDefine();
 const SubmitButton = SubmitButtonDefine();
 const InputOTP = InputOTPDefine();
@@ -185,6 +188,13 @@ export function install(): {
         label: Intl.get('qr_code'),
         searchLabel: Intl.get('qr_code'),
         tooltip: Intl.get('qr_code'),
+      },
+      {
+        type: SignaturePad.type,
+        icon: React.createElement(EditOutlined),
+        label: Intl.get('signature_pad'),
+        searchLabel: Intl.get('signature_pad'),
+        tooltip: Intl.get('signature_pad'),
       },
       {
         type: Text.type,
@@ -326,6 +336,7 @@ export function install(): {
       TimeRangePicker,
       ColorPicker,
       QRCode,
+      SignaturePad,
       Text,
       Alert,
       Link,

@@ -366,5 +366,12 @@ export default [
     bg_color: 'Background color',
     icon_size: 'Icon size',
     margin_size: 'Margin size',
+    signature_pad: 'Signature',
+    pen_color: 'Pen color',
+    background_color: 'Background color',
+    line_width: 'Line width',
+    canvas_width: 'Canvas width',
+    canvas_height: 'Canvas height',
+    clear_on_resize: 'Clear on resize',
   },
 ];

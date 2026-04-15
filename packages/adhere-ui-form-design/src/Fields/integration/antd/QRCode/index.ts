@@ -33,6 +33,7 @@ export function define(): DesignItem {
         initialValue: 'https://ant.design/',
       },
       fieldProps: {
+        value: 'https://ant.design/',
         type: 'canvas',
         size: 160,
         bordered: true,

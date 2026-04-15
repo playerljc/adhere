@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_adhereUiWritingboard=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.renderDesign=void 0,_interopRequireDefault(require("@baifendian/adhere-ui-writingboard"))),_createRenderDesign=require("./createRenderDesign"),renderDesign=exports.renderDesign=(0,_createRenderDesign.createSignatureRenderDesign)(_adhereUiWritingboard.default.Signature);
+//# sourceMappingURL=renderDesign.js.map
