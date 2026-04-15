@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,QRCodeErrorLevelSelectStandardDict=Components[genDictComponentName(names.QRCodeErrorLevel,ComponentNames.Select.Standard)];export{QRCodeErrorLevelSelectStandardDict};
+//# sourceMappingURL=QRCodeErrorLevel.js.map

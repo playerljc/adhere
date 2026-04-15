@@ -359,5 +359,12 @@ export default [
     transfer_item_description_placeholder: 'Enter description (optional)',
     transfer_item_disabled: 'Disable this item',
     transfer_item_detail: 'Detail Settings',
+    qr_code: 'QR Code',
+    error_level: 'Error correction level',
+    boost_level: 'Boost level',
+    status_render_template: 'Status render template',
+    bg_color: 'Background color',
+    icon_size: 'Icon size',
+    margin_size: 'Margin size',
   },
 ];

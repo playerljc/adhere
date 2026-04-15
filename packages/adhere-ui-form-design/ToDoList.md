@@ -56,7 +56,7 @@
 - [x] Card
 - [x] Tabs
 - [x] Step
-- [ ] Collapse
+- [x] Collapse
 
 ### 其他
 
@@ -77,10 +77,8 @@
 
 ## FAQ
 
-- [ ] **saga 和 store 不应该是局部的**
-  - 引深到 Model 中使用的 saga 应该能从全局获取
 - [ ] **event 中的 this 不应该是 designContext，应该是 formContext**
 - [x] Tabs,Steps,Collapse 拖拽多副本 uuid 重复问题
 - [x] Tabs,Steps,Collapse 中项中的 FlexLayout 布局不能删除
-- [ ] Collapse 布局的 less 完善
 - [x] Collapse 只能激活一个的设置
+- [ ] Collapse 布局的 less 完善

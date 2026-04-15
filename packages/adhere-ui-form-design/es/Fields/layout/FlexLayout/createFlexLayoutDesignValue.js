@@ -1,2 +1,2 @@
-import Util from"@baifendian/adhere-util";import{TYPE}from"./constant";function createFlexLayoutDesignValue(){return{id:Util.uuid(),type:TYPE,props:{fieldProps:{direction:"vertical",wrap:!1,justifyContent:"flex-start",alignItems:"stretch",alignContent:"normal",gap:8},flexProps:{minSize:!0,scroll:!0},children:[]}}}export{createFlexLayoutDesignValue};
+import Util from"@baifendian/adhere-util";import{TYPE}from"./constant";function createFlexLayoutDesignValue(){return{id:Util.uuid(),type:TYPE,props:{fieldProps:{direction:"vertical",wrap:!1,justifyContent:"flex-start",alignItems:"stretch",alignContent:"normal",gap:8},flexProps:{minSize:!0,scroll:!0},children:[],fieldActionTypes:[]}}}export{createFlexLayoutDesignValue};
 //# sourceMappingURL=createFlexLayoutDesignValue.js.map

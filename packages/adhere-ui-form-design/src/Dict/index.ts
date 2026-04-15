@@ -37,6 +37,10 @@ import { Placement } from './Placement';
 import { RadioGroupButtonStyle } from './RadioGroupButtonStyle';
 import { RadioGroupOptionType } from './RadioGroupOptionType';
 import { RateSize } from './RateSize';
+import { QRCodeErrorLevel } from './QRCodeErrorLevel';
+import { QRCodeStatus } from './QRCodeStatus';
+import { QRCodeStatusRenderTemplate } from './QRCodeStatusRenderTemplate';
+import { QRCodeType } from './QRCodeType';
 import { Rules } from './Rules';
 import { SegmentedShape } from './SegmentedShape';
 import { SelectMode } from './SelectMode';
@@ -98,6 +102,10 @@ const dictImpls = {
   RadioGroupButtonStyle,
   RadioGroupOptionType,
   RateSize,
+  QRCodeType,
+  QRCodeErrorLevel,
+  QRCodeStatus,
+  QRCodeStatusRenderTemplate,
   Rules,
   SegmentedShape,
   TableGridLayoutModeType,

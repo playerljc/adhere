@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,QRCodeStatusSelectStandardDict=Components[genDictComponentName(names.QRCodeStatus,ComponentNames.Select.Standard)];export{QRCodeStatusSelectStandardDict};
+//# sourceMappingURL=QRCodeStatus.js.map

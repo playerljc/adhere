@@ -52,6 +52,10 @@ import { PlacementSelectStandardDict } from './Placement';
 import { RadioGroupButtonStyleSelectStandardDict } from './RadioGroupButtonStyle';
 import { RadioGroupOptionTypeSelectStandardDict } from './RadioGroupOptionType';
 import { RateSizeSelectStandardDict } from './RateSize';
+import { QRCodeErrorLevelSelectStandardDict } from './QRCodeErrorLevel';
+import { QRCodeStatusSelectStandardDict } from './QRCodeStatus';
+import { QRCodeStatusRenderTemplateSelectStandardDict } from './QRCodeStatusRenderTemplate';
+import { QRCodeTypeSelectStandardDict } from './QRCodeType';
 import { RulesMenuStandardDict } from './Rules';
 import RulesSettingFormItem from './RulesSettingFormItem';
 import { SegmentedShapeSelectStandardDict } from './SegmentedShape';
@@ -185,6 +189,10 @@ export {
   RadioGroupButtonStyleSelectStandardDict,
   RadioGroupOptionTypeSelectStandardDict,
   RateSizeSelectStandardDict,
+  QRCodeTypeSelectStandardDict,
+  QRCodeErrorLevelSelectStandardDict,
+  QRCodeStatusSelectStandardDict,
+  QRCodeStatusRenderTemplateSelectStandardDict,
   SegmentedShapeSelectStandardDict,
   SwitchSizeSelectStandardDict,
   TextTypeSelectStandardDict,

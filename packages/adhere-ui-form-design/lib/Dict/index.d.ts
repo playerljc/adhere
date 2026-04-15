@@ -178,6 +178,30 @@ declare const names: Partial<{
             value: string;
         }[];
     };
+    QRCodeType: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    QRCodeErrorLevel: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    QRCodeStatus: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    QRCodeStatusRenderTemplate: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
     Rules: {
         value: {
             label: string;

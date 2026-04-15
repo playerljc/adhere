@@ -437,5 +437,15 @@ declare const _default: {
     steps_percent: string;
     header_style: string;
     body_style: string;
+    qr_code: string;
+    error_level: string;
+    boost_level: string;
+    status_render_template: string;
+    bg_color: string;
+    icon_size: string;
+    margin_size: string;
+    qr_status: string;
+    qr_size: string;
+    qr_icon: string;
 }[];
 export default _default;

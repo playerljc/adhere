@@ -358,5 +358,12 @@ declare const _default: {
     transfer_item_description_placeholder: string;
     transfer_item_disabled: string;
     transfer_item_detail: string;
+    qr_code: string;
+    error_level: string;
+    boost_level: string;
+    status_render_template: string;
+    bg_color: string;
+    icon_size: string;
+    margin_size: string;
 }[];
 export default _default;
