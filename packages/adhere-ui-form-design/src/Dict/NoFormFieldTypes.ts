@@ -1,0 +1,12 @@
+import { TYPE as AlertType } from '../Fields/integration/antd/Alert/constant';
+import { TYPE as ButtonType } from '../Fields/integration/antd/Button/constant';
+import { TYPE as DividerType } from '../Fields/integration/antd/Divider/constant';
+import { TYPE as LinkType } from '../Fields/integration/antd/Link/constant';
+import { TYPE as SubmitButtonType } from '../Fields/integration/antd/SubmitButton/constant';
+import { TYPE as TextType } from '../Fields/integration/antd/Text/constant';
+
+export const NoFormFieldTypes = {
+  handler: () => {
+    return [AlertType, ButtonType, LinkType, SubmitButtonType, TextType, DividerType];
+  },
+};

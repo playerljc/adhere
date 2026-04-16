@@ -21,6 +21,10 @@ import { DatePickerEvents } from './DatePickerEvents';
 import { DateRangePickerEvents } from './DateRangePickerEvents';
 import { DefaultToolBox } from './DefaultToolBox';
 import { Density } from './Density';
+import { DividerOrientation } from './DividerOrientation';
+import { DividerSize } from './DividerSize';
+import { DividerTitlePlacement } from './DividerTitlePlacement';
+import { DividerVariant } from './DividerVariant';
 import { Direction } from './Direction';
 import { FocusEvents } from './FocusEvents';
 import { InputEvents } from './InputEvents';
@@ -29,35 +33,36 @@ import { InputSize } from './InputSize';
 import { InputType } from './InputType';
 import { JustifyContent } from './JustifyContent';
 import { KeyboardEvents } from './KeyboardEvents';
-import { LayoutItemsType } from './LayoutItemsType';
+import { LayoutFieldTypes } from './LayoutFieldTypes';
 import { LinkTarget } from './LinkTarget';
 import { MouseEvents } from './MouseEvents';
+import { NoFormFieldTypes } from './NoFormFieldTypes';
 import { Picker } from './Picker';
 import { Placement } from './Placement';
-import { RadioGroupButtonStyle } from './RadioGroupButtonStyle';
-import { RadioGroupOptionType } from './RadioGroupOptionType';
-import { RateSize } from './RateSize';
 import { QRCodeErrorLevel } from './QRCodeErrorLevel';
 import { QRCodeStatus } from './QRCodeStatus';
 import { QRCodeStatusRenderTemplate } from './QRCodeStatusRenderTemplate';
 import { QRCodeType } from './QRCodeType';
+import { RadioGroupButtonStyle } from './RadioGroupButtonStyle';
+import { RadioGroupOptionType } from './RadioGroupOptionType';
+import { RateSize } from './RateSize';
 import { Rules } from './Rules';
 import { SegmentedShape } from './SegmentedShape';
 import { SelectMode } from './SelectMode';
 import { SignaturePadMode } from './SignaturePadMode';
+import { Size } from './Size';
 import { StepsSize } from './StepsSize';
 import { StepsStatus } from './StepsStatus';
 import { StepsSwiperDirection } from './StepsSwiperDirection';
 import { StepsSwiperItemLayoutMode } from './StepsSwiperItemLayoutMode';
 import { StepsSwiperItemRenderMode } from './StepsSwiperItemRenderMode';
 import { StepsType } from './StepsType';
-import { Size } from './Size';
 import { SwitchSize } from './SwitchSize';
+import { TableGridLayoutModeType } from './TableGridLayoutModeType';
+import { TableNumberGeneratorRule } from './TableNumberGeneratorRule';
 import { TabsSize } from './TabsSize';
 import { TabsTabPlacement } from './TabsTabPlacement';
 import { TabsType } from './TabsType';
-import { TableGridLayoutModeType } from './TableGridLayoutModeType';
-import { TableNumberGeneratorRule } from './TableNumberGeneratorRule';
 import { TextType } from './TextType';
 import { Thousands } from './Thousands';
 import { TimeHourStep } from './TimeHourStep';
@@ -107,6 +112,10 @@ const dictImpls = {
   QRCodeErrorLevel,
   QRCodeStatus,
   QRCodeStatusRenderTemplate,
+  DividerOrientation,
+  DividerSize,
+  DividerTitlePlacement,
+  DividerVariant,
   Rules,
   SegmentedShape,
   TableGridLayoutModeType,
@@ -116,7 +125,7 @@ const dictImpls = {
   ValuePropName,
   InputSize,
   DefaultToolBox,
-  LayoutItemsType,
+  LayoutFieldTypes,
   Variant,
   Thousands,
   Size,
@@ -142,6 +151,7 @@ const dictImpls = {
   TabsType,
   TabsSize,
   TabsTabPlacement,
+  NoFormFieldTypes,
 };
 
 const { names, values } = genModuleDict(dictImpls);

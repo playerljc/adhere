@@ -365,6 +365,15 @@ declare const _default: {
     bg_color: string;
     icon_size: string;
     margin_size: string;
+    divider: string;
+    divider_title: string;
+    divider_orientation: string;
+    divider_vertical: string;
+    divider_dashed: string;
+    divider_plain: string;
+    divider_size: string;
+    divider_title_placement: string;
+    divider_variant: string;
     signature_pad: string;
     pen_color: string;
     background_color: string;

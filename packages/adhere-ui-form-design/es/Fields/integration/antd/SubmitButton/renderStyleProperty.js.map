@@ -1,1 +1,1 @@
-{"version":3,"file":"renderStyleProperty.js","sources":["Fields/integration/antd/SubmitButton/renderStyleProperty.js"],"sourcesContent":["export { renderStyleProperty } from '../Input/renderStyleProperty';"],"names":[],"mappings":"0BAAkE,KAA9B"}
+{"version":3,"file":"renderStyleProperty.js","sources":["Fields/integration/antd/SubmitButton/renderStyleProperty.js"],"sourcesContent":["export { renderStyleProperty } from '../Text/renderStyleProperty';"],"names":[],"mappings":"0BAAiE,KAA7B"}

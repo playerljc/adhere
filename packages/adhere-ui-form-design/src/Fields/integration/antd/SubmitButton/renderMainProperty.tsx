@@ -15,6 +15,7 @@ import { createStandardMainProperty } from '../../../../utils/createStandardMain
 
 const MainProperty = createStandardMainProperty({
   formName: 'antSubmitButtonMainProperty',
+  autoFill: false,
   buildRows: () => [
     {
       key: 'children',

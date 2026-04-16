@@ -17,8 +17,9 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-import { SELECT_PREFIX, SELECT_VALUE_KEY_NAME } from '../../constant';
+import { SELECT_PREFIX } from '../../constant';
 import type { I18nValue } from '../../types';
+import { toI18nLabel } from '../../utils';
 import I18nChangeFormItem from '../I18nChangeFormItem';
 import EditorSettingModalFromDir from './editorSetting/EditorSettingModal';
 
@@ -98,22 +99,6 @@ function createEmptyColumn(): TableColumnSettingItem {
   };
 }
 
-function toI18nTitle(
-  title: TableColumnSettingItem['title'],
-  lang: string,
-  localesKeys: string[],
-): I18nValue {
-  if (title && typeof title === 'object' && SELECT_VALUE_KEY_NAME in title) {
-    return title as I18nValue;
-  }
-
-  const next: Record<string, string | null | undefined> = { [SELECT_VALUE_KEY_NAME]: lang };
-  localesKeys.forEach((key) => {
-    next[key] = key === lang ? (title as unknown as string) ?? '' : null;
-  });
-  return next as I18nValue;
-}
-
 const EditorTypeOptions: Array<{ label: string; value: TableColumnEditorType }> = [
   { label: 'Input', value: 'input' },
   { label: 'Select', value: 'select' },
@@ -164,7 +149,7 @@ const SortableItem: FC<{
   const lang = intl.lang!;
   const localesKeys = Object.keys(intl.locales);
   const triggerRef = useRef<HTMLDivElement | null>(null);
-  const titleValue = toI18nTitle(item.title, lang, localesKeys);
+  const titleValue = toI18nLabel(item.title, lang, localesKeys);
 
   const {
     attributes,

@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import type { DataSourceItem, DataSourceManagerFormItemValue } from '../components/DataSourceManagerFormItem';
 import { SELECT_VALUE_KEY_NAME } from '../constant';
 import type { DataSourceItemConfig, DesignValue, FieldProps, I18nValue } from '../types';
+import { resolveI18nText } from './resolveI18nText';
 
 /** 与设计器 antd Select / Radio 等 options 形态对齐的条目 */
 export type DesignFieldDataSourceOption = {
@@ -15,8 +16,7 @@ export type DesignFieldDataSourceOption = {
  */
 export function resolveDataSourceOptionLabel(label: DataSourceItem['label'], lang: string): string {
   if (label && typeof label === 'object' && SELECT_VALUE_KEY_NAME in label) {
-    const i18n = label as I18nValue;
-    return String(i18n[lang] ?? i18n[i18n.selectValue] ?? '');
+    return resolveI18nText(label as I18nValue, lang);
   }
   if (typeof label === 'string' || typeof label === 'number') {
     return String(label);

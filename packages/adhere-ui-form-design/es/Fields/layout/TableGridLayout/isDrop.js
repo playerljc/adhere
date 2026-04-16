@@ -1,2 +1,2 @@
-import{isLayoutItemByType}from"../../../utils";function isDrop(t){return!isLayoutItemByType(t)}export{isDrop};
+import{isLayoutFieldByType,isNoFormFieldByType}from"../../../utils";function isDrop(i){return!isLayoutFieldByType(i)&&!isNoFormFieldByType(i)}export{isDrop};
 //# sourceMappingURL=isDrop.js.map

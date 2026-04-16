@@ -21,6 +21,10 @@ import { DateBoundModeSelectStandardDict } from './DateBoundMode';
 import { DatePickerEventsSelectStandardDict } from './DatePickerEvents';
 import { DateRangePickerEventsSelectStandardDict } from './DateRangePickerEvents';
 import { DensitySelectStandardDict } from './Density';
+import { DividerOrientationSelectStandardDict } from './DividerOrientation';
+import { DividerSizeSelectStandardDict } from './DividerSize';
+import { DividerTitlePlacementSelectStandardDict } from './DividerTitlePlacement';
+import { DividerVariantSelectStandardDict } from './DividerVariant';
 import DesignFieldActions from './DesignFieldActions';
 import {
   DesignPreviewFieldWithDataSource,
@@ -114,6 +118,10 @@ export {
   DirectionSelectStandardDict,
   WhetherRadioHorizontalDict,
   DensitySelectStandardDict,
+  DividerOrientationSelectStandardDict,
+  DividerSizeSelectStandardDict,
+  DividerTitlePlacementSelectStandardDict,
+  DividerVariantSelectStandardDict,
   TableGridLayoutModeTypeSelectStandardDict,
   TableGridLayoutColgroupSetting,
   InputTypeSelectStandardDict,

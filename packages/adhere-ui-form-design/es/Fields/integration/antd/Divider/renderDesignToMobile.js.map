@@ -1,0 +1,1 @@
+{"version":3,"file":"renderDesignToMobile.js","sources":["Fields/integration/antd/Divider/renderDesignToMobile.js"],"sourcesContent":["export { renderDesignToMobile } from './renderDesign';"],"names":[],"mappings":"2BAAqD,KAAhB"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Divider/constant.js"],"sourcesContent":["export var TYPE = 'FormDesignDivider';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,2BAAPA,IAA0B"}

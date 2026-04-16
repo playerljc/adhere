@@ -17,6 +17,7 @@ import {
   GroupOutlined,
   LinkOutlined,
   LockOutlined,
+  MinusOutlined,
   PartitionOutlined,
   QrcodeOutlined,
   ScheduleOutlined,
@@ -50,6 +51,7 @@ import { define as InputOTPDefine } from './InputOTP';
 import { define as InputSearchDefine } from './InputSearch';
 import { define as LinkDefine } from './Link';
 import { define as PasswordDefine } from './Password';
+import { define as DividerDefine } from './Divider';
 import { define as QRCodeDefine } from './QRCode';
 import { define as SignaturePadDefine } from './SignaturePad';
 import { define as RadioDefine } from './Radio';
@@ -80,6 +82,7 @@ const Password = PasswordDefine();
 const Text = TextDefine();
 const Alert = AlertDefine();
 const Link = LinkDefine();
+const Divider = DividerDefine();
 const QRCode = QRCodeDefine();
 const SignaturePad = SignaturePadDefine();
 const Button = ButtonDefine();
@@ -181,6 +184,13 @@ export function install(): {
         label: Intl.get('color_picker'),
         searchLabel: Intl.get('color_picker'),
         tooltip: Intl.get('color_picker'),
+      },
+      {
+        type: Divider.type,
+        icon: React.createElement(MinusOutlined),
+        label: Intl.get('divider'),
+        searchLabel: Intl.get('divider'),
+        tooltip: Intl.get('divider'),
       },
       {
         type: QRCode.type,
@@ -335,6 +345,7 @@ export function install(): {
       TimePicker,
       TimeRangePicker,
       ColorPicker,
+      Divider,
       QRCode,
       SignaturePad,
       Text,

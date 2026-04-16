@@ -1,5 +1,4 @@
-export declare const renderDesign: ({ parentId, value, context, }: {
+export declare const renderDesign: ({ parentId, value }: {
     parentId?: string;
     value: import("../../../../types").DesignValue;
-    context: import("../../../../types").DesignContextType;
-}) => import("@baifendian/adhere-ui-tablegridlayout").DataItemRow;
+}) => import("react").JSX.Element;

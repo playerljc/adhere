@@ -1,4 +1,4 @@
-import { isLayoutItemByType } from '../../../utils';
+import { isLayoutFieldByType, isNoFormFieldByType } from '../../../utils';
 
 /**
  * isDrop
@@ -6,5 +6,7 @@ import { isLayoutItemByType } from '../../../utils';
  * @param originType
  */
 export function isDrop(originType: string): boolean {
-  return !isLayoutItemByType(originType) as boolean;
+  return (
+    (!isLayoutFieldByType(originType) as boolean) && (!isNoFormFieldByType(originType) as boolean)
+  );
 }

@@ -14,29 +14,13 @@ import {
 } from '../../../../components';
 import { SlotEndLabel } from '../../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
-import { SELECT_VALUE_KEY_NAME } from '../../../../constant';
 import type { DesignValueProps, I18nValue } from '../../../../types';
+import { toI18nLabel } from '../../../../utils';
 
 export type I18nInputSlotRef = {
   get: (key: string) => unknown;
   set: (key: string, value: unknown) => void;
 };
-
-function toI18nValue(
-  value: I18nValue | string | undefined,
-  lang: string,
-  localesKeys: string[],
-): I18nValue {
-  if (value && typeof value === 'object' && SELECT_VALUE_KEY_NAME in value) {
-    return value as I18nValue;
-  }
-
-  const next: Record<string, string | null | undefined> = { [SELECT_VALUE_KEY_NAME]: lang };
-  localesKeys.forEach((key) => {
-    next[key] = key === lang ? (typeof value === 'string' ? value : '') : null;
-  });
-  return next as I18nValue;
-}
 
 function I18nInput({
   value,
@@ -57,7 +41,7 @@ function I18nInput({
   const lang = intl.lang!;
   const localesKeys = Object.keys(intl.locales);
 
-  const i18nValue = toI18nValue(value, lang, localesKeys);
+  const i18nValue = toI18nLabel(value, lang, localesKeys);
 
   return (
     <I18nChangeFormItem

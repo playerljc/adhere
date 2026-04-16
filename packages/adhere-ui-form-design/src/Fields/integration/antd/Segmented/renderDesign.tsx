@@ -19,7 +19,7 @@ function toSegmentedOptions(
 }
 
 /**
- * renderDesign �?Segmented，选项来自数据�?
+ * renderDesign �?Segmented，选项来自数据�?
  * @see https://ant.design/components/segmented-cn
  */
 export function renderDesign({

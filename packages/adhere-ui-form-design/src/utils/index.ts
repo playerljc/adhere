@@ -13,7 +13,8 @@ import { formItemToProps } from './formItemToProps';
 import { getLabel } from './getLabel';
 import { getLabelByType, getToolBoxItemByType } from './getLabelByType';
 import { isDesktop } from './isDesktop';
-import { isLayoutItemByType } from './isLayoutItemByType';
+import { isLayoutFieldByType } from './isLayoutFieldByType';
+import { isNoFormFieldByType } from './isNoFormFieldByType';
 import isReactNode from './isReactNode';
 import normalizeDesignChildren from './normalizeDesignChildren';
 import { resolveI18nText } from './resolveI18nText';
@@ -27,7 +28,7 @@ export {
   createMainProperty,
   renderMainProperty as renderMainPropertyWithCreate,
 } from './createMainProperty';
-export type { CreateMainPropertyOptions } from './createMainProperty';
+export type { CreateMainPropertyOptions, GetDefaultFormItemsCtx } from './createMainProperty';
 
 export {
   actionsCodeStringToEvents,
@@ -36,7 +37,7 @@ export {
   getLabel,
   rulesSettingToRules,
   styleCodeStringToCSSProperties,
-  isLayoutItemByType,
+  isLayoutFieldByType,
   isDesktop,
   isReactNode,
   normalizeDesignChildren,
@@ -55,7 +56,9 @@ export {
   useDesignFieldDataSourceOptions,
   resolveI18nText,
   toI18nLabel,
+  isNoFormFieldByType,
 };
+
 export type { LabelValueColSpan } from './computeLabelValueColSpan';
 export type { DesignFieldDataSourceOption } from './dataSourceOptions';
 export {

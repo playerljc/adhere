@@ -10,6 +10,7 @@ import { createStandardMainProperty } from '../../../../utils/createStandardMain
 
 const MainProperty = createStandardMainProperty({
   formName: 'antLinkMainProperty',
+  autoFill: false,
   buildRows: () => [
     {
       key: 'children',

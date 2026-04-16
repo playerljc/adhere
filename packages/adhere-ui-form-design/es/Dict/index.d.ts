@@ -202,6 +202,30 @@ declare const names: Partial<{
             value: string;
         }[];
     };
+    DividerOrientation: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    DividerSize: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    DividerTitlePlacement: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    DividerVariant: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
     Rules: {
         value: {
             label: string;
@@ -258,7 +282,7 @@ declare const names: Partial<{
             items: never[];
         }[];
     };
-    LayoutItemsType: {
+    LayoutFieldTypes: {
         value: string[];
     };
     Variant: {
@@ -410,6 +434,9 @@ declare const names: Partial<{
             label: string;
             value: string;
         }[];
+    };
+    NoFormFieldTypes: {
+        value: string[];
     };
 }>;
 export { names, values };

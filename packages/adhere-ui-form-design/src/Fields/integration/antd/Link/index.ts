@@ -2,6 +2,7 @@ import { Copy, Delete } from '../../../../components/DesignFieldActions/actions'
 import type { DesignItem } from '../../../../types';
 import { TYPE } from './constant';
 import { renderActions } from './renderActions';
+import { renderActionsProperty } from './renderActionsProperty';
 import { renderActionsToMobile } from './renderActionsToMobile';
 import { renderDesign } from './renderDesign';
 import { renderDesignToMobile } from './renderDesignToMobile';
@@ -17,8 +18,9 @@ export function define(): DesignItem {
     renderStyleProperty,
     renderActions,
     renderActionsToMobile,
+    renderActionsProperty,
     hasFormProperty: false,
-    hasActionsProperty: false,
+    hasActionsProperty: true,
     hasFlexProperty: false,
     defaultValue: {
       formItemProps: {

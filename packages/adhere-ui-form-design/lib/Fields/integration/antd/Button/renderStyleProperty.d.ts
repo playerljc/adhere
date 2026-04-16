@@ -1,1 +1,1 @@
-export { renderStyleProperty } from '../Input/renderStyleProperty';
+export { renderStyleProperty } from '../Text/renderStyleProperty';

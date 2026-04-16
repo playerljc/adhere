@@ -1,0 +1,1 @@
+{"version":3,"file":"renderActionsToMobile.js","sources":["Fields/integration/antd/Divider/renderActionsToMobile.js"],"sourcesContent":["export { renderActionsToMobile } from '../Text/renderActionsToMobile';"],"names":[],"mappings":"4BAAqE,KAA/B"}

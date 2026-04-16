@@ -73,7 +73,7 @@ function renderCheckboxGroupBody(
 }
 
 /**
- * renderDesign �?Checkbox.Group，选项来自数据源；布局参�?antd 文档中的 Group + Row/Col 与换行排�? */
+ * renderDesign �?Checkbox.Group，选项来自数据源；布局参�?antd 文档中的 Group + Row/Col 与换行排�? */
 export function renderDesign({
   parentId,
   value,
