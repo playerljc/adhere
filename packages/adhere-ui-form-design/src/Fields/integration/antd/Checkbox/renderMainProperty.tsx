@@ -1,20 +1,60 @@
 import React from 'react';
 
-import { Form } from '@baifendian/adhere-ui-anthoc';
+import { Form, Input } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { WhetherRadioHorizontalDict } from '../../../../components';
+import {
+  I18nChangeFormItem,
+  SlotEndLabel,
+  WhetherRadioHorizontalDict,
+} from '../../../../components';
 import { Label, Value } from '../../../../components/TableGridLayout';
 import {
   createMainProperty,
   renderMainPropertyWithCreate,
 } from '../../../../utils';
 import type { DesignValueProps } from '../../../../types';
+import type { GetDefaultFormItemsCtx } from '../../../../utils';
 
-const MainProperty = createMainProperty({
-  formName: 'antCheckboxMainProperty',
-  getDefaultFormItems: (): DataItemRow[] => [
+function getDefaultFormItems(
+  _designValue: DesignValueProps,
+  ctx: GetDefaultFormItemsCtx,
+): DataItemRow[] {
+  const { titleLabelSlot } = ctx;
+
+  return [
+    {
+      key: 'text',
+      require: false,
+      label: (
+        <SlotEndLabel
+          ref={(node) => {
+            titleLabelSlot.set('text', node);
+          }}
+        >
+          {Intl.get('text')}：
+        </SlotEndLabel>
+      ),
+      value: (
+        <Value>
+          <Form.Item name="text">
+            <I18nChangeFormItem getTriggerContainer={() => titleLabelSlot.get('text') as HTMLElement}>
+              {({ onChange, value }) => (
+                <Input.OptimizedInput
+                  value={value}
+                  placeholder={Intl.get('text')}
+                  maxLength={200}
+                  onChange={(e) => onChange(e.target.value)}
+                  showCount={false}
+                  allowClear
+                />
+              )}
+            </I18nChangeFormItem>
+          </Form.Item>
+        </Value>
+      ),
+    },
     {
       key: 'disabled',
       require: false,
@@ -39,7 +79,12 @@ const MainProperty = createMainProperty({
         </Value>
       ),
     },
-  ],
+  ];
+}
+
+const MainProperty = createMainProperty({
+  formName: 'antCheckboxMainProperty',
+  getDefaultFormItems,
   autoFill: true,
 });
 
