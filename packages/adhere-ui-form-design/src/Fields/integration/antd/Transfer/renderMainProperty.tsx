@@ -1,11 +1,10 @@
-import React, { type ReactNode, useContext, useEffect, useRef } from 'react';
+import React, { useContext } from 'react';
 
 import { Form, Input } from '@baifendian/adhere-ui-anthoc';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { DesignContext } from '../../../../Design/Context';
 import {
   I18nChangeFormItem,
   TransferDataSourceManagerFormItem,
@@ -13,9 +12,9 @@ import {
   WhetherRadioHorizontalDict,
 } from '../../../../components';
 import { SlotEndLabel } from '../../../../components';
-import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
+import { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps, I18nValue } from '../../../../types';
-import { toI18nLabel } from '../../../../utils';
+import { createMainProperty, renderMainPropertyWithCreate, toI18nLabel } from '../../../../utils';
 
 export type I18nInputSlotRef = {
   get: (key: string) => unknown;
@@ -62,49 +61,12 @@ function I18nInput({
   );
 }
 
-export function MainProperty({
-  designValue,
-  renderFormItems,
-}: {
-  designValue: DesignValueProps;
-  renderFormItems?: (defaultFormItems: DataItemRow[]) => DataItemRow[];
-}) {
-  const [form] = Form.useForm();
+const MainProperty = createMainProperty({
+  formName: 'antTransferMainProperty',
+  getDefaultFormItems: (designValue, ctx): DataItemRow[] => {
+    const slot = ctx.titleLabelSlot as unknown as I18nInputSlotRef;
 
-  const { getActiveFieldId, setFieldProps } = useContext(DesignContext);
-
-  const { fieldProps } = designValue;
-
-  // 国际化字段的 label slot 引用
-  const leftTitleSlot = useRef<I18nInputSlotRef>({
-    get: (key: string) => leftTitleSlot.current[key as keyof I18nInputSlotRef],
-    set: (key: string, value: unknown) => {
-      (leftTitleSlot.current as unknown as Record<string, unknown>)[key] = value;
-    },
-  });
-
-  const rightTitleSlot = useRef<I18nInputSlotRef>({
-    get: (key: string) => rightTitleSlot.current[key as keyof I18nInputSlotRef],
-    set: (key: string, value: unknown) => {
-      (rightTitleSlot.current as unknown as Record<string, unknown>)[key] = value;
-    },
-  });
-
-  const leftOperationSlot = useRef<I18nInputSlotRef>({
-    get: (key: string) => leftOperationSlot.current[key as keyof I18nInputSlotRef],
-    set: (key: string, value: unknown) => {
-      (leftOperationSlot.current as unknown as Record<string, unknown>)[key] = value;
-    },
-  });
-
-  const rightOperationSlot = useRef<I18nInputSlotRef>({
-    get: (key: string) => rightOperationSlot.current[key as keyof I18nInputSlotRef],
-    set: (key: string, value: unknown) => {
-      (rightOperationSlot.current as unknown as Record<string, unknown>)[key] = value;
-    },
-  });
-
-  const defaultFormItems: DataItemRow[] = [
+    const defaultFormItems: DataItemRow[] = [
     {
       key: 'disabled',
       require: false,
@@ -171,7 +133,7 @@ export function MainProperty({
       label: (
         <SlotEndLabel
           ref={(node) => {
-            leftTitleSlot.current.set('label', node);
+            slot.set('leftTitleLabel', node);
           }}
         >
           {Intl.get('transfer_left_title')}：
@@ -183,8 +145,8 @@ export function MainProperty({
             <I18nInput
               placeholder={Intl.get('transfer_left_title')}
               maxLength={50}
-              slot={leftTitleSlot.current}
-              slotKey="label"
+              slot={slot}
+              slotKey="leftTitleLabel"
             />
           </Form.Item>
         </Value>
@@ -196,7 +158,7 @@ export function MainProperty({
       label: (
         <SlotEndLabel
           ref={(node) => {
-            rightTitleSlot.current.set('label', node);
+            slot.set('rightTitleLabel', node);
           }}
         >
           {Intl.get('transfer_right_title')}：
@@ -208,8 +170,8 @@ export function MainProperty({
             <I18nInput
               placeholder={Intl.get('transfer_right_title')}
               maxLength={50}
-              slot={rightTitleSlot.current}
-              slotKey="label"
+              slot={slot}
+              slotKey="rightTitleLabel"
             />
           </Form.Item>
         </Value>
@@ -221,7 +183,7 @@ export function MainProperty({
       label: (
         <SlotEndLabel
           ref={(node) => {
-            leftOperationSlot.current.set('label', node);
+            slot.set('leftOperationLabel', node);
           }}
         >
           {Intl.get('transfer_left_operation')}：
@@ -233,8 +195,8 @@ export function MainProperty({
             <I18nInput
               placeholder={Intl.get('transfer_left_operation')}
               maxLength={20}
-              slot={leftOperationSlot.current}
-              slotKey="label"
+              slot={slot}
+              slotKey="leftOperationLabel"
             />
           </Form.Item>
         </Value>
@@ -246,7 +208,7 @@ export function MainProperty({
       label: (
         <SlotEndLabel
           ref={(node) => {
-            rightOperationSlot.current.set('label', node);
+            slot.set('rightOperationLabel', node);
           }}
         >
           {Intl.get('transfer_right_operation')}：
@@ -258,8 +220,8 @@ export function MainProperty({
             <I18nInput
               placeholder={Intl.get('transfer_right_operation')}
               maxLength={20}
-              slot={rightOperationSlot.current}
-              slotKey="label"
+              slot={slot}
+              slotKey="rightOperationLabel"
             />
           </Form.Item>
         </Value>
@@ -290,34 +252,11 @@ export function MainProperty({
       ),
     },
   ];
+    return defaultFormItems;
+  },
+  autoFill: true,
+});
 
-  function onFieldsChange() {
-    const values = form.getFieldsValue();
-    setFieldProps(getActiveFieldId() as string, { ...values });
-  }
-
-  useEffect(() => {
-    form.setFieldsValue(fieldProps);
-  }, [fieldProps]);
-
-  return (
-    <Form name="antTransferMainProperty" form={form} onFieldsChange={onFieldsChange}>
-      <PropertiesGridLayout
-        layout="vertical"
-        data={[
-          {
-            name: 'g1',
-            width: '100%',
-            columnCount: 1,
-            colgroup: ['auto'],
-            data: renderFormItems ? renderFormItems(defaultFormItems) : defaultFormItems,
-          },
-        ]}
-      />
-    </Form>
-  );
-}
-
-export function renderMainProperty(props: DesignValueProps): ReactNode {
-  return <MainProperty designValue={props} />;
+export function renderMainProperty(props: DesignValueProps) {
+  return renderMainPropertyWithCreate(MainProperty, props);
 }

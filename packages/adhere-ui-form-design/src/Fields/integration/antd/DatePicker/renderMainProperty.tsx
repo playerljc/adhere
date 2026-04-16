@@ -1,11 +1,10 @@
 import dayjs from 'dayjs';
-import React, { type ReactNode, useContext, useEffect, useMemo } from 'react';
+import React from 'react';
 
 import { DatePicker, Form, Input } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { DesignContext } from '../../../../Design/Context';
 import {
   DateBoundModeSelectStandardDict,
   PickerSelectStandardDict,
@@ -14,31 +13,22 @@ import {
   VariantSelectStandardDict,
   VerificationStatusSelectStandardDict,
   WhetherRadioHorizontalDict,
-  buildFormPropertyFillRow,
 } from '../../../../components';
-import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
+import { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
+import { createMainProperty, renderMainPropertyWithCreate } from '../../../../utils';
 
 /**
  * MainProperty - DatePicker basic props per antd DatePicker API.
  * Basic only: format, picker, showTime, allowClear, isBirthday, dateBoundMode, dateBoundBaseValue, dateBoundIncludeBase
  */
-export function MainProperty({
-  designValue,
-  renderFormItems,
-}: {
-  designValue: DesignValueProps;
-  renderFormItems?: (defaultFormItems: DataItemRow[]) => DataItemRow[];
-}) {
-  const [form] = Form.useForm();
-  const { getActiveFieldId, setFieldProps } = useContext(DesignContext);
-  const { fieldProps } = designValue;
+const MainProperty = createMainProperty({
+  formName: 'antDatePickerMainProperty',
+  getDefaultFormItems: (designValue, ctx): DataItemRow[] => {
+    const pickerValue = ctx.watchValues?.picker as string | undefined;
+    const dateBoundMode = ((ctx.watchValues?.dateBoundMode as string | undefined) ?? '') as string;
 
-  const pickerValue = Form.useWatch('picker', form) as string | undefined;
-
-  const dateBoundMode = (Form.useWatch('dateBoundMode', form) as string | undefined) ?? '';
-
-  const defaultFormItems: (DataItemRow | false)[] = [
+    const defaultFormItems: (DataItemRow | false)[] = [
     {
       key: 'disabled',
       require: false,
@@ -254,57 +244,27 @@ export function MainProperty({
         </Value>
       ),
     },
-    buildFormPropertyFillRow(),
-  ].filter(Boolean);
+    ].filter(Boolean);
 
-  const finalFormItems = useMemo(() => {
-    return renderFormItems ? renderFormItems(defaultFormItems as DataItemRow[]) : defaultFormItems;
-  }, [defaultFormItems, renderFormItems]);
-
-  function payloadToValues(payload: any) {
-    if (!!payload.dateBoundBaseValue) {
+    return defaultFormItems as DataItemRow[];
+  },
+  autoFill: true,
+  payloadToValues: (fieldProps: any) => {
+    const payload = { ...(fieldProps ?? {}) };
+    if (payload.dateBoundBaseValue) {
       payload.dateBoundBaseValue = dayjs(payload.dateBoundBaseValue);
     }
-
     return payload;
-  }
-
-  function valuesToPayload(values: any) {
-    if (!!values.dateBoundBaseValue) {
-      values.dateBoundBaseValue = values.dateBoundBaseValue.valueOf();
+  },
+  valuesToPayload: (values: any) => {
+    const payload = { ...(values ?? {}) };
+    if (payload.dateBoundBaseValue) {
+      payload.dateBoundBaseValue = payload.dateBoundBaseValue.valueOf();
     }
+    return payload;
+  },
+});
 
-    return values;
-  }
-
-  function onFieldsChange() {
-    // 控件改变设置值
-    setFieldProps(getActiveFieldId() as string, { ...valuesToPayload(form.getFieldsValue()) });
-  }
-
-  useEffect(() => {
-    // 初始化设置值
-    form.setFieldsValue(payloadToValues(fieldProps));
-  }, [fieldProps]);
-
-  return (
-    <Form name="antDatePickerMainProperty" form={form} onFieldsChange={onFieldsChange}>
-      <PropertiesGridLayout
-        layout="vertical"
-        data={[
-          {
-            name: 'g1',
-            width: '100%',
-            columnCount: 1,
-            colgroup: ['auto'],
-            data: finalFormItems as DataItemRow[],
-          },
-        ]}
-      />
-    </Form>
-  );
-}
-
-export function renderMainProperty(props: DesignValueProps): ReactNode {
-  return <MainProperty designValue={props} />;
+export function renderMainProperty(props: DesignValueProps) {
+  return renderMainPropertyWithCreate(MainProperty, props);
 }

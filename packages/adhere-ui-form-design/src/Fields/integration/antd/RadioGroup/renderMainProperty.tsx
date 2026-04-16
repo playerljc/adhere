@@ -1,20 +1,19 @@
-import React, { type ReactNode, useContext, useEffect } from 'react';
+import React from 'react';
 
 import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { DesignContext } from '../../../../Design/Context';
 import {
   DataSourceManagerFormItem,
   RadioGroupButtonStyleSelectStandardDict,
   RadioGroupOptionTypeSelectStandardDict,
   SizeSelectStandardDict,
   WhetherRadioHorizontalDict,
-  buildFormPropertyFillRow,
 } from '../../../../components';
-import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
+import { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps, FieldProps } from '../../../../types';
+import { createMainProperty, renderMainPropertyWithCreate } from '../../../../utils';
 
 type RadioGroupFieldProps = FieldProps & {
   optionWrap?: boolean;
@@ -33,29 +32,13 @@ function normalizeLayoutProps(values: RadioGroupFieldProps): RadioGroupFieldProp
   return next;
 }
 
-/**
- * MainProperty — Radio.Group，属性参考 https://ant.design/components/radio-cn
- * 是否换行（optionWrap）与列数（columnCount）互斥。
- */
-export function MainProperty({
-  designValue,
-  renderFormItems,
-}: {
-  designValue: DesignValueProps;
-  renderFormItems?: (defaultFormItems: DataItemRow[]) => DataItemRow[];
-}) {
-  const [form] = Form.useForm();
+const MainProperty = createMainProperty({
+  formName: 'antRadioGroupMainProperty',
+  getDefaultFormItems: (designValue, ctx): DataItemRow[] => {
+    const fieldProps = designValue.fieldProps as RadioGroupFieldProps;
+    const optionType = ctx.watchValues?.optionType ?? fieldProps.optionType ?? 'default';
 
-  const { getActiveFieldId, setFieldProps } = useContext(DesignContext);
-
-  const { fieldProps } = designValue;
-
-  const optionType =
-    Form.useWatch('optionType', form) ??
-    (fieldProps as RadioGroupFieldProps).optionType ??
-    'default';
-
-  const defaultFormItems: (DataItemRow | boolean)[] = [
+    const defaultFormItems: (DataItemRow | boolean)[] = [
     {
       key: 'disabled',
       require: false,
@@ -179,42 +162,22 @@ export function MainProperty({
         </Value>
       ),
     },
-    buildFormPropertyFillRow(),
-  ].filter(Boolean);
+    ].filter(Boolean);
 
-  function onFieldsChange() {
-    const raw = form.getFieldsValue() as RadioGroupFieldProps;
+    return defaultFormItems as DataItemRow[];
+  },
+  autoFill: true,
+  payloadToValues: (fieldProps) => normalizeLayoutProps(fieldProps as RadioGroupFieldProps),
+  onFieldsChange: ({ form, getActiveFieldId, setFieldProps, valuesToPayload }) => {
+    const raw = valuesToPayload(form.getFieldsValue()) as RadioGroupFieldProps;
     const next = normalizeLayoutProps(raw);
     if (next.columnCount !== raw.columnCount || next.optionWrap !== raw.optionWrap) {
       form.setFieldsValue(next);
     }
     setFieldProps(getActiveFieldId() as string, next);
-  }
+  },
+});
 
-  useEffect(() => {
-    form.setFieldsValue(normalizeLayoutProps(fieldProps as RadioGroupFieldProps));
-  }, [fieldProps]);
-
-  return (
-    <Form name="antRadioGroupMainProperty" form={form} onFieldsChange={onFieldsChange}>
-      <PropertiesGridLayout
-        layout="vertical"
-        data={[
-          {
-            name: 'g1',
-            width: '100%',
-            columnCount: 1,
-            colgroup: ['auto'],
-            data: renderFormItems
-              ? renderFormItems(defaultFormItems as DataItemRow[])
-              : (defaultFormItems as DataItemRow[]),
-          },
-        ]}
-      />
-    </Form>
-  );
-}
-
-export function renderMainProperty(props: DesignValueProps): ReactNode {
-  return <MainProperty designValue={props} />;
+export function renderMainProperty(props: DesignValueProps) {
+  return renderMainPropertyWithCreate(MainProperty, props);
 }

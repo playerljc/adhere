@@ -31,10 +31,55 @@ export interface CreateMainPropertyOptions {
   getDefaultFormItems: (designValue: DesignValueProps, ctx: GetDefaultFormItemsCtx) => DataItemRow[];
   /** 是否自动添加 fill 设置项（默认 true） */
   autoFill?: boolean;
+  /**
+   * 将存储在 fieldProps(payload) 的值转换为表单可消费的 values
+   * - 典型场景：时间戳 <-> dayjs
+   */
+  payloadToValues?: (
+    fieldProps: any,
+    ctx: {
+      designValue: DesignValueProps;
+      form: ReturnType<typeof Form.useForm>[0];
+      watchValues: any;
+      titleLabelSlot: FormPropertyLabelSlotRef;
+    },
+  ) => any;
+  /**
+   * 将表单 values 转换为写回 fieldProps(payload) 的值
+   */
+  valuesToPayload?: (
+    values: any,
+    ctx: {
+      designValue: DesignValueProps;
+      form: ReturnType<typeof Form.useForm>[0];
+      watchValues: any;
+      titleLabelSlot: FormPropertyLabelSlotRef;
+    },
+  ) => any;
+  /**
+   * 自定义 onFieldsChange 逻辑
+   * - 典型场景：字段互斥/归一化，需要回写 form.setFieldsValue
+   */
+  onFieldsChange?: (ctx: {
+    designValue: DesignValueProps;
+    form: ReturnType<typeof Form.useForm>[0];
+    watchValues: any;
+    titleLabelSlot: FormPropertyLabelSlotRef;
+    getActiveFieldId: () => string | null | undefined;
+    setFieldProps: (id: string, props: any) => void;
+    valuesToPayload: (values: any) => any;
+  }) => void;
 }
 
 export function createMainProperty(options: CreateMainPropertyOptions) {
-  const { formName, getDefaultFormItems, autoFill = true } = options;
+  const {
+    formName,
+    getDefaultFormItems,
+    autoFill = true,
+    payloadToValues,
+    valuesToPayload,
+    onFieldsChange,
+  } = options;
 
   return function MainProperty({
     designValue,
@@ -61,6 +106,16 @@ export function createMainProperty(options: CreateMainPropertyOptions) {
     // 监听属性面板表单值，用于动态生成表单项
     const watchValues = Form.useWatch([], form);
 
+    const convertCtx = useMemo(
+      () => ({
+        designValue,
+        form,
+        watchValues,
+        titleLabelSlot,
+      }),
+      [designValue, form, titleLabelSlot, watchValues],
+    );
+
     // 获取默认表单项（可根据 watchValues 动态变化）
     const baseFormItems = useMemo(
       () =>
@@ -77,17 +132,36 @@ export function createMainProperty(options: CreateMainPropertyOptions) {
       ? [...baseFormItems, buildFormPropertyFillRow()]
       : baseFormItems;
 
-    function onFieldsChange() {
-      const values = form.getFieldsValue();
+    const valuesToPayloadFn = useMemo(() => {
+      if (!valuesToPayload) return (values: any) => values;
+      return (values: any) => valuesToPayload(values, convertCtx);
+    }, [convertCtx, valuesToPayload]);
+
+    function onFieldsChangeInternal() {
+      if (onFieldsChange) {
+        onFieldsChange({
+          designValue,
+          form,
+          watchValues,
+          titleLabelSlot,
+          getActiveFieldId,
+          setFieldProps,
+          valuesToPayload: valuesToPayloadFn,
+        });
+        return;
+      }
+
+      const values = valuesToPayloadFn(form.getFieldsValue());
       setFieldProps(getActiveFieldId() as string, { ...values });
     }
 
     useEffect(() => {
-      form.setFieldsValue(fieldProps);
+      const values = payloadToValues ? payloadToValues(fieldProps, convertCtx) : fieldProps;
+      form.setFieldsValue(values);
     }, [fieldProps]);
 
     return (
-      <Form name={formName} form={form} onFieldsChange={onFieldsChange}>
+      <Form name={formName} form={form} onFieldsChange={onFieldsChangeInternal}>
         <PropertiesGridLayout
           layout="vertical"
           data={[

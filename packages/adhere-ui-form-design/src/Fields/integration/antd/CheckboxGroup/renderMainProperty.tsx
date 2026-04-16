@@ -1,17 +1,16 @@
-import React, { type ReactNode, useContext, useEffect } from 'react';
+import React from 'react';
 
 import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { DesignContext } from '../../../../Design/Context';
 import {
   DataSourceManagerFormItem,
   WhetherRadioHorizontalDict,
-  buildFormPropertyFillRow,
 } from '../../../../components';
-import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
+import { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps, FieldProps } from '../../../../types';
+import { createMainProperty, renderMainPropertyWithCreate } from '../../../../utils';
 
 type CheckboxGroupFieldProps = FieldProps & {
   optionWrap?: boolean;
@@ -28,24 +27,9 @@ function normalizeLayoutProps(values: CheckboxGroupFieldProps): CheckboxGroupFie
   return next;
 }
 
-/**
- * MainProperty — Checkbox.Group，属性参考 https://ant.design/components/checkbox-cn
- * 是否换行（optionWrap）与列数（columnCount）互斥：开启换行时清空列数；列数大于 0 时关闭换行。
- */
-export function MainProperty({
-  designValue,
-  renderFormItems,
-}: {
-  designValue: DesignValueProps;
-  renderFormItems?: (defaultFormItems: DataItemRow[]) => DataItemRow[];
-}) {
-  const [form] = Form.useForm();
-
-  const { getActiveFieldId, setFieldProps } = useContext(DesignContext);
-
-  const { fieldProps } = designValue;
-
-  const defaultFormItems: DataItemRow[] = [
+const MainProperty = createMainProperty({
+  formName: 'antCheckboxGroupMainProperty',
+  getDefaultFormItems: (): DataItemRow[] => [
     {
       key: 'disabled',
       require: false,
@@ -115,40 +99,19 @@ export function MainProperty({
         </Value>
       ),
     },
-    buildFormPropertyFillRow(),
-  ];
-
-  function onFieldsChange() {
-    const raw = form.getFieldsValue() as CheckboxGroupFieldProps;
+  ],
+  autoFill: true,
+  payloadToValues: (fieldProps) => normalizeLayoutProps(fieldProps as CheckboxGroupFieldProps),
+  onFieldsChange: ({ form, getActiveFieldId, setFieldProps, valuesToPayload }) => {
+    const raw = valuesToPayload(form.getFieldsValue()) as CheckboxGroupFieldProps;
     const next = normalizeLayoutProps(raw);
     if (next.columnCount !== raw.columnCount || next.optionWrap !== raw.optionWrap) {
       form.setFieldsValue(next);
     }
     setFieldProps(getActiveFieldId() as string, next);
-  }
+  },
+});
 
-  useEffect(() => {
-    form.setFieldsValue(normalizeLayoutProps(fieldProps as CheckboxGroupFieldProps));
-  }, [fieldProps]);
-
-  return (
-    <Form name="antCheckboxGroupMainProperty" form={form} onFieldsChange={onFieldsChange}>
-      <PropertiesGridLayout
-        layout="vertical"
-        data={[
-          {
-            name: 'g1',
-            width: '100%',
-            columnCount: 1,
-            colgroup: ['auto'],
-            data: renderFormItems ? renderFormItems(defaultFormItems) : defaultFormItems,
-          },
-        ]}
-      />
-    </Form>
-  );
-}
-
-export function renderMainProperty(props: DesignValueProps): ReactNode {
-  return <MainProperty designValue={props} />;
+export function renderMainProperty(props: DesignValueProps) {
+  return renderMainPropertyWithCreate(MainProperty, props);
 }
