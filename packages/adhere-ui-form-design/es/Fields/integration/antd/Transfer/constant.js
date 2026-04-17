@@ -1,2 +1,2 @@
-var TYPE="antd-transfer";export{TYPE};
+var TYPE="ant-transfer";export{TYPE};
 //# sourceMappingURL=constant.js.map

@@ -1,1 +1,1 @@
-{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Rate/constant.js"],"sourcesContent":["export var TYPE = 'antd-rate';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,mBAAPA,IAAkB"}
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Rate/constant.js"],"sourcesContent":["export var TYPE = 'ant-rate';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,kBAAPA,IAAiB"}

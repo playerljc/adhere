@@ -1,1 +1,1 @@
-{"version":3,"file":"constant.js","sources":["Fields/integration/antd/RadioGroup/constant.js"],"sourcesContent":["export var TYPE = 'antd-radio-group';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,0BAAPA,IAAyB"}
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/RadioGroup/constant.js"],"sourcesContent":["export var TYPE = 'ant-radio-group';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,yBAAPA,IAAwB"}

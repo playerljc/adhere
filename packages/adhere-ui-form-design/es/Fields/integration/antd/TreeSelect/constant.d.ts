@@ -1,1 +1,1 @@
-export declare const TYPE = "antd-tree-select";
+export declare const TYPE = "ant-tree-select";

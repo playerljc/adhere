@@ -13,6 +13,7 @@ import { findTypeById } from './findTypeById';
 import { formItemToProps } from './formItemToProps';
 import { getLabel } from './getLabel';
 import { getLabelByType, getToolBoxItemByType } from './getLabelByType';
+import { isContainerFieldByType } from './isContainerFieldByType';
 import { isDesktop } from './isDesktop';
 import { isLayoutFieldByType } from './isLayoutFieldByType';
 import { isNoFormFieldByType } from './isNoFormFieldByType';
@@ -59,6 +60,7 @@ export {
   resolveI18nText,
   toI18nLabel,
   isNoFormFieldByType,
+  isContainerFieldByType,
 };
 
 export type { LabelValueColSpan } from './computeLabelValueColSpan';

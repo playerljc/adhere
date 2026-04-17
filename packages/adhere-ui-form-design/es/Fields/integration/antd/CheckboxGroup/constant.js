@@ -1,2 +1,2 @@
-var TYPE="antd-checkbox-group";export{TYPE};
+var TYPE="ant-checkbox-group";export{TYPE};
 //# sourceMappingURL=constant.js.map

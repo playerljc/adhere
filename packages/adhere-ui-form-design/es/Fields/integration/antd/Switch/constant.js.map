@@ -1,1 +1,1 @@
-{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Switch/constant.js"],"sourcesContent":["export var TYPE = 'antd-switch';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,qBAAPA,IAAoB"}
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Switch/constant.js"],"sourcesContent":["export var TYPE = 'ant-switch';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,oBAAPA,IAAmB"}

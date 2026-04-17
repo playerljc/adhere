@@ -1,2 +1,2 @@
-var TYPE="antd-signature-pad";export{TYPE};
+var TYPE="ant-signature-pad";export{TYPE};
 //# sourceMappingURL=constant.js.map

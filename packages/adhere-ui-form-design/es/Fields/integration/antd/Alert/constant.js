@@ -1,2 +1,2 @@
-var TYPE="FormDesignAlert";export{TYPE};
+var TYPE="ant-alert";export{TYPE};
 //# sourceMappingURL=constant.js.map

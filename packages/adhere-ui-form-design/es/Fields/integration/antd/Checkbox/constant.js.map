@@ -1,1 +1,1 @@
-{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Checkbox/constant.js"],"sourcesContent":["export var TYPE = 'antd-checkbox';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,uBAAPA,IAAsB"}
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Checkbox/constant.js"],"sourcesContent":["export var TYPE = 'ant-checkbox';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,sBAAPA,IAAqB"}

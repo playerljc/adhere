@@ -1,1 +1,1 @@
-{"version":3,"file":"constant.js","sources":["Fields/integration/antd/QRCode/constant.js"],"sourcesContent":["export var TYPE = 'antd-qrcode';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,qBAAPA,IAAoB"}
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/QRCode/constant.js"],"sourcesContent":["export var TYPE = 'ant-qrcode';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,oBAAPA,IAAmB"}

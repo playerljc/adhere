@@ -1,1 +1,1 @@
-{"version":3,"file":"constant.js","sources":["Fields/integration/antd/TimePicker/constant.js"],"sourcesContent":["export var TYPE = 'FormDesignTimePicker';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,8BAAPA,IAA6B"}
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/TimePicker/constant.js"],"sourcesContent":["export var TYPE = 'ant-time-picker';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,yBAAPA,IAAwB"}

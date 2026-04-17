@@ -1,2 +1,2 @@
-var TYPE="antd-segmented";export{TYPE};
+var TYPE="ant-segmented";export{TYPE};
 //# sourceMappingURL=constant.js.map

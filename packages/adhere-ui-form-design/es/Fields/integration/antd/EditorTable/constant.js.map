@@ -1,1 +1,1 @@
-{"version":3,"file":"constant.js","sources":["Fields/integration/antd/EditorTable/constant.js"],"sourcesContent":["export var TYPE = 'antd-editor-table';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,2BAAPA,IAA0B"}
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/EditorTable/constant.js"],"sourcesContent":["export var TYPE = 'ant-editor-table';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,0BAAPA,IAAyB"}

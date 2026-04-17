@@ -1,2 +1,2 @@
-var TYPE="antd-input";export{TYPE};
+var TYPE="ant-input";export{TYPE};
 //# sourceMappingURL=constant.js.map

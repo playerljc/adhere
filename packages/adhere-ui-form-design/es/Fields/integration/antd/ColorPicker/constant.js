@@ -1,2 +1,2 @@
-var TYPE="FormDesignColorPicker";export{TYPE};
+var TYPE="ant-color-picker";export{TYPE};
 //# sourceMappingURL=constant.js.map

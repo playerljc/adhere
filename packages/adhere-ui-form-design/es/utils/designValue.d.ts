@@ -47,3 +47,11 @@ export declare function findParentDesignValueById(id: string, designValue: Desig
  * @return {string} 生成的新名称
  */
 export declare function genNewName(name: string, designValue: DesignValue): string;
+/**
+ * typeToNamePrefix
+ * @description 将组件 type 转为默认 name 的前缀
+ * - antd-input -> input
+ * - antd-tree-select -> tree_select
+ * - FormDesignButton -> button
+ */
+export declare function typeToNamePrefix(type: string): string;

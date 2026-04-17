@@ -1,2 +1,2 @@
-var TYPE="antd-radio";export{TYPE};
+var TYPE="ant-radio";export{TYPE};
 //# sourceMappingURL=constant.js.map

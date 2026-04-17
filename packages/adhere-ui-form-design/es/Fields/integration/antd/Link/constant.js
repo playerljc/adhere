@@ -1,2 +1,2 @@
-var TYPE="FormDesignLink";export{TYPE};
+var TYPE="ant-link";export{TYPE};
 //# sourceMappingURL=constant.js.map

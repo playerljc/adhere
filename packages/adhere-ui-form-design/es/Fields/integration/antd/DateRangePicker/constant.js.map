@@ -1,1 +1,1 @@
-{"version":3,"file":"constant.js","sources":["Fields/integration/antd/DateRangePicker/constant.js"],"sourcesContent":["export var TYPE = 'FormDesignDateRangePicker';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,mCAAPA,IAAkC"}
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/DateRangePicker/constant.js"],"sourcesContent":["export var TYPE = 'ant-date-dange-picker';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,+BAAPA,IAA8B"}

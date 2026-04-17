@@ -1,1 +1,1 @@
-export declare const TYPE = "antd-checkbox-group";
+export declare const TYPE = "ant-checkbox-group";

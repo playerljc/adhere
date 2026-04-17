@@ -1,1 +1,1 @@
-export declare const TYPE = "FormDesignDateRangePicker";
+export declare const TYPE = "ant-date-dange-picker";

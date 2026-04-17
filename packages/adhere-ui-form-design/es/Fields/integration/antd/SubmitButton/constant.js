@@ -1,2 +1,2 @@
-var TYPE="FormDesignSubmitButton";export{TYPE};
+var TYPE="ant-submit-button";export{TYPE};
 //# sourceMappingURL=constant.js.map

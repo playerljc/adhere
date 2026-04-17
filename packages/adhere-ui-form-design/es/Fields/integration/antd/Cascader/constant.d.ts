@@ -1,1 +1,1 @@
-export declare const TYPE = "antd-cascader";
+export declare const TYPE = "ant-cascader";

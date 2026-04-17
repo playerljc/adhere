@@ -1,1 +1,1 @@
-export declare const TYPE = "FormDesignTimePicker";
+export declare const TYPE = "ant-time-picker";

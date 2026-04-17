@@ -1,1 +1,1 @@
-{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Cascader/constant.js"],"sourcesContent":["export var TYPE = 'antd-cascader';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,uBAAPA,IAAsB"}
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Cascader/constant.js"],"sourcesContent":["export var TYPE = 'ant-cascader';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,sBAAPA,IAAqB"}

@@ -1,1 +1,1 @@
-{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Password/constant.js"],"sourcesContent":["export var TYPE = 'antd-input-password';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,6BAAPA,IAA4B"}
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Password/constant.js"],"sourcesContent":["export var TYPE = 'ant-input-password';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,4BAAPA,IAA2B"}

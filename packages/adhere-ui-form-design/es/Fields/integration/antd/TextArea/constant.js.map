@@ -1,1 +1,1 @@
-{"version":3,"file":"constant.js","sources":["Fields/integration/antd/TextArea/constant.js"],"sourcesContent":["export var TYPE = 'antd-textarea';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,uBAAPA,IAAsB"}
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/TextArea/constant.js"],"sourcesContent":["export var TYPE = 'ant-textarea';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,sBAAPA,IAAqB"}

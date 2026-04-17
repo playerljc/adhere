@@ -1,2 +1,2 @@
-var TYPE="antd-tree-select";export{TYPE};
+var TYPE="ant-tree-select";export{TYPE};
 //# sourceMappingURL=constant.js.map

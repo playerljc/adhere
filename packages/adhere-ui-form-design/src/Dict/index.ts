@@ -16,16 +16,17 @@ import { CollapseSize } from './CollapseSize';
 import { ColorPickerEvents } from './ColorPickerEvents';
 import { ColorPickerFormat } from './ColorPickerFormat';
 import { ColorPickerTrigger } from './ColorPickerTrigger';
+import { ContainerFieldTypes } from './ContainerFieldTypes';
 import { DateBoundMode } from './DateBoundMode';
 import { DatePickerEvents } from './DatePickerEvents';
 import { DateRangePickerEvents } from './DateRangePickerEvents';
 import { DefaultToolBox } from './DefaultToolBox';
 import { Density } from './Density';
+import { Direction } from './Direction';
 import { DividerOrientation } from './DividerOrientation';
 import { DividerSize } from './DividerSize';
 import { DividerTitlePlacement } from './DividerTitlePlacement';
 import { DividerVariant } from './DividerVariant';
-import { Direction } from './Direction';
 import { FocusEvents } from './FocusEvents';
 import { InputEvents } from './InputEvents';
 import { InputNumberMode } from './InputNumberMode';
@@ -152,6 +153,7 @@ const dictImpls = {
   TabsSize,
   TabsTabPlacement,
   NoFormFieldTypes,
+  ContainerFieldTypes,
 };
 
 const { names, values } = genModuleDict(dictImpls);

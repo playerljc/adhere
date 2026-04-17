@@ -1,1 +1,1 @@
-export declare const TYPE = "FormDesignColorPicker";
+export declare const TYPE = "ant-color-picker";

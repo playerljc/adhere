@@ -4,6 +4,7 @@ import { Delete } from '../../../components/DesignFieldActions/actions';
 import type { DesignItem, DesignValueProps } from '../../../types';
 import { createFlexLayoutDesignValue } from '../FlexLayout';
 import { TYPE } from './constant';
+import { collapseLayoutOutline } from './outline';
 import { renderActions } from './renderActions';
 import { renderActionsProperty } from './renderActionsProperty';
 import { renderActionsToMobile } from './renderActionsToMobile';
@@ -100,5 +101,6 @@ export function define(): DesignItem {
     renderActionsToMobile,
     createDefaultValue: createDefaultDesignValueProps,
     defaultValue: createDefaultDesignValueProps(),
+    outline: collapseLayoutOutline,
   };
 }

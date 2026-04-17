@@ -1,1 +1,1 @@
-{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Link/constant.js"],"sourcesContent":["export var TYPE = 'FormDesignLink';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,wBAAPA,IAAuB"}
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/Link/constant.js"],"sourcesContent":["export var TYPE = 'ant-link';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,kBAAPA,IAAiB"}

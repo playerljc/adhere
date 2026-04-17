@@ -1,1 +1,1 @@
-export declare const TYPE = "FormDesignTimeRangePicker";
+export declare const TYPE = "ant-time-range-picker";

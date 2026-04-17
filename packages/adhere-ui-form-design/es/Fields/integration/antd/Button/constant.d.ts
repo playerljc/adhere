@@ -1,1 +1,1 @@
-export declare const TYPE = "FormDesignButton";
+export declare const TYPE = "ant-button";

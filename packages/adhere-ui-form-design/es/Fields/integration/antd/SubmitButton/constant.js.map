@@ -1,1 +1,1 @@
-{"version":3,"file":"constant.js","sources":["Fields/integration/antd/SubmitButton/constant.js"],"sourcesContent":["export var TYPE = 'FormDesignSubmitButton';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,gCAAPA,IAA+B"}
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/SubmitButton/constant.js"],"sourcesContent":["export var TYPE = 'ant-submit-button';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,2BAAPA,IAA0B"}

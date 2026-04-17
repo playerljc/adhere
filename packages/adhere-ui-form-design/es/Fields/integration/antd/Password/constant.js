@@ -1,2 +1,2 @@
-var TYPE="antd-input-password";export{TYPE};
+var TYPE="ant-input-password";export{TYPE};
 //# sourceMappingURL=constant.js.map

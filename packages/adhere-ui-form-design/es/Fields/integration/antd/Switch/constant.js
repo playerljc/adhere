@@ -1,2 +1,2 @@
-var TYPE="antd-switch";export{TYPE};
+var TYPE="ant-switch";export{TYPE};
 //# sourceMappingURL=constant.js.map

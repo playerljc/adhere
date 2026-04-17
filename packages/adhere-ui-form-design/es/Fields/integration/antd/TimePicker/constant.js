@@ -1,2 +1,2 @@
-var TYPE="FormDesignTimePicker";export{TYPE};
+var TYPE="ant-time-picker";export{TYPE};
 //# sourceMappingURL=constant.js.map

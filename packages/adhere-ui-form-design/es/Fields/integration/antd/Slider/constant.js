@@ -1,2 +1,2 @@
-var TYPE="antd-slider";export{TYPE};
+var TYPE="ant-slider";export{TYPE};
 //# sourceMappingURL=constant.js.map

@@ -1,1 +1,1 @@
-{"version":3,"file":"constant.js","sources":["Fields/integration/antd/InputOTP/constant.js"],"sourcesContent":["export var TYPE = 'antd-input-otp';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,wBAAPA,IAAuB"}
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/InputOTP/constant.js"],"sourcesContent":["export var TYPE = 'ant-input-otp';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,uBAAPA,IAAsB"}

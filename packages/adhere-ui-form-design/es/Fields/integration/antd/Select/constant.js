@@ -1,2 +1,2 @@
-var TYPE="antd-select";export{TYPE};
+var TYPE="ant-select";export{TYPE};
 //# sourceMappingURL=constant.js.map
