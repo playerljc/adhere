@@ -1,1 +1,1 @@
-export const TYPE = 'antd-transfer';
+export const TYPE = 'ant-transfer';

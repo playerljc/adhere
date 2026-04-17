@@ -1,2 +1,1 @@
-export const TYPE = 'antd-qrcode';
-
+export const TYPE = 'ant-qrcode';

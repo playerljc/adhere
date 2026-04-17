@@ -1,1 +1,1 @@
-export const TYPE = 'antd-select';
+export const TYPE = 'ant-select';

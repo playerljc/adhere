@@ -1,1 +1,1 @@
-export const TYPE = 'antd-input';
+export const TYPE = 'ant-input';

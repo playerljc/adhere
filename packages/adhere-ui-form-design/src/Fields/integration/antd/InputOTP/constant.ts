@@ -1,1 +1,1 @@
-export const TYPE = 'antd-input-otp';
+export const TYPE = 'ant-input-otp';

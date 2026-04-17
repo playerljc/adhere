@@ -24,23 +24,20 @@ export default () => {
       {
         items: [...antd.toolBox].filter(({ type }) =>
           [
-            'collapse-layout',
-            'steps-layout',
-            'tabs-layout',
-            'antd-input',
-            'antd-checkbox',
+            'ant-input',
+            'ant-checkbox',
             'ant-color-picker',
             'ant-date-picker',
             'ant-date-dange-picker',
-            'antd-input-number',
-            'antd-input-otp',
-            'antd-input-search',
-            'antd-input-password',
-            'antd-radio',
-            'antd-rate',
-            'antd-slider',
-            'antd-switch',
-            'antd-textarea',
+            'ant-input-number',
+            'ant-input-otp',
+            'ant-input-search',
+            'ant-input-password',
+            'ant-radio',
+            'ant-rate',
+            'ant-slider',
+            'ant-switch',
+            'ant-textarea',
             'ant-time-picker',
             'ant-time-range-picker',
           ].includes(type),
@@ -50,10 +47,10 @@ export default () => {
       {
         items: [...antd.toolBox].filter(({ type }) =>
           [
-            'antd-cascader',
-            'antd-checkbox-group',
-            'antd-radio-group',
-            'antd-segmented',
+            'ant-cascader',
+            'ant-checkbox-group',
+            'ant-radio-group',
+            'ant-segmented',
             'ant-select',
             'ant-transfer',
             'ant-tree-select',
@@ -78,7 +75,7 @@ export default () => {
       },
       {
         items: [...antd.toolBox].filter(({ type }) =>
-          ['antd-editor-table', 'antd-qrcode', 'antd-signature-pad'].includes(type),
+          ['ant-editor-table', 'ant-qrcode', 'ant-signature-pad'].includes(type),
         ),
         columns: 2,
       },

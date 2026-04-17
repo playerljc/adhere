@@ -1,1 +1,1 @@
-export const TYPE = 'antd-tree-select';
+export const TYPE = 'ant-tree-select';

@@ -1,1 +1,1 @@
-export const TYPE = 'antd-rate';
+export const TYPE = 'ant-rate';

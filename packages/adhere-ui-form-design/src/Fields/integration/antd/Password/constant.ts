@@ -1,1 +1,1 @@
-export const TYPE = 'antd-input-password';
+export const TYPE = 'ant-input-password';

@@ -1,2 +1,1 @@
-export const TYPE = 'antd-signature-pad';
-
+export const TYPE = 'ant-signature-pad';

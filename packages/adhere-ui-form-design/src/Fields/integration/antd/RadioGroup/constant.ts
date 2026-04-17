@@ -1,1 +1,1 @@
-export const TYPE = 'antd-radio-group';
+export const TYPE = 'ant-radio-group';

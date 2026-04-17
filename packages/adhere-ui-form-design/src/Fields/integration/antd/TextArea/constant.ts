@@ -1,1 +1,1 @@
-export const TYPE = 'antd-textarea';
+export const TYPE = 'ant-textarea';

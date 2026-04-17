@@ -1,1 +1,1 @@
-export const TYPE = 'antd-editor-table';
+export const TYPE = 'ant-editor-table';

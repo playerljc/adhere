@@ -1,1 +1,1 @@
-export const TYPE = 'antd-switch';
+export const TYPE = 'ant-switch';

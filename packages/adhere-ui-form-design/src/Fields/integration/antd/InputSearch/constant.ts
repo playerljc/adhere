@@ -1,1 +1,1 @@
-export const TYPE = 'antd-input-search';
+export const TYPE = 'ant-input-search';

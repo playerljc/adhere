@@ -39,11 +39,10 @@ export function define(): DesignItem {
         bordered: true,
         boostLevel: true,
         status: 'active',
-        statusRenderTemplate: 'antd-example',
+        statusRenderTemplate: 'ant-example',
         fill: true,
       },
       fieldActionTypes: [Copy.key, Delete.key],
     },
   };
 }
-
