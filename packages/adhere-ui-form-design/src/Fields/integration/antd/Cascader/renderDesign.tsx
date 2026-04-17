@@ -1,11 +1,12 @@
-import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import { Cascader, type CascaderProps } from 'antd';
 import React from 'react';
 
+import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
+
 import { LabelDesign, ValueDesign } from '../../../../components';
+import { type TreeDataSourceManagerFormItemValue } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
-import { type TreeDataSourceManagerFormItemValue } from '../../../../components/TreeDataSourceManagerFormItem';
+import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
 
 function parseTreeData(treeOptions: TreeDataSourceManagerFormItemValue | undefined): any[] {
   if (!treeOptions) return [];
@@ -53,11 +54,12 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style }) => {
-          const { treeOptions, showCheckedStrategy, ...restFieldProps } = fieldProps as typeof fieldProps & {
-            treeOptions?: TreeDataSourceManagerFormItemValue;
-            showCheckedStrategy?: string;
-          };
+        {({ fieldProps, style, lang }) => {
+          const { treeOptions, showCheckedStrategy, ...restFieldProps } =
+            fieldProps as typeof fieldProps & {
+              treeOptions?: TreeDataSourceManagerFormItemValue;
+              showCheckedStrategy?: string;
+            };
           const options = parseTreeData(treeOptions);
 
           // antd 的 CascaderProps 在 multiple=true 时会把泛型锁死为 true。
@@ -78,6 +80,7 @@ export function renderDesign({
             <Cascader
               {...(restCascaderProps as CascaderProps<any>)}
               {...(multiple === true ? ({ multiple: true } as const) : {})}
+              placeholder={resolveI18nText(restCascaderProps.placeholder as any, lang)}
               options={options}
               showCheckedStrategy={resolvedStrategy}
               style={style}

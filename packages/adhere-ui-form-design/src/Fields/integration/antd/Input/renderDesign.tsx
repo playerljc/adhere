@@ -5,7 +5,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
+import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
 
 /**
  * renderDesign
@@ -41,11 +41,12 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions }) => (
+        {({ fieldProps, style, actions, lang }) => (
           <Input
             {...(fieldProps as InputProps)}
-            style={style ?? {}}
             {...actions}
+            style={style ?? {}}
+            placeholder={resolveI18nText(fieldProps.placeholder as any, lang) as any}
             defaultValue={formItemProps?.initialValue as InputProps['defaultValue']}
           />
         )}

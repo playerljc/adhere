@@ -61,6 +61,7 @@ export function ValueDesign({
     fieldProps: FieldProps;
     style: CSSProperties;
     actions: Record<string, (...args: any[]) => any>;
+    lang: string;
   }) => ReactNode;
 }) {
   const ConfigProviderContext = useContext(ConfigProvider.Context);
@@ -89,6 +90,7 @@ export function ValueDesign({
             fieldProps,
             style,
             actions,
+            lang,
           })}
         </Form.Item>
       </DesignFieldWrapper>

@@ -5,6 +5,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types
 import Intl from '@baifendian/adhere-util-intl';
 
 import {
+  buildFormPropertyPlaceholderRow,
   PlacementSelectStandardDict,
   SizeSelectStandardDict,
   TimeHourStepSelectStandardDict,
@@ -19,7 +20,7 @@ import { createMainProperty, renderMainPropertyWithCreate } from '../../../../ut
 
 const MainProperty = createMainProperty({
   formName: 'antTimePickerMainProperty',
-  getDefaultFormItems: (): DataItemRow[] => [
+  getDefaultFormItems: (_designValue, ctx): DataItemRow[] => [
     {
       key: 'disabled',
       require: false,
@@ -44,18 +45,7 @@ const MainProperty = createMainProperty({
         </Value>
       ),
     },
-    {
-      key: 'placeholder',
-      require: false,
-      label: <Label>{Intl.get('placeholder')}：</Label>,
-      value: (
-        <Value>
-          <Form.Item name="placeholder">
-            <Input.OptimizedInput showCount={false} placeholder={Intl.get('placeholder')} />
-          </Form.Item>
-        </Value>
-      ),
-    },
+    buildFormPropertyPlaceholderRow(ctx.titleLabelSlot),
     {
       key: 'size',
       require: false,

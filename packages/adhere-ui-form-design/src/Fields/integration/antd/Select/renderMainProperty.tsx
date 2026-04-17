@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
+import { Form, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
 import {
+  buildFormPropertyPlaceholderRow,
   DataSourceManagerFormItem,
   PlacementSelectStandardDict,
   SelectModeSelectStandardDict,
@@ -100,22 +101,7 @@ const MainProperty = createMainProperty({
         </Value>
       ),
     },
-    {
-      key: 'placeholder',
-      require: false,
-      label: <Label>{Intl.get('placeholder')}：</Label>,
-      value: (
-        <Value>
-          <Form.Item name="placeholder">
-            <Input.OptimizedInput
-              showCount={false}
-              placeholder={Intl.get('placeholder')}
-              maxLength={50}
-            />
-          </Form.Item>
-        </Value>
-      ),
-    },
+    buildFormPropertyPlaceholderRow(ctx.titleLabelSlot),
     {
       key: 'placement',
       require: false,

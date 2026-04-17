@@ -6,7 +6,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import { LabelDesign, ValueDesign } from '../../../../components';
 import { type TreeDataSourceManagerFormItemValue } from '../../../../components/TreeDataSourceManagerFormItem';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
+import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
 
 function parseTreeData(treeOptions: TreeDataSourceManagerFormItemValue | undefined): any[] {
   if (!treeOptions) return [];
@@ -54,11 +54,12 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style }) => {
-          const { treeOptions, showCheckedStrategy, ...restFieldProps } = fieldProps as typeof fieldProps & {
-            treeOptions?: TreeDataSourceManagerFormItemValue;
-            showCheckedStrategy?: string;
-          };
+        {({ fieldProps, style, lang }) => {
+          const { treeOptions, showCheckedStrategy, ...restFieldProps } =
+            fieldProps as typeof fieldProps & {
+              treeOptions?: TreeDataSourceManagerFormItemValue;
+              showCheckedStrategy?: string;
+            };
           const treeData = parseTreeData(treeOptions);
 
           const checkedStrategyMap: Record<string, TreeSelectProps['showCheckedStrategy']> = {
@@ -73,6 +74,7 @@ export function renderDesign({
           return (
             <TreeSelect
               {...(restFieldProps as TreeSelectProps)}
+              placeholder={resolveI18nText(restFieldProps.placeholder as any, lang) as any}
               treeData={treeData}
               fieldNames={{ label: 'label', value: 'value', children: 'children' }}
               showCheckedStrategy={resolvedStrategy}

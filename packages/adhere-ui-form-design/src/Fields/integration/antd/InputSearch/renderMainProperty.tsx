@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
+import { Form, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
 import {
+  buildFormPropertyPlaceholderRow,
   InputSizeSelectStandardDict,
   VariantSelectStandardDict,
   WhetherRadioHorizontalDict,
@@ -18,23 +19,8 @@ import { createMainProperty, renderMainPropertyWithCreate } from '../../../../ut
  */
 const MainProperty = createMainProperty({
   formName: 'antInputSearchMainProperty',
-  getDefaultFormItems: (): DataItemRow[] => [
-    {
-      key: 'placeholder',
-      require: false,
-      label: <Label>{Intl.get('placeholder')}：</Label>,
-      value: (
-        <Value>
-          <Form.Item name="placeholder">
-            <Input.OptimizedInput
-              showCount={false}
-              placeholder={Intl.get('placeholder')}
-              maxLength={50}
-            />
-          </Form.Item>
-        </Value>
-      ),
-    },
+  getDefaultFormItems: (_designValue, ctx): DataItemRow[] => [
+    buildFormPropertyPlaceholderRow(ctx.titleLabelSlot),
     {
       key: 'allowClear',
       require: false,

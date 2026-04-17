@@ -18,6 +18,42 @@ export type FormPropertyLabelSlotRef = {
 };
 
 /** 标签（含 i18n） */
+export function buildFormPropertyPlaceholderRow(slot: FormPropertyLabelSlotRef): DataItemRow {
+  return {
+    key: 'placeholder',
+    require: false,
+    label: (
+      <SlotEndLabel
+        ref={(node) => {
+          slot.set('placeholder', node);
+        }}
+      >
+        {Intl.get('placeholder')}：
+      </SlotEndLabel>
+    ),
+    value: (
+      <Value>
+        <Form.Item name="placeholder">
+          <I18nChangeFormItem getTriggerContainer={() => slot.get('placeholder') as HTMLElement}>
+            {({ onChange, value }) => (
+              <Input.OptimizedInput
+                value={value}
+                placeholder={Intl.get('placeholder')}
+                maxLength={200}
+                onChange={(e) => {
+                  onChange(e.target.value);
+                }}
+                showCount={false}
+              />
+            )}
+          </I18nChangeFormItem>
+        </Form.Item>
+      </Value>
+    ),
+  };
+}
+
+/** 标签（含 i18n） */
 export function buildFormPropertyLabelRow(slot: FormPropertyLabelSlotRef): DataItemRow {
   return {
     key: 'label',

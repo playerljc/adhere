@@ -7,7 +7,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
+import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
 
 const { RangePicker } = DatePicker;
 type RangePickerProps = React.ComponentProps<typeof RangePicker>;
@@ -47,11 +47,12 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps: fp, style, actions }) => (
+        {({ fieldProps: fp, style, actions, lang }) => (
           <RangePicker
             {...(fp as RangePickerProps)}
-            style={style ?? {}}
             {...actions}
+            style={style ?? {}}
+            placeholder={resolveI18nText(fp.placeholder as any, lang) as any}
             defaultValue={valueRange}
           />
         )}

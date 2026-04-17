@@ -7,7 +7,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
+import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
 
 /**
  * renderDesign - TimePicker design mode (desktop)
@@ -42,11 +42,12 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps: fp, style, actions }) => (
+        {({ fieldProps: fp, style, actions, lang }) => (
           <TimePicker
             {...(fp as TimePickerProps)}
-            style={style ?? {}}
             {...actions}
+            placeholder={resolveI18nText(fp.placeholder as any, lang) as any}
+            style={style ?? {}}
             defaultValue={valueDayjs}
           />
         )}

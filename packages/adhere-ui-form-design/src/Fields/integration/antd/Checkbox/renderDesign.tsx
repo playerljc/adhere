@@ -5,24 +5,9 @@ import React from 'react';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { LabelDesign, ValueDesign } from '../../../../components';
-import { SELECT_VALUE_KEY_NAME } from '../../../../constant';
-import type { I18nValue } from '../../../../types';
 import type { DesignContextType, DesignValue } from '../../../../types';
 import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
 import { resolveI18nText } from '../../../../utils';
-
-function getI18nText(v: unknown): string | undefined {
-  if (!v) return undefined;
-  if (typeof v === 'string') return v;
-
-  if (typeof v === 'object' && v !== null && SELECT_VALUE_KEY_NAME in (v as Record<string, any>)) {
-    const i18n = v as I18nValue;
-    const lang = i18n[SELECT_VALUE_KEY_NAME];
-    return resolveI18nText(i18n, lang);
-  }
-
-  return undefined;
-}
 
 /**
  * renderDesign - single Checkbox (no Group), Form uses valuePropName="checked"
@@ -56,11 +41,11 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions }) => {
+        {({ fieldProps, style, actions, lang }) => {
           const { text, children, ...rest } = (fieldProps ?? {}) as CheckboxProps & {
             text?: React.ReactNode;
           };
-          const label = getI18nText(children ?? text);
+          const label = resolveI18nText((children ?? text) as any, lang);
 
           return (
             <Checkbox
