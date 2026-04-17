@@ -5,6 +5,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { DesignContext } from '../Design/Context';
 import type { DesignValueProps, FormItemProps } from '../types';
+import { genNewName, typeToNamePrefix } from '../utils';
 import PropertiesGridLayout from './TableGridLayout';
 
 export type FormPropertyShellProps = {
@@ -44,7 +45,8 @@ export function FormPropertyShell({
 }: FormPropertyShellProps) {
   const [form] = Form.useForm();
 
-  const { getActiveFieldId, setFormItemProps } = useContext(DesignContext);
+  const { getActiveFieldId, getActiveDesignFieldValue, getDesignValue, setFormItemProps } =
+    useContext(DesignContext);
 
   const { formItemProps } = designValue;
 
@@ -54,12 +56,50 @@ export function FormPropertyShell({
     setFormItemProps(activeFieldId as string, { ...form.getFieldsValue() });
   }
 
+  function genDefaultName(): string | null {
+    const active = getActiveDesignFieldValue?.();
+    const type = active?.type;
+    if (!type) return null;
+
+    const prefix = typeToNamePrefix(type);
+
+    // 8 位 base36：更贴近 input_373phydm 风格
+    const suffix = Math.random().toString(36).slice(2, 10).padEnd(8, '0');
+    const base = `${prefix}_${suffix}`;
+
+    const designValue = getDesignValue?.();
+    if (!designValue) return base;
+
+    return genNewName(base, designValue);
+  }
+
   useEffect(() => {
     const values = mapFormValuesFromFormItemProps
       ? mapFormValuesFromFormItemProps(formItemProps as FormItemProps)
       : { ...(formItemProps as Record<string, unknown>) };
+
+    // name 默认值：只在缺省时补齐一次
+    if (activeFieldId && !values?.name) {
+      const generated = genDefaultName();
+      if (generated) {
+        values.name = generated;
+        setFormItemProps(activeFieldId as string, {
+          ...(formItemProps as Record<string, unknown>),
+          name: generated,
+        } as FormItemProps);
+      }
+    }
+
     form.setFieldsValue(values);
-  }, [formItemProps, form, mapFormValuesFromFormItemProps]);
+  }, [
+    activeFieldId,
+    formItemProps,
+    form,
+    getActiveDesignFieldValue,
+    getDesignValue,
+    mapFormValuesFromFormItemProps,
+    setFormItemProps,
+  ]);
 
   return (
     <Form name={formName} form={form} onFieldsChange={onFieldsChange}>

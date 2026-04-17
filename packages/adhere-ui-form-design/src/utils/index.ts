@@ -7,6 +7,7 @@ import {
   findParentDesignValueById,
   findParentIdById,
   genNewName,
+  typeToNamePrefix,
 } from './designValue';
 import { findTypeById } from './findTypeById';
 import { formItemToProps } from './formItemToProps';
@@ -46,6 +47,7 @@ export {
   findDesignValueByIdToClone,
   findParentIdById,
   genNewName,
+  typeToNamePrefix,
   genRootFieldId,
   getRootFieldId,
   isRootFieldId,

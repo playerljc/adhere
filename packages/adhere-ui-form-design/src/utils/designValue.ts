@@ -172,3 +172,32 @@ export function genNewName(name: string, designValue: DesignValue): string {
 
   return newName;
 }
+
+/**
+ * typeToNamePrefix
+ * @description 将组件 type 转为默认 name 的前缀
+ * - antd-input -> input
+ * - antd-tree-select -> tree_select
+ * - FormDesignButton -> button
+ */
+export function typeToNamePrefix(type: string): string {
+  const raw = String(type ?? '').trim();
+  if (!raw) return 'field';
+
+  // antd-*
+  if (/^antd-/i.test(raw)) {
+    return raw.replace(/^antd-/i, '').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'field';
+  }
+
+  // FormDesign*
+  if (/^FormDesign/.test(raw)) {
+    return raw
+      .replace(/^FormDesign/, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_+|_+$/g, '') || 'field';
+  }
+
+  // fallback
+  return raw.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'field';
+}
