@@ -464,5 +464,9 @@ export default [
     canvas_width: '画布宽度',
     canvas_height: '画布高度',
     clear_on_resize: '尺寸变化时清空',
+    general_controls: '通用',
+    data_source_controls: '数据',
+    container_controls: '容器',
+    advanced: '高级',
   },
 ];

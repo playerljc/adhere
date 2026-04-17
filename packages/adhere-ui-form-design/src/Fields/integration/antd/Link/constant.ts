@@ -1,1 +1,1 @@
-export const TYPE = 'FormDesignLink';
+export const TYPE = 'ant-link';

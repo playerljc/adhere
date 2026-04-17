@@ -1,1 +1,1 @@
-export const TYPE = 'FormDesignText';
+export const TYPE = 'ant-text';

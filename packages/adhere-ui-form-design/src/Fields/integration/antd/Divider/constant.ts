@@ -1,2 +1,1 @@
-export const TYPE = 'FormDesignDivider';
-
+export const TYPE = 'ant-divider';

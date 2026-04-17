@@ -1,1 +1,1 @@
-export const TYPE = 'FormDesignColorPicker';
+export const TYPE = 'ant-color-picker';

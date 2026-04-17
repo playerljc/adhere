@@ -463,5 +463,9 @@ declare const _default: {
     canvas_width: string;
     canvas_height: string;
     clear_on_resize: string;
+    general_controls: string;
+    data_source_controls: string;
+    container_controls: string;
+    advanced: string;
 }[];
 export default _default;

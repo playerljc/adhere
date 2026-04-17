@@ -4,22 +4,43 @@
 @import './ToolboxItem';
 @import './ToolboxItemDragOverlay';
 
+.@{prefix-cls}-design-toolbox-wrapper {
+  height: 100%;
+  min-height: 0;
+}
+
+.@{prefix-cls}-design-toolbox-tabs {
+  height: 100%;
+}
+
+.@{prefix-cls}-design-toolbox-tabs-header {
+  padding: 0 20px;
+}
+
+.@{prefix-cls}-design-toolbox-tabs-content {
+  height: 100%;
+}
+
+.@{prefix-cls}-design-toolbox-tabs-item-icon {
+  font-size: 20px;
+}
+
 .@{prefix-cls}-design-toolbox {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
   height: 100%;
   min-height: 0;
-  padding: var(--fd-design-toolbox-inner-padding, 12px);
-  box-sizing: border-box;
+  padding: var(--fd-design-toolbox-inner-padding, 0 12px);
 
   > .@{prefix-cls}-design-toolbox-search-wrapper {
     flex-shrink: 0;
     margin-bottom: var(--fd-design-toolbox-search-margin-bottom, 10px);
 
     .ant-input-affix-wrapper {
-      border-radius: var(--fd-design-toolbox-search-radius, 6px);
       background: var(--fd-design-toolbox-search-bg, #fff);
       border-color: var(--fd-design-toolbox-search-border-color, #e4e4e7);
+      border-radius: var(--fd-design-toolbox-search-radius, 6px);
       box-shadow: var(--fd-design-toolbox-search-shadow, none);
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
 
@@ -31,17 +52,19 @@
     }
 
     .ant-input-search-button {
-      border-radius: 0 var(--fd-design-toolbox-search-radius, 6px) var(--fd-design-toolbox-search-radius, 6px) 0;
+      border-radius: 0 var(--fd-design-toolbox-search-radius, 6px)
+        var(--fd-design-toolbox-search-radius, 6px) 0;
     }
   }
 
   > .@{prefix-cls}-design-toolbox-body {
     flex: 1;
     min-height: 0;
+    margin-right: calc(-1 * var(--fd-design-toolbox-body-scroll-padding, 2px));
+    padding-right: var(--fd-design-toolbox-body-scroll-padding-right, 2px);
+    padding-bottom: var(--fd-design-toolbox-body-scroll-padding-bottom, 20px);
     overflow-x: hidden;
     overflow-y: auto;
-    padding-right: var(--fd-design-toolbox-body-scroll-padding, 2px);
-    margin-right: calc(-1 * var(--fd-design-toolbox-body-scroll-padding, 2px));
 
     &::-webkit-scrollbar {
       width: 5px;
@@ -56,46 +79,50 @@
       background: transparent;
     }
 
-    > .@{prefix-cls}-design-toolbox-group {
-      + .@{prefix-cls}-design-toolbox-group {
-        margin-top: var(--fd-design-toolbox-group-gap, 14px);
+    > .@{prefix-cls}-design-toolbox-collapse {
+      .@{prefix-cls}-design-toolbox-collapse-header {
+        padding-right: 0;
+        padding-left: 0;
       }
 
-      > .@{prefix-cls}-design-toolbox-group-title {
-        position: relative;
-        margin: 0 0 8px;
-        padding: 0 0 0 9px;
-        font-size: var(--fd-design-toolbox-group-title-size, 14px);
-        font-weight: 600;
-        line-height: 1.35;
-        letter-spacing: 0.04em;
-        color: var(--fd-design-toolbox-group-title-color, #71717a);
-
-        &::before {
-          position: absolute;
-          top: 50%;
-          left: 0;
-          width: 3px;
-          height: 80%;
-          background: var(--fd-design-toolbox-group-title-accent, #d4d4d8);
-          border-radius: 1px;
-          transform: translateY(-50%);
-          content: '';
-        }
+      .@{prefix-cls}-design-toolbox-collapse-body {
+        padding: 0;
       }
+    }
 
-      > .@{prefix-cls}-design-toolbox-group-body {
-        margin: 0;
+    // group title (now rendered inside Collapse header label)
+    .@{prefix-cls}-design-toolbox-group-title {
+      position: relative;
+      display: block;
+      margin: 0;
+      padding: 0 0 0 9px;
+      color: var(--fd-design-toolbox-group-title-color, #71717a);
+      font-weight: 600;
+      font-size: var(--fd-design-toolbox-group-title-size, 14px);
+      line-height: 1.35;
+      letter-spacing: 0.04em;
 
-        > .@{prefix-cls}-design-toolbox-group-list {
-          display: grid;
-          grid-row-gap: var(--tool-box-group-body-list-grid-row-gap, 15px);
-          grid-column-gap: var(--tool-box-group-body-list-grid-column-gap, 10px);
-          margin: var(--tool-box-group-body-list-margin, 0);
-          padding: var(--tool-box-group-body-list-padding, 0);
-          list-style: none;
-        }
+      &::before {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 3px;
+        height: 80%;
+        background: var(--fd-design-toolbox-group-title-accent, #d4d4d8);
+        border-radius: 1px;
+        transform: translateY(-50%);
+        content: '';
       }
+    }
+
+    // group list (ul) - keep grid behavior
+    .@{prefix-cls}-design-toolbox-group-list {
+      display: grid;
+      grid-row-gap: var(--tool-box-group-body-list-grid-row-gap, 15px);
+      grid-column-gap: var(--tool-box-group-body-list-grid-column-gap, 10px);
+      margin: var(--tool-box-group-body-list-margin, 0);
+      padding: var(--tool-box-group-body-list-padding, 0);
+      list-style: none;
     }
   }
 }

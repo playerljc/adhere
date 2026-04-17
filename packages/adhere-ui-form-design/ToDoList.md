@@ -62,7 +62,7 @@
 
 - [x] QRCode
 - [x] 签名组件
-- [ ] Divider分割线
+- [x] Divider分割线
 - [ ] ImageCode
 - [ ] QuickRangeDate
 - [ ] Upload
@@ -83,5 +83,5 @@
 - [x] Tabs,Steps,Collapse 中项中的 FlexLayout 布局不能删除
 - [x] Collapse 只能激活一个的设置
 - [x] placeholder 设置需要支持国际化
-- [ ] 拖上来的表单 Field 的 name 需要有默认值
-- [ ] Alert Link Text Divider Button SubmitButton 是可以多动到FlexLayout TableGridLayout Card中的
+- [x] 拖上来的表单 Field 的 name 需要有默认值
+- [x] Alert Link Text Divider Button SubmitButton 是可以多动到FlexLayout TableGridLayout Card中的

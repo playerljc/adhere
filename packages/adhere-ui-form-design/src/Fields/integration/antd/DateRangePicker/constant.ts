@@ -1,1 +1,1 @@
-export const TYPE = 'FormDesignDateRangePicker';
+export const TYPE = 'ant-date-dange-picker';
