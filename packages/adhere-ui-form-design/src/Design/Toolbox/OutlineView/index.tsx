@@ -1,5 +1,6 @@
 import { Tree } from 'antd';
 import type { DataNode, TreeProps } from 'antd/es/tree';
+import defaultDropIndicatorRender from 'antd/es/tree/utils/dropIndicator';
 import classNames from 'classnames';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import type { FC, ReactNode } from 'react';
@@ -77,6 +78,38 @@ function findPathWithSlotIndex(root: DesignValue, targetId: string): PathNode[] 
 function toKey(v: unknown): string {
   if (v === undefined || v === null) return '';
   return String(v);
+}
+
+/** 设计根下第一个子节点 id（扁平 children） */
+function getRootFirstChildId(designRoot: DesignValue): string | undefined {
+  return flattenChildren(designRoot.props?.children)[0]?.id;
+}
+
+/**
+ * rc-tree 在「第一个子节点」行上半区会把抽象落点挪到根节点 key，导致无法落到「第一个子之前」。
+ * Outline 仅做互换：落在根行 gap 时，改为与第一个子节点互换。
+ */
+function resolveOutlineSwapPartnerId(
+  designRoot: DesignValue,
+  dropNodeKey: string,
+  ctx: { dropToGap?: boolean; allowDropPosition?: -1 | 0 | 1 },
+): string {
+  const k = toKey(dropNodeKey);
+  if (k !== designRoot.id) return k;
+
+  const firstId = getRootFirstChildId(designRoot);
+  if (!firstId) return k;
+
+  if (ctx.allowDropPosition !== undefined) {
+    if (ctx.allowDropPosition === 0) return k;
+    return firstId;
+  }
+
+  if (ctx.dropToGap) {
+    return firstId;
+  }
+
+  return k;
 }
 
 function shallowEqualByKeys(a: Record<string, any>, b: Record<string, any>): boolean {
@@ -236,18 +269,30 @@ const OutlineView: FC = () => {
       if (!designValue) return false;
 
       const dragId = toKey(dragNode.key);
-      const dropId = toKey(dropNode.key);
+      const dropKey = toKey(dropNode.key);
 
-      if (isRootFieldId(dragId) || isRootFieldId(dropId)) return false;
-      if (dragId === dropId) return false;
+      if (isRootFieldId(dragId)) return false;
+      if (dragId === dropKey) return false;
+
+      // 落在设计根节点：不允许作为「子级」拖入；gap（前/后）统一解析为与第一个子互换
+      if (dropKey === designValue.id) {
+        if (dropPosition === 0) return false;
+        const partnerId = resolveOutlineSwapPartnerId(designValue, dropKey, {
+          allowDropPosition: dropPosition,
+        });
+        if (partnerId === dropKey) return false;
+        return validateOutlineSwap(designValue, getDesignItemByType, dragId, partnerId);
+      }
+
+      if (isRootFieldId(dropKey)) return false;
 
       // 禁止拖入「设计数据上仍有子节点」的容器内部（避免变成子节点）；仅允许与叶子/无子项节点做 inside 互换
       if (dropPosition === 0) {
-        const dropVal = findDesignValueById(dropId, designValue);
+        const dropVal = findDesignValueById(dropKey, designValue);
         if (dropVal && flattenChildren(dropVal.props?.children).length > 0) return false;
       }
 
-      return validateOutlineSwap(designValue, getDesignItemByType, dragId, dropId);
+      return validateOutlineSwap(designValue, getDesignItemByType, dragId, dropKey);
     },
     [designValue, getDesignItemByType],
   );
@@ -341,21 +386,34 @@ const OutlineView: FC = () => {
           },
         }}
         allowDrop={allowDrop}
+        dropIndicatorRender={(props) => {
+          const el = defaultDropIndicatorRender(
+            props as Parameters<typeof defaultDropIndicatorRender>[0],
+          );
+          if (React.isValidElement(el)) {
+            return React.cloneElement(el, {
+              title: '松开后与目标控件互换位置（辅助线表示落点参考，不等同于插入排序）',
+            } as React.HTMLAttributes<HTMLElement>);
+          }
+          return el;
+        }}
         onDrop={(info) => {
           if (!designValue) return;
 
           const dragId = String(info.dragNode.key);
-          const dropId = String(info.node.key);
+          const partnerId = resolveOutlineSwapPartnerId(designValue, String(info.node.key), {
+            dropToGap: !!info.dropToGap,
+          });
           const dropPosition = getDropPosition(info);
 
           if (dropPosition === 'inside') {
-            const dropVal = findDesignValueById(dropId, designValue);
+            const dropVal = findDesignValueById(partnerId, designValue);
             if (dropVal && flattenChildren(dropVal.props?.children).length > 0) return;
           }
 
-          if (!validateOutlineSwap(designValue, getDesignItemByType, dragId, dropId)) return;
+          if (!validateOutlineSwap(designValue, getDesignItemByType, dragId, partnerId)) return;
 
-          swapOutlineNodes?.(dragId, dropId);
+          swapOutlineNodes?.(dragId, partnerId);
         }}
       />
     </div>
