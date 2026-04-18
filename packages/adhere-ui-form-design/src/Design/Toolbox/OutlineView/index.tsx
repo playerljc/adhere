@@ -1,15 +1,18 @@
 import { Tree } from 'antd';
 import type { DataNode, TreeProps } from 'antd/es/tree';
 import classNames from 'classnames';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import type { FC, ReactNode } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import { SELECT_PREFIX } from '../../../constant';
-import type { DesignValue, DesignValueProps } from '../../../types';
+import { TYPE as FLEX_LAYOUT_TYPE } from '../../../Fields/layout/FlexLayout/constant';
+import type { DesignItem, DesignValue } from '../../../types';
 import {
+  findDesignValueById,
   findParentIdById,
+  findParentWithChildIndex,
   getLabelByType,
   getToolBoxItemByType,
   isRootFieldId,
@@ -24,12 +27,6 @@ type PathNode = {
 };
 
 type DropPosition = 'inside' | 'before' | 'after';
-
-type OutlineDropInfo = {
-  dragId: string;
-  dropId: string;
-  dropPosition: DropPosition;
-};
 
 function flattenChildren(children: any): DesignValue[] {
   if (!children) return [];
@@ -113,6 +110,32 @@ function shallowEqualByKeys(a: Record<string, any>, b: Record<string, any>): boo
   return true;
 }
 
+function validateOutlineSwap(
+  root: DesignValue,
+  getDesignItemByType: (type: string) => DesignItem | undefined,
+  idA: string,
+  idB: string,
+): boolean {
+  if (!idA || !idB || idA === idB) return false;
+  if (isRootFieldId(idA) || isRootFieldId(idB)) return false;
+
+  const nodeA = findDesignValueById(idA, root);
+  const nodeB = findDesignValueById(idB, root);
+  if (!nodeA || !nodeB) return false;
+
+  const locA = findParentWithChildIndex(root, idA);
+  const locB = findParentWithChildIndex(root, idB);
+  if (!locA || !locB) return false;
+
+  const itemParentA = getDesignItemByType(String(locA.parent.type));
+  const itemParentB = getDesignItemByType(String(locB.parent.type));
+
+  const canAHostB = !!(itemParentA?.isDrop && itemParentA.isDrop(String(nodeB.type)));
+  const canBHostA = !!(itemParentB?.isDrop && itemParentB.isDrop(String(nodeA.type)));
+
+  return canAHostB && canBHostA;
+}
+
 /**
  * OutlineView
  */
@@ -124,6 +147,7 @@ const OutlineView: FC = () => {
     getToolBox,
     setFieldProps,
     getItems,
+    swapOutlineNodes,
   } = useContext(DesignContext);
 
   const designValue = getDesignValue() as DesignValue | undefined;
@@ -199,19 +223,34 @@ const OutlineView: FC = () => {
     }
   }, [activeFieldId, designValue, getDesignItemByType, setFieldProps]);
 
-  const canDrop = (info: OutlineDropInfo): boolean => {
-    // 预留：后续实现拖拽换位置逻辑
-    void info;
-    return false;
-  };
+  const allowDrop = useCallback(
+    ({
+      dragNode,
+      dropNode,
+      dropPosition,
+    }: {
+      dragNode: DataNode;
+      dropNode: DataNode;
+      dropPosition: -1 | 0 | 1;
+    }) => {
+      if (!designValue) return false;
 
-  const applyReorder = (
-    params: OutlineDropInfo & { designValue: DesignValue },
-  ): DesignValueProps['children'] => {
-    // 预留：后续实现拖拽换位时，返回新的 children
-    void params;
-    return undefined;
-  };
+      const dragId = toKey(dragNode.key);
+      const dropId = toKey(dropNode.key);
+
+      if (isRootFieldId(dragId) || isRootFieldId(dropId)) return false;
+      if (dragId === dropId) return false;
+
+      // 禁止拖入「设计数据上仍有子节点」的容器内部（避免变成子节点）；仅允许与叶子/无子项节点做 inside 互换
+      if (dropPosition === 0) {
+        const dropVal = findDesignValueById(dropId, designValue);
+        if (dropVal && flattenChildren(dropVal.props?.children).length > 0) return false;
+      }
+
+      return validateOutlineSwap(designValue, getDesignItemByType, dragId, dropId);
+    },
+    [designValue, getDesignItemByType],
+  );
 
   const treeData: DataNode[] = useMemo(() => {
     if (!designValue) return [];
@@ -290,7 +329,18 @@ const OutlineView: FC = () => {
           if (!id) return;
           setActiveFieldId?.(id);
         }}
-        draggable
+        draggable={{
+          icon: false,
+          nodeDraggable: (node) => {
+            if (!designValue) return false;
+            const key = toKey(node.key);
+            if (isRootFieldId(key)) return false;
+            const v = findDesignValueById(key, designValue);
+            if (v?.type === FLEX_LAYOUT_TYPE) return false;
+            return true;
+          },
+        }}
+        allowDrop={allowDrop}
         onDrop={(info) => {
           if (!designValue) return;
 
@@ -298,12 +348,14 @@ const OutlineView: FC = () => {
           const dropId = String(info.node.key);
           const dropPosition = getDropPosition(info);
 
-          const nextInfo: OutlineDropInfo = { dragId, dropId, dropPosition };
+          if (dropPosition === 'inside') {
+            const dropVal = findDesignValueById(dropId, designValue);
+            if (dropVal && flattenChildren(dropVal.props?.children).length > 0) return;
+          }
 
-          if (!canDrop(nextInfo)) return;
+          if (!validateOutlineSwap(designValue, getDesignItemByType, dragId, dropId)) return;
 
-          // 预留：未来接入 updateChildrenById / reducer action 后在这里更新 designValue
-          applyReorder({ ...nextInfo, designValue });
+          swapOutlineNodes?.(dragId, dropId);
         }}
       />
     </div>

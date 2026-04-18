@@ -363,6 +363,16 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         });
       }
 
+      function swapOutlineNodes(idA: string, idB: string) {
+        dispatch({
+          type: REDUCER_ACTION_TYPE.swapNodes,
+          payload: {
+            idA,
+            idB,
+          },
+        });
+      }
+
       function setDataSourceConfig(id: string, dataSourceConfig: DataSourceConfig) {
         dispatch({
           type: REDUCER_ACTION_TYPE.updateDataSourceConfig,
@@ -412,6 +422,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                 deleteFieldByChildren,
                 // update
                 updateChildrenById,
+                swapOutlineNodes,
               }}
             >
               <div

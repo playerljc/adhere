@@ -37,7 +37,7 @@ export function define(): DesignItem {
         loading: false,
         disabled: false,
         block: false,
-        fill: true,
+        fill: false,
       },
       fieldActionTypes: [Copy.key, Delete.key],
     },

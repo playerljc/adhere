@@ -34,7 +34,7 @@ export function define(): DesignItem {
         delete: false,
         disabled: false,
         ellipsis: false,
-        fill: true,
+        fill: false,
       },
       fieldActionTypes: [Copy.key, Delete.key],
     },

@@ -153,7 +153,7 @@ function getDefaultFormItems(
 const MainProperty = createMainProperty({
   formName: 'antDividerMainProperty',
   getDefaultFormItems,
-  autoFill: false,
+  autoFill: true,
 });
 
 export function renderMainProperty(props: DesignValueProps) {

@@ -3,7 +3,12 @@ import clone from 'rfdc';
 
 import { REDUCER_ACTION_TYPE } from '../../constant';
 import type { DataSourceConfig, DesignValue } from '../../types';
-import { deleteDesignValueByIdInChildren, findDesignValueById } from '../../utils';
+import {
+  deleteDesignValueByIdInChildren,
+  findDesignValueById,
+  findParentWithChildIndex,
+  flattenDesignChildren,
+} from '../../utils';
 
 export type DesignValueState = DesignValue | undefined;
 
@@ -45,6 +50,13 @@ export type DesignValueAction =
       payload: {
         id: string;
         dataSourceConfig: DataSourceConfig;
+      };
+    }
+  | {
+      type: REDUCER_ACTION_TYPE.swapNodes;
+      payload: {
+        idA: string;
+        idB: string;
       };
     }
   | {
@@ -149,6 +161,51 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
       const designValue = findDesignValueById(action.payload.id, state as DesignValue);
       if (designValue) {
         designValue.dataSourceConfig = action.payload.dataSourceConfig;
+      }
+
+      return clone()(state);
+    }
+
+    case REDUCER_ACTION_TYPE.swapNodes: {
+      if (!state) return state;
+
+      const { idA, idB } = action.payload;
+      if (!idA || !idB || idA === idB) {
+        return clone()(state);
+      }
+
+      const root = state as DesignValue;
+      const locA = findParentWithChildIndex(root, idA);
+      const locB = findParentWithChildIndex(root, idB);
+
+      if (!locA || !locB) {
+        return clone()(state);
+      }
+
+      const { parent: parentA, index: indexA } = locA;
+      const { parent: parentB, index: indexB } = locB;
+
+      // 同父：必须在「同一份」扁平数组上交换下标；若用两份 flatten 副本交叉赋值，会把同一引用写进错误槽位（例如出现两个 B）。
+      if (parentA === parentB) {
+        const flat = flattenDesignChildren(parentA.props.children);
+        if (!flat[indexA] || !flat[indexB] || flat[indexA].id !== idA || flat[indexB].id !== idB) {
+          return clone()(state);
+        }
+        const tmp = flat[indexA];
+        flat[indexA] = flat[indexB];
+        flat[indexB] = tmp;
+        parentA.props.children = flat;
+      } else {
+        const flatA = flattenDesignChildren(parentA.props.children);
+        const flatB = flattenDesignChildren(parentB.props.children);
+        if (!flatA[indexA] || !flatB[indexB] || flatA[indexA].id !== idA || flatB[indexB].id !== idB) {
+          return clone()(state);
+        }
+        const tmp = flatA[indexA];
+        flatA[indexA] = flatB[indexB];
+        flatB[indexB] = tmp;
+        parentA.props.children = flatA;
+        parentB.props.children = flatB;
       }
 
       return clone()(state);

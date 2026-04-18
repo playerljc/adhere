@@ -152,6 +152,8 @@ export interface DesignContextType {
   // --------- delete -----------
   deleteFieldByChildren: (id: string) => void;
   updateChildrenById: (id: string, children: DesignValueProps['children']) => void;
+  /** Outline 等场景：交换两个节点在设计树中的位置（各自父容器的 children 中下标互换） */
+  swapOutlineNodes: (idA: string, idB: string) => void;
 }
 
 /**

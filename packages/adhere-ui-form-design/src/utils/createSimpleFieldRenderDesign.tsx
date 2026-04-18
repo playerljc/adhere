@@ -86,10 +86,10 @@ function SimpleField({
 }) {
   const {
     id,
-    props: { fieldProps, /*flexProps,*/ styleProps, actionsProps, fieldActionTypes },
+    props: { fieldProps, flexProps, styleProps, actionsProps, fieldActionTypes },
   } = value;
 
-  // const fill = fieldProps?.fill;
+  const fill = fieldProps?.fill;
 
   const designContext = useContext(DesignContext);
 
@@ -98,22 +98,20 @@ function SimpleField({
     [styleProps],
   );
 
-  // const targetFlexStyle = useMemo<CSSProperties>(() => {
-  //   const { minSize, scroll, ..._flexProps } = flexProps ?? {};
-  //
-  //   return {
-  //     ..._flexProps,
-  //     minWidth: minSize ? 0 : 'initial',
-  //     minHeight: minSize ? 0 : 'initial',
-  //   };
-  // }, [flexProps]);
+  const targetFlexStyle = useMemo<CSSProperties>(() => {
+    const { minSize, scroll, ..._flexProps } = flexProps ?? {};
+
+    return {
+      ..._flexProps,
+      minWidth: minSize ? 0 : 'initial',
+      minHeight: minSize ? 0 : 'initial',
+    };
+  }, [flexProps]);
 
   const actions = actionsCodeStringToEvents({
     actions: actionsProps?.actions ?? [],
     designContext,
   });
-
-  console.log('fieldProps======', fieldProps);
 
   return (
     <DesignFieldWrapper
@@ -123,12 +121,12 @@ function SimpleField({
         [`${selectorPrefix}-design-field-wrapper-fill`]: isRootFieldId(id),
         [`${selectorPrefix}-design-field-wrapper-no-border`]: isRootFieldId(id),
       })}
-      // style={targetFlexStyle}
+      style={targetFlexStyle}
     >
       {React.createElement(Component, {
         ...(fieldProps as FieldProps),
         style: {
-          // flex: fill ? '1' : 'none',
+          flex: fill ? '1' : 'none',
           ...(style ?? {}),
         },
         ...actions,

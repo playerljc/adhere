@@ -31,7 +31,7 @@ export function define(): DesignItem {
         href: '',
         target: '_blank',
         disabled: false,
-        fill: true,
+        fill: false,
       },
       fieldActionTypes: [Copy.key, Delete.key],
     },

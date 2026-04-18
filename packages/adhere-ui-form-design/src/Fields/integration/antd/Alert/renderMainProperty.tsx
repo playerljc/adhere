@@ -10,7 +10,7 @@ import { createStandardMainProperty } from '../../../../utils/createStandardMain
 
 const MainProperty = createStandardMainProperty({
   formName: 'antAlertMainProperty',
-  autoFill: false,
+  autoFill: true,
   buildRows: () => [
     {
       key: 'message',

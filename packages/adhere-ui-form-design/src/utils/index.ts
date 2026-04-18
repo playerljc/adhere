@@ -9,6 +9,7 @@ import {
   genNewName,
   typeToNamePrefix,
 } from './designValue';
+import { findParentWithChildIndex, flattenDesignChildren } from './designValueTree';
 import { findTypeById } from './findTypeById';
 import { formItemToProps } from './formItemToProps';
 import { getLabel } from './getLabel';
@@ -56,6 +57,8 @@ export {
   getToolBoxItemByType,
   findTypeById,
   findParentDesignValueById,
+  findParentWithChildIndex,
+  flattenDesignChildren,
   useDesignFieldDataSourceOptions,
   resolveI18nText,
   toI18nLabel,

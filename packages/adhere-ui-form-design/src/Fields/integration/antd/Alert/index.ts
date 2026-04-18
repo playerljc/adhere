@@ -32,7 +32,7 @@ export function define(): DesignItem {
         type: 'info',
         closable: false,
         showIcon: true,
-        fill: true,
+        fill: false,
       },
       fieldActionTypes: [Copy.key, Delete.key],
     },
