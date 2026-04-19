@@ -1,6 +1,74 @@
-import merge from 'lodash.merge';
-
 import type { DesignValueProps, FieldProps, Terminal } from '../types';
+
+/** 仅用于预览合并的纯 JSON 结构克隆，避免写回共享引用 */
+function deepClonePlainJson<T>(v: T): T {
+  return JSON.parse(JSON.stringify(v)) as T;
+}
+
+function isPlainObject(v: unknown): v is Record<string, unknown> {
+  return v !== null && typeof v === 'object' && !Array.isArray(v);
+}
+
+/** 首项为普通对象的数组：按索引合并元素；否则整段替换（避免 lodash.merge 把 colgroup 按索引拉长） */
+function shouldMergeObjectArraysByIndex(existing: unknown, incoming: unknown[]): boolean {
+  if (!Array.isArray(existing) || incoming.length === 0) return false;
+  const a0 = existing[0];
+  const b0 = incoming[0];
+  return isPlainObject(a0) && isPlainObject(b0);
+}
+
+function mergeArrayByIndex(existing: unknown[], incoming: unknown[]): unknown[] {
+  const len = Math.max(existing.length, incoming.length);
+  const out: unknown[] = [];
+  for (let i = 0; i < len; i += 1) {
+    const oi = existing[i];
+    const si = incoming[i];
+    if (si === undefined) {
+      out[i] = oi;
+      continue;
+    }
+    if (oi === undefined || oi === null) {
+      out[i] = si;
+      continue;
+    }
+    if (isPlainObject(oi) && isPlainObject(si)) {
+      out[i] = mergeFieldPropsLayersReplaceScalarArrays(oi, si);
+      continue;
+    }
+    out[i] = si;
+  }
+  return out;
+}
+
+/**
+ * 深合并：对象递归；对象数组按索合并；其余数组（含 string[] 如 colgroup）以后者整段为准。
+ */
+function mergeFieldPropsLayersReplaceScalarArrays(
+  base: Record<string, unknown>,
+  patch: Record<string, unknown>,
+): Record<string, unknown> {
+  const out: Record<string, unknown> = { ...base };
+  for (const key of Object.keys(patch)) {
+    const sv = patch[key];
+    if (sv === undefined) continue;
+    const ov = out[key];
+    if (Array.isArray(sv)) {
+      if (shouldMergeObjectArraysByIndex(ov, sv)) {
+        out[key] = mergeArrayByIndex((Array.isArray(ov) ? ov : []) as unknown[], sv);
+      } else {
+        out[key] = sv.slice();
+      }
+      continue;
+    }
+    if (isPlainObject(sv)) {
+      const inner = isPlainObject(ov) ? ov : {};
+      out[key] = mergeFieldPropsLayersReplaceScalarArrays(inner, sv);
+      continue;
+    }
+    out[key] = sv;
+  }
+  return out;
+}
 
 /**
  * 设计器移动端预览合并顺序：基线 fieldProps → 各布局自实现的 suggestion → 用户持久化 fieldPropsByTerminal.mobile（后者覆盖同键）。
@@ -15,7 +83,13 @@ export function mergeMobilePreviewFieldProps(
     return props.fieldProps;
   }
   const overlay = props.fieldPropsByTerminal?.mobile ?? {};
-  return merge({}, props.fieldProps, suggestion, overlay) as FieldProps;
+  const base = deepClonePlainJson(props.fieldProps) as unknown as Record<string, unknown>;
+  let merged = mergeFieldPropsLayersReplaceScalarArrays(
+    base,
+    suggestion as unknown as Record<string, unknown>,
+  );
+  merged = mergeFieldPropsLayersReplaceScalarArrays(merged, overlay as unknown as Record<string, unknown>);
+  return merged as FieldProps;
 }
 
 /**
