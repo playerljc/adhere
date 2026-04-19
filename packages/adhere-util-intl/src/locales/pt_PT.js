@@ -308,6 +308,8 @@ export default [
     transfer_item_description_placeholder: 'Enter description (optional)',
     transfer_item_disabled: 'Disable this item',
     transfer_item_detail: 'Detail Settings',
+    full_screen: 'Ecrã inteiro',
+    exit_full_screen: 'Sair do ecrã inteiro',
     gen_json: 'Gerar JSON',
     gen_json_copy: 'Copiar',
     gen_json_export: 'Exportar para ficheiro',

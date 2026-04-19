@@ -1,5 +1,13 @@
 import classNames from 'classnames';
-import React, { forwardRef, memo, useImperativeHandle, useMemo, useReducer, useState } from 'react';
+import React, {
+  forwardRef,
+  memo,
+  useImperativeHandle,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from 'react';
 import type { CSSProperties, PropsWithoutRef, RefAttributes } from 'react';
 
 import Hooks from '@baifendian/adhere-ui-hooks';
@@ -99,6 +107,9 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
 
       // 当前的终端
       const [currentTerminal, setCurrentTerminal] = usePropToState(terminal);
+
+      // 全屏绑定的设计器根节点
+      const fullscreenRootRef = useRef<HTMLDivElement>(null);
 
       // Editor中激活的item id
       const [activeFieldId, setActiveFieldId] = useState<string>();
@@ -417,6 +428,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
           >
             <DesignContext
               value={{
+                fullscreenRootRef,
                 // getter
                 getDesignValue,
                 getTerminal,
@@ -450,6 +462,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
               }}
             >
               <div
+                ref={fullscreenRootRef}
                 className={classNames(`${SELECT_PREFIX}-design-wrapper`, className)}
                 style={style}
               >

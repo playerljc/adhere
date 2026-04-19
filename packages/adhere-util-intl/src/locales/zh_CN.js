@@ -471,6 +471,7 @@ export default [
     desktop_mode: '桌面模式',
     mobile_mode: '移动模式',
     full_screen: '全屏',
+    exit_full_screen: '退出全屏',
     undo: '撤销',
     redo: '重做',
     template: '模板',

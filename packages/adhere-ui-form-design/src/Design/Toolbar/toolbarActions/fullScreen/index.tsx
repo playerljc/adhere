@@ -1,16 +1,22 @@
 import React, { useContext } from 'react';
 
-import { FullscreenOutlined } from '@ant-design/icons';
+import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
+import { useFullscreen } from 'ahooks';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../Context';
 
 export const FullScreen = () => {
-  const {} = useContext(DesignContext);
+  const { fullscreenRootRef } = useContext(DesignContext);
+  const [isFullscreen, { toggleFullscreen }] = useFullscreen(fullscreenRootRef, {
+    pageFullscreen: false,
+  });
+
+  const title = isFullscreen ? Intl.get('exit_full_screen') : Intl.get('full_screen');
 
   return (
-    <span key={config.key} title={config.label} onClick={() => {}}>
-      {config.icon}
+    <span key={config.key} title={title} onClick={() => toggleFullscreen()}>
+      {isFullscreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
     </span>
   );
 };

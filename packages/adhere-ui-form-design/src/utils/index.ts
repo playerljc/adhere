@@ -75,6 +75,13 @@ export type { CopyTextToClipboardOptions } from './copyTextToClipboard';
 export { downloadTextAsFile } from './downloadTextAsFile';
 export type { DownloadTextAsFileOptions } from './downloadTextAsFile';
 
+export {
+  getFullscreenElement,
+  isElementInFullscreen,
+  requestElementFullscreen,
+  exitDocumentFullscreen,
+} from './domFullscreen';
+
 export type { LabelValueColSpan } from './computeLabelValueColSpan';
 export type { DesignFieldDataSourceOption } from './dataSourceOptions';
 export {

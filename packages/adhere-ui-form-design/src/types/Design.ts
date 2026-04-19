@@ -4,6 +4,7 @@ import type {
   PropsWithoutRef,
   ReactNode,
   RefAttributes,
+  RefObject,
 } from 'react';
 
 import type { ActionsProps } from './Actions';
@@ -164,6 +165,8 @@ export interface DesignHandler {
 }
 
 export interface DesignContextType {
+  /** 设计器根容器，用于全屏等绑定原生 Fullscreen API */
+  fullscreenRootRef: RefObject<HTMLDivElement | null>;
   // --------- getters ---------
   getDesignValue: () => DesignValue | undefined;
   getTerminal: () => Terminal;

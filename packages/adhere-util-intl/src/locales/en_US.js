@@ -382,6 +382,8 @@ export default [
     canvas_width: 'Canvas width',
     canvas_height: 'Canvas height',
     clear_on_resize: 'Clear on resize',
+    full_screen: 'Full screen',
+    exit_full_screen: 'Exit full screen',
     clear_all_confirm_title: 'Clear canvas',
     clear_all_confirm_content:
       'Are you sure you want to clear the current form design? This cannot be undone.',
