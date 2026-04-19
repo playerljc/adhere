@@ -10,20 +10,31 @@ import type { DesignValue } from '../../../types';
 import { actionsCodeStringToEvents, isRootFieldId, resolveI18nText } from '../../../utils';
 import { parseDesign } from '../../parse';
 import InternalTabs, { type InternalTabsLayoutProps } from './InternalTabs';
+import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
 const selectorPrefix = 'adhere-ui-fd-layout';
 
 function TabsLayoutDesign({ value }: { value: DesignValue }) {
+  const { id, props } = value;
   const {
-    id,
-    props: { children, styleProps, fieldProps, flexProps, actionsProps, fieldActionTypes },
-  } = value;
+    children,
+    styleProps,
+    flexProps,
+    actionsProps,
+    fieldActionTypes,
+    fieldProps: rawFieldProps,
+  } = props;
+
+  const designContext = useContext(DesignContext);
+  const terminal = designContext.getTerminal();
+  const fieldProps = useMemo(
+    () => resolveFieldPropsForDesignEditor(props, terminal),
+    [props, terminal],
+  );
 
   const [activeKey, setActiveKey] = useState(
     (fieldProps as InternalTabsLayoutProps).defaultActiveKey,
   );
-
-  const designContext = useContext(DesignContext);
   const { intl } = useContext(ConfigProvider.Context);
   const lang = intl?.lang ?? 'zh_CN';
 
@@ -106,7 +117,7 @@ function TabsLayoutDesign({ value }: { value: DesignValue }) {
 
             // 在这块动态修改 defaultActiveKey
             designContext.setFieldProps(id, {
-              ...fieldProps,
+              ...rawFieldProps,
               defaultActiveKey: key,
             });
           }}

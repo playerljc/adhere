@@ -18,6 +18,7 @@ import PropertiesGridLayout, { Label, Value } from '../../../components/TableGri
 import type { DesignValueProps } from '../../../types';
 import { createFlexLayoutDesignValue } from '../FlexLayout';
 import type { InternalCollapseLayoutProps } from './InternalCollapse';
+import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
 type PanelItemLike = { id?: string; key?: string | number };
 
@@ -129,9 +130,16 @@ function MainProperty(props: DesignValueProps) {
   const panelItemsWatch = Form.useWatch('panelItems', form);
   const accordionWatch = Form.useWatch('accordion', form);
 
-  const { getActiveFieldId, setFieldProps, updateChildrenById } = useContext(DesignContext);
+  const { getActiveFieldId, setFieldProps, updateChildrenById, getTerminal } =
+    useContext(DesignContext);
 
-  const { children, fieldProps } = props;
+  const { children } = props;
+  const rawFieldProps = props.fieldProps;
+  const terminal = getTerminal();
+  const fieldProps = useMemo(
+    () => resolveFieldPropsForDesignEditor(props, terminal),
+    [props.fieldProps, props.fieldPropsByTerminal, terminal],
+  );
   const collapseProps = fieldProps as InternalCollapseLayoutProps;
   const panelItemsForSelect = panelItemsWatch ?? collapseProps.panelItems ?? [];
   const accordion = accordionWatch ?? collapseProps.accordion ?? false;
@@ -151,8 +159,8 @@ function MainProperty(props: DesignValueProps) {
 
   function onFieldsChange() {
     const values = form.getFieldsValue();
-    const next = merge({}, fieldProps, values);
-    const prevItems = ((fieldProps as InternalCollapseLayoutProps).panelItems ??
+    const next = merge({}, (rawFieldProps ?? {}) as object, values);
+    const prevItems = ((rawFieldProps as InternalCollapseLayoutProps).panelItems ??
       []) as PanelItemLike[];
     if (values.panelItems !== undefined) {
       next.panelItems = values.panelItems;
@@ -164,10 +172,10 @@ function MainProperty(props: DesignValueProps) {
 
     const nextAccordion =
       values.accordion ?? (next as InternalCollapseLayoutProps).accordion ?? false;
-    const prevAccordion = (fieldProps as InternalCollapseLayoutProps).accordion ?? false;
+    const prevAccordion = (rawFieldProps as InternalCollapseLayoutProps).accordion ?? false;
 
     if (panelItemsChanged) {
-      const prevDefault = (fieldProps as InternalCollapseLayoutProps)
+      const prevDefault = (rawFieldProps as InternalCollapseLayoutProps)
         .defaultActiveKey as ActiveKeyFormValue;
       const formDefault = values.defaultActiveKey as ActiveKeyFormValue;
       const resolved = resolveCollapseDefaultActiveKey(

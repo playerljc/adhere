@@ -10,6 +10,7 @@ import type { DesignValue } from '../../../types';
 import { actionsCodeStringToEvents, isRootFieldId, resolveI18nText } from '../../../utils';
 import { parseDesign } from '../../parse';
 import InternalCollapse, { type InternalCollapseLayoutProps } from './InternalCollapse';
+import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
 const selectorPrefix = 'adhere-ui-fd-layout';
 
@@ -28,10 +29,22 @@ function normalizeActiveKeyForCollapse(
 }
 
 function CollapseLayoutDesign({ value }: { value: DesignValue }) {
+  const { id, props } = value;
   const {
-    id,
-    props: { children, styleProps, fieldProps, flexProps, actionsProps, fieldActionTypes },
-  } = value;
+    children,
+    styleProps,
+    flexProps,
+    actionsProps,
+    fieldActionTypes,
+    fieldProps: rawFieldProps,
+  } = props;
+
+  const designContext = useContext(DesignContext);
+  const terminal = designContext.getTerminal();
+  const fieldProps = useMemo(
+    () => resolveFieldPropsForDesignEditor(props, terminal),
+    [props, terminal],
+  );
 
   const fp = (fieldProps ?? {}) as InternalCollapseLayoutProps;
   const accordion = fp.accordion ?? false;
@@ -40,7 +53,6 @@ function CollapseLayoutDesign({ value }: { value: DesignValue }) {
     normalizeActiveKeyForCollapse(fp.defaultActiveKey as ActiveKeyState, accordion),
   );
 
-  const designContext = useContext(DesignContext);
   const { intl } = useContext(ConfigProvider.Context);
   const lang = intl?.lang ?? 'zh_CN';
 
@@ -131,7 +143,7 @@ function CollapseLayoutDesign({ value }: { value: DesignValue }) {
               : keys;
 
             designContext.setFieldProps(id, {
-              ...fieldProps,
+              ...rawFieldProps,
               defaultActiveKey: nextDefault,
             });
             setActiveKey(normalizeActiveKeyForCollapse(nextDefault, isAccordion));

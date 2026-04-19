@@ -1,20 +1,27 @@
 import classNames from 'classnames';
-import React, { type CSSProperties, useMemo } from 'react';
+import React, { type CSSProperties, useContext, useMemo } from 'react';
 import type { ReactNode } from 'react';
 
+import { DesignContext } from '../../../Design/Context';
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignValue } from '../../../types';
 import { isRootFieldId, normalizeDesignChildren } from '../../../utils';
 import InternalCard, { type InternalCardLayoutProps } from './InternalCard';
+import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
 const selectorPrefix = 'adhere-ui-fd-layout';
 
 function CardLayoutDesign({ value }: { value: DesignValue }) {
-  const {
-    id,
-    props: { children, styleProps, fieldProps, flexProps, fieldActionTypes },
-  } = value;
+  const { id, props } = value;
+  const { children, styleProps, flexProps, fieldActionTypes } = props;
+
+  const designContext = useContext(DesignContext);
+  const terminal = designContext.getTerminal();
+  const fieldProps = useMemo(
+    () => resolveFieldPropsForDesignEditor(props, terminal),
+    [props, terminal],
+  );
 
   const resolvedChildren = useMemo<DesignValue[] | undefined>(() => {
     return normalizeDesignChildren(children, { returnUndefinedIfEmpty: true });

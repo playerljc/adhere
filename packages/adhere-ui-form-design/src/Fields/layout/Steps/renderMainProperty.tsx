@@ -22,6 +22,7 @@ import PropertiesGridLayout, { Label, Value } from '../../../components/TableGri
 import type { DesignValueProps } from '../../../types';
 import { createFlexLayoutDesignValue } from '../FlexLayout';
 import type { InternalStepsLayoutProps } from './InternalSteps';
+import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
 type StepItemLike = { id?: string };
 
@@ -84,9 +85,16 @@ function MainProperty(props: DesignValueProps) {
   const [form] = Form.useForm();
   const stepItemsWatch = Form.useWatch('stepItems', form);
 
-  const { getActiveFieldId, setFieldProps, updateChildrenById } = useContext(DesignContext);
+  const { getActiveFieldId, setFieldProps, updateChildrenById, getTerminal } =
+    useContext(DesignContext);
 
-  const { children, fieldProps } = props;
+  const { children } = props;
+  const rawFieldProps = props.fieldProps;
+  const terminal = getTerminal();
+  const fieldProps = useMemo(
+    () => resolveFieldPropsForDesignEditor(props, terminal),
+    [props.fieldProps, props.fieldPropsByTerminal, terminal],
+  );
   const stepsProps = fieldProps as InternalStepsLayoutProps;
   const stepItemsForSelect = stepItemsWatch ?? stepsProps.stepItems ?? [];
 
@@ -105,8 +113,8 @@ function MainProperty(props: DesignValueProps) {
 
   function onFieldsChange() {
     const values = form.getFieldsValue();
-    const next = merge({}, fieldProps, values);
-    const prevItems = ((fieldProps as InternalStepsLayoutProps).stepItems ?? []) as StepItemLike[];
+    const next = merge({}, (rawFieldProps ?? {}) as object, values);
+    const prevItems = ((rawFieldProps as InternalStepsLayoutProps).stepItems ?? []) as StepItemLike[];
     if (values.stepItems !== undefined) {
       next.stepItems = values.stepItems;
     }
@@ -114,7 +122,7 @@ function MainProperty(props: DesignValueProps) {
     const nextItems = ((next as InternalStepsLayoutProps).stepItems ?? []) as StepItemLike[];
     const stepItemsChanged = stepItemsSignature(prevItems) !== stepItemsSignature(nextItems);
     if (stepItemsChanged) {
-      const prevCurrent = (fieldProps as InternalStepsLayoutProps).current;
+      const prevCurrent = (rawFieldProps as InternalStepsLayoutProps).current;
       const formCurrent = values.current as number | undefined;
       const resolved = resolveStepsCurrent(prevItems, nextItems, prevCurrent, formCurrent);
       (next as InternalStepsLayoutProps).current = resolved;

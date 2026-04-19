@@ -1,20 +1,27 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 
 import type { TableGridLayoutProps } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 
+import { DesignContext } from '../../../Design/Context';
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignValue } from '../../../types';
 import { normalizeDesignChildren, styleCodeStringToCSSProperties } from '../../../utils';
 import { TableGridLayoutContext } from './Context';
 import InternalTableGridLayout from './InternalTableGridLayout';
+import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
 function TableGridLayoutDesign({ value }: { value: DesignValue }) {
-  const {
-    id,
-    props: { children, styleProps, fieldProps, flexProps, fieldActionTypes },
-  } = value;
+  const { id, props } = value;
+  const { children, styleProps, flexProps, fieldActionTypes } = props;
+
+  const designContext = useContext(DesignContext);
+  const terminal = designContext.getTerminal();
+  const fieldProps = useMemo(
+    () => resolveFieldPropsForDesignEditor(props, terminal),
+    [props, terminal],
+  );
 
   const normalizedChildren = useMemo<DesignValue[] | undefined>(() => {
     return normalizeDesignChildren(children, { returnUndefinedIfEmpty: true });

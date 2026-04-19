@@ -9,6 +9,7 @@ import { type FormPropertyLabelSlotRef, buildFormPropertyTitleRow } from '../../
 import PropertiesGridLayout, { Label, Value } from '../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../types';
 import type { InternalCardLayoutProps } from './InternalCard';
+import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
 /**
  * MainProperty
@@ -17,9 +18,13 @@ import type { InternalCardLayoutProps } from './InternalCard';
 function MainProperty(props: DesignValueProps) {
   const [form] = Form.useForm();
 
-  const { getActiveFieldId, setFieldProps } = useContext(DesignContext);
+  const { getActiveFieldId, setFieldProps, getTerminal } = useContext(DesignContext);
 
-  const { fieldProps } = props;
+  const terminal = getTerminal();
+  const fieldProps = useMemo(
+    () => resolveFieldPropsForDesignEditor(props, terminal),
+    [props.fieldProps, props.fieldPropsByTerminal, terminal],
+  );
   const cardProps = fieldProps as InternalCardLayoutProps;
 
   const titleSlotStore = useRef<Record<string, unknown>>({});
@@ -38,7 +43,10 @@ function MainProperty(props: DesignValueProps) {
   function onFieldsChange() {
     const values = form.getFieldsValue();
 
-    setFieldProps(getActiveFieldId() as string, merge({}, fieldProps, values));
+    setFieldProps(
+      getActiveFieldId() as string,
+      merge({}, (props.fieldProps ?? {}) as object, values),
+    );
   }
 
   useEffect(() => {

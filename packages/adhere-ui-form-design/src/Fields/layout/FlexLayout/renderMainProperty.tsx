@@ -1,5 +1,5 @@
 import merge from 'lodash.merge';
-import React, { type ReactNode, useContext, useEffect } from 'react';
+import React, { type ReactNode, useContext, useEffect, useMemo } from 'react';
 
 import { Form, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
@@ -15,6 +15,7 @@ import {
 import PropertiesGridLayout, { Label, Value } from '../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../types';
 import type { InternalFlexLayoutProps } from './InternalFlexLayout';
+import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
 /**
  * MainProperty
@@ -26,14 +27,16 @@ function MainProperty(props: DesignValueProps) {
   const [form] = Form.useForm();
 
   const {
-    // 获取当前激活的控件的id(也就是Editor中选中的控件)
     getActiveFieldId,
-    // 设置控件的属性
     setFieldProps,
+    getTerminal,
   } = useContext(DesignContext);
 
-  // 控件的数据
-  const { fieldProps } = props;
+  const terminal = getTerminal();
+  const fieldProps = useMemo(
+    () => resolveFieldPropsForDesignEditor(props, terminal),
+    [props.fieldProps, props.fieldPropsByTerminal, terminal],
+  );
   const flexLayoutProps: InternalFlexLayoutProps = fieldProps as InternalFlexLayoutProps;
 
   function onFieldsChange() {
@@ -41,7 +44,7 @@ function MainProperty(props: DesignValueProps) {
 
     setFieldProps(
       getActiveFieldId() as string,
-      merge({}, fieldProps, {
+      merge({}, (props.fieldProps ?? {}) as object, {
         ...rest,
       }),
     );

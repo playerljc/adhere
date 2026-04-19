@@ -18,6 +18,7 @@ import PropertiesGridLayout, { Label, Value } from '../../../components/TableGri
 import type { DesignValueProps } from '../../../types';
 import { createFlexLayoutDesignValue } from '../FlexLayout';
 import type { InternalTabsLayoutProps } from './InternalTabs';
+import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
 type TabItemLike = { id?: string; key?: string };
 
@@ -80,9 +81,16 @@ function MainProperty(props: DesignValueProps) {
   const [form] = Form.useForm();
   const tabItemsWatch = Form.useWatch('tabItems', form);
 
-  const { getActiveFieldId, setFieldProps, updateChildrenById } = useContext(DesignContext);
+  const { getActiveFieldId, setFieldProps, updateChildrenById, getTerminal } =
+    useContext(DesignContext);
 
-  const { children, fieldProps } = props;
+  const { children } = props;
+  const rawFieldProps = props.fieldProps;
+  const terminal = getTerminal();
+  const fieldProps = useMemo(
+    () => resolveFieldPropsForDesignEditor(props, terminal),
+    [props.fieldProps, props.fieldPropsByTerminal, terminal],
+  );
   const tabsProps = fieldProps as InternalTabsLayoutProps;
   const tabItemsForSelect = tabItemsWatch ?? tabsProps.tabItems ?? [];
 
@@ -101,8 +109,8 @@ function MainProperty(props: DesignValueProps) {
 
   function onFieldsChange() {
     const values = form.getFieldsValue();
-    const next = merge({}, fieldProps, values);
-    const prevItems = ((fieldProps as InternalTabsLayoutProps).tabItems ?? []) as TabItemLike[];
+    const next = merge({}, (rawFieldProps ?? {}) as object, values);
+    const prevItems = ((rawFieldProps as InternalTabsLayoutProps).tabItems ?? []) as TabItemLike[];
     // lodash.merge 会按索引合并数组，删除 tabItems 时短数组无法“删掉”长数组尾部项，需整段替换
     if (values.tabItems !== undefined) {
       next.tabItems = values.tabItems;
@@ -111,7 +119,7 @@ function MainProperty(props: DesignValueProps) {
     const nextItems = ((next as InternalTabsLayoutProps).tabItems ?? []) as TabItemLike[];
     const tabItemsChanged = tabItemsSignature(prevItems) !== tabItemsSignature(nextItems);
     if (tabItemsChanged) {
-      const prevDefault = (fieldProps as InternalTabsLayoutProps).defaultActiveKey;
+      const prevDefault = (rawFieldProps as InternalTabsLayoutProps).defaultActiveKey;
       const formDefault = values.defaultActiveKey as string | undefined;
       const resolved = resolveTabsDefaultActiveKey(prevItems, nextItems, prevDefault, formDefault);
       (next as InternalTabsLayoutProps).defaultActiveKey = resolved;

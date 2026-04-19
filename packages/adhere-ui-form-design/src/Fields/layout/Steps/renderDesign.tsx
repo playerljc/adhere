@@ -11,20 +11,32 @@ import type { DesignValue, I18nValue } from '../../../types';
 import { actionsCodeStringToEvents, isRootFieldId, resolveI18nText } from '../../../utils';
 import { parseDesign } from '../../parse';
 import InternalSteps, { type InternalStepsLayoutProps } from './InternalSteps';
+import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
 const selectorPrefix = 'adhere-ui-fd-layout';
 
 function StepsLayoutDesign({ value }: { value: DesignValue }) {
+  const { id, props } = value;
   const {
-    id,
-    props: { children, styleProps, fieldProps, flexProps, actionsProps, fieldActionTypes },
-  } = value;
+    children,
+    styleProps,
+    flexProps,
+    actionsProps,
+    fieldActionTypes,
+    fieldProps: rawFieldProps,
+  } = props;
+
+  const designContext = useContext(DesignContext);
+  const terminal = designContext.getTerminal();
+  const fieldProps = useMemo(
+    () => resolveFieldPropsForDesignEditor(props, terminal),
+    [props, terminal],
+  );
 
   const fp = (fieldProps ?? {}) as InternalStepsLayoutProps;
   const initial = fp.initial ?? 0;
   const [current, setCurrent] = useState(fp.current ?? initial);
 
-  const designContext = useContext(DesignContext);
   const { intl } = useContext(ConfigProvider.Context);
   const lang = intl?.lang ?? 'zh_CN';
 
@@ -60,7 +72,7 @@ function StepsLayoutDesign({ value }: { value: DesignValue }) {
           setCurrent((c) => {
             const n = Math.min(c + 1, lastIndex);
             designContext.setFieldProps(id, {
-              ...fieldProps,
+              ...rawFieldProps,
               current: n,
             });
             actions?.onChange?.(n);
@@ -71,7 +83,7 @@ function StepsLayoutDesign({ value }: { value: DesignValue }) {
           setCurrent((c) => {
             const n = Math.max(c - 1, 0);
             designContext.setFieldProps(id, {
-              ...fieldProps,
+              ...rawFieldProps,
               current: n,
             });
             actions?.onChange?.(n);
@@ -80,7 +92,7 @@ function StepsLayoutDesign({ value }: { value: DesignValue }) {
         },
       } as StepsSwiperItemProps;
     });
-  }, [actions, children, designContext, fieldProps, id, lang]);
+  }, [actions, children, designContext, fieldProps, id, lang, rawFieldProps]);
 
   const targetFlexStyle = useMemo<CSSProperties>(() => {
     const { minSize, scroll, ..._flexProps } = flexProps ?? {};
@@ -135,7 +147,7 @@ function StepsLayoutDesign({ value }: { value: DesignValue }) {
 
             setCurrent(next);
             designContext.setFieldProps(id, {
-              ...fieldProps,
+              ...rawFieldProps,
               current: next,
             });
           }}

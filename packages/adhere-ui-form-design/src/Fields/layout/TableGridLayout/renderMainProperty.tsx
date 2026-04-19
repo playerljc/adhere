@@ -1,4 +1,4 @@
-import React, { type ReactNode, useContext, useEffect } from 'react';
+import React, { type ReactNode, useContext, useEffect, useMemo } from 'react';
 
 import { Form, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import type { TableGridLayoutProps } from '@baifendian/adhere-ui-tablegridlayout/es/types';
@@ -14,6 +14,7 @@ import {
 } from '../../../components';
 import PropertiesGridLayout, { Label, Value } from '../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../types';
+import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
 /**
  * MainProperty
@@ -24,16 +25,15 @@ function MainProperty(props: DesignValueProps) {
   // 表单的instance
   const [form] = Form.useForm();
 
-  const {
-    // 获取当前激活的控件的id(也就是Editor中选中的控件)
-    getActiveFieldId,
-    // 设置控件的属性
-    setFieldProps,
-  } = useContext(DesignContext);
+  const { getActiveFieldId, setFieldProps, getTerminal } = useContext(DesignContext);
 
-  // 控件的数据
-  const { fieldProps } = props;
+  const terminal = getTerminal();
+  const fieldProps = useMemo(
+    () => resolveFieldPropsForDesignEditor(props, terminal),
+    [props.fieldProps, props.fieldPropsByTerminal, terminal],
+  );
   const gridLayoutProps: TableGridLayoutProps = fieldProps as TableGridLayoutProps;
+  const baselineGridProps = props.fieldProps as TableGridLayoutProps;
 
   const columnCount =
     Form.useWatch('columnCount', form) ?? (gridLayoutProps?.data?.[0]?.columnCount as number);
@@ -47,7 +47,7 @@ function MainProperty(props: DesignValueProps) {
       ...rest,
       data: [
         {
-          ...gridLayoutProps?.data?.[0],
+          ...baselineGridProps?.data?.[0],
           columnCount,
           colgroup: width,
         },
