@@ -1,15 +1,14 @@
-import { Editor } from '@monaco-editor/react';
 import { Button, Modal, Space, message } from 'antd';
 import classNames from 'classnames';
 import merge from 'lodash.merge';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
+import { Editor } from '@monaco-editor/react';
 
 import { SELECT_PREFIX } from '../../constant';
 import type { DesignValue } from '../../types';
-
-import './index.less';
+import { copyTextToClipboard, downloadTextAsFile, stringifyDesignValue } from '../../utils';
 
 const selectorPrefix = `${SELECT_PREFIX}-components-design-value-json-viewer-modal`;
 
@@ -17,24 +16,6 @@ export interface DesignValueJsonViewerModalProps {
   open: boolean;
   onClose: () => void;
   designValue: DesignValue;
-}
-
-function stringifyDesignValue(value: DesignValue): string {
-  try {
-    return JSON.stringify(
-      value,
-      (_key, v) => {
-        if (typeof v === 'function') return undefined;
-        if (v && typeof v === 'object' && typeof (v as { $$typeof?: symbol }).$$typeof === 'symbol') {
-          return '[ReactNode]';
-        }
-        return v;
-      },
-      2,
-    );
-  } catch {
-    return '{}';
-  }
 }
 
 export default function DesignValueJsonViewerModal({
@@ -66,35 +47,19 @@ export default function DesignValueJsonViewerModal({
   );
 
   const handleCopy = useCallback(async () => {
-    try {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(text);
-      } else {
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position = 'fixed';
-        ta.style.left = '-9999px';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-      }
+    const ok = await copyTextToClipboard(text, { rejectWhitespaceOnly: true });
+    if (ok) {
       message.success(Intl.get('copy_success'));
-    } catch {
+    } else {
       message.error(Intl.get('gen_json_copy_failed'));
     }
   }, [text]);
 
   const handleExport = useCallback(() => {
     const base = Intl.get('gen_json_export_filename').replace(/\.json$/i, '');
-    const name = `${base}.json`;
-    const blob = new Blob([text], { type: 'application/json;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = name;
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadTextAsFile(text, `${base}.json`, {
+      mimeType: 'application/json;charset=utf-8',
+    });
   }, [text]);
 
   return (

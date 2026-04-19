@@ -69,6 +69,12 @@ export {
   isContainerFieldByType,
 };
 
+export { stringifyDesignValue } from './stringifyDesignValue';
+export { copyTextToClipboard } from './copyTextToClipboard';
+export type { CopyTextToClipboardOptions } from './copyTextToClipboard';
+export { downloadTextAsFile } from './downloadTextAsFile';
+export type { DownloadTextAsFileOptions } from './downloadTextAsFile';
+
 export type { LabelValueColSpan } from './computeLabelValueColSpan';
 export type { DesignFieldDataSourceOption } from './dataSourceOptions';
 export {
