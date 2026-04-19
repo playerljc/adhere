@@ -42,10 +42,16 @@ import {
   type FieldType,
   type FlexProps,
   type FormItemProps,
+  type MobileViewportPresetId,
   type StyleProps,
   ToolBoxItem,
 } from '../types';
-import { createDefaultRootDesignValue } from '../utils';
+import {
+  MOBILE_VIEWPORT_DEFAULT_PRESET_ID,
+  computeFieldPropsOverlayPatch,
+  createDefaultRootDesignValue,
+  findDesignValueById,
+} from '../utils';
 import sage from '../utils/saga';
 import { DesignContext } from './Context';
 import Editor from './DesignEditor';
@@ -107,6 +113,10 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
 
       // 当前的终端
       const [currentTerminal, setCurrentTerminal] = usePropToState(terminal);
+
+      const [mobileViewportPresetId, setMobileViewportPresetId] = useState<MobileViewportPresetId>(
+        MOBILE_VIEWPORT_DEFAULT_PRESET_ID,
+      );
 
       // 全屏绑定的设计器根节点
       const fullscreenRootRef = useRef<HTMLDivElement>(null);
@@ -262,6 +272,14 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         return currentTerminal;
       }
 
+      function getMobileViewportPresetId() {
+        return mobileViewportPresetId;
+      }
+
+      function setMobileViewportPresetIdState(presetId: MobileViewportPresetId) {
+        setMobileViewportPresetId(presetId);
+      }
+
       function getActiveFieldId() {
         return activeFieldId;
       }
@@ -333,6 +351,23 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       }
 
       function setFieldProps(id: string, props: FieldProps) {
+        if (currentTerminal === 'mobile') {
+          const root = designValue as DesignValue | undefined;
+          if (!root) return;
+          const raw = findDesignValueById(id, root);
+          if (!raw) return;
+          const patch = computeFieldPropsOverlayPatch(raw.props.fieldProps, props);
+          dispatch({
+            type: REDUCER_ACTION_TYPE.updateFieldPropsByTerminal,
+            payload: {
+              id,
+              terminal: 'mobile',
+              props: patch,
+            },
+          });
+          return;
+        }
+
         dispatch({
           type: REDUCER_ACTION_TYPE.updateFieldProps,
           payload: {
@@ -432,6 +467,8 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                 // getter
                 getDesignValue,
                 getTerminal,
+                getMobileViewportPresetId,
+                setMobileViewportPresetId: setMobileViewportPresetIdState,
                 getActiveFieldId,
                 getActiveDesignFieldValue,
                 getItems,
@@ -473,7 +510,6 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                   )}
                   style={toolbarStyle}
                 >
-                  111
                 </div>
 
                 <div className={classNames(`${SELECT_PREFIX}-design-body-wrapper`)}>

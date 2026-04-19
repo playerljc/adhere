@@ -1,8 +1,9 @@
 import type { Reducer } from 'react';
 import clone from 'rfdc';
+import merge from 'lodash.merge';
 
 import { REDUCER_ACTION_TYPE } from '../../constant';
-import type { DataSourceConfig, DesignValue } from '../../types';
+import type { DataSourceConfig, DesignValue, FieldProps, Terminal } from '../../types';
 import {
   deleteDesignValueByIdInChildren,
   findDesignValueById,
@@ -66,6 +67,14 @@ export type DesignValueAction =
       };
     }
   | {
+      type: REDUCER_ACTION_TYPE.updateFieldPropsByTerminal;
+      payload: {
+        id: string;
+        terminal: Terminal;
+        props: Partial<FieldProps>;
+      };
+    }
+  | {
       type: 'noop';
     };
 
@@ -91,6 +100,21 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
       const designValue = findDesignValueById(action.payload.id, state as DesignValue);
       if (designValue) {
         designValue.props.fieldProps = action.payload.props as DesignValue['props']['fieldProps'];
+      }
+
+      return clone()(state);
+    }
+
+    case REDUCER_ACTION_TYPE.updateFieldPropsByTerminal: {
+      const designValue = findDesignValueById(action.payload.id, state as DesignValue);
+      if (designValue) {
+        const { terminal, props: patch } = action.payload;
+        const prev = designValue.props.fieldPropsByTerminal ?? {};
+        const nextOverlay = merge({}, (prev[terminal] as object | undefined) ?? {}, patch);
+        designValue.props.fieldPropsByTerminal = {
+          ...prev,
+          [terminal]: nextOverlay,
+        };
       }
 
       return clone()(state);

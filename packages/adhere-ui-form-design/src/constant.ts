@@ -3,6 +3,7 @@ export const SELECT_VALUE_KEY_NAME = 'selectValue';
 export enum REDUCER_ACTION_TYPE {
   updateFormItemProps = 'update_form_item_props',
   updateFieldProps = 'update_field_props',
+  updateFieldPropsByTerminal = 'update_field_props_by_terminal',
   updateStyleProps = 'update_style_props',
   updateActionsProps = 'update_actions_props',
   updateFlexProps = 'update_flex_props',

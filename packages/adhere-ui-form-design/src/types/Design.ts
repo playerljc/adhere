@@ -14,7 +14,7 @@ import type { FormItemProps } from './FormItem';
 import type { DesignItem } from './Item';
 import type { StyleProps } from './Style';
 import type { DraggableToolItemProps, ToolBoxOption } from './ToolBox';
-import type { Styles, Terminal } from './types';
+import type { MobileViewportPresetId, Styles, Terminal } from './types';
 
 export type DesignFieldWrapperProps = {
   className?: string;
@@ -32,6 +32,9 @@ export type ToolbarProps = {
   menuBarEllipseCount?: number;
 };
 
+/** 按终端覆盖的 fieldProps 差量（与 fieldProps 深度合并后参与渲染） */
+export type FieldPropsByTerminal = Partial<Record<Terminal, Partial<FieldProps>>>;
+
 // 设计值属性
 export type DesignValueProps = {
   // FormItem的props
@@ -39,6 +42,9 @@ export type DesignValueProps = {
 
   // 控件的props
   fieldProps: FieldProps;
+
+  /** 各终端相对 fieldProps 的增量，常用 mobile */
+  fieldPropsByTerminal?: FieldPropsByTerminal;
 
   // 控件样式的props
   styleProps?: StyleProps;
@@ -183,6 +189,8 @@ export interface DesignContextType {
   // getDispatch: () => Dispatch<DesignValueAction>;
   // --------- setters ---------
   setCurrentTerminal: (terminal: Terminal) => void;
+  getMobileViewportPresetId: () => MobileViewportPresetId;
+  setMobileViewportPresetId: (presetId: MobileViewportPresetId) => void;
   setActiveFieldId: (activeFieldId: string | undefined) => void;
   setFormItemProps: (id: string, props: FormItemProps) => void;
   setFieldProps: (id: string, props: FieldProps) => void;

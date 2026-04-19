@@ -307,6 +307,17 @@ declare const _default: {
     transfer_item_description_placeholder: string;
     transfer_item_disabled: string;
     transfer_item_detail: string;
+    desktop_mode: string;
+    mobile_mode: string;
+    mobile_viewport_preset: string;
+    mobile_viewport_360: string;
+    mobile_viewport_375: string;
+    mobile_viewport_390: string;
+    mobile_viewport_393: string;
+    mobile_viewport_414: string;
+    mobile_viewport_428: string;
+    full_screen: string;
+    exit_full_screen: string;
     gen_json: string;
     gen_json_copy: string;
     gen_json_export: string;

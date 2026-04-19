@@ -69,6 +69,19 @@ export {
   isContainerFieldByType,
 };
 
+export {
+  mergeFieldPropsForTerminal,
+  computeFieldPropsOverlayPatch,
+  withMergedFieldPropsForTerminal,
+} from './fieldPropsTerminal';
+export {
+  MOBILE_VIEWPORT_PRESETS,
+  MOBILE_VIEWPORT_DEFAULT_PRESET_ID,
+  getMobileViewportPresetById,
+  getMobileViewportLabel,
+} from './mobileViewportPresets';
+export type { MobileViewportPreset } from './mobileViewportPresets';
+
 export { stringifyDesignValue } from './stringifyDesignValue';
 export { copyTextToClipboard } from './copyTextToClipboard';
 export type { CopyTextToClipboardOptions } from './copyTextToClipboard';

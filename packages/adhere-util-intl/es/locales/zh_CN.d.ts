@@ -469,7 +469,15 @@ declare const _default: {
     advanced: string;
     desktop_mode: string;
     mobile_mode: string;
+    mobile_viewport_preset: string;
+    mobile_viewport_360: string;
+    mobile_viewport_375: string;
+    mobile_viewport_390: string;
+    mobile_viewport_393: string;
+    mobile_viewport_414: string;
+    mobile_viewport_428: string;
     full_screen: string;
+    exit_full_screen: string;
     undo: string;
     redo: string;
     template: string;

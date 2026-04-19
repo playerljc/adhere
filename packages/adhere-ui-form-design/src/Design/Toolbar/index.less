@@ -89,6 +89,11 @@
     &:has(.@{prefix-cls}-design-toolbar-menu-item-disabled):hover {
       cursor: not-allowed;
     }
+
+    &.@{prefix-cls}-design-toolbar-item-active {
+      background: var(--fd-design-toolbar-item-active-bg, #e4e4e7);
+      border-radius: var(--fd-design-toolbar-item-active-radius, 6px);
+    }
   }
 
   .@{prefix-cls}-design-toolbar-divider {
@@ -119,6 +124,12 @@
     .ant-btn {
       justify-content: flex-start;
       width: 100%;
+    }
+
+    &.@{prefix-cls}-design-toolbar-overflow-menu-el-active {
+      padding: 2px 6px;
+      background: var(--fd-design-toolbar-item-active-bg, #e4e4e7);
+      border-radius: var(--fd-design-toolbar-item-active-radius, 6px);
     }
   }
 }

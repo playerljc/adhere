@@ -2,8 +2,8 @@ import type { ReactNode } from 'react';
 
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 
-import type { DesignContextType, DesignProps, DesignValue, Terminal } from '../../types';
-import { isDesktop } from '../../utils/isDesktop';
+import type { DesignContextType, DesignProps, DesignValue } from '../../types';
+import { isDesktop, withMergedFieldPropsForTerminal } from '../../utils';
 
 /**
  * parseDesign
@@ -32,17 +32,19 @@ export function parseDesign({
 
   const item = items.find((_item) => _item.type === value.type);
 
+  const displayValue = withMergedFieldPropsForTerminal(value, terminal);
+
   if (isDesktop(terminal)) {
     return item?.renderDesign({
       parentId,
-      value,
+      value: displayValue,
       context,
     });
   }
 
   return item?.renderDesignToMobile({
     parentId,
-    value,
+    value: displayValue,
     context,
   });
 }

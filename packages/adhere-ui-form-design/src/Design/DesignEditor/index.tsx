@@ -1,12 +1,20 @@
+import { Select } from 'antd';
 import classNames from 'classnames';
 import React, { useContext } from 'react';
-import type { FC, ReactNode } from 'react';
+import type { CSSProperties, FC, ReactNode } from 'react';
 
 import { Form } from '@baifendian/adhere-ui-anthoc';
+import Intl from '@baifendian/adhere-util-intl';
 
 import { parseDesign } from '../../Fields';
 import { SELECT_PREFIX } from '../../constant';
-import type { DesignEditorProps, DesignValue } from '../../types';
+import type { DesignEditorProps, DesignValue, MobileViewportPresetId } from '../../types';
+import {
+  MOBILE_VIEWPORT_PRESETS,
+  getMobileViewportLabel,
+  getMobileViewportPresetById,
+  isDesktop,
+} from '../../utils';
 import { DesignContext } from '../Context';
 import Toolbar from '../Toolbar';
 import { defaultMenuItems } from '../Toolbar/menuActions';
@@ -20,12 +28,13 @@ const selectPrefix = `${SELECT_PREFIX}-design-editor`;
 const DesignEditor: FC<DesignEditorProps> = () => {
   const [form] = Form.useForm();
 
-  const allValues = Form.useWatch([], form);
-
   const context = useContext(DesignContext);
 
   const {
     getDesignValue,
+    getTerminal,
+    getMobileViewportPresetId,
+    setMobileViewportPresetId,
     getRenderToolBar,
     getRenderMenuBar,
     getToolbarEllipseCount,
@@ -33,6 +42,10 @@ const DesignEditor: FC<DesignEditorProps> = () => {
   } = context;
 
   const value = getDesignValue() as DesignValue;
+  const terminal = getTerminal();
+  const isMobilePreview = !isDesktop(terminal);
+  const mobilePresetId = getMobileViewportPresetId();
+  const mobileViewportWidthPx = getMobileViewportPresetById(mobilePresetId)?.widthPx ?? 375;
 
   const renderToolBar = getRenderToolBar();
   const renderMenuBar = getRenderMenuBar();
@@ -50,17 +63,52 @@ const DesignEditor: FC<DesignEditorProps> = () => {
         />
       </div>
 
-      <div className={classNames(`${selectPrefix}-body`)}>
-        <Form name="editor" form={form} className={classNames(`${selectPrefix}-form`)}>
-          {
-            // 对value进行解析
-            parseDesign({
-              parentId: undefined,
-              value,
-              context,
-            }) as ReactNode
+      <div
+        className={classNames(`${selectPrefix}-body`, {
+          [`${selectPrefix}-body-mobile`]: isMobilePreview,
+        })}
+      >
+        {isMobilePreview && (
+          <div className={classNames(`${selectPrefix}-viewport-toolbar`)}>
+            <span className={classNames(`${selectPrefix}-viewport-toolbar-label`)}>
+              {Intl.get('mobile_viewport_preset')}
+            </span>
+            <Select<MobileViewportPresetId>
+              size="small"
+              className={classNames(`${selectPrefix}-viewport-select`)}
+              value={mobilePresetId}
+              options={MOBILE_VIEWPORT_PRESETS.map((p) => ({
+                value: p.id,
+                label: getMobileViewportLabel(p),
+              }))}
+              onChange={(v) => setMobileViewportPresetId(v as MobileViewportPresetId)}
+              aria-label={Intl.get('mobile_viewport_preset')}
+            />
+          </div>
+        )}
+        <div
+          className={classNames(`${selectPrefix}-viewport`, {
+            [`${selectPrefix}-viewport-mobile`]: isMobilePreview,
+          })}
+          style={
+            isMobilePreview
+              ? ({
+                  ['--fd-design-editor-mobile-viewport-width' as string]: `${mobileViewportWidthPx}px`,
+                } as CSSProperties)
+              : undefined
           }
-        </Form>
+        >
+          <Form name="editor" form={form} className={classNames(`${selectPrefix}-form`)}>
+            {
+              // 对value进行解析
+              parseDesign({
+                parentId: undefined,
+                value,
+                context,
+              }) as ReactNode
+            }
+          </Form>
+        </div>
       </div>
     </div>
   );

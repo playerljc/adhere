@@ -3,6 +3,7 @@ import { Button, Dropdown } from 'antd';
 import classNames from 'classnames';
 import React, {
   useCallback,
+  useContext,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -12,7 +13,8 @@ import type { FC } from 'react';
 import type { ItemType } from 'antd/es/menu/interface';
 
 import { SELECT_PREFIX } from '../../constant';
-import type { MenuItem, ToolBar, ToolBarItem, ToolbarProps } from '../../types';
+import type { MenuItem, Terminal, ToolBar, ToolBarItem, ToolbarProps } from '../../types';
+import { DesignContext } from '../Context';
 
 const selectPrefix = `${SELECT_PREFIX}-design-toolbar`;
 
@@ -83,7 +85,10 @@ function computeVisibleCount(args: {
   return best;
 }
 
-function buildToolbarOverflowMenuItems(overflowEntries: ToolbarFlatEntry[]): ItemType[] {
+function buildToolbarOverflowMenuItems(
+  overflowEntries: ToolbarFlatEntry[],
+  terminal: Terminal,
+): ItemType[] {
   const items: ItemType[] = [];
   let prevGroup: number | null = null;
 
@@ -97,10 +102,22 @@ function buildToolbarOverflowMenuItems(overflowEntries: ToolbarFlatEntry[]): Ite
       items.push({ type: 'divider' });
     }
     prevGroup = groupIndex;
+    const isTerminalToggle =
+      item.key === 'changeDesktopMode' || item.key === 'changeMobileMode';
+    const isActive =
+      isTerminalToggle &&
+      ((item.key === 'changeDesktopMode' && terminal === 'desktop') ||
+        (item.key === 'changeMobileMode' && terminal === 'mobile'));
     items.push({
       key: `overflow-${item.key}-${idx}`,
       label: (
-        <div className={classNames(`${selectPrefix}-overflow-menu-el`)}>{item.el}</div>
+        <div
+          className={classNames(`${selectPrefix}-overflow-menu-el`, {
+            [`${selectPrefix}-overflow-menu-el-active`]: isActive,
+          })}
+        >
+          {item.el}
+        </div>
       ),
     });
   });
@@ -190,13 +207,26 @@ function useRowOverflowCount(args: {
 function renderToolbarEntry(
   entry: ToolbarFlatEntry,
   key: string,
+  terminal: Terminal,
 ): React.ReactElement {
   if (entry.type === 'divider') {
     return <div key={key} className={classNames(`${selectPrefix}-divider`)} aria-hidden />;
   }
+  const { item } = entry;
+  const isTerminalToggle =
+    item.key === 'changeDesktopMode' || item.key === 'changeMobileMode';
+  const isActive =
+    isTerminalToggle &&
+    ((item.key === 'changeDesktopMode' && terminal === 'desktop') ||
+      (item.key === 'changeMobileMode' && terminal === 'mobile'));
   return (
-    <div key={key} className={classNames(`${selectPrefix}-item`)}>
-      {entry.item.el}
+    <div
+      key={key}
+      className={classNames(`${selectPrefix}-item`, {
+        [`${selectPrefix}-item-active`]: isActive,
+      })}
+    >
+      {item.el}
     </div>
   );
 }
@@ -218,6 +248,9 @@ const Toolbar: FC<ToolbarProps> = ({
   toolbarEllipseCount,
   menuBarEllipseCount,
 }) => {
+  const { getTerminal } = useContext(DesignContext);
+  const terminal = getTerminal();
+
   const toolbarEntries = useMemo(() => flattenToolbarGroups(toolbarGroup), [toolbarGroup]);
 
   const groupContainerRef = useRef<HTMLDivElement>(null);
@@ -249,8 +282,8 @@ const Toolbar: FC<ToolbarProps> = ({
   const visibleToolbarEntries = toolbarEntries.slice(0, toolbarVisible);
   const overflowToolbarEntries = toolbarEntries.slice(toolbarVisible);
   const toolbarOverflowItems = useMemo(() => {
-    return buildToolbarOverflowMenuItems(toolbarEntries.slice(toolbarVisible));
-  }, [toolbarEntries, toolbarVisible]);
+    return buildToolbarOverflowMenuItems(toolbarEntries.slice(toolbarVisible), terminal);
+  }, [toolbarEntries, toolbarVisible, terminal]);
 
   const visibleMenu = menu.slice(0, menuVisible);
   const menuOverflowItems = useMemo(() => {
@@ -270,7 +303,11 @@ const Toolbar: FC<ToolbarProps> = ({
             aria-hidden
           >
             {toolbarEntries.map((entry, i) =>
-              renderToolbarEntry(entry, `m-${i}-${entry.type === 'item' ? entry.item.key : 'd'}`),
+              renderToolbarEntry(
+                entry,
+                `m-${i}-${entry.type === 'item' ? entry.item.key : 'd'}`,
+                terminal,
+              ),
             )}
           </div>
           {toolbarEntries.length > 0 && (
@@ -284,7 +321,11 @@ const Toolbar: FC<ToolbarProps> = ({
           )}
           <div className={classNames(`${selectPrefix}-row`)}>
             {visibleToolbarEntries.map((entry, i) =>
-              renderToolbarEntry(entry, `v-${i}-${entry.type === 'item' ? entry.item.key : 'd'}`),
+              renderToolbarEntry(
+                entry,
+                `v-${i}-${entry.type === 'item' ? entry.item.key : 'd'}`,
+                terminal,
+              ),
             )}
             {showToolbarEllipsis && (
               <div className={classNames(`${selectPrefix}-ellipsis`)}>

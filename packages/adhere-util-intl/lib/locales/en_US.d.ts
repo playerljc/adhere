@@ -381,6 +381,17 @@ declare const _default: {
     canvas_width: string;
     canvas_height: string;
     clear_on_resize: string;
+    desktop_mode: string;
+    mobile_mode: string;
+    mobile_viewport_preset: string;
+    mobile_viewport_360: string;
+    mobile_viewport_375: string;
+    mobile_viewport_390: string;
+    mobile_viewport_393: string;
+    mobile_viewport_414: string;
+    mobile_viewport_428: string;
+    full_screen: string;
+    exit_full_screen: string;
     clear_all_confirm_title: string;
     clear_all_confirm_content: string;
     clear_all_disabled_hint: string;

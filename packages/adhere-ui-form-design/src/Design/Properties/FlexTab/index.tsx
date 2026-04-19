@@ -12,7 +12,6 @@ const selectPrefix = `${SELECT_PREFIX}-design-properties-flex-tab`;
 const FlexTab: FC<PropertiesTabProps> = () => {
   const { getActiveDesignFieldValue, getItems } = useContext(DesignContext);
 
-  debugger;
   const activeDesignFieldValue = getActiveDesignFieldValue();
   const items = getItems();
 
