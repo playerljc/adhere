@@ -26,7 +26,8 @@
     padding: var(--fd-design-editor-body-padding, 12px);
 
     &.@{prefix-cls}-design-editor-body-mobile {
-      align-items: stretch;
+      /* 视口自身有固定宽度时用居中，避免仅 max-width 时空画布在 flex 下宽度/留白异常 */
+      align-items: center;
       padding: var(--fd-design-editor-body-mobile-padding, 16px 12px 20px);
       background: var(--fd-design-editor-body-mobile-bg, #f4f4f5);
     }
@@ -37,6 +38,9 @@
       gap: 8px;
       align-items: center;
       justify-content: center;
+      align-self: stretch;
+      width: 100%;
+      box-sizing: border-box;
       margin-bottom: 10px;
     }
 
@@ -58,7 +62,12 @@
 
       &.@{prefix-cls}-design-editor-viewport-mobile {
         box-sizing: border-box;
+        flex: 1 1 auto;
+        align-self: center;
+        width: min(100%, var(--fd-design-editor-mobile-viewport-width, 375px));
         max-width: var(--fd-design-editor-mobile-viewport-width, 375px);
+        /* 无子控件时内容高度为 0，保证仍有可拖拽的可见画布高度 */
+        min-height: var(--fd-design-editor-mobile-viewport-min-height, 480px);
         margin-inline: auto;
         padding: var(--fd-design-editor-viewport-mobile-padding, 12px 12px 16px);
         overflow: auto;

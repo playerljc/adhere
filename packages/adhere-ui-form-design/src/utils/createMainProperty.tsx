@@ -1,16 +1,16 @@
 import React, { type ReactNode, useContext, useEffect, useMemo, useRef } from 'react';
-import type { ReactElement } from 'react';
 
 import { Form } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 
 import { DesignContext } from '../Design/Context';
 import {
-  buildFormPropertyFillRow,
   type FormPropertyLabelSlotRef,
   PropertiesGridLayout,
+  buildFormPropertyFillRow,
 } from '../components';
-import type { DesignValueProps } from '../types';
+import type { DesignValueProps, FieldProps } from '../types';
+import { mergeMobilePreviewFieldProps } from './fieldPropsTerminal';
 
 export interface GetDefaultFormItemsCtx {
   form: ReturnType<typeof Form.useForm>[0];
@@ -28,7 +28,10 @@ export interface CreateMainPropertyOptions {
   /** 表单名称 */
   formName: string;
   /** 默认表单项数组（不包含 fill） */
-  getDefaultFormItems: (designValue: DesignValueProps, ctx: GetDefaultFormItemsCtx) => DataItemRow[];
+  getDefaultFormItems: (
+    designValue: DesignValueProps,
+    ctx: GetDefaultFormItemsCtx,
+  ) => DataItemRow[];
   /** 是否自动添加 fill 设置项（默认 true） */
   autoFill?: boolean;
   /**
@@ -89,8 +92,9 @@ export function createMainProperty(options: CreateMainPropertyOptions) {
     renderFormItems?: (defaultFormItems: DataItemRow[]) => DataItemRow[];
   }): ReactNode {
     const [form] = Form.useForm();
-    const { getActiveFieldId, setFieldProps } = useContext(DesignContext);
-    const { fieldProps } = designValue;
+    const { getActiveFieldId, setFieldProps, getTerminal } = useContext(DesignContext);
+    const { fieldProps, fieldPropsByTerminal } = designValue;
+    const terminal = getTerminal();
 
     const titleSlotStore = useRef<Record<string, unknown>>({});
     const titleLabelSlot = useMemo<FormPropertyLabelSlotRef>(
@@ -137,6 +141,17 @@ export function createMainProperty(options: CreateMainPropertyOptions) {
       return (values: any) => valuesToPayload(values, convertCtx);
     }, [convertCtx, valuesToPayload]);
 
+    /** 属性面板展示用：移动端为基线 + fieldPropsByTerminal.mobile（与 setFieldProps 写 overlay 一致） */
+    const displayFieldProps = useMemo(
+      () =>
+        mergeMobilePreviewFieldProps(
+          { fieldProps, fieldPropsByTerminal },
+          terminal,
+          {},
+        ) as FieldProps,
+      [fieldProps, fieldPropsByTerminal, terminal],
+    );
+
     function onFieldsChangeInternal() {
       if (onFieldsChange) {
         onFieldsChange({
@@ -156,9 +171,12 @@ export function createMainProperty(options: CreateMainPropertyOptions) {
     }
 
     useEffect(() => {
-      const values = payloadToValues ? payloadToValues(fieldProps, convertCtx) : fieldProps;
+      const values = payloadToValues
+        ? payloadToValues(displayFieldProps, convertCtx)
+        : displayFieldProps;
       form.setFieldsValue(values);
-    }, [fieldProps]);
+      // 仅随存储中的 fieldProps / overlay 变化同步；勿依赖含 watchValues 的 convertCtx，否则每次输入都会 setFieldsValue
+    }, [displayFieldProps, form, payloadToValues]);
 
     return (
       <Form name={formName} form={form} onFieldsChange={onFieldsChangeInternal}>
