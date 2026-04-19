@@ -86,7 +86,7 @@
       cursor: pointer;
     }
 
-    &:has(.@{prefix-cls}-design-toolbar-menu-clear-disabled):hover {
+    &:has(.@{prefix-cls}-design-toolbar-menu-item-disabled):hover {
       cursor: not-allowed;
     }
   }
@@ -123,10 +123,10 @@
   }
 }
 
-/* 根级：Dropdown 等挂载在工具栏外时仍应用禁用光标 */
-.@{prefix-cls}-design-toolbar-menu-clear-disabled {
+/* 根级：Dropdown 等挂载在工具栏外时仍应用禁用光标（清空 / 生成 JSON 等菜单共用） */
+.@{prefix-cls}-design-toolbar-menu-item-disabled {
   cursor: not-allowed;
-  opacity: var(--fd-design-toolbar-menu-clear-disabled-opacity, 0.45);
+  opacity: var(--fd-design-toolbar-menu-item-disabled-opacity, 0.45);
   user-select: none;
 
   &:hover {
@@ -139,6 +139,6 @@
   }
 }
 
-.@{prefix-cls}-design-toolbar-overflow-menu-el:has(.@{prefix-cls}-design-toolbar-menu-clear-disabled):hover {
+.@{prefix-cls}-design-toolbar-overflow-menu-el:has(.@{prefix-cls}-design-toolbar-menu-item-disabled):hover {
   cursor: not-allowed;
 }

@@ -386,5 +386,11 @@ export default [
     clear_all_confirm_content:
       'Are you sure you want to clear the current form design? This cannot be undone.',
     clear_all_disabled_hint: 'The canvas is already empty.',
+    gen_json: 'Generate JSON',
+    gen_json_copy: 'Copy',
+    gen_json_export: 'Export to file',
+    gen_json_export_filename: 'form-design',
+    gen_json_disabled_hint: 'The canvas is empty; nothing to export as JSON.',
+    gen_json_copy_failed: 'Copy failed',
   },
 ];

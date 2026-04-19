@@ -10,6 +10,7 @@ import { hasDesignCanvasUserContent } from '../../../../utils';
 import { DesignContext } from '../../../Context';
 
 const menuItemPrefix = `${SELECT_PREFIX}-design-toolbar-menu-clear`;
+const menuItemDisabledClass = `${SELECT_PREFIX}-design-toolbar-menu-item-disabled`;
 
 export const Clear = () => {
   const { getDesignValue, resetDesignValue } = useContext(DesignContext);
@@ -31,7 +32,7 @@ export const Clear = () => {
     <span
       key={config.key}
       className={classNames(menuItemPrefix, {
-        [`${menuItemPrefix}-disabled`]: !canClear,
+        [menuItemDisabledClass]: !canClear,
       })}
       title={canClear ? config.label : Intl.get('clear_all_disabled_hint')}
       aria-disabled={!canClear}

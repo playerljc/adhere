@@ -1,0 +1,20 @@
+@import '../../constant.less';
+
+.@{prefix-cls}-components-design-value-json-viewer-modal {
+  .@{prefix-cls}-components-design-value-json-viewer-modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--fd-design-value-json-modal-gap, 12px);
+  }
+
+  .@{prefix-cls}-components-design-value-json-viewer-modal-editor-wrap {
+    overflow: hidden;
+    border: 1px solid var(--fd-design-value-json-modal-border-color, #f0f0f0);
+    border-radius: var(--fd-design-value-json-modal-border-radius, 6px);
+  }
+
+  .@{prefix-cls}-components-design-value-json-viewer-modal-footer {
+    justify-content: flex-end;
+    width: 100%;
+  }
+}

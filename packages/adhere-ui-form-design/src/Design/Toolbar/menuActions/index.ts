@@ -41,15 +41,6 @@ export const ACTIONS = new Map<string, () => MenuItem>([
       el: Template.render(),
     }),
   ],
-  [
-    GenJSON.key,
-    () => ({
-      key: GenJSON.key,
-      label: GenJSON.label,
-      icon: GenJSON.icon,
-      el: GenJSON.render(),
-    }),
-  ],
 ]);
 
 export const defaultMenuItems = Array.from(ACTIONS.values()).map((fn) => fn() as MenuItem);

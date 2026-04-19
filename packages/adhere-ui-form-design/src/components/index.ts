@@ -46,6 +46,7 @@ import { InputTypeSelectStandardDict } from './InputType';
 import { JustifyContentSelectStandardDict } from './JustifyContent';
 import { LabelDesign, ValueDesign } from './LabelValueDesign';
 import { LinkTargetSelectStandardDict } from './LinkTarget';
+import DesignValueJsonViewerModal from './DesignValueJsonViewerModal';
 import MonacoCSSEditorFormItem from './MonacoCSSEditorFormItem';
 import MonacoEditorFormItem, {
   EmptyValidator as MonacoEditorFormItemEmptyValidator,
@@ -98,6 +99,7 @@ import { VariantSelectStandardDict } from './Variant';
 import { VerificationStatusSelectStandardDict } from './VerificationStatus';
 import { WhetherRadioHorizontalDict } from './Whether';
 
+export type { DesignValueJsonViewerModalProps } from './DesignValueJsonViewerModal';
 export type {
   TreeDataSourceManagerFormItemValue,
   TreeDataSourceManagerFormItemProps,
@@ -128,6 +130,7 @@ export {
   MonacoEditorFormItem,
   MonacoEditorFormItemEmptyValidator,
   MonacoCSSEditorFormItem,
+  DesignValueJsonViewerModal,
   I18nChangeFormItem,
   payloadToValues,
   transformPayloadI18n,

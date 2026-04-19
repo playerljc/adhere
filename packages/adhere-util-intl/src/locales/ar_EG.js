@@ -308,6 +308,12 @@ export default [
     transfer_item_description_placeholder: 'Enter description (optional)',
     transfer_item_disabled: 'Disable this item',
     transfer_item_detail: 'Detail Settings',
+    gen_json: 'إنشاء JSON',
+    gen_json_copy: 'نسخ',
+    gen_json_export: 'تصدير إلى ملف',
+    gen_json_export_filename: 'form-design',
+    gen_json_disabled_hint: 'اللوحة فارغة؛ لا يوجد JSON للتصدير.',
+    gen_json_copy_failed: 'فشل النسخ',
     clear_all_confirm_title: 'مسح اللوحة',
     clear_all_confirm_content:
       'هل تريد بالتأكيد مسح تصميم النموذج الحالي؟ لا يمكن التراجع عن هذا الإجراء.',

@@ -308,6 +308,12 @@ export default [
     transfer_item_description_placeholder: 'Enter description (optional)',
     transfer_item_disabled: 'Disable this item',
     transfer_item_detail: 'Detail Settings',
+    gen_json: 'Gerar JSON',
+    gen_json_copy: 'Copiar',
+    gen_json_export: 'Exportar para ficheiro',
+    gen_json_export_filename: 'form-design',
+    gen_json_disabled_hint: 'A área está vazia; não há JSON para exportar.',
+    gen_json_copy_failed: 'Falha ao copiar',
     clear_all_confirm_title: 'Limpar área de desenho',
     clear_all_confirm_content:
       'Tem a certeza de que pretende limpar o desenho do formulário atual? Esta ação não pode ser anulada.',

@@ -474,6 +474,11 @@ declare const _default: {
     redo: string;
     template: string;
     gen_json: string;
+    gen_json_copy: string;
+    gen_json_export: string;
+    gen_json_export_filename: string;
+    gen_json_disabled_hint: string;
+    gen_json_copy_failed: string;
     clear_all: string;
     clear_all_confirm_title: string;
     clear_all_confirm_content: string;
