@@ -24,7 +24,12 @@ export type DesignFieldWrapperProps = {
 };
 
 // Toolbar
-export type ToolbarProps = {};
+export type ToolbarProps = {
+  toolbarGroup: ToolBar;
+  menu: MenuBar;
+  toolbarEllipseCount?: number;
+  menuBarEllipseCount?: number;
+};
 
 // 设计值属性
 export type DesignValueProps = {
@@ -102,6 +107,26 @@ export type DesignValue = {
   dataSourceConfig?: DataSourceConfig;
 };
 
+export type ToolBarItem = {
+  key: string;
+  label: string;
+  icon: ReactNode;
+  el: ReactNode;
+};
+
+export type ToolBarGroup = ToolBarItem[];
+
+export type ToolBar = ToolBarGroup[];
+
+export type MenuItem = {
+  key: string;
+  label: string;
+  icon: ReactNode;
+  el: ReactNode;
+};
+
+export type MenuBar = MenuItem[];
+
 // 设计器属性
 export interface DesignProps {
   className?: Styles['className'];
@@ -123,6 +148,14 @@ export interface DesignProps {
   toolBox: ToolBoxOption;
   // 控件
   items: DesignItem[];
+
+  // 工具栏
+  renderToolBar?: (originGroup: ToolBarGroup[]) => ToolBar;
+  toolbarEllipseCount?: number;
+
+  // 菜单栏
+  renderMenuBar?: (originMenu: MenuItem[]) => MenuBar;
+  menuBarEllipseCount?: number;
 }
 
 export interface DesignHandler {}
@@ -137,6 +170,10 @@ export interface DesignContextType {
   getOverlayCursor: () => CSSProperties['cursor'];
   getActiveToolItemData: () => DraggableToolItemProps['data'] | null;
   getToolBox: () => ToolBoxOption;
+  getRenderToolBar: () => DesignProps['renderToolBar'];
+  getRenderMenuBar: () => DesignProps['renderMenuBar'];
+  getToolbarEllipseCount: () => DesignProps['toolbarEllipseCount'];
+  getMenuBarEllipseCount: () => DesignProps['menuBarEllipseCount'];
   // getDispatch: () => Dispatch<DesignValueAction>;
   // --------- setters ---------
   setCurrentTerminal: (terminal: Terminal) => void;

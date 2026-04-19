@@ -15,16 +15,23 @@ export const Delete = ({ id }: { id: string }) => {
   const { deleteFieldByChildren } = useContext(DesignContext);
 
   return (
-    <DeleteOutlined
+    <span
+      key={config.key}
+      title={config.label}
       onClick={() => {
         deleteFieldByChildren(id);
       }}
-    />
+    >
+      {config.icon}
+    </span>
   );
 };
 
-export default {
+const config = {
   key: 'delete',
   label: Intl.get('delete'),
+  icon: <DeleteOutlined />,
   render: (id: string) => <Delete id={id} />,
 };
+
+export default config;

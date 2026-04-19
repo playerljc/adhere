@@ -8,8 +8,9 @@ import { parseDesign } from '../../Fields';
 import { SELECT_PREFIX } from '../../constant';
 import type { DesignEditorProps, DesignValue } from '../../types';
 import { DesignContext } from '../Context';
-import Actions from './Actions';
-import ModeChange from './ModeChange';
+import Toolbar from '../Toolbar';
+import { defaultMenuItems } from '../Toolbar/menuActions';
+import { defaultGroups } from '../Toolbar/toolbarActions';
 
 const selectPrefix = `${SELECT_PREFIX}-design-editor`;
 
@@ -19,28 +20,34 @@ const selectPrefix = `${SELECT_PREFIX}-design-editor`;
 const DesignEditor: FC<DesignEditorProps> = () => {
   const [form] = Form.useForm();
 
-  console.log('render======');
-
   const allValues = Form.useWatch([], form);
-
-  console.log('allValues======', allValues);
 
   const context = useContext(DesignContext);
 
-  const { getDesignValue } = context;
+  const {
+    getDesignValue,
+    getRenderToolBar,
+    getRenderMenuBar,
+    getToolbarEllipseCount,
+    getMenuBarEllipseCount,
+  } = context;
 
   const value = getDesignValue() as DesignValue;
+
+  const renderToolBar = getRenderToolBar();
+  const renderMenuBar = getRenderMenuBar();
+  const toolbarEllipseCount = getToolbarEllipseCount();
+  const menuBarEllipseCount = getMenuBarEllipseCount();
 
   return (
     <div className={classNames(selectPrefix)}>
       <div className={classNames(`${selectPrefix}-header`)}>
-        <div className={classNames(`${selectPrefix}-mode`)}>
-          <ModeChange />
-        </div>
-
-        <div className={classNames(`${selectPrefix}-actions`)}>
-          <Actions />
-        </div>
+        <Toolbar
+          toolbarGroup={renderToolBar?.(defaultGroups) ?? defaultGroups}
+          menu={renderMenuBar?.(defaultMenuItems) ?? defaultMenuItems}
+          toolbarEllipseCount={toolbarEllipseCount}
+          menuBarEllipseCount={menuBarEllipseCount}
+        />
       </div>
 
       <div className={classNames(`${selectPrefix}-body`)}>

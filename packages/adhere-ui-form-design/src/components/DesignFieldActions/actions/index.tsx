@@ -8,6 +8,7 @@ export const ACTIONS = new Map<string, (id: string) => DesignFieldAction>([
     (id: string) => ({
       key: Copy.key,
       label: Copy.label,
+      icon: Copy.icon,
       el: Copy.render(id),
     }),
   ],
@@ -16,6 +17,7 @@ export const ACTIONS = new Map<string, (id: string) => DesignFieldAction>([
     (id: string) => ({
       key: Delete.key,
       label: Delete.label,
+      icon: Delete.icon,
       el: Delete.render(id),
     }),
   ],

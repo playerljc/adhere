@@ -28,16 +28,23 @@ export const Copy = ({ id }: { id: string }) => {
   const parentId = findParentIdById(id, designValue) as string;
 
   return (
-    <CopyOutlined
+    <span
+      key={config.key}
+      title={config.label}
       onClick={() => {
         addChildrenById(parentId, targetValue);
       }}
-    />
+    >
+      {config.icon}
+    </span>
   );
 };
 
-export default {
+const config = {
   key: 'copy',
   label: Intl.get('copy'),
+  icon: <CopyOutlined />,
   render: (id: string) => <Copy id={id} />,
 };
+
+export default config;

@@ -7,6 +7,7 @@ const selectorPrefix = `${SELECT_PREFIX}-design-field-actions`;
 export interface DesignFieldAction {
   key: string;
   label: string;
+  icon: ReactElement;
   el: ReactElement;
 }
 

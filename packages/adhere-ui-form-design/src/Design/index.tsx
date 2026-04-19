@@ -45,6 +45,8 @@ import Editor from './DesignEditor';
 import DesignValueReducer from './DesignValueReducer';
 import Properties from './Properties';
 import Toolbar from './Toolbar';
+import { defaultMenuItems } from './Toolbar/menuActions';
+import { defaultGroups } from './Toolbar/toolbarActions';
 import Toolbox from './Toolbox';
 import ToolboxItemDragOverlay from './Toolbox/ToolboxItemDragOverlay';
 
@@ -74,6 +76,10 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         value,
         terminal,
         items,
+        renderToolBar,
+        toolbarEllipseCount,
+        renderMenuBar,
+        menuBarEllipseCount,
       },
       ref,
     ) => {
@@ -284,6 +290,22 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         return toolBox;
       }
 
+      function getRenderToolBar() {
+        return renderToolBar;
+      }
+
+      function getRenderMenuBar() {
+        return renderMenuBar;
+      }
+
+      function getToolbarEllipseCount() {
+        return toolbarEllipseCount;
+      }
+
+      function getMenuBarEllipseCount() {
+        return menuBarEllipseCount;
+      }
+
       function setFormItemProps(id: string, props: FormItemProps) {
         dispatch({
           type: REDUCER_ACTION_TYPE.updateFormItemProps,
@@ -407,6 +429,10 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                 getOverlayCursor,
                 getActiveToolItemData,
                 getToolBox,
+                getRenderToolBar,
+                getRenderMenuBar,
+                getToolbarEllipseCount,
+                getMenuBarEllipseCount,
                 // setter
                 setCurrentTerminal,
                 setActiveFieldId,
@@ -431,12 +457,12 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
               >
                 <div
                   className={classNames(
-                    `${SELECT_PREFIX}-design-toolbar-wrapper`,
+                    `${SELECT_PREFIX}-design-menubar-wrapper`,
                     toolbarClassName,
                   )}
                   style={toolbarStyle}
                 >
-                  <Toolbar />
+                  111
                 </div>
 
                 <div className={classNames(`${SELECT_PREFIX}-design-body-wrapper`)}>

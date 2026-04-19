@@ -468,5 +468,13 @@ export default [
     data_source_controls: '数据',
     container_controls: '容器',
     advanced: '高级',
+    desktop_mode: '桌面模式',
+    mobile_mode: '移动模式',
+    full_screen: '全屏',
+    undo: '撤销',
+    redo: '重做',
+    template: '模板',
+    gen_json: '生成 JSON',
+    clear_all: '清空所有',
   },
 ];

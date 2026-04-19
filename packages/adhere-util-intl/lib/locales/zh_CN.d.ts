@@ -467,5 +467,13 @@ declare const _default: {
     data_source_controls: string;
     container_controls: string;
     advanced: string;
+    desktop_mode: string;
+    mobile_mode: string;
+    full_screen: string;
+    undo: string;
+    redo: string;
+    template: string;
+    gen_json: string;
+    clear_all: string;
 }[];
 export default _default;
