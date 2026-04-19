@@ -69,7 +69,7 @@ export default function DesignValueJsonViewerModal({
       onCancel={onClose}
       footer={null}
       width="min(920px, 96vw)"
-      destroyOnClose
+      destroyOnHidden
       className={classNames(selectorPrefix)}
     >
       <div className={classNames(`${selectorPrefix}-body`)}>
