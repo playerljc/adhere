@@ -475,5 +475,8 @@ declare const _default: {
     template: string;
     gen_json: string;
     clear_all: string;
+    clear_all_confirm_title: string;
+    clear_all_confirm_content: string;
+    clear_all_disabled_hint: string;
 }[];
 export default _default;

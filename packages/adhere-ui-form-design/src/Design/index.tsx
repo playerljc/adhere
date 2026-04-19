@@ -19,7 +19,6 @@ import {
 } from '@dnd-kit/core';
 
 import { define as flexLayoutDefine } from '../Fields/layout/FlexLayout';
-import { TYPE } from '../Fields/layout/FlexLayout/constant';
 import { REDUCER_ACTION_TYPE, SELECT_PREFIX } from '../constant';
 import {
   ActionsProps,
@@ -38,7 +37,7 @@ import {
   type StyleProps,
   ToolBoxItem,
 } from '../types';
-import { genRootFieldId } from '../utils';
+import { createDefaultRootDesignValue } from '../utils';
 import sage from '../utils/saga';
 import { DesignContext } from './Context';
 import Editor from './DesignEditor';
@@ -92,21 +91,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         // 对designValue进行处理，处理什么呢？
         // 如果designValue是null，那么需要创建一个默认的布局(布局需要这个包提供一个TableGridLayout布局)，否则直接返回即可
         if (!designValue) {
-          return {
-            id: genRootFieldId(),
-            type: TYPE,
-            props: {
-              fieldProps: {
-                direction: 'vertical',
-                wrap: false,
-                justifyContent: 'flex-start',
-                alignItems: 'stretch',
-                alignContent: 'normal',
-                gap: 8,
-              },
-              children: [],
-            },
-          };
+          return createDefaultRootDesignValue();
         }
 
         return designValue;
@@ -405,8 +390,20 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         });
       }
 
+      function resetDesignValue() {
+        dispatch({
+          type: REDUCER_ACTION_TYPE.replaceDesignValue,
+          payload: {
+            designValue: createDefaultRootDesignValue(),
+          },
+        });
+        setActiveFieldId(undefined);
+      }
+
       // 提供对外的方法
-      useImperativeHandle(ref, () => ({} as DesignHandler));
+      useImperativeHandle(ref, () => ({
+        resetDesignValue,
+      }));
 
       return (
         <Provider store={store}>
@@ -449,6 +446,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                 // update
                 updateChildrenById,
                 swapOutlineNodes,
+                resetDesignValue,
               }}
             >
               <div

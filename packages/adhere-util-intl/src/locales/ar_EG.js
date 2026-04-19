@@ -308,5 +308,9 @@ export default [
     transfer_item_description_placeholder: 'Enter description (optional)',
     transfer_item_disabled: 'Disable this item',
     transfer_item_detail: 'Detail Settings',
+    clear_all_confirm_title: 'مسح اللوحة',
+    clear_all_confirm_content:
+      'هل تريد بالتأكيد مسح تصميم النموذج الحالي؟ لا يمكن التراجع عن هذا الإجراء.',
+    clear_all_disabled_hint: 'اللوحة فارغة بالفعل.',
   },
 ];

@@ -1,15 +1,42 @@
-import React, { useContext } from 'react';
-
 import { ClearOutlined } from '@ant-design/icons';
+import { Modal } from 'antd';
+import classNames from 'classnames';
+import React, { useCallback, useContext } from 'react';
+
 import Intl from '@baifendian/adhere-util-intl';
 
+import { SELECT_PREFIX } from '../../../../constant';
+import { hasDesignCanvasUserContent } from '../../../../utils';
 import { DesignContext } from '../../../Context';
 
+const menuItemPrefix = `${SELECT_PREFIX}-design-toolbar-menu-clear`;
+
 export const Clear = () => {
-  const {} = useContext(DesignContext);
+  const { getDesignValue, resetDesignValue } = useContext(DesignContext);
+
+  const canClear = hasDesignCanvasUserContent(getDesignValue());
+
+  const handleClick = useCallback(() => {
+    if (!hasDesignCanvasUserContent(getDesignValue())) return;
+    Modal.confirm({
+      title: Intl.get('clear_all_confirm_title'),
+      content: Intl.get('clear_all_confirm_content'),
+      onOk: () => {
+        resetDesignValue();
+      },
+    });
+  }, [getDesignValue, resetDesignValue]);
 
   return (
-    <span key={config.key} title={config.label} onClick={() => {}}>
+    <span
+      key={config.key}
+      className={classNames(menuItemPrefix, {
+        [`${menuItemPrefix}-disabled`]: !canClear,
+      })}
+      title={canClear ? config.label : Intl.get('clear_all_disabled_hint')}
+      aria-disabled={!canClear}
+      onClick={canClear ? handleClick : undefined}
+    >
       {config.icon} {config.label}
     </span>
   );

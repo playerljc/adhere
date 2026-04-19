@@ -158,7 +158,10 @@ export interface DesignProps {
   menuBarEllipseCount?: number;
 }
 
-export interface DesignHandler {}
+export interface DesignHandler {
+  /** 将设计画布重置为默认空根布局，并清除当前选中项 */
+  resetDesignValue: () => void;
+}
 
 export interface DesignContextType {
   // --------- getters ---------
@@ -177,7 +180,7 @@ export interface DesignContextType {
   // getDispatch: () => Dispatch<DesignValueAction>;
   // --------- setters ---------
   setCurrentTerminal: (terminal: Terminal) => void;
-  setActiveFieldId: (activeFieldId: string) => void;
+  setActiveFieldId: (activeFieldId: string | undefined) => void;
   setFormItemProps: (id: string, props: FormItemProps) => void;
   setFieldProps: (id: string, props: FieldProps) => void;
   setStyleProps: (id: string, props: StyleProps) => void;
@@ -191,6 +194,8 @@ export interface DesignContextType {
   updateChildrenById: (id: string, children: DesignValueProps['children']) => void;
   /** Outline 等场景：交换两个节点在设计树中的位置（各自父容器的 children 中下标互换） */
   swapOutlineNodes: (idA: string, idB: string) => void;
+  /** 将设计画布重置为默认空根布局，并清除当前选中项 */
+  resetDesignValue: () => void;
 }
 
 /**

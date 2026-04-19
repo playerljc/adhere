@@ -85,6 +85,10 @@
     &:hover {
       cursor: pointer;
     }
+
+    &:has(.@{prefix-cls}-design-toolbar-menu-clear-disabled):hover {
+      cursor: not-allowed;
+    }
   }
 
   .@{prefix-cls}-design-toolbar-divider {
@@ -117,4 +121,24 @@
       width: 100%;
     }
   }
+}
+
+/* 根级：Dropdown 等挂载在工具栏外时仍应用禁用光标 */
+.@{prefix-cls}-design-toolbar-menu-clear-disabled {
+  cursor: not-allowed;
+  opacity: var(--fd-design-toolbar-menu-clear-disabled-opacity, 0.45);
+  user-select: none;
+
+  &:hover {
+    cursor: not-allowed;
+  }
+
+  .anticon,
+  svg {
+    cursor: not-allowed;
+  }
+}
+
+.@{prefix-cls}-design-toolbar-overflow-menu-el:has(.@{prefix-cls}-design-toolbar-menu-clear-disabled):hover {
+  cursor: not-allowed;
 }

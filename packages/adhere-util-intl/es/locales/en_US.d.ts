@@ -381,5 +381,8 @@ declare const _default: {
     canvas_width: string;
     canvas_height: string;
     clear_on_resize: string;
+    clear_all_confirm_title: string;
+    clear_all_confirm_content: string;
+    clear_all_disabled_hint: string;
 }[];
 export default _default;

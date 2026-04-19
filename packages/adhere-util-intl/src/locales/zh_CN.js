@@ -476,5 +476,8 @@ export default [
     template: '模板',
     gen_json: '生成 JSON',
     clear_all: '清空所有',
+    clear_all_confirm_title: '清空画布',
+    clear_all_confirm_content: '确定要清空当前表单设计吗？该操作不可撤销。',
+    clear_all_disabled_hint: '当前画布无内容，无需清空',
   },
 ];

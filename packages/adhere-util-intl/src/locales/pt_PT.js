@@ -308,5 +308,9 @@ export default [
     transfer_item_description_placeholder: 'Enter description (optional)',
     transfer_item_disabled: 'Disable this item',
     transfer_item_detail: 'Detail Settings',
+    clear_all_confirm_title: 'Limpar área de desenho',
+    clear_all_confirm_content:
+      'Tem a certeza de que pretende limpar o desenho do formulário atual? Esta ação não pode ser anulada.',
+    clear_all_disabled_hint: 'A área de desenho já está vazia.',
   },
 ];

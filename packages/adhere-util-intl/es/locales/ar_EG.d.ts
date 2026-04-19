@@ -307,5 +307,8 @@ declare const _default: {
     transfer_item_description_placeholder: string;
     transfer_item_disabled: string;
     transfer_item_detail: string;
+    clear_all_confirm_title: string;
+    clear_all_confirm_content: string;
+    clear_all_disabled_hint: string;
 }[];
 export default _default;

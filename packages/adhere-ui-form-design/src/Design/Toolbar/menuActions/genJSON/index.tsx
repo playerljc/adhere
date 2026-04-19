@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { FileOutlined } from '@ant-design/icons';
+import { CodeOutlined } from '@ant-design/icons';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../Context';
@@ -18,7 +18,7 @@ export const GenJSON = () => {
 const config = {
   key: 'genJSON',
   label: Intl.get('gen_json'),
-  icon: <FileOutlined />,
+  icon: <CodeOutlined />,
   render: () => <GenJSON />,
 };
 

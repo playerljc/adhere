@@ -60,6 +60,12 @@ export type DesignValueAction =
       };
     }
   | {
+      type: REDUCER_ACTION_TYPE.replaceDesignValue;
+      payload: {
+        designValue: DesignValue;
+      };
+    }
+  | {
       type: 'noop';
     };
 
@@ -209,6 +215,10 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
       }
 
       return clone()(state);
+    }
+
+    case REDUCER_ACTION_TYPE.replaceDesignValue: {
+      return clone()(action.payload.designValue);
     }
 
     // 什么都不做

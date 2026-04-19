@@ -21,6 +21,7 @@ import { isNoFormFieldByType } from './isNoFormFieldByType';
 import isReactNode from './isReactNode';
 import normalizeDesignChildren from './normalizeDesignChildren';
 import { resolveI18nText } from './resolveI18nText';
+import { createDefaultRootDesignValue, hasDesignCanvasUserContent } from './createDefaultRootDesignValue';
 import { genRootFieldId, getRootFieldId, isRootFieldId } from './rootFieldId';
 import { rulesSettingToRules } from './rulesSettingToRules';
 import { styleCodeStringToCSSProperties } from './styleCodeStringToCSSProperties';
@@ -53,6 +54,8 @@ export {
   genRootFieldId,
   getRootFieldId,
   isRootFieldId,
+  createDefaultRootDesignValue,
+  hasDesignCanvasUserContent,
   getLabelByType,
   getToolBoxItemByType,
   findTypeById,

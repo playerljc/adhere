@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { FileOutlined } from '@ant-design/icons';
+import { SnippetsOutlined } from '@ant-design/icons';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../Context';
@@ -18,7 +18,7 @@ export const Template = () => {
 const config = {
   key: 'template',
   label: Intl.get('template'),
-  icon: <FileOutlined />,
+  icon: <SnippetsOutlined />,
   render: () => <Template />,
 };
 

@@ -11,5 +11,6 @@ export enum REDUCER_ACTION_TYPE {
   deleteChildrenById = 'delete_children_by_id',
   updateDataSourceConfig = 'update_data_source_config',
   swapNodes = 'swap_nodes',
+  replaceDesignValue = 'replace_design_value',
   noop = 'noop',
 }
