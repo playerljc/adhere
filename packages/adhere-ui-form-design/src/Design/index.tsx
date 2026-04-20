@@ -355,9 +355,14 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         if (currentTerminal === 'mobile') {
           const root = designValue as DesignValue | undefined;
           if (!root) return;
+
           const raw = findDesignValueById(id, root);
           if (!raw) return;
+
           const patch = computeFieldPropsOverlayPatch(raw.props.fieldProps, props);
+
+          debugger;
+
           dispatch({
             type: REDUCER_ACTION_TYPE.updateFieldPropsByTerminal,
             payload: {

@@ -16,6 +16,31 @@ import PropertiesGridLayout, { Label, Value } from '../../../components/TableGri
 import type { DesignValueProps } from '../../../types';
 import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
+/** 与 TableGridLayoutColgroupSetting 一致：vertical 为 columnCount 段；horizontal 为 columnCount 对（每对 2 个元素） */
+function normalizeColgroupForColumnCount(
+  colgroup: unknown,
+  columnCount: number,
+  layout: string | undefined,
+): (string | undefined)[] {
+  const n = Math.max(1, Math.min(5, Math.floor(Number(columnCount)) || 1));
+  const prev = Array.isArray(colgroup) ? ([...colgroup] as (string | undefined)[]) : [];
+
+  if (layout === 'horizontal') {
+    const targetLen = n * 2;
+    const next = prev.slice(0, targetLen);
+    for (let i = next.length; i < targetLen; i += 2) {
+      next.push(undefined, 'auto');
+    }
+    return next.slice(0, targetLen);
+  }
+
+  const next = prev.slice(0, n);
+  while (next.length < n) {
+    next.push('auto');
+  }
+  return next.slice(0, n);
+}
+
 /**
  * MainProperty
  * @description 控件的属性面板，如果控件是TableGridLayout，那么属性面板就是TableGridLayout的属性面板
@@ -42,14 +67,19 @@ function MainProperty(props: DesignValueProps) {
 
   function onFieldsChange() {
     const { columnCount, width, ...rest } = form.getFieldsValue();
+    const layoutVal = (rest.layout ?? baselineGridProps?.layout) as string | undefined;
+    const cc = Math.max(1, Math.min(5, Math.floor(Number(columnCount)) || 1));
+    const colgroup = normalizeColgroupForColumnCount(width, cc, layoutVal);
+
+    console.log('colgroup======', colgroup);
 
     setFieldProps(getActiveFieldId() as string, {
       ...rest,
       data: [
         {
           ...baselineGridProps?.data?.[0],
-          columnCount,
-          colgroup: width,
+          columnCount: cc,
+          colgroup,
         },
       ],
     });

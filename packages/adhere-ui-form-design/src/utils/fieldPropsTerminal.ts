@@ -41,7 +41,8 @@ function mergeArrayByIndex(existing: unknown[], incoming: unknown[]): unknown[] 
 }
 
 /**
- * 深合并：对象递归；对象数组按索合并；其余数组（含 string[] 如 colgroup）以后者整段为准。
+ * 深合并：对象递归；对象数组按索引合并元素；其余数组（含 string[] 如 colgroup）以后者整段为准。
+ * 用于 {@link mergeMobilePreviewFieldProps} 与终端 overlay 累加（见 mergeFieldPropsTerminalOverlay）。
  */
 function mergeFieldPropsLayersReplaceScalarArrays(
   base: Record<string, unknown>,
@@ -92,12 +93,25 @@ export function mergeMobilePreviewFieldProps(
     suggestion as unknown as Record<string, unknown>,
   );
 
-  debugger;
   merged = mergeFieldPropsLayersReplaceScalarArrays(
     merged,
     overlay as unknown as Record<string, unknown>,
   );
   return merged as FieldProps;
+}
+
+/**
+ * 将本次 patch 累加到某终端已有 overlay 上（与 lodash.merge 不同：标量数组整段替换，避免 colgroup 等按索引残留）。
+ */
+export function mergeFieldPropsTerminalOverlay(
+  prevOverlay: Partial<FieldProps> | undefined,
+  patch: Partial<FieldProps>,
+): FieldProps {
+  const base = deepClonePlainJson(prevOverlay ?? {}) as unknown as Record<string, unknown>;
+  return mergeFieldPropsLayersReplaceScalarArrays(
+    base,
+    patch as unknown as Record<string, unknown>,
+  ) as FieldProps;
 }
 
 /**

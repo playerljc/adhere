@@ -69,7 +69,11 @@ export {
   isContainerFieldByType,
 };
 
-export { mergeMobilePreviewFieldProps, computeFieldPropsOverlayPatch } from './fieldPropsTerminal';
+export {
+  mergeMobilePreviewFieldProps,
+  mergeFieldPropsTerminalOverlay,
+  computeFieldPropsOverlayPatch,
+} from './fieldPropsTerminal';
 export {
   MOBILE_VIEWPORT_PRESETS,
   MOBILE_VIEWPORT_DEFAULT_PRESET_ID,

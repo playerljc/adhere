@@ -1,6 +1,5 @@
 import type { Reducer } from 'react';
 import clone from 'rfdc';
-import merge from 'lodash.merge';
 
 import { REDUCER_ACTION_TYPE } from '../../constant';
 import type { DataSourceConfig, DesignValue, FieldProps, Terminal } from '../../types';
@@ -9,6 +8,7 @@ import {
   findDesignValueById,
   findParentWithChildIndex,
   flattenDesignChildren,
+  mergeFieldPropsTerminalOverlay,
 } from '../../utils';
 
 export type DesignValueState = DesignValue | undefined;
@@ -110,7 +110,10 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
       if (designValue) {
         const { terminal, props: patch } = action.payload;
         const prev = designValue.props.fieldPropsByTerminal ?? {};
-        const nextOverlay = merge({}, (prev[terminal] as object | undefined) ?? {}, patch);
+        const nextOverlay = mergeFieldPropsTerminalOverlay(
+          prev[terminal] as Partial<FieldProps> | undefined,
+          patch,
+        );
         designValue.props.fieldPropsByTerminal = {
           ...prev,
           [terminal]: nextOverlay,
@@ -228,7 +231,12 @@ const reducer: Reducer<DesignValueState, DesignValueAction> = (state, action) =>
       } else {
         const flatA = flattenDesignChildren(parentA.props.children);
         const flatB = flattenDesignChildren(parentB.props.children);
-        if (!flatA[indexA] || !flatB[indexB] || flatA[indexA].id !== idA || flatB[indexB].id !== idB) {
+        if (
+          !flatA[indexA] ||
+          !flatB[indexB] ||
+          flatA[indexA].id !== idA ||
+          flatB[indexB].id !== idB
+        ) {
           return clone()(state);
         }
         const tmp = flatA[indexA];
