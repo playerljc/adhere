@@ -79,23 +79,34 @@ export function mergeMobilePreviewFieldProps(
   terminal: Terminal,
   suggestion: Partial<FieldProps>,
 ): FieldProps {
+  // 如果是桌面端，则直接返回 fieldProps
   if (terminal === 'desktop') {
     return props.fieldProps;
   }
+
+  // mobile单独设置的
   const overlay = props.fieldPropsByTerminal?.mobile ?? {};
   const base = deepClonePlainJson(props.fieldProps) as unknown as Record<string, unknown>;
   let merged = mergeFieldPropsLayersReplaceScalarArrays(
     base,
     suggestion as unknown as Record<string, unknown>,
   );
-  merged = mergeFieldPropsLayersReplaceScalarArrays(merged, overlay as unknown as Record<string, unknown>);
+
+  debugger;
+  merged = mergeFieldPropsLayersReplaceScalarArrays(
+    merged,
+    overlay as unknown as Record<string, unknown>,
+  );
   return merged as FieldProps;
 }
 
 /**
  * 计算写入 fieldPropsByTerminal.mobile 的差量：仅包含与基线不同的分支（含数组整段替换）。
  */
-export function computeFieldPropsOverlayPatch(base: unknown, desired: unknown): Partial<FieldProps> {
+export function computeFieldPropsOverlayPatch(
+  base: unknown,
+  desired: unknown,
+): Partial<FieldProps> {
   const patch = computeDiffPatchRecursive(base, desired);
   return (patch ?? {}) as Partial<FieldProps>;
 }

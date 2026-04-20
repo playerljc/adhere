@@ -351,6 +351,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       }
 
       function setFieldProps(id: string, props: FieldProps) {
+        // 如果移动端就调用updateFieldPropsByTerminal去修改数据
         if (currentTerminal === 'mobile') {
           const root = designValue as DesignValue | undefined;
           if (!root) return;
@@ -368,6 +369,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
           return;
         }
 
+        // 否则就是调用updateFieldProps去修改数据
         dispatch({
           type: REDUCER_ACTION_TYPE.updateFieldProps,
           payload: {
@@ -509,8 +511,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                     toolbarClassName,
                   )}
                   style={toolbarStyle}
-                >
-                </div>
+                ></div>
 
                 <div className={classNames(`${SELECT_PREFIX}-design-body-wrapper`)}>
                   <div

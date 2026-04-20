@@ -9,10 +9,18 @@ import { DesignContext } from '../../Context';
 
 const selectPrefix = `${SELECT_PREFIX}-design-properties-props-tab`;
 
+/**
+ * PropertiesTabProps
+ * @description 控件的属性面板
+ * @constructor
+ */
 const PropertiesTab: FC<PropertiesTabProps> = () => {
   const { getActiveDesignFieldValue, getItems } = useContext(DesignContext);
 
+  // 获取激活控件的designValue
   const activeDesignFieldValue = getActiveDesignFieldValue();
+
+  // 获取所有设计控件的集合
   const items = getItems();
 
   return (

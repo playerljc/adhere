@@ -26,13 +26,12 @@ function MainProperty(props: DesignValueProps) {
   // 表单的instance
   const [form] = Form.useForm();
 
-  const {
-    getActiveFieldId,
-    setFieldProps,
-    getTerminal,
-  } = useContext(DesignContext);
+  const { getActiveFieldId, setFieldProps, getTerminal } = useContext(DesignContext);
 
+  // 获取当前的终端
   const terminal = getTerminal();
+
+  // desktop和mobile属性的merge后返回一个新的fieldProps
   const fieldProps = useMemo(
     () => resolveFieldPropsForDesignEditor(props, terminal),
     [props.fieldProps, props.fieldPropsByTerminal, terminal],
