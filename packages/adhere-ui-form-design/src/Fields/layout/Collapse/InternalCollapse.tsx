@@ -7,6 +7,7 @@ import { Collapse } from '@baifendian/adhere-ui-anthoc';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import { DesignContext } from '../../../Design/Context';
+import { SELECT_PREFIX } from '../../../constant';
 import type { CollapsePanelSettingItem } from '../../../components/CollapsePanelSettingFormItem';
 import type { DesignValue, I18nValue, StyleProps } from '../../../types';
 import { resolveI18nText, styleCodeStringToCSSProperties } from '../../../utils';
@@ -26,7 +27,7 @@ export type InternalCollapseLayoutProps = CollapseProps & {
   items?: CollapseProps['items'];
 };
 
-const selectorPrefix = 'adhere-ui-fd-collapse-layout';
+const selectorPrefix = `${SELECT_PREFIX}-collapse-layout`;
 
 /**
  * InternalCollapse

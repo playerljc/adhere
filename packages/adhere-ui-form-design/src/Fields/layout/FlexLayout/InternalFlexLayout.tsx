@@ -3,6 +3,7 @@ import React, { useContext, useMemo } from 'react';
 import type { CSSProperties, FC } from 'react';
 
 import { DesignContext } from '../../../Design/Context';
+import { SELECT_PREFIX } from '../../../constant';
 import type { DesignValue } from '../../../types';
 import { parseDesign } from '../../parse';
 
@@ -18,7 +19,7 @@ export interface InternalFlexLayoutProps {
   gap?: CSSProperties['gap'];
 }
 
-const selectorPrefix = 'adhere-ui-fd-flex-layout';
+const selectorPrefix = `${SELECT_PREFIX}-flex-layout`;
 
 /**
  * InternalFlexLayout

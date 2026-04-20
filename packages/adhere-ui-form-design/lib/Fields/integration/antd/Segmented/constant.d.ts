@@ -1,1 +1,1 @@
-export declare const TYPE = "antd-segmented";
+export declare const TYPE = "ant-segmented";

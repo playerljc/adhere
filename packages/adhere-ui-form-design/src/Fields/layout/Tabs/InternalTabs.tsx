@@ -11,6 +11,7 @@ import type { TabsTabSettingItem } from '../../../components/TabsTabSettingFormI
 import type { DesignValue, I18nValue, StyleProps } from '../../../types';
 import { resolveI18nText, styleCodeStringToCSSProperties } from '../../../utils';
 import { parseDesign } from '../../parse';
+import { SELECT_PREFIX } from '../../../constant';
 
 export type { TabsTabSettingItem };
 
@@ -27,7 +28,7 @@ export type InternalTabsLayoutProps = TabsProps & {
   defaultActiveKey?: string;
 };
 
-const selectorPrefix = 'adhere-ui-fd-tabs-layout';
+const selectorPrefix = `${SELECT_PREFIX}-tabs-layout`;
 
 /**
  * InternalTabs

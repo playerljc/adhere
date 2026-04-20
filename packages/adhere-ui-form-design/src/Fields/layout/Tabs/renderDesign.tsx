@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import { DesignContext } from '../../../Design/Context';
+import { SELECT_PREFIX } from '../../../constant';
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import type { DesignValue } from '../../../types';
 import { actionsCodeStringToEvents, isRootFieldId, resolveI18nText } from '../../../utils';
@@ -12,7 +13,7 @@ import { parseDesign } from '../../parse';
 import InternalTabs, { type InternalTabsLayoutProps } from './InternalTabs';
 import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
-const selectorPrefix = 'adhere-ui-fd-layout';
+const selectorPrefix = `${SELECT_PREFIX}-layout`;
 
 function TabsLayoutDesign({ value }: { value: DesignValue }) {
   const { id, props } = value;

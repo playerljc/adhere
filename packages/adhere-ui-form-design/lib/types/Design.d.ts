@@ -1,4 +1,4 @@
-import type { CSSProperties, NamedExoticComponent, PropsWithoutRef, ReactNode, RefAttributes } from 'react';
+import type { CSSProperties, NamedExoticComponent, PropsWithoutRef, ReactNode, RefAttributes, RefObject } from 'react';
 import type { ActionsProps } from './Actions';
 import type { FieldProps, FieldType } from './Field';
 import type { FlexProps } from './Flex';
@@ -6,7 +6,7 @@ import type { FormItemProps } from './FormItem';
 import type { DesignItem } from './Item';
 import type { StyleProps } from './Style';
 import type { DraggableToolItemProps, ToolBoxOption } from './ToolBox';
-import type { Styles, Terminal } from './types';
+import type { MobileViewportPresetId, Styles, Terminal } from './types';
 export type DesignFieldWrapperProps = {
     className?: string;
     style?: CSSProperties;
@@ -14,10 +14,19 @@ export type DesignFieldWrapperProps = {
     children?: ReactNode;
     fieldActionTypes?: DesignValueProps['fieldActionTypes'];
 };
-export type ToolbarProps = {};
+export type ToolbarProps = {
+    toolbarGroup: ToolBar;
+    menu: MenuBar;
+    toolbarEllipseCount?: number;
+    menuBarEllipseCount?: number;
+};
+/** 按终端覆盖的 fieldProps 差量（与 fieldProps 深度合并后参与渲染） */
+export type FieldPropsByTerminal = Partial<Record<Terminal, Partial<FieldProps>>>;
 export type DesignValueProps = {
     formItemProps?: FormItemProps;
     fieldProps: FieldProps;
+    /** 各终端相对 fieldProps 的增量，常用 mobile */
+    fieldPropsByTerminal?: FieldPropsByTerminal;
     styleProps?: StyleProps;
     actionsProps?: ActionsProps;
     flexProps?: FlexProps;
@@ -61,6 +70,21 @@ export type DesignValue = {
     props: DesignValueProps;
     dataSourceConfig?: DataSourceConfig;
 };
+export type ToolBarItem = {
+    key: string;
+    label: string;
+    icon: ReactNode;
+    el: ReactNode;
+};
+export type ToolBarGroup = ToolBarItem[];
+export type ToolBar = ToolBarGroup[];
+export type MenuItem = {
+    key: string;
+    label: string;
+    icon: ReactNode;
+    el: ReactNode;
+};
+export type MenuBar = MenuItem[];
 export interface DesignProps {
     className?: Styles['className'];
     style?: Styles['style'];
@@ -76,10 +100,18 @@ export interface DesignProps {
     value?: DesignValue;
     toolBox: ToolBoxOption;
     items: DesignItem[];
+    renderToolBar?: (originGroup: ToolBarGroup[]) => ToolBar;
+    toolbarEllipseCount?: number;
+    renderMenuBar?: (originMenu: MenuItem[]) => MenuBar;
+    menuBarEllipseCount?: number;
 }
 export interface DesignHandler {
+    /** 将设计画布重置为默认空根布局，并清除当前选中项 */
+    resetDesignValue: () => void;
 }
 export interface DesignContextType {
+    /** 设计器根容器，用于全屏等绑定原生 Fullscreen API */
+    fullscreenRootRef: RefObject<HTMLDivElement | null>;
     getDesignValue: () => DesignValue | undefined;
     getTerminal: () => Terminal;
     getActiveFieldId: () => string | null | undefined;
@@ -88,8 +120,14 @@ export interface DesignContextType {
     getOverlayCursor: () => CSSProperties['cursor'];
     getActiveToolItemData: () => DraggableToolItemProps['data'] | null;
     getToolBox: () => ToolBoxOption;
+    getRenderToolBar: () => DesignProps['renderToolBar'];
+    getRenderMenuBar: () => DesignProps['renderMenuBar'];
+    getToolbarEllipseCount: () => DesignProps['toolbarEllipseCount'];
+    getMenuBarEllipseCount: () => DesignProps['menuBarEllipseCount'];
     setCurrentTerminal: (terminal: Terminal) => void;
-    setActiveFieldId: (activeFieldId: string) => void;
+    getMobileViewportPresetId: () => MobileViewportPresetId;
+    setMobileViewportPresetId: (presetId: MobileViewportPresetId) => void;
+    setActiveFieldId: (activeFieldId: string | undefined) => void;
     setFormItemProps: (id: string, props: FormItemProps) => void;
     setFieldProps: (id: string, props: FieldProps) => void;
     setStyleProps: (id: string, props: StyleProps) => void;
@@ -99,6 +137,10 @@ export interface DesignContextType {
     addChildrenById: (id: string, child: DesignValue) => void;
     deleteFieldByChildren: (id: string) => void;
     updateChildrenById: (id: string, children: DesignValueProps['children']) => void;
+    /** Outline 等场景：交换两个节点在设计树中的位置（各自父容器的 children 中下标互换） */
+    swapOutlineNodes: (idA: string, idB: string) => void;
+    /** 将设计画布重置为默认空根布局，并清除当前选中项 */
+    resetDesignValue: () => void;
 }
 /**
  * DesignComponent

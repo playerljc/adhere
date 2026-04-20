@@ -1,1 +1,1 @@
-export declare const TYPE = "antd-signature-pad";
+export declare const TYPE = "ant-signature-pad";

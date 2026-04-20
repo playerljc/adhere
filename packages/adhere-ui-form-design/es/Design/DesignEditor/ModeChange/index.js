@@ -1,2 +1,0 @@
-import classNames from"classnames";import React,{useContext}from"react";import{SELECT_PREFIX}from"../../../constant";import{DesignContext}from"../../Context";var selectPrefix="".concat(SELECT_PREFIX,"-design-editor"),ModeChange=function(){var e=useContext(DesignContext),e=e.getTerminal;e();return React.createElement("div",{className:classNames("".concat(selectPrefix,"-mode-change"))},"ModeChange")};export default ModeChange;
-//# sourceMappingURL=index.js.map

@@ -1,1 +1,1 @@
-export declare const TYPE = "antd-slider";
+export declare const TYPE = "ant-slider";

@@ -1,1 +1,1 @@
-export declare const TYPE = "antd-input-number";
+export declare const TYPE = "ant-input-number";

@@ -8,6 +8,7 @@ import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import type { StepsStepSettingItem } from '../../../components/StepsStepSettingFormItem';
 import { DesignContext } from '../../../Design/Context';
+import { SELECT_PREFIX } from '../../../constant';
 import type { DesignValue, I18nValue, StyleProps } from '../../../types';
 import { resolveI18nText, styleCodeStringToCSSProperties } from '../../../utils';
 import { parseDesign } from '../../parse';
@@ -26,7 +27,7 @@ export type InternalStepsLayoutProps = Omit<StepsSwiperProps, 'items'> & {
   items?: StepsSwiperItemProps[];
 };
 
-const selectorPrefix = 'adhere-ui-fd-steps-layout';
+const selectorPrefix = `${SELECT_PREFIX}-steps-layout`;
 
 /**
  * InternalSteps

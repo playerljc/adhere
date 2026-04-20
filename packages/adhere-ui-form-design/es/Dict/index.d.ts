@@ -438,5 +438,8 @@ declare const names: Partial<{
     NoFormFieldTypes: {
         value: string[];
     };
+    ContainerFieldTypes: {
+        value: string[];
+    };
 }>;
 export { names, values };

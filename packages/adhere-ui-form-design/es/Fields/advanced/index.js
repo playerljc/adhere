@@ -1,0 +1,2 @@
+import _OrderedListOutlined from"@ant-design/icons/es/icons/OrderedListOutlined";import React from"react";import Intl from"@baifendian/adhere-util-intl";import{define as defineImageCaptcha}from"./ImageCaptcha";var ImageCaptcha=defineImageCaptcha();function install(){return{toolBox:[{type:ImageCaptcha.type,icon:React.createElement(_OrderedListOutlined),label:Intl.get("image_captcha"),searchLabel:Intl.get("image_captcha"),tooltip:Intl.get("image_captcha")}],designItems:[ImageCaptcha]}}export{install};
+//# sourceMappingURL=index.js.map

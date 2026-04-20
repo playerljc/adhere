@@ -1,1 +1,1 @@
-export declare const TYPE = "FormDesignDivider";
+export declare const TYPE = "ant-divider";

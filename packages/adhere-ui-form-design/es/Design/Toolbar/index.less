@@ -1,16 +1,155 @@
 @import '../../constant.less';
 
-// 顶栏占位：与简约画布区一致的中性线与留白
-.@{prefix-cls}-design-toolbar-wrapper {
-  border-bottom: 1px solid var(--fd-design-toolbar-border, #e4e4e7);
-  background: var(--fd-design-toolbar-bg, #ffffff);
+.@{prefix-cls}-design-toolbar {
+  display: flex;
+  gap: var(--fd-design-toolbar-gap, 12px);
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--fd-design-toolbar-bg, transparent);
+
+  --fd-design-toolbar-menu-justify: flex-end;
+
+  .@{prefix-cls}-design-toolbar-group,
+  .@{prefix-cls}-design-toolbar-menu {
+    display: flex;
+    flex: 1;
+    align-items: stretch;
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  .@{prefix-cls}-design-toolbar-menu .@{prefix-cls}-design-toolbar-row {
+    justify-content: var(--fd-design-toolbar-menu-justify, flex-end);
+  }
+
+  .@{prefix-cls}-design-toolbar-group-inner,
+  .@{prefix-cls}-design-toolbar-menu-inner {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding-block: var(--fd-design-toolbar-inner-padding-block, 6px);
+    padding-inline: var(--fd-design-toolbar-inner-padding-inline, 8px);
+  }
+
+  .@{prefix-cls}-design-toolbar-measure {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--fd-design-toolbar-item-gap, 8px);
+    align-items: center;
+    width: max-content;
+    max-width: none;
+    white-space: nowrap;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .@{prefix-cls}-design-toolbar-ellipsis-measure {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    min-width: var(--fd-design-toolbar-ellipsis-min-width, 32px);
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .@{prefix-cls}-design-toolbar-row {
+    display: flex;
+    flex: 1;
+    flex-wrap: nowrap;
+    gap: var(--fd-design-toolbar-item-gap, 8px);
+    align-items: center;
+    box-sizing: border-box;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .@{prefix-cls}-design-toolbar-item {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: var(--fd-design-toolbar-item-min-height, 28px);
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:has(.@{prefix-cls}-design-toolbar-menu-item-disabled):hover {
+      cursor: not-allowed;
+    }
+
+    &.@{prefix-cls}-design-toolbar-item-active {
+      background: var(--fd-design-toolbar-item-active-bg, #e4e4e7);
+      border-radius: var(--fd-design-toolbar-item-active-radius, 6px);
+    }
+  }
+
+  .@{prefix-cls}-design-toolbar-divider {
+    flex-shrink: 0;
+    align-self: center;
+    width: var(--fd-design-toolbar-divider-width, 1px);
+    height: var(--fd-design-toolbar-divider-height, 18px);
+    background: var(--fd-design-toolbar-divider-color, #e8e8e8);
+    margin-inline: var(--fd-design-toolbar-divider-margin-inline, 8px);
+  }
+
+  .@{prefix-cls}-design-toolbar-ellipsis {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--fd-design-toolbar-ellipsis-min-width, 32px);
+
+    .ant-btn {
+      min-width: var(--fd-design-toolbar-ellipsis-min-width, 32px);
+    }
+  }
+
+  .@{prefix-cls}-design-toolbar-overflow-menu-el {
+    box-sizing: border-box;
+    max-width: var(--fd-design-toolbar-overflow-menu-max-width, 280px);
+
+    .ant-btn {
+      justify-content: flex-start;
+      width: 100%;
+    }
+
+    &.@{prefix-cls}-design-toolbar-overflow-menu-el-active {
+      padding: 2px 6px;
+      background: var(--fd-design-toolbar-item-active-bg, #e4e4e7);
+      border-radius: var(--fd-design-toolbar-item-active-radius, 6px);
+    }
+  }
 }
 
-.@{prefix-cls}-design-toolbar {
-  box-sizing: border-box;
-  min-height: var(--fd-design-toolbar-min-height, 40px);
-  padding: var(--fd-design-toolbar-padding, 8px 14px);
-  font-size: var(--fd-design-toolbar-font-size, 12px);
-  letter-spacing: 0.02em;
-  color: var(--fd-design-toolbar-color, #71717a);
+/* 根级：Dropdown 等挂载在工具栏外时仍应用禁用光标（清空 / 生成 JSON 等菜单共用） */
+.@{prefix-cls}-design-toolbar-menu-item-disabled {
+  cursor: not-allowed;
+  opacity: var(--fd-design-toolbar-menu-item-disabled-opacity, 0.45);
+  user-select: none;
+
+  &:hover {
+    cursor: not-allowed;
+  }
+
+  .anticon,
+  svg {
+    cursor: not-allowed;
+  }
+}
+
+.@{prefix-cls}-design-toolbar-overflow-menu-el:has(.@{prefix-cls}-design-toolbar-menu-item-disabled):hover {
+  cursor: not-allowed;
 }

@@ -16,7 +16,9 @@ export type DesignFieldDataSourceOption = {
  */
 export function resolveDataSourceOptionLabel(label: DataSourceItem['label'], lang: string): string {
   if (label && typeof label === 'object' && SELECT_VALUE_KEY_NAME in label) {
-    return resolveI18nText(label as I18nValue, lang);
+    const v = resolveI18nText(label as I18nValue, lang);
+    if (typeof v === 'string' || typeof v === 'number') return String(v);
+    return '';
   }
   if (typeof label === 'string' || typeof label === 'number') {
     return String(label);

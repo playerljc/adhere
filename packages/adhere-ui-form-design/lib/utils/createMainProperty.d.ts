@@ -21,6 +21,38 @@ export interface CreateMainPropertyOptions {
     getDefaultFormItems: (designValue: DesignValueProps, ctx: GetDefaultFormItemsCtx) => DataItemRow[];
     /** 是否自动添加 fill 设置项（默认 true） */
     autoFill?: boolean;
+    /**
+     * 将存储在 fieldProps(payload) 的值转换为表单可消费的 values
+     * - 典型场景：时间戳 <-> dayjs
+     */
+    payloadToValues?: (fieldProps: any, ctx: {
+        designValue: DesignValueProps;
+        form: ReturnType<typeof Form.useForm>[0];
+        watchValues: any;
+        titleLabelSlot: FormPropertyLabelSlotRef;
+    }) => any;
+    /**
+     * 将表单 values 转换为写回 fieldProps(payload) 的值
+     */
+    valuesToPayload?: (values: any, ctx: {
+        designValue: DesignValueProps;
+        form: ReturnType<typeof Form.useForm>[0];
+        watchValues: any;
+        titleLabelSlot: FormPropertyLabelSlotRef;
+    }) => any;
+    /**
+     * 自定义 onFieldsChange 逻辑
+     * - 典型场景：字段互斥/归一化，需要回写 form.setFieldsValue
+     */
+    onFieldsChange?: (ctx: {
+        designValue: DesignValueProps;
+        form: ReturnType<typeof Form.useForm>[0];
+        watchValues: any;
+        titleLabelSlot: FormPropertyLabelSlotRef;
+        getActiveFieldId: () => string | null | undefined;
+        setFieldProps: (id: string, props: any) => void;
+        valuesToPayload: (values: any) => any;
+    }) => void;
 }
 export declare function createMainProperty(options: CreateMainPropertyOptions): ({ designValue, renderFormItems, }: {
     designValue: DesignValueProps;

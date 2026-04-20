@@ -1,11 +1,3 @@
-import React, { type ReactNode } from 'react';
-import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
+import React from 'react';
 import type { DesignValueProps } from '../../../../types';
-/**
- * MainProperty - extends Input with Search-specific: loading (boolean only)
- */
-export declare function MainProperty({ designValue, renderFormItems, }: {
-    designValue: DesignValueProps;
-    renderFormItems?: (defaultFormItems: DataItemRow[]) => DataItemRow[];
-}): React.JSX.Element;
-export declare function renderMainProperty(props: DesignValueProps): ReactNode;
+export declare function renderMainProperty(props: DesignValueProps): React.ReactNode;

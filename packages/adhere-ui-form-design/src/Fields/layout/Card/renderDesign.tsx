@@ -3,6 +3,7 @@ import React, { type CSSProperties, useContext, useMemo } from 'react';
 import type { ReactNode } from 'react';
 
 import { DesignContext } from '../../../Design/Context';
+import { SELECT_PREFIX } from '../../../constant';
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignValue } from '../../../types';
@@ -10,7 +11,7 @@ import { isRootFieldId, normalizeDesignChildren } from '../../../utils';
 import InternalCard, { type InternalCardLayoutProps } from './InternalCard';
 import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
-const selectorPrefix = 'adhere-ui-fd-layout';
+const selectorPrefix = `${SELECT_PREFIX}-layout`;
 
 function CardLayoutDesign({ value }: { value: DesignValue }) {
   const { id, props } = value;

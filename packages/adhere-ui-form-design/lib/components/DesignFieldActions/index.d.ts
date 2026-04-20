@@ -2,6 +2,7 @@ import { type FC, type ReactElement } from 'react';
 export interface DesignFieldAction {
     key: string;
     label: string;
+    icon: ReactElement;
     el: ReactElement;
 }
 export interface DesignFieldActionsProps {

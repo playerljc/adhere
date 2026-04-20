@@ -88,8 +88,12 @@ export function renderDesign({
           const operations: string[] = [];
           const resolvedRightOp = resolveI18nText(rightOperation, lang);
           const resolvedLeftOp = resolveI18nText(leftOperation, lang);
-          if (resolvedRightOp) operations[0] = resolvedRightOp;
-          if (resolvedLeftOp) operations[1] = resolvedLeftOp;
+          if (typeof resolvedRightOp === 'string' || typeof resolvedRightOp === 'number') {
+            operations[0] = String(resolvedRightOp);
+          }
+          if (typeof resolvedLeftOp === 'string' || typeof resolvedLeftOp === 'number') {
+            operations[1] = String(resolvedLeftOp);
+          }
 
           return (
             <Transfer

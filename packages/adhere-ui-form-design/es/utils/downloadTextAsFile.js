@@ -1,0 +1,2 @@
+function downloadTextAsFile(e,o,n){var d;"undefined"!=typeof document&&"undefined"!=typeof URL&&"undefined"!=typeof Blob&&(d=null!=(d=null==n?void 0:n.mimeType)?d:"text/plain;charset=utf-8",n=!1!==(null==n?void 0:n.revokeObjectUrl),e=new Blob([e],{type:d}),d=URL.createObjectURL(e),(e=document.createElement("a")).href=d,e.download=o,e.rel="noopener",e.style.display="none",document.body.appendChild(e),e.click(),document.body.removeChild(e),n)&&URL.revokeObjectURL(d)}export{downloadTextAsFile};
+//# sourceMappingURL=downloadTextAsFile.js.map

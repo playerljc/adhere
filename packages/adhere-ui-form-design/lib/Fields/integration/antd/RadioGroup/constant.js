@@ -1,2 +1,2 @@
-Object.defineProperty(exports,"__esModule",{value:!0}),exports.TYPE=void 0;var TYPE=exports.TYPE="antd-radio-group";
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.TYPE=void 0;var TYPE=exports.TYPE="ant-radio-group";
 //# sourceMappingURL=constant.js.map

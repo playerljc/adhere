@@ -1,0 +1,2 @@
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.resolveFieldPropsForDesignEditor=resolveFieldPropsForDesignEditor;var _utils=require("../../../utils");function mobileSuggestion(e){var r;return"horizontal"===(null!=(r=null!=(r=e.titlePlacement)?r:e.labelPlacement)?r:"horizontal")?{titlePlacement:"vertical"}:{}}function resolveFieldPropsForDesignEditor(e,r){return(0,_utils.mergeMobilePreviewFieldProps)(e,r,mobileSuggestion(e.fieldProps))}
+//# sourceMappingURL=resolveFieldPropsForDesignEditor.js.map

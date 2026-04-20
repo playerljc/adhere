@@ -1,1 +1,1 @@
-export declare const TYPE = "FormDesignText";
+export declare const TYPE = "ant-text";

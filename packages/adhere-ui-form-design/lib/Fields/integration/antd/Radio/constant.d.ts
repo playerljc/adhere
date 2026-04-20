@@ -1,1 +1,1 @@
-export declare const TYPE = "antd-radio";
+export declare const TYPE = "ant-radio";

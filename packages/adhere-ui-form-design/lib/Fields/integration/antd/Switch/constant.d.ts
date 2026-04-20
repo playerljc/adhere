@@ -1,1 +1,1 @@
-export declare const TYPE = "antd-switch";
+export declare const TYPE = "ant-switch";

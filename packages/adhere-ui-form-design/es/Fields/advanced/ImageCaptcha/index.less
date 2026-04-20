@@ -1,0 +1,32 @@
+@import '../../../constant.less';
+
+.@{prefix-cls}-image-captcha {
+  display: flex;
+  align-items: center;
+  gap: var(--image-captcha-gap, 8px);
+  width: 100%;
+}
+
+.@{prefix-cls}-image-captcha-img {
+  width: var(--image-captcha-width, 112px);
+  height: var(--image-captcha-height, 42px);
+  border: var(--image-captcha-border, 1px solid rgba(0, 0, 0, 0.06));
+  border-radius: var(--image-captcha-border-radius, 6px);
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.@{prefix-cls}-image-captcha-img > img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+}
+
+.@{prefix-cls}-image-captcha-body {
+  flex: 1;
+  min-width: 0;
+}
+

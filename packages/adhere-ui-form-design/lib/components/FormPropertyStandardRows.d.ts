@@ -4,6 +4,8 @@ export type FormPropertyLabelSlotRef = {
     set: (key: string, value: unknown) => void;
 };
 /** 标签（含 i18n） */
+export declare function buildFormPropertyPlaceholderRow(slot: FormPropertyLabelSlotRef): DataItemRow;
+/** 标签（含 i18n） */
 export declare function buildFormPropertyLabelRow(slot: FormPropertyLabelSlotRef): DataItemRow;
 /** 标题（含 i18n），如 Card.title、EditorTable 表格标题 */
 export declare function buildFormPropertyTitleRow(slot: FormPropertyLabelSlotRef): DataItemRow;

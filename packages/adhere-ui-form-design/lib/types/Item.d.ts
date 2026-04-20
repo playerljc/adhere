@@ -167,6 +167,30 @@ export interface DesignItem extends BaseItem {
      * 未实现时回退为 defaultValue。
      */
     createDefaultValue?: () => DesignValueProps;
+    /**
+     * Outline 扩展点
+     * @description 大纲视图相关能力下沉到组件自身，避免 OutlineView 里硬编码判断 type
+     */
+    outline?: {
+        /**
+         * getSlotTitlePrefix
+         * @description 当前 value 作为“容器”时，给第 slotIndex 个子树返回分组标题（用于 [xxx] 前缀）
+         */
+        getSlotTitlePrefix?: (args: {
+            containerValue: DesignValue;
+            slotIndex: number;
+            lang: string;
+        }) => string;
+        /**
+         * getNextFieldPropsByActiveSlot
+         * @description 当 active 落在第 slotIndex 个子树时，计算容器需要写回的 nextFieldProps
+         * - 仅计算，不直接写回（由 OutlineView 统一 setFieldProps 写回）
+         */
+        getNextFieldPropsByActiveSlot?: (args: {
+            containerValue: DesignValue;
+            slotIndex: number;
+        }) => Record<string, any> | null;
+    };
 }
 /**
  * 表单模式下的Item接口，定义了控件在表单预览/运行时的渲染行为

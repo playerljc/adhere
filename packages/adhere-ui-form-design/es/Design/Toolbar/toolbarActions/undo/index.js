@@ -1,0 +1,2 @@
+import _ArrowRightOutlined from"@ant-design/icons/es/icons/ArrowRightOutlined";import React,{useContext}from"react";import Intl from"@baifendian/adhere-util-intl";import{DesignContext}from"../../../Context";var Undo=function(){useContext(DesignContext);return React.createElement("span",{key:config.key,title:config.label,onClick:function(){}},config.icon)},config={key:"undo",label:Intl.get("undo"),icon:React.createElement(_ArrowRightOutlined,null),render:function(){return React.createElement(Undo,null)}};export default config;export{Undo};
+//# sourceMappingURL=index.js.map

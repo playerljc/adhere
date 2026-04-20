@@ -1,6 +1,6 @@
 import type { Reducer } from 'react';
 import { REDUCER_ACTION_TYPE } from '../../constant';
-import type { DataSourceConfig, DesignValue } from '../../types';
+import type { DataSourceConfig, DesignValue, FieldProps, Terminal } from '../../types';
 export type DesignValueState = DesignValue | undefined;
 export type DesignValueAction = {
     type: REDUCER_ACTION_TYPE.updateFormItemProps | REDUCER_ACTION_TYPE.updateFieldProps | REDUCER_ACTION_TYPE.updateStyleProps | REDUCER_ACTION_TYPE.updateActionsProps | REDUCER_ACTION_TYPE.updateFlexProps | REDUCER_ACTION_TYPE.updateChildrenProps;
@@ -24,6 +24,24 @@ export type DesignValueAction = {
     payload: {
         id: string;
         dataSourceConfig: DataSourceConfig;
+    };
+} | {
+    type: REDUCER_ACTION_TYPE.swapNodes;
+    payload: {
+        idA: string;
+        idB: string;
+    };
+} | {
+    type: REDUCER_ACTION_TYPE.replaceDesignValue;
+    payload: {
+        designValue: DesignValue;
+    };
+} | {
+    type: REDUCER_ACTION_TYPE.updateFieldPropsByTerminal;
+    payload: {
+        id: string;
+        terminal: Terminal;
+        props: Partial<FieldProps>;
     };
 } | {
     type: 'noop';

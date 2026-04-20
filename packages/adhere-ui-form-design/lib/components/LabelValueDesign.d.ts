@@ -11,5 +11,6 @@ export declare function ValueDesign({ value: { id, props: { formItemProps, field
         fieldProps: FieldProps;
         style: CSSProperties;
         actions: Record<string, (...args: any[]) => any>;
+        lang: string;
     }) => ReactNode;
 }): React.JSX.Element;

@@ -6,6 +6,7 @@ import type { StepsSwiperItemProps } from '@baifendian/adhere-ui-anthoc/es/types
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import { DesignContext } from '../../../Design/Context';
+import { SELECT_PREFIX } from '../../../constant';
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import type { DesignValue, I18nValue } from '../../../types';
 import { actionsCodeStringToEvents, isRootFieldId, resolveI18nText } from '../../../utils';
@@ -13,7 +14,7 @@ import { parseDesign } from '../../parse';
 import InternalSteps, { type InternalStepsLayoutProps } from './InternalSteps';
 import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
-const selectorPrefix = 'adhere-ui-fd-layout';
+const selectorPrefix = `${SELECT_PREFIX}-layout`;
 
 function StepsLayoutDesign({ value }: { value: DesignValue }) {
   const { id, props } = value;

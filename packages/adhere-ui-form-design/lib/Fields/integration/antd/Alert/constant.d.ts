@@ -1,1 +1,1 @@
-export declare const TYPE = "FormDesignAlert";
+export declare const TYPE = "ant-alert";

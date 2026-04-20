@@ -1,14 +1,14 @@
 @import '../constant.less';
-@import './Toolbar';
-@import './Toolbox';
-@import './DesignEditor';
-@import './Properties';
+@import './Toolbar/index.less';
+@import './Toolbox/index.less';
+@import './DesignEditor/index.less';
+@import './Properties/index.less';
 
 .@{prefix-cls}-design-wrapper {
   display: flex;
   flex-direction: column;
 
-  > .@{prefix-cls}-design-toolbar-wrapper {
+  > .@{prefix-cls}-design-menubar-wrapper {
     flex-shrink: 0;
   }
 
@@ -45,8 +45,8 @@
       align-self: stretch;
       box-sizing: border-box;
       min-width: var(--fd-design-properties-min-width, 260px);
-      min-height: 0;
       max-width: var(--design-wrapper-properties-margin, 20%);
+      min-height: 0;
       padding: var(--fd-design-properties-outer-padding, 0);
       overflow: hidden;
       border-left: 1px solid var(--fd-design-properties-border-color, #e4e4e7);

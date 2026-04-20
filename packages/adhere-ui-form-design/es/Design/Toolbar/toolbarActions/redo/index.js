@@ -1,0 +1,2 @@
+import _ArrowLeftOutlined from"@ant-design/icons/es/icons/ArrowLeftOutlined";import React,{useContext}from"react";import Intl from"@baifendian/adhere-util-intl";import{DesignContext}from"../../../Context";var Redo=function(){useContext(DesignContext);return React.createElement("span",{key:config.key,title:config.label,onClick:function(){}},config.icon)},config={key:"redo",label:Intl.get("redo"),icon:React.createElement(_ArrowLeftOutlined,null),render:function(){return React.createElement(Redo,null)}};export default config;export{Redo};
+//# sourceMappingURL=index.js.map

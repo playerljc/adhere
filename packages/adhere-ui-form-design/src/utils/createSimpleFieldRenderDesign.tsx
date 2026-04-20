@@ -68,13 +68,14 @@ import React, { type CSSProperties, useContext, useMemo } from 'react';
 import type { ElementType } from 'react';
 
 import { DesignContext } from '../Design/Context';
+import { SELECT_PREFIX } from '../constant';
 import DesignFieldWrapper from '../components/DesignFieldWrapper';
 import type { DesignValue } from '../types';
 import { actionsCodeStringToEvents, isRootFieldId, styleCodeStringToCSSProperties } from '../utils';
 
 type FieldProps = Record<string, any>;
 
-const selectorPrefix = 'adhere-ui-fd-layout';
+const selectorPrefix = `${SELECT_PREFIX}-layout`;
 
 function SimpleField({
   value,

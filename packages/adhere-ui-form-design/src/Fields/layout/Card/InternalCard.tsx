@@ -7,6 +7,7 @@ import type { CSSProperties, FC, ReactNode } from 'react';
 import { Card } from '@baifendian/adhere-ui-anthoc';
 
 import { DesignContext } from '../../../Design/Context';
+import { SELECT_PREFIX } from '../../../constant';
 import type { DesignValue, I18nValue, StyleProps } from '../../../types';
 import { resolveI18nText, styleCodeStringToCSSProperties } from '../../../utils';
 import { parseDesign } from '../../parse';
@@ -26,7 +27,7 @@ export interface InternalCardLayoutProps {
   styleProps?: StyleProps;
 }
 
-const selectorPrefix = 'adhere-ui-fd-card-layout';
+const selectorPrefix = `${SELECT_PREFIX}-card-layout`;
 
 /**
  * InternalCard

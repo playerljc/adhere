@@ -3,6 +3,7 @@ import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 import Design from './Design';
 import * as Dict from './Dict';
 import * as parse from './Fields';
+import * as Advanced from './Fields/advanced';
 import * as Plugins from './Fields/integration';
 import * as Layout from './Fields/layout';
 import * as Components from './components';
@@ -21,6 +22,7 @@ export default {
   Util,
   parse,
   Layout,
+  Advanced,
   Plugins,
   Dict,
 };

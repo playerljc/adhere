@@ -1,1 +1,1 @@
-export declare const TYPE = "antd-qrcode";
+export declare const TYPE = "ant-qrcode";

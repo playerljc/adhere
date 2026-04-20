@@ -6,10 +6,11 @@ import FormDesign from '../../src';
 import '../../src/index.less';
 import './index.less';
 
-const { Design, Dict, Plugins, Layout } = FormDesign;
+const { Design, Dict, Plugins, Layout, Advanced } = FormDesign;
 
 const antd = Plugins.installAntd();
 const layout = Layout.install();
+const advanced = Advanced.install();
 
 export default () => {
   const toolBox = merge(
@@ -74,8 +75,8 @@ export default () => {
         columns: 2,
       },
       {
-        items: [...antd.toolBox].filter(({ type }) =>
-          ['ant-editor-table', 'ant-qrcode', 'ant-signature-pad'].includes(type),
+        items: [...antd.toolBox, ...advanced.toolBox].filter(({ type }) =>
+          ['ant-editor-table', 'ant-qrcode', 'ant-signature-pad', 'image-captcha'].includes(type),
         ),
         columns: 2,
       },

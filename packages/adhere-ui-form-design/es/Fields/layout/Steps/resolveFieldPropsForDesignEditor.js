@@ -1,0 +1,2 @@
+import{mergeMobilePreviewFieldProps}from"../../../utils";function mobileSuggestion(e){var i;return"horizontal"===(null!=(i=null!=(i=e.titlePlacement)?i:e.labelPlacement)?i:"horizontal")?{titlePlacement:"vertical"}:{}}function resolveFieldPropsForDesignEditor(e,i){return mergeMobilePreviewFieldProps(e,i,mobileSuggestion(e.fieldProps))}export{resolveFieldPropsForDesignEditor};
+//# sourceMappingURL=resolveFieldPropsForDesignEditor.js.map

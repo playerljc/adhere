@@ -67,13 +67,31 @@
 - [x] QRCode
 - [x] 签名组件
 - [x] Divider分割线
-- [ ] ImageCode
-- [ ] QuickRangeDate
-- [ ] Upload
-- [ ] ImageCroppingUpload
-- [ ] MapSelectPoint
-- [ ] PhoneWithAreaCode
-- [ ] RichEditor
+- ImageCaptcha(图片的验证码)
+  - [ ] 支持维护一个接口地址生成图片
+  - [ ] 拖拽形状验证码(rc-slider-captcha)
+- [ ] 短信验证码
+- [ ] QuickRangeDate(快速的时间范围选择)
+- Upload(文件的上传)
+  - [ ] 自定义接口
+  - 上传到各种外部的OSS服务
+    - [ ] 阿里云OSS
+    - [ ] 腾讯云OSS
+    - [ ] 七牛云OSS
+- [ ] ImageCroppingUpload(图片的上传可以对图片进行处理)
+- MapSelectPoint(地图中选点的操作)
+    - [ ] 百度MAP
+    - [ ] 高德MAP
+    - [ ] 腾讯MAP
+    - [ ] 天地图
+    - [ ] GoogleMAP
+    - [ ] MapBOX
+    - [ ] OSM
+- PhoneWithAreaCode(不同区域的电话号码选择)
+    - [ ] 中国电话
+    - [ ] 海外电话
+- [ ] RichEditor(富文本)
+- [ ] 表达式(可以输入表达式)
 
 ## 高级
 
@@ -83,8 +101,8 @@
   
 - 工具栏
   - 不同终端视图的切换
-    - [ ] 切换到桌面端
-    - [ ] 切换到移动端
+    - [x] 切换到桌面端
+    - [x] 切换到移动端
   - [ ] 还原和恢复的功能
   - [x] 全屏的功能
   - [ ] 导入固定的模板
