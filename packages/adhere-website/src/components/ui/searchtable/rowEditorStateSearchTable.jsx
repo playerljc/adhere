@@ -263,7 +263,7 @@ class RowEditableStateSearchTable extends ProEditableRowSearchStateTable {
           type: 'input',
           visible: true,
           valueAttrs: {
-            colSpan: 5,
+            // colSpan: 5,
           },
         },
         $editable: {

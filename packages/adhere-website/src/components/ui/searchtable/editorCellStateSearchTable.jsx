@@ -275,7 +275,7 @@ class EditableCellStateSearchTable extends ProEditableCellSearchStateTable {
           type: 'input',
           visible: true,
           valueAttrs: {
-            colSpan: 5,
+            // colSpan: 5,
           },
         },
         $editable: {

@@ -250,7 +250,7 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
           type: 'input',
           visible: true,
           valueAttrs: {
-            colSpan: 5,
+            // colSpan: 5,
           },
         },
       },
