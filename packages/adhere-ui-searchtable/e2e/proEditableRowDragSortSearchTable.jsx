@@ -117,6 +117,10 @@ class RowDragSort extends ProSearchEditableRowDragSortStateTable {
     ]);
   }
 
+  isUseExclusiveEditorRow() {
+    return true;
+  }
+
   /**
    * Table的列
    * @override

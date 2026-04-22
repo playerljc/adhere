@@ -13,7 +13,6 @@ import type { EditorRowControlProps } from '../../../types';
  * @param styles
  * @param renderEditableRow
  * @param renderSave
- * @returns {JSX.Element}
  * @constructor
  */
 declare const EditableRowControl: FC<EditorRowControlProps>;

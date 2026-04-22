@@ -2,6 +2,7 @@ import type { SearchEditorRowTableState, SearchTableImplementProps } from '../ty
 declare const SearchEditableRowTable_base: {
     new (props: any): {
         [x: string]: any;
+        isUseExclusiveEditorRow(): boolean;
         rowEditableReducer(params: {
             rowIndex: number;
             record: {

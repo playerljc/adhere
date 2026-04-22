@@ -1,6 +1,7 @@
 declare const SearchEditableRowStateTable_base: {
     new (props: any): {
         [x: string]: any;
+        isUseExclusiveEditorRow(): boolean;
         rowEditableReducer(params: {
             rowIndex: number;
             record: {

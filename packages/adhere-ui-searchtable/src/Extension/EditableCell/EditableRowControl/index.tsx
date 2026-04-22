@@ -99,10 +99,24 @@ const EditableRowControl: FC<EditorRowControlProps> = ({
   const updateRowEdit = () => {
     const rowId = record[rowKey];
     // @ts-ignore
-    context?.context?.setState((prev: { editorRowIds?: string[] }) => {
-      const ids = prev?.editorRowIds ?? [];
-      return { editorRowIds: Array.from(new Set([...ids, rowId])) };
-    });
+    const isUseExclusive =
+      // @ts-ignore
+      typeof context?.context?.isUseExclusiveEditorRow === 'function' &&
+      // @ts-ignore
+      context?.context?.isUseExclusiveEditorRow?.();
+
+    if (isUseExclusive) {
+      // @ts-ignore
+      context?.context?.setState({
+        editorRowIds: [rowId],
+      });
+    } else {
+      // @ts-ignore
+      context?.context?.setState((prev: { editorRowIds?: string[] }) => {
+        const ids = prev?.editorRowIds ?? [];
+        return { editorRowIds: Array.from(new Set([...ids, rowId])) };
+      });
+    }
   };
 
   return (

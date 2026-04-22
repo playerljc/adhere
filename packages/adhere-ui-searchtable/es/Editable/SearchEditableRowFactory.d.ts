@@ -4,6 +4,11 @@ export default function <P, S>(SuperClass: any): {
     new (props: any): {
         [x: string]: any;
         /**
+         * isUseExclusiveEditorRow
+         * @description 是否开启互斥单行编辑策略（开启后进入编辑会退出其它编辑行）
+         */
+        isUseExclusiveEditorRow(): boolean;
+        /**
          * rowEditableReducer
          * @description 可编辑row的处理
          * @param params
@@ -35,14 +40,18 @@ export default function <P, S>(SuperClass: any): {
             editorConfig: any;
         }): void;
         /**
-         * 设置当前处于编辑态的行 id 集合（整体替换）
-         * @param rowIds 行主键值列表，空数组表示无编辑行
+         * setActiveEditorRowIds
+         * @description 设置当前处于编辑态的行 id 集合（整体替换）
+         * @param {string[]} rowIds 行主键值列表，空数组表示无编辑行
+         * @return {Promise<void>}
          */
         setActiveEditorRowIds(rowIds: readonly string[]): Promise<void>;
         /**
-         * 校验指定激活编辑行对应的表单
-         * @param rowId 行主键值
-         * @param opt antd Form.validateFields 的参数
+         * validateActiveEditorRow
+         * @description 校验指定激活编辑行对应的表单
+         * @param {string} rowId 行主键值
+         * @param {Parameters<FormInstance['validateFields']>[0]} opt antd Form.validateFields 的参数
+         * @return {Promise<any> | undefined}
          */
         validateActiveEditorRow(rowId: string, opt?: Parameters<FormInstance["validateFields"]>[0]): Promise<any> | undefined;
         /**
