@@ -19,13 +19,15 @@ const SearchEditableRowDragSortTable = RowDragSortMultiExtend<
     onDragSortRow(params) {
       // 如果是行编辑状态则不能拖拽和放置
       // @ts-ignore
-      if (this.state.editorRowId) {
+      if (this.state.editorRowIds?.length > 0) {
         return {
-          dragConfig: {
-            canDrag: () => false,
-          },
-          dropConfig: {
-            canDrop: () => false,
+          override: {
+            dragConfig: () => ({
+              canDrag: () => false,
+            }),
+            dropConfig: () => ({
+              canDrop: () => false,
+            }),
           },
         };
       }

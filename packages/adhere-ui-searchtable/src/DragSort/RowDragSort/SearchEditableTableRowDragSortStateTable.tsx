@@ -20,11 +20,13 @@ const SearchEditableTableRowDragSortStateTable = RowDragSortMultiExtend<
       // @ts-ignore
       if (this.state.isTableEditor) {
         return {
-          dragConfig: {
-            canDrag: () => false,
-          },
-          dropConfig: {
-            canDrop: () => false,
+          override: {
+            dragConfig: () => ({
+              canDrag: () => false,
+            }),
+            dropConfig: () => ({
+              canDrop: () => false,
+            }),
           },
         };
       }

@@ -16,11 +16,6 @@ declare const SearchEditableCellTable_base: {
             rowIndex: number;
             record: any;
         }): import("../types").RowEditableConfig;
-        onEditorCell(params: {
-            rowIndex: number;
-            editorConfig: import("../types").ColumnEditableConfig;
-            record: any;
-        }): void;
         cellEditableReducer(params: {
             rowIndex: number;
             column: import("../types").ColumnTypeExt;

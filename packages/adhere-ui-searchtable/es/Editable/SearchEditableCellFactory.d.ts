@@ -1,4 +1,4 @@
-import type { ColumnEditableConfig, ColumnTypeExt, FormItemType, RowEditableConfig } from '../types';
+import type { ColumnTypeExt, FormItemType, RowEditableConfig } from '../types';
 export default function <P, S>(SuperClass: any): {
     new (props: any): {
         [x: string]: any;
@@ -27,11 +27,6 @@ export default function <P, S>(SuperClass: any): {
             rowIndex: number;
             record: any;
         }): RowEditableConfig;
-        onEditorCell(params: {
-            rowIndex: number;
-            editorConfig: ColumnEditableConfig;
-            record: any;
-        }): void;
         /**
          * cellEditableReducer
          * @description 可编辑单元格的onCell处理

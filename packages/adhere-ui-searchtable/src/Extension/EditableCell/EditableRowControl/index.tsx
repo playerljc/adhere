@@ -19,13 +19,12 @@ import { EditableContext } from '../EditableRow';
  * @param renderCancel
  * @param onEditor
  * @param onSave
- * @param editorRowId
+ * @param editorRowIds
  * @param rowKey
  * @param className
  * @param styles
  * @param renderEditableRow
  * @param renderSave
- * @returns {JSX.Element}
  * @constructor
  */
 const EditableRowControl: FC<EditorRowControlProps> = ({
@@ -36,7 +35,7 @@ const EditableRowControl: FC<EditorRowControlProps> = ({
   renderCancel,
   record,
   rowKey,
-  editorRowId,
+  editorRowIds,
   onEditor,
   onSave,
 }) => {
@@ -89,17 +88,22 @@ const EditableRowControl: FC<EditorRowControlProps> = ({
       ?.updateEditorCellRowData({ values, record })
       ?.then(() => reset());
 
-  const reset = () =>
+  const reset = () => {
+    const rowId = record[rowKey];
     // @ts-ignore
-    context?.context?.setState({
-      editorRowId: '',
-    });
+    context?.context?.setState((prev: { editorRowIds?: string[] }) => ({
+      editorRowIds: (prev?.editorRowIds ?? []).filter((id) => id !== rowId),
+    }));
+  };
 
-  const updateRowEdit = () =>
+  const updateRowEdit = () => {
+    const rowId = record[rowKey];
     // @ts-ignore
-    context?.context?.setState({
-      editorRowId: record[rowKey],
+    context?.context?.setState((prev: { editorRowIds?: string[] }) => {
+      const ids = prev?.editorRowIds ?? [];
+      return { editorRowIds: Array.from(new Set([...ids, rowId])) };
     });
+  };
 
   return (
     <div
@@ -107,7 +111,7 @@ const EditableRowControl: FC<EditorRowControlProps> = ({
       style={styles ?? {}}
     >
       <ConditionalRender
-        conditional={editorRowId !== record[rowKey]}
+        conditional={!editorRowIds.includes(record[rowKey])}
         noMatch={() => (
           <div className={`${selectorPrefix}-editor-row-control-save-cancel`}>
             <div

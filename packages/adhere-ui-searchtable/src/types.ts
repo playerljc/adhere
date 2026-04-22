@@ -272,7 +272,7 @@ export interface EditorRowControlProps {
   className?: string;
   styles?: CSSProperties;
   rowKey: string;
-  editorRowId: string;
+  editorRowIds: string[];
   record: { [prop: string]: any };
   renderEditorRow?: () => ReactNode;
   renderSave?: () => ReactNode;
@@ -538,7 +538,7 @@ export interface SearchTableImplementState extends SearchTableState {
 }
 
 export interface SearchEditorRowTableState extends SearchTableImplementState {
-  editorRowId: string;
+  editorRowIds: string[];
 }
 
 export interface SearchEditorTableState extends SearchTableImplementState {

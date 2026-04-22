@@ -1,3 +1,4 @@
+import { Button } from 'antd';
 import React from 'react';
 
 import { DateDisplay, FieldGeneratorToDict, Resource } from '@baifendian/adhere';
@@ -54,6 +55,66 @@ class RowDragSort extends ProSearchEditableRowDragSortStateTable {
    */
   getTotalKey() {
     return 'totalCount';
+  }
+
+  renderSearchFooterItems(defaultItems) {
+    return super.renderSearchFooterItems([
+      {
+        key: 'add',
+        value: (
+          <Button
+            key="add"
+            type="primary"
+            onClick={() => {
+              const dataSource = this.getData();
+              this.setActiveEditorRowIds(dataSource.map((t) => t.id));
+            }}
+          >
+            激活指定行
+          </Button>
+        ),
+      },
+      {
+        key: 'add1',
+        value: (
+          <Button
+            key="add"
+            type="primary"
+            onClick={() => {
+              this.setActiveEditorRowIds([]);
+            }}
+          >
+            取消所有激活行
+          </Button>
+        ),
+      },
+      {
+        key: 'add2',
+        value: (
+          <Button
+            key="add"
+            type="primary"
+            onClick={() => {
+              const dataSource = this.getData();
+              const rowId = dataSource[0].id;
+
+              this.setActiveEditorRowIds([rowId]).then(() => {
+                this.validateActiveEditorRow(rowId)
+                  .then((values) => {
+                    debugger;
+                  })
+                  .catch((e) => {
+                    debugger;
+                  });
+              });
+            }}
+          >
+            校验指定行
+          </Button>
+        ),
+      },
+      ...defaultItems,
+    ]);
   }
 
   /**
@@ -292,7 +353,7 @@ class RowDragSort extends ProSearchEditableRowDragSortStateTable {
           <EditableRowControl
             record={record}
             rowKey={this.getRowKey()}
-            editorRowId={this.state.editorRowId}
+            editorRowIds={this.state.editorRowIds}
           />
         ),
       },

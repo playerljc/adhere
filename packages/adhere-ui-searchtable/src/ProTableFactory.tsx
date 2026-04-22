@@ -86,7 +86,7 @@ const OptimizedInput = React.memo(({ value, onChange, ...restProps }: InputProps
     setLocalValue(newValue);
   };
 
-  return <Input {...restProps} value={localValue} onChange={handleChange} />;
+  return <Input showCount={false} {...restProps} value={localValue} onChange={handleChange} />;
 });
 
 OptimizedInput.displayName = 'OptimizedInput';
@@ -125,7 +125,7 @@ const OptimizedTextArea = React.memo(({ value, onChange, ...restProps }: TextAre
     setLocalValue(newValue);
   };
 
-  return <TextArea {...restProps} value={localValue} onChange={handleChange} />;
+  return <TextArea showCount={false} {...restProps} value={localValue} onChange={handleChange} />;
 });
 
 OptimizedTextArea.displayName = 'OptimizedTextArea';

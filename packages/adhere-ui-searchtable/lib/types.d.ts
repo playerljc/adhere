@@ -173,7 +173,7 @@ export interface EditorRowControlProps {
     className?: string;
     styles?: CSSProperties;
     rowKey: string;
-    editorRowId: string;
+    editorRowIds: string[];
     record: {
         [prop: string]: any;
     };
@@ -379,7 +379,7 @@ export interface SearchTableImplementState extends SearchTableState {
     searchParams?: any;
 }
 export interface SearchEditorRowTableState extends SearchTableImplementState {
-    editorRowId: string;
+    editorRowIds: string[];
 }
 export interface SearchEditorTableState extends SearchTableImplementState {
     isTableEditor: boolean;

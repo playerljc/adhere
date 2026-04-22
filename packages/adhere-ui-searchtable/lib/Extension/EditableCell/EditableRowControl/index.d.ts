@@ -7,7 +7,7 @@ import type { EditorRowControlProps } from '../../../types';
  * @param renderCancel
  * @param onEditor
  * @param onSave
- * @param editorRowId
+ * @param editorRowIds
  * @param rowKey
  * @param className
  * @param styles

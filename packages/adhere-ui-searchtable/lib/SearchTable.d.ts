@@ -754,6 +754,11 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @param {FormInstance} form 该行对应的表单实例
      */
     setEditableRowForm(rowIndex: number, form: FormInstance): void;
+    /**
+     * 通过 rowId 获取当前 dataSource 中的 rowIndex
+     * @param rowId
+     */
+    getRowIndexById(rowId: any): number;
 }
 export declare const defaultProps: {
     className: string;

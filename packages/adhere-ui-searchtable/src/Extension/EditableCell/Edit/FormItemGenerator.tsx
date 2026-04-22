@@ -51,10 +51,10 @@ export default {
     };
 
     const renderInput = () => {
-      return <Input {...defaultProps} {...(props ?? {})} />;
+      return <Input showCount={false} {...defaultProps} {...(props ?? {})} />;
     };
     const renderTextArea = () => {
-      return <TextArea {...defaultProps} {...(props ?? {})} />;
+      return <TextArea showCount={false} {...defaultProps} {...(props ?? {})} />;
     };
     const renderInputNumber = () => {
       return <InputNumber {...defaultProps} {...(props ?? {})} />;

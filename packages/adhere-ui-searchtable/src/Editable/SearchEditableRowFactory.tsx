@@ -9,7 +9,7 @@ export default function <P, S>(SuperClass) {
 
       this.state = {
         ...this.state,
-        editorRowId: '',
+        editorRowIds: [],
       };
 
       this.rowConfigReducers = [...this.rowConfigReducers, this.rowEditableReducer];
@@ -62,7 +62,7 @@ export default function <P, S>(SuperClass) {
       if (editorConfig) {
         editorConfig.useTrigger = false;
 
-        if (record[this.getRowKey()] === this.state.editorRowId) {
+        if ((this.state.editorRowIds ?? []).includes(record[this.getRowKey()])) {
           editorConfig.defaultStatus = 'edit';
         } else {
           // editorConfig 是列级别配置对象，渲染不同 row 时会复用同一引用
@@ -73,15 +73,17 @@ export default function <P, S>(SuperClass) {
     }
 
     /**
-     * 激活（进入编辑态）指定行
-     * @param rowId
+     * setActiveEditorRowIds
+     * @description 设置当前处于编辑态的行 id 集合（整体替换）
+     * @param {string[]} rowIds 行主键值列表，空数组表示无编辑行
+     * @return {Promise<void>}
      */
-    setActiveEditorRowId(rowId: any): Promise<void> {
+    setActiveEditorRowIds(rowIds: readonly string[]): Promise<void> {
       return new Promise((resolve) => {
         // @ts-ignore
         this.setState(
           {
-            editorRowId: rowId ?? '',
+            editorRowIds: [...rowIds],
           },
           () => resolve(),
         );
@@ -89,17 +91,21 @@ export default function <P, S>(SuperClass) {
     }
 
     /**
-     * 校验当前激活行（editorRowId 对应的那一行）
-     * @param opt antd Form.validateFields 的参数
+     * validateActiveEditorRow
+     * @description 校验指定激活编辑行对应的表单
+     * @param {string} rowId 行主键值
+     * @param {Parameters<FormInstance['validateFields']>[0]} opt antd Form.validateFields 的参数
+     * @return {Promise<any> | undefined}
      */
     validateActiveEditorRow(
+      rowId: string,
       opt?: Parameters<FormInstance['validateFields']>[0],
     ): Promise<any> | undefined {
+      if (!rowId) return undefined;
       // @ts-ignore
-      const activeId = this.state?.editorRowId;
-      if (!activeId) return undefined;
+      if (!this.state?.editorRowIds?.includes(rowId)) return undefined;
 
-      const rowIndex = this.getRowIndexById(activeId);
+      const rowIndex = this.getRowIndexById(rowId);
       if (rowIndex < 0) return undefined;
 
       return this.editableRowForms.get(rowIndex)?.validateFields(opt);
@@ -109,9 +115,9 @@ export default function <P, S>(SuperClass) {
      * fetchData
      */
     fetchData() {
-      return super.fetchData().then((res) => {
+      return super.fetchData().then((res: any) => {
         this.setState({
-          editorRowId: '',
+          editorRowIds: [],
         });
 
         return res;

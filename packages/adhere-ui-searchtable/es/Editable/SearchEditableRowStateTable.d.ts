@@ -18,6 +18,8 @@ declare const SearchEditableRowStateTable_base: {
             record: any;
             editorConfig: any;
         }): void;
+        setActiveEditorRowIds(rowIds: readonly string[]): Promise<void>;
+        validateActiveEditorRow(rowId: string, opt?: Parameters<import("antd").FormInstance["validateFields"]>[0]): Promise<any> | undefined;
         fetchData(): any;
     };
     [x: string]: any;
