@@ -165,7 +165,7 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
           showColumnHeader: true,
 
           // valueAttrs: {
-          //   colSpan: 5,
+          //   // colSpan: 5,
           // },
         },
       },

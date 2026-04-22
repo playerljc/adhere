@@ -7,7 +7,7 @@ const request = new Ajax('');
 export const fetchList = (() => {
   return {
     call: (params) => {
-      console.log(params);
+      // e2e 示例：不要使用 debugger/console 影响渲染与测试
 
       // const _localAddDataMap = params._localAddDataMap;
       //

@@ -24,7 +24,7 @@
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildpackage:cjs": "ctbuild buildpackagets-babel -c ctbuild.package.ts.cjs.config.js -o lib",
     "postbuildpackage:cjs": "tsc --declaration -p ./ --emitDeclarationOnly --outDir lib",
-    "buildpackage:esm": "ctbuild buildpackagets-babel -c ctbuild.package.ts.esm.config.js -o es",
+    "buildpackage:esm": "ctbuild buildpackagets-babel -c ctbuild.package.ts.cjs.config.js -o es",
     "postbuildpackage:esm": "tsc --declaration -p ./ --emitDeclarationOnly --outDir es",
     "buildumd": "ctbuild buildumd --config ctbuild.config.umd.js --packagename AdhereSearchTable --define alias=@,evnVars=true",
     "e2e": "cross-env e2e media=true",

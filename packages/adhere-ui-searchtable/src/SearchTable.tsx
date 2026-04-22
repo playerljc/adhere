@@ -55,7 +55,6 @@ import TableCell from './Extension/TableComponents/TableCell';
 import TableRow from './Extension/TableComponents/TableRow';
 import TableDensitySetting from './Extension/TableDensitySetting';
 import Search, { defaultProps as searchDefaultProps, propTypes as searchPropTypes } from './Search';
-import { cloneDeep } from './Util';
 import type {
   CellConfigReducer,
   ColumnTypeExt,
@@ -3462,6 +3461,16 @@ abstract class SearchTable<
    */
   setEditableRowForm(rowIndex: number, form: FormInstance) {
     this.editableRowForms.set(rowIndex, form);
+  }
+
+  /**
+   * 通过 rowId 获取当前 dataSource 中的 rowIndex
+   * @param rowId
+   */
+  getRowIndexById(rowId: any): number {
+    const rowKey = this.getRowKey();
+    const data = this.getData?.() ?? [];
+    return (data as any[]).findIndex((r) => r?.[rowKey] === rowId);
   }
 
   // /**

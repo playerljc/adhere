@@ -1,4 +1,4 @@
-import { useLatest } from 'ahooks';
+// import { useLatest } from 'ahooks';
 import type { FormInstance } from 'antd/es/form';
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -18,9 +18,9 @@ import EditableCellView from './View';
 const EditableCell: TableCellComponentReducer = (props) => {
   const { column, rowIndex, record } = props;
 
-  const validateAllEditableRowCB = useRef<((rowIndex: number, dataIndex: string) => void) | null>(
-    null,
-  );
+  // const validateAllEditableRowCB = useRef<((rowIndex: number, dataIndex: string) => void) | null>(
+  //   null,
+  // );
 
   /**
    * defaultConfig
@@ -38,9 +38,9 @@ const EditableCell: TableCellComponentReducer = (props) => {
     useKeepEdit: false,
   };
 
-  const columnLatest = useLatest(column);
+  // const columnLatest = useLatest(column);
 
-  const rowIndexLatest = useLatest(rowIndex);
+  // const rowIndexLatest = useLatest(rowIndex);
 
   /**
    * editableConfig
@@ -51,7 +51,7 @@ const EditableCell: TableCellComponentReducer = (props) => {
     [column, column?.dataIndex],
   );
 
-  const editableConfigLatest = useLatest(editableConfig);
+  // const editableConfigLatest = useLatest(editableConfig);
 
   /**
    * status
@@ -61,7 +61,7 @@ const EditableCell: TableCellComponentReducer = (props) => {
     editableConfig.defaultStatus as string,
   );
 
-  const statusLatest = useLatest(status);
+  // const statusLatest = useLatest(status);
 
   const context = useContext<{
     context: SearchTable;

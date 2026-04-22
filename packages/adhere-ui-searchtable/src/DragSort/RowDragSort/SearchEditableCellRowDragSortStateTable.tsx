@@ -1,5 +1,3 @@
-import React from 'react';
-
 import SearchEditableCellStateTable from '../../Editable/SearchEditableCellStateTable';
 import { SearchTableStateImplement } from '../../SearchTableStateImplement';
 import type { SearchTableImplementState, SearchTableStateImplementProps } from '../../types';
