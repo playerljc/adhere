@@ -355,6 +355,7 @@ class RowDragSort extends ProSearchEditableRowDragSortStateTable {
         width: 100,
         render: (v, record) => (
           <EditableRowControl
+            isShowCancel={false}
             record={record}
             rowKey={this.getRowKey()}
             editorRowIds={this.state.editorRowIds}

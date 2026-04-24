@@ -2,6 +2,7 @@ import lodashClone from 'lodash.clone';
 // import lodashCloneDeep from 'lodash.clonedeep';
 import cloneDeepWith from 'lodash/cloneDeepWith';
 import deepClone from 'rfdc';
+import type { ValidatorRule } from './types';
 
 /**
  * findRecord
@@ -234,3 +235,135 @@ export function hasCommonPathRelation(path1: string, path2: string) {
 }
 
 export const clone = lodashClone;
+
+export async function asyncLoop({ tasks, ...rest }) {
+  for (let task of tasks) {
+    try {
+      await task(rest);
+    } catch (error) {
+      throw new Error(String(error));
+    }
+  }
+
+  return Promise.resolve();
+}
+
+export const validator = (rules: ValidatorRule[]) => {
+  type ValidatorCtx = {
+    rule: ValidatorRule;
+    value: any;
+    callback: (error?: any) => void;
+  };
+
+  type RuleImplFactory = (rule: ValidatorRule) => (ctx: ValidatorCtx) => Promise<void>;
+
+  const rulesImpls: Record<string, RuleImplFactory> = {
+    required:
+      (rule) =>
+      ({ value }) => {
+        if (!rule.required) return Promise.resolve();
+
+        if (!value) return Promise.reject(rule.message);
+
+        return Promise.resolve();
+      },
+    pattern:
+      (rule) =>
+      ({ value }) => {
+        if (!value) return Promise.reject(rule.message);
+
+        // 保持原来的“匹配即报错”语义，同时修正 value.test 的类型问题
+        if (rule.pattern && rule.pattern.test(String(value))) return Promise.reject(rule.message);
+
+        return Promise.resolve();
+      },
+    min:
+      (rule) =>
+      ({ value }) => {
+        if (!value) return Promise.reject(rule.message);
+
+        if (typeof value?.length === 'number' && typeof rule.min === 'number' && value.length < rule.min) {
+          return Promise.reject(rule.message);
+        }
+
+        return Promise.resolve();
+      },
+    max:
+      (rule) =>
+      ({ value }) => {
+        if (!value) return Promise.reject(rule.message);
+
+        if (typeof value?.length === 'number' && typeof rule.max === 'number' && value.length > rule.max) {
+          return Promise.reject(rule.message);
+        }
+
+        return Promise.resolve();
+      },
+    whitespace:
+      (rule) =>
+      ({ value }) => {
+        if (!rule.whitespace) return Promise.resolve();
+
+        if (!value) return Promise.reject(rule.message);
+
+        if (/^\s+$/.test(String(value))) return Promise.reject(rule.message);
+
+        return Promise.resolve();
+      },
+    validator:
+      (rule) =>
+      ({ rule: _, value, callback }) =>
+        new Promise((resolve, reject) => {
+          const cb = (error?: any) => {
+            callback(error);
+
+            if (error) {
+              reject(error);
+            } else {
+              resolve();
+            }
+          };
+
+          // antd rule.validator 可能不存在，但这里的分支只会在 'validator' in rule 时走到
+          rule.validator?.(_, value, cb);
+        }),
+  };
+
+  const isTask = (v: any): v is (ctx: ValidatorCtx) => Promise<void> => typeof v === 'function';
+
+  return {
+    validator: function (_, value, cb) {
+      const tasks = rules
+        .map((rule) => {
+          if ('required' in rule) {
+            return rulesImpls.required(rule);
+          }
+          if ('pattern' in rule) {
+            return rulesImpls.pattern(rule);
+          }
+          if ('min' in rule) {
+            return rulesImpls.min(rule);
+          }
+          if ('max' in rule) {
+            return rulesImpls.max(rule);
+          }
+          if ('whitespace' in rule) {
+            return rulesImpls.whitespace(rule);
+          }
+          if ('validator' in rule) {
+            return rulesImpls.validator(rule);
+          }
+
+          return false;
+        })
+        .filter(isTask);
+
+      return asyncLoop({
+        rules: _,
+        value,
+        callback: cb,
+        tasks,
+      });
+    },
+  };
+};

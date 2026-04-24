@@ -36,6 +36,7 @@ const EditableRowControl: FC<EditorRowControlProps> = ({
   record,
   rowKey,
   editorRowIds,
+  isShowCancel = true,
   onEditor,
   onSave,
 }) => {
@@ -137,14 +138,16 @@ const EditableRowControl: FC<EditorRowControlProps> = ({
               </ConditionalRender>
             </div>
 
-            <div
-              className={`${selectorPrefix}-editor-row-control-save-cancel-item`}
-              onClick={reset}
-            >
-              <ConditionalRender conditional={!renderCancel} noMatch={() => renderCancel?.()}>
-                {() => renderDefaultCancel()}
-              </ConditionalRender>
-            </div>
+            {isShowCancel && (
+              <div
+                className={`${selectorPrefix}-editor-row-control-save-cancel-item`}
+                onClick={reset}
+              >
+                <ConditionalRender conditional={!renderCancel} noMatch={() => renderCancel?.()}>
+                  {() => renderDefaultCancel()}
+                </ConditionalRender>
+              </div>
+            )}
           </div>
         )}
       >

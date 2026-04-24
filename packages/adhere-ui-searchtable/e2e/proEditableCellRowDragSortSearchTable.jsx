@@ -1,3 +1,4 @@
+import { Button } from 'antd';
 import React from 'react';
 
 import { DateDisplay, DelConfirm, FieldGeneratorToDict } from '@baifendian/adhere';
@@ -51,6 +52,140 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
    */
   getTotalKey() {
     return 'totalCount';
+  }
+
+  renderSearchFooterItems(defaultItems) {
+    return super.renderSearchFooterItems([
+      {
+        key: 'add',
+        value: (
+          <Button
+            key="add"
+            type="primary"
+            onClick={() => {
+              const dataSource = this.getData();
+              this.setActiveCells(
+                dataSource.map((item) => {
+                  return {
+                    rowId: item.id,
+                    dataIndex: 'name',
+                  };
+                }),
+              );
+            }}
+          >
+            激活所有单元格
+          </Button>
+        ),
+      },
+      {
+        key: 'add1',
+        value: (
+          <Button
+            key="add"
+            type="primary"
+            onClick={() => {
+              const dataSource = this.getData();
+              this.setActiveCells([
+                {
+                  rowId: dataSource[0].id,
+                  dataIndex: 'name',
+                },
+              ]);
+            }}
+          >
+            只激活第一个单元格
+          </Button>
+        ),
+      },
+      {
+        key: 'add3',
+        value: (
+          <Button
+            key="add"
+            type="primary"
+            onClick={() => {
+              const dataSource = this.getData();
+              this.setActiveCells([
+                {
+                  rowId: dataSource[0].id,
+                  dataIndex: 'name',
+                },
+              ]).then(() => {
+                this.validateActiveCells([
+                  {
+                    rowId: dataSource[0].id,
+                    dataIndex: 'name',
+                  },
+                ])
+                  .then((values) => {
+                    debugger;
+                  })
+                  .catch((e) => {
+                    debugger;
+                  });
+              });
+            }}
+          >
+            验证第一个单元格
+          </Button>
+        ),
+      },
+      {
+        key: 'add3',
+        value: (
+          <Button
+            key="add"
+            type="primary"
+            onClick={() => {
+              const dataSource = this.getData();
+              this.setActiveCells(
+                dataSource.map((record) => ({
+                  rowId: record.id,
+                  dataIndex: 'name',
+                })),
+              ).then(() => {
+                this.validateActiveCells(
+                  dataSource.map((record) => ({
+                    rowId: record.id,
+                    dataIndex: 'name',
+                  })),
+                )
+                  .then((values) => {
+                    debugger;
+                  })
+                  .catch((e) => {
+                    debugger;
+                  });
+              });
+            }}
+          >
+            验证所有行的name单元格
+          </Button>
+        ),
+      },
+      {
+        key: 'add4',
+        value: (
+          <Button
+            key="add"
+            type="primary"
+            onClick={() => {
+              this.validatorAll()
+                .then((values) => {
+                  debugger;
+                })
+                .catch((e) => {
+                  debugger;
+                });
+            }}
+          >
+            静态验证所有数据
+          </Button>
+        ),
+      },
+      ...defaultItems,
+    ]);
   }
 
   /**

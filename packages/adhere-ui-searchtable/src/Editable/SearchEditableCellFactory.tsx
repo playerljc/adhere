@@ -1,6 +1,9 @@
-import type { FormInstance } from 'antd/es/form';
+// import type { FormInstance } from 'antd/es/form';
 import dayjs from 'dayjs';
 
+import Emitter from '@baifendian/adhere-util-emitter';
+
+import { CELL_ACTIVE } from '../Constant';
 import type {
   // ColumnEditableConfig,
   ColumnTypeExt,
@@ -8,7 +11,7 @@ import type {
   RowEditableConfig,
 } from '../types';
 
-export default function <P, S>(SuperClass) {
+export default function <P, S>(SuperClass: any) {
   return class extends SuperClass<P, S> {
     /**
      * valueToFormItemValueMap
@@ -220,7 +223,7 @@ export default function <P, S>(SuperClass) {
      * setActiveValue
      * @param activeValue
      */
-    setActiveValue(activeValue) {
+    setActiveValue(activeValue: any) {
       return new Promise<void>((resolve) => {
         this.setState(
           {
@@ -236,6 +239,60 @@ export default function <P, S>(SuperClass) {
      */
     getActiveValue() {
       return this.state.activeValue;
+    }
+
+    /**
+     * setActiveCells
+     * @description cells激活
+     * @param params
+     */
+    setActiveCells(params: { rowId: string; dataIndex: string }[]) {
+      Emitter.trigger(CELL_ACTIVE, params);
+
+      return new Promise<void>((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, 500);
+      });
+    }
+
+    /**
+     * validateActiveCells
+     * @description 校验指定的单元格
+     * @param {{ rowId: string; dataIndex: string }[]} params
+     * @return Promise<any> | undefined
+     */
+    validateActiveCells(params: { rowId: string; dataIndex: string }[]): Promise<any> | undefined {
+      if (!params) return undefined;
+
+      if (params.length <= 0) return undefined;
+
+      let map = new Map<string, string[]>();
+
+      map = params.reduce((_map, { rowId, dataIndex }) => {
+        let value = _map.get(rowId);
+
+        if (!value) {
+          value = [];
+          _map.set(rowId, value);
+        }
+
+        value.push(dataIndex);
+
+        return _map;
+      }, map);
+
+      const rowInfoList = Array.from(map.keys()).map((rowId) => ({
+        rowId,
+        rowIndex: this.getRowIndexById(rowId),
+      }));
+
+      // 一行一个form的校验
+      return Promise.all(
+        rowInfoList.map(({ rowIndex, rowId }) => {
+          return this?.editableRowForms?.get?.(rowIndex)?.validateFields?.(map.get(rowId));
+        }),
+      );
     }
   };
 }

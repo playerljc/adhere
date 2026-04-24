@@ -31,16 +31,26 @@ export const oneData = {
 
 const dataSource = Array.from({ length: 100 }).map((t) => ({
   id: Mockjs.mock('@guid'),
-  name: Mockjs.mock('@name'),
-  sex: `${Util.generatorRandom(0, 1)}`,
-  // homeTown: Mockjs.mock('@name'),
-  homeTown:
-    '我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠',
-  address: Mockjs.mock('@name'),
-  birthday: new Date().getTime(),
-  deptName: Mockjs.mock('@name'),
-  height: Mockjs.mock('@integer'),
-  width: Mockjs.mock('@integer'),
+  // name: Mockjs.mock('@name'),
+  // sex: `${Util.generatorRandom(0, 1)}`,
+  // // homeTown: Mockjs.mock('@name'),
+  // homeTown:
+  //   '我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠',
+  // address: Mockjs.mock('@name'),
+  // birthday: new Date().getTime(),
+  // deptName: Mockjs.mock('@name'),
+  // height: Mockjs.mock('@integer'),
+  // width: Mockjs.mock('@integer'),
+
+  name: '',
+  sex: '',
+  homeTown: '',
+  address: '',
+  birthday: undefined,
+  deptName: '',
+  height: undefined,
+  width: undefined,
+
   // children: Array.from({ length: 2 }).map((t) => ({
   //   id: Mockjs.mock('@guid'),
   //   name: Mockjs.mock('@name'),

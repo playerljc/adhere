@@ -18,6 +18,7 @@ export default function <P, S>(SuperClass) {
     /**
      * isUseExclusiveEditorRow
      * @description 是否开启互斥单行编辑策略（开启后进入编辑会退出其它编辑行）
+     * @return {boolean}
      */
     isUseExclusiveEditorRow(): boolean {
       return false;
@@ -27,6 +28,7 @@ export default function <P, S>(SuperClass) {
      * rowEditableReducer
      * @description 可编辑row的处理
      * @param params
+     * @return {RowConfig}
      */
     rowEditableReducer(params: {
       rowIndex: number;

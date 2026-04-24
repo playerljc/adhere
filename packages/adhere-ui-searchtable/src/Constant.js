@@ -8,6 +8,8 @@ export const TREE_UTIL_CONFIG = {
   rootParentId: '-1',
 };
 
+export const CELL_ACTIVE = 'CELL_ACTIVE';
+
 // export const VALIDATE_ALL_EDITABLE_ROW = 'VALIDATE_ALL_EDITABLE_ROW';
 
 // export const VALIDATE_EDITABLE_ROW = 'VALIDATE_EDITABLE_ROW';

@@ -55,6 +55,7 @@ import TableCell from './Extension/TableComponents/TableCell';
 import TableRow from './Extension/TableComponents/TableRow';
 import TableDensitySetting from './Extension/TableDensitySetting';
 import Search, { defaultProps as searchDefaultProps, propTypes as searchPropTypes } from './Search';
+import { validator } from './Util';
 import type {
   CellConfigReducer,
   ColumnTypeExt,
@@ -64,6 +65,7 @@ import type {
   SearchTableProps,
   SearchTableState,
   TableRowSelectionExt,
+  ValidatorRule,
 } from './types';
 import { TableDensity } from './types';
 
@@ -3471,6 +3473,286 @@ abstract class SearchTable<
     const rowKey = this.getRowKey();
     const data = this.getData?.() ?? [];
     return (data as any[]).findIndex((r) => r?.[rowKey] === rowId);
+  }
+
+  /**
+   * validatorAll
+   * @description 全数据校验,校验并给出错误信息
+   */
+  async validatorAll() {
+    const dataSource = this.getDataSource();
+    const columns = this.getColumns();
+    const rowKey = this.getRowKey();
+
+    const okValues: Array<Record<string, any>> = [];
+    const errors: Array<Record<string, any>> = [];
+
+    // 每一行
+    for (const record of dataSource as any[]) {
+      const rowIndex = this.getRowIndexById(record?.[rowKey]);
+      const rowValues: Record<string, any> = {};
+
+      // 每一列
+      for (const column of columns as any[]) {
+        const dataIndex = column?.dataIndex as any;
+        if (!dataIndex) continue;
+
+        const editableConfig = (column as ColumnTypeExt).$editable;
+        const rulesConfig = editableConfig?.rules;
+        if (!rulesConfig) continue;
+
+        const value = record?.[dataIndex];
+
+        const rules =
+          typeof rulesConfig === 'function'
+            ? rulesConfig({
+                value,
+                record,
+                dataIndex,
+                rowIndex,
+              })
+            : rulesConfig;
+
+        if (!rules || !Array.isArray(rules) || !rules.length) {
+          rowValues[String(dataIndex)] = value;
+          continue;
+        }
+
+        try {
+          await validator(rules as ValidatorRule[])?.validator(rules, value, () => {});
+          rowValues[String(dataIndex)] = value;
+          debugger;
+        } catch (e: any) {
+          errors.push({
+            [rowKey]: record?.[rowKey],
+            [String(dataIndex)]: e,
+          });
+        }
+      }
+
+      if (Object.keys(rowValues).length) {
+        okValues.push(rowValues);
+      }
+    }
+
+    if (errors.length) {
+      return Promise.reject(errors);
+    }
+
+    return Promise.resolve(okValues);
+  }
+
+  /**
+   * validatorFirst
+   * @description 短路校验
+   */
+  async validateFirst() {
+    const dataSource = this.getDataSource();
+    const columns = this.getColumns();
+    const rowKey = this.getRowKey();
+
+    const okValues: Array<Record<string, any>> = [];
+
+    // 每一行
+    for (const record of dataSource as any[]) {
+      const rowIndex = this.getRowIndexById(record?.[rowKey]);
+      const rowValues: Record<string, any> = {};
+
+      // 每一列
+      for (const column of columns as any[]) {
+        const dataIndex = column?.dataIndex as any;
+        if (!dataIndex) continue;
+
+        const editableConfig = (column as ColumnTypeExt).$editable;
+        const rulesConfig = editableConfig?.rules;
+        if (!rulesConfig) continue;
+
+        const value = record?.[dataIndex];
+
+        const rules =
+          typeof rulesConfig === 'function'
+            ? rulesConfig({
+                value,
+                record,
+                dataIndex,
+                rowIndex,
+              })
+            : rulesConfig;
+
+        if (!rules || !Array.isArray(rules) || !rules.length) {
+          rowValues[String(dataIndex)] = value;
+          continue;
+        }
+
+        try {
+          await validator(rules as ValidatorRule[])?.validator(rules, value, () => {});
+          rowValues[String(dataIndex)] = value;
+        } catch (e: any) {
+          return Promise.reject([
+            {
+              [rowKey]: record?.[rowKey],
+              [String(dataIndex)]: e,
+            },
+          ]);
+        }
+      }
+
+      if (Object.keys(rowValues).length) {
+        okValues.push(rowValues);
+      }
+    }
+
+    return Promise.resolve(okValues);
+  }
+
+  /**
+   * validateAndGetRowInfo
+   * @description 短路校验,并给出出错行信息
+   */
+  async validateAndGetRowInfo() {
+    const dataSource = this.getDataSource();
+    const columns = this.getColumns();
+    const rowKey = this.getRowKey();
+
+    const okValues: Array<Record<string, any>> = [];
+
+    // 每一行
+    for (const record of dataSource as any[]) {
+      const rowIndex = this.getRowIndexById(record?.[rowKey]);
+      const rowValues: Record<string, any> = {};
+
+      // 为“每一个 key”预先构造 value/error 容器
+      const rowInfo: {
+        [key: string]: any;
+        rowIndex: number;
+        cells: Record<string, { value: any; error?: any }>;
+      } = {
+        [rowKey]: record?.[rowKey],
+        rowIndex,
+        cells: Object.keys(record ?? {}).reduce((acc, k) => {
+          acc[k] = { value: (record as any)?.[k], error: undefined };
+          return acc;
+        }, {} as Record<string, { value: any; error?: any }>),
+      };
+
+      // 每一列
+      for (const column of columns as any[]) {
+        const dataIndex = column?.dataIndex as any;
+        if (!dataIndex) continue;
+
+        const editableConfig = (column as ColumnTypeExt).$editable;
+        const rulesConfig = editableConfig?.rules;
+        if (!rulesConfig) continue;
+
+        const value = record?.[dataIndex];
+
+        const rules =
+          typeof rulesConfig === 'function'
+            ? rulesConfig({
+                value,
+                record,
+                dataIndex,
+                rowIndex,
+              })
+            : rulesConfig;
+
+        if (!rules || !Array.isArray(rules) || !rules.length) {
+          rowValues[String(dataIndex)] = value;
+          if (!(String(dataIndex) in rowInfo.cells)) {
+            rowInfo.cells[String(dataIndex)] = { value, error: undefined };
+          }
+          continue;
+        }
+
+        try {
+          await validator(rules as ValidatorRule[])?.validator(rules, value, () => {});
+          rowValues[String(dataIndex)] = value;
+          if (!(String(dataIndex) in rowInfo.cells)) {
+            rowInfo.cells[String(dataIndex)] = { value, error: undefined };
+          }
+        } catch (e: any) {
+          const key = String(dataIndex);
+          if (!(key in rowInfo.cells)) {
+            rowInfo.cells[key] = { value, error: e };
+          } else {
+            rowInfo.cells[key].error = e;
+          }
+
+          return Promise.reject(rowInfo);
+        }
+      }
+
+      if (Object.keys(rowValues).length) {
+        okValues.push(rowValues);
+      }
+    }
+
+    return Promise.resolve(okValues);
+  }
+
+  /**
+   * validateAndGetCellInfo
+   * @description 短路校验,并给出出错单元格信息
+   */
+  async validateAndGetCellInfo() {
+    const dataSource = this.getDataSource();
+    const columns = this.getColumns();
+    const rowKey = this.getRowKey();
+
+    const okValues: Array<Record<string, any>> = [];
+
+    // 每一行
+    for (const record of dataSource as any[]) {
+      const rowId = record?.[rowKey];
+      const rowIndex = this.getRowIndexById(rowId);
+      const rowValues: Record<string, any> = {};
+
+      // 每一列
+      for (const column of columns as any[]) {
+        const dataIndex = column?.dataIndex as any;
+        if (!dataIndex) continue;
+
+        const editableConfig = (column as ColumnTypeExt).$editable;
+        const rulesConfig = editableConfig?.rules;
+        if (!rulesConfig) continue;
+
+        const value = record?.[dataIndex];
+
+        const rules =
+          typeof rulesConfig === 'function'
+            ? rulesConfig({
+                value,
+                record,
+                dataIndex,
+                rowIndex,
+              })
+            : rulesConfig;
+
+        if (!rules || !Array.isArray(rules) || !rules.length) {
+          rowValues[String(dataIndex)] = value;
+          continue;
+        }
+
+        try {
+          await validator(rules as ValidatorRule[])?.validator(rules, value, () => {});
+          rowValues[String(dataIndex)] = value;
+        } catch (e: any) {
+          return Promise.reject({
+            [rowKey]: rowId,
+            rowIndex,
+            dataIndex: String(dataIndex),
+            value,
+            error: e,
+          });
+        }
+      }
+
+      if (Object.keys(rowValues).length) {
+        okValues.push(rowValues);
+      }
+    }
+
+    return Promise.resolve(okValues);
   }
 
   // /**

@@ -98,6 +98,17 @@ export type FormItemType =
   | 'colorPicker'
   | string;
 
+export type ValidatorRule = {
+  required?: boolean;
+  message?: any;
+  pattern?: RegExp;
+  min?: number;
+  max?: number;
+  whitespace?: boolean;
+  validator?: (rule: any, value: any, callback: (error?: any) => void) => void;
+  [key: string]: any;
+};
+
 /**
  * ColumnSearchConfig
  * @description 列的查询设置
@@ -279,6 +290,7 @@ export interface EditorRowControlProps {
   renderCancel?: () => ReactNode;
   onSave: (values: { [props: string]: any }) => Promise<void>;
   onEditor: (id: string) => Promise<void>;
+  isShowCancel?: boolean;
 }
 
 export interface EditorTableControlProps {

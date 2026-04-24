@@ -1,9 +1,11 @@
 // import { useLatest } from 'ahooks';
 import type { FormInstance } from 'antd/es/form';
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import Util from '@baifendian/adhere-util';
+import Emitter from '@baifendian/adhere-util-emitter';
 
+import { CELL_ACTIVE } from '../../Constant';
 import type SearchTable from '../../SearchTable';
 import { SearchTableContext } from '../../SearchTable';
 import { createChildren } from '../../Util';
@@ -55,7 +57,7 @@ const EditableCell: TableCellComponentReducer = (props) => {
 
   /**
    * status
-   * @description 单元格的状态
+   * @description 单元格的状态 edit激活状态 view查看状态
    */
   const [status, setStatus] = useState<'view' | 'edit' | string>(
     editableConfig.defaultStatus as string,
@@ -74,9 +76,18 @@ const EditableCell: TableCellComponentReducer = (props) => {
 
   /**
    * 数据改变则切换成查看状态
+   * 当前单元格数据变了变成查看状态
    */
   useEffect(() => {
-    setStatus(editableConfig?.defaultStatus as string);
+    const dataSource = context?.context?.getData();
+
+    const preValue = record?.[column?.dataIndex];
+    const currentValue = dataSource?.[rowIndex]?.[column?.dataIndex];
+
+    // 如果之前的值和当前数据不一致则切换成查看状态
+    if (preValue !== currentValue) {
+      setStatus(editableConfig?.defaultStatus as string);
+    }
   }, [context?.context?.getData()]);
 
   /**
@@ -85,6 +96,25 @@ const EditableCell: TableCellComponentReducer = (props) => {
   useEffect(() => {
     setStatus(editableConfig?.defaultStatus as string);
   }, [editableConfig?.defaultStatus]);
+
+  /**
+   * 监听单元格激活状态
+   */
+  useEffect(() => {
+    function onActiveCells(params: { rowId: string; dataIndex: string }[]) {
+      if (params.find((item) => item.rowId === record.id && item.dataIndex === column.dataIndex)) {
+        setStatus('edit');
+      } else {
+        setStatus('view');
+      }
+    }
+
+    Emitter.on(CELL_ACTIVE, onActiveCells);
+
+    return () => {
+      Emitter.remove(CELL_ACTIVE, onActiveCells);
+    };
+  }, [column, record]);
 
   // useUpdateEffect(() => {
   //   if (statusLatest.current === 'edit' && validateAllEditableRowCB.current) {
