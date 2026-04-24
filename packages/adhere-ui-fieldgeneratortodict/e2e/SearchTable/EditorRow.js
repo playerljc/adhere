@@ -155,7 +155,7 @@ const DictComponent = FieldGeneratorToDict.Components[
               <EditableRowControl
                 record={record}
                 rowKey={self.getRowKey()}
-                editorRowId={self.state.editorRowId}
+                editorRowIds={self.state.editorRowIds}
                 onSave={(values) => {
                   // 可以调用接口进行保存
                   return Promise.resolve();

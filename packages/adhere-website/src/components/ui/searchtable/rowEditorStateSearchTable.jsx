@@ -294,7 +294,7 @@ class RowEditableStateSearchTable extends ProEditableRowSearchStateTable {
           <EditableRowControl
             record={record}
             rowKey={this.getRowKey()}
-            editorRowId={this.state.editorRowId}
+            editorRowIds={this.state.editorRowIds}
           />
         ),
       },
