@@ -335,6 +335,8 @@ export interface ResponseInterceptorParams extends ISendArg {
   responseText: XMLHttpRequest['responseText'];
   responseXML: XMLHttpRequest['responseXML'];
   xhr: XMLHttpRequest;
+  /** 重新发送当前请求（支持覆盖部分参数） */
+  retry: (override?: Partial<ISendArg>) => Promise<SendResult>;
 }
 
 export interface ResponseInterceptorReturn extends ISendArg {
@@ -342,6 +344,8 @@ export interface ResponseInterceptorReturn extends ISendArg {
   responseText: XMLHttpRequest['responseText'];
   responseXML: XMLHttpRequest['responseXML'];
   xhr: XMLHttpRequest;
+  /** 重新发送当前请求（支持覆盖部分参数） */
+  retry: (override?: Partial<ISendArg>) => Promise<SendResult>;
 }
 
 /**

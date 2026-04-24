@@ -637,20 +637,7 @@ function createRetry(
       },
     };
 
-    switch (nextParams.method) {
-      case 'get':
-        return ajaxInstance.get(nextParams);
-      case 'post':
-        return ajaxInstance.post(nextParams);
-      case 'put':
-        return ajaxInstance.put(nextParams);
-      case 'patch':
-        return ajaxInstance.patch(nextParams);
-      case 'delete':
-        return ajaxInstance.delete(nextParams);
-      default:
-        return Promise.reject(new Error('Invalid request method for retry'));
-    }
+    return rawRequestWithoutRequestInterceptors.call(ajaxInstance, nextParams);
   };
 }
 
@@ -680,6 +667,201 @@ function transformStringHeadersToObject(stringHeaders: string) {
   });
 
   return headersObj;
+}
+
+async function prepareWithInterceptorsConfig(
+  this: Ajax,
+  interceptorsConfig: ISendArg,
+  { resolve, reject }: PrepareFunctionParams,
+): Promise<Prepare> {
+  const {
+    // get|post|patch|put|delete方法独有
+    method,
+    path,
+    headers,
+    // 数据
+    data,
+    // 业务参数
+    mock,
+    loading,
+    // 下面是后端返回的三组值
+    dataKey = 'data',
+    messageKey = 'message',
+    codeKey = 'code',
+    codeSuccess = 200,
+    showWarn = true,
+    ...curConfig // timeout && withCredentials && events
+  } = interceptorsConfig as ISendArg & { method?: Method };
+
+  if (!method) {
+    reject(new Error('Invalid request method for retry'));
+    return { xhr: null, contentType: '' };
+  }
+
+  let indicator: any;
+
+  const defaultLoadingText = `${Intl.get('loading')}...`;
+
+  const {
+    show = false,
+    text = defaultLoadingText,
+    el = document.body,
+    terminal = 'pc',
+  } = (loading ?? {}) as any;
+
+  const targetGlobalIndicator = getGlobalIndicator(terminal);
+
+  // 显示loading
+  if (show) {
+    indicator = targetGlobalIndicator.show(el || document.body, text || defaultLoadingText);
+  }
+
+  // 如果是mock数据
+  if (mock) {
+    setTimeout(() => {
+      if (show) {
+        resolve({
+          data: path,
+          hideIndicator: () => {
+            targetGlobalIndicator.hide(indicator);
+          },
+        });
+      } else {
+        resolve(path);
+      }
+    }, 200);
+
+    return { xhr: null, contentType: '' };
+  }
+
+  const { baseURL, config } = this;
+
+  const configWithDefaults = Object.assign(
+    // 默认的属性
+    getDefaultConfig.call(this),
+    config,
+    curConfig,
+  ) as IConfig;
+
+  const { timeout, withCredentials, responseType, interceptor, ...events } = configWithDefaults;
+
+  // xhr
+  const xhr = createXHR();
+
+  // open
+  xhr.open(method, baseURL ? `${baseURL}/${path}` : path!, true);
+
+  // timeout
+  xhr.timeout = timeout!;
+
+  // withCredentials
+  xhr.withCredentials = withCredentials!;
+
+  // responseType
+  xhr.responseType = responseType || '';
+
+  let contentType: string;
+
+  // requestHeaders - 在open之后
+  /** 如果用户设置了header **/
+  if (!Util.isEmpty(headers) && Util.isObject(headers)) {
+    // 不是get请求且如果用户没有定义Content-type 则默认添加application/json
+    if (!('Content-Type' in headers)) {
+      if (!isMultipartFormData(data)) {
+        headers['Content-Type'] = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
+      }
+    }
+
+    contentType = headers['Content-Type'] ?? '';
+
+    for (const header in headers) {
+      xhr.setRequestHeader(header, headers[header]);
+    }
+  } else {
+    /**
+     * 用户没有设置header,会根据data初始化header
+     */
+    if (!Util.isEmpty(data) && Util.isRef(data) && !['get', 'GET'].includes(method)) {
+      if (!isMultipartFormData(data)) {
+        contentType = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
+        xhr.setRequestHeader('Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
+      } else {
+        contentType = Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA;
+      }
+    } else {
+      contentType = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
+      xhr.setRequestHeader('Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
+    }
+  }
+
+  // events
+  initXhrEvents({ xhr, events: { ...events, interceptor }, reject });
+
+  // onreadystatechange
+  xhr.onreadystatechange = onreadystatechange.bind(this, {
+    xhr,
+    interceptor,
+    loading: {
+      show,
+      terminal,
+      indicator,
+    },
+    business: {
+      dataKey,
+      messageKey,
+      codeKey,
+      codeSuccess,
+      showWarn,
+    },
+    interceptorsConfig,
+    resolve,
+    reject,
+  });
+
+  return {
+    xhr,
+    contentType,
+    interceptorsConfig,
+  };
+}
+
+async function rawRequestWithoutRequestInterceptors(
+  this: Ajax,
+  interceptorsConfig: ISendArg,
+): Promise<SendResult> {
+  let resolveFn: (value: any) => void;
+  let rejectFn: (reason?: any) => void;
+
+  const promise = new Promise((resolve, reject) => {
+    resolveFn = resolve;
+    rejectFn = reject;
+  });
+
+  const prepare = await prepareWithInterceptorsConfig.call(this, interceptorsConfig, {
+    resolve: resolveFn!,
+    reject: rejectFn!,
+  });
+
+  const { xhr, contentType } = prepare;
+
+  if (xhr) {
+    const method = (interceptorsConfig.method ?? '') as Method;
+    if (method === 'get') {
+      xhr.send(null);
+    } else {
+      xhr.send(
+        getSendParams({
+          data: interceptorsConfig?.data,
+          contentType: contentType!,
+        }),
+      );
+    }
+  }
+
+  return {
+    ...prepare,
+    promise,
+  };
 }
 
 /**
@@ -715,6 +897,7 @@ async function onreadystatechange(
         response: xhr.response,
         responseText: canAccessText ? xhr.responseText : '',
         responseXML: canAccessXML ? xhr.responseXML : null,
+        retry: createRetry(this, interceptorsConfig),
         xhr,
       });
 
@@ -861,7 +1044,6 @@ async function sendPrepare(
   }: ISendPrepareArg,
   { resolve, reject }: PrepareFunctionParams,
 ): Promise<Prepare> {
-  let indicator: any;
   let interceptorsConfig: ISendArg;
 
   try {
@@ -880,151 +1062,14 @@ async function sendPrepare(
     return { xhr: null, contentType: '' };
   }
 
-  const {
-    // get|post|patch|put|delete方法独有
-    path,
-    headers,
-    // 数据
-    data,
-    // 业务参数
-    mock,
-    loading,
-    onBeforeResponse,
-    // 下面是后端返回的三组值
-    dataKey = 'data',
-    messageKey = 'message',
-    codeKey = 'code',
-    codeSuccess = 200,
-    showWarn = true,
-    ...curConfig // timeout && withCredentials && events
-  } = interceptorsConfig;
-
-  const defaultLoadingText = `${Intl.get('loading')}...`;
-
-  const {
-    show = false,
-    text = defaultLoadingText,
-    el = document.body,
-    // zIndex = 19999,
-    // size = 'default',
-    terminal = 'pc',
-  } = loading!;
-
-  const targetGlobalIndicator = getGlobalIndicator(terminal);
-
-  // 显示loading
-  if (show) {
-    indicator = targetGlobalIndicator.show(el || document.body, text || defaultLoadingText);
-  }
-
-  // 如果是mock数据
-  if (mock) {
-    setTimeout(() => {
-      if (show) {
-        resolve({
-          data: path,
-          hideIndicator: () => {
-            targetGlobalIndicator.hide(indicator);
-          },
-        });
-      } else {
-        resolve(path);
-      }
-    }, 200);
-
-    return { xhr: null, contentType: '' };
-  }
-
-  const { baseURL, config } = this;
-
-  const configWithDefaults = Object.assign(
-    // 默认的属性
-    getDefaultConfig.call(this),
-    config,
-    curConfig,
-  ) as IConfig;
-
-  const { timeout, withCredentials, responseType, interceptor, ...events } = configWithDefaults;
-
-  // xhr
-  const xhr = createXHR();
-
-  // open
-  xhr.open(method, baseURL ? `${baseURL}/${path}` : path!, true);
-
-  // timeout
-  xhr.timeout = timeout!;
-
-  // withCredentials
-  xhr.withCredentials = withCredentials!;
-
-  // responseType
-  xhr.responseType = responseType || '';
-
-  let contentType: string;
-
-  // requestHeaders - 在open之后
-  /** 如果用户设置了header **/
-  if (!Util.isEmpty(headers) && Util.isObject(headers)) {
-    // 不是get请求且如果用户没有定义Content-type 则默认添加application/json
-    if (!('Content-Type' in headers)) {
-      if (!isMultipartFormData(data)) {
-        headers['Content-Type'] = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
-      }
-    }
-
-    contentType = headers['Content-Type'] ?? '';
-
-    for (const header in headers) {
-      xhr.setRequestHeader(header, headers[header]);
-    }
-  } else {
-    /**
-     * 用户没有设置header,会根据data初始化header
-     */
-    if (!Util.isEmpty(data) && Util.isRef(data) && !['get', 'GET'].includes(method)) {
-      if (!isMultipartFormData(data)) {
-        contentType = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
-        xhr.setRequestHeader('Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
-      } else {
-        contentType = Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA;
-      }
-    } else {
-      contentType = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
-      xhr.setRequestHeader('Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
-    }
-  }
-
-  // events
-  initXhrEvents({ xhr, events: { ...events, interceptor }, reject });
-
-  // onreadystatechange
-  xhr.onreadystatechange = onreadystatechange.bind(this, {
-    xhr,
-    interceptor,
-    loading: {
-      show,
-      terminal,
-      indicator,
+  return prepareWithInterceptorsConfig.call(
+    this,
+    {
+      ...interceptorsConfig,
+      method,
     },
-    business: {
-      dataKey,
-      messageKey,
-      codeKey,
-      codeSuccess,
-      showWarn,
-    },
-    interceptorsConfig,
-    resolve,
-    reject,
-  });
-
-  // return
-  return {
-    xhr,
-    contentType,
-    interceptorsConfig,
-  };
+    { resolve, reject },
+  );
 }
 
 /**

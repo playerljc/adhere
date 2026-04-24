@@ -144,6 +144,16 @@ ajax.interceptors.addResponse('unwrap', (params) => {
   return params;
 });
 
+// 响应拦截器中可以直接使用 retry 进行重试（支持覆盖部分参数）
+// 注意：retry 会复用上一次“最终请求参数”直接发起请求，不会再走请求拦截器，但仍会走响应拦截器
+ajax.interceptors.addResponse('retry-once', async (params) => {
+  // 示例：遇到 401 时触发一次重试（具体业务逻辑自行调整）
+  if (params.xhr?.status === 401) {
+    return await params.retry();
+  }
+  return params;
+});
+
 // 跳过指定拦截器
 ajax.get({
   path: 'users',
