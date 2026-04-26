@@ -229,7 +229,7 @@ export interface ResponseInterceptorParams extends ISendArg {
     responseXML: XMLHttpRequest['responseXML'];
     xhr: XMLHttpRequest;
     /** 重新发送当前请求（支持覆盖部分参数） */
-    retry: (override?: Partial<ISendArg>) => Promise<SendResult>;
+    retry: (override?: Partial<ISendArg>, useRequestInterceptors?: boolean) => Promise<SendResult>;
 }
 export interface ResponseInterceptorReturn extends ISendArg {
     response: XMLHttpRequest['response'];
@@ -237,7 +237,7 @@ export interface ResponseInterceptorReturn extends ISendArg {
     responseXML: XMLHttpRequest['responseXML'];
     xhr: XMLHttpRequest;
     /** 重新发送当前请求（支持覆盖部分参数） */
-    retry: (override?: Partial<ISendArg>) => Promise<SendResult>;
+    retry: (override?: Partial<ISendArg>, useRequestInterceptors?: boolean) => Promise<SendResult>;
 }
 /**
  * 响应拦截器类型
@@ -252,6 +252,11 @@ export type ResolveDataParams = {
     terminal: string;
     xhr: XMLHttpRequest;
     data: any;
+    /**
+     * 用于 retry 走请求拦截器时使用的“原始请求参数”
+     * @description 通常传入 requestReducer 之前的参数（含 method）
+     */
+    rawInterceptorsConfig?: ISendArg;
     /**
      * 用于生成 retry 的“最终请求参数”
      * @description 通常传入 requestReducer 处理后的 interceptorsConfig
@@ -300,6 +305,8 @@ export interface EventHandlerParams {
     resolve: (value: any) => void;
     /** Promise reject函数 */
     reject: (reason?: any) => void;
+    /** raw interceptors config (before requestReducer) */
+    rawInterceptorsConfig?: ISendArg;
     /** interceptorsConfig **/
     interceptorsConfig?: ISendArg;
 }
@@ -325,7 +332,7 @@ export interface ResolveDataResult {
     /** 隐藏指示器函数 */
     hideIndicator?: () => void;
     /** 重新发送当前请求（支持覆盖部分参数） */
-    retry: (override?: Partial<ISendArg>) => Promise<SendResult>;
+    retry: (override?: Partial<ISendArg>, useRequestInterceptors?: boolean) => Promise<SendResult>;
 }
 /**
  * XHR事件初始化参数接口

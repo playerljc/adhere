@@ -620,37 +620,69 @@ function initXhrEvents({ xhr, events, reject }: XhrEventsConfig): void {
 
 /**
  * 解析响应数据
- * @param params - 响应参数
  * @returns 解析后的数据对象
+ * @param ajaxInstance
+ * @param params
  */
 function createRetry(
   ajaxInstance: Ajax,
-  baseParams?: ISendArg,
-): (override?: Partial<ISendArg>) => Promise<SendResult> {
-  return (override?: Partial<ISendArg>) => {
+  params?: {
+    /** requestReducer 之前的“原始参数”（含 method） */
+    rawParams?: ISendArg;
+    /** requestReducer 之后的“最终参数”（含 method） */
+    finalParams?: ISendArg;
+  },
+): (override?: Partial<ISendArg>, useRequestInterceptors?: boolean) => Promise<SendResult> {
+  return (override?: Partial<ISendArg>, useRequestInterceptors = false) => {
+    const rawBaseParams = params?.rawParams;
+    const finalBaseParams = params?.finalParams;
+
     const nextParams: ISendArg = {
-      ...(baseParams ?? {}),
+      ...((useRequestInterceptors ? rawBaseParams : finalBaseParams) ?? {}),
       ...(override ?? {}),
       headers: {
-        ...(baseParams?.headers ?? {}),
+        ...(((useRequestInterceptors ? rawBaseParams : finalBaseParams)?.headers ?? {}) as any),
         ...(override?.headers ?? {}),
       },
     };
 
-    return rawRequestWithoutRequestInterceptors.call(ajaxInstance, nextParams);
+    if (useRequestInterceptors) {
+      switch (nextParams.method) {
+        case 'get':
+          return ajaxInstance.get(nextParams);
+        case 'post':
+          return ajaxInstance.post(nextParams);
+        case 'put':
+          return ajaxInstance.put(nextParams);
+        case 'patch':
+          return ajaxInstance.patch(nextParams);
+        case 'delete':
+          return ajaxInstance.delete(nextParams);
+        default:
+          return Promise.reject(new Error('Invalid request method for retry'));
+      }
+    }
+
+    return rawRequestWithoutRequestInterceptors.call(
+      ajaxInstance,
+      nextParams,
+      // 让“不走请求拦截器”的请求也能继续携带 raw/final，用于后续 retry 切换策略
+      rawBaseParams ?? nextParams,
+    );
   };
 }
 
 function resolveData(this: Ajax, params: ResolveDataParams): ResolveDataResult {
   // 调用response拦截器
-  const { show, terminal, data, indicator, xhr, interceptorsConfig } = params;
+  const { show, terminal, data, indicator, xhr, interceptorsConfig, rawInterceptorsConfig } =
+    params;
 
   const targetGlobalIndicator = getGlobalIndicator(terminal);
 
   return {
     ...{ xhr, data },
     ...(show ? { hideIndicator: () => targetGlobalIndicator.hide(indicator) } : {}),
-    retry: createRetry(this, interceptorsConfig),
+    retry: createRetry(this, { rawParams: rawInterceptorsConfig, finalParams: interceptorsConfig }),
   };
 }
 
@@ -673,6 +705,7 @@ async function prepareWithInterceptorsConfig(
   this: Ajax,
   interceptorsConfig: ISendArg,
   { resolve, reject }: PrepareFunctionParams,
+  rawInterceptorsConfig?: ISendArg,
 ): Promise<Prepare> {
   const {
     // get|post|patch|put|delete方法独有
@@ -813,6 +846,7 @@ async function prepareWithInterceptorsConfig(
       codeSuccess,
       showWarn,
     },
+    rawInterceptorsConfig,
     interceptorsConfig,
     resolve,
     reject,
@@ -828,6 +862,7 @@ async function prepareWithInterceptorsConfig(
 async function rawRequestWithoutRequestInterceptors(
   this: Ajax,
   interceptorsConfig: ISendArg,
+  rawInterceptorsConfig?: ISendArg,
 ): Promise<SendResult> {
   let resolveFn: (value: any) => void;
   let rejectFn: (reason?: any) => void;
@@ -837,10 +872,15 @@ async function rawRequestWithoutRequestInterceptors(
     rejectFn = reject;
   });
 
-  const prepare = await prepareWithInterceptorsConfig.call(this, interceptorsConfig, {
-    resolve: resolveFn!,
-    reject: rejectFn!,
-  });
+  const prepare = await prepareWithInterceptorsConfig.call(
+    this,
+    interceptorsConfig,
+    {
+      resolve: resolveFn!,
+      reject: rejectFn!,
+    },
+    rawInterceptorsConfig ?? interceptorsConfig,
+  );
 
   const { xhr, contentType } = prepare;
 
@@ -877,6 +917,7 @@ async function onreadystatechange(
     business: { messageKey, codeKey, codeSuccess, showWarn },
     resolve,
     reject,
+    rawInterceptorsConfig,
     interceptorsConfig,
   }: EventHandlerParams,
 ): Promise<void> {
@@ -897,7 +938,10 @@ async function onreadystatechange(
         response: xhr.response,
         responseText: canAccessText ? xhr.responseText : '',
         responseXML: canAccessXML ? xhr.responseXML : null,
-        retry: createRetry(this, interceptorsConfig),
+        retry: createRetry(this, {
+          rawParams: rawInterceptorsConfig,
+          finalParams: interceptorsConfig,
+        }),
         xhr,
       });
 
@@ -922,6 +966,7 @@ async function onreadystatechange(
               data: jsonObj,
               indicator,
               xhr,
+              rawInterceptorsConfig,
               interceptorsConfig,
             }),
           );
@@ -939,6 +984,7 @@ async function onreadystatechange(
               data: responseXML,
               indicator,
               xhr,
+              rawInterceptorsConfig,
               interceptorsConfig,
             }),
           );
@@ -953,6 +999,7 @@ async function onreadystatechange(
               data: response,
               indicator,
               xhr,
+              rawInterceptorsConfig,
               interceptorsConfig,
             }),
           );
@@ -976,7 +1023,10 @@ async function onreadystatechange(
           statusText: xhr.statusText,
           response,
           responseText,
-          retry: createRetry(this, interceptorsConfig),
+          retry: createRetry(this, {
+            rawParams: rawInterceptorsConfig,
+            finalParams: interceptorsConfig,
+          }),
         });
 
         // 取消遮罩
@@ -1045,6 +1095,10 @@ async function sendPrepare(
   { resolve, reject }: PrepareFunctionParams,
 ): Promise<Prepare> {
   let interceptorsConfig: ISendArg;
+  const rawInterceptorsConfig: ISendArg = {
+    ...params,
+    method,
+  };
 
   try {
     /** 调用request拦截器，返回新的interceptorsConfig **/
@@ -1069,6 +1123,7 @@ async function sendPrepare(
       method,
     },
     { resolve, reject },
+    rawInterceptorsConfig,
   );
 }
 
