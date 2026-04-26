@@ -120,6 +120,9 @@ const EditableRowControl: FC<EditorRowControlProps> = ({
     }
   };
 
+  console.log('editorRowIds===', !editorRowIds.includes(record[rowKey]));
+  console.log('record===', record, rowKey, record[rowKey]);
+
   return (
     <div
       className={classNames(`${selectorPrefix}-editor-row-control`, className)}

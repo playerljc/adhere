@@ -755,10 +755,35 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     setEditableRowForm(rowIndex: number, form: FormInstance): void;
     /**
+     * 移除指定行的可编辑表单实例
+     * @param {number} rowIndex 行索引
+     */
+    deleteEditableRowForm(rowIndex: number): void;
+    /**
      * 通过 rowId 获取当前 dataSource 中的 rowIndex
      * @param rowId
      */
     getRowIndexById(rowId: any): number;
+    /**
+     * validatorAll
+     * @description 全数据校验,校验并给出错误信息
+     */
+    validatorAll(): Promise<Record<string, any>[]>;
+    /**
+     * validatorFirst
+     * @description 短路校验
+     */
+    validateFirst(): Promise<Record<string, any>[]>;
+    /**
+     * validateAndGetRowInfo
+     * @description 短路校验,并给出出错行信息
+     */
+    validateAndGetRowInfo(): Promise<Record<string, any>[]>;
+    /**
+     * validateAndGetCellInfo
+     * @description 短路校验,并给出出错单元格信息
+     */
+    validateAndGetCellInfo(): Promise<Record<string, any>[]>;
 }
 export declare const defaultProps: {
     className: string;

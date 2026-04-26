@@ -60,6 +60,25 @@ export default function <P, S>(SuperClass: any): {
          * getActiveValue
          */
         getActiveValue(): any;
+        /**
+         * setActiveCells
+         * @description cells激活
+         * @param params
+         */
+        setActiveCells(params: {
+            rowId: string;
+            dataIndex: string;
+        }[]): Promise<void>;
+        /**
+         * validateActiveCells
+         * @description 校验指定的单元格
+         * @param {{ rowId: string; dataIndex: string }[]} params
+         * @return Promise<any> | undefined
+         */
+        validateActiveCells(params: {
+            rowId: string;
+            dataIndex: string;
+        }[]): Promise<any> | undefined;
     };
     [x: string]: any;
 };

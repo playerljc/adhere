@@ -1,3 +1,4 @@
+import type { ValidatorRule } from './types';
 /**
  * findRecord
  * @description 在dataResource中查找rowKey是id的record
@@ -70,3 +71,10 @@ export declare const cloneDeep: (obj: {
  */
 export declare function hasCommonPathRelation(path1: string, path2: string): boolean;
 export declare const clone: any;
+export declare function asyncLoop({ tasks, ...rest }: {
+    [x: string]: any;
+    tasks: any;
+}): Promise<void>;
+export declare const validator: (rules: ValidatorRule[]) => {
+    validator: (_: any, value: any, cb: any) => Promise<void>;
+};

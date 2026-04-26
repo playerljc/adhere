@@ -111,12 +111,21 @@ export default function <P, S>(SuperClass) {
       rowId: string,
       opt?: Parameters<FormInstance['validateFields']>[0],
     ): Promise<any> | undefined {
+      console.log('validateActiveEditorRow', rowId, this.state?.editorRowIds);
       if (!rowId) return undefined;
       // @ts-ignore
       if (!this.state?.editorRowIds?.includes(rowId)) return undefined;
 
       const rowIndex = this.getRowIndexById(rowId);
+
+      console.log('validateActiveEditorRow RowIndex', rowIndex);
       if (rowIndex < 0) return undefined;
+
+      console.log(
+        'validateActiveEditorRow editableRowForms',
+        this.editableRowForms,
+        this.editableRowForms.get(rowIndex),
+      );
 
       return this.editableRowForms.get(rowIndex)?.validateFields(opt);
     }

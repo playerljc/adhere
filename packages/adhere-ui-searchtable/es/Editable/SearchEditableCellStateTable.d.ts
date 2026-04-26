@@ -33,6 +33,14 @@ declare const SearchEditableCellStateTable_base: {
         }): any;
         setActiveValue(activeValue: any): Promise<void>;
         getActiveValue(): any;
+        setActiveCells(params: {
+            rowId: string;
+            dataIndex: string;
+        }[]): Promise<void>;
+        validateActiveCells(params: {
+            rowId: string;
+            dataIndex: string;
+        }[]): Promise<any> | undefined;
     };
     [x: string]: any;
 };

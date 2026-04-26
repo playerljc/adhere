@@ -3466,6 +3466,14 @@ abstract class SearchTable<
   }
 
   /**
+   * 移除指定行的可编辑表单实例
+   * @param {number} rowIndex 行索引
+   */
+  deleteEditableRowForm(rowIndex: number) {
+    this.editableRowForms.delete(rowIndex);
+  }
+
+  /**
    * 通过 rowId 获取当前 dataSource 中的 rowIndex
    * @param rowId
    */
@@ -3521,7 +3529,6 @@ abstract class SearchTable<
         try {
           await validator(rules as ValidatorRule[])?.validator(rules, value, () => {});
           rowValues[String(dataIndex)] = value;
-          debugger;
         } catch (e: any) {
           errors.push({
             [rowKey]: record?.[rowKey],

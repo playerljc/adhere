@@ -25,9 +25,20 @@ const EditableRow: TableRowComponentReducer = ({ columns = [], rowIndex }) => {
   } | null>(SearchTableContext);
 
   useEffect(() => {
-    // 设置行的form句柄
+    console.log('EditableRow1', rowIndex);
     context?.context?.setEditableRowForm(rowIndex, form);
   }, []);
+
+  useEffect(() => {
+    console.log('EditableRow2', rowIndex);
+
+    context?.context?.setEditableRowForm(rowIndex, form);
+
+    return () => {
+      // rowIndex 变更或组件卸载时，清除当前索引的注册，避免 Map 中残留脏数据
+      context?.context?.deleteEditableRowForm(rowIndex);
+    };
+  }, [rowIndex]);
 
   return (trREL: React.ReactElement<any>) => {
     let res = trREL;

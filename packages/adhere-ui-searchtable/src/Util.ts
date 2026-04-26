@@ -257,20 +257,22 @@ export const validator = (rules: ValidatorRule[]) => {
 
   type RuleImplFactory = (rule: ValidatorRule) => (ctx: ValidatorCtx) => Promise<void>;
 
+  const isValidateEmpty = (v: any) => v === undefined || v === null || v === '';
+
   const rulesImpls: Record<string, RuleImplFactory> = {
     required:
       (rule) =>
       ({ value }) => {
         if (!rule.required) return Promise.resolve();
 
-        if (!value) return Promise.reject(rule.message);
+        if (isValidateEmpty(value)) return Promise.reject(rule.message);
 
         return Promise.resolve();
       },
     pattern:
       (rule) =>
       ({ value }) => {
-        if (!value) return Promise.reject(rule.message);
+        if (isValidateEmpty(value)) return Promise.reject(rule.message);
 
         // 保持原来的“匹配即报错”语义，同时修正 value.test 的类型问题
         if (rule.pattern && rule.pattern.test(String(value))) return Promise.reject(rule.message);
@@ -280,7 +282,7 @@ export const validator = (rules: ValidatorRule[]) => {
     min:
       (rule) =>
       ({ value }) => {
-        if (!value) return Promise.reject(rule.message);
+        if (isValidateEmpty(value)) return Promise.reject(rule.message);
 
         if (typeof value?.length === 'number' && typeof rule.min === 'number' && value.length < rule.min) {
           return Promise.reject(rule.message);
@@ -291,7 +293,7 @@ export const validator = (rules: ValidatorRule[]) => {
     max:
       (rule) =>
       ({ value }) => {
-        if (!value) return Promise.reject(rule.message);
+        if (isValidateEmpty(value)) return Promise.reject(rule.message);
 
         if (typeof value?.length === 'number' && typeof rule.max === 'number' && value.length > rule.max) {
           return Promise.reject(rule.message);
@@ -304,7 +306,7 @@ export const validator = (rules: ValidatorRule[]) => {
       ({ value }) => {
         if (!rule.whitespace) return Promise.resolve();
 
-        if (!value) return Promise.reject(rule.message);
+        if (isValidateEmpty(value)) return Promise.reject(rule.message);
 
         if (/^\s+$/.test(String(value))) return Promise.reject(rule.message);
 

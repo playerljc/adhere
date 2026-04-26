@@ -334,8 +334,6 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @param data
    */
   setData<T extends Array<object>>(data: T | ((prevData: T) => T)): Promise<any[]> {
-    this.editableRowForms.clear();
-
     let targetDataSource;
 
     if (Util.isArray(data)) {

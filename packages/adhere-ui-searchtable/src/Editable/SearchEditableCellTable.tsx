@@ -63,7 +63,7 @@ class SearchEditableCellTable<
    * @description 修改cells的值
    * @param values
    */
-  updateEditorCellsDate(values: { record; dataIndex; value }[]): Promise<void> {
+  updateEditorCellsDate(values: { record: any; dataIndex: any; value: any }[]): Promise<void> {
     return new Promise((resolve) => {
       const listData = cloneDeep(this.props[this.getServiceName()]);
       const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];

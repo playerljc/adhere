@@ -9,6 +9,16 @@ import type { DataIndex } from '@rc-component/table/lib/interface';
 import type SearchTableImplement from './SearchTableImplement';
 import type { SearchTableStateImplement } from './SearchTableStateImplement';
 export type FormItemType = 'dict' | 'input' | 'textArea' | 'inputNumber' | 'inputNumberDecimal1' | 'inputNegativeNumberDecimal1' | 'inputPositiveNumberDecimal1' | 'inputNumberDecimal1French' | 'inputNumberDecimal1German' | 'inputNumberDecimal1International' | 'inputNumberDecimal1US' | 'inputNumberDecimal2' | 'inputNegativeNumberDecimal2' | 'inputPositiveNumberDecimal2' | 'inputNumberDecimal2French' | 'inputNumberDecimal2German' | 'inputNumberDecimal2International' | 'inputNumberDecimal2US' | 'inputNumberInteger' | 'inputNegativeNumberInteger' | 'inputPositiveNumberInteger' | 'inputNumberIntegerFrench' | 'inputNumberIntegerGerman' | 'inputNumberIntegerInternational' | 'inputNumberIntegerUS' | 'datePicker' | 'birthdayPicker' | 'boundedTimePicker' | 'timePicker' | 'rangePicker' | 'slider' | 'sliderRange' | 'rate' | 'switch' | 'colorPicker' | string;
+export type ValidatorRule = {
+    required?: boolean;
+    message?: any;
+    pattern?: RegExp;
+    min?: number;
+    max?: number;
+    whitespace?: boolean;
+    validator?: (rule: any, value: any, callback: (error?: any) => void) => void;
+    [key: string]: any;
+};
 /**
  * ColumnSearchConfig
  * @description 列的查询设置
@@ -184,6 +194,7 @@ export interface EditorRowControlProps {
         [props: string]: any;
     }) => Promise<void>;
     onEditor: (id: string) => Promise<void>;
+    isShowCancel?: boolean;
 }
 export interface EditorTableControlProps {
     className?: string;
