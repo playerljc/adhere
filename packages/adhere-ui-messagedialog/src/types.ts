@@ -2,7 +2,6 @@ import type { ButtonProps } from 'antd';
 import type { ModalProps } from 'antd/lib/modal/interface';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
 
-
 /**
  * 警告对话框参数接口
  */
@@ -19,6 +18,7 @@ export interface AlertArgv {
   local?: string;
   /** 图标元素 */
   icon?: ReactElement | null;
+  closeBtnText?: string;
 }
 
 /**
@@ -49,6 +49,7 @@ export interface PromptArgv {
   /** 确认回调函数 */
   onSuccess?: (value: any) => Promise<void>;
   confirmText?: string;
+  closeBtnText?: string;
 }
 
 /**
@@ -59,6 +60,8 @@ export interface ModalArgv {
   children?: ReactNode;
   /** 是否显示默认关闭按钮 */
   defaultCloseBtn?: boolean;
+  /** 关闭按钮的文本 */
+  closeBtnText?: string;
   /** 国际化语言 */
   local?: string;
   /** 模态框配置 */
@@ -75,6 +78,8 @@ export interface ModalDialogProps {
   config: ModalProps;
   /** 是否显示关闭按钮 */
   closeBtn: boolean;
+  /** 关闭按钮的文本 */
+  closeBtnText?: string;
   /** 关闭回调函数 */
   close?: () => void;
   /** 子元素 */

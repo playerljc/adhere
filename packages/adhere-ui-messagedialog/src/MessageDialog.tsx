@@ -90,6 +90,7 @@ const MessageDialogFactory = {
     width = DEFAULT_WIDTH,
     zIndex = DEFAULT_ZINDEX,
     confirmText,
+    closeBtnText,
     local,
     icon = null,
     onSuccess,
@@ -123,6 +124,7 @@ const MessageDialogFactory = {
         ],
       },
       local,
+      closeBtnText,
       children: icon ? renderByIcon(icon, text) : text,
     });
 
@@ -147,6 +149,7 @@ const MessageDialogFactory = {
     zIndex = DEFAULT_ZINDEX,
     local,
     icon,
+    closeBtnText,
   }: AlertArgv): DialogHandle | void {
     return this.Modal({
       config: {
@@ -158,6 +161,7 @@ const MessageDialogFactory = {
       },
       local,
       children: icon ? renderByIcon(icon, text) : text,
+      closeBtnText,
     });
   },
 
@@ -178,6 +182,7 @@ const MessageDialogFactory = {
     width = DEFAULT_WIDTH,
     zIndex = DEFAULT_ZINDEX,
     confirmText,
+    closeBtnText,
     local,
     onSuccess,
   }: PromptArgv): DialogHandle | void {
@@ -213,6 +218,7 @@ const MessageDialogFactory = {
         ],
       },
       local,
+      closeBtnText,
       children: <PromptForm ref={ref} {...config} />,
     });
 
@@ -320,7 +326,12 @@ const MessageDialogFactory = {
    * @param params.defaultCloseBtn - 是否显示默认关闭按钮
    * @returns 对话框句柄
    */
-  Modal({ config = {}, children = null, defaultCloseBtn = true }: ModalArgv): DialogHandle | void {
+  Modal({
+    config = {},
+    children = null,
+    defaultCloseBtn = true,
+    closeBtnText,
+  }: ModalArgv): DialogHandle | void {
     // 如果不允许多实例且已锁定，则返回
     if (!allowMultipleInstances && lock) {
       console.warn('Modal dialog is locked, cannot create new instance');
@@ -348,7 +359,13 @@ const MessageDialogFactory = {
      */
     function render(_children?: ReactNode): void {
       const element = (
-        <ModalDialog open={open} close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
+        <ModalDialog
+          open={open}
+          close={close}
+          config={modalConfig}
+          closeBtn={defaultCloseBtn}
+          closeBtnText={closeBtnText}
+        >
           {_children ?? children}
         </ModalDialog>
       );

@@ -17,7 +17,7 @@ const { useTheme } = ConfigProvider;
  * 提供可配置的模态对话框功能，支持自定义按钮、主题等
  */
 const ModalDialog = memo<ModalDialogProps>((props) => {
-  const { config, closeBtn, close, open, children } = props;
+  const { config, closeBtn, close, open, closeBtnText, children } = props;
 
   const { footer = [], centered = true, ...rest } = config;
 
@@ -35,7 +35,7 @@ const ModalDialog = memo<ModalDialogProps>((props) => {
    */
   const renderCloseBtn = useCallback((): ReactNode => {
     const buttonProps: Omit<ButtonProps, 'key'> = {
-      title: Intl.get('cancel'),
+      title: closeBtnText ?? Intl.get('cancel'),
       type: 'default',
       onClick: () => close?.(),
     };
@@ -47,10 +47,10 @@ const ModalDialog = memo<ModalDialogProps>((props) => {
 
     return (
       <Button key="close" {...buttonProps}>
-        {Intl.get('cancel')}
+        {closeBtnText ?? Intl.get('cancel')}
       </Button>
     );
-  }, [footer, close]);
+  }, [footer, closeBtnText, close]);
 
   /**
    * 计算底部按钮区域
@@ -75,7 +75,7 @@ const ModalDialog = memo<ModalDialogProps>((props) => {
     }
 
     return null;
-  }, [footer, closeBtn, renderCloseBtn]);
+  }, [footer, closeBtn, closeBtnText, renderCloseBtn]);
 
   /**
    * 取消回调函数
