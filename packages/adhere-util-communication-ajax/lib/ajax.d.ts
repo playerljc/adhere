@@ -100,6 +100,7 @@ declare class Ajax {
     /**
      * debounceRequest
      * @description 防抖请求方法，用于避免重复的相同请求
+     * @param method
      * @param requestFn - 请求函数，接收请求参数并返回请求结果
      * @param options - 可选配置项
      * @param options.filterData - 用于过滤请求数据的函数，返回处理后的数据用于生成缓存键
@@ -107,7 +108,7 @@ declare class Ajax {
      * @returns 返回一个异步函数，该函数接收请求参数并返回防抖后的请求结果
      * @protected
      */
-    protected debounceRequest(requestFn: (params: ISendArg) => Promise<SendResult>, options?: {
+    protected debounceRequest(method: string, requestFn: (params: ISendArg) => Promise<SendResult>, options?: {
         filterData?: ISendArg['debounceFilterData'];
         filterHeaders?: ISendArg['debounceFilterHeaders'];
     }): (this: Ajax, params: ISendArg) => Promise<SendResult>;

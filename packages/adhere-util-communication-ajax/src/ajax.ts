@@ -20,6 +20,7 @@ import {
   ResolveDataParams,
   ResolveDataResult,
   ResponseInterceptor,
+  ResponseInterceptorReturn,
   SendParamsConfig,
   SendResult,
   XhrEventsConfig,
@@ -226,6 +227,7 @@ class Ajax {
   /**
    * debounceRequest
    * @description 防抖请求方法，用于避免重复的相同请求
+   * @param method
    * @param requestFn - 请求函数，接收请求参数并返回请求结果
    * @param options - 可选配置项
    * @param options.filterData - 用于过滤请求数据的函数，返回处理后的数据用于生成缓存键
@@ -234,6 +236,7 @@ class Ajax {
    * @protected
    */
   protected debounceRequest(
+    method: string,
     requestFn: (params: ISendArg) => Promise<SendResult>,
     options?: {
       filterData?: ISendArg['debounceFilterData'];
@@ -243,29 +246,73 @@ class Ajax {
     const self = this;
 
     return async function (this: Ajax, params: ISendArg): Promise<SendResult> {
+      console.log('debounceRequest======', params);
+
       // 生成请求唯一标识
       const requestKey = await generateCacheKey({
         url: combineUrls(self.baseURL, params.path),
-        method: params.method!,
-        body: options?.filterData ? options?.filterData?.(params.data!) : params.data,
-        headers: options?.filterHeaders ? options?.filterHeaders(params.headers) : params.headers,
+        method,
+        body: options?.filterData ? options?.filterData?.(params?.data ?? {}) : params?.data ?? {},
+        headers: options?.filterHeaders
+          ? options?.filterHeaders(params?.headers ?? {})
+          : params?.headers ?? {},
       });
+
+      console.log('debounceRequestCache', self.debounceRequestCache);
+
+      console.log('requestKey', requestKey);
 
       // 检查是否有相同的请求正在进行
       if (self.debounceRequestCache.has(requestKey)) {
+        console.log('有');
+
         // 返回已存在的请求对象
         return self.debounceRequestCache.get(requestKey) as SendResult;
       }
 
-      const { promise, ...rest } = await requestFn(params);
+      console.log('没有');
 
-      const debouncePromise = promise.finally(() => {
-        self.debounceRequestCache.delete(requestKey);
+      /**
+       * 关键：先占位写入缓存，避免并发竞态窗口
+       * - 如果在 requestFn 的 await 期间又来了相同 requestKey 的调用，应当直接复用同一个 SendResult
+       */
+      let resolveOuter!: (value: any) => void;
+      let rejectOuter!: (reason?: any) => void;
+
+      const outerPromise = new Promise((resolve, reject) => {
+        resolveOuter = resolve;
+        rejectOuter = reject;
       });
 
-      const result: SendResult = { promise: debouncePromise, ...rest };
+      const result: SendResult = {
+        promise: outerPromise,
+        xhr: null,
+        contentType: '',
+        interceptorsConfig: undefined,
+      };
 
       self.debounceRequestCache.set(requestKey, result);
+
+      try {
+        const real = await requestFn(params);
+
+        // 让调用方能拿到 xhr/contentType/interceptorsConfig 等信息
+        result.xhr = real.xhr ?? null;
+        result.contentType = real.contentType ?? '';
+        result.interceptorsConfig = real.interceptorsConfig;
+
+        // 统一完成后清缓存（无论成功失败）
+        real.promise
+          .finally(() => {
+            console.log('delete', requestKey);
+            self.debounceRequestCache.delete(requestKey);
+          })
+          .then(resolveOuter, rejectOuter);
+      } catch (e) {
+        console.log('delete', requestKey);
+        self.debounceRequestCache.delete(requestKey);
+        rejectOuter(e);
+      }
 
       return result;
     };
@@ -363,9 +410,12 @@ class Ajax {
     this: Ajax,
     { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
   ): Promise<SendResult> {
+    // console.log('get', arg, enableDebounce);
+    // console.log('get', arg.path, Util.isIPv4(arg.path!));
+
     const call =
-      typeof arg.path === 'string' && Util.isIPv4(arg.path) && enableDebounce
-        ? this.debounceRequest(this.getCore.bind(this), {
+      typeof arg.path === 'string' /*&& Util.isIPv4(arg.path)*/ && enableDebounce
+        ? this.debounceRequest('get', this.getCore.bind(this), {
             filterData: debounceFilterData,
             filterHeaders: debounceFilterHeaders,
           })
@@ -387,8 +437,8 @@ class Ajax {
     { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
   ): Promise<SendResult> {
     const call =
-      typeof arg.path === 'string' && Util.isIPv4(arg.path) && enableDebounce
-        ? this.debounceRequest(this.postCore.bind(this), {
+      typeof arg.path === 'string' /*&& Util.isIPv4(arg.path)*/ && enableDebounce
+        ? this.debounceRequest('post', this.postCore.bind(this), {
             filterData: debounceFilterData,
             filterHeaders: debounceFilterHeaders,
           })
@@ -410,8 +460,8 @@ class Ajax {
     { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
   ): Promise<SendResult> {
     const call =
-      typeof arg.path === 'string' && Util.isIPv4(arg.path) && enableDebounce
-        ? this.debounceRequest(this.patchCore.bind(this), {
+      typeof arg.path === 'string' /*&& Util.isIPv4(arg.path)*/ && enableDebounce
+        ? this.debounceRequest('patch', this.patchCore.bind(this), {
             filterData: debounceFilterData,
             filterHeaders: debounceFilterHeaders,
           })
@@ -433,8 +483,8 @@ class Ajax {
     { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
   ): Promise<SendResult> {
     const call =
-      typeof arg.path === 'string' && Util.isIPv4(arg.path) && enableDebounce
-        ? this.debounceRequest(this.putCore.bind(this), {
+      typeof arg.path === 'string' /*&& Util.isIPv4(arg.path)*/ && enableDebounce
+        ? this.debounceRequest('put', this.putCore.bind(this), {
             filterData: debounceFilterData,
             filterHeaders: debounceFilterHeaders,
           })
@@ -456,8 +506,8 @@ class Ajax {
     { enableDebounce = true, debounceFilterData, debounceFilterHeaders, ...arg }: ISendArg,
   ): Promise<SendResult> {
     const call =
-      typeof arg.path === 'string' && Util.isIPv4(arg.path) && enableDebounce
-        ? this.debounceRequest(this.deleteCore.bind(this), {
+      typeof arg.path === 'string' /*&& Util.isIPv4(arg.path)*/ && enableDebounce
+        ? this.debounceRequest('delete', this.deleteCore.bind(this), {
             filterData: debounceFilterData,
             filterHeaders: debounceFilterHeaders,
           })
@@ -619,6 +669,67 @@ function initXhrEvents({ xhr, events, reject }: XhrEventsConfig): void {
 }
 
 /**
+ * 专供响应过滤器内部使用的 retry 工厂
+ * @description 返回的 retry 结果结构与 ResponseInterceptorReturn 一致，可在过滤器中直接 return
+ */
+function createResponseInterceptorRetry(
+  ajaxInstance: Ajax,
+  retryParams?: {
+    rawParams?: ISendArg;
+    finalParams?: ISendArg;
+  },
+): (
+  override?: Partial<ISendArg>,
+  useRequestInterceptors?: boolean,
+) => Promise<ResponseInterceptorReturn> {
+  return async (override, useRequestInterceptors = false) => {
+    const base = useRequestInterceptors ? retryParams?.rawParams : retryParams?.finalParams;
+
+    const nextParams: ISendArg = {
+      ...(base ?? {}),
+      ...(override ?? {}),
+      headers: {
+        ...((base?.headers ?? {}) as any),
+        ...(override?.headers ?? {}),
+      },
+    };
+
+    let sendResult: SendResult;
+
+    if (useRequestInterceptors) {
+      sendResult = await rawRequestWithRequestInterceptors.call(ajaxInstance, nextParams);
+    } else {
+      sendResult = await rawRequestWithoutRequestInterceptors.call(
+        ajaxInstance,
+        nextParams,
+        retryParams?.rawParams ?? nextParams,
+      );
+    }
+
+    // 等待请求完成（response 过滤器链全部跑完后 resolve/reject）
+    await sendResult.promise;
+
+    const xhr = sendResult.xhr as XMLHttpRequest;
+    const responseType = xhr?.responseType ?? '';
+    const canAccessText = responseType === '' || responseType === 'text';
+    const canAccessXML = responseType === '' || responseType === 'document';
+
+    return {
+      ...nextParams,
+      headers: transformStringHeadersToObject(xhr?.getAllResponseHeaders?.() ?? ''),
+      response: xhr?.response ?? null,
+      responseText: canAccessText ? (xhr?.responseText ?? '') : '',
+      responseXML: canAccessXML ? (xhr?.responseXML ?? null) : null,
+      xhr,
+      retry: createResponseInterceptorRetry(ajaxInstance, {
+        rawParams: retryParams?.rawParams,
+        finalParams: sendResult.interceptorsConfig,
+      }),
+    };
+  };
+}
+
+/**
  * 解析响应数据
  * @returns 解析后的数据对象
  * @param ajaxInstance
@@ -647,20 +758,8 @@ function createRetry(
     };
 
     if (useRequestInterceptors) {
-      switch (nextParams.method) {
-        case 'get':
-          return ajaxInstance.get(nextParams);
-        case 'post':
-          return ajaxInstance.post(nextParams);
-        case 'put':
-          return ajaxInstance.put(nextParams);
-        case 'patch':
-          return ajaxInstance.patch(nextParams);
-        case 'delete':
-          return ajaxInstance.delete(nextParams);
-        default:
-          return Promise.reject(new Error('Invalid request method for retry'));
-      }
+      // 直接走内部发送通道，不经过 debounceRequest，保证返回值结构与 false 分支一致
+      return rawRequestWithRequestInterceptors.call(ajaxInstance, nextParams);
     }
 
     return rawRequestWithoutRequestInterceptors.call(
@@ -859,6 +958,57 @@ async function prepareWithInterceptorsConfig(
   };
 }
 
+/**
+ * 走请求过滤器、但不经过 debounceRequest 的内部发送通道（专供 retry 使用）
+ */
+async function rawRequestWithRequestInterceptors(
+  this: Ajax,
+  rawParams: ISendArg,
+): Promise<SendResult> {
+  let resolveFn: (value: any) => void;
+  let rejectFn: (reason?: any) => void;
+
+  const promise = new Promise((resolve, reject) => {
+    resolveFn = resolve;
+    rejectFn = reject;
+  });
+
+  const prepare = await sendPrepare.call(
+    this,
+    {
+      ...getDefaultConfig.call(this),
+      ...this.config,
+      ...(rawParams as ISendPrepareArg),
+    },
+    {
+      resolve: resolveFn!,
+      reject: rejectFn!,
+    },
+  );
+
+  const { xhr, contentType, interceptorsConfig } = prepare;
+
+  if (xhr) {
+    const method = (rawParams.method ?? '') as Method;
+    if (method === 'get') {
+      xhr.send(null);
+    } else {
+      xhr.send(
+        getSendParams({
+          data: interceptorsConfig?.data,
+          contentType: contentType!,
+          customSendJSONStringify: rawParams.customSendJSONStringify,
+        }),
+      );
+    }
+  }
+
+  return {
+    ...prepare,
+    promise,
+  };
+}
+
 async function rawRequestWithoutRequestInterceptors(
   this: Ajax,
   interceptorsConfig: ISendArg,
@@ -932,23 +1082,34 @@ async function onreadystatechange(
       const canAccessXML = responseType === '' || responseType === 'document';
 
       /** 调用response过滤器 **/
-      const { response, responseXML, responseText } = await this.interceptors.responseReducer({
+      const {
+        response,
+        responseXML,
+        responseText,
+        xhr: finalXhr,
+      } = await this.interceptors.responseReducer({
         ...interceptorsConfig,
         headers: transformStringHeadersToObject(xhr.getAllResponseHeaders()),
         response: xhr.response,
         responseText: canAccessText ? xhr.responseText : '',
         responseXML: canAccessXML ? xhr.responseXML : null,
-        retry: createRetry(this, {
+        retry: createResponseInterceptorRetry(this, {
           rawParams: rawInterceptorsConfig,
           finalParams: interceptorsConfig,
         }),
         xhr,
       });
 
+      /**
+       * 优先使用响应过滤器返回的 xhr（拦截器内调用 retry 后会替换为新请求的 xhr）
+       * 若过滤器未替换则回退到原始 xhr
+       */
+      const effectiveXhr = finalXhr ?? xhr;
+
       // status success
-      if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+      if ((effectiveXhr.status >= 200 && effectiveXhr.status < 300) || effectiveXhr.status === 304) {
         // 获取contentType
-        const contentType = xhr.getResponseHeader('Content-type') || '';
+        const contentType = effectiveXhr.getResponseHeader('Content-type') || '';
 
         /** response ContentType是application/json **/
         if (contentType.indexOf(Ajax.CONTENT_TYPE_APPLICATION_JSON) !== -1) {
@@ -965,7 +1126,7 @@ async function onreadystatechange(
               terminal,
               data: jsonObj,
               indicator,
-              xhr,
+              xhr: effectiveXhr,
               rawInterceptorsConfig,
               interceptorsConfig,
             }),
@@ -983,7 +1144,7 @@ async function onreadystatechange(
               terminal,
               data: responseXML,
               indicator,
-              xhr,
+              xhr: effectiveXhr,
               rawInterceptorsConfig,
               interceptorsConfig,
             }),
@@ -998,7 +1159,7 @@ async function onreadystatechange(
               terminal,
               data: response,
               indicator,
-              xhr,
+              xhr: effectiveXhr,
               rawInterceptorsConfig,
               interceptorsConfig,
             }),
@@ -1011,16 +1172,16 @@ async function onreadystatechange(
 
         // 拦截器
         interceptor({
-          status: xhr.status as HttpStatusCode,
-          statusText: xhr.statusText,
+          status: effectiveXhr.status as HttpStatusCode,
+          statusText: effectiveXhr.statusText,
           response,
           responseText,
         });
 
         // catch
         reject({
-          status: xhr.status,
-          statusText: xhr.statusText,
+          status: effectiveXhr.status,
+          statusText: effectiveXhr.statusText,
           response,
           responseText,
           retry: createRetry(this, {
