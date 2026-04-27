@@ -24,6 +24,7 @@ export interface AlertArgv {
 export interface ConfirmArgv extends AlertArgv {
     /** 确认回调函数 */
     onSuccess?: (params?: any) => Promise<void>;
+    confirmText?: string;
 }
 /**
  * 输入提示对话框参数接口
@@ -42,6 +43,7 @@ export interface PromptArgv {
     local?: string;
     /** 确认回调函数 */
     onSuccess?: (value: any) => Promise<void>;
+    confirmText?: string;
 }
 /**
  * 模态对话框参数接口

@@ -5,13 +5,24 @@ import { Root, createRoot } from 'react-dom/client';
 
 import Intl from '@baifendian/adhere-util-intl';
 
-import { DEFAULT_WIDTH, DEFAULT_ZINDEX, PROMPT_LAYOUT } from './Constant';
+import {
+  DEFAULT_WIDTH,
+  DEFAULT_ZINDEX,
+  /*PROMPT_LAYOUT*/
+} from './Constant';
 import MaximizeModalDialog from './MaximizeModal';
 import ModalDialog, { selectorPrefix } from './Modal';
 import PromptForm from './PromptForm';
 import Trigger from './Trigger';
 import TriggerPrompt from './TriggerPrompt';
-import type { AlertArgv, ConfirmArgv, DialogHandle, ModalArgv, PromptArgv, PromptFormRefHandle } from './types';
+import type {
+  AlertArgv,
+  ConfirmArgv,
+  DialogHandle,
+  ModalArgv,
+  PromptArgv,
+  PromptFormRefHandle,
+} from './types';
 
 /**
  * 渲染带图标的组件
@@ -78,6 +89,7 @@ const MessageDialogFactory = {
     text = null,
     width = DEFAULT_WIDTH,
     zIndex = DEFAULT_ZINDEX,
+    confirmText,
     local,
     icon = null,
     onSuccess,
@@ -93,7 +105,7 @@ const MessageDialogFactory = {
           <Button
             key="submit"
             type="primary"
-            title={Intl.get('confirm')}
+            title={confirmText ?? Intl.get('confirm')}
             onClick={async () => {
               try {
                 if (onSuccess) {
@@ -106,7 +118,7 @@ const MessageDialogFactory = {
               }
             }}
           >
-            {Intl.get('confirm')}
+            {confirmText ?? Intl.get('confirm')}
           </Button>,
         ],
       },
@@ -165,6 +177,7 @@ const MessageDialogFactory = {
     config,
     width = DEFAULT_WIDTH,
     zIndex = DEFAULT_ZINDEX,
+    confirmText,
     local,
     onSuccess,
   }: PromptArgv): DialogHandle | void {
@@ -181,7 +194,7 @@ const MessageDialogFactory = {
           <Button
             key="submit"
             type="primary"
-            title={Intl.get('confirm')}
+            title={confirmText ?? Intl.get('confirm')}
             onClick={async () => {
               try {
                 if (onSuccess && ref.current) {
@@ -195,7 +208,7 @@ const MessageDialogFactory = {
               }
             }}
           >
-            {Intl.get('confirm')}
+            {confirmText ?? Intl.get('confirm')}
           </Button>,
         ],
       },

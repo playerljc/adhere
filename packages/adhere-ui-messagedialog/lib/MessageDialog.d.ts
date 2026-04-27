@@ -22,7 +22,7 @@ declare const MessageDialogFactory: {
      * @param params.onSuccess - 确认回调函数
      * @returns 对话框句柄
      */
-    Confirm({ title, text, width, zIndex, local, icon, onSuccess, }: ConfirmArgv): DialogHandle | void;
+    Confirm({ title, text, width, zIndex, confirmText, local, icon, onSuccess, }: ConfirmArgv): DialogHandle | void;
     /**
      * 创建警告对话框
      * @param params - 警告对话框参数
@@ -46,7 +46,7 @@ declare const MessageDialogFactory: {
      * @param params.onSuccess - 确认回调函数
      * @returns 对话框句柄
      */
-    Prompt({ title, config, width, zIndex, local, onSuccess, }: PromptArgv): DialogHandle | void;
+    Prompt({ title, config, width, zIndex, confirmText, local, onSuccess, }: PromptArgv): DialogHandle | void;
     /**
      * 创建输入框提示对话框
      * @param config

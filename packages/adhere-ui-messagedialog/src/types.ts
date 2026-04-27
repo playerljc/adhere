@@ -2,6 +2,7 @@ import type { ButtonProps } from 'antd';
 import type { ModalProps } from 'antd/lib/modal/interface';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
 
+
 /**
  * 警告对话框参数接口
  */
@@ -26,6 +27,7 @@ export interface AlertArgv {
 export interface ConfirmArgv extends AlertArgv {
   /** 确认回调函数 */
   onSuccess?: (params?: any) => Promise<void>;
+  confirmText?: string;
 }
 
 /**
@@ -46,6 +48,7 @@ export interface PromptArgv {
   local?: string;
   /** 确认回调函数 */
   onSuccess?: (value: any) => Promise<void>;
+  confirmText?: string;
 }
 
 /**
