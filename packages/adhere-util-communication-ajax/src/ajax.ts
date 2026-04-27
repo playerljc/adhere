@@ -707,7 +707,10 @@ function createResponseInterceptorRetry(
     }
 
     // 等待请求完成（response 过滤器链全部跑完后 resolve/reject）
-    await sendResult.promise;
+    const resolved = await sendResult.promise;
+
+    // 重试请求若带 loading 遮罩，resolve 后需主动关闭，否则遮罩会一直挂着
+    resolved?.hideIndicator?.();
 
     const xhr = sendResult.xhr as XMLHttpRequest;
     const responseType = xhr?.responseType ?? '';
@@ -1043,6 +1046,7 @@ async function rawRequestWithoutRequestInterceptors(
         getSendParams({
           data: interceptorsConfig?.data,
           contentType: contentType!,
+          customSendJSONStringify: interceptorsConfig?.customSendJSONStringify,
         }),
       );
     }
