@@ -21,6 +21,7 @@ import {
   ResolveDataResult,
   ResponseInterceptor,
   ResponseInterceptorReturn,
+  RetryOptions,
   SendParamsConfig,
   SendResult,
   XhrEventsConfig,
@@ -91,6 +92,14 @@ class Interceptors {
     if (this.responseInterceptors.has(key)) {
       this.responseInterceptors.delete(key);
     }
+  }
+
+  /**
+   * 返回所有已注册的请求拦截器 key 列表
+   * @description 供 retry 的 keys 白名单计算使用
+   */
+  getRequestInterceptorKeys(): string[] {
+    return Array.from(this.requestInterceptors.keys());
   }
 
   /**
@@ -669,6 +678,37 @@ function initXhrEvents({ xhr, events, reject }: XhrEventsConfig): void {
 }
 
 /**
+ * 根据 RetryOptions 计算最终发送参数
+ * - 处理 override 合并
+ * - 将 keys 白名单转换为 skipRequestInterceptors 黑名单
+ */
+function buildRetryParams(
+  ajaxInstance: Ajax,
+  base: ISendArg | undefined,
+  options: RetryOptions | undefined,
+): ISendArg {
+  const override = options?.override;
+  const next: ISendArg = {
+    ...(base ?? {}),
+    ...(override ?? {}),
+    headers: {
+      ...((base?.headers ?? {}) as any),
+      ...(override?.headers ?? {}),
+    },
+  };
+
+  const keys = options?.useRequestInterceptors?.keys;
+  if (keys) {
+    // keys 白名单：排除不在白名单里的请求拦截器 key
+    const allKeys = ajaxInstance.interceptors.getRequestInterceptorKeys();
+    const skipKeys = allKeys.filter((k) => !keys.includes(k));
+    next.skipRequestInterceptors = [...(next.skipRequestInterceptors ?? []), ...skipKeys];
+  }
+
+  return next;
+}
+
+/**
  * 专供响应过滤器内部使用的 retry 工厂
  * @description 返回的 retry 结果结构与 ResponseInterceptorReturn 一致，可在过滤器中直接 return
  */
@@ -678,21 +718,11 @@ function createResponseInterceptorRetry(
     rawParams?: ISendArg;
     finalParams?: ISendArg;
   },
-): (
-  override?: Partial<ISendArg>,
-  useRequestInterceptors?: boolean,
-) => Promise<ResponseInterceptorReturn> {
-  return async (override, useRequestInterceptors = false) => {
+): (options?: RetryOptions) => Promise<ResponseInterceptorReturn> {
+  return async (options) => {
+    const useRequestInterceptors = options?.useRequestInterceptors?.enabled ?? false;
     const base = useRequestInterceptors ? retryParams?.rawParams : retryParams?.finalParams;
-
-    const nextParams: ISendArg = {
-      ...(base ?? {}),
-      ...(override ?? {}),
-      headers: {
-        ...((base?.headers ?? {}) as any),
-        ...(override?.headers ?? {}),
-      },
-    };
+    const nextParams = buildRetryParams(ajaxInstance, base, options);
 
     let sendResult: SendResult;
 
@@ -719,6 +749,7 @@ function createResponseInterceptorRetry(
 
     return {
       ...nextParams,
+      ...(sendResult.interceptorsConfig ?? {}),
       headers: transformStringHeadersToObject(xhr?.getAllResponseHeaders?.() ?? ''),
       response: xhr?.response ?? null,
       responseText: canAccessText ? (xhr?.responseText ?? '') : '',
@@ -746,19 +777,11 @@ function createRetry(
     /** requestReducer 之后的“最终参数”（含 method） */
     finalParams?: ISendArg;
   },
-): (override?: Partial<ISendArg>, useRequestInterceptors?: boolean) => Promise<SendResult> {
-  return (override?: Partial<ISendArg>, useRequestInterceptors = false) => {
-    const rawBaseParams = params?.rawParams;
-    const finalBaseParams = params?.finalParams;
-
-    const nextParams: ISendArg = {
-      ...((useRequestInterceptors ? rawBaseParams : finalBaseParams) ?? {}),
-      ...(override ?? {}),
-      headers: {
-        ...(((useRequestInterceptors ? rawBaseParams : finalBaseParams)?.headers ?? {}) as any),
-        ...(override?.headers ?? {}),
-      },
-    };
+): (options?: RetryOptions) => Promise<SendResult> {
+  return (options) => {
+    const useRequestInterceptors = options?.useRequestInterceptors?.enabled ?? false;
+    const base = useRequestInterceptors ? params?.rawParams : params?.finalParams;
+    const nextParams = buildRetryParams(ajaxInstance, base, options);
 
     if (useRequestInterceptors) {
       // 直接走内部发送通道，不经过 debounceRequest，保证返回值结构与 false 分支一致
@@ -768,8 +791,8 @@ function createRetry(
     return rawRequestWithoutRequestInterceptors.call(
       ajaxInstance,
       nextParams,
-      // 让“不走请求拦截器”的请求也能继续携带 raw/final，用于后续 retry 切换策略
-      rawBaseParams ?? nextParams,
+      // 让"不走请求拦截器"的请求也能继续携带 raw/final，用于后续 retry 切换策略
+      params?.rawParams ?? nextParams,
     );
   };
 }

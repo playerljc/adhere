@@ -79,7 +79,25 @@ postResult.promise.then(data => {
 
 ### 请求重试（retry）
 
-在成功（`then`）和失败（`catch`）的回调参数中，都提供了 `retry(override)` 方法，用于在需要时**重新发送本次请求**。`override` 支持覆盖本次请求的部分参数（例如 `headers`、`data`、`path` 等）。
+在成功（`then`）和失败（`catch`）的回调参数中，都提供了 `retry(options?)` 方法，用于在需要时**重新发送本次请求**。
+
+```typescript
+interface RetryOptions {
+  /** 覆盖本次重试的请求参数（与原参数深合并） */
+  override?: Partial<ISendArg>;
+  /**
+   * 请求拦截器配置
+   * - 不传 / enabled: false：不走请求拦截器，用已过滤后的参数直接发请求（默认行为）
+   * - enabled: true, keys 不传：走全部请求拦截器，用原始未过滤参数
+   * - enabled: true, keys: ['auth']：只走 auth 拦截器，其余自动跳过
+   */
+  useRequestInterceptors?: {
+    enabled: boolean;
+    /** 白名单：只走这些 key 的请求拦截器；不传则走全部 */
+    keys?: string[];
+  };
+}
+```
 
 ```typescript
 // 失败后重试（例如刷新 token 后重发）
@@ -91,17 +109,17 @@ ajax
   .promise.then((res) => {
     console.log('GET响应:', res.data);
 
-    // 成功后也可以重发（例如带上不同 header 再请求一次）
+    // 成功后覆盖 header 重发，不走请求拦截器（默认）
     return res.retry({
-      headers: { Authorization: 'Bearer new_token' },
+      override: { headers: { Authorization: 'Bearer new_token' } },
     });
   })
   .catch((err) => {
     console.error('GET错误:', err);
 
-    // 失败后重试（可覆盖参数）
+    // 失败后重试：走全部请求拦截器（用原始参数）
     return err.retry({
-      headers: { Authorization: 'Bearer new_token' },
+      useRequestInterceptors: { enabled: true },
     });
   })
   .then((res2) => {
@@ -144,14 +162,16 @@ ajax.interceptors.addResponse('unwrap', (params) => {
   return params;
 });
 
-// 响应拦截器中可以直接使用 retry 进行重试（支持覆盖部分参数）
-// 第二个参数 useRequestInterceptors:
-// - false(默认)：使用“走过请求过滤器后的参数”直接发起请求，不再走请求拦截器，但仍会走响应拦截器
-// - true：使用“未走请求过滤器的原始参数”重新走请求拦截器 + 响应拦截器
+// 响应拦截器中可以直接使用 retry 进行重试（支持 RetryOptions）
+// useRequestInterceptors 不传或 enabled: false（默认）：用已过滤后的参数直接发请求
+// enabled: true：用原始未过滤参数重新走请求拦截器
+// enabled: true, keys: ['auth']：只走 auth 拦截器，其余自动跳过
 ajax.interceptors.addResponse('retry-once', async (params) => {
-  // 示例：遇到 401 时触发一次重试（具体业务逻辑自行调整）
+  // 示例：遇到 401 时只重走 auth 拦截器刷新 token，然后重发
   if (params.xhr?.status === 401) {
-    return await params.retry();
+    return await params.retry({
+      useRequestInterceptors: { enabled: true, keys: ['auth'] },
+    });
   }
   return params;
 });
@@ -326,11 +346,11 @@ interface ResolveDataResult {
   data: any;
   xhr: XMLHttpRequest;
   hideIndicator?: () => void;
-  retry: (override?: Partial<ISendArg>) => Promise<SendResult>;
+  retry: (options?: RetryOptions) => Promise<SendResult>;
 }
 ```
 
-当请求失败（非 2xx/304）时，`promise` reject 的对象会包含 `status/statusText/response/responseText`，并且同样带有 `retry(override)` 方便重发。
+当请求失败（非 2xx/304）时，`promise` reject 的对象会包含 `status/statusText/response/responseText`，并且同样带有 `retry(options?)` 方便重发。
 
 ### 防抖去重（enableDebounce）
 

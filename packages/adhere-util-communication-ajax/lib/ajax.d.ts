@@ -35,6 +35,11 @@ declare class Interceptors {
      */
     removeResponseInterceptor(key: string): void;
     /**
+     * 返回所有已注册的请求拦截器 key 列表
+     * @description 供 retry 的 keys 白名单计算使用
+     */
+    getRequestInterceptorKeys(): string[];
+    /**
      * 对请求参数进行拦截器处理
      * @param params - 请求参数
      * @returns 处理后的请求参数

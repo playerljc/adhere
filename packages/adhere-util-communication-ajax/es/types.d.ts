@@ -221,6 +221,24 @@ export interface SendResult extends Prepare {
  */
 export type RequestInterceptor = (params: ISendArg) => ISendArg | Promise<ISendArg>;
 /**
+ * retry 方法的选项参数
+ */
+export interface RetryOptions {
+    /** 覆盖本次重试的请求参数（与原参数深合并） */
+    override?: Partial<ISendArg>;
+    /**
+     * 请求拦截器配置
+     * - 不传 / enabled: false：不走请求拦截器，直接用上一次已过滤后的参数重发
+     * - enabled: true, keys 不传：走全部请求拦截器，用原始未过滤参数
+     * - enabled: true, keys 传了：只走指定 key 的请求拦截器，其余 key 自动跳过
+     */
+    useRequestInterceptors?: {
+        enabled: boolean;
+        /** 白名单：只走这些 key 的请求拦截器；不传则走全部 */
+        keys?: string[];
+    };
+}
+/**
  * 响应拦截器参数接口
  */
 export interface ResponseInterceptorParams extends ISendArg {
@@ -231,7 +249,7 @@ export interface ResponseInterceptorParams extends ISendArg {
     /**
      * 重新发送当前请求，返回结构与响应拦截器参数结构一致，可直接在拦截器中 return
      */
-    retry: (override?: Partial<ISendArg>, useRequestInterceptors?: boolean) => Promise<ResponseInterceptorReturn>;
+    retry: (options?: RetryOptions) => Promise<ResponseInterceptorReturn>;
 }
 export interface ResponseInterceptorReturn extends ISendArg {
     response: XMLHttpRequest['response'];
@@ -241,7 +259,7 @@ export interface ResponseInterceptorReturn extends ISendArg {
     /**
      * 重新发送当前请求，返回结构与响应拦截器参数结构一致，可直接在拦截器中 return
      */
-    retry: (override?: Partial<ISendArg>, useRequestInterceptors?: boolean) => Promise<ResponseInterceptorReturn>;
+    retry: (options?: RetryOptions) => Promise<ResponseInterceptorReturn>;
 }
 /**
  * 响应拦截器类型
@@ -336,7 +354,7 @@ export interface ResolveDataResult {
     /** 隐藏指示器函数 */
     hideIndicator?: () => void;
     /** 重新发送当前请求（支持覆盖部分参数） */
-    retry: (override?: Partial<ISendArg>, useRequestInterceptors?: boolean) => Promise<SendResult>;
+    retry: (options?: RetryOptions) => Promise<SendResult>;
 }
 /**
  * XHR事件初始化参数接口
