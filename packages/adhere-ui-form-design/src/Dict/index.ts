@@ -40,6 +40,7 @@ import { MouseEvents } from './MouseEvents';
 import { NoFormFieldTypes } from './NoFormFieldTypes';
 import { Picker } from './Picker';
 import { Placement } from './Placement';
+import { PhoneAreaCode } from './PhoneAreaCode';
 import { QRCodeErrorLevel } from './QRCodeErrorLevel';
 import { QRCodeStatus } from './QRCodeStatus';
 import { QRCodeStatusRenderTemplate } from './QRCodeStatusRenderTemplate';
@@ -125,6 +126,7 @@ const dictImpls = {
   TimeMinuteSecondStep,
   ValuePropName,
   InputSize,
+  PhoneAreaCode,
   DefaultToolBox,
   LayoutFieldTypes,
   Variant,

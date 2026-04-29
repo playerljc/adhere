@@ -67,9 +67,13 @@
 - [x] QRCode
 - [x] 签名组件
 - [x] Divider分割线
-- ImageCaptcha(图片的验证码)
+- ImageCaptcha(图片的验证码) - 暂时先暂停
   - [ ] 支持维护一个接口地址生成图片
   - [ ] 拖拽形状验证码(rc-slider-captcha)
+
+- [ ]PhoneWithAreaCode(不同区域的电话号码选择)
+- [ ]ChinaPhone - 中国电话
+
 - [ ] 短信验证码
 - [ ] QuickRangeDate(快速的时间范围选择)
 - Upload(文件的上传)
@@ -78,7 +82,9 @@
     - [ ] 阿里云OSS
     - [ ] 腾讯云OSS
     - [ ] 七牛云OSS
+    - 
 - [ ] ImageCroppingUpload(图片的上传可以对图片进行处理)
+
 - MapSelectPoint(地图中选点的操作)
     - [ ] 百度MAP
     - [ ] 高德MAP
@@ -87,9 +93,7 @@
     - [ ] GoogleMAP
     - [ ] MapBOX
     - [ ] OSM
-- PhoneWithAreaCode(不同区域的电话号码选择)
-    - [ ] 中国电话
-    - [ ] 海外电话
+
 - [ ] RichEditor(富文本)
 - [ ] 表达式(可以输入表达式)
 

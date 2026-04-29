@@ -329,5 +329,10 @@ export default [
     clear_all_confirm_content:
       'هل تريد بالتأكيد مسح تصميم النموذج الحالي؟ لا يمكن التراجع عن هذا الإجراء.',
     clear_all_disabled_hint: 'اللوحة فارغة بالفعل.',
+
+    phone_with_area_code: 'هاتف مع رمز المنطقة',
+    area_code: 'رمز المنطقة',
+    phone_number: 'رقم الهاتف',
+    please_enter_phone_number: 'الرجاء إدخال رقم الهاتف',
   },
 ];

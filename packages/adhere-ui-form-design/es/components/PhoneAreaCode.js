@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,PhoneAreaCodeSelectStandardDict=Components[genDictComponentName(names.PhoneAreaCode,ComponentNames.Select.Standard)];export{PhoneAreaCodeSelectStandardDict};
+//# sourceMappingURL=PhoneAreaCode.js.map

@@ -329,5 +329,10 @@ export default [
     clear_all_confirm_content:
       'Tem a certeza de que pretende limpar o desenho do formulário atual? Esta ação não pode ser anulada.',
     clear_all_disabled_hint: 'A área de desenho já está vazia.',
+
+    phone_with_area_code: 'Telefone com indicativo',
+    area_code: 'Indicativo',
+    phone_number: 'Número de telefone',
+    please_enter_phone_number: 'Por favor, insira o número de telefone',
   },
 ];

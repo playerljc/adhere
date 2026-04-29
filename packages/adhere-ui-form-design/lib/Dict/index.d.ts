@@ -274,6 +274,9 @@ declare const names: Partial<{
             value: string;
         }[];
     };
+    PhoneAreaCode: {
+        value: import("./PhoneAreaCode").PhoneAreaCodeItem[];
+    };
     DefaultToolBox: {
         value: {
             id: string;

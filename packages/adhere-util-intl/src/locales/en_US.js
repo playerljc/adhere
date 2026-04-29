@@ -424,5 +424,10 @@ export default [
     gen_json_export_filename: 'form-design',
     gen_json_disabled_hint: 'The canvas is empty; nothing to export as JSON.',
     gen_json_copy_failed: 'Copy failed',
+
+    phone_with_area_code: 'Phone with area code',
+    area_code: 'Area code',
+    phone_number: 'Phone number',
+    please_enter_phone_number: 'Please enter phone number',
   },
 ];

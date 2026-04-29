@@ -1,1 +1,1 @@
-export declare const TYPE = "advanced-image-captcha";
+export declare const TYPE = "image-captcha";

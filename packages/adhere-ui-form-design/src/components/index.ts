@@ -94,6 +94,7 @@ import { TimeRangePickerEventsSelectStandardDict } from './TimeRangePickerEvents
 import TransferDataSourceManagerFormItem from './TransferDataSourceManagerFormItem';
 import TreeDataSourceManagerFormItem from './TreeDataSourceManagerFormItem';
 import { TreeSelectShowCheckedStrategySelectStandardDict } from './TreeSelectShowCheckedStrategy';
+import { PhoneAreaCodeSelectStandardDict } from './PhoneAreaCode';
 import { ValuePropNameSelectStandardDict } from './ValuePropName';
 import { VariantSelectStandardDict } from './Variant';
 import { VerificationStatusSelectStandardDict } from './VerificationStatus';
@@ -212,4 +213,5 @@ export {
   TimeHourStepSelectStandardDict,
   TimeMinuteSecondStepSelectStandardDict,
   TableNumberGeneratorRuleSelectStandardDict,
+  PhoneAreaCodeSelectStandardDict,
 };

@@ -1,0 +1,67 @@
+// 常用国家/地区电话区号
+export type PhoneAreaCodeRule = 'digits' | 'digits_and_space_dash';
+
+export type PhoneAreaCodeItem = {
+  label: string;
+  value: string;
+  /**
+   * 输入规则（用于 PhoneWithAreaCode 字段根据区号决定过滤策略）
+   */
+  rule?: PhoneAreaCodeRule;
+};
+
+export const PhoneAreaCode = {
+  handler: (): PhoneAreaCodeItem[] => {
+    // 说明：
+    // - label 直接包含中英文，避免引入大量国家名称 i18n 词条
+    // - value 统一为字符串（如 “+86”）
+    return [
+      { label: '+86 中国(China)', value: '+86', rule: 'digits' },
+      { label: '+852 中国香港(Hong Kong)', value: '+852', rule: 'digits' },
+      { label: '+853 中国澳门(Macau)', value: '+853', rule: 'digits' },
+      { label: '+886 中国台湾(Taiwan)', value: '+886', rule: 'digits' },
+
+      { label: '+1 美国/加拿大(US/Canada)', value: '+1', rule: 'digits_and_space_dash' },
+      { label: '+44 英国(United Kingdom)', value: '+44', rule: 'digits_and_space_dash' },
+      { label: '+49 德国(Germany)', value: '+49', rule: 'digits_and_space_dash' },
+      { label: '+33 法国(France)', value: '+33', rule: 'digits_and_space_dash' },
+      { label: '+39 意大利(Italy)', value: '+39', rule: 'digits_and_space_dash' },
+      { label: '+34 西班牙(Spain)', value: '+34', rule: 'digits_and_space_dash' },
+      { label: '+31 荷兰(Netherlands)', value: '+31', rule: 'digits_and_space_dash' },
+      { label: '+32 比利时(Belgium)', value: '+32', rule: 'digits_and_space_dash' },
+      { label: '+41 瑞士(Switzerland)', value: '+41', rule: 'digits_and_space_dash' },
+      { label: '+43 奥地利(Austria)', value: '+43', rule: 'digits_and_space_dash' },
+      { label: '+46 瑞典(Sweden)', value: '+46', rule: 'digits_and_space_dash' },
+      { label: '+45 丹麦(Denmark)', value: '+45', rule: 'digits_and_space_dash' },
+      { label: '+47 挪威(Norway)', value: '+47', rule: 'digits_and_space_dash' },
+      { label: '+358 芬兰(Finland)', value: '+358', rule: 'digits_and_space_dash' },
+      { label: '+353 爱尔兰(Ireland)', value: '+353', rule: 'digits_and_space_dash' },
+      { label: '+351 葡萄牙(Portugal)', value: '+351', rule: 'digits_and_space_dash' },
+
+      { label: '+7 俄罗斯(Russia)', value: '+7', rule: 'digits_and_space_dash' },
+      { label: '+81 日本(Japan)', value: '+81', rule: 'digits' },
+      { label: '+82 韩国(South Korea)', value: '+82', rule: 'digits' },
+      { label: '+91 印度(India)', value: '+91', rule: 'digits' },
+      { label: '+65 新加坡(Singapore)', value: '+65', rule: 'digits' },
+      { label: '+60 马来西亚(Malaysia)', value: '+60', rule: 'digits' },
+      { label: '+66 泰国(Thailand)', value: '+66', rule: 'digits' },
+      { label: '+62 印度尼西亚(Indonesia)', value: '+62', rule: 'digits' },
+      { label: '+63 菲律宾(Philippines)', value: '+63', rule: 'digits' },
+      { label: '+84 越南(Vietnam)', value: '+84', rule: 'digits' },
+
+      { label: '+61 澳大利亚(Australia)', value: '+61', rule: 'digits_and_space_dash' },
+      { label: '+64 新西兰(New Zealand)', value: '+64', rule: 'digits_and_space_dash' },
+
+      { label: '+55 巴西(Brazil)', value: '+55', rule: 'digits_and_space_dash' },
+      { label: '+52 墨西哥(Mexico)', value: '+52', rule: 'digits_and_space_dash' },
+      { label: '+54 阿根廷(Argentina)', value: '+54', rule: 'digits_and_space_dash' },
+      { label: '+56 智利(Chile)', value: '+56', rule: 'digits_and_space_dash' },
+
+      { label: '+27 南非(South Africa)', value: '+27', rule: 'digits_and_space_dash' },
+      { label: '+20 埃及(Egypt)', value: '+20', rule: 'digits_and_space_dash' },
+      { label: '+971 阿联酋(UAE)', value: '+971', rule: 'digits' },
+      { label: '+966 沙特阿拉伯(Saudi Arabia)', value: '+966', rule: 'digits' },
+    ];
+  },
+};
+
