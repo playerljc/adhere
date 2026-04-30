@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import React from 'react';
+import React, { type ReactNode } from 'react';
 import type { PhoneAreaCodeItem } from '../../../Dict/PhoneAreaCode';
 export type PhoneWithAreaCodeValue = {
     code?: string;
@@ -32,6 +32,10 @@ export type PhoneWithAreaCodeFieldProps = {
     areaCodeActions?: Record<string, (...args: any[]) => any>;
     /** 右侧号码输入事件（与 actions 合并，本侧优先） */
     phoneInputActions?: Record<string, (...args: any[]) => any>;
+    /**
+     * 右侧扩展内容（例如：发送验证码按钮）
+     */
+    rightAddon?: ReactNode;
     /**
      * 覆盖默认区号选项（缺省取 Dict.PhoneAreaCode）
      */

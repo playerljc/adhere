@@ -34,6 +34,15 @@ export function define(): DesignItem {
         validateTrigger: 'onChange',
       },
       fieldProps: {
+        // 手机号（PhoneWithAreaCode）
+        defaultCode: '+86',
+        areaCodeOptionsSource: {
+          type: 'static',
+          areaCodeJson: '',
+        },
+        phonePlaceholder: '',
+        allowClear: true,
+        // 验证码
         placeholder: '',
         disabled: false,
         readOnly: false,
@@ -55,6 +64,9 @@ export function define(): DesignItem {
         codeInputActions: [],
         sendButtonActions: [],
         countdownActions: [],
+        // PhoneWithAreaCode events
+        areaCodeActions: [],
+        phoneInputActions: [],
       },
       fieldActionTypes: [Copy.key, Delete.key],
     },

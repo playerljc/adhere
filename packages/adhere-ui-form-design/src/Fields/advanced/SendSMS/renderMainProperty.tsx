@@ -5,6 +5,8 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types
 import Intl from '@baifendian/adhere-util-intl';
 
 import {
+  AreaCodePhoneDataSourceManagerFormItem,
+  PhoneAreaCodeSelectStandardDict,
   SendSMSDataSourcePickerFormItem,
   WhetherRadioHorizontalDict,
   buildFormPropertyPlaceholderRow,
@@ -35,6 +37,67 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="readOnly">
+            <WhetherRadioHorizontalDict />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'defaultCode',
+      require: false,
+      label: (
+        <Label>
+          {Intl.get('default')}
+          {Intl.get('area_code')}：
+        </Label>
+      ),
+      value: (
+        <Value>
+          <Form.Item name="defaultCode">
+            <PhoneAreaCodeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'areaCodeOptionsSource',
+      require: false,
+      label: <Label>{Intl.get('area_code_data_source')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="areaCodeOptionsSource">
+            <AreaCodePhoneDataSourceManagerFormItem />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'phonePlaceholder',
+      require: false,
+      label: <Label>{Intl.get('phone_number')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="phonePlaceholder">
+            <Input.OptimizedInput
+              placeholder={Intl.get('please_enter_phone_number')}
+              maxLength={200}
+              showCount={false}
+            />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'allowClear',
+      require: false,
+      label: (
+        <Label>
+          {Intl.get('allow_clear')}（{Intl.get('phone_number')}）：
+        </Label>
+      ),
+      value: (
+        <Value>
+          <Form.Item name="allowClear">
             <WhetherRadioHorizontalDict />
           </Form.Item>
         </Value>

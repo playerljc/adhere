@@ -12,11 +12,15 @@ import type { DesignValueProps } from '../../../types';
 
 export function ActionsProperty({
   designValue,
+  areaCodeActions,
+  phoneInputActions,
   codeInputActions,
   sendButtonActions,
   countdownActions,
 }: {
   designValue: DesignValueProps;
+  areaCodeActions: ActionItem[];
+  phoneInputActions: ActionItem[];
   codeInputActions: ActionItem[];
   sendButtonActions: ActionItem[];
   countdownActions: ActionItem[];
@@ -50,6 +54,30 @@ export function ActionsProperty({
             columnCount: 1,
             colgroup: ['auto'],
             data: [
+              {
+                key: 'areaCodeActions',
+                require: false,
+                label: <Label>{Intl.get('phone_area_code_select_actions')}：</Label>,
+                value: (
+                  <Value>
+                    <Form.Item name="areaCodeActions">
+                      <ActionsFormItem actions={areaCodeActions} />
+                    </Form.Item>
+                  </Value>
+                ),
+              },
+              {
+                key: 'phoneInputActions',
+                require: false,
+                label: <Label>{Intl.get('phone_number_input_actions')}：</Label>,
+                value: (
+                  <Value>
+                    <Form.Item name="phoneInputActions">
+                      <ActionsFormItem actions={phoneInputActions} />
+                    </Form.Item>
+                  </Value>
+                ),
+              },
               {
                 key: 'codeInputActions',
                 require: false,
@@ -98,6 +126,8 @@ export function renderActionsProperty(props: DesignValueProps): ReactNode {
   return (
     <ActionsProperty
       designValue={props}
+      areaCodeActions={(values.PhoneAreaCodeAreaEvents?.value ?? []) as ActionItem[]}
+      phoneInputActions={(values.InputEvents?.value ?? []) as ActionItem[]}
       codeInputActions={(values.InputEvents?.value ?? []) as ActionItem[]}
       sendButtonActions={(values.ButtonEvents?.value ?? []) as ActionItem[]}
       countdownActions={(values.SendSMSCountdownEvents?.value ?? []) as ActionItem[]}

@@ -526,6 +526,8 @@ export default [
     verification_code: '验证码',
     please_enter_verification_code: '请输入验证码',
     send_sms_countdown: '{value}s',
+    send_sms_resend_countdown: '重新发送({value}s)',
+    send_sms_countdown_tip: '请在{value}s后重试',
     send_sms_countdown_seconds: '倒计时秒数',
     send_sms_data_source: '发送验证码数据源',
     send_sms_data_source_placeholder: '请选择发送验证码数据源',

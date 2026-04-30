@@ -2,11 +2,8 @@
 
 .@{prefix-cls}-send-sms {
   width: var(--send-sms-width, 100%);
-}
-
-.@{prefix-cls}-send-sms-input {
-  flex: 1;
-  min-width: var(--send-sms-input-min-width, 0);
+  // 通过 css 变量控制 PhoneWithAreaCode 的 addon 宽度
+  --phone-with-area-code-addon-width: var(--send-sms-send-width, 140px);
 }
 
 .@{prefix-cls}-send-sms-send {

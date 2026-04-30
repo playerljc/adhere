@@ -438,6 +438,8 @@ export default [
     verification_code: 'Verification code',
     please_enter_verification_code: 'Please enter verification code',
     send_sms_countdown: '{value}s',
+    send_sms_resend_countdown: 'Resend ({value}s)',
+    send_sms_countdown_tip: 'Please retry in {value}s',
     send_sms_countdown_seconds: 'Countdown seconds',
     send_sms_data_source: 'Send SMS data source',
     send_sms_data_source_placeholder: 'Please select Send SMS data source',

@@ -1,4 +1,4 @@
-import { Button, Input, Space } from 'antd';
+import { Button, Tooltip } from 'antd';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
@@ -7,12 +7,14 @@ import type { DataSourceManagerFormItemValue } from '../../../components/DataSou
 import { SELECT_PREFIX } from '../../../constant';
 import type { DataSourceItemConfig, DesignValue } from '../../../types';
 import { findDataSourceItemConfigByDynamicId } from '../../../utils';
+import PhoneWithAreaCodeField, {
+  type PhoneWithAreaCodeFieldProps,
+  type PhoneWithAreaCodeValue,
+} from '../PhoneWithAreaCode/PhoneWithAreaCodeField';
 
 const selectorPrefix = `${SELECT_PREFIX}-send-sms`;
 
-export type SendSMSValue = {
-  code?: string;
-};
+export type SendSMSValue = string;
 
 export type SendSMSFieldProps = {
   rootDesignValue?: DesignValue;
@@ -24,7 +26,18 @@ export type SendSMSFieldProps = {
   onChange?: (value: SendSMSValue) => void;
   disabled?: boolean;
   readOnly?: boolean;
+  /** 验证码输入框 placeholder */
   placeholder?: string;
+  /** 手机号输入配置 */
+  phoneProps?: Pick<
+    PhoneWithAreaCodeFieldProps,
+    'defaultCode' | 'allowClear' | 'areaCodeOptions' | 'areaCodeLoading' | 'areaCodeActions' | 'phoneInputActions'
+  > & {
+    /** 手机号输入框 placeholder（右侧） */
+    placeholder?: string;
+    disabled?: boolean;
+    readOnly?: boolean;
+  };
   /**
    * 倒计时秒数
    */
@@ -47,7 +60,7 @@ export type SendSMSFieldProps = {
    * 设计器下发的 actions（事件），兼容旧版：未配置分区事件时共用
    */
   actions?: Record<string, (...args: any[]) => any>;
-  /** 左侧输入框事件（与 actions 合并，本侧优先） */
+  /** 验证码输入框事件（与 actions 合并，本侧优先） */
   codeInputActions?: Record<string, (...args: any[]) => any>;
   /** 发送按钮事件（与 actions 合并，本侧优先） */
   sendButtonActions?: Record<string, (...args: any[]) => any>;
@@ -99,19 +112,14 @@ export default function SendSMSField(props: SendSMSFieldProps) {
     onChange,
     disabled,
     readOnly,
-    placeholder,
+    phoneProps,
     countdownSeconds = 60,
     sendApi,
     actions,
-    codeInputActions,
     sendButtonActions,
     countdownActions,
   } = props;
 
-  const mergedCodeInputEvents = useMemo(
-    () => ({ ...(actions ?? {}), ...(codeInputActions ?? {}) }),
-    [actions, codeInputActions],
-  );
   const mergedSendButtonEvents = useMemo(
     () => ({ ...(actions ?? {}), ...(sendButtonActions ?? {}) }),
     [actions, sendButtonActions],
@@ -121,12 +129,14 @@ export default function SendSMSField(props: SendSMSFieldProps) {
     [actions, countdownActions],
   );
 
-  const [inner, setInner] = useState<SendSMSValue>(defaultValue ?? {});
+  const [inner, setInner] = useState<SendSMSValue>(defaultValue ?? '');
   const mergedValue = value ?? inner;
 
   const [sending, setSending] = useState(false);
   const [leftSeconds, setLeftSeconds] = useState<number>(0);
   const timerRef = useRef<number | null>(null);
+
+  const [phoneValue, setPhoneValue] = useState<PhoneWithAreaCodeValue>({});
 
   const cfg = useMemo(() => {
     const source = sendApi?.source;
@@ -135,7 +145,16 @@ export default function SendSMSField(props: SendSMSFieldProps) {
     return findDataSourceItemConfigByDynamicId(rootDesignValue, source.dynamicConfigId);
   }, [rootDesignValue, sendApi?.source]);
 
-  const disabledSend = disabled || readOnly || sending || leftSeconds > 0 || !cfg;
+  const hasPhone = Boolean((phoneValue?.value ?? '').trim());
+  const disabledSend = disabled || readOnly || sending || leftSeconds > 0 || !cfg || !hasPhone;
+
+  const disabledReason = useMemo(() => {
+    if (disabled || readOnly) return Intl.get('disabled');
+    if (!cfg) return Intl.get('send_sms_data_source_placeholder');
+    if (!hasPhone) return Intl.get('please_enter_phone_number');
+    if (leftSeconds > 0) return Intl.get('send_sms_countdown_tip', { value: leftSeconds });
+    return '';
+  }, [cfg, disabled, hasPhone, leftSeconds, readOnly]);
 
   function emit(next: SendSMSValue) {
     if (value === undefined) setInner(next);
@@ -179,7 +198,12 @@ export default function SendSMSField(props: SendSMSFieldProps) {
     if (!cfg || disabledSend) return;
     setSending(true);
     try {
-      const json = await requestByConfigWithData(cfg, sendApi?.requestData);
+      const dataOverride = {
+        areaCode: phoneValue?.code,
+        phone: phoneValue?.value,
+        ...(sendApi?.requestData ?? {}),
+      };
+      const json = await requestByConfigWithData(cfg, dataOverride);
       const code = json?.[cfg.request.codeKey];
       if (code !== cfg.request.codeSuccess) return;
       const payload = json?.[cfg.request.dataKey];
@@ -193,33 +217,45 @@ export default function SendSMSField(props: SendSMSFieldProps) {
     }
   }
 
-  return (
-    <Space.Compact className={selectorPrefix} block>
-      <Input
-        className={`${selectorPrefix}-input`}
-        disabled={disabled}
-        readOnly={readOnly}
-        placeholder={placeholder}
-        value={mergedValue?.code ?? ''}
-        {...mergedCodeInputEvents}
-        onChange={(e) => {
-          emit({ ...(mergedValue ?? {}), code: e.target.value });
-        }}
-      />
+  // value/onChange 仍保留（验证码值由外部别处输入/回填），此处不提供第二个输入框
+  void mergedValue;
+  void emit;
 
-      <Button
-        className={`${selectorPrefix}-send`}
-        disabled={disabledSend}
-        loading={sending}
-        {...mergedSendButtonEvents}
-        onClick={(e) => {
-          mergedSendButtonEvents?.onClick?.(e);
-          void handleSend();
-        }}
-      >
-        {leftSeconds > 0 ? Intl.get('send_sms_countdown', { value: leftSeconds }) : Intl.get('send_sms')}
-      </Button>
-    </Space.Compact>
+  return (
+    <div className={selectorPrefix}>
+      <PhoneWithAreaCodeField
+        value={phoneValue}
+        onChange={(next) => setPhoneValue(next)}
+        disabled={phoneProps?.disabled ?? disabled}
+        readOnly={phoneProps?.readOnly ?? readOnly}
+        defaultCode={phoneProps?.defaultCode}
+        allowClear={phoneProps?.allowClear}
+        placeholder={phoneProps?.placeholder as any}
+        areaCodeOptions={phoneProps?.areaCodeOptions}
+        areaCodeLoading={phoneProps?.areaCodeLoading}
+        actions={actions}
+        areaCodeActions={phoneProps?.areaCodeActions}
+        phoneInputActions={phoneProps?.phoneInputActions}
+        rightAddon={
+          <Tooltip title={disabledSend ? disabledReason : ''}>
+            <Button
+              className={`${selectorPrefix}-send`}
+              disabled={disabledSend}
+              loading={sending}
+              {...mergedSendButtonEvents}
+              onClick={(e) => {
+                mergedSendButtonEvents?.onClick?.(e);
+                void handleSend();
+              }}
+            >
+              {leftSeconds > 0
+                ? Intl.get('send_sms_resend_countdown', { value: leftSeconds })
+                : Intl.get('send_sms')}
+            </Button>
+          </Tooltip>
+        }
+      />
+    </div>
   );
 }
 

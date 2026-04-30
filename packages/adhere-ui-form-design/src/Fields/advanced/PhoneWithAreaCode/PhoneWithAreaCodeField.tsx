@@ -1,6 +1,6 @@
 import { Select, Space } from 'antd';
 import type { CSSProperties } from 'react';
-import React, { useMemo } from 'react';
+import React, { useMemo, type ReactNode } from 'react';
 
 import { Input } from '@baifendian/adhere-ui-anthoc';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -43,6 +43,10 @@ export type PhoneWithAreaCodeFieldProps = {
   areaCodeActions?: Record<string, (...args: any[]) => any>;
   /** 右侧号码输入事件（与 actions 合并，本侧优先） */
   phoneInputActions?: Record<string, (...args: any[]) => any>;
+  /**
+   * 右侧扩展内容（例如：发送验证码按钮）
+   */
+  rightAddon?: ReactNode;
   /**
    * 覆盖默认区号选项（缺省取 Dict.PhoneAreaCode）
    */
@@ -107,6 +111,7 @@ export default function PhoneWithAreaCodeField(props: PhoneWithAreaCodeFieldProp
     actions,
     areaCodeActions,
     phoneInputActions,
+    rightAddon,
   } = props;
 
   const mergedAreaCodeEvents = useMemo(
@@ -243,6 +248,8 @@ export default function PhoneWithAreaCodeField(props: PhoneWithAreaCodeFieldProp
           });
         }}
       />
+
+      {rightAddon ? <span className={`${selectorPrefix}-addon`}>{rightAddon}</span> : null}
     </Space.Compact>
   );
 }

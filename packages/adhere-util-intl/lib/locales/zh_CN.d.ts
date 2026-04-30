@@ -522,6 +522,8 @@ declare const _default: {
     verification_code: string;
     please_enter_verification_code: string;
     send_sms_countdown: string;
+    send_sms_resend_countdown: string;
+    send_sms_countdown_tip: string;
     send_sms_countdown_seconds: string;
     send_sms_data_source: string;
     send_sms_data_source_placeholder: string;

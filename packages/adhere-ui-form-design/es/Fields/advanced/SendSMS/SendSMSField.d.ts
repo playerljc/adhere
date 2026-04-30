@@ -1,9 +1,8 @@
 import React from 'react';
 import type { DataSourceManagerFormItemValue } from '../../../components/DataSourceManagerFormItem';
 import type { DesignValue } from '../../../types';
-export type SendSMSValue = {
-    code?: string;
-};
+import { type PhoneWithAreaCodeFieldProps } from '../PhoneWithAreaCode/PhoneWithAreaCodeField';
+export type SendSMSValue = string;
 export type SendSMSFieldProps = {
     rootDesignValue?: DesignValue;
     value?: SendSMSValue;
@@ -14,7 +13,15 @@ export type SendSMSFieldProps = {
     onChange?: (value: SendSMSValue) => void;
     disabled?: boolean;
     readOnly?: boolean;
+    /** 验证码输入框 placeholder */
     placeholder?: string;
+    /** 手机号输入配置 */
+    phoneProps?: Pick<PhoneWithAreaCodeFieldProps, 'defaultCode' | 'allowClear' | 'areaCodeOptions' | 'areaCodeLoading' | 'areaCodeActions' | 'phoneInputActions'> & {
+        /** 手机号输入框 placeholder（右侧） */
+        placeholder?: string;
+        disabled?: boolean;
+        readOnly?: boolean;
+    };
     /**
      * 倒计时秒数
      */
@@ -37,7 +44,7 @@ export type SendSMSFieldProps = {
      * 设计器下发的 actions（事件），兼容旧版：未配置分区事件时共用
      */
     actions?: Record<string, (...args: any[]) => any>;
-    /** 左侧输入框事件（与 actions 合并，本侧优先） */
+    /** 验证码输入框事件（与 actions 合并，本侧优先） */
     codeInputActions?: Record<string, (...args: any[]) => any>;
     /** 发送按钮事件（与 actions 合并，本侧优先） */
     sendButtonActions?: Record<string, (...args: any[]) => any>;
