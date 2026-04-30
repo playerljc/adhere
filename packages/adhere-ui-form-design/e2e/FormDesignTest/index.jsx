@@ -76,7 +76,13 @@ export default () => {
       },
       {
         items: [...antd.toolBox, ...advanced.toolBox].filter(({ type }) =>
-          ['ant-editor-table', 'ant-qrcode', 'ant-signature-pad', 'image-captcha'].includes(type),
+          [
+            'ant-editor-table',
+            'ant-qrcode',
+            'ant-signature-pad',
+            'image-captcha',
+            'phone-with-area-code',
+          ].includes(type),
         ),
         columns: 2,
       },
@@ -88,7 +94,7 @@ export default () => {
       className="Design"
       terminal="desktop"
       toolBox={toolBox}
-      items={[...layout.designItems, ...antd.designItems]}
+      items={[...layout.designItems, ...antd.designItems, ...advanced.designItems]}
     />
   );
 };

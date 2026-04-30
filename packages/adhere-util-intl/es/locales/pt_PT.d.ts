@@ -327,5 +327,9 @@ declare const _default: {
     clear_all_confirm_title: string;
     clear_all_confirm_content: string;
     clear_all_disabled_hint: string;
+    phone_with_area_code: string;
+    area_code: string;
+    phone_number: string;
+    please_enter_phone_number: string;
 }[];
 export default _default;

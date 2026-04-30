@@ -420,5 +420,9 @@ declare const _default: {
     gen_json_export_filename: string;
     gen_json_disabled_hint: string;
     gen_json_copy_failed: string;
+    phone_with_area_code: string;
+    area_code: string;
+    phone_number: string;
+    please_enter_phone_number: string;
 }[];
 export default _default;

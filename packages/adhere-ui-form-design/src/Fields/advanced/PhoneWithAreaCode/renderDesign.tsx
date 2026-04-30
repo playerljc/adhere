@@ -4,7 +4,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { LabelDesign, ValueDesign } from '../../../components';
 import type { DesignContextType, DesignValue } from '../../../types';
-import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../utils';
+import { computeLabelValueColSpan, findDesignValueById } from '../../../utils';
 import PhoneWithAreaCodeField from './PhoneWithAreaCodeField';
 
 export function renderDesign({
@@ -35,17 +35,17 @@ export function renderDesign({
     value: (
       <ValueDesign value={value}>
         {({ fieldProps, style, actions, lang }) => (
-          <div style={style ?? {}} {...actions}>
-            <PhoneWithAreaCodeField
-              defaultCode={fieldProps.defaultCode}
-              allowClear={fieldProps.allowClear}
-              placeholder={resolveI18nText(fieldProps.placeholder as any, lang) as any}
-              value={formItemProps?.initialValue as any}
-            />
-          </div>
+          <PhoneWithAreaCodeField
+            style={style ?? {}}
+            actions={actions}
+            defaultCode={fieldProps.defaultCode}
+            allowClear={fieldProps.allowClear}
+            disabled={fieldProps.disabled}
+            placeholder={fieldProps.placeholder as any}
+            defaultValue={formItemProps?.initialValue as any}
+          />
         )}
       </ValueDesign>
     ),
   };
 }
-

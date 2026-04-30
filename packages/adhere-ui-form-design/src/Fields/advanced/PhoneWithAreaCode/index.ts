@@ -1,6 +1,9 @@
 import { Copy, Delete } from '../../../components/DesignFieldActions/actions';
 import type { DesignItem } from '../../../types';
 import { TYPE } from './constant';
+import { renderActions } from './renderActions';
+import { renderActionsProperty } from './renderActionsProperty';
+import { renderActionsToMobile } from './renderActionsToMobile';
 import { renderDesign } from './renderDesign';
 import { renderDesignToMobile } from './renderDesignToMobile';
 import { renderFormProperty } from './renderFormProperty';
@@ -15,8 +18,11 @@ export function define(): DesignItem {
     renderFormProperty,
     renderMainProperty,
     renderStyleProperty,
+    renderActionsProperty,
+    renderActions,
+    renderActionsToMobile,
     hasFormProperty: true,
-    hasActionsProperty: false,
+    hasActionsProperty: true,
     hasFlexProperty: false,
     defaultValue: {
       formItemProps: {
@@ -30,16 +36,11 @@ export function define(): DesignItem {
       fieldProps: {
         defaultCode: '+86',
         allowClear: true,
-        placeholder: {
-          zh_CN: '',
-          en_US: '',
-          ar_EG: '',
-          pt_PT: '',
-        },
+        placeholder: '',
+        disabled: false,
         fill: true,
       },
       fieldActionTypes: [Copy.key, Delete.key],
     },
   };
 }
-

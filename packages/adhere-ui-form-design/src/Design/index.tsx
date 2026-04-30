@@ -57,9 +57,6 @@ import { DesignContext } from './Context';
 import Editor from './DesignEditor';
 import DesignValueReducer from './DesignValueReducer';
 import Properties from './Properties';
-import Toolbar from './Toolbar';
-import { defaultMenuItems } from './Toolbar/menuActions';
-import { defaultGroups } from './Toolbar/toolbarActions';
 import Toolbox from './Toolbox';
 import ToolboxItemDragOverlay from './Toolbox/ToolboxItemDragOverlay';
 
