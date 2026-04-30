@@ -1,6 +1,9 @@
 import type { CSSProperties } from 'react';
-import { Select, Space } from 'antd';
 import React, { useMemo } from 'react';
+
+import { Select, Space } from 'antd';
+
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import { Input } from '@baifendian/adhere-ui-anthoc';
 
@@ -59,6 +62,31 @@ function filterPhoneValue(raw: string, rule: PhoneAreaCodeRule): string {
   return s.replace(/[^\d\s-]/g, '');
 }
 
+function toFlagEmoji(iso2: string | undefined): string {
+  if (!iso2) return '';
+  const code = String(iso2).toUpperCase();
+  if (code.length !== 2) return '';
+  const A = 0x41;
+  const base = 0x1f1e6; // Regional indicator symbol letter A
+  const c1 = code.charCodeAt(0);
+  const c2 = code.charCodeAt(1);
+  if (c1 < A || c1 > A + 25 || c2 < A || c2 > A + 25) return '';
+  return String.fromCodePoint(base + (c1 - A), base + (c2 - A));
+}
+
+function getLocalizedCountryName(args: { iso2?: string; fallback: string; lang?: string }): string {
+  const { iso2, fallback, lang } = args;
+  try {
+    // 在现代浏览器中可用（Node/旧浏览器可能不可用），不可用则回退
+    const DisplayNames = (Intl as any).DisplayNames;
+    if (!DisplayNames || !iso2) return fallback;
+    const dn = new DisplayNames([lang || 'en'], { type: 'region' });
+    return dn.of(String(iso2).toUpperCase()) || fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 export default function PhoneWithAreaCodeField(props: PhoneWithAreaCodeFieldProps) {
   const {
     value,
@@ -73,6 +101,9 @@ export default function PhoneWithAreaCodeField(props: PhoneWithAreaCodeFieldProp
     style,
     actions,
   } = props;
+
+  const ConfigProviderContext = React.useContext(ConfigProvider.Context);
+  const lang = ConfigProviderContext?.intl?.lang;
 
   const options: PhoneAreaCodeItem[] = useMemo(() => {
     if (areaCodeOptions && Array.isArray(areaCodeOptions)) return areaCodeOptions;
@@ -90,6 +121,37 @@ export default function PhoneWithAreaCodeField(props: PhoneWithAreaCodeFieldProp
     return normalizeRule(item?.rule);
   }, [currentCode, options]);
 
+  const selectOptions = useMemo(() => {
+    return options.map((o) => {
+      const flag = toFlagEmoji(o.iso2);
+      const country = getLocalizedCountryName({ iso2: o.iso2, fallback: o.label, lang });
+
+      // o.label 目前形如 "China (+86)"，这里为避免重复显示，优先提取国家名（fallback 就用原 label）
+      const countryText =
+        country && country !== o.label
+          ? country
+          : String(o.label).replace(/\s*\(\+\d[\d]*\)\s*$/, '').trim();
+
+      // 选中后显示（更贴近 Google 左侧）：国旗 + 区号
+      const selectedLabel = (
+        <span>
+          {flag ? `${flag} ` : ''}
+          {o.value}
+        </span>
+      );
+
+      return {
+        label: selectedLabel,
+        value: o.value,
+        // 下拉渲染需要
+        country: countryText,
+        iso2: o.iso2,
+        dial: o.value,
+        search: `${countryText} ${o.iso2 ?? ''} ${o.value} ${o.search ?? ''}`,
+      };
+    });
+  }, [lang, options]);
+
   function emit(next: PhoneWithAreaCodeValue) {
     if (value === undefined) setInner(next);
     onChange?.(next);
@@ -102,15 +164,42 @@ export default function PhoneWithAreaCodeField(props: PhoneWithAreaCodeFieldProp
         disabled={disabled}
         value={currentCode}
         allowClear={allowClear}
-        options={options.map((o) => ({ label: o.label, value: o.value }))}
+        showSearch
+        optionLabelProp="label"
+        popupMatchSelectWidth={false}
+        dropdownStyle={{ minWidth: 420 }}
+        listHeight={400}
+        options={selectOptions as any}
+        optionRender={(opt) => {
+          const data: any = opt.data;
+          const flag = toFlagEmoji(data?.iso2);
+          return (
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'flex-start' }}>
+              <div style={{ display: 'flex', gap: 8, minWidth: 0, flex: 1 }}>
+                <span style={{ flex: 'none', lineHeight: '22px' }}>{flag}</span>
+                <span style={{ whiteSpace: 'normal', wordBreak: 'break-word', lineHeight: '22px' }}>
+                  {data?.country ?? ''}
+                </span>
+              </div>
+              <span style={{ flex: 'none', opacity: 0.85, lineHeight: '22px' }}>{data?.dial ?? ''}</span>
+            </div>
+          );
+        }}
+        filterOption={(input, option) => {
+          const q = String(input ?? '').trim().toLowerCase();
+          if (!q) return true;
+          const s = String((option as any)?.search ?? (option as any)?.label ?? '').toLowerCase();
+          const iso2 = String((option as any)?.iso2 ?? '').toLowerCase();
+          return s.includes(q) || iso2.includes(q);
+        }}
         {...(actions ?? {})}
         onChange={(nextCode) => {
           emit({
-            ...(value ?? {}),
+            ...(mergedValue ?? {}),
             code: nextCode ?? undefined,
           });
         }}
-        style={{ width: 200 }}
+        style={{ width: 280, minWidth: 280 }}
       />
 
       <Input.OptimizedInput

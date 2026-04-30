@@ -1,67 +1,158 @@
-// 常用国家/地区电话区号
+// 国家/地区电话区号（Google 注册页风格：国家/地区名 + 区号，可搜索）
+import type { ICountryCodeItem } from './_countryCallingCodeRaw';
+import { codes } from './_countryCallingCodeRaw';
+
 export type PhoneAreaCodeRule = 'digits' | 'digits_and_space_dash';
 
 export type PhoneAreaCodeItem = {
+  /** 下拉展示：Country (+Code) */
   label: string;
+  /** 选中回填：+Code */
   value: string;
-  /**
-   * 输入规则（用于 PhoneWithAreaCode 字段根据区号决定过滤策略）
-   */
+  /** 搜索关键字 */
+  search?: string;
+  /** ISO2 */
+  iso2?: string;
+  /** 输入规则（用于 PhoneWithAreaCode 字段根据区号决定过滤策略） */
   rule?: PhoneAreaCodeRule;
 };
 
+function normalizeDialCode(raw: string): string {
+  return `+${String(raw ?? '').replace(/-/g, '')}`;
+}
+
+function resolveRuleByIso2(iso2: string | undefined): PhoneAreaCodeRule {
+  // 更偏向“纯数字”的地区
+  if (!iso2) return 'digits_and_space_dash';
+  if (
+    [
+      'CN',
+      'HK',
+      'MO',
+      'TW',
+      'JP',
+      'KR',
+      'SG',
+      'MY',
+      'TH',
+      'VN',
+      'PH',
+      'ID',
+      'IN',
+      'AE',
+      'SA',
+    ].includes(iso2)
+  )
+    return 'digits';
+  return 'digits_and_space_dash';
+}
+
+const priorityIso2 = new Map<string, number>([
+  ['CN', 0],
+  ['HK', 1],
+  ['MO', 2],
+  ['TW', 3],
+  ['US', 4],
+  ['CA', 5],
+  ['GB', 6],
+  ['AU', 7],
+  ['NZ', 8],
+  ['JP', 9],
+  ['KR', 10],
+  ['SG', 11],
+  ['MY', 12],
+  ['TH', 13],
+  ['VN', 14],
+  ['PH', 15],
+  ['ID', 16],
+  ['IN', 17],
+  ['DE', 18],
+  ['FR', 19],
+]);
+
+function sortByPriorityThenLabel(a: PhoneAreaCodeItem, b: PhoneAreaCodeItem): number {
+  const pa = priorityIso2.has(a.iso2 ?? '') ? (priorityIso2.get(a.iso2 ?? '') as number) : 9999;
+  const pb = priorityIso2.has(b.iso2 ?? '') ? (priorityIso2.get(b.iso2 ?? '') as number) : 9999;
+  if (pa !== pb) return pa - pb;
+  return String(a.label).localeCompare(String(b.label));
+}
+
+/**
+ * 同一区号（如 +1）会对应多个国家/地区；Select 的 value 必须唯一，否则会出现重复与选中异常。
+ * 合并为一条：展示前几名国家名 + 其余数量，搜索词保留全部以便检索。
+ */
+function dedupeByDial(items: PhoneAreaCodeItem[]): PhoneAreaCodeItem[] {
+  const groups = new Map<string, PhoneAreaCodeItem[]>();
+  items.forEach((it) => {
+    const dial = it.value;
+    const arr = groups.get(dial) ?? [];
+    arr.push(it);
+    groups.set(dial, arr);
+  });
+
+  const merged: PhoneAreaCodeItem[] = [];
+  groups.forEach((group, dial) => {
+    group.sort(sortByPriorityThenLabel);
+
+    const countryNames = group.map((g) => {
+      const m = String(g.label).match(/^(.*)\s\((\+\d+)\)$/);
+      return m ? m[1].trim() : String(g.label).replace(/\s*\(\+\d+\)\s*$/, '').trim();
+    });
+
+    const head = countryNames.slice(0, 3).join(' / ');
+    const rest = countryNames.length > 3 ? ` …` : '';
+    const label = `${head}${rest} (${dial})`;
+
+    const search = group.map((g) => g.search ?? `${g.label} ${g.iso2 ?? ''} ${g.value}`).join(' ');
+    const iso2 = group[0]?.iso2;
+    const rule = group.some((g) => g.rule === 'digits') ? 'digits' : 'digits_and_space_dash';
+
+    merged.push({
+      label,
+      value: dial,
+      iso2,
+      rule,
+      search: `${search} ${countryNames.join(' ')}`,
+    });
+  });
+
+  merged.sort((a, b) => {
+    const pa = priorityIso2.has(a.iso2 ?? '') ? (priorityIso2.get(a.iso2 ?? '') as number) : 9999;
+    const pb = priorityIso2.has(b.iso2 ?? '') ? (priorityIso2.get(b.iso2 ?? '') as number) : 9999;
+    if (pa !== pb) return pa - pb;
+    return String(a.label).localeCompare(String(b.label));
+  });
+
+  return merged;
+}
+
+function mapToItems(raw: ICountryCodeItem[]): PhoneAreaCodeItem[] {
+  const items: PhoneAreaCodeItem[] = [];
+
+  raw.forEach((item) => {
+    const iso2 = item.isoCode2;
+    const rule = resolveRuleByIso2(iso2);
+
+    item.countryCodes.forEach((code) => {
+      const dial = normalizeDialCode(code);
+      const label = `${item.country} (${dial})`;
+      items.push({
+        label,
+        value: dial,
+        iso2,
+        rule,
+        search: `${item.country} ${iso2} ${dial}`,
+      });
+    });
+  });
+
+  items.sort(sortByPriorityThenLabel);
+  return dedupeByDial(items);
+}
+
 export const PhoneAreaCode = {
   handler: (): PhoneAreaCodeItem[] => {
-    // 说明：
-    // - label 直接包含中英文，避免引入大量国家名称 i18n 词条
-    // - value 统一为字符串（如 “+86”）
-    return [
-      { label: '+86 中国(China)', value: '+86', rule: 'digits' },
-      { label: '+852 中国香港(Hong Kong)', value: '+852', rule: 'digits' },
-      { label: '+853 中国澳门(Macau)', value: '+853', rule: 'digits' },
-      { label: '+886 中国台湾(Taiwan)', value: '+886', rule: 'digits' },
-
-      { label: '+1 美国/加拿大(US/Canada)', value: '+1', rule: 'digits_and_space_dash' },
-      { label: '+44 英国(United Kingdom)', value: '+44', rule: 'digits_and_space_dash' },
-      { label: '+49 德国(Germany)', value: '+49', rule: 'digits_and_space_dash' },
-      { label: '+33 法国(France)', value: '+33', rule: 'digits_and_space_dash' },
-      { label: '+39 意大利(Italy)', value: '+39', rule: 'digits_and_space_dash' },
-      { label: '+34 西班牙(Spain)', value: '+34', rule: 'digits_and_space_dash' },
-      { label: '+31 荷兰(Netherlands)', value: '+31', rule: 'digits_and_space_dash' },
-      { label: '+32 比利时(Belgium)', value: '+32', rule: 'digits_and_space_dash' },
-      { label: '+41 瑞士(Switzerland)', value: '+41', rule: 'digits_and_space_dash' },
-      { label: '+43 奥地利(Austria)', value: '+43', rule: 'digits_and_space_dash' },
-      { label: '+46 瑞典(Sweden)', value: '+46', rule: 'digits_and_space_dash' },
-      { label: '+45 丹麦(Denmark)', value: '+45', rule: 'digits_and_space_dash' },
-      { label: '+47 挪威(Norway)', value: '+47', rule: 'digits_and_space_dash' },
-      { label: '+358 芬兰(Finland)', value: '+358', rule: 'digits_and_space_dash' },
-      { label: '+353 爱尔兰(Ireland)', value: '+353', rule: 'digits_and_space_dash' },
-      { label: '+351 葡萄牙(Portugal)', value: '+351', rule: 'digits_and_space_dash' },
-
-      { label: '+7 俄罗斯(Russia)', value: '+7', rule: 'digits_and_space_dash' },
-      { label: '+81 日本(Japan)', value: '+81', rule: 'digits' },
-      { label: '+82 韩国(South Korea)', value: '+82', rule: 'digits' },
-      { label: '+91 印度(India)', value: '+91', rule: 'digits' },
-      { label: '+65 新加坡(Singapore)', value: '+65', rule: 'digits' },
-      { label: '+60 马来西亚(Malaysia)', value: '+60', rule: 'digits' },
-      { label: '+66 泰国(Thailand)', value: '+66', rule: 'digits' },
-      { label: '+62 印度尼西亚(Indonesia)', value: '+62', rule: 'digits' },
-      { label: '+63 菲律宾(Philippines)', value: '+63', rule: 'digits' },
-      { label: '+84 越南(Vietnam)', value: '+84', rule: 'digits' },
-
-      { label: '+61 澳大利亚(Australia)', value: '+61', rule: 'digits_and_space_dash' },
-      { label: '+64 新西兰(New Zealand)', value: '+64', rule: 'digits_and_space_dash' },
-
-      { label: '+55 巴西(Brazil)', value: '+55', rule: 'digits_and_space_dash' },
-      { label: '+52 墨西哥(Mexico)', value: '+52', rule: 'digits_and_space_dash' },
-      { label: '+54 阿根廷(Argentina)', value: '+54', rule: 'digits_and_space_dash' },
-      { label: '+56 智利(Chile)', value: '+56', rule: 'digits_and_space_dash' },
-
-      { label: '+27 南非(South Africa)', value: '+27', rule: 'digits_and_space_dash' },
-      { label: '+20 埃及(Egypt)', value: '+20', rule: 'digits_and_space_dash' },
-      { label: '+971 阿联酋(UAE)', value: '+971', rule: 'digits' },
-      { label: '+966 沙特阿拉伯(Saudi Arabia)', value: '+966', rule: 'digits' },
-    ];
+    return mapToItems(codes);
   },
 };
 
