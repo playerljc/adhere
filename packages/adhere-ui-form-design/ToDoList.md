@@ -71,10 +71,10 @@
   - [ ] 支持维护一个接口地址生成图片
   - [ ] 拖拽形状验证码(rc-slider-captcha)
 
-- [ ]PhoneWithAreaCode(不同区域的电话号码选择)
-- [ ]ChinaPhone - 中国电话
+- [x]PhoneWithAreaCode(不同区域的电话号码选择)
 
-- [ ] 短信验证码
+- [ ] SendSMS(短信验证码)
+
 - [ ] QuickRangeDate(快速的时间范围选择)
 - Upload(文件的上传)
   - [ ] 自定义接口

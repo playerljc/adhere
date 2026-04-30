@@ -1,0 +1,1 @@
+{"version":3,"file":"renderDesignToMobile.js","sources":["Fields/advanced/SendSMS/renderDesignToMobile.js"],"sourcesContent":["import { renderDesign } from './renderDesign';\nexport var renderDesignToMobile = renderDesign;"],"names":["renderDesign","renderDesignToMobile"],"mappings":"OAASA,YAAoC,KAAhB,iBACtB,IAAIC,qBAAuBD,oBAAvBC,oBAAmC"}

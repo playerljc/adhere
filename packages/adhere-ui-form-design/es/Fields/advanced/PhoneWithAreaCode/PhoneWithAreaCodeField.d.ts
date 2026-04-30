@@ -25,12 +25,18 @@ export type PhoneWithAreaCodeFieldProps = {
      */
     style?: CSSProperties;
     /**
-     * 设计器下发的 actions（事件），需要分发到 Select/Input 上
+     * 设计器下发的 actions（事件），兼容旧版：未配置分区事件时两侧共用
      */
     actions?: Record<string, (...args: any[]) => any>;
+    /** 左侧区号选择事件（与 actions 合并，本侧优先） */
+    areaCodeActions?: Record<string, (...args: any[]) => any>;
+    /** 右侧号码输入事件（与 actions 合并，本侧优先） */
+    phoneInputActions?: Record<string, (...args: any[]) => any>;
     /**
      * 覆盖默认区号选项（缺省取 Dict.PhoneAreaCode）
      */
     areaCodeOptions?: PhoneAreaCodeItem[];
+    /** 区号数据源加载中（设计器动态数据源预览） */
+    areaCodeLoading?: boolean;
 };
 export default function PhoneWithAreaCodeField(props: PhoneWithAreaCodeFieldProps): React.JSX.Element;

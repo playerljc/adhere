@@ -521,5 +521,17 @@ export default [
     please_enter_phone_number: '请输入电话号码',
     phone_area_code_select_actions: '左侧区号选择事件',
     phone_number_input_actions: '右侧号码输入事件',
+
+    send_sms: '发送验证码',
+    verification_code: '验证码',
+    please_enter_verification_code: '请输入验证码',
+    send_sms_countdown: '{value}s',
+    send_sms_countdown_seconds: '倒计时秒数',
+    send_sms_data_source: '发送验证码数据源',
+    send_sms_data_source_placeholder: '请选择发送验证码数据源',
+    send_sms_data_source_select: '选择数据源',
+    verification_code_input_actions: '验证码输入框事件',
+    send_sms_button_actions: '发送按钮事件',
+    send_sms_countdown_actions: '倒计时事件',
   },
 ];

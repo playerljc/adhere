@@ -1,0 +1,49 @@
+@import '../../constant.less';
+
+.@{prefix-cls}-send-sms-data-source-picker {
+  display: flex;
+  align-items: center;
+  gap: var(--send-sms-data-source-picker-gap, 8px);
+  width: 100%;
+}
+
+.@{prefix-cls}-send-sms-data-source-picker-info {
+  flex: 1;
+  min-width: var(--send-sms-data-source-picker-info-min-width, 0);
+  padding: var(--send-sms-data-source-picker-info-padding, 0 8px);
+  border: var(--send-sms-data-source-picker-info-border, 1px dashed rgba(0, 0, 0, 0.15));
+  border-radius: var(--send-sms-data-source-picker-info-border-radius, 6px);
+  line-height: var(--send-sms-data-source-picker-info-line-height, 32px);
+  height: var(--send-sms-data-source-picker-info-height, 32px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.@{prefix-cls}-send-sms-data-source-picker-info-empty {
+  opacity: var(--send-sms-data-source-picker-info-empty-opacity, 0.65);
+}
+
+.@{prefix-cls}-send-sms-data-source-picker-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--send-sms-data-source-picker-actions-gap, 6px);
+  flex: none;
+}
+
+.@{prefix-cls}-send-sms-data-source-picker-select {
+  width: var(--send-sms-data-source-picker-select-width, 220px);
+  min-width: var(--send-sms-data-source-picker-select-width, 220px);
+}
+
+.@{prefix-cls}-send-sms-data-source-picker-manager-trigger {
+  width: var(--send-sms-data-source-picker-manager-trigger-size, 32px);
+  height: var(--send-sms-data-source-picker-manager-trigger-size, 32px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--send-sms-data-source-picker-manager-trigger-border-radius, 6px);
+  border: var(--send-sms-data-source-picker-manager-trigger-border, 1px solid rgba(0, 0, 0, 0.06));
+  cursor: pointer;
+}
+

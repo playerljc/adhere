@@ -277,6 +277,18 @@ declare const names: Partial<{
     PhoneAreaCode: {
         value: import("./PhoneAreaCode").PhoneAreaCodeItem[];
     };
+    PhoneAreaCodeAreaEvents: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    SendSMSCountdownEvents: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
     DefaultToolBox: {
         value: {
             id: string;

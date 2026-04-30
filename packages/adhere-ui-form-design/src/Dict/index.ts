@@ -42,6 +42,7 @@ import { Picker } from './Picker';
 import { Placement } from './Placement';
 import { PhoneAreaCode } from './PhoneAreaCode';
 import { PhoneAreaCodeAreaEvents } from './PhoneAreaCodeAreaEvents';
+import { SendSMSCountdownEvents } from './SendSMSCountdownEvents';
 import { QRCodeErrorLevel } from './QRCodeErrorLevel';
 import { QRCodeStatus } from './QRCodeStatus';
 import { QRCodeStatusRenderTemplate } from './QRCodeStatusRenderTemplate';
@@ -129,6 +130,7 @@ const dictImpls = {
   InputSize,
   PhoneAreaCode,
   PhoneAreaCodeAreaEvents,
+  SendSMSCountdownEvents,
   DefaultToolBox,
   LayoutFieldTypes,
   Variant,

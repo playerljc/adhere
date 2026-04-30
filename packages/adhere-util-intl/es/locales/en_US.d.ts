@@ -428,5 +428,16 @@ declare const _default: {
     please_enter_phone_number: string;
     phone_area_code_select_actions: string;
     phone_number_input_actions: string;
+    send_sms: string;
+    verification_code: string;
+    please_enter_verification_code: string;
+    send_sms_countdown: string;
+    send_sms_countdown_seconds: string;
+    send_sms_data_source: string;
+    send_sms_data_source_placeholder: string;
+    send_sms_data_source_select: string;
+    verification_code_input_actions: string;
+    send_sms_button_actions: string;
+    send_sms_countdown_actions: string;
 }[];
 export default _default;

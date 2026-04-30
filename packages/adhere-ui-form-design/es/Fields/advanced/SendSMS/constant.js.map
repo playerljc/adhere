@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/advanced/SendSMS/constant.js"],"sourcesContent":["export var TYPE = 'send-sms';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,kBAAPA,IAAiB"}

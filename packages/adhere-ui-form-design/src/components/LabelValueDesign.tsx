@@ -65,6 +65,12 @@ export function ValueDesign({
     areaCodeActions?: Record<string, (...args: any[]) => any>;
     /** PhoneWithAreaCode：右侧号码输入 */
     phoneInputActions?: Record<string, (...args: any[]) => any>;
+    /** SendSMS：验证码输入框事件 */
+    codeInputActions?: Record<string, (...args: any[]) => any>;
+    /** SendSMS：发送按钮事件 */
+    sendButtonActions?: Record<string, (...args: any[]) => any>;
+    /** SendSMS：倒计时事件 */
+    countdownActions?: Record<string, (...args: any[]) => any>;
     lang: string;
   }) => ReactNode;
 }) {
@@ -86,6 +92,18 @@ export function ValueDesign({
     actions: actionsProps?.phoneInputActions ?? [],
     designContext,
   });
+  const codeInputActions = actionsCodeStringToEvents({
+    actions: (actionsProps as any)?.codeInputActions ?? [],
+    designContext,
+  });
+  const sendButtonActions = actionsCodeStringToEvents({
+    actions: (actionsProps as any)?.sendButtonActions ?? [],
+    designContext,
+  });
+  const countdownActions = actionsCodeStringToEvents({
+    actions: (actionsProps as any)?.countdownActions ?? [],
+    designContext,
+  });
   const formProps = formItemToProps(formItemProps ?? {}, lang);
   const colSpan = formItemProps?.colSpan;
   const fill = fieldProps?.fill;
@@ -104,6 +122,9 @@ export function ValueDesign({
             actions,
             areaCodeActions,
             phoneInputActions,
+            codeInputActions,
+            sendButtonActions,
+            countdownActions,
             lang,
           })}
         </Form.Item>

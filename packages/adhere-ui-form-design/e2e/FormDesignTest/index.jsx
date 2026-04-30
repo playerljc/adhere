@@ -82,6 +82,7 @@ export default () => {
             'ant-signature-pad',
             'image-captcha',
             'phone-with-area-code',
+            'send-sms',
           ].includes(type),
         ),
         columns: 2,

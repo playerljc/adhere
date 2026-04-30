@@ -1,16 +1,54 @@
 @import '../../../constant.less';
 
 .@{prefix-cls}-phone-with-area-code {
-  width: 100%;
+  width: var(--phone-with-area-code-width, 100%);
   display: flex;
 }
 
 .@{prefix-cls}-phone-with-area-code-code {
-  width: var(--phone-with-area-code-code-width, 200px);
+  width: var(--phone-with-area-code-code-width, 280px);
+  min-width: var(--phone-with-area-code-code-width, 280px);
 }
 
 .@{prefix-cls}-phone-with-area-code-phone {
   flex: 1;
-  min-width: 0;
+  min-width: var(--phone-with-area-code-phone-min-width, 0);
+}
+
+// 下拉面板宽度（配合 antd v6 Select classNames.popup.root）
+.@{prefix-cls}-phone-with-area-code-popup {
+  min-width: var(--phone-with-area-code-popup-min-width, 420px);
+}
+
+// 下拉选项布局（替代 optionRender 内联样式）
+.@{prefix-cls}-phone-with-area-code-option {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--phone-with-area-code-option-gap, 12px);
+  align-items: flex-start;
+}
+
+.@{prefix-cls}-phone-with-area-code-option-left {
+  display: flex;
+  gap: var(--phone-with-area-code-option-left-gap, 8px);
+  min-width: var(--phone-with-area-code-option-left-min-width, 0);
+  flex: 1;
+}
+
+.@{prefix-cls}-phone-with-area-code-option-flag {
+  flex: none;
+  line-height: var(--phone-with-area-code-option-flag-line-height, 22px);
+}
+
+.@{prefix-cls}-phone-with-area-code-option-country {
+  white-space: normal;
+  word-break: break-word;
+  line-height: var(--phone-with-area-code-option-country-line-height, 22px);
+}
+
+.@{prefix-cls}-phone-with-area-code-option-dial {
+  flex: none;
+  opacity: var(--phone-with-area-code-option-dial-opacity, 0.85);
+  line-height: var(--phone-with-area-code-option-dial-line-height, 22px);
 }
 

@@ -94,6 +94,7 @@ import { TimeRangePickerEventsSelectStandardDict } from './TimeRangePickerEvents
 import TransferDataSourceManagerFormItem from './TransferDataSourceManagerFormItem';
 import TreeDataSourceManagerFormItem from './TreeDataSourceManagerFormItem';
 import AreaCodePhoneDataSourceManagerFormItem from './AreaCodePhoneDataSourceManagerFormItem';
+import SendSMSDataSourcePickerFormItem from './SendSMSDataSourcePickerFormItem';
 import { TreeSelectShowCheckedStrategySelectStandardDict } from './TreeSelectShowCheckedStrategy';
 import { PhoneAreaCodeSelectStandardDict } from './PhoneAreaCode';
 import { ValuePropNameSelectStandardDict } from './ValuePropName';
@@ -179,6 +180,7 @@ export {
   TreeDataSourceManagerFormItem,
   AreaCodePhoneDataSourceManagerFormItem,
   TransferDataSourceManagerFormItem,
+  SendSMSDataSourcePickerFormItem,
   TableColumnSettingFormItem,
   TabsTypeSelectStandardDict,
   TabsSizeSelectStandardDict,

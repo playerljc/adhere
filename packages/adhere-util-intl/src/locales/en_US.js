@@ -433,5 +433,17 @@ export default [
     please_enter_phone_number: 'Please enter phone number',
     phone_area_code_select_actions: 'Area code select (left) events',
     phone_number_input_actions: 'Phone number input (right) events',
+
+    send_sms: 'Send SMS',
+    verification_code: 'Verification code',
+    please_enter_verification_code: 'Please enter verification code',
+    send_sms_countdown: '{value}s',
+    send_sms_countdown_seconds: 'Countdown seconds',
+    send_sms_data_source: 'Send SMS data source',
+    send_sms_data_source_placeholder: 'Please select Send SMS data source',
+    send_sms_data_source_select: 'Select data source',
+    verification_code_input_actions: 'Verification code input events',
+    send_sms_button_actions: 'Send button events',
+    send_sms_countdown_actions: 'Countdown events',
   },
 ];

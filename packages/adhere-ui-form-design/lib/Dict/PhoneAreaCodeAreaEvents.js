@@ -1,0 +1,2 @@
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.PhoneAreaCodeAreaEvents=void 0;var PhoneAreaCodeAreaEvents=exports.PhoneAreaCodeAreaEvents={handler:function(){return[{label:"onChange",value:"onChange"},{label:"onSelect",value:"onSelect"},{label:"onFocus",value:"onFocus"},{label:"onBlur",value:"onBlur"},{label:"onClear",value:"onClear"},{label:"onDropdownVisibleChange",value:"onDropdownVisibleChange"}]}};
+//# sourceMappingURL=PhoneAreaCodeAreaEvents.js.map
