@@ -332,7 +332,11 @@ export default [
 
     phone_with_area_code: 'Telefone com indicativo',
     area_code: 'Indicativo',
+    area_code_data_source: 'Fonte de dados do indicativo',
+    area_code_data_setting: 'Definições de dados do indicativo',
     phone_number: 'Número de telefone',
     please_enter_phone_number: 'Por favor, insira o número de telefone',
+    phone_area_code_select_actions: 'Eventos do indicativo (esquerda)',
+    phone_number_input_actions: 'Eventos do número (direita)',
   },
 ];

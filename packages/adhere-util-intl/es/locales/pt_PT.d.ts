@@ -329,7 +329,11 @@ declare const _default: {
     clear_all_disabled_hint: string;
     phone_with_area_code: string;
     area_code: string;
+    area_code_data_source: string;
+    area_code_data_setting: string;
     phone_number: string;
     please_enter_phone_number: string;
+    phone_area_code_select_actions: string;
+    phone_number_input_actions: string;
 }[];
 export default _default;

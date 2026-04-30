@@ -40,6 +40,11 @@ export function define(): DesignItem {
         disabled: false,
         fill: true,
       },
+      actionsProps: {
+        actions: [],
+        areaCodeActions: [],
+        phoneInputActions: [],
+      },
       fieldActionTypes: [Copy.key, Delete.key],
     },
   };

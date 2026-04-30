@@ -515,7 +515,11 @@ export default [
 
     phone_with_area_code: '区号+手机号',
     area_code: '区号',
+    area_code_data_source: '区号区域数据源',
+    area_code_data_setting: '区号区域数据设置',
     phone_number: '电话号码',
     please_enter_phone_number: '请输入电话号码',
+    phone_area_code_select_actions: '左侧区号选择事件',
+    phone_number_input_actions: '右侧号码输入事件',
   },
 ];

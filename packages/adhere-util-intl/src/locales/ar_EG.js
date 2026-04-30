@@ -332,7 +332,11 @@ export default [
 
     phone_with_area_code: 'هاتف مع رمز المنطقة',
     area_code: 'رمز المنطقة',
+    area_code_data_source: 'مصدر بيانات رمز المنطقة',
+    area_code_data_setting: 'إعداد بيانات رمز المنطقة',
     phone_number: 'رقم الهاتف',
     please_enter_phone_number: 'الرجاء إدخال رقم الهاتف',
+    phone_area_code_select_actions: 'أحداث اختيار رمز المنطقة (يسار)',
+    phone_number_input_actions: 'أحداث إدخال رقم الهاتف (يمين)',
   },
 ];

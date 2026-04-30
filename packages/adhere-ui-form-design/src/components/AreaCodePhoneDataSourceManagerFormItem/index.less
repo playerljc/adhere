@@ -1,0 +1,35 @@
+@import '../../constant.less';
+
+.@{prefix-cls}-design-field-area-code-phone-data-source-form-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--area-code-phone-data-source-form-item-gap, 8px);
+  width: var(--area-code-phone-data-source-form-item-width, 100%);
+
+  &-actions {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  &-body {
+    width: var(--area-code-phone-data-source-form-item-body-width, 100%);
+  }
+}
+
+.@{prefix-cls}-design-field-area-code-phone-data-source-form-item-dynamic {
+  display: flex;
+  gap: var(--area-code-phone-data-source-form-item-dynamic-gap, 8px);
+  align-items: center;
+
+  &-nav {
+    flex: 1;
+    min-width: var(--area-code-phone-data-source-form-item-dynamic-nav-min-width, 0);
+    overflow: hidden;
+  }
+
+  &-manager-trigger {
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+}
+

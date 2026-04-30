@@ -41,6 +41,7 @@ import { NoFormFieldTypes } from './NoFormFieldTypes';
 import { Picker } from './Picker';
 import { Placement } from './Placement';
 import { PhoneAreaCode } from './PhoneAreaCode';
+import { PhoneAreaCodeAreaEvents } from './PhoneAreaCodeAreaEvents';
 import { QRCodeErrorLevel } from './QRCodeErrorLevel';
 import { QRCodeStatus } from './QRCodeStatus';
 import { QRCodeStatusRenderTemplate } from './QRCodeStatusRenderTemplate';
@@ -127,6 +128,7 @@ const dictImpls = {
   ValuePropName,
   InputSize,
   PhoneAreaCode,
+  PhoneAreaCodeAreaEvents,
   DefaultToolBox,
   LayoutFieldTypes,
   Variant,

@@ -93,6 +93,7 @@ import { TimePickerEventsSelectStandardDict } from './TimePickerEvents';
 import { TimeRangePickerEventsSelectStandardDict } from './TimeRangePickerEvents';
 import TransferDataSourceManagerFormItem from './TransferDataSourceManagerFormItem';
 import TreeDataSourceManagerFormItem from './TreeDataSourceManagerFormItem';
+import AreaCodePhoneDataSourceManagerFormItem from './AreaCodePhoneDataSourceManagerFormItem';
 import { TreeSelectShowCheckedStrategySelectStandardDict } from './TreeSelectShowCheckedStrategy';
 import { PhoneAreaCodeSelectStandardDict } from './PhoneAreaCode';
 import { ValuePropNameSelectStandardDict } from './ValuePropName';
@@ -105,6 +106,11 @@ export type {
   TreeDataSourceManagerFormItemValue,
   TreeDataSourceManagerFormItemProps,
 } from './TreeDataSourceManagerFormItem';
+
+export type {
+  AreaCodePhoneDataSourceManagerFormItemValue,
+  AreaCodePhoneDataSourceManagerFormItemProps,
+} from './AreaCodePhoneDataSourceManagerFormItem';
 
 export type {
   TransferDataSourceManagerFormItemValue,
@@ -171,6 +177,7 @@ export {
   DataSourceManager,
   DataSourceManagerFormItem,
   TreeDataSourceManagerFormItem,
+  AreaCodePhoneDataSourceManagerFormItem,
   TransferDataSourceManagerFormItem,
   TableColumnSettingFormItem,
   TabsTypeSelectStandardDict,

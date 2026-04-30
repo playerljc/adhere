@@ -61,6 +61,10 @@ export function ValueDesign({
     fieldProps: FieldProps;
     style: CSSProperties;
     actions: Record<string, (...args: any[]) => any>;
+    /** PhoneWithAreaCode：左侧区号选择 */
+    areaCodeActions?: Record<string, (...args: any[]) => any>;
+    /** PhoneWithAreaCode：右侧号码输入 */
+    phoneInputActions?: Record<string, (...args: any[]) => any>;
     lang: string;
   }) => ReactNode;
 }) {
@@ -72,6 +76,14 @@ export function ValueDesign({
   const valueStyle = styleCodeStringToCSSProperties(styleProps?.valueStyles ?? '');
   const actions = actionsCodeStringToEvents({
     actions: actionsProps?.actions ?? [],
+    designContext,
+  });
+  const areaCodeActions = actionsCodeStringToEvents({
+    actions: actionsProps?.areaCodeActions ?? [],
+    designContext,
+  });
+  const phoneInputActions = actionsCodeStringToEvents({
+    actions: actionsProps?.phoneInputActions ?? [],
     designContext,
   });
   const formProps = formItemToProps(formItemProps ?? {}, lang);
@@ -90,6 +102,8 @@ export function ValueDesign({
             fieldProps,
             style,
             actions,
+            areaCodeActions,
+            phoneInputActions,
             lang,
           })}
         </Form.Item>

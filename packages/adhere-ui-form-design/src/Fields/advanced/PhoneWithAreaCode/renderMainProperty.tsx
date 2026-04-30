@@ -5,6 +5,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types
 import Intl from '@baifendian/adhere-util-intl';
 
 import {
+  AreaCodePhoneDataSourceManagerFormItem,
   PhoneAreaCodeSelectStandardDict,
   WhetherRadioHorizontalDict,
 } from '../../../components';
@@ -43,6 +44,18 @@ function getDefaultFormItems(
         <Value>
           <Form.Item name="defaultCode">
             <PhoneAreaCodeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
+          </Form.Item>
+        </Value>
+      ),
+    },
+    {
+      key: 'areaCodeOptionsSource',
+      require: false,
+      label: <Label>{Intl.get('area_code_data_source')}：</Label>,
+      value: (
+        <Value>
+          <Form.Item name="areaCodeOptionsSource">
+            <AreaCodePhoneDataSourceManagerFormItem />
           </Form.Item>
         </Value>
       ),

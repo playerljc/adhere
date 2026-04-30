@@ -427,7 +427,11 @@ export default [
 
     phone_with_area_code: 'Phone with area code',
     area_code: 'Area code',
+    area_code_data_source: 'Area code data source',
+    area_code_data_setting: 'Area code data settings',
     phone_number: 'Phone number',
     please_enter_phone_number: 'Please enter phone number',
+    phone_area_code_select_actions: 'Area code select (left) events',
+    phone_number_input_actions: 'Phone number input (right) events',
   },
 ];

@@ -13,44 +13,37 @@ import type { DesignValueProps } from '../../../types';
 /**
  * ActionsProperty
  *
- * @description
- *
- * @param {DesignValueProps} props
+ * @description PhoneWithAreaCode：左侧区号选择与右侧号码输入分别配置事件
  */
 export function ActionsProperty({
   designValue,
-  actions,
+  areaCodeActions,
+  phoneInputActions,
 }: {
   designValue: DesignValueProps;
-  actions: ActionItem[];
+  areaCodeActions: ActionItem[];
+  phoneInputActions: ActionItem[];
 }) {
-  // 表单的instance
   const [form] = Form.useForm();
 
-  const {
-    // 获取当前激活的控件的id(也就是Editor中选中的控件)
-    getActiveFieldId,
-    // 设置控件的属性
-    setActionsProps,
-  } = useContext(DesignContext);
+  const { getActiveFieldId, setActionsProps } = useContext(DesignContext);
 
   const { actionsProps } = designValue;
 
   function onFieldsChange() {
-    const values = form.getFieldsValue();
-
+    const next = form.getFieldsValue();
     setActionsProps(getActiveFieldId() as string, {
-      ...values,
+      ...actionsProps,
+      ...next,
     });
   }
 
   useEffect(() => {
-    // 设置控件的数据到表单
     form.setFieldsValue(actionsProps);
-  }, [actionsProps]);
+  }, [actionsProps, form]);
 
   return (
-    <Form name="antInputActionsProperty" form={form} onFieldsChange={onFieldsChange}>
+    <Form name="phoneWithAreaCodeActionsProperty" form={form} onFieldsChange={onFieldsChange}>
       <PropertiesGridLayout
         layout="vertical"
         data={[
@@ -61,13 +54,25 @@ export function ActionsProperty({
             colgroup: ['auto'],
             data: [
               {
-                key: 'actions',
+                key: 'areaCodeActions',
                 require: false,
-                label: <Label>{Intl.get('actions')}：</Label>,
+                label: <Label>{Intl.get('phone_area_code_select_actions')}：</Label>,
                 value: (
                   <Value>
-                    <Form.Item name="actions">
-                      <ActionsFormItem actions={actions} />
+                    <Form.Item name="areaCodeActions">
+                      <ActionsFormItem actions={areaCodeActions} />
+                    </Form.Item>
+                  </Value>
+                ),
+              },
+              {
+                key: 'phoneInputActions',
+                require: false,
+                label: <Label>{Intl.get('phone_number_input_actions')}：</Label>,
+                value: (
+                  <Value>
+                    <Form.Item name="phoneInputActions">
+                      <ActionsFormItem actions={phoneInputActions} />
                     </Form.Item>
                   </Value>
                 ),
@@ -75,15 +80,17 @@ export function ActionsProperty({
             ],
           },
         ]}
-      ></PropertiesGridLayout>
+      />
     </Form>
   );
 }
-/**
- * renderActionsProperty
- * @description 对Actions的渲染
- * @param props
- */
+
 export function renderActionsProperty(props: DesignValueProps): ReactNode {
-  return <ActionsProperty designValue={props} actions={values.InputEvents?.value ?? []} />;
+  return (
+    <ActionsProperty
+      designValue={props}
+      areaCodeActions={(values.PhoneAreaCodeAreaEvents?.value ?? []) as ActionItem[]}
+      phoneInputActions={(values.InputEvents?.value ?? []) as ActionItem[]}
+    />
+  );
 }

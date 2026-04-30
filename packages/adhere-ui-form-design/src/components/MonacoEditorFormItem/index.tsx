@@ -83,7 +83,8 @@ const MonacoEditorFormItem = forwardRef<MonacoEditorFormItemHandle, MonacoEditor
           hideCursorInOverviewRuler: true, // 可选：隐藏概览标尺中的光标标识
           scrollBeyondLastLine: false,
           scrollbar: {
-            vertical: 'hidden', // 可选：如果你也不想要右侧滚动条
+            vertical: 'auto',
+            horizontal: 'auto',
           },
           minimap: { enabled: false }, // 建议：通常去掉行号时也会关闭右侧小地图
           padding: {
