@@ -23,6 +23,8 @@
     "clean": "lerna clean",
     "gen-in-test": "node scripts/IntTest.js",
     "generatorchangelog": "lerna run generatorchangelog",
+    "git:pull:proxy": "node ./scripts/with-proxy.mjs git pull",
+    "git:push:proxy": "node ./scripts/with-proxy.mjs git push",
     "init:husky": "npx husky add .husky/pre-commit \"npm run lint-staged\"",
     "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
     "lint-staged": "lint-staged",
@@ -42,7 +44,8 @@
     "publish:next": "lerna publish --dist-tag next",
     "release": "lerna version --conventional-commits --create-release github",
     "upgrade": "yarn upgrade",
-    "upgrade-interactive": "yarn upgrade-interactive"
+    "upgrade-interactive": "yarn upgrade-interactive",
+    "yarn:proxy": "node ./scripts/with-proxy.mjs yarn"
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
@@ -118,7 +121,8 @@
           "title": "Stash Files"
         }
       }
-    }
+    },
+    "proxy": "http://127.0.0.1:7890"
   },
   "browserslist": {
     "production": [

@@ -63,19 +63,28 @@
 - [x] Collapse
 
 ### 高级组件
-
 - [x] QRCode
 - [x] 签名组件
 - [x] Divider分割线
+  - [x]PhoneWithAreaCode(不同区域的电话号码选择)
+- [ ] QuickRangeDate(快速的时间范围选择)
+- MapSelectPoint(地图中选点的操作)
+  - [ ] 百度MAP
+  - [ ] 高德MAP
+  - [ ] 腾讯MAP
+  - [ ] 天地图
+  - [ ] GoogleMAP
+  - [ ] MapBOX
+  - [ ] OSM
+- [ ] RichEditor(富文本)
+- [ ] 表达式(可以输入表达式)
+
 - ImageCaptcha(图片的验证码) - 暂时先暂停(因为需要和表单联动，需要和表单的属性联动，需要和表单的校验逻辑联动)
   - [ ] 支持维护一个接口地址生成图片
   - [ ] 拖拽形状验证码(rc-slider-captcha)
 
-- [x]PhoneWithAreaCode(不同区域的电话号码选择)
-
 - [ ] SendSMS(短信验证码) - 暂时先暂停(原因是需要和电话属性联动，需要和调用的接口返回值相关，校验的逻辑需要兼顾联动的组件)
 
-- [ ] QuickRangeDate(快速的时间范围选择)
 - Upload(文件的上传)
   - [ ] 自定义接口
   - 上传到各种外部的OSS服务
@@ -84,18 +93,6 @@
     - [ ] 七牛云OSS
     - 
 - [ ] ImageCroppingUpload(图片的上传可以对图片进行处理)
-
-- MapSelectPoint(地图中选点的操作)
-    - [ ] 百度MAP
-    - [ ] 高德MAP
-    - [ ] 腾讯MAP
-    - [ ] 天地图
-    - [ ] GoogleMAP
-    - [ ] MapBOX
-    - [ ] OSM
-
-- [ ] RichEditor(富文本)
-- [ ] 表达式(可以输入表达式)
 
 ## 高级
 

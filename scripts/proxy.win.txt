@@ -1,2 +1,0 @@
-cmd /c "set HTTP_PROXY=http://127.0.0.1:7890&& set HTTPS_PROXY=http://127.0.0.1:7890&& set ALL_PROXY=http://127.0.0.1:7890&& set NODE_OPTIONS=--import=./scripts/undici-proxy-preload.mjs&& git push"
-HTTP_PROXY=http://127.0.0.1:7890 HTTPS_PROXY=http://127.0.0.1:7890 ALL_PROXY=http://127.0.0.1:7890 NODE_OPTIONS="--import=./scripts/undici-proxy-preload.mjs" git push
