@@ -424,6 +424,12 @@ export default [
     gen_json_export_filename: 'form-design',
     gen_json_disabled_hint: 'The canvas is empty; nothing to export as JSON.',
     gen_json_copy_failed: 'Copy failed',
+    preview_disabled_hint: 'The canvas is empty; nothing to preview.',
+    preview_submit: 'Submit',
+    preview_reset: 'Reset',
+    preview_view_values: 'View values',
+    preview_view_values_title: 'Current form values',
+    preview_validate_failed: 'Validation failed',
 
     phone_with_area_code: 'Phone with area code',
     area_code: 'Area code',

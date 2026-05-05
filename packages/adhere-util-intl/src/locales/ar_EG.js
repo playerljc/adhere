@@ -329,6 +329,12 @@ export default [
     clear_all_confirm_content:
       'هل تريد بالتأكيد مسح تصميم النموذج الحالي؟ لا يمكن التراجع عن هذا الإجراء.',
     clear_all_disabled_hint: 'اللوحة فارغة بالفعل.',
+    preview_disabled_hint: 'اللوحة فارغة؛ لا يوجد ما يمكن معاينته.',
+    preview_submit: 'إرسال',
+    preview_reset: 'إعادة تعيين',
+    preview_view_values: 'عرض القيم',
+    preview_view_values_title: 'قيم النموذج الحالية',
+    preview_validate_failed: 'فشل التحقق',
 
     phone_with_area_code: 'هاتف مع رمز المنطقة',
     area_code: 'رمز المنطقة',

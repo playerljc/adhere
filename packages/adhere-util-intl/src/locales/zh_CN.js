@@ -512,6 +512,12 @@ export default [
     clear_all_confirm_title: '清空画布',
     clear_all_confirm_content: '确定要清空当前表单设计吗？该操作不可撤销。',
     clear_all_disabled_hint: '当前画布无内容，无需清空',
+    preview_disabled_hint: '当前画布无内容，无法预览',
+    preview_submit: '提交',
+    preview_reset: '重置',
+    preview_view_values: '查看当前值',
+    preview_view_values_title: '当前表单值',
+    preview_validate_failed: '校验未通过',
 
     phone_with_area_code: '区号+手机号',
     area_code: '区号',
