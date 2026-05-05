@@ -35,6 +35,23 @@ onDragSortRow(params) {
 
 sort 模式下 `moveRow` 由 hover 实时调用，并在内部使用异步锁，防止 dispatch / setState 期间被重复触发同一次换位。
 
+## 交换/排序完成后调用接口（Hook/覆写点）
+
+目前 `RowDragSortConfig.dropHooks.drop` **不是** “交换完成后” 的回调，它在 drop 落点时触发：
+
+- **swap 模式**：`dropHooks.drop` 会在 `moveRow` 之前触发（如果你在这里调接口，拿到的是交换前的数据）。
+- **sort 模式**：排序在 hover 阶段已完成，drop 阶段只触发 `dropHooks.drop`（适合在这里提交最终顺序到服务端）。
+
+如果你需要一个统一的“本地数据交换/排序完成后”时机去调接口，推荐**覆写表格类的 `moveRow`**，在 `super.moveRow(...)` 完成后再调用接口：
+
+```tsx
+async moveRow(dragRecord, hoverRecord, dragSortType) {
+  await super.moveRow(dragRecord, hoverRecord, dragSortType);
+  // 这里拿到的是已经交换/排序完成后的 this.getData()
+  await api.saveOrder(this.getData());
+}
+```
+
 ## sort 模式视觉效果
 
 sort 模式下默认开启以下 Sortable 风格的视觉反馈：

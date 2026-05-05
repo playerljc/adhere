@@ -188,6 +188,18 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
     ]);
   }
 
+  getDragSortType() {
+    // return 'swap';
+    return 'sort';
+  }
+
+  async moveRow(dragRecord, hoverRecord, dragSortType) {
+    await super.moveRow(dragRecord, hoverRecord, dragSortType);
+    // 这里拿到的是已经交换/排序完成后的 this.getData()
+    // await api.saveOrder(this.getData());
+    console.log('moveRow', this.getData());
+  }
+
   /**
    * Table的列
    * @override
