@@ -19,6 +19,7 @@ import { DesignContext } from '../Context';
 import Toolbar from '../Toolbar';
 import { defaultMenuItems } from '../Toolbar/menuActions';
 import { defaultGroups } from '../Toolbar/toolbarActions';
+import HiddenFormItemsPortal from './HiddenFormItemsPortal';
 
 const selectPrefix = `${SELECT_PREFIX}-design-editor`;
 
@@ -99,6 +100,8 @@ const DesignEditor: FC<DesignEditorProps> = () => {
           }
         >
           <Form name="editor" form={form} className={classNames(`${selectPrefix}-form`)}>
+            <div id="editorHidden"></div>
+            <HiddenFormItemsPortal value={value} />
             {
               // 对value进行解析
               parseDesign({
