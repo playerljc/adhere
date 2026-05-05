@@ -9,6 +9,7 @@ import * as Layout from './Fields/layout';
 import * as Components from './components';
 import * as Util from './utils';
 import sage from './utils/saga';
+export { FormContext, useFormContext } from './Design/DesignEditor';
 
 ServiceRegister.setSage(sage);
 // import Form from './Form';

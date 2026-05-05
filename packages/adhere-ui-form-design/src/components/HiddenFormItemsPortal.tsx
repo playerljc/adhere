@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 
 import { Form } from '@baifendian/adhere-ui-anthoc';
 
-import type { DesignValue } from '../../types';
+import type { DesignValue } from '../types';
 
 function collectHiddenFormItems(root?: DesignValue): DesignValue[] {
   if (!root) return [];
