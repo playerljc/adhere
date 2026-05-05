@@ -86,7 +86,7 @@ const DesignFieldWrapper: FC<DesignFieldWrapperProps> = ({
 
   return (
     <div
-      className={classNames(selectPrefix, className, {
+      className={classNames(selectPrefix, `${selectPrefix}-design-mode`, className, {
         [`${selectPrefix}-active`]: isActive,
       })}
       style={style ?? {}}

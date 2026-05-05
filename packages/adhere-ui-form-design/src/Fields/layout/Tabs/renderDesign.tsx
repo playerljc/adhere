@@ -28,6 +28,7 @@ function TabsLayoutDesign({ value }: { value: DesignValue }) {
 
   const designContext = useContext(DesignContext);
   const terminal = designContext.getTerminal();
+  const isFormMode = designContext.mode === 'form';
   const fieldProps = useMemo(
     () => resolveFieldPropsForDesignEditor(props, terminal),
     [props, terminal],
@@ -103,7 +104,12 @@ function TabsLayoutDesign({ value }: { value: DesignValue }) {
       })}
       style={targetFlexStyle}
     >
-      <div className={`${selectorPrefix}-slots-container`} style={targetContainerStyle}>
+      <div
+        className={classNames(`${selectorPrefix}-slots-container`, {
+          [`${selectorPrefix}-slots-container-design-mode`]: !isFormMode,
+        })}
+        style={targetContainerStyle}
+      >
         <InternalTabs
           {...(fieldProps as InternalTabsLayoutProps)}
           {...actions}

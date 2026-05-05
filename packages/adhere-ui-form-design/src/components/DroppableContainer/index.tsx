@@ -34,6 +34,7 @@ const DroppableContainer: FC<DroppableContainerProps> = ({
     <div
       ref={isFormMode ? undefined : setNodeRef}
       className={classNames(`${selectPrefix}-droppable-container`, className, {
+        [`${selectPrefix}-droppable-container-design-mode`]: !isFormMode,
         [`${selectPrefix}-droppable-container-over`]: !isFormMode && isOver,
       })}
       style={style ?? {}}

@@ -23,6 +23,7 @@ function FlexLayoutDesign({ value }: { value: DesignValue }) {
 
   const designContext = useContext(DesignContext);
   const terminal = designContext.getTerminal();
+  const isFormMode = designContext.mode === 'form';
   const fieldProps = useMemo(
     () => resolveFieldPropsForDesignEditor(props, terminal),
     [props, terminal],
@@ -74,7 +75,9 @@ function FlexLayoutDesign({ value }: { value: DesignValue }) {
       <DroppableContainer
         id={id}
         value={value}
-        className={`${selectorPrefix}-droppable-container`}
+        className={classNames(`${selectorPrefix}-droppable-container`, {
+          [`${selectorPrefix}-droppable-container-design-mode`]: !isFormMode,
+        })}
         style={targetContainerStyle}
       >
         <InternalFlexLayout
