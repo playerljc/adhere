@@ -52,6 +52,26 @@ export interface DesignItem extends BaseItem {
   }) => DataItemRow | ReactNode;
 
   /**
+   * 表单运行时（Desktop）下的渲染内容（可选）
+   * @description 缺省时由 parseDesign 回退到 renderDesign
+   */
+  renderForm?: (props: {
+    parentId?: string;
+    value: DesignValue;
+    context: DesignContextType;
+  }) => DataItemRow | ReactNode;
+
+  /**
+   * 表单运行时（Mobile）下的渲染内容（可选）
+   * @description 缺省时由 parseDesign 回退到 renderDesignToMobile
+   */
+  renderFormToMobile?: (props: {
+    parentId?: string;
+    value: DesignValue;
+    context: DesignContextType;
+  }) => DataItemRow | ReactNode;
+
+  /**
    * 控件属性的设置相关属性
    */
 

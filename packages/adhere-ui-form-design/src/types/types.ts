@@ -11,8 +11,5 @@ export type Styles = {
   style?: CSSProperties;
 };
 
-// 表单属性
-export interface FormProps {}
-
 // 预览属性
 export interface ViewProps {}

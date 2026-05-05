@@ -35,20 +35,31 @@ const DesignFieldWrapper: FC<DesignFieldWrapperProps> = ({
   fieldActionTypes,
   children,
 }) => {
-  const { getActiveFieldId, setActiveFieldId, getItems, getDesignValue, getTerminal, getToolBox } =
-    useContext(DesignContext);
+  const designContext = useContext(DesignContext);
 
-  const items = getItems() ?? [];
+  const {
+    mode,
+    getActiveFieldId,
+    setActiveFieldId,
+    getItems,
+    getDesignValue,
+    getTerminal,
+    getToolBox,
+  } = designContext;
 
-  const designValue = getDesignValue();
+  const isFormMode = mode === 'form';
 
-  const terminal = getTerminal();
+  const items = getItems?.() ?? [];
 
-  const activeFieldId = getActiveFieldId();
+  const designValue = getDesignValue?.();
+
+  const terminal = getTerminal?.();
+
+  const activeFieldId = getActiveFieldId?.();
 
   const isActive = id === activeFieldId;
 
-  const toolbox = getToolBox();
+  const toolbox = getToolBox?.();
 
   const fieldType = useMemo(() => findTypeById({ id, designValue }), [designValue, id]);
 
@@ -61,7 +72,16 @@ const DesignFieldWrapper: FC<DesignFieldWrapperProps> = ({
   function onClick(e) {
     e.stopPropagation();
 
-    setActiveFieldId(id);
+    setActiveFieldId?.(id);
+  }
+
+  // 表单运行时模式：只做透传，不渲染选中态/工具条，不绑定 onClick
+  if (isFormMode) {
+    return (
+      <div className={classNames(selectPrefix, className)} style={style ?? {}}>
+        {children}
+      </div>
+    );
   }
 
   return (

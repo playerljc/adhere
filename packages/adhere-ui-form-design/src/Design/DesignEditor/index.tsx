@@ -1,6 +1,6 @@
 import { Select } from 'antd';
 import classNames from 'classnames';
-import React, { createContext, useContext } from 'react';
+import React, { useContext } from 'react';
 import type { CSSProperties, FC, ReactNode } from 'react';
 
 import { Form } from '@baifendian/adhere-ui-anthoc';
@@ -20,16 +20,11 @@ import Toolbar from '../Toolbar';
 import { defaultMenuItems } from '../Toolbar/menuActions';
 import { defaultGroups } from '../Toolbar/toolbarActions';
 import HiddenFormItemsPortal from '../../components/HiddenFormItemsPortal';
+import { FormContext, useFormContext } from '../../components/FormContext';
+
+export { FormContext, useFormContext };
 
 const selectPrefix = `${SELECT_PREFIX}-design-editor`;
-
-type FormInstance = ReturnType<typeof Form.useForm>[0];
-
-export const FormContext = createContext<FormInstance | null>(null);
-
-export function useFormContext(): FormInstance | null {
-  return useContext(FormContext);
-}
 
 /**
  * DesignEditor

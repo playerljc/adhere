@@ -25,15 +25,20 @@ export function parseDesign({
   value: DesignValue;
   context: DesignContextType;
 }): DataItemRow | ReactNode {
-  const { getTerminal, getItems } = context;
+  const { getTerminal, getItems, mode } = context;
 
   const terminal = getTerminal();
   const items = getItems();
 
   const item = items.find((_item) => _item.type === value.type);
 
+  const isFormMode = mode === 'form';
+
   if (isDesktop(terminal)) {
-    const result = item?.renderDesign({
+    // form 模式优先调用 renderForm，缺省回退到 renderDesign
+    const desktopRenderer = isFormMode && item?.renderForm ? item.renderForm : item?.renderDesign;
+
+    const result = desktopRenderer?.({
       parentId,
       value,
       context,
@@ -56,7 +61,11 @@ export function parseDesign({
     return result;
   }
 
-  return item?.renderDesignToMobile({
+  // form 模式优先调用 renderFormToMobile，缺省回退到 renderDesignToMobile
+  const mobileRenderer =
+    isFormMode && item?.renderFormToMobile ? item.renderFormToMobile : item?.renderDesignToMobile;
+
+  return mobileRenderer?.({
     parentId,
     value,
     context,

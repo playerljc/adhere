@@ -29,12 +29,15 @@ function collectHiddenFormItems(root?: DesignValue): DesignValue[] {
   return result;
 }
 
-const HiddenFormItemsPortal: React.FC<{ value?: DesignValue }> = ({ value }) => {
+const HiddenFormItemsPortal: React.FC<{ value?: DesignValue; containerId?: string }> = ({
+  value,
+  containerId = 'editorHidden',
+}) => {
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    setContainer(document.getElementById('editorHidden'));
-  }, []);
+    setContainer(document.getElementById(containerId));
+  }, [containerId]);
 
   const hiddenItems = useMemo(() => collectHiddenFormItems(value), [value]);
 
