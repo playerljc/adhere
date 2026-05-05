@@ -4,7 +4,7 @@
   //border-bottom: 2px dashed rgba(var(--adhere-color-primary-rgb), 0.9);
   border-bottom: var(
     --row-drag-sort-drop-over-downward-td-border-bottom,
-    2px dashed rgba(var(--adhere-color-primary-rgb), 0.9)
+    2px dashed rgb(var(--adhere-color-primary-rgb) 0.9)
   );
 }
 
@@ -12,6 +12,35 @@
   //border-top: 2px dashed rgba(var(--adhere-color-primary-rgb), 0.6);
   border-top: var(
     --row-drag-sort-drop-over-upward-td-border-top,
-    2px dashed rgba(var(--adhere-color-primary-rgb), 0.6)
+    2px dashed rgb(var(--adhere-color-primary-rgb) 0.6)
   );
+}
+
+// sort 模式：被拖动行的 ghost 效果
+.adhere-ui-search-table-row-drag-sort-dragging {
+  opacity: var(--row-drag-sort-dragging-opacity, 0.35);
+  background: var(
+    --row-drag-sort-dragging-bg,
+    rgb(var(--adhere-color-primary-rgb) 0.04)
+  );
+}
+
+.adhere-ui-search-table-row-drag-sort-dragging td {
+  background: transparent !important;
+}
+
+// sort 模式：悬停目标行高亮
+.adhere-ui-search-table-row-drag-sort-hover-target td {
+  background: var(
+    --row-drag-sort-hover-target-bg,
+    rgb(var(--adhere-color-primary-rgb) 0.08)
+  ) !important;
+  transition: background-color 0.15s ease;
+}
+
+// 拖拽期间全局 grabbing 光标 + 禁选文本
+body.adhere-ui-search-table-row-drag-sort-grabbing,
+body.adhere-ui-search-table-row-drag-sort-grabbing * {
+  cursor: grabbing !important;
+  user-select: none !important;
 }

@@ -110,6 +110,33 @@ export function swap(record1: any, record2: any) {
 }
 
 /**
+ * moveSort
+ * @description 在同一层级兄弟节点中将dragId对应的记录移动到hoverId对应记录的位置，其他兄弟节点顺序顺移。
+ * 由于findBrother返回的是dataSource中真实的兄弟数组引用，对其splice将原地反映到dataSource上。
+ * @param {any[]} dataSource
+ * @param {string} rowKey
+ * @param {any} dragId
+ * @param {any} hoverId
+ */
+export function moveSort(
+  dataSource: any[],
+  rowKey: string = 'id',
+  dragId: any,
+  hoverId: any,
+) {
+  const siblings = findBrother(dataSource, rowKey, dragId);
+  if (!siblings || !siblings.length) return;
+
+  const dragIndex = siblings.findIndex((r) => r[rowKey] === dragId);
+  const hoverIndex = siblings.findIndex((r) => r[rowKey] === hoverId);
+
+  if (dragIndex === -1 || hoverIndex === -1 || dragIndex === hoverIndex) return;
+
+  const [item] = siblings.splice(dragIndex, 1);
+  siblings.splice(hoverIndex, 0, item);
+}
+
+/**
  * isSameLevel
  * @description 是否是同一层级
  * @param {any[]} dataSource

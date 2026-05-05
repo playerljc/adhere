@@ -1,3 +1,4 @@
+import type { RowDragSortType } from '../../types';
 declare const SearchRowDragSortTable_base: {
     new (props: any): {
         [x: string]: any;
@@ -19,6 +20,7 @@ declare const SearchRowDragSortTable_base: {
             };
             columns: import("../../types").ColumnTypeExt[];
         }): import("../../types").ColumnTypeExt;
+        getDragSortType(): RowDragSortType;
         onDragSortRow(params: {
             rowIndex: number;
             record: {
@@ -46,8 +48,9 @@ declare class SearchRowDragSortTable extends SearchRowDragSortTable_base {
      * moveRow
      * @param {any} dragRecord
      * @param {any} hoverRecord
+     * @param {RowDragSortType} dragSortType - 'swap' | 'sort'，默认从 getDragSortType() 读取
      * @return Promise<void>
      */
-    moveRow(dragRecord: any, hoverRecord: any): Promise<void>;
+    moveRow(dragRecord: any, hoverRecord: any, dragSortType?: RowDragSortType): Promise<void>;
 }
 export default SearchRowDragSortTable;

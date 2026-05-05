@@ -3,11 +3,13 @@ import React from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
+import { DragGlobalEffect } from '../../Extension/DragSort/RowDragSort/DragSortRow';
 import type {
   ColumnRowDragSortConfig,
   ColumnTypeExt,
   RowConfig,
   RowDragSortConfig,
+  RowDragSortType,
 } from '../../types';
 
 export default function <P, S>(SuperClass) {
@@ -78,6 +80,15 @@ export default function <P, S>(SuperClass) {
     }
 
     /**
+     * getDragSortType
+     * @description 表级别的拖拽模式（swap | sort）。子类整表覆写此方法即可切换全表的拖拽行为。
+     * 行级 RowDragSortConfig.dragSortType 优先级高于此方法。
+     */
+    getDragSortType(): RowDragSortType {
+      return 'sort';
+    }
+
+    /**
      * onDragSortRow
      * @param params
      */
@@ -102,7 +113,12 @@ export default function <P, S>(SuperClass) {
     }
 
     render(): ReactElement {
-      return <DndProvider backend={HTML5Backend}>{super.render()}</DndProvider>;
+      return (
+        <DndProvider backend={HTML5Backend}>
+          <DragGlobalEffect />
+          {super.render()}
+        </DndProvider>
+      );
     }
   };
 }

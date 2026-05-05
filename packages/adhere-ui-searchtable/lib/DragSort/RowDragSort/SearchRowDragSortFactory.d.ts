@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import type { ColumnRowDragSortConfig, ColumnTypeExt, RowConfig, RowDragSortConfig } from '../../types';
+import type { ColumnRowDragSortConfig, ColumnTypeExt, RowConfig, RowDragSortConfig, RowDragSortType } from '../../types';
 export default function <P, S>(SuperClass: any): {
     new (props: any): {
         [x: string]: any;
@@ -37,6 +37,12 @@ export default function <P, S>(SuperClass: any): {
             };
             columns: ColumnTypeExt[];
         }): ColumnTypeExt;
+        /**
+         * getDragSortType
+         * @description 表级别的拖拽模式（swap | sort）。子类整表覆写此方法即可切换全表的拖拽行为。
+         * 行级 RowDragSortConfig.dragSortType 优先级高于此方法。
+         */
+        getDragSortType(): RowDragSortType;
         /**
          * onDragSortRow
          * @param params

@@ -31,7 +31,7 @@ export const oneData = {
 
 const dataSource = Array.from({ length: 100 }).map((t) => ({
   id: Mockjs.mock('@guid'),
-  // name: Mockjs.mock('@name'),
+  name: Mockjs.mock('@name'),
   // sex: `${Util.generatorRandom(0, 1)}`,
   // // homeTown: Mockjs.mock('@name'),
   // homeTown:
@@ -42,7 +42,7 @@ const dataSource = Array.from({ length: 100 }).map((t) => ({
   // height: Mockjs.mock('@integer'),
   // width: Mockjs.mock('@integer'),
 
-  name: '',
+  // name: '',
   sex: '',
   homeTown: '',
   address: '',

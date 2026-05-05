@@ -214,9 +214,22 @@ export interface RowEditableConfig {
 }
 
 /**
+ * RowDragSortType
+ * @description 拖拽行的处理模式：
+ * - swap: 拖拽行与目标行的字段内容互换，行的物理位置不变
+ * - sort: 将拖拽行从原位置移除并插入到目标行的位置，期间的兄弟行顺序顺移
+ */
+export type RowDragSortType = 'swap' | 'sort';
+
+/**
  * RowDragSortConfig
  */
 export interface RowDragSortConfig {
+  /**
+   * dragSortType
+   * @description 行级别的拖拽模式（swap | sort）。设置后会覆盖表级 getDragSortType() 的返回值。
+   */
+  dragSortType?: RowDragSortType;
   override?: {
     type?: string;
     dropOverDownwardClassName?: string;
