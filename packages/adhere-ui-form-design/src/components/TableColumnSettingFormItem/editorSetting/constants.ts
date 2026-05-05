@@ -30,4 +30,3 @@ export const DatePickerEditorTypes = new Set<TableColumnEditorType>([
   'birthdayPicker',
   'boundedTimePicker',
 ]);
-

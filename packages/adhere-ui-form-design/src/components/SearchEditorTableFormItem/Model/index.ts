@@ -16,4 +16,3 @@ const Model = Object.assign(ServiceRegister.model(serviceName), {}) as Record<st
 sage.model(Model);
 
 export default Model;
-

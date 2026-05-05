@@ -35,4 +35,3 @@ function EditableCellTable({ subClass, value, onChange }: EditableCellTableProps
 }
 
 export default EditableCellTable;
-

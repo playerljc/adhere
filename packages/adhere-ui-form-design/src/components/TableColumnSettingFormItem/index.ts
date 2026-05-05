@@ -7,4 +7,3 @@ export type {
 } from './TableColumnSettingFormItem';
 
 export { default as TableColumnSettingFormItem } from './TableColumnSettingFormItem';
-

@@ -6,4 +6,3 @@ const { ComponentNames, Components, genDictComponentName } = FieldGeneratorToDic
 
 export const DividerVariantSelectStandardDict =
   Components[genDictComponentName(names.DividerVariant as string, ComponentNames.Select.Standard)];
-

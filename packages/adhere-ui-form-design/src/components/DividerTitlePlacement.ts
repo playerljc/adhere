@@ -8,4 +8,3 @@ export const DividerTitlePlacementSelectStandardDict =
   Components[
     genDictComponentName(names.DividerTitlePlacement as string, ComponentNames.Select.Standard)
   ];
-

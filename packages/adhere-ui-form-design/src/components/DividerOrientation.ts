@@ -8,4 +8,3 @@ export const DividerOrientationSelectStandardDict =
   Components[
     genDictComponentName(names.DividerOrientation as string, ComponentNames.Select.Standard)
   ];
-

@@ -5,4 +5,6 @@ import { names } from '../Dict';
 const { ComponentNames, Components, genDictComponentName } = FieldGeneratorToDict;
 
 export const ColorPickerFormatSelectStandardDict =
-  Components[genDictComponentName(names.ColorPickerFormat as string, ComponentNames.Select.Standard)];
+  Components[
+    genDictComponentName(names.ColorPickerFormat as string, ComponentNames.Select.Standard)
+  ];

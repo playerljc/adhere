@@ -1,10 +1,10 @@
-import React from 'react';
 import { Form } from 'antd';
+import React from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
-import { ActionsFormItem } from '../../../index';
 import { values } from '../../../../Dict';
+import { ActionsFormItem } from '../../../index';
 
 export default function ActionsSection() {
   return (
@@ -13,4 +13,3 @@ export default function ActionsSection() {
     </Form.Item>
   );
 }
-

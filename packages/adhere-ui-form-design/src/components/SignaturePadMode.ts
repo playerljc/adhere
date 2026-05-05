@@ -8,4 +8,3 @@ export const SignaturePadModeSelectStandardDict =
   Components[
     genDictComponentName(names.SignaturePadMode as string, ComponentNames.Select.Standard)
   ];
-

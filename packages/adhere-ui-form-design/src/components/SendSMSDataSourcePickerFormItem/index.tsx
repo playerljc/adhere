@@ -47,9 +47,7 @@ const SendSMSDataSourcePickerFormItem: FC<SendSMSDataSourcePickerFormItemProps> 
     <>
       <div className={selectorPrefix}>
         <div
-          className={`${selectorPrefix}-info ${
-            summary ? '' : `${selectorPrefix}-info-empty`
-          }`}
+          className={`${selectorPrefix}-info ${summary ? '' : `${selectorPrefix}-info-empty`}`}
           title={summary || Intl.get('send_sms_data_source_placeholder')}
         >
           {summary || Intl.get('send_sms_data_source_placeholder')}
@@ -86,4 +84,3 @@ const SendSMSDataSourcePickerFormItem: FC<SendSMSDataSourcePickerFormItemProps> 
 };
 
 export default SendSMSDataSourcePickerFormItem;
-

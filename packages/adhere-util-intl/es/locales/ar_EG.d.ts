@@ -327,6 +327,12 @@ declare const _default: {
     clear_all_confirm_title: string;
     clear_all_confirm_content: string;
     clear_all_disabled_hint: string;
+    preview_disabled_hint: string;
+    preview_submit: string;
+    preview_reset: string;
+    preview_view_values: string;
+    preview_view_values_title: string;
+    preview_validate_failed: string;
     phone_with_area_code: string;
     area_code: string;
     area_code_data_source: string;

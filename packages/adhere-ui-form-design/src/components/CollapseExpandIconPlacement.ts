@@ -6,5 +6,8 @@ const { ComponentNames, Components, genDictComponentName } = FieldGeneratorToDic
 
 export const CollapseExpandIconPlacementSelectStandardDict =
   Components[
-    genDictComponentName(names.CollapseExpandIconPlacement as string, ComponentNames.Select.Standard)
+    genDictComponentName(
+      names.CollapseExpandIconPlacement as string,
+      ComponentNames.Select.Standard,
+    )
   ];

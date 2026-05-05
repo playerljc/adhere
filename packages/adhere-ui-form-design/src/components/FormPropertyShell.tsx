@@ -83,10 +83,13 @@ export function FormPropertyShell({
       const generated = genDefaultName();
       if (generated) {
         values.name = generated;
-        setFormItemProps(activeFieldId as string, {
-          ...(formItemProps as Record<string, unknown>),
-          name: generated,
-        } as FormItemProps);
+        setFormItemProps(
+          activeFieldId as string,
+          {
+            ...(formItemProps as Record<string, unknown>),
+            name: generated,
+          } as FormItemProps,
+        );
       }
     }
 

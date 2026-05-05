@@ -6,4 +6,3 @@ const { ComponentNames, Components, genDictComponentName } = FieldGeneratorToDic
 
 export const PhoneAreaCodeSelectStandardDict =
   Components[genDictComponentName(names.PhoneAreaCode as string, ComponentNames.Select.Standard)];
-

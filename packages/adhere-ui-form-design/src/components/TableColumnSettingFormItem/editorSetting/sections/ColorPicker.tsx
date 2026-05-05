@@ -1,5 +1,5 @@
-import React from 'react';
 import { Form } from 'antd';
+import React from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -51,4 +51,3 @@ export default function ColorPickerSection() {
     </>
   );
 }
-

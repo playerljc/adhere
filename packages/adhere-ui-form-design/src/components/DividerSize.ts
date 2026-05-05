@@ -6,4 +6,3 @@ const { ComponentNames, Components, genDictComponentName } = FieldGeneratorToDic
 
 export const DividerSizeSelectStandardDict =
   Components[genDictComponentName(names.DividerSize as string, ComponentNames.Select.Standard)];
-

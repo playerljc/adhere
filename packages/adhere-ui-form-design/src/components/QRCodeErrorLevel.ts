@@ -8,4 +8,3 @@ export const QRCodeErrorLevelSelectStandardDict =
   Components[
     genDictComponentName(names.QRCodeErrorLevel as string, ComponentNames.Select.Standard)
   ];
-

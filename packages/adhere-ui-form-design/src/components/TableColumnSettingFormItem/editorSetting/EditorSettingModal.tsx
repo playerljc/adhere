@@ -6,13 +6,13 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import type { TableColumnEditorType } from '../TableColumnSettingFormItem';
 import { DatePickerEditorTypes, InputNumberEditorTypes } from './constants';
+import ActionsSection from './sections/Actions';
 import ColorPickerSection from './sections/ColorPicker';
 import DatePickerSection from './sections/DatePicker';
 import InputSection from './sections/Input';
 import InputNumberSection from './sections/InputNumber';
 import RangePickerSection from './sections/RangePicker';
 import RateSection from './sections/Rate';
-import ActionsSection from './sections/Actions';
 import RulesSection from './sections/Rules';
 import SelectSection from './sections/Select';
 import SliderSection from './sections/Slider';

@@ -6,4 +6,3 @@ const { ComponentNames, Components, genDictComponentName } = FieldGeneratorToDic
 
 export const QRCodeStatusSelectStandardDict =
   Components[genDictComponentName(names.QRCodeStatus as string, ComponentNames.Select.Standard)];
-

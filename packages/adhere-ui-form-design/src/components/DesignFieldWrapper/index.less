@@ -1,4 +1,4 @@
-@import '../../constant.less';
+@import url('../../constant.less');
 
 .@{prefix-cls}-design-field-wrapper {
   position: relative;
@@ -12,36 +12,36 @@
     left: 0;
     display: inline-flex;
     flex-direction: row;
+    gap: var(--design-field-wrapper-label-gap, 4px);
     align-items: center;
     max-width: 100%;
     padding: var(--design-field-wrapper-label-padding, 2px 6px);
-    color: var(--design-field-wrapper-label-color, var(--ant-color-text-light-solid, #ffffff));
+    color: var(--design-field-wrapper-label-color, var(--ant-color-text-light-solid, #fff));
     background-color: var(
       --design-field-wrapper-label-background-color,
       var(--antd-color-primary, #1677ff)
     );
-    gap: var(--design-field-wrapper-label-gap, 4px);
 
     .@{prefix-cls}-design-field-wrapper-label-icon {
       display: inline-flex;
       flex-shrink: 0;
       align-items: center;
       justify-content: center;
+      color: inherit;
       font-size: var(--design-field-wrapper-label-icon-size, 14px);
       line-height: 1;
-      color: inherit;
 
       .anticon {
-        font-size: inherit;
         color: inherit;
+        font-size: inherit;
       }
     }
 
     .@{prefix-cls}-design-field-wrapper-label-text {
       min-width: 0;
       overflow: hidden;
-      text-overflow: ellipsis;
       white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 
@@ -54,10 +54,7 @@
 
   &.@{prefix-cls}-design-field-wrapper-active {
     padding: var(--design-field-wrapper-active-padding, 2px 2px 36px 2px);
-    border: var(
-      --design-field-wrapper-active-border,
-      1px solid var(--antd-color-primary, #1677ff)
-    );
+    border: var(--design-field-wrapper-active-border, 1px solid var(--antd-color-primary, #1677ff));
   }
 
   // 激活的工具栏

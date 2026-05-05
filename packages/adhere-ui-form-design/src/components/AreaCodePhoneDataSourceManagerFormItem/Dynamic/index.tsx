@@ -52,4 +52,3 @@ const Dynamic: FC<DynamicProps> = ({ value, onChange }) => {
 };
 
 export default Dynamic;
-

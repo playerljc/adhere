@@ -4,10 +4,9 @@ import React, { type FC } from 'react';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { SELECT_PREFIX } from '../../constant';
+import type { I18nValue } from '../../types';
 import Dynamic from './Dynamic';
 import Static from './Static';
-
-import type { I18nValue } from '../../types';
 
 export interface TransferDataSourceItem {
   key: string;

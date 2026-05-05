@@ -1,6 +1,6 @@
-import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import React, { useContext, useMemo } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 
 import type { FieldProps, I18nValue } from '../../types';

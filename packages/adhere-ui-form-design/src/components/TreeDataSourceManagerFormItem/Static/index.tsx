@@ -5,9 +5,7 @@ import { Button, Modal } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { SELECT_PREFIX } from '../../../constant';
-import MonacoEditorFormItem, {
-  type MonacoEditorFormItemHandle,
-} from '../../MonacoEditorFormItem';
+import MonacoEditorFormItem, { type MonacoEditorFormItemHandle } from '../../MonacoEditorFormItem';
 import { type TreeDataSourceManagerFormItemProps } from '../index';
 
 const DEFAULT_TREE_DATA = JSON.stringify(
@@ -70,12 +68,7 @@ const Static: FC<TreeDataSourceManagerFormItemProps> = ({ value, onChange }) => 
 
   return (
     <div className={selectorPrefix}>
-      <Button
-        type="default"
-        icon={<SettingOutlined />}
-        onClick={handleOpen}
-        block
-      >
+      <Button type="default" icon={<SettingOutlined />} onClick={handleOpen} block>
         {Intl.get('tree_data_setting')}
       </Button>
 

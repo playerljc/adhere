@@ -13,4 +13,3 @@ export {
   EditableCellTableSuperTable,
   EditableRowControlTableSuperTable,
 };
-

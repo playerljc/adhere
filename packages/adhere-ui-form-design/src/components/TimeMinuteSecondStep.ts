@@ -5,4 +5,6 @@ import { names } from '../Dict';
 const { ComponentNames, Components, genDictComponentName } = FieldGeneratorToDict;
 
 export const TimeMinuteSecondStepSelectStandardDict =
-  Components[genDictComponentName(names.TimeMinuteSecondStep as string, ComponentNames.Select.Standard)];
+  Components[
+    genDictComponentName(names.TimeMinuteSecondStep as string, ComponentNames.Select.Standard)
+  ];

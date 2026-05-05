@@ -14,4 +14,3 @@ export interface DatePickerRuntimeState {
   pickerValue?: string;
   dateBoundMode?: string;
 }
-

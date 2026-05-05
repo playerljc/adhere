@@ -4,8 +4,8 @@ import type { FC } from 'react';
 
 import { useDroppable } from '@dnd-kit/core';
 
-import { SELECT_PREFIX } from '../../constant';
 import { DesignContext } from '../../Design/Context';
+import { SELECT_PREFIX } from '../../constant';
 import type { DroppableContainerProps } from '../../types';
 
 const selectPrefix = `${SELECT_PREFIX}-design-editor`;

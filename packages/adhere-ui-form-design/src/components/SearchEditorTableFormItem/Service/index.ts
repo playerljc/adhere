@@ -79,4 +79,3 @@ ServiceRegister.addConfig(Service.name, {
   fetchList,
   default: Service,
 });
-

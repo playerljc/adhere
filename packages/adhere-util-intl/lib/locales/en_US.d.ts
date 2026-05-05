@@ -420,6 +420,12 @@ declare const _default: {
     gen_json_export_filename: string;
     gen_json_disabled_hint: string;
     gen_json_copy_failed: string;
+    preview_disabled_hint: string;
+    preview_submit: string;
+    preview_reset: string;
+    preview_view_values: string;
+    preview_view_values_title: string;
+    preview_validate_failed: string;
     phone_with_area_code: string;
     area_code: string;
     area_code_data_source: string;

@@ -1,5 +1,5 @@
-import React from 'react';
 import { Form, InputNumber } from 'antd';
+import React from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -50,4 +50,3 @@ export default function SliderSection() {
     </>
   );
 }
-
