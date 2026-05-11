@@ -518,6 +518,10 @@ export default [
     preview_view_values: '查看当前值',
     preview_view_values_title: '当前表单值',
     preview_validate_failed: '校验未通过',
+    preview_get_data: '获取数据',
+    preview_close: '关闭',
+    preview_disable_editing: '禁用编辑',
+    preview_enable_editing: '启用编辑',
 
     phone_with_area_code: '区号+手机号',
     area_code: '区号',

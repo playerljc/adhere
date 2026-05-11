@@ -335,6 +335,10 @@ export default [
     preview_view_values: 'عرض القيم',
     preview_view_values_title: 'قيم النموذج الحالية',
     preview_validate_failed: 'فشل التحقق',
+    preview_get_data: 'الحصول على البيانات',
+    preview_close: 'إغلاق',
+    preview_disable_editing: 'تعطيل التحرير',
+    preview_enable_editing: 'تمكين التحرير',
 
     phone_with_area_code: 'هاتف مع رمز المنطقة',
     area_code: 'رمز المنطقة',

@@ -335,6 +335,10 @@ export default [
     preview_view_values: 'Ver valores',
     preview_view_values_title: 'Valores atuais do formulário',
     preview_validate_failed: 'Falha na validação',
+    preview_get_data: 'Obter dados',
+    preview_close: 'Fechar',
+    preview_disable_editing: 'Desativar edição',
+    preview_enable_editing: 'Ativar edição',
 
     phone_with_area_code: 'Telefone com indicativo',
     area_code: 'Indicativo',

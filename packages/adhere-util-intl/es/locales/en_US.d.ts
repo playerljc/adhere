@@ -426,6 +426,10 @@ declare const _default: {
     preview_view_values: string;
     preview_view_values_title: string;
     preview_validate_failed: string;
+    preview_get_data: string;
+    preview_close: string;
+    preview_disable_editing: string;
+    preview_enable_editing: string;
     phone_with_area_code: string;
     area_code: string;
     area_code_data_source: string;

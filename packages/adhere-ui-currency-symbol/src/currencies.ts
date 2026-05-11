@@ -156,6 +156,11 @@ const currencies: CurrenciesItem[] = [
     symbol: 'RM',
     code: 'MYR',
   },
+  {
+    name: 'Angolan Kwanza',
+    symbol: 'Kz',
+    code: 'AOA',
+  },
 ];
 
 export default currencies; 

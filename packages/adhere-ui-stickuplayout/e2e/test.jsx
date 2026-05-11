@@ -8,7 +8,7 @@ import './index.less';
 const { Item } = StickupLayout;
 
 export default () => (
-  <div style={{ height: 500, overflow: 'hidden' }} className="StickupLayout">
+  <div style={{ height: 500 }} className="StickupLayout">
     <StickupLayout>
       <Item
         title={<span className="title">基本参数</span>}

@@ -430,6 +430,10 @@ export default [
     preview_view_values: 'View values',
     preview_view_values_title: 'Current form values',
     preview_validate_failed: 'Validation failed',
+    preview_get_data: 'Get data',
+    preview_close: 'Close',
+    preview_disable_editing: 'Disable editing',
+    preview_enable_editing: 'Enable editing',
 
     phone_with_area_code: 'Phone with area code',
     area_code: 'Area code',

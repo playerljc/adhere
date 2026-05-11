@@ -34,6 +34,7 @@ const codes: Record<string, string> = {
   VND: 'VND',
   PHP: 'PHP',
   MYR: 'MYR',
+  AOA: 'AOA',
 };
 
 export default codes; 
