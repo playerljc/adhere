@@ -4,7 +4,7 @@
 
 ## 特性
 
-- 🎯 支持30种常用货币
+- 🎯 支持31种常用货币
 - 🎨 丰富的样式自定义选项
 - ⚡ 数字动画效果支持
 - 📱 响应式设计
@@ -30,6 +30,9 @@ import CurrencySymbol from '@baifendian/adhere-ui-currency-symbol';
 
 // 欧元
 <CurrencySymbol amount={1234.56} code="EUR" />
+
+// 安哥拉宽扎
+<CurrencySymbol amount={1234.56} code="AOA" />
 ```
 
 ## 高级用法
@@ -113,7 +116,7 @@ import CurrencySymbol from '@baifendian/adhere-ui-currency-symbol';
 
 ### 支持的货币
 
-组件支持以下30种货币：
+组件支持以下31种货币：
 
 - USD (美元) - $
 - EUR (欧元) - €
@@ -145,6 +148,7 @@ import CurrencySymbol from '@baifendian/adhere-ui-currency-symbol';
 - VND (越南盾) - ₫
 - PHP (菲律宾比索) - ₱
 - MYR (马来西亚林吉特) - RM
+- AOA (安哥拉宽扎) - Kz
 
 ### 静态属性
 
