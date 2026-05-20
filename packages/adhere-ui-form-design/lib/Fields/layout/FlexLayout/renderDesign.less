@@ -18,16 +18,24 @@
 
 .@{prefix-cls}-layout-droppable-container {
   width: 100%;
-  padding-bottom: var(--layout-droppable-container-padding-bottom, 60px);
   overflow: auto;
+
+  // 设计期专用：底部预留拖放占位
+  &.@{prefix-cls}-layout-droppable-container-design-mode {
+    padding-bottom: var(--layout-droppable-container-padding-bottom, 60px);
+  }
 }
 
 .@{prefix-cls}-layout-slots-container {
   flex: 1;
   width: 100%;
-  min-width: var(--layout-slots-container-min-width, 60px);
-  min-height: var(--layout-slots-container-min-height, 60px);
-  padding-bottom: var(--layout-slots-container-padding-bottom, 60px);
   overflow: auto;
-  border: var(--layout-slots-container-border, 1px solid @border-color);
+
+  // 设计期专用：占位最小尺寸 / 占位 padding-bottom / 外框
+  &.@{prefix-cls}-layout-slots-container-design-mode {
+    min-width: var(--layout-slots-container-min-width, 60px);
+    min-height: var(--layout-slots-container-min-height, 60px);
+    padding-bottom: var(--layout-slots-container-padding-bottom, 60px);
+    border: var(--layout-slots-container-border, 1px solid @border-color);
+  }
 }

@@ -25,6 +25,22 @@ drop / hover 时按以下顺序解析有效模式：
 - drop 阶段：数据已在 hover 时就位，**不会再次调用 `moveRow`**，但 `dropHooks.drop` 仍会被触发。
 - 视觉提示：sort 模式不再叠加 `dropOverDownward` / `dropOverUpward` 上下边线（行已物理位移）。
 
+### 交换/排序完成后调用接口（Hook/覆写点）
+
+目前提供的 `RowDragSortConfig.dropHooks.drop` 是 **drop 落点** 回调，并不等价于“交换完成后”：
+
+- **swap 模式**：`dropHooks.drop` 发生在 `moveRow` 之前（交换尚未执行）。
+- **sort 模式**：排序在 hover 阶段已完成，drop 阶段只会触发 `dropHooks.drop`（适合在这里提交最终顺序到服务端）。
+
+如果你需要一个统一的“交换/排序完成后”时机，推荐覆写表格类的 `moveRow`，在 `super.moveRow(...)` 完成后调接口：
+
+```tsx
+async moveRow(dragRecord, hoverRecord, dragSortType) {
+  await super.moveRow(dragRecord, hoverRecord, dragSortType);
+  await api.saveOrder(this.getData());
+}
+```
+
 ### sort 模式视觉增强
 
 sort 模式默认启用四项 Sortable 风格视觉反馈：

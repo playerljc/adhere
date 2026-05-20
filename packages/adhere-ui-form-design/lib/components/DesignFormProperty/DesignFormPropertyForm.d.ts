@@ -1,6 +1,6 @@
+import React from 'react';
 import { Form } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
-import React from 'react';
 import type { DesignValueProps, FormItemProps } from '../../types';
 type FormInstance = ReturnType<typeof Form.useForm>[0];
 export type DesignFormPropertyFormProps = {

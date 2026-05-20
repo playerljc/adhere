@@ -1,6 +1,7 @@
 import sha256 from 'crypto-js/sha256';
 import stableStringify from 'json-stable-stringify';
 
+
 // 类型定义
 interface NormalizedHeaders {
   [key: string]: string;
@@ -51,13 +52,24 @@ async function blobToBase64(blob: Blob): Promise<string> {
 }
 
 /**
+ * 将 UTF-8 字符串安全地编码为 Base64（兼容超出 Latin1 的 Unicode）
+ */
+function utf8ToBase64(str: string): string {
+  const bytes = new TextEncoder().encode(str);
+  let binary = '';
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
+
+/**
  * 将请求体编码为 Base64 字符串
  * @param body 要编码的请求体
  * @returns Base64 编码的字符串
  */
 async function base64Encode(body: CacheKeyBody): Promise<string> {
   let base64Body: string;
-
   if (body instanceof FormData) {
     const entries = await Promise.all(
       Array.from(body.entries())
@@ -70,16 +82,14 @@ async function base64Encode(body: CacheKeyBody): Promise<string> {
         }),
     );
     const objectBody = Object.fromEntries(entries);
-    base64Body = btoa(JSON.stringify(objectBody));
+    base64Body = utf8ToBase64(JSON.stringify(objectBody));
   } else if (body && typeof body === 'object') {
-    base64Body = btoa(JSON.stringify(body));
+    base64Body = utf8ToBase64(JSON.stringify(body));
   } else {
-    base64Body = btoa(String(body || ''));
+    base64Body = utf8ToBase64(String(body ?? ''));
   }
-
   return base64Body;
 }
-
 /**
  * 规范化请求头，将所有键转换为小写，值转换为小写字符串
  * @param headers 原始请求头对象

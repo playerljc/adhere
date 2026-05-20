@@ -1,70 +1,75 @@
-@import '../../constant.less';
+@import url('../../constant.less');
 
 .@{prefix-cls}-design-field-wrapper {
   position: relative;
   display: flex;
   box-sizing: border-box;
-  padding: var(--design-field-wrapper-padding, 2px);
 
-  > .@{prefix-cls}-design-field-wrapper-label {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    max-width: 100%;
-    padding: var(--design-field-wrapper-label-padding, 2px 6px);
-    color: var(--design-field-wrapper-label-color, var(--ant-color-text-light-solid, #ffffff));
-    background-color: var(
-      --design-field-wrapper-label-background-color,
-      var(--antd-color-primary, #1677ff)
-    );
-    gap: var(--design-field-wrapper-label-gap, 4px);
+  // 设计期专用视觉：padding / hover / active / label / actions
+  // form 模式下不会挂上 -design-mode 修饰符，从而保持纯净 DOM 表现
+  &.@{prefix-cls}-design-field-wrapper-design-mode {
+    padding: var(--design-field-wrapper-padding, 2px);
 
-    .@{prefix-cls}-design-field-wrapper-label-icon {
+    > .@{prefix-cls}-design-field-wrapper-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
       display: inline-flex;
-      flex-shrink: 0;
+      flex-direction: row;
+      gap: var(--design-field-wrapper-label-gap, 4px);
       align-items: center;
-      justify-content: center;
-      font-size: var(--design-field-wrapper-label-icon-size, 14px);
-      line-height: 1;
-      color: inherit;
+      max-width: 100%;
+      padding: var(--design-field-wrapper-label-padding, 2px 6px);
+      color: var(--design-field-wrapper-label-color, var(--ant-color-text-light-solid, #fff));
+      background-color: var(
+        --design-field-wrapper-label-background-color,
+        var(--antd-color-primary, #1677ff)
+      );
 
-      .anticon {
-        font-size: inherit;
+      .@{prefix-cls}-design-field-wrapper-label-icon {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
         color: inherit;
+        font-size: var(--design-field-wrapper-label-icon-size, 14px);
+        line-height: 1;
+
+        .anticon {
+          color: inherit;
+          font-size: inherit;
+        }
+      }
+
+      .@{prefix-cls}-design-field-wrapper-label-text {
+        min-width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
     }
 
-    .@{prefix-cls}-design-field-wrapper-label-text {
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    &:hover {
+      border: var(
+        --design-field-wrapper-hover-border,
+        1px dashed var(--antd-color-primary-border, #91caff)
+      );
     }
-  }
 
-  &:hover {
-    border: var(
-      --design-field-wrapper-hover-border,
-      1px dashed var(--antd-color-primary-border, #91caff)
-    );
-  }
+    &.@{prefix-cls}-design-field-wrapper-active {
+      padding: var(--design-field-wrapper-active-padding, 2px 2px 36px 2px);
+      border: var(
+        --design-field-wrapper-active-border,
+        1px solid var(--antd-color-primary, #1677ff)
+      );
+    }
 
-  &.@{prefix-cls}-design-field-wrapper-active {
-    padding: var(--design-field-wrapper-active-padding, 2px 2px 36px 2px);
-    border: var(
-      --design-field-wrapper-active-border,
-      1px solid var(--antd-color-primary, #1677ff)
-    );
-  }
-
-  // 激活的工具栏
-  > .@{prefix-cls}-design-field-wrapper-actions {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    z-index: 5;
+    // 激活的工具栏
+    > .@{prefix-cls}-design-field-wrapper-actions {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      z-index: 5;
+    }
   }
 }

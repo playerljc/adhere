@@ -5,8 +5,10 @@ import * as Plugins from './Fields/integration';
 import * as Layout from './Fields/layout';
 import * as Components from './components';
 import * as Util from './utils';
+export { FormContext, useFormContext } from './components/FormContext';
 declare const _default: {
     Design: import("./types").DesignComponent;
+    Form: import("./types").FormComponent;
     Components: typeof Components;
     Util: typeof Util;
     parse: typeof parse;

@@ -1,32 +1,17 @@
 import { notification } from 'antd';
 
+
+
 import MobileGlobalIndicator from '@baifendian/adhere-mobile-ui-globalindicator';
 import GlobalIndicator from '@baifendian/adhere-ui-globalindicator';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
-import {
-  CONTENT_TYPES,
-  EventHandlerParams,
-  FormDataConfig,
-  HttpStatusCode,
-  IConfig,
-  ISendArg,
-  ISendPrepareArg,
-  Method,
-  Prepare,
-  PrepareFunctionParams,
-  RequestInterceptor,
-  ResolveDataParams,
-  ResolveDataResult,
-  ResponseInterceptor,
-  ResponseInterceptorReturn,
-  RetryOptions,
-  SendParamsConfig,
-  SendResult,
-  XhrEventsConfig,
-} from './types';
+
+
+import { CONTENT_TYPES, EventHandlerParams, FormDataConfig, HttpStatusCode, IConfig, ISendArg, ISendPrepareArg, Method, Prepare, PrepareFunctionParams, RequestInterceptor, ResolveDataParams, ResolveDataResult, ResponseInterceptor, ResponseInterceptorReturn, RetryOptions, SendParamsConfig, SendResult, XhrEventsConfig } from './types';
 import { combineUrls, generateCacheKey } from './utils';
+
 
 /** 是否触发过402状态码 */
 let trigger402 = false;
@@ -1368,12 +1353,12 @@ function getSendParams({
       // 如果值是数组
       else if (Array.isArray(value)) {
         value.forEach((_value) => {
-          formData.append(k, String(_value));
+          formData.append(k, _value);
         });
       }
       // 正常的情况
       else {
-        formData.append(k, String(value));
+        formData.append(k, value);
       }
     });
 

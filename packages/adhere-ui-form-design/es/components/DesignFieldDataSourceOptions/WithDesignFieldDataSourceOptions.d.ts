@@ -1,7 +1,7 @@
 import React, { type ReactNode } from 'react';
-import type { DataSourceManagerFormItemValue } from '../DataSourceManagerFormItem';
 import type { FieldProps } from '../../types';
 import type { DesignFieldDataSourceOption } from '../../utils/dataSourceOptions';
+import type { DataSourceManagerFormItemValue } from '../DataSourceManagerFormItem';
 export type WithDesignFieldDataSourceOptionsRenderArgs = {
     source: DataSourceManagerFormItemValue | undefined;
     options: DesignFieldDataSourceOption[];

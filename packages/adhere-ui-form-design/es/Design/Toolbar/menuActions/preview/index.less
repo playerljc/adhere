@@ -1,0 +1,141 @@
+@import url('../../../../constant.less');
+
+// 全视口包裹层：让 antd Modal 占满整个浏览器视口
+.@{prefix-cls}-design-preview-modal-wrap {
+  // wrapClassName 挂在 .ant-modal-wrap 上；这里强制让 wrap 本身就是 100% 视口
+  height: 100dvh;
+  inset: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+
+  // 用 flex 让 .ant-modal / content 可以用 height: 100%
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+
+  // antd 默认会给 .ant-modal 设定 max-width/margin/top，这里强制覆盖为全视口
+  > .ant-modal {
+    position: relative;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding-bottom: 0 !important;
+
+    > .ant-modal-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+      padding: 0;
+      border-radius: 0;
+
+      > .ant-modal-header {
+        flex-shrink: 0;
+        margin: 0;
+        padding: var(--fd-design-preview-modal-header-padding, 12px 16px);
+      }
+
+      > .ant-modal-body {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        overflow: hidden; // 只让中间 body 区域滚动
+      }
+    }
+  }
+}
+
+.@{prefix-cls}-design-preview-modal {
+  // 顶部工具栏：左 desktop/mobile 切换，mobile 时附带尺寸下拉
+  .@{prefix-cls}-design-preview-modal-toolbar {
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: row;
+    gap: var(--fd-design-preview-modal-toolbar-gap, 12px);
+    align-items: center;
+    padding: var(--fd-design-preview-modal-toolbar-padding, 8px 16px);
+    border-bottom: 1px solid
+      var(--fd-design-preview-modal-toolbar-border-color, #e4e4e7);
+  }
+
+  // 内容区：撑满剩余高度，溢出滚动
+  .@{prefix-cls}-design-preview-modal-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding: var(--fd-design-preview-modal-body-padding, 16px);
+    overflow: auto;
+    background: var(--fd-design-preview-modal-body-bg, #f5f5f5);
+  }
+
+  // 视口容器：desktop 透明全宽；mobile 居中手机框
+  .@{prefix-cls}-design-preview-modal-viewport {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+
+    &.@{prefix-cls}-design-preview-modal-viewport-desktop {
+      flex: 1;
+      width: 100%;
+      min-height: 100%;
+      padding: 0;
+      background: var(--fd-design-preview-modal-desktop-bg, #fff);
+      border: 1px solid
+        var(--fd-design-preview-modal-desktop-border, #e4e4e7);
+      border-radius: var(--fd-design-preview-modal-desktop-radius, 6px);
+    }
+
+    &.@{prefix-cls}-design-preview-modal-viewport-mobile {
+      align-self: center;
+      width: min(100%, var(--fd-preview-mobile-viewport-width, 375px));
+      max-width: var(--fd-preview-mobile-viewport-width, 375px);
+      min-height: var(--fd-design-preview-modal-mobile-min-height, 480px);
+      margin-block: var(--fd-design-preview-modal-mobile-margin-block, 8px);
+      margin-inline: auto;
+      padding: var(--fd-design-preview-modal-mobile-padding, 12px 12px 16px);
+      background: var(--fd-design-preview-modal-mobile-bg, #fff);
+      border: 1px solid var(--fd-design-preview-modal-mobile-border, #e4e4e7);
+      border-radius: var(--fd-design-preview-modal-mobile-radius, 12px);
+      box-shadow: var(
+        --fd-design-preview-modal-mobile-shadow,
+        0 8px 24px rgb(15 23 42 / 8%)
+      );
+    }
+  }
+
+  // 底部按钮条：sticky bottom，靠右排列
+  .@{prefix-cls}-design-preview-modal-footer {
+    flex-shrink: 0;
+    justify-content: flex-end;
+    width: 100%;
+    gap: var(--fd-design-preview-modal-footer-gap, 8px);
+    padding: var(--fd-design-preview-modal-footer-padding, 12px 16px);
+    background: var(--fd-design-preview-modal-footer-bg, #fff);
+    border-top: 1px solid
+      var(--fd-design-preview-modal-footer-border-color, #e4e4e7);
+  }
+}
+
+.@{prefix-cls}-design-preview-values-json-modal {
+  .@{prefix-cls}-design-preview-values-json-modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--fd-design-preview-values-json-modal-gap, 12px);
+  }
+
+  .@{prefix-cls}-design-preview-values-json-modal-editor-wrap {
+    overflow: hidden;
+    border: 1px solid var(--fd-design-preview-values-json-modal-border-color, #f0f0f0);
+    border-radius: var(--fd-design-preview-values-json-modal-border-radius, 6px);
+  }
+
+  .@{prefix-cls}-design-preview-values-json-modal-footer {
+    justify-content: flex-end;
+    width: 100%;
+  }
+}

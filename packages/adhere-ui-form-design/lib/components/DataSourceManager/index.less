@@ -2,27 +2,27 @@
 
 /* 弹窗内容区固定高度，本身不滚动；左右两栏各自滚动 */
 .@{prefix-cls}-design-field-data-source-manager-modal-body-inner {
-  height: calc(100vh - 200px);
-  max-height: calc(100vh - 200px);
-  min-height: 320px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  height: calc(100vh - 200px);
+  min-height: 320px;
+  max-height: calc(100vh - 200px);
+  overflow: hidden;
 
   > .@{prefix-cls}-design-field-data-source-manager {
     flex: 1 1 auto;
-    min-height: 0;
     min-width: 0;
+    min-height: 0;
   }
 }
 
 .@{prefix-cls}-design-field-data-source-manager {
   display: flex;
+  flex: 1 1 auto;
   gap: 12px;
   align-items: stretch;
-  flex: 1 1 auto;
-  min-height: 0;
   width: 100%;
+  min-height: 0;
 
   .@{prefix-cls}-design-field-data-source-manager-fix {
     display: flex;
@@ -53,8 +53,8 @@
     gap: 8px;
     align-items: center;
     padding: 8px 10px;
-    cursor: pointer;
     border-radius: 4px;
+    cursor: pointer;
     transition: background 0.2s;
 
     &:hover {
@@ -70,9 +70,9 @@
     flex: 1 1 auto;
     min-width: 0;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     font-size: 13px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .@{prefix-cls}-design-field-data-source-manager-list-item-actions {
@@ -117,8 +117,8 @@
   }
 
   .@{prefix-cls}-design-field-data-source-manager-pair-block {
-    padding-bottom: 10px;
     margin-bottom: 10px;
+    padding-bottom: 10px;
     border-bottom: 1px dotted @border-color;
   }
 
@@ -154,7 +154,7 @@
   }
 
   .@{prefix-cls}-design-field-data-source-manager-pair-add-btn {
-    padding: 0;
     height: auto;
+    padding: 0;
   }
 }

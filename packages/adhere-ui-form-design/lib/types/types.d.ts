@@ -6,7 +6,5 @@ export type Styles = {
     className?: string;
     style?: CSSProperties;
 };
-export interface FormProps {
-}
 export interface ViewProps {
 }
