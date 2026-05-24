@@ -1,2 +1,2 @@
-Object.defineProperty(exports,"__esModule",{value:!0});var antd_1=require("antd"),util_1=require("../util"),TagHOC=(0,util_1.createFactory)(antd_1.Tag,{});TagHOC.displayName="Tag",exports.default=TagHOC;
+var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},antd_1=(Object.defineProperty(exports,"__esModule",{value:!0}),require("antd")),util_1=require("../util"),InternalTag_1=__importDefault(require("./InternalTag")),TagHOC=(0,util_1.createFactory)(InternalTag_1.default,{});Object.assign(TagHOC,antd_1.Tag),TagHOC.displayName="Tag",exports.default=TagHOC;
 //# sourceMappingURL=Tag.js.map

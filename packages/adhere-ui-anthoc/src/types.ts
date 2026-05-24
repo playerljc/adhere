@@ -115,6 +115,7 @@ import CheckAllTagSelect from './tag/CheckAllTagSelect';
 import HorizontalCheckAllCheckableTagGroup from './tag/HorizontalCheckAllCheckableTagGroup';
 import HorizontalCheckableTagGroup from './tag/HorizontalCheckableTagGroup';
 import HorizontalTagGroup from './tag/HorizontalTagGroup';
+import type { InternalTagProps } from './tag/types';
 import TagSelect from './tag/TagSelect';
 import VerticalCheckAllCheckableTagGroup from './tag/VerticalCheckAllCheckableTagGroup';
 import VerticalCheckableTagGroup from './tag/VerticalCheckableTagGroup';
@@ -247,7 +248,7 @@ export type TagGroupProps = (HorizontalTagGroupProps | VerticalTagGroupProps) & 
 };
 
 export type HorizontalTagGroupProps = SpaceProps & {
-  options: (TagProps & { value: SelectProps['value'] })[];
+  options: (InternalTagProps & { value: SelectProps['value'] })[];
 };
 
 export type VerticalTagGroupProps = HorizontalTagGroupProps;
@@ -914,7 +915,7 @@ export type TableHOCComponent = ReturnType<typeof createFactory<TableProps<any>>
   TableExt: typeof TableExt;
 };
 
-export type TagHOCComponent = ReturnType<typeof createFactory<TagProps>> & {
+export type TagHOCComponent = ReturnType<typeof createFactory<InternalTagProps>> & {
   AutoCompleteTagSelect: typeof AutoCompleteTagSelect;
   AutoCompleteCheckAllTagSelect: typeof AutoCompleteCheckAllTagSelect;
   CheckAllTagSelect: typeof CheckAllTagSelect;

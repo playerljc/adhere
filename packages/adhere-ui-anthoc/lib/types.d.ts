@@ -1,4 +1,4 @@
-import type { FormItemProps as AntFormItemProps, AutoCompleteProps as AntdAutoCompleteProps, CalendarProps, CascaderProps, CheckboxProps, DatePickerProps, FormProps, FormRule, InputProps, ListProps, PaginationProps, RadioProps, SelectProps, SpaceProps, StepsProps, TableProps, TagProps, TimePickerProps, TransferProps, TreeSelectProps } from 'antd';
+import type { FormItemProps as AntFormItemProps, AutoCompleteProps as AntdAutoCompleteProps, CalendarProps, CascaderProps, CheckboxProps, DatePickerProps, FormProps, FormRule, InputProps, ListProps, PaginationProps, RadioProps, SelectProps, SpaceProps, StepsProps, TableProps, TimePickerProps, TransferProps, TreeSelectProps } from 'antd';
 import type { CheckboxGroupProps, CheckboxOptionType } from 'antd/es/checkbox';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import useForm, { FormInstance } from 'antd/es/form/hooks/useForm';
@@ -92,6 +92,7 @@ import CheckAllTagSelect from './tag/CheckAllTagSelect';
 import HorizontalCheckAllCheckableTagGroup from './tag/HorizontalCheckAllCheckableTagGroup';
 import HorizontalCheckableTagGroup from './tag/HorizontalCheckableTagGroup';
 import HorizontalTagGroup from './tag/HorizontalTagGroup';
+import type { InternalTagProps } from './tag/types';
 import TagSelect from './tag/TagSelect';
 import VerticalCheckAllCheckableTagGroup from './tag/VerticalCheckAllCheckableTagGroup';
 import VerticalCheckableTagGroup from './tag/VerticalCheckableTagGroup';
@@ -198,7 +199,7 @@ export type TagGroupProps = (HorizontalTagGroupProps | VerticalTagGroupProps) & 
     direction: SpaceProps['direction'];
 };
 export type HorizontalTagGroupProps = SpaceProps & {
-    options: (TagProps & {
+    options: (InternalTagProps & {
         value: SelectProps['value'];
     })[];
 };
@@ -671,7 +672,7 @@ export type TableHOCComponent = ReturnType<typeof createFactory<TableProps<any>>
     TreeTablePagingSelect: typeof TreeTablePagingSelect;
     TableExt: typeof TableExt;
 };
-export type TagHOCComponent = ReturnType<typeof createFactory<TagProps>> & {
+export type TagHOCComponent = ReturnType<typeof createFactory<InternalTagProps>> & {
     AutoCompleteTagSelect: typeof AutoCompleteTagSelect;
     AutoCompleteCheckAllTagSelect: typeof AutoCompleteCheckAllTagSelect;
     CheckAllTagSelect: typeof CheckAllTagSelect;
