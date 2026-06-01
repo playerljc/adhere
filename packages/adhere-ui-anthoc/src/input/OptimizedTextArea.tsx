@@ -2,11 +2,12 @@ import type { TextAreaProps } from 'antd/es/input';
 import React, { useDeferredValue, useEffect, useState } from 'react';
 
 import TextArea from '../text-area';
+import { createFactory } from '../util';
 
 /**
  * 优化的TextArea组件，使用useDeferredValue来减少快速输入时的卡顿
  */
-const OptimizedTextArea = React.memo(({ value, onChange, ...restProps }: TextAreaProps) => {
+const InternalOptimizedTextArea = React.memo(({ value, onChange, ...restProps }: TextAreaProps) => {
   const [localValue, setLocalValue] = useState(value || '');
   const deferredValue = useDeferredValue(localValue);
   const prevDeferredValueRef = React.useRef(deferredValue);
@@ -40,6 +41,18 @@ const OptimizedTextArea = React.memo(({ value, onChange, ...restProps }: TextAre
   return <TextArea {...restProps} value={localValue} onChange={handleChange} />;
 });
 
-OptimizedTextArea.displayName = 'OptimizedTextArea';
+InternalOptimizedTextArea.displayName = 'InternalOptimizedTextArea';
 
-export default OptimizedTextArea;
+const OptimizedTextAreaHOC: typeof InternalOptimizedTextArea & {
+  defaultProps?: Partial<TextAreaProps>;
+  override?: (props: Partial<TextAreaProps>) => Partial<TextAreaProps>;
+} = createFactory<TextAreaProps>(InternalOptimizedTextArea, {
+  allowClear: true,
+  maxLength: 1000,
+  showCount: true,
+  autoSize: false,
+});
+
+OptimizedTextAreaHOC.displayName = 'OptimizedTextArea';
+
+export default OptimizedTextAreaHOC;

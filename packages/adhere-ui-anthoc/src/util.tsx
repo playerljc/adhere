@@ -31,11 +31,13 @@ export function createFactory<P>(
 
     useEffect(() => {
       let cancelled = false;
+
       const run = async () => {
         if (!fn.override) {
           setOverrideProps(undefined);
           return;
         }
+
         try {
           const result = await fn.override({ ...(_props ?? {}) });
           if (!cancelled) {
@@ -47,7 +49,9 @@ export function createFactory<P>(
           }
         }
       };
+
       run();
+
       return () => {
         cancelled = true;
       };

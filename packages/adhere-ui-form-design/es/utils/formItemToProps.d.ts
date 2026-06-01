@@ -7,7 +7,7 @@ export declare function formItemToProps(formItemProps: FormItemProps, lang: stri
     validateFirst: boolean | "parallel" | undefined;
     validateTrigger: string | false | string[] | undefined;
     initialValue: any;
-    rules: (Pick<import("antd/es/form").RuleObject, "type" | "min" | "max" | "required" | "whitespace" | "len" | "enum" | "warningOnly"> & {
+    rules: (Pick<import("antd/es/form").RuleObject, "type" | "required" | "whitespace" | "max" | "min" | "len" | "enum" | "warningOnly"> & {
         validator?: string;
         pattern?: string;
         message?: import("../types").I18nValue;

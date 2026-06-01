@@ -1,13 +1,14 @@
 import type { InputProps } from 'antd';
 import React, { useDeferredValue, useEffect, useState } from 'react';
 
+import { createFactory } from '../util';
 import Input from './Input';
 
 /**
  * 优化的Input组件，使用useDeferredValue来减少快速输入时的卡顿
  * 保持输入框的即时响应，同时延迟状态更新到父组件
  */
-const OptimizedInput = React.memo(({ value, onChange, ...restProps }: InputProps) => {
+const InternalOptimizedInput = React.memo(({ value, onChange, ...restProps }: InputProps) => {
   const [localValue, setLocalValue] = useState(value || '');
   const deferredValue = useDeferredValue(localValue);
   const prevDeferredValueRef = React.useRef(deferredValue);
@@ -42,6 +43,17 @@ const OptimizedInput = React.memo(({ value, onChange, ...restProps }: InputProps
   return <Input {...restProps} value={localValue} onChange={handleChange} />;
 });
 
-OptimizedInput.displayName = 'OptimizedInput';
+InternalOptimizedInput.displayName = 'InternalOptimizedInput';
 
-export default OptimizedInput;
+const OptimizedInputHOC: typeof InternalOptimizedInput & {
+  defaultProps?: Partial<InputProps>;
+  override?: (props: Partial<InputProps>) => Partial<InputProps>;
+} = createFactory<InputProps>(InternalOptimizedInput, {
+  allowClear: true,
+  maxLength: 1000,
+  showCount: true,
+});
+
+OptimizedInputHOC.displayName = 'OptimizedInput';
+
+export default OptimizedInputHOC;

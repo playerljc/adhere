@@ -1,1 +1,0 @@
-export { renderDesignToMobile } from './renderDesign';
