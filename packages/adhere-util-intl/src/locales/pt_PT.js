@@ -348,5 +348,18 @@ export default [
     please_enter_phone_number: 'Por favor, insira o número de telefone',
     phone_area_code_select_actions: 'Eventos do indicativo (esquerda)',
     phone_number_input_actions: 'Eventos do número (direita)',
+
+    file_upload: 'Upload de ficheiro',
+    upload: 'Carregar',
+    upload_accept: 'accept',
+    upload_multiple: 'Múltiplo',
+    upload_max_count: 'Quantidade máxima',
+    upload_list_type: 'Tipo de lista',
+    upload_show_list: 'Mostrar lista',
+    upload_data_source: 'Fonte de dados de upload',
+    upload_data_source_placeholder: 'Selecione a fonte de dados de upload',
+    upload_data_source_select: 'Selecionar fonte de dados',
+    upload_field_name: 'Nome do campo',
+    upload_response_invalid: 'Resposta de upload inválida',
   },
 ];

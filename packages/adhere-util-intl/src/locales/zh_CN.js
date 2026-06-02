@@ -545,5 +545,18 @@ export default [
     verification_code_input_actions: '验证码输入框事件',
     send_sms_button_actions: '发送按钮事件',
     send_sms_countdown_actions: '倒计时事件',
+
+    file_upload: '文件上传',
+    upload: '上传',
+    upload_accept: 'accept',
+    upload_multiple: '是否多选',
+    upload_max_count: '最大数量',
+    upload_list_type: '列表类型',
+    upload_show_list: '显示上传列表',
+    upload_data_source: '上传数据源',
+    upload_data_source_placeholder: '请选择上传数据源',
+    upload_data_source_select: '选择数据源',
+    upload_field_name: '上传字段名',
+    upload_response_invalid: '上传响应格式错误',
   },
 ];

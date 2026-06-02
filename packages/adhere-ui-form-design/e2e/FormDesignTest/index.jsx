@@ -54,6 +54,7 @@ export default () => {
             'ant-segmented',
             'ant-select',
             'ant-transfer',
+            'ant-file-upload',
             'ant-tree-select',
           ].includes(type),
         ),

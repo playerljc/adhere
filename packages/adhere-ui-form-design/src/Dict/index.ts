@@ -74,6 +74,8 @@ import { TimeMinuteSecondStep } from './TimeMinuteSecondStep';
 import { TimePickerEvents } from './TimePickerEvents';
 import { TimeRangePickerEvents } from './TimeRangePickerEvents';
 import { TreeSelectShowCheckedStrategy } from './TreeSelectShowCheckedStrategy';
+import { UploadEvents } from './UploadEvents';
+import { UploadListType } from './UploadListType';
 import { ValuePropName } from './ValuePropName';
 import { Variant } from './Variant';
 import { VerificationStatus } from './VerificationStatus';
@@ -158,6 +160,8 @@ const dictImpls = {
   TabsType,
   TabsSize,
   TabsTabPlacement,
+  UploadEvents,
+  UploadListType,
   NoFormFieldTypes,
   ContainerFieldTypes,
 };

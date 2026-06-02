@@ -457,5 +457,18 @@ export default [
     verification_code_input_actions: 'Verification code input events',
     send_sms_button_actions: 'Send button events',
     send_sms_countdown_actions: 'Countdown events',
+
+    file_upload: 'File upload',
+    upload: 'Upload',
+    upload_accept: 'accept',
+    upload_multiple: 'Multiple',
+    upload_max_count: 'Max count',
+    upload_list_type: 'List type',
+    upload_show_list: 'Show upload list',
+    upload_data_source: 'Upload data source',
+    upload_data_source_placeholder: 'Please select upload data source',
+    upload_data_source_select: 'Select data source',
+    upload_field_name: 'Upload field name',
+    upload_response_invalid: 'Invalid upload response',
   },
 ];

@@ -345,5 +345,17 @@ declare const _default: {
     please_enter_phone_number: string;
     phone_area_code_select_actions: string;
     phone_number_input_actions: string;
+    file_upload: string;
+    upload: string;
+    upload_accept: string;
+    upload_multiple: string;
+    upload_max_count: string;
+    upload_list_type: string;
+    upload_show_list: string;
+    upload_data_source: string;
+    upload_data_source_placeholder: string;
+    upload_data_source_select: string;
+    upload_field_name: string;
+    upload_response_invalid: string;
 }[];
 export default _default;

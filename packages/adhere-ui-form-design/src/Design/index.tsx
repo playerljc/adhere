@@ -534,6 +534,8 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                       toolboxClassName,
                     )}
                     style={toolboxStyle}
+                    // collapseDirection="L"
+                    // trigger={(collapsed, defaultTrigger) => defaultTrigger}
                   >
                     <Toolbox toolBox={toolBox} />
                   </FlexLayout.Fixed>
@@ -566,6 +568,8 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                       propertiesClassName,
                     )}
                     style={propertiesStyle}
+                    // collapseDirection="R"
+                    // trigger={(collapsed, defaultTrigger) => defaultTrigger}
                   >
                     <Properties key={activeFieldId} />
                   </FlexLayout.Fixed>

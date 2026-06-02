@@ -541,5 +541,17 @@ declare const _default: {
     verification_code_input_actions: string;
     send_sms_button_actions: string;
     send_sms_countdown_actions: string;
+    file_upload: string;
+    upload: string;
+    upload_accept: string;
+    upload_multiple: string;
+    upload_max_count: string;
+    upload_list_type: string;
+    upload_show_list: string;
+    upload_data_source: string;
+    upload_data_source_placeholder: string;
+    upload_data_source_select: string;
+    upload_field_name: string;
+    upload_response_invalid: string;
 }[];
 export default _default;

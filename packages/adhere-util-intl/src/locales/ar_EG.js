@@ -348,5 +348,18 @@ export default [
     please_enter_phone_number: 'الرجاء إدخال رقم الهاتف',
     phone_area_code_select_actions: 'أحداث اختيار رمز المنطقة (يسار)',
     phone_number_input_actions: 'أحداث إدخال رقم الهاتف (يمين)',
+
+    file_upload: 'رفع ملف',
+    upload: 'رفع',
+    upload_accept: 'accept',
+    upload_multiple: 'متعدد',
+    upload_max_count: 'الحد الأقصى للعدد',
+    upload_list_type: 'نوع القائمة',
+    upload_show_list: 'إظهار القائمة',
+    upload_data_source: 'مصدر بيانات الرفع',
+    upload_data_source_placeholder: 'يرجى اختيار مصدر بيانات الرفع',
+    upload_data_source_select: 'اختيار مصدر البيانات',
+    upload_field_name: 'اسم الحقل',
+    upload_response_invalid: 'استجابة رفع غير صالحة',
   },
 ];

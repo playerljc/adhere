@@ -68,6 +68,7 @@ import RulesSettingFormItem from './RulesSettingFormItem';
 import { SegmentedShapeSelectStandardDict } from './SegmentedShape';
 import { SelectModeSelectStandardDict } from './SelectMode';
 import SendSMSDataSourcePickerFormItem from './SendSMSDataSourcePickerFormItem';
+import UploadDataSourceManagerFormItem from './UploadDataSourceManagerFormItem';
 import { SignaturePadModeSelectStandardDict } from './SignaturePadMode';
 import { SizeSelectStandardDict } from './Size';
 import { SlotEndLabel, SlotStartLabel } from './SlotLabel';
@@ -97,6 +98,7 @@ import { TimeRangePickerEventsSelectStandardDict } from './TimeRangePickerEvents
 import TransferDataSourceManagerFormItem from './TransferDataSourceManagerFormItem';
 import TreeDataSourceManagerFormItem from './TreeDataSourceManagerFormItem';
 import { TreeSelectShowCheckedStrategySelectStandardDict } from './TreeSelectShowCheckedStrategy';
+import { UploadListTypeSelectStandardDict } from './UploadListType';
 import { ValuePropNameSelectStandardDict } from './ValuePropName';
 import { VariantSelectStandardDict } from './Variant';
 import { VerificationStatusSelectStandardDict } from './VerificationStatus';
@@ -121,6 +123,10 @@ export type {
 } from './TransferDataSourceManagerFormItem';
 
 export type { DisabledTextProps } from './DisabledText';
+export type {
+  UploadDataSourceManagerFormItemValue,
+  UploadDataSourceManagerFormItemProps,
+} from './UploadDataSourceManagerFormItem';
 
 export * from './FormPropertyStandardRows';
 export { FormPropertyShell, mapSliderFormPropertyFormValues } from './FormPropertyShell';
@@ -184,6 +190,7 @@ export {
   AreaCodePhoneDataSourceManagerFormItem,
   TransferDataSourceManagerFormItem,
   SendSMSDataSourcePickerFormItem,
+  UploadDataSourceManagerFormItem,
   TableColumnSettingFormItem,
   TabsTypeSelectStandardDict,
   TabsSizeSelectStandardDict,
@@ -222,6 +229,7 @@ export {
   SegmentedShapeSelectStandardDict,
   SwitchSizeSelectStandardDict,
   TextTypeSelectStandardDict,
+  UploadListTypeSelectStandardDict,
   TimeHourStepSelectStandardDict,
   TimeMinuteSecondStepSelectStandardDict,
   TableNumberGeneratorRuleSelectStandardDict,
