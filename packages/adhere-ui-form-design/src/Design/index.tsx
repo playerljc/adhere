@@ -358,8 +358,6 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
 
           const patch = computeFieldPropsOverlayPatch(raw.props.fieldProps, props);
 
-          debugger;
-
           dispatch({
             type: REDUCER_ACTION_TYPE.updateFieldPropsByTerminal,
             payload: {

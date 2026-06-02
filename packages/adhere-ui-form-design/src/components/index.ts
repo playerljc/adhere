@@ -101,6 +101,7 @@ import { ValuePropNameSelectStandardDict } from './ValuePropName';
 import { VariantSelectStandardDict } from './Variant';
 import { VerificationStatusSelectStandardDict } from './VerificationStatus';
 import { WhetherRadioHorizontalDict } from './Whether';
+import DisabledText from './DisabledText';
 
 export type { DesignValueJsonViewerModalProps } from './DesignValueJsonViewerModal';
 export type {
@@ -118,6 +119,8 @@ export type {
   TransferDataSourceManagerFormItemProps,
   TransferDataSourceItem,
 } from './TransferDataSourceManagerFormItem';
+
+export type { DisabledTextProps } from './DisabledText';
 
 export * from './FormPropertyStandardRows';
 export { FormPropertyShell, mapSliderFormPropertyFormValues } from './FormPropertyShell';
@@ -223,4 +226,5 @@ export {
   TimeMinuteSecondStepSelectStandardDict,
   TableNumberGeneratorRuleSelectStandardDict,
   PhoneAreaCodeSelectStandardDict,
+  DisabledText,
 };
