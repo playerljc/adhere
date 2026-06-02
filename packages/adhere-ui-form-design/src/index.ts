@@ -7,18 +7,18 @@ import * as Advanced from './Fields/advanced';
 import * as Plugins from './Fields/integration';
 import * as Layout from './Fields/layout';
 import Form from './Form';
+import View from './View';
 import * as Components from './components';
 import * as Util from './utils';
 import sage from './utils/saga';
 export { FormContext, useFormContext } from './components/FormContext';
 
 ServiceRegister.setSage(sage);
-// import View from './View';
 
 export default {
   Design,
   Form,
-  // View,
+  View,
   Components,
   Util,
   parse,
