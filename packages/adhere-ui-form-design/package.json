@@ -44,6 +44,7 @@
     "@baifendian/adhere-ui-forceupdate": "^2.11.0",
     "@baifendian/adhere-ui-hooks": "^2.11.0",
     "@baifendian/adhere-ui-searchtable": "^2.11.0",
+    "@baifendian/adhere-ui-splitlayout": "^2.11.0",
     "@baifendian/adhere-ui-tablegridlayout": "^2.11.0",
     "@baifendian/adhere-ui-writingboard": "^2.11.0",
     "@baifendian/adhere-util": "^2.11.0",
@@ -60,9 +61,9 @@
     "constrained-editor-plugin": "^1.4.0",
     "dayjs": "^1.11.19",
     "lodash.merge": "^4.6.2",
+    "rc-slider-captcha": "^1.9.0",
     "react-is": "^19.2.0",
-    "rfdc": "^1.4.1",
-    "rc-slider-captcha": "^1.9.0"
+    "rfdc": "^1.4.1"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

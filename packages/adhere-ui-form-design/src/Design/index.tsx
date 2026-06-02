@@ -11,7 +11,9 @@ import React, {
 import type { CSSProperties, PropsWithoutRef, RefAttributes } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import Hooks from '@baifendian/adhere-ui-hooks';
+import SplitLayout from '@baifendian/adhere-ui-splitlayout';
 import Util from '@baifendian/adhere-util';
 import { createLoggerMiddleware } from '@ctsj/state/lib/middleware';
 import { Provider } from '@ctsj/state/lib/react';
@@ -525,8 +527,8 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                   style={toolbarStyle}
                 ></div>
 
-                <div className={classNames(`${SELECT_PREFIX}-design-body-wrapper`)}>
-                  <div
+                <FlexLayout className={classNames(`${SELECT_PREFIX}-design-body-wrapper`)} direction="horizontal">
+                  <FlexLayout.Fixed
                     className={classNames(
                       `${SELECT_PREFIX}-design-toolbox-wrapper`,
                       toolboxClassName,
@@ -534,9 +536,15 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                     style={toolboxStyle}
                   >
                     <Toolbox toolBox={toolBox} />
-                  </div>
+                  </FlexLayout.Fixed>
 
-                  <div
+                  <SplitLayout
+                    minSize="10%"
+                    maxSize="50%"
+                    style={{ width: 'auto' }}
+                  />
+
+                  <FlexLayout.Auto
                     className={classNames(
                       `${SELECT_PREFIX}-design-editor-wrapper`,
                       editorClassName,
@@ -544,9 +552,15 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                     style={editorStyle}
                   >
                     <Editor />
-                  </div>
+                  </FlexLayout.Auto>
 
-                  <div
+                  <SplitLayout
+                    minSize={260}
+                    maxSize="50%"
+                    style={{ width: 'auto' }}
+                  />
+
+                  <FlexLayout.Fixed
                     className={classNames(
                       `${SELECT_PREFIX}-design-properties-wrapper`,
                       propertiesClassName,
@@ -554,8 +568,8 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                     style={propertiesStyle}
                   >
                     <Properties key={activeFieldId} />
-                  </div>
-                </div>
+                  </FlexLayout.Fixed>
+                </FlexLayout>
               </div>
 
               {activeToolItemData && <ToolboxItemDragOverlay />}
