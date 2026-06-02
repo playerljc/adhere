@@ -78,6 +78,14 @@ export function ValueDesign({
   const designContext = useContext(DesignContext);
   const lang = ConfigProviderContext.intl.lang!;
 
+  const formDisabled = designContext.getFormDisabled?.();
+  const finalFieldProps = (formDisabled === undefined
+    ? fieldProps
+    : {
+        ...fieldProps,
+        disabled: formDisabled,
+      }) as FieldProps;
+
   const style = styleCodeStringToCSSProperties(styleProps?.styles ?? '');
   const valueStyle = styleCodeStringToCSSProperties(styleProps?.valueStyles ?? '');
   const actions = actionsCodeStringToEvents({
@@ -106,7 +114,7 @@ export function ValueDesign({
   });
   const formProps = formItemToProps(formItemProps ?? {}, lang);
   const colSpan = formItemProps?.colSpan;
-  const fill = fieldProps?.fill;
+  const fill = finalFieldProps?.fill;
 
   return (
     <Value
@@ -117,7 +125,7 @@ export function ValueDesign({
       <DesignFieldWrapper id={id} fieldActionTypes={fieldActionTypes}>
         <Form.Item {...formProps} style={{ flex: fill ? '1' : 'none' }}>
           {children({
-            fieldProps,
+            fieldProps: finalFieldProps,
             style,
             actions,
             areaCodeActions,

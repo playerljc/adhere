@@ -96,6 +96,7 @@ const InternalFormDesignForm = memo<PropsWithoutRef<FormProps> & RefAttributes<F
       () => [flexLayoutDefine(), ...(items ?? [])],
       [items],
     );
+    const getFormDisabled = useCallback(() => disabled, [disabled]);
 
     const designContextValue = useMemo<DesignContextType>(
       () => ({
@@ -113,6 +114,7 @@ const InternalFormDesignForm = memo<PropsWithoutRef<FormProps> & RefAttributes<F
         getRenderMenuBar: () => undefined,
         getToolbarEllipseCount: () => undefined,
         getMenuBarEllipseCount: () => undefined,
+        getFormDisabled,
         getMobileViewportPresetId: () => 'w375' as MobileViewportPresetId,
         setMobileViewportPresetId: noop,
         setCurrentTerminal: noop,
@@ -129,7 +131,7 @@ const InternalFormDesignForm = memo<PropsWithoutRef<FormProps> & RefAttributes<F
         swapOutlineNodes: noop as (idA: string, idB: string) => void,
         resetDesignValue: noop,
       }),
-      [getDesignValue, getTerminal, getItems],
+      [getDesignValue, getTerminal, getItems, getFormDisabled],
     );
 
     useImperativeHandle(ref, () => form, [form]);

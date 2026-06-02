@@ -317,6 +317,10 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         return menuBarEllipseCount;
       }
 
+      function getFormDisabled() {
+        return undefined;
+      }
+
       function setFormItemProps(id: string, props: FormItemProps) {
         dispatch({
           type: REDUCER_ACTION_TYPE.updateFormItemProps,
@@ -481,6 +485,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                 getRenderMenuBar,
                 getToolbarEllipseCount,
                 getMenuBarEllipseCount,
+                getFormDisabled,
                 // setter
                 setCurrentTerminal,
                 setActiveFieldId,
