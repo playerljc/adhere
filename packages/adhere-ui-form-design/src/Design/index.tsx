@@ -10,6 +10,7 @@ import React, {
 } from 'react';
 import type { CSSProperties, PropsWithoutRef, RefAttributes } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Util from '@baifendian/adhere-util';
 import { createLoggerMiddleware } from '@ctsj/state/lib/middleware';
@@ -60,6 +61,7 @@ import Properties from './Properties';
 import Toolbox from './Toolbox';
 import ToolboxItemDragOverlay from './Toolbox/ToolboxItemDragOverlay';
 
+const { useTheme } = ConfigProvider;
 const { usePropToState } = Hooks;
 
 const store = createStore(null, {}, applyMiddleware(createLoggerMiddleware(), sage));
@@ -93,6 +95,14 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       },
       ref,
     ) => {
+      // 全屏绑定的设计器根节点
+      const fullscreenRootRef = useRef<HTMLDivElement>(null);
+
+      useTheme<HTMLElement>({
+        elRef: fullscreenRootRef,
+        group: 'form-design',
+      });
+
       const [
         // 设计的值
         designValue,
@@ -114,9 +124,6 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       const [mobileViewportPresetId, setMobileViewportPresetId] = useState<MobileViewportPresetId>(
         MOBILE_VIEWPORT_DEFAULT_PRESET_ID,
       );
-
-      // 全屏绑定的设计器根节点
-      const fullscreenRootRef = useRef<HTMLDivElement>(null);
 
       // Editor中激活的item id
       const [activeFieldId, setActiveFieldId] = useState<string>();
