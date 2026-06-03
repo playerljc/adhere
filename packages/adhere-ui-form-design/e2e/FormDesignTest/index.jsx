@@ -80,6 +80,7 @@ export default () => {
         items: [...antd.toolBox, ...advanced.toolBox].filter(({ type }) =>
           [
             'ant-editor-table',
+            'ant-rich-editor',
             'ant-qrcode',
             'ant-signature-pad',
             'image-captcha',

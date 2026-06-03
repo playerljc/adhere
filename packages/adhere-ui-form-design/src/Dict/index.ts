@@ -50,6 +50,10 @@ import { QRCodeType } from './QRCodeType';
 import { RadioGroupButtonStyle } from './RadioGroupButtonStyle';
 import { RadioGroupOptionType } from './RadioGroupOptionType';
 import { RateSize } from './RateSize';
+import { RichEditorEvents } from './RichEditorEvents';
+import { RichEditorMediaInsertMode } from './RichEditorMediaInsertMode';
+import { RichEditorTextDirection } from './RichEditorTextDirection';
+import { RichEditorToolbarPreset } from './RichEditorToolbarPreset';
 import { Rules } from './Rules';
 import { SegmentedShape } from './SegmentedShape';
 import { SelectMode } from './SelectMode';
@@ -162,6 +166,10 @@ const dictImpls = {
   TabsTabPlacement,
   UploadEvents,
   UploadListType,
+  RichEditorEvents,
+  RichEditorToolbarPreset,
+  RichEditorMediaInsertMode,
+  RichEditorTextDirection,
   NoFormFieldTypes,
   ContainerFieldTypes,
 };

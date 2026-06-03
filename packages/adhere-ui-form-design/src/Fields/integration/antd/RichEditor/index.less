@@ -1,0 +1,24 @@
+@import '../../../../constant.less';
+
+@rich-editor-prefix: ~'@{prefix-cls}-rich-editor';
+
+.@{rich-editor-prefix} {
+  width: 100%;
+  min-height: var(--fd-rich-editor-min-height, 300px);
+  height: var(--fd-rich-editor-height, 360px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  > .adhere-ui-richtext-wangeditor-sandbox {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+  }
+
+  &-disabled {
+    opacity: var(--fd-rich-editor-disabled-opacity, 0.6);
+    cursor: not-allowed;
+  }
+}

@@ -32,6 +32,7 @@ import {
   UnorderedListOutlined,
   UploadOutlined,
   PictureOutlined,
+  FileTextOutlined,
   WarningOutlined,
 } from '@ant-design/icons';
 import Intl from '@baifendian/adhere-util-intl';
@@ -60,6 +61,7 @@ import { define as QRCodeDefine } from './QRCode';
 import { define as SignaturePadDefine } from './SignaturePad';
 import { define as RadioDefine } from './Radio';
 import { define as RadioGroupDefine } from './RadioGroup';
+import { define as RichEditorDefine } from './RichEditor';
 import { define as RateDefine } from './Rate';
 import { define as SegmentedDefine } from './Segmented';
 import { define as SelectDefine } from './Select';
@@ -107,6 +109,7 @@ const Transfer = TransferDefine();
 const EditorTable = EditorTableDefine();
 const FileUpload = FileUploadDefine();
 const ImageUpload = ImageUploadDefine();
+const RichEditor = RichEditorDefine();
 
 export function install(): {
   toolBox: ToolBoxGroup['items'];
@@ -352,6 +355,13 @@ export function install(): {
         searchLabel: Intl.get('editor_table_text'),
         tooltip: Intl.get('editor_table_text'),
       },
+      {
+        type: RichEditor.type,
+        icon: React.createElement(FileTextOutlined),
+        label: Intl.get('rich_editor_text'),
+        searchLabel: Intl.get('rich_editor_text'),
+        tooltip: Intl.get('rich_editor_text'),
+      },
     ],
     designItems: [
       Input,
@@ -388,6 +398,7 @@ export function install(): {
       FileUpload,
       ImageUpload,
       EditorTable,
+      RichEditor,
     ],
   };
 }

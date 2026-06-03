@@ -18,6 +18,7 @@ import { isContainerFieldByType } from './isContainerFieldByType';
 import { isDesktop } from './isDesktop';
 import { isLayoutFieldByType } from './isLayoutFieldByType';
 import { isNoFormFieldByType } from './isNoFormFieldByType';
+import { isRichEditorHtmlEmpty, RICH_EDITOR_EMPTY_VALIDATOR_CODE } from './isRichEditorHtmlEmpty';
 import isReactNode from './isReactNode';
 import normalizeDesignChildren from './normalizeDesignChildren';
 import { resolveI18nText } from './resolveI18nText';
@@ -66,6 +67,8 @@ export {
   resolveI18nText,
   toI18nLabel,
   isNoFormFieldByType,
+  isRichEditorHtmlEmpty,
+  RICH_EDITOR_EMPTY_VALIDATOR_CODE,
   isContainerFieldByType,
 };
 

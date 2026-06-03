@@ -63,6 +63,9 @@ import { QRCodeTypeSelectStandardDict } from './QRCodeType';
 import { RadioGroupButtonStyleSelectStandardDict } from './RadioGroupButtonStyle';
 import { RadioGroupOptionTypeSelectStandardDict } from './RadioGroupOptionType';
 import { RateSizeSelectStandardDict } from './RateSize';
+import { RichEditorMediaInsertModeSelectStandardDict } from './RichEditorMediaInsertMode';
+import { RichEditorTextDirectionSelectStandardDict } from './RichEditorTextDirection';
+import { RichEditorToolbarPresetSelectStandardDict } from './RichEditorToolbarPreset';
 import { RulesMenuStandardDict } from './Rules';
 import RulesSettingFormItem from './RulesSettingFormItem';
 import { SegmentedShapeSelectStandardDict } from './SegmentedShape';
@@ -230,6 +233,9 @@ export {
   SwitchSizeSelectStandardDict,
   TextTypeSelectStandardDict,
   UploadListTypeSelectStandardDict,
+  RichEditorToolbarPresetSelectStandardDict,
+  RichEditorMediaInsertModeSelectStandardDict,
+  RichEditorTextDirectionSelectStandardDict,
   TimeHourStepSelectStandardDict,
   TimeMinuteSecondStepSelectStandardDict,
   TableNumberGeneratorRuleSelectStandardDict,

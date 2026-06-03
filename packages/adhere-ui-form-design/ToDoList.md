@@ -78,14 +78,14 @@
   - [ ] OSM
 
 - [ ] QuickRangeDate(快速的时间范围选择)
-- [ ] RichEditor(富文本)
+- [x] RichEditor(富文本)
 - Upload(文件的上传)
-  - [ ] 自定义接口
+  - [x] 自定义接口
   - 上传到各种外部的OSS服务
     - [ ] 阿里云OSS
     - [ ] 腾讯云OSS
     - [ ] 七牛云OSS
-- [ ] ImageCroppingUpload(图片的上传可以对图片进行处理)
+- [x] ImageCroppingUpload(图片的上传可以对图片进行处理)
 - [ ] 表达式(可以输入表达式)
 
 - ImageCaptcha(图片的验证码) - 暂时先暂停(因为需要和表单联动，需要和表单的属性联动，需要和表单的校验逻辑联动)
