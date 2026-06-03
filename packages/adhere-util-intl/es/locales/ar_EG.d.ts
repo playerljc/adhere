@@ -44,6 +44,17 @@ declare const _default: {
     crop_rectangle: string;
     crop_star: string;
     crop_triangle: string;
+    image_upload: string;
+    image_crop: string;
+    crop_shape: string;
+    crop_aspect: string;
+    crop_free: string;
+    crop_enabled: string;
+    crop_allow_flip: string;
+    flip_x: string;
+    flip_y: string;
+    rotate: string;
+    zoom: string;
     custom: string;
     data_loading: string;
     default: string;

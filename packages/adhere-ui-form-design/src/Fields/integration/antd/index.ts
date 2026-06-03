@@ -31,6 +31,7 @@ import {
   TableOutlined,
   UnorderedListOutlined,
   UploadOutlined,
+  PictureOutlined,
   WarningOutlined,
 } from '@ant-design/icons';
 import Intl from '@baifendian/adhere-util-intl';
@@ -47,6 +48,7 @@ import { define as DatePickerDefine } from './DatePicker';
 import { define as DateRangePickerDefine } from './DateRangePicker';
 import { define as EditorTableDefine } from './EditorTable';
 import { define as FileUploadDefine } from './FileUpload';
+import { define as ImageUploadDefine } from './ImageUpload';
 import { define as InputDefine } from './Input';
 import { define as InputNumberDefine } from './InputNumber';
 import { define as InputOTPDefine } from './InputOTP';
@@ -104,6 +106,7 @@ const Cascader = CascaderDefine();
 const Transfer = TransferDefine();
 const EditorTable = EditorTableDefine();
 const FileUpload = FileUploadDefine();
+const ImageUpload = ImageUploadDefine();
 
 export function install(): {
   toolBox: ToolBoxGroup['items'];
@@ -336,6 +339,13 @@ export function install(): {
         tooltip: Intl.get('file_upload'),
       },
       {
+        type: ImageUpload.type,
+        icon: React.createElement(PictureOutlined),
+        label: Intl.get('image_upload'),
+        searchLabel: Intl.get('image_upload'),
+        tooltip: Intl.get('image_upload'),
+      },
+      {
         type: EditorTable.type,
         icon: React.createElement(TableOutlined),
         label: Intl.get('editor_table_text'),
@@ -376,6 +386,7 @@ export function install(): {
       Cascader,
       Transfer,
       FileUpload,
+      ImageUpload,
       EditorTable,
     ],
   };

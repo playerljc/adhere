@@ -63,7 +63,9 @@
     "lodash.merge": "^4.6.2",
     "rc-slider-captcha": "^1.9.0",
     "react-is": "^19.2.0",
-    "rfdc": "^1.4.1"
+    "rfdc": "^1.4.1",
+    "cropperjs": "^1.6.2",
+    "react-cropper": "^2.3.3"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

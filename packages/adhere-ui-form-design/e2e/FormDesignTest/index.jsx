@@ -55,6 +55,7 @@ export default () => {
             'ant-select',
             'ant-transfer',
             'ant-file-upload',
+            'ant-image-upload',
             'ant-tree-select',
           ].includes(type),
         ),
