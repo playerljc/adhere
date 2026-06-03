@@ -231,9 +231,14 @@ const FieldRichEditor = ({
       >
         <WangEditorSandbox
           key={sandboxKey}
-          wrapStyle={{ width: '100%', height: '100%' }}
           value={editorValue}
-          onChange={(html) => onChange?.(html)}
+          onChange={(payload) => {
+            const html =
+              typeof payload === 'string'
+                ? payload
+                : (payload as { getHtml: () => string }).getHtml();
+            onChange?.(html);
+          }}
           readOnly={sandboxReadOnly}
           bordered={bordered}
           gap={gap}
