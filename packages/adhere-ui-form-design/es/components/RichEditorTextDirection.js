@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,RichEditorTextDirectionSelectStandardDict=Components[genDictComponentName(names.RichEditorTextDirection,ComponentNames.Select.Standard)];export{RichEditorTextDirectionSelectStandardDict};
+//# sourceMappingURL=RichEditorTextDirection.js.map

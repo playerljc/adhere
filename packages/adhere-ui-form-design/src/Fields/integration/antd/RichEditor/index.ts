@@ -1,6 +1,7 @@
 import { Copy, Delete } from '../../../../components/DesignFieldActions/actions';
+import type { Rule } from '../../../../components/RulesSettingFormItem';
 import { SELECT_VALUE_KEY_NAME } from '../../../../constant';
-import type { DesignItem } from '../../../../types';
+import type { DesignItem, FormItemProps } from '../../../../types';
 import { RICH_EDITOR_EMPTY_VALIDATOR_CODE } from '../../../../utils';
 import { TYPE } from './constant';
 import { renderActions } from './renderActions';
@@ -19,6 +20,16 @@ const defaultRequiredMessage = {
   ar_EG: 'محتوى النص الغني مطلوب',
   [SELECT_VALUE_KEY_NAME]: 'zh_CN',
 };
+
+const richEditorDefaultRules: Rule[] = [
+  {
+    type: 'custom',
+    config: {
+      validator: RICH_EDITOR_EMPTY_VALIDATOR_CODE,
+      message: defaultRequiredMessage,
+    },
+  },
+];
 
 export function define(): DesignItem {
   return {
@@ -42,15 +53,7 @@ export function define(): DesignItem {
         valuePropName: 'value',
         validateFirst: false,
         validateTrigger: 'onChange',
-        rules: [
-          {
-            type: 'custom',
-            config: {
-              validator: RICH_EDITOR_EMPTY_VALIDATOR_CODE,
-              message: defaultRequiredMessage,
-            },
-          },
-        ],
+        rules: richEditorDefaultRules as unknown as FormItemProps['rules'],
       },
       fieldProps: {
         readOnly: false,

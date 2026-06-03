@@ -1,0 +1,16 @@
+@import '../../constant.less';
+
+.@{prefix-cls}-disabled-text {
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.25);
+  cursor: not-allowed;
+  user-select: none;
+  
+  // 禁用状态下的文本样式
+  opacity: 0.6;
+  
+  // 确保子元素也继承禁用样式
+  * {
+    pointer-events: none;
+  }
+}

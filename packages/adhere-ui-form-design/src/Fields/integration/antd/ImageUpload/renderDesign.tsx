@@ -12,7 +12,7 @@ import {
 } from 'antd';
 import classNames from 'classnames';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Cropper } from 'react-cropper';
+import { Cropper, type ReactCropperElement } from 'react-cropper';
 
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import Intl from '@baifendian/adhere-util-intl';
@@ -147,7 +147,7 @@ const CropModal = ({
   onCancel: () => void;
   onOk: (result: { file: File; cropMeta: ImageUploadCropMeta; thumbUrl: string; width: number; height: number }) => void;
 }) => {
-  const cropperRef = useRef<Cropper>(null);
+  const cropperRef = useRef<ReactCropperElement | null>(null);
   const [shape, setShape] = useState<ImageUploadCropShape>(initialShape);
   const [aspect, setAspect] = useState<number | undefined>(initialAspect);
   const [flipX, setFlipX] = useState(false);

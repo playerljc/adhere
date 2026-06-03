@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/RichEditor/constant.js"],"sourcesContent":["export var TYPE = 'ant-rich-editor';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,yBAAPA,IAAwB"}

@@ -1,2 +1,2 @@
-
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(e){for(var r,t=1,a=arguments.length;t<a;t++)for(var i in r=arguments[t])Object.prototype.hasOwnProperty.call(r,i)&&(e[i]=r[i]);return e}).apply(this,arguments)};import React from"react";import Form from"../Form";var View=React.memo(React.forwardRef(function(e,r){return React.createElement(Form,__assign({ref:r},e,{disabled:!0}))}));View.displayName="View";export default View;
 //# sourceMappingURL=index.js.map

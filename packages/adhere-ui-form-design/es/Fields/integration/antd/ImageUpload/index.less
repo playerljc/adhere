@@ -1,0 +1,127 @@
+@import '../../../../constant.less';
+
+.@{prefix-cls}-image-upload-crop-modal {
+  &-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--image-upload-crop-modal-body-gap, 12px);
+  }
+
+  &-toolbar {
+    display: flex;
+    gap: var(--image-upload-crop-modal-toolbar-gap, 12px);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  &-slider-row {
+    display: flex;
+    gap: var(--image-upload-crop-modal-slider-row-gap, 12px);
+    align-items: center;
+  }
+
+  &-slider {
+    flex: 1;
+    min-width: var(--image-upload-crop-modal-slider-min-width, 0);
+  }
+
+  &-slider-value {
+    width: var(--image-upload-crop-modal-slider-value-width, 52px);
+  }
+
+  &-cropper-wrap {
+    position: relative;
+    width: 100%;
+    height: var(--image-upload-crop-modal-cropper-height, 420px);
+    background: var(--image-upload-crop-modal-cropper-background, rgba(0, 0, 0, 0.04));
+    overflow: hidden;
+    border-radius: var(--image-upload-crop-modal-cropper-border-radius, 8px);
+  }
+
+  &-cropper {
+    width: 100%;
+    height: var(--image-upload-crop-modal-cropper-height, 420px);
+  }
+
+  /* 将 cropper 选区显示为对应形状（底层仍是矩形逻辑，导出时再 mask） */
+  &-cropper-wrap-shape-circle {
+    .cropper-view-box,
+    .cropper-face {
+      border-radius: var(--image-upload-crop-modal-crop-box-circle-radius, 50%);
+    }
+
+    .cropper-line,
+    .cropper-point {
+      display: none;
+    }
+  }
+
+  &-cropper-wrap-shape-triangle {
+    .cropper-view-box,
+    .cropper-face {
+      clip-path: var(
+        --image-upload-crop-modal-crop-box-triangle-clip,
+        polygon(50% 0%, 100% 100%, 0% 100%)
+      );
+    }
+
+    .cropper-line,
+    .cropper-point {
+      display: none;
+    }
+  }
+
+  &-cropper-wrap-shape-diamond {
+    .cropper-view-box,
+    .cropper-face {
+      clip-path: var(
+        --image-upload-crop-modal-crop-box-diamond-clip,
+        polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)
+      );
+    }
+
+    .cropper-line,
+    .cropper-point {
+      display: none;
+    }
+  }
+}
+
+.@{prefix-cls}-image-upload {
+  &-list-item {
+    :global(.ant-upload-list-item-image),
+    :global(.ant-upload-list-item-thumbnail) img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &-list-item-circle {
+    :global(.ant-upload-list-item-image),
+    :global(.ant-upload-list-item-thumbnail) img {
+      border-radius: var(--image-upload-list-thumb-circle-radius, 50%);
+    }
+  }
+
+  &-list-item-triangle {
+    :global(.ant-upload-list-item-image),
+    :global(.ant-upload-list-item-thumbnail) img {
+      clip-path: var(
+        --image-upload-list-thumb-triangle-clip,
+        polygon(50% 0%, 100% 100%, 0% 100%)
+      );
+    }
+  }
+
+  &-list-item-diamond {
+    :global(.ant-upload-list-item-image),
+    :global(.ant-upload-list-item-thumbnail) img {
+      clip-path: var(
+        --image-upload-list-thumb-diamond-clip,
+        polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)
+      );
+    }
+  }
+}
+

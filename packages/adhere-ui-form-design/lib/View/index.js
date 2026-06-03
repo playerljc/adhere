@@ -1,2 +1,2 @@
-
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_react=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0,_interopRequireDefault(require("react"))),_Form=_interopRequireDefault(require("../Form")),__assign=function(){return(__assign=Object.assign||function(e){for(var r,t=1,a=arguments.length;t<a;t++)for(var i in r=arguments[t])Object.prototype.hasOwnProperty.call(r,i)&&(e[i]=r[i]);return e}).apply(this,arguments)},View=_react.default.memo(_react.default.forwardRef(function(e,r){return _react.default.createElement(_Form.default,__assign({ref:r},e,{disabled:!0}))})),_default=(View.displayName="View",exports.default=View);
 //# sourceMappingURL=index.js.map

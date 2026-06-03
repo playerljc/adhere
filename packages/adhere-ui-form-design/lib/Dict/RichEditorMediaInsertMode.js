@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_adhereUtilIntl=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.RichEditorMediaInsertMode=void 0,_interopRequireDefault(require("@baifendian/adhere-util-intl"))),RichEditorMediaInsertMode=exports.RichEditorMediaInsertMode={handler:function(){return[{label:_adhereUtilIntl.default.get("rich_editor_insert_path"),value:"path"},{label:_adhereUtilIntl.default.get("rich_editor_insert_upload"),value:"upload"}]}};
+//# sourceMappingURL=RichEditorMediaInsertMode.js.map

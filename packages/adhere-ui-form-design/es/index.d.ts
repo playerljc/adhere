@@ -9,6 +9,7 @@ export { FormContext, useFormContext } from './components/FormContext';
 declare const _default: {
     Design: import("./types").DesignComponent;
     Form: import("./types").FormComponent;
+    View: import("react").NamedExoticComponent<Omit<import("./types").FormProps & import("react").RefAttributes<any>, "ref"> & import("react").RefAttributes<any>>;
     Components: typeof Components;
     Util: typeof Util;
     parse: typeof parse;

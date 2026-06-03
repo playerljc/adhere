@@ -1,0 +1,2 @@
+function isRichEditorHtmlEmpty(r){return null==r||""===String(r).replace(/<[^>]*>/g,"").replace(/&nbsp;/gi," ").trim()}Object.defineProperty(exports,"__esModule",{value:!0}),exports.RICH_EDITOR_EMPTY_VALIDATOR_CODE=void 0,exports.isRichEditorHtmlEmpty=isRichEditorHtmlEmpty;var RICH_EDITOR_EMPTY_VALIDATOR_CODE=exports.RICH_EDITOR_EMPTY_VALIDATOR_CODE="var h=value==null?'':String(value);var t=h.replace(/<[^>]*>/g,'').replace(/&nbsp;/gi,' ').trim();if(!t){cb(' ');return;}cb();";
+//# sourceMappingURL=isRichEditorHtmlEmpty.js.map

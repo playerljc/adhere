@@ -138,6 +138,13 @@ export interface DesignContextType {
     getRenderMenuBar: () => DesignProps['renderMenuBar'];
     getToolbarEllipseCount: () => DesignProps['toolbarEllipseCount'];
     getMenuBarEllipseCount: () => DesignProps['menuBarEllipseCount'];
+    /**
+     * Form 运行态 disabled 覆盖
+     * @description 当外层 Form 传入 disabled（无论 true/false）时，控件自身 fieldProps.disabled 必须让位
+     * - undefined: 不覆盖，使用控件自身 disabled
+     * - boolean: 覆盖所有控件 disabled
+     */
+    getFormDisabled?: () => boolean | undefined;
     setCurrentTerminal: (terminal: Terminal) => void;
     getMobileViewportPresetId: () => MobileViewportPresetId;
     setMobileViewportPresetId: (presetId: MobileViewportPresetId) => void;

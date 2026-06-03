@@ -1,0 +1,1 @@
+{"version":3,"file":"renderFormProperty.js","sources":["Fields/integration/antd/ImageUpload/renderFormProperty.js"],"sourcesContent":["export { FormProperty, renderFormProperty } from '../Input/renderFormProperty';"],"names":[],"mappings":"sCAA8E,KAA7B"}

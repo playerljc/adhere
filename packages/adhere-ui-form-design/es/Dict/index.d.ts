@@ -450,6 +450,42 @@ declare const names: Partial<{
             value: string;
         }[];
     };
+    UploadEvents: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    UploadListType: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    RichEditorEvents: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    RichEditorToolbarPreset: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    RichEditorMediaInsertMode: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
+    RichEditorTextDirection: {
+        value: {
+            label: string;
+            value: string;
+        }[];
+    };
     NoFormFieldTypes: {
         value: string[];
     };
