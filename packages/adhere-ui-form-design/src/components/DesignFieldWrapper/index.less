@@ -8,7 +8,7 @@
   // 设计期专用视觉：padding / hover / active / label / actions
   // form 模式下不会挂上 -design-mode 修饰符，从而保持纯净 DOM 表现
   &.@{prefix-cls}-design-field-wrapper-design-mode {
-    padding: var(--design-field-wrapper-padding, 2px);
+    padding: var(--design-field-wrapper-padding, 4px);
 
     > .@{prefix-cls}-design-field-wrapper-label {
       position: absolute;
@@ -19,12 +19,15 @@
       gap: var(--design-field-wrapper-label-gap, 4px);
       align-items: center;
       max-width: 100%;
-      padding: var(--design-field-wrapper-label-padding, 2px 6px);
+      padding: var(--design-field-wrapper-label-padding, 2px 8px);
       color: var(--design-field-wrapper-label-color, var(--ant-color-text-light-solid, #fff));
+      font-size: 11px;
+      font-weight: 500;
       background-color: var(
         --design-field-wrapper-label-background-color,
-        var(--antd-color-primary, #1677ff)
+        #3b82f6
       );
+      border-radius: var(--design-field-wrapper-label-border-radius, 4px);
 
       .@{prefix-cls}-design-field-wrapper-label-icon {
         display: inline-flex;
@@ -32,7 +35,7 @@
         align-items: center;
         justify-content: center;
         color: inherit;
-        font-size: var(--design-field-wrapper-label-icon-size, 14px);
+        font-size: var(--design-field-wrapper-label-icon-size, 12px);
         line-height: 1;
 
         .anticon {
@@ -52,7 +55,7 @@
     &:hover {
       border: var(
         --design-field-wrapper-hover-border,
-        1px dashed var(--antd-color-primary-border, #91caff)
+        1.5px dashed rgba(59, 130, 246, 0.35)
       );
     }
 
@@ -60,7 +63,7 @@
       padding: var(--design-field-wrapper-active-padding, 2px 2px 36px 2px);
       border: var(
         --design-field-wrapper-active-border,
-        1px solid var(--antd-color-primary, #1677ff)
+        1.5px solid #3b82f6
       );
     }
 

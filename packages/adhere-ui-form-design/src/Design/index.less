@@ -1,4 +1,5 @@
 @import '../constant.less';
+
 @import './Toolbar/index.less';
 @import './Toolbox/index.less';
 @import './DesignEditor/index.less';
@@ -16,26 +17,26 @@
     display: flex;
     flex: 1;
     min-height: 0;
-    background: var(--fd-design-body-row-bg, #ffffff);
+    background: var(--fd-design-body-row-bg, #f8fafc);
 
     > .@{prefix-cls}-design-toolbox-wrapper {
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
       box-sizing: border-box;
-      width: var(--fd-design-toolbox-width, 244px);
-      min-width: var(--fd-design-toolbox-min-width, 200px);
-      max-width: var(--fd-design-toolbox-max-width, 280px);
+      width: var(--fd-design-toolbox-width, 260px);
+      min-width: var(--fd-design-toolbox-min-width, 220px);
+      max-width: var(--fd-design-toolbox-max-width, 300px);
       padding: var(--fd-design-toolbox-padding, 0);
-      border-right: 1px solid var(--fd-design-toolbox-border-color, #e4e4e7);
-      box-shadow: var(--fd-design-toolbox-shadow, none);
+      border-right: 1px solid var(--fd-design-toolbox-border-color, #e2e8f0);
+      box-shadow: var(--fd-design-toolbox-shadow, 0 1px 2px rgba(15, 23, 42, 0.04));
     }
 
     > .@{prefix-cls}-design-editor-wrapper {
       display: flex;
       flex: 1;
       min-width: 0;
-      background: var(--fd-design-editor-bg, #ffffff);
+      background: var(--fd-design-editor-bg, #f8fafc);
     }
 
     > .@{prefix-cls}-design-properties-wrapper {
@@ -44,14 +45,14 @@
       flex-shrink: 0;
       align-self: stretch;
       box-sizing: border-box;
-      min-width: var(--fd-design-properties-min-width, 260px);
+      min-width: var(--fd-design-properties-min-width, 280px);
       max-width: var(--design-wrapper-properties-max-width, 50%) !important;
-      width: var(--fd-design-properties-width, 20%);
+      width: var(--fd-design-properties-width, 22%);
       min-height: 0;
       padding: var(--fd-design-properties-outer-padding, 0);
       overflow: hidden;
-      border-left: 1px solid var(--fd-design-properties-border-color, #e4e4e7);
-      box-shadow: var(--fd-design-properties-shadow, none);
+      border-left: 1px solid var(--fd-design-properties-border-color, #e2e8f0);
+      box-shadow: var(--fd-design-properties-shadow, 0 1px 2px rgba(15, 23, 42, 0.04));
     }
   }
 }
