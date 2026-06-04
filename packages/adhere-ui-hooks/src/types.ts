@@ -193,3 +193,52 @@ export type UseHistoryBack = (
   initialPathname: string,
   routePath?: string,
 ) => UseHistoryBackReturn;
+
+/**
+ * 与 antd Form NamePath 一致
+ */
+export type FormTabsNamePath = string | number | (string | number)[];
+
+/**
+ * Segmented 分段与 Form 字段映射
+ */
+export type SegmentedFormTab = {
+  /** 与 Segmented 的 value / options[].value 一致 */
+  key: string;
+  /**
+   * 该分段内 Form.Item / Form.List 的 name 列表。
+   * Form.List 子字段可写 list 根路径（如 `['users']`），或省略下标（如 `['users', 'name']`、
+   * `['users', '*', 'name']`），与 antd 报错路径 `['users', 0, 'name']` 对齐。
+   */
+  fieldNames: FormTabsNamePath[];
+};
+
+export type FormTabsErrorField = {
+  name: FormTabsNamePath;
+};
+
+/**
+ * useFormTabs 所需的最小 Form 实例能力（兼容 antd FormInstance）
+ */
+export type FormTabsFormInstance = {
+  validateFields: (
+    nameList?: FormTabsNamePath | FormTabsNamePath[],
+    config?: Record<string, unknown>,
+  ) => Promise<unknown>;
+};
+
+export type UseFormTabsOptions<Form extends FormTabsFormInstance = FormTabsFormInstance> = {
+  form: Form;
+  tabs: SegmentedFormTab[];
+  defaultTab?: string;
+};
+
+export type UseFormTabsReturn<Form extends FormTabsFormInstance = FormTabsFormInstance> = {
+  activeTab: string | undefined;
+  setActiveTab: (key: string) => void;
+  validateFields: Form['validateFields'];
+};
+
+export type UseFormTabs = <Form extends FormTabsFormInstance = FormTabsFormInstance>(
+  options: UseFormTabsOptions<Form>,
+) => UseFormTabsReturn<Form>;

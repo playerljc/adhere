@@ -16,5 +16,6 @@ declare const Hooks: {
     readonly useItemsRef: typeof useItemsRef;
     readonly useSafeRef: typeof useSafeRef;
     readonly useHistoryBack: import("./types").UseHistoryBack;
+    readonly useFormTabs: import("./types").UseFormTabs;
 };
 export default Hooks;

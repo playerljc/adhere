@@ -195,6 +195,76 @@ useEffect(() => {
 }, []);
 ```
 
+### useFormTabs
+
+将 **antd `Segmented`** 与 **单个 `Form` 实例** 联动：各分段面板内为 `Form.Item`，提交时若校验失败，按配置顺序自动切换到**第一个包含错误字段**的分段。
+
+**适用场景**：一个 `Form` 包裹多个分段面板（常用 `hidden` 切换显示）；各分段有校验规则且用户可能在非当前分段提交；需要在 `validateFields` 失败后定位到未填写的分段。不适用每个分段独立 `Form` 实例的场景。
+
+```tsx
+import { Segmented } from 'antd';
+import { useMemo } from 'react';
+import { Form } from '@baifendian/adhere-ui-anthoc';
+import { useFormTabs } from '@baifendian/adhere-ui-hooks';
+
+const TAB_KEYS = { A: 'tabA', B: 'tabB' } as const;
+
+function MyForm({ form }) {
+  const tabs = useMemo(
+    () => [
+      { key: TAB_KEYS.A, fieldNames: ['checkList'] },
+      { key: TAB_KEYS.B, fieldNames: ['judge'] },
+    ],
+    [],
+  );
+
+  const { activeTab, setActiveTab, validateFields } = useFormTabs({
+    form,
+    tabs,
+    defaultTab: TAB_KEYS.A,
+  });
+
+  return (
+    <>
+      <Segmented
+        block
+        value={activeTab}
+        options={[
+          { value: TAB_KEYS.A, label: '页签 A' },
+          { value: TAB_KEYS.B, label: '页签 B' },
+        ]}
+        onChange={setActiveTab}
+      />
+      <div hidden={activeTab !== TAB_KEYS.A}>
+        <Form.Item name="checkList" rules={[{ required: true }]} />
+      </div>
+      <div hidden={activeTab !== TAB_KEYS.B}>
+        <Form.Item name="judge" rules={[{ required: true }]} />
+      </div>
+      <Form.SubmitButton
+        onClick={() => validateFields().then(values => { /* 提交 */ })}
+      />
+    </>
+  );
+}
+```
+
+| 入参 | 类型 | 说明 |
+|------|------|------|
+| `form` | `FormInstance` | antd Form 实例 |
+| `tabs` | `SegmentedFormTab[]` | 分段与字段映射，建议 `useMemo` 稳定引用 |
+| `defaultTab` | `string` | 可选，初始分段 key，默认 `tabs[0].key` |
+
+| 返回值 | 类型 | 说明 |
+|--------|------|------|
+| `activeTab` | `string` | 当前激活分段，绑定 `Segmented` 的 `value` |
+| `setActiveTab` | `(key: string) => void` | 切换分段，绑定 `onChange` |
+| `validateFields` | `FormInstance['validateFields']` | 包装后的校验，**提交时必须使用**，勿直接调用 `form.validateFields` |
+
+**切换规则**：按 `tabs` 顺序查找第一个与 `error.errorFields` 匹配的分段；字段完全相等或以 `fieldName.` 为前缀的嵌套子字段归属该分段；**Form.List** 支持省略 list 下标（如 `['users', 'name']` 匹配 `['users', 0, 'name']`）或 list 根路径 `['users']`；未命中时再按错误字段名前缀回退；错误不在任何 `tabs.fieldNames` 中时不切换；仍 `throw` 原始校验错误。
+
+**注意**：`tabs` 需引用稳定；`fieldNames` 须与 `Form.Item name` 一致；`hidden` 仅隐藏展示不影响校验；提交链路请统一使用 hook 返回的 `validateFields`。
+
 ### useTriggerQuery
 
 用于管理查询参数和搜索状态的 React Hook。
