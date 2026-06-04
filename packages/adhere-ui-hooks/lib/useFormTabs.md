@@ -33,7 +33,7 @@ import { useSegmentedFormTabs } from '@/hooks/useSegmentedFormTabs';
 | 属性 | 类型 | 说明 |
 |------|------|------|
 | `key` | `string` | 与 `Segmented` 的 `value` / `options[].value` 一致 |
-| `fieldNames` | `NamePath[]` | 该分段内 `Form.Item` 的 `name` 列表，支持嵌套路径如 `['user', 'name']` |
+| `fieldNames` | `NamePath[]` | 该分段内 `Form.Item` / `Form.List` 的 `name` 列表，支持嵌套路径如 `['user', 'name']`；Form.List 子字段可写 `['users', 'name']` 或 `['users', '*', 'name']`（匹配 `['users', 0, 'name']`） |
 
 `NamePath` 与 antd Form 一致：`string | number | (string | number)[]`。
 
@@ -52,12 +52,48 @@ import { useSegmentedFormTabs } from '@/hooks/useSegmentedFormTabs';
 3. **按 `tabs` 数组顺序** 查找第一个「其 `fieldNames` 与任一错误字段匹配」的分段并 `setActiveTab`。
 4. 字段匹配规则：
    - 错误字段 key 与配置的 `fieldName` **完全相等**；或
-   - 错误字段 key 以 `fieldName.` 为前缀（嵌套子字段归属父字段所在分段）。
-5. 若按顺序未命中，再按第一个错误字段名做前缀回退查找。
+   - 错误字段 key 以 `fieldName.` 为前缀（嵌套子字段归属父字段所在分段）；或
+   - **Form.List**：错误路径中的纯数字段（list 下标）可与配置中省略的下标对齐，例如配置 `['users', 'name']` 匹配错误 `['users', 0, 'name']`；也可显式写 `['users', '*', 'name']`；仅配置 list 根 `['users']` 时匹配该 list 下任意项。
+5. 若按顺序未命中，再按第一个错误字段名做前缀回退查找（同样支持 Form.List 下标对齐）。
 6. 错误字段不在任何 `tabs.fieldNames` 中（如表单底部的公共字段）时，**不切换**分段。
 7. 仍将原始校验错误 `throw`，调用方 `catch` 行为与 antd 一致。
 
 **示例**：第一页 `checkList`、第二页 `judge` 均未填，用户在第二页提交 → 切换到第一页（`tabs` 中靠前的分段优先）。
+
+## Form.List
+
+`Form.List` 校验失败时，antd 的 `errorFields[].name` 会带 list 下标，例如 `['users', 0, 'name']`。`fieldNames` 有三种写法：
+
+| 配置 | 匹配的错误 name | 说明 |
+|------|-----------------|------|
+| `['users']` | `['users', 0, 'name']` 等 | list 根路径，该分段内任意 list 项报错均命中 |
+| `['users', 'name']` | `['users', 0, 'name']` | 省略下标，匹配任意项内的 `name` 字段 |
+| `['users', '*', 'name']` | 同上 | 显式通配一段，与省略下标等价 |
+
+```jsx
+<Form.List name="users">
+  {(fields) =>
+    fields.map((field) => (
+      <Form.Item
+        key={field.key}
+        name={[field.name, 'name']}
+        rules={[{ required: true }]}
+      />
+    ))
+  }
+</Form.List>
+
+// tabs 配置示例
+const tabs = useMemo(
+  () => [
+    { key: 'basic', fieldNames: ['title'] },
+    { key: 'members', fieldNames: [['users', 'name']] },
+  ],
+  [],
+);
+```
+
+嵌套 `Form.List`（如 `items.0.tags.1.value`）同样适用：配置中省略数字下标段即可。
 
 ## 基本用法
 

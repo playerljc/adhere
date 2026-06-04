@@ -172,7 +172,11 @@ export type FormTabsNamePath = string | number | (string | number)[];
 export type SegmentedFormTab = {
     /** 与 Segmented 的 value / options[].value 一致 */
     key: string;
-    /** 该分段内 Form.Item 的 name 列表 */
+    /**
+     * 该分段内 Form.Item / Form.List 的 name 列表。
+     * Form.List 子字段可写 list 根路径（如 `['users']`），或省略下标（如 `['users', 'name']`、
+     * `['users', '*', 'name']`），与 antd 报错路径 `['users', 0, 'name']` 对齐。
+     */
     fieldNames: FormTabsNamePath[];
 };
 export type FormTabsErrorField = {
