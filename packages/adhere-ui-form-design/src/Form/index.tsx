@@ -130,6 +130,10 @@ const InternalFormDesignForm = memo<PropsWithoutRef<FormProps> & RefAttributes<F
         updateChildrenById: noop as (id: string, children: DesignValueProps['children']) => void,
         swapOutlineNodes: noop as (idA: string, idB: string) => void,
         resetDesignValue: noop,
+        getCanUndo: () => false,
+        getCanRedo: () => false,
+        undo: noop,
+        redo: noop,
       }),
       [getDesignValue, getTerminal, getItems, getFormDisabled],
     );

@@ -230,6 +230,14 @@ export interface DesignContextType {
   swapOutlineNodes: (idA: string, idB: string) => void;
   /** 将设计画布重置为默认空根布局，并清除当前选中项 */
   resetDesignValue: () => void;
+  /** 是否可撤销 */
+  getCanUndo: () => boolean;
+  /** 是否可重做 */
+  getCanRedo: () => boolean;
+  /** 撤销一步 */
+  undo: () => void;
+  /** 重做一步 */
+  redo: () => void;
 }
 
 /**

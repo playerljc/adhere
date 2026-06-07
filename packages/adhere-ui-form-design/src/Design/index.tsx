@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, {
   forwardRef,
   memo,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useReducer,
@@ -58,7 +59,8 @@ import {
 import sage from '../utils/saga';
 import { DesignContext } from './Context';
 import Editor from './DesignEditor';
-import DesignValueReducer from './DesignValueReducer';
+import DesignValueReducer, { type DesignValueAction } from './DesignValueReducer';
+import { useDesignHistory } from './hooks/useDesignHistory';
 import Properties from './Properties';
 import Toolbox from './Toolbox';
 import ToolboxItemDragOverlay from './Toolbox/ToolboxItemDragOverlay';
@@ -129,6 +131,21 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
 
       // Editor中激活的item id
       const [activeFieldId, setActiveFieldId] = useState<string>();
+
+      const { recordBeforeChange, undo, redo, getCanUndo, getCanRedo } = useDesignHistory({
+        getDesignValue: () => designValue,
+        getActiveFieldId: () => activeFieldId,
+        dispatch,
+        setActiveFieldId,
+      });
+
+      function commitDesignChange(
+        action: DesignValueAction,
+        options?: { immediate?: boolean },
+      ) {
+        recordBeforeChange(options?.immediate);
+        dispatch(action);
+      }
 
       // Editor中激活的field的designValue
       const activeDesignFieldValue = useMemo(() => {
@@ -255,13 +272,16 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         }) as DesignValue[];
 
         // 追加布局的data数据
-        dispatch({
-          type: REDUCER_ACTION_TYPE.updateChildrenProps,
-          payload: {
-            id: overItem.id,
-            props,
+        commitDesignChange(
+          {
+            type: REDUCER_ACTION_TYPE.updateChildrenProps,
+            payload: {
+              id: overItem.id,
+              props,
+            },
           },
-        });
+          { immediate: true },
+        );
 
         setActiveFieldId(filedId);
       }
@@ -331,7 +351,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       }
 
       function setFormItemProps(id: string, props: FormItemProps) {
-        dispatch({
+        commitDesignChange({
           type: REDUCER_ACTION_TYPE.updateFormItemProps,
           payload: {
             id,
@@ -341,7 +361,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       }
 
       function setActionsProps(id: string, props: ActionsProps) {
-        dispatch({
+        commitDesignChange({
           type: REDUCER_ACTION_TYPE.updateActionsProps,
           payload: {
             id,
@@ -351,7 +371,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       }
 
       function setFlexProps(id: string, props: FlexProps) {
-        dispatch({
+        commitDesignChange({
           type: REDUCER_ACTION_TYPE.updateFlexProps,
           payload: {
             id,
@@ -371,7 +391,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
 
           const patch = computeFieldPropsOverlayPatch(raw.props.fieldProps, props);
 
-          dispatch({
+          commitDesignChange({
             type: REDUCER_ACTION_TYPE.updateFieldPropsByTerminal,
             payload: {
               id,
@@ -383,7 +403,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         }
 
         // 否则就是调用updateFieldProps去修改数据
-        dispatch({
+        commitDesignChange({
           type: REDUCER_ACTION_TYPE.updateFieldProps,
           payload: {
             id,
@@ -393,7 +413,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       }
 
       function setStyleProps(id: string, props: StyleProps) {
-        dispatch({
+        commitDesignChange({
           type: REDUCER_ACTION_TYPE.updateStyleProps,
           payload: {
             id,
@@ -403,46 +423,58 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       }
 
       function deleteFieldByChildren(id: string) {
-        dispatch({
-          type: REDUCER_ACTION_TYPE.deleteChildrenById,
-          payload: {
-            id,
+        commitDesignChange(
+          {
+            type: REDUCER_ACTION_TYPE.deleteChildrenById,
+            payload: {
+              id,
+            },
           },
-        });
+          { immediate: true },
+        );
       }
 
       function addChildrenById(id: string, child: DesignValue) {
-        dispatch({
-          type: REDUCER_ACTION_TYPE.addChildrenById,
-          payload: {
-            id,
-            child,
+        commitDesignChange(
+          {
+            type: REDUCER_ACTION_TYPE.addChildrenById,
+            payload: {
+              id,
+              child,
+            },
           },
-        });
+          { immediate: true },
+        );
       }
 
       function updateChildrenById(id: string, children: DesignValueProps['children']) {
-        dispatch({
-          type: REDUCER_ACTION_TYPE.updateChildrenProps,
-          payload: {
-            id,
-            props: children,
+        commitDesignChange(
+          {
+            type: REDUCER_ACTION_TYPE.updateChildrenProps,
+            payload: {
+              id,
+              props: children,
+            },
           },
-        });
+          { immediate: true },
+        );
       }
 
       function swapOutlineNodes(idA: string, idB: string) {
-        dispatch({
-          type: REDUCER_ACTION_TYPE.swapNodes,
-          payload: {
-            idA,
-            idB,
+        commitDesignChange(
+          {
+            type: REDUCER_ACTION_TYPE.swapNodes,
+            payload: {
+              idA,
+              idB,
+            },
           },
-        });
+          { immediate: true },
+        );
       }
 
       function setDataSourceConfig(id: string, dataSourceConfig: DataSourceConfig) {
-        dispatch({
+        commitDesignChange({
           type: REDUCER_ACTION_TYPE.updateDataSourceConfig,
           payload: {
             id,
@@ -452,14 +484,50 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       }
 
       function resetDesignValue() {
-        dispatch({
-          type: REDUCER_ACTION_TYPE.replaceDesignValue,
-          payload: {
-            designValue: createDefaultRootDesignValue(),
+        commitDesignChange(
+          {
+            type: REDUCER_ACTION_TYPE.replaceDesignValue,
+            payload: {
+              designValue: createDefaultRootDesignValue(),
+            },
           },
-        });
+          { immediate: true },
+        );
         setActiveFieldId(undefined);
       }
+
+      useEffect(() => {
+        const isEditableTarget = (target: EventTarget | null) => {
+          if (!(target instanceof HTMLElement)) return false;
+          const tag = target.tagName;
+          if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return true;
+          if (target.isContentEditable) return true;
+          return !!target.closest('[contenteditable="true"]');
+        };
+
+        const onKeyDown = (e: KeyboardEvent) => {
+          if (!(e.metaKey || e.ctrlKey)) return;
+          if (isEditableTarget(e.target)) return;
+
+          const key = e.key.toLowerCase();
+          if (key === 'z' && !e.shiftKey) {
+            if (getCanUndo()) {
+              e.preventDefault();
+              undo();
+            }
+            return;
+          }
+          if (key === 'y' || (key === 'z' && e.shiftKey)) {
+            if (getCanRedo()) {
+              e.preventDefault();
+              redo();
+            }
+          }
+        };
+
+        window.addEventListener('keydown', onKeyDown);
+        return () => window.removeEventListener('keydown', onKeyDown);
+      }, [getCanRedo, getCanUndo, redo, undo]);
 
       // 提供对外的方法
       useImperativeHandle(ref, () => ({
@@ -512,6 +580,10 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                 updateChildrenById,
                 swapOutlineNodes,
                 resetDesignValue,
+                getCanUndo,
+                getCanRedo,
+                undo,
+                redo,
               }}
             >
               <div
