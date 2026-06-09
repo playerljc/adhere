@@ -1,4 +1,22 @@
+@import url('../../../constant.less');
+
 .adhere-ui-table-grid-layout {
+  .adhere-ui-table-grid-layout-table-row-value {
+    > .@{prefix-cls}-design-field-wrapper {
+      width: 100%;
+
+      > .ant-form-item {
+        width: 100%;
+        min-width: 0;
+
+        .ant-form-item-control-input,
+        .ant-form-item-control-input-content {
+          width: 100%;
+        }
+      }
+    }
+  }
+
   .adhere-ui-table-grid-layout-inner-wrap {
     .adhere-ui-table-grid-layout-table-vertical {
       &.densitydefault {

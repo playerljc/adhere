@@ -113,17 +113,31 @@ export function ValueDesign({
     designContext,
   });
   const formProps = formItemToProps(formItemProps ?? {}, lang);
-  const colSpan = formItemProps?.colSpan;
+  const colSpan =
+    typeof formItemProps?.colSpan === 'number' && formItemProps.colSpan > 1
+      ? formItemProps.colSpan
+      : undefined;
   const fill = finalFieldProps?.fill;
 
   return (
     <Value
       style={valueStyle ?? {}}
       // @ts-ignore
-      colSpan={colSpan}
+      {...(colSpan != null ? { colSpan } : {})}
     >
-      <DesignFieldWrapper id={id} fieldActionTypes={fieldActionTypes}>
-        <Form.Item {...formProps} style={{ flex: fill ? '1' : 'none' }}>
+      <DesignFieldWrapper
+        id={id}
+        fieldActionTypes={fieldActionTypes}
+        style={{ width: '100%' }}
+      >
+        <Form.Item
+          {...formProps}
+          style={{
+            width: '100%',
+            minWidth: 0,
+            flex: fill ? 1 : undefined,
+          }}
+        >
           {children({
             fieldProps: finalFieldProps,
             style,
