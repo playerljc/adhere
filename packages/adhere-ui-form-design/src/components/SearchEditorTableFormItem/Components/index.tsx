@@ -1,11 +1,10 @@
 import React from 'react';
 
-
-
 import { Button } from '@baifendian/adhere-ui-anthoc';
 import DelConfirm from '@baifendian/adhere-ui-confirm-delconfirm';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 import Intl from '@baifendian/adhere-util-intl';
+import dayjs from 'dayjs';
 
 
 
@@ -23,6 +22,20 @@ const {
 } = SearchTable as any;
 
 type AnyRecord = Record<string, any>;
+
+function normalizeRowValues(values: AnyRecord): AnyRecord {
+  const result = { ...values };
+
+  Object.keys(result).forEach((key) => {
+    const value = result[key];
+
+    if (dayjs.isDayjs(value)) {
+      result[key] = value.valueOf();
+    }
+  });
+
+  return result;
+}
 
 /**
  * createImplFactory
@@ -154,12 +167,14 @@ export class EditableRowControlTable extends createImplFactory(ProEditableRowSea
    */
   async onSave(values: AnyRecord): Promise<void> {
     const key = this.getRowKey();
+    const normalized = normalizeRowValues(values);
+    const rowId = normalized[key];
 
     return this.setData((_data: AnyRecord[]) => {
-      const index = _data.findIndex((record) => record[key] === values[key]);
+      const index = _data.findIndex((record) => record[key] === rowId);
 
       if (index !== -1) {
-        _data[index] = values;
+        _data[index] = { ..._data[index], ...normalized };
       }
 
       return [..._data];
@@ -193,7 +208,7 @@ export class EditableRowControlTable extends createImplFactory(ProEditableRowSea
                     rowKey={this.getRowKey()}
                     editorRowIds={this.state.editorRowIds ?? []}
                     renderEditorRow={() => <a>{Intl.get('edit')}</a>}
-                    onSave={(values: AnyRecord) => this.onSave(values)}
+                    onSave={(values: AnyRecord) => this.onSave({ ...record, ...values })}
                   />
                 ),
               },
