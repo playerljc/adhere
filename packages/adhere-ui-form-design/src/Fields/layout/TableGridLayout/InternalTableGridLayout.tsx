@@ -9,6 +9,18 @@ import { DesignContext } from '../../../Design/Context';
 import type { InternalTableGridLayoutProps } from '../../../types';
 import { parseDesign } from '../../parse';
 
+function clampDataItemColSpan(row: DataItemRow, columnCount: number): DataItemRow {
+  const maxSpan = Math.max(1, columnCount);
+  const labelColSpan = Math.min(row.labelColSpan ?? 1, maxSpan);
+  const valueColSpan = Math.min(row.valueColSpan ?? 1, maxSpan);
+
+  if (row.labelColSpan === labelColSpan && row.valueColSpan === valueColSpan) {
+    return row;
+  }
+
+  return { ...row, labelColSpan, valueColSpan };
+}
+
 /**
  * InternalTableGridLayout
  * @description TableGridLayout的内部实现
@@ -19,18 +31,21 @@ const InternalTableGridLayout: FC<InternalTableGridLayoutProps> = ({ children, i
   const targetProps = useMemo<TableGridLayoutProps>(() => {
     // 基本的数据在props中都给了
     const tableGridLayoutProps = merge({}, props);
+    const columnCount = tableGridLayoutProps.data?.[0]?.columnCount ?? 1;
 
     // 对children进行解析
     tableGridLayoutProps.data[0].data = children?.map((_item) => {
-      return parseDesign({
+      const row = parseDesign({
         parentId: id,
         value: _item,
         context,
       }) as DataItemRow;
+
+      return clampDataItemColSpan(row, columnCount);
     });
 
     return tableGridLayoutProps;
-  }, [children, props]);
+  }, [children, context, id, props]);
 
   return <TableGridLayout {...targetProps} />;
 };

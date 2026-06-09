@@ -86,8 +86,14 @@ const renderHorizontal: RenderHorizontal = (
       if (columnsCount === columnCount) {
         break;
       }
+
       // If adding this item would exceed row capacity, finish current row and leave item for next row
       if (columnsCount + span > columnCount) {
+        if (columnsCount === 0 && item) {
+          columnsCount = columnCount;
+          tdJSXChildren.push(item);
+          _index++;
+        }
         break;
       }
 
@@ -230,7 +236,17 @@ const renderVertical: RenderVertical = (
       const span = itemSpans[_index] ?? 1;
 
       if (columnsCount === columnCount) break;
-      if (columnsCount + span > columnCount) break;
+
+      if (columnsCount + span > columnCount) {
+        // 单项跨度超过当前行容量时仍占满本行并前进索引，避免无限递归
+        if (columnsCount === 0 && item) {
+          columnsCount = columnCount;
+          tdLabelJSXS.push(item.label);
+          tdValueJSXS.push(item.value);
+          _index++;
+        }
+        break;
+      }
 
       if (item) {
         columnsCount += span;
