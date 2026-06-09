@@ -65,7 +65,7 @@ export function createFactory<P>(
 
     if (!('getPopupContainer' in props)) {
       props.getPopupContainer = (el) => {
-        return getEl?.() || el?.parentElement || document.body;
+        return getEl?.() /*|| el?.parentElement*/ || document.body;
       };
     }
 

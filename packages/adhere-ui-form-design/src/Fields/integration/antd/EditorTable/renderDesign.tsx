@@ -25,14 +25,20 @@ import {
   EditableRowControlTable,
   EditableRowControlTableSuperTable,
 } from '../../../../components/SearchEditorTableFormItem';
-import type { DesignContextType, DesignValue, FieldProps } from '../../../../types';
+import type { DesignContextType, DesignValue, DesignValueProps, FieldProps } from '../../../../types';
 import {
   actionsCodeStringToEvents,
   computeLabelValueColSpan,
   findDesignValueById,
+  isDesktop,
   resolveI18nText,
   rulesSettingToRules,
 } from '../../../../utils';
+import {
+  EDITOR_TABLE_MOBILE_COLUMN_MIN_WIDTH,
+  EDITOR_TABLE_MOBILE_OPERATION_COLUMN_WIDTH,
+} from './constant';
+import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
 const popupEditorTypes = new Set<TableColumnEditorType>([
   'select',
@@ -330,6 +336,7 @@ type EditorTableDesignParams = {
   actions: Record<string, (...args: any[]) => any>;
   lang: string;
   designContext: DesignContextType;
+  isMobile: boolean;
 };
 
 /**
@@ -340,7 +347,13 @@ function createSubClass(
   getParams: () => EditorTableDesignParams,
 ): typeof EditableRowControlTableSuperTable {
   return class extends EditableRowControlTableSuperTable {
+    /**
+     * getEllipsisCount
+     * @description 获取省略显示的最大数量
+     */
     getEllipsisCount() {
+      if (getParams().isMobile) return 1;
+
       return 5;
     }
 
@@ -382,9 +395,19 @@ function createSubClass(
     }
 
     getColumns() {
-      const columns = super.getColumns();
-      const { fieldProps, style, lang, designContext } = getParams();
+      const { fieldProps, style, lang, designContext, isMobile } = getParams();
       const columnSetting = fieldProps?.columnSetting ?? [];
+      const optionsDataIndex = this.getOptionsColumnDataIndex();
+      const columns = super.getColumns().map((column) => {
+        if (!isMobile || column.dataIndex !== optionsDataIndex) {
+          return column;
+        }
+
+        return {
+          ...column,
+          width: EDITOR_TABLE_MOBILE_OPERATION_COLUMN_WIDTH,
+        };
+      });
 
       return [
         ...columnSetting.map((columnConfig) =>
@@ -397,25 +420,34 @@ function createSubClass(
 }
 
 function EditorTableDesignPreview({
-  fieldProps,
+  designValueProps,
   style,
   actions,
   lang,
   designContext,
   value,
   onChange,
-}: EditorTableDesignParams & {
+}: Omit<EditorTableDesignParams, 'fieldProps' | 'isMobile'> & {
+  designValueProps: DesignValueProps;
   value?: Record<string, any>[];
   onChange?: (nextValue: Record<string, any>[]) => void;
 }) {
+  const terminal = designContext.getTerminal();
+  const isMobile = !isDesktop(terminal);
+  const fieldProps = useMemo(
+    () => resolveFieldPropsForDesignEditor(designValueProps, terminal),
+    [designValueProps, terminal],
+  );
+
   const paramsRef = useRef<EditorTableDesignParams>({
     fieldProps,
     style,
     actions,
     lang,
     designContext,
+    isMobile,
   });
-  paramsRef.current = { fieldProps, style, actions, lang, designContext };
+  paramsRef.current = { fieldProps, style, actions, lang, designContext, isMobile };
 
   const subClass = useMemo(() => createSubClass(() => paramsRef.current), []);
 
@@ -463,14 +495,14 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions }) => {
+        {({ style, actions }) => {
           const { intl } = useContext(ConfigProvider.Context);
           const lang = intl.lang!;
           const designContext = useContext(DesignContext);
 
           return (
             <EditorTableDesignPreview
-              fieldProps={fieldProps}
+              designValueProps={value.props}
               style={style}
               actions={actions}
               lang={lang}

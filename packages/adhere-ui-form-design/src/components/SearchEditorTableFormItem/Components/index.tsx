@@ -194,7 +194,7 @@ export class EditableRowControlTable extends createImplFactory(ProEditableRowSea
       title: Intl.get('operation'),
       dataIndex: this.getOptionsColumnDataIndex(),
       key: this.getOptionsColumnDataIndex(),
-      width: {},
+      width: 120,
       renderToString: () => this.getOptionsColumnString([Intl.get('edit'), Intl.get('delete')]),
       render: (_: unknown, record: AnyRecord) => {
         return (
@@ -287,7 +287,7 @@ export class EditorCellTable extends createImplFactory(ProEditableCellSearchStat
       title: Intl.get('operation'),
       dataIndex: this.getOptionsColumnDataIndex(),
       key: this.getOptionsColumnDataIndex(),
-      width: this.isMobile() ? 'auto' : {},
+      width: 120,
       renderToString: () => this.getOptionsColumnString([Intl.get('delete')]),
       render: (_: unknown, record: AnyRecord) => (
         <OptionsWrap style={{ justifyContent: 'center' }} ellipsisCount={this.getEllipsisCount()}>
