@@ -134,8 +134,16 @@ function createSubClass(
           const {
             actions: actionsConfig,
             rules: rulesConfig,
+            placeholder,
             ...editorSetting
           } = columnConfigconfig.editorSetting ?? {};
+
+          const resolvedEditorSetting = {
+            ...editorSetting,
+            ...(placeholder !== undefined
+              ? { placeholder: resolveI18nText(placeholder, lang) }
+              : {}),
+          };
 
           const actions = actionsCodeStringToEvents({
             actions: actionsConfig ?? [],
@@ -158,7 +166,7 @@ function createSubClass(
                   type: 'custom',
                   render: ({ value }) => (
                     <EditorTableColumnSelectEditor
-                      fieldProps={editorSetting}
+                      fieldProps={resolvedEditorSetting}
                       style={style}
                       actions={actions}
                       value={value}
@@ -170,7 +178,7 @@ function createSubClass(
                   editable: true,
                   type: columnConfigconfig?.editorType,
                   props: {
-                    ...editorSetting,
+                    ...resolvedEditorSetting,
                     ...actions,
                   },
                   rules,

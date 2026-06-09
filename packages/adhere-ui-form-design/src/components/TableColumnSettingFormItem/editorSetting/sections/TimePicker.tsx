@@ -12,6 +12,7 @@ import {
   VerificationStatusSelectStandardDict,
   WhetherRadioHorizontalDict,
 } from '../../../index';
+import EditorSettingPlaceholderFormItem from '../EditorSettingPlaceholderFormItem';
 
 export default function TimePickerSection() {
   return (
@@ -24,9 +25,7 @@ export default function TimePickerSection() {
         <Input.OptimizedInput placeholder="HH:mm:ss" showCount={false} />
       </Form.Item>
 
-      <Form.Item name="placeholder" label={`${Intl.get('placeholder')}：`}>
-        <Input.OptimizedInput placeholder={Intl.get('placeholder')} showCount={false} />
-      </Form.Item>
+      <EditorSettingPlaceholderFormItem />
 
       <Form.Item name="size" label={`${Intl.get('input_size')}：`}>
         <SizeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />

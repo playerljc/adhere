@@ -9,6 +9,7 @@ import {
   VariantSelectStandardDict,
   WhetherRadioHorizontalDict,
 } from '../../../index';
+import EditorSettingPlaceholderFormItem from '../EditorSettingPlaceholderFormItem';
 
 export default function InputSection() {
   return (
@@ -17,13 +18,7 @@ export default function InputSection() {
         <InputTypeSelectStandardDict placeholder={Intl.get('please_select')} allowClear />
       </Form.Item>
 
-      <Form.Item name="placeholder" label={`${Intl.get('placeholder')}：`}>
-        <Input.OptimizedInput
-          placeholder={Intl.get('placeholder')}
-          maxLength={50}
-          showCount={false}
-        />
-      </Form.Item>
+      <EditorSettingPlaceholderFormItem />
 
       <Form.Item name="allowClear" label={`${Intl.get('allow_clear')}：`}>
         <WhetherRadioHorizontalDict />

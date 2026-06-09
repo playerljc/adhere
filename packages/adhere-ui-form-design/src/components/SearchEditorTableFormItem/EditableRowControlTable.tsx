@@ -42,7 +42,7 @@ function EditableRowControlTable({
       FieldGeneratorToDict={FieldGeneratorToDict}
       isShowExpandSearch
       autoFixed
-      fixedHeaderAutoTable
+      fixedHeaderAutoTable={false}
       fixedTableSpaceBetween
       title={tableTitle}
       // form

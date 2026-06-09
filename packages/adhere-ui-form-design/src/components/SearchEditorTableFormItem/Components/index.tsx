@@ -185,7 +185,7 @@ export class EditableRowControlTable extends createImplFactory(ProEditableRowSea
                 <EditableRowControl
                   record={record}
                   rowKey={this.getRowKey()}
-                  editorRowId={this.state.editorRowId}
+                  editorRowIds={this.state.editorRowIds ?? []}
                   renderEditorRow={() => <a>{Intl.get('edit')}</a>}
                   onSave={(values: AnyRecord) => this.onSave(values)}
                 />

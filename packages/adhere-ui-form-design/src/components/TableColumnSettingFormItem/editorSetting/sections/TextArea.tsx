@@ -4,17 +4,12 @@ import { Form, Input, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { VariantSelectStandardDict, WhetherRadioHorizontalDict } from '../../../index';
+import EditorSettingPlaceholderFormItem from '../EditorSettingPlaceholderFormItem';
 
 export default function TextAreaSection() {
   return (
     <>
-      <Form.Item name="placeholder" label={`${Intl.get('placeholder')}：`}>
-        <Input.OptimizedInput
-          placeholder={Intl.get('placeholder')}
-          maxLength={50}
-          showCount={false}
-        />
-      </Form.Item>
+      <EditorSettingPlaceholderFormItem />
 
       <Form.Item name="allowClear" label={`${Intl.get('allow_clear')}：`}>
         <WhetherRadioHorizontalDict />

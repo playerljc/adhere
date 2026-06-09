@@ -10,17 +10,12 @@ import {
   VariantSelectStandardDict,
   WhetherRadioHorizontalDict,
 } from '../../../index';
+import EditorSettingPlaceholderFormItem from '../EditorSettingPlaceholderFormItem';
 
 export default function InputNumberSection() {
   return (
     <>
-      <Form.Item name="placeholder" label={`${Intl.get('placeholder')}：`}>
-        <Input.OptimizedInput
-          placeholder={Intl.get('placeholder')}
-          maxLength={50}
-          showCount={false}
-        />
-      </Form.Item>
+      <EditorSettingPlaceholderFormItem />
 
       <Form.Item name="decimalSeparator" label={`${Intl.get('input_number_decimal_separator')}：`}>
         <Input.OptimizedInput

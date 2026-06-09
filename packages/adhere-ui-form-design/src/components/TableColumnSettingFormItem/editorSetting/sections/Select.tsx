@@ -12,6 +12,7 @@ import {
   VerificationStatusSelectStandardDict,
   WhetherRadioHorizontalDict,
 } from '../../../index';
+import EditorSettingPlaceholderFormItem from '../EditorSettingPlaceholderFormItem';
 
 export default function SelectSection() {
   const mode = Form.useWatch('mode');
@@ -45,13 +46,7 @@ export default function SelectSection() {
         <SelectModeSelectStandardDict placeholder={Intl.get('mode')} />
       </Form.Item>
 
-      <Form.Item name="placeholder" label={`${Intl.get('placeholder')}：`}>
-        <Input.OptimizedInput
-          placeholder={Intl.get('placeholder')}
-          maxLength={50}
-          showCount={false}
-        />
-      </Form.Item>
+      <EditorSettingPlaceholderFormItem />
 
       <Form.Item name="placement" label={`${Intl.get('placement')}：`}>
         <PlacementSelectStandardDict placeholder={Intl.get('placement')} />

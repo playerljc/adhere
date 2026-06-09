@@ -1,5 +1,5 @@
 {
-  "id": "b016d94a-1d72-4494-8df8-6a82025f94b2",
+  "id": "cfbe4749-e939-4d40-b8d4-1e43898e869a",
   "type": "flex-layout",
   "props": {
     "fieldProps": {
@@ -12,7 +12,7 @@
     },
     "children": [
       {
-        "id": "cc8dd0c3-7f36-4bb6-85ef-0f34ecc53731",
+        "id": "78bbb341-be11-4510-8397-2fb2470a747a",
         "type": "card-layout",
         "props": {
           "fieldProps": {
@@ -37,7 +37,7 @@
           },
           "children": [
             {
-              "id": "3153e47b-9efb-4e5a-81fd-a96a8f377e1e",
+              "id": "8a205cc2-a1bf-4d82-b63c-a64ee5e703f0",
               "type": "table-grid-layout",
               "props": {
                 "fieldProps": {
@@ -63,7 +63,7 @@
                 },
                 "children": [
                   {
-                    "id": "1c006b41-6155-45fc-8a12-47d080a08e89",
+                    "id": "dcedab24-7bc6-47d7-9bc7-eb6ae6effe4d",
                     "type": "ant-image-upload",
                     "props": {
                       "formItemProps": {
@@ -104,7 +104,7 @@
                     }
                   },
                   {
-                    "id": "c082344c-60c2-490d-82b7-15f6c1661f7f",
+                    "id": "2097eafa-1b27-41d5-8821-b9912d9c11fc",
                     "type": "ant-input",
                     "props": {
                       "formItemProps": {
@@ -162,7 +162,7 @@
                     }
                   },
                   {
-                    "id": "4ff46ebb-80a0-444c-bec5-30c3c4b3da92",
+                    "id": "a5ffbbf7-73a8-4665-8eb7-de6e4899210f",
                     "type": "ant-select",
                     "props": {
                       "formItemProps": {
@@ -244,7 +244,7 @@
                     }
                   },
                   {
-                    "id": "038f7c2e-3141-4177-8394-fcde573992f6",
+                    "id": "3af97fe9-94b6-45e9-8083-605f18892e52",
                     "type": "ant-date-picker",
                     "props": {
                       "formItemProps": {
@@ -286,7 +286,7 @@
                     }
                   },
                   {
-                    "id": "293b55cd-cc3e-4d24-8cc8-72869ede4745",
+                    "id": "c156cccf-67b2-497f-887b-ea0248c5c816",
                     "type": "ant-input",
                     "props": {
                       "formItemProps": {
@@ -357,7 +357,7 @@
                     }
                   },
                   {
-                    "id": "03767e3e-8e65-470a-a903-47e56f7ffaa2",
+                    "id": "0da330e3-5411-453a-96d7-d48fd5536fa1",
                     "type": "ant-input",
                     "props": {
                       "formItemProps": {
@@ -400,7 +400,7 @@
                     }
                   },
                   {
-                    "id": "f9806ef7-a2f2-4d04-9711-8897096e89ab",
+                    "id": "b49e25f9-a342-4c28-817d-bf0a0f10e76b",
                     "type": "ant-select",
                     "props": {
                       "formItemProps": {
@@ -467,7 +467,7 @@
                     }
                   },
                   {
-                    "id": "16d96166-20d9-4627-8d2b-b5a4d7f3e80c",
+                    "id": "6ea54d1d-bb42-4306-8d63-ae899a83559e",
                     "type": "phone-with-area-code",
                     "props": {
                       "formItemProps": {
@@ -505,7 +505,7 @@
                     }
                   },
                   {
-                    "id": "ab2aa699-ace9-4d7e-b57d-b38f9e2df655",
+                    "id": "57510b5e-2ad6-4463-9509-61c02dfc2c74",
                     "type": "ant-input",
                     "props": {
                       "formItemProps": {
@@ -548,7 +548,7 @@
                     }
                   },
                   {
-                    "id": "6991b883-330d-4ac6-812b-de0bdf0aa0ad",
+                    "id": "e2210cf7-8103-4a74-bce1-d5dca8664c76",
                     "type": "ant-input",
                     "props": {
                       "formItemProps": {
@@ -591,7 +591,7 @@
                     }
                   },
                   {
-                    "id": "bec3359c-ae15-4ec3-83f4-cf1d932c10ad",
+                    "id": "d2712f49-d97a-416c-8a3b-7e50aea692bb",
                     "type": "ant-input",
                     "props": {
                       "formItemProps": {
@@ -634,7 +634,7 @@
                     }
                   },
                   {
-                    "id": "4123117b-ae0c-4154-9c5b-15cbcaca1954",
+                    "id": "12ad68b9-d3da-40f7-878b-1f862f5011ee",
                     "type": "ant-input",
                     "props": {
                       "formItemProps": {
@@ -677,7 +677,7 @@
                     }
                   },
                   {
-                    "id": "8c7bacac-8533-4e95-bef8-bd04ec520705",
+                    "id": "d4663df7-983b-4463-8afb-428faff750d8",
                     "type": "ant-time-picker",
                     "props": {
                       "formItemProps": {
@@ -717,7 +717,7 @@
                     }
                   },
                   {
-                    "id": "e24215e3-4524-4e45-81d1-aaa96f5bd5f4",
+                    "id": "4453a375-9d76-4167-ac54-591b1d0a8d36",
                     "type": "ant-cascader",
                     "props": {
                       "formItemProps": {
@@ -761,7 +761,7 @@
                     }
                   },
                   {
-                    "id": "dd1b0ed1-ca8a-41fa-8b71-a74bb7ea33ec",
+                    "id": "d631eb42-fdec-4647-8378-0ba28cb2fc02",
                     "type": "ant-textarea",
                     "props": {
                       "formItemProps": {
@@ -816,7 +816,7 @@
         }
       },
       {
-        "id": "8fe38db5-3821-4260-8d83-ac41ab7ab668",
+        "id": "1734e57f-7442-481c-867e-2140515fadb0",
         "type": "card-layout",
         "props": {
           "fieldProps": {
@@ -839,7 +839,7 @@
           },
           "children": [
             {
-              "id": "08dff16b-df34-4a46-9dfa-4e054ebcaccb",
+              "id": "3fe03f3a-0d0f-4574-98aa-285ffd2c1026",
               "type": "table-grid-layout",
               "props": {
                 "fieldProps": {
@@ -864,7 +864,7 @@
                 },
                 "children": [
                   {
-                    "id": "d458cdfe-c948-40bf-a75b-b139ee632a7e",
+                    "id": "92c017e7-d97c-4d6b-8262-97cd967e1119",
                     "type": "ant-editor-table",
                     "props": {
                       "formItemProps": {
@@ -895,7 +895,29 @@
                             "widthMode": "adaptive",
                             "align": "left",
                             "editorType": "input",
-                            "editorSetting": {}
+                            "editorSetting": {
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "姓名",
+                                "en_US": "Name",
+                                "pt_PT": "Nome",
+                                "ar_EG": "الاسم"
+                              },
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请输入姓名",
+                                      "en_US": null,
+                                      "pt_PT": null
+                                    }
+                                  }
+                                }
+                              ]
+                            }
                           },
                           {
                             "id": "55a913a5-6f9f-4ec9-966c-44b4393378b3",
@@ -908,7 +930,7 @@
                             },
                             "field": "sex",
                             "widthMode": "adaptive",
-                            "align": "left",
+                            "align": "center",
                             "editorType": "select",
                             "editorSetting": {
                               "selectOptions": {
@@ -937,7 +959,28 @@
                                   }
                                 ],
                                 "type": "static"
-                              }
+                              },
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "性别",
+                                "en_US": "Gender",
+                                "pt_PT": "Género",
+                                "ar_EG": "الجنس"
+                              },
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请选择性别",
+                                      "en_US": null,
+                                      "pt_PT": null
+                                    }
+                                  }
+                                }
+                              ]
                             }
                           },
                           {
@@ -951,9 +994,17 @@
                             },
                             "field": "birthday",
                             "widthMode": "adaptive",
-                            "align": "left",
+                            "align": "center",
                             "editorType": "birthdayPicker",
-                            "editorSetting": {}
+                            "editorSetting": {
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "出生年月",
+                                "en_US": "Date of birth",
+                                "pt_PT": "Data de nascimento",
+                                "ar_EG": "تاريخ الميلاد"
+                              }
+                            }
                           },
                           {
                             "id": "d088511c-687e-4ecf-8b1b-d6ac56df1173",
@@ -966,7 +1017,7 @@
                             },
                             "field": "relationship",
                             "widthMode": "adaptive",
-                            "align": "left",
+                            "align": "center",
                             "editorType": "select",
                             "editorSetting": {
                               "selectOptions": {
@@ -995,7 +1046,28 @@
                                   }
                                 ],
                                 "type": "static"
-                              }
+                              },
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "关系",
+                                "en_US": "Relationship",
+                                "pt_PT": "Relação",
+                                "ar_EG": "العلاقة"
+                              },
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请选择关系",
+                                      "en_US": null,
+                                      "pt_PT": null
+                                    }
+                                  }
+                                }
+                              ]
                             }
                           }
                         ],
