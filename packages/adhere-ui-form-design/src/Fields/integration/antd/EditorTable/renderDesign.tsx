@@ -7,7 +7,17 @@ import Util from '@baifendian/adhere-util';
 import { Select, type SelectProps } from 'antd';
 
 import { DesignContext } from '../../../../Design/Context';
-import { DesignPreviewFieldWithDataSource, LabelDesign, ValueDesign } from '../../../../components';
+import {
+  DesignPreviewFieldWithDataSource,
+  LabelDesign,
+  ValueDesign,
+  WithDesignFieldDataSourceOptions,
+} from '../../../../components';
+import type {
+  TableColumnEditorType,
+  TableColumnSettingItem,
+} from '../../../../components/TableColumnSettingFormItem/TableColumnSettingFormItem';
+import { DatePickerEditorTypes } from '../../../../components/TableColumnSettingFormItem/editorSetting/constants';
 import type { Rule } from '../../../../components/RulesSettingFormItem';
 import {
   EditableRowControlTable,
@@ -21,6 +31,186 @@ import {
   resolveI18nText,
   rulesSettingToRules,
 } from '../../../../utils';
+
+const popupEditorTypes = new Set<TableColumnEditorType>([
+  'select',
+  'timePicker',
+  'rangePicker',
+  'colorPicker',
+  ...Array.from(DatePickerEditorTypes),
+]);
+
+function getPopupContainerProps() {
+  return { getPopupContainer: () => document.body };
+}
+
+function getEditorPopupProps(editorType?: TableColumnEditorType) {
+  if (!editorType || !popupEditorTypes.has(editorType)) {
+    return {};
+  }
+  return getPopupContainerProps();
+}
+
+function resolveColumnWidth(columnConfig: TableColumnSettingItem): number | string | Record<string, never> {
+  const { widthMode, widthValue } = columnConfig;
+
+  if (!widthMode || widthMode === 'adaptive') {
+    return {};
+  }
+
+  if (widthMode === 'auto') {
+    return 'auto';
+  }
+
+  if (widthMode === 'percent' && widthValue != null) {
+    return `${widthValue}%`;
+  }
+
+  if (widthMode === 'number' && widthValue != null) {
+    return widthValue;
+  }
+
+  return {};
+}
+
+function resolveEditorSetting(
+  editorSetting: TableColumnSettingItem['editorSetting'],
+  lang: string,
+) {
+  const { actions: _actions, rules: _rules, placeholder, ...rest } = editorSetting ?? {};
+
+  const resolved: FieldProps = { ...rest };
+
+  if (placeholder !== undefined) {
+    resolved.placeholder = resolveI18nText(placeholder, lang);
+  }
+
+  return {
+    actionsConfig: _actions,
+    rulesConfig: _rules,
+    resolvedEditorSetting: resolved,
+  };
+}
+
+function buildSelectEditableConfig({
+  resolvedEditorSetting,
+  style,
+  actions,
+  rules,
+}: {
+  resolvedEditorSetting: FieldProps;
+  style: React.CSSProperties;
+  actions: Record<string, (...args: any[]) => any>;
+  rules: ReturnType<typeof rulesSettingToRules>;
+}) {
+  return {
+    render: (value: unknown) => (
+      <EditorTableColumnSelectLabel fieldProps={resolvedEditorSetting} value={value} />
+    ),
+    $editable: {
+      editable: true,
+      type: 'custom' as const,
+      render: ({ value }: { value?: unknown }) => (
+        <EditorTableColumnSelectEditor
+          fieldProps={resolvedEditorSetting}
+          style={style}
+          actions={actions}
+          value={value as SelectProps['value']}
+        />
+      ),
+      rules,
+    },
+  };
+}
+
+function buildDefaultEditableConfig({
+  editorType,
+  editorProps,
+  rules,
+}: {
+  editorType?: TableColumnEditorType;
+  editorProps: FieldProps;
+  rules: ReturnType<typeof rulesSettingToRules>;
+}) {
+  return {
+    $editable: {
+      editable: true,
+      type: editorType,
+      props: editorProps,
+      rules,
+    },
+  };
+}
+
+function buildEditorTableColumn({
+  columnConfig,
+  lang,
+  designContext,
+  style,
+}: {
+  columnConfig: TableColumnSettingItem;
+  lang: string;
+  designContext: DesignContextType;
+  style: React.CSSProperties;
+}) {
+  const { actionsConfig, rulesConfig, resolvedEditorSetting } = resolveEditorSetting(
+    columnConfig.editorSetting,
+    lang,
+  );
+
+  const actions = actionsCodeStringToEvents({
+    actions: actionsConfig ?? [],
+    designContext,
+  });
+
+  const rules = rulesSettingToRules((rulesConfig ?? []) as unknown as Rule[], lang);
+  const editorType = columnConfig.editorType;
+  const editorProps = {
+    ...resolvedEditorSetting,
+    ...actions,
+    ...getEditorPopupProps(editorType),
+  };
+
+  const baseColumn = {
+    title: resolveI18nText(columnConfig.title, lang),
+    dataIndex: columnConfig.field,
+    key: columnConfig.field,
+    align: columnConfig.align,
+    width: resolveColumnWidth(columnConfig),
+  };
+
+  if (editorType === 'select') {
+    return {
+      ...baseColumn,
+      ...buildSelectEditableConfig({ resolvedEditorSetting, style, actions, rules }),
+    };
+  }
+
+  return {
+    ...baseColumn,
+    ...buildDefaultEditableConfig({ editorType, editorProps, rules }),
+  };
+}
+
+/**
+ * Select 列只读态：按 options 将 value 显示为 label
+ */
+function EditorTableColumnSelectLabel({
+  fieldProps,
+  value,
+}: {
+  fieldProps: FieldProps;
+  value?: unknown;
+}) {
+  return (
+    <WithDesignFieldDataSourceOptions fieldProps={fieldProps}>
+      {({ options }) => {
+        const matched = options.find((item) => item.value === value);
+        return <>{matched?.label ?? value ?? ''}</>;
+      }}
+    </WithDesignFieldDataSourceOptions>
+  );
+}
 
 /**
  * 表格列编辑态：与 Select/renderDesign 一致的数据源 + Select 渲染。
@@ -48,6 +238,7 @@ function EditorTableColumnSelectEditor({
           options={options}
           style={{ width: '100%', ...fieldStyle }}
           {...fieldActions}
+          {...getPopupContainerProps()}
           value={value}
           onChange={onChange}
         />
@@ -107,9 +298,10 @@ function createSubClass(
     }
 
     getNumberGeneratorRule() {
-      return getParams()?.fieldProps?.noRule === '1'
-        ? SearchTable.Table.NUMBER_GENERATOR_RULE_ALONE
-        : SearchTable.Table.NUMBER_GENERATOR_RULE_CONTINUITY;
+      if (getParams()?.fieldProps?.noRule === '1') {
+        return SearchTable.Table.NUMBER_GENERATOR_RULE_ALONE;
+      }
+      return SearchTable.Table.NUMBER_GENERATOR_RULE_CONTINUITY;
     }
 
     getColumns() {
@@ -118,73 +310,9 @@ function createSubClass(
       const columnSetting = fieldProps?.columnSetting ?? [];
 
       return [
-        ...columnSetting.map((columnConfigconfig) => {
-          let width = {};
-
-          if (columnConfigconfig.widthMode) {
-            if (columnConfigconfig.widthMode === 'auto') {
-              width = 'auto';
-            } else if (columnConfigconfig.widthMode === 'percent') {
-              width = `${columnConfigconfig.widthMode}%`;
-            } else if (columnConfigconfig.widthMode === 'number') {
-              width = columnConfigconfig.widthMode;
-            }
-          }
-
-          const {
-            actions: actionsConfig,
-            rules: rulesConfig,
-            placeholder,
-            ...editorSetting
-          } = columnConfigconfig.editorSetting ?? {};
-
-          const resolvedEditorSetting = {
-            ...editorSetting,
-            ...(placeholder !== undefined
-              ? { placeholder: resolveI18nText(placeholder, lang) }
-              : {}),
-          };
-
-          const actions = actionsCodeStringToEvents({
-            actions: actionsConfig ?? [],
-            designContext,
-          });
-
-          const rules = rulesSettingToRules((rulesConfig ?? []) as unknown as Rule[], lang);
-
-          const isSelect = columnConfigconfig?.editorType === 'select';
-
-          return {
-            title: resolveI18nText(columnConfigconfig?.title, lang),
-            dataIndex: columnConfigconfig?.field,
-            key: columnConfigconfig?.field,
-            align: columnConfigconfig?.align,
-            width,
-            $editable: isSelect
-              ? {
-                  editable: true,
-                  type: 'custom',
-                  render: ({ value }) => (
-                    <EditorTableColumnSelectEditor
-                      fieldProps={resolvedEditorSetting}
-                      style={style}
-                      actions={actions}
-                      value={value}
-                    />
-                  ),
-                  rules,
-                }
-              : {
-                  editable: true,
-                  type: columnConfigconfig?.editorType,
-                  props: {
-                    ...resolvedEditorSetting,
-                    ...actions,
-                  },
-                  rules,
-                },
-          };
-        }),
+        ...columnSetting.map((columnConfig) =>
+          buildEditorTableColumn({ columnConfig, lang, designContext, style }),
+        ),
         ...columns,
       ];
     }
