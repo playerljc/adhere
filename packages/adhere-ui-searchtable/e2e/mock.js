@@ -37,7 +37,7 @@ const dataSource = Array.from({ length: 100 }).map((t) => ({
   // homeTown:
   //   '我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠我是一个粉刷匠',
   // address: Mockjs.mock('@name'),
-  // birthday: new Date().getTime(),
+  birthday: new Date().getTime(),
   // deptName: Mockjs.mock('@name'),
   // height: Mockjs.mock('@integer'),
   // width: Mockjs.mock('@integer'),
@@ -46,7 +46,7 @@ const dataSource = Array.from({ length: 100 }).map((t) => ({
   sex: '',
   homeTown: '',
   address: '',
-  birthday: undefined,
+  // birthday: undefined,
   deptName: '',
   height: undefined,
   width: undefined,

@@ -1,6 +1,7 @@
 import { DatePicker } from 'antd';
 import type { DatePickerProps } from 'antd';
 
+import '../util/setupDayjs';
 import { createFactory } from '../util';
 
 const DatePickerHOC: typeof DatePicker & {

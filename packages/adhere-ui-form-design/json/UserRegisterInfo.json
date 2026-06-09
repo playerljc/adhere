@@ -1,5 +1,5 @@
 {
-  "id": "cfbe4749-e939-4d40-b8d4-1e43898e869a",
+  "id": "1b3e7f22-b1a5-461c-a35b-d0e065ad821a",
   "type": "flex-layout",
   "props": {
     "fieldProps": {
@@ -12,7 +12,7 @@
     },
     "children": [
       {
-        "id": "78bbb341-be11-4510-8397-2fb2470a747a",
+        "id": "600f3d0d-a6d5-450a-bd10-4d17a16feb7b",
         "type": "card-layout",
         "props": {
           "fieldProps": {
@@ -37,7 +37,7 @@
           },
           "children": [
             {
-              "id": "8a205cc2-a1bf-4d82-b63c-a64ee5e703f0",
+              "id": "cc9d5ac8-79b7-421f-85fe-0bd864128aef",
               "type": "table-grid-layout",
               "props": {
                 "fieldProps": {
@@ -63,7 +63,7 @@
                 },
                 "children": [
                   {
-                    "id": "dcedab24-7bc6-47d7-9bc7-eb6ae6effe4d",
+                    "id": "5f9e039a-a10b-40d5-91f8-6f7c146e7d57",
                     "type": "ant-image-upload",
                     "props": {
                       "formItemProps": {
@@ -104,7 +104,7 @@
                     }
                   },
                   {
-                    "id": "2097eafa-1b27-41d5-8821-b9912d9c11fc",
+                    "id": "44354f77-a5d8-4bab-aa9e-b6c2d41eb98f",
                     "type": "ant-input",
                     "props": {
                       "formItemProps": {
@@ -162,7 +162,7 @@
                     }
                   },
                   {
-                    "id": "a5ffbbf7-73a8-4665-8eb7-de6e4899210f",
+                    "id": "7afda816-78fb-4d47-8479-22d5ccc483f9",
                     "type": "ant-select",
                     "props": {
                       "formItemProps": {
@@ -244,7 +244,7 @@
                     }
                   },
                   {
-                    "id": "3af97fe9-94b6-45e9-8083-605f18892e52",
+                    "id": "bf3019b0-f3c7-4a14-8bad-1d6d41d15706",
                     "type": "ant-date-picker",
                     "props": {
                       "formItemProps": {
@@ -286,7 +286,7 @@
                     }
                   },
                   {
-                    "id": "c156cccf-67b2-497f-887b-ea0248c5c816",
+                    "id": "c8a652ff-5df6-4b71-a2e0-baf9b250d52c",
                     "type": "ant-input",
                     "props": {
                       "formItemProps": {
@@ -328,7 +328,7 @@
                                 "pt_PT": "Introduza um número de cartão de identidade válido",
                                 "ar_EG": "يرجى إدخال رقم هوية صحيح"
                               },
-                              "pattern": "/^[1-9]\\d{5}(19|20)\\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$/"
+                              "pattern": "^[1-9]\\d{5}(19|20)\\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$"
                             }
                           }
                         ]
@@ -343,7 +343,7 @@
                           "ar_EG": "رقم الهوية"
                         },
                         "allowClear": true,
-                        "readOnly": true,
+                        "readOnly": false,
                         "disabled": false,
                         "showCount": false,
                         "size": "middle",
@@ -357,7 +357,7 @@
                     }
                   },
                   {
-                    "id": "0da330e3-5411-453a-96d7-d48fd5536fa1",
+                    "id": "35a15097-23b9-49f6-ab69-1073bdebc5cd",
                     "type": "ant-input",
                     "props": {
                       "formItemProps": {
@@ -400,7 +400,7 @@
                     }
                   },
                   {
-                    "id": "b49e25f9-a342-4c28-817d-bf0a0f10e76b",
+                    "id": "8214d211-dc3c-4148-bcfc-c2a7de10d26a",
                     "type": "ant-select",
                     "props": {
                       "formItemProps": {
@@ -467,7 +467,7 @@
                     }
                   },
                   {
-                    "id": "6ea54d1d-bb42-4306-8d63-ae899a83559e",
+                    "id": "a45ba979-73cf-494d-add0-537e98429ccb",
                     "type": "phone-with-area-code",
                     "props": {
                       "formItemProps": {
@@ -505,7 +505,7 @@
                     }
                   },
                   {
-                    "id": "57510b5e-2ad6-4463-9509-61c02dfc2c74",
+                    "id": "3a08c4ac-38a1-44cf-b0af-4f24e4c80fb0",
                     "type": "ant-input",
                     "props": {
                       "formItemProps": {
@@ -548,7 +548,7 @@
                     }
                   },
                   {
-                    "id": "e2210cf7-8103-4a74-bce1-d5dca8664c76",
+                    "id": "9e255116-efa0-4eb6-b2a6-c9f0a96f8a45",
                     "type": "ant-input",
                     "props": {
                       "formItemProps": {
@@ -577,7 +577,7 @@
                           "ar_EG": "المهنة"
                         },
                         "allowClear": true,
-                        "readOnly": true,
+                        "readOnly": false,
                         "disabled": false,
                         "showCount": false,
                         "size": "middle",
@@ -591,7 +591,7 @@
                     }
                   },
                   {
-                    "id": "d2712f49-d97a-416c-8a3b-7e50aea692bb",
+                    "id": "7031630b-31de-4636-8a5d-f1941825db85",
                     "type": "ant-input",
                     "props": {
                       "formItemProps": {
@@ -620,7 +620,7 @@
                           "ar_EG": "الجامعة"
                         },
                         "allowClear": true,
-                        "readOnly": true,
+                        "readOnly": false,
                         "disabled": false,
                         "showCount": false,
                         "size": "middle",
@@ -634,7 +634,7 @@
                     }
                   },
                   {
-                    "id": "12ad68b9-d3da-40f7-878b-1f862f5011ee",
+                    "id": "f543ba70-e3af-4f1a-856a-01ca01cd18a6",
                     "type": "ant-input",
                     "props": {
                       "formItemProps": {
@@ -663,7 +663,7 @@
                           "ar_EG": "التخصص"
                         },
                         "allowClear": true,
-                        "readOnly": true,
+                        "readOnly": false,
                         "disabled": false,
                         "showCount": false,
                         "size": "middle",
@@ -677,7 +677,7 @@
                     }
                   },
                   {
-                    "id": "d4663df7-983b-4463-8afb-428faff750d8",
+                    "id": "ccac6d52-75c5-4d30-8fe4-a07c4d71ac3b",
                     "type": "ant-time-picker",
                     "props": {
                       "formItemProps": {
@@ -717,7 +717,7 @@
                     }
                   },
                   {
-                    "id": "4453a375-9d76-4167-ac54-591b1d0a8d36",
+                    "id": "e003ce5b-cbdf-4656-8c65-b222cdf5b9ae",
                     "type": "ant-cascader",
                     "props": {
                       "formItemProps": {
@@ -750,7 +750,8 @@
                           "ar_EG": "المدينة"
                         },
                         "treeOptions": {
-                          "type": "static"
+                          "type": "static",
+                          "treeDataJson": "[\n  {\n    \"value\": \"zhejiang\",\n    \"label\": \"Zhejiang\",\n    \"children\": [\n      {\n        \"value\": \"hangzhou\",\n        \"label\": \"Hangzhou\",\n        \"children\": [\n          {\n            \"value\": \"xihu\",\n            \"label\": \"West Lake\"\n          }\n        ]\n      }\n    ]\n  },\n  {\n    \"value\": \"jiangsu\",\n    \"label\": \"Jiangsu\",\n    \"children\": [\n      {\n        \"value\": \"nanjing\",\n        \"label\": \"Nanjing\",\n        \"children\": [\n          {\n            \"value\": \"zhonghuamen\",\n            \"label\": \"Zhong Hua Men\"\n          }\n        ]\n      }\n    ]\n  }\n]\n"
                         },
                         "fill": true
                       },
@@ -761,7 +762,7 @@
                     }
                   },
                   {
-                    "id": "d631eb42-fdec-4647-8378-0ba28cb2fc02",
+                    "id": "228efdd2-5020-4460-a8da-fd51bfe4d5c7",
                     "type": "ant-textarea",
                     "props": {
                       "formItemProps": {
@@ -816,7 +817,7 @@
         }
       },
       {
-        "id": "1734e57f-7442-481c-867e-2140515fadb0",
+        "id": "f7f7b520-6adb-44a1-872c-b47cf0bd6ac6",
         "type": "card-layout",
         "props": {
           "fieldProps": {
@@ -839,7 +840,7 @@
           },
           "children": [
             {
-              "id": "3fe03f3a-0d0f-4574-98aa-285ffd2c1026",
+              "id": "f7187e4b-68a6-400c-8b33-12c3b4229700",
               "type": "table-grid-layout",
               "props": {
                 "fieldProps": {
@@ -864,7 +865,7 @@
                 },
                 "children": [
                   {
-                    "id": "92c017e7-d97c-4d6b-8262-97cd967e1119",
+                    "id": "36fb37c1-5478-4edc-8ca4-fefc675335ff",
                     "type": "ant-editor-table",
                     "props": {
                       "formItemProps": {

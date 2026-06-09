@@ -268,28 +268,12 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
             }),
         },
       },
-      {
-        title: '出生年月',
-        dataIndex: 'birthday',
-        key: 'birthday',
-        align: 'center',
-        width: 180,
-        render: (val) => <DateDisplay.DateDisplay10 value={val} />,
-        $search: {
-          type: 'rangePicker',
-          visible: true,
-          startName: 'birthDayStart',
-          endName: 'birthDayEnd',
-        },
-      },
       // {
       //   title: '出生年月',
       //   dataIndex: 'birthday',
       //   key: 'birthday',
       //   align: 'center',
-      //   width: 200,
-      //   sorter: true,
-      //   sortOrder: this.sortOrder('birthday'),
+      //   width: 180,
       //   render: (val) => <DateDisplay.DateDisplay10 value={val} />,
       //   $search: {
       //     type: 'rangePicker',
@@ -297,26 +281,42 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
       //     startName: 'birthDayStart',
       //     endName: 'birthDayEnd',
       //   },
-      //   $editable: {
-      //     editable: true,
-      //     type: 'datePicker',
-      //     rules: [
-      //       {
-      //         required: true,
-      //         message: '请选择',
-      //       },
-      //     ],
-      //     onSave: ({ record, dataIndex, value }) => {
-      //       return new Promise((resolve) => {
-      //         this.updateEditorCellDateData({
-      //           record,
-      //           dataIndex,
-      //           value,
-      //         }).then(() => resolve());
-      //       });
-      //     },
-      //   },
       // },
+      {
+        title: '出生年月',
+        dataIndex: 'birthday',
+        key: 'birthday',
+        align: 'center',
+        width: 200,
+        // sorter: true,
+        // sortOrder: this.sortOrder('birthday'),
+        render: (val) => <DateDisplay.DateDisplay10 value={val} />,
+        $search: {
+          type: 'rangePicker',
+          visible: true,
+          startName: 'birthDayStart',
+          endName: 'birthDayEnd',
+        },
+        $editable: {
+          editable: true,
+          type: 'datePicker',
+          rules: [
+            {
+              required: true,
+              message: '请选择',
+            },
+          ],
+          onSave: ({ record, dataIndex, value }) => {
+            return new Promise((resolve) => {
+              this.updateEditorCellDateData({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
+            });
+          },
+        },
+      },
       // {
       //   title: '身高',
       //   dataIndex: 'height',

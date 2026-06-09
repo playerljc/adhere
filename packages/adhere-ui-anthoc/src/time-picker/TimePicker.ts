@@ -1,6 +1,7 @@
 import { TimePicker } from 'antd';
 import type { TimePickerProps } from 'antd';
 
+import '../util/setupDayjs';
 import { createFactory } from '../util';
 
 const TimePickerHOC: typeof TimePicker & {
