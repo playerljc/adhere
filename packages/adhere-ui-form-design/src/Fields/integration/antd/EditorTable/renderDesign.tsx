@@ -1,10 +1,12 @@
 import React, { useContext, useMemo, useRef } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+import DateDisplay, { type DateValue } from '@baifendian/adhere-ui-datedisplay';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import Util from '@baifendian/adhere-util';
 import { Select, type SelectProps } from 'antd';
+import dayjs from 'dayjs';
 
 import { DesignContext } from '../../../../Design/Context';
 import {
@@ -16,7 +18,7 @@ import {
 import type {
   TableColumnEditorType,
   TableColumnSettingItem,
-} from '../../../../components/TableColumnSettingFormItem/TableColumnSettingFormItem';
+} from '../../../../components/TableColumnSettingFormItem';
 import { DatePickerEditorTypes } from '../../../../components/TableColumnSettingFormItem/editorSetting/constants';
 import type { Rule } from '../../../../components/RulesSettingFormItem';
 import {
@@ -38,6 +40,14 @@ const popupEditorTypes = new Set<TableColumnEditorType>([
   'rangePicker',
   'colorPicker',
   ...Array.from(DatePickerEditorTypes),
+]);
+
+const dateTimeDisplayEditorTypes = new Set<TableColumnEditorType>([
+  'datePicker',
+  'birthdayPicker',
+  'boundedTimePicker',
+  'timePicker',
+  'rangePicker',
 ]);
 
 function getPopupContainerProps() {
@@ -123,6 +133,57 @@ function buildSelectEditableConfig({
   };
 }
 
+function resolveEditableType(editorType?: TableColumnEditorType): TableColumnEditorType | undefined {
+  if (editorType === 'birthdayPicker') {
+    return 'datePicker';
+  }
+  return editorType;
+}
+
+function buildBirthdayPickerProps(editorProps: FieldProps): FieldProps {
+  return {
+    ...editorProps,
+    disabledDate: (current) =>
+      !!current && (current.isSame(dayjs(), 'day') || current.isAfter(dayjs(), 'day')),
+  };
+}
+
+function resolveDateDisplayFormat(resolvedEditorSetting: FieldProps): string {
+  const format = resolvedEditorSetting.format;
+  if (typeof format === 'string' && format.trim()) {
+    return format.trim();
+  }
+  return 'L';
+}
+
+function buildDateDisplayColumnRender({
+  format,
+  editorType,
+}: {
+  format: string;
+  editorType?: TableColumnEditorType;
+}) {
+  if (editorType === 'rangePicker') {
+    return (value: unknown) => {
+      if (!Array.isArray(value) || value.length !== 2) {
+        return null;
+      }
+
+      return (
+        <>
+          <DateDisplay.DateDisplay format={format} value={value[0] as DateValue} />
+          {' ~ '}
+          <DateDisplay.DateDisplay format={format} value={value[1] as DateValue} />
+        </>
+      );
+    };
+  }
+
+  return (value: unknown) => (
+    <DateDisplay.DateDisplay format={format} value={value as DateValue} />
+  );
+}
+
 function buildDefaultEditableConfig({
   editorType,
   editorProps,
@@ -135,7 +196,7 @@ function buildDefaultEditableConfig({
   return {
     $editable: {
       editable: true,
-      type: editorType,
+      type: resolveEditableType(editorType),
       props: editorProps,
       rules,
     },
@@ -165,11 +226,13 @@ function buildEditorTableColumn({
 
   const rules = rulesSettingToRules((rulesConfig ?? []) as unknown as Rule[], lang);
   const editorType = columnConfig.editorType;
-  const editorProps = {
+  const baseEditorProps = {
     ...resolvedEditorSetting,
     ...actions,
     ...getEditorPopupProps(editorType),
   };
+  const editorProps =
+    editorType === 'birthdayPicker' ? buildBirthdayPickerProps(baseEditorProps) : baseEditorProps;
 
   const baseColumn = {
     title: resolveI18nText(columnConfig.title, lang),
@@ -186,8 +249,17 @@ function buildEditorTableColumn({
     };
   }
 
+  const dateDisplayRender =
+    editorType && dateTimeDisplayEditorTypes.has(editorType)
+      ? buildDateDisplayColumnRender({
+          format: resolveDateDisplayFormat(resolvedEditorSetting),
+          editorType,
+        })
+      : undefined;
+
   return {
     ...baseColumn,
+    ...(dateDisplayRender ? { render: dateDisplayRender } : {}),
     ...buildDefaultEditableConfig({ editorType, editorProps, rules }),
   };
 }

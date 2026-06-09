@@ -1,12 +1,17 @@
 import React from 'react';
 
+
+
 import { Button } from '@baifendian/adhere-ui-anthoc';
 import DelConfirm from '@baifendian/adhere-ui-confirm-delconfirm';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 import Intl from '@baifendian/adhere-util-intl';
 
+
+
 import Model from '../Model';
 import { serviceName } from '../Service';
+
 
 const {
   EditableRowControl,
@@ -176,32 +181,34 @@ export class EditableRowControlTable extends createImplFactory(ProEditableRowSea
       key: this.getOptionsColumnDataIndex(),
       width: {},
       renderToString: () => this.getOptionsColumnString([Intl.get('edit'), Intl.get('delete')]),
-      render: (_: unknown, record: AnyRecord) => (
-        <OptionsWrap style={{ justifyContent: 'center' }} ellipsisCount={this.getEllipsisCount()}>
-          {this.renderOptionColumn([
-            {
-              key: 'edit',
-              value: (
-                <EditableRowControl
-                  record={record}
-                  rowKey={this.getRowKey()}
-                  editorRowIds={this.state.editorRowIds ?? []}
-                  renderEditorRow={() => <a>{Intl.get('edit')}</a>}
-                  onSave={(values: AnyRecord) => this.onSave(values)}
-                />
-              ),
-            },
-            {
-              key: 'delete',
-              value: (
-                <DelConfirm success={() => this.onDel(record[this.getRowKey()])}>
-                  <a>{Intl.get('delete')}</a>
-                </DelConfirm>
-              ),
-            },
-          ])}
-        </OptionsWrap>
-      ),
+      render: (_: unknown, record: AnyRecord) => {
+        return (
+          <OptionsWrap style={{ justifyContent: 'center' }} ellipsisCount={this.getEllipsisCount()}>
+            {this.renderOptionColumn([
+              {
+                key: 'edit',
+                value: (
+                  <EditableRowControl
+                    record={record}
+                    rowKey={this.getRowKey()}
+                    editorRowIds={this.state.editorRowIds ?? []}
+                    renderEditorRow={() => <a>{Intl.get('edit')}</a>}
+                    onSave={(values: AnyRecord) => this.onSave(values)}
+                  />
+                ),
+              },
+              {
+                key: 'delete',
+                value: (
+                  <DelConfirm success={() => this.onDel(record[this.getRowKey()])}>
+                    <a>{Intl.get('delete')}</a>
+                  </DelConfirm>
+                ),
+              },
+            ])}
+          </OptionsWrap>
+        );
+      },
     });
 
     return columns;
