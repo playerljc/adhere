@@ -1,0 +1,1028 @@
+{
+  "id": "b016d94a-1d72-4494-8df8-6a82025f94b2",
+  "type": "flex-layout",
+  "props": {
+    "fieldProps": {
+      "direction": "vertical",
+      "wrap": false,
+      "justifyContent": "flex-start",
+      "alignItems": "stretch",
+      "alignContent": "normal",
+      "gap": 8
+    },
+    "children": [
+      {
+        "id": "cc8dd0c3-7f36-4bb6-85ef-0f34ecc53731",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "基本信息",
+              "en_US": "Basic information",
+              "pt_PT": "Informação básica",
+              "ar_EG": "المعلومات الأساسية"
+            }
+          },
+          "flexProps": {
+            "flex": 1,
+            "flexShrink": 1,
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "3153e47b-9efb-4e5a-81fd-a96a8f377e1e",
+              "type": "table-grid-layout",
+              "props": {
+                "fieldProps": {
+                  "layout": "vertical",
+                  "bordered": false,
+                  "density": "default",
+                  "mode": "normal",
+                  "data": [
+                    {
+                      "name": "g1",
+                      "columnCount": 2,
+                      "colgroup": [
+                        "auto",
+                        "auto"
+                      ],
+                      "data": []
+                    }
+                  ]
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "1c006b41-6155-45fc-8a12-47d080a08e89",
+                    "type": "ant-image-upload",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "头像",
+                          "en_US": "Avatar",
+                          "pt_PT": "Avatar",
+                          "ar_EG": "الصورة الشخصية"
+                        },
+                        "name": "ant_image_upload_17zpaqy0",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "colSpan": 2,
+                        "validateTrigger": "onChange"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "accept": "image/*",
+                        "multiple": true,
+                        "listType": "picture-card",
+                        "showUploadList": true,
+                        "uploadDataSource": {
+                          "type": "dynamic"
+                        },
+                        "cropEnabled": true,
+                        "cropShape": "rect",
+                        "cropAllowFlip": true,
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "c082344c-60c2-490d-82b7-15f6c1661f7f",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "姓名",
+                          "en_US": "Name",
+                          "pt_PT": "Nome",
+                          "ar_EG": "الاسم"
+                        },
+                        "name": "ant_input_m3lfqvmi",
+                        "require": true,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "rules": [
+                          {
+                            "type": "required",
+                            "config": {
+                              "required": true,
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入姓名",
+                                "en_US": "Please enter name",
+                                "pt_PT": "Introduza o nome",
+                                "ar_EG": "يرجى إدخال الاسم"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "fieldProps": {
+                        "type": "text",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "姓名",
+                          "en_US": "Name",
+                          "pt_PT": "Nome",
+                          "ar_EG": "الاسم"
+                        },
+                        "allowClear": true,
+                        "readOnly": false,
+                        "disabled": false,
+                        "showCount": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "4ff46ebb-80a0-444c-bec5-30c3c4b3da92",
+                    "type": "ant-select",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "性别",
+                          "en_US": "Gender",
+                          "pt_PT": "Género",
+                          "ar_EG": "الجنس"
+                        },
+                        "name": "ant_select_ocvg2vgn",
+                        "require": true,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "rules": [
+                          {
+                            "type": "required",
+                            "config": {
+                              "required": true,
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请选择性别",
+                                "en_US": "Please select gender",
+                                "pt_PT": "Selecione o género",
+                                "ar_EG": "يرجى اختيار الجنس"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "fieldProps": {
+                        "allowClear": false,
+                        "defaultActiveFirstOption": true,
+                        "disabled": false,
+                        "listHeight": 256,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "性别",
+                          "en_US": "Gender",
+                          "pt_PT": "Género",
+                          "ar_EG": "الجنس"
+                        },
+                        "selectOptions": {
+                          "type": "static",
+                          "dataSource": [
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "男",
+                                "en_US": "Male",
+                                "pt_PT": "Masculino",
+                                "ar_EG": "ذكر"
+                              },
+                              "value": "1",
+                              "__fdSortId": "fd-sort-0m7o7wttf"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "女",
+                                "en_US": "Female",
+                                "pt_PT": "Feminino",
+                                "ar_EG": "أنثى"
+                              },
+                              "value": "2",
+                              "__fdSortId": "fd-sort-7j340kd9u"
+                            }
+                          ]
+                        },
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "038f7c2e-3141-4177-8394-fcde573992f6",
+                    "type": "ant-date-picker",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "出生年月",
+                          "en_US": "Date of birth",
+                          "pt_PT": "Data de nascimento",
+                          "ar_EG": "تاريخ الميلاد"
+                        },
+                        "name": "ant_date_picker_71kn5913",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "format": "YYYY-MM-DD",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "出生年月",
+                          "en_US": "Date of birth",
+                          "pt_PT": "Data de nascimento",
+                          "ar_EG": "تاريخ الميلاد"
+                        },
+                        "showTime": false,
+                        "allowClear": true,
+                        "isBirthday": true,
+                        "dateBoundMode": "",
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "293b55cd-cc3e-4d24-8cc8-72869ede4745",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "身份证号",
+                          "en_US": "ID card number",
+                          "pt_PT": "Número do cartão de identidade",
+                          "ar_EG": "رقم الهوية"
+                        },
+                        "name": "ant_input_60llv7h8",
+                        "require": true,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "rules": [
+                          {
+                            "type": "required",
+                            "config": {
+                              "required": true,
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入身份证号",
+                                "en_US": "Please enter ID card number",
+                                "pt_PT": "Introduza o número do cartão de identidade",
+                                "ar_EG": "يرجى إدخال رقم الهوية"
+                              }
+                            }
+                          },
+                          {
+                            "type": "pattern",
+                            "config": {
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入正确的身份证号",
+                                "en_US": "Please enter a valid ID card number",
+                                "pt_PT": "Introduza um número de cartão de identidade válido",
+                                "ar_EG": "يرجى إدخال رقم هوية صحيح"
+                              },
+                              "pattern": "/^[1-9]\\d{5}(19|20)\\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$/"
+                            }
+                          }
+                        ]
+                      },
+                      "fieldProps": {
+                        "type": "text",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "身份证号",
+                          "en_US": "ID card number",
+                          "pt_PT": "Número do cartão de identidade",
+                          "ar_EG": "رقم الهوية"
+                        },
+                        "allowClear": true,
+                        "readOnly": true,
+                        "disabled": false,
+                        "showCount": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "03767e3e-8e65-470a-a903-47e56f7ffaa2",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "籍贯",
+                          "en_US": "Place of origin",
+                          "pt_PT": "Naturalidade",
+                          "ar_EG": "مسقط الرأس"
+                        },
+                        "name": "ant_input_6wz8wl6k",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange"
+                      },
+                      "fieldProps": {
+                        "type": "text",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "籍贯",
+                          "en_US": "Place of origin",
+                          "pt_PT": "Naturalidade",
+                          "ar_EG": "مسقط الرأس"
+                        },
+                        "allowClear": true,
+                        "readOnly": false,
+                        "disabled": false,
+                        "showCount": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "f9806ef7-a2f2-4d04-9711-8897096e89ab",
+                    "type": "ant-select",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "婚否",
+                          "en_US": "Marital status",
+                          "pt_PT": "Estado civil",
+                          "ar_EG": "الحالة الاجتماعية"
+                        },
+                        "name": "ant_select_lc3945g6",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange"
+                      },
+                      "fieldProps": {
+                        "allowClear": false,
+                        "defaultActiveFirstOption": true,
+                        "disabled": false,
+                        "listHeight": 256,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "婚否",
+                          "en_US": "Marital status",
+                          "pt_PT": "Estado civil",
+                          "ar_EG": "الحالة الاجتماعية"
+                        },
+                        "selectOptions": {
+                          "type": "static",
+                          "dataSource": [
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "已婚",
+                                "en_US": "Married",
+                                "pt_PT": "Casado(a)",
+                                "ar_EG": "متزوج"
+                              },
+                              "value": "1",
+                              "__fdSortId": "fd-sort-hlrq6wgv6"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "未婚",
+                                "en_US": "Single",
+                                "pt_PT": "Solteiro(a)",
+                                "ar_EG": "أعزب"
+                              },
+                              "value": "2",
+                              "__fdSortId": "fd-sort-zn2vijt72"
+                            }
+                          ]
+                        },
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "16d96166-20d9-4627-8d2b-b5a4d7f3e80c",
+                    "type": "phone-with-area-code",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "手机号",
+                          "en_US": "Mobile number",
+                          "pt_PT": "Telemóvel",
+                          "ar_EG": "رقم الجوال"
+                        },
+                        "name": "phone_with_area_code_568qf35x",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange"
+                      },
+                      "fieldProps": {
+                        "defaultCode": "+86",
+                        "allowClear": true,
+                        "placeholder": "",
+                        "disabled": false,
+                        "fill": true
+                      },
+                      "actionsProps": {
+                        "actions": [],
+                        "areaCodeActions": [],
+                        "phoneInputActions": []
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "ab2aa699-ace9-4d7e-b57d-b38f9e2df655",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "电子邮件",
+                          "en_US": "Email",
+                          "pt_PT": "E-mail",
+                          "ar_EG": "البريد الإلكتروني"
+                        },
+                        "name": "ant_input_far5o3j9",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange"
+                      },
+                      "fieldProps": {
+                        "type": "email",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "电子邮件",
+                          "en_US": "Email",
+                          "pt_PT": "E-mail",
+                          "ar_EG": "البريد الإلكتروني"
+                        },
+                        "allowClear": true,
+                        "readOnly": false,
+                        "disabled": false,
+                        "showCount": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "6991b883-330d-4ac6-812b-de0bdf0aa0ad",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "职业",
+                          "en_US": "Occupation",
+                          "pt_PT": "Profissão",
+                          "ar_EG": "المهنة"
+                        },
+                        "name": "ant_input_4w06db34",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange"
+                      },
+                      "fieldProps": {
+                        "type": "text",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "职业",
+                          "en_US": "Occupation",
+                          "pt_PT": "Profissão",
+                          "ar_EG": "المهنة"
+                        },
+                        "allowClear": true,
+                        "readOnly": true,
+                        "disabled": false,
+                        "showCount": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "bec3359c-ae15-4ec3-83f4-cf1d932c10ad",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "毕业院校",
+                          "en_US": "University",
+                          "pt_PT": "Universidade",
+                          "ar_EG": "الجامعة"
+                        },
+                        "name": "ant_input_pyu7gf3b",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange"
+                      },
+                      "fieldProps": {
+                        "type": "text",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "毕业院校",
+                          "en_US": "University",
+                          "pt_PT": "Universidade",
+                          "ar_EG": "الجامعة"
+                        },
+                        "allowClear": true,
+                        "readOnly": true,
+                        "disabled": false,
+                        "showCount": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "4123117b-ae0c-4154-9c5b-15cbcaca1954",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "专业",
+                          "en_US": "Major",
+                          "pt_PT": "Especialização",
+                          "ar_EG": "التخصص"
+                        },
+                        "name": "ant_input_pyu7gf3b_copy1",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange"
+                      },
+                      "fieldProps": {
+                        "type": "text",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "专业",
+                          "en_US": "Major",
+                          "pt_PT": "Especialização",
+                          "ar_EG": "التخصص"
+                        },
+                        "allowClear": true,
+                        "readOnly": true,
+                        "disabled": false,
+                        "showCount": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "8c7bacac-8533-4e95-bef8-bd04ec520705",
+                    "type": "ant-time-picker",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "毕业时间",
+                          "en_US": "Graduation time",
+                          "pt_PT": "Hora de graduação",
+                          "ar_EG": "وقت التخرج"
+                        },
+                        "name": "ant_time_picker_gtu0cftm",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "format": "HH:mm:ss",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "毕业时间",
+                          "en_US": "Graduation time",
+                          "pt_PT": "Hora de graduação",
+                          "ar_EG": "وقت التخرج"
+                        },
+                        "minuteStep": 1,
+                        "allowClear": true,
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "e24215e3-4524-4e45-81d1-aaa96f5bd5f4",
+                    "type": "ant-cascader",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "所在城市",
+                          "en_US": "City",
+                          "pt_PT": "Cidade",
+                          "ar_EG": "المدينة"
+                        },
+                        "name": "ant_cascader_a1uswgum",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange"
+                      },
+                      "fieldProps": {
+                        "allowClear": false,
+                        "changeOnSelect": false,
+                        "disabled": false,
+                        "multiple": false,
+                        "showCheckedStrategy": "SHOW_PARENT",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "所在城市",
+                          "en_US": "City",
+                          "pt_PT": "Cidade",
+                          "ar_EG": "المدينة"
+                        },
+                        "treeOptions": {
+                          "type": "static"
+                        },
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "dd1b0ed1-ca8a-41fa-8b71-a74bb7ea33ec",
+                    "type": "ant-textarea",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "详细地址",
+                          "en_US": "Detailed address",
+                          "pt_PT": "Morada detalhada",
+                          "ar_EG": "العنوان التفصيلي"
+                        },
+                        "name": "ant_textarea_opxf42ik",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "colSpan": 2,
+                        "validateTrigger": "onChange"
+                      },
+                      "fieldProps": {
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "详细地址",
+                          "en_US": "Detailed address",
+                          "pt_PT": "Morada detalhada",
+                          "ar_EG": "العنوان التفصيلي"
+                        },
+                        "allowClear": true,
+                        "readOnly": false,
+                        "disabled": false,
+                        "showCount": false,
+                        "autoSize": false,
+                        "variant": "outlined",
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      },
+      {
+        "id": "8fe38db5-3821-4260-8d83-ac41ab7ab668",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "家庭信息",
+              "en_US": "Family information",
+              "pt_PT": "Informações familiares",
+              "ar_EG": "معلومات العائلة"
+            }
+          },
+          "flexProps": {
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "08dff16b-df34-4a46-9dfa-4e054ebcaccb",
+              "type": "table-grid-layout",
+              "props": {
+                "fieldProps": {
+                  "layout": "vertical",
+                  "bordered": false,
+                  "density": "default",
+                  "mode": "normal",
+                  "data": [
+                    {
+                      "name": "g1",
+                      "columnCount": 1,
+                      "colgroup": [
+                        "auto"
+                      ],
+                      "data": []
+                    }
+                  ]
+                },
+                "flexProps": {
+                  "minSize": false,
+                  "scroll": false
+                },
+                "children": [
+                  {
+                    "id": "d458cdfe-c948-40bf-a75b-b139ee632a7e",
+                    "type": "ant-editor-table",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "name": "ant_editor_table_y1cvx5nx"
+                      },
+                      "fieldProps": {
+                        "bordered": true,
+                        "pagination": false,
+                        "size": "middle",
+                        "no": true,
+                        "columnSetting": [
+                          {
+                            "id": "de02ce6f-a05b-4f4f-9e9d-6b9d29377868",
+                            "title": {
+                              "selectValue": "zh_CN",
+                              "zh_CN": "姓名",
+                              "en_US": "Name",
+                              "pt_PT": "Nome",
+                              "ar_EG": "الاسم"
+                            },
+                            "field": "name",
+                            "widthMode": "adaptive",
+                            "align": "left",
+                            "editorType": "input",
+                            "editorSetting": {}
+                          },
+                          {
+                            "id": "55a913a5-6f9f-4ec9-966c-44b4393378b3",
+                            "title": {
+                              "selectValue": "zh_CN",
+                              "zh_CN": "性别",
+                              "en_US": "Gender",
+                              "pt_PT": "Género",
+                              "ar_EG": "الجنس"
+                            },
+                            "field": "sex",
+                            "widthMode": "adaptive",
+                            "align": "left",
+                            "editorType": "select",
+                            "editorSetting": {
+                              "selectOptions": {
+                                "dataSource": [
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "男",
+                                      "en_US": "Male",
+                                      "pt_PT": "Masculino",
+                                      "ar_EG": "ذكر"
+                                    },
+                                    "value": "1",
+                                    "__fdSortId": "fd-sort-hnhib6gm7"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "女",
+                                      "en_US": "Female",
+                                      "pt_PT": "Feminino",
+                                      "ar_EG": "أنثى"
+                                    },
+                                    "value": "2",
+                                    "__fdSortId": "fd-sort-ipt07ggiy"
+                                  }
+                                ],
+                                "type": "static"
+                              }
+                            }
+                          },
+                          {
+                            "id": "16818cfd-b839-43de-9f74-be3e160d3010",
+                            "title": {
+                              "selectValue": "zh_CN",
+                              "zh_CN": "出生年月",
+                              "en_US": "Date of birth",
+                              "pt_PT": "Data de nascimento",
+                              "ar_EG": "تاريخ الميلاد"
+                            },
+                            "field": "birthday",
+                            "widthMode": "adaptive",
+                            "align": "left",
+                            "editorType": "birthdayPicker",
+                            "editorSetting": {}
+                          },
+                          {
+                            "id": "d088511c-687e-4ecf-8b1b-d6ac56df1173",
+                            "title": {
+                              "selectValue": "zh_CN",
+                              "zh_CN": "关系",
+                              "en_US": "Relationship",
+                              "pt_PT": "Relação",
+                              "ar_EG": "العلاقة"
+                            },
+                            "field": "relationship",
+                            "widthMode": "adaptive",
+                            "align": "left",
+                            "editorType": "select",
+                            "editorSetting": {
+                              "selectOptions": {
+                                "dataSource": [
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "父亲",
+                                      "en_US": "Father",
+                                      "pt_PT": "Pai",
+                                      "ar_EG": "الأب"
+                                    },
+                                    "value": "1",
+                                    "__fdSortId": "fd-sort-8gkfx837j"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "母亲",
+                                      "en_US": "Mother",
+                                      "pt_PT": "Mãe",
+                                      "ar_EG": "الأم"
+                                    },
+                                    "value": "2",
+                                    "__fdSortId": "fd-sort-vln6wvgn5"
+                                  }
+                                ],
+                                "type": "static"
+                              }
+                            }
+                          }
+                        ],
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      }
+    ],
+    "flexProps": {
+      "minSize": true,
+      "scroll": true
+    }
+  }
+}

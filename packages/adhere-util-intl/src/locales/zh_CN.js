@@ -522,7 +522,7 @@ export default [
     template_login_name: '登录表单',
     template_login_desc: 'Card 分组包含登录方式、账号密码与验证码选项，适用于企业后台登录',
     template_register_name: '注册表单',
-    template_register_desc: 'Card 分组涵盖账号设置、个人资料与协议确认，适用于用户注册开户',
+    template_register_desc: 'Card 分组涵盖基本信息与家庭信息，含可编辑表格，适用于用户注册信息采集',
     template_feedback_name: '反馈表单',
     template_feedback_desc: 'Card 分组收集反馈详情与联系方式，适用于产品意见与缺陷反馈',
     template_card_contact_basic: '基本信息',

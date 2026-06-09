@@ -506,7 +506,7 @@ export default [
       'Card sections for login method, credentials, and verification options for admin sign-in',
     template_register_name: 'Registration form',
     template_register_desc:
-      'Card sections for account setup, profile details, and terms agreement for user sign-up',
+      'Card sections for basic and family information with an editable table, for user registration data collection',
     template_feedback_name: 'Feedback form',
     template_feedback_desc:
       'Card sections for feedback details and contact information for product feedback',

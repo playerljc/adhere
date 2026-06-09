@@ -341,7 +341,8 @@ export default [
     template_login_name: 'نموذج تسجيل الدخول',
     template_login_desc: 'أقسام Card لطريقة الدخول وبيانات الحساب وخيارات التحقق',
     template_register_name: 'نموذج التسجيل',
-    template_register_desc: 'أقسام Card لإعداد الحساب والملف الشخصي والموافقة على الشروط',
+    template_register_desc:
+      'أقسام Card للمعلومات الأساسية والعائلية مع جدول قابل للتحرير، لجمع بيانات تسجيل المستخدم',
     template_feedback_name: 'نموذج الملاحظات',
     template_feedback_desc: 'أقسام Card لتفاصيل الملاحظات وبيانات التواصل',
     template_card_contact_basic: 'المعلومات الأساسية',

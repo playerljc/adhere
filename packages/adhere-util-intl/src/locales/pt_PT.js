@@ -342,7 +342,8 @@ export default [
     template_login_name: 'Formulário de início de sessão',
     template_login_desc: 'Secções Card com método de login, credenciais e opções de verificação',
     template_register_name: 'Formulário de registo',
-    template_register_desc: 'Secções Card para conta, perfil e aceitação de termos',
+    template_register_desc:
+      'Secções Card com informações básicas e familiares, com tabela editável, para recolha de dados de registo',
     template_feedback_name: 'Formulário de feedback',
     template_feedback_desc: 'Secções Card para detalhes do feedback e informações de contacto',
     template_card_contact_basic: 'Informação básica',

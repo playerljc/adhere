@@ -5,8 +5,9 @@
     "declarationDir": "./lib",
     "outDir": "./lib",
     "baseUrl": "./",
-    "module": "ESNext"
+    "module": "ESNext",
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules"],
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "json/**/*.json"]
 }
