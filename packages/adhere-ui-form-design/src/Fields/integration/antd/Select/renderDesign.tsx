@@ -53,7 +53,8 @@ export function renderDesign({
               loading,
               style: fieldStyle,
               actions: fieldActions,
-              previewValue,
+              value,
+              onChange,
             }) => (
               <Select
                 {...(restFieldProps as SelectProps)}
@@ -62,7 +63,8 @@ export function renderDesign({
                 options={options}
                 style={fieldStyle}
                 {...fieldActions}
-                defaultValue={previewValue as SelectProps['defaultValue']}
+                value={value as SelectProps['value']}
+                onChange={onChange}
               />
             )}
           </DesignPreviewFieldWithDataSource>

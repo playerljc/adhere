@@ -120,12 +120,11 @@ function buildSelectEditableConfig({
     $editable: {
       editable: true,
       type: 'custom' as const,
-      render: ({ value }: { value?: unknown }) => (
+      render: () => (
         <EditorTableColumnSelectEditor
           fieldProps={resolvedEditorSetting}
           style={style}
           actions={actions}
-          value={value as SelectProps['value']}
         />
       ),
       rules,
@@ -302,8 +301,14 @@ function EditorTableColumnSelectEditor({
   onChange?: SelectProps['onChange'];
 }) {
   return (
-    <DesignPreviewFieldWithDataSource fieldProps={fieldProps} style={style} actions={actions}>
-      {({ restFieldProps, options, loading, style: fieldStyle, actions: fieldActions }) => (
+    <DesignPreviewFieldWithDataSource
+      fieldProps={fieldProps}
+      style={style}
+      actions={actions}
+      value={value}
+      onChange={onChange}
+    >
+      {({ restFieldProps, options, loading, style: fieldStyle, actions: fieldActions, value: formValue, onChange: formOnChange }) => (
         <Select
           {...(restFieldProps as SelectProps)}
           loading={loading || undefined}
@@ -311,8 +316,8 @@ function EditorTableColumnSelectEditor({
           style={{ width: '100%', ...fieldStyle }}
           {...fieldActions}
           {...getPopupContainerProps()}
-          value={value}
-          onChange={onChange}
+          value={formValue as SelectProps['value']}
+          onChange={formOnChange}
         />
       )}
     </DesignPreviewFieldWithDataSource>

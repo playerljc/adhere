@@ -14,6 +14,9 @@ export type DesignPreviewFieldWithDataSourceRenderArgs = {
   actions: Record<string, (...args: any[]) => any>;
   /** 设计态表单项上的预览值，由具体控件解释类型 */
   previewValue: unknown;
+  /** Form.Item 注入的受控值 */
+  value?: unknown;
+  onChange?: (...args: any[]) => void;
 };
 
 export type DesignPreviewFieldWithDataSourceProps = {
@@ -22,6 +25,9 @@ export type DesignPreviewFieldWithDataSourceProps = {
   style?: CSSProperties;
   actions?: Record<string, (...args: any[]) => any>;
   designOptionsKey?: string;
+  /** Form.Item 注入的受控值，需透传给内部表单控件 */
+  value?: unknown;
+  onChange?: (...args: any[]) => void;
   children: (args: DesignPreviewFieldWithDataSourceRenderArgs) => ReactNode;
 };
 
@@ -34,6 +40,8 @@ export function DesignPreviewFieldWithDataSource({
   style,
   actions,
   designOptionsKey = 'selectOptions',
+  value,
+  onChange,
   children,
 }: DesignPreviewFieldWithDataSourceProps) {
   const previewValue = (formItemProps as { initialValue?: unknown } | undefined)?.initialValue;
@@ -49,6 +57,8 @@ export function DesignPreviewFieldWithDataSource({
           style: style ?? {},
           actions: actions ?? {},
           previewValue,
+          value,
+          onChange,
         })
       }
     </WithDesignFieldDataSourceOptions>
