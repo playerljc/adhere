@@ -68,6 +68,7 @@ const EditorSettingModal: FC<EditorSettingModalProps> = ({
       }}
       onCancel={onCancel}
       destroyOnHidden
+      centered
       onOk={() => {
         const next = form.getFieldsValue(true);
         onOk(next);

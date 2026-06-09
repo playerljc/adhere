@@ -178,6 +178,8 @@ export interface DesignProps {
 export interface DesignHandler {
   /** 将设计画布重置为默认空根布局，并清除当前选中项 */
   resetDesignValue: () => void;
+  /** 用完整设计树替换当前画布，并清除当前选中项 */
+  loadDesignValue: (designValue: DesignValue) => void;
 }
 
 export interface DesignContextType {
@@ -230,6 +232,8 @@ export interface DesignContextType {
   swapOutlineNodes: (idA: string, idB: string) => void;
   /** 将设计画布重置为默认空根布局，并清除当前选中项 */
   resetDesignValue: () => void;
+  /** 用完整设计树替换当前画布，并清除当前选中项 */
+  loadDesignValue: (designValue: DesignValue) => void;
   /** 是否可撤销 */
   getCanUndo: () => boolean;
   /** 是否可重做 */

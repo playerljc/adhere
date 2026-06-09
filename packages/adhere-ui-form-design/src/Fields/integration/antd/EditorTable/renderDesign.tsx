@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo, useRef } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
@@ -56,26 +56,31 @@ function EditorTableColumnSelectEditor({
   );
 }
 
-/**
- * createSubClass
- * @param _params
- * @returns
- */
-function createSubClass(_params: {
+type EditorTableDesignParams = {
   fieldProps: FieldProps;
   style: React.CSSProperties;
   actions: Record<string, (...args: any[]) => any>;
   lang: string;
   designContext: DesignContextType;
-}): typeof EditableRowControlTableSuperTable {
+};
+
+/**
+ * createSubClass
+ * @description 通过 getParams 读取最新配置，避免父组件刷新时因 subClass 引用变化导致表格重新挂载
+ */
+function createSubClass(
+  getParams: () => EditorTableDesignParams,
+): typeof EditableRowControlTableSuperTable {
   return class extends EditableRowControlTableSuperTable {
     getEllipsisCount() {
       return 5;
     }
 
     onAdd() {
+      const { fieldProps } = getParams();
+
       return super.onAdd(
-        (_params?.fieldProps.columnSetting ?? []).reduce(
+        (fieldProps.columnSetting ?? []).reduce(
           (record, columnConfig) => {
             record[columnConfig.field] = columnConfig?.defaultValue;
 
@@ -89,27 +94,28 @@ function createSubClass(_params: {
     }
 
     getPagination(): boolean {
-      return _params?.fieldProps?.pagination;
+      return getParams()?.fieldProps?.pagination;
     }
 
     getTableDensity() {
-      return _params?.fieldProps?.size ?? super.getTableDensity();
+      const { fieldProps } = getParams();
+      return fieldProps?.size ?? super.getTableDensity();
     }
 
     isShowNumber() {
-      return _params?.fieldProps?.no;
+      return getParams()?.fieldProps?.no;
     }
 
     getNumberGeneratorRule() {
-      return _params?.fieldProps?.noRule === '1'
+      return getParams()?.fieldProps?.noRule === '1'
         ? SearchTable.Table.NUMBER_GENERATOR_RULE_ALONE
         : SearchTable.Table.NUMBER_GENERATOR_RULE_CONTINUITY;
     }
 
     getColumns() {
       const columns = super.getColumns();
-
-      const columnSetting = _params?.fieldProps?.columnSetting ?? [];
+      const { fieldProps, style, lang, designContext } = getParams();
+      const columnSetting = fieldProps?.columnSetting ?? [];
 
       return [
         ...columnSetting.map((columnConfigconfig) => {
@@ -133,15 +139,15 @@ function createSubClass(_params: {
 
           const actions = actionsCodeStringToEvents({
             actions: actionsConfig ?? [],
-            designContext: _params.designContext,
+            designContext,
           });
 
-          const rules = rulesSettingToRules((rulesConfig ?? []) as unknown as Rule[], _params.lang);
+          const rules = rulesSettingToRules((rulesConfig ?? []) as unknown as Rule[], lang);
 
           const isSelect = columnConfigconfig?.editorType === 'select';
 
           return {
-            title: resolveI18nText(columnConfigconfig?.title, _params.lang),
+            title: resolveI18nText(columnConfigconfig?.title, lang),
             dataIndex: columnConfigconfig?.field,
             key: columnConfigconfig?.field,
             align: columnConfigconfig?.align,
@@ -153,7 +159,7 @@ function createSubClass(_params: {
                   render: ({ value }) => (
                     <EditorTableColumnSelectEditor
                       fieldProps={editorSetting}
-                      style={_params.style}
+                      style={style}
                       actions={actions}
                       value={value}
                     />
@@ -175,6 +181,27 @@ function createSubClass(_params: {
       ];
     }
   };
+}
+
+function EditorTableDesignPreview({
+  fieldProps,
+  style,
+  actions,
+  lang,
+  designContext,
+}: EditorTableDesignParams) {
+  const paramsRef = useRef<EditorTableDesignParams>({
+    fieldProps,
+    style,
+    actions,
+    lang,
+    designContext,
+  });
+  paramsRef.current = { fieldProps, style, actions, lang, designContext };
+
+  const subClass = useMemo(() => createSubClass(() => paramsRef.current), []);
+
+  return <EditableRowControlTable subClass={subClass} fieldProps={fieldProps} />;
 }
 
 /**
@@ -217,15 +244,12 @@ export function renderDesign({
           const designContext = useContext(DesignContext);
 
           return (
-            <EditableRowControlTable
-              subClass={createSubClass({
-                fieldProps,
-                style,
-                actions,
-                lang,
-                designContext,
-              })}
+            <EditorTableDesignPreview
               fieldProps={fieldProps}
+              style={style}
+              actions={actions}
+              lang={lang}
+              designContext={designContext}
             />
           );
         }}

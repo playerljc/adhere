@@ -496,6 +496,19 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         setActiveFieldId(undefined);
       }
 
+      function loadDesignValue(nextDesignValue: DesignValue) {
+        commitDesignChange(
+          {
+            type: REDUCER_ACTION_TYPE.replaceDesignValue,
+            payload: {
+              designValue: nextDesignValue,
+            },
+          },
+          { immediate: true },
+        );
+        setActiveFieldId(undefined);
+      }
+
       useEffect(() => {
         const isEditableTarget = (target: EventTarget | null) => {
           if (!(target instanceof HTMLElement)) return false;
@@ -532,6 +545,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       // 提供对外的方法
       useImperativeHandle(ref, () => ({
         resetDesignValue,
+        loadDesignValue,
       }));
 
       return (
@@ -580,6 +594,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                 updateChildrenById,
                 swapOutlineNodes,
                 resetDesignValue,
+                loadDesignValue,
                 getCanUndo,
                 getCanRedo,
                 undo,

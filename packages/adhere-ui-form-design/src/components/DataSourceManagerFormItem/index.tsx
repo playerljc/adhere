@@ -1,5 +1,5 @@
 import { Segmented } from 'antd';
-import React, { type FC } from 'react';
+import React, { type FC, useEffect } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -47,11 +47,22 @@ const selectorPrefix = `${SELECT_PREFIX}-design-field-data-source-form-item`;
  * DataSourceManagerFormItem
  */
 const DataSourceManagerFormItem: FC<DataSourceManagerFormItemProps> = ({ value, onChange }) => {
+  const type = value?.type ?? 'static';
+
+  useEffect(() => {
+    if (value?.type) return;
+    onChange?.({
+      type: 'static',
+      dataSource: value?.dataSource ?? [],
+      dynamicConfigId: value?.dynamicConfigId,
+    });
+  }, [value?.type, value?.dataSource, value?.dynamicConfigId, onChange]);
+
   return (
     <div className={selectorPrefix}>
       <div className={`${selectorPrefix}-actions`}>
         <Segmented
-          value={value?.type}
+          value={type}
           onChange={(_value) => {
             onChange?.({
               // ...(value ?? {}),
@@ -74,9 +85,9 @@ const DataSourceManagerFormItem: FC<DataSourceManagerFormItemProps> = ({ value, 
       </div>
 
       <div className={`${selectorPrefix}-body`}>
-        {value?.type === 'static' && <Static value={value} onChange={onChange} />}
+        {type === 'static' && <Static value={value} onChange={onChange} />}
 
-        {value?.type === 'dynamic' && <Dynamic value={value} onChange={onChange} />}
+        {type === 'dynamic' && <Dynamic value={value} onChange={onChange} />}
       </div>
     </div>
   );
