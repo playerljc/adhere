@@ -402,7 +402,12 @@ function EditorTableDesignPreview({
   actions,
   lang,
   designContext,
-}: EditorTableDesignParams) {
+  value,
+  onChange,
+}: EditorTableDesignParams & {
+  value?: Record<string, any>[];
+  onChange?: (nextValue: Record<string, any>[]) => void;
+}) {
   const paramsRef = useRef<EditorTableDesignParams>({
     fieldProps,
     style,
@@ -414,7 +419,14 @@ function EditorTableDesignPreview({
 
   const subClass = useMemo(() => createSubClass(() => paramsRef.current), []);
 
-  return <EditableRowControlTable subClass={subClass} fieldProps={fieldProps} />;
+  return (
+    <EditableRowControlTable
+      subClass={subClass}
+      fieldProps={fieldProps}
+      value={value}
+      onChange={onChange}
+    />
+  );
 }
 
 /**
