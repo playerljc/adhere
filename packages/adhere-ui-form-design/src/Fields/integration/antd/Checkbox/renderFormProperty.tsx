@@ -43,7 +43,7 @@ export function FormProperty({
       value: (
         <Value>
           <Form.Item name="initialValue">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('initial_checked')} />
           </Form.Item>
         </Value>
       ),

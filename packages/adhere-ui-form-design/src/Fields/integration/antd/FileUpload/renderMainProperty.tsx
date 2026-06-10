@@ -26,7 +26,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),
@@ -50,7 +50,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="multiple">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('upload_multiple')} />
           </Form.Item>
         </Value>
       ),
@@ -86,7 +86,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="showUploadList">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('upload_show_list')} />
           </Form.Item>
         </Value>
       ),

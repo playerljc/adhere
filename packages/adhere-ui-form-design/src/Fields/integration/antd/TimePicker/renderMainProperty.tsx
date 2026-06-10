@@ -29,7 +29,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),
@@ -105,7 +105,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="needConfirm">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('need_confirm')} />
           </Form.Item>
         </Value>
       ),
@@ -117,7 +117,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="use12Hours">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder="use12Hours" />
           </Form.Item>
         </Value>
       ),
@@ -129,7 +129,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="changeOnScroll">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('change_on_scroll')} />
           </Form.Item>
         </Value>
       ),
@@ -183,7 +183,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="showNow">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('show_now')} />
           </Form.Item>
         </Value>
       ),
@@ -195,7 +195,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="allowClear">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('allow_clear')} />
           </Form.Item>
         </Value>
       ),

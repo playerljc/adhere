@@ -25,7 +25,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),
@@ -37,7 +37,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="keyboard">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('slider_keyboard')} />
           </Form.Item>
         </Value>
       ),
@@ -100,7 +100,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="reverse">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('slider_reverse')} />
           </Form.Item>
         </Value>
       ),
@@ -112,7 +112,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="dots">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('slider_dots')} />
           </Form.Item>
         </Value>
       ),
@@ -124,7 +124,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="included">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('slider_included')} />
           </Form.Item>
         </Value>
       ),
@@ -136,7 +136,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="range">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('slider_range')} />
           </Form.Item>
         </Value>
       ),

@@ -29,7 +29,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="allowClear">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('allow_clear')} />
           </Form.Item>
         </Value>
       ),
@@ -41,7 +41,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="readOnly">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('read_only')} />
           </Form.Item>
         </Value>
       ),
@@ -53,7 +53,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),
@@ -77,7 +77,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="showCount">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('show_count')} />
           </Form.Item>
         </Value>
       ),
@@ -89,7 +89,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="visibilityToggle">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('password_visibility_toggle')} />
           </Form.Item>
         </Value>
       ),

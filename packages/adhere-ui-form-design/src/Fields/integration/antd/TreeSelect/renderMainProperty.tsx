@@ -29,7 +29,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="allowClear">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('allow_clear')} />
           </Form.Item>
         </Value>
       ),
@@ -41,7 +41,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),

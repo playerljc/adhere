@@ -58,7 +58,7 @@ export function FormProperty({
       value: (
         <Value>
           <Form.Item name="valuePropName">
-            <ValuePropNameSelectStandardDict />
+            <ValuePropNameSelectStandardDict placeholder={Intl.get('value_propname')} />
           </Form.Item>
         </Value>
       ),

@@ -40,6 +40,7 @@ const MainProperty = createStandardMainProperty({
               showText
               disabledAlpha
               placement="bottomLeft"
+              placeholder={Intl.get('pen_color')}
             />
           </Form.Item>
         </Value>
@@ -62,6 +63,7 @@ const MainProperty = createStandardMainProperty({
               showText
               disabledAlpha
               placement="bottomLeft"
+              placeholder={Intl.get('background_color')}
             />
           </Form.Item>
         </Value>

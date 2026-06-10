@@ -75,7 +75,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),
@@ -87,7 +87,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="showSearch">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('show_search')} />
           </Form.Item>
         </Value>
       ),
@@ -99,7 +99,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="oneWay">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('transfer_one_way')} />
           </Form.Item>
         </Value>
       ),
@@ -111,7 +111,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="pagination">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('transfer_pagination')} />
           </Form.Item>
         </Value>
       ),
@@ -123,7 +123,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="showSelectAll">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('transfer_show_select_all')} />
           </Form.Item>
         </Value>
       ),

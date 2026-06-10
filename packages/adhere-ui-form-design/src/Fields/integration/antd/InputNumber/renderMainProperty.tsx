@@ -127,7 +127,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="stringMode">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('input_number_string_mode')} />
           </Form.Item>
         </Value>
       ),
@@ -139,7 +139,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="keyboard">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('input_number_keyboard')} />
           </Form.Item>
         </Value>
       ),
@@ -151,7 +151,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="changeOnBlur">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('input_number_change_on_blur')} />
           </Form.Item>
         </Value>
       ),
@@ -163,7 +163,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="changeOnWheel">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('input_number_change_on_wheel')} />
           </Form.Item>
         </Value>
       ),
@@ -175,7 +175,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="controls">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('input_number_controls')} />
           </Form.Item>
         </Value>
       ),
@@ -187,7 +187,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),
@@ -199,7 +199,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="readOnly">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('read_only')} />
           </Form.Item>
         </Value>
       ),

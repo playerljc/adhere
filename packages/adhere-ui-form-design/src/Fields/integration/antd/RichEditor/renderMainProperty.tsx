@@ -57,7 +57,7 @@ function createRichEditorMainProperty(lang: string) {
         value: (
           <Value>
             <Form.Item name="readOnly">
-              <WhetherRadioHorizontalDict />
+              <WhetherRadioHorizontalDict placeholder={Intl.get('read_only')} />
             </Form.Item>
           </Value>
         ),
@@ -69,7 +69,7 @@ function createRichEditorMainProperty(lang: string) {
         value: (
           <Value>
             <Form.Item name="disabled">
-              <WhetherRadioHorizontalDict />
+              <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
             </Form.Item>
           </Value>
         ),
@@ -81,7 +81,7 @@ function createRichEditorMainProperty(lang: string) {
         value: (
           <Value>
             <Form.Item name="bordered">
-              <WhetherRadioHorizontalDict />
+              <WhetherRadioHorizontalDict placeholder={Intl.get('bordered')} />
             </Form.Item>
           </Value>
         ),

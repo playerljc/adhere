@@ -37,7 +37,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="allowClear">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('allow_clear')} />
           </Form.Item>
         </Value>
       ),
@@ -49,7 +49,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="defaultActiveFirstOption">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('default_active_first_option')} />
           </Form.Item>
         </Value>
       ),
@@ -61,7 +61,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="defaultOpen">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('default_open')} />
           </Form.Item>
         </Value>
       ),
@@ -73,7 +73,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),
@@ -122,7 +122,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="showSearch">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('show_search')} />
           </Form.Item>
         </Value>
       ),
@@ -134,7 +134,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="size">
-            <SizeSelectStandardDict />
+            <SizeSelectStandardDict placeholder={Intl.get('input_size')} />
           </Form.Item>
         </Value>
       ),
@@ -158,7 +158,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="variant">
-            <VariantSelectStandardDict />
+            <VariantSelectStandardDict placeholder={Intl.get('input_variant')} />
           </Form.Item>
         </Value>
       ),
@@ -170,7 +170,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="checkAll">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('check_all')} />
           </Form.Item>
         </Value>
       ),

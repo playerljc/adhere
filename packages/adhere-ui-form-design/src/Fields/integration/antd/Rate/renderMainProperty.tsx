@@ -25,7 +25,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="allowClear">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('rate_allow_clear')} />
           </Form.Item>
         </Value>
       ),
@@ -37,7 +37,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="allowHalf">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('rate_allow_half')} />
           </Form.Item>
         </Value>
       ),
@@ -65,7 +65,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="disabled">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('disabled')} />
           </Form.Item>
         </Value>
       ),
@@ -77,7 +77,7 @@ const MainProperty = createMainProperty({
       value: (
         <Value>
           <Form.Item name="keyboard">
-            <WhetherRadioHorizontalDict />
+            <WhetherRadioHorizontalDict placeholder={Intl.get('rate_keyboard')} />
           </Form.Item>
         </Value>
       ),
