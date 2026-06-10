@@ -4,7 +4,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { LabelDesign, ValueDesign } from '../../../components';
 import type { DesignContextType, DesignValue } from '../../../types';
-import { computeLabelValueColSpan, findDesignValueById } from '../../../utils';
+import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../utils';
 import { useDesignPhoneAreaCodeOptions } from '../../../utils/useDesignPhoneAreaCodeOptions';
 import PhoneWithAreaCodeField from './PhoneWithAreaCodeField';
 
@@ -15,6 +15,7 @@ function PhoneWithAreaCodeDesignPreview({
   actions,
   areaCodeActions,
   phoneInputActions,
+  lang,
 }: any) {
   const { source, options, loading } = useDesignPhoneAreaCodeOptions(fieldProps, 'areaCodeOptionsSource');
 
@@ -27,7 +28,7 @@ function PhoneWithAreaCodeDesignPreview({
       defaultCode={fieldProps.defaultCode}
       allowClear={fieldProps.allowClear}
       disabled={fieldProps.disabled}
-      placeholder={fieldProps.placeholder as any}
+      placeholder={resolveI18nText(fieldProps.placeholder as any, lang) as string}
       defaultValue={value?.props?.formItemProps?.initialValue as any}
       areaCodeOptions={source ? options : undefined}
       areaCodeLoading={source?.type === 'dynamic' ? loading : false}
@@ -62,7 +63,7 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions, areaCodeActions, phoneInputActions }) => (
+        {({ fieldProps, style, actions, areaCodeActions, phoneInputActions, lang }) => (
           <PhoneWithAreaCodeDesignPreview
             value={value}
             fieldProps={fieldProps}
@@ -70,6 +71,7 @@ export function renderDesign({
             actions={actions}
             areaCodeActions={areaCodeActions}
             phoneInputActions={phoneInputActions}
+            lang={lang}
           />
         )}
       </ValueDesign>

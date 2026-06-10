@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Form, Input } from '@baifendian/adhere-ui-anthoc';
+import { Form } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -8,6 +8,7 @@ import {
   AreaCodePhoneDataSourceManagerFormItem,
   PhoneAreaCodeSelectStandardDict,
   WhetherRadioHorizontalDict,
+  buildFormPropertyPlaceholderRow,
 } from '../../../components';
 import { Label, Value } from '../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../types';
@@ -60,22 +61,7 @@ function getDefaultFormItems(
         </Value>
       ),
     },
-    {
-      key: 'placeholder',
-      require: false,
-      label: <Label>{Intl.get('phone_number')}：</Label>,
-      value: (
-        <Value>
-          <Form.Item name="placeholder">
-            <Input.OptimizedInput
-              placeholder={Intl.get('please_enter_phone_number')}
-              maxLength={200}
-              showCount={false}
-            />
-          </Form.Item>
-        </Value>
-      ),
-    },
+    buildFormPropertyPlaceholderRow(ctx.titleLabelSlot),
     {
       key: 'allowClear',
       require: false,

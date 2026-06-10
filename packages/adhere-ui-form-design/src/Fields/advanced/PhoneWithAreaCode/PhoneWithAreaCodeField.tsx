@@ -8,6 +8,7 @@ import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import { values } from '../../../Dict';
 import type { PhoneAreaCodeItem, PhoneAreaCodeRule } from '../../../Dict/PhoneAreaCode';
 import { SELECT_PREFIX } from '../../../constant';
+import { resolveI18nText } from '../../../utils';
 
 const selectorPrefix = `${SELECT_PREFIX}-phone-with-area-code`;
 
@@ -57,6 +58,27 @@ export type PhoneWithAreaCodeFieldProps = {
 
 function normalizeRule(rule?: PhoneAreaCodeRule): PhoneAreaCodeRule {
   return rule ?? 'digits_and_space_dash';
+}
+
+function normalizePhoneText(raw: unknown, lang?: string): string {
+  if (raw === undefined || raw === null) return '';
+  if (typeof raw === 'string') return raw;
+  if (typeof raw === 'object') {
+    const resolved = resolveI18nText(raw as any, lang ?? 'zh_CN');
+    return typeof resolved === 'string' ? resolved : '';
+  }
+  return String(raw);
+}
+
+function normalizePhoneValue(
+  raw: PhoneWithAreaCodeValue | undefined,
+  lang?: string,
+): PhoneWithAreaCodeValue {
+  if (!raw) return {};
+  return {
+    ...raw,
+    value: normalizePhoneText(raw.value, lang),
+  };
 }
 
 function filterPhoneValue(raw: string, rule: PhoneAreaCodeRule): string {
@@ -131,9 +153,15 @@ export default function PhoneWithAreaCodeField(props: PhoneWithAreaCodeFieldProp
     return (values.PhoneAreaCode?.value ?? []) as PhoneAreaCodeItem[];
   }, [areaCodeOptions]);
 
-  const [inner, setInner] = React.useState<PhoneWithAreaCodeValue>(defaultValue ?? {});
+  const [inner, setInner] = React.useState<PhoneWithAreaCodeValue>(() =>
+    normalizePhoneValue(defaultValue, lang),
+  );
 
-  const mergedValue = value ?? inner;
+  const mergedValue = normalizePhoneValue(value ?? inner, lang);
+  const resolvedPlaceholder = useMemo(
+    () => normalizePhoneText(placeholder, lang),
+    [lang, placeholder],
+  );
 
   const currentCode = mergedValue?.code ?? defaultCode;
 
@@ -237,7 +265,7 @@ export default function PhoneWithAreaCodeField(props: PhoneWithAreaCodeFieldProp
         allowClear={allowClear}
         showCount={false}
         value={mergedValue?.value ?? ''}
-        placeholder={placeholder}
+        placeholder={resolvedPlaceholder}
         {...mergedPhoneInputEvents}
         onChange={(e) => {
           const nextValue = filterPhoneValue(e.target.value, currentRule);
