@@ -31,8 +31,7 @@ const TreeDataSourceManagerFormItem: FC<TreeDataSourceManagerFormItemProps> = ({
           value={value?.type}
           onChange={(_value) => {
             onChange?.({
-              treeDataJson: undefined,
-              dynamicConfigId: undefined,
+              ...(value ?? {}),
               type: _value as TreeDataSourceManagerFormItemValue['type'],
             });
           }}

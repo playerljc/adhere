@@ -67,10 +67,9 @@ const DataSourceManagerFormItem: FC<DataSourceManagerFormItemProps> = ({ value, 
         <Segmented
           value={type}
           onChange={(_value) => {
+            // 仅切换 type，保留静态 dataSource / 动态 dynamicConfigId，便于来回切换不丢配置
             onChange?.({
-              // ...(value ?? {}),
-              dataSource: [],
-              dynamicConfigId: undefined,
+              ...(value ?? {}),
               type: _value as DataSourceManagerFormItemValue['type'],
             });
           }}

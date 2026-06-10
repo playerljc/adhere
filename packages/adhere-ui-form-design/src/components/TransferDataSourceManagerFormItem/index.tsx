@@ -41,8 +41,7 @@ const TransferDataSourceManagerFormItem: FC<TransferDataSourceManagerFormItemPro
           value={value?.type}
           onChange={(_value) => {
             onChange?.({
-              dataSource: [],
-              dynamicConfigId: undefined,
+              ...(value ?? {}),
               type: _value as TransferDataSourceManagerFormItemValue['type'],
             });
           }}

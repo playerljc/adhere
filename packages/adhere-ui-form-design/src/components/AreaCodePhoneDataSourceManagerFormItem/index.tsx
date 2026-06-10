@@ -35,8 +35,7 @@ const AreaCodePhoneDataSourceManagerFormItem: FC<AreaCodePhoneDataSourceManagerF
           value={type}
           onChange={(_value) => {
             onChange?.({
-              areaCodeJson: undefined,
-              dynamicConfigId: undefined,
+              ...(value ?? {}),
               type: _value as AreaCodePhoneDataSourceManagerFormItemValue['type'],
             });
           }}
