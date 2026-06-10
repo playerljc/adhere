@@ -6,6 +6,7 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import {
   buildFormPropertyPlaceholderRow,
+  buildFormPropertyTipRow,
   InputNumberModeSelectStandardDict,
   InputSizeSelectStandardDict,
   ThousandsSelectStandardDict,
@@ -227,6 +228,7 @@ const MainProperty = createMainProperty({
         </Value>
       ),
     },
+    buildFormPropertyTipRow(ctx.titleLabelSlot),
   ],
   autoFill: true,
 });

@@ -4,7 +4,10 @@ import { Form, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { RateSizeSelectStandardDict, WhetherRadioHorizontalDict } from '../../../../components';
+import {
+  RateSizeSelectStandardDict, WhetherRadioHorizontalDict,
+  buildFormPropertyTipRow,
+} from '../../../../components';
 import { Label, Value } from '../../../../components/TableGridLayout';
 import {
   createMainProperty,
@@ -14,7 +17,7 @@ import type { DesignValueProps } from '../../../../types';
 
 const MainProperty = createMainProperty({
   formName: 'antRateMainProperty',
-  getDefaultFormItems: (): DataItemRow[] => [
+  getDefaultFormItems: (_designValue, ctx): DataItemRow[] => [
     {
       key: 'allowClear',
       require: false,
@@ -91,6 +94,7 @@ const MainProperty = createMainProperty({
         </Value>
       ),
     },
+    buildFormPropertyTipRow(ctx.titleLabelSlot),
   ],
   autoFill: true,
 });

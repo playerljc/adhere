@@ -21,7 +21,8 @@ import { isNoFormFieldByType } from './isNoFormFieldByType';
 import { isRichEditorHtmlEmpty, RICH_EDITOR_EMPTY_VALIDATOR_CODE } from './isRichEditorHtmlEmpty';
 import isReactNode from './isReactNode';
 import normalizeDesignChildren from './normalizeDesignChildren';
-import { resolveI18nText } from './resolveI18nText';
+import { omitFieldTip } from './omitFieldTip';
+import { isResolvedI18nTextEmpty, resolveI18nText } from './resolveI18nText';
 import { createDefaultRootDesignValue, hasDesignCanvasUserContent } from './createDefaultRootDesignValue';
 import { genRootFieldId, getRootFieldId, isRootFieldId } from './rootFieldId';
 import { rulesSettingToRules } from './rulesSettingToRules';
@@ -65,6 +66,8 @@ export {
   flattenDesignChildren,
   useDesignFieldDataSourceOptions,
   resolveI18nText,
+  isResolvedI18nTextEmpty,
+  omitFieldTip,
   toI18nLabel,
   isNoFormFieldByType,
   isRichEditorHtmlEmpty,

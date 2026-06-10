@@ -3,7 +3,7 @@ import React from 'react';
 
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
-import { LabelDesign, ValueDesign } from '../../../../components';
+import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import { type TreeDataSourceManagerFormItemValue } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
 import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
@@ -77,14 +77,16 @@ export function renderDesign({
             : undefined;
 
           return (
-            <Cascader
-              {...(restCascaderProps as CascaderProps<any>)}
-              {...(multiple === true ? ({ multiple: true } as const) : {})}
-              placeholder={resolveI18nText(restCascaderProps.placeholder as any, lang)}
-              options={options}
-              showCheckedStrategy={resolvedStrategy}
-              style={style}
-            />
+            <FieldWithTip tip={fieldProps.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
+              <Cascader
+                {...(restCascaderProps as CascaderProps<any>)}
+                {...(multiple === true ? ({ multiple: true } as const) : {})}
+                placeholder={resolveI18nText(restCascaderProps.placeholder as any, lang)}
+                options={options}
+                showCheckedStrategy={resolvedStrategy}
+                style={style}
+              />
+            </FieldWithTip>
           );
         }}
       </ValueDesign>

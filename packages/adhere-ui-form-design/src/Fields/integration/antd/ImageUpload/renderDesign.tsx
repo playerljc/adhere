@@ -18,7 +18,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import Intl from '@baifendian/adhere-util-intl';
 
 import type { UploadDataSourceManagerFormItemValue } from '../../../../components';
-import { LabelDesign, ValueDesign } from '../../../../components';
+import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import { SELECT_PREFIX } from '../../../../constant';
 import type { DesignContextType, DesignValue } from '../../../../types';
 import {
@@ -614,7 +614,7 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions }) => {
+        {({ fieldProps, style, actions, lang }) => {
           const {
             uploadDataSource,
             cropEnabled,
@@ -643,14 +643,16 @@ export function renderDesign({
           const hasUploadAction = !!action?.trim();
 
           return (
-            <FieldImageUpload
-              uploadProps={uploadProps}
-              cropEnabled={!!cropEnabled}
-              cropShape={(cropShape ?? 'rect') as ImageUploadCropShape}
-              cropAspect={typeof cropAspect === 'number' ? cropAspect : undefined}
-              cropAllowFlip={!!cropAllowFlip}
-              designMode={context.mode !== 'form' && !hasUploadAction}
-            />
+            <FieldWithTip tip={fieldProps.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
+              <FieldImageUpload
+                uploadProps={uploadProps}
+                cropEnabled={!!cropEnabled}
+                cropShape={(cropShape ?? 'rect') as ImageUploadCropShape}
+                cropAspect={typeof cropAspect === 'number' ? cropAspect : undefined}
+                cropAllowFlip={!!cropAllowFlip}
+                designMode={context.mode !== 'form' && !hasUploadAction}
+              />
+            </FieldWithTip>
           );
         }}
       </ValueDesign>

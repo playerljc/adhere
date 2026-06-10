@@ -7,6 +7,7 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import {
   buildFormPropertyPlaceholderRow,
+  buildFormPropertyTipRow,
   DateBoundModeSelectStandardDict,
   PickerSelectStandardDict,
   PlacementSelectStandardDict,
@@ -234,6 +235,7 @@ const MainProperty = createMainProperty({
         </Value>
       ),
     },
+    buildFormPropertyTipRow(ctx.titleLabelSlot),
     ].filter(Boolean);
 
     return defaultFormItems as DataItemRow[];

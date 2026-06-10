@@ -1,0 +1,1458 @@
+{
+  "id": "04bceea8-16d7-4ce8-b23c-4d3c60b44e3e",
+  "type": "flex-layout",
+  "props": {
+    "fieldProps": {
+      "direction": "vertical",
+      "wrap": false,
+      "justifyContent": "flex-start",
+      "alignItems": "stretch",
+      "alignContent": "normal",
+      "gap": 8
+    },
+    "children": [
+      {
+        "id": "a90c5b14-9656-450f-87b1-961e43c5dd43",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "01 | 实体信息",
+              "en_US": "01 | Entity information",
+              "pt_PT": "01 | Informação da entidade",
+              "ar_EG": "01 | معلومات الكيان"
+            }
+          },
+          "flexProps": {
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "b7ba6bb8-2afc-440a-8d94-4be54228259c",
+              "type": "table-grid-layout",
+              "props": {
+                "fieldProps": {
+                  "layout": "vertical",
+                  "bordered": false,
+                  "density": "default",
+                  "mode": "normal",
+                  "data": [
+                    {
+                      "name": "g1",
+                      "columnCount": 2,
+                      "colgroup": [
+                        "auto",
+                        "auto"
+                      ],
+                      "data": []
+                    }
+                  ]
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "ea232e04-30a6-44a7-acb4-fc662f28499e",
+                    "type": "ant-input-search",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "税号",
+                          "en_US": "Tax number",
+                          "pt_PT": "NIF",
+                          "ar_EG": "الرقم الضريبي"
+                        },
+                        "name": "tax_number",
+                        "require": true,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "colSpan": 2,
+                        "validateTrigger": "onChange",
+                        "rules": [
+                          {
+                            "type": "required",
+                            "config": {
+                              "required": true,
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入税号",
+                                "en_US": "Please enter tax number",
+                                "pt_PT": "Introduza o NIF",
+                                "ar_EG": "يرجى إدخال الرقم الضريبي"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "fieldProps": {
+                        "readOnly": false,
+                        "allowClear": true,
+                        "disabled": false,
+                        "showCount": false,
+                        "loading": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "请输入税号（9 位）",
+                          "en_US": "Enter tax number (9 digits)",
+                          "pt_PT": "Introduza o NIF (9 dígitos)",
+                          "ar_EG": "أدخل الرقم الضريبي (9 أرقام)"
+                        },
+                        "enterButton": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "查询实体",
+                          "en_US": "Query entity",
+                          "pt_PT": "Consultar entidade",
+                          "ar_EG": "استعلام عن الكيان"
+                        },
+                        "fill": true,
+                        "tip": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "输入税号以自动同步信息，或手动填写\n演示税号：500123456 · 500987654 · 500456789",
+                          "en_US": "Enter tax number to sync automatically, or fill in manually\nDemo tax numbers: 500123456 · 500987654 · 500456789",
+                          "pt_PT": "Introduza o NIF para sincronizar automaticamente ou preencha manualmente\nNIF de demonstração: 500123456 · 500987654 · 500456789",
+                          "ar_EG": "أدخل الرقم الضريبي للمزامنة التلقائية أو املأ يدوياً\nأرقام ضريبية تجريبية: 500123456 · 500987654 · 500456789"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "edb90326-7f4a-497d-acfe-5d78f741dffb",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "实体全称",
+                          "en_US": "Entity full name",
+                          "pt_PT": "Nome completo da entidade",
+                          "ar_EG": "الاسم الكامل للكيان"
+                        },
+                        "name": "entity_name",
+                        "require": true,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "colSpan": 2,
+                        "rules": [
+                          {
+                            "type": "required",
+                            "config": {
+                              "required": true,
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入实体全称",
+                                "en_US": "Please enter entity full name",
+                                "pt_PT": "",
+                                "ar_EG": ""
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "fieldProps": {
+                        "type": "text",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "例：财政部",
+                          "en_US": "e.g. Ministry of Finance",
+                          "pt_PT": "ex.: Ministério das Finanças",
+                          "ar_EG": "مثال: وزارة المالية"
+                        },
+                        "allowClear": true,
+                        "readOnly": false,
+                        "disabled": false,
+                        "showCount": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "77a20455-1411-4300-882e-8bee638b3501",
+                    "type": "ant-select",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "实体类型",
+                          "en_US": "Entity type",
+                          "pt_PT": "Tipo de entidade",
+                          "ar_EG": "نوع الكيان"
+                        },
+                        "name": "entity_type",
+                        "require": true,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "rules": [
+                          {
+                            "type": "required",
+                            "config": {
+                              "required": true,
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请选择实体类型",
+                                "en_US": "Please select entity type",
+                                "pt_PT": "",
+                                "ar_EG": ""
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "fieldProps": {
+                        "allowClear": false,
+                        "defaultActiveFirstOption": true,
+                        "disabled": false,
+                        "listHeight": 256,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "请选择实体类型",
+                          "en_US": "Select entity type",
+                          "pt_PT": "Selecione o tipo",
+                          "ar_EG": "اختر نوع الكيان"
+                        },
+                        "selectOptions": {
+                          "type": "static",
+                          "dataSource": [
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "政府部门",
+                                "en_US": "Government department",
+                                "pt_PT": "Departamento governamental",
+                                "ar_EG": "جهة حكومية"
+                              },
+                              "value": "gov",
+                              "__fdSortId": "fd-sort-et1"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "公共机构",
+                                "en_US": "Public institution",
+                                "pt_PT": "Instituição pública",
+                                "ar_EG": "مؤسسة عامة"
+                              },
+                              "value": "public",
+                              "__fdSortId": "fd-sort-et2"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "国有企业",
+                                "en_US": "State-owned enterprise",
+                                "pt_PT": "Empresa estatal",
+                                "ar_EG": "مؤسسة حكومية"
+                              },
+                              "value": "soe",
+                              "__fdSortId": "fd-sort-et3"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "其他",
+                                "en_US": "Other",
+                                "pt_PT": "Outro",
+                                "ar_EG": "أخرى"
+                              },
+                              "value": "other",
+                              "__fdSortId": "fd-sort-et4"
+                            }
+                          ]
+                        },
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "3af9fba4-6ced-419b-8322-08d63d31ac95",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "子类 (选填)",
+                          "en_US": "Subcategory (optional)",
+                          "pt_PT": "Subcategoria (opcional)",
+                          "ar_EG": "الفئة الفرعية (اختياري)"
+                        },
+                        "name": "subcategory",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange"
+                      },
+                      "fieldProps": {
+                        "type": "text",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "例：部委 / 行政与监管 / 研发",
+                          "en_US": "e.g. Ministry / Administration / R&D",
+                          "pt_PT": "ex.: Ministério / Administração / I&D",
+                          "ar_EG": "مثال: وزارة / إدارة / بحث وتطوير"
+                        },
+                        "allowClear": true,
+                        "readOnly": false,
+                        "disabled": false,
+                        "showCount": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "06aed424-d557-427e-8f12-0648b7a8d583",
+                    "type": "ant-select",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "省份",
+                          "en_US": "Province",
+                          "pt_PT": "Província",
+                          "ar_EG": "المقاطعة"
+                        },
+                        "name": "province",
+                        "require": true,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "rules": [
+                          {
+                            "type": "required",
+                            "config": {
+                              "required": true,
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请选择省份",
+                                "en_US": "Please select province",
+                                "pt_PT": "",
+                                "ar_EG": ""
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "fieldProps": {
+                        "allowClear": false,
+                        "defaultActiveFirstOption": true,
+                        "disabled": false,
+                        "listHeight": 256,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "请选择省份",
+                          "en_US": "Select province",
+                          "pt_PT": "Selecione a província",
+                          "ar_EG": "اختر المقاطعة"
+                        },
+                        "selectOptions": {
+                          "type": "static",
+                          "dataSource": [
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "罗安达",
+                                "en_US": "Luanda",
+                                "pt_PT": "Luanda",
+                                "ar_EG": "لواندا"
+                              },
+                              "value": "luanda",
+                              "__fdSortId": "fd-sort-p1"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "本格拉",
+                                "en_US": "Benguela",
+                                "pt_PT": "Benguela",
+                                "ar_EG": "بنغيلا"
+                              },
+                              "value": "benguela",
+                              "__fdSortId": "fd-sort-p2"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "威拉",
+                                "en_US": "Huíla",
+                                "pt_PT": "Huíla",
+                                "ar_EG": "ويلا"
+                              },
+                              "value": "huila",
+                              "__fdSortId": "fd-sort-p3"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "万博",
+                                "en_US": "Huambo",
+                                "pt_PT": "Huambo",
+                                "ar_EG": "هوامبو"
+                              },
+                              "value": "huambo",
+                              "__fdSortId": "fd-sort-p4"
+                            }
+                          ]
+                        },
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "123fa302-a619-42d8-8f50-178559f9bcd8",
+                    "type": "phone-with-area-code",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "实体电话",
+                          "en_US": "Entity phone",
+                          "pt_PT": "Telefone da entidade",
+                          "ar_EG": "هاتف الكيان"
+                        },
+                        "name": "entity_phone",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange"
+                      },
+                      "fieldProps": {
+                        "defaultCode": "+244",
+                        "allowClear": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "+244 222 XXX XXX",
+                          "en_US": "+244 222 XXX XXX",
+                          "pt_PT": "+244 222 XXX XXX",
+                          "ar_EG": "+244 222 XXX XXX"
+                        },
+                        "disabled": false,
+                        "fill": true
+                      },
+                      "actionsProps": {
+                        "actions": [],
+                        "areaCodeActions": [],
+                        "phoneInputActions": []
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "d9e4d8b7-c56a-49e6-b3f4-0f2ffdcd1844",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "法定地址",
+                          "en_US": "Legal address",
+                          "pt_PT": "Morada legal",
+                          "ar_EG": "العنوان القانوني"
+                        },
+                        "name": "legal_address",
+                        "require": true,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "colSpan": 2,
+                        "rules": [
+                          {
+                            "type": "required",
+                            "config": {
+                              "required": true,
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入法定地址",
+                                "en_US": "Please enter legal address",
+                                "pt_PT": "",
+                                "ar_EG": ""
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "fieldProps": {
+                        "type": "text",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "请输入实体法定地址",
+                          "en_US": "Enter legal address",
+                          "pt_PT": "Introduza a morada legal",
+                          "ar_EG": "أدخل العنوان القانوني"
+                        },
+                        "allowClear": true,
+                        "readOnly": false,
+                        "disabled": false,
+                        "showCount": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "3dcd0e2f-2497-4844-8a9c-12407862b31e",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "实体官方邮箱",
+                          "en_US": "Official email",
+                          "pt_PT": "E-mail oficial",
+                          "ar_EG": "البريد الرسمي"
+                        },
+                        "name": "official_email",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "colSpan": 2
+                      },
+                      "fieldProps": {
+                        "type": "email",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "geral@entidade.gov.ao",
+                          "en_US": "geral@entidade.gov.ao",
+                          "pt_PT": "geral@entidade.gov.ao",
+                          "ar_EG": "geral@entidade.gov.ao"
+                        },
+                        "allowClear": true,
+                        "readOnly": false,
+                        "disabled": false,
+                        "showCount": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      },
+      {
+        "id": "9925965f-3a2f-480d-8add-a0dd2d01e1ac",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "02 | 实体负责人",
+              "en_US": "02 | Entity person in charge",
+              "pt_PT": "02 | Responsável da entidade",
+              "ar_EG": "02 | المسؤول عن الكيان"
+            }
+          },
+          "flexProps": {
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "83c225ba-a41f-43ef-8bc1-38c98c5b50e8",
+              "type": "table-grid-layout",
+              "props": {
+                "fieldProps": {
+                  "layout": "vertical",
+                  "bordered": false,
+                  "density": "default",
+                  "mode": "normal",
+                  "data": [
+                    {
+                      "name": "g1",
+                      "columnCount": 2,
+                      "colgroup": [
+                        "auto",
+                        "auto"
+                      ],
+                      "data": []
+                    }
+                  ]
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "9676af3b-443b-4bd7-8d33-d24360bd89c5",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "负责人姓名",
+                          "en_US": "Person in charge name",
+                          "pt_PT": "Nome do responsável",
+                          "ar_EG": "اسم المسؤول"
+                        },
+                        "name": "responsible_name",
+                        "require": true,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "rules": [
+                          {
+                            "type": "required",
+                            "config": {
+                              "required": true,
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入负责人姓名",
+                                "en_US": "Please enter person in charge name",
+                                "pt_PT": "",
+                                "ar_EG": ""
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "fieldProps": {
+                        "type": "text",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "负责人完整姓名",
+                          "en_US": "Full name of person in charge",
+                          "pt_PT": "Nome completo do responsável",
+                          "ar_EG": "الاسم الكامل للمسؤول"
+                        },
+                        "allowClear": true,
+                        "readOnly": false,
+                        "disabled": false,
+                        "showCount": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true,
+                        "tip": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "法定代表人或授权联系人的信息",
+                          "en_US": "Information of legal representative or authorized contact",
+                          "pt_PT": "Informações do representante legal ou contacto autorizado",
+                          "ar_EG": "معلومات الممثل القانوني أو جهة الاتصال المفوضة"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "c9a8b5c0-2e59-429b-869a-4d317f44adf8",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "职务",
+                          "en_US": "Position",
+                          "pt_PT": "Cargo",
+                          "ar_EG": "المنصب"
+                        },
+                        "name": "responsible_title",
+                        "require": true,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "rules": [
+                          {
+                            "type": "required",
+                            "config": {
+                              "required": true,
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入职务",
+                                "en_US": "Please enter position",
+                                "pt_PT": "",
+                                "ar_EG": ""
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "fieldProps": {
+                        "type": "text",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "例：财务总监 / 法定代表人",
+                          "en_US": "e.g. CFO / Legal representative",
+                          "pt_PT": "ex.: Diretor financeiro / Representante legal",
+                          "ar_EG": "مثال: المدير المالي / الممثل القانوني"
+                        },
+                        "allowClear": true,
+                        "readOnly": false,
+                        "disabled": false,
+                        "showCount": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      },
+      {
+        "id": "808fa8f0-574f-45a0-8b4d-96c7a23dd210",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "03 | 登录账号",
+              "en_US": "03 | Login account",
+              "pt_PT": "03 | Conta de login",
+              "ar_EG": "03 | حساب تسجيل الدخول"
+            }
+          },
+          "flexProps": {
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "ea8df7be-9ece-4658-8ba1-2917e0f599e1",
+              "type": "table-grid-layout",
+              "props": {
+                "fieldProps": {
+                  "layout": "vertical",
+                  "bordered": false,
+                  "density": "default",
+                  "mode": "normal",
+                  "data": [
+                    {
+                      "name": "g1",
+                      "columnCount": 2,
+                      "colgroup": [
+                        "auto",
+                        "auto"
+                      ],
+                      "data": []
+                    }
+                  ]
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "b4eae66b-c9ca-4db9-9743-6400726d4e23",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "登录者姓名",
+                          "en_US": "Registrant name",
+                          "pt_PT": "Nome do utilizador",
+                          "ar_EG": "اسم المسجل"
+                        },
+                        "name": "login_name",
+                        "require": true,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "rules": [
+                          {
+                            "type": "required",
+                            "config": {
+                              "required": true,
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入登录者姓名",
+                                "en_US": "Please enter registrant name",
+                                "pt_PT": "",
+                                "ar_EG": ""
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "fieldProps": {
+                        "type": "text",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "登录者完整姓名",
+                          "en_US": "Full name of registrant",
+                          "pt_PT": "Nome completo do utilizador",
+                          "ar_EG": "الاسم الكامل للمسجل"
+                        },
+                        "allowClear": true,
+                        "readOnly": false,
+                        "disabled": false,
+                        "showCount": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true,
+                        "tip": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "请设置登录凭据与联系方式",
+                          "en_US": "Set login credentials and contact information",
+                          "pt_PT": "Defina credenciais de login e contacto",
+                          "ar_EG": "يرجى تعيين بيانات تسجيل الدخول ومعلومات الاتصال"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "a9f26817-8072-4796-8514-710f5cf844d9",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "职务",
+                          "en_US": "Position",
+                          "pt_PT": "Cargo",
+                          "ar_EG": "المنصب"
+                        },
+                        "name": "login_title",
+                        "require": true,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "rules": [
+                          {
+                            "type": "required",
+                            "config": {
+                              "required": true,
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入职务",
+                                "en_US": "Please enter position",
+                                "pt_PT": "",
+                                "ar_EG": ""
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "fieldProps": {
+                        "type": "text",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "例：财务专员 / 会计",
+                          "en_US": "e.g. Finance specialist / Accountant",
+                          "pt_PT": "ex.: Especialista financeiro / Contabilista",
+                          "ar_EG": "مثال: أخصائي مالي / محاسب"
+                        },
+                        "allowClear": true,
+                        "readOnly": false,
+                        "disabled": false,
+                        "showCount": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "ee834b20-c3d7-4b20-a3ae-90aa782ba472",
+                    "type": "ant-alert",
+                    "props": {
+                      "formItemProps": {
+                        "noStyle": true,
+                        "colSpan": 2
+                      },
+                      "fieldProps": {
+                        "message": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "验证提示",
+                          "en_US": "Verification notice",
+                          "pt_PT": "Aviso de verificação",
+                          "ar_EG": "تنبيه التحقق"
+                        },
+                        "description": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "邮箱或手机号至少填写并验证一项。",
+                          "en_US": "Fill in and verify at least one: email or mobile number.",
+                          "pt_PT": "Preencha e verifique pelo menos um: e-mail ou telemóvel.",
+                          "ar_EG": "يرجى ملء والتحقق من البريد الإلكتروني أو رقم الجوال على الأقل."
+                        },
+                        "type": "warning",
+                        "closable": false,
+                        "showIcon": true,
+                        "fill": false
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "f611c26b-f1f1-4d13-8765-9d309dd2bdd9",
+                    "type": "send-sms",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "登录手机号",
+                          "en_US": "Login mobile",
+                          "pt_PT": "Telemóvel de login",
+                          "ar_EG": "جوال تسجيل الدخول"
+                        },
+                        "name": "login_phone_sms",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "colSpan": 2,
+                        "validateTrigger": "onChange"
+                      },
+                      "fieldProps": {
+                        "defaultCode": "+244",
+                        "areaCodeOptionsSource": {
+                          "type": "static",
+                          "areaCodeJson": ""
+                        },
+                        "phonePlaceholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "9XX XXX XXX",
+                          "en_US": "9XX XXX XXX",
+                          "pt_PT": "9XX XXX XXX",
+                          "ar_EG": "9XX XXX XXX"
+                        },
+                        "allowClear": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "验证码",
+                          "en_US": "Verification code",
+                          "pt_PT": "Código de verificação",
+                          "ar_EG": "رمز التحقق"
+                        },
+                        "disabled": false,
+                        "readOnly": false,
+                        "countdownSeconds": 60,
+                        "sendApi": {
+                          "source": {
+                            "type": "dynamic"
+                          },
+                          "responseMap": {
+                            "dataPath": ""
+                          },
+                          "requestData": {}
+                        },
+                        "fill": true
+                      },
+                      "actionsProps": {
+                        "actions": [],
+                        "codeInputActions": [],
+                        "sendButtonActions": [],
+                        "countdownActions": [],
+                        "areaCodeActions": [],
+                        "phoneInputActions": []
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "9a2566ce-289d-4baa-8f84-3a7df1631c2d",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "登录邮箱",
+                          "en_US": "Login email",
+                          "pt_PT": "E-mail de login",
+                          "ar_EG": "بريد تسجيل الدخول"
+                        },
+                        "name": "login_email",
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "colSpan": 2
+                      },
+                      "fieldProps": {
+                        "type": "email",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "nome@entidade.gov.ao",
+                          "en_US": "nome@entidade.gov.ao",
+                          "pt_PT": "nome@entidade.gov.ao",
+                          "ar_EG": "nome@entidade.gov.ao"
+                        },
+                        "allowClear": true,
+                        "readOnly": false,
+                        "disabled": false,
+                        "showCount": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "25bf900c-3b40-4c71-9807-07ec1542e0c2",
+                    "type": "ant-input-password",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "密码",
+                          "en_US": "Password",
+                          "pt_PT": "Palavra-passe",
+                          "ar_EG": "كلمة المرور"
+                        },
+                        "name": "password",
+                        "require": true,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "rules": [
+                          {
+                            "type": "required",
+                            "config": {
+                              "required": true,
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入密码",
+                                "en_US": "Please enter password",
+                                "pt_PT": "Introduza a palavra-passe",
+                                "ar_EG": "يرجى إدخال كلمة المرور"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "fieldProps": {
+                        "readOnly": false,
+                        "allowClear": true,
+                        "disabled": false,
+                        "showCount": false,
+                        "visibilityToggle": true,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "请输入密码",
+                          "en_US": "Enter password",
+                          "pt_PT": "Introduza a palavra-passe",
+                          "ar_EG": "أدخل كلمة المرور"
+                        },
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "f313cd16-8921-4ac2-88bb-81d13be32b40",
+                    "type": "ant-input-password",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "确认密码",
+                          "en_US": "Confirm password",
+                          "pt_PT": "Confirmar palavra-passe",
+                          "ar_EG": "تأكيد كلمة المرور"
+                        },
+                        "name": "confirm_password",
+                        "require": true,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "value",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "rules": [
+                          {
+                            "type": "required",
+                            "config": {
+                              "required": true,
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请再次输入密码",
+                                "en_US": "Please enter password again",
+                                "pt_PT": "Introduza a palavra-passe novamente",
+                                "ar_EG": "يرجى إدخال كلمة المرور مرة أخرى"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "fieldProps": {
+                        "readOnly": false,
+                        "allowClear": true,
+                        "disabled": false,
+                        "showCount": false,
+                        "visibilityToggle": true,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "请再次输入密码",
+                          "en_US": "Enter password again",
+                          "pt_PT": "Introduza a palavra-passe novamente",
+                          "ar_EG": "أدخل كلمة المرور مرة أخرى"
+                        },
+                        "fill": true
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "fb1a9e7e-b348-4939-b293-61deabd4f067",
+                    "type": "ant-checkbox",
+                    "props": {
+                      "formItemProps": {
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "协议",
+                          "en_US": "Agreement",
+                          "pt_PT": "Acordo",
+                          "ar_EG": "الاتفاقية"
+                        },
+                        "name": "agreement",
+                        "require": true,
+                        "hidden": false,
+                        "noStyle": false,
+                        "valuePropName": "checked",
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "colSpan": 2,
+                        "rules": [
+                          {
+                            "type": "required",
+                            "config": {
+                              "required": true,
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请阅读并接受使用条款和隐私政策",
+                                "en_US": "Please read and accept terms and privacy policy",
+                                "pt_PT": "Leia e aceite os termos e política de privacidade",
+                                "ar_EG": "يرجى قراءة وقبول الشروط وسياسة الخصوصية"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "indeterminate": false,
+                        "fill": true,
+                        "children": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "我已阅读并接受使用条款和隐私政策",
+                          "en_US": "I have read and accept the Terms of Use and Privacy Policy",
+                          "pt_PT": "Li e aceito os Termos de Utilização e a Política de Privacidade",
+                          "ar_EG": "لقد قرأت وأوافق على شروط الاستخدام وسياسة الخصوصية"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      },
+      {
+        "id": "eb17515d-ddbb-4bbd-8b6b-25c09fd20973",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "安全与合规",
+              "en_US": "Security and compliance",
+              "pt_PT": "Segurança e conformidade",
+              "ar_EG": "الأمان والامتثال"
+            }
+          },
+          "flexProps": {
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "1c06d187-7990-4e14-8e8c-fddb3cc5ce4e",
+              "type": "ant-text",
+              "props": {
+                "formItemProps": {
+                  "noStyle": true
+                },
+                "fieldProps": {
+                  "children": "端到端加密传输 (TLS 1.3)",
+                  "type": "secondary",
+                  "strong": false,
+                  "underline": false,
+                  "delete": false,
+                  "disabled": false,
+                  "ellipsis": false,
+                  "fill": false
+                },
+                "fieldActionTypes": [
+                  "copy",
+                  "delete"
+                ],
+                "styleProps": {
+                  "styles": "element.style{\r\n  font-size:14px;\r\n  color: rgba(101, 117, 139, 0.8);\r\n}\r\n"
+                }
+              }
+            },
+            {
+              "id": "9341eb13-d6de-4da6-a761-297ece15d720",
+              "type": "ant-text",
+              "props": {
+                "formItemProps": {
+                  "noStyle": true
+                },
+                "fieldProps": {
+                  "children": "AES-256 静态加密存储",
+                  "type": "secondary",
+                  "strong": false,
+                  "underline": false,
+                  "delete": false,
+                  "disabled": false,
+                  "ellipsis": false,
+                  "fill": false
+                },
+                "fieldActionTypes": [
+                  "copy",
+                  "delete"
+                ],
+                "styleProps": {
+                  "styles": "element.style{\r\n  font-size:14px;\r\n  color: rgba(101, 117, 139, 0.8);\r\n}\r\n"
+                }
+              }
+            },
+            {
+              "id": "60fa93c8-b865-476c-9962-b67808743467",
+              "type": "ant-text",
+              "props": {
+                "formItemProps": {
+                  "noStyle": true
+                },
+                "fieldProps": {
+                  "children": "敏感数据脱敏并审计",
+                  "type": "secondary",
+                  "strong": false,
+                  "underline": false,
+                  "delete": false,
+                  "disabled": false,
+                  "ellipsis": false,
+                  "fill": false
+                },
+                "fieldActionTypes": [
+                  "copy",
+                  "delete"
+                ],
+                "styleProps": {
+                  "styles": "element.style{\r\n  font-size:14px;\r\n  color: rgba(101, 117, 139, 0.8);\r\n}\r\n"
+                }
+              }
+            },
+            {
+              "id": "2befd91d-8a0b-427c-92e8-77ff1e85bf04",
+              "type": "ant-divider",
+              "props": {
+                "formItemProps": {
+                  "noStyle": true
+                },
+                "fieldProps": {
+                  "children": {
+                    "selectValue": "zh_CN",
+                    "zh_CN": "",
+                    "en_US": "Divider"
+                  },
+                  "orientation": "horizontal",
+                  "vertical": false,
+                  "dashed": false,
+                  "plain": false,
+                  "size": "small",
+                  "titlePlacement": "center",
+                  "variant": "solid",
+                  "fill": true
+                },
+                "fieldActionTypes": [
+                  "copy",
+                  "delete"
+                ]
+              }
+            },
+            {
+              "id": "3c585761-8101-4bd3-8cac-eb3ef9e16002",
+              "type": "ant-text",
+              "props": {
+                "formItemProps": {
+                  "noStyle": true
+                },
+                "fieldProps": {
+                  "children": "符合第 22/11 号《个人数据保护法》及审计法院内部政策。\n\n",
+                  "type": "secondary",
+                  "strong": false,
+                  "underline": false,
+                  "delete": false,
+                  "disabled": false,
+                  "ellipsis": false,
+                  "fill": false
+                },
+                "fieldActionTypes": [
+                  "copy",
+                  "delete"
+                ],
+                "styleProps": {
+                  "styles": "element.style{\r\n  font-size:10px;\r\n  color: rgba(101, 117, 139, 0.8);\r\n  margin-top: 8px;\r\n}\r\n"
+                }
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      }
+    ],
+    "flexProps": {
+      "minSize": true,
+      "scroll": true
+    }
+  }
+}

@@ -188,6 +188,8 @@ declare const _default: {
     pattern: string;
     placement: string;
     placeholder: string;
+    tip: string;
+    tip_style: string;
     please_enter: string;
     please_select: string;
     preview: string;

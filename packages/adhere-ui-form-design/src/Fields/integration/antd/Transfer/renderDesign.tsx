@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
-import { LabelDesign, ValueDesign } from '../../../../components';
+import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import type { TransferDataSourceManagerFormItemValue } from '../../../../components';
 import type { DesignContextType, DesignValue, I18nValue } from '../../../../types';
 import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
@@ -59,7 +59,7 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style }) => {
+        {({ fieldProps, style, lang }) => {
           const { intl } = useContext(ConfigProvider.Context);
           const lang = intl.lang!;
 
@@ -96,14 +96,16 @@ export function renderDesign({
           }
 
           return (
-            <Transfer
-              {...(transferProps as TransferProps)}
-              dataSource={dataSource}
-              style={style}
-              titles={[resolvedLeftTitle, resolvedRightTitle]}
-              operations={operations.length > 0 ? operations : undefined}
-              render={(item) => item.title}
-            />
+            <FieldWithTip tip={fieldProps.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
+              <Transfer
+                {...(transferProps as TransferProps)}
+                dataSource={dataSource}
+                style={style}
+                titles={[resolvedLeftTitle, resolvedRightTitle]}
+                operations={operations.length > 0 ? operations : undefined}
+                render={(item) => item.title}
+              />
+            </FieldWithTip>
           );
         }}
       </ValueDesign>

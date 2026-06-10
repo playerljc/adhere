@@ -3,7 +3,12 @@ import React from 'react';
 
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
-import { DesignPreviewFieldWithDataSource, LabelDesign, ValueDesign } from '../../../../components';
+import {
+  DesignPreviewFieldWithDataSource,
+  FieldWithTip,
+  LabelDesign,
+  ValueDesign,
+} from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
 import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
 
@@ -41,33 +46,35 @@ export function renderDesign({
     value: (
       <ValueDesign value={value}>
         {({ fieldProps, style, actions, lang }) => (
-          <DesignPreviewFieldWithDataSource
-            fieldProps={fieldProps}
-            formItemProps={formItemProps}
-            style={style ?? {}}
-            actions={actions}
-          >
-            {({
-              restFieldProps,
-              options,
-              loading,
-              style: fieldStyle,
-              actions: fieldActions,
-              value,
-              onChange,
-            }) => (
-              <Select
-                {...(restFieldProps as SelectProps)}
-                placeholder={resolveI18nText(fieldProps.placeholder as any, lang) as any}
-                loading={loading || undefined}
-                options={options}
-                style={fieldStyle}
-                {...fieldActions}
-                value={value as SelectProps['value']}
-                onChange={onChange}
-              />
-            )}
-          </DesignPreviewFieldWithDataSource>
+          <FieldWithTip tip={fieldProps.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
+            <DesignPreviewFieldWithDataSource
+              fieldProps={fieldProps}
+              formItemProps={formItemProps}
+              style={style ?? {}}
+              actions={actions}
+            >
+              {({
+                restFieldProps,
+                options,
+                loading,
+                style: fieldStyle,
+                actions: fieldActions,
+                value,
+                onChange,
+              }) => (
+                <Select
+                  {...(restFieldProps as SelectProps)}
+                  placeholder={resolveI18nText(fieldProps.placeholder as any, lang) as any}
+                  loading={loading || undefined}
+                  options={options}
+                  style={fieldStyle}
+                  {...fieldActions}
+                  value={value as SelectProps['value']}
+                  onChange={onChange}
+                />
+              )}
+            </DesignPreviewFieldWithDataSource>
+          </FieldWithTip>
         )}
       </ValueDesign>
     ),

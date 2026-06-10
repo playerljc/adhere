@@ -6,6 +6,7 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import {
   buildFormPropertyPlaceholderRow,
+  buildFormPropertyTipRow,
   DataSourceManagerFormItem,
   PlacementSelectStandardDict,
   SelectModeSelectStandardDict,
@@ -186,6 +187,7 @@ const MainProperty = createMainProperty({
         </Value>
       ),
     },
+    buildFormPropertyTipRow(ctx.titleLabelSlot),
     ].filter(Boolean);
 
     return defaultFormItems as DataItemRow[];

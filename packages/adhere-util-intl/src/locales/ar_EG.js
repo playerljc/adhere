@@ -158,6 +158,8 @@ export default [
     past_years: 'آخر {value} سنوات',
     pattern: 'نمط',
     placeholder: 'عنصر نائب',
+    tip: 'تلميح',
+    tip_style: 'نمط التلميح',
     please_enter: 'يرجى الإدخال',
     please_select: 'يرجى الاختيار',
     preview: 'معاينة',

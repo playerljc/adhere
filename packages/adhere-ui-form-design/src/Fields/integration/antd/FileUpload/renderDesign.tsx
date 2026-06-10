@@ -5,7 +5,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import Intl from '@baifendian/adhere-util-intl';
 
 import type { UploadDataSourceManagerFormItemValue } from '../../../../components';
-import { LabelDesign, ValueDesign } from '../../../../components';
+import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
 import {
   computeLabelValueColSpan,
@@ -132,7 +132,7 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions }) => {
+        {({ fieldProps, style, actions, lang }) => {
           const { uploadDataSource, ...rest } = fieldProps as typeof fieldProps & {
             uploadDataSource?: UploadDataSourceManagerFormItemValue;
           };
@@ -153,7 +153,11 @@ export function renderDesign({
             style,
           };
 
-          return <FieldFileUpload uploadProps={uploadProps} />;
+          return (
+            <FieldWithTip tip={fieldProps.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
+              <FieldFileUpload uploadProps={uploadProps} />
+            </FieldWithTip>
+          );
         }}
       </ValueDesign>
     ),

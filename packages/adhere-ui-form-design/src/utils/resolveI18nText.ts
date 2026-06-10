@@ -16,3 +16,14 @@ export function resolveI18nText(
   }
   return '';
 }
+
+export function isResolvedI18nTextEmpty(
+  value: I18nValue | string | null | undefined,
+  lang: string,
+): boolean {
+  const resolved = resolveI18nText(value, lang);
+  if (typeof resolved === 'string') {
+    return resolved.trim() === '';
+  }
+  return resolved == null || resolved === false;
+}

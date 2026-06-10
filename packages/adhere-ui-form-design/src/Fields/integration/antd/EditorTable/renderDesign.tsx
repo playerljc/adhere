@@ -1,6 +1,5 @@
 import React, { useContext, useMemo, useRef } from 'react';
 
-import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import DateDisplay, { type DateValue } from '@baifendian/adhere-ui-datedisplay';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
@@ -11,6 +10,7 @@ import dayjs from 'dayjs';
 import { DesignContext } from '../../../../Design/Context';
 import {
   DesignPreviewFieldWithDataSource,
+  FieldWithTip,
   LabelDesign,
   ValueDesign,
   WithDesignFieldDataSourceOptions,
@@ -495,19 +495,19 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ style, actions }) => {
-          const { intl } = useContext(ConfigProvider.Context);
-          const lang = intl.lang!;
+        {({ fieldProps, style, actions, lang }) => {
           const designContext = useContext(DesignContext);
 
           return (
-            <EditorTableDesignPreview
-              designValueProps={value.props}
-              style={style}
-              actions={actions}
-              lang={lang}
-              designContext={designContext}
-            />
+            <FieldWithTip tip={fieldProps.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
+              <EditorTableDesignPreview
+                designValueProps={value.props}
+                style={style}
+                actions={actions}
+                lang={lang}
+                designContext={designContext}
+              />
+            </FieldWithTip>
           );
         }}
       </ValueDesign>

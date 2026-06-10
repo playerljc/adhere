@@ -8,6 +8,7 @@ import {
   InputSizeSelectStandardDict,
   VariantSelectStandardDict,
   WhetherRadioHorizontalDict,
+  buildFormPropertyTipRow,
 } from '../../../../components';
 import { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
@@ -18,7 +19,7 @@ import { createMainProperty, renderMainPropertyWithCreate } from '../../../../ut
  */
 const MainProperty = createMainProperty({
   formName: 'antInputOTPMainProperty',
-  getDefaultFormItems: (): DataItemRow[] => [
+  getDefaultFormItems: (_designValue, ctx): DataItemRow[] => [
     {
       key: 'length',
       require: false,
@@ -95,6 +96,7 @@ const MainProperty = createMainProperty({
         </Value>
       ),
     },
+    buildFormPropertyTipRow(ctx.titleLabelSlot),
   ],
   autoFill: true,
 });

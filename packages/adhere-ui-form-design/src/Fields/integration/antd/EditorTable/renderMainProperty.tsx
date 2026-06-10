@@ -10,6 +10,7 @@ import {
   TableColumnSettingFormItem,
   TableNumberGeneratorRuleSelectStandardDict,
   WhetherRadioHorizontalDict,
+  buildFormPropertyTipRow,
 } from '../../../../components';
 import { Label, Value } from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
@@ -92,6 +93,7 @@ const MainProperty = createMainProperty({
           </Value>
         ),
       },
+    buildFormPropertyTipRow(titleLabelSlot),
     ].filter(Boolean),
   autoFill: true,
 });

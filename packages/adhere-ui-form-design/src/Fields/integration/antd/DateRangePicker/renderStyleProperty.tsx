@@ -1,11 +1,10 @@
 import React, { type ReactNode, useContext, useEffect } from 'react';
 
 import { Form } from '@baifendian/adhere-ui-anthoc';
-import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
-import { MonacoCSSEditorFormItem } from '../../../../components';
-import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
+import { buildFieldStylePropertyRows } from '../../../../components/FieldStylePropertyRows';
+import PropertiesGridLayout from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
 
 function StyleProperty(props: DesignValueProps) {
@@ -31,44 +30,7 @@ function StyleProperty(props: DesignValueProps) {
             width: '100%',
             columnCount: 1,
             colgroup: ['auto'],
-            data: [
-              {
-                key: 'styles',
-                require: false,
-                label: <Label>{Intl.get('style')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="styles">
-                      <MonacoCSSEditorFormItem language="css" />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'labelStyles',
-                require: false,
-                label: <Label>{Intl.get('label_style')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="labelStyles">
-                      <MonacoCSSEditorFormItem language="css" />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'valueStyles',
-                require: false,
-                label: <Label>{Intl.get('value_style')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="valueStyles">
-                      <MonacoCSSEditorFormItem language="css" />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-            ],
+            data: buildFieldStylePropertyRows(),
           },
         ]}
       />

@@ -10,6 +10,7 @@ import {
   TransferDataSourceManagerFormItem,
   VerificationStatusSelectStandardDict,
   WhetherRadioHorizontalDict,
+  buildFormPropertyTipRow,
 } from '../../../../components';
 import { SlotEndLabel } from '../../../../components';
 import { Label, Value } from '../../../../components/TableGridLayout';
@@ -251,6 +252,7 @@ const MainProperty = createMainProperty({
         </Value>
       ),
     },
+    buildFormPropertyTipRow(ctx.titleLabelSlot),
   ];
     return defaultFormItems;
   },

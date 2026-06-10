@@ -3,7 +3,7 @@ import React from 'react';
 
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
-import { LabelDesign, ValueDesign } from '../../../../components';
+import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
 import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
 
@@ -42,13 +42,15 @@ export function renderDesign({
     value: (
       <ValueDesign value={value}>
         {({ fieldProps, style, actions, lang }) => (
-          <Input
-            {...(fieldProps as InputProps)}
-            {...actions}
-            style={style ?? {}}
-            placeholder={resolveI18nText(fieldProps.placeholder as any, lang) as any}
-            defaultValue={formItemProps?.initialValue as InputProps['defaultValue']}
-          />
+          <FieldWithTip tip={fieldProps.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
+            <Input
+              {...(fieldProps as InputProps)}
+              {...actions}
+              style={style ?? {}}
+              placeholder={resolveI18nText(fieldProps.placeholder as any, lang) as any}
+              defaultValue={formItemProps?.initialValue as InputProps['defaultValue']}
+            />
+          </FieldWithTip>
         )}
       </ValueDesign>
     ),

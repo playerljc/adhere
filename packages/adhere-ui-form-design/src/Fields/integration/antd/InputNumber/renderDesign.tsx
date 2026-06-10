@@ -5,7 +5,7 @@ import React from 'react';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import Util from '@baifendian/adhere-util';
 
-import { LabelDesign, ValueDesign } from '../../../../components';
+import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
 import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
 
@@ -73,16 +73,18 @@ export function renderDesign({
           }
 
           return (
-            <InputNumber
-              {...(inputNumberProps as InputNumberProps)}
-              {...actions}
-              placeholder={resolveI18nText(fieldProps.placeholder as any, lang) as any}
-              style={style ?? {}}
-              defaultValue={
-                (formItemProps as { initialValue?: InputNumberProps['defaultValue'] })?.initialValue
-              }
-              {...thousandsProps}
-            />
+            <FieldWithTip tip={fieldProps.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
+              <InputNumber
+                {...(inputNumberProps as InputNumberProps)}
+                {...actions}
+                placeholder={resolveI18nText(fieldProps.placeholder as any, lang) as any}
+                style={style ?? {}}
+                defaultValue={
+                  (formItemProps as { initialValue?: InputNumberProps['defaultValue'] })?.initialValue
+                }
+                {...thousandsProps}
+              />
+            </FieldWithTip>
           );
         }}
       </ValueDesign>

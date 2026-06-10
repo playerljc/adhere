@@ -189,6 +189,8 @@ export default [
     pattern: '正则',
     placement: '弹出位置',
     placeholder: '占位符',
+    tip: '提示',
+    tip_style: '提示样式',
     please_enter: '请输入',
     please_select: '请选择',
     preview: '预览',

@@ -132,6 +132,8 @@ export type {
 } from './UploadDataSourceManagerFormItem';
 
 export * from './FormPropertyStandardRows';
+export { buildFieldStylePropertyRows } from './FieldStylePropertyRows';
+export { default as FieldWithTip } from './FieldWithTip';
 export { FormPropertyShell, mapSliderFormPropertyFormValues } from './FormPropertyShell';
 export {
   LabelDesign,

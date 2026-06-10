@@ -7,7 +7,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
-import { LabelDesign, ValueDesign } from '../../../../components';
+import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import { SELECT_PREFIX } from '../../../../constant';
 import type { DesignContextType, DesignValue } from '../../../../types';
 import { computeLabelValueColSpan, findDesignValueById, isRichEditorHtmlEmpty } from '../../../../utils';
@@ -291,13 +291,15 @@ export function renderDesign({
     value: (
       <ValueDesign value={value}>
         {({ fieldProps, style, actions, lang }) => (
-          <FieldRichEditor
-            fieldId={id}
-            fieldProps={fieldProps as RichEditorFieldProps}
-            style={style}
-            actions={actions}
-            lang={lang}
-          />
+          <FieldWithTip tip={fieldProps.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
+            <FieldRichEditor
+              fieldId={id}
+              fieldProps={fieldProps as RichEditorFieldProps}
+              style={style}
+              actions={actions}
+              lang={lang}
+            />
+          </FieldWithTip>
         )}
       </ValueDesign>
     ),

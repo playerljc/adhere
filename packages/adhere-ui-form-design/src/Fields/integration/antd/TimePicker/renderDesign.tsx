@@ -5,7 +5,7 @@ import React from 'react';
 
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
-import { LabelDesign, ValueDesign } from '../../../../components';
+import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
 import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
 
@@ -43,13 +43,15 @@ export function renderDesign({
     value: (
       <ValueDesign value={value}>
         {({ fieldProps: fp, style, actions, lang }) => (
-          <TimePicker
-            {...(fp as TimePickerProps)}
-            {...actions}
-            placeholder={resolveI18nText(fp.placeholder as any, lang) as any}
-            style={style ?? {}}
-            defaultValue={valueDayjs}
-          />
+          <FieldWithTip tip={fp.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
+            <TimePicker
+              {...(fp as TimePickerProps)}
+              {...actions}
+              placeholder={resolveI18nText(fp.placeholder as any, lang) as any}
+              style={style ?? {}}
+              defaultValue={valueDayjs}
+            />
+          </FieldWithTip>
         )}
       </ValueDesign>
     ),

@@ -53,6 +53,42 @@ export function buildFormPropertyPlaceholderRow(slot: FormPropertyLabelSlotRef):
   };
 }
 
+/** 字段提示（含 i18n） */
+export function buildFormPropertyTipRow(slot: FormPropertyLabelSlotRef): DataItemRow {
+  return {
+    key: 'tip',
+    require: false,
+    label: (
+      <SlotEndLabel
+        ref={(node) => {
+          slot.set('tip', node);
+        }}
+      >
+        {Intl.get('tip')}：
+      </SlotEndLabel>
+    ),
+    value: (
+      <Value>
+        <Form.Item name="tip">
+          <I18nChangeFormItem getTriggerContainer={() => slot.get('tip') as HTMLElement}>
+            {({ onChange, value }) => (
+              <Input.OptimizedInput
+                value={value}
+                placeholder={Intl.get('tip')}
+                maxLength={200}
+                onChange={(e) => {
+                  onChange(e.target.value);
+                }}
+                showCount={false}
+              />
+            )}
+          </I18nChangeFormItem>
+        </Form.Item>
+      </Value>
+    ),
+  };
+}
+
 /** 标签（含 i18n） */
 export function buildFormPropertyLabelRow(slot: FormPropertyLabelSlotRef): DataItemRow {
   return {

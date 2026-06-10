@@ -179,6 +179,8 @@ export default [
     past_years: 'Past {value} years',
     pattern: 'Pattern',
     placeholder: 'Placeholder',
+    tip: 'Tip',
+    tip_style: 'Tip style',
     please_enter: 'Please enter',
     please_select: 'Please select',
     preview: 'Preview',

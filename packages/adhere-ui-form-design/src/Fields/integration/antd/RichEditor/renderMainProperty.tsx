@@ -11,6 +11,7 @@ import {
   RichEditorToolbarPresetSelectStandardDict,
   WhetherRadioHorizontalDict,
   buildFormPropertyPlaceholderRow,
+  buildFormPropertyTipRow,
   payloadToValues as i18nPayloadToValues,
   valuesToPayload as i18nValuesToPayload,
 } from '../../../../components';
@@ -155,6 +156,7 @@ function createRichEditorMainProperty(lang: string) {
           </Value>
         ),
       },
+      buildFormPropertyTipRow(ctx.titleLabelSlot),
     ],
     autoFill: true,
   });

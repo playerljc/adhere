@@ -157,6 +157,8 @@ declare const _default: {
     past_years: string;
     pattern: string;
     placeholder: string;
+    tip: string;
+    tip_style: string;
     please_enter: string;
     please_select: string;
     preview: string;

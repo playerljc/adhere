@@ -158,6 +158,8 @@ export default [
     past_years: 'Últimos {value} anos',
     pattern: 'Padrão',
     placeholder: 'Espaço reservado',
+    tip: 'Dica',
+    tip_style: 'Estilo da dica',
     please_enter: 'Por favor, insira',
     please_select: 'Por favor, selecione',
     preview: 'Visualizar',

@@ -4,7 +4,10 @@ import { Form, InputNumberInteger } from '@baifendian/adhere-ui-anthoc';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { DirectionSelectStandardDict, WhetherRadioHorizontalDict } from '../../../../components';
+import {
+  DirectionSelectStandardDict, WhetherRadioHorizontalDict,
+  buildFormPropertyTipRow,
+} from '../../../../components';
 import { Label, Value } from '../../../../components/TableGridLayout';
 import {
   createMainProperty,
@@ -14,7 +17,7 @@ import type { DesignValueProps } from '../../../../types';
 
 const MainProperty = createMainProperty({
   formName: 'antSliderMainProperty',
-  getDefaultFormItems: (): DataItemRow[] => [
+  getDefaultFormItems: (_designValue, ctx): DataItemRow[] => [
     {
       key: 'disabled',
       require: false,
@@ -138,6 +141,7 @@ const MainProperty = createMainProperty({
         </Value>
       ),
     },
+    buildFormPropertyTipRow(ctx.titleLabelSlot),
   ],
   autoFill: true,
 });

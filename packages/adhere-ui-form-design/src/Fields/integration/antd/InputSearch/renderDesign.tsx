@@ -4,7 +4,7 @@ import React from 'react';
 
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
-import { LabelDesign, ValueDesign } from '../../../../components';
+import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
 import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
 
@@ -42,15 +42,29 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions, lang }) => (
-          <Search
-            {...(fieldProps as SearchProps)}
-            {...actions}
-            placeholder={resolveI18nText(fieldProps.placeholder as any, lang) as any}
-            style={style ?? {}}
-            defaultValue={formItemProps?.initialValue as SearchProps['defaultValue']}
-          />
-        )}
+        {({ fieldProps, style, actions, lang }) => {
+          const { placeholder, enterButton, ...restFieldProps } = fieldProps as SearchProps & {
+            placeholder?: unknown;
+            enterButton?: unknown;
+          };
+
+          return (
+            <FieldWithTip tip={fieldProps.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
+              <Search
+                {...restFieldProps}
+                {...actions}
+                placeholder={resolveI18nText(placeholder as any, lang) as SearchProps['placeholder']}
+                enterButton={
+                  enterButton != null
+                    ? (resolveI18nText(enterButton as any, lang) as SearchProps['enterButton'])
+                    : undefined
+                }
+                style={style ?? {}}
+                defaultValue={formItemProps?.initialValue as SearchProps['defaultValue']}
+              />
+            </FieldWithTip>
+          );
+        }}
       </ValueDesign>
     ),
   };

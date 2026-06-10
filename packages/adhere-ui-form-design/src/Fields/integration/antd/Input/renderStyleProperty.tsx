@@ -1,11 +1,10 @@
 import React, { type ReactNode, useContext, useEffect } from 'react';
 
 import { Form } from '@baifendian/adhere-ui-anthoc';
-import Intl from '@baifendian/adhere-util-intl';
 
 import { DesignContext } from '../../../../Design/Context';
-import { MonacoCSSEditorFormItem } from '../../../../components';
-import PropertiesGridLayout, { Label, Value } from '../../../../components/TableGridLayout';
+import { buildFieldStylePropertyRows } from '../../../../components/FieldStylePropertyRows';
+import PropertiesGridLayout from '../../../../components/TableGridLayout';
 import type { DesignValueProps } from '../../../../types';
 
 /**
@@ -18,15 +17,9 @@ import type { DesignValueProps } from '../../../../types';
  * @param {DesignValueProps} props
  */
 function StyleProperty(props: DesignValueProps) {
-  // 表单的instance
   const [form] = Form.useForm();
 
-  const {
-    // 获取当前激活的控件的id(也就是Editor中选中的控件)
-    getActiveFieldId,
-    // 设置控件的属性
-    setStyleProps,
-  } = useContext(DesignContext);
+  const { getActiveFieldId, setStyleProps } = useContext(DesignContext);
 
   const { styleProps } = props;
 
@@ -39,7 +32,6 @@ function StyleProperty(props: DesignValueProps) {
   }
 
   useEffect(() => {
-    // 设置控件的数据到表单
     form.setFieldsValue(styleProps);
   }, [styleProps]);
 
@@ -53,55 +45,14 @@ function StyleProperty(props: DesignValueProps) {
             width: '100%',
             columnCount: 1,
             colgroup: ['auto'],
-            data: [
-              {
-                key: 'styles',
-                require: false,
-                label: <Label>{Intl.get('style')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="styles">
-                      <MonacoCSSEditorFormItem language="css" />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'labelStyles',
-                require: false,
-                label: <Label>{Intl.get('label_style')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="labelStyles">
-                      <MonacoCSSEditorFormItem language="css" />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-              {
-                key: 'valueStyles',
-                require: false,
-                label: <Label>{Intl.get('value_style')}：</Label>,
-                value: (
-                  <Value>
-                    <Form.Item name="valueStyles">
-                      <MonacoCSSEditorFormItem language="css" />
-                    </Form.Item>
-                  </Value>
-                ),
-              },
-            ],
+            data: buildFieldStylePropertyRows(),
           },
         ]}
       ></PropertiesGridLayout>
     </Form>
   );
 }
-/**
- * renderStyleProperty
- * @description 我觉得直接写代码就行，不需要那么多的可视化设置
- * @param props
- */
+
 export function renderStyleProperty(props: DesignValueProps): ReactNode {
   return <StyleProperty {...props} />;
 }
