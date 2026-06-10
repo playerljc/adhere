@@ -110,6 +110,9 @@ export function createMainProperty(options: CreateMainPropertyOptions) {
     // 监听属性面板表单值，用于动态生成表单项
     const watchValues = Form.useWatch([], form);
 
+    /** 程序化 setFieldsValue 期间跳过 onFieldsChange，避免回写不完整表单值覆盖 fieldProps */
+    const isHydratingRef = useRef(false);
+
     const convertCtx = useMemo(
       () => ({
         designValue,
@@ -153,6 +156,8 @@ export function createMainProperty(options: CreateMainPropertyOptions) {
     );
 
     function onFieldsChangeInternal() {
+      if (isHydratingRef.current) return;
+
       if (onFieldsChange) {
         onFieldsChange({
           designValue,
@@ -171,10 +176,14 @@ export function createMainProperty(options: CreateMainPropertyOptions) {
     }
 
     useEffect(() => {
+      isHydratingRef.current = true;
       const values = payloadToValues
         ? payloadToValues(displayFieldProps, convertCtx)
         : displayFieldProps;
       form.setFieldsValue(values);
+      queueMicrotask(() => {
+        isHydratingRef.current = false;
+      });
       // 仅随存储中的 fieldProps / overlay 变化同步；勿依赖含 watchValues 的 convertCtx，否则每次输入都会 setFieldsValue
     }, [displayFieldProps, form, payloadToValues]);
 

@@ -50,11 +50,14 @@ const DataSourceManagerFormItem: FC<DataSourceManagerFormItemProps> = ({ value, 
   const type = value?.type ?? 'static';
 
   useEffect(() => {
-    if (value?.type) return;
+    // 属性面板首次挂载时 Form 尚未 setFieldsValue，此时 value 为 undefined；
+    // 若此时写入默认空 dataSource，会经 onFieldsChange 覆盖 JSON/模板中的静态选项。
+    if (value == null) return;
+    if (value.type) return;
     onChange?.({
       type: 'static',
-      dataSource: value?.dataSource ?? [],
-      dynamicConfigId: value?.dynamicConfigId,
+      dataSource: value.dataSource ?? [],
+      dynamicConfigId: value.dynamicConfigId,
     });
   }, [value?.type, value?.dataSource, value?.dynamicConfigId, onChange]);
 
