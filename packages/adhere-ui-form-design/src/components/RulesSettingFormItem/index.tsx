@@ -15,6 +15,7 @@ import Min from './Min';
 import Pattern from './Pattern';
 import Required from './Required';
 import TableSelectRequired from './TableSelectRequired';
+import TreeSelectionRequired from './TreeSelectionRequired';
 import Whitespace from './Whitespace';
 
 export type RuleType =
@@ -24,7 +25,8 @@ export type RuleType =
   | 'min'
   | 'pattern'
   | 'custom'
-  | 'tableSelectRequired';
+  | 'tableSelectRequired'
+  | 'treeSelectionRequired';
 
 export type RuleConfig = Pick<
   RuleObject,
@@ -156,6 +158,17 @@ const RulesSettingFormItem: FC<RulesSettingFormItemProps> = ({
       'tableSelectRequired',
       (ruleConfig, index) => (
         <TableSelectRequired
+          rule={ruleConfig}
+          onChange={(_value) => {
+            onChange?.(changeValueAt(index, _value));
+          }}
+        />
+      ),
+    ],
+    [
+      'treeSelectionRequired',
+      (ruleConfig, index) => (
+        <TreeSelectionRequired
           rule={ruleConfig}
           onChange={(_value) => {
             onChange?.(changeValueAt(index, _value));

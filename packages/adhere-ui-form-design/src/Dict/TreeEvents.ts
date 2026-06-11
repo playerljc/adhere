@@ -1,0 +1,20 @@
+// TreeEvents
+
+export const TreeEvents = {
+  handler: () => {
+    return [
+      { label: 'onCheck', value: 'onCheck' },
+      { label: 'onSelect', value: 'onSelect' },
+      { label: 'onExpand', value: 'onExpand' },
+      { label: 'onDoubleClick', value: 'onDoubleClick' },
+      { label: 'onDragStart', value: 'onDragStart' },
+      { label: 'onDragEnter', value: 'onDragEnter' },
+      { label: 'onDragLeave', value: 'onDragLeave' },
+      { label: 'onDragOver', value: 'onDragOver' },
+      { label: 'onDragEnd', value: 'onDragEnd' },
+      { label: 'onDrop', value: 'onDrop' },
+      { label: 'onLoad', value: 'onLoad' },
+      { label: 'onRightClick', value: 'onRightClick' },
+    ];
+  },
+};

@@ -1,6 +1,7 @@
 import {
   AlignLeftOutlined,
   ApartmentOutlined,
+  BranchesOutlined,
   BgColorsOutlined,
   BorderInnerOutlined,
   BorderOutlined,
@@ -74,6 +75,7 @@ import { define as TextAreaDefine } from './TextArea';
 import { define as TimePickerDefine } from './TimePicker';
 import { define as TimeRangePickerDefine } from './TimeRangePicker';
 import { define as TransferDefine } from './Transfer';
+import { define as TreeSelectionDefine } from './TreeSelection';
 import { define as TreeSelectDefine } from './TreeSelect';
 
 const Input = InputDefine();
@@ -105,6 +107,7 @@ const Slider = SliderDefine();
 const Segmented = SegmentedDefine();
 const Select = SelectDefine();
 const TreeSelect = TreeSelectDefine();
+const TreeSelection = TreeSelectionDefine();
 const Cascader = CascaderDefine();
 const Transfer = TransferDefine();
 const EditorTable = EditorTableDefine();
@@ -323,6 +326,13 @@ export function install(): {
         tooltip: Intl.get('tree_select_text'),
       },
       {
+        type: TreeSelection.type,
+        icon: React.createElement(BranchesOutlined),
+        label: Intl.get('tree_selection_text'),
+        searchLabel: Intl.get('tree_selection_text'),
+        tooltip: Intl.get('tree_selection_text'),
+      },
+      {
         type: Cascader.type,
         icon: React.createElement(PartitionOutlined),
         label: Intl.get('cascader_text'),
@@ -402,6 +412,7 @@ export function install(): {
       Segmented,
       Select,
       TreeSelect,
+      TreeSelection,
       Cascader,
       Transfer,
       FileUpload,

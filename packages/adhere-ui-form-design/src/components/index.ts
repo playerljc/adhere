@@ -91,6 +91,7 @@ import { TableColumnDefaultSortOrderSelectStandardDict } from './TableColumnDefa
 import { TableColumnFixedSelectStandardDict } from './TableColumnFixed';
 import { TableColumnSettingFormItem } from './TableColumnSettingFormItem';
 import { TableEventsSelectStandardDict } from './TableEvents';
+import { TreeEventsSelectStandardDict } from './TreeEvents';
 import TableDataSourceManagerFormItem from './TableDataSourceManagerFormItem';
 import { TableLayoutSelectStandardDict } from './TableLayout';
 import { TableRowSelectionTypeSelectStandardDict } from './TableRowSelectionType';
@@ -232,6 +233,7 @@ export {
   PaginationPositionSelectStandardDict,
   PaginationSizeSelectStandardDict,
   TableEventsSelectStandardDict,
+  TreeEventsSelectStandardDict,
   TabsTypeSelectStandardDict,
   TabsSizeSelectStandardDict,
   TabsTabPlacementSelectStandardDict,

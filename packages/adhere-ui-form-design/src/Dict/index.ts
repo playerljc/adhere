@@ -85,6 +85,7 @@ import { TimeHourStep } from './TimeHourStep';
 import { TimeMinuteSecondStep } from './TimeMinuteSecondStep';
 import { TimePickerEvents } from './TimePickerEvents';
 import { TimeRangePickerEvents } from './TimeRangePickerEvents';
+import { TreeEvents } from './TreeEvents';
 import { TreeSelectShowCheckedStrategy } from './TreeSelectShowCheckedStrategy';
 import { UploadEvents } from './UploadEvents';
 import { UploadListType } from './UploadListType';
@@ -157,6 +158,7 @@ const dictImpls = {
   SelectMode,
   SignaturePadMode,
   TreeSelectShowCheckedStrategy,
+  TreeEvents,
   CascaderShowCheckedStrategy,
   JustifyContent,
   AlignItems,

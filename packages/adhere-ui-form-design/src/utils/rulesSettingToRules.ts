@@ -45,6 +45,17 @@ function pickRuleMessageText(message: RuleConfig['message'], lang: string): stri
   return '';
 }
 
+function hasTreeSelectionCheckedValue(value: StoreValue): boolean {
+  if (Array.isArray(value)) {
+    return value.length > 0;
+  }
+  if (value != null && typeof value === 'object') {
+    const checked = (value as { checked?: unknown }).checked;
+    return Array.isArray(checked) && checked.length > 0;
+  }
+  return value != null;
+}
+
 export function rulesSettingToRules(rules: Rule[], lang: string): Return[] {
   return rules.map((rule) => {
     const {
@@ -61,6 +72,19 @@ export function rulesSettingToRules(rules: Rule[], lang: string): Return[] {
         validator: (_rule: RuleObject, value: StoreValue) => {
           const keys = Array.isArray(value) ? value : value != null ? [value] : [];
           if (keys.length > 0) {
+            return Promise.resolve();
+          }
+          return Promise.reject(new Error(messageText || ' '));
+        },
+      } as unknown as Return;
+    }
+
+    if (type === 'treeSelectionRequired') {
+      return {
+        ...restConfig,
+        message: messageText || undefined,
+        validator: (_rule: RuleObject, value: StoreValue) => {
+          if (hasTreeSelectionCheckedValue(value)) {
             return Promise.resolve();
           }
           return Promise.reject(new Error(messageText || ' '));

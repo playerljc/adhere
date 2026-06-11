@@ -112,3 +112,23 @@ export {
   staticDataSourceToDesignOptions,
 } from './dataSourceOptions';
 export type { UseDesignFieldDataSourceOptionsResult } from './useDesignFieldDataSourceOptions';
+
+export {
+  collectExpandedKeysForKeyword,
+  collectTreeNodeKeyEntries,
+  DEFAULT_TREE_FIELD_NAMES,
+  filterTreeNodesByKeyword,
+} from './filterTreeNodesByKeyword';
+export type { TreeFieldNames, TreeNodeKeyEntry } from './filterTreeNodesByKeyword';
+
+export {
+  fetchDataSourceItemConfigAsTreeNodes,
+  omitFieldPropsTreeOptionsKey,
+  parseTreeDataSourceValueFromFieldProps,
+  staticTreeDataSourceToNodes,
+  useDesignFieldTreeDataSource,
+} from './treeDataSource';
+export type {
+  TreeDataNode,
+  UseDesignFieldTreeDataSourceResult,
+} from './treeDataSource';

@@ -81,6 +81,7 @@ export default () => {
           [
             'ant-editor-table',
             'ant-table-selection',
+            'ant-tree-selection',
             'ant-rich-editor',
             'ant-qrcode',
             'ant-signature-pad',
