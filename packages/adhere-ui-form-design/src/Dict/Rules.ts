@@ -10,6 +10,7 @@ export const Rules = {
       { label: 'min', value: 'min' },
       { label: 'pattern', value: 'pattern' },
       { label: 'custom', value: 'custom' },
+      { label: Intl.get('table_select_required'), value: 'tableSelectRequired' },
     ];
   },
 };

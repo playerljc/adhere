@@ -66,8 +66,16 @@ import { StepsSwiperItemLayoutMode } from './StepsSwiperItemLayoutMode';
 import { StepsSwiperItemRenderMode } from './StepsSwiperItemRenderMode';
 import { StepsType } from './StepsType';
 import { SwitchSize } from './SwitchSize';
+import { PaginationPosition } from './PaginationPosition';
+import { PaginationSize } from './PaginationSize';
+import { TableColumnAlign } from './TableColumnAlign';
+import { TableColumnDefaultSortOrder } from './TableColumnDefaultSortOrder';
+import { TableColumnFixed } from './TableColumnFixed';
+import { TableEvents } from './TableEvents';
 import { TableGridLayoutModeType } from './TableGridLayoutModeType';
+import { TableLayout } from './TableLayout';
 import { TableNumberGeneratorRule } from './TableNumberGeneratorRule';
+import { TableRowSelectionType } from './TableRowSelectionType';
 import { TabsSize } from './TabsSize';
 import { TabsTabPlacement } from './TabsTabPlacement';
 import { TabsType } from './TabsType';
@@ -155,6 +163,14 @@ const dictImpls = {
   AlignContent,
   AlignSelf,
   TableNumberGeneratorRule,
+  TableRowSelectionType,
+  TableColumnAlign,
+  TableColumnDefaultSortOrder,
+  TableColumnFixed,
+  TableLayout,
+  PaginationPosition,
+  PaginationSize,
+  TableEvents,
   StepsSize,
   StepsStatus,
   StepsSwiperDirection,

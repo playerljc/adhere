@@ -48,12 +48,29 @@ function pickRuleMessageText(message: RuleConfig['message'], lang: string): stri
 export function rulesSettingToRules(rules: Rule[], lang: string): Return[] {
   return rules.map((rule) => {
     const {
+      type,
       config: { validator, pattern, message, ...restConfig },
     } = rule;
 
+    const messageText = pickRuleMessageText(message, lang);
+
+    if (type === 'tableSelectRequired') {
+      return {
+        ...restConfig,
+        message: messageText || undefined,
+        validator: (_rule: RuleObject, value: StoreValue) => {
+          const keys = Array.isArray(value) ? value : value != null ? [value] : [];
+          if (keys.length > 0) {
+            return Promise.resolve();
+          }
+          return Promise.reject(new Error(messageText || ' '));
+        },
+      } as unknown as Return;
+    }
+
     return {
       ...restConfig,
-      message: pickRuleMessageText(message, lang),
+      message: messageText,
       pattern: pattern ? new RegExp(pattern) : undefined,
       validator: validator
         ? (rule: RuleObject, value: StoreValue, cb: (error?: string) => void) => {

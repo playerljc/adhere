@@ -1,0 +1,38 @@
+@import '../../constant.less';
+
+.@{prefix-cls}-design-field-table-data-source-form-item-static {
+  width: 100%;
+}
+
+.@{prefix-cls}-design-field-table-data-source-form-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--table-data-source-form-gap, 8px);
+  width: 100%;
+
+  &-actions {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  &-body {
+    width: 100%;
+  }
+}
+
+.@{prefix-cls}-design-field-table-data-source-form-item-dynamic {
+  display: flex;
+  gap: var(--table-data-source-dynamic-gap, 8px);
+  align-items: center;
+
+  &-nav {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  &-manager-trigger {
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+}

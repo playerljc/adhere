@@ -14,9 +14,17 @@ import Max from './Max';
 import Min from './Min';
 import Pattern from './Pattern';
 import Required from './Required';
+import TableSelectRequired from './TableSelectRequired';
 import Whitespace from './Whitespace';
 
-export type RuleType = 'required' | 'whitespace' | 'max' | 'min' | 'pattern' | 'custom';
+export type RuleType =
+  | 'required'
+  | 'whitespace'
+  | 'max'
+  | 'min'
+  | 'pattern'
+  | 'custom'
+  | 'tableSelectRequired';
 
 export type RuleConfig = Pick<
   RuleObject,
@@ -137,6 +145,17 @@ const RulesSettingFormItem: FC<RulesSettingFormItemProps> = ({
       'custom',
       (ruleConfig, index) => (
         <Custom
+          rule={ruleConfig}
+          onChange={(_value) => {
+            onChange?.(changeValueAt(index, _value));
+          }}
+        />
+      ),
+    ],
+    [
+      'tableSelectRequired',
+      (ruleConfig, index) => (
+        <TableSelectRequired
           rule={ruleConfig}
           onChange={(_value) => {
             onChange?.(changeValueAt(index, _value));

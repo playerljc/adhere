@@ -83,7 +83,18 @@ import { StepsSwiperItemLayoutModeSelectStandardDict } from './StepsSwiperItemLa
 import { StepsSwiperItemRenderModeSelectStandardDict } from './StepsSwiperItemRenderMode';
 import { StepsTypeSelectStandardDict } from './StepsType';
 import { SwitchSizeSelectStandardDict } from './SwitchSize';
+import PagingSettingFormItem from './PagingSettingFormItem';
+import { PaginationPositionSelectStandardDict } from './PaginationPosition';
+import { PaginationSizeSelectStandardDict } from './PaginationSize';
+import { TableColumnAlignSelectStandardDict } from './TableColumnAlign';
+import { TableColumnDefaultSortOrderSelectStandardDict } from './TableColumnDefaultSortOrder';
+import { TableColumnFixedSelectStandardDict } from './TableColumnFixed';
 import { TableColumnSettingFormItem } from './TableColumnSettingFormItem';
+import { TableEventsSelectStandardDict } from './TableEvents';
+import TableDataSourceManagerFormItem from './TableDataSourceManagerFormItem';
+import { TableLayoutSelectStandardDict } from './TableLayout';
+import { TableRowSelectionTypeSelectStandardDict } from './TableRowSelectionType';
+import { TableSelectColumnSettingFormItem } from './TableSelectColumnSettingFormItem';
 import PropertiesGridLayout from './TableGridLayout';
 import TableGridLayoutColgroupSetting from './TableGridLayoutColgroupSetting';
 import { TableGridLayoutModeTypeSelectStandardDict } from './TableGridLayoutModeType';
@@ -124,6 +135,19 @@ export type {
   TransferDataSourceManagerFormItemProps,
   TransferDataSourceItem,
 } from './TransferDataSourceManagerFormItem';
+
+export type {
+  TableDataSourceManagerFormItemValue,
+  TableDataSourceManagerFormItemProps,
+} from './TableDataSourceManagerFormItem';
+
+export type {
+  TableSelectColumnSettingItem,
+  TableSelectColumnSettingFormItemProps,
+} from './TableSelectColumnSettingFormItem';
+
+export type { PagingSettingValue, PagingSettingFormItemProps } from './PagingSettingFormItem';
+export { DEFAULT_PAGING_SETTING } from './PagingSettingFormItem';
 
 export type { DisabledTextProps } from './DisabledText';
 export type {
@@ -197,6 +221,17 @@ export {
   SendSMSDataSourcePickerFormItem,
   UploadDataSourceManagerFormItem,
   TableColumnSettingFormItem,
+  TableSelectColumnSettingFormItem,
+  TableDataSourceManagerFormItem,
+  PagingSettingFormItem,
+  TableRowSelectionTypeSelectStandardDict,
+  TableColumnAlignSelectStandardDict,
+  TableColumnDefaultSortOrderSelectStandardDict,
+  TableColumnFixedSelectStandardDict,
+  TableLayoutSelectStandardDict,
+  PaginationPositionSelectStandardDict,
+  PaginationSizeSelectStandardDict,
+  TableEventsSelectStandardDict,
   TabsTypeSelectStandardDict,
   TabsSizeSelectStandardDict,
   TabsTabPlacementSelectStandardDict,

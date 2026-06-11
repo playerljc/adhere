@@ -10,6 +10,20 @@ export function toI18nLabel(
     return label as I18nValue;
   }
 
+  // 兼容历史数据：{ key: 'zh_CN', zh_CN: '...' }
+  if (label && typeof label === 'object' && 'key' in label) {
+    const legacy = label as Record<string, unknown>;
+    const selectLang = typeof legacy.key === 'string' ? legacy.key : lang;
+    const next: Record<string, string | null | undefined> = {
+      [SELECT_VALUE_KEY_NAME]: selectLang,
+    };
+    localesKeys.forEach((key) => {
+      const value = legacy[key];
+      next[key] = typeof value === 'string' ? value : null;
+    });
+    return next as I18nValue;
+  }
+
   const next: Record<string, string | null | undefined> = { [SELECT_VALUE_KEY_NAME]: lang };
   localesKeys.forEach((key) => {
     next[key] = key === lang ? (typeof label === 'string' ? label : '') : null;
