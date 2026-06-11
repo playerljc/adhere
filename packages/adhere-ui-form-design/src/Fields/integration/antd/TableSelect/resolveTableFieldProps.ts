@@ -1,7 +1,7 @@
 import type { TableProps } from 'antd';
 
-import type { PagingSettingValue } from '../../../../components/PagingSettingFormItem';
-import type { TableSelectColumnSettingItem } from '../../../../components/TableSelectColumnSettingFormItem';
+import type { PagingSettingValue } from '../../../../components';
+import type { TableSelectColumnSettingItem } from '../../../../components';
 import type { I18nValue } from '../../../../types';
 import type { TableDataRow } from '../../../../utils/tableDataSource';
 import { compareTableCellValues } from '../../../../utils/compareTableCellValues';
@@ -25,12 +25,19 @@ export type TableSelectFieldConfig = {
   paginationSetting?: PagingSettingValue;
   scrollY?: number;
   columnSetting?: TableSelectColumnSettingItem[];
+  disabled?: boolean;
 };
+
+const DEFAULT_MOBILE_COLUMN_WIDTH = 120;
+const DEFAULT_SELECTION_COLUMN_WIDTH = 48;
 
 export function resolveTableColumns(
   columnSetting: TableSelectColumnSettingItem[] | undefined,
   lang: string,
+  options?: { isMobile?: boolean },
 ): TableProps<TableDataRow>['columns'] {
+  const isMobile = options?.isMobile === true;
+
   return (columnSetting ?? [])
     .filter((col) => col.visible !== false)
     .map((col) => {
@@ -41,12 +48,14 @@ export function resolveTableColumns(
         (col.defaultSortOrder === 'ascend' || col.defaultSortOrder === 'descend')
           ? col.defaultSortOrder
           : undefined;
+      const width =
+        col.width ?? (isMobile ? DEFAULT_MOBILE_COLUMN_WIDTH : undefined);
 
       return {
         key: col.id,
         title: resolveI18nText(col.title, lang) || col.dataIndex || '',
         dataIndex,
-        width: col.width,
+        width,
         align: col.align,
         ellipsis: col.ellipsis,
         fixed:
@@ -74,7 +83,7 @@ export function resolveTablePagination(
   paginationSetting?: PagingSettingValue,
 ): TableProps<TableDataRow>['pagination'] {
   if (!pagination) return false;
-  if (!paginationSetting) return true;
+  if (!paginationSetting) return {};
   return {
     defaultCurrent: paginationSetting.defaultCurrent ?? 1,
     pageSize: paginationSetting.pageSize ?? 10,
@@ -88,18 +97,33 @@ export function resolveTablePagination(
   };
 }
 
+export function resolveMobileScrollX(
+  columnSetting: TableSelectColumnSettingItem[] | undefined,
+  rowSelectionColumnWidth?: number,
+): number {
+  const selectionWidth = rowSelectionColumnWidth ?? DEFAULT_SELECTION_COLUMN_WIDTH;
+  const columnsWidth = (columnSetting ?? [])
+    .filter((col) => col.visible !== false)
+    .reduce((sum, col) => sum + (col.width ?? DEFAULT_MOBILE_COLUMN_WIDTH), 0);
+
+  return selectionWidth + columnsWidth;
+}
+
 export function pickTableSelectTableProps(
   fieldProps: TableSelectFieldConfig,
   lang: string,
+  options?: { isMobile?: boolean },
 ): Omit<TableProps<TableDataRow>, 'rowSelection' | 'dataSource' | 'scroll'> {
+  const isMobile = options?.isMobile === true;
+
   return {
     bordered: fieldProps.bordered,
     loading: fieldProps.loading,
     size: resolveTableSize(fieldProps.size),
     showHeader: fieldProps.showHeader,
-    tableLayout: fieldProps.tableLayout,
+    tableLayout: isMobile ? 'fixed' : fieldProps.tableLayout,
     rowKey: fieldProps.rowKey ?? 'key',
-    columns: resolveTableColumns(fieldProps.columnSetting, lang),
+    columns: resolveTableColumns(fieldProps.columnSetting, lang, { isMobile }),
     pagination: resolveTablePagination(fieldProps.pagination, fieldProps.paginationSetting),
   };
 }
