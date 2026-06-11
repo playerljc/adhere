@@ -1,1 +1,1 @@
-export const TYPE = 'ant-table-select';
+export const TYPE = 'ant-table-selection';

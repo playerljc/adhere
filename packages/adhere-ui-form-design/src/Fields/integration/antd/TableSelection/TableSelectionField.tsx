@@ -5,18 +5,18 @@ import React, { type CSSProperties, useCallback, useMemo, useState } from 'react
 import { filterTableRowsByKeyword } from '../../../../utils/filterTableRowsByKeyword';
 import type { TableDataRow } from '../../../../utils/tableDataSource';
 import { resolveI18nText } from '../../../../utils';
-import TableSelectSearchBar from './TableSelectSearchBar';
+import TableSelectionSearchBar from './TableSelectionSearchBar';
 import {
-  pickTableSelectTableProps,
+  pickTableSelectionTableProps,
   resolveMobileScrollX,
-  type TableSelectFieldConfig,
-} from './resolveTableFieldProps';
+  type TableSelectionFieldConfig,
+} from './resolveTableSelectionFieldProps';
 
 import './index.less';
 
-const selectorPrefix = 'adhere-ui-fd-table-select-field';
+const selectorPrefix = 'adhere-ui-fd-table-selection-field';
 
-export type TableSelectFieldProps = TableSelectFieldConfig & {
+export type TableSelectionFieldProps = TableSelectionFieldConfig & {
   value?: React.Key[];
   onChange?: (value: React.Key[]) => void;
   dataSource?: TableDataRow[];
@@ -27,7 +27,7 @@ export type TableSelectFieldProps = TableSelectFieldConfig & {
   actions?: Record<string, (...args: any[]) => any>;
 };
 
-const TableSelectField: React.FC<TableSelectFieldProps> = ({
+const TableSelectionField: React.FC<TableSelectionFieldProps> = ({
   value,
   onChange,
   dataSource = [],
@@ -77,7 +77,7 @@ const TableSelectField: React.FC<TableSelectFieldProps> = ({
 
   const tableProps = useMemo(
     () =>
-      pickTableSelectTableProps(
+      pickTableSelectionTableProps(
         {
           bordered,
           loading,
@@ -178,7 +178,7 @@ const TableSelectField: React.FC<TableSelectFieldProps> = ({
       style={style}
     >
       {showSearch && (
-        <TableSelectSearchBar
+        <TableSelectionSearchBar
           placeholder={resolvedSearchPlaceholder || undefined}
           allowClear={searchAllowClear}
           disabled={!!disabled}
@@ -197,4 +197,4 @@ const TableSelectField: React.FC<TableSelectFieldProps> = ({
   );
 };
 
-export default TableSelectField;
+export default TableSelectionField;

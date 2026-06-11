@@ -7,7 +7,7 @@ import type { TableDataRow } from '../../../../utils/tableDataSource';
 import { compareTableCellValues } from '../../../../utils/compareTableCellValues';
 import { resolveI18nText } from '../../../../utils';
 
-export type TableSelectFieldConfig = {
+export type TableSelectionFieldConfig = {
   showSearch?: boolean;
   searchPlaceholder?: I18nValue | string;
   searchAllowClear?: boolean;
@@ -109,8 +109,8 @@ export function resolveMobileScrollX(
   return selectionWidth + columnsWidth;
 }
 
-export function pickTableSelectTableProps(
-  fieldProps: TableSelectFieldConfig,
+export function pickTableSelectionTableProps(
+  fieldProps: TableSelectionFieldConfig,
   lang: string,
   options?: { isMobile?: boolean },
 ): Omit<TableProps<TableDataRow>, 'rowSelection' | 'dataSource' | 'scroll'> {

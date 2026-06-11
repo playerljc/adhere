@@ -3,10 +3,10 @@ import React, { type CSSProperties } from 'react';
 import { FieldWithTip } from '../../../../components';
 import type { FieldProps } from '../../../../types';
 import { useDesignFieldTableDataSource } from '../../../../utils/tableDataSource';
-import TableSelectField from './TableSelectField';
-import type { TableSelectFieldConfig } from './resolveTableFieldProps';
+import TableSelectionField from './TableSelectionField';
+import type { TableSelectionFieldConfig } from './resolveTableSelectionFieldProps';
 
-export type TableSelectDesignBodyProps = {
+export type TableSelectionDesignBodyProps = {
   fieldProps: FieldProps;
   style?: CSSProperties;
   lang: string;
@@ -16,7 +16,7 @@ export type TableSelectDesignBodyProps = {
   onChange?: (value: React.Key[]) => void;
 };
 
-const TableSelectDesignBody: React.FC<TableSelectDesignBodyProps> = ({
+const TableSelectionDesignBody: React.FC<TableSelectionDesignBodyProps> = ({
   fieldProps,
   style,
   lang,
@@ -27,11 +27,11 @@ const TableSelectDesignBody: React.FC<TableSelectDesignBodyProps> = ({
 }) => {
   const { dataSource, loading, restFieldProps } = useDesignFieldTableDataSource(fieldProps);
 
-  const config = restFieldProps as TableSelectFieldConfig & FieldProps;
+  const config = restFieldProps as TableSelectionFieldConfig & FieldProps;
 
   return (
     <FieldWithTip tip={fieldProps.tip as any} lang={lang}>
-      <TableSelectField
+      <TableSelectionField
         {...config}
         value={value}
         onChange={onChange}
@@ -46,4 +46,4 @@ const TableSelectDesignBody: React.FC<TableSelectDesignBodyProps> = ({
   );
 };
 
-export default TableSelectDesignBody;
+export default TableSelectionDesignBody;

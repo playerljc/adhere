@@ -68,7 +68,7 @@ import { define as SelectDefine } from './Select';
 import { define as SliderDefine } from './Slider';
 import { define as SubmitButtonDefine } from './SubmitButton';
 import { define as SwitchDefine } from './Switch';
-import { define as TableSelectDefine } from './TableSelect';
+import { define as TableSelectionDefine } from './TableSelection';
 import { define as TextDefine } from './Text';
 import { define as TextAreaDefine } from './TextArea';
 import { define as TimePickerDefine } from './TimePicker';
@@ -111,7 +111,7 @@ const EditorTable = EditorTableDefine();
 const FileUpload = FileUploadDefine();
 const ImageUpload = ImageUploadDefine();
 const RichEditor = RichEditorDefine();
-const TableSelect = TableSelectDefine();
+const TableSelection = TableSelectionDefine();
 
 export function install(): {
   toolBox: ToolBoxGroup['items'];
@@ -358,7 +358,7 @@ export function install(): {
         tooltip: Intl.get('editor_table_text'),
       },
       {
-        type: TableSelect.type,
+        type: TableSelection.type,
         icon: React.createElement(CheckSquareOutlined),
         label: Intl.get('table_select_text'),
         searchLabel: Intl.get('table_select_text'),
@@ -407,7 +407,7 @@ export function install(): {
       FileUpload,
       ImageUpload,
       EditorTable,
-      TableSelect,
+      TableSelection,
       RichEditor,
     ],
   };

@@ -5,7 +5,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import { LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
 import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
-import TableSelectDesignBody from './TableSelectDesignBody';
+import TableSelectionDesignBody from './TableSelectionDesignBody';
 
 /**
  * renderDesign
@@ -40,7 +40,7 @@ export function renderDesign({
     value: (
       <ValueDesign value={value}>
         {({ fieldProps, style, actions, lang }) => (
-          <TableSelectDesignBody
+          <TableSelectionDesignBody
             fieldProps={fieldProps}
             style={style}
             lang={lang}

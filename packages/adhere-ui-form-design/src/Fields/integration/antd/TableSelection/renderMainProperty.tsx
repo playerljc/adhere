@@ -22,7 +22,7 @@ import type { DesignValueProps } from '../../../../types';
 import { createMainProperty, renderMainPropertyWithCreate } from '../../../../utils';
 
 const MainProperty = createMainProperty({
-  formName: 'antTableSelectMainProperty',
+  formName: 'antTableSelectionMainProperty',
   getDefaultFormItems: (_designValue, { watchValues, titleLabelSlot }): DataItemRow[] =>
     [
       {

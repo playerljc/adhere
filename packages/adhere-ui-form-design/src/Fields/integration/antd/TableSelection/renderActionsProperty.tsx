@@ -35,7 +35,7 @@ export function ActionsProperty({
   }, [actionsProps]);
 
   return (
-    <Form name="antTableSelectActionsProperty" form={form} onFieldsChange={onFieldsChange}>
+    <Form name="antTableSelectionActionsProperty" form={form} onFieldsChange={onFieldsChange}>
       <PropertiesGridLayout
         layout="vertical"
         data={[

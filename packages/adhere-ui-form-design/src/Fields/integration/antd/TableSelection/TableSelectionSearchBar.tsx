@@ -5,9 +5,9 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import './index.less';
 
-const selectorPrefix = 'adhere-ui-fd-table-select-field-search';
+const selectorPrefix = 'adhere-ui-fd-table-selection-field-search';
 
-export type TableSelectSearchBarProps = {
+export type TableSelectionSearchBarProps = {
   placeholder?: string;
   allowClear?: boolean;
   disabled?: boolean;
@@ -15,7 +15,7 @@ export type TableSelectSearchBarProps = {
   onClear: () => void;
 };
 
-const TableSelectSearchBar: React.FC<TableSelectSearchBarProps> = ({
+const TableSelectionSearchBar: React.FC<TableSelectionSearchBarProps> = ({
   placeholder,
   allowClear = true,
   disabled = false,
@@ -71,4 +71,4 @@ const TableSelectSearchBar: React.FC<TableSelectSearchBarProps> = ({
   );
 };
 
-export default TableSelectSearchBar;
+export default TableSelectionSearchBar;
