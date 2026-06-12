@@ -7,7 +7,12 @@ import Util from '@baifendian/adhere-util';
 
 import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
+import {
+  computeLabelValueColSpan,
+  findDesignValueById,
+  getDesignFormControlProps,
+  resolveI18nText,
+} from '../../../../utils';
 
 export type InputNumberDesignProps = InputNumberProps & {
   thousands: 'French' | 'German' | 'US' | 'International';
@@ -45,7 +50,7 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions, lang }) => {
+        {({ fieldProps, style, actions, lang, value, onChange, checked, targetKeys }) => {
           const { thousands, ...inputNumberProps } = fieldProps as InputNumberDesignProps;
 
           let thousandsProps = {};
@@ -77,11 +82,9 @@ export function renderDesign({
               <InputNumber
                 {...(inputNumberProps as InputNumberProps)}
                 {...actions}
+                {...getDesignFormControlProps(formItemProps, { value, onChange, checked, targetKeys })}
                 placeholder={resolveI18nText(fieldProps.placeholder as any, lang) as any}
                 style={style ?? {}}
-                defaultValue={
-                  (formItemProps as { initialValue?: InputNumberProps['defaultValue'] })?.initialValue
-                }
                 {...thousandsProps}
               />
             </FieldWithTip>

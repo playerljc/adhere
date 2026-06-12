@@ -7,7 +7,12 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
+import {
+  computeLabelValueColSpan,
+  findDesignValueById,
+  getDesignFormControlProps,
+  resolveI18nText,
+} from '../../../../utils';
 
 export type DatePickerFieldProps = {
   isBirthday?: boolean;
@@ -67,8 +72,6 @@ export function renderDesign({
   const fieldProps = value.props?.fieldProps as
     | (DatePickerProps & DatePickerFieldProps)
     | undefined;
-  const rawValue = (formItemProps as { initialValue?: string })?.initialValue;
-  const valueDayjs = rawValue ? dayjs(rawValue) : undefined;
   const disabledDate = getDisabledDate(fieldProps ?? {});
 
   return {
@@ -79,18 +82,32 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps: fp, style, actions, lang }) => (
-          <FieldWithTip tip={fp.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
-            <DatePicker
-              {...(fp as DatePickerProps)}
-              {...actions}
-              placeholder={resolveI18nText(fp.placeholder as any, lang) as any}
-              disabledDate={disabledDate}
-              style={style ?? {}}
-              defaultValue={valueDayjs}
-            />
-          </FieldWithTip>
-        )}
+        {({ fieldProps: fp, style, actions, lang, value, onChange, checked, targetKeys }) => {
+          const dateControlProps =
+            typeof onChange === 'function'
+              ? {
+                  ...getDesignFormControlProps(formItemProps, { value, onChange, checked, targetKeys }),
+                  value: value ? dayjs(value as string) : null,
+                }
+              : {
+                  defaultValue: (formItemProps as { initialValue?: string })?.initialValue
+                    ? dayjs((formItemProps as { initialValue?: string }).initialValue as string)
+                    : undefined,
+                };
+
+          return (
+            <FieldWithTip tip={fp.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
+              <DatePicker
+                {...(fp as DatePickerProps)}
+                {...actions}
+                {...dateControlProps}
+                placeholder={resolveI18nText(fp.placeholder as any, lang) as any}
+                disabledDate={disabledDate}
+                style={style ?? {}}
+              />
+            </FieldWithTip>
+          );
+        }}
       </ValueDesign>
     ),
   };

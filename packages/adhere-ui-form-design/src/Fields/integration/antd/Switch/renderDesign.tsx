@@ -6,7 +6,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
+import { computeLabelValueColSpan, findDesignValueById, getDesignFormControlProps } from '../../../../utils';
 
 /**
  * renderDesign - single Switch, Form uses valuePropName="checked"
@@ -40,12 +40,12 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions }) => (
+        {({ fieldProps, style, actions, value, onChange, checked, targetKeys }) => (
           <Switch
             {...(fieldProps as SwitchProps)}
             style={style ?? {}}
             {...actions}
-            defaultChecked={(formItemProps as { initialValue?: boolean })?.initialValue}
+            {...getDesignFormControlProps(formItemProps, { value, onChange, checked, targetKeys })}
           />
         )}
       </ValueDesign>

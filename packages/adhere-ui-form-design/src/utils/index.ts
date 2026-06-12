@@ -12,6 +12,7 @@ import {
 import { findParentWithChildIndex, flattenDesignChildren } from './designValueTree';
 import { findTypeById } from './findTypeById';
 import { formItemToProps } from './formItemToProps';
+import { getDesignFormControlProps } from './getDesignFormControlProps';
 import { getLabel } from './getLabel';
 import { getLabelByType, getToolBoxItemByType } from './getLabelByType';
 import { isContainerFieldByType } from './isContainerFieldByType';
@@ -40,6 +41,7 @@ export {
   actionsCodeStringToEvents,
   computeLabelValueColSpan,
   formItemToProps,
+  getDesignFormControlProps,
   getLabel,
   rulesSettingToRules,
   styleCodeStringToCSSProperties,

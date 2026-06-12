@@ -7,7 +7,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
+import { computeLabelValueColSpan, findDesignValueById, getDesignFormControlProps } from '../../../../utils';
 
 /**
  * renderDesign - Slider, Form binds value (number or [number, number] when range)
@@ -34,12 +34,6 @@ export function renderDesign({
   const { labelColSpan, valueColSpan } = computeLabelValueColSpan(parent, formItemProps);
 
   const range = (fieldProps as { range?: boolean })?.range;
-  const rawValue = (formItemProps as { initialValue?: number | [number, number] })?.initialValue;
-  const sliderValueSingle =
-    typeof rawValue === 'number' ? rawValue : Array.isArray(rawValue) ? rawValue[0] : 0;
-  const sliderValueRange: [number, number] = Array.isArray(rawValue)
-    ? rawValue
-    : [sliderValueSingle, sliderValueSingle];
 
   return {
     key: id,
@@ -49,22 +43,22 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps: fp, style, actions, lang }) => (
+        {({ fieldProps: fp, style, actions, lang, value, onChange, checked, targetKeys }) => (
           <FieldWithTip tip={fp.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
             {range ? (
               <Slider
                 {...(fp as SliderRangeProps)}
                 style={style ?? {}}
                 {...actions}
+                {...getDesignFormControlProps(formItemProps, { value, onChange, checked, targetKeys })}
                 range
-                defaultValue={sliderValueRange}
               />
             ) : (
               <Slider
                 {...(fp as SliderSingleProps)}
                 style={style ?? {}}
                 {...actions}
-                defaultValue={sliderValueSingle}
+                {...getDesignFormControlProps(formItemProps, { value, onChange, checked, targetKeys })}
               />
             )}
           </FieldWithTip>

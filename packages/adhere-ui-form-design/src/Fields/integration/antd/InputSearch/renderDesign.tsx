@@ -6,7 +6,12 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
+import {
+  computeLabelValueColSpan,
+  findDesignValueById,
+  getDesignFormControlProps,
+  resolveI18nText,
+} from '../../../../utils';
 
 const { Search } = Input;
 
@@ -42,7 +47,7 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions, lang }) => {
+        {({ fieldProps, style, actions, lang, value, onChange, checked, targetKeys }) => {
           const { placeholder, enterButton, ...restFieldProps } = fieldProps as SearchProps & {
             placeholder?: unknown;
             enterButton?: unknown;
@@ -53,6 +58,7 @@ export function renderDesign({
               <Search
                 {...restFieldProps}
                 {...actions}
+                {...getDesignFormControlProps(formItemProps, { value, onChange, checked, targetKeys })}
                 placeholder={resolveI18nText(placeholder as any, lang) as SearchProps['placeholder']}
                 enterButton={
                   enterButton != null
@@ -60,7 +66,6 @@ export function renderDesign({
                     : undefined
                 }
                 style={style ?? {}}
-                defaultValue={formItemProps?.initialValue as SearchProps['defaultValue']}
               />
             </FieldWithTip>
           );

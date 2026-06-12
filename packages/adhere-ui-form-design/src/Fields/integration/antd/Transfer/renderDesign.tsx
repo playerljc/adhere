@@ -1,31 +1,11 @@
-import { Transfer, type TransferProps } from 'antd';
-import React, { useContext } from 'react';
+import React from 'react';
 
-import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
-import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
-import type { TransferDataSourceManagerFormItemValue } from '../../../../components';
-import type { DesignContextType, DesignValue, I18nValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
-
-function parseTransferData(
-  transferOptions: TransferDataSourceManagerFormItemValue | undefined,
-  lang: string,
-): TransferProps['dataSource'] {
-  if (!transferOptions) return [];
-
-  if (transferOptions.type === 'static' && transferOptions.dataSource) {
-    return transferOptions.dataSource.map((item) => ({
-      key: item.key,
-      title: resolveI18nText(item.title, lang),
-      description: resolveI18nText(item.description, lang),
-      disabled: item.disabled,
-    }));
-  }
-
-  return [];
-}
+import { LabelDesign, ValueDesign } from '../../../../components';
+import type { DesignContextType, DesignValue } from '../../../../types';
+import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
+import TransferDesignBody from './TransferDesignBody';
 
 /**
  * renderDesign
@@ -59,55 +39,15 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, lang }) => {
-          const { intl } = useContext(ConfigProvider.Context);
-          const lang = intl.lang!;
-
-          const {
-            transferOptions,
-            leftTitle,
-            rightTitle,
-            leftOperation,
-            rightOperation,
-            ...transferProps
-          } = fieldProps as typeof fieldProps & {
-            transferOptions?: TransferDataSourceManagerFormItemValue;
-            leftTitle?: I18nValue | string;
-            rightTitle?: I18nValue | string;
-            leftOperation?: I18nValue | string;
-            rightOperation?: I18nValue | string;
-          };
-
-          const dataSource = parseTransferData(transferOptions, lang);
-
-          // 解析国际化标题
-          const resolvedLeftTitle = resolveI18nText(leftTitle, lang) || undefined;
-          const resolvedRightTitle = resolveI18nText(rightTitle, lang) || undefined;
-
-          // 构建操作按钮文字数组 [右移文字, 左移文字]
-          const operations: string[] = [];
-          const resolvedRightOp = resolveI18nText(rightOperation, lang);
-          const resolvedLeftOp = resolveI18nText(leftOperation, lang);
-          if (typeof resolvedRightOp === 'string' || typeof resolvedRightOp === 'number') {
-            operations[0] = String(resolvedRightOp);
-          }
-          if (typeof resolvedLeftOp === 'string' || typeof resolvedLeftOp === 'number') {
-            operations[1] = String(resolvedLeftOp);
-          }
-
-          return (
-            <FieldWithTip tip={fieldProps.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
-              <Transfer
-                {...(transferProps as TransferProps)}
-                dataSource={dataSource}
-                style={style}
-                titles={[resolvedLeftTitle, resolvedRightTitle]}
-                operations={operations.length > 0 ? operations : undefined}
-                render={(item) => item.title}
-              />
-            </FieldWithTip>
-          );
-        }}
+        {({ fieldProps, style, actions, lang }) => (
+          <TransferDesignBody
+            fieldProps={fieldProps}
+            style={style}
+            styleProps={styleProps}
+            lang={lang}
+            actions={actions}
+          />
+        )}
       </ValueDesign>
     ),
   };

@@ -8,6 +8,7 @@ export function formItemToProps(formItemProps: FormItemProps, lang: string) {
     hidden: formItemProps.hidden,
     noStyle: formItemProps.noStyle,
     valuePropName: formItemProps.valuePropName,
+    getValueFromEvent: formItemProps.getValueFromEvent,
     validateFirst: formItemProps.validateFirst,
     validateTrigger: formItemProps.validateTrigger,
     initialValue: formItemProps.initialValue,

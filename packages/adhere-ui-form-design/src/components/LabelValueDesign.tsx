@@ -14,6 +14,7 @@ import {
   styleCodeStringToCSSProperties,
 } from '../utils';
 import DesignFieldWrapper from './DesignFieldWrapper';
+import FormItemBridge, { type DesignFormInjectedProps } from './FormItemBridge';
 
 const { Label, Value } = TableGridLayout;
 
@@ -72,19 +73,24 @@ export function ValueDesign({
     /** SendSMS：倒计时事件 */
     countdownActions?: Record<string, (...args: any[]) => any>;
     lang: string;
-  }) => ReactNode;
+  } & DesignFormInjectedProps) => ReactNode;
 }) {
   const ConfigProviderContext = useContext(ConfigProvider.Context);
   const designContext = useContext(DesignContext);
   const lang = ConfigProviderContext.intl.lang!;
 
+  const isFormMode = designContext.mode === 'form';
   const formDisabled = designContext.getFormDisabled?.();
-  const finalFieldProps = (formDisabled === undefined
-    ? fieldProps
-    : {
-        ...fieldProps,
-        disabled: formDisabled,
-      }) as FieldProps;
+  const finalFieldProps = (() => {
+    if (!isFormMode) {
+      // 设计态画布：与工具箱拖入控件默认 readOnly 一致；非文本类控件由 DesignFieldWrapper 的 pointer-events 拦截
+      return { ...fieldProps, readOnly: true } as FieldProps;
+    }
+    if (formDisabled === undefined) {
+      return fieldProps as FieldProps;
+    }
+    return { ...fieldProps, disabled: formDisabled } as FieldProps;
+  })();
 
   const style = styleCodeStringToCSSProperties(styleProps?.styles ?? '');
   const valueStyle = styleCodeStringToCSSProperties(styleProps?.valueStyles ?? '');
@@ -138,17 +144,22 @@ export function ValueDesign({
             flex: fill ? 1 : undefined,
           }}
         >
-          {children({
-            fieldProps: finalFieldProps,
-            style,
-            actions,
-            areaCodeActions,
-            phoneInputActions,
-            codeInputActions,
-            sendButtonActions,
-            countdownActions,
-            lang,
-          })}
+          <FormItemBridge>
+            {(formInjected) =>
+              children({
+                fieldProps: finalFieldProps,
+                style,
+                actions,
+                areaCodeActions,
+                phoneInputActions,
+                codeInputActions,
+                sendButtonActions,
+                countdownActions,
+                lang,
+                ...formInjected,
+              })
+            }
+          </FormItemBridge>
         </Form.Item>
       </DesignFieldWrapper>
     </Value>

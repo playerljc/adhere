@@ -6,7 +6,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
+import { computeLabelValueColSpan, findDesignValueById, getDesignFormControlProps } from '../../../../utils';
 import { resolveI18nText } from '../../../../utils';
 
 /**
@@ -41,7 +41,7 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions, lang }) => {
+        {({ fieldProps, style, actions, lang, value, onChange, checked, targetKeys }) => {
           const { text, children, ...rest } = (fieldProps ?? {}) as CheckboxProps & {
             text?: React.ReactNode;
           };
@@ -52,7 +52,7 @@ export function renderDesign({
               {...rest}
               style={style ?? {}}
               {...actions}
-              defaultChecked={(formItemProps as { initialValue?: boolean })?.initialValue}
+              {...getDesignFormControlProps(formItemProps, { value, onChange, checked, targetKeys })}
             >
               {label}
             </Checkbox>

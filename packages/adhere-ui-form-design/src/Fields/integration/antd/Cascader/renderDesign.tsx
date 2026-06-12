@@ -6,7 +6,12 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import { type TreeDataSourceManagerFormItemValue } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
+import {
+  computeLabelValueColSpan,
+  findDesignValueById,
+  getDesignFormControlProps,
+  resolveI18nText,
+} from '../../../../utils';
 
 function parseTreeData(treeOptions: TreeDataSourceManagerFormItemValue | undefined): any[] {
   if (!treeOptions) return [];
@@ -54,7 +59,7 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, lang }) => {
+        {({ fieldProps, style, lang, value, onChange, checked, targetKeys }) => {
           const { treeOptions, showCheckedStrategy, ...restFieldProps } =
             fieldProps as typeof fieldProps & {
               treeOptions?: TreeDataSourceManagerFormItemValue;
@@ -81,6 +86,7 @@ export function renderDesign({
               <Cascader
                 {...(restCascaderProps as CascaderProps<any>)}
                 {...(multiple === true ? ({ multiple: true } as const) : {})}
+                {...getDesignFormControlProps(formItemProps, { value, onChange, checked, targetKeys })}
                 placeholder={resolveI18nText(restCascaderProps.placeholder as any, lang)}
                 options={options}
                 showCheckedStrategy={resolvedStrategy}

@@ -28,6 +28,7 @@
     "postbuildpackage:esm": "tsc --declaration -p ./ --emitDeclarationOnly --outDir es",
     "buildumd": "ctbuild buildumd --packagename AdhereFormDesign --define alias=@,evnVars=true",
     "e2e": "cross-env e2e",
+    "generate:all-fields": "node json/scripts/generateAllFields.mjs",
     "generatorchangelog": "bd changelog/CHANGELOG.html",
     "test": "echo \"Error: no test specified\" && exit 1",
     "upgrade": "yarn upgrade",

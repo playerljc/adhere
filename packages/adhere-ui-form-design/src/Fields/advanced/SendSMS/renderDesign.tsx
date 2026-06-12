@@ -4,13 +4,19 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { LabelDesign, ValueDesign } from '../../../components';
 import type { DesignContextType, DesignValue } from '../../../types';
-import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../utils';
+import {
+  computeLabelValueColSpan,
+  findDesignValueById,
+  getDesignFormControlProps,
+  resolveI18nText,
+} from '../../../utils';
 import { useDesignPhoneAreaCodeOptions } from '../../../utils/useDesignPhoneAreaCodeOptions';
 import SendSMSField from './SendSMSField';
 
 function SendSMSDesignPreview({
   rootDesignValue,
   fieldProps,
+  formItemProps,
   style,
   actions,
   lang,
@@ -19,7 +25,10 @@ function SendSMSDesignPreview({
   countdownActions,
   areaCodeActions,
   phoneInputActions,
-  defaultValue,
+  value,
+  onChange,
+  checked,
+  targetKeys,
 }: any) {
   const { source, options, loading } = useDesignPhoneAreaCodeOptions(fieldProps, 'areaCodeOptionsSource');
 
@@ -44,7 +53,7 @@ function SendSMSDesignPreview({
           areaCodeActions,
           phoneInputActions,
         }}
-        defaultValue={defaultValue}
+        {...getDesignFormControlProps(formItemProps, { value, onChange, checked, targetKeys })}
       />
     </div>
   );
@@ -87,10 +96,15 @@ export function renderDesign({
           countdownActions,
           areaCodeActions,
           phoneInputActions,
+          value,
+          onChange,
+          checked,
+          targetKeys,
         }) => (
           <SendSMSDesignPreview
             rootDesignValue={designValue}
             fieldProps={fieldProps}
+            formItemProps={formItemProps}
             style={style}
             actions={actions}
             lang={lang}
@@ -99,7 +113,10 @@ export function renderDesign({
             countdownActions={countdownActions}
             areaCodeActions={areaCodeActions}
             phoneInputActions={phoneInputActions}
-            defaultValue={formItemProps?.initialValue as any}
+            value={value}
+            onChange={onChange}
+            checked={checked}
+            targetKeys={targetKeys}
           />
         )}
       </ValueDesign>

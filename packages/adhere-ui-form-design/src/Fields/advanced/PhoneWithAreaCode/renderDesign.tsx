@@ -4,18 +4,27 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { LabelDesign, ValueDesign } from '../../../components';
 import type { DesignContextType, DesignValue } from '../../../types';
-import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../utils';
+import {
+  computeLabelValueColSpan,
+  findDesignValueById,
+  getDesignFormControlProps,
+  resolveI18nText,
+} from '../../../utils';
 import { useDesignPhoneAreaCodeOptions } from '../../../utils/useDesignPhoneAreaCodeOptions';
 import PhoneWithAreaCodeField from './PhoneWithAreaCodeField';
 
 function PhoneWithAreaCodeDesignPreview({
-  value,
   fieldProps,
+  formItemProps,
   style,
   actions,
   areaCodeActions,
   phoneInputActions,
   lang,
+  value,
+  onChange,
+  checked,
+  targetKeys,
 }: any) {
   const { source, options, loading } = useDesignPhoneAreaCodeOptions(fieldProps, 'areaCodeOptionsSource');
 
@@ -29,7 +38,7 @@ function PhoneWithAreaCodeDesignPreview({
       allowClear={fieldProps.allowClear}
       disabled={fieldProps.disabled}
       placeholder={resolveI18nText(fieldProps.placeholder as any, lang) as string}
-      defaultValue={value?.props?.formItemProps?.initialValue as any}
+      {...getDesignFormControlProps(formItemProps, { value, onChange, checked, targetKeys })}
       areaCodeOptions={source ? options : undefined}
       areaCodeLoading={source?.type === 'dynamic' ? loading : false}
     />
@@ -63,15 +72,19 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions, areaCodeActions, phoneInputActions, lang }) => (
+        {({ fieldProps, style, actions, areaCodeActions, phoneInputActions, lang, value, onChange, checked, targetKeys }) => (
           <PhoneWithAreaCodeDesignPreview
-            value={value}
             fieldProps={fieldProps}
+            formItemProps={formItemProps}
             style={style}
             actions={actions}
             areaCodeActions={areaCodeActions}
             phoneInputActions={phoneInputActions}
             lang={lang}
+            value={value}
+            onChange={onChange}
+            checked={checked}
+            targetKeys={targetKeys}
           />
         )}
       </ValueDesign>

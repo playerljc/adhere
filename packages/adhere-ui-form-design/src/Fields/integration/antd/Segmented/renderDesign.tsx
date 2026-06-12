@@ -5,7 +5,7 @@ import React, { type ComponentProps } from 'react';
 import { DesignPreviewFieldWithDataSource, LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
 import type { DesignFieldDataSourceOption } from '../../../../utils';
-import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
+import { computeLabelValueColSpan, findDesignValueById, getDesignFormControlProps } from '../../../../utils';
 
 type SegmentedProps = ComponentProps<typeof Segmented>;
 
@@ -51,12 +51,14 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions }) => (
+        {({ fieldProps, style, actions, value, onChange, checked, targetKeys }) => (
           <DesignPreviewFieldWithDataSource
             fieldProps={fieldProps}
             formItemProps={formItemProps}
             style={style ?? {}}
             actions={actions}
+            value={value}
+            onChange={onChange}
           >
             {({
               restFieldProps,
@@ -70,7 +72,13 @@ export function renderDesign({
                 options={toSegmentedOptions(options)}
                 style={{ width: '100%', ...(fieldStyle ?? {}) }}
                 {...fieldActions}
-                defaultValue={previewValue as SegmentedProps['defaultValue']}
+                {...getDesignFormControlProps(formItemProps, {
+                  value,
+                  onChange,
+                  checked,
+                  targetKeys,
+                  previewValue,
+                })}
               />
             )}
           </DesignPreviewFieldWithDataSource>

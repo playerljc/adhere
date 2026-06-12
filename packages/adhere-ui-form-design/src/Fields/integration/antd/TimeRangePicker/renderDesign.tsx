@@ -6,7 +6,12 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
+import {
+  computeLabelValueColSpan,
+  findDesignValueById,
+  getDesignFormControlProps,
+  resolveI18nText,
+} from '../../../../utils';
 
 const { RangePicker } = TimePicker;
 type TimeRangePickerProps = React.ComponentProps<typeof RangePicker>;
@@ -33,9 +38,9 @@ export function renderDesign({
   const parent = findDesignValueById(parentId as string, designValue) as DesignValue;
   const { labelColSpan, valueColSpan } = computeLabelValueColSpan(parent, formItemProps);
 
-  const rawValue = (formItemProps as { initialValue?: [string, string] })?.initialValue;
-  const valueRange: [dayjs.Dayjs, dayjs.Dayjs] | undefined = rawValue
-    ? [dayjs(rawValue[0], 'HH:mm:ss'), dayjs(rawValue[1], 'HH:mm:ss')]
+  const initialRange = (formItemProps as { initialValue?: [string, string] })?.initialValue;
+  const defaultValueRange: [dayjs.Dayjs, dayjs.Dayjs] | undefined = initialRange
+    ? [dayjs(initialRange[0], 'HH:mm:ss'), dayjs(initialRange[1], 'HH:mm:ss')]
     : undefined;
 
   return {
@@ -46,17 +51,30 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps: fp, style, actions, lang }) => (
-          <FieldWithTip tip={fp.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
-            <RangePicker
-              {...(fp as TimeRangePickerProps)}
-              {...actions}
-              placeholder={resolveI18nText(fp.placeholder as any, lang) as any}
-              style={style ?? {}}
-              defaultValue={valueRange}
-            />
-          </FieldWithTip>
-        )}
+        {({ fieldProps: fp, style, actions, lang, value, onChange, checked, targetKeys }) => {
+          const rangeControlProps =
+            typeof onChange === 'function'
+              ? {
+                  ...getDesignFormControlProps(formItemProps, { value, onChange, checked, targetKeys }),
+                  value:
+                    Array.isArray(value) && value[0] && value[1]
+                      ? [dayjs(value[0] as string, 'HH:mm:ss'), dayjs(value[1] as string, 'HH:mm:ss')]
+                      : null,
+                }
+              : { defaultValue: defaultValueRange };
+
+          return (
+            <FieldWithTip tip={fp.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
+              <RangePicker
+                {...(fp as TimeRangePickerProps)}
+                {...actions}
+                {...rangeControlProps}
+                placeholder={resolveI18nText(fp.placeholder as any, lang) as any}
+                style={style ?? {}}
+              />
+            </FieldWithTip>
+          );
+        }}
       </ValueDesign>
     ),
   };

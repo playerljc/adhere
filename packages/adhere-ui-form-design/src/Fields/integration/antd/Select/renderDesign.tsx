@@ -10,7 +10,12 @@ import {
   ValueDesign,
 } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
+import {
+  computeLabelValueColSpan,
+  findDesignValueById,
+  getDesignFormControlProps,
+  resolveI18nText,
+} from '../../../../utils';
 
 /**
  * renderDesign
@@ -45,13 +50,15 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions, lang }) => (
+        {({ fieldProps, style, actions, lang, value, onChange, checked, targetKeys }) => (
           <FieldWithTip tip={fieldProps.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
             <DesignPreviewFieldWithDataSource
               fieldProps={fieldProps}
               formItemProps={formItemProps}
               style={style ?? {}}
               actions={actions}
+              value={value}
+              onChange={onChange}
             >
               {({
                 restFieldProps,
@@ -59,8 +66,7 @@ export function renderDesign({
                 loading,
                 style: fieldStyle,
                 actions: fieldActions,
-                value,
-                onChange,
+                previewValue,
               }) => (
                 <Select
                   {...(restFieldProps as SelectProps)}
@@ -69,8 +75,13 @@ export function renderDesign({
                   options={options}
                   style={fieldStyle}
                   {...fieldActions}
-                  value={value as SelectProps['value']}
-                  onChange={onChange}
+                  {...getDesignFormControlProps(formItemProps, {
+                    value,
+                    onChange,
+                    checked,
+                    targetKeys,
+                    previewValue,
+                  })}
                 />
               )}
             </DesignPreviewFieldWithDataSource>

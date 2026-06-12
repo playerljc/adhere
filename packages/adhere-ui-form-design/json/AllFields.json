@@ -1,0 +1,1842 @@
+{
+  "id": "991b3169-4cd3-4680-9e45-83f4200a3b07",
+  "type": "flex-layout",
+  "props": {
+    "fieldProps": {
+      "direction": "vertical",
+      "wrap": false,
+      "justifyContent": "flex-start",
+      "alignItems": "stretch",
+      "alignContent": "normal",
+      "gap": 8
+    },
+    "flexProps": {
+      "minSize": true,
+      "scroll": true
+    },
+    "children": [
+      {
+        "id": "d61ddd54-9396-4ed0-a8ad-43895e93d052",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "全部表单控件",
+              "en_US": "All form controls",
+              "pt_PT": "All form controls",
+              "ar_EG": "All form controls"
+            }
+          },
+          "flexProps": {
+            "flex": 1,
+            "flexShrink": 1,
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "e5d6fa69-c255-4b18-9c18-5dd7307716e2",
+              "type": "table-grid-layout",
+              "props": {
+                "fieldProps": {
+                  "layout": "vertical",
+                  "bordered": false,
+                  "density": "default",
+                  "mode": "normal",
+                  "data": [
+                    {
+                      "name": "g1",
+                      "columnCount": 2,
+                      "colgroup": [
+                        "auto",
+                        "auto"
+                      ],
+                      "data": []
+                    }
+                  ]
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "5c2c9da4-434f-436f-936f-3731e774a387",
+                    "type": "ant-input",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "姓名",
+                          "en_US": "Name",
+                          "pt_PT": "Name",
+                          "ar_EG": "Name"
+                        },
+                        "name": "ant_input_euluow04"
+                      },
+                      "fieldProps": {
+                        "type": "text",
+                        "allowClear": true,
+                        "readOnly": false,
+                        "disabled": false,
+                        "variant": "outlined",
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "姓名",
+                          "en_US": "Name",
+                          "pt_PT": "Name",
+                          "ar_EG": "Name"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "6f0c388b-1cab-4bd2-8f72-38db3fd1061b",
+                    "type": "ant-input-search",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "搜索关键词",
+                          "en_US": "Search keyword",
+                          "pt_PT": "Search keyword",
+                          "ar_EG": "Search keyword"
+                        },
+                        "name": "ant_input_search_j3z1j0jv"
+                      },
+                      "fieldProps": {
+                        "readOnly": false,
+                        "allowClear": true,
+                        "disabled": false,
+                        "showCount": false,
+                        "loading": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "搜索关键词",
+                          "en_US": "Search keyword",
+                          "pt_PT": "Search keyword",
+                          "ar_EG": "Search keyword"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "40d1be6d-27de-4a80-81ce-5d6a69c75996",
+                    "type": "ant-input-password",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "登录密码",
+                          "en_US": "Password",
+                          "pt_PT": "Password",
+                          "ar_EG": "Password"
+                        },
+                        "name": "ant_input_password_chn11a7t"
+                      },
+                      "fieldProps": {
+                        "allowClear": true,
+                        "disabled": false,
+                        "variant": "outlined",
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "登录密码",
+                          "en_US": "Password",
+                          "pt_PT": "Password",
+                          "ar_EG": "Password"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "bebbf151-2cc1-4ef0-ab85-0346f17311c4",
+                    "type": "ant-input-otp",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "短信验证码",
+                          "en_US": "SMS code",
+                          "pt_PT": "SMS code",
+                          "ar_EG": "SMS code"
+                        },
+                        "name": "ant_input_otp_vqgwp3xb"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "length": 6,
+                        "mask": false,
+                        "size": "middle",
+                        "variant": "outlined",
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "短信验证码",
+                          "en_US": "SMS code",
+                          "pt_PT": "SMS code",
+                          "ar_EG": "SMS code"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "77c7ece1-c8a6-497e-9f43-1e39b5ab2ece",
+                    "type": "ant-input-number",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "年龄",
+                          "en_US": "Age",
+                          "pt_PT": "Age",
+                          "ar_EG": "Age"
+                        },
+                        "name": "ant_input_number_21w02mtb"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "variant": "outlined",
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "年龄",
+                          "en_US": "Age",
+                          "pt_PT": "Age",
+                          "ar_EG": "Age"
+                        },
+                        "min": 18,
+                        "max": 65
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "a0d0c1be-38da-408f-91ab-4152dd5b9690",
+                    "type": "ant-textarea",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "备注",
+                          "en_US": "Remarks",
+                          "pt_PT": "Remarks",
+                          "ar_EG": "Remarks"
+                        },
+                        "name": "ant_textarea_5jxcp7mh",
+                        "colSpan": 2
+                      },
+                      "fieldProps": {
+                        "allowClear": true,
+                        "readOnly": false,
+                        "disabled": false,
+                        "showCount": false,
+                        "autoSize": true,
+                        "variant": "outlined",
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "备注",
+                          "en_US": "Remarks",
+                          "pt_PT": "Remarks",
+                          "ar_EG": "Remarks"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "f06f8a30-ad21-48c7-b9c5-c15521f08f0a",
+                    "type": "ant-select",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "所属部门",
+                          "en_US": "Department",
+                          "pt_PT": "Department",
+                          "ar_EG": "Department"
+                        },
+                        "name": "ant_select_fxxn5b5o"
+                      },
+                      "fieldProps": {
+                        "allowClear": false,
+                        "disabled": false,
+                        "defaultActiveFirstOption": true,
+                        "listHeight": 256,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "所属部门",
+                          "en_US": "Department",
+                          "pt_PT": "Department",
+                          "ar_EG": "Department"
+                        },
+                        "selectOptions": {
+                          "type": "static",
+                          "dataSource": [
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "研发中心",
+                                "en_US": "R&D Center",
+                                "pt_PT": "R&D Center",
+                                "ar_EG": "R&D Center"
+                              },
+                              "value": "rd",
+                              "__fdSortId": "fd-sort-allfields-1"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "产品部",
+                                "en_US": "Product",
+                                "pt_PT": "Product",
+                                "ar_EG": "Product"
+                              },
+                              "value": "product",
+                              "__fdSortId": "fd-sort-allfields-2"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "运营部",
+                                "en_US": "Operations",
+                                "pt_PT": "Operations",
+                                "ar_EG": "Operations"
+                              },
+                              "value": "ops",
+                              "__fdSortId": "fd-sort-allfields-3"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "人力资源部",
+                                "en_US": "Human Resources",
+                                "pt_PT": "Human Resources",
+                                "ar_EG": "Human Resources"
+                              },
+                              "value": "hr",
+                              "__fdSortId": "fd-sort-allfields-4"
+                            }
+                          ]
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "86047342-6a1f-44e1-81be-d8945bf758f6",
+                    "type": "ant-radio",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "checked",
+                        "value": false,
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "同意协议",
+                          "en_US": "Agree to terms",
+                          "pt_PT": "Agree to terms",
+                          "ar_EG": "Agree to terms"
+                        },
+                        "name": "ant_radio_12ci7toq"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "同意协议",
+                          "en_US": "Agree to terms",
+                          "pt_PT": "Agree to terms",
+                          "ar_EG": "Agree to terms"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "23f3a3e2-3425-4bf1-bc20-ae79afb30082",
+                    "type": "ant-radio-group",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "通知方式",
+                          "en_US": "Notification method",
+                          "pt_PT": "Notification method",
+                          "ar_EG": "Notification method"
+                        },
+                        "name": "ant_radio_group_okc41tfh"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "optionType": "default",
+                        "buttonStyle": "outline",
+                        "block": false,
+                        "optionWrap": false,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "通知方式",
+                          "en_US": "Notification method",
+                          "pt_PT": "Notification method",
+                          "ar_EG": "Notification method"
+                        },
+                        "selectOptions": {
+                          "type": "static",
+                          "dataSource": [
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "邮件",
+                                "en_US": "Email",
+                                "pt_PT": "Email",
+                                "ar_EG": "Email"
+                              },
+                              "value": "email",
+                              "__fdSortId": "fd-sort-allfields-5"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "短信",
+                                "en_US": "SMS",
+                                "pt_PT": "SMS",
+                                "ar_EG": "SMS"
+                              },
+                              "value": "sms",
+                              "__fdSortId": "fd-sort-allfields-6"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "站内信",
+                                "en_US": "In-app Message",
+                                "pt_PT": "In-app Message",
+                                "ar_EG": "In-app Message"
+                              },
+                              "value": "inbox",
+                              "__fdSortId": "fd-sort-allfields-7"
+                            }
+                          ]
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "66dbddf1-04db-4d74-9bc4-00d8a977ec85",
+                    "type": "ant-checkbox",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "checked",
+                        "value": false,
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "订阅资讯",
+                          "en_US": "Subscribe to newsletter",
+                          "pt_PT": "Subscribe to newsletter",
+                          "ar_EG": "Subscribe to newsletter"
+                        },
+                        "name": "ant_checkbox_7djtas8a"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "indeterminate": false,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "订阅资讯",
+                          "en_US": "Subscribe to newsletter",
+                          "pt_PT": "Subscribe to newsletter",
+                          "ar_EG": "Subscribe to newsletter"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "7a43e816-7845-4665-82b4-162b58a62cd7",
+                    "type": "ant-checkbox-group",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "技能标签",
+                          "en_US": "Skills",
+                          "pt_PT": "Skills",
+                          "ar_EG": "Skills"
+                        },
+                        "name": "ant_checkbox_group_bf07flqb"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "optionWrap": false,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "技能标签",
+                          "en_US": "Skills",
+                          "pt_PT": "Skills",
+                          "ar_EG": "Skills"
+                        },
+                        "selectOptions": {
+                          "type": "static",
+                          "dataSource": [
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "JavaScript",
+                                "en_US": "JavaScript",
+                                "pt_PT": "JavaScript",
+                                "ar_EG": "JavaScript"
+                              },
+                              "value": "js",
+                              "__fdSortId": "fd-sort-allfields-8"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "TypeScript",
+                                "en_US": "TypeScript",
+                                "pt_PT": "TypeScript",
+                                "ar_EG": "TypeScript"
+                              },
+                              "value": "ts",
+                              "__fdSortId": "fd-sort-allfields-9"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "React",
+                                "en_US": "React",
+                                "pt_PT": "React",
+                                "ar_EG": "React"
+                              },
+                              "value": "react",
+                              "__fdSortId": "fd-sort-allfields-10"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "Node.js",
+                                "en_US": "Node.js",
+                                "pt_PT": "Node.js",
+                                "ar_EG": "Node.js"
+                              },
+                              "value": "node",
+                              "__fdSortId": "fd-sort-allfields-11"
+                            }
+                          ]
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "21c16225-3e39-4dce-8639-b498e034542c",
+                    "type": "ant-switch",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "checked",
+                        "value": false,
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "账号启用",
+                          "en_US": "Account enabled",
+                          "pt_PT": "Account enabled",
+                          "ar_EG": "Account enabled"
+                        },
+                        "name": "ant_switch_hcxk04q9"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "loading": false,
+                        "size": "default",
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "账号启用",
+                          "en_US": "Account enabled",
+                          "pt_PT": "Account enabled",
+                          "ar_EG": "Account enabled"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "8de34c1f-9bea-4216-b00c-df51b0f1ed36",
+                    "type": "ant-rate",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "满意度",
+                          "en_US": "Satisfaction",
+                          "pt_PT": "Satisfaction",
+                          "ar_EG": "Satisfaction"
+                        },
+                        "name": "ant_rate_vsml2gle"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "allowHalf": false,
+                        "count": 5,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "满意度",
+                          "en_US": "Satisfaction",
+                          "pt_PT": "Satisfaction",
+                          "ar_EG": "Satisfaction"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "387be37a-96e9-4b05-ba03-d40cb788394a",
+                    "type": "ant-slider",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "value": 0,
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "优先级",
+                          "en_US": "Priority",
+                          "pt_PT": "Priority",
+                          "ar_EG": "Priority"
+                        },
+                        "name": "ant_slider_4li61rw7"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "keyboard": true,
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "orientation": "horizontal",
+                        "reverse": false,
+                        "dots": false,
+                        "included": true,
+                        "range": false,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "优先级",
+                          "en_US": "Priority",
+                          "pt_PT": "Priority",
+                          "ar_EG": "Priority"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "a5017679-bfd3-4508-a677-74d055d4ce45",
+                    "type": "ant-segmented",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "视图模式",
+                          "en_US": "View mode",
+                          "pt_PT": "View mode",
+                          "ar_EG": "View mode"
+                        },
+                        "name": "ant_segmented_kvac3sx2"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "block": false,
+                        "orientation": "horizontal",
+                        "size": "medium",
+                        "shape": "default",
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "视图模式",
+                          "en_US": "View mode",
+                          "pt_PT": "View mode",
+                          "ar_EG": "View mode"
+                        },
+                        "selectOptions": {
+                          "type": "static",
+                          "dataSource": [
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "列表",
+                                "en_US": "List",
+                                "pt_PT": "List",
+                                "ar_EG": "List"
+                              },
+                              "value": "list",
+                              "__fdSortId": "fd-sort-allfields-12"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "卡片",
+                                "en_US": "Card",
+                                "pt_PT": "Card",
+                                "ar_EG": "Card"
+                              },
+                              "value": "card",
+                              "__fdSortId": "fd-sort-allfields-13"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "看板",
+                                "en_US": "Kanban",
+                                "pt_PT": "Kanban",
+                                "ar_EG": "Kanban"
+                              },
+                              "value": "kanban",
+                              "__fdSortId": "fd-sort-allfields-14"
+                            }
+                          ]
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "5291b23d-9052-48a6-b95a-96e061907aa3",
+                    "type": "ant-date-picker",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "入职日期",
+                          "en_US": "Join date",
+                          "pt_PT": "Join date",
+                          "ar_EG": "Join date"
+                        },
+                        "name": "ant_date_picker_msiitbyj"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "format": "YYYY-MM-DD",
+                        "showTime": false,
+                        "allowClear": true,
+                        "isBirthday": false,
+                        "dateBoundMode": "",
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "入职日期",
+                          "en_US": "Join date",
+                          "pt_PT": "Join date",
+                          "ar_EG": "Join date"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "5ed90e41-e2ee-4a35-8a06-801345113a66",
+                    "type": "ant-date-dange-picker",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "合同期限",
+                          "en_US": "Contract period",
+                          "pt_PT": "Contract period",
+                          "ar_EG": "Contract period"
+                        },
+                        "name": "ant_date_dange_picker_35pjsp8j"
+                      },
+                      "fieldProps": {
+                        "format": "YYYY-MM-DD",
+                        "allowClear": true,
+                        "disabled": false,
+                        "showTime": false,
+                        "allowEmpty": [
+                          true,
+                          true
+                        ],
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "合同期限",
+                          "en_US": "Contract period",
+                          "pt_PT": "Contract period",
+                          "ar_EG": "Contract period"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "eacd78fd-a6e0-456d-964a-c30d22abb351",
+                    "type": "ant-time-picker",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "上班时间",
+                          "en_US": "Work start time",
+                          "pt_PT": "Work start time",
+                          "ar_EG": "Work start time"
+                        },
+                        "name": "ant_time_picker_z6evhlxf"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "format": "HH:mm:ss",
+                        "minuteStep": 1,
+                        "allowClear": true,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "上班时间",
+                          "en_US": "Work start time",
+                          "pt_PT": "Work start time",
+                          "ar_EG": "Work start time"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "a233508c-fc29-4699-90d0-32cbf54da1c4",
+                    "type": "ant-time-range-picker",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "工作时段",
+                          "en_US": "Work hours",
+                          "pt_PT": "Work hours",
+                          "ar_EG": "Work hours"
+                        },
+                        "name": "ant_time_range_picker_2bcynr1h"
+                      },
+                      "fieldProps": {
+                        "format": "HH:mm:ss",
+                        "allowClear": true,
+                        "disabled": false,
+                        "minuteStep": 1,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "工作时段",
+                          "en_US": "Work hours",
+                          "pt_PT": "Work hours",
+                          "ar_EG": "Work hours"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "75f4230f-182d-4573-914f-1f9a6a445b5c",
+                    "type": "ant-color-picker",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "主题色",
+                          "en_US": "Theme color",
+                          "pt_PT": "Theme color",
+                          "ar_EG": "Theme color"
+                        },
+                        "name": "ant_color_picker_fbx7mijg"
+                      },
+                      "fieldProps": {
+                        "format": "hex",
+                        "allowClear": true,
+                        "disabled": false,
+                        "showText": false,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "主题色",
+                          "en_US": "Theme color",
+                          "pt_PT": "Theme color",
+                          "ar_EG": "Theme color"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "790b36c7-d349-4800-a49f-7a9053da8911",
+                    "type": "ant-cascader",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "所在地区",
+                          "en_US": "Region",
+                          "pt_PT": "Region",
+                          "ar_EG": "Region"
+                        },
+                        "name": "ant_cascader_my054r92"
+                      },
+                      "fieldProps": {
+                        "allowClear": false,
+                        "changeOnSelect": false,
+                        "disabled": false,
+                        "multiple": false,
+                        "showCheckedStrategy": "SHOW_PARENT",
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "所在地区",
+                          "en_US": "Region",
+                          "pt_PT": "Region",
+                          "ar_EG": "Region"
+                        },
+                        "treeOptions": {
+                          "type": "static",
+                          "treeDataJson": "[\n  {\n    \"value\": \"zhejiang\",\n    \"label\": \"浙江省\",\n    \"children\": [\n      {\n        \"value\": \"hangzhou\",\n        \"label\": \"杭州市\",\n        \"children\": [\n          {\n            \"value\": \"xihu\",\n            \"label\": \"西湖区\"\n          },\n          {\n            \"value\": \"binjiang\",\n            \"label\": \"滨江区\"\n          }\n        ]\n      },\n      {\n        \"value\": \"ningbo\",\n        \"label\": \"宁波市\",\n        \"children\": [\n          {\n            \"value\": \"haishu\",\n            \"label\": \"海曙区\"\n          }\n        ]\n      }\n    ]\n  },\n  {\n    \"value\": \"jiangsu\",\n    \"label\": \"江苏省\",\n    \"children\": [\n      {\n        \"value\": \"nanjing\",\n        \"label\": \"南京市\",\n        \"children\": [\n          {\n            \"value\": \"xuanwu\",\n            \"label\": \"玄武区\"\n          }\n        ]\n      },\n      {\n        \"value\": \"suzhou\",\n        \"label\": \"苏州市\",\n        \"children\": [\n          {\n            \"value\": \"gusu\",\n            \"label\": \"姑苏区\"\n          }\n        ]\n      }\n    ]\n  }\n]"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "9ea7e7d2-848a-439b-8efe-86e5ff169406",
+                    "type": "ant-tree-select",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "汇报上级",
+                          "en_US": "Reports to",
+                          "pt_PT": "Reports to",
+                          "ar_EG": "Reports to"
+                        },
+                        "name": "ant_tree_select_67lnbs4h"
+                      },
+                      "fieldProps": {
+                        "allowClear": false,
+                        "disabled": false,
+                        "labelInValue": false,
+                        "multiple": false,
+                        "treeCheckable": false,
+                        "showCheckedStrategy": "SHOW_CHILD",
+                        "treeDefaultExpandAll": false,
+                        "treeLine": false,
+                        "virtual": true,
+                        "listHeight": 256,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "汇报上级",
+                          "en_US": "Reports to",
+                          "pt_PT": "Reports to",
+                          "ar_EG": "Reports to"
+                        },
+                        "treeOptions": {
+                          "type": "static",
+                          "treeDataJson": "[\n  {\n    \"value\": \"hq\",\n    \"label\": \"总公司\",\n    \"children\": [\n      {\n        \"value\": \"rd\",\n        \"label\": \"研发中心\",\n        \"children\": [\n          {\n            \"value\": \"fe\",\n            \"label\": \"前端组\"\n          },\n          {\n            \"value\": \"be\",\n            \"label\": \"后端组\"\n          },\n          {\n            \"value\": \"qa\",\n            \"label\": \"测试组\"\n          }\n        ]\n      },\n      {\n        \"value\": \"product\",\n        \"label\": \"产品部\",\n        \"children\": [\n          {\n            \"value\": \"pm\",\n            \"label\": \"产品经理组\"\n          },\n          {\n            \"value\": \"ux\",\n            \"label\": \"设计组\"\n          }\n        ]\n      },\n      {\n        \"value\": \"hr\",\n        \"label\": \"人力资源部\"\n      },\n      {\n        \"value\": \"finance\",\n        \"label\": \"财务部\"\n      }\n    ]\n  }\n]"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "ae72d442-bcc6-4fbb-9293-48bb634413d2",
+                    "type": "ant-tree-selection",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "initialValue": [],
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "菜单权限",
+                          "en_US": "Menu permissions",
+                          "pt_PT": "Menu permissions",
+                          "ar_EG": "Menu permissions"
+                        },
+                        "name": "ant_tree_selection_oop5l04k",
+                        "colSpan": 2
+                      },
+                      "fieldProps": {
+                        "checkable": true,
+                        "checkStrictly": false,
+                        "defaultExpandAll": false,
+                        "autoExpandParent": true,
+                        "blockNode": false,
+                        "selectable": true,
+                        "multiple": false,
+                        "treeLine": false,
+                        "virtual": true,
+                        "draggable": false,
+                        "disabled": false,
+                        "contentMaxHeight": 320,
+                        "showSearch": true,
+                        "searchAllowClear": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "菜单权限",
+                          "en_US": "Menu permissions",
+                          "pt_PT": "Menu permissions",
+                          "ar_EG": "Menu permissions"
+                        },
+                        "searchPlaceholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "请输入关键字搜索",
+                          "en_US": "Enter keyword to search",
+                          "pt_PT": "Enter keyword to search",
+                          "ar_EG": "Enter keyword to search"
+                        },
+                        "treeOptions": {
+                          "type": "static",
+                          "treeDataJson": "[\n  {\n    \"value\": \"hq\",\n    \"label\": \"总公司\",\n    \"children\": [\n      {\n        \"value\": \"rd\",\n        \"label\": \"研发中心\",\n        \"children\": [\n          {\n            \"value\": \"fe\",\n            \"label\": \"前端组\"\n          },\n          {\n            \"value\": \"be\",\n            \"label\": \"后端组\"\n          },\n          {\n            \"value\": \"qa\",\n            \"label\": \"测试组\"\n          }\n        ]\n      },\n      {\n        \"value\": \"product\",\n        \"label\": \"产品部\",\n        \"children\": [\n          {\n            \"value\": \"pm\",\n            \"label\": \"产品经理组\"\n          },\n          {\n            \"value\": \"ux\",\n            \"label\": \"设计组\"\n          }\n        ]\n      },\n      {\n        \"value\": \"hr\",\n        \"label\": \"人力资源部\"\n      },\n      {\n        \"value\": \"finance\",\n        \"label\": \"财务部\"\n      }\n    ]\n  }\n]"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "364b7d4a-0136-4786-9dd7-5d9cb83e7fef",
+                    "type": "ant-transfer",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "targetKeys",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "分配角色",
+                          "en_US": "Assign roles",
+                          "pt_PT": "Assign roles",
+                          "ar_EG": "Assign roles"
+                        },
+                        "name": "ant_transfer_gtdirhba",
+                        "colSpan": 2
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "showSearch": false,
+                        "oneWay": false,
+                        "pagination": false,
+                        "showSelectAll": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "分配角色",
+                          "en_US": "Assign roles",
+                          "pt_PT": "Assign roles",
+                          "ar_EG": "Assign roles"
+                        },
+                        "transferOptions": {
+                          "type": "static",
+                          "dataSource": [
+                            {
+                              "key": "admin",
+                              "title": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "系统管理员",
+                                "en_US": "System Admin",
+                                "pt_PT": "System Admin",
+                                "ar_EG": "System Admin"
+                              },
+                              "description": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "拥有全部系统权限",
+                                "en_US": "Full system access",
+                                "pt_PT": "Full system access",
+                                "ar_EG": "Full system access"
+                              },
+                              "disabled": false,
+                              "__fdSortId": "fd-sort-allfields-15"
+                            },
+                            {
+                              "key": "editor",
+                              "title": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "内容编辑",
+                                "en_US": "Content Editor",
+                                "pt_PT": "Content Editor",
+                                "ar_EG": "Content Editor"
+                              },
+                              "description": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "可编辑与发布内容",
+                                "en_US": "Can edit and publish content",
+                                "pt_PT": "Can edit and publish content",
+                                "ar_EG": "Can edit and publish content"
+                              },
+                              "disabled": false,
+                              "__fdSortId": "fd-sort-allfields-16"
+                            },
+                            {
+                              "key": "viewer",
+                              "title": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "只读访客",
+                                "en_US": "Read-only Viewer",
+                                "pt_PT": "Read-only Viewer",
+                                "ar_EG": "Read-only Viewer"
+                              },
+                              "description": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "仅可查看数据",
+                                "en_US": "View data only",
+                                "pt_PT": "View data only",
+                                "ar_EG": "View data only"
+                              },
+                              "disabled": false,
+                              "__fdSortId": "fd-sort-allfields-17"
+                            },
+                            {
+                              "key": "auditor",
+                              "title": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "审计员",
+                                "en_US": "Auditor",
+                                "pt_PT": "Auditor",
+                                "ar_EG": "Auditor"
+                              },
+                              "description": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "可查看操作日志",
+                                "en_US": "Can view audit logs",
+                                "pt_PT": "Can view audit logs",
+                                "ar_EG": "Can view audit logs"
+                              },
+                              "disabled": false,
+                              "__fdSortId": "fd-sort-allfields-18"
+                            }
+                          ]
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "7ae8d308-2fc8-4d76-925c-26d8a2914747",
+                    "type": "ant-table-selection",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "initialValue": [],
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "选择同事",
+                          "en_US": "Select colleagues",
+                          "pt_PT": "Select colleagues",
+                          "ar_EG": "Select colleagues"
+                        },
+                        "name": "ant_table_selection_9sx54gef",
+                        "colSpan": 2
+                      },
+                      "fieldProps": {
+                        "bordered": true,
+                        "loading": false,
+                        "size": "middle",
+                        "showHeader": true,
+                        "tableLayout": "auto",
+                        "rowKey": "key",
+                        "rowSelectionType": "checkbox",
+                        "hideSelectAll": false,
+                        "rowSelectionFixed": true,
+                        "showSearch": true,
+                        "searchAllowClear": true,
+                        "pagination": false,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "选择同事",
+                          "en_US": "Select colleagues",
+                          "pt_PT": "Select colleagues",
+                          "ar_EG": "Select colleagues"
+                        },
+                        "searchPlaceholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "请输入关键字搜索",
+                          "en_US": "Enter keyword to search",
+                          "pt_PT": "Enter keyword to search",
+                          "ar_EG": "Enter keyword to search"
+                        },
+                        "paginationSetting": {
+                          "defaultCurrent": 1,
+                          "pageSize": 10,
+                          "showSizeChanger": true,
+                          "pageSizeOptions": [
+                            10,
+                            20,
+                            50,
+                            100
+                          ],
+                          "showQuickJumper": false,
+                          "simple": false,
+                          "hideOnSinglePage": false,
+                          "position": [
+                            "bottomRight"
+                          ],
+                          "size": "default"
+                        },
+                        "columnSetting": [
+                          {
+                            "id": "41355eb2-d14d-4bc3-83f2-e48f311566b4",
+                            "title": {
+                              "selectValue": "zh_CN",
+                              "zh_CN": "姓名",
+                              "en_US": "Name",
+                              "pt_PT": "Name",
+                              "ar_EG": "Name"
+                            },
+                            "dataIndex": "name",
+                            "visible": true,
+                            "align": "left",
+                            "ellipsis": false
+                          },
+                          {
+                            "id": "eac9d7d1-1e46-4264-b96e-4ac74051333a",
+                            "title": {
+                              "selectValue": "zh_CN",
+                              "zh_CN": "年龄",
+                              "en_US": "Age",
+                              "pt_PT": "Age",
+                              "ar_EG": "Age"
+                            },
+                            "dataIndex": "age",
+                            "visible": true,
+                            "align": "left",
+                            "ellipsis": false
+                          },
+                          {
+                            "id": "24731416-30a6-4f26-8103-686db82d6620",
+                            "title": {
+                              "selectValue": "zh_CN",
+                              "zh_CN": "部门",
+                              "en_US": "Department",
+                              "pt_PT": "Department",
+                              "ar_EG": "Department"
+                            },
+                            "dataIndex": "department",
+                            "visible": true,
+                            "align": "left",
+                            "ellipsis": false
+                          }
+                        ],
+                        "tableOptions": {
+                          "type": "static",
+                          "dataSourceJson": "[\n  {\n    \"key\": \"1\",\n    \"name\": \"张三\",\n    \"age\": 32,\n    \"department\": \"研发中心\"\n  },\n  {\n    \"key\": \"2\",\n    \"name\": \"李四\",\n    \"age\": 28,\n    \"department\": \"产品部\"\n  },\n  {\n    \"key\": \"3\",\n    \"name\": \"王五\",\n    \"age\": 35,\n    \"department\": \"运营部\"\n  },\n  {\n    \"key\": \"4\",\n    \"name\": \"赵六\",\n    \"age\": 29,\n    \"department\": \"人力资源部\"\n  }\n]"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "503a9267-cde4-4bbf-b123-c3e08795e826",
+                    "type": "ant-file-upload",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "value": [],
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "附件上传",
+                          "en_US": "Attachments",
+                          "pt_PT": "Attachments",
+                          "ar_EG": "Attachments"
+                        },
+                        "name": "ant_file_upload_k3h30e8z",
+                        "colSpan": 2
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "accept": "",
+                        "multiple": true,
+                        "listType": "text",
+                        "showUploadList": true,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "附件上传",
+                          "en_US": "Attachments",
+                          "pt_PT": "Attachments",
+                          "ar_EG": "Attachments"
+                        },
+                        "uploadDataSource": {
+                          "type": "dynamic"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "b6a9d179-7dcd-4be1-9ac5-99f693e634a1",
+                    "type": "ant-image-upload",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "value": [],
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "头像上传",
+                          "en_US": "Avatar",
+                          "pt_PT": "Avatar",
+                          "ar_EG": "Avatar"
+                        },
+                        "name": "ant_image_upload_rfgndgeh",
+                        "colSpan": 2
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "accept": "image/*",
+                        "multiple": true,
+                        "listType": "picture-card",
+                        "showUploadList": true,
+                        "cropEnabled": true,
+                        "cropShape": "rect",
+                        "cropAllowFlip": true,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "头像上传",
+                          "en_US": "Avatar",
+                          "pt_PT": "Avatar",
+                          "ar_EG": "Avatar"
+                        },
+                        "uploadDataSource": {
+                          "type": "dynamic"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "824e9c75-8a20-4e6e-b585-aa1277c76719",
+                    "type": "ant-qrcode",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "initialValue": "https://example.com/invite/abc123",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "邀请链接",
+                          "en_US": "Invite link",
+                          "pt_PT": "Invite link",
+                          "ar_EG": "Invite link"
+                        },
+                        "name": "ant_qrcode_hy7bbtsd"
+                      },
+                      "fieldProps": {
+                        "value": "https://example.com/invite/abc123",
+                        "type": "canvas",
+                        "size": 160,
+                        "bordered": true,
+                        "boostLevel": true,
+                        "status": "active",
+                        "statusRenderTemplate": "ant-example",
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "邀请链接",
+                          "en_US": "Invite link",
+                          "pt_PT": "Invite link",
+                          "ar_EG": "Invite link"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "c6199dbb-9be5-40fc-9b21-e78b80e907f3",
+                    "type": "ant-signature-pad",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "initialValue": "",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "电子签名",
+                          "en_US": "Signature",
+                          "pt_PT": "Signature",
+                          "ar_EG": "Signature"
+                        },
+                        "name": "ant_signature_pad_sjsrl7hr",
+                        "colSpan": 2
+                      },
+                      "fieldProps": {
+                        "value": "",
+                        "penColor": "#000000",
+                        "backgroundColor": "#ffffff",
+                        "mode": "free",
+                        "lineWidth": 2,
+                        "canvasWidth": 300,
+                        "canvasHeight": 200,
+                        "clearOnResize": false,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "电子签名",
+                          "en_US": "Signature",
+                          "pt_PT": "Signature",
+                          "ar_EG": "Signature"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "57dcb440-ec20-44e1-9244-1962d6c1a582",
+                    "type": "ant-rich-editor",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "个人简介",
+                          "en_US": "Bio",
+                          "pt_PT": "Bio",
+                          "ar_EG": "Bio"
+                        },
+                        "name": "ant_rich_editor_2irob7ec",
+                        "colSpan": 2
+                      },
+                      "fieldProps": {
+                        "readOnly": false,
+                        "disabled": false,
+                        "bordered": true,
+                        "minHeight": 300,
+                        "height": 360,
+                        "gap": 60,
+                        "direction": "ltr",
+                        "toolbarPreset": "basic",
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "请输入个人简介",
+                          "en_US": "Enter your bio",
+                          "pt_PT": "Enter your bio",
+                          "ar_EG": "Enter your bio"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "db11d0bb-5d53-4870-a7c7-b2e0752b7844",
+                    "type": "ant-editor-table",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "工作经历",
+                          "en_US": "Work experience",
+                          "pt_PT": "Work experience",
+                          "ar_EG": "Work experience"
+                        },
+                        "name": "ant_editor_table_8c4f3d5h",
+                        "colSpan": 2
+                      },
+                      "fieldProps": {
+                        "bordered": true,
+                        "pagination": false,
+                        "no": true,
+                        "size": "middle",
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "工作经历",
+                          "en_US": "Work experience",
+                          "pt_PT": "Work experience",
+                          "ar_EG": "Work experience"
+                        },
+                        "columnSetting": [
+                          {
+                            "id": "045c7f98-8db8-46f0-a5b3-ab9be0aa03f5",
+                            "title": {
+                              "selectValue": "zh_CN",
+                              "zh_CN": "姓名",
+                              "en_US": "Name",
+                              "pt_PT": "Name",
+                              "ar_EG": "Name"
+                            },
+                            "field": "name",
+                            "widthMode": "adaptive",
+                            "align": "left",
+                            "editorType": "input",
+                            "editorSetting": {
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "姓名",
+                                "en_US": "Name",
+                                "pt_PT": "Name",
+                                "ar_EG": "Name"
+                              }
+                            }
+                          },
+                          {
+                            "id": "d2c4c592-a571-4ce3-881b-615104037f5c",
+                            "title": {
+                              "selectValue": "zh_CN",
+                              "zh_CN": "部门",
+                              "en_US": "Department",
+                              "pt_PT": "Department",
+                              "ar_EG": "Department"
+                            },
+                            "field": "department",
+                            "widthMode": "adaptive",
+                            "align": "center",
+                            "editorType": "select",
+                            "editorSetting": {
+                              "selectOptions": {
+                                "type": "static",
+                                "dataSource": [
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "研发中心",
+                                      "en_US": "R&D Center",
+                                      "pt_PT": "R&D Center",
+                                      "ar_EG": "R&D Center"
+                                    },
+                                    "value": "rd",
+                                    "__fdSortId": "fd-sort-allfields-1"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "产品部",
+                                      "en_US": "Product",
+                                      "pt_PT": "Product",
+                                      "ar_EG": "Product"
+                                    },
+                                    "value": "product",
+                                    "__fdSortId": "fd-sort-allfields-2"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "运营部",
+                                      "en_US": "Operations",
+                                      "pt_PT": "Operations",
+                                      "ar_EG": "Operations"
+                                    },
+                                    "value": "ops",
+                                    "__fdSortId": "fd-sort-allfields-3"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "人力资源部",
+                                      "en_US": "Human Resources",
+                                      "pt_PT": "Human Resources",
+                                      "ar_EG": "Human Resources"
+                                    },
+                                    "value": "hr",
+                                    "__fdSortId": "fd-sort-allfields-4"
+                                  }
+                                ]
+                              },
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "部门",
+                                "en_US": "Department",
+                                "pt_PT": "Department",
+                                "ar_EG": "Department"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      }
+    ]
+  }
+}

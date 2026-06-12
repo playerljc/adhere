@@ -6,7 +6,11 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import { LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
+import {
+  computeLabelValueColSpan,
+  findDesignValueById,
+  getDesignFormControlProps,
+} from '../../../../utils';
 
 type SignatureComponentProps = React.ComponentProps<typeof WritingBoard.Signature>;
 type SignatureComponent = React.ComponentType<SignatureComponentProps>;
@@ -53,12 +57,23 @@ export function createSignatureRenderDesign(SignatureComponent: SignatureCompone
       label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
       value: (
         <ValueDesign value={value}>
-          {({ fieldProps, style }) => (
-            <SignaturePadValue
-              fieldProps={(fieldProps ?? {}) as SignatureFieldProps}
-              style={style}
-            />
-          )}
+          {({ fieldProps, style, value, onChange, checked, targetKeys }) => {
+            const controlProps = getDesignFormControlProps(formItemProps, {
+              value,
+              onChange,
+              checked,
+              targetKeys,
+            });
+
+            return (
+              <SignaturePadValue
+                fieldProps={(fieldProps ?? {}) as SignatureFieldProps}
+                style={style}
+                value={controlProps.value as string | undefined}
+                onChange={controlProps.onChange as ((base64?: string) => void) | undefined}
+              />
+            );
+          }}
         </ValueDesign>
       ),
     };

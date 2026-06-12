@@ -290,10 +290,12 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions, lang }) => (
+        {({ fieldProps, style, actions, lang, value, onChange }) => (
           <FieldWithTip tip={fieldProps.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
             <FieldRichEditor
               fieldId={id}
+              value={value as string | undefined}
+              onChange={onChange as ((value: string) => void) | undefined}
               fieldProps={fieldProps as RichEditorFieldProps}
               style={style}
               actions={actions}

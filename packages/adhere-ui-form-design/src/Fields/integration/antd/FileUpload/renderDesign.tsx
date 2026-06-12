@@ -132,7 +132,7 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions, lang }) => {
+        {({ fieldProps, style, actions, lang, value, onChange }) => {
           const { uploadDataSource, ...rest } = fieldProps as typeof fieldProps & {
             uploadDataSource?: UploadDataSourceManagerFormItemValue;
           };
@@ -155,7 +155,7 @@ export function renderDesign({
 
           return (
             <FieldWithTip tip={fieldProps.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
-              <FieldFileUpload uploadProps={uploadProps} />
+              <FieldFileUpload uploadProps={uploadProps} value={value as FileUploadValueItem[] | undefined} onChange={onChange as ((value: FileUploadValueItem[]) => void) | undefined} />
             </FieldWithTip>
           );
         }}

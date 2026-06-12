@@ -6,7 +6,7 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
+import { computeLabelValueColSpan, findDesignValueById, getDesignFormControlProps } from '../../../../utils';
 
 /**
  * renderDesign - ColorPicker design mode (desktop)
@@ -30,8 +30,6 @@ export function renderDesign({
   const parent = findDesignValueById(parentId as string, designValue) as DesignValue;
   const { labelColSpan, valueColSpan } = computeLabelValueColSpan(parent, formItemProps);
 
-  const rawValue = (formItemProps as { initialValue?: string })?.initialValue;
-
   return {
     key: id,
     require: formItemProps?.require ?? false,
@@ -40,12 +38,12 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps: fp, style, actions }) => (
+        {({ fieldProps: fp, style, actions, value, onChange, checked, targetKeys }) => (
           <ColorPicker
             {...(fp as ColorPickerProps)}
             style={style ?? {}}
             {...actions}
-            defaultValue={rawValue}
+            {...getDesignFormControlProps(formItemProps, { value, onChange, checked, targetKeys })}
           />
         )}
       </ValueDesign>

@@ -30,8 +30,10 @@ export function define(): DesignItem {
         hidden: false,
         noStyle: false,
         valuePropName: 'targetKeys',
+        getValueFromEvent: (nextTargetKeys: string[]) => nextTargetKeys,
         validateFirst: false,
         validateTrigger: 'onChange',
+        initialValue: [],
       },
       fieldProps: {
         disabled: false,

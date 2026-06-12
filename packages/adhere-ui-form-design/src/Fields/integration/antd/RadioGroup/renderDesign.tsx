@@ -4,9 +4,9 @@ import React from 'react';
 import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { DesignPreviewFieldWithDataSource, LabelDesign, ValueDesign } from '../../../../components';
-import type { DesignContextType, DesignValue, FieldProps } from '../../../../types';
+import type { DesignContextType, DesignValue, FieldProps, FormItemProps } from '../../../../types';
 import type { DesignFieldDataSourceOption } from '../../../../utils';
-import { computeLabelValueColSpan, findDesignValueById } from '../../../../utils';
+import { computeLabelValueColSpan, findDesignValueById, getDesignFormControlProps } from '../../../../utils';
 
 type LayoutFieldProps = FieldProps & {
   optionWrap?: boolean;
@@ -28,9 +28,17 @@ function renderRadioGroupBody(
   columnCount: number | undefined,
   options: DesignFieldDataSourceOption[],
   groupProps: Omit<RadioGroupProps, 'options' | 'children'>,
-  previewValue: unknown,
+  formItemProps: FormItemProps | undefined,
+  injected: {
+    value?: unknown;
+    onChange?: (...args: unknown[]) => void;
+    checked?: boolean;
+    targetKeys?: string[];
+    previewValue?: unknown;
+  },
   optionType: 'default' | 'button',
 ) {
+  const controlProps = getDesignFormControlProps(formItemProps, injected);
   const cols =
     !optionWrap && columnCount != null && Number(columnCount) > 0
       ? Math.min(24, Math.max(1, Math.floor(Number(columnCount))))
@@ -40,7 +48,7 @@ function renderRadioGroupBody(
 
   if (optionWrap) {
     return (
-      <Radio.Group {...groupProps} defaultValue={previewValue as RadioGroupProps['defaultValue']}>
+      <Radio.Group {...groupProps} {...controlProps}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, width: '100%' }}>
           {options.map((o) => (
             <OptionTag key={String(o.value)} value={o.value}>
@@ -54,7 +62,7 @@ function renderRadioGroupBody(
 
   if (cols > 0 && span) {
     return (
-      <Radio.Group {...groupProps} defaultValue={previewValue as RadioGroupProps['defaultValue']}>
+      <Radio.Group {...groupProps} {...controlProps}>
         <Row gutter={[8, 8]} style={{ width: '100%' }}>
           {options.map((o) => (
             <Col key={String(o.value)} span={span}>
@@ -70,7 +78,7 @@ function renderRadioGroupBody(
     <Radio.Group
       {...groupProps}
       options={toRadioOptions(options)}
-      defaultValue={previewValue as RadioGroupProps['defaultValue']}
+      {...controlProps}
     />
   );
 }
@@ -107,12 +115,14 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions }) => (
+        {({ fieldProps, style, actions, value, onChange, checked, targetKeys }) => (
           <DesignPreviewFieldWithDataSource
             fieldProps={fieldProps}
             formItemProps={formItemProps}
             style={style ?? {}}
             actions={actions}
+            value={value}
+            onChange={onChange}
           >
             {({
               restFieldProps,
@@ -138,7 +148,8 @@ export function renderDesign({
                 columnCount,
                 options,
                 groupProps,
-                previewValue,
+                formItemProps,
+                { value, onChange, checked, targetKeys, previewValue },
                 optionType,
               );
             }}

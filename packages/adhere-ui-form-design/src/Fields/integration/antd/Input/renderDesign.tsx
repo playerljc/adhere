@@ -5,7 +5,12 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
+import {
+  computeLabelValueColSpan,
+  findDesignValueById,
+  getDesignFormControlProps,
+  resolveI18nText,
+} from '../../../../utils';
 
 /**
  * renderDesign
@@ -41,14 +46,14 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions, lang }) => (
+        {({ fieldProps, style, actions, lang, value, onChange, checked, targetKeys }) => (
           <FieldWithTip tip={fieldProps.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
             <Input
               {...(fieldProps as InputProps)}
               {...actions}
+              {...getDesignFormControlProps(formItemProps, { value, onChange, checked, targetKeys })}
               style={style ?? {}}
               placeholder={resolveI18nText(fieldProps.placeholder as any, lang) as any}
-              defaultValue={formItemProps?.initialValue as InputProps['defaultValue']}
             />
           </FieldWithTip>
         )}

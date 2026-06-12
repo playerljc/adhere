@@ -6,7 +6,12 @@ import type { DataItemRow } from '@baifendian/adhere-ui-tablegridlayout';
 
 import { FieldWithTip, LabelDesign, ValueDesign } from '../../../../components';
 import type { DesignContextType, DesignValue } from '../../../../types';
-import { computeLabelValueColSpan, findDesignValueById, resolveI18nText } from '../../../../utils';
+import {
+  computeLabelValueColSpan,
+  findDesignValueById,
+  getDesignFormControlProps,
+  resolveI18nText,
+} from '../../../../utils';
 
 const { Password } = Input;
 
@@ -42,14 +47,14 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions, lang }) => (
+        {({ fieldProps, style, actions, lang, value, onChange, checked, targetKeys }) => (
           <FieldWithTip tip={fieldProps.tip as any} tipStyles={styleProps?.tipStyles} lang={lang}>
             <Password
               {...(fieldProps as PasswordProps)}
               {...actions}
+              {...getDesignFormControlProps(formItemProps, { value, onChange, checked, targetKeys })}
               placeholder={resolveI18nText(fieldProps.placeholder as any, lang) as any}
               style={style ?? {}}
-              defaultValue={formItemProps?.initialValue as PasswordProps['defaultValue']}
             />
           </FieldWithTip>
         )}
