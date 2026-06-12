@@ -495,7 +495,7 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions, lang }) => {
+        {({ fieldProps, style, actions, lang, value: formValue, onChange }) => {
           const designContext = useContext(DesignContext);
 
           return (
@@ -506,6 +506,8 @@ export function renderDesign({
                 actions={actions}
                 lang={lang}
                 designContext={designContext}
+                value={formValue as Record<string, any>[] | undefined}
+                onChange={onChange as ((nextValue: Record<string, any>[]) => void) | undefined}
               />
             </FieldWithTip>
           );

@@ -18,13 +18,6 @@ import FormItemBridge, { type DesignFormInjectedProps } from './FormItemBridge';
 
 const { Label, Value } = TableGridLayout;
 
-/** 设计态画布上需保留内部勾选/穿梭等交互的字段类型 */
-const DESIGN_CANVAS_INTERACTIVE_FIELD_TYPES = new Set([
-  'ant-tree-selection',
-  'ant-table-selection',
-  'ant-transfer',
-]);
-
 export function LabelDesign({
   formItemProps,
   styleProps,
@@ -89,12 +82,11 @@ export function ValueDesign({
 
   const isFormMode = designContext.mode === 'form';
   const formDisabled = designContext.getFormDisabled?.();
+  const designItem = designContext.getItems?.().find((item) => item.type === type);
+  const designCanvasInteractive = designItem?.designCanvasInteractive === true;
   const finalFieldProps = (() => {
-    if (
-      !isFormMode &&
-      !DESIGN_CANVAS_INTERACTIVE_FIELD_TYPES.has(type)
-    ) {
-      // 设计态：文本类控件只读展示；树/表/穿梭框需保留内部选择交互
+    if (!isFormMode && !designCanvasInteractive) {
+      // 设计态：默认只读展示；designCanvasInteractive 的控件在 define() 中自行声明
       return { ...fieldProps, readOnly: true } as FieldProps;
     }
     if (formDisabled === undefined) {

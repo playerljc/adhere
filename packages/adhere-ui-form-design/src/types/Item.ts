@@ -210,6 +210,12 @@ export interface DesignItem extends BaseItem {
   isDrop?: (originType: string) => boolean;
 
   /**
+   * 设计态画布是否保留控件内部交互（勾选、穿梭、可编辑表格等）。
+   * 默认 false：画布上合并 readOnly，避免误录入；复杂控件在 define() 中设为 true。
+   */
+  designCanvasInteractive?: boolean;
+
+  /**
    * 组件designValue的默认值配置
    */
   defaultValue?: DesignValueProps;
