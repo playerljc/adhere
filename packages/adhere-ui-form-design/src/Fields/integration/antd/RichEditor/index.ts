@@ -45,6 +45,7 @@ export function define(): DesignItem {
     hasFormProperty: true,
     hasActionsProperty: true,
     hasFlexProperty: false,
+    designCanvasInteractive: true,
     defaultValue: {
       formItemProps: {
         require: true,
