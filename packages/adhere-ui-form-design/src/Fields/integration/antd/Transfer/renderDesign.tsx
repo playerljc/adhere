@@ -39,13 +39,15 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions, lang }) => (
+        {({ fieldProps, style, actions, lang, targetKeys, onChange }) => (
           <TransferDesignBody
             fieldProps={fieldProps}
             style={style}
             styleProps={styleProps}
             lang={lang}
             actions={actions}
+            targetKeys={targetKeys}
+            onChange={onChange}
           />
         )}
       </ValueDesign>

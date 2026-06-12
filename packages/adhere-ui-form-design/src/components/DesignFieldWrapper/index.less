@@ -10,19 +10,6 @@
   &.@{prefix-cls}-design-field-wrapper-design-mode {
     padding: var(--design-field-wrapper-padding, 4px);
 
-    // 设计态：控件区只读展示，禁止录入；点击仍由外层 wrapper 选中字段，工具栏保持可点
-    > *:not(.@{prefix-cls}-design-field-wrapper-label):not(
-        .@{prefix-cls}-design-field-wrapper-actions
-      ) {
-      pointer-events: none;
-      user-select: none;
-    }
-
-    > .@{prefix-cls}-design-field-wrapper-label,
-    > .@{prefix-cls}-design-field-wrapper-actions {
-      pointer-events: auto;
-    }
-
     > .@{prefix-cls}-design-field-wrapper-label {
       position: absolute;
       bottom: 0;

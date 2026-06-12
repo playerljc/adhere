@@ -39,13 +39,15 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions, lang }) => (
+        {({ fieldProps, style, actions, lang, value, onChange }) => (
           <TableSelectionDesignBody
             fieldProps={fieldProps}
             style={style}
             lang={lang}
             isMobile={false}
             actions={actions}
+            value={value as React.Key[] | undefined}
+            onChange={onChange as ((value: React.Key[]) => void) | undefined}
           />
         )}
       </ValueDesign>

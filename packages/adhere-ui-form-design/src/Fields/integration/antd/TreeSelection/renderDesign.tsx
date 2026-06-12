@@ -39,12 +39,14 @@ export function renderDesign({
     label: <LabelDesign formItemProps={formItemProps} styleProps={styleProps} />,
     value: (
       <ValueDesign value={value}>
-        {({ fieldProps, style, actions, lang }) => (
+        {({ fieldProps, style, actions, lang, value, onChange }) => (
           <TreeSelectionDesignBody
             fieldProps={fieldProps}
             style={style}
             lang={lang}
             actions={actions}
+            value={value as React.ComponentProps<typeof TreeSelectionDesignBody>['value']}
+            onChange={onChange as React.ComponentProps<typeof TreeSelectionDesignBody>['onChange']}
           />
         )}
       </ValueDesign>
