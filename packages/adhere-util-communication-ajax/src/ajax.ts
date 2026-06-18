@@ -1,17 +1,32 @@
 import { notification } from 'antd';
 
-
-
 import MobileGlobalIndicator from '@baifendian/adhere-mobile-ui-globalindicator';
 import GlobalIndicator from '@baifendian/adhere-ui-globalindicator';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
-
-
-import { CONTENT_TYPES, EventHandlerParams, FormDataConfig, HttpStatusCode, IConfig, ISendArg, ISendPrepareArg, Method, Prepare, PrepareFunctionParams, RequestInterceptor, ResolveDataParams, ResolveDataResult, ResponseInterceptor, ResponseInterceptorReturn, RetryOptions, SendParamsConfig, SendResult, XhrEventsConfig } from './types';
+import {
+  CONTENT_TYPES,
+  EventHandlerParams,
+  FormDataConfig,
+  HttpStatusCode,
+  IConfig,
+  ISendArg,
+  ISendPrepareArg,
+  Method,
+  Prepare,
+  PrepareFunctionParams,
+  RequestInterceptor,
+  ResolveDataParams,
+  ResolveDataResult,
+  ResponseInterceptor,
+  ResponseInterceptorReturn,
+  RetryOptions,
+  SendParamsConfig,
+  SendResult,
+  XhrEventsConfig,
+} from './types';
 import { combineUrls, generateCacheKey } from './utils';
-
 
 /** 是否触发过402状态码 */
 let trigger402 = false;
@@ -737,8 +752,8 @@ function createResponseInterceptorRetry(
       ...(sendResult.interceptorsConfig ?? {}),
       headers: transformStringHeadersToObject(xhr?.getAllResponseHeaders?.() ?? ''),
       response: xhr?.response ?? null,
-      responseText: canAccessText ? (xhr?.responseText ?? '') : '',
-      responseXML: canAccessXML ? (xhr?.responseXML ?? null) : null,
+      responseText: canAccessText ? xhr?.responseText ?? '' : '',
+      responseXML: canAccessXML ? xhr?.responseXML ?? null : null,
       xhr,
       retry: createResponseInterceptorRetry(ajaxInstance, {
         rawParams: retryParams?.rawParams,
@@ -1119,7 +1134,10 @@ async function onreadystatechange(
       const effectiveXhr = finalXhr ?? xhr;
 
       // status success
-      if ((effectiveXhr.status >= 200 && effectiveXhr.status < 300) || effectiveXhr.status === 304) {
+      if (
+        (effectiveXhr.status >= 200 && effectiveXhr.status < 300) ||
+        effectiveXhr.status === 304
+      ) {
         // 获取contentType
         const contentType = effectiveXhr.getResponseHeader('Content-type') || '';
 
