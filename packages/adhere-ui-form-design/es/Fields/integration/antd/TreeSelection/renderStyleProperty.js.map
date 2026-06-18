@@ -1,0 +1,1 @@
+{"version":3,"file":"renderStyleProperty.js","sources":["Fields/integration/antd/TreeSelection/renderStyleProperty.js"],"sourcesContent":["export { renderStyleProperty } from '../Input/renderStyleProperty';"],"names":[],"mappings":"0BAAkE,KAA9B"}

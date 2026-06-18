@@ -1,0 +1,2 @@
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.TableEvents=void 0;var TableEvents=exports.TableEvents={handler:function(){return[{label:"onChange",value:"onChange"},{label:"onSelect",value:"onSelect"},{label:"onSelectAll",value:"onSelectAll"},{label:"onSelectInvert",value:"onSelectInvert"},{label:"onSelectNone",value:"onSelectNone"},{label:"tableOnChange",value:"tableOnChange"}]}};
+//# sourceMappingURL=TableEvents.js.map

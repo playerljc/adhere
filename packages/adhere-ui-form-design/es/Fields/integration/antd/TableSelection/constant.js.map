@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/TableSelection/constant.js"],"sourcesContent":["export var TYPE = 'ant-table-selection';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,6BAAPA,IAA4B"}

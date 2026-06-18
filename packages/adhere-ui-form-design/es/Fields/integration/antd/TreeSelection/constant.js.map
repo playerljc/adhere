@@ -1,0 +1,1 @@
+{"version":3,"file":"constant.js","sources":["Fields/integration/antd/TreeSelection/constant.js"],"sourcesContent":["export var TYPE = 'ant-tree-selection';"],"names":["TYPE"],"mappings":"AAAO,IAAIA,KAAO,4BAAPA,IAA2B"}

@@ -130,7 +130,7 @@ const MainProperty = createStandardMainProperty({
             getValueFromEvent={(_color: unknown, hex: string) => hex}
             trigger="onChange"
           >
-            <ColorPicker allowClear format="hex" showText disabledAlpha placement="bottomLeft" placeholder={Intl.get('color')} />
+            <ColorPicker allowClear format="hex" showText disabledAlpha placement="bottomLeft" />
           </Form.Item>
         </Value>
       ),
@@ -146,7 +146,7 @@ const MainProperty = createStandardMainProperty({
             getValueFromEvent={(_color: unknown, hex: string) => hex}
             trigger="onChange"
           >
-            <ColorPicker allowClear format="hex" showText disabledAlpha placement="bottomLeft" placeholder={Intl.get('bg_color')} />
+            <ColorPicker allowClear format="hex" showText disabledAlpha placement="bottomLeft" />
           </Form.Item>
         </Value>
       ),

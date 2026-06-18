@@ -153,7 +153,7 @@ const TreeSelectionField: React.FC<TreeSelectionFieldProps> = ({
         <Spin spinning={loading}>
           <Tree
             {...treeProps}
-            treeData={displayTreeData as TreeProps['treeData']}
+            treeData={displayTreeData as unknown as TreeProps['treeData']}
             fieldNames={TREE_SELECTION_FIELD_NAMES}
             checkedKeys={value}
             {...expandedTreeProps}

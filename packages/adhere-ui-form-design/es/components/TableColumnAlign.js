@@ -1,0 +1,2 @@
+import FieldGeneratorToDict from"@baifendian/adhere-ui-fieldgeneratortodict";import{names}from"../Dict";var ComponentNames=FieldGeneratorToDict.ComponentNames,Components=FieldGeneratorToDict.Components,genDictComponentName=FieldGeneratorToDict.genDictComponentName,TableColumnAlignSelectStandardDict=Components[genDictComponentName(names.TableColumnAlign,ComponentNames.Select.Standard)];export{TableColumnAlignSelectStandardDict};
+//# sourceMappingURL=TableColumnAlign.js.map

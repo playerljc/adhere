@@ -1,2 +1,2 @@
-Object.defineProperty(exports,"__esModule",{value:!0}),exports.TYPE=void 0;var TYPE=exports.TYPE="ant-editor-table";
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.TYPE=exports.EDITOR_TABLE_MOBILE_OPERATION_COLUMN_WIDTH=exports.EDITOR_TABLE_MOBILE_COLUMN_MIN_WIDTH=void 0;var TYPE=exports.TYPE="ant-editor-table",EDITOR_TABLE_MOBILE_COLUMN_MIN_WIDTH=exports.EDITOR_TABLE_MOBILE_COLUMN_MIN_WIDTH=200,EDITOR_TABLE_MOBILE_OPERATION_COLUMN_WIDTH=exports.EDITOR_TABLE_MOBILE_OPERATION_COLUMN_WIDTH=50;
 //# sourceMappingURL=constant.js.map

@@ -15,7 +15,7 @@ export type TreeSelectionFieldConfig = {
   blockNode?: boolean;
   selectable?: boolean;
   multiple?: boolean;
-  treeLine?: boolean | { showLeafIcon?: boolean };
+  treeLine?: TreeProps['showLine'];
   virtual?: boolean;
   height?: number;
   draggable?: boolean;

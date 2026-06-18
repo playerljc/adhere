@@ -1,0 +1,35 @@
+.adhere-ui-fd-tree-selection-field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+
+  &-search {
+    flex-shrink: 0;
+    width: 100%;
+    margin-bottom: var(--tree-selection-search-margin-bottom, 12px);
+
+    &-compact {
+      display: flex;
+      width: 100%;
+    }
+
+    &-input {
+      flex: 1;
+      min-width: var(--tree-selection-search-input-min-width, 160px);
+    }
+
+    &-button {
+      flex-shrink: 0;
+      min-width: var(--tree-selection-search-button-min-width, 72px);
+    }
+  }
+
+  &-body {
+    flex: 1;
+    min-height: 0;
+    max-height: var(--tree-selection-content-max-height, 320px);
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}

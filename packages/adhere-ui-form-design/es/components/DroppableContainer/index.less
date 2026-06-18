@@ -2,16 +2,18 @@
 
 .@{prefix-cls}-design-editor-droppable-container {
   flex: 1;
+  border-radius: var(--fd-radius-sm, 6px);
 
-  // 设计期专用视觉：占位最小尺寸 / 边框 / 拖入高亮
-  // form 模式下不会挂上 -design-mode 修饰符
   &.@{prefix-cls}-design-editor-droppable-container-design-mode {
-    min-width: var(--droppable-container-min-width, 60px);
-    min-height: var(--droppable-container-min-height, 60px);
-    border: var(--droppable-container-border, 1px solid @border-color);
+    min-width: var(--droppable-container-min-width, 80px);
+    min-height: var(--droppable-container-min-height, 80px);
+    border: var(--droppable-container-border, 1.5px dashed #cbd5e1);
+    border-radius: var(--fd-radius-md, 8px);
+    transition: border-color 0.15s ease, background 0.15s ease;
 
     &.@{prefix-cls}-design-editor-droppable-container-over {
-      border-color: var(--droppable-container-over-border-color, @highlight-color);
+      background: var(--fd-accent-soft, rgba(59, 130, 246, 0.06));
+      border-color: var(--droppable-container-over-border-color, #3b82f6);
     }
   }
 }

@@ -1,0 +1,2 @@
+import{i18nFromKey}from"./i18nFromKey";var EMAIL_PATTERN="^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$";function requiredRules(e){return[{type:"required",config:{required:!0,message:i18nFromKey(e)}}]}function emailRules(e,r){return[{type:"required",config:{required:!0,message:i18nFromKey(e)}},{type:"pattern",config:{pattern:EMAIL_PATTERN,message:i18nFromKey(r)}}]}function requiredFormItem(e){return{require:!0,rules:requiredRules(e)}}export{requiredRules,emailRules,requiredFormItem};
+//# sourceMappingURL=createTemplateRules.js.map

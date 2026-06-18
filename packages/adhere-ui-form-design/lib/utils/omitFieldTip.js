@@ -1,0 +1,2 @@
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.omitFieldTip=omitFieldTip;var __rest=function(e,t){var r={};for(i in e)Object.prototype.hasOwnProperty.call(e,i)&&t.indexOf(i)<0&&(r[i]=e[i]);if(null!=e&&"function"==typeof Object.getOwnPropertySymbols)for(var o=0,i=Object.getOwnPropertySymbols(e);o<i.length;o++)t.indexOf(i[o])<0&&Object.prototype.propertyIsEnumerable.call(e,i[o])&&(r[i[o]]=e[i[o]]);return r};function omitFieldTip(e){return e&&(e.tip,__rest(e,["tip"]))}
+//# sourceMappingURL=omitFieldTip.js.map

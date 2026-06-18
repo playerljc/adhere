@@ -1,0 +1,2 @@
+function cellValueMatchesKeyword(e,r){if(null==e)return!1;if("object"==typeof e)try{return JSON.stringify(e).toLowerCase().includes(r)}catch(e){return!1}return String(e).toLowerCase().includes(r)}function rowMatchesKeyword(e,r){return Object.values(e).some(function(e){return cellValueMatchesKeyword(e,r)})}function filterTableRowsByKeyword(e,r){var t=(null!=r?r:"").trim().toLowerCase();return t?e.filter(function(e){return rowMatchesKeyword(e,t)}):e}export{filterTableRowsByKeyword};
+//# sourceMappingURL=filterTableRowsByKeyword.js.map

@@ -1,0 +1,2 @@
+var __rest=this&&this.__rest||function(t,e){var r={};for(i in t)Object.prototype.hasOwnProperty.call(t,i)&&e.indexOf(i)<0&&(r[i]=t[i]);if(null!=t&&"function"==typeof Object.getOwnPropertySymbols)for(var o=0,i=Object.getOwnPropertySymbols(t);o<i.length;o++)e.indexOf(i[o])<0&&Object.prototype.propertyIsEnumerable.call(t,i[o])&&(r[i[o]]=t[i[o]]);return r};function omitFieldTip(t){return t&&(t.tip,__rest(t,["tip"]))}export{omitFieldTip};
+//# sourceMappingURL=omitFieldTip.js.map

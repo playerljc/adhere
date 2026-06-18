@@ -1,2 +1,2 @@
-import{SELECT_VALUE_KEY_NAME}from"../constant";function toI18nLabel(t,n,E){var o,_;return t&&"object"==typeof t&&SELECT_VALUE_KEY_NAME in t?t:((o={})[SELECT_VALUE_KEY_NAME]=n,_=o,E.forEach(function(E){_[E]=E===n?"string"==typeof t?t:"":null}),_)}export{toI18nLabel};
+import{SELECT_VALUE_KEY_NAME}from"../constant";function toI18nLabel(t,n,E){var o,e,r,_,f;return t&&"object"==typeof t&&SELECT_VALUE_KEY_NAME in t?t:t&&"object"==typeof t&&"key"in t?(r="string"==typeof(e=t).key?e.key:n,(o={})[SELECT_VALUE_KEY_NAME]=r,_=o,E.forEach(function(E){var t=e[E];_[E]="string"==typeof t?t:null}),_):((r={})[SELECT_VALUE_KEY_NAME]=n,f=r,E.forEach(function(E){f[E]=E===n?"string"==typeof t?t:"":null}),f)}export{toI18nLabel};
 //# sourceMappingURL=toI18nLabel.js.map

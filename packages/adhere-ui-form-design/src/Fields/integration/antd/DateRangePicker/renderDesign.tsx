@@ -59,7 +59,10 @@ export function renderDesign({
                   ...getDesignFormControlProps(formItemProps, { value, onChange, checked, targetKeys }),
                   value:
                     Array.isArray(value) && value[0] && value[1]
-                      ? [dayjs(value[0] as string), dayjs(value[1] as string)]
+                      ? ([dayjs(value[0] as string), dayjs(value[1] as string)] as [
+                          dayjs.Dayjs,
+                          dayjs.Dayjs,
+                        ])
                       : null,
                 }
               : { defaultValue: defaultValueRange };

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["components/TableSelectColumnSettingFormItem/index.js"],"sourcesContent":["export { default as TableSelectColumnSettingFormItem } from './TableSelectColumnSettingFormItem';"],"names":[],"mappings":"kDAAgG,KAApC"}

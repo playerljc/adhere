@@ -1,0 +1,33 @@
+.adhere-ui-fd-table-selection-field {
+  width: 100%;
+  min-width: 0;
+
+  &-search {
+    width: 100%;
+    margin-bottom: var(--table-selection-search-margin-bottom, 12px);
+
+    &-compact {
+      display: flex;
+      width: 100%;
+    }
+
+    &-input {
+      flex: 1;
+      min-width: var(--table-selection-search-input-min-width, 160px);
+    }
+
+    &-button {
+      flex-shrink: 0;
+      min-width: var(--table-selection-search-button-min-width, 72px);
+    }
+  }
+
+  &-mobile {
+    max-width: 100%;
+    min-width: 0;
+
+    .ant-table-wrapper {
+      width: 100%;
+    }
+  }
+}

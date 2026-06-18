@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_react=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=FormItemBridge,_interopRequireDefault(require("react")));function FormItemBridge(e){var r=e.children;return _react.default.createElement(_react.default.Fragment,null,r({value:e.value,onChange:e.onChange,checked:e.checked,targetKeys:e.targetKeys}))}
+//# sourceMappingURL=index.js.map

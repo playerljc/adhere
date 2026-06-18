@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_adhereUtilIntl=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.TableColumnAlign=void 0,_interopRequireDefault(require("@baifendian/adhere-util-intl"))),TableColumnAlign=exports.TableColumnAlign={handler:function(){return[{label:_adhereUtilIntl.default.get("align_left"),value:"left"},{label:_adhereUtilIntl.default.get("align_center"),value:"center"},{label:_adhereUtilIntl.default.get("align_right"),value:"right"}]}};
+//# sourceMappingURL=TableColumnAlign.js.map

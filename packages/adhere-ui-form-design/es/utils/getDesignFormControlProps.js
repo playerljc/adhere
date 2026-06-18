@@ -1,0 +1,2 @@
+function getDesignFormControlProps(e,l){var n=l.value,a=l.onChange,o=l.checked,t=l.targetKeys,l=l.previewValue,u=null!=(u=null==e?void 0:e.valuePropName)?u:"value",l=null!=l?l:null==e?void 0:e.initialValue;return"function"!=typeof a?"checked"===u?void 0!==l?{defaultChecked:l}:{}:"targetKeys"===u?void 0!==l?{defaultTargetKeys:l}:{}:void 0!==l?{defaultValue:l}:{}:"targetKeys"===u?{targetKeys:null!=t?t:[],onChange:a}:"checked"===u?{checked:null!=o&&o,onChange:a}:{value:n,onChange:a}}export{getDesignFormControlProps};
+//# sourceMappingURL=getDesignFormControlProps.js.map

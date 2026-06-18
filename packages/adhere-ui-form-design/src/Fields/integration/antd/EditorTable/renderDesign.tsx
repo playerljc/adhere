@@ -283,7 +283,10 @@ function EditorTableColumnSelectLabel({
     <WithDesignFieldDataSourceOptions fieldProps={fieldProps}>
       {({ options }) => {
         const matched = options.find((item) => item.value === value);
-        return <>{matched?.label ?? value ?? ''}</>;
+        const displayLabel =
+          matched?.label ??
+          (typeof value === 'string' || typeof value === 'number' ? value : '');
+        return <>{displayLabel}</>;
       }}
     </WithDesignFieldDataSourceOptions>
   );

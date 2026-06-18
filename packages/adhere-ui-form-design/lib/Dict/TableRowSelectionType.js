@@ -1,0 +1,2 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_adhereUtilIntl=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.TableRowSelectionType=void 0,_interopRequireDefault(require("@baifendian/adhere-util-intl"))),TableRowSelectionType=exports.TableRowSelectionType={handler:function(){return[{label:_adhereUtilIntl.default.get("table_row_selection_checkbox"),value:"checkbox"},{label:_adhereUtilIntl.default.get("table_row_selection_radio"),value:"radio"}]}};
+//# sourceMappingURL=TableRowSelectionType.js.map

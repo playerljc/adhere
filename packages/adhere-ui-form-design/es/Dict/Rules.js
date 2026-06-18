@@ -1,2 +1,2 @@
-var Rules={handler:function(){return[{label:"required",value:"required"},{label:"whitespace",value:"whitespace"},{label:"max",value:"max"},{label:"min",value:"min"},{label:"pattern",value:"pattern"},{label:"custom",value:"custom"}]}};export{Rules};
+import Intl from"@baifendian/adhere-util-intl";var Rules={handler:function(){return[{label:"required",value:"required"},{label:"whitespace",value:"whitespace"},{label:"max",value:"max"},{label:"min",value:"min"},{label:"pattern",value:"pattern"},{label:"custom",value:"custom"},{label:Intl.get("table_select_required"),value:"tableSelectRequired"},{label:Intl.get("tree_selection_required"),value:"treeSelectionRequired"}]}};export{Rules};
 //# sourceMappingURL=Rules.js.map

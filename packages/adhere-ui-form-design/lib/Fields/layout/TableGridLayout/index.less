@@ -1,6 +1,36 @@
+@import url('../../../constant.less');
+
 .adhere-ui-table-grid-layout {
+  .adhere-ui-table-grid-layout-table-row-value {
+    > .@{prefix-cls}-design-field-wrapper {
+      width: 100%;
+
+      > .ant-form-item {
+        width: 100%;
+        min-width: 0;
+
+        .ant-form-item-control-input,
+        .ant-form-item-control-input-content {
+          width: 100%;
+        }
+      }
+    }
+  }
+
   .adhere-ui-table-grid-layout-inner-wrap {
     .adhere-ui-table-grid-layout-table-vertical {
+      .adhere-ui-table-grid-layout-table-row {
+        .adhere-ui-table-grid-layout-table-row-label {
+          vertical-align: top;
+        }
+      }
+
+      .adhere-ui-table-grid-layout-table-row {
+        .adhere-ui-table-grid-layout-table-row-value {
+          vertical-align: top;
+        }
+      }
+
       &.densitydefault {
         .adhere-ui-table-grid-layout-table-row {
           .adhere-ui-table-grid-layout-table-row-label {
@@ -17,10 +47,20 @@
     }
 
     .adhere-ui-table-grid-layout-table-horizontal {
+      .adhere-ui-table-grid-layout-table-row {
+        .adhere-ui-table-grid-layout-table-row-label {
+          vertical-align: top;
+        }
+
+        .adhere-ui-table-grid-layout-table-row-value {
+          vertical-align: top;
+        }
+      }
+
       &.densitydefault {
         .adhere-ui-table-grid-layout-table-row {
           .adhere-ui-table-grid-layout-table-row-label {
-            padding: var(--table-grid-layout-vertical-label-padding, 10px);
+            padding: var(--table-grid-layout-vertical-label-padding, 17px 10px 10px 10px);
           }
 
           .adhere-ui-table-grid-layout-table-row-value {
