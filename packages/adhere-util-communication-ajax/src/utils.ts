@@ -3,12 +3,21 @@ import stableStringify from 'json-stable-stringify';
 
 /** 是否在浏览器环境（CSR） */
 export function isBrowser(): boolean {
-  return typeof window !== 'undefined' && typeof document !== 'undefined';
+  return (
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined' &&
+    typeof document.createElement === 'function' &&
+    typeof document.createDocumentFragment === 'function'
+  );
 }
 
 /** 获取 loading 默认挂载元素，SSR 环境下返回 undefined */
 export function getDefaultLoadingEl(): HTMLElement | undefined {
-  return isBrowser() ? document.body : undefined;
+  if (!isBrowser()) {
+    return undefined;
+  }
+
+  return document.body;
 }
 
 // 类型定义

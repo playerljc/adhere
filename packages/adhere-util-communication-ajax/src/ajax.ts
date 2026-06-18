@@ -543,6 +543,10 @@ function errorInfo(title: string, message: string): void {
   }
 
   errorInfoHandler = setTimeout(() => {
+    if (!isBrowser()) {
+      return;
+    }
+
     notification.error({
       title,
       description: message,
@@ -566,6 +570,10 @@ function warnInfo(title: string, message: string): void {
   }
 
   warnInfoHandler = setTimeout(() => {
+    if (!isBrowser()) {
+      return;
+    }
+
     notification.warning({
       title,
       description: message,
