@@ -1,3 +1,7 @@
+/** 是否在浏览器环境（CSR） */
+export declare function isBrowser(): boolean;
+/** 获取 loading 默认挂载元素，SSR 环境下返回 undefined */
+export declare function getDefaultLoadingEl(): HTMLElement | undefined;
 interface NormalizedHeaders {
     [key: string]: string;
 }

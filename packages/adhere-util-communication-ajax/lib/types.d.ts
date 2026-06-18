@@ -67,8 +67,8 @@ export interface LoadingConfig {
     show: boolean;
     /** 遮罩的内容 */
     text: string;
-    /** 遮罩的元素 */
-    el: HTMLElement;
+    /** 遮罩的元素（SSR 环境下可为空） */
+    el?: HTMLElement | null;
     /** 层级 */
     zIndex: number;
     /** 大小 */

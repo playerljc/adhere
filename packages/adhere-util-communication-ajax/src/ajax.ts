@@ -26,7 +26,8 @@ import {
   SendResult,
   XhrEventsConfig,
 } from './types';
-import { combineUrls, generateCacheKey } from './utils';
+import { combineUrls, generateCacheKey, getDefaultLoadingEl, isBrowser } from './utils';
+import { createXHR } from './xhr';
 
 /** 是否触发过402状态码 */
 let trigger402 = false;
@@ -532,6 +533,10 @@ class Ajax {
  * @param message - 错误消息
  */
 function errorInfo(title: string, message: string): void {
+  if (!isBrowser()) {
+    return;
+  }
+
   if (errorInfoHandler) {
     clearTimeout(errorInfoHandler);
     errorInfoHandler = null;
@@ -551,6 +556,10 @@ function errorInfo(title: string, message: string): void {
  * @param message - 警告消息
  */
 function warnInfo(title: string, message: string): void {
+  if (!isBrowser()) {
+    return;
+  }
+
   if (warnInfoHandler) {
     clearTimeout(warnInfoHandler);
     warnInfoHandler = null;
@@ -562,14 +571,6 @@ function warnInfo(title: string, message: string): void {
       description: message,
     });
   }, NOTIFICATION_THROTTLING_TIME);
-}
-
-/**
- * 创建XMLHttpRequest对象
- * @returns XMLHttpRequest实例
- */
-function createXHR(): XMLHttpRequest {
-  return new XMLHttpRequest();
 }
 
 /**
@@ -617,8 +618,8 @@ function getDefaultConfig(this: Ajax): IConfig {
       show: false,
       // 遮罩的内容
       text: '',
-      // 遮罩的元素
-      el: document.body,
+      // 遮罩的元素（SSR 环境下为 undefined）
+      el: getDefaultLoadingEl(),
       zIndex: 19999,
       size: 'default',
     },
@@ -863,15 +864,16 @@ async function prepareWithInterceptorsConfig(
   const {
     show = false,
     text = defaultLoadingText,
-    el = document.body,
+    el,
     terminal = 'pc',
   } = (loading ?? {}) as any;
 
   const targetGlobalIndicator = getGlobalIndicator(terminal);
+  const loadingEl = el ?? getDefaultLoadingEl();
 
-  // 显示loading
-  if (show) {
-    indicator = targetGlobalIndicator.show(el || document.body, text || defaultLoadingText);
+  // 显示loading（SSR 环境下跳过 UI 遮罩）
+  if (show && loadingEl) {
+    indicator = targetGlobalIndicator.show(loadingEl, text || defaultLoadingText);
   }
 
   // 如果是mock数据
