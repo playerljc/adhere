@@ -1,5 +1,9 @@
 import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
+import { getNumberFormatterUseScientificNotation, setNumberFormatterUseScientificNotation } from './numberFormatter';
+import type { NumberFormatterOptions } from './numberFormatter';
 import { ICircle, IPoint } from './types';
+export type { NumberFormatterOptions } from './numberFormatter';
+export { getNumberFormatterUseScientificNotation, setNumberFormatterUseScientificNotation, } from './numberFormatter';
 /**
  * 数学工具类
  * @description 提供数学计算相关的工具函数
@@ -305,13 +309,16 @@ declare const _default: {
      * @description 德国数字格式化（千分位: `.`, 小数点: `,`）
      * @param {string | number} value - 要格式化的数值
      * @param {number} precision - 小数精度
+     * @param {NumberFormatterOptions} options - 格式化选项，`useScientificNotation` 控制超大数是否以科学计数法显示
      * @return {string} 格式化后的字符串，例如: 1.234.567,89
      * @example
      * ```typescript
      * GermanNumberFormatter(1234567.89, 2) // "1.234.567,89"
+     * GermanNumberFormatter(1e21, 2) // "1.000.000.000.000.000.000.000,00"
+     * GermanNumberFormatter(1e21, 2, { useScientificNotation: true }) // "1e+21"
      * ```
      */
-    GermanNumberFormatter(value: string | number, precision?: number): string;
+    GermanNumberFormatter(value: string | number, precision?: number, options?: NumberFormatterOptions): string;
     /**
      * GermanNumberParse
      * @description 解析德国格式的数字字符串（千分位: `.`, 小数点: `,`）
@@ -328,13 +335,14 @@ declare const _default: {
      * @description 美国/中国数字格式化（千分位: `,`, 小数点: `.`）
      * @param {string | number} value - 要格式化的数值
      * @param {number} precision - 小数精度
+     * @param {NumberFormatterOptions} options - 格式化选项，`useScientificNotation` 控制超大数是否以科学计数法显示
      * @return {string} 格式化后的字符串，例如: 1,234,567.89
      * @example
      * ```typescript
      * USNumberFormatter(1234567.89, 2) // "1,234,567.89"
      * ```
      */
-    USNumberFormatter(value: string | number, precision?: number): string;
+    USNumberFormatter(value: string | number, precision?: number, options?: NumberFormatterOptions): string;
     /**
      * USNumberParse
      * @description 解析美国/中国格式的数字字符串（千分位: `,`, 小数点: `.`）
@@ -351,13 +359,14 @@ declare const _default: {
      * @description 法国数字格式化（千分位: 空格, 小数点: `,`）
      * @param {string | number} value - 要格式化的数值
      * @param {number} precision - 小数精度
+     * @param {NumberFormatterOptions} options - 格式化选项，`useScientificNotation` 控制超大数是否以科学计数法显示
      * @return {string} 格式化后的字符串，例如: 1 234 567,89
      * @example
      * ```typescript
      * FrenchNumberFormatter(1234567.89, 2) // "1 234 567,89"
      * ```
      */
-    FrenchNumberFormatter(value: string | number, precision?: number): string;
+    FrenchNumberFormatter(value: string | number, precision?: number, options?: NumberFormatterOptions): string;
     /**
      * FrenchNumberParse
      * @description 解析法国格式的数字字符串（千分位: 空格, 小数点: `,`）
@@ -374,13 +383,14 @@ declare const _default: {
      * @description 国际标准数字格式化（千分位: 空格, 小数点: `.`）
      * @param {string | number} value - 要格式化的数值
      * @param {number} precision - 小数精度
+     * @param {NumberFormatterOptions} options - 格式化选项，`useScientificNotation` 控制超大数是否以科学计数法显示
      * @return {string} 格式化后的字符串，例如: 1 234 567.89
      * @example
      * ```typescript
      * InternationalNumberFormatter(1234567.89, 2) // "1 234 567.89"
      * ```
      */
-    InternationalNumberFormatter(value: string | number, precision?: number): string;
+    InternationalNumberFormatter(value: string | number, precision?: number, options?: NumberFormatterOptions): string;
     /**
      * InternationalNumberParse
      * @description 解析国际标准格式的数字字符串（千分位: 空格, 小数点: `.`）
@@ -392,5 +402,16 @@ declare const _default: {
      * ```
      */
     InternationalNumberParse(value: string): string;
+    /**
+     * setNumberFormatterUseScientificNotation
+     * @description 设置数字格式化全局默认是否以科学计数法显示超大数
+     * @param useScientificNotation - true 使用科学计数法（旧行为），false 展开为完整数字
+     */
+    setNumberFormatterUseScientificNotation: typeof setNumberFormatterUseScientificNotation;
+    /**
+     * getNumberFormatterUseScientificNotation
+     * @description 获取数字格式化全局默认是否以科学计数法显示超大数
+     */
+    getNumberFormatterUseScientificNotation: typeof getNumberFormatterUseScientificNotation;
 };
 export default _default;

@@ -1,7 +1,19 @@
 import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
 
 import Dom from './dom';
+import {
+  formatLocaleNumber,
+  getNumberFormatterUseScientificNotation,
+  setNumberFormatterUseScientificNotation,
+} from './numberFormatter';
+import type { NumberFormatterOptions } from './numberFormatter';
 import { ICircle, IPoint } from './types';
+
+export type { NumberFormatterOptions } from './numberFormatter';
+export {
+  getNumberFormatterUseScientificNotation,
+  setNumberFormatterUseScientificNotation,
+} from './numberFormatter';
 
 /**
  * 数学工具类
@@ -500,44 +512,26 @@ export default {
    * @description 德国数字格式化（千分位: `.`, 小数点: `,`）
    * @param {string | number} value - 要格式化的数值
    * @param {number} precision - 小数精度
+   * @param {NumberFormatterOptions} options - 格式化选项，`useScientificNotation` 控制超大数是否以科学计数法显示
    * @return {string} 格式化后的字符串，例如: 1.234.567,89
    * @example
    * ```typescript
    * GermanNumberFormatter(1234567.89, 2) // "1.234.567,89"
+   * GermanNumberFormatter(1e21, 2) // "1.000.000.000.000.000.000.000,00"
+   * GermanNumberFormatter(1e21, 2, { useScientificNotation: true }) // "1e+21"
    * ```
    */
-  GermanNumberFormatter(value: string | number, precision?: number) {
-    if (!value && value !== 0) return '';
-
-    const num = Number(value);
-
-    if (isNaN(num)) {
-      return '';
-    }
-
-    // 如果是无限大或无限小的数字
-    if (!isFinite(num)) {
-      return '';
-    }
-
-    // 根据是否指定precision决定格式化方式
-    let str: string;
-    if (precision === undefined) {
-      // 没有指定precision，转换为普通字符串
-      str = num.toString();
-    } else {
-      // 指定了precision，使用toFixed
-      str = num.toFixed(precision);
-    }
-
-    // 拆分整数和小数部分
-    const [integerPart, decimalPart = ''] = str.split('.');
-
-    // 格式化整数部分，使用点作为千分位分隔符
-    const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-    // 如果有小数部分，用逗号连接
-    return decimalPart ? `${formattedInteger},${decimalPart}` : formattedInteger;
+  GermanNumberFormatter(
+    value: string | number,
+    precision?: number,
+    options?: NumberFormatterOptions,
+  ) {
+    return formatLocaleNumber(
+      value,
+      precision,
+      { thousandsSep: '.', decimalSep: ',' },
+      options,
+    );
   },
 
   /**
@@ -559,44 +553,24 @@ export default {
    * @description 美国/中国数字格式化（千分位: `,`, 小数点: `.`）
    * @param {string | number} value - 要格式化的数值
    * @param {number} precision - 小数精度
+   * @param {NumberFormatterOptions} options - 格式化选项，`useScientificNotation` 控制超大数是否以科学计数法显示
    * @return {string} 格式化后的字符串，例如: 1,234,567.89
    * @example
    * ```typescript
    * USNumberFormatter(1234567.89, 2) // "1,234,567.89"
    * ```
    */
-  USNumberFormatter(value: string | number, precision?: number) {
-    if (!value && value !== 0) return '';
-
-    const num = Number(value);
-
-    if (isNaN(num)) {
-      return '';
-    }
-
-    // 如果是无限大或无限小的数字
-    if (!isFinite(num)) {
-      return '';
-    }
-
-    // 根据是否指定precision决定格式化方式
-    let str: string;
-    if (precision === undefined) {
-      // 没有指定precision，转换为普通字符串
-      str = num.toString();
-    } else {
-      // 指定了precision，使用toFixed
-      str = num.toFixed(precision);
-    }
-
-    // 拆分整数和小数部分
-    const [integerPart, decimalPart = ''] = str.split('.');
-
-    // 格式化整数部分，使用逗号作为千分位分隔符
-    const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    // 如果有小数部分，用点连接
-    return decimalPart ? `${formattedInteger}.${decimalPart}` : formattedInteger;
+  USNumberFormatter(
+    value: string | number,
+    precision?: number,
+    options?: NumberFormatterOptions,
+  ) {
+    return formatLocaleNumber(
+      value,
+      precision,
+      { thousandsSep: ',', decimalSep: '.' },
+      options,
+    );
   },
 
   /**
@@ -618,44 +592,24 @@ export default {
    * @description 法国数字格式化（千分位: 空格, 小数点: `,`）
    * @param {string | number} value - 要格式化的数值
    * @param {number} precision - 小数精度
+   * @param {NumberFormatterOptions} options - 格式化选项，`useScientificNotation` 控制超大数是否以科学计数法显示
    * @return {string} 格式化后的字符串，例如: 1 234 567,89
    * @example
    * ```typescript
    * FrenchNumberFormatter(1234567.89, 2) // "1 234 567,89"
    * ```
    */
-  FrenchNumberFormatter(value: string | number, precision?: number) {
-    if (!value && value !== 0) return '';
-
-    const num = Number(value);
-
-    if (isNaN(num)) {
-      return '';
-    }
-
-    // 如果是无限大或无限小的数字
-    if (!isFinite(num)) {
-      return '';
-    }
-
-    // 根据是否指定precision决定格式化方式
-    let str: string;
-    if (precision === undefined) {
-      // 没有指定precision，转换为普通字符串
-      str = num.toString();
-    } else {
-      // 指定了precision，使用toFixed
-      str = num.toFixed(precision);
-    }
-
-    // 拆分整数和小数部分
-    const [integerPart, decimalPart = ''] = str.split('.');
-
-    // 格式化整数部分，使用空格作为千分位分隔符
-    const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-
-    // 如果有小数部分，用逗号连接
-    return decimalPart ? `${formattedInteger},${decimalPart}` : formattedInteger;
+  FrenchNumberFormatter(
+    value: string | number,
+    precision?: number,
+    options?: NumberFormatterOptions,
+  ) {
+    return formatLocaleNumber(
+      value,
+      precision,
+      { thousandsSep: ' ', decimalSep: ',' },
+      options,
+    );
   },
 
   /**
@@ -677,44 +631,24 @@ export default {
    * @description 国际标准数字格式化（千分位: 空格, 小数点: `.`）
    * @param {string | number} value - 要格式化的数值
    * @param {number} precision - 小数精度
+   * @param {NumberFormatterOptions} options - 格式化选项，`useScientificNotation` 控制超大数是否以科学计数法显示
    * @return {string} 格式化后的字符串，例如: 1 234 567.89
    * @example
    * ```typescript
    * InternationalNumberFormatter(1234567.89, 2) // "1 234 567.89"
    * ```
    */
-  InternationalNumberFormatter(value: string | number, precision?: number) {
-    if (!value && value !== 0) return '';
-
-    const num = Number(value);
-
-    if (isNaN(num)) {
-      return '';
-    }
-
-    // 如果是无限大或无限小的数字
-    if (!isFinite(num)) {
-      return '';
-    }
-
-    // 根据是否指定precision决定格式化方式
-    let str: string;
-    if (precision === undefined) {
-      // 没有指定precision，转换为普通字符串
-      str = num.toString();
-    } else {
-      // 指定了precision，使用toFixed
-      str = num.toFixed(precision);
-    }
-
-    // 拆分整数和小数部分
-    const [integerPart, decimalPart = ''] = str.split('.');
-
-    // 格式化整数部分，使用空格作为千分位分隔符
-    const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-
-    // 如果有小数部分，用点连接
-    return decimalPart ? `${formattedInteger}.${decimalPart}` : formattedInteger;
+  InternationalNumberFormatter(
+    value: string | number,
+    precision?: number,
+    options?: NumberFormatterOptions,
+  ) {
+    return formatLocaleNumber(
+      value,
+      precision,
+      { thousandsSep: ' ', decimalSep: '.' },
+      options,
+    );
   },
 
   /**
@@ -730,5 +664,18 @@ export default {
   InternationalNumberParse(value: string) {
     return value.replace(/\s/g, '');
   },
+
+  /**
+   * setNumberFormatterUseScientificNotation
+   * @description 设置数字格式化全局默认是否以科学计数法显示超大数
+   * @param useScientificNotation - true 使用科学计数法（旧行为），false 展开为完整数字
+   */
+  setNumberFormatterUseScientificNotation,
+
+  /**
+   * getNumberFormatterUseScientificNotation
+   * @description 获取数字格式化全局默认是否以科学计数法显示超大数
+   */
+  getNumberFormatterUseScientificNotation,
   /**--------------------------math-end------------------------**/
 };
