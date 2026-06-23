@@ -1,11 +1,9 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import type {
-  FormTabsErrorField,
-  FormTabsNamePath,
-  SegmentedFormTab,
-  UseFormTabs,
-} from './types';
+
+
+import type { FormTabsErrorField, FormTabsNamePath, SegmentedFormTab, UseFormTabs } from './types';
+
 
 function namePathToSegments(name: FormTabsNamePath): string[] {
   if (Array.isArray(name)) {
@@ -90,7 +88,7 @@ export function findFirstTabKeyWithErrors(
   }
 
   for (const { key, fieldNames } of tabs) {
-    const hasError = fieldNames.some(fieldName =>
+    const hasError = fieldNames.some((fieldName) =>
       errorFields.some(({ name }) => namePathMatchesError(fieldName, name)),
     );
 
@@ -105,7 +103,7 @@ export function findFirstTabKeyWithErrors(
     const prefix = firstErrorParts.slice(0, len);
 
     for (const { key, fieldNames } of tabs) {
-      const matched = fieldNames.some(fieldName => namePathMatchesError(fieldName, prefix));
+      const matched = fieldNames.some((fieldName) => namePathMatchesError(fieldName, prefix));
 
       if (matched) {
         return key;
@@ -144,9 +142,7 @@ type ValidateErrorLike = {
  * ```
  */
 const useFormTabs: UseFormTabs = ({ form, tabs, defaultTab }) => {
-  const [activeTab, setActiveTab] = useState<string | undefined>(
-    () => defaultTab ?? tabs[0]?.key,
-  );
+  const [activeTab, setActiveTab] = useState<string | undefined>(() => defaultTab ?? tabs[0]?.key);
 
   const validateFields = useCallback(
     ((...args: Parameters<typeof form.validateFields>) => {
@@ -162,6 +158,10 @@ const useFormTabs: UseFormTabs = ({ form, tabs, defaultTab }) => {
     }) as typeof form.validateFields,
     [form, tabs],
   );
+
+  useEffect(() => {
+    setActiveTab(defaultTab ?? tabs[0]?.key);
+  }, [defaultTab, tabs]);
 
   return {
     activeTab,
