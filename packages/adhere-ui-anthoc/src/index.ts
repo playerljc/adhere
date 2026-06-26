@@ -7,6 +7,7 @@ import AutoComplete from './auto-complete';
 import Avatar from './avatar';
 import BackTop from './back-top';
 import Badge from './badge';
+import BorderBeam from './border-beam';
 import Breadcrumb from './breadcrumb';
 import Button from './button';
 import Calendar from './calendar';
@@ -97,6 +98,7 @@ export {
   Avatar,
   BackTop,
   Badge,
+  BorderBeam,
   Breadcrumb,
   Button,
   Calendar,

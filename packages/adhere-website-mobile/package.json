@@ -43,7 +43,7 @@
     "@baifendian/adhere": "^2.11.0",
     "@baifendian/adhere-mock": "^2.11.0",
     "@ctsj/router": "^1.0.5",
-    "antd": "^6.0.0",
+    "antd": "^6.4.5",
     "antd-mobile": "^5.41.1",
     "antd-mobile-icons": "^0.3.0",
     "classnames": "^2.5.1",

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["border-beam/index.js"],"sourcesContent":["import BorderBeam from './BorderBeam';\nexport default BorderBeam;"],"names":["BorderBeam"],"mappings":"OAAOA,eAAgB,8BACRA"}
