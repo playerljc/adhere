@@ -38,6 +38,20 @@ const selectorPrefix = 'adhere-ui-richtext-wangeditor-sandbox';
 
 const editorId = 'wangEditorWrap';
 
+function normalizeHtmlForCompare(html?: string) {
+  const normalized = (html ?? '').trim();
+
+  if (!normalized || normalized === '<p><br></p>' || normalized === '<p></p>') {
+    return '';
+  }
+
+  return normalized;
+}
+
+function isHtmlValueEqual(a?: string, b?: string) {
+  return normalizeHtmlForCompare(a) === normalizeHtmlForCompare(b);
+}
+
 const InternalWangEditorSandbox = memo<
   PropsWithoutRef<WangEditorSandboxProps> & RefAttributes<WangEditorSandboxHandler>
 >(
@@ -70,6 +84,8 @@ const InternalWangEditorSandbox = memo<
     const editor = useRef<IDomEditor | null>(null);
 
     const isTriggerChange = useRef(false);
+
+    const isInternalChangeRef = useRef(false);
 
     const reactRootRef = useRef<any>(null);
 
@@ -109,6 +125,30 @@ const InternalWangEditorSandbox = memo<
       [],
     );
 
+    function handleEditorChange(_editor: IDomEditor) {
+      if (!isTriggerChange.current) {
+        isTriggerChange.current = true;
+        return;
+      }
+
+      isInternalChangeRef.current = true;
+
+      if (props.onChange) {
+        props.onChange(_editor.getHtml());
+      }
+    }
+
+    function handleEditorCreated(_editor: IDomEditor) {
+      editor.current = _editor;
+      isMount.current = true;
+
+      if (editorProps?.onCreated) {
+        editorProps.onCreated(_editor);
+      }
+
+      onRender?.();
+    }
+
     /**
      * renderWangEditor
      * @description 渲染富文本
@@ -124,6 +164,15 @@ const InternalWangEditorSandbox = memo<
           }
 
           const wrap = document.getElementById(editorId) as HTMLDivElement;
+
+          if (editor.current) {
+            resolve({
+              document,
+              window,
+              wrap,
+            });
+            return;
+          }
 
           // ----------------------------------------- start
           const styleSheet: CSSStyleSheet = document.styleSheets[0];
@@ -234,27 +283,9 @@ const InternalWangEditorSandbox = memo<
                   ref: ref,
                   ...defaultEditorProps,
                   ...(props.editorProps ?? {}),
-                  onCreated: (_editor) => {
-                    editor.current = _editor;
-                    render().then(() => {
-                      if (editorProps?.onCreated) {
-                        editorProps.onCreated(_editor);
-                      }
-
-                      onRender?.();
-                    });
-                  },
-                  value: value.current,
-                  onChange: (_editor) => {
-                    if (!isTriggerChange.current) {
-                      isTriggerChange.current = true;
-                      return;
-                    }
-
-                    if (props.onChange) {
-                      props.onChange(_editor.getHtml());
-                    }
-                  },
+                  onCreated: handleEditorCreated,
+                  defaultHtml: value.current,
+                  onChange: handleEditorChange,
                 }),
               );
               
@@ -263,8 +294,6 @@ const InternalWangEditorSandbox = memo<
               console.error('[WangEditorSandbox] Render error:', error);
               throw error;
             }
-
-            isMount.current = true;
 
             resolve({
               document,
@@ -288,27 +317,9 @@ const InternalWangEditorSandbox = memo<
                   ref: ref,
                   ...defaultEditorProps,
                   ...(props.editorProps ?? {}),
-                  onCreated: (_editor) => {
-                    editor.current = _editor;
-                    render().then(() => {
-                      if (editorProps?.onCreated) {
-                        editorProps.onCreated(_editor);
-                      }
-
-                      onRender?.();
-                    });
-                  },
-                  value: value.current,
-                  onChange: (_editor) => {
-                    if (!isTriggerChange.current) {
-                      isTriggerChange.current = true;
-                      return;
-                    }
-
-                    if (props.onChange) {
-                      props.onChange(_editor.getHtml());
-                    }
-                  },
+                  onCreated: handleEditorCreated,
+                  defaultHtml: value.current,
+                  onChange: handleEditorChange,
                 }),
               );
               
@@ -316,8 +327,6 @@ const InternalWangEditorSandbox = memo<
                 element,
                 wrap,
                 () => {
-                  isMount.current = true;
-
                   resolve({
                     document,
                     window,
@@ -361,10 +370,12 @@ const InternalWangEditorSandbox = memo<
       return 100 / Number(ratio);
     }
 
+    const lastObservedHeightRef = useRef(0);
+
     function monitorHeightChange() {
       const document = frameRef?.current?.contentDocument as Document;
 
-      if (!document) return;
+      if (!document || resizeObserverRef.current) return;
 
       const editEL = document.getElementById(editorId);
 
@@ -376,6 +387,13 @@ const InternalWangEditorSandbox = memo<
           for (const entry of entries) {
             if (entry.target === editEL) {
               const newHeight = entry.contentRect.height;
+
+              if (Math.abs(newHeight - lastObservedHeightRef.current) < 2) {
+                return;
+              }
+
+              lastObservedHeightRef.current = newHeight;
+
               if (wrapRef.current) {
                 wrapRef.current.style.height = `${newHeight + gap}px`;
               }
@@ -406,6 +424,11 @@ const InternalWangEditorSandbox = memo<
           return;
         }
 
+        if (editor.current && isMount.current) {
+          resolve();
+          return;
+        }
+
         return renderWangEditor().then(() => {
           resolve();
         });
@@ -427,6 +450,25 @@ const InternalWangEditorSandbox = memo<
 
     function getEditor(): IDomEditor | null {
       return editor.current;
+    }
+
+    function syncEditorValue(nextValue?: string): 'skip' | 'synced' | 'rerender' {
+      const currentEditor = editor.current;
+
+      if (!currentEditor || typeof currentEditor.getHtml !== 'function') {
+        return 'rerender';
+      }
+
+      if (isHtmlValueEqual(currentEditor.getHtml(), nextValue)) {
+        return 'skip';
+      }
+
+      if (typeof currentEditor.setHtml === 'function') {
+        currentEditor.setHtml(nextValue ?? '');
+        return 'synced';
+      }
+
+      return 'rerender';
     }
 
     /**
@@ -649,28 +691,38 @@ const InternalWangEditorSandbox = memo<
      * @description value
      */
     useUpdateEffect(() => {
-      value.current = props.value as string;
+      const nextValue = props.value as string;
 
-      if (isMount.current) {
-        render().then(() => {
-          onRender?.();
-        });
+      value.current = nextValue;
+
+      if (!isMount.current) {
+        return;
       }
+
+      if (isInternalChangeRef.current) {
+        isInternalChangeRef.current = false;
+        return;
+      }
+
+      if (editor.current?.isFocused?.()) {
+        return;
+      }
+
+      const syncResult = syncEditorValue(nextValue);
+
+      if (syncResult === 'skip') {
+        return;
+      }
+
+      if (syncResult === 'synced') {
+        onRender?.();
+        return;
+      }
+
+      render().then(() => {
+        onRender?.();
+      });
     }, [props.value]);
-
-    /**
-     * useUpdateEffect
-     * @description toolBarProps, editorProps
-     */
-    useUpdateEffect(() => {
-      // console.log('toolBarProps change', toolBarProps);
-
-      if (isMount.current) {
-        render().then(() => {
-          onRender?.();
-        });
-      }
-    }, [toolBarProps, editorProps]);
 
     return (
       <div

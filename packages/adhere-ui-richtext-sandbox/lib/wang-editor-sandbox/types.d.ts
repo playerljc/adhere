@@ -52,7 +52,7 @@ export interface WangEditorSandboxProps {
     wrapStyle?: React.CSSProperties;
     wangEditorStyle?: string;
     value?: string;
-    onChange?: (editor: IDomEditor) => void;
+    onChange?: (html: string) => void;
     toolBarProps?: ToolBarProps;
     editorProps?: EditorProps;
     locales?: {
