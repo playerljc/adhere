@@ -184,7 +184,7 @@ export default [
     select_all: 'Selecionar tudo',
     select_field_to_edit_properties: 'Selecione um campo para editar suas propriedades',
     selected_items_count: '{count} itens selecionados',
-    serial_number: 'Número de série',
+    serial_number: 'Número',
     settings: 'Configurações',
     show_count: 'Mostrar contagem de caracteres',
     show_reply_content: 'Mostrar conteúdo da resposta',
