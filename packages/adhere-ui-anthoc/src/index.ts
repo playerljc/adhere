@@ -24,6 +24,7 @@ import ConfigProvider from './config-provider';
 import DatePicker from './date-picker';
 import DatePickerFormatValueHOC from './date-picker-format-value-hoc';
 import DatePickerTimestampValueHOC from './date-picker-timestamp-value-hoc';
+import DebounceButton from './debounce-button';
 import Descriptions from './descriptions';
 import Divider from './divider';
 import Drawer from './drawer';
@@ -115,6 +116,7 @@ export {
   DatePicker,
   DatePickerTimestampValueHOC,
   DatePickerFormatValueHOC,
+  DebounceButton,
   TimePickerTimestampValueHOC,
   TimePickerFormatValueHOC,
   Descriptions,

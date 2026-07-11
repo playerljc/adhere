@@ -1,0 +1,2 @@
+var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},util_1=(Object.defineProperty(exports,"__esModule",{value:!0}),require("../util")),InternalDebounceButton_1=__importDefault(require("./InternalDebounceButton")),DebounceButtonHOC=(0,util_1.createFactory)(InternalDebounceButton_1.default,{});DebounceButtonHOC.displayName="DebounceButton",exports.default=DebounceButtonHOC;
+//# sourceMappingURL=DebounceButton.js.map
