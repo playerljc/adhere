@@ -117,8 +117,12 @@ import VerticalTagGroupCodeText from '!!raw-loader!./examples/Tag/VerticalTagGro
 import TimePickerFormatValueHOCCodeText from '!!raw-loader!./examples/TimePickerValueHOC/TimePickerFormatValueHOC';
 import TimePickerTimestampValueHOCCodeText from '!!raw-loader!./examples/TimePickerValueHOC/TimePickerTimestampValueHOC';
 import AutoCompleteTransferSelectCodeText from '!!raw-loader!./examples/Transfer/AutoCompleteTransferSelect';
+import TableTransferCodeText from '!!raw-loader!./examples/Transfer/TableTransfer';
+import TableTransferSelectCodeText from '!!raw-loader!./examples/Transfer/TableTransferSelect';
 import TransferCodeText from '!!raw-loader!./examples/Transfer/Transfer';
 import TransferSelectCodeText from '!!raw-loader!./examples/Transfer/TransferSelect';
+import TreeTransferCodeText from '!!raw-loader!./examples/Transfer/TreeTransfer';
+import TreeTransferSelectCodeText from '!!raw-loader!./examples/Transfer/TreeTransferSelect';
 import CascaderEntityValueHOCCodeText from '!!raw-loader!./examples/TreeEntityValueHOC/CascaderEntityValueHOC';
 import TreeEntityValueHOCCodeText from '!!raw-loader!./examples/TreeEntityValueHOC/TreeEntityValueHOC';
 import AsyncTreeCheckedShowAllSelectCodeText from '!!raw-loader!./examples/TreeSelect/AsyncTreeCheckedShowAllSelect';
@@ -268,8 +272,12 @@ import VerticalTagGroup from './examples/Tag/VerticalTagGroup';
 import TimePickerFormatValueHOC from './examples/TimePickerValueHOC/TimePickerFormatValueHOC';
 import TimePickerTimestampValueHOC from './examples/TimePickerValueHOC/TimePickerTimestampValueHOC';
 import AutoCompleteTransferSelect from './examples/Transfer/AutoCompleteTransferSelect';
+import TableTransfer from './examples/Transfer/TableTransfer';
+import TableTransferSelect from './examples/Transfer/TableTransferSelect';
 import Transfer from './examples/Transfer/Transfer';
 import TransferSelect from './examples/Transfer/TransferSelect';
+import TreeTransfer from './examples/Transfer/TreeTransfer';
+import TreeTransferSelect from './examples/Transfer/TreeTransferSelect';
 import CascaderEntityValueHOC from './examples/TreeEntityValueHOC/CascaderEntityValueHOC';
 import TreeEntityValueHOC from './examples/TreeEntityValueHOC/TreeEntityValueHOC';
 import AsyncTreeCheckedShowAllSelect from './examples/TreeSelect/AsyncTreeCheckedShowAllSelect';
@@ -557,6 +565,66 @@ export default () => {
             type: 'PlayGround',
             codeText: AutoCompleteTransferSelectCodeText,
             renderChildren: () => <AutoCompleteTransferSelect />,
+          },
+          {
+            id: `TreeTransfer`,
+            name: `TreeTransfer`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeTransfer',
+                info: '树穿梭框，左侧 Tree，右侧默认列表',
+              },
+            },
+            type: 'PlayGround',
+            codeText: TreeTransferCodeText,
+            renderChildren: () => <TreeTransfer />,
+          },
+          {
+            id: `TableTransfer`,
+            name: `TableTransfer`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TableTransfer',
+                info: '表格穿梭框，左右均为 Table',
+              },
+            },
+            type: 'PlayGround',
+            codeText: TableTransferCodeText,
+            renderChildren: () => <TableTransfer />,
+          },
+          {
+            id: `TreeTransferSelect`,
+            name: `TreeTransferSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeTransferSelect',
+                info: '树穿梭框的 Select 形式',
+              },
+            },
+            type: 'PlayGround',
+            codeText: TreeTransferSelectCodeText,
+            renderChildren: () => <TreeTransferSelect />,
+          },
+          {
+            id: `TableTransferSelect`,
+            name: `TableTransferSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TableTransferSelect',
+                info: '表格穿梭框的 Select 形式',
+              },
+            },
+            type: 'PlayGround',
+            codeText: TableTransferSelectCodeText,
+            renderChildren: () => <TableTransferSelect />,
           },
         ]}
       />

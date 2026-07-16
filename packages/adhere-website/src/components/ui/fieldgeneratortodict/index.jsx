@@ -4891,6 +4891,169 @@ export default () => {
               return <Component />;
             },
           },
+          {
+            id: `Tree`,
+            name: `Tree`,
+            mode: 'code',
+            scope: { React, useState, FieldGeneratorToDict },
+            cardProps: {
+              description: {
+                title: 'Tree',
+                info: '树穿梭框',
+              },
+            },
+            type: 'PlayGround',
+            codeText: ``,
+            renderChildren: () => {
+              const Component = () => {
+                const [targetKeys, setTargetKeys] = useState([]);
+
+                const DictComponentName = `SystemTreeDynamic${FieldGeneratorToDict.ComponentNames.TransferDynamic.Tree}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    className={styles.DictComponent3}
+                    titles={['Source', 'Target']}
+                    targetKeys={targetKeys}
+                    onChange={setTargetKeys}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Table`,
+            name: `Table`,
+            mode: 'code',
+            scope: { React, useState, FieldGeneratorToDict },
+            cardProps: {
+              description: {
+                title: 'Table',
+                info: '表格穿梭框',
+              },
+            },
+            type: 'PlayGround',
+            codeText: ``,
+            renderChildren: () => {
+              const Component = () => {
+                const [targetKeys, setTargetKeys] = useState([]);
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TransferDynamic.Table}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                const columns = [
+                  {
+                    dataIndex: 'title',
+                    title: 'Name',
+                  },
+                  {
+                    dataIndex: 'description',
+                    title: 'Description',
+                  },
+                ];
+
+                return (
+                  <DictComponent
+                    className={styles.DictComponent3}
+                    targetKeys={targetKeys}
+                    onChange={setTargetKeys}
+                    showSearch
+                    leftColumns={columns}
+                    rightColumns={columns}
+                    render={(item) => item.title}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TreeSelect`,
+            name: `TreeSelect`,
+            mode: 'code',
+            scope: { React, useState, FieldGeneratorToDict },
+            cardProps: {
+              description: {
+                title: 'TreeSelect',
+                info: '树穿梭框 Select',
+              },
+            },
+            type: 'PlayGround',
+            codeText: ``,
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemTreeDynamic${FieldGeneratorToDict.ComponentNames.TransferDynamic.TreeSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TableSelect`,
+            name: `TableSelect`,
+            mode: 'code',
+            scope: { React, useState, FieldGeneratorToDict },
+            cardProps: {
+              description: {
+                title: 'TableSelect',
+                info: '表格穿梭框 Select',
+              },
+            },
+            type: 'PlayGround',
+            codeText: ``,
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TransferDynamic.TableSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                const columns = [
+                  {
+                    dataIndex: 'title',
+                    title: 'Name',
+                  },
+                  {
+                    dataIndex: 'description',
+                    title: 'Description',
+                  },
+                ];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent}
+                    value={value}
+                    onChange={setValue}
+                    leftColumns={columns}
+                    rightColumns={columns}
+                    transferProps={{
+                      showSearch: true,
+                      render: (item) => item.title,
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
         ]}
       />
 

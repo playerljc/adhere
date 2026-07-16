@@ -58,8 +58,12 @@ import TagTypesGallery from './Tag/TagTypesGallery';
 import TimePickerValueHOCInFormTest from './TimePickerValueHOCInFormTest';
 import TimePickerValueHOCTest from './TimePickerValueHOCTest';
 import TransferTest from './Transfer/AutoCompleteTransferSelect.tsx';
+import TableTransfer from './Transfer/TableTransfer';
+import TableTransferSelect from './Transfer/TableTransferSelect';
 import Transfer from './Transfer/Transfer';
 import TransferSelect from './Transfer/TransferSelect';
+import TreeTransfer from './Transfer/TreeTransfer';
+import TreeTransferSelect from './Transfer/TreeTransferSelect';
 import TreeEntityValueHOC from './TreeEntityValueHOC';
 import AutoCompleteTreeMultiSelectValueHOC from './TreeSelect/AutoCompleteTreeMultiSelectValueHOC';
 import FlatTreeSelect from './TreeSelect/FlatTreeSelect';
@@ -69,11 +73,12 @@ import AntHOC from './test';
 
 import '../src/index.less';
 
-const isTagGallery =
-  typeof window !== 'undefined' &&
-  new URLSearchParams(window.location.search).get('tagGallery') === '1';
+// const isTagGallery =
+//   typeof window !== 'undefined' &&
+//   new URLSearchParams(window.location.search).get('tagGallery') === '1';
 
 e2e.PC({
   // children: <TransferSelect />,
-  children: isTagGallery ? <TagTypesGallery /> : <ScrollFirstError />,
+  // children: isTagGallery ? <TableTransfer /> : <ScrollFirstError />,
+  children: <TreeTransferSelect />,
 });

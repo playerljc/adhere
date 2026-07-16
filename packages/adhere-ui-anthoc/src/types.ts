@@ -20,6 +20,8 @@ import type {
   TransferProps,
   TreeSelectProps,
 } from 'antd';
+import type { ColumnsType as TableColumnsType } from 'antd/es/table';
+import type { DataNode as TreeDataNode } from 'antd/es/tree';
 import type { CheckboxGroupProps, CheckboxOptionType } from 'antd/es/checkbox';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import useForm, { FormInstance } from 'antd/es/form/hooks/useForm';
@@ -121,7 +123,11 @@ import VerticalCheckAllCheckableTagGroup from './tag/VerticalCheckAllCheckableTa
 import VerticalCheckableTagGroup from './tag/VerticalCheckableTagGroup';
 import VerticalTagGroup from './tag/VerticalTagGroup';
 import AutoCompleteTransferSelect from './transfer/AutoCompleteTransferSelect';
+import TableTransfer from './transfer/TableTransfer';
+import TableTransferSelect from './transfer/TableTransferSelect';
 import TransferSelect from './transfer/TransferSelect';
+import TreeTransfer from './transfer/TreeTransfer';
+import TreeTransferSelect from './transfer/TreeTransferSelect';
 import AsyncTreeCheckedShowAllSelect from './tree-select/AsyncTreeCheckedShowAllSelect';
 import AsyncTreeCheckedShowChildSelect from './tree-select/AsyncTreeCheckedShowChildSelect';
 import AsyncTreeCheckedShowParentSelect from './tree-select/AsyncTreeCheckedShowParentSelect';
@@ -826,6 +832,40 @@ export type TransferSelectProps = DropdownRenderSelectProps & {
   transferProps?: Omit<TransferProps<any>, 'value' | 'onChange' | 'options'>;
 };
 
+export type TreeTransferProps = Omit<TransferProps<any>, 'dataSource'> & {
+  dataSource?: TreeDataNode[];
+  isHideInvalidValue?: boolean;
+};
+
+export type TableTransferProps = TransferProps<any> & {
+  leftColumns: TableColumnsType<any>;
+  rightColumns: TableColumnsType<any>;
+  isHideInvalidValue?: boolean;
+};
+
+export type TreeTransferSelectProps = DropdownRenderSelectProps & {
+  treeData?: TreeDataNode[];
+  transferProps?: Omit<
+    TreeTransferProps,
+    'dataSource' | 'targetKeys' | 'onChange' | 'selectedKeys' | 'onSelectChange'
+  >;
+};
+
+export type TableTransferSelectProps = DropdownRenderSelectProps & {
+  leftColumns: TableColumnsType<any>;
+  rightColumns: TableColumnsType<any>;
+  transferProps?: Omit<
+    TableTransferProps,
+    | 'dataSource'
+    | 'targetKeys'
+    | 'onChange'
+    | 'leftColumns'
+    | 'rightColumns'
+    | 'selectedKeys'
+    | 'onSelectChange'
+  >;
+};
+
 export type CheckboxHOCComponent = ReturnType<typeof createFactory<CheckboxProps>> & {
   AutoCompleteCheckboxSelect: typeof AutoCompleteCheckboxSelect;
   AutoCompleteCheckAllCheckboxSelect: typeof AutoCompleteCheckAllCheckboxSelect;
@@ -931,6 +971,10 @@ export type TagHOCComponent = ReturnType<typeof createFactory<InternalTagProps>>
 export type TransferHOCComponent = ReturnType<typeof createFactory<TransferProps<any>>> & {
   AutoCompleteTransferSelect: typeof AutoCompleteTransferSelect;
   TransferSelect: typeof TransferSelect;
+  TreeTransfer: typeof TreeTransfer;
+  TableTransfer: typeof TableTransfer;
+  TreeTransferSelect: typeof TreeTransferSelect;
+  TableTransferSelect: typeof TableTransferSelect;
 };
 
 export type TreeSelectHOCComponent = ReturnType<typeof createFactory<TreeSelectProps>> & {
@@ -1022,6 +1066,26 @@ export type UseTransferRenderProps = (
   options?: SelectProps['options'];
   loading?: boolean;
 }) => TransferProps<any>;
+
+export type UseTreeTransferRenderProps = (
+  transferProps: TreeTransferSelectProps['transferProps'],
+) => (arg: {
+  value?: SelectProps['value'];
+  onChange?: SelectProps['onChange'];
+  options?: SelectProps['options'];
+  treeData?: TreeDataNode[];
+  loading?: boolean;
+}) => TreeTransferProps;
+
+export type UseTableTransferRenderProps = (
+  transferProps: TableTransferSelectProps['transferProps'],
+  columns: Pick<TableTransferSelectProps, 'leftColumns' | 'rightColumns'>,
+) => (arg: {
+  value?: SelectProps['value'];
+  onChange?: SelectProps['onChange'];
+  options?: SelectProps['options'];
+  loading?: boolean;
+}) => TableTransferProps;
 
 export type UseAutoCompleteFetchLoading = (renderLoading?: () => ReactNode) => ReactNode;
 

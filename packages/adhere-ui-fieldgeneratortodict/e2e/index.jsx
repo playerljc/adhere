@@ -70,9 +70,15 @@ import MobileTreeSelectShowAll from './MobileTreeSelect/MobileTreeSelectShowAll'
 import MobileTreeSelectShowChild from './MobileTreeSelect/MobileTreeSelectShowChild';
 import MobileTreeSelectStandard from './MobileTreeSelect/MobileTreeSelectStandard';
 
+
+
 import React, { Suspense, lazy } from 'react';
 
+
+
 import e2e from '@baifendian/adhere-e2e';
+
+
 
 // import { createLoggerMiddleware } from '@ctsj/state/lib/middleware';
 // import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
@@ -125,6 +131,10 @@ import TagTest from './Tag/HorizontalCheckable';
 import TimelineTest from './Timeline/SuspenseStandard';
 import TransferTest from './Transfer/AutoComplete';
 import Transfer from './Transfer/Standard';
+import TransferTable from './Transfer/Table';
+import TransferTableSelect from './Transfer/TableSelect';
+import TransferTree from './Transfer/Tree';
+import TransferTreeSelect from './Transfer/TreeSelect';
 import TreeAsyncEntityValueHOC from './Tree/TreeAsyncEntityValueHOC';
 import TreeTest from './Tree/TreeAsyncFlatCheckedShowParent';
 import TreeAsyncFlatEntityValueHOC from './Tree/TreeAsyncFlatEntityValueHOC';
@@ -145,8 +155,11 @@ import TreeFlatMultiEntityValueHOC from './Tree/TreeFlatMultiEntityValueHOC';
 import TreeLeafEntityValueHOC from './Tree/TreeLeafEntityValueHOC';
 import TreeMultiEntityValueHOC from './Tree/TreeMultiEntityValueHOC';
 
+
+
 // import sage from './saga';
 import '../src/index.less';
+
 
 // 设置Saga实例
 // ServiceRegister.setSage(sage);
@@ -171,6 +184,6 @@ import '../src/index.less';
 //   ),
 // });
 
-e2e.Mobile({
-  children: <MobileCascaderViewAsyncStandard />,
+e2e.PC({
+  children: <TransferTreeSelect />,
 });

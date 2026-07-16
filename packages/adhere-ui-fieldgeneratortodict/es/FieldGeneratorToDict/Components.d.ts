@@ -221,11 +221,19 @@ declare const Components: {
         readonly Standard: "TransferStandard";
         readonly SuspenseStandard: "TransferSuspenseStandard";
         readonly Select: "TransferSelect";
+        readonly Tree: "TransferTree";
+        readonly Table: "TransferTable";
+        readonly TreeSelect: "TransferTreeSelect";
+        readonly TableSelect: "TransferTableSelect";
     };
     readonly TransferDynamic: {
         readonly Standard: "TransferDynamicStandard";
         readonly SuspenseStandard: "TransferDynamicSuspenseStandard";
         readonly Select: "TransferDynamicSelect";
+        readonly Tree: "TransferDynamicTree";
+        readonly Table: "TransferDynamicTable";
+        readonly TreeSelect: "TransferDynamicTreeSelect";
+        readonly TableSelect: "TransferDynamicTableSelect";
     };
     readonly TransferAC: {
         readonly Standard: "TransferACStandard";
