@@ -7,7 +7,7 @@ interface UseSlideReturn {
     /** 获取动画持续时间 */
     getDuration: (time?: number | string | null | undefined) => number;
     /** 遮罩层元素引用 */
-    maskEl: React.RefObject<HTMLDivElement | undefined>;
+    maskEl: React.RefObject<HTMLDivElement | null>;
 }
 /**
  * 滑动布局自定义Hook

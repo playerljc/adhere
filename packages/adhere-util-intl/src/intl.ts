@@ -1,4 +1,9 @@
-import intl, { type ReactIntlUniversalMessageDescriptor } from 'react-intl-universal';
+import type { ReactElement } from 'react';
+import intl, {
+  type ReactIntlUniversalHTMLMessage,
+  type ReactIntlUniversalMessageDescriptor,
+  type ReactIntlUniversalVariables,
+} from 'react-intl-universal';
 
 // import ar_EG from './locales/ar_EG';
 // import en_US from './locales/en_US';
@@ -38,13 +43,22 @@ export type MainLocales = Record<SupportedLocale, ProcessedLocale>;
 /**
  * Variables object for interpolation
  */
-export type Variables = Record<string, string | number | boolean>;
+export type Variables = ReactIntlUniversalVariables;
 
 /**
  * Options object for HTML formatting
  */
-export type HtmlOptions = Record<string, any>;
+export type HtmlOptions = ReactIntlUniversalVariables;
 
+/**
+ * Normalize nullable variables for react-intl-universal APIs
+ * (library accepts `undefined`, not `null`)
+ */
+function toVariables(
+  variables?: Variables | null,
+): ReactIntlUniversalVariables | undefined {
+  return variables ?? undefined;
+}
 /**
  * Initialization configuration interface
  */
@@ -293,14 +307,14 @@ const IntlService = {
    *
    * @param key - Chinese text key
    * @param options - HTML formatting options
-   * @returns Internationalized HTML string
+   * @returns Internationalized HTML string or React element
    *
    * @example
    * ```typescript
    * IntlService.vHtml('欢迎', { name: 'User' });
    * ```
    */
-  vHtml(key: string, options?: HtmlOptions | null): string {
+  vHtml(key: string, options?: HtmlOptions | null): ReactIntlUniversalHTMLMessage {
     if (!isInitialized) {
       console.warn('Internationalization service not initialized. Call init() first.');
       return '';
@@ -309,7 +323,7 @@ const IntlService = {
     if (options) {
       const localeKey = intlKey[key];
       if (localeKey) {
-        return intl.getHTML(localeKey, options);
+        return intl.getHTML(localeKey, toVariables(options));
       }
     }
 
@@ -329,7 +343,8 @@ const IntlService = {
    * ```
    */
   get(key: string, variables?: Variables | null): string {
-    return intl.get(key, variables);
+    const vars = toVariables(variables);
+    return vars === undefined ? intl.get(key) : intl.get(key, vars);
   },
 
   /**
@@ -337,15 +352,15 @@ const IntlService = {
    *
    * @param key - Locale key
    * @param options - HTML formatting options
-   * @returns Internationalized HTML string
+   * @returns Internationalized HTML string or React element
    *
    * @example
    * ```typescript
    * IntlService.getHTML('welcome', { name: 'User' });
    * ```
    */
-  getHTML(key: string, options?: HtmlOptions | null): string {
-    return intl.getHTML(key, options);
+  getHTML(key: string, options?: HtmlOptions | null): ReactIntlUniversalHTMLMessage {
+    return intl.getHTML(key, toVariables(options));
   },
 
   /**
@@ -367,7 +382,10 @@ const IntlService = {
     options: ReactIntlUniversalMessageDescriptor,
     variables?: Variables | null,
   ): string {
-    return intl.formatMessage(options, variables);
+    const vars = toVariables(variables);
+    return vars === undefined
+      ? intl.formatMessage(options)
+      : intl.formatMessage(options, vars);
   },
 
   /**
@@ -375,7 +393,7 @@ const IntlService = {
    *
    * @param options - Message descriptor options
    * @param variables - Variables for interpolation
-   * @returns Formatted HTML message string
+   * @returns Formatted HTML message string or React element
    *
    * @example
    * ```typescript
@@ -388,8 +406,8 @@ const IntlService = {
   formatHTMLMessage(
     options: ReactIntlUniversalMessageDescriptor,
     variables?: Variables | null,
-  ): string {
-    return intl.formatHTMLMessage(options, variables);
+  ): string | ReactElement {
+    return intl.formatHTMLMessage(options, toVariables(variables));
   },
 
   /**

@@ -1,4 +1,5 @@
-import { type ReactIntlUniversalMessageDescriptor } from 'react-intl-universal';
+import type { ReactElement } from 'react';
+import { type ReactIntlUniversalHTMLMessage, type ReactIntlUniversalMessageDescriptor, type ReactIntlUniversalVariables } from 'react-intl-universal';
 /**
  * Supported locale types
  */
@@ -26,11 +27,11 @@ export type MainLocales = Record<SupportedLocale, ProcessedLocale>;
 /**
  * Variables object for interpolation
  */
-export type Variables = Record<string, string | number | boolean>;
+export type Variables = ReactIntlUniversalVariables;
 /**
  * Options object for HTML formatting
  */
-export type HtmlOptions = Record<string, any>;
+export type HtmlOptions = ReactIntlUniversalVariables;
 /**
  * Initialization configuration interface
  */
@@ -116,14 +117,14 @@ declare const IntlService: {
      *
      * @param key - Chinese text key
      * @param options - HTML formatting options
-     * @returns Internationalized HTML string
+     * @returns Internationalized HTML string or React element
      *
      * @example
      * ```typescript
      * IntlService.vHtml('欢迎', { name: 'User' });
      * ```
      */
-    vHtml(key: string, options?: HtmlOptions | null): string;
+    vHtml(key: string, options?: HtmlOptions | null): ReactIntlUniversalHTMLMessage;
     /**
      * Get internationalized value using locale key
      *
@@ -142,14 +143,14 @@ declare const IntlService: {
      *
      * @param key - Locale key
      * @param options - HTML formatting options
-     * @returns Internationalized HTML string
+     * @returns Internationalized HTML string or React element
      *
      * @example
      * ```typescript
      * IntlService.getHTML('welcome', { name: 'User' });
      * ```
      */
-    getHTML(key: string, options?: HtmlOptions | null): string;
+    getHTML(key: string, options?: HtmlOptions | null): ReactIntlUniversalHTMLMessage;
     /**
      * Format message using ReactIntlUniversalMessageDescriptor
      *
@@ -171,7 +172,7 @@ declare const IntlService: {
      *
      * @param options - Message descriptor options
      * @param variables - Variables for interpolation
-     * @returns Formatted HTML message string
+     * @returns Formatted HTML message string or React element
      *
      * @example
      * ```typescript
@@ -181,7 +182,7 @@ declare const IntlService: {
      * );
      * ```
      */
-    formatHTMLMessage(options: ReactIntlUniversalMessageDescriptor, variables?: Variables | null): string;
+    formatHTMLMessage(options: ReactIntlUniversalMessageDescriptor, variables?: Variables | null): string | ReactElement;
     /**
      * Get initialization options from react-intl-universal
      *

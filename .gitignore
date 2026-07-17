@@ -36,3 +36,5 @@ packages/adhere-website/lessFiles
 
 IntTest/@baifendian
 IntTest/@baifendian.zip
+
+scripts/buildpackage-errors.log

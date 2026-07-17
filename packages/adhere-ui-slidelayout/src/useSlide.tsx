@@ -1,6 +1,5 @@
 import React, {
   RefObject,
-  RefObject,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -17,7 +16,7 @@ interface UseSlideReturn {
   /** 获取动画持续时间 */
   getDuration: (time?: number | string | null | undefined) => number;
   /** 遮罩层元素引用 */
-  maskEl: React.RefObject<HTMLDivElement | undefined>;
+  maskEl: React.RefObject<HTMLDivElement | null>;
 }
 
 /**
@@ -50,7 +49,7 @@ export default function useSlide(
   } = props;
 
   const [collapse, setCollapse] = useState<boolean>(props.collapse ?? false);
-  const maskEl = useRef<HTMLDivElement>();
+  const maskEl = useRef<HTMLDivElement | null>(null);
 
   /**
    * 关闭滑动面板
@@ -152,7 +151,7 @@ export default function useSlide(
         } catch (error) {
           // 忽略清理时的错误
         }
-        maskEl.current = undefined;
+        maskEl.current = null;
       }
     };
   }, []);

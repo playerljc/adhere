@@ -17,6 +17,7 @@
   ],
   "scripts": {
     "buildpackages": "lerna run buildpackage --ignore adhere-ui-formdesign",
+    "buildpackages:with-errors": "node scripts/buildpackages-with-errors.js",
     "buildumd": "node scripts/buildumd.js",
     "changed": "lerna changed",
     "changelog": "lerna version --conventional-commits",

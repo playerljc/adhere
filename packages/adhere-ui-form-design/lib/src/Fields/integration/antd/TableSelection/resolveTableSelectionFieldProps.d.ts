@@ -27,6 +27,11 @@ export declare function resolveTableColumns(columnSetting: TableSelectColumnSett
     isMobile?: boolean;
 }): TableProps<TableDataRow>['columns'];
 export declare function resolveTableSize(size?: string): TableProps<TableDataRow>['size'];
+/**
+ * Map form-design pagination size to antd SizeType.
+ * Legacy value `default` maps to antd's default `medium`.
+ */
+export declare function resolvePaginationSize(size?: PagingSettingValue['size']): NonNullable<Exclude<TableProps<TableDataRow>['pagination'], false | undefined>>['size'];
 export declare function resolveTablePagination(pagination?: boolean, paginationSetting?: PagingSettingValue): TableProps<TableDataRow>['pagination'];
 export declare function resolveMobileScrollX(columnSetting: TableSelectColumnSettingItem[] | undefined, rowSelectionColumnWidth?: number): number;
 export declare function pickTableSelectionTableProps(fieldProps: TableSelectionFieldConfig, lang: string, options?: {

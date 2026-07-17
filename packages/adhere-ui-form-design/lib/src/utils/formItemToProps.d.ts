@@ -4,15 +4,15 @@ export declare function formItemToProps(formItemProps: FormItemProps, lang: stri
     hidden: boolean | undefined;
     noStyle: boolean | undefined;
     valuePropName: string | undefined;
-    getValueFromEvent: ((...args: import("@rc-component/form/lib/interface").EventArgs) => import("@rc-component/form/lib/interface").StoreValue) | undefined;
+    getValueFromEvent: ((...args: import("@rc-component/form/es/interface").EventArgs) => import("@rc-component/form").StoreValue) | undefined;
     validateFirst: boolean | "parallel" | undefined;
     validateTrigger: string | false | string[] | undefined;
     initialValue: any;
-    rules: (Pick<import("antd/es/form").RuleObject, "type" | "min" | "max" | "required" | "whitespace" | "len" | "enum" | "warningOnly"> & {
+    rules: (Pick<import("@rc-component/form/lib/interface").RuleObject, "type" | "min" | "max" | "required" | "whitespace" | "len" | "enum" | "warningOnly"> & {
         validator?: string;
         pattern?: string;
         message?: import("../types").I18nValue;
     } & {
-        validate?: import("antd/es/form").RuleObject["validator"];
+        validate?: import("@rc-component/form/lib/interface").RuleObject["validator"];
     })[];
 };

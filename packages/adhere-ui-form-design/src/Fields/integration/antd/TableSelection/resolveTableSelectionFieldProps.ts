@@ -78,6 +78,17 @@ export function resolveTableSize(size?: string): TableProps<TableDataRow>['size'
   return (size as TableProps<TableDataRow>['size']) ?? 'middle';
 }
 
+/**
+ * Map form-design pagination size to antd SizeType.
+ * Legacy value `default` maps to antd's default `medium`.
+ */
+export function resolvePaginationSize(
+  size?: PagingSettingValue['size'],
+): NonNullable<Exclude<TableProps<TableDataRow>['pagination'], false | undefined>>['size'] {
+  if (size === 'small') return 'small';
+  return 'medium';
+}
+
 export function resolveTablePagination(
   pagination?: boolean,
   paginationSetting?: PagingSettingValue,
@@ -93,7 +104,7 @@ export function resolveTablePagination(
     simple: paginationSetting.simple ?? false,
     hideOnSinglePage: paginationSetting.hideOnSinglePage ?? false,
     position: paginationSetting.position ?? ['bottomRight'],
-    size: paginationSetting.size ?? 'default',
+    size: resolvePaginationSize(paginationSetting.size),
   };
 }
 
