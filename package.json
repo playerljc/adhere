@@ -44,6 +44,7 @@
     "publish:beta": "lerna publish --dist-tag beta",
     "publish:next": "lerna publish --dist-tag next",
     "release": "lerna version --conventional-commits --create-release github",
+    "sync-inttest": "node scripts/syncIntTest.js",
     "upgrade": "yarn upgrade",
     "upgrade-interactive": "yarn upgrade-interactive",
     "yarn:proxy": "node ./scripts/with-proxy.mjs yarn"
