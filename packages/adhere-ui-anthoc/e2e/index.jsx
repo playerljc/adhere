@@ -53,6 +53,7 @@ import CheckboxTableSelect from './Table/CheckboxTableSelect.tsx';
 import TableExt from './Table/TableExt';
 import TreeTablePagingSelect from './Table/TreeTablePagingSelect.jsx';
 import TreeTableSelect from './Table/TreeTableSelect';
+import SegmentedTabs from './Tabs/SegmentedTabs';
 import TagTest from './Tag/HorizontalCheckableTagGroup';
 import TagTypesGallery from './Tag/TagTypesGallery';
 import TimePickerValueHOCInFormTest from './TimePickerValueHOCInFormTest';
@@ -80,5 +81,5 @@ import '../src/index.less';
 e2e.PC({
   // children: <TransferSelect />,
   // children: isTagGallery ? <TableTransfer /> : <ScrollFirstError />,
-  children: <TreeTransferSelect />,
+  children: <SegmentedTabs />,
 });

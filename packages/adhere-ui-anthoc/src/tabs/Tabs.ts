@@ -1,12 +1,10 @@
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 
+import type { TabsHOCComponent } from '../types';
 import { createFactory } from '../util';
 
-const TabsHOC: typeof Tabs & {
-  defaultProps?: Partial<TabsProps>;
-  override?: (props: Partial<TabsProps>) => Partial<TabsProps>;
-} = createFactory<TabsProps>(Tabs, {});
+const TabsHOC: TabsHOCComponent = createFactory<TabsProps>(Tabs, {});
 
 TabsHOC.displayName = 'Tabs';
 

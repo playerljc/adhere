@@ -15,6 +15,7 @@ import type {
   SpaceProps,
   StepsProps,
   TableProps,
+  TabsProps,
   TagProps,
   TimePickerProps,
   TransferProps,
@@ -97,6 +98,7 @@ import AutoCompleteSelect from './select/AutoCompleteSelect';
 import DropdownRenderSelect from './select/DropdownRenderSelect';
 import Select from './select/Select';
 import StepsSwiper from './steps/StepsSwiper';
+import SegmentedTabs from './tabs/SegmentedTabs';
 import AutoCompleteTablePagingSelect from './table/AutoCompleteTablePagingSelect';
 import AutoCompleteTableSelect from './table/AutoCompleteTableSelect';
 import AutoCompleteTreeTablePagingSelect from './table/AutoCompleteTreeTablePagingSelect';
@@ -1463,6 +1465,15 @@ export type StepsSwiperProps = {
 
 export type StepsHOCComponent = ReturnType<typeof createFactory<StepsProps>> & {
   StepsSwiper: typeof StepsSwiper;
+};
+
+export type SegmentedTabsProps = TabsProps & {
+  /** 透传给 TabBar 内 Swiper，默认 freeMode + slidesPerView:'auto' */
+  tabBarSwiperProps?: SwiperOptions;
+};
+
+export type TabsHOCComponent = ReturnType<typeof createFactory<TabsProps>> & {
+  SegmentedTabs: typeof SegmentedTabs;
 };
 
 export interface RevolvingTableColumn<T, U> {
