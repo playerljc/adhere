@@ -1,2 +1,2 @@
-var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},Tabs_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./Tabs")));exports.default=Tabs_1.default;
+var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},util_1=(Object.defineProperty(exports,"__esModule",{value:!0}),require("../util")),SegmentedTabs_1=__importDefault(require("./SegmentedTabs")),Tabs_1=__importDefault(require("./Tabs"));Tabs_1.default.SegmentedTabs=(0,util_1.createFactory)(SegmentedTabs_1.default,{}),exports.default=Tabs_1.default;
 //# sourceMappingURL=index.js.map

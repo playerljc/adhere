@@ -256,6 +256,7 @@ const SegmentedTabBar = memo<SegmentedTabBarProps>(
                   <div
                     role="tab"
                     id={id ? `${id}-tab-${key}` : undefined}
+                    aria-controls={id ? `${id}-panel-${key}` : undefined}
                     aria-selected={active}
                     aria-disabled={disabled}
                     tabIndex={disabled ? -1 : active ? 0 : -1}

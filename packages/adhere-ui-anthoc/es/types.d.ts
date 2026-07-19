@@ -1,4 +1,4 @@
-import type { FormItemProps as AntFormItemProps, AutoCompleteProps as AntdAutoCompleteProps, CalendarProps, CascaderProps, CheckboxProps, DatePickerProps, FormProps, FormRule, InputProps, ListProps, PaginationProps, RadioProps, SelectProps, SpaceProps, StepsProps, TableProps, TimePickerProps, TransferProps, TreeSelectProps } from 'antd';
+import type { FormItemProps as AntFormItemProps, AutoCompleteProps as AntdAutoCompleteProps, CalendarProps, CascaderProps, CheckboxProps, DatePickerProps, FormProps, FormRule, InputProps, ListProps, PaginationProps, RadioProps, SelectProps, SpaceProps, StepsProps, TableProps, TabsProps, TimePickerProps, TransferProps, TreeSelectProps } from 'antd';
 import type { ColumnsType as TableColumnsType } from 'antd/es/table';
 import type { DataNode as TreeDataNode } from 'antd/es/tree';
 import type { CheckboxGroupProps, CheckboxOptionType } from 'antd/es/checkbox';
@@ -74,6 +74,7 @@ import AutoCompleteSelect from './select/AutoCompleteSelect';
 import DropdownRenderSelect from './select/DropdownRenderSelect';
 import Select from './select/Select';
 import StepsSwiper from './steps/StepsSwiper';
+import SegmentedTabs from './tabs/SegmentedTabs';
 import AutoCompleteTablePagingSelect from './table/AutoCompleteTablePagingSelect';
 import AutoCompleteTableSelect from './table/AutoCompleteTableSelect';
 import AutoCompleteTreeTablePagingSelect from './table/AutoCompleteTreeTablePagingSelect';
@@ -1037,6 +1038,13 @@ export type StepsSwiperProps = {
 } & Omit<StepsProps, 'direction' | 'items' | 'className' | 'style'>;
 export type StepsHOCComponent = ReturnType<typeof createFactory<StepsProps>> & {
     StepsSwiper: typeof StepsSwiper;
+};
+export type SegmentedTabsProps = TabsProps & {
+    /** 透传给 TabBar 内 Swiper，默认 freeMode + slidesPerView:'auto' */
+    tabBarSwiperProps?: SwiperOptions;
+};
+export type TabsHOCComponent = ReturnType<typeof createFactory<TabsProps>> & {
+    SegmentedTabs: typeof SegmentedTabs;
 };
 export interface RevolvingTableColumn<T, U> {
     dataIndex: string;
