@@ -251,6 +251,7 @@ declare const _default: {
     table_grid_layout: string;
     tabs_tab_config: string;
     add_tab: string;
+    remove_tab: string;
     tab_key: string;
     tab_key_duplicate: string;
     tabs_force_render: string;

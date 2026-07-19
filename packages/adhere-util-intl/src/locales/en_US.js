@@ -261,6 +261,7 @@ export default [
     table_grid_layout: 'Grid',
     tabs_tab_config: 'Tab configuration',
     add_tab: 'Add tab',
+    remove_tab: 'Remove tab',
     tab_key: 'Tab key',
     tab_key_duplicate: 'Tab key must be unique',
     tabs_force_render: 'Force render',

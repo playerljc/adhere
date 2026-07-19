@@ -1,5 +1,6 @@
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import TabContext from '@rc-component/tabs/es/TabContext';
+import Intl from '@baifendian/adhere-util-intl';
 import classNames from 'classnames';
 import merge from 'lodash.merge';
 import React, { memo, useContext, useEffect, useMemo, useRef } from 'react';
@@ -201,7 +202,7 @@ const SegmentedTabBar = memo<SegmentedTabBarProps>(
         <button
           type="button"
           className={`${selectorPrefix}-add`}
-          aria-label={locale?.addAriaLabel ?? 'Add tab'}
+          aria-label={locale?.addAriaLabel ?? Intl.get('add_tab')}
           onClick={(e) => {
             editable.onEdit('add', { event: e });
           }}
@@ -289,7 +290,7 @@ const SegmentedTabBar = memo<SegmentedTabBarProps>(
                       <button
                         type="button"
                         className={`${selectorPrefix}-remove`}
-                        aria-label={locale?.removeAriaLabel ?? 'Remove tab'}
+                        aria-label={locale?.removeAriaLabel ?? Intl.get('remove_tab')}
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();

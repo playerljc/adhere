@@ -252,6 +252,7 @@ export default [
     table_grid_layout: '网格布局',
     tabs_tab_config: '标签配置项',
     add_tab: '添加标签页',
+    remove_tab: '移除标签页',
     tab_key: '标签 Key',
     tab_key_duplicate: '标签 Key 不能重复',
     tabs_force_render: '预渲染隐藏面板',

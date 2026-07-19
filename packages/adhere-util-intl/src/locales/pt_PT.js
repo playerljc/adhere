@@ -197,6 +197,7 @@ export default [
     table_grid_layout: 'Layout de grade da tabela',
     tabs_tab_config: 'Configuração das abas',
     add_tab: 'Adicionar aba',
+    remove_tab: 'Remover aba',
     tab_key: 'Chave da aba',
     tab_key_duplicate: 'A chave da aba deve ser única',
     tabs_force_render: 'Renderização forçada',

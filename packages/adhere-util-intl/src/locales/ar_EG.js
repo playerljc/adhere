@@ -197,6 +197,7 @@ export default [
     table_grid_layout: 'تخطيط جدول الشبكة',
     tabs_tab_config: 'إعدادات علامات التبويب',
     add_tab: 'إضافة تبويب',
+    remove_tab: 'إزالة تبويب',
     tab_key: 'مفتاح التبويب',
     tab_key_duplicate: 'يجب أن يكون مفتاح التبويب فريدًا',
     tabs_force_render: 'عرض قسري',
