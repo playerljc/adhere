@@ -366,6 +366,8 @@ export interface XhrEventsConfig {
     events: IConfig;
     /** Promise reject函数 */
     reject: (reason?: any) => void;
+    /** timeout / abort / error 时关闭 loading */
+    hideIndicator?: () => void;
 }
 /**
  * 准备函数参数接口

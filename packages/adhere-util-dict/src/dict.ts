@@ -77,6 +77,20 @@ function CreateFunProxy<T extends (...args: any[]) => any>(fun: T, property: str
 }
 
 /**
+ * Resolve whether memoization is enabled for a handler
+ * Handler-level isUseMemo takes precedence over global config
+ * @param handler - Dictionary handler
+ * @returns True if memoization should be used
+ */
+function resolveIsUseMemo(handler?: HandlerTarget[string]): boolean {
+  if (handler && 'isUseMemo' in handler) {
+    return !!handler.isUseMemo;
+  }
+
+  return config.isUseMemo;
+}
+
+/**
  * Initialize dictionary value with proper memoization handling
  * @param p - Dictionary property name
  * @returns Initialized dictionary value
@@ -275,10 +289,34 @@ const Dict = {
 
   /**
    * Dictionary values - provides access to dictionary data with lazy initialization
+   *
+   * Function values:
+   *   - Always cached in target (original behavior)
+   *   - isUseMemo only controls CreateFunProxy arg memoization (in initValue)
+   *
+   * Non-function values:
+   *   - isUseMemo true: cache in target (original behavior)
+   *   - isUseMemo false: recompute on every .value access
    */
   value: new Proxy(target, {
     get(target, property: string, receiver) {
-      if (!(property in target)) {
+      const useMemo = resolveIsUseMemo(Dict.handlers[property]);
+
+      // Non-function was cached, then isUseMemo flipped to false → drop cache
+      if (!useMemo && property in target) {
+        const cached = Reflect.get(target, property, receiver);
+        if (typeof cached?.value !== 'function') {
+          delete receiver[property];
+        }
+      }
+
+      // Cache hit (functions always; non-functions when isUseMemo true)
+      if (property in target) {
+        return Reflect.get(target, property, receiver);
+      }
+
+      // isUseMemo true: original caching logic (unchanged behavior)
+      if (useMemo) {
         receiver[property] = {
           value: initValue(property),
           refresh() {
@@ -286,9 +324,35 @@ const Dict = {
             return this;
           },
         };
+
+        return Reflect.get(target, property, receiver);
       }
 
-      return Reflect.get(target, property, receiver);
+      // isUseMemo false: split by value type
+      const value = initValue(property);
+
+      // Function: original behavior — cache entry; CreateFunProxy skipped in initValue
+      if (typeof value === 'function') {
+        receiver[property] = {
+          value,
+          refresh() {
+            delete receiver[property];
+            return this;
+          },
+        };
+
+        return Reflect.get(target, property, receiver);
+      }
+
+      // Non-function: do not cache; every .value access recomputes
+      return {
+        get value() {
+          return initValue(property);
+        },
+        refresh() {
+          return this;
+        },
+      };
     },
   }),
 

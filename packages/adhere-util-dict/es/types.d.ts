@@ -14,7 +14,11 @@ export interface IDict {
  * Controls global behavior of the dictionary system
  */
 export interface IConfig {
-    /** Whether to use memoization for function results to improve performance */
+    /**
+     * Memoization switch (can be overridden per handler via handler.isUseMemo).
+     * - Function values: whether to memoize by arguments (CreateFunProxy)
+     * - Non-function values: whether to cache the value; false = recompute on every access
+     */
     isUseMemo: boolean;
 }
 /**
@@ -124,7 +128,11 @@ export interface LabelValue {
  * Extends Function to include memoization configuration
  */
 export interface HandlerTargetValue extends Function {
-    /** Whether to use memoization for this specific handler */
+    /**
+     * Per-handler memoization (overrides global config).
+     * - Function values: whether to memoize by arguments (CreateFunProxy)
+     * - Non-function values: whether to cache the value; false = recompute on every access
+     */
     isUseMemo?: boolean;
 }
 /**

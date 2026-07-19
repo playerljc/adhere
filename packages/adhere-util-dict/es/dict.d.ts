@@ -22,6 +22,14 @@ declare const Dict: {
     }>;
     /**
      * Dictionary values - provides access to dictionary data with lazy initialization
+     *
+     * Function values:
+     *   - Always cached in target (original behavior)
+     *   - isUseMemo only controls CreateFunProxy arg memoization (in initValue)
+     *
+     * Non-function values:
+     *   - isUseMemo true: cache in target (original behavior)
+     *   - isUseMemo false: recompute on every .value access
      */
     value: Partial<{
         [key: string]: import("./types").TargetValue<any>;

@@ -645,12 +645,13 @@ function getDefaultConfig(this: Ajax): IConfig {
  * 初始化XHR事件监听器
  * @param config - XHR事件配置
  */
-function initXhrEvents({ xhr, events, reject }: XhrEventsConfig): void {
+function initXhrEvents({ xhr, events, reject, hideIndicator }: XhrEventsConfig): void {
   const { onTimeout, onLoadsStart, onProgress, onAbort, onError, onLoad, onLoadend } = events;
 
   if (onTimeout) {
     xhr.addEventListener('timeout', function (event: ProgressEvent<XMLHttpRequestEventTarget>) {
       onTimeout(event);
+      hideIndicator?.();
       reject(event);
     });
   }
@@ -658,6 +659,7 @@ function initXhrEvents({ xhr, events, reject }: XhrEventsConfig): void {
   if (onAbort) {
     xhr.addEventListener('abort', function (event: ProgressEvent<XMLHttpRequestEventTarget>) {
       onAbort(event);
+      hideIndicator?.();
       reject(event);
     });
   }
@@ -665,6 +667,7 @@ function initXhrEvents({ xhr, events, reject }: XhrEventsConfig): void {
   if (onError) {
     xhr.addEventListener('error', function (event: ProgressEvent<XMLHttpRequestEventTarget>) {
       onError(event);
+      hideIndicator?.();
       reject(event);
     });
   }
@@ -884,15 +887,23 @@ async function prepareWithInterceptorsConfig(
     indicator = targetGlobalIndicator.show(loadingEl, text || defaultLoadingText);
   }
 
+  const hideIndicator = () => {
+    if (show && indicator) {
+      try {
+        targetGlobalIndicator.hide(indicator);
+      } catch {
+        // 业务侧可能已关闭，忽略
+      }
+    }
+  };
+
   // 如果是mock数据
   if (mock) {
     setTimeout(() => {
       if (show) {
         resolve({
           data: path,
-          hideIndicator: () => {
-            targetGlobalIndicator.hide(indicator);
-          },
+          hideIndicator,
         });
       } else {
         resolve(path);
@@ -902,96 +913,111 @@ async function prepareWithInterceptorsConfig(
     return { xhr: null, contentType: '' };
   }
 
-  const { baseURL, config } = this;
+  try {
+    const { baseURL, config } = this;
 
-  const configWithDefaults = Object.assign(
-    // 默认的属性
-    getDefaultConfig.call(this),
-    config,
-    curConfig,
-  ) as IConfig;
+    const configWithDefaults = Object.assign(
+      // 默认的属性
+      getDefaultConfig.call(this),
+      config,
+      curConfig,
+    ) as IConfig;
 
-  const { timeout, withCredentials, responseType, interceptor, ...events } = configWithDefaults;
+    const { timeout, withCredentials, responseType, interceptor, ...events } = configWithDefaults;
 
-  // xhr
-  const xhr = createXHR();
+    // xhr
+    const xhr = createXHR();
 
-  // open
-  xhr.open(method, baseURL ? `${baseURL}/${path}` : path!, true);
+    // open
+    xhr.open(method, baseURL ? `${baseURL}/${path}` : path!, true);
 
-  // timeout
-  xhr.timeout = timeout!;
+    // timeout
+    xhr.timeout = timeout!;
 
-  // withCredentials
-  xhr.withCredentials = withCredentials!;
+    // withCredentials
+    xhr.withCredentials = withCredentials!;
 
-  // responseType
-  xhr.responseType = responseType || '';
+    // responseType
+    xhr.responseType = responseType || '';
 
-  let contentType: string;
+    let contentType: string;
 
-  // requestHeaders - 在open之后
-  /** 如果用户设置了header **/
-  if (!Util.isEmpty(headers) && Util.isObject(headers)) {
-    // 不是get请求且如果用户没有定义Content-type 则默认添加application/json
-    if (!('Content-Type' in headers)) {
-      if (!isMultipartFormData(data)) {
-        headers['Content-Type'] = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
+    // requestHeaders - 在open之后
+    /** 如果用户设置了header **/
+    if (!Util.isEmpty(headers) && Util.isObject(headers)) {
+      // 不是get请求且如果用户没有定义Content-type 则默认添加application/json
+      if (!('Content-Type' in headers)) {
+        if (!isMultipartFormData(data)) {
+          headers['Content-Type'] = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
+        }
       }
-    }
 
-    contentType = headers['Content-Type'] ?? '';
+      contentType = headers['Content-Type'] ?? '';
 
-    for (const header in headers) {
-      xhr.setRequestHeader(header, headers[header]);
-    }
-  } else {
-    /**
-     * 用户没有设置header,会根据data初始化header
-     */
-    if (!Util.isEmpty(data) && Util.isRef(data) && !['get', 'GET'].includes(method)) {
-      if (!isMultipartFormData(data)) {
-        contentType = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
-        xhr.setRequestHeader('Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
-      } else {
-        contentType = Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA;
+      for (const header in headers) {
+        xhr.setRequestHeader(header, headers[header]);
       }
     } else {
-      contentType = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
-      xhr.setRequestHeader('Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
+      /**
+       * 用户没有设置header,会根据data初始化header
+       */
+      if (!Util.isEmpty(data) && Util.isRef(data) && !['get', 'GET'].includes(method)) {
+        if (!isMultipartFormData(data)) {
+          contentType = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
+          xhr.setRequestHeader(
+            'Content-Type',
+            `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`,
+          );
+        } else {
+          contentType = Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA;
+        }
+      } else {
+        contentType = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
+        xhr.setRequestHeader('Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
+      }
     }
+
+    // events
+    initXhrEvents({
+      xhr,
+      events: { ...events, interceptor },
+      reject,
+      hideIndicator,
+    });
+
+    // onreadystatechange
+    xhr.onreadystatechange = onreadystatechange.bind(this, {
+      xhr,
+      interceptor,
+      loading: {
+        show,
+        terminal,
+        indicator,
+      },
+      business: {
+        dataKey,
+        messageKey,
+        codeKey,
+        codeSuccess,
+        showWarn,
+      },
+      rawInterceptorsConfig,
+      interceptorsConfig,
+      resolve,
+      reject,
+    });
+
+    return {
+      xhr,
+      contentType,
+      interceptorsConfig,
+    };
+  } catch (error) {
+    hideIndicator();
+    reject(error);
+    // 保持与原先一致：prepare 失败时向上抛出，同时结算内部 promise
+    throw error;
   }
-
-  // events
-  initXhrEvents({ xhr, events: { ...events, interceptor }, reject });
-
-  // onreadystatechange
-  xhr.onreadystatechange = onreadystatechange.bind(this, {
-    xhr,
-    interceptor,
-    loading: {
-      show,
-      terminal,
-      indicator,
-    },
-    business: {
-      dataKey,
-      messageKey,
-      codeKey,
-      codeSuccess,
-      showWarn,
-    },
-    rawInterceptorsConfig,
-    interceptorsConfig,
-    resolve,
-    reject,
-  });
-
-  return {
-    xhr,
-    contentType,
-    interceptorsConfig,
-  };
 }
 
 /**
@@ -1112,6 +1138,9 @@ async function onreadystatechange(
 
   // readyState === 4
   if (xhr.readyState === Ajax.READY_STATE_DONE) {
+    // 成功路径交给调用方 hideIndicator；失败路径在 finally 统一关闭
+    let keepIndicatorForCaller = false;
+
     try {
       /** 根据responseType安全获取响应数据 **/
       const responseType = xhr.responseType || '';
@@ -1160,6 +1189,7 @@ async function onreadystatechange(
             warnInfo(Intl.get('hint'), jsonObj[messageKey]);
           }
 
+          keepIndicatorForCaller = true;
           resolve(
             resolveData.call(this, {
               show,
@@ -1178,6 +1208,7 @@ async function onreadystatechange(
           contentType === Ajax.CONTENT_TYPE_TEXT_XML ||
           contentType === Ajax.CONTENT_TYPE_APPLICATION_XML
         ) {
+          keepIndicatorForCaller = true;
           resolve(
             resolveData.call(this, {
               show,
@@ -1193,6 +1224,7 @@ async function onreadystatechange(
         //
         else {
           /** response ContentType是其他 **/
+          keepIndicatorForCaller = true;
           resolve(
             resolveData.call(this, {
               show,
@@ -1229,23 +1261,23 @@ async function onreadystatechange(
             finalParams: interceptorsConfig,
           }),
         });
-
-        // 取消遮罩
-        if (show && indicator) {
-          targetGlobalIndicator.hide(indicator);
-        }
       }
     } catch (error) {
       // 处理 responseReducer 或其他异步操作中的异常
       reject(error);
 
-      // 取消遮罩
-      if (show && indicator) {
-        targetGlobalIndicator.hide(indicator);
-      }
-
       // 显示错误提示
       errorInfo(Intl.get('hint'), (error as Error)?.message || Intl.get('request_error'));
+    } finally {
+      // 非成功终态统一关闭遮罩（含 interceptor 抛错、非 2xx、parse 异常等）
+      // 业务侧可能已调用 hideIndicator，hide 需容错
+      if (!keepIndicatorForCaller && show && indicator) {
+        try {
+          targetGlobalIndicator.hide(indicator);
+        } catch {
+          // ignore
+        }
+      }
     }
   }
 }

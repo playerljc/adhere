@@ -84,7 +84,12 @@ class FetchXMLHttpRequest {
       clearTimeout(this.timeoutId);
       this.timeoutId = null;
     }
+    this.status = 0;
+    this.statusText = '';
+    this.readyState = FetchXMLHttpRequest.DONE;
+    this.dispatchReadyStateChange();
     this.emit('abort', new ProgressEvent('abort'));
+    this.emit('loadend', new ProgressEvent('loadend'));
   }
 
   send(body?: Document | XMLHttpRequestBodyInit | null): void {
@@ -95,7 +100,12 @@ class FetchXMLHttpRequest {
       this.timeoutId = setTimeout(() => {
         this.aborted = true;
         this.abortController?.abort();
+        this.status = 0;
+        this.statusText = '';
+        this.readyState = FetchXMLHttpRequest.DONE;
+        this.dispatchReadyStateChange();
         this.emit('timeout', new ProgressEvent('timeout'));
+        this.emit('loadend', new ProgressEvent('loadend'));
       }, this.timeout);
     }
 
