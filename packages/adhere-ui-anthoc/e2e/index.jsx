@@ -1,6 +1,10 @@
 import React from 'react';
 
+
+
 import e2e from '@baifendian/adhere-e2e';
+
+
 
 import ArrayEntityValueHOC from './ArrayEntityValueHOC';
 import AsyncTreeEntityValueHOC from './AsyncTreeEntityValueHOC';
@@ -35,6 +39,7 @@ import PagingEntityValueHOC from './PagingEntityValueHOC';
 import RadioTest from './Radio/AutoCompleteButtonRadioSelect.tsx';
 import RangePickerValueHOCInFormTest from './RangePickerValueHOCInFormTest';
 import RangePickerValueHOCTest from './RangePickerValueHOCTest';
+import RevolvingTableGallery from './RevolvingTable/gallery';
 import RevolvingTableNormal from './RevolvingTable/normal';
 import SelectTest from './Select/AutoCompleteCheckAllMultipleSelect';
 import AutoCompleteSelect from './Select/AutoCompleteSelect';
@@ -72,7 +77,10 @@ import Anchor from './anchor';
 import FormRulesTest from './formRulesTest';
 import AntHOC from './test';
 
+
+
 import '../src/index.less';
+
 
 // const isTagGallery =
 //   typeof window !== 'undefined' &&
@@ -81,5 +89,6 @@ import '../src/index.less';
 e2e.PC({
   // children: <TransferSelect />,
   // children: isTagGallery ? <TableTransfer /> : <ScrollFirstError />,
-  children: <SegmentedTabs />,
+  children: <RevolvingTableGallery />,
+  // children: <RevolvingTableNormal />,
 });

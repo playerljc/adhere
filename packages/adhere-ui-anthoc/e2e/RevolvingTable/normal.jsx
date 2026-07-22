@@ -1,57 +1,23 @@
-import Mock from 'mockjs';
 import React from 'react';
 
 import { RevolvingTable } from '../../src';
 
+import { createColumns, createDataSource } from './mock';
+
 import '../../src/index.less';
 
+/** 基础用法：固定表头 + 纵向自动轮播 + 奇偶行 */
 export default () => {
   return (
     <RevolvingTable
-      style={{ height: 300 }}
-      // renderHeaderBefore={() => <div>renderHeaderBefore</div>}
-      // renderHeaderAfter={() => <div>renderHeaderAfter</div>}
-      // renderBodyBefore={() => <div>renderBodyBefore</div>}
-      // renderBodyAfter={() => <div>renderBodyAfter</div>}
+      style={{ height: 320 }}
+      rowKey="id"
       parity
-      columns={[
-        {
-          dataIndex: 'name',
-          key: 'name',
-          align: 'center',
-          title: 'name',
-          width: 250,
-        },
-        {
-          dataIndex: 'sex',
-          key: 'sex',
-          title: 'sex',
-          ellipsis: true,
-          // render: (v) => {
-          //   return (
-          //     <div style={{ color: 'red' }}>
-          //
-          //     </div>
-          //   );
-          // },
-        },
-        {
-          dataIndex: 'address',
-          key: 'address',
-          title: 'address',
-        },
-      ]}
-      dataSource={Array.from({ length: 2 }).map(() => ({
-        id: Mock.mock('@guid'),
-        name: Mock.mock('@name'),
-        // sex: Mock.mock('@name'),
-        sex: 'ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp',
-        address: Mock.mock('@name'),
-      }))}
+      columns={createColumns({ withEllipsis: true })}
+      dataSource={createDataSource(12)}
       revolvingConfig={{
-        loop: false,
-        slidesPerView: 3,
-        spaceBetween: 16,
+        slidesPerView: 5,
+        spaceBetween: 8,
       }}
     />
   );
