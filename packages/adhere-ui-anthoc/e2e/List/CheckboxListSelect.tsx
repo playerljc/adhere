@@ -29,7 +29,8 @@ export default () => {
     <List.ListSelect
       mode="multiple"
       style={{ width: 600 }}
-      placeholder="List"
+      placeholder="CheckboxListSelect"
+      dropdownStyle={{ maxHeight: 400, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
       options={data}

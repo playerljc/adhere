@@ -45,31 +45,6 @@ const TREE_DATA = [
   },
 ];
 
-const defaultTreeData = {
-  key: 'leaf2',
-  value: [
-    {
-      value: 'parent 1',
-      title: 'parent 1Test',
-      id: 'parent 1',
-      children: [
-        {
-          value: 'parent 1-0',
-          title: 'parent 1-0Test',
-          id: 'parent 1-0',
-          children: [
-            {
-              value: 'leaf2',
-              title: 'leaf2Test',
-              id: 'leaf2',
-            },
-          ],
-        },
-      ],
-    },
-  ],
-};
-
 const FLAT_TREE_DATA = Util.treeToArray(
   TREE_DATA,
   {
@@ -79,22 +54,8 @@ const FLAT_TREE_DATA = Util.treeToArray(
   'id',
 );
 
-const flatDefaultTreeData = {
-  key: 'leaf2',
-  value: Util.treeToArray(
-    defaultTreeData.value,
-    {
-      parentIdAttr: 'pId',
-      rootParentId: 0,
-    },
-    'id',
-  ),
-};
-
 export default () => {
   const [treeData, setTreeData] = useState([]);
-
-  // const [value, setValue] = useState();
 
   const [form] = Form.useForm();
 
@@ -102,16 +63,16 @@ export default () => {
     <Form
       form={form}
       onFinish={(values) => {
-        debugger;
+        console.log('onFinish', values);
       }}
     >
       <Form.Item
-        name="sex"
-        label="性别"
+        name="treeValue"
+        label="树选择"
         rules={[
           {
             required: true,
-            message: '请选择性别',
+            message: '请选择',
           },
         ]}
         initialValue={[
@@ -125,9 +86,8 @@ export default () => {
         <TreeEntityValueHOC>
           <TreeSelect.AutoCompleteTreeMultiSelect
             style={{ width: 300 }}
-            // value={value}
             dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-            placeholder="Please select"
+            placeholder="AutoCompleteTreeMultiSelectValueHOC"
             treeDataSimpleMode
             loadData={(_kw) => {
               return new Promise((resolve) => {
@@ -138,23 +98,6 @@ export default () => {
                 }
 
                 setTimeout(() => {
-                  // 正常
-                  // const flatTreeData = Util.treeToArray(
-                  //   TREE_DATA,
-                  //   { parentIdAttr: 'pId', rootParentId: '' },
-                  //   'value',
-                  // );
-                  //
-                  // const result = flatTreeData.filter((_node) => _node.title.indexOf(_kw) !== -1);
-                  //
-                  // const targetTreeData = Util.completionIncompleteFlatArr(flatTreeData, result, {
-                  //   keyAttr: 'value',
-                  //   titleAttr: 'title',
-                  //   parentIdAttr: 'pId',
-                  //   rootParentId: '',
-                  // });
-
-                  // flat
                   const result = FLAT_TREE_DATA.filter((_node) => _node.title.indexOf(_kw) !== -1);
 
                   const targetTreeData = Util.treeToArray(
@@ -179,9 +122,6 @@ export default () => {
               });
             }}
             treeData={treeData}
-            // onChange={(_value) => {
-            //   setValue(_value);
-            // }}
           />
         </TreeEntityValueHOC>
       </Form.Item>

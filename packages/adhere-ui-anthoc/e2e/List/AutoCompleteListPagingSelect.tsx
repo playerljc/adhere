@@ -34,9 +34,10 @@ export default () => {
       mode="multiple"
       placeholder="AutoCompleteListPagingSelect"
       style={{ width: 600 }}
-      // dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
+      renderLoading={() => <div style={{ padding: 16 }}>加载中...</div>}
       pagingProps={{
         loadData,
         defaultLimit: 5,

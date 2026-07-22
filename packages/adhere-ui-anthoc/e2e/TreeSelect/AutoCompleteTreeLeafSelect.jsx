@@ -43,9 +43,17 @@ const TREE_DATA = [
   },
 ];
 
-const defaultTreeData = {
-  key: 'leaf2',
-  value: [
+const FLAT_TREE_DATA = Util.treeToArray(
+  TREE_DATA,
+  {
+    parentIdAttr: 'pId',
+    rootParentId: 0,
+  },
+  'id',
+);
+
+const flatDefaultTreeData = Util.treeToArray(
+  [
     {
       value: 'parent 1',
       title: 'parent 1',
@@ -66,10 +74,6 @@ const defaultTreeData = {
       ],
     },
   ],
-};
-
-const FLAT_TREE_DATA = Util.treeToArray(
-  TREE_DATA,
   {
     parentIdAttr: 'pId',
     rootParentId: 0,
@@ -77,30 +81,19 @@ const FLAT_TREE_DATA = Util.treeToArray(
   'id',
 );
 
-const flatDefaultTreeData = {
-  key: 'leaf2',
-  value: Util.treeToArray(
-    defaultTreeData.value,
-    {
-      parentIdAttr: 'pId',
-      rootParentId: 0,
-    },
-    'id',
-  ),
-};
-
 export default () => {
   const [treeData, setTreeData] = useState([]);
 
-  const [value, setValue] = useState();
+  const [value, setValue] = useState('leaf2');
 
   return (
     <TreeSelect.AutoCompleteTreeLeafSelect
       style={{ width: 300 }}
       value={value}
       dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-      placeholder="Please select"
+      placeholder="AutoCompleteTreeLeafSelect"
       treeDataSimpleMode
+      defaultTreeData={flatDefaultTreeData}
       loadData={(_kw) => {
         return new Promise((resolve) => {
           if (!_kw) {
@@ -110,23 +103,6 @@ export default () => {
           }
 
           setTimeout(() => {
-            // 正常
-            // const flatTreeData = Util.treeToArray(
-            //   TREE_DATA,
-            //   { parentIdAttr: 'pId', rootParentId: '' },
-            //   'value',
-            // );
-            //
-            // const result = flatTreeData.filter((_node) => _node.title.indexOf(_kw) !== -1);
-            //
-            // const targetTreeData = Util.completionIncompleteFlatArr(flatTreeData, result, {
-            //   keyAttr: 'value',
-            //   titleAttr: 'title',
-            //   parentIdAttr: 'pId',
-            //   rootParentId: '',
-            // });
-
-            // flat
             const result = FLAT_TREE_DATA.filter((_node) => _node.title.indexOf(_kw) !== -1);
 
             const targetTreeData = Util.treeToArray(
@@ -151,9 +127,7 @@ export default () => {
         });
       }}
       treeData={treeData}
-      onChange={(_value) => {
-        setValue(_value);
-      }}
+      onChange={setValue}
     />
   );
 };

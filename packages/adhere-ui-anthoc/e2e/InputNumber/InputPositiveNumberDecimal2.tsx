@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import InputNumberDecimal2 from '../../src/input-number-decimal2';
+import Space from '../../src/space';
 
 export default () => {
-  return <InputNumberDecimal2.InputPositiveNumberDecimal2 />;
+  const [value, setValue] = useState(0);
+
+  return (
+    <Space direction="vertical" size={8}>
+      <InputNumberDecimal2.InputPositiveNumberDecimal2
+        style={{ width: 200 }}
+        placeholder="InputPositiveNumberDecimal2"
+        value={value}
+        onChange={setValue}
+      />
+      <div>当前 value: {String(value)}（min=0, precision=2）</div>
+    </Space>
+  );
 };

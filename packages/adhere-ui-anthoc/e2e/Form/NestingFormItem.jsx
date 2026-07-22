@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
@@ -16,21 +16,21 @@ export default () => {
 
   function getMap() {
     if (!itemsRef.current) {
-      // 首次运行时初始化 Map。
       itemsRef.current = new Map();
     }
     return itemsRef.current;
   }
 
-  useEffect(() => {
-    console.log('obj1Ref', obj1Ref);
-    console.log('obj2Ref', obj2Ref);
-    // form.setFieldsValue(JSON.parse('{"name":"1","obj1":{"a":"2","b":{"b.1":"3","b.2":"4"}}}'));
-  }, []);
-
   return (
-    <div style={{ /*height: 100,*/ overflowY: 'auto' }}>
-      <Form form={form} name="form" scrollToFirstError>
+    <div style={{ overflowY: 'auto' }}>
+      <Form
+        form={form}
+        name="nestingForm"
+        scrollToFirstError
+        onFinish={(values) => {
+          console.log('onFinish', values);
+        }}
+      >
         <Form.Item
           name="name"
           label="姓名"
@@ -114,177 +114,134 @@ export default () => {
         </Form.Item>
 
         <Form.List name="array">
-          {(fields, { add, remove }, { errors }) => {
-            return (
-              <>
-                <Button
-                  onClick={() => {
-                    add();
-                  }}
+          {(fields, { add, remove }, { errors }) => (
+            <>
+              <Button
+                onClick={() => {
+                  add();
+                }}
+              >
+                Add
+              </Button>
+
+              {fields.map((field) => (
+                <Form.Item
+                  noStyle
+                  key={field.key}
+                  {...field}
+                  rules={[
+                    {
+                      validator: () => {
+                        const map = getMap();
+                        const ref = map.get(field.key);
+                        return ref.validateFields();
+                      },
+                    },
+                  ]}
                 >
-                  Add
-                </Button>
+                  <Form.NestingFormItem
+                    ref={(node) => {
+                      const map = getMap();
+                      if (node) {
+                        map.set(field.key, node);
+                      } else {
+                        map.delete(field.key);
+                      }
+                    }}
+                  >
+                    <FlexLayout direction="horizontal">
+                      <FlexLayout.Auto>
+                        <Form.Item
+                          name="key1"
+                          label="key1"
+                          rules={[
+                            {
+                              required: true,
+                              message: '请输入key1',
+                            },
+                          ]}
+                        >
+                          <Input />
+                        </Form.Item>
 
-                {fields.map((field) => {
-                  return (
-                    <Form.Item
-                      noStyle
-                      key={field.key}
-                      {...field}
-                      rules={[
-                        {
-                          validator: () => {
-                            const map = getMap();
-                            const ref = map.get(field.key);
-                            return ref.validateFields();
-                          },
-                        },
-                      ]}
-                    >
-                      <Form.NestingFormItem
-                        ref={(node) => {
-                          const map = getMap();
-                          if (node) {
-                            map.set(field.key, node);
-                          } else {
-                            map.delete(field.key);
-                          }
-                        }}
-                      >
-                        <FlexLayout direction="horizontal">
-                          <FlexLayout.Auto>
-                            <Form.Item
-                              name="key1"
-                              label="key1"
-                              rules={[
-                                {
-                                  required: true,
-                                  message: '请输入key1',
-                                },
-                              ]}
-                            >
-                              <Input />
-                            </Form.Item>
+                        <Form.Item
+                          name="key2"
+                          label="key2"
+                          rules={[
+                            {
+                              required: true,
+                              message: '请输入key2',
+                            },
+                          ]}
+                        >
+                          <Input />
+                        </Form.Item>
 
-                            <Form.Item
-                              name="key2"
-                              label="key2"
-                              rules={[
-                                {
-                                  required: true,
-                                  message: '请输入key2',
-                                },
-                              ]}
-                            >
-                              <Input />
-                            </Form.Item>
-
+                        <Form.Item
+                          name="key3"
+                          noStyle
+                          rules={[
+                            {
+                              validator: () => {
+                                const map = getMap();
+                                const ref = map.get(`${field.key}_key3`);
+                                return ref.validateFields();
+                              },
+                            },
+                          ]}
+                        >
+                          <Form.NestingFormItem
+                            ref={(node) => {
+                              const map = getMap();
+                              if (node) {
+                                map.set(`${field.key}_key3`, node);
+                              } else {
+                                map.delete(`${field.key}_key3`);
+                              }
+                            }}
+                          >
                             <Form.Item
                               name="key3"
-                              noStyle
+                              label="key3"
                               rules={[
                                 {
-                                  validator: () => {
-                                    const map = getMap();
-                                    const ref = map.get(`${field.key}_key3`);
-                                    return ref.validateFields();
-                                  },
+                                  required: true,
+                                  message: '请输入key3',
                                 },
                               ]}
                             >
-                              <Form.NestingFormItem
-                                ref={(node) => {
-                                  const map = getMap();
-                                  if (node) {
-                                    map.set(`${field.key}_key3`, node);
-                                  } else {
-                                    map.delete(`${field.key}_key3`);
-                                  }
-                                }}
-                              >
-                                <Form.Item
-                                  name="key3"
-                                  label="key3"
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: '请输入key3',
-                                    },
-                                  ]}
-                                >
-                                  <Input />
-                                </Form.Item>
-                              </Form.NestingFormItem>
+                              <Input />
                             </Form.Item>
-                          </FlexLayout.Auto>
+                          </Form.NestingFormItem>
+                        </Form.Item>
+                      </FlexLayout.Auto>
 
-                          <FlexLayout.Fixed>
-                            <Button
-                              onClick={() => {
-                                remove(field.name);
-                              }}
-                            >
-                              删除
-                            </Button>
-                          </FlexLayout.Fixed>
-                        </FlexLayout>
-                      </Form.NestingFormItem>
-                    </Form.Item>
-                  );
-                })}
-                <Form.ErrorList errors={errors} />
-              </>
-            );
-          }}
+                      <FlexLayout.Fixed>
+                        <Button
+                          onClick={() => {
+                            remove(field.name);
+                          }}
+                        >
+                          删除
+                        </Button>
+                      </FlexLayout.Fixed>
+                    </FlexLayout>
+                  </Form.NestingFormItem>
+                </Form.Item>
+              ))}
+              <Form.ErrorList errors={errors} />
+            </>
+          )}
         </Form.List>
+
+        <Form.Item style={{ marginTop: 16 }}>
+          <Form.SubmitButton form={form} type="primary" block>
+            Submit
+          </Form.SubmitButton>
+        </Form.Item>
       </Form>
 
-      <div>
-        <Button
-          block
-          onClick={() => {
-            form
-              .validateFields()
-              .then((values) => {
-                debugger;
-              })
-              .catch((err) => {
-                debugger;
-              });
-          }}
-        >
-          Submit
-        </Button>
-      </div>
-
-      <div id="error"></div>
+      <div id="error" style={{ color: 'red', marginTop: 12 }} />
     </div>
   );
-
-  /**
-   * 人
-   * 姓名
-   * 性别
-   * 出生年月
-   * 联系电话
-   *   联系电话
-   *   紧急联系电话
-   * 住址
-   *   常驻地址
-   *   户籍地址
-   * 父亲
-   *   姓名
-   *   出生年月
-   *   籍贯
-   *   住址
-   * 母亲
-   *   姓名
-   *   出生年月
-   *   籍贯
-   *   住址
-   *
-   * 房屋信息
-   *
-   * 车辆信息
-   */
 };

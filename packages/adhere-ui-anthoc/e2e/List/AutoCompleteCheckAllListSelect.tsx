@@ -16,6 +16,7 @@ export default () => {
       value={value}
       options={options}
       onChange={setValue}
+      renderLoading={() => <div style={{ padding: 16 }}>加载中...</div>}
       loadData={(_kw) =>
         new Promise((resolve) => {
           if (!_kw) {
@@ -30,6 +31,7 @@ export default () => {
               .map((t) => ({
                 label: t.t,
                 value: t.id,
+                title: t.t,
               }));
 
             setOptions(result);
@@ -42,7 +44,7 @@ export default () => {
         itemLayout: 'horizontal',
         renderItem: (item) => (
           <List.Item>
-            <List.Item.Meta title={item.title} description={item.label} />
+            <List.Item.Meta title={item.title ?? item.label} description={item.label} />
           </List.Item>
         ),
       }}

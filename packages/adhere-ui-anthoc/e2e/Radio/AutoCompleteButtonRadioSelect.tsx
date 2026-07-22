@@ -16,6 +16,8 @@ export default () => {
       value={value}
       options={options}
       onChange={setValue}
+      radioProps={{}}
+      renderLoading={() => <div style={{ padding: 16 }}>加载中...</div>}
       loadData={(_kw) =>
         new Promise((resolve) => {
           if (!_kw) {

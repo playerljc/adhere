@@ -12,8 +12,6 @@ export default () => {
    * @param cascadeParams
    */
   function fetchData(pid, cascadeParams) {
-    console.log('pid', pid);
-
     if (!pid) {
       return Promise.resolve(
         Province.map((t) => ({
@@ -39,8 +37,6 @@ export default () => {
 
     return Promise.resolve(result);
   }
-
-  console.log('value', value);
 
   return (
     <Cascader.AsyncCascader

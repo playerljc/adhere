@@ -6,21 +6,27 @@ import Book from '../mock/book';
 export default () => {
   const [options, setOptions] = useState([]);
 
-  const [value, setValue] = useState(undefined);
+  const [value, setValue] = useState([]);
 
   return (
     <List.AutoCompleteListSelect
       placeholder="AutoCompleteListSelect"
       style={{ width: 600 }}
+      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       mode="multiple"
-      // dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       options={options}
       onChange={setValue}
+      defaultOptions={[
+        {
+          label: Book[0].label,
+          value: Book[0].id,
+          title: Book[0].label,
+        },
+      ]}
+      renderLoading={() => <div style={{ padding: 16 }}>加载中...</div>}
       loadData={(_kw) =>
         new Promise((resolve) => {
-          console.log('_kw', _kw);
-
           if (!_kw) {
             setOptions([]);
             resolve();
@@ -33,6 +39,7 @@ export default () => {
               .map((t) => ({
                 label: t.t,
                 value: t.id,
+                title: t.t,
               }));
 
             setOptions(result);
@@ -45,7 +52,7 @@ export default () => {
         itemLayout: 'horizontal',
         renderItem: (item) => (
           <List.Item>
-            <List.Item.Meta title={item.title} description={item.label} />
+            <List.Item.Meta title={item.title ?? item.label} description={item.label} />
           </List.Item>
         ),
       }}

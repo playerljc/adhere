@@ -4,7 +4,7 @@ import TreeSelect from '../../src/tree-select';
 import { City, County, Province } from '../mock/pcc';
 
 export default () => {
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState(undefined);
 
   /**
    * fetchData

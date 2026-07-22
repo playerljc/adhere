@@ -39,7 +39,7 @@ export default () => {
     <Table.TablePagingSelect
       mode="multiple"
       style={{ width: 600 }}
-      placeholder="RadioPagingList"
+      placeholder="CheckboxTablePagingSelect"
       // defaultOptions={[dataSource[0], dataSource[6]]}
       value={value}
       onChange={setValue}

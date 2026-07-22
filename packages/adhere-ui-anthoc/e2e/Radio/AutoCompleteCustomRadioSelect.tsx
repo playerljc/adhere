@@ -18,6 +18,8 @@ export default () => {
       value={value}
       options={options}
       onChange={setValue}
+      radioProps={{}}
+      renderLoading={() => <div style={{ padding: 16 }}>加载中...</div>}
       loadData={(_kw) =>
         new Promise((resolve) => {
           if (!_kw) {
@@ -41,13 +43,11 @@ export default () => {
         })
       }
     >
-      {(options) => (
+      {(items) => (
         <Row gutter={[16, 24]}>
-          {options.map(({ data }) => (
-            <Col span={4}>
-              <Radio key={data?.value} {...(data ?? {})}>
-                {data?.label}
-              </Radio>
+          {items.map(({ data, defaultNode }) => (
+            <Col key={data?.value} span={4}>
+              {defaultNode}
             </Col>
           ))}
         </Row>

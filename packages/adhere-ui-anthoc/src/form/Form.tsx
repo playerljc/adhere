@@ -200,7 +200,6 @@ FormInternalComponent.useForm = (...params) => {
 Object.keys(Form)
   .filter((key) => !['$$typeof', 'useForm', 'Item'].includes(key))
   .forEach((key) => {
-    console.log('key', key);
     FormInternalComponent[key] = Form[key];
   });
 

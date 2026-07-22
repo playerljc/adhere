@@ -33,7 +33,6 @@ const columns = [
 ];
 
 export default () => {
-  // 默认选中前两个项
   const [targetKeys, setTargetKeys] = useState<string[]>(['0', '1']);
 
   return (
@@ -41,6 +40,7 @@ export default () => {
       dataSource={mockData}
       targetKeys={targetKeys}
       onChange={setTargetKeys}
+      titles={['可选', '已选']}
       showSearch
       filterOption={(input, item) => item.title?.includes(input) || item.tag?.includes(input)}
       leftColumns={columns}

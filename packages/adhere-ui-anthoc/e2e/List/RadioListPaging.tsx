@@ -20,8 +20,6 @@ export default () => {
   const [value, setValue] = useState(undefined);
 
   function loadData(page, limit) {
-    console.log('paging', page, limit);
-
     return new Promise((resolve) => {
       resolve({
         totalCount: data.length,
@@ -33,10 +31,7 @@ export default () => {
   return (
     <List.ListPaging
       value={value}
-      onChange={(_value) => {
-        console.log(_value);
-        setValue(_value);
-      }}
+      onChange={setValue}
       isSuspenseAsync={false}
       pagingProps={{
         loadData,

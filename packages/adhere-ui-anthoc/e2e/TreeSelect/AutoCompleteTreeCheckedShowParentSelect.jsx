@@ -1,3 +1,4 @@
+// NOTE: AutoCompleteTreeCheckedShowParentSelect 当前未在 tree-select/index.ts 中导出，此例子保留以便后续恢复导出后使用。
 import React, { useState } from 'react';
 
 import Util from '@baifendian/adhere-util';

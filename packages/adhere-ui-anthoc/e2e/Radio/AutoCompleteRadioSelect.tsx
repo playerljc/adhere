@@ -6,15 +6,24 @@ import Book from '../mock/book';
 export default () => {
   const [options, setOptions] = useState([]);
 
-  const [value, setValue] = useState(undefined);
+  const [value, setValue] = useState(Book[0].id);
 
   return (
     <Radio.AutoCompleteRadioSelect
       placeholder="AutoCompleteRadioSelect"
+      defaultOptions={[
+        {
+          label: Book[0].label,
+          value: Book[0].id,
+        },
+      ]}
       style={{ width: 600 }}
+      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       options={options}
       onChange={setValue}
+      radioProps={{}}
+      renderLoading={() => <div style={{ padding: 16 }}>加载中...</div>}
       loadData={(_kw) =>
         new Promise((resolve) => {
           if (!_kw) {

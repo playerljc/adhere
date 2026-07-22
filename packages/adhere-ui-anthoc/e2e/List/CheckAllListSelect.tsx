@@ -28,10 +28,21 @@ export default () => {
   return (
     <List.CheckAllListSelect
       style={{ width: 600 }}
-      placeholder="List"
+      placeholder="CheckAllListSelect"
+      dropdownStyle={{ maxHeight: 400, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
       options={data}
+      render={(checkAllOrigin, childrenOrigin) => {
+        return (
+          <div>
+            <div style={{ padding: '8px 12px', borderBottom: '1px solid #f0f0f0' }}>
+              {checkAllOrigin}
+            </div>
+            <div style={{ padding: 12 }}>{childrenOrigin}</div>
+          </div>
+        );
+      }}
       listProps={{
         itemLayout: 'horizontal',
         renderItem: (item, index) => (

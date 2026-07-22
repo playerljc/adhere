@@ -18,7 +18,7 @@ const treeData = [
 ];
 
 export default () => {
-  const [targetKeys, setTargetKeys] = useState<string[]>([]);
+  const [targetKeys, setTargetKeys] = useState<string[]>(['0-1-0']);
 
   return (
     <Transfer.TreeTransfer
@@ -26,6 +26,7 @@ export default () => {
       targetKeys={targetKeys}
       onChange={setTargetKeys}
       titles={['Source', 'Target']}
+      showSearch
     />
   );
 };

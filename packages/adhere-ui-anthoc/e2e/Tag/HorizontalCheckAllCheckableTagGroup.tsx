@@ -8,25 +8,16 @@ export default () => {
   return (
     <Tag.HorizontalCheckAllCheckableTagGroup
       value={value}
-      onChange={(v) => {
-        setValue(v);
-      }}
+      onChange={setValue}
       options={Array.from({ length: 26 }).map((t, _index) => {
         const letter = String.fromCharCode(97 + _index).toUpperCase();
 
         return {
           value: letter,
+          label: letter,
           children: letter,
         };
       })}
-      // render={(origin, children) => {
-      //   return (
-      //     <div>
-      //       <div>{children}</div>
-      //       <div>{origin}</div>
-      //     </div>
-      //   );
-      // }}
     />
   );
 };

@@ -103,6 +103,7 @@ const InternalStepsSwiper = memo<StepsSwiperProps>(
           style={indicatorStyle ?? {}}
           direction={direction}
           items={_items}
+          onChange={onChange}
         />
       );
     }, [

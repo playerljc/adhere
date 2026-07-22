@@ -121,7 +121,7 @@ const flatDefaultTreeData = {
 };
 
 export default () => {
-  const [value, setValue] = useState(undefined);
+  const [value, setValue] = useState([]);
 
   return (
     <Table.TreeTableSelect

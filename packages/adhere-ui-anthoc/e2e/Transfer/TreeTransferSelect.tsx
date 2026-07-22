@@ -18,15 +18,20 @@ const treeData = [
 ];
 
 export default () => {
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState(['0-1-0']);
 
   return (
     <Transfer.TreeTransferSelect
-      placeholder="Tree Transfer Select"
+      placeholder="TreeTransferSelect"
       style={{ width: 410 }}
+      dropdownStyle={{ maxHeight: 400, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
       treeData={treeData}
+      transferProps={{
+        titles: ['可选', '已选'],
+        showSearch: true,
+      }}
     />
   );
 };

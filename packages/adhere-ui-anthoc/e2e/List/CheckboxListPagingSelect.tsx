@@ -33,6 +33,7 @@ export default () => {
       mode="multiple"
       style={{ width: 600 }}
       placeholder="CheckboxListPagingSelect"
+      dropdownStyle={{ maxHeight: 400, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
       pagingProps={{

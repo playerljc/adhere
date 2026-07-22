@@ -7,12 +7,12 @@ export default () => {
 
   return (
     <Tag.CheckAllTagSelect
-      style={{ width: 200 }}
-      placeholder="A-Z"
+      style={{ width: 300 }}
+      placeholder="CheckAllTagSelect"
+      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
-      onChange={(v) => {
-        setValue(v);
-      }}
+      onChange={setValue}
+      tagProps={{}}
       options={Array.from({ length: 26 }).map((t, _index) => {
         const letter = String.fromCharCode(97 + _index).toUpperCase();
 
@@ -22,11 +22,13 @@ export default () => {
           children: letter,
         };
       })}
-      render={(origin, children) => {
+      render={(checkAllOrigin, childrenOrigin) => {
         return (
           <div>
-            <div>{children}</div>
-            <div>{origin}</div>
+            <div style={{ padding: '8px 12px', borderBottom: '1px solid #f0f0f0' }}>
+              {checkAllOrigin}
+            </div>
+            <div style={{ padding: 12 }}>{childrenOrigin}</div>
           </div>
         );
       }}

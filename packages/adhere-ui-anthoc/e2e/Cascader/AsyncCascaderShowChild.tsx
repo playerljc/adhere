@@ -38,8 +38,6 @@ export default () => {
     return Promise.resolve(result);
   }
 
-  console.log('value', value);
-
   return (
     <Cascader.AsyncCascaderShowChild
       style={{ width: 200 }}

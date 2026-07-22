@@ -36,7 +36,7 @@ export default () => {
   return (
     <Table.TablePagingSelect
       style={{ width: 600 }}
-      placeholder="RadioPagingList"
+      placeholder="RadioTablePagingSelect"
       value={value}
       onChange={setValue}
       pagingProps={{

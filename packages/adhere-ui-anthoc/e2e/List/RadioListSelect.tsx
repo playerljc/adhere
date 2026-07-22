@@ -28,7 +28,8 @@ export default () => {
   return (
     <List.ListSelect
       style={{ width: 600 }}
-      placeholder="List"
+      placeholder="RadioListSelect"
+      dropdownStyle={{ maxHeight: 400, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
       options={data}

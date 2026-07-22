@@ -11,9 +11,10 @@ export default () => {
     <Radio.CustomRadioSelect
       style={{ width: 300 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
-      placeholder="A-Z"
+      placeholder="CustomRadioSelect"
       value={value}
       onChange={setValue}
+      radioProps={{}}
       options={Array.from({ length: 26 }).map((t, _index) => {
         const letter = String.fromCharCode(97 + _index).toUpperCase();
 
@@ -23,13 +24,11 @@ export default () => {
         };
       })}
     >
-      {(options) => (
+      {(items) => (
         <Row gutter={[16, 24]}>
-          {options.map(({ data }) => (
-            <Col span={4}>
-              <Radio key={data?.value} {...(data ?? {})}>
-                {data?.label}
-              </Radio>
+          {items.map(({ data, defaultNode }) => (
+            <Col key={data?.value} span={4}>
+              {defaultNode}
             </Col>
           ))}
         </Row>

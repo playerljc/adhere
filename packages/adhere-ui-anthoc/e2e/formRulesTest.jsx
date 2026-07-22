@@ -9,7 +9,7 @@ export default () => {
         name="name"
         rules={[
           {
-            require: true,
+            required: true,
             message: 'name不能为空',
           },
           Form.ValidatorRules.isMimeType({ invalidMessage: 'MimeType错误' }),

@@ -22,7 +22,7 @@ const dataSource = Array.from({ length: 100 }).map(() => {
 export default () => {
   const [options, setOptions] = useState([]);
 
-  const [value, setValue] = useState(undefined);
+  const [value, setValue] = useState([]);
 
   return (
     <Table.AutoCompleteTableSelect

@@ -34,6 +34,6 @@ const InternalTableSelect = memo<TableSelectProps>(({ tableProps, ...props }) =>
 });
 
 const TableSelect = InternalTableSelect as DisplayNameInternal<typeof InternalTableSelect>;
-TableSelect.displayName = 'TablePaging';
+TableSelect.displayName = 'TableSelect';
 
 export default TableSelect;

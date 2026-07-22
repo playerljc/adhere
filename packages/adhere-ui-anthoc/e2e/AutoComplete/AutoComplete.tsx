@@ -1,28 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import AutoComplete from '../../src/auto-complete';
+import Space from '../../src/space';
 
-export default () => (
-  <AutoComplete
-    // value={value}
-    options={Array.from({ length: 26 }).map((t, _index) => {
-      const letter = String.fromCharCode(97 + _index).toUpperCase();
+const options = Array.from({ length: 26 }).map((t, _index) => {
+  const letter = String.fromCharCode(97 + _index).toUpperCase();
 
-      return {
-        label: letter,
-        value: 97 + _index,
-      };
-    })}
-    style={{ width: 200 }}
-    onSelect={(v) => {
-      console.log('onSelect', v);
-    }}
-    onSearch={(v) => {
-      console.log('onSearch', v);
-    }}
-    onChange={(v) => {
-      console.log('onChange', v);
-    }}
-    placeholder="control mode"
-  />
-);
+  return {
+    label: letter,
+    value: letter,
+  };
+});
+
+export default () => {
+  const [value, setValue] = useState('');
+
+  return (
+    <Space direction="vertical" size={12}>
+      <AutoComplete
+        value={value}
+        options={options}
+        style={{ width: 200 }}
+        placeholder="AutoComplete"
+        onChange={setValue}
+        onSelect={(v) => {
+          setValue(v);
+        }}
+      />
+      <div>当前 value: {value || '(空)'}</div>
+    </Space>
+  );
+};

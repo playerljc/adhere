@@ -9,11 +9,6 @@ export default () => {
     ['230000000000', '230100000000', '230102000000'],
   ]);
 
-  /**
-   * fetchData
-   * @param pid
-   * @param cascadeParams
-   */
   function fetchData(pid, cascadeParams) {
     if (!pid) {
       return Promise.resolve(
@@ -41,16 +36,14 @@ export default () => {
     return Promise.resolve(result);
   }
 
-  console.log('value', value);
-
   return (
-    <Cascader.AsyncCascaderShowChild
-      style={{ width: 200 }}
-      placeholder="AsyncCascaderMulti"
+    <Cascader.AsyncCascaderMulti
+      style={{ width: 300 }}
+      placeholder="AsyncCascaderMultiEcho"
       value={value}
       onChange={setValue}
       fetchData={fetchData}
-      fetchBranch={(value, cascadeParams) => {
+      fetchBranch={() => {
         return Promise.resolve([
           {
             label: '辽宁省',

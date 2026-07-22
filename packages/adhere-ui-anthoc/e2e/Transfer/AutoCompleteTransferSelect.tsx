@@ -6,20 +6,29 @@ import Book from '../mock/book';
 export default () => {
   const [options, setOptions] = useState([]);
 
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState([Book[0].id]);
 
   return (
     <Transfer.AutoCompleteTransferSelect
       placeholder="AutoCompleteTransferSelect"
       style={{ width: 600 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+      defaultOptions={[
+        {
+          label: Book[0].label,
+          value: Book[0].id,
+        },
+      ]}
       value={value}
       options={options}
       onChange={setValue}
+      transferProps={{
+        titles: ['可选', '已选'],
+        showSearch: true,
+      }}
+      renderLoading={() => <div style={{ padding: 16 }}>加载中...</div>}
       loadData={(_kw) =>
         new Promise((resolve) => {
-          console.log('_kw', _kw);
-
           if (!_kw) {
             setOptions([]);
             resolve();

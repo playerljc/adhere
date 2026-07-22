@@ -44,7 +44,7 @@ export default () => {
     <Form
       form={form}
       onFinish={(values) => {
-        debugger;
+        console.log('onFinish', values);
       }}
     >
       <Form.Item

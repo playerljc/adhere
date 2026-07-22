@@ -38,19 +38,16 @@ const treeData = [
     .flat(),
 ];
 
+/** flat + CascaderTreeSelect（单选） */
 export default () => {
-  const [value, setValue] = useState<string>();
-
-  const onChange = (newValue: string) => {
-    setValue(newValue);
-  };
+  const [value, setValue] = useState<string[]>();
 
   return (
-    <Cascader.CascaderMulti
-      style={{ width: 200 }}
+    <Cascader.CascaderTreeSelect
+      style={{ width: 300 }}
       value={value}
-      placeholder="Please select"
-      onChange={onChange}
+      placeholder="FlatCascader"
+      onChange={setValue}
       options={treeData}
       treeDataSimpleMode
     />

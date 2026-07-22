@@ -37,16 +37,19 @@ export default () => {
 
   return (
     <Transfer.TableTransferSelect
-      placeholder="Table Transfer Select"
+      placeholder="TableTransferSelect"
       style={{ width: 600 }}
+      dropdownStyle={{ maxHeight: 400, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
       options={options}
       leftColumns={columns}
       rightColumns={columns}
       transferProps={{
+        titles: ['可选', '已选'],
         showSearch: true,
-        filterOption: (input, item) => item.title?.includes(input) || item.tag?.includes(input),
+        filterOption: (input, item) =>
+          item.title?.includes(input) || item.tag?.includes(input),
       }}
     />
   );

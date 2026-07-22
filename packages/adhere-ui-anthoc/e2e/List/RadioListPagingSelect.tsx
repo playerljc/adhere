@@ -20,8 +20,6 @@ export default () => {
   const [value, setValue] = useState(undefined);
 
   function loadData(page, limit) {
-    console.log('paging', page, limit);
-
     return new Promise((resolve) => {
       resolve({
         totalCount: data.length,
@@ -34,6 +32,7 @@ export default () => {
     <List.ListPagingSelect
       style={{ width: 600 }}
       placeholder="RadioListPagingSelect"
+      dropdownStyle={{ maxHeight: 400, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
       pagingProps={{

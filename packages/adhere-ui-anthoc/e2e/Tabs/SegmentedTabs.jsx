@@ -45,10 +45,11 @@ const initialEditableItems = [
 ];
 
 export default () => {
-  const [placement, setPlacement] = useState('top');
+  const [tabPosition, setTabPosition] = useState('top');
   const [destroyOnHidden, setDestroyOnHidden] = useState(false);
   const [editableActiveKey, setEditableActiveKey] = useState(initialEditableItems[0].key);
   const [editableItems, setEditableItems] = useState(initialEditableItems);
+  const [scrollInfo, setScrollInfo] = useState(null);
   const newTabIndex = useRef(0);
 
   const overflowItems = Array.from({ length: 20 }, (_, i) => {
@@ -144,35 +145,40 @@ export default () => {
         </div>
 
         <div>
-          <h3>Overflow Swiper (placement)</h3>
+          <h3>Overflow Swiper (tabPosition)</h3>
           <Radio.Group
-            value={placement}
-            onChange={(e) => setPlacement(e.target.value)}
+            value={tabPosition}
+            onChange={(e) => setTabPosition(e.target.value)}
             style={{ marginBottom: 12 }}
             optionType="button"
             options={[
               { label: 'top', value: 'top' },
               { label: 'bottom', value: 'bottom' },
-              { label: 'start', value: 'start' },
-              { label: 'end', value: 'end' },
+              { label: 'left', value: 'left' },
+              { label: 'right', value: 'right' },
             ]}
           />
           <div
             style={{
               height: 220,
-              width: placement === 'top' || placement === 'bottom' ? 360 : '100%',
+              width: tabPosition === 'top' || tabPosition === 'bottom' ? 360 : '100%',
             }}
           >
             <Tabs.SegmentedTabs
               defaultActiveKey="1"
-              tabPlacement={placement}
+              tabPosition={tabPosition}
               style={{ height: '100%' }}
               items={overflowItems}
               onTabScroll={(info) => {
-                console.log('[onTabScroll]', info);
+                setScrollInfo(info);
               }}
             />
           </div>
+          {scrollInfo && (
+            <p style={{ color: '#999', marginTop: 8 }}>
+              onTabScroll: {scrollInfo.direction}
+            </p>
+          )}
         </div>
 
         <div>

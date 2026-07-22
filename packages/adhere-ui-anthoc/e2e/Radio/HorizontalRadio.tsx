@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Radio from '../../src/radio';
 
-export default () => (
-  <Radio.HorizontalRadio
-    options={[
-      {
-        label: '男',
-        value: 2,
-      },
-      {
-        label: '女',
-        value: 1,
-      },
-    ]}
-  />
-);
+export default () => {
+  const [value, setValue] = useState('A');
+
+  return (
+    <Radio.HorizontalRadio
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      options={Array.from({ length: 26 }).map((t, _index) => {
+        const letter = String.fromCharCode(97 + _index).toUpperCase();
+
+        return {
+          label: letter,
+          value: letter,
+        };
+      })}
+    />
+  );
+};

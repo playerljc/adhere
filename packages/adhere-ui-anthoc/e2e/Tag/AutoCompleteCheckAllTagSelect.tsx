@@ -12,9 +12,12 @@ export default () => {
     <Tag.AutoCompleteCheckAllTagSelect
       placeholder="AutoCompleteCheckAllTagSelect"
       style={{ width: 600 }}
+      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       options={options}
       onChange={setValue}
+      tagProps={{}}
+      renderLoading={() => <div style={{ padding: 16 }}>加载中...</div>}
       loadData={(_kw) =>
         new Promise((resolve) => {
           if (!_kw) {
@@ -38,14 +41,16 @@ export default () => {
           }, 500);
         })
       }
-      // render={(origin, children) => {
-      //   return (
-      //     <div>
-      //       <div>{children}</div>
-      //       <div>{origin}</div>
-      //     </div>
-      //   );
-      // }}
+      render={(checkAllOrigin, childrenOrigin) => {
+        return (
+          <div>
+            <div style={{ padding: '8px 12px', borderBottom: '1px solid #f0f0f0' }}>
+              {checkAllOrigin}
+            </div>
+            <div style={{ padding: 12 }}>{childrenOrigin}</div>
+          </div>
+        );
+      }}
     />
   );
 };

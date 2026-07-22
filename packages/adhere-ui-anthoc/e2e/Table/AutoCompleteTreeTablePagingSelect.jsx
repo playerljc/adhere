@@ -148,7 +148,7 @@ export default () => {
       placeholder="AutoCompleteTreeTablePagingSelect"
       style={{ width: 800 }}
       dropdownStyle={{ width: 1000 }}
-      // multiple
+      multiple
       value={value}
       onChange={setValue}
       treeDataSimpleMode

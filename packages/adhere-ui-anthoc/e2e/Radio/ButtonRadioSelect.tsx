@@ -8,9 +8,11 @@ export default () => {
   return (
     <Radio.ButtonRadioSelect
       style={{ width: 300 }}
-      placeholder="A-Z"
+      placeholder="ButtonRadioSelect"
+      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
+      radioProps={{}}
       options={Array.from({ length: 26 }).map((t, _index) => {
         const letter = String.fromCharCode(97 + _index).toUpperCase();
 

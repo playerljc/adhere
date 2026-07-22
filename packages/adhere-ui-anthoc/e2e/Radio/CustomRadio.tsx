@@ -1,30 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Col from '../../src/col';
 import Radio from '../../src/radio';
 import Row from '../../src/row';
 
-export default () => (
-  <Radio.CustomRadio
-    options={Array.from({ length: 26 }).map((t, _index) => {
-      const letter = String.fromCharCode(97 + _index).toUpperCase();
+export default () => {
+  const [value, setValue] = useState('A');
 
-      return {
-        label: letter,
-        value: letter,
-      };
-    })}
-  >
-    {(options) => (
-      <Row gutter={[16, 24]}>
-        {options.map(({ data }) => (
-          <Col span={4}>
-            <Radio key={data?.value} {...(data ?? {})}>
-              {data?.label}
-            </Radio>
-          </Col>
-        ))}
-      </Row>
-    )}
-  </Radio.CustomRadio>
-);
+  return (
+    <Radio.CustomRadio
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      options={Array.from({ length: 26 }).map((t, _index) => {
+        const letter = String.fromCharCode(97 + _index).toUpperCase();
+
+        return {
+          label: letter,
+          value: letter,
+        };
+      })}
+    >
+      {(items) => (
+        <Row gutter={[16, 24]}>
+          {items.map(({ data, defaultNode }) => (
+            <Col key={data?.value} span={4}>
+              {defaultNode}
+            </Col>
+          ))}
+        </Row>
+      )}
+    </Radio.CustomRadio>
+  );
+};

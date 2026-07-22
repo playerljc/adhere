@@ -36,9 +36,9 @@ const treeData = [
 ];
 
 export default () => {
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState<string[]>([]);
 
-  const onChange = (newValue: string) => {
+  const onChange = (newValue: string[]) => {
     setValue(newValue);
   };
 
