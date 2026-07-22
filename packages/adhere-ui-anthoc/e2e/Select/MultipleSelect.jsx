@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import Select from '../../src/multiple-select/index';
+import MultipleSelect from '../../src/multiple-select/index';
 
 export default () => {
+  const [value, setValue] = useState(['2']);
+
   return (
-    <Select
+    <MultipleSelect
       style={{ width: 200 }}
+      placeholder="MultipleSelect"
+      value={value}
+      onChange={setValue}
       options={[
         {
           label: '男',

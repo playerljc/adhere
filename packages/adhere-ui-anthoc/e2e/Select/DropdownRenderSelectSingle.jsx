@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 
-import Checkbox from '../../src/checkbox';
+import Radio from '../../src/radio';
 import Select from '../../src/select/index';
 
 export default () => {
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState();
 
   return (
     <Select.DropdownRenderSelect
-      mode="multiple"
-      placeholder="DropdownRenderSelect multiple"
+      placeholder="DropdownRenderSelect single"
       value={value}
       onChange={setValue}
       style={{ width: 200 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
-      defaultInputValue="A"
-      showSearch
       options={Array.from({ length: 26 }).map((t, _index) => {
         const letter = String.fromCharCode(97 + _index).toUpperCase();
 
@@ -26,7 +23,13 @@ export default () => {
       })}
     >
       {({ value: selectedValue, onChange, options }) => {
-        return <Checkbox.Group value={selectedValue} onChange={onChange} options={options} />;
+        return (
+          <Radio.Group
+            value={selectedValue}
+            onChange={(e) => onChange?.(e.target.value)}
+            options={options}
+          />
+        );
       }}
     </Select.DropdownRenderSelect>
   );

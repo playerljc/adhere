@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import Checkbox from '../../src/checkbox';
 import MultipleSelect from '../../src/multiple-select/index';
 
 export default () => {
@@ -7,7 +8,7 @@ export default () => {
 
   return (
     <MultipleSelect.CheckAllSelect
-      placeholder="CheckAllMultipleSelect"
+      placeholder="CheckAllMultipleSelect custom children"
       value={value}
       onChange={setValue}
       style={{ width: 200 }}
@@ -20,6 +21,10 @@ export default () => {
           value: letter,
         };
       })}
-    />
+    >
+      {({ value: selectedValue, onChange, options }) => {
+        return <Checkbox.Group value={selectedValue} onChange={onChange} options={options} />;
+      }}
+    </MultipleSelect.CheckAllSelect>
   );
 };

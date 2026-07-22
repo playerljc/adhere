@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 
 import Checkbox from '../../src/checkbox';
-import Select from '../../src/select/index';
+import MultipleSelect from '../../src/multiple-select/index';
 
 export default () => {
   const [value, setValue] = useState([]);
 
   return (
-    <Select.DropdownRenderSelect
-      mode="multiple"
-      placeholder="DropdownRenderSelect multiple"
+    <MultipleSelect.CheckAllSelect
+      placeholder="CheckAllMultipleSelect custom render"
       value={value}
       onChange={setValue}
-      style={{ width: 200 }}
+      style={{ width: 300 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
-      defaultInputValue="A"
-      showSearch
       options={Array.from({ length: 26 }).map((t, _index) => {
         const letter = String.fromCharCode(97 + _index).toUpperCase();
 
@@ -24,10 +21,20 @@ export default () => {
           value: letter,
         };
       })}
+      render={(checkAllOrigin, childrenOrigin) => {
+        return (
+          <div>
+            <div style={{ padding: '8px 12px', borderBottom: '1px solid #f0f0f0' }}>
+              {checkAllOrigin}
+            </div>
+            <div style={{ padding: 12 }}>{childrenOrigin}</div>
+          </div>
+        );
+      }}
     >
       {({ value: selectedValue, onChange, options }) => {
         return <Checkbox.Group value={selectedValue} onChange={onChange} options={options} />;
       }}
-    </Select.DropdownRenderSelect>
+    </MultipleSelect.CheckAllSelect>
   );
 };
