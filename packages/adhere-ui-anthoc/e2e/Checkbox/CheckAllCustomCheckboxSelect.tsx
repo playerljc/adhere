@@ -9,10 +9,12 @@ export default () => {
 
   return (
     <Checkbox.CheckAllCustomCheckboxSelect
-      style={{ width: 200 }}
-      placeholder="A-Z"
+      style={{ width: 280 }}
+      placeholder="CheckAllCustomCheckboxSelect"
+      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
+      checkboxProps={{}}
       options={Array.from({ length: 26 }).map((t, _index) => {
         const letter = String.fromCharCode(97 + _index).toUpperCase();
 
@@ -21,25 +23,27 @@ export default () => {
           value: letter,
         };
       })}
-      // render={(origin, children) => {
-      //   return (
-      //     <div>
-      //       <div>{children}</div>
-      //       <div>{origin}</div>
-      //     </div>
-      //   );
-      // }}
+      render={(checkAllOrigin, childrenOrigin) => {
+        return (
+          <div>
+            <div style={{ padding: '8px 12px', borderBottom: '1px solid #f0f0f0' }}>
+              {checkAllOrigin}
+            </div>
+            <div style={{ padding: 12 }}>{childrenOrigin}</div>
+          </div>
+        );
+      }}
     >
-      {(options) => (
+      {(items) => (
         <Row gutter={[16, 24]}>
-          {options.map(({ data, onChange, checked, disabled }) => (
+          {items.map(({ data, onChange, checked, disabled }) => (
             <Col key={data?.value} span={4}>
               <Checkbox
                 {...(data ?? {})}
                 checked={checked}
                 disabled={disabled}
-                onChange={(v) => {
-                  onChange(v, data.value);
+                onChange={(e) => {
+                  onChange(e, data.value);
                 }}
               >
                 {data?.label}

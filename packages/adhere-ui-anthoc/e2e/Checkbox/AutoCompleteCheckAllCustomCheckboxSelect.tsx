@@ -18,6 +18,8 @@ export default () => {
       value={value}
       options={options}
       onChange={setValue}
+      checkboxProps={{}}
+      renderLoading={() => <div style={{ padding: 16 }}>加载中...</div>}
       loadData={(_kw) =>
         new Promise((resolve) => {
           if (!_kw) {
@@ -40,18 +42,20 @@ export default () => {
           }, 500);
         })
       }
-      // render={(origin, children) => {
-      //   return (
-      //     <div>
-      //       <div>{children}</div>
-      //       <div>{origin}</div>
-      //     </div>
-      //   );
-      // }}
+      render={(checkAllOrigin, childrenOrigin) => {
+        return (
+          <div>
+            <div style={{ padding: '8px 12px', borderBottom: '1px solid #f0f0f0' }}>
+              {checkAllOrigin}
+            </div>
+            <div style={{ padding: 12 }}>{childrenOrigin}</div>
+          </div>
+        );
+      }}
     >
-      {(options) => (
+      {(items) => (
         <Row gutter={[16, 24]}>
-          {options.map(({ data, onChange, checked, disabled }) => (
+          {items.map(({ data, onChange, checked, disabled }) => (
             <Col span={4} key={data?.value}>
               <Checkbox
                 {...(data ?? {})}

@@ -18,6 +18,7 @@ export default () => {
       value={value}
       options={options}
       onChange={setValue}
+      checkboxProps={{}}
       loadData={(_kw) =>
         new Promise((resolve) => {
           if (!_kw) {
@@ -41,9 +42,9 @@ export default () => {
         })
       }
     >
-      {(options) => (
+      {(items) => (
         <Row gutter={[16, 24]}>
-          {options.map(({ data, onChange, checked, disabled }) => (
+          {items.map(({ data, onChange, checked, disabled }) => (
             <Col key={data?.value} span={4}>
               <Checkbox
                 {...(data ?? {})}

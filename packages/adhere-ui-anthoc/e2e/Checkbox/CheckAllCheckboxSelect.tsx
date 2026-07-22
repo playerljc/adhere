@@ -7,11 +7,14 @@ export default () => {
 
   return (
     <Checkbox.CheckAllCheckboxSelect
-      placeholder="A-Z"
+      placeholder="CheckAllCheckboxSelect"
       style={{ width: 200 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
+      checkboxProps={{
+        spaceProps: { size: 8 },
+      }}
       options={Array.from({ length: 26 }).map((t, _index) => {
         const letter = String.fromCharCode(97 + _index).toUpperCase();
 
@@ -20,14 +23,6 @@ export default () => {
           value: letter,
         };
       })}
-      // render={(origin, children) => {
-      //   return (
-      //     <div>
-      //       <div>{children}</div>
-      //       <div>{origin}</div>
-      //     </div>
-      //   );
-      // }}
     />
   );
 };

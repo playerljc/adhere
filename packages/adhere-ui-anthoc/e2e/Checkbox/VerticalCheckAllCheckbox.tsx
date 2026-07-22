@@ -9,21 +9,21 @@ export default () => {
     <Checkbox.VerticalCheckAllCheckbox
       value={value}
       onChange={setValue}
-      options={[
-        {
-          label: '男',
-          value: '2',
-        },
-        {
-          label: '女',
-          value: '1',
-        },
-      ]}
-      render={(origin, children) => {
+      options={Array.from({ length: 26 }).map((t, _index) => {
+        const letter = String.fromCharCode(97 + _index).toUpperCase();
+
+        return {
+          label: letter,
+          value: letter,
+        };
+      })}
+      render={(checkAllOrigin, childrenOrigin) => {
         return (
           <div>
-            <div>{children}</div>
-            <div>{origin}</div>
+            <div style={{ padding: '8px 0', borderBottom: '1px solid #f0f0f0', marginBottom: 12 }}>
+              {checkAllOrigin}
+            </div>
+            <div>{childrenOrigin}</div>
           </div>
         );
       }}

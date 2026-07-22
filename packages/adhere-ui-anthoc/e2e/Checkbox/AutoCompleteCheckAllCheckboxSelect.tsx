@@ -10,12 +10,16 @@ export default () => {
 
   return (
     <Checkbox.AutoCompleteCheckAllCheckboxSelect
-      placeholder="AutoCompleteCheckAllCheckboxSelect111"
+      placeholder="AutoCompleteCheckAllCheckboxSelect"
       style={{ width: 600 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       options={options}
       onChange={setValue}
+      checkboxProps={{
+        spaceProps: { size: 8 },
+      }}
+      renderLoading={() => <div style={{ padding: 16 }}>加载中...</div>}
       loadData={(_kw) =>
         new Promise((resolve) => {
           if (!_kw) {
@@ -38,14 +42,6 @@ export default () => {
           }, 500);
         })
       }
-      // render={(origin, children) => {
-      //   return (
-      //     <div>
-      //       <div>{children}</div>
-      //       <div>{origin}</div>
-      //     </div>
-      //   );
-      // }}
     />
   );
 };

@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Checkbox from '../../src/checkbox';
 
-export default () => (
-  <Checkbox.HorizontalCheckbox
-    options={[
-      {
-        label: '男',
-        value: '2',
-      },
-      {
-        label: '女',
-        value: '1',
-      },
-    ]}
-  />
-);
+export default () => {
+  const [value, setValue] = useState(['A', 'C']);
+
+  return (
+    <Checkbox.HorizontalCheckbox
+      value={value}
+      onChange={setValue}
+      spaceProps={{ size: 12 }}
+      options={Array.from({ length: 26 }).map((t, _index) => {
+        const letter = String.fromCharCode(97 + _index).toUpperCase();
+
+        return {
+          label: letter,
+          value: letter,
+        };
+      })}
+    />
+  );
+};

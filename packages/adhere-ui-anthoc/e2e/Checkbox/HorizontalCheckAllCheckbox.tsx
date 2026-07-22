@@ -9,24 +9,15 @@ export default () => {
     <Checkbox.HorizontalCheckAllCheckbox
       value={value}
       onChange={setValue}
-      options={[
-        {
-          label: '男',
-          value: '2',
-        },
-        {
-          label: '女',
-          value: '1',
-        },
-      ]}
-      // render={(origin, children) => {
-      //   return (
-      //     <div>
-      //       <div>{children}</div>
-      //       <div>{origin}</div>
-      //     </div>
-      //   );
-      // }}
+      spaceProps={{ size: 12 }}
+      options={Array.from({ length: 26 }).map((t, _index) => {
+        const letter = String.fromCharCode(97 + _index).toUpperCase();
+
+        return {
+          label: letter,
+          value: letter,
+        };
+      })}
     />
   );
 };

@@ -9,10 +9,12 @@ export default () => {
 
   return (
     <Checkbox.CustomCheckboxSelect
-      style={{ width: 200 }}
-      placeholder="A-Z"
+      style={{ width: 280 }}
+      placeholder="CustomCheckboxSelect"
+      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
+      checkboxProps={{}}
       options={Array.from({ length: 26 }).map((t, _index) => {
         const letter = String.fromCharCode(97 + _index).toUpperCase();
 
@@ -22,9 +24,9 @@ export default () => {
         };
       })}
     >
-      {(options) => (
+      {(items) => (
         <Row gutter={[16, 24]}>
-          {options.map(({ data, onChange, ...rest }) => (
+          {items.map(({ data, onChange, ...rest }) => (
             <Col key={data?.value} span={4}>
               <Checkbox
                 {...(data ?? {})}

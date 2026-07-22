@@ -1,34 +1,32 @@
 import React, { useState } from 'react';
 
 import Checkbox from '../../src/checkbox';
-import { ArrayEntityValueHOC } from '../../src/index';
 import Book from '../mock/book';
 
 export default () => {
   const [options, setOptions] = useState([]);
 
-  const [value, setValue] = useState([
-    // 默认值
-    Book[0].id,
-  ]);
+  const [value, setValue] = useState([Book[0].id]);
 
   return (
     <Checkbox.AutoCompleteCheckboxSelect
       placeholder="AutoCompleteCheckboxSelect"
-      // 用来做初始化的options
-      defaultOptions={[Book[0]]}
+      defaultOptions={[
+        {
+          label: Book[0].label,
+          value: Book[0].id,
+        },
+      ]}
       style={{ width: 600 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       options={options}
-      onChange={function (val) {
-        debugger;
-        setValue(val);
+      onChange={setValue}
+      checkboxProps={{
+        spaceProps: { size: 8 },
       }}
       loadData={(_kw) =>
         new Promise((resolve) => {
-          console.log('_kw', _kw);
-
           if (!_kw) {
             setOptions([]);
             resolve();

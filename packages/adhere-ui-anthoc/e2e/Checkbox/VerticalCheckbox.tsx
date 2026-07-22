@@ -1,23 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Checkbox from '../../src/checkbox';
 
-export default () => (
-  <Checkbox.VerticalCheckbox
-    onChange={(v) => {
-      console.log('v', v);
-    }}
-    disabled
-    options={[
-      {
-        label: '男',
-        value: '2',
-        disabled: false,
-      },
-      {
-        label: '女',
-        value: '1',
-      },
-    ]}
-  />
-);
+export default () => {
+  const [value, setValue] = useState(['A']);
+
+  return (
+    <Checkbox.VerticalCheckbox
+      value={value}
+      onChange={setValue}
+      options={Array.from({ length: 26 }).map((t, _index) => {
+        const letter = String.fromCharCode(97 + _index).toUpperCase();
+
+        return {
+          label: letter,
+          value: letter,
+        };
+      })}
+    />
+  );
+};

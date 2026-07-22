@@ -6,15 +6,12 @@ export default () => {
   const [value, setValue] = useState([]);
 
   return (
-    <Checkbox.CheckboxSelect
-      placeholder="CheckboxSelect"
-      style={{ width: 200 }}
+    <Checkbox.CheckAllCheckboxSelect
+      placeholder="CheckAllCheckboxSelect custom render"
+      style={{ width: 300 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
-      checkboxProps={{
-        spaceProps: { size: 8 },
-      }}
       options={Array.from({ length: 26 }).map((t, _index) => {
         const letter = String.fromCharCode(97 + _index).toUpperCase();
 
@@ -23,6 +20,16 @@ export default () => {
           value: letter,
         };
       })}
+      render={(checkAllOrigin, childrenOrigin) => {
+        return (
+          <div>
+            <div style={{ padding: '8px 12px', borderBottom: '1px solid #f0f0f0' }}>
+              {checkAllOrigin}
+            </div>
+            <div style={{ padding: 12 }}>{childrenOrigin}</div>
+          </div>
+        );
+      }}
     />
   );
 };
