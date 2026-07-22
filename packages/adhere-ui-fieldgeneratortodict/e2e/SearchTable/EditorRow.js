@@ -8,7 +8,6 @@ import sage from '../saga';
 
 const { EditableRowControl } = SearchTable;
 
-// const DictComponentName = `SystemTable${FieldGeneratorToDict.ComponentNames.SearchTable.EditorRow}`;
 const DictComponent = FieldGeneratorToDict.Components[
   FieldGeneratorToDict.genDictComponentName(
     // @ts-ignore

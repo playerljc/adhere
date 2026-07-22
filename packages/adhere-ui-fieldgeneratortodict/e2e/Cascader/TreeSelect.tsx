@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
+  const [value, setValue] = useState(undefined);
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -13,5 +14,5 @@ export default () => {
       )
     ];
 
-  return <DictComponent placeholder={names.SystemSSQ} style={{ width: 350 }} />;
+  return <DictComponent placeholder={names.SystemSSQ} style={{ width: 350 }} value={value} onChange={setValue} />;
 };

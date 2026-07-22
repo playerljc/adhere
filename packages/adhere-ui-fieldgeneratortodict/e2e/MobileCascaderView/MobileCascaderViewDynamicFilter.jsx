@@ -5,10 +5,8 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState(undefined);
 
-  // const DictComponentName = `SystemTreeDynamic${FieldGeneratorToDict.ComponentNames.MobileCascaderViewDynamic.Filter}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -21,21 +19,17 @@ export default () => {
   return (
     <DictComponent
       value={value}
-      onChange={(_value) => {
-        setValue(_value);
-      }}
-      renderLabel={(item, filterValue) => {
-        return (
-          <label>
-            <Highlighter
-              highlightClassName="Highlight"
-              searchWords={[filterValue]}
-              autoEscape={true}
-              textToHighlight={item.label}
-            />
-          </label>
-        );
-      }}
+      onChange={setValue}
+      renderLabel={(item, filterValue) => (
+        <label>
+          <Highlighter
+            highlightClassName="Highlight"
+            searchWords={[filterValue]}
+            autoEscape
+            textToHighlight={item.label}
+          />
+        </label>
+      )}
     />
   );
 };

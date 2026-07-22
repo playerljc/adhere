@@ -15,6 +15,7 @@ const columns = [
 ];
 
 export default () => {
+  const [value, setValue] = useState([]);
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -23,8 +24,6 @@ export default () => {
         FieldGeneratorToDict.ComponentNames.TransferDynamic.TableSelect,
       )
     ];
-
-  const [value, setValue] = useState([]);
 
   return (
     <DictComponent

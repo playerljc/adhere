@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  // const DictComponentName = `SystemOrg${FieldGeneratorToDict.ComponentNames.Tree.Leaf}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const [value, setValue] = useState(undefined);
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -15,5 +14,12 @@ export default () => {
       )
     ];
 
-  return <DictComponent placeholder={names.SystemOrg} style={{ width: 200 }} />;
+  return (
+    <DictComponent
+      placeholder={names.SystemOrg}
+      style={{ width: 200 }}
+      value={value}
+      onChange={setValue}
+    />
+  );
 };

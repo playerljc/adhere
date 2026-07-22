@@ -4,10 +4,7 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  const [value, setValue] = useState(undefined);
-
-  // const DictComponentName = `SystemTreeACFlat${FieldGeneratorToDict.ComponentNames.TreeAC.MultiLeaf}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const [value, setValue] = useState([]);
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -20,11 +17,11 @@ export default () => {
   return (
     <DictComponent
       placeholder={names.SystemTreeACFlat}
-      dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
       style={{ width: 300 }}
-      treeDataSimpleMode
       value={value}
       onChange={setValue}
+      dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+      treeDataSimpleMode
     />
   );
 };

@@ -1,5 +1,4 @@
 import { Button, Form } from 'antd';
-// import Mock from 'mockjs';
 import React, { useEffect } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
@@ -10,44 +9,41 @@ const { ArrayEntityValueHOC } = FieldGeneratorToDict;
 export default () => {
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    // form.setFieldValue('sex', [
-    //   {
-    //     label: 'A',
-    //     value: 'A',
-    //   },
-    //   'B',
-    // ]);
-  }, []);
-
-  // const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
         // @ts-ignore
         names.SystemBookCatalogDynamic,
-        FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard,
+        FieldGeneratorToDict.ComponentNames.SelectDynamic.Multi,
       )
     ];
+
+  useEffect(() => {
+    form.setFieldValue('books', [
+      {
+        label: 'A',
+        value: 'A',
+      },
+      'B',
+    ]);
+  }, [form]);
 
   return (
     <Form
       form={form}
       onFinish={(values) => {
-        debugger;
+        console.log('onFinish', values);
       }}
     >
       <Form.Item
-        name="sex"
-        label="性别"
+        name="books"
+        label="图书"
         rules={[
           {
             required: true,
-            message: '请选择性别',
+            message: '请选择图书',
           },
         ]}
-        // initialValue={[]}
       >
         <ArrayEntityValueHOC>
           <DictComponent placeholder={names.SystemBookCatalogDynamic} style={{ width: 500 }} />

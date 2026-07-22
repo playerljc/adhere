@@ -123,7 +123,7 @@ const Components = {
     VerticalCheckable: 'TagVerticalCheckable',
     CheckAllVerticalCheckable: 'TagCheckAllVerticalCheckable',
     Horizontal: 'TagHorizontal',
-    HorizontalCheckable: 'TagVerticalCheckable',
+    HorizontalCheckable: 'TagHorizontalCheckable',
     CheckAllHorizontalCheckable: 'TagCheckAllHorizontalCheckable',
     SuspenseVertical: 'TagSuspenseVertical',
     SuspenseVerticalCheckable: 'TagSuspenseVerticalCheckable',

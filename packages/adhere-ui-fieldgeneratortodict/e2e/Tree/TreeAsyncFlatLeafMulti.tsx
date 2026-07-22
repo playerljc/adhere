@@ -4,10 +4,7 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  const [value, setValue] = useState(undefined);
-
-  // const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.FlatLeafMulti}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const [value, setValue] = useState([]);
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(

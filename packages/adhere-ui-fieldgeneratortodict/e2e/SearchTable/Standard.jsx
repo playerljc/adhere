@@ -6,7 +6,6 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 import sage from '../saga';
 
-// const DictComponentName = `SystemTable${FieldGeneratorToDict.ComponentNames.SearchTable.Standard}`;
 const DictComponent = FieldGeneratorToDict.Components[
   FieldGeneratorToDict.genDictComponentName(
     // @ts-ignore
@@ -61,21 +60,6 @@ const DictComponent = FieldGeneratorToDict.Components[
             ellipsis: true,
             width: 200,
           },
-          // {
-          //   title: '出生年月',
-          //   dataIndex: 'birthday',
-          //   key: 'birthday',
-          //   align: 'center',
-          //   width: 200,
-          //   sorter: true,
-          //   sortOrder: this.sortOrder('birthday'),
-          //   $search: {
-          //     type: 'rangePicker',
-          //     visible: true,
-          //     startName: 'birthDayStart',
-          //     endName: 'birthDayEnd',
-          //   },
-          // },
           {
             title: '现居住地',
             dataIndex: 'address',

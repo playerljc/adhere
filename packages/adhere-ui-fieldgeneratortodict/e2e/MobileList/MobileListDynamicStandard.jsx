@@ -4,10 +4,8 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(undefined);
 
-  // const DictComponentName = `SystemListDynamic${FieldGeneratorToDict.ComponentNames.MobileListDynamic.Standard}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(

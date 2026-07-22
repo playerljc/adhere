@@ -5,9 +5,6 @@ import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
   const [value, setValue] = useState([]);
-
-  // const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.CheckAllSelect}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(

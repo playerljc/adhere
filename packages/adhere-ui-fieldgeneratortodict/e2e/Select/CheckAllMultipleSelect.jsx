@@ -8,8 +8,6 @@ import { names } from '../dict/dict/dict.test.config';
 export default () => {
   const [value, setValue] = useState([]);
 
-  // const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.SelectDynamic.CheckAll}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -26,10 +24,9 @@ export default () => {
       value={value}
       onChange={setValue}
     >
-      {({ originNode, value, onChange, options }) => {
-        // return originNode;
-        return <Checkbox.Group value={value} onChange={onChange} options={options} />;
-      }}
+      {({ value: groupValue, onChange, options }) => (
+        <Checkbox.Group value={groupValue} onChange={onChange} options={options} />
+      )}
     </DictComponent>
   );
 };

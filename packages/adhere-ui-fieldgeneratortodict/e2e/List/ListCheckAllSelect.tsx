@@ -8,29 +8,23 @@ import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
   const [value, setValue] = useState([]);
-
-  // const DictComponentName = `SystemUserACPagin${FieldGeneratorToDict.ComponentNames.ListAC.MultiPaging}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
         // @ts-ignore
-        names.SystemUserACPagin,
-        FieldGeneratorToDict.ComponentNames.ListAC.MultiPaging,
+        names.SystemUserStatic,
+        FieldGeneratorToDict.ComponentNames.List.CheckAllSelect,
       )
     ];
 
   return (
     <DictComponent
-      placeholder={names.SystemUserACPagin}
+      placeholder={names.SystemUserStatic}
       style={{ width: 600 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
-      pagingProps={{
-        defaultLimit: 10,
-      }}
-      listPagingProps={{
+      listProps={{
         itemLayout: 'horizontal',
         renderItem: (item, index) => (
           <List.Item>

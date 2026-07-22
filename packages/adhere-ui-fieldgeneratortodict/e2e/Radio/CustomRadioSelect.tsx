@@ -6,10 +6,7 @@ import FieldGeneratorToDict from '../../src';
 import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  const [value, setValue] = useState();
-
-  // const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.RadioDynamic.CustomSelect}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const [value, setValue] = useState(undefined);
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -21,7 +18,7 @@ export default () => {
 
   return (
     <DictComponent
-      placeholder="SystemBookCatalogDynamic"
+      placeholder={names.SystemBookCatalogDynamic}
       style={{ width: 350 }}
       value={value}
       onChange={setValue}

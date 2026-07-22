@@ -8,16 +8,14 @@ const defaultPaging = {
 };
 
 export default () => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState([]);
 
-  // const DictComponentName = `SystemUser${FieldGeneratorToDict.ComponentNames.MobileCheckListPaginationDynamic.Filter}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
         // @ts-ignore
-        names.SystemUser,
-        FieldGeneratorToDict.ComponentNames.MobileCheckListPaginationDynamic.Filter,
+        names.SystemUserStatic,
+        FieldGeneratorToDict.ComponentNames.MobileCheckListPagination.Filter,
       )
     ];
 

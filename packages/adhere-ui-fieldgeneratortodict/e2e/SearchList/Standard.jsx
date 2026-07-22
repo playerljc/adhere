@@ -6,7 +6,6 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 import sage from '../saga';
 
-// const DictComponentName = `SystemList${FieldGeneratorToDict.ComponentNames.SearchList.Standard}`;
 const DictComponent = FieldGeneratorToDict.Components[
   FieldGeneratorToDict.genDictComponentName(
     // @ts-ignore

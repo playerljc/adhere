@@ -5,9 +5,6 @@ import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
   const [value, setValue] = useState(undefined);
-
-  // const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.CascaderAsync.FlatStandard}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(

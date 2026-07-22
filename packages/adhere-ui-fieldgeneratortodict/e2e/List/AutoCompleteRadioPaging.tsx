@@ -7,27 +7,27 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  const [value, setValue] = useState([]);
-
-  // const DictComponentName = `SystemBookAC${FieldGeneratorToDict.ComponentNames.ListAC.Multi}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const [value, setValue] = useState(undefined);
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
         // @ts-ignore
-        names.SystemBookAC,
-        FieldGeneratorToDict.ComponentNames.ListAC.Multi,
+        names.SystemUserACPagin,
+        FieldGeneratorToDict.ComponentNames.ListAC.Paging,
       )
     ];
 
   return (
     <DictComponent
-      placeholder={names.SystemBookAC}
+      placeholder={names.SystemUserACPagin}
       style={{ width: 600 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
-      listProps={{
+      pagingProps={{
+        defaultLimit: 10,
+      }}
+      listPagingProps={{
         itemLayout: 'horizontal',
         renderItem: (item, index) => (
           <List.Item>

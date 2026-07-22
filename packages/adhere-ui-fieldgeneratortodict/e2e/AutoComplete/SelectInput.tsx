@@ -13,14 +13,14 @@ export default () => {
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
         // @ts-ignore
-        names.SystemBookCatalogDynamic,
-        FieldGeneratorToDict.ComponentNames.AutoCompleteDynamic.SelectInput,
+        names.SystemBookCatalog,
+        FieldGeneratorToDict.ComponentNames.AutoComplete.SelectInput,
       )
     ];
 
   return (
     <DictComponent
-      placeholder={names.SystemBookCatalogDynamic}
+      placeholder={names.SystemBookCatalog}
       style={{ width: 350 }}
       value={value}
       onChange={setValue}

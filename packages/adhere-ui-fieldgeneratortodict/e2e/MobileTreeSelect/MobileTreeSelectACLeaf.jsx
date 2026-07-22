@@ -6,9 +6,6 @@ import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
   const [value, setValue] = useState([]);
-
-  // const DictComponentName = `SystemTreeACFlat${FieldGeneratorToDict.ComponentNames.MobileTreeSelectAC.Leaf}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -21,9 +18,7 @@ export default () => {
   return (
     <DictComponent
       value={value}
-      onChange={(_value) => {
-        setValue(_value);
-      }}
+      onChange={setValue}
       treeSelectProps={{
         treeDataSimpleMode: true,
       }}

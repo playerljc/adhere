@@ -4,10 +4,8 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(undefined);
 
-  // const DictComponentName = `SystemTreeStatic${FieldGeneratorToDict.ComponentNames.MobileCascaderView.Standard}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -17,12 +15,5 @@ export default () => {
       )
     ];
 
-  return (
-    <DictComponent
-      value={value}
-      onChange={(_value) => {
-        setValue(_value);
-      }}
-    />
-  );
+  return <DictComponent value={value} onChange={setValue} />;
 };

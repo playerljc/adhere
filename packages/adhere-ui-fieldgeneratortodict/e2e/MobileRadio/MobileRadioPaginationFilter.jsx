@@ -8,10 +8,7 @@ const defaultPaging = {
 };
 
 export default () => {
-  const [value, setValue] = useState();
-
-  // const DictComponentName = `SystemUserStatic${FieldGeneratorToDict.ComponentNames.MobileRadioPagination.Filter}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const [value, setValue] = useState(undefined);
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -23,7 +20,6 @@ export default () => {
 
   return (
     <DictComponent
-      multiple
       filterProps={{ placeholder: '请输入关键字' }}
       style={{ height: '100%' }}
       value={value}

@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  // const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.GroupExt}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const [value, setValue] = useState([]);
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -15,5 +14,5 @@ export default () => {
       )
     ];
 
-  return <DictComponent />;
+  return <DictComponent value={value} onChange={setValue} />;
 };

@@ -4,8 +4,6 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  // const DictComponentName = `SystemTableBook${FieldGeneratorToDict.ComponentNames.TableDynamic.SuspenseStandard}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(

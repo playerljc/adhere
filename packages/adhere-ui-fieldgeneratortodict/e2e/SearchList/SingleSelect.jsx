@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import SearchList from '@baifendian/adhere-ui-searchlist';
 
@@ -6,7 +6,6 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 import sage from '../saga';
 
-// const DictComponentName = `SystemList${FieldGeneratorToDict.ComponentNames.SearchList.SingleSelect}`;
 const DictComponent = FieldGeneratorToDict.Components[
   FieldGeneratorToDict.genDictComponentName(
     // @ts-ignore
@@ -16,58 +15,6 @@ const DictComponent = FieldGeneratorToDict.Components[
 ]({
   override: {
     getColumns() {
-      // return this.applySuper('getColumns', [
-      //   [
-      //     {
-      //       title: '标题',
-      //       dataIndex: 'title',
-      //       key: 'title',
-      //       width: 150,
-      //       align: 'left',
-      //       $search: {
-      //         type: 'input',
-      //         visible: true,
-      //       },
-      //     },
-      //     {
-      //       title: '子标题',
-      //       dataIndex: 'subTitle',
-      //       key: 'subTitle',
-      //       width: 150,
-      //       $search: {
-      //         visible: true,
-      //         type: 'dict',
-      //         dictName: `SystemTestSex${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
-      //         props: {
-      //           dropdownStyle: {
-      //             zIndex: 19999,
-      //           },
-      //         },
-      //       },
-      //     },
-      //     {
-      //       title: '描述',
-      //       dataIndex: 'description',
-      //       key: 'description',
-      //       width: 150,
-      //       $search: {
-      //         type: 'input',
-      //         visible: true,
-      //       },
-      //     },
-      //     {
-      //       title: '内容',
-      //       dataIndex: 'content',
-      //       key: 'content',
-      //       width: 150,
-      //       $search: {
-      //         type: 'input',
-      //         visible: true,
-      //       },
-      //     },
-      //   ],
-      // ]);
-
       return [
         {
           title: '标题',
@@ -129,7 +76,7 @@ const DictComponent = FieldGeneratorToDict.Components[
 });
 
 export default () => {
-  const [value, setValue] = React.useState([]);
+  const [value, setValue] = useState(undefined);
 
   return (
     <DictComponent
@@ -137,9 +84,7 @@ export default () => {
       style={{ width: 200 }}
       dropdownStyle={{ width: 1000, height: 500, overflow: 'auto', padding: '20px 20px 0 20px' }}
       value={value}
-      onChange={(v) => {
-        setValue(v);
-      }}
+      onChange={setValue}
     />
   );
 };

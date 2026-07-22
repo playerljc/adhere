@@ -7,8 +7,6 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  // const DictComponentName = `SystemBook${FieldGeneratorToDict.ComponentNames.ListDynamic.SuspenseStandard}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(

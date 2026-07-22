@@ -8,10 +8,7 @@ const defaultPaging = {
 };
 
 export default () => {
-  const [value, setValue] = useState();
-
-  // const DictComponentName = `SystemUserStatic${FieldGeneratorToDict.ComponentNames.MobileSelectorPagination.Filter}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const [value, setValue] = useState([]);
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(

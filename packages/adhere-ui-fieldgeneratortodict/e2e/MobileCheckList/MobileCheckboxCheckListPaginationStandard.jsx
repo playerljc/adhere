@@ -10,10 +10,7 @@ const defaultPaging = {
 };
 
 export default () => {
-  const [value, setValue] = useState();
-
-  // const DictComponentName = `SystemUserPaging${FieldGeneratorToDict.ComponentNames.MobileCheckboxCheckListPagination.Standard}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const [value, setValue] = useState([]);
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -27,8 +24,6 @@ export default () => {
     <PagingEntityValueHOC onChange={setValue} value={value}>
       <DictComponent
         multiple
-        // value={value}
-        // onChange={setValue}
         pagingProps={{
           style: { height: '100%' },
           defaultPaging,

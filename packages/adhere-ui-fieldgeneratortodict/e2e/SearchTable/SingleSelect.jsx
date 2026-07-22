@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 
@@ -6,7 +6,6 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 import sage from '../saga';
 
-// const DictComponentName = `SystemTable${FieldGeneratorToDict.ComponentNames.SearchTable.SingleSelect}`;
 const DictComponent = FieldGeneratorToDict.Components[
   FieldGeneratorToDict.genDictComponentName(
     // @ts-ignore
@@ -87,21 +86,6 @@ const DictComponent = FieldGeneratorToDict.Components[
               visible: true,
             },
           },
-          // {
-          //   title: '出生年月',
-          //   dataIndex: 'birthday',
-          //   key: 'birthday',
-          //   align: 'center',
-          //   width: 200,
-          //   sorter: true,
-          //   sortOrder: this.sortOrder('birthday'),
-          //   $search: {
-          //     type: 'rangePicker',
-          //     visible: true,
-          //     startName: 'birthDayStart',
-          //     endName: 'birthDayEnd',
-          //   },
-          // },
           {
             title: '现居住地',
             dataIndex: 'address',
@@ -122,7 +106,7 @@ const DictComponent = FieldGeneratorToDict.Components[
 });
 
 export default () => {
-  const [value, setValue] = React.useState('11212');
+  const [value, setValue] = useState(undefined);
 
   return (
     <DictComponent
@@ -130,10 +114,7 @@ export default () => {
       style={{ width: 200 }}
       dropdownStyle={{ width: 1000, padding: '20px 20px 0 20px' }}
       value={value}
-      onChange={(v) => {
-        debugger;
-        setValue(v);
-      }}
+      onChange={setValue}
     />
   );
 };

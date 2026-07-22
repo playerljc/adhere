@@ -6,7 +6,6 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 import sage from '../saga';
 
-// const DictComponentName = `SystemTable${FieldGeneratorToDict.ComponentNames.SearchTable.EditorCell}`;
 const DictComponent = FieldGeneratorToDict.Components[
   FieldGeneratorToDict.genDictComponentName(
     // @ts-ignore
@@ -87,8 +86,6 @@ const DictComponent = FieldGeneratorToDict.Components[
               ],
               onSave: function ({ value, record, dataIndex }) {
                 return new Promise((resolve) => {
-                  debugger;
-                  // 在此处可以调用接口来更新单元格的值
                   self
                     .updateEditorCellDate({
                       record,

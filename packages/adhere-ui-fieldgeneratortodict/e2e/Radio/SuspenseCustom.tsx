@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Col, Radio, Row } from '@baifendian/adhere-ui-anthoc';
 
@@ -6,8 +6,7 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  // const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.RadioDynamic.SuspenseCustom}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+  const [value, setValue] = useState(undefined);
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -18,7 +17,7 @@ export default () => {
     ];
 
   return (
-    <DictComponent>
+    <DictComponent value={value} onChange={setValue}>
       {(options) => (
         <Row gutter={[16, 24]}>
           {options.map(({ data }) => (

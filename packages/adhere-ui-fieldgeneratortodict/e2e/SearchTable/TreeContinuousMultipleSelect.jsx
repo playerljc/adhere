@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 
@@ -6,7 +6,6 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 import sage from '../saga';
 
-// const DictComponentName = `SystemTreeTable${FieldGeneratorToDict.ComponentNames.SearchTable.TreeContinuousMultipleSelect}`;
 const DictComponent = FieldGeneratorToDict.Components[
   FieldGeneratorToDict.genDictComponentName(
     // @ts-ignore
@@ -87,12 +86,12 @@ const DictComponent = FieldGeneratorToDict.Components[
     },
   },
   SearchClass: SearchTable,
-  // showCheckedStrategy: SearchTable.Table.CHECKED_STRATEGY_SHOW_CHILD,
+  SearchTable,
   sage,
 });
 
 export default () => {
-  const [value, setValue] = React.useState([]);
+  const [value, setValue] = useState([]);
 
   return (
     <DictComponent

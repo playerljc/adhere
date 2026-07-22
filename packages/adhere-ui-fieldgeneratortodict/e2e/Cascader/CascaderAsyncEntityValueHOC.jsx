@@ -1,6 +1,5 @@
 import { Button, Form } from 'antd';
-// import Mock from 'mockjs';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
@@ -10,18 +9,6 @@ const { AsyncTreeEntityValueHOC } = FieldGeneratorToDict;
 export default () => {
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    // form.setFieldValue('sex', [
-    //   {
-    //     label: 'A',
-    //     value: 'A',
-    //   },
-    //   'B',
-    // ]);
-  }, []);
-
-  // const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.CascaderAsync.Standard}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -35,19 +22,18 @@ export default () => {
     <Form
       form={form}
       onFinish={(values) => {
-        debugger;
+        console.log("onFinish", values);
       }}
     >
       <Form.Item
-        name="sex"
-        label="性别"
+        name="cascader"
+        label="级联选择"
         rules={[
           {
             required: true,
-            message: '请选择性别',
+            message: '请选择',
           },
         ]}
-        // initialValue={[]}
       >
         <AsyncTreeEntityValueHOC>
           <DictComponent placeholder={names.SystemDepartment} style={{ width: 200 }} />

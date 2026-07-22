@@ -5,9 +5,6 @@ import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
   const [value, setValue] = useState(undefined);
-
-  // const DictComponentName = `SystemFilterBookList${FieldGeneratorToDict.ComponentNames.RadioAC.Button}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -20,7 +17,7 @@ export default () => {
   return (
     <DictComponent
       style={{ width: 600 }}
-      placeholder="SystemFilterBookList"
+      placeholder={names.SystemFilterBookList}
       value={value}
       onChange={setValue}
     />

@@ -4,6 +4,7 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
+  const [targetKeys, setTargetKeys] = useState([]);
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -12,8 +13,6 @@ export default () => {
         FieldGeneratorToDict.ComponentNames.Transfer.Tree,
       )
     ];
-
-  const [targetKeys, setTargetKeys] = useState<string[]>([]);
 
   return (
     <DictComponent

@@ -8,9 +8,6 @@ import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
   const [value, setValue] = useState(undefined);
-
-  // const DictComponentName = `SystemBook${FieldGeneratorToDict.ComponentNames.ListDynamic.Select}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import SearchTable from '@baifendian/adhere-ui-searchtable';
 
@@ -6,7 +6,6 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 import sage from '../saga';
 
-// const DictComponentName = `SystemTable${FieldGeneratorToDict.ComponentNames.SearchTable.ContinuousMultipleSelect}`;
 const DictComponent = FieldGeneratorToDict.Components[
   FieldGeneratorToDict.genDictComponentName(
     // @ts-ignore
@@ -91,7 +90,7 @@ const DictComponent = FieldGeneratorToDict.Components[
 });
 
 export default () => {
-  const [value, setValue] = React.useState([]);
+  const [value, setValue] = useState([]);
 
   return (
     <DictComponent

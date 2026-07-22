@@ -829,6 +829,24 @@ const { names, values } = genModuleDict({
         })),
       ),
   },
+  SystemBookCatalogText: {
+    isStatic: true,
+    handler: () =>
+      [
+        '中国文学',
+        '外国文学',
+        '儿童文学',
+        '散文',
+        '经典名著',
+        '小说',
+        '历史',
+        '教育',
+        '成功励志',
+        '心灵鸡汤',
+        '人物传记',
+        '影视原著',
+      ],
+  },
   SystemBookCatalogTextDynamic: {
     handler: () =>
       Promise.resolve(
@@ -995,8 +1013,6 @@ const { names, values } = genModuleDict({
   },
   SystemDepartment: {
     handler: () => (pid, cascadeParams) => {
-      debugger;
-
       if (!pid) {
         return Promise.resolve(
           Province.map((t) => {
@@ -1072,6 +1088,10 @@ const { names, values } = genModuleDict({
   SystemDepartmentAll: {
     handler: () => Promise.resolve(PCCFlat),
   },
+  SystemDepartmentAllStatic: {
+    isStatic: true,
+    handler: () => PCCFlat,
+  },
   SystemSSQRemote: {
     handler: () => ssqCascade,
   },
@@ -1086,6 +1106,33 @@ const { names, values } = genModuleDict({
       }));
 
       return Promise.resolve(options);
+    },
+  },
+  SystemTableBookStatic: {
+    isStatic: true,
+    handler: () =>
+      books.map(({ children, ...t }) => ({
+        ...t,
+        value: t.id,
+      })),
+  },
+  SystemTableTree: {
+    handler: () => Promise.resolve(TABLE_TREE_DATA),
+  },
+  SystemTableTreeStatic: {
+    isStatic: true,
+    handler: () => TABLE_TREE_DATA,
+  },
+  SystemTableTreePagin: {
+    handler: () => (page, limit) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            totalCount: TABLE_TREE_DATA.length,
+            data: TABLE_TREE_DATA.slice((page - 1) * limit, page * limit),
+          });
+        }, 100);
+      });
     },
   },
   SystemTableBookAC: {

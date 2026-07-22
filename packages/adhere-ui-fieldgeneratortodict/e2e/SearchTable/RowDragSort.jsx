@@ -8,7 +8,6 @@ import sage from '../saga';
 
 const { DragSortColumn } = SearchTable;
 
-// const DictComponentName = `SystemTable${FieldGeneratorToDict.ComponentNames.SearchTable.RowDragSort}`;
 const DictComponent = FieldGeneratorToDict.Components[
   FieldGeneratorToDict.genDictComponentName(
     // @ts-ignore

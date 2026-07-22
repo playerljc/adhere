@@ -26,7 +26,6 @@ export default () => {
     <Form
       form={form}
       onFinish={(values) => {
-        debugger;
       }}
     >
       <Form.Item

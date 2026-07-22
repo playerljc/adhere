@@ -6,10 +6,8 @@ import FieldGeneratorToDict from '../../src/index';
 import { names } from '../dict/dict/dict.test.config';
 
 export default () => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState([]);
 
-  // const DictComponentName = `SystemUserByKPL${FieldGeneratorToDict.ComponentNames.MobileCheckListAC.Paging}`;
-  // const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
   const DictComponent =
     FieldGeneratorToDict.Components[
       FieldGeneratorToDict.genDictComponentName(
@@ -19,13 +17,10 @@ export default () => {
       )
     ];
 
-  console.log(value);
   return (
     <PagingEntityValueHOC
       value={value}
       onChange={setValue}
-      // optionsProp="searchDataSource"
-      // changePropagation={false}
       pagingPropsPath={['pagingCheckListProps', 'pagingProps']}
     >
       <DictComponent
