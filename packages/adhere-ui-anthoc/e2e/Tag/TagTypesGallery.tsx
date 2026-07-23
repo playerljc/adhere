@@ -35,7 +35,7 @@ export const TAG_SEMANTIC_TYPES: TagSemanticType[] = [
 export default function TagTypesGallery() {
   return (
     <div style={{ padding: 24, background: '#fff' }}>
-      <Space direction="vertical" size={24} style={{ width: '100%' }}>
+      <Space orientation="vertical" size={24} style={{ width: '100%' }}>
         <div
           style={{
             display: 'grid',
@@ -49,7 +49,7 @@ export default function TagTypesGallery() {
             </div>
           ))}
         </div>
-        <Space direction="vertical" size={12}>
+        <Space orientation="vertical" size={12}>
           <div data-tag-type="custom-colors">
             <Tag type="success" textColor="#722ed1" bgColor="#f9f0ff" borderColor="#d3adf7">
               自定义三色

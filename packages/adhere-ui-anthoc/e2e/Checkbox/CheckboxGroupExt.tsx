@@ -17,7 +17,7 @@ export default () => {
   const [childrenValue, setChildrenValue] = useState(['B']);
 
   return (
-    <Space direction="vertical" size={24}>
+    <Space orientation="vertical" size={24}>
       <div>
         <div style={{ marginBottom: 8 }}>options + direction / spaceProps</div>
         <Checkbox.CheckboxGroupExt

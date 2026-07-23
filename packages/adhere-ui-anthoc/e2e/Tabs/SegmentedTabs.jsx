@@ -100,7 +100,7 @@ export default () => {
 
   return (
     <div style={{ padding: 24 }}>
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space orientation="vertical" size="large" style={{ width: '100%' }}>
         <div>
           <h3>Basic + icon + size + disabled</h3>
           <Tabs.SegmentedTabs

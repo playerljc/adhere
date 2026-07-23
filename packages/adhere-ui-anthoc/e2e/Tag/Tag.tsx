@@ -7,7 +7,7 @@ export default () => {
   const [checked, setChecked] = useState(true);
 
   return (
-    <Space direction="vertical" size={12}>
+    <Space orientation="vertical" size={12}>
       <Space wrap>
         <Tag type="success">success</Tag>
         <Tag type="info">info</Tag>

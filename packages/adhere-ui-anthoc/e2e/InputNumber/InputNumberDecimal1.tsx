@@ -7,7 +7,7 @@ export default () => {
   const [value, setValue] = useState(0);
 
   return (
-    <Space direction="vertical" size={8}>
+    <Space orientation="vertical" size={8}>
       <InputNumberDecimal1
         style={{ width: 200 }}
         placeholder="InputNumberDecimal1"

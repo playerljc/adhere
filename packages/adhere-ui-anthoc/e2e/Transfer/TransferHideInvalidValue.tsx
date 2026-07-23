@@ -16,7 +16,7 @@ export default () => {
   const [targetKeys, setTargetKeys] = useState(['0', 'invalid', '1']);
 
   return (
-    <Space direction="vertical" size={16}>
+    <Space orientation="vertical" size={16}>
       <div>
         <div style={{ marginBottom: 8 }}>isHideInvalidValue=true（无效 key 会被隐藏）</div>
         <Transfer

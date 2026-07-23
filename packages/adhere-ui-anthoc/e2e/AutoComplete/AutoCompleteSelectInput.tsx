@@ -19,7 +19,7 @@ export default () => {
   });
 
   return (
-    <Space direction="vertical" size={12}>
+    <Space orientation="vertical" size={12}>
       <AutoComplete.AutoCompleteSelectInput
         placeholder="AutoCompleteSelectInput（可输入可选择）"
         style={{ width: 280 }}

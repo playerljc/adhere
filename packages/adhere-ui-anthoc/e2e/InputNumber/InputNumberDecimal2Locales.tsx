@@ -10,7 +10,7 @@ export default () => {
   const [international, setInternational] = useState(1234.56);
 
   return (
-    <Space direction="vertical" size={16}>
+    <Space orientation="vertical" size={16}>
       <div>
         <div style={{ marginBottom: 8 }}>US</div>
         <InputNumberDecimal2.InputNumberDecimal2US

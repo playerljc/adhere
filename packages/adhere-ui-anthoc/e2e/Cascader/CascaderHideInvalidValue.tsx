@@ -43,7 +43,7 @@ export default () => {
   const [value, setValue] = useState(['invalid', 'path']);
 
   return (
-    <Space direction="vertical" size={16}>
+    <Space orientation="vertical" size={16}>
       <div>
         <div style={{ marginBottom: 8 }}>isHideInvalidValue=true（无效路径会被隐藏）</div>
         <Cascader

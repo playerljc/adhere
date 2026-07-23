@@ -18,7 +18,7 @@ export default () => {
   const [singleValue, setSingleValue] = useState('A');
 
   return (
-    <Space direction="vertical" size={24}>
+    <Space orientation="vertical" size={24}>
       <div>
         <div style={{ marginBottom: 8 }}>mode=multiple</div>
         <Tag.HorizontalCheckableTagGroup

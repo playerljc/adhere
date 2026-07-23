@@ -74,7 +74,7 @@ export default () => {
   const [cascadeValue, setCascadeValue] = useState([]);
 
   return (
-    <Space direction="vertical" size={24} style={{ width: '100%' }}>
+    <Space orientation="vertical" size={24} style={{ width: '100%' }}>
       <div>
         <div style={{ marginBottom: 8 }}>checkStrictly=true</div>
         <Table.CheckboxTreeTable

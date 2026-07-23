@@ -24,7 +24,7 @@ export default () => {
   const [shouldRenderValue, setShouldRenderValue] = useState();
 
   return (
-    <Space direction="vertical" size={24}>
+    <Space orientation="vertical" size={24}>
       <div>
         <div style={{ marginBottom: 8 }}>emptyContent：treeData 为空时展示自定义空态</div>
         <TreeSelect.DropdownRenderSelect

@@ -16,7 +16,7 @@ export default () => {
   const [value, setValue] = useState('');
 
   return (
-    <Space direction="vertical" size={12}>
+    <Space orientation="vertical" size={12}>
       <AutoComplete
         value={value}
         options={options}
