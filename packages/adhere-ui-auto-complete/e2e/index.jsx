@@ -2,13 +2,14 @@ import React from 'react';
 
 import e2e from '@baifendian/adhere-e2e';
 
-import TableTest from './Table';
+import AutoComplete from './AutoComplete';
+import AutoCompleteMultiple from './AutoCompleteMultiple';
+import TableMultiple from './TableMultiple';
 import TablePaginMultiple from './TablePaginMultiple';
 import TablePaginRadio from './TablePaginRadio';
-import TableTreeTest from './TableTreeTest';
-import Test from './Test.jsx';
-import TreeTest from './TreeTest';
+import TreeAutoComplete from './TreeAutoComplete';
+import TreeTableMultiple from './TreeTableMultiple';
 
 e2e.PC({
-  children: <Test />,
+  children: <AutoComplete />,
 });

@@ -28,13 +28,10 @@ export default () => {
       }
     >
       <Form.Item name="birthDay" label="生日" rules={[{ required: true, message: '请选择生日' }]}>
-        <CalendarPopup.RangeCalendarPopup
-        // selectionMode="range"
-        // precision="week-day"
-        // locale="en"
-        // modalTriggerProps={{
-        //   title: 'DateModal',
-        // }}
+        <CalendarPopup
+          popupTriggerProps={{
+            title: '选择日期',
+          }}
         />
       </Form.Item>
     </Form>

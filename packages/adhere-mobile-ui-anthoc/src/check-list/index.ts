@@ -1,8 +1,8 @@
 import type {
-  AutoCompleteCheckListProps,
   AutoCompleteCheckboxCheckListProps,
   AutoCompletePagingCheckListProps,
   AutoCompletePagingCheckboxCheckListProps,
+  CheckAllCheckListProps,
   CheckboxCheckAllCheckListProps,
   CheckboxCheckListProps,
   FilterCheckAllCheckListProps,
@@ -37,7 +37,7 @@ CheckList.AutoCompleteCheckboxCheckList = createFactory<AutoCompleteCheckboxChec
   {},
 );
 CheckList.AutoCompleteCheckList = createFactory(AutoCompleteCheckList, {});
-CheckList.CheckAllCheckList = createFactory<AutoCompleteCheckListProps>(CheckAllCheckList, {});
+CheckList.CheckAllCheckList = createFactory<CheckAllCheckListProps>(CheckAllCheckList, {});
 CheckList.FilterCheckList = createFactory<FilterCheckListProps>(FilterCheckList, {});
 CheckList.FilterCheckAllCheckList = createFactory<FilterCheckAllCheckListProps>(
   FilterCheckAllCheckList,

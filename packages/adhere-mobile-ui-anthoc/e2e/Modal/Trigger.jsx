@@ -1,19 +1,15 @@
 import { Button, Form } from 'antd-mobile';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo } from 'react';
 
-import { Modal } from '../../src/index';
-import FilterCheckAllCheckList from '../CheckList/FilterCheckAllCheckList';
+import { CheckList, Modal } from '../../src/index';
+import { letterOptions } from '../CheckList/options';
 
 import '../../src/index.less';
 
 export default () => {
-  const [count, setCount] = useState(0);
-
   const [form] = Form.useForm();
 
   const person = Form.useWatch('person', form) ?? [];
-
-  const filterCheckAllCheckListRef = useRef();
 
   const actions = useMemo(
     () => [
@@ -21,17 +17,7 @@ export default () => {
         key: 'submit',
         text: '提交',
         primary: true,
-        onClick: () => {
-          const value = filterCheckAllCheckListRef.current.getValue();
-          return Promise.resolve(value);
-        },
-      },
-      {
-        key: 'close',
-        text: '关闭',
-        onClick: () => {
-          return Promise.resolve();
-        },
+        onClick: () => Promise.resolve(),
       },
     ],
     [],
@@ -59,7 +45,7 @@ export default () => {
       <Form.Header>Trigger</Form.Header>
 
       <Form.Item name="person" label="人员" rules={[{ required: true, message: '人员不能为空' }]}>
-        <Modal.TriggerPrompt
+        <Modal.Trigger
           title="人员选择"
           actions={actions}
           popoverTriggerProps={{
@@ -70,18 +56,13 @@ export default () => {
             ),
           }}
         >
-          {/*<FilterCheckAllCheckList ref={filterCheckAllCheckListRef} />*/}
-          <>
-            <div>{count}</div>
-            <div
-              onClick={() => {
-                setCount(count + 1);
-              }}
-            >
-              111
-            </div>
-          </>
-        </Modal.TriggerPrompt>
+          <CheckList.FilterCheckAllCheckList
+            filterProps={{ placeholder: '请输入关键字' }}
+            style={{ height: 300 }}
+            bodyWrapperStyle={{ overflowY: 'auto' }}
+            options={letterOptions}
+          />
+        </Modal.Trigger>
       </Form.Item>
     </Form>
   );

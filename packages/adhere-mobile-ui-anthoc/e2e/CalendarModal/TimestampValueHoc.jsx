@@ -30,13 +30,9 @@ export default () => {
       <Form.Item name="birthDay" label="生日" rules={[{ required: true, message: '请选择生日' }]}>
         <CalendarTimestampValueHOC>
           <CalendarModal.RangeCalendarModal
-          // selectionMode="range"
-          // RangeCalendarModal
-          // precision="week-day"
-          // locale="en"
-          // modalTriggerProps={{
-          //   title: 'DateModal',
-          // }}
+            modalTriggerProps={{
+              title: '选择日期范围',
+            }}
           />
         </CalendarTimestampValueHOC>
       </Form.Item>

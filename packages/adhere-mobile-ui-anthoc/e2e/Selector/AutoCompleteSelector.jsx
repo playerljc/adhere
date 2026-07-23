@@ -24,7 +24,6 @@ const book = Book.map((t) => {
 
 export default () => {
   const [searchDataSource, setSearchDataSource] = useState([]);
-
   const [value, setValue] = useState([]);
 
   return (
@@ -32,6 +31,8 @@ export default () => {
       placeholder="请输入关键字"
       style={{ height: '100%' }}
       value={value}
+      onChange={setValue}
+      searchDataSource={searchDataSource}
       loadData={(_kw) => {
         if (!_kw) {
           setSearchDataSource([]);
@@ -42,14 +43,9 @@ export default () => {
 
         setTimeout(() => {
           setSearchDataSource(book.filter((_book) => _book.t.indexOf(_kw) !== -1));
-
           MobileGlobalIndicator.hide(handler);
         }, 500);
       }}
-      onChange={(_value) => {
-        setValue(_value);
-      }}
-      searchDataSource={searchDataSource}
       selectorProps={{
         multiple: true,
         columns: 2,

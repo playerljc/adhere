@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { InputMultiple } from '../../src';
 
+import '../../src/index.less';
+
 export default () => {
   const [value, setValue] = useState([]);
 
@@ -10,12 +12,12 @@ export default () => {
       <InputMultiple.Dialog
         value={value}
         onChange={setValue}
-        options={['222']}
+        options={['React', 'Vue', 'Angular']}
         isCheckAll
         isFilter
         selectorProps={{
           filterProps: {
-            optionFilterProp: 'label',
+            placeholder: '请输入关键字',
           },
         }}
       />

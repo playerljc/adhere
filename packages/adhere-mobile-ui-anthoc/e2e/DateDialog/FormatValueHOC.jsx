@@ -28,13 +28,11 @@ export default () => {
       }
     >
       <Form.Item name="birthDay" label="生日" rules={[{ required: true, message: '请选择生日' }]}>
-        <DateFormatValueHOC>
+        <DateFormatValueHOC format="YYYY-MM-DD">
           <DateDialog
-            // precision="week-day"
-            locale="en"
-            // modalTriggerProps={{
-            //   title: 'DateModal',
-            // }}
+            dialogTriggerProps={{
+              title: '选择日期',
+            }}
           />
         </DateFormatValueHOC>
       </Form.Item>

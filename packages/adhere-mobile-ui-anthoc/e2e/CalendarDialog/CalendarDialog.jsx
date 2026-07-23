@@ -28,12 +28,10 @@ export default () => {
       }
     >
       <Form.Item name="birthDay" label="生日" rules={[{ required: true, message: '请选择生日' }]}>
-        <CalendarDialog.RangeCalendarDialog
-        // selectionMode="range"
-        // precision="week-day"
-        // modalTriggerProps={{
-        //   title: 'DateModal',
-        // }}
+        <CalendarDialog
+          dialogTriggerProps={{
+            title: '选择日期',
+          }}
         />
       </Form.Item>
     </Form>

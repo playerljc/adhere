@@ -5,7 +5,7 @@ import { Radio } from '../../src/index';
 
 import '../../src/index.less';
 
-const options = Array.from({ length: 1000 }).map((t, _index) => {
+const options = Array.from({ length: 1000 }).map(() => {
   const value = Mockjs.mock('@guid');
   const title = Mockjs.mock('@name');
 
@@ -17,7 +17,7 @@ const options = Array.from({ length: 1000 }).map((t, _index) => {
 });
 
 export default () => {
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState(undefined);
 
   return (
     <Radio.FilterPagingRadio

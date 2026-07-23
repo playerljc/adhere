@@ -15,6 +15,9 @@ const InputNumberHOC: typeof Input & {
   type: 'number',
 }));
 
+InputNumberHOC.InputNegativeNumber = InputNegativeNumber;
+InputNumberHOC.InputPositiveNumber = InputPositiveNumber;
+
 InputNumberHOC.displayName = 'InputNumber';
 
 export default InputNumberHOC;

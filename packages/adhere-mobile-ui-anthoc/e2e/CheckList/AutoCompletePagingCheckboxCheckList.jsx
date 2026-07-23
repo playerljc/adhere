@@ -7,20 +7,17 @@ import { CheckList } from '../../src/index';
 
 import '../../src/index.less';
 
-const options = Array.from({ length: 1000 }).map((t, _index) => {
+const options = Array.from({ length: 1000 }).map(() => {
   const value = Mockjs.mock('@guid');
-  const title = `${Mockjs.mock('@name')}1`;
 
   return {
     value,
-    title,
+    title: `${Mockjs.mock('@name')}1`,
     id: value,
   };
 });
 
 export default () => {
-  // const [searchDataSource, setSearchDataSource] = useState([]);
-
   const [value, setValue] = useState([]);
 
   return (
@@ -29,6 +26,7 @@ export default () => {
       style={{ height: '100%' }}
       bodyStyle={{ overflowY: 'hidden' }}
       value={value}
+      onChange={setValue}
       loadData={(_kw, page, limit) => {
         return new Promise((resolve) => {
           if (!_kw) {
@@ -36,9 +34,6 @@ export default () => {
               total: 0,
               data: [],
             });
-
-            // setSearchDataSource([]);
-
             return;
           }
 
@@ -56,27 +51,11 @@ export default () => {
           }, 500);
         });
       }}
-      onChange={(_value) => {
-        setValue(_value);
-      }}
-      // searchDataSource={searchDataSource}
-      pagingCheckboxCheckListProps={{
+      pagingCheckListProps={{
         multiple: true,
         pagingProps: {
           style: { height: '100%' },
           isLocal: false,
-          // onLoad: (page, limit) => {
-          //   console.log('page', page, 'limit', limit);
-          //
-          //   return new Promise((resolve) => {
-          //     setTimeout(() => {
-          //       resolve({
-          //         data: searchDataSource.slice((page - 1) * limit, page * limit),
-          //         total: searchDataSource.length,
-          //       });
-          //     }, 1000);
-          //   });
-          // },
         },
       }}
     />

@@ -31,4 +31,12 @@ Selector.AutoCompletePagingSelector = createFactory<AutoCompletePagingSelectorPr
   {},
 );
 
+Selector.AutoCompleteSelector.displayName = 'AutoCompleteSelector';
+Selector.CheckAllSelector.displayName = 'CheckAllSelector';
+Selector.FilterSelector.displayName = 'FilterSelector';
+Selector.FilterCheckAllSelector.displayName = 'FilterCheckAllSelector';
+Selector.PagingSelector.displayName = 'PagingSelector';
+Selector.FilterPagingSelector.displayName = 'FilterPagingSelector';
+Selector.AutoCompletePagingSelector.displayName = 'AutoCompletePagingSelector';
+
 export default Selector;

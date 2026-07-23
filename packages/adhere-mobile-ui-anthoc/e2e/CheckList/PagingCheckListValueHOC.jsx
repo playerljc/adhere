@@ -1,22 +1,12 @@
 import { Button, Form } from 'antd-mobile';
 import React from 'react';
 
-import { ArrayEntityValueHOC, PagingEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
+import { PagingEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
 
 import { CheckList } from '../../src/index';
+import { defaultPaging, pagingOptions } from './options';
 
 import '../../src/index.less';
-
-const options = Array.from({ length: 100 }).map((t, _index) => {
-  return {
-    title: `${_index + 1}`,
-    value: _index + 1,
-  };
-});
-
-const defaultPaging = {
-  limit: 20,
-};
 
 export default () => {
   const [form] = Form.useForm();
@@ -49,11 +39,9 @@ export default () => {
             message: '请选择性别',
           },
         ]}
-        // initialValue={[]}
       >
         <PagingEntityValueHOC>
-          <CheckList.PagingCheckboxCheckList
-            // options={options}
+          <CheckList.PagingCheckList
             multiple
             pagingProps={{
               style: { height: 300 },
@@ -63,8 +51,8 @@ export default () => {
                 return new Promise((resolve) => {
                   setTimeout(() => {
                     resolve({
-                      data: options.slice((page - 1) * limit, page * limit),
-                      total: options.length,
+                      data: pagingOptions.slice((page - 1) * limit, page * limit),
+                      total: pagingOptions.length,
                     });
                   }, 1000);
                 });

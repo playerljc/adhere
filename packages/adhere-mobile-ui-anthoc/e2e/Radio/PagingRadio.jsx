@@ -1,26 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Radio } from '../../src/index';
+import { defaultPaging, pagingOptions } from './options';
 
 import '../../src/index.less';
 
-const options = Array.from({ length: 100 }).map((t, _index) => {
-  return {
-    title: `${_index + 1}`,
-    value: _index + 1,
-    children: `${_index + 1}`,
-  };
-});
-
-const defaultPaging = {
-  limit: 20,
-};
-
 export default () => {
+  const [value, setValue] = useState(undefined);
+
   return (
     <Radio.PagingRadio
-      options={options}
+      options={pagingOptions}
       spaceStyle={{ '--gap': '23px' }}
+      value={value}
+      onChange={setValue}
       pagingProps={{
         style: { height: '100%', padding: 20 },
         defaultPaging,

@@ -1,24 +1,14 @@
 import { Button, Form } from 'antd-mobile';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { ArrayEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
 
 import { CheckList } from '../../src/index';
+import { letterOptions } from './options';
 
 import '../../src/index.less';
 
-const options = Array.from({ length: 26 }).map((t, _index) => {
-  const letter = String.fromCharCode(97 + _index).toUpperCase();
-
-  return {
-    title: letter,
-    value: letter,
-  };
-});
-
 export default () => {
-  const [value, setValue] = useState([]);
-
   const [form] = Form.useForm();
 
   return (
@@ -49,14 +39,10 @@ export default () => {
             message: '请选择性别',
           },
         ]}
-        // initialValue={[]}
       >
         <ArrayEntityValueHOC>
           <CheckList.CheckAllCheckList
-            value={value}
-            options={options}
-            onChange={setValue}
-            onCheckAllChange={setValue}
+            options={letterOptions}
             checkAllLabel={(_value) => (
               <div>
                 <span>{!!_value.length ? `(${_value.length})` : null}</span>

@@ -2,10 +2,11 @@ import Mockjs from 'mockjs';
 import React, { useState } from 'react';
 
 import { Selector } from '../../src/index';
+import { selectorStyle } from './options';
 
 import '../../src/index.less';
 
-const options = Array.from({ length: 1000 }).map((t, _index) => {
+const options = Array.from({ length: 1000 }).map(() => {
   const value = Mockjs.mock('@guid');
   const title = Mockjs.mock('@name');
 
@@ -24,10 +25,7 @@ export default () => {
       filterProps={{ placeholder: '请输入关键字', optionFilterProp: 'label' }}
       style={{
         height: '100%',
-        '--border-radius': '100px',
-        '--border': 'solid transparent 1px',
-        '--checked-border': 'solid var(--adm-color-primary) 1px',
-        '--padding': '8px 24px',
+        ...selectorStyle,
       }}
       showCheckMark={false}
       multiple

@@ -1,13 +1,14 @@
-import { Button } from 'antd';
 import React, { useEffect } from 'react';
 
-import { Form, InputMultiple } from '../../src';
+import { Button, Form, InputMultiple } from '../../src';
+
+import '../../src/index.less';
 
 export default () => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    form.setFieldValue('inputMultiple', ['111', '222']);
+    form.setFieldValue('inputMultiple', ['React', 'Vue']);
   }, []);
 
   return (
@@ -15,7 +16,19 @@ export default () => {
       form={form}
       layout="horizontal"
       footer={
-        <Button block type="submit" color="primary" size="large">
+        <Button
+          block
+          color="primary"
+          size="middle"
+          onClick={() => {
+            form
+              .validateFields()
+              .then((values) => {
+                alert(JSON.stringify(values));
+              })
+              .catch(() => {});
+          }}
+        >
           提交
         </Button>
       }
@@ -33,9 +46,10 @@ export default () => {
         <InputMultiple.Dialog
           isCheckAll
           isFilter
+          options={['React', 'Vue', 'Angular']}
           selectorProps={{
             filterProps: {
-              optionFilterProp: 'label',
+              placeholder: '请输入关键字',
             },
           }}
         />

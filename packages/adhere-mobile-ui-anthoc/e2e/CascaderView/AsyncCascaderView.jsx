@@ -2,17 +2,10 @@ import React, { useState } from 'react';
 
 import Mock from '@baifendian/adhere-mock';
 
-import CascaderView from '../../src/cascader-view';
+import { CascaderView } from '../../src/index';
 
 import './index.less';
 
-// 正常
-// const options = Mock.Province.map((t) => ({
-//   label: t.name,
-//   value: t.id,
-// }));
-
-// 拉平
 const options = Mock.Province.map((t) => ({
   label: t.name,
   value: t.id,
@@ -29,29 +22,12 @@ export default () => {
 
   return (
     <CascaderView.AsyncCascaderView
-      // options={options}
       isEveryAsync
       value={value}
       treeDataSimpleMode
-      onChange={(_value) => {
-        setValue(_value);
-      }}
+      onChange={setValue}
       loadData={(defaultId) => {
         return new Promise((resolve, reject) => {
-          // 正常
-          // if (!objs[defaultId]) {
-          //   reject();
-          // } else {
-          //   setTimeout(() => {
-          //     resolve(
-          //       objs[defaultId].map((t) => ({
-          //         label: t.name,
-          //         value: t.id,
-          //       })),
-          //     );
-          //   }, 1000);
-          // }
-          // 拉平
           if (!defaultId) {
             resolve(options);
           } else if (!objs[defaultId]) {

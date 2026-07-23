@@ -43,4 +43,16 @@ TreeSelect.AutoCompleteTreeShowChildSelect = createFactory<TreeAutoCompleteProps
   {},
 );
 
+TreeSelect.TreeLeafSelect.displayName = 'TreeLeafSelect';
+TreeSelect.TreeShowAllSelect.displayName = 'TreeShowAllSelect';
+TreeSelect.TreeShowChildSelect.displayName = 'TreeShowChildSelect';
+TreeSelect.AsyncTreeSelect.displayName = 'AsyncTreeSelect';
+TreeSelect.AsyncTreeLeafSelect.displayName = 'AsyncTreeLeafSelect';
+TreeSelect.AsyncTreeShowAllSelect.displayName = 'AsyncTreeShowAllSelect';
+TreeSelect.AsyncTreeShowChildSelect.displayName = 'AsyncTreeShowChildSelect';
+TreeSelect.AutoCompleteTreeSelect.displayName = 'AutoCompleteTreeSelect';
+TreeSelect.AutoCompleteTreeLeafSelect.displayName = 'AutoCompleteTreeLeafSelect';
+TreeSelect.AutoCompleteTreeShowAllSelect.displayName = 'AutoCompleteTreeShowAllSelect';
+TreeSelect.AutoCompleteTreeShowChildSelect.displayName = 'AutoCompleteTreeShowChildSelect';
+
 export default TreeSelect;

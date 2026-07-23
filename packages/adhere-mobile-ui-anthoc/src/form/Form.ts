@@ -100,6 +100,7 @@ FormHOC.CustomWrapperFormItem = createFactory<CustomWrapperFormItemProps>(
 );
 
 FormHOC.Item.displayName = 'FormItem';
+FormHOC.NestingFormItem.displayName = 'NestingFormItem';
 FormHOC.CustomWrapperFormItem.displayName = 'CustomWrapperFormItem';
 FormHOC.displayName = 'Form';
 

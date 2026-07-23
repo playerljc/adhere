@@ -1,8 +1,8 @@
 import { Button, Form } from 'antd-mobile';
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 
-import { Dialog } from '../../src/index';
-import FilterCheckAllCheckList from '../CheckList/FilterCheckAllCheckList';
+import { CheckList, Dialog } from '../../src/index';
+import { letterOptions } from '../CheckList/options';
 
 import '../../src/index.less';
 
@@ -11,18 +11,13 @@ export default () => {
 
   const person = Form.useWatch('person', form) ?? [];
 
-  const filterCheckAllCheckListRef = useRef();
-
   const actions = useMemo(
     () => [
       {
         key: 'submit',
         text: '提交',
         primary: true,
-        onClick: () => {
-          const value = filterCheckAllCheckListRef.current.getValue();
-          return Promise.resolve(value);
-        },
+        onClick: () => Promise.resolve(),
       },
     ],
     [],
@@ -50,7 +45,7 @@ export default () => {
       <Form.Header>Trigger</Form.Header>
 
       <Form.Item name="person" label="人员" rules={[{ required: true, message: '人员不能为空' }]}>
-        <Dialog.TriggerPrompt
+        <Dialog.Trigger
           title="人员选择"
           actions={actions}
           popoverTriggerProps={{
@@ -61,8 +56,13 @@ export default () => {
             ),
           }}
         >
-          <FilterCheckAllCheckList ref={filterCheckAllCheckListRef} />
-        </Dialog.TriggerPrompt>
+          <CheckList.FilterCheckAllCheckList
+            filterProps={{ placeholder: '请输入关键字' }}
+            style={{ height: 300 }}
+            bodyWrapperStyle={{ overflowY: 'auto' }}
+            options={letterOptions}
+          />
+        </Dialog.Trigger>
       </Form.Item>
     </Form>
   );

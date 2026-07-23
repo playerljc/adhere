@@ -35,5 +35,12 @@ Checkbox.AutoCompletePagingCheckbox = createFactory<AutoCompletePagingCheckboxPr
 );
 
 Checkbox.CheckboxGroup.displayName = 'CheckboxGroup';
+Checkbox.CheckAllCheckbox.displayName = 'CheckAllCheckbox';
+Checkbox.FilterCheckbox.displayName = 'FilterCheckbox';
+Checkbox.FilterCheckAllCheckbox.displayName = 'FilterCheckAllCheckbox';
+Checkbox.PagingCheckbox.displayName = 'PagingCheckbox';
+Checkbox.FilterPagingCheckbox.displayName = 'FilterPagingCheckbox';
+Checkbox.AutoCompleteCheckbox.displayName = 'AutoCompleteCheckbox';
+Checkbox.AutoCompletePagingCheckbox.displayName = 'AutoCompletePagingCheckbox';
 
 export default Checkbox;

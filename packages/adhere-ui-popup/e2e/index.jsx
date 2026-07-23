@@ -1,9 +1,17 @@
-import React from 'react';
+import { createRoot } from 'react-dom/client';
 
-import e2e from '@baifendian/adhere-e2e';
+import '../src/index.less';
 
-import Test from './test';
+import PopupCloseAll from './PopupCloseAll';
+import PopupCreate from './PopupCreate';
+import PopupShowClosePre from './PopupShowClosePre';
+import SubmitButtonDemo from './SubmitButtonDemo';
+import TriggerAndPrompt from './TriggerAndPrompt';
 
-e2e.PC({
-  children: <Test />,
-});
+createRoot(document.getElementById('app')).render(
+  // <PopupCreate />
+  // <PopupCloseAll />
+  // <PopupShowClosePre />
+  // <SubmitButtonDemo />
+  <TriggerAndPrompt />,
+);

@@ -18,6 +18,6 @@ const InternalTreeCheckedShowParentSelect = memo<TreeSelectProps>((props) => {
 const TreeCheckedShowParentSelect = InternalTreeCheckedShowParentSelect as DisplayNameInternal<
   typeof InternalTreeCheckedShowParentSelect
 >;
-TreeCheckedShowParentSelect.displayName = 'TreeCheckedShowParentSelect';
+TreeCheckedShowParentSelect.displayName = 'TreeShowAllSelect';
 
 export default TreeCheckedShowParentSelect;

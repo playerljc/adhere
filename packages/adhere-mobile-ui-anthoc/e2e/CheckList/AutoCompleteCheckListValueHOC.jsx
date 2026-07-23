@@ -3,31 +3,24 @@ import Mockjs from 'mockjs';
 import React, { useState } from 'react';
 
 import { MobileGlobalIndicator } from '@baifendian/adhere';
-import Mock from '@baifendian/adhere-mock';
 import { ArrayEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
 
 import { CheckList } from '../../src/index';
 
 import '../../src/index.less';
 
-const { Book } = Mock;
-
-const book = Book.map((t) => {
-  const id = Mockjs.mock('@guid');
+const options = Array.from({ length: 100 }).map(() => {
+  const value = Mockjs.mock('@guid');
 
   return {
-    ...t,
-    value: id,
-    title: t.t,
-    id,
+    value,
+    title: Mockjs.mock('@name'),
+    id: value,
   };
 });
 
 export default () => {
   const [searchDataSource, setSearchDataSource] = useState([]);
-
-  const [value, setValue] = useState([]);
-
   const [form] = Form.useForm();
 
   return (
@@ -63,7 +56,6 @@ export default () => {
           <CheckList.AutoCompleteCheckList
             placeholder="请输入关键字"
             style={{ height: '100%' }}
-            value={value}
             loadData={(_kw) => {
               if (!_kw) {
                 setSearchDataSource([]);
@@ -73,13 +65,9 @@ export default () => {
               const handler = MobileGlobalIndicator.show();
 
               setTimeout(() => {
-                setSearchDataSource(book.filter((_book) => _book.t.indexOf(_kw) !== -1));
-
+                setSearchDataSource(options.filter((t) => t.title.indexOf(_kw) !== -1));
                 MobileGlobalIndicator.hide(handler);
               }, 500);
-            }}
-            onChange={(_value) => {
-              setValue(_value);
             }}
             searchDataSource={searchDataSource}
             checkListProps={{

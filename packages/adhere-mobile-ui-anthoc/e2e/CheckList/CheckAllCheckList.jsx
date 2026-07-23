@@ -1,17 +1,9 @@
 import React, { useState } from 'react';
 
 import { CheckList } from '../../src/index';
+import { letterOptions } from './options';
 
 import '../../src/index.less';
-
-const options = Array.from({ length: 26 }).map((t, _index) => {
-  const letter = String.fromCharCode(97 + _index).toUpperCase();
-
-  return {
-    title: letter,
-    value: letter,
-  };
-});
 
 export default () => {
   const [value, setValue] = useState([]);
@@ -19,7 +11,7 @@ export default () => {
   return (
     <CheckList.CheckAllCheckList
       value={value}
-      options={options}
+      options={letterOptions}
       onChange={setValue}
       onCheckAllChange={setValue}
       checkAllLabel={(_value) => (

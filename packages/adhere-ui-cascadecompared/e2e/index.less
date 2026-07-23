@@ -1,0 +1,62 @@
+.CascadeComparedE2E {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 16px;
+  overflow: hidden;
+
+  .ant-tabs {
+    height: 100%;
+
+    .ant-tabs-content-holder {
+      height: calc(100% - 46px);
+      overflow: hidden;
+
+      .ant-tabs-content {
+        height: 100%;
+
+        .ant-tabs-tabpane {
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+
+.CascadeComparedE2E-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.CascadeComparedE2E-wrapper {
+  width: 100%;
+  height: calc(100% - 48px);
+  min-height: 400px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.CascadeComparedE2E-title {
+  margin: 0;
+  padding: 15px 0 15px 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.adhere-ui-cascade-compared {
+  > .adhere-ui-cascade-compared-master {
+    > .adhere-ui-stickup-layout.adhere-ui-cascade-compared-master-inner {
+      > .adhere-ui-stickup-layout-inner {
+        > .adhere-ui-stickup-layout-item {
+          &:not(:first-child) {
+            > .adhere-ui-stickup-layout-item-header {
+              > h2 {
+                border-top: 1px solid rgba(0, 0, 0, 0.1);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

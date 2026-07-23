@@ -1,18 +1,9 @@
 import React, { useState } from 'react';
 
 import { Checkbox } from '../../src/index';
+import { letterOptions } from './options';
 
 import '../../src/index.less';
-
-const options = Array.from({ length: 26 }).map((t, _index) => {
-  const letter = String.fromCharCode(97 + _index).toUpperCase();
-
-  return {
-    title: letter,
-    value: letter,
-    children: letter,
-  };
-});
 
 export default () => {
   const [value, setValue] = useState([]);
@@ -24,7 +15,7 @@ export default () => {
       value={value}
       onChange={setValue}
       onCheckAllChange={setValue}
-      options={options}
+      options={letterOptions}
       checkAllLabel={(_value) => (
         <div>
           <span>{!!_value.length ? `(${_value.length})` : null}</span>

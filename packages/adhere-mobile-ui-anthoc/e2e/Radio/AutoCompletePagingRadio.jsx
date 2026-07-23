@@ -7,7 +7,7 @@ import { Radio } from '../../src/index';
 
 import '../../src/index.less';
 
-const options = Array.from({ length: 1000 }).map((t, _index) => {
+const options = Array.from({ length: 1000 }).map(() => {
   const value = Mockjs.mock('@guid');
   const title = `${Mockjs.mock('@name')}1`;
 
@@ -20,9 +20,7 @@ const options = Array.from({ length: 1000 }).map((t, _index) => {
 });
 
 export default () => {
-  // const [searchDataSource, setSearchDataSource] = useState([]);
-
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(undefined);
 
   return (
     <Radio.AutoCompletePagingRadio
@@ -30,6 +28,7 @@ export default () => {
       style={{ height: '100%' }}
       bodyStyle={{ overflowY: 'hidden' }}
       value={value}
+      onChange={setValue}
       loadData={(_kw, page, limit) => {
         return new Promise((resolve) => {
           if (!_kw) {
@@ -37,9 +36,6 @@ export default () => {
               total: 0,
               data: [],
             });
-
-            // setSearchDataSource([]);
-
             return;
           }
 
@@ -54,15 +50,9 @@ export default () => {
               total: data.length,
               data: data.slice((page - 1) * limit, page * limit),
             });
-
-            // setSearchDataSource(data);
           }, 500);
         });
       }}
-      onChange={(_value) => {
-        setValue(_value);
-      }}
-      // searchDataSource={searchDataSource}
       pagingRadioProps={{
         spaceStyle: { '--gap': '23px' },
         pagingProps: {

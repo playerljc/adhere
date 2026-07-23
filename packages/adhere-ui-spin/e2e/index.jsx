@@ -2,8 +2,16 @@ import React from 'react';
 
 import e2e from '@baifendian/adhere-e2e';
 
-import Test from './test';
+import SpinBasic from './SpinBasic';
+import SpinNoText from './SpinNoText';
+import SpinSizeAndToggle from './SpinSizeAndToggle';
+import SpinSizes from './SpinSizes';
+import SpinZIndex from './SpinZIndex';
 
 e2e.PC({
-  children: <Test />,
+  // children: <SpinBasic />,
+  // children: <SpinNoText />,
+  // children: <SpinSizes />,
+  // children: <SpinZIndex />,
+  children: <SpinSizeAndToggle />,
 });

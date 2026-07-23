@@ -3,16 +3,15 @@ import React from 'react';
 import FlexLayout from '../src/index';
 
 import '../src/index.less';
+import './index.less';
 
 export default () => {
   return (
-    <div style={{ height: 500 }}>
-      <FlexLayout.SpaceAround style={{ height: '100%' }} direction="vertical">
-        <div>111</div>
-
-        <div>111</div>
-
-        <div>111</div>
+    <div className="wrap">
+      <FlexLayout.SpaceAround style={{ height: '100%', border: '1px solid #d9d9d9' }} direction="vertical">
+        <div className="region">Item A</div>
+        <div className="region">Item B</div>
+        <div className="region">Item C</div>
       </FlexLayout.SpaceAround>
     </div>
   );

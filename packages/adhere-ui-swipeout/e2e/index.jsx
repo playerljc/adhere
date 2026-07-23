@@ -2,8 +2,16 @@ import React from 'react';
 
 import e2e from '@baifendian/adhere-e2e';
 
-import Test from './test';
+import ListShowBeforeAfter from './ListShowBeforeAfter';
+import SwipeOutBasic from './SwipeOutBasic';
+import SwipeOutCallbacks from './SwipeOutCallbacks';
+import SwipeOutCustomStyle from './SwipeOutCustomStyle';
+import SwipeOutVertical from './SwipeOutVertical';
 
 e2e.PC({
-  children: <Test />,
+  // children: <SwipeOutBasic />,
+  // children: <SwipeOutVertical />,
+  // children: <SwipeOutCallbacks />,
+  // children: <SwipeOutCustomStyle />,
+  children: <ListShowBeforeAfter />,
 });

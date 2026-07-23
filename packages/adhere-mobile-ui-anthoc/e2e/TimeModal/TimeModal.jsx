@@ -27,13 +27,11 @@ export default () => {
         </Button>
       }
     >
-      <Form.Item name="birthDay" label="生日" rules={[{ required: true, message: '请选择生日' }]}>
+      <Form.Item name="time" label="时间" rules={[{ required: true, message: '请选择时间' }]}>
         <TimeModal
-        // precision="week-day"
-        // locale="en"
-        // modalTriggerProps={{
-        //   title: 'DateModal',
-        // }}
+          modalTriggerProps={{
+            title: '选择时间',
+          }}
         />
       </Form.Item>
     </Form>

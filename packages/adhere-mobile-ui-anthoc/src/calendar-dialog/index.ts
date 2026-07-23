@@ -8,6 +8,6 @@ CalendarDialog.RangeCalendarDialog = createFactory<RangeCalendarDialogProps>(
   {},
 );
 
-CalendarDialog.RangeCalendarDialog.displayName = 'CalendarDialog';
+CalendarDialog.RangeCalendarDialog.displayName = 'RangeCalendarDialog';
 
 export default CalendarDialog;
