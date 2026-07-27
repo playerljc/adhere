@@ -3,10 +3,10 @@ import React from 'react';
 
 import e2e from '@baifendian/adhere-e2e';
 
-import P1 from './p1';
-import P2 from './p2';
-import P3 from './p3';
-import P4 from './p4';
+import Basic from './Basic';
+import Gallery from './Gallery';
+import RatioByHeight from './RatioByHeight';
+import RatioByWidth from './RatioByWidth';
 
 import './index.less';
 
@@ -21,27 +21,27 @@ e2e.PC({
   children: (
     <div className="ContourBlockE2E">
       <Tabs
-        defaultActiveKey="p1"
+        defaultActiveKey="Basic"
         items={[
           {
-            key: 'p1',
+            key: 'Basic',
             label: '基本使用',
-            children: <P1 />,
+            children: <Basic />,
           },
           {
-            key: 'p2',
+            key: 'Gallery',
             label: '画廊',
-            children: <P2 />,
+            children: <Gallery />,
           },
           {
-            key: 'p3',
+            key: 'RatioByWidth',
             label: 'Ratio(按宽算高)',
-            children: <P3 />,
+            children: <RatioByWidth />,
           },
           {
-            key: 'p4',
+            key: 'RatioByHeight',
             label: 'Ratio(按高算宽)',
-            children: <P4 />,
+            children: <RatioByHeight />,
           },
         ]}
       />

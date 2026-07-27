@@ -38,7 +38,7 @@ declare const _default: {
     ReactAutoTryCatch: typeof ReactAutoTryCatch;
 };
 export default _default;
-export type { IReactErrorBoundariesState, SharedProps, ReactComponent, AopCallback, AutoTryCatchCallback, DecoratorDescriptor, DecoratorTarget, DecoratorProperty } from './types';
+export type { IReactErrorBoundariesState, SharedProps, ReactComponent, AopCallback, AopBeforeCallback, AopAfterCallback, AutoTryCatchCallback, DecoratorDescriptor, DecoratorTarget, DecoratorProperty } from './types';
 export { default as ReactErrorBoundaries } from './ReactErrorBoundaries';
 export { default as ReactAop } from './ReactAop';
 export { default as ReactAutoTryCatch } from './ReactAutoTryCatch';

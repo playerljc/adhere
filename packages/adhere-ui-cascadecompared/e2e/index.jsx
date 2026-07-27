@@ -3,10 +3,10 @@ import React from 'react';
 
 import e2e from '@baifendian/adhere-e2e';
 
-import P1 from './p1';
-import P2 from './p2';
-import P3 from './p3';
-import P4 from './p4';
+import Basic from './Basic';
+import InsertGroup from './InsertGroup';
+import ScrollByColumn from './ScrollByColumn';
+import ScrollByIndex from './ScrollByIndex';
 
 import './index.less';
 
@@ -21,27 +21,27 @@ e2e.PC({
   children: (
     <div className="CascadeComparedE2E">
       <Tabs
-        defaultActiveKey="p1"
+        defaultActiveKey="Basic"
         items={[
           {
-            key: 'p1',
+            key: 'Basic',
             label: '基本使用',
-            children: <P1 />,
+            children: <Basic />,
           },
           {
-            key: 'p2',
+            key: 'InsertGroup',
             label: '在底部插入',
-            children: <P2 />,
+            children: <InsertGroup />,
           },
           {
-            key: 'p3',
+            key: 'ScrollByIndex',
             label: '通过索引滚动',
-            children: <P3 />,
+            children: <ScrollByIndex />,
           },
           {
-            key: 'p4',
+            key: 'ScrollByColumn',
             label: '滚动到指定列',
-            children: <P4 />,
+            children: <ScrollByColumn />,
           },
         ]}
       />

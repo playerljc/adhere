@@ -45,6 +45,8 @@ export type {
   SharedProps,
   ReactComponent,
   AopCallback,
+  AopBeforeCallback,
+  AopAfterCallback,
   AutoTryCatchCallback,
   DecoratorDescriptor,
   DecoratorTarget,

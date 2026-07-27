@@ -71,9 +71,10 @@ class MyClass {
       console.log('方法执行前');
       return true; // 返回true允许方法执行，返回false阻止执行
     },
-    // after钩子 - 方法执行后调用
-    function() {
-      console.log('方法执行后');
+    // after钩子 - 接收原方法返回值，自身返回值作为最终结果
+    function(result) {
+      console.log('方法执行后', result);
+      return `${result}!`;
     }
   )
   myMethod() {
@@ -99,12 +100,14 @@ class MyClass2 {
 class MyClass3 {
   @ReactAop(
     undefined, // before钩子为空
-    function() {
-      console.log('记录操作日志');
+    function(result) {
+      console.log('记录操作日志', result);
+      return result;
     }
   )
   logOperation() {
     console.log('执行操作');
+    return 'done';
   }
 }
 ```
@@ -165,16 +168,19 @@ ReactErrorBoundaries.setDefaultErrorUI(defaultErrorUI: ReactElement): void
 #### 函数签名
 ```typescript
 function ReactAop(
-  before?: AopCallback,
-  after?: AopCallback
+  before?: AopBeforeCallback,
+  after?: AopAfterCallback
 ): DecoratorFunction
 ```
 
 #### 类型定义
 ```typescript
-type AopCallback = () => boolean | void;
+type AopBeforeCallback = () => boolean | void;
+type AopAfterCallback = (result: any) => any;
 ```
 
+- `before`：返回 `false` 时阻止原方法执行
+- `after`：接收原方法返回值 `result`，其返回值作为最终结果
 ### ReactAutoTryCatch
 
 #### 函数签名
