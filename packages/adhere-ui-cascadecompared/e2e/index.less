@@ -5,16 +5,23 @@
   overflow: hidden;
 
   .ant-tabs {
+    display: flex;
+    flex-direction: column;
     height: 100%;
 
+    /* antd 6: content-holder -> body-holder */
+    .ant-tabs-body-holder,
     .ant-tabs-content-holder {
-      height: calc(100% - 46px);
+      flex: 1 1 auto;
+      min-height: 0;
       overflow: hidden;
 
+      .ant-tabs-body,
       .ant-tabs-content {
         height: 100%;
 
-        .ant-tabs-tabpane {
+        .ant-tabs-tabpane,
+        .ant-tabs-content-active {
           height: 100%;
         }
       }
@@ -29,18 +36,70 @@
   margin-bottom: 12px;
 }
 
+/**
+ * 演示容器刻意限宽，保证出现横向溢出，才能验证 IScroll
+ * 总列宽约 140 * 10 = 1400，容器 640 时可横向滚动
+ */
 .CascadeComparedE2E-wrapper {
+  box-sizing: border-box;
   width: 100%;
-  height: calc(100% - 48px);
-  min-height: 400px;
+  max-width: 640px;
+  height: 100%;
+  min-height: 0;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: #fff;
+
+  .adhere-ui-cascade-compared-cell {
+    min-height: 48px;
+  }
+
+  .adhere-ui-cascade-compared-cell-inner {
+    min-height: 48px;
+    padding: 0;
+  }
+}
+
+/* 带工具栏的示例：用 flex 分配剩余高度 */
+.CascadeComparedE2E .ant-tabs-content-active:has(> .CascadeComparedE2E-toolbar) {
+  display: flex;
+  flex-direction: column;
+
+  > .CascadeComparedE2E-toolbar {
+    flex-shrink: 0;
+  }
+
+  > .CascadeComparedE2E-wrapper {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+  }
 }
 
 .CascadeComparedE2E-title {
   margin: 0;
-  padding: 15px 0 15px 15px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  background: #fafafa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.CascadeComparedE2E-cellText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  padding: 8px;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+  word-break: break-all;
 }
 
 .adhere-ui-cascade-compared {
@@ -50,8 +109,8 @@
         > .adhere-ui-stickup-layout-item {
           &:not(:first-child) {
             > .adhere-ui-stickup-layout-item-header {
-              > h2 {
-                border-top: 1px solid rgba(0, 0, 0, 0.1);
+              > .CascadeComparedE2E-title {
+                border-top: 1px solid rgba(0, 0, 0, 0.08);
               }
             }
           }

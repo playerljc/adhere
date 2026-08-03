@@ -35,46 +35,13 @@ const { useTheme } = ConfigProvider;
 
 const StickupLayoutItem = Item!;
 
-/**
- * 初始化触摸事件处理
- * 防止默认的触摸滚动行为
- */
-function initTouch(): void {
-  function isPassive(): boolean {
-    let supportsPassiveOption = false;
-    try {
-      // @ts-ignore
-      addEventListener(
-        'test',
-        null,
-        Object.defineProperty({}, 'passive', {
-          get() {
-            supportsPassiveOption = true;
-          },
-        }),
-      );
-    } catch (e) {
-      // 忽略错误
-    }
-    return supportsPassiveOption;
+type IScrollInstance = InstanceType<typeof IScroll>;
+
+function destroyScrolls(scrollInstances: IScrollInstance[]): void {
+  for (let i = 0; i < scrollInstances.length; i++) {
+    scrollInstances[i]?.destroy();
   }
-
-  document.addEventListener(
-    'touchmove',
-    (e) => {
-      e.preventDefault();
-    },
-    isPassive()
-      ? {
-          capture: false,
-          passive: false,
-        }
-      : false,
-  );
 }
-
-// 初始化触摸事件
-initTouch();
 
 /**
  * 级联对比组件
@@ -140,7 +107,7 @@ const CascadeCompared = memo<
 
     const wrapperRef = useRef<HTMLDivElement | null>(null);
     const stickup = useRef<StickupLayoutHandle | null>(null);
-    const scrolls = useRef<(typeof IScroll)[]>([]);
+    const scrolls = useRef<IScrollInstance[]>([]);
 
     // 使用主题
     useTheme<HTMLElement>({
@@ -161,13 +128,7 @@ const CascadeCompared = memo<
 
       const wrapEls = wrapperRef.current.querySelectorAll(`.${selectorPrefix}-auto-wrap`);
 
-      // 销毁现有的滚动实例
-      for (let i = 0; i < scrolls.current.length; i++) {
-        if (scrolls.current[i]) {
-          scrolls.current[i].destroy();
-        }
-      }
-
+      destroyScrolls(scrolls.current);
       scrolls.current = [];
 
       // 为每个自动滚动区域创建新的滚动实例
@@ -191,6 +152,9 @@ const CascadeCompared = memo<
           }
         });
       }
+
+      // 布局稳定后再 refresh，确保 maxScrollX 计算正确
+      scrolls.current.forEach((scroll) => scroll.refresh());
     }, []);
 
     /**
@@ -238,6 +202,7 @@ const CascadeCompared = memo<
      */
     const renderIndicator = useCallback((): ReactElement => {
       const fixedColumnConfig = getFixedColumnConfig(columns);
+      const autoColumns = columns.filter((column) => column !== fixedColumnConfig);
 
       return (
         <div
@@ -265,20 +230,18 @@ const CascadeCompared = memo<
             style={indicatorAutoWrapStyle}
           >
             <div className={`${selectorPrefix}-item`}>
-              {columns
-                .filter((column) => column !== fixedColumnConfig)
-                .map((column, columnIndex) => (
-                  <div
-                    key={column.dataIndex}
-                    className={classNames(`${selectorPrefix}-cell`, column.className)}
-                    style={{
-                      ...column.style,
-                      width: column?.width || actualDefaultCellWidth,
-                    }}
-                  >
-                    {renderCell(column, dataSource, -1, -1, columnIndex)}
-                  </div>
-                ))}
+              {autoColumns.map((column, columnIndex) => (
+                <div
+                  key={column.dataIndex}
+                  className={classNames(`${selectorPrefix}-cell`, column.className)}
+                  style={{
+                    ...column.style,
+                    width: column?.width || actualDefaultCellWidth,
+                  }}
+                >
+                  {renderCell(column, dataSource, -1, -1, columnIndex)}
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -317,6 +280,7 @@ const CascadeCompared = memo<
         } = config;
 
         const fixedColumnConfig = getFixedColumnConfig(columns);
+        const autoColumns = columns.filter((column) => column !== fixedColumnConfig);
 
         return (
           <>
@@ -349,20 +313,18 @@ const CascadeCompared = memo<
               >
                 {dataSource.map((record, rowIndex) => (
                   <div key={rowIndex} className={`${selectorPrefix}-item`}>
-                    {columns
-                      .filter((column) => column !== fixedColumnConfig)
-                      .map((column, columnIndex) => (
-                        <div
-                          key={column.dataIndex}
-                          className={classNames(`${selectorPrefix}-cell`, column.className)}
-                          style={{
-                            ...column.style,
-                            width: column?.width || actualDefaultCellWidth,
-                          }}
-                        >
-                          {renderCell(column, record, groupIndex, rowIndex, columnIndex)}
-                        </div>
-                      ))}
+                    {autoColumns.map((column, columnIndex) => (
+                      <div
+                        key={column.dataIndex}
+                        className={classNames(`${selectorPrefix}-cell`, column.className)}
+                        style={{
+                          ...column.style,
+                          width: column?.width || actualDefaultCellWidth,
+                        }}
+                      >
+                        {renderCell(column, record, groupIndex, rowIndex, columnIndex)}
+                      </div>
+                    ))}
                   </div>
                 ))}
               </div>
@@ -443,56 +405,62 @@ const CascadeCompared = memo<
     /**
      * 暴露给父组件的方法
      */
-    useImperativeHandle(ref, () => ({
-      /**
-       * 根据索引滚动到指定位置
-       * @param index - 目标索引
-       * @param duration - 滚动动画持续时间（毫秒）
-       */
-      scrollToByIndex(index: number, duration = 300): void {
-        if (stickup.current) {
-          stickup.current.scrollToByIndex(index, duration);
-        }
-      },
+    useImperativeHandle(
+      ref,
+      () => ({
+        /**
+         * 根据索引滚动到指定位置
+         * @param index - 目标索引
+         * @param duration - 滚动动画持续时间（毫秒）
+         */
+        scrollToByIndex(index: number, duration = 300): void {
+          stickup.current?.scrollToByIndex(index, duration);
+        },
 
-      /**
-       * 根据头部元素滚动到指定位置
-       * @param headerEl - 目标头部元素
-       * @param duration - 滚动动画持续时间（毫秒）
-       */
-      scrollToByHeaderEl(headerEl: HTMLElement, duration = 300): void {
-        if (stickup.current) {
-          stickup.current.scrollToByHeaderEl(headerEl, duration);
-        }
-      },
+        /**
+         * 根据头部元素滚动到指定位置
+         * @param headerEl - 目标头部元素
+         * @param duration - 滚动动画持续时间（毫秒）
+         */
+        scrollToByHeaderEl(headerEl: HTMLElement, duration = 300): void {
+          stickup.current?.scrollToByHeaderEl(headerEl, duration);
+        },
 
-      /**
-       * 根据列索引滚动到指定列
-       * @param columnIndex - 目标列索引
-       */
-      scrollToByColumn(columnIndex: number): void {
-        const scroll = scrolls.current[0];
-        if (!scroll || !scroll.wrapper) return;
+        /**
+         * 根据列索引滚动到指定列
+         * @param columnIndex - 目标列索引
+         */
+        scrollToByColumn(columnIndex: number): void {
+          const scroll = scrolls.current[0];
+          if (!scroll?.wrapper) return;
 
-        const el = scroll.wrapper.querySelector(
-          `.${selectorPrefix}-item .${selectorPrefix}-cell:nth-of-type(${columnIndex})`,
-        );
+          const el = scroll.wrapper.querySelector(
+            `.${selectorPrefix}-item .${selectorPrefix}-cell:nth-of-type(${columnIndex})`,
+          );
 
-        if (el) {
-          scroll.scrollToElement(el);
-        }
-      },
-    }));
+          if (el) {
+            scroll.scrollToElement(el);
+          }
+        },
+      }),
+      [],
+    );
 
     /**
      * 布局效果：刷新粘性布局和初始化滚动
+     * 仅在 initScroll 内销毁旧实例；卸载时再清理，避免依赖变更 cleanup 误毁实例
      */
     useLayoutEffect(() => {
-      if (stickup.current) {
-        stickup.current.refresh();
-      }
+      stickup.current?.refresh();
       initScroll();
-    }, [columns, dataSource, master]);
+    }, [columns, dataSource, master, initScroll]);
+
+    useLayoutEffect(() => {
+      return () => {
+        destroyScrolls(scrolls.current);
+        scrolls.current = [];
+      };
+    }, []);
 
     return (
       <div ref={wrapperRef} className={classNames(selectorPrefix, className)} style={style}>
