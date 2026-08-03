@@ -11,7 +11,7 @@ export default () => {
   const dataSource = getDataSource();
 
   return (
-    <div style={{ display: 'flex', gap: 24, padding: 16, flexWrap: 'wrap' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24, padding: 16 }}>
       <div>
         <div style={{ marginBottom: 8 }}>position=top</div>
         <div className="WrapperWide">

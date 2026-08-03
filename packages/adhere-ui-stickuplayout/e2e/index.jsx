@@ -11,7 +11,7 @@ import ScrollToByIndex from './ScrollToByIndex';
 e2e.PC({
   // children: <ScrollToByIndex />,
   // children: <OnChangeAndRefresh />,
-  // children: <ScrollToByHeaderEl />,
+  children: <ScrollToByHeaderEl />,
   // children: <CustomClassStyle />,
-  children: <CarParamsStickup />,
+  // children: <CarParamsStickup />,
 });

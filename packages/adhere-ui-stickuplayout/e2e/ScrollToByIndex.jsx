@@ -32,15 +32,15 @@ export default () => {
   return (
     <div style={{ padding: 16 }}>
       <Space wrap style={{ marginBottom: 12 }}>
-        <Button type="primary" onClick={() => ref.current?.scrollToByIndex(5)}>
+        <Button type="primary" onClick={() => ref.current?.scrollToByIndex(sections.length)}>
           滚动到底部(动画)
         </Button>
         <Button onClick={() => ref.current?.scrollToByIndex(0)}>置顶(动画)</Button>
-        <Button type="primary" onClick={() => ref.current?.scrollToByIndex(5, 0)}>
+        <Button type="primary" onClick={() => ref.current?.scrollToByIndex(sections.length, 0)}>
           滚动到底部(无动画)
         </Button>
         <Button onClick={() => ref.current?.scrollToByIndex(0, 0)}>置顶(无动画)</Button>
-        <Button onClick={() => ref.current?.scrollToByIndex(2)}>滚动到发动机</Button>
+        <Button onClick={() => ref.current?.scrollToByIndex(3)}>滚动到发动机</Button>
       </Space>
 
       <div style={{ height: 500 }} className="StickupLayout">

@@ -18,6 +18,7 @@ export default () => {
     const headers = wrapRef.current?.querySelectorAll?.(
       '.adhere-ui-stickup-layout-item-header',
     );
+
     const headerEl = headers?.[index];
     if (headerEl) {
       ref.current?.scrollToByHeaderEl(headerEl);
@@ -28,7 +29,7 @@ export default () => {
     <div style={{ padding: 16 }}>
       <Space wrap style={{ marginBottom: 12 }}>
         {sections.map((title, index) => (
-          <Button key={title} onClick={() => scrollByHeader(index)}>
+          <Button key={title} onClick={() => scrollByHeader(index + 1)}>
             scrollToByHeaderEl → {title}
           </Button>
         ))}

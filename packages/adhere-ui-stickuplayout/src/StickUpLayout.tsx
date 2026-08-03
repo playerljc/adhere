@@ -20,7 +20,7 @@ import type {
   StickupLayoutComponent,
   StickupLayoutHandle,
   StickupLayoutProps,
-  ScrollAnimationConfig,
+  // ScrollAnimationConfig,
 } from './types';
 
 const selectorPrefix = 'adhere-ui-stickup-layout';

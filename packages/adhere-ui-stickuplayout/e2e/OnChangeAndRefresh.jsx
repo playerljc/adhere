@@ -31,7 +31,7 @@ export default () => {
       </div>
       <Space wrap style={{ marginBottom: 12 }}>
         {sections.map((title, index) => (
-          <Button key={title} size="small" onClick={() => ref.current?.scrollToByIndex(index)}>
+          <Button key={title} size="small" onClick={() => ref.current?.scrollToByIndex(index + 1)}>
             {title}
           </Button>
         ))}

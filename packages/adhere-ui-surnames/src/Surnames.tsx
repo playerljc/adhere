@@ -34,6 +34,9 @@ const DEFAULT_DURATION = 100;
 /** 默认屏幕刷新率（毫秒） */
 const DEFAULT_REFRESH_RATE = 16.7;
 
+/** 高亮指示器默认尺寸（与样式 --highlighted-width/height 保持一致） */
+const DEFAULT_HIGHLIGHTED_SIZE = 44;
+
 /**
  * 转义属性选择器中的值，避免特殊字符破坏 querySelector
  */
@@ -481,7 +484,15 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
             const translateY = (index.offsetTop || 0) + Math.floor((index.height || 0) / 2);
             highlightedEl.current.style.transform = `translate3d(0,${translateY}px,0)`;
           } else {
-            const translateX = (index.offsetLeft || 0) + (index.width || 0);
+            // 水平方向：指示器相对字母居中，并限制在容器内避免被裁切
+            const bubbleWidth = highlightedEl.current.offsetWidth || DEFAULT_HIGHLIGHTED_SIZE;
+            const containerWidth = el.current?.clientWidth || 0;
+            const centerX = (index.offsetLeft || 0) + Math.floor((index.width || 0) / 2);
+            const maxTranslateX = Math.max(0, containerWidth - bubbleWidth);
+            const translateX = Math.max(
+              0,
+              Math.min(centerX - Math.floor(bubbleWidth / 2), maxTranslateX),
+            );
             highlightedEl.current.style.transform = `translate3d(${translateX}px,0,0)`;
           }
 

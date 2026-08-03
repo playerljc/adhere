@@ -9,9 +9,9 @@ import SurnamesRightLeft from './SurnamesRightLeft';
 import SurnamesTopBottom from './SurnamesTopBottom';
 
 e2e.PC({
-  // children: <SurnamesTopBottom />,
+  children: <SurnamesTopBottom />,
   // children: <ScrollToAnimation />,
   // children: <ScrollToAndCallbacks />,
-  children: <CustomClassStyle />,
+  // children: <CustomClassStyle />,
   // children: <SurnamesRightLeft />,
 });

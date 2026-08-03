@@ -94,10 +94,22 @@
     }
 
     > .adhere-ui-surnames-index {
+      width: 100%;
+      overflow-x: auto;
+
       > .adhere-ui-surnames-index-inner {
         flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        width: max-content;
+        min-width: 100%;
+        box-sizing: border-box;
+        //padding: 0 24px;
+        padding: var(--config-position-top-bottom-index-inner-padding, 0 24px);
 
         > .adhere-ui-surnames-index-item {
+          width: auto;
+          flex: 0 0 auto;
           //padding-top: 0;
           padding-top: var(--config-position-top-bottom-index-item-padding-top, 0);
           //padding-bottom: 0;
