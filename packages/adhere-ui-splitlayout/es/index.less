@@ -1,12 +1,29 @@
 @import '~@baifendian/adhere-ui-flexlayout/es/index.less';
 
+// ============================================================================
+// SplitLayout 样式
+//
+// 视觉 vs 命中：
+// - ::before：1px 可视分割线（不接收事件）
+// - 元素自身：默认占 10px 布局空间（与历史 minSize 下限一致）
+// - ::after：向外扩 6px 的透明热区，总命中约 22px，解决“线太细不好选”
+//
+// 拖动体验（配合 SplitLayout.tsx）：
+// - .is-dragging：拖动中强制 resize 光标
+// - .dragging（加在父 Flex 容器上）：关掉 Fixed 的 transition，并临时禁用面板 pointer-events
+//   （Fixed 默认 transition: all 0.2s，不关会导致尺寸永远跟不上鼠标）
+// ============================================================================
+
 .adhere-ui-split-layout {
   position: relative;
   display: flex;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
+  // 避免触控滚动抢走拖动手势
   touch-action: none;
+  // 略抬高，减少被相邻面板内容盖住导致难选中
+  z-index: 1;
 
   &.adhere-ui-split-layout-vertical,
   &.adhere-ui-split-layout-horizontal {
@@ -14,59 +31,95 @@
     align-items: center;
     justify-content: center;
 
+    // 可视细线
     &::before {
       display: flex;
-      //background-color: var(--adhere-color-border-base);
       background-color: var(
         --vertical-horizontal-before-background-color,
         var(--adhere-color-border-base)
       );
       content: '';
+      pointer-events: none;
+    }
+
+    // 透明热区（尺寸由方向分支设置）
+    &::after {
+      position: absolute;
+      z-index: 1;
+      content: '';
+      background: transparent;
     }
   }
 
+  // 纵向分割：改的是上下面板的 height
   &.adhere-ui-split-layout-vertical {
     flex-direction: column;
-    //height: 10px;
+    // 布局占用 10px；勿轻易改大，否则 getMinSize 会按 el.offset 抬高最小尺寸
     height: var(--vertical-height, 10px);
 
     &::before {
-      //width: 100%;
       width: var(--vertical-before-width, 100%);
-      //height: 1px;
       height: var(--vertical-before-height, 1px);
+    }
+
+    // 上下各扩 6px → 命中高度约 10+12=22px
+    &::after {
+      top: -6px;
+      right: 0;
+      bottom: -6px;
+      left: 0;
     }
   }
 
+  // 横向分割：改的是左右面板的 width
   &.adhere-ui-split-layout-horizontal {
     flex-direction: row;
-    //width: 10px;
     width: var(--horizontal-width, 10px);
 
     &::before {
-      //width: 1px;
       width: var(--horizontal-before-width, 1px);
-      //height: 100%;
       height: var(--horizontal-before-height, 100%);
+    }
+
+    // 左右各扩 6px → 命中宽度约 22px
+    &::after {
+      top: 0;
+      right: -6px;
+      bottom: 0;
+      left: -6px;
     }
   }
 
-  //&:hover {
-  //  background-image: radial-gradient(
-  //    at center center,
-  //    rgba(0, 0, 0, 0.2) 0%,
-  //    transparent 70%,
-  //    transparent 100%
-  //  );
-  //  background-repeat: no-repeat;
-  //  background-position: 0 50%;
-  //  background-size: 50px 100%;
-  //}
+  // 拖动中挂在句柄上，保证光标不被子内容抢掉
+  &.adhere-ui-split-layout-is-dragging {
+    &.adhere-ui-split-layout-horizontal {
+      cursor: col-resize;
+    }
+
+    &.adhere-ui-split-layout-vertical {
+      cursor: row-resize;
+    }
+  }
 }
 
 .adhere-ui-split-layout-no-select {
   user-select: none; /* Chrome/Safari/Opera */
   -webkit-touch-callout: none; /* iOS Safari */
+}
+
+// 挂在父级 FlexLayout 上（TSX: containerEl.classList.add(...-dragging)）
+// - transition none：抵消 Fixed 的 transition: all 0.2s
+// - pointer-events none：拖动时减少面板内重命中/滚动干扰；句柄保持可点
+.adhere-ui-split-layout-dragging {
+  > .adhere-ui-flex-layout-fixed,
+  > .adhere-ui-flex-layout-auto {
+    transition: none !important;
+    pointer-events: none;
+  }
+
+  > .adhere-ui-split-layout {
+    pointer-events: auto;
+  }
 }
 
 .adhere-ui-split-layout-col-resize {
