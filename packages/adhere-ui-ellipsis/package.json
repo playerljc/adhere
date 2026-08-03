@@ -21,7 +21,7 @@
     "umd"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test ./src/utils.test.ts",
     "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
     "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",

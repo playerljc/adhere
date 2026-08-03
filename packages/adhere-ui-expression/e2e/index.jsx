@@ -11,5 +11,5 @@ import Variables from './Variables';
 import ViewAndParse from './ViewAndParse';
 
 e2e.PC({
-  children: <Expression />,
+  children: <ViewAndParse />,
 });

@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode, MouseEvent } from 'react';
+import type { CSSProperties, KeyboardEvent, MouseEvent, ReactNode } from 'react';
 
 import { Options } from '@popperjs/core/lib/types';
 
@@ -50,8 +50,8 @@ export interface EllipsisProps {
 export interface MoreProps {
   /** 子元素 */
   children: ReactNode;
-  /** 点击事件处理函数 */
-  onClick: (event: MouseEvent<HTMLDivElement>) => void;
+  /** 点击 / 键盘激活事件处理函数 */
+  onClick: (event: MouseEvent<HTMLDivElement> | KeyboardEvent<HTMLDivElement>) => void;
 }
 
 /**
