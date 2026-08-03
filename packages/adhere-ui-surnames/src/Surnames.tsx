@@ -55,6 +55,16 @@ function findGroupTitleEl(container: HTMLElement, name: string): HTMLElement | n
 }
 
 /**
+ * 计算将元素顶部对齐到滚动容器顶部所需的 scrollTop（置顶）
+ */
+function getScrollTopToAlign(container: HTMLElement, element: HTMLElement): number {
+  const containerRect = container.getBoundingClientRect();
+  const elementRect = element.getBoundingClientRect();
+
+  return Math.max(0, elementRect.top - containerRect.top + container.scrollTop);
+}
+
+/**
  * 根据视口坐标查找索引项：先精确命中，未命中则取主轴最近项（填补间隙、减少失焦）
  */
 function findIndexByClientPoint(
@@ -329,7 +339,7 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
     }, []);
 
     /**
-     * 带动画效果的滚动到指定位置
+     * 带动画效果滚动，使对应分组 header 置顶
      */
     const scrollToAnimation = useCallback(
       (name?: string, duration: number = DEFAULT_DURATION): void => {
@@ -345,23 +355,34 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
           return;
         }
 
-        const srcTop = contentEl.current.scrollTop;
-        let scrollVal = srcTop;
-        const targetTop = targetEl.offsetTop;
+        const container = contentEl.current;
+        const srcTop = container.scrollTop;
+        const targetTop = getScrollTopToAlign(container, targetEl);
+        const distance = Math.abs(targetTop - srcTop);
 
+        onBeforeScroll?.(name);
+
+        // 已在顶部时直接完成，避免空动画占住交互锁
+        if (distance < 1) {
+          container.scrollTop = targetTop;
+          releaseInteractionLock();
+          onScroll?.(name);
+          return;
+        }
+
+        let scrollVal = srcTop;
         const refreshRate = (screen as any).updateInterval || DEFAULT_REFRESH_RATE;
-        const frameCount =
-          duration / refreshRate + (duration % refreshRate !== 0 ? 1 : 0);
-        const step = (contentEl.current.scrollHeight || 0) / frameCount;
+        const frameCount = Math.max(1, Math.ceil(duration / refreshRate));
+        const step = distance / frameCount;
 
         const scrollAnimation = (): void => {
           if (srcTop < targetTop) {
-            if (scrollVal + step > targetTop) {
+            if (scrollVal + step >= targetTop) {
               scrollVal = targetTop;
             } else {
               scrollVal += step;
             }
-          } else if (scrollVal - step < targetTop) {
+          } else if (scrollVal - step <= targetTop) {
             scrollVal = targetTop;
           } else {
             scrollVal -= step;
@@ -384,12 +405,13 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
           }
 
           function clear(): void {
+            if (contentEl.current) {
+              contentEl.current.scrollTop = targetTop;
+            }
             releaseInteractionLock();
             onScroll?.(name);
           }
         };
-
-        onBeforeScroll?.(name);
 
         if (typeof window !== 'undefined') {
           window.requestAnimationFrame(scrollAnimation);
@@ -399,7 +421,7 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
     );
 
     /**
-     * 直接滚动到指定位置（无动画）
+     * 直接滚动，使对应分组 header 置顶（无动画）
      */
     const scrollTo = useCallback(
       (name?: string): void => {
@@ -408,7 +430,7 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
         const targetEl = findGroupTitleEl(contentEl.current, name);
 
         if (targetEl) {
-          contentEl.current.scrollTop = targetEl.offsetTop;
+          contentEl.current.scrollTop = getScrollTopToAlign(contentEl.current, targetEl);
           onScroll?.(name);
         }
       },
@@ -684,6 +706,18 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
       createIndexPosition();
     }, [adapterDimension, createIndexPosition, indexes, dataSource]);
 
+    /**
+     * 点击内容区分组 header 时置顶
+     */
+    const onGroupTitleClick = useCallback(
+      (e: React.MouseEvent<HTMLAnchorElement>): void => {
+        e.preventDefault();
+        e.stopPropagation();
+        clickDetail(e.currentTarget.dataset.name);
+      },
+      [clickDetail],
+    );
+
     const contentElements = useMemo(
       () =>
         dataSource.map((record) => {
@@ -691,7 +725,11 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
 
           return (
             <div key={record.index} className={`${selectorPrefix}-group`}>
-              <a className={`${selectorPrefix}-group-title`} data-name={record.index}>
+              <a
+                className={`${selectorPrefix}-group-title`}
+                data-name={record.index}
+                onClick={onGroupTitleClick}
+              >
                 {indexConfig?.renderTitle ? indexConfig.renderTitle(record) : indexConfig?.index}
               </a>
               <div className={`${selectorPrefix}-group-inner`}>
@@ -700,7 +738,7 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
             </div>
           );
         }),
-      [dataSource, indexes],
+      [dataSource, indexes, onGroupTitleClick],
     );
 
     const indexElements = useMemo(
