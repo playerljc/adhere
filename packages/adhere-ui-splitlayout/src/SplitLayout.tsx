@@ -79,6 +79,11 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
   const fixedValue = useRef(0);
   const maxDimension = useRef(0);
 
+  // 拖动期间挂在 document 上的监听，便于 cleanup
+  const documentMoveHandler = useRef<((e: MouseEvent) => void) | null>(null);
+  const documentUpHandler = useRef<((e: MouseEvent) => void) | null>(null);
+  const prevBodyUserSelect = useRef('');
+
   useTheme<HTMLElement>({
     elRef: el,
     group: 'normal',
@@ -234,6 +239,28 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
   );
 
   /**
+   * 移除 document 级拖动监听并恢复 body 选中
+   */
+  const detachDocumentDrag = useCallback(() => {
+    if (documentMoveHandler.current) {
+      document.removeEventListener('mousemove', documentMoveHandler.current);
+      documentMoveHandler.current = null;
+    }
+
+    if (documentUpHandler.current) {
+      document.removeEventListener('mouseup', documentUpHandler.current);
+      documentUpHandler.current = null;
+    }
+
+    if (prevBodyUserSelect.current !== undefined) {
+      document.body.style.userSelect = prevBodyUserSelect.current;
+      prevBodyUserSelect.current = '';
+    }
+
+    el.current?.classList.remove(`${selectorPrefix}-is-dragging`);
+  }, []);
+
+  /**
    * 鼠标进入事件处理
    * @param e - 鼠标事件
    */
@@ -248,68 +275,12 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
   );
 
   /**
-   * 鼠标按下事件处理
-   * @param e - 鼠标事件
-   */
-  const onMousedown = useCallback(
-    (e: MouseEvent) => {
-      el.current?.classList.remove(`${selectorPrefix}-${getResizeClass()}`);
-
-      if (isEnter.current) {
-        isDown.current = true;
-        startVal.current = e[getProps().page];
-        fixedValue.current = fixedEl.current?.[getProps().offset] || 0;
-        onDragStarted?.(createDragEventParams(e, 0));
-      }
-    },
-    [getResizeClass, getProps, onDragStarted, createDragEventParams],
-  );
-
-  /**
-   * 鼠标抬起事件处理
-   * @param e - 鼠标事件
-   */
-  const onMouseup = useCallback(
-    (e: MouseEvent) => {
-      el.current?.classList.add(`${selectorPrefix}-${getResizeClass()}`);
-
-      if (isDown.current) {
-        isDown.current = false;
-        isMove.current = false;
-        isEnter.current = !isOut.current;
-        startVal.current = 0;
-        changeBaseVal.current = changeBaseVal.current + changeVal.current;
-        onDragFinished?.(createDragEventParams(e, 0));
-      }
-    },
-    [getResizeClass, onDragFinished, createDragEventParams],
-  );
-
-  /**
-   * 鼠标离开容器事件处理
-   * @param e - 鼠标事件
-   */
-  const onMouseleave = useCallback(
-    (e: MouseEvent) => {
-      if (isDown.current) {
-        isDown.current = false;
-        isMove.current = false;
-        isEnter.current = false;
-        startVal.current = 0;
-        changeBaseVal.current += changeVal.current;
-        onDragFinished?.(createDragEventParams(e, 0));
-      }
-    },
-    [onDragFinished, createDragEventParams],
-  );
-
-  /**
    * 鼠标移动事件处理
    * @param e - 鼠标事件
    */
   const onMousemove = useCallback(
     (e: MouseEvent) => {
-      if (isEnter.current && isDown.current) {
+      if (isDown.current) {
         isMove.current = true;
 
         const { page } = getProps();
@@ -345,60 +316,106 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
   );
 
   /**
-   * 鼠标离开事件处理
+   * 结束拖动（mouseup）
+   * @param e - 鼠标事件
+   */
+  const endDrag = useCallback(
+    (e: MouseEvent) => {
+      el.current?.classList.add(`${selectorPrefix}-${getResizeClass()}`);
+
+      if (isDown.current) {
+        isDown.current = false;
+        isMove.current = false;
+        isEnter.current = !isOut.current;
+        startVal.current = 0;
+        changeBaseVal.current = changeBaseVal.current + changeVal.current;
+        detachDocumentDrag();
+        onDragFinished?.(createDragEventParams(e, 0));
+      } else {
+        detachDocumentDrag();
+      }
+    },
+    [getResizeClass, onDragFinished, createDragEventParams, detachDocumentDrag],
+  );
+
+  /**
+   * 鼠标按下事件处理
+   * @param e - 鼠标事件
+   */
+  const onMousedown = useCallback(
+    (e: MouseEvent) => {
+      // 仅响应主按键
+      if (e.button !== 0) {
+        return;
+      }
+
+      e.preventDefault();
+
+      el.current?.classList.remove(`${selectorPrefix}-${getResizeClass()}`);
+      el.current?.classList.add(`${selectorPrefix}-is-dragging`);
+
+      isEnter.current = true;
+      isOut.current = false;
+      isDown.current = true;
+      startVal.current = e[getProps().page];
+      fixedValue.current = fixedEl.current?.[getProps().offset] || 0;
+
+      prevBodyUserSelect.current = document.body.style.userSelect;
+      document.body.style.userSelect = 'none';
+
+      documentMoveHandler.current = onMousemove;
+      documentUpHandler.current = endDrag;
+      document.addEventListener('mousemove', onMousemove);
+      document.addEventListener('mouseup', endDrag);
+
+      onDragStarted?.(createDragEventParams(e, 0));
+    },
+    [getResizeClass, getProps, onDragStarted, createDragEventParams, onMousemove, endDrag],
+  );
+
+  /**
+   * 鼠标离开句柄事件处理（悬停态）
    * @param e - 鼠标事件
    */
   const onMouseout = useCallback(
     (e: MouseEvent) => {
+      // 忽略从句柄移入其子伪元素/子节点的冒泡
+      const related = e.relatedTarget as Node | null;
+      if (related && el.current?.contains(related)) {
+        return;
+      }
+
       isOut.current = true;
 
       if (!isDown.current) {
         isEnter.current = false;
+        el.current?.classList.remove(`${selectorPrefix}-${getResizeClass()}`);
         onOut?.(createDragEventParams(e, 0));
       }
     },
-    [onOut, createDragEventParams],
+    [onOut, createDragEventParams, getResizeClass],
   );
 
   /**
-   * 初始化事件监听器
+   * 初始化事件监听器（悬停 + 按下；拖动期间改由 document 承接）
    */
   const initEvents = useCallback(() => {
-    const elements = [el.current, fixedEl.current, autoEl.current].filter(Boolean) as HTMLElement[];
-
-    // 添加事件监听器
     el.current?.addEventListener('mouseenter', onMouseenter);
     el.current?.addEventListener('mousedown', onMousedown);
-
-    elements.forEach((element) => {
-      element.addEventListener('mousemove', onMousemove);
-      element.addEventListener('mouseout', onMouseout);
-      element.addEventListener('mouseup', onMouseup);
-    });
-
-    containerEl.current?.addEventListener('mouseleave', onMouseleave);
-  }, [onMouseenter, onMousedown, onMousemove, onMouseout, onMouseup, onMouseleave]);
+    el.current?.addEventListener('mouseout', onMouseout);
+  }, [onMouseenter, onMousedown, onMouseout]);
 
   /**
    * 移除事件监听器
    */
   const removeEvents = useCallback(() => {
-    const elements = [el.current, fixedEl.current, autoEl.current].filter(Boolean) as HTMLElement[];
-
-    // 移除事件监听器
     el.current?.removeEventListener('mouseenter', onMouseenter);
     el.current?.removeEventListener('mousedown', onMousedown);
+    el.current?.removeEventListener('mouseout', onMouseout);
+    detachDocumentDrag();
+  }, [onMouseenter, onMousedown, onMouseout, detachDocumentDrag]);
 
-    elements.forEach((element) => {
-      element.removeEventListener('mousemove', onMousemove);
-      element.removeEventListener('mouseout', onMouseout);
-      element.removeEventListener('mouseup', onMouseup);
-    });
-
-    containerEl.current?.removeEventListener('mouseleave', onMouseleave);
-  }, [onMouseenter, onMousedown, onMousemove, onMouseout, onMouseup, onMouseleave]);
-
-  // 初始化
+  // 初始化：校验 → 取元素 → 挂事件；cleanup 卸事件
   useLayoutEffect(() => {
     if (checked()) {
       fixedEl.current = getFixedEl();
@@ -408,30 +425,6 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
       if (containerEl.current) {
         containerEl.current.classList.add(`${selectorPrefix}-no-select`);
       }
-
-      initEvents();
-    }
-
-    return removeEvents;
-  }, [checked, getFixedEl, getAutoEl, initEvents, removeEvents]);
-
-  // 更新时重新初始化
-  useLayoutEffect(() => {
-    if (checked()) {
-      // 重置状态
-      isEnter.current = false;
-      isOut.current = false;
-      isDown.current = false;
-      isMove.current = false;
-
-      startVal.current = 0;
-      changeVal.current = 0;
-      changeBaseVal.current = 0;
-      fixedValue.current = 0;
-      maxDimension.current = 0;
-
-      fixedEl.current = getFixedEl();
-      autoEl.current = getAutoEl();
 
       initEvents();
     }
