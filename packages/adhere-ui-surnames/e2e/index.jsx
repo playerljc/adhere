@@ -12,6 +12,6 @@ e2e.PC({
   // children: <SurnamesTopBottom />,
   // children: <ScrollToAnimation />,
   // children: <ScrollToAndCallbacks />,
-  // children: <CustomClassStyle />,
-  children: <SurnamesRightLeft />,
+  children: <CustomClassStyle />,
+  // children: <SurnamesRightLeft />,
 });

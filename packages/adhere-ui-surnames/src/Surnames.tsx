@@ -7,21 +7,21 @@ import React, {
   useCallback,
   useImperativeHandle,
   useLayoutEffect,
-  useRef,
   useMemo,
+  useRef,
 } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Util from '@baifendian/adhere-util';
 
-import type { 
-  Position, 
-  SurnamesProps, 
-  SurnamesRefHandle, 
+import type {
   Direction,
   EventHandler,
+  MouseEventHandler,
+  Position,
+  SurnamesProps,
+  SurnamesRefHandle,
   TouchEventHandler,
-  MouseEventHandler
 } from './types';
 
 const selectorPrefix = 'adhere-ui-surnames';
@@ -35,10 +35,83 @@ const DEFAULT_DURATION = 100;
 const DEFAULT_REFRESH_RATE = 16.7;
 
 /**
+ * 转义属性选择器中的值，避免特殊字符破坏 querySelector
+ */
+function escapeAttrValue(value: string): string {
+  if (typeof CSS !== 'undefined' && typeof CSS.escape === 'function') {
+    return CSS.escape(value);
+  }
+
+  return value.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+}
+
+/**
+ * 按 data-name 查找内容区分组标题
+ */
+function findGroupTitleEl(container: HTMLElement, name: string): HTMLElement | null {
+  return container.querySelector(
+    `.${selectorPrefix}-group-title[data-name='${escapeAttrValue(name)}']`,
+  ) as HTMLElement | null;
+}
+
+/**
+ * 根据视口坐标查找索引项：先精确命中，未命中则取主轴最近项（填补间隙、减少失焦）
+ */
+function findIndexByClientPoint(
+  map: Position[],
+  direction: Direction,
+  clientX: number,
+  clientY: number,
+): Position | null {
+  if (!map.length) return null;
+
+  for (let i = 0; i < map.length; i++) {
+    const item = map[i];
+
+    if (direction === 'vertical') {
+      if (clientY >= (item.top as number) && clientY <= (item.bottom as number)) {
+        return item;
+      }
+    } else if (clientX >= (item.left as number) && clientX <= (item.right as number)) {
+      return item;
+    }
+  }
+
+  let best = map[0];
+  let bestDist = Number.POSITIVE_INFINITY;
+
+  for (let i = 0; i < map.length; i++) {
+    const item = map[i];
+    let dist: number;
+
+    if (direction === 'vertical') {
+      const top = item.top as number;
+      const bottom = item.bottom as number;
+      if (clientY < top) dist = top - clientY;
+      else if (clientY > bottom) dist = clientY - bottom;
+      else dist = 0;
+    } else {
+      const left = item.left as number;
+      const right = item.right as number;
+      if (clientX < left) dist = left - clientX;
+      else if (clientX > right) dist = clientX - right;
+      else dist = 0;
+    }
+
+    if (dist < bestDist) {
+      bestDist = dist;
+      best = item;
+    }
+  }
+
+  return best;
+}
+
+/**
  * Surnames 组件 - 姓氏索引列表组件
- * 
+ *
  * 支持垂直和水平方向的索引导航，提供平滑滚动动画和触摸/鼠标交互
- * 
+ *
  * @example
  * ```tsx
  * <Surnames
@@ -83,10 +156,39 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
     const key = useRef<boolean>(false);
     const isMouseClicked = useRef<boolean>(false);
     const isMouseMoved = useRef<boolean>(false);
-    const startY = useRef<number>(0);
-    const startX = useRef<number>(0);
     const curIndexName = useRef<string>('');
+    const lastMoveIndexName = useRef<string>('');
     const indexPositionMap = useRef<Position[]>([]);
+    const documentMouseTrackingBound = useRef<boolean>(false);
+
+    // 事件处理函数引用，避免原生监听器闭包陈旧
+    const eventHandlersRef = useRef<{
+      onClick: EventHandler;
+      onTouchstart: TouchEventHandler;
+      onTouchmove: TouchEventHandler;
+      onTouchend: EventHandler;
+      onMousedown: MouseEventHandler;
+      onMousemove: MouseEventHandler;
+      onMouseup: MouseEventHandler;
+      onResize: EventHandler;
+    }>({
+      onClick: () => undefined,
+      onTouchstart: () => undefined,
+      onTouchmove: () => undefined,
+      onTouchend: () => undefined,
+      onMousedown: () => undefined,
+      onMousemove: () => undefined,
+      onMouseup: () => undefined,
+      onResize: () => undefined,
+    });
+
+    const documentMouseHandlersRef = useRef<{
+      onMousemove: MouseEventHandler;
+      onMouseup: MouseEventHandler;
+    }>({
+      onMousemove: () => undefined,
+      onMouseup: () => undefined,
+    });
 
     useTheme<HTMLElement>({
       elRef: el,
@@ -96,63 +198,40 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
 
     /**
      * 获取当前方向
-     * @returns 方向类型：'vertical' | 'horizontal'
      */
     const getDirection = useCallback((): Direction => {
       return position === 'left' || position === 'right' ? 'vertical' : 'horizontal';
     }, [position]);
 
     /**
-     * 初始化事件监听器
+     * 释放点击滚动锁并隐藏遮罩
      */
-    const initEvent = useCallback((): void => {
-      if (!indexInnerEl.current) return;
-
-      if (Util.isTouch()) {
-        // 触摸设备事件
-        indexInnerEl.current.addEventListener('click', onClick as EventHandler);
-        indexInnerEl.current.addEventListener('touchmove', onTouchmove as TouchEventHandler);
-        indexInnerEl.current.addEventListener('touchend', onTouchend as EventHandler);
-      } else {
-        // 鼠标设备事件
-        indexInnerEl.current.addEventListener('mousedown', onMousedown as MouseEventHandler);
-        indexInnerEl.current.addEventListener('mousemove', onMousemove as MouseEventHandler);
-        indexInnerEl.current.addEventListener('mouseleave', onMouseleave as MouseEventHandler);
-        indexInnerEl.current.addEventListener('mouseup', onMouseup as MouseEventHandler);
-
-        // 窗口大小变化事件
-        if (typeof window !== 'undefined') {
-          window.addEventListener('resize', onResize);
-        }
+    const releaseInteractionLock = useCallback((): void => {
+      key.current = false;
+      isMouseClicked.current = false;
+      if (maskEl.current) {
+        maskEl.current.style.display = 'none';
       }
     }, []);
 
     /**
-     * 移除事件监听器
+     * 隐藏高亮指示器
      */
-    const removeEvent = useCallback((): void => {
-      if (!indexInnerEl.current) return;
+    const hideHighlighted = useCallback((): void => {
+      if (!highlightedEl.current) return;
 
-      indexInnerEl.current.removeEventListener('click', onClick as EventHandler);
-      indexInnerEl.current.removeEventListener('touchmove', onTouchmove as TouchEventHandler);
-      indexInnerEl.current.removeEventListener('touchend', onTouchend as EventHandler);
-      indexInnerEl.current.removeEventListener('mousedown', onMousedown as MouseEventHandler);
-      indexInnerEl.current.removeEventListener('mousemove', onMousemove as MouseEventHandler);
-      indexInnerEl.current.removeEventListener('mouseleave', onMouseleave as MouseEventHandler);
-      indexInnerEl.current.removeEventListener('mouseup', onMouseup as MouseEventHandler);
-
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('resize', onResize);
-      }
+      highlightedEl.current.style.display = 'none';
+      highlightedEl.current.innerText = '';
+      highlightedEl.current.style.transform = 'translate3d(0,0,0)';
     }, []);
 
     /**
      * 创建遮罩层
      */
     const createMask = useCallback((): void => {
-      const el = document.createElement('div');
-      el.innerHTML = `<div class='${selectorPrefix}-mask'></div>`;
-      maskEl.current = el.firstElementChild as HTMLDivElement;
+      const maskWrapper = document.createElement('div');
+      maskWrapper.innerHTML = `<div class='${selectorPrefix}-mask'></div>`;
+      maskEl.current = maskWrapper.firstElementChild as HTMLDivElement;
       document.body.appendChild(maskEl.current);
     }, []);
 
@@ -173,37 +252,6 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
     }, [getDirection]);
 
     /**
-     * 渲染内容区域
-     */
-    const renderContent = useCallback((): React.ReactElement[] => {
-      return dataSource.map((record) => {
-        const indexConfig = indexes.find((index) => index.index === record.index);
-
-        return (
-          <div key={record.index} className={`${selectorPrefix}-group`}>
-            <a className={`${selectorPrefix}-group-title`} data-name={record.index}>
-              {indexConfig?.renderTitle ? indexConfig.renderTitle(record) : indexConfig?.index}
-            </a>
-            <div className={`${selectorPrefix}-group-inner`}>
-              {indexConfig?.renderContent ? indexConfig.renderContent(record) : null}
-            </div>
-          </div>
-        );
-      });
-    }, [dataSource, indexes]);
-
-    /**
-     * 渲染索引区域
-     */
-    const renderIndex = useCallback((): React.ReactElement[] => {
-      return indexes.map((index) => (
-        <a key={index.index} className={`${selectorPrefix}-index-item`} data-name={index.index}>
-          {index.renderIndex ? index.renderIndex(index) : index.index}
-        </a>
-      ));
-    }, [indexes]);
-
-    /**
      * 创建索引位置映射
      */
     const createIndexPosition = useCallback((): void => {
@@ -215,7 +263,6 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
 
       indexPositionMap.current = [];
 
-      // 计算每一项距离视口的位置信息
       for (let i = 0; i < indexItemEls.length; i++) {
         const indexItemEl = indexItemEls[i];
         const indexName = indexItemEl.dataset.name;
@@ -236,323 +283,435 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
     }, []);
 
     /**
-     * 根据坐标查找对应的索引
-     * @param x - X 坐标
-     * @param y - Y 坐标
-     * @returns 找到的索引位置信息，未找到则返回 null
+     * 根据视口坐标查找对应的索引
      */
-    const findIndex = useCallback((x: number, y: number): Position | null => {
-      const direction = getDirection();
-      const val = direction === 'vertical' ? y - startY.current : x - startX.current;
-      const curIndex = indexPositionMap.current.find(
-        (t) => t.name === curIndexName.current,
-      ) as Position;
-
-      if (!curIndex) return null;
-
-      let low = 0;
-      let high = indexPositionMap.current.length - 1;
-      let middle: number;
-      let target: Position | undefined;
-
-      while (
-        low <= high &&
-        low <= indexPositionMap.current.length - 1 &&
-        high <= indexPositionMap.current.length - 1
-      ) {
-        middle = (high + low) >> 1;
-        const targetVal = indexPositionMap.current[middle];
-
-        let t1: number;
-        let t2: number;
-        let t3: number;
-        let t4: number;
-
-        if (direction === 'vertical') {
-          t1 = (curIndex.top as number) + val;
-          t2 = (curIndex.bottom as number) + val;
-          t3 = targetVal.top as number;
-          t4 = targetVal.bottom as number;
-        } else {
-          t1 = (curIndex.left as number) + val;
-          t2 = (curIndex.right as number) + val;
-          t3 = targetVal.left as number;
-          t4 = targetVal.right as number;
-        }
-
-        if (t1 >= t3 && t1 <= t4) {
-          target = targetVal;
-          break;
-        } else if (t1 < t3) {
-          high = middle - 1;
-        } else {
-          low = middle + 1;
-        }
-      }
-
-      return target || null;
-    }, [getDirection]);
+    const findIndex = useCallback(
+      (clientX: number, clientY: number): Position | null => {
+        return findIndexByClientPoint(
+          indexPositionMap.current,
+          getDirection(),
+          clientX,
+          clientY,
+        );
+      },
+      [getDirection],
+    );
 
     /**
-     * 处理点击详情
-     * @param e - 事件对象
+     * 绑定 / 解绑 document 级鼠标拖动跟踪（避免移出索引条就失焦）
      */
-    const clickDetail = useCallback((e: Event): void => {
-      const target = e.target as HTMLElement;
-      e.preventDefault();
+    const unbindDocumentMouseTracking = useCallback((): void => {
+      if (!documentMouseTrackingBound.current || typeof document === 'undefined') return;
 
-      if (key.current) {
-        return;
-      }
+      document.removeEventListener(
+        'mousemove',
+        documentMouseHandlersRef.current.onMousemove as EventListener,
+      );
+      document.removeEventListener(
+        'mouseup',
+        documentMouseHandlersRef.current.onMouseup as EventListener,
+      );
+      documentMouseTrackingBound.current = false;
+    }, []);
 
-      key.current = true;
-      if (maskEl.current) {
-        maskEl.current.style.display = 'block';
-      }
+    const bindDocumentMouseTracking = useCallback((): void => {
+      if (documentMouseTrackingBound.current || typeof document === 'undefined') return;
 
-      scrollToAnimation(target.dataset.name);
+      document.addEventListener(
+        'mousemove',
+        documentMouseHandlersRef.current.onMousemove as EventListener,
+      );
+      document.addEventListener(
+        'mouseup',
+        documentMouseHandlersRef.current.onMouseup as EventListener,
+      );
+      documentMouseTrackingBound.current = true;
     }, []);
 
     /**
-     * 处理移动详情
-     * @param x - X 坐标
-     * @param y - Y 坐标
+     * 带动画效果的滚动到指定位置
      */
-    const moveDetail = useCallback((x: number, y: number): void => {
-      const index = findIndex(x, y);
-
-      if (index && highlightedEl.current) {
-        highlightedEl.current.innerText = index.name || '';
-        highlightedEl.current.style.display = 'block';
-
-        const direction = getDirection();
-
-        if (direction === 'vertical') {
-          const translateY = (index.offsetTop || 0) + Math.floor((index.height || 0) / 2);
-          highlightedEl.current.style.transform = `translate3d(0,${translateY}px,0)`;
-        } else {
-          const translateX = (index.offsetLeft || 0) + (index.width || 0);
-          highlightedEl.current.style.transform = `translate3d(${translateX}px,0,0)`;
+    const scrollToAnimation = useCallback(
+      (name?: string, duration: number = DEFAULT_DURATION): void => {
+        if (!contentEl.current || !name) {
+          releaseInteractionLock();
+          return;
         }
 
-        scrollTo(index.name);
-      }
-    }, [findIndex, getDirection]);
+        const targetEl = findGroupTitleEl(contentEl.current, name);
 
-    /**
-     * 带动画效果的滚动到指定位置
-     * @param name - 目标索引名称
-     * @param duration - 动画持续时间
-     */
-    const scrollToAnimation = useCallback((name?: string, duration: number = DEFAULT_DURATION): void => {
-      if (!contentEl.current || !name) return;
+        if (!targetEl) {
+          releaseInteractionLock();
+          return;
+        }
 
-      const targetEl = contentEl.current.querySelector(
-        `.${selectorPrefix}-group-title[data-name='${name}']`,
-      ) as HTMLElement;
+        const srcTop = contentEl.current.scrollTop;
+        let scrollVal = srcTop;
+        const targetTop = targetEl.offsetTop;
 
-      if (!targetEl) return;
+        const refreshRate = (screen as any).updateInterval || DEFAULT_REFRESH_RATE;
+        const frameCount =
+          duration / refreshRate + (duration % refreshRate !== 0 ? 1 : 0);
+        const step = (contentEl.current.scrollHeight || 0) / frameCount;
 
-      const srcTop = contentEl.current.scrollTop;
-      let scrollVal = srcTop;
-      const targetTop = targetEl.offsetTop;
-
-      // 获取屏幕刷新率
-      const refreshRate = (screen as any).updateInterval || DEFAULT_REFRESH_RATE;
-      const step = (el.current?.scrollHeight || 0) / (duration / refreshRate + (duration % refreshRate !== 0 ? 1 : 0));
-
-      /**
-       * 滚动动画函数
-       */
-      const scrollAnimation = (): void => {
-        if (srcTop < targetTop) {
-          if (scrollVal + step > targetTop) {
+        const scrollAnimation = (): void => {
+          if (srcTop < targetTop) {
+            if (scrollVal + step > targetTop) {
+              scrollVal = targetTop;
+            } else {
+              scrollVal += step;
+            }
+          } else if (scrollVal - step < targetTop) {
             scrollVal = targetTop;
           } else {
-            scrollVal += step;
+            scrollVal -= step;
           }
-        } else if (scrollVal - step < targetTop) {
-          scrollVal = targetTop;
-        } else {
-          scrollVal -= step;
-        }
 
-        if (contentEl.current) {
-          contentEl.current.scrollTop = scrollVal;
-        }
+          if (contentEl.current) {
+            contentEl.current.scrollTop = scrollVal;
+          }
 
-        if (srcTop < targetTop) {
-          if (scrollVal >= targetTop) {
-            clear();
-          } else {
-            if (typeof window !== 'undefined') {
+          if (srcTop < targetTop) {
+            if (scrollVal >= targetTop) {
+              clear();
+            } else if (typeof window !== 'undefined') {
               window.requestAnimationFrame(scrollAnimation);
             }
-          }
-        } else if (scrollVal <= targetTop) {
-          clear();
-        } else {
-          if (typeof window !== 'undefined') {
+          } else if (scrollVal <= targetTop) {
+            clear();
+          } else if (typeof window !== 'undefined') {
             window.requestAnimationFrame(scrollAnimation);
           }
-        }
 
-        function clear(): void {
-          key.current = false;
-          isMouseClicked.current = false;
-          if (maskEl.current) {
-            maskEl.current.style.display = 'none';
+          function clear(): void {
+            releaseInteractionLock();
+            onScroll?.(name);
           }
-          onScroll?.(name);
+        };
+
+        onBeforeScroll?.(name);
+
+        if (typeof window !== 'undefined') {
+          window.requestAnimationFrame(scrollAnimation);
         }
-      };
-
-      onBeforeScroll?.(name);
-
-      if (typeof window !== 'undefined') {
-        window.requestAnimationFrame(scrollAnimation);
-      }
-    }, [onBeforeScroll, onScroll]);
+      },
+      [onBeforeScroll, onScroll, releaseInteractionLock],
+    );
 
     /**
      * 直接滚动到指定位置（无动画）
-     * @param name - 目标索引名称
      */
-    const scrollTo = useCallback((name?: string): void => {
-      if (!contentEl.current || !name) return;
+    const scrollTo = useCallback(
+      (name?: string): void => {
+        if (!contentEl.current || !name) return;
 
-      const targetEl = contentEl.current.querySelector(
-        `.${selectorPrefix}-group-title[data-name='${name}']`,
-      ) as HTMLElement;
+        const targetEl = findGroupTitleEl(contentEl.current, name);
 
-      if (targetEl) {
-        contentEl.current.scrollTop = targetEl.offsetTop;
-        onScroll?.(name);
-      }
-    }, [onScroll]);
+        if (targetEl) {
+          contentEl.current.scrollTop = targetEl.offsetTop;
+          onScroll?.(name);
+        }
+      },
+      [onScroll],
+    );
 
     /**
-     * 更新组件状态
+     * 处理点击详情
      */
-    const update = useCallback((): void => {
+    const clickDetail = useCallback(
+      (name?: string): void => {
+        if (key.current || !name) {
+          return;
+        }
+
+        key.current = true;
+        if (maskEl.current) {
+          maskEl.current.style.display = 'block';
+        }
+
+        scrollToAnimation(name);
+      },
+      [scrollToAnimation],
+    );
+
+    /**
+     * 处理移动详情
+     */
+    const moveDetail = useCallback(
+      (clientX: number, clientY: number): void => {
+        const index = findIndex(clientX, clientY);
+
+        if (!index?.name || !highlightedEl.current) {
+          return;
+        }
+
+        curIndexName.current = index.name;
+
+        // 同一索引仅更新一次，避免频繁 scroll / 重绘导致卡顿失焦
+        if (lastMoveIndexName.current !== index.name) {
+          lastMoveIndexName.current = index.name;
+          highlightedEl.current.innerText = index.name;
+          highlightedEl.current.style.display = 'block';
+
+          const direction = getDirection();
+
+          if (direction === 'vertical') {
+            const translateY = (index.offsetTop || 0) + Math.floor((index.height || 0) / 2);
+            highlightedEl.current.style.transform = `translate3d(0,${translateY}px,0)`;
+          } else {
+            const translateX = (index.offsetLeft || 0) + (index.width || 0);
+            highlightedEl.current.style.transform = `translate3d(${translateX}px,0,0)`;
+          }
+
+          scrollTo(index.name);
+        } else if (highlightedEl.current.style.display !== 'block') {
+          highlightedEl.current.innerText = index.name;
+          highlightedEl.current.style.display = 'block';
+        }
+      },
+      [findIndex, getDirection, scrollTo],
+    );
+
+    /**
+     * 从事件目标解析索引项，并更新当前索引名
+     */
+    const updateCurIndexFromTarget = useCallback((target: HTMLElement): HTMLElement | null => {
+      const indexItemEl = Util.getTopDom(target, `${selectorPrefix}-index-item`) as HTMLElement;
+
+      if (indexItemEl?.dataset.name) {
+        curIndexName.current = indexItemEl.dataset.name;
+        return indexItemEl;
+      }
+
+      return null;
+    }, []);
+
+    const resetMoveState = useCallback((): void => {
+      isMouseClicked.current = false;
+      isMouseMoved.current = false;
+      lastMoveIndexName.current = '';
+      hideHighlighted();
+      unbindDocumentMouseTracking();
+    }, [hideHighlighted, unbindDocumentMouseTracking]);
+
+    const onClick = useCallback(
+      (e: Event): void => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const indexItemEl = updateCurIndexFromTarget(e.target as HTMLElement);
+        clickDetail(indexItemEl?.dataset.name);
+      },
+      [clickDetail, updateCurIndexFromTarget],
+    );
+
+    const onTouchstart = useCallback(
+      (e: TouchEvent): void => {
+        createIndexPosition();
+        lastMoveIndexName.current = '';
+        updateCurIndexFromTarget(e.target as HTMLElement);
+
+        const touch = e.touches[0] || e.changedTouches[0];
+        if (touch) {
+          moveDetail(touch.clientX, touch.clientY);
+        }
+      },
+      [createIndexPosition, moveDetail, updateCurIndexFromTarget],
+    );
+
+    const onTouchmove = useCallback(
+      (e: TouchEvent): void => {
+        e.preventDefault();
+
+        const touch = e.touches[0] || e.changedTouches[0];
+        if (!touch) return;
+
+        // 直接按触点坐标命中，不依赖 e.target（touchmove 的 target 固定为起始元素）
+        moveDetail(touch.clientX, touch.clientY);
+      },
+      [moveDetail],
+    );
+
+    const onTouchend = useCallback((): void => {
+      lastMoveIndexName.current = '';
+      hideHighlighted();
+    }, [hideHighlighted]);
+
+    const onMousedown = useCallback(
+      (e: MouseEvent): void => {
+        e.preventDefault();
+
+        createIndexPosition();
+        lastMoveIndexName.current = '';
+
+        if (updateCurIndexFromTarget(e.target as HTMLElement)) {
+          isMouseClicked.current = true;
+          isMouseMoved.current = false;
+          bindDocumentMouseTracking();
+        }
+      },
+      [bindDocumentMouseTracking, createIndexPosition, updateCurIndexFromTarget],
+    );
+
+    const onMousemove = useCallback(
+      (e: MouseEvent): void => {
+        if (!isMouseClicked.current) return;
+
+        isMouseMoved.current = true;
+        e.preventDefault();
+
+        moveDetail(e.clientX, e.clientY);
+      },
+      [moveDetail],
+    );
+
+    const onMouseup = useCallback(
+      (e: MouseEvent): void => {
+        if (!isMouseClicked.current) return;
+
+        e.preventDefault();
+
+        if (isMouseMoved.current) {
+          resetMoveState();
+          return;
+        }
+
+        const name = curIndexName.current;
+        resetMoveState();
+        clickDetail(name);
+      },
+      [clickDetail, resetMoveState],
+    );
+
+    const onResize = useCallback((): void => {
       adapterDimension();
       createIndexPosition();
     }, [adapterDimension, createIndexPosition]);
 
-    // 事件处理函数
-    const onClick = useCallback((e: Event): void => {
-      e.preventDefault();
-      e.stopPropagation();
-      clickDetail(e);
-    }, [clickDetail]);
+    eventHandlersRef.current = {
+      onClick,
+      onTouchstart,
+      onTouchmove,
+      onTouchend,
+      onMousedown,
+      onMousemove,
+      onMouseup,
+      onResize,
+    };
 
-    const onTouchmove = useCallback((e: TouchEvent): void => {
-      e.preventDefault();
+    useImperativeHandle(
+      ref,
+      () => ({
+        scrollToAnimation,
+        scrollTo,
+      }),
+      [scrollToAnimation, scrollTo],
+    );
 
-      const touch = e.changedTouches[0];
-      const y = touch.pageY;
-      const x = touch.pageX;
-      const target = e.target as HTMLElement;
-
-      const indexItemEl = Util.getTopDom(target, `${selectorPrefix}-index-item`) as HTMLElement;
-      if (indexItemEl?.dataset.name) {
-        curIndexName.current = indexItemEl.dataset.name;
-        moveDetail(x, y);
-      }
-    }, [moveDetail]);
-
-    const onTouchend = useCallback((): void => {
-      if (highlightedEl.current) {
-        highlightedEl.current.style.display = 'none';
-        highlightedEl.current.innerText = '';
-        highlightedEl.current.style.transform = 'translate3d(0,0,0)';
-      }
-    }, []);
-
-    const onMousedown = useCallback((e: MouseEvent): void => {
-      e.preventDefault();
-
-      startY.current = e.pageY;
-      startX.current = e.pageX;
-
-      const target = e.target as HTMLElement;
-      const indexItemEl = Util.getTopDom(target, `${selectorPrefix}-index-item`) as HTMLElement;
-
-      if (indexItemEl?.dataset.name) {
-        curIndexName.current = indexItemEl.dataset.name;
-        isMouseClicked.current = true;
-      }
-    }, []);
-
-    const onMousemove = useCallback((e: MouseEvent): void => {
-      if (!isMouseClicked.current) return;
-
-      isMouseMoved.current = true;
-      e.preventDefault();
-
-      moveDetail(e.pageX, e.pageY);
-    }, [moveDetail]);
-
-    const onMouseleave = useCallback((): void => {
-      isMouseClicked.current = false;
-      isMouseMoved.current = false;
-      if (highlightedEl.current) {
-        highlightedEl.current.style.display = 'none';
-        highlightedEl.current.innerText = '';
-        highlightedEl.current.style.transform = 'translate3d(0,0,0)';
-      }
-    }, []);
-
-    const onMouseup = useCallback((e: MouseEvent): void => {
-      if (isMouseMoved.current) {
-        isMouseClicked.current = false;
-        isMouseMoved.current = false;
-        if (highlightedEl.current) {
-          highlightedEl.current.style.display = 'none';
-          highlightedEl.current.innerText = '';
-          highlightedEl.current.style.transform = 'translate3d(0,0,0)';
-        }
-        return;
-      }
-
-      e.preventDefault();
-      clickDetail(e);
-    }, [clickDetail]);
-
-    const onResize = useCallback((): void => {
-      update();
-    }, [update]);
-
-    // 暴露给父组件的方法
-    useImperativeHandle(ref, () => ({
-      scrollToAnimation,
-      scrollTo,
-    }));
-
-    // 初始化遮罩层和尺寸适配
+    // 初始化遮罩层
     useLayoutEffect(() => {
       createMask();
-      adapterDimension();
-      createIndexPosition();
 
       return () => {
         if (maskEl.current?.parentElement) {
           maskEl.current.parentElement.removeChild(maskEl.current);
         }
       };
-    }, [createMask, adapterDimension, createIndexPosition]);
+    }, [createMask]);
 
-    // 初始化事件监听器
+    // 初始化事件监听器（通过 ref 转发到最新处理函数）
     useLayoutEffect(() => {
-      initEvent();
+      const indexInner = indexInnerEl.current;
+      if (!indexInner) return;
+
+      const handleClick: EventHandler = (e) => eventHandlersRef.current.onClick(e);
+      const handleTouchstart: TouchEventHandler = (e) => eventHandlersRef.current.onTouchstart(e);
+      const handleTouchmove: TouchEventHandler = (e) => eventHandlersRef.current.onTouchmove(e);
+      const handleTouchend: EventHandler = (e) => eventHandlersRef.current.onTouchend(e);
+      const handleMousedown: MouseEventHandler = (e) => eventHandlersRef.current.onMousedown(e);
+      const handleResize: EventHandler = (e) => eventHandlersRef.current.onResize(e);
+
+      // document 级跟踪使用稳定包装函数，便于绑定/解绑
+      documentMouseHandlersRef.current = {
+        onMousemove: (e) => eventHandlersRef.current.onMousemove(e),
+        onMouseup: (e) => eventHandlersRef.current.onMouseup(e),
+      };
+
+      if (Util.isTouch()) {
+        indexInner.addEventListener('click', handleClick);
+        indexInner.addEventListener('touchstart', handleTouchstart as EventListener);
+        indexInner.addEventListener('touchmove', handleTouchmove as EventListener, {
+          passive: false,
+        });
+        indexInner.addEventListener('touchend', handleTouchend);
+      } else {
+        // 仅在索引条上按下；移动/抬起挂到 document，避免移出索引条后失焦
+        indexInner.addEventListener('mousedown', handleMousedown as EventListener);
+
+        if (typeof window !== 'undefined') {
+          window.addEventListener('resize', handleResize);
+        }
+      }
+
+      return () => {
+        indexInner.removeEventListener('click', handleClick);
+        indexInner.removeEventListener('touchstart', handleTouchstart as EventListener);
+        indexInner.removeEventListener('touchmove', handleTouchmove as EventListener);
+        indexInner.removeEventListener('touchend', handleTouchend);
+        indexInner.removeEventListener('mousedown', handleMousedown as EventListener);
+
+        if (typeof document !== 'undefined') {
+          document.removeEventListener(
+            'mousemove',
+            documentMouseHandlersRef.current.onMousemove as EventListener,
+          );
+          document.removeEventListener(
+            'mouseup',
+            documentMouseHandlersRef.current.onMouseup as EventListener,
+          );
+          documentMouseTrackingBound.current = false;
+        }
+
+        if (typeof window !== 'undefined') {
+          window.removeEventListener('resize', handleResize);
+        }
+      };
+    }, []);
+
+    // 尺寸与索引坐标：position / indexes / dataSource 变化后重建
+    useLayoutEffect(() => {
       adapterDimension();
       createIndexPosition();
-      return removeEvent;
-    }, [initEvent, adapterDimension, createIndexPosition, removeEvent]);
+    }, [adapterDimension, createIndexPosition, indexes, dataSource]);
 
-    // 缓存渲染结果
-    const contentElements = useMemo(() => renderContent(), [renderContent]);
-    const indexElements = useMemo(() => renderIndex(), [renderIndex]);
+    const contentElements = useMemo(
+      () =>
+        dataSource.map((record) => {
+          const indexConfig = indexes.find((index) => index.index === record.index);
+
+          return (
+            <div key={record.index} className={`${selectorPrefix}-group`}>
+              <a className={`${selectorPrefix}-group-title`} data-name={record.index}>
+                {indexConfig?.renderTitle ? indexConfig.renderTitle(record) : indexConfig?.index}
+              </a>
+              <div className={`${selectorPrefix}-group-inner`}>
+                {indexConfig?.renderContent ? indexConfig.renderContent(record) : null}
+              </div>
+            </div>
+          );
+        }),
+      [dataSource, indexes],
+    );
+
+    const indexElements = useMemo(
+      () =>
+        indexes.map((index) => (
+          <a key={index.index} className={`${selectorPrefix}-index-item`} data-name={index.index}>
+            {index.renderIndex ? index.renderIndex(index) : index.index}
+          </a>
+        )),
+      [indexes],
+    );
 
     return (
       <div
