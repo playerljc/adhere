@@ -49,20 +49,24 @@ export default function TagTypesGallery() {
             </div>
           ))}
         </div>
+
         <Space orientation="vertical" size={12}>
           <div data-tag-type="custom-colors">
-            <Tag type="success" textColor="#722ed1" bgColor="#f9f0ff" borderColor="#d3adf7">
+            <Tag textColor="#722ed1" bgColor="#f9f0ff" borderColor="#d3adf7">
               自定义三色
             </Tag>
           </div>
+
           <div data-tag-type="radius-padding">
             <Tag type="error" radius={16} padding="4px 12px">
               radius + padding
             </Tag>
           </div>
+
           <div data-tag-type="antd-color">
             <Tag color="blue">Ant Design color</Tag>
           </div>
+
           <div data-tag-type="plain">
             <Tag>默认 Tag</Tag>
           </div>

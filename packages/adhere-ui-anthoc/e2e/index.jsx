@@ -1,16 +1,11 @@
 import React from 'react';
 
-
-
 import e2e from '@baifendian/adhere-e2e';
-
-
 
 import ArrayEntityValueHOC from './ArrayEntityValueHOC';
 import AsyncTreeEntityValueHOC from './AsyncTreeEntityValueHOC';
-import AutoCompleteTest from './AutoComplete/AutoCompleteSelectInput';
 import AutoCompleteBase from './AutoComplete/AutoComplete';
-import Cascader from './Cascader/Cascader';
+import AutoCompleteTest from './AutoComplete/AutoCompleteSelectInput';
 import AsyncCascader from './Cascader/AsyncCascader';
 import AsyncCascaderChangeOnSelect from './Cascader/AsyncCascaderChangeOnSelect';
 import AsyncCascaderEcho from './Cascader/AsyncCascaderEcho';
@@ -18,6 +13,7 @@ import AsyncCascaderMulti from './Cascader/AsyncCascaderMulti';
 import AsyncCascaderMultiEcho from './Cascader/AsyncCascaderMultiEcho';
 import AsyncCascaderShowChild from './Cascader/AsyncCascaderShowChild';
 import AsyncCascaderShowParent from './Cascader/AsyncCascaderShowParent';
+import Cascader from './Cascader/Cascader';
 import CascaderChangeOnSelect from './Cascader/CascaderChangeOnSelect';
 import CascaderHideInvalidValue from './Cascader/CascaderHideInvalidValue';
 import CascaderMulti from './Cascader/CascaderMulti';
@@ -27,9 +23,9 @@ import CascaderTreeSelect from './Cascader/CascaderTreeSelect';
 import CascaderTest from './Cascader/FlatAsyncCascader.tsx';
 import FlatCascader from './Cascader/FlatCascader';
 import FlatCascaderMulti from './Cascader/FlatCascaderMulti';
-import AutoCompleteCheckboxSelect from './Checkbox/AutoCompleteCheckboxSelect';
 import AutoCompleteCheckAllCheckboxSelect from './Checkbox/AutoCompleteCheckAllCheckboxSelect';
 import AutoCompleteCheckAllCustomCheckboxSelect from './Checkbox/AutoCompleteCheckAllCustomCheckboxSelect';
+import AutoCompleteCheckboxSelect from './Checkbox/AutoCompleteCheckboxSelect';
 import AutoCompleteCustomCheckboxSelect from './Checkbox/AutoCompleteCustomCheckboxSelect';
 import CheckAllCheckboxSelect from './Checkbox/CheckAllCheckboxSelect';
 import CheckAllCheckboxSelectRender from './Checkbox/CheckAllCheckboxSelectRender';
@@ -73,16 +69,15 @@ import AutoCompleteListPagingSelect from './List/AutoCompleteListPagingSelect.ts
 import AutoCompleteListSelect from './List/AutoCompleteListSelect.tsx';
 import CheckAllListSelect from './List/CheckAllListSelect.tsx';
 import CheckboxList from './List/CheckboxList';
-import ListTest from './List/CheckboxListPaging';
-import CheckboxListPaging from './List/CheckboxListPaging.tsx';
+import CheckboxListPaging from './List/CheckboxListPaging';
 import CheckboxListPagingSelect from './List/CheckboxListPagingSelect';
 import CheckboxListSelect from './List/CheckboxListSelect';
+import ListBase from './List/List';
 import RadioList from './List/RadioList';
 import RadioListPaging from './List/RadioListPaging';
 import RadioListPagingSelect from './List/RadioListPagingSelect';
 import RadioListSelect from './List/RadioListSelect';
 import SuspenseListPaging from './List/SuspenseListPaging';
-import ListBase from './List/List';
 import PagingEntityValueHOC from './PagingEntityValueHOC';
 import RadioTest from './Radio/AutoCompleteButtonRadioSelect.tsx';
 import AutoCompleteCustomRadioSelect from './Radio/AutoCompleteCustomRadioSelect';
@@ -142,18 +137,18 @@ import TreeTableSelectSingle from './Table/TreeTableSelectSingle';
 import SegmentedTabs from './Tabs/SegmentedTabs';
 import SegmentedTabsSwiperProps from './Tabs/SegmentedTabsSwiperProps';
 import TabsBase from './Tabs/TabsBase';
-import TagTest from './Tag/HorizontalCheckableTagGroup';
 import AutoCompleteCheckAllTagSelect from './Tag/AutoCompleteCheckAllTagSelect';
 import AutoCompleteTagSelect from './Tag/AutoCompleteTagSelect';
 import CheckAllTagSelect from './Tag/CheckAllTagSelect';
 import HorizontalCheckAllCheckableTagGroup from './Tag/HorizontalCheckAllCheckableTagGroup';
+import TagTest from './Tag/HorizontalCheckableTagGroup';
 import HorizontalTagGroup from './Tag/HorizontalTagGroup';
 import TagBase from './Tag/Tag';
 import TagSelect from './Tag/TagSelect';
 import TagSelectSingle from './Tag/TagSelectSingle';
 import TagTypesGallery from './Tag/TagTypesGallery';
-import VerticalCheckableTagGroup from './Tag/VerticalCheckableTagGroup';
 import VerticalCheckAllCheckableTagGroup from './Tag/VerticalCheckAllCheckableTagGroup';
+import VerticalCheckableTagGroup from './Tag/VerticalCheckableTagGroup';
 import VerticalTagGroup from './Tag/VerticalTagGroup';
 import TimePickerValueHOCInFormTest from './TimePickerValueHOCInFormTest';
 import TimePickerValueHOCTest from './TimePickerValueHOCTest';
@@ -166,14 +161,14 @@ import TransferSelect from './Transfer/TransferSelect';
 import TreeTransfer from './Transfer/TreeTransfer';
 import TreeTransferSelect from './Transfer/TreeTransferSelect';
 import TreeEntityValueHOC from './TreeEntityValueHOC';
-import AutoCompleteTreeMultiSelectValueHOC from './TreeSelect/AutoCompleteTreeMultiSelectValueHOC';
 import AsyncTreeLeafSelect from './TreeSelect/AsyncTreeLeafSelect';
 import AsyncTreeSelectEcho from './TreeSelect/AsyncTreeSelectEcho';
 import AutoCompleteTreeLeafSelect from './TreeSelect/AutoCompleteTreeLeafSelect';
 import AutoCompleteTreeMultiSelect from './TreeSelect/AutoCompleteTreeMultiSelect';
+import AutoCompleteTreeMultiSelectValueHOC from './TreeSelect/AutoCompleteTreeMultiSelectValueHOC';
 import AutoCompleteTreeSelect from './TreeSelect/AutoCompleteTreeSelect';
-import DropdownRenderSelect from './TreeSelect/DropdownRenderSelect';
-import DropdownRenderSelectEmpty from './TreeSelect/DropdownRenderSelectEmpty';
+import TreeDropdownRenderSelect from './TreeSelect/DropdownRenderSelect';
+import TreeDropdownRenderSelectEmpty from './TreeSelect/DropdownRenderSelectEmpty';
 import FlatTreeSelect from './TreeSelect/FlatTreeSelect';
 import TreeMultiSelect from './TreeSelect/TreeMultiSelect';
 import TreeSelectBase from './TreeSelect/TreeSelect';
@@ -182,10 +177,7 @@ import Anchor from './anchor';
 import FormRulesTest from './formRulesTest';
 import AntHOC from './test';
 
-
-
 import '../src/index.less';
-
 
 // const isTagGallery =
 //   typeof window !== 'undefined' &&
@@ -194,6 +186,6 @@ import '../src/index.less';
 e2e.PC({
   // children: <TransferSelect />,
   // children: isTagGallery ? <TableTransfer /> : <ScrollFirstError />,
-  children: <RevolvingTableGallery />,
+  children: <TagTypesGallery />,
   // children: <RevolvingTableNormal />,
 });
