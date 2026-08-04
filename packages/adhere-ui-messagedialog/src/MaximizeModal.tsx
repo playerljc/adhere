@@ -68,6 +68,8 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
         disabled={isMaximize ? true : draggableDisabled}
         bounds={bounds}
         nodeRef={draggableRef}
+        // 关闭/最大化等操作按钮不进入拖拽，避免点击关闭时触发 react-draggable 内部 process 访问
+        cancel={`.${selectorPrefix}-header-action, .${selectorPrefix}-header-actions`}
         onStart={onDraggableStart}
       >
         {renderModalInner(modal)}
@@ -119,7 +121,13 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
           <div className={`${selectorPrefix}-header-title`} title={title as string}>
             {title}
           </div>
-          <div className={`${selectorPrefix}-header-actions`}>
+          <div
+            className={`${selectorPrefix}-header-actions`}
+            onMouseDown={(e) => {
+              // 阻止标题栏拖拽逻辑抢占关闭按钮的 mousedown
+              e.stopPropagation();
+            }}
+          >
             <Space.Group direction="horizontal" size={5}>
               {isMaximize && (
                 <BlockOutlined

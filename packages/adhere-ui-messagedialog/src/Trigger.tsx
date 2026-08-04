@@ -1,18 +1,17 @@
 import type { ModalProps } from 'antd/lib/modal/interface';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
-import { forwardRef } from 'react';
-import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 
 import MessageDialog from './MessageDialog';
 import { selectorPrefix } from './Modal';
 import SubmitButton from './SubmitButton';
-import type { TriggerHandle, TriggerProps } from './types';
+import type { DialogHandle, TriggerHandle, TriggerProps } from './types';
 
 /**
  * Trigger组件
  * 用于触发模态对话框的触发器组件
- * 
+ *
  * @param props - 组件属性
  * @param props.className - 自定义类名
  * @param props.style - 自定义样式
@@ -47,13 +46,16 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
     },
     ref,
   ) => {
-    const dialog = useRef<
-      ReturnType<typeof MessageDialog.MaximizeModal> | ReturnType<typeof MessageDialog.Modal> | null
-    >(null);
+    const dialog = useRef<DialogHandle | null>(null);
 
     const bodyChildren = useMemo(() => {
       // 确保children是有效的ReactElement
-      if (!children || typeof children === 'string' || typeof children === 'number' || typeof children === 'boolean') {
+      if (
+        !children ||
+        typeof children === 'string' ||
+        typeof children === 'number' ||
+        typeof children === 'boolean'
+      ) {
         return children;
       }
 
@@ -102,29 +104,32 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
       if (disabled) return;
 
       function execute(): void {
-        const _modalConfig: ModalProps = modalConfig?.config ?? {};
+        const _modalConfig: ModalProps = {
+          ...(modalConfig?.config ?? {}),
+        };
 
         _modalConfig.footer =
           (actions ?? []).map?.((_actionConfig) => (
             <SubmitButton
               {...(_actionConfig ?? {})}
-              onClick={() => onConfirm(_actionConfig.onClick, (dialog.current as any)?.close)}
+              // 与原先一致：在点击时捕获 close 引用，避免 300ms 后 ref 已被清空导致关不掉
+              onClick={() => onConfirm(_actionConfig.onClick, dialog.current?.close)}
             />
           )) ?? [];
 
-        const modalMap = new Map([
-          [true, MessageDialog.MaximizeModal],
-          [false, MessageDialog.Modal],
-        ]);
+        const userAfterClose = _modalConfig.afterClose;
+        _modalConfig.afterClose = (...args: any[]) => {
+          dialog.current = null;
+          userAfterClose?.(...(args as []));
+        };
 
-        const ModalComponent = modalMap.get(maximized as boolean);
-        if (ModalComponent) {
-          dialog.current = ModalComponent({
+        const ModalComponent = maximized ? MessageDialog.MaximizeModal : MessageDialog.Modal;
+        dialog.current =
+          ModalComponent({
             config: _modalConfig,
             defaultCloseBtn,
             children: bodyChildren,
-          });
-        }
+          }) ?? null;
       }
 
       if (!beforeTrigger) {
@@ -140,26 +145,30 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
       }
     }
 
+    // 仅在弹层打开且配置/内容变化时同步，避免关闭后对已卸载 root 调用 setConfig
     useEffect(() => {
+      if (!dialog.current?.setConfig) return;
+
+      const _modalConfig: ModalProps = modalConfig?.config ?? {};
+
       try {
-        const _modalConfig: ModalProps = modalConfig?.config ?? {};
-        if (dialog.current?.setConfig) {
-          dialog.current.setConfig((draft) => {
-            Object.keys(_modalConfig).forEach((_key) => {
-              draft[_key] = _modalConfig[_key];
-            });
-          }, bodyChildren);
-        }
+        dialog.current.setConfig((draft) => {
+          Object.keys(_modalConfig).forEach((_key) => {
+            // 保留打开时注入的 afterClose（用于清理 dialog ref）
+            if (_key === 'afterClose') return;
+            draft[_key] = _modalConfig[_key as keyof ModalProps];
+          });
+        }, bodyChildren);
       } catch (err) {
         console.error('Trigger setConfig error:', err);
+        dialog.current = null;
       }
-    });
+    }, [modalConfig, bodyChildren]);
 
     useImperativeHandle(ref, () => ({
       close: () => {
-        if (dialog.current?.close) {
-          (dialog.current as any).close();
-        }
+        dialog.current?.close?.();
+        dialog.current = null;
       },
     }));
 

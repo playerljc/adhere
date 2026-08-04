@@ -85,7 +85,7 @@ declare const MessageDialogFactory: {
      * @param params.defaultCloseBtn - 是否显示默认关闭按钮
      * @returns 对话框句柄
      */
-    MaximizeModal({ config, children, defaultCloseBtn, }: ModalArgv): DialogHandle | void;
+    MaximizeModal({ config, children, defaultCloseBtn, closeBtnText, }: ModalArgv): DialogHandle | void;
     /**
      * 关闭指定的对话框
      * @param el - 对话框DOM元素

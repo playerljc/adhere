@@ -24,6 +24,9 @@ import type {
   PromptFormRefHandle,
 } from './types';
 
+/** 关闭动画后再卸载 root 的等待时间 */
+const UNMOUNT_DELAY = 300;
+
 /**
  * 渲染带图标的组件
  * @param icon - 图标元素
@@ -58,6 +61,111 @@ let renderToWrapper: ((children: () => ReactNode) => ReactNode) | undefined;
  * 存储MessageDialog实例的WeakMap
  */
 const MessageDialogHandlers = new WeakMap<HTMLElement, Root>();
+
+type PortalDialogOptions = {
+  config?: ModalArgv['config'];
+  children?: ReactNode;
+  defaultCloseBtn?: boolean;
+  closeBtnText?: ModalArgv['closeBtnText'];
+  renderDialog: (params: {
+    open: boolean;
+    close: () => void;
+    config: Record<string, any>;
+    closeBtn: boolean;
+    closeBtnText?: ModalArgv['closeBtnText'];
+    children: ReactNode;
+  }) => React.ReactElement;
+};
+
+/**
+ * 创建独立 React root 的弹层，并保证关闭后不再 render（避免 unmounted root 报错）
+ */
+function createPortalDialog({
+  config = {},
+  children = null,
+  defaultCloseBtn = true,
+  closeBtnText,
+  renderDialog,
+}: PortalDialogOptions): DialogHandle | void {
+  if (!allowMultipleInstances && lock) {
+    console.warn('Modal dialog is locked, cannot create new instance');
+    return;
+  }
+
+  lock = true;
+
+  let open = true;
+  let disposed = false;
+  let modalConfig: Record<string, any> = {
+    maskClosable: false,
+    ...config,
+    afterClose: () => {
+      lock = false;
+      config?.afterClose?.();
+    },
+  };
+
+  const el = document.createElement('div');
+  const root = createRoot(el);
+
+  function render(_children?: ReactNode): void {
+    // 已卸载或正在关闭后的非法更新直接忽略
+    if (disposed) return;
+
+    const element = renderDialog({
+      open,
+      close,
+      config: modalConfig,
+      closeBtn: defaultCloseBtn,
+      closeBtnText,
+      children: _children ?? children,
+    });
+
+    root.render(renderToWrapper?.(() => element) ?? element);
+  }
+
+  function close(): void {
+    if (disposed || !open) return;
+
+    open = false;
+    render();
+
+    setTimeout(() => {
+      if (disposed) return;
+
+      disposed = true;
+      try {
+        root.unmount();
+      } catch {
+        // root 可能已卸载，忽略
+      }
+
+      MessageDialogHandlers.delete(el);
+      el.parentElement?.removeChild(el);
+      lock = false;
+    }, UNMOUNT_DELAY);
+  }
+
+  render();
+  MessageDialogHandlers.set(el, root);
+  document.body.appendChild(el);
+
+  return {
+    el,
+    close,
+    setConfig: (callback: (draft: any) => void, _children?: ReactNode): void => {
+      // 关闭中或已卸载时禁止更新，避免 Cannot update an unmounted root
+      if (disposed || !open) return;
+
+      modalConfig = produce(modalConfig, callback);
+      render(_children);
+    },
+    update: (_children?: ReactNode): void => {
+      if (disposed || !open) return;
+      render(_children);
+    },
+  };
+}
 
 /**
  * MessageDialog工厂类
@@ -332,75 +440,23 @@ const MessageDialogFactory = {
     defaultCloseBtn = true,
     closeBtnText,
   }: ModalArgv): DialogHandle | void {
-    // 如果不允许多实例且已锁定，则返回
-    if (!allowMultipleInstances && lock) {
-      console.warn('Modal dialog is locked, cannot create new instance');
-      return;
-    }
-
-    lock = true;
-
-    let open = true;
-    let modalConfig = {
-      maskClosable: false,
-      ...config,
-      afterClose: () => {
-        lock = false;
-        config?.afterClose?.();
-      },
-    };
-
-    const el = document.createElement('div');
-    const root = createRoot(el);
-
-    /**
-     * 渲染对话框内容
-     * @param _children - 可选的子元素
-     */
-    function render(_children?: ReactNode): void {
-      const element = (
+    return createPortalDialog({
+      config,
+      children,
+      defaultCloseBtn,
+      closeBtnText,
+      renderDialog: ({ open, close, config: modalConfig, closeBtn, closeBtnText: btnText, children: dialogChildren }) => (
         <ModalDialog
           open={open}
           close={close}
           config={modalConfig}
-          closeBtn={defaultCloseBtn}
-          closeBtnText={closeBtnText}
+          closeBtn={closeBtn}
+          closeBtnText={btnText}
         >
-          {_children ?? children}
+          {dialogChildren}
         </ModalDialog>
-      );
-
-      root.render(renderToWrapper?.(() => element) ?? element);
-    }
-
-    /**
-     * 关闭对话框
-     */
-    function close(): void {
-      open = false;
-      render();
-
-      setTimeout(() => {
-        root.unmount();
-        lock = false;
-      }, 300);
-    }
-
-    render();
-    MessageDialogHandlers.set(el, root);
-    document.body.appendChild(el);
-
-    return {
-      el,
-      close,
-      setConfig: (callback: (draft: any) => void, _children?: ReactNode): void => {
-        modalConfig = produce(modalConfig, callback);
-        render(_children);
-      },
-      update: (_children?: ReactNode): void => {
-        render(_children);
-      },
-    };
+      ),
+    });
   },
 
   /**
@@ -415,74 +471,25 @@ const MessageDialogFactory = {
     config = {},
     children = null,
     defaultCloseBtn = true,
+    closeBtnText,
   }: ModalArgv): DialogHandle | void {
-    if (!allowMultipleInstances && lock) {
-      console.warn('Maximize modal dialog is locked, cannot create new instance');
-      return;
-    }
-
-    lock = true;
-
-    let open = true;
-    let modalConfig = {
-      maskClosable: false,
-      ...config,
-      afterClose: () => {
-        lock = false;
-        config?.afterClose?.();
-      },
-    };
-
-    const el = document.createElement('div');
-    const root = createRoot(el);
-
-    /**
-     * 渲染对话框内容
-     * @param _children - 可选的子元素
-     */
-    function render(_children?: ReactNode): void {
-      const element = (
+    return createPortalDialog({
+      config,
+      children,
+      defaultCloseBtn,
+      closeBtnText,
+      renderDialog: ({ open, close, config: modalConfig, closeBtn, closeBtnText: btnText, children: dialogChildren }) => (
         <MaximizeModalDialog
           open={open}
           close={close}
           config={modalConfig}
-          closeBtn={defaultCloseBtn}
+          closeBtn={closeBtn}
+          closeBtnText={btnText}
         >
-          {_children ?? children}
+          {dialogChildren}
         </MaximizeModalDialog>
-      );
-
-      root.render(renderToWrapper?.(() => element) ?? element);
-    }
-
-    /**
-     * 关闭对话框
-     */
-    function close(): void {
-      open = false;
-      render();
-
-      setTimeout(() => {
-        root.unmount();
-        lock = false;
-      }, 300);
-    }
-
-    render();
-    MessageDialogHandlers.set(el, root);
-    document.body.appendChild(el);
-
-    return {
-      el,
-      close,
-      setConfig: (callback: (draft: any) => void, _children?: ReactNode): void => {
-        modalConfig = produce(modalConfig, callback);
-        render(_children);
-      },
-      update: (_children?: ReactNode): void => {
-        render(_children);
-      },
-    };
+      ),
+    });
   },
 
   /**
@@ -492,9 +499,14 @@ const MessageDialogFactory = {
   close(el: HTMLElement): void {
     const root = MessageDialogHandlers.get(el);
     if (root) {
-      root.unmount();
+      try {
+        root.unmount();
+      } catch {
+        // ignore
+      }
       MessageDialogHandlers.delete(el);
     }
+    el.parentElement?.removeChild(el);
     lock = false;
   },
 
