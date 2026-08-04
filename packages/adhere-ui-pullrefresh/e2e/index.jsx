@@ -12,6 +12,6 @@ import './index.less';
 e2e.PC({
   // children: <PullRefreshManual />,
   // children: <PullRefreshCustom />,
-  // children: <PullRefreshCallbacks />,
-  children: <PullRefreshBasic />,
+  children: <PullRefreshCallbacks />,
+  // children: <PullRefreshBasic />,
 });

@@ -92,6 +92,14 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
     const isDownPull = useRef<boolean>(false);
     const refreshHeight = useRef<number>(0);
 
+    // 拖动热路径状态（避免每帧重复写 style / setState）
+    const lastIconDeg = useRef<number>(180);
+    const overflowLocked = useRef<boolean>(false);
+    const displayApplied = useRef<boolean>(false);
+    const rafId = useRef<number | null>(null);
+    const pendingScrollY = useRef<string | null>(null);
+    const pendingTriggerY = useRef<string | null>(null);
+
     /**
      * 渲染下拉图标
      * @returns JSX.Element
@@ -277,18 +285,143 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
      * @param duration - 动画持续时间（毫秒）
      */
     const translateY = useCallback((el: HTMLElement, y: string, duration = 0): void => {
-      el.style.transition = `transform ${duration}ms ease`;
+      if (duration === 0) {
+        if (el.style.transition) el.style.transition = '';
+      } else {
+        el.style.transition = `transform ${duration}ms ease`;
+      }
       el.style.transform = `translate3d(0,${y},0)`;
+    }, []);
+
+    /**
+     * 旋转图标（角度未变则跳过，避免每帧重启 transition）
+     * @param target - 图标元素
+     * @param distance - 旋转角度
+     * @param duration - 动画持续时间
+     */
+    const rotateIcon = useCallback((target: HTMLDivElement, distance: number, duration = 0): void => {
+      if (lastIconDeg.current === distance) return;
+
+      lastIconDeg.current = distance;
+
+      if (duration === 0) {
+        if (target.style.transition) target.style.transition = '';
+      } else {
+        target.style.transition = `transform ${duration}ms linear`;
+      }
+      target.style.transform = `rotate(${distance}deg)`;
+    }, []);
+
+    /**
+     * 取消未执行的位移 rAF，避免松手后旧帧覆盖动画
+     */
+    const cancelPendingTranslate = useCallback((): void => {
+      if (rafId.current != null) {
+        cancelAnimationFrame(rafId.current);
+        rafId.current = null;
+      }
+      pendingScrollY.current = null;
+      pendingTriggerY.current = null;
+    }, []);
+
+    /**
+     * 立即应用待写入位移并取消 rAF（松手时保证位置与手指一致）
+     */
+    const flushPendingTranslate = useCallback((): void => {
+      if (rafId.current != null) {
+        cancelAnimationFrame(rafId.current);
+        rafId.current = null;
+      }
+
+      const scrollElement = scrollEl.current;
+      const elElement = el.current;
+      const nextScrollY = pendingScrollY.current;
+      const nextTriggerY = pendingTriggerY.current;
+
+      pendingScrollY.current = null;
+      pendingTriggerY.current = null;
+
+      if (scrollElement && nextScrollY != null) {
+        translateY(scrollElement, nextScrollY, 0);
+      }
+      if (elElement && nextTriggerY != null) {
+        translateY(elElement, nextTriggerY, 0);
+      }
+    }, [translateY]);
+
+    /**
+     * 合并到下一帧再写 transform，保证拖动跟手且不堆积 style 写入
+     */
+    const scheduleTranslate = useCallback(
+      (scrollY: string, triggerY: string): void => {
+        pendingScrollY.current = scrollY;
+        pendingTriggerY.current = triggerY;
+
+        if (rafId.current != null) return;
+
+        rafId.current = requestAnimationFrame(() => {
+          rafId.current = null;
+
+          const scrollElement = scrollEl.current;
+          const elElement = el.current;
+          const nextScrollY = pendingScrollY.current;
+          const nextTriggerY = pendingTriggerY.current;
+
+          if (scrollElement && nextScrollY != null) {
+            translateY(scrollElement, nextScrollY, 0);
+          }
+          if (elElement && nextTriggerY != null) {
+            translateY(elElement, nextTriggerY, 0);
+          }
+        });
+      },
+      [translateY],
+    );
+
+    /**
+     * 仅在 can 状态变化时更新，避免拖动中每帧 setState
+     */
+    const updateCan = useCallback(
+      (next: boolean, callback?: () => void): void => {
+        if (isCanRef.current === next) return;
+        if (callback) {
+          setCan(next, callback);
+        } else {
+          setCan(next);
+        }
+      },
+      [isCanRef, setCan],
+    );
+
+    /**
+     * 首次进入下拉时锁定 overflow，clear 时恢复
+     */
+    const lockOverflow = useCallback((scrollElement: HTMLElement): void => {
+      if (overflowLocked.current) return;
+      scrollElement.style.overflow = 'hidden';
+      overflowLocked.current = true;
+    }, []);
+
+    /**
+     * 首次需要时显示 trigger
+     */
+    const ensureTriggerDisplay = useCallback((): void => {
+      if (displayApplied.current || !el.current) return;
+      el.current.style.display = 'flex';
+      displayApplied.current = true;
     }, []);
 
     /**
      * 清除组件状态
      */
     const clear = useCallback((): void => {
+      cancelPendingTranslate();
       removeEvents();
 
       isDownPull.current = false;
       isTop.current = true;
+      overflowLocked.current = false;
+      displayApplied.current = false;
 
       const elElement = el.current as HTMLElement;
       const refreshElement = refreshElRef.current as HTMLElement;
@@ -302,7 +435,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
       if (iconEl.current) rotateIcon(iconEl.current, 180, 0);
       if (scrollElement) scrollElement.style.overflowY = 'auto';
       if (maskElement) maskElement.style.display = 'none';
-    }, []);
+    }, [cancelPendingTranslate, rotateIcon]);
 
     /**
      * 移除事件监听器
@@ -321,6 +454,8 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
      * 触发刷新
      */
     const refresh = useCallback((): void => {
+      cancelPendingTranslate();
+
       const onTransitionEnd = (): void => {
         const triggerInnerElement = triggerInnerEl.current as HTMLElement;
         const refreshElement = refreshElRef.current as HTMLElement;
@@ -350,7 +485,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
       translateY(elElement, `calc(-100% + ${refreshHeight.current}px)`, 500);
 
       if (iconEl.current) rotateIcon(iconEl.current, 180, 300);
-    }, [removeEvents, trigger, setPreUpdateTime, translateY]);
+    }, [cancelPendingTranslate, removeEvents, trigger, setPreUpdateTime, translateY, rotateIcon]);
 
     /**
      * 重置组件状态
@@ -398,17 +533,6 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
     }, [preUpdateTimeRef]);
 
     /**
-     * 旋转图标
-     * @param el - 图标元素
-     * @param distance - 旋转角度
-     * @param duration - 动画持续时间
-     */
-    const rotateIcon = useCallback((el: HTMLDivElement, distance: number, duration = 0): void => {
-      el.style.transition = `transform ${duration}ms linear`;
-      el.style.transform = `rotate(${distance}deg)`;
-    }, []);
-
-    /**
      * 触摸开始事件处理
      * @param e - 触摸事件
      */
@@ -425,7 +549,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
         const scrollElement = scrollEl.current;
         if (!scrollElement) return;
 
-        scrollElement.addEventListener('touchmove', onTouchMove);
+        scrollElement.addEventListener('touchmove', onTouchMove, { passive: false });
         scrollElement.addEventListener('mousemove', onTouchMove);
         scrollElement.addEventListener('touchend', onTouchEnd);
         scrollElement.addEventListener('mouseup', onTouchEnd);
@@ -442,7 +566,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
         const scrollElement = scrollEl.current as HTMLElement;
         if (!scrollElement) return;
 
-        scrollElement.style.overflow = 'hidden';
+        lockOverflow(scrollElement);
 
         const touchEvent = e as TouchEvent;
         const mouseEvent = e as MouseEvent;
@@ -459,46 +583,48 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
 
           // 正常拉动范围
           if (distance < pullHeight.current) {
-            const elElement = el.current as HTMLDivElement;
-
-            translateY(scrollElement, `${distance}px`, 0);
-            translateY(elElement, `calc(-100% + ${distance}px)`, 0);
+            scheduleTranslate(`${distance}px`, `calc(-100% + ${distance}px)`);
 
             // 达到刷新条件
             if (distance >= refreshHeight.current + 80) {
               if (iconEl.current) rotateIcon(iconEl.current, 0, 150);
-              setCan(true, () => trigger('onPullCanRefresh'));
+              updateCan(true, () => trigger('onPullCanRefresh'));
             } else {
               if (iconEl.current) rotateIcon(iconEl.current, 180, 150);
-              setCan(false);
+              updateCan(false);
             }
 
-            if (el.current) el.current.style.display = 'flex';
+            ensureTriggerDisplay();
           } else {
             // 超出拉动范围
-            const elElement = el.current as HTMLDivElement;
-
-            translateY(scrollElement, `${pullHeight.current}px`, 0);
-            translateY(elElement, `calc(-100% + ${pullHeight.current}px)`, 0);
+            scheduleTranslate(
+              `${pullHeight.current}px`,
+              `calc(-100% + ${pullHeight.current}px)`,
+            );
 
             if (iconEl.current) rotateIcon(iconEl.current, 0, 150);
-            setCan(true, () => trigger('onPullBottom'));
+            updateCan(true, () => trigger('onPullBottom'));
           }
         } else if (isDownPull.current) {
           // 向上回弹
           e.preventDefault();
 
-          const elElement = el.current as HTMLDivElement;
-
-          translateY(scrollElement, '0px', 0);
-          translateY(elElement, 'calc(-100% + 0px)', 0);
+          scheduleTranslate('0px', 'calc(-100% + 0px)');
 
           if (iconEl.current) rotateIcon(iconEl.current, 180, 0);
         } else {
           clear();
         }
       },
-      [pullHeight, refreshHeight, setCan, trigger, translateY, rotateIcon, clear],
+      [
+        lockOverflow,
+        scheduleTranslate,
+        rotateIcon,
+        updateCan,
+        trigger,
+        ensureTriggerDisplay,
+        clear,
+      ],
     );
 
     /**
@@ -507,6 +633,8 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
      */
     const onTouchEnd = useCallback(
       (e: TouchEvent | MouseEvent): void => {
+        flushPendingTranslate();
+
         const touchEvent = e as TouchEvent;
         const mouseEvent = e as MouseEvent;
         const targetY = touchEvent.changedTouches
@@ -532,7 +660,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
           clear();
         }
       },
-      [pullHeight, refreshHeight, refresh, trigger, reset, clear],
+      [flushPendingTranslate, refresh, trigger, reset, clear],
     );
 
     /**

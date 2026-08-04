@@ -11,6 +11,7 @@
     bottom: 0;
     width: 100%;
     overflow: hidden auto;
+    will-change: transform;
   }
 
   > .adhere-ui-pull-refresh-trigger {
@@ -24,6 +25,7 @@
     height: var(--trigger-height, 60px);
     //transform: translate3d(0, -100%, 0);
     transform: var(--trigger-transform, translate3d(0, -100%, 0));
+    will-change: transform;
 
     > .adhere-ui-pull-refresh-trigger-inner {
       position: relative;
