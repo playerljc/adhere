@@ -3,7 +3,6 @@ import React, { CSSProperties, memo, useContext, useMemo } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
-import SpaceGroup from './Group';
 import { getValue } from './Util';
 import type { SpaceComponent, SpaceProps } from './types';
 
@@ -85,8 +84,5 @@ const InternalSpace = memo<SpaceProps>((props) => {
 const Space = InternalSpace as SpaceComponent;
 
 Space.displayName = 'Space';
-
-// 添加 Group 子组件
-Space.Group = SpaceGroup;
 
 export default Space;

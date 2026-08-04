@@ -1,15 +1,4 @@
-import type { CSSProperties, NamedExoticComponent, ReactNode } from 'react';
-
-import SpaceGroup from './Group';
-
-/**
- * Space 组件类型定义
- * 包含 Space 组件本身和 Group 子组件
- */
-export type SpaceComponent = NamedExoticComponent<SpaceProps> & {
-  /** SpaceGroup 子组件 */
-  Group: typeof SpaceGroup;
-};
+import type { CSSProperties, FC, NamedExoticComponent, ReactNode } from 'react';
 
 /**
  * Space 组件属性接口
@@ -36,6 +25,15 @@ export interface SpaceGroupProps extends SpaceProps {
   /** 子元素 */
   children?: ReactNode;
 }
+
+/**
+ * Space 组件类型定义
+ * 包含 Space 组件本身和 Group 子组件
+ */
+export type SpaceComponent = NamedExoticComponent<SpaceProps> & {
+  /** SpaceGroup 子组件 */
+  Group: FC<SpaceGroupProps>;
+};
 
 /**
  * 媒体查询配置类型

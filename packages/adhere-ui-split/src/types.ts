@@ -1,15 +1,4 @@
-import { CSSProperties, NamedExoticComponent, ReactNode } from 'react';
-
-import SplitGroup from './Group';
-
-/**
- * Split组件的类型定义
- * 包含主组件和Group子组件
- */
-export type SplitComponent = NamedExoticComponent<SplitProps> & {
-  /** SplitGroup子组件 */
-  Group: typeof SplitGroup;
-};
+import type { CSSProperties, FC, NamedExoticComponent, ReactNode } from 'react';
 
 /**
  * Split组件的基础属性接口
@@ -37,6 +26,15 @@ export interface SplitGroupProps extends SplitProps {
 }
 
 /**
+ * Split组件的类型定义
+ * 包含主组件和Group子组件
+ */
+export type SplitComponent = NamedExoticComponent<SplitProps> & {
+  /** SplitGroup子组件 */
+  Group: FC<SplitGroupProps>;
+};
+
+/**
  * 媒体查询配置类型
  */
 export interface MediaConfig {
@@ -44,4 +42,4 @@ export interface MediaConfig {
   isUseMedia?: boolean;
   /** 设计稿宽度 */
   designWidth?: number;
-}
+};

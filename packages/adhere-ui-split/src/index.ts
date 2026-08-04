@@ -1,10 +1,13 @@
 import Split from './Split';
+import SplitGroup from './Group';
+import type { SplitComponent } from './types';
 
-// 导出主组件
-export default Split;
+const SplitWithGroup = Split as SplitComponent;
+SplitWithGroup.Group = SplitGroup;
 
-// 导出类型定义
+export default SplitWithGroup;
+
 export type { SplitProps, SplitGroupProps, SplitComponent, MediaConfig } from './types';
 
-// 导出工具函数
 export { getValue } from './Util';
+export { flattenChildren } from './flattenChildren';

@@ -3,7 +3,6 @@ import React, { type CSSProperties, memo, useContext, useMemo, useRef } from 're
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
-import SplitGroup from './Group';
 import { getValue } from './Util';
 import type { SplitComponent, SplitProps } from './types';
 
@@ -84,8 +83,5 @@ const Split = InternalSplit as SplitComponent;
 
 // 设置显示名称
 Split.displayName = 'Split';
-
-// 添加Group子组件
-Split.Group = SplitGroup;
 
 export default Split;

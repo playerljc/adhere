@@ -16,6 +16,6 @@ e2e.PC({
   // children: <SpaceSize />,
   // children: <GroupHorizontalVertical />,
   // children: <SpaceHorizontalFit />,
-  // children: <GetValueUtil />,
-  children: <GroupHorizontalFragment />,
+  children: <GetValueUtil />,
+  // children: <GroupHorizontalFragment />,
 });
