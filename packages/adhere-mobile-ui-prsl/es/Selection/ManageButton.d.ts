@@ -1,19 +1,25 @@
-import React from 'react';
+import type { FC, ReactNode } from 'react';
+export type SelectionManageButtonProps = {
+    selectionLabel?: ReactNode;
+    selectionFinishLabel?: ReactNode;
+    selectionCancelLabel?: ReactNode;
+    isUseSelectionMode: boolean;
+    isUseNormalMode: boolean;
+    onChange: (isUseSelectionMode: boolean) => void;
+    onFinish: () => void;
+    onCancel: () => void;
+};
 /**
  * SelectionManageButton
- * @param renderSelectionTrigger
+ * @param selectionLabel
+ * @param selectionFinishLabel
+ * @param selectionCancelLabel
  * @param isUseSelectionMode
+ * @param isUseNormalMode
  * @param onChange
+ * @param onFinish
+ * @param onCancel
  * @constructor
  */
-declare const SelectionManageButton: ({ selectionLabel, selectionFinishLabel, selectionCancelLabel, isUseSelectionMode, isUseNormalMode, onChange, onFinish, onCancel, }: {
-    selectionLabel: any;
-    selectionFinishLabel: any;
-    selectionCancelLabel: any;
-    isUseSelectionMode: any;
-    isUseNormalMode: any;
-    onChange: any;
-    onFinish: any;
-    onCancel: any;
-}) => React.JSX.Element;
+declare const SelectionManageButton: FC<SelectionManageButtonProps>;
 export default SelectionManageButton;

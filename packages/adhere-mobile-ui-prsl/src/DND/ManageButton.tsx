@@ -1,17 +1,34 @@
 import React from 'react';
+import type { FC, ReactNode } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
 const selectorPrefix = 'adhere-mobile-ui-prsl-dnd';
 
+export type DNDManageButtonProps = {
+  dndLabel?: ReactNode;
+  dndFinishLabel?: ReactNode;
+  dndCancelLabel?: ReactNode;
+  isUseDNDMode: boolean;
+  isUseNormalMode: boolean;
+  onChange: (isUseDNDMode: boolean) => void;
+  onFinish: () => void;
+  onCancel: () => void;
+};
+
 /**
  * DNDManageButton
- * @param renderSelectionTrigger
+ * @param dndLabel
+ * @param dndFinishLabel
+ * @param dndCancelLabel
  * @param isUseDNDMode
+ * @param isUseNormalMode
  * @param onChange
+ * @param onFinish
+ * @param onCancel
  * @constructor
  */
-const DNDManageButton = ({
+const DNDManageButton: FC<DNDManageButtonProps> = ({
   dndLabel,
   dndFinishLabel,
   dndCancelLabel,

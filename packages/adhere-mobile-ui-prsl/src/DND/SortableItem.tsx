@@ -1,15 +1,11 @@
-import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import React from 'react';
 
+import type { SortableElementProps } from '../types';
 import { SortableItemContext } from './SortableItemContext';
 
-type Props = {
-  index: number;
-  children?: React.ReactNode;
-};
-
-export default function SortableItem({ index, children }: Props) {
+export default function SortableItem({ index, children }: SortableElementProps) {
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition } =
     useSortable({ id: index });
 

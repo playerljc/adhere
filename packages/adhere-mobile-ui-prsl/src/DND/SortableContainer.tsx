@@ -1,16 +1,12 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import type { DragEndEvent } from '@dnd-kit/core';
 import { DndContext, PointerSensor, TouchSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import Context from '../Context';
+import type { SortableContainerProps } from '../types';
 
-type Props = {
-  children?: React.ReactNode;
-  onSortEnd?: (params: { oldIndex: number; newIndex: number }) => void;
-  useDragHandle?: boolean;
-};
-
-export default function SortableContainer({ children, onSortEnd }: Props) {
+export default function SortableContainer({ children, onSortEnd }: SortableContainerProps) {
   const { getDatasourceLength } = useContext(Context);
 
   const length = getDatasourceLength?.() ?? 0;
@@ -39,12 +35,12 @@ export default function SortableContainer({ children, onSortEnd }: Props) {
     }),
   );
 
-  function handleDragEnd(event: any) {
+  function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event ?? {};
     if (!active || !over || active?.id === over?.id) return;
 
-    const oldIndex = items.indexOf(active.id);
-    const newIndex = items.indexOf(over.id);
+    const oldIndex = items.indexOf(Number(active.id));
+    const newIndex = items.indexOf(Number(over.id));
 
     if (oldIndex !== -1 && newIndex !== -1 && oldIndex !== newIndex) {
       setItems((prev) => arrayMove(prev, oldIndex, newIndex));

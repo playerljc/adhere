@@ -1,6 +1,8 @@
+import type { DraggableAttributes, DraggableSyntheticListeners } from '@dnd-kit/core';
 import React from 'react';
-export declare const SortableItemContext: React.Context<{
-    attributes: Record<string, any>;
-    listeners: Record<string, any>;
+export type SortableItemContextValue = {
+    attributes: DraggableAttributes | Record<string, never>;
+    listeners: DraggableSyntheticListeners | Record<string, never>;
     setActivatorNodeRef: (el: HTMLElement | null) => void;
-}>;
+};
+export declare const SortableItemContext: React.Context<SortableItemContextValue>;

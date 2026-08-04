@@ -2,7 +2,20 @@ import { useLatest, useUpdateEffect } from 'ahooks';
 import { arrayMoveImmutable } from 'array-move';
 import { useMemo, useState } from 'react';
 
-import type { DNDChangeValue } from '../types';
+import type { DNDChangeValue, ModeType } from '../types';
+
+export type UseDNDParams = {
+  mode: ModeType;
+  dataSource: Record<string, any>[];
+  reset: () => void;
+  rowKey: string;
+  total: number;
+};
+
+export type DNDMoveParams = {
+  oldIndex: number;
+  newIndex: number;
+};
 
 /**
  * UseDND
@@ -13,8 +26,10 @@ import type { DNDChangeValue } from '../types';
  * @param total
  * @constructor
  */
-export default function UseDND({ mode, dataSource, reset, rowKey, total }) {
-  const [optionDataSource, setOptionDataSource] = useState([...(dataSource ?? [])]);
+export default function UseDND({ mode, dataSource, reset, rowKey, total }: UseDNDParams) {
+  const [optionDataSource, setOptionDataSource] = useState<Record<string, any>[]>([
+    ...(dataSource ?? []),
+  ]);
 
   const optionDataSourceRef = useLatest(optionDataSource);
 
@@ -43,7 +58,7 @@ export default function UseDND({ mode, dataSource, reset, rowKey, total }) {
     reset();
   };
 
-  function move({ oldIndex, newIndex }) {
+  function move({ oldIndex, newIndex }: DNDMoveParams) {
     setOptionDataSource((_optionDataSource) =>
       arrayMoveImmutable(_optionDataSource, oldIndex, newIndex),
     );

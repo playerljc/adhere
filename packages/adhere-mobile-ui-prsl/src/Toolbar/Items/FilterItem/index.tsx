@@ -190,8 +190,11 @@ const FilterItem: FC<FilterItemProps> = ({
   }
 
   function reset(): Promise<void> {
-    // @ts-ignore
-    form?.resetFields(isPrimaryEmpty(defaultFilterValues) ? undefined : defaultFilterValues);
+    if (isPrimaryEmpty(defaultFilterValues)) {
+      form?.resetFields();
+    } else {
+      form?.setFieldsValue(defaultFilterValues);
+    }
 
     if (!onFilterReset) {
       return Promise.resolve();

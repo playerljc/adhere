@@ -1,19 +1,25 @@
-import React from 'react';
+import type { FC, ReactNode } from 'react';
+export type DNDManageButtonProps = {
+    dndLabel?: ReactNode;
+    dndFinishLabel?: ReactNode;
+    dndCancelLabel?: ReactNode;
+    isUseDNDMode: boolean;
+    isUseNormalMode: boolean;
+    onChange: (isUseDNDMode: boolean) => void;
+    onFinish: () => void;
+    onCancel: () => void;
+};
 /**
  * DNDManageButton
- * @param renderSelectionTrigger
+ * @param dndLabel
+ * @param dndFinishLabel
+ * @param dndCancelLabel
  * @param isUseDNDMode
+ * @param isUseNormalMode
  * @param onChange
+ * @param onFinish
+ * @param onCancel
  * @constructor
  */
-declare const DNDManageButton: ({ dndLabel, dndFinishLabel, dndCancelLabel, isUseDNDMode, isUseNormalMode, onChange, onFinish, onCancel, }: {
-    dndLabel: any;
-    dndFinishLabel: any;
-    dndCancelLabel: any;
-    isUseDNDMode: any;
-    isUseNormalMode: any;
-    onChange: any;
-    onFinish: any;
-    onCancel: any;
-}) => React.JSX.Element;
+declare const DNDManageButton: FC<DNDManageButtonProps>;
 export default DNDManageButton;

@@ -65,21 +65,21 @@ const SearchKeyWord = memo<SearchKeyWordProps>(
       onSearchClear?.();
     }
 
-    function addHistory(kw) {
+    function addHistory(kw: string) {
       dispatch({
         type: 'add',
         addKw: kw,
       });
     }
 
-    function removeHistory(id) {
+    function removeHistory(id: string) {
       dispatch({
         type: 'remove',
         removeId: id,
       });
     }
 
-    function listHistory(list) {
+    function listHistory(list: SearchHistoryData) {
       dispatch({
         type: 'list',
         list,
@@ -126,7 +126,6 @@ const SearchKeyWord = memo<SearchKeyWordProps>(
       >
         {(disabled || !isUseHistoryMode) && (
           <SearchBar
-            // @ts-ignore
             ref={searchRef}
             defaultValue={defaultSearchKeyWord ?? ''}
             onSearch={search}

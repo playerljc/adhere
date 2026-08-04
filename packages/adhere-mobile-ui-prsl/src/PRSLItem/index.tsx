@@ -1,7 +1,7 @@
 import { Checkbox, Radio } from 'antd-mobile';
 import classNames from 'classnames';
 import React, { useCallback, useContext, useMemo } from 'react';
-import type { FC } from 'react';
+import type { FC, ReactNode } from 'react';
 
 import { ActionSheetTrigger, ActionSwiper } from '../Action';
 import Context from '../Context';
@@ -57,7 +57,7 @@ const PRSLItem: FC<PRSLItemProps> = ({ className, style, children, record }) => 
   );
 
   const wrapper = useCallback(
-    (_children) => {
+    (_children: ReactNode) => {
       const wrapperMemo = (
         <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
           {_children}

@@ -467,11 +467,11 @@ export interface PRSLContext {
   isUseNormalMode: () => boolean;
   getRowKey: () => string;
   getOptionSelectedRowKeys: () => (string | number)[];
-  selectionChange: (_checked: boolean, id: string) => void;
+  selectionChange: (_checked: boolean, id: string | number) => void;
   selectionAllChange: (_checkAll: boolean) => void;
   getDatasourceLength: () => number;
   getSelectionMultiple: () => boolean;
-  getIndexByIdFormOptionDataSource: (id: string) => number;
+  getIndexByIdFormOptionDataSource: (id: string | number) => number;
   getDndDragHandle: () => ReactNode;
   getActionTriggerMode: () => string;
   getRenderActionSheetTrigger: () => ReactNode;
@@ -495,8 +495,11 @@ export type ModeType = 'normal' | 'selection' | 'dnd';
 
 export interface SortableContainerProps {
   children?: ReactNode;
+  onSortEnd?: (params: { oldIndex: number; newIndex: number }) => void;
+  useDragHandle?: boolean;
 }
 
 export interface SortableElementProps {
   children?: ReactNode;
+  index: number;
 }

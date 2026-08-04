@@ -18,7 +18,10 @@ import { useImmer } from 'use-immer';
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
-import type { ScrollLoadRefHandle } from '@baifendian/adhere-ui-scrollload/es/types';
+import type {
+  ScrollLoadRefHandle,
+  ScrollLoadStatus,
+} from '@baifendian/adhere-ui-scrollload/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
 import Context from './Context';
@@ -188,19 +191,19 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       },
       ref,
     ) => {
-      const wrapperRef = useRef<HTMLDivElement | undefined>(undefined);
+      const wrapperRef = useRef<HTMLDivElement | null>(null);
 
       const isFirstRef = useRef(true);
 
       const isFirstLoadingRef = useRef(false);
 
-      const scrollRef = useRef<HTMLElement | undefined>(undefined);
+      const scrollRef = useRef<HTMLDivElement | null>(null);
 
-      const callbackHandler = useRef<Function | null>(null);
+      const callbackHandler = useRef<((status?: ScrollLoadStatus) => void) | null>(null);
 
-      const status = useRef<typeof ScrollLoad.NORMAL | typeof ScrollLoad.EMPTY>(ScrollLoad.NORMAL);
+      const status = useRef<ScrollLoadStatus>(ScrollLoad.NORMAL);
 
-      const scrollLoadRef = useRef<ScrollLoadRefHandle>({} as ScrollLoadRefHandle);
+      const scrollLoadRef = useRef<ScrollLoadRefHandle | null>(null);
 
       const pagingRef = useRef({
         page:
@@ -651,7 +654,6 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       const scrollLoadElement = useMemo(() => {
         return (
           <ScrollLoad
-            // @ts-ignore
             ref={scrollLoadRef}
             renderLoading={renderLoadMoreLoading}
             distance={scrollLoadProps?.distance || 50}
@@ -686,7 +688,6 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         return (
           <div
             className={`${selectorPrefix}-scroll`}
-            // @ts-ignore
             ref={scrollRef}
           >
             {scrollLoadBeforeInnerElement}
@@ -767,7 +768,6 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
                   selectedRowKeys,
                   selectedRows,
                   changeRowKeys,
-                  // @ts-ignore
                   info,
                 );
               }}
@@ -891,9 +891,8 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         if (isUseDNDMode) {
           return (
             <SortableContainer
-              onSortEnd={(...params) => {
-                // @ts-ignore
-                dndMove(...params);
+              onSortEnd={(params) => {
+                dndMove(params);
               }}
               useDragHandle
             >
@@ -1178,16 +1177,16 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
        * @description 滚动到底部
        * @param callback
        */
-      function onScrollBottom(callback) {
+      function onScrollBottom(callback?: (status?: ScrollLoadStatus) => void) {
         // if (status.current === ScrollLoad.EMPTY) {
         //   status.current = ScrollLoad.EMPTY;
         //   callback(ScrollLoad.EMPTY);
         //   return;
         // }
 
-        callbackHandler.current = callback;
+        callbackHandler.current = callback ?? null;
 
-        return appendData();
+        void appendData();
       }
 
       /**
@@ -1273,7 +1272,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         getOptionSelectedRowKeys: () => optionSelectedRowKeys ?? [],
         getDatasourceLength: () => dataSource.data.length,
         getSelectionMultiple: () => isSelectionMultiple,
-        getIndexByIdFormOptionDataSource: (id: any) => {
+        getIndexByIdFormOptionDataSource: (id: string | number) => {
           return optionDataSource.data.findIndex((t) => t[targetRowKey] === id);
         },
         getDndDragHandle: () => dndDragHandle,
@@ -1286,7 +1285,6 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       return (
         <Context.Provider value={contextExpose}>
           <div
-            // @ts-ignore
             ref={wrapperRef}
             className={classNames(selectorPrefix, className ?? '')}
             style={style ?? {}}

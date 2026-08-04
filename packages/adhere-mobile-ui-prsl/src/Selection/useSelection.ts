@@ -2,7 +2,30 @@ import { useLatest, useUpdateEffect } from 'ahooks';
 import difference from 'lodash.difference';
 import { useMemo, useState } from 'react';
 
+import type { ModeType } from '../types';
+
 const DEFAULT_SELECTION_MULTIPLE = true;
+
+export type SelectionRowKey = string | number;
+
+export type SelectionChangeInfo = {
+  type: 'select' | 'unselect';
+};
+
+export type SelectionFinishResult = {
+  selectedRowKeys: SelectionRowKey[];
+  selectedRows: Record<string, any>[];
+  changeRowKeys: SelectionRowKey[];
+  info: SelectionChangeInfo;
+};
+
+export type UseSelectionParams = {
+  selectedRowKeys?: SelectionRowKey[];
+  selectionMultiple?: boolean;
+  mode: ModeType;
+  dataSource: Record<string, any>[];
+  rowKey: string;
+};
 
 export default function UseSelection({
   selectedRowKeys,
@@ -10,10 +33,14 @@ export default function UseSelection({
   mode,
   dataSource,
   rowKey,
-}) {
-  const [targetSelectedRowKeys, setTargetSelectedRowKeys] = useState(selectedRowKeys ?? []);
+}: UseSelectionParams) {
+  const [targetSelectedRowKeys, setTargetSelectedRowKeys] = useState<SelectionRowKey[]>(
+    selectedRowKeys ?? [],
+  );
 
-  const [optionSelectedRowKeys, setOptionSelectedRowKeys] = useState(selectedRowKeys ?? []);
+  const [optionSelectedRowKeys, setOptionSelectedRowKeys] = useState<SelectionRowKey[]>(
+    selectedRowKeys ?? [],
+  );
 
   const targetSelectedRowKeysRef = useLatest(targetSelectedRowKeys);
 
@@ -26,7 +53,7 @@ export default function UseSelection({
     [selectionMultiple],
   );
 
-  const finish = () => {
+  const finish = (): SelectionFinishResult => {
     const _preSelectedRowKeys = [...targetSelectedRowKeysRef.current];
     const _targetSelectedRowKeys = [...optionSelectedRowKeysRef.current];
 
@@ -39,7 +66,8 @@ export default function UseSelection({
     return {
       selectedRowKeys: _targetSelectedRowKeys,
       selectedRows: _targetSelectedRowKeys.map(
-        (_id) => dataSource.find((r) => (r as any)?.[rowKey] === _id) as Record<string, any>,
+        (_id) =>
+          dataSource.find((r) => r?.[rowKey] === _id) as Record<string, any>,
       ),
       changeRowKeys: [...(removed ?? []), ...(added ?? [])],
       info: {
@@ -52,7 +80,7 @@ export default function UseSelection({
     setOptionSelectedRowKeys([...targetSelectedRowKeysRef.current]);
   };
 
-  function selectionChange(_checked, _id) {
+  function selectionChange(_checked: boolean, _id: SelectionRowKey) {
     setOptionSelectedRowKeys((_optionSelectedRowKeys) => {
       if (_checked) {
         if (isSelectionMultiple) {
@@ -70,10 +98,10 @@ export default function UseSelection({
     });
   }
 
-  function selectionAllChange(_checkAll) {
-    setOptionSelectedRowKeys((_optionSelectedRowKeys) => {
+  function selectionAllChange(_checkAll: boolean) {
+    setOptionSelectedRowKeys(() => {
       if (_checkAll) {
-        return [...dataSource.map((t) => t[rowKey])];
+        return [...dataSource.map((t) => t[rowKey] as SelectionRowKey)];
       } else {
         return [];
       }

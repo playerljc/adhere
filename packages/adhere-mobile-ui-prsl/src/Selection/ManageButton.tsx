@@ -1,17 +1,34 @@
 import React from 'react';
+import type { FC, ReactNode } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
 const selectorPrefix = 'adhere-mobile-ui-prsl-selection';
 
+export type SelectionManageButtonProps = {
+  selectionLabel?: ReactNode;
+  selectionFinishLabel?: ReactNode;
+  selectionCancelLabel?: ReactNode;
+  isUseSelectionMode: boolean;
+  isUseNormalMode: boolean;
+  onChange: (isUseSelectionMode: boolean) => void;
+  onFinish: () => void;
+  onCancel: () => void;
+};
+
 /**
  * SelectionManageButton
- * @param renderSelectionTrigger
+ * @param selectionLabel
+ * @param selectionFinishLabel
+ * @param selectionCancelLabel
  * @param isUseSelectionMode
+ * @param isUseNormalMode
  * @param onChange
+ * @param onFinish
+ * @param onCancel
  * @constructor
  */
-const SelectionManageButton = ({
+const SelectionManageButton: FC<SelectionManageButtonProps> = ({
   selectionLabel,
   selectionFinishLabel,
   selectionCancelLabel,

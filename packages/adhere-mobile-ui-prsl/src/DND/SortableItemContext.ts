@@ -1,14 +1,14 @@
+import type { DraggableAttributes, DraggableSyntheticListeners } from '@dnd-kit/core';
 import React from 'react';
 
-export const SortableItemContext = React.createContext<{
-  attributes: Record<string, any>;
-  listeners: Record<string, any>;
+export type SortableItemContextValue = {
+  attributes: DraggableAttributes | Record<string, never>;
+  listeners: DraggableSyntheticListeners | Record<string, never>;
   setActivatorNodeRef: (el: HTMLElement | null) => void;
-}>({
+};
+
+export const SortableItemContext = React.createContext<SortableItemContextValue>({
   attributes: {},
   listeners: {},
-  // @ts-ignore
-  setActivatorNodeRef: () => {},
+  setActivatorNodeRef: (_el: HTMLElement | null) => {},
 });
-
-
