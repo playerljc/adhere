@@ -5,7 +5,7 @@ import ContourBlock from '@baifendian/adhere-ui-contourblock';
 import Glass from '../src/index';
 
 import '../src/index.less';
-import './test2.less';
+import './ContourBlockWrapGrid.less';
 
 export default () => {
   return (

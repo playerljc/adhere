@@ -3,7 +3,7 @@ import React from 'react';
 import Glass from '../src/index';
 
 import '../src/index.less';
-import './test.less';
+import './FixedSizeScroll.less';
 
 export default () => {
   return (

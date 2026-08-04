@@ -3,7 +3,7 @@ import React from 'react';
 import Glass from '../src/index';
 
 import '../src/index.less';
-import './test1.less';
+import './GlassGrid.less';
 
 export default () => {
   return (
