@@ -207,9 +207,11 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         dataIndex: 'sex',
         key: 'sex',
         $tip: '性别',
-        titleToString: `性别我`,
+        titleToString: '性别',
         width: {},
-        render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
+        render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v)?.label,
+        renderToString: (v) =>
+          Resource.Dict.value.ResourceNormalSexMap.value.get(v)?.label ?? '',
         $search: {
           type: 'dict',
           visible: true,
@@ -355,6 +357,15 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         sorter: true,
         sortOrder: this.sortOrder('birthday'),
         render: (val) => <DateDisplay.DateDisplay10 value={val} />,
+        renderToString: (val) => {
+          if (!val) return '';
+          const date = new Date(val);
+          if (Number.isNaN(date.getTime())) return '';
+          const y = date.getFullYear();
+          const m = `${date.getMonth() + 1}`.padStart(2, '0');
+          const d = `${date.getDate()}`.padStart(2, '0');
+          return `${y}-${m}-${d}`;
+        },
         $search: {
           type: 'rangePicker',
           visible: true,
@@ -691,6 +702,7 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         dataIndex: this.getOptionsColumnDataIndex(),
         key: this.getOptionsColumnDataIndex(),
         width: {},
+        renderToString: () => '查看删除',
         render: (v, record) => (
           <OptionsWrap
             style={{ justifyContent: 'center' }}
@@ -752,13 +764,13 @@ export default () => {
       // wrapStyle={{ height: '100%' }}
       FieldGeneratorToDict={FieldGeneratorToDict}
       // isShowExpandSearch={false}
-      // isColumnMaxContent
+      isColumnMaxContent
       isShowExpandSearch
       autoFixed
       fixedHeaderAutoTable
       fixedTableSpaceBetween
       antdTableProps={{
-        virtual: true,
+        virtual: false,
       }}
     />
   );
