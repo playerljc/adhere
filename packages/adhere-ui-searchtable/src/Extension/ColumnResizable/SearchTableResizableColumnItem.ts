@@ -46,6 +46,103 @@ function getRenderedColWidth(colEl: HTMLElement | null | undefined): number | un
 }
 
 /**
+ * flattenLeafColumns
+ * @description 展开表头分组，得到与 colgroup 对齐的叶子列
+ */
+function flattenLeafColumns(columns: any[] = []): any[] {
+  return columns.reduce((result, column) => {
+    if (column?.children && Array.isArray(column.children)) {
+      return result.concat(flattenLeafColumns(column.children));
+    }
+
+    return result.concat(column);
+  }, []);
+}
+
+/**
+ * getHeaderColElements
+ * @description 获取表头 colgroup 中的 col 节点
+ */
+function getHeaderColElements(context: any): HTMLElement[] {
+  const colEls = context?.tableWrapRef?.current?.querySelectorAll?.(
+    '.ant-table-header > table > colgroup > col',
+  );
+
+  return colEls?.length ? (Array.from(colEls) as HTMLElement[]) : [];
+}
+
+/**
+ * getLeadingColCount
+ * @description 选择列 / 序号列占用的前置 col 数量
+ */
+function getLeadingColCount(context: any): number {
+  let spanCount = 0;
+
+  if (context.getRowSelection()) {
+    spanCount += 1;
+  }
+
+  if (context.isShowNumber()) {
+    spanCount += 1;
+  }
+
+  return spanCount;
+}
+
+/**
+ * isColumnVisible
+ * @description 与 getTableColumns 的显隐规则保持一致
+ */
+function isColumnVisible(column: any): boolean {
+  if ('$hide' in column && !!column.$hide) {
+    return false;
+  }
+
+  if ('$authorized' in column) {
+    return !!column?.$authorized?.();
+  }
+
+  return true;
+}
+
+/**
+ * getVisibleLeafColumns
+ * @description 取可见叶子列；这里用 getColumns，避免调用 getTableColumns 重入 resizable 处理
+ */
+function getVisibleLeafColumns(context: any): any[] {
+  const columns = (context?.getColumns?.() ?? []).filter(isColumnVisible);
+  return flattenLeafColumns(columns);
+}
+
+/**
+ * freezeColumnWidthsFromDOM
+ * @description 首次拖拽前把所有叶子列当前渲染宽度写入缓存，避免只锁一列时其余列随布局重算被带偏
+ */
+function freezeColumnWidthsFromDOM(
+  context: any,
+  columnsWidth: Map<string, { width: number; height: number }>,
+) {
+  const colEls = getHeaderColElements(context);
+  const leafColumns = getVisibleLeafColumns(context);
+  const spanCount = getLeadingColCount(context);
+
+  leafColumns.forEach((column, index) => {
+    const key = column?.key;
+    if (key == null || columnsWidth.has(key)) {
+      return;
+    }
+
+    const fromColumn = parseWidthToNumber(column.width);
+    const fromDom = getRenderedColWidth(colEls[spanCount + index]);
+    const width = fromColumn ?? fromDom;
+
+    if (typeof width === 'number' && width > 0) {
+      columnsWidth.set(key, { width, height: 0 });
+    }
+  });
+}
+
+/**
  * handleResize
  * @description 表头列拖动的时候
  * @param context
@@ -55,10 +152,21 @@ function getRenderedColWidth(colEl: HTMLElement | null | undefined): number | un
  */
 function handleResize(context, column, columnsWidth) {
   return (e, { size }) => {
-    // 当拖动header的column时
+    // 拖动过程中先冻结其余列宽，再写入当前列，避免邻列被表格重排带偏
+    freezeColumnWidthsFromDOM(context, columnsWidth);
     columnsWidth.set(column.key, size);
 
     context.forceUpdate();
+  };
+}
+
+/**
+ * handleResizeStart
+ * @description 开始拖拽时立即冻结全部叶子列宽
+ */
+function handleResizeStart(context, columnsWidth) {
+  return () => {
+    freezeColumnWidthsFromDOM(context, columnsWidth);
   };
 }
 
@@ -108,22 +216,17 @@ export default ({
   column: any;
 }) => {
   // 如果设置了列可拖动
-  const colEls = context?.tableWrapRef?.current?.querySelectorAll?.(
-    '.ant-table-header > table > colgroup > col',
+  const colEls = getHeaderColElements(context);
+  const spanCount = getLeadingColCount(context);
+
+  // 表头分组时传入的 index 是顶层索引，需按叶子列位置对齐 colgroup
+  const leafColumns = getVisibleLeafColumns(context);
+  const leafIndex = leafColumns.findIndex(
+    (item) => item?.key === column?.key || item?.dataIndex === column?.dataIndex,
   );
+  const colIndex = leafIndex >= 0 ? leafIndex : index;
 
-  let spanCount = 0;
-
-  if (context.getRowSelection()) {
-    spanCount = spanCount + 1;
-  }
-
-  if (context.isShowNumber()) {
-    spanCount = spanCount + 1;
-  }
-
-  const colEl =
-    colEls && colEls.length > spanCount ? (colEls?.[spanCount + index] as HTMLElement) : null;
+  const colEl = colEls.length > spanCount ? colEls[spanCount + colIndex] : null;
   const computedWidth = getRenderedColWidth(colEl);
 
   const width = resolveResizableWidth({
@@ -171,6 +274,7 @@ export default ({
 
       return {
         width: headerWidth,
+        onResizeStart: handleResizeStart(context, columnsWidth),
         onResize: handleResize(context, _others, columnsWidth),
         column: _others,
       };

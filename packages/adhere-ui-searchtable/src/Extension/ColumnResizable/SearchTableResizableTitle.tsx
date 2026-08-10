@@ -11,7 +11,7 @@ import { selectorPrefix } from '../../SearchTable';
  * @constructor
  */
 function SearchTableResizableTitle(props) {
-  const { onResize, width, column, ...restProps } = props;
+  const { onResize, onResizeStart, width, column, ...restProps } = props;
 
   // Resizable 需要正数宽度；width: {} / "xxpx" / 未就绪时不能落成 0，否则首次拖动会突然变窄
   const numericWidth = (() => {
@@ -70,6 +70,7 @@ function SearchTableResizableTitle(props) {
         />
       }
       draggableOpts={{ enableUserSelectHack: false }}
+      onResizeStart={onResizeStart}
       onResize={onResize}
     >
       <th {...restProps} style={styleList} />
@@ -80,6 +81,7 @@ function SearchTableResizableTitle(props) {
 SearchTableResizableTitle.propTypes = {
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.number]),
   onResize: PropTypes.func,
+  onResizeStart: PropTypes.func,
   column: PropTypes.object,
 };
 
