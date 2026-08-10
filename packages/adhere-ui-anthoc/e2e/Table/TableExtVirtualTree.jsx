@@ -2,12 +2,13 @@ import React from 'react';
 
 import Table from '../../src/table';
 import { flatColumns } from './tableExtColumns';
-import { flatDataSource } from './tableExtMock';
+import { treeDataSource } from './tableExtMock';
 
 import '../../src/index.less';
 
 /**
- * TableExt 基础表格（与虚拟滚动示例列、数据一致，仅关闭 virtual）
+ * TableExt 树形 children 示例
+ * 列与基础表格一致（含第一列 fixed），数据为 tree；树形展开与 virtual 不兼容
  */
 export default () => {
   return (
@@ -20,8 +21,11 @@ export default () => {
           type: 'checkbox',
         }}
         columns={flatColumns}
-        dataSource={flatDataSource}
+        dataSource={treeDataSource}
         pagination={false}
+        expandable={{
+          defaultExpandAllRows: true,
+        }}
       />
     </div>
   );

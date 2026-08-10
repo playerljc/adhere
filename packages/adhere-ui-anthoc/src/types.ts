@@ -1398,12 +1398,38 @@ export type InputMultipleHOCComponent = ReturnType<typeof createFactory<InputMul
   Select: typeof Select;
 };
 
+export interface ColumnWidthMaxContent {
+  // 最小值
+  minWidth?: number;
+  // 最大值
+  maxWidth?: number;
+  // 单元格
+  cellSpacing?: number;
+  cellFontSize?: number;
+  cellFontFamily?: string;
+  cellSpacingSpace?: number;
+  // 列title
+  titleSpacing?: number;
+  titleFontSize?: number;
+  titleFontFamily?: string;
+  titleSpacingSpace?: number;
+}
+
+export type ColumnTypeExt = Omit<ColumnType<any>, 'width'> & {
+  // 宽度的设置
+  width?: undefined | string | number | ColumnWidthMaxContent;
+  titleToString?: string;
+  renderToString?: (value: any, record?: Record<string, any>, index?: number) => string;
+  children?: ColumnTypeExt[];
+  minWidth?: number | string;
+};
+
 export type TableExtProps = Omit<TableProps, 'columns'> & {
   wrapperClassName?: string;
   wrapperStyle?: CSSProperties;
   fixedHeaderAutoTable?: boolean;
   fixedTableSpaceBetween?: boolean;
-  columns: TableProps['columns'];
+  columns: ColumnTypeExt[];
   defaultColumnTitleFontSize?: number;
   defaultColumnFontFamily?: string;
   defaultColumnSpacing?: number;
@@ -1512,28 +1538,4 @@ export interface RevolvingTableProps<T, U> {
 
 export type ProxyFormInstance<Values> = FormInstance & {
   validateFieldsWithNesting?: ValidateFields<Values>;
-};
-
-export interface ColumnWidthMaxContent {
-  // 最小值
-  minWidth?: number;
-  // 最大值
-  maxWidth?: number;
-  // 单元格
-  cellSpacing?: number;
-  cellFontSize?: number;
-  cellFontFamily?: string;
-  cellSpacingSpace?: number;
-  // 列title
-  titleSpacing?: number;
-  titleFontSize?: number;
-  titleFontFamily?: string;
-  titleSpacingSpace?: number;
-}
-
-export type ColumnTypeExt = Omit<ColumnType<any>, 'width'> & {
-  // 宽度的设置
-  width?: undefined | string | number | ColumnWidthMaxContent;
-  titleToString?: string;
-  renderToString?: (value: any) => string;
 };

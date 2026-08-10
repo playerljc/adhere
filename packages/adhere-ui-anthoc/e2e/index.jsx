@@ -131,6 +131,7 @@ import RadioTreeTable from './Table/RadioTreeTable';
 import SuspenseTablePaging from './Table/SuspenseTablePaging';
 import TableBase from './Table/Table';
 import TableExt from './Table/TableExt';
+import TableExtGallery from './Table/TableExtGallery';
 import TreeTablePagingSelect from './Table/TreeTablePagingSelect.jsx';
 import TreeTableSelect from './Table/TreeTableSelect';
 import TreeTableSelectSingle from './Table/TreeTableSelectSingle';
@@ -186,6 +187,7 @@ import '../src/index.less';
 e2e.PC({
   // children: <TransferSelect />,
   // children: isTagGallery ? <TableTransfer /> : <ScrollFirstError />,
-  children: <SegmentedTabs />,
+  // children: <SegmentedTabs />,
   // children: <RevolvingTableNormal />,
+  children: <TableExtGallery />,
 });

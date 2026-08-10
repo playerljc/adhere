@@ -6,14 +6,15 @@ import React, { type FC, useContext, useEffect, useMemo, useRef, useState } from
 import * as ReactIs from 'react-is';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
-import { ColumnTypeExt } from '@baifendian/adhere-ui-searchtable/src/types';
 import Util from '@baifendian/adhere-util';
 
-import type { ColumnWidthMaxContent, TableExtProps } from '../types';
+import type { ColumnTypeExt, ColumnWidthMaxContent, TableExtProps } from '../types';
 
 const selectorPrefix = 'adhere-ui-anthoc-table';
 
 const { useTheme } = ConfigProvider;
+
+const DEFAULT_SELECTION_COLUMN_WIDTH = 50;
 
 const TableExt: FC<TableExtProps> = ({
   wrapperClassName,
@@ -46,12 +47,16 @@ const TableExt: FC<TableExtProps> = ({
 
   const preScrollY = usePrevious(scrollY);
 
+  const size = useMemo(() => props.size ?? 'middle', [props.size]);
+
+  const isVirtual = !!props.virtual;
+
   const targetDefaultColumnTitleFontSize = useMemo(() => {
-    return defaultCellFontSize ?? theme.getDesignToken().fontSize;
+    return defaultColumnTitleFontSize ?? theme.getDesignToken().fontSize;
   }, [defaultColumnTitleFontSize]);
 
   const targetDefaultColumnFontFamily = useMemo(() => {
-    return targetDefaultColumnFontFamily ?? theme.getDesignToken().fontFamily;
+    return defaultColumnFontFamily ?? theme.getDesignToken().fontFamily;
   }, [defaultColumnFontFamily]);
 
   const targetDefaultColumnSpacing = useMemo(() => {
@@ -62,7 +67,7 @@ const TableExt: FC<TableExtProps> = ({
     ]);
 
     return defaultColumnSpacing ?? spacingMap.get(size) ?? 0;
-  }, [defaultColumnSpacing]);
+  }, [defaultColumnSpacing, size]);
 
   const targetDefaultColumnSpace = useMemo(() => {
     return defaultColumnSpace ?? targetDefaultColumnTitleFontSize * 3;
@@ -88,9 +93,7 @@ const TableExt: FC<TableExtProps> = ({
     ]);
 
     return defaultCellSpacing ?? spacingMap.get(size) ?? 0;
-  }, [defaultCellSpacing]);
-
-  const size = useMemo(() => props.size ?? 'middle', [props.size]);
+  }, [defaultCellSpacing, size]);
 
   const targetFixedHeaderAutoTable = useMemo(() => {
     if (Util.isEmpty(fixedHeaderAutoTable)) return true;
@@ -103,66 +106,6 @@ const TableExt: FC<TableExtProps> = ({
 
     return fixedTableSpaceBetween;
   }, [fixedTableSpaceBetween]);
-
-  const targetColumns = useMemo<ColumnsType>(() => {
-    return (
-      (columns ?? [])
-        // width 功能
-        .map((columnConfig) => {
-          function loop(columns) {
-            return columns.map((_columnConfig) => {
-              if ('children' in _columnConfig && Array.isArray(_columnConfig.children)) {
-                _columnConfig.children = loop(_columnConfig.children as ColumnTypeExt[]);
-
-                return _columnConfig;
-              }
-
-              if ('width' in _columnConfig) {
-                setColumnWidth(_columnConfig);
-              }
-
-              return _columnConfig;
-            });
-          }
-
-          if ('children' in columnConfig && Array.isArray(columnConfig.children)) {
-            columnConfig.children = loop(columnConfig.children as ColumnTypeExt[]);
-
-            return columnConfig;
-          }
-
-          if ('width' in columnConfig) {
-            setColumnWidth(columnConfig);
-          }
-
-          return columnConfig;
-        })
-    );
-  }, [
-    columns,
-    defaultColumnTitleFontSize,
-    defaultColumnFontFamily,
-    defaultColumnSpacing,
-    defaultColumnSpace,
-    defaultCellFontSize,
-    defaultCellFontFamily,
-    defaultCellSpace,
-    defaultCellSpacing,
-  ]);
-
-  const targetTableProps = useMemo(() => {
-    const targetProps = { ...props };
-
-    if (targetFixedHeaderAutoTable) {
-      if (targetProps.scroll) {
-        targetProps.scroll.y = scrollY;
-      } else {
-        targetProps.scroll = { y: scrollY };
-      }
-    }
-
-    return targetProps;
-  }, [scrollY, props, targetFixedHeaderAutoTable]);
 
   /**
    * getCtx
@@ -212,51 +155,226 @@ const TableExt: FC<TableExtProps> = ({
 
   /**
    * pxToRem
-   * @param size
+   * @param sizeValue
    * @function
    */
-  function pxToRem(size) {
-    if (Util.isNumber(size)) {
+  function pxToRem(sizeValue) {
+    if (Util.isNumber(sizeValue)) {
       if (_context?.media?.isUseMedia) {
-        return Util.pxToRem(size as number, _context?.media?.designWidth as number);
+        return Util.pxToRem(sizeValue as number, _context?.media?.designWidth as number);
       }
 
-      return `${size}px`;
+      return `${sizeValue}px`;
     }
 
-    return size as string;
+    return sizeValue as string;
   }
 
-  function getTitleText(columnConfig: ColumnTypeExt) {
-    if ('titleToString' in columnConfig) {
-      return columnConfig.titleToString as string;
+  function getMeasurableTitleText(columnConfig: ColumnTypeExt) {
+    if ('titleToString' in columnConfig && columnConfig.titleToString != null) {
+      return String(columnConfig.titleToString);
     }
 
-    return columnConfig.title as string;
+    const { title } = columnConfig;
+    if (typeof title === 'string' || typeof title === 'number') {
+      return String(title);
+    }
+
+    return '';
   }
 
   function getCellText({
     columnConfig,
     record,
+    rowIndex = 0,
   }: {
     columnConfig: ColumnTypeExt;
     record: Record<string, any>;
+    rowIndex?: number;
   }) {
+    let text: any;
+
     if ('renderToString' in columnConfig) {
-      return columnConfig?.renderToString?.(record[columnConfig.dataIndex] as any, record, 0);
+      text = columnConfig?.renderToString?.(
+        record[columnConfig.dataIndex as string] as any,
+        record,
+        rowIndex,
+      );
+    } else {
+      text = record[columnConfig.dataIndex as string];
     }
 
-    return record[columnConfig.dataIndex];
+    if (text == null) {
+      return '';
+    }
+
+    if (typeof text === 'string' || typeof text === 'number' || typeof text === 'boolean') {
+      return String(text);
+    }
+
+    return '';
+  }
+
+  function parseColumnWidthToNumber(width: ColumnTypeExt['width'] | unknown, fallback = 150): number {
+    if (typeof width === 'number' && !Number.isNaN(width)) {
+      return width;
+    }
+
+    if (typeof width === 'string') {
+      const value = parseFloat(width);
+      if (Number.isNaN(value)) {
+        return fallback;
+      }
+
+      if (width.endsWith('rem')) {
+        return Util.remToPx(value);
+      }
+
+      return value;
+    }
+
+    if (width && typeof width === 'object') {
+      const widthConfig = width as ColumnWidthMaxContent;
+      if (typeof widthConfig.minWidth === 'number') {
+        return widthConfig.minWidth;
+      }
+      if (typeof widthConfig.maxWidth === 'number') {
+        return widthConfig.maxWidth;
+      }
+    }
+
+    return fallback;
+  }
+
+  function flattenLeafColumns(cols: ColumnTypeExt[] = []): ColumnTypeExt[] {
+    return cols.reduce<ColumnTypeExt[]>((result, column) => {
+      if (column?.children && Array.isArray(column.children)) {
+        return result.concat(flattenLeafColumns(column.children as ColumnTypeExt[]));
+      }
+
+      return result.concat(column);
+    }, []);
+  }
+
+  function getColumnExtraWidth(columnConfig: ColumnTypeExt): number {
+    let extra = 0;
+
+    if (columnConfig.sorter) {
+      extra += 20;
+    }
+
+    return extra;
+  }
+
+  function getColumnContentWidth(columnConfig: ColumnTypeExt, dataSource: any[] = []): number {
+    const widthConfig =
+      columnConfig.width && typeof columnConfig.width === 'object'
+        ? (columnConfig.width as ColumnWidthMaxContent)
+        : ({} as ColumnWidthMaxContent);
+
+    const titleWidth = getWidthByHacker({
+      text: getMeasurableTitleText(columnConfig),
+      font: widthConfig.titleFontSize ?? targetDefaultColumnTitleFontSize,
+      family: widthConfig.titleFontFamily ?? targetDefaultColumnFontFamily,
+      spacing: widthConfig.titleSpacing ?? targetDefaultColumnSpacing,
+      space: widthConfig.titleSpacingSpace ?? targetDefaultColumnSpace,
+    });
+
+    const cellsWidth = dataSource.map((record, rowIndex) =>
+      getWidthByHacker({
+        text: getCellText({ columnConfig, record, rowIndex }),
+        font: widthConfig.cellFontSize ?? targetDefaultCellFontSize,
+        family: widthConfig.cellFontFamily ?? targetDefaultCellFontFamily,
+        spacing: widthConfig.cellSpacing ?? targetDefaultCellSpacing,
+        space: widthConfig.cellSpacingSpace ?? targetDefaultCellSpace,
+      }),
+    );
+
+    const cellMaxWidth = cellsWidth.length ? Math.max(...cellsWidth) : 0;
+    let contentWidth = Math.max(titleWidth, cellMaxWidth, 0) + getColumnExtraWidth(columnConfig);
+
+    const minWidthCandidate =
+      (columnConfig as ColumnTypeExt & { minWidth?: number | string }).minWidth ??
+      widthConfig.minWidth;
+    const maxWidthCandidate = widthConfig.maxWidth;
+
+    if (minWidthCandidate != null) {
+      contentWidth = Math.max(
+        contentWidth,
+        parseColumnWidthToNumber(minWidthCandidate as ColumnTypeExt['width'], contentWidth),
+      );
+    }
+
+    if (maxWidthCandidate != null) {
+      contentWidth = Math.min(contentWidth, maxWidthCandidate);
+    }
+
+    return Math.max(Math.ceil(contentWidth), 50);
+  }
+
+  function resolveColumnNumberWidth(columnConfig: ColumnTypeExt, dataSource: any[] = []): number {
+    const { width } = columnConfig;
+
+    if (typeof width === 'number' && !Number.isNaN(width)) {
+      return width;
+    }
+
+    if (typeof width === 'string') {
+      return parseColumnWidthToNumber(width);
+    }
+
+    // width: {} / 未给 width：按内容测算
+    return getColumnContentWidth(columnConfig, dataSource);
+  }
+
+  function normalizeColumnWidths(
+    cols: ColumnTypeExt[] = [],
+    dataSource: any[] = [],
+  ): ColumnTypeExt[] {
+    return cols.map((column) => {
+      if (column?.children && Array.isArray(column.children)) {
+        return {
+          ...column,
+          children: normalizeColumnWidths(column.children as ColumnTypeExt[], dataSource),
+        };
+      }
+
+      return {
+        ...column,
+        width: resolveColumnNumberWidth(column, dataSource),
+        minWidth: undefined,
+      };
+    });
+  }
+
+  function getColumnsScrollX(cols: ColumnTypeExt[] = []): number {
+    const total = flattenLeafColumns(cols).reduce((sum, column) => {
+      const width =
+        column?.width ??
+        (column as ColumnTypeExt & { minWidth?: number | string })?.minWidth ??
+        150;
+
+      return sum + parseColumnWidthToNumber(width as ColumnTypeExt['width']);
+    }, 0);
+
+    const selectionWidth = props.rowSelection
+      ? parseColumnWidthToNumber(
+          (props.rowSelection as { columnWidth?: number | string }).columnWidth ??
+            DEFAULT_SELECTION_COLUMN_WIDTH,
+          DEFAULT_SELECTION_COLUMN_WIDTH,
+        )
+      : 0;
+
+    return Math.max(Math.ceil(total + selectionWidth), 1);
   }
 
   /**
    * setColumnWidth
-   * @param columnConfig
-   * @private
+   * @description 非 virtual：保持原逻辑，将测算宽写成 rem/px；virtual 时保留 number
    */
-  function setColumnWidth(columnConfig: ColumnTypeExt) {
+  function setColumnWidth(columnConfig: ColumnTypeExt, keepNumber = false) {
     if (typeof columnConfig.width === 'number') {
-      columnConfig.width = pxToRem(columnConfig.width);
+      columnConfig.width = keepNumber ? columnConfig.width : pxToRem(columnConfig.width);
       return;
     }
 
@@ -264,7 +382,6 @@ const TableExt: FC<TableExtProps> = ({
       return;
     }
 
-    // ------------------------------------------ 自己判断的视线
     /**
      * 先判断可行性
      */
@@ -278,25 +395,20 @@ const TableExt: FC<TableExtProps> = ({
       return undefined;
     }
 
-    // 渲染是对象且没有字符串渲染
-
     const widthConfig = columnConfig.width as ColumnWidthMaxContent;
+    const dataSource = (props?.dataSource ?? []) as Record<string, any>[];
 
-    /**
-     * 获取title宽度
-     * 获取数据的最大宽度
-     */
     const titleWidth = getWidthByHacker({
-      text: getTitleText(columnConfig),
+      text: getMeasurableTitleText(columnConfig),
       font: widthConfig.titleFontSize ?? targetDefaultColumnTitleFontSize,
       family: widthConfig.titleFontFamily ?? targetDefaultColumnFontFamily,
       spacing: widthConfig.titleSpacing ?? targetDefaultColumnSpacing,
       space: widthConfig.titleSpacingSpace ?? targetDefaultColumnSpace,
     });
 
-    const cellsWidth = (props?.dataSource ?? []).map((record) =>
+    const cellsWidth = dataSource.map((record, rowIndex) =>
       getWidthByHacker({
-        text: getCellText({ columnConfig, record }),
+        text: getCellText({ columnConfig, record, rowIndex }),
         font: widthConfig.cellFontSize ?? targetDefaultCellFontSize,
         family: widthConfig.cellFontFamily ?? targetDefaultCellFontFamily,
         spacing: widthConfig.cellSpacing ?? targetDefaultCellSpacing,
@@ -304,8 +416,7 @@ const TableExt: FC<TableExtProps> = ({
       }),
     );
 
-    const cellMaxWidth = Math.max(...cellsWidth);
-
+    const cellMaxWidth = cellsWidth.length ? Math.max(...cellsWidth) : 0;
     const titleAndCellMaxWidth = Math.max(titleWidth, cellMaxWidth);
 
     let _width: number = -1;
@@ -335,9 +446,112 @@ const TableExt: FC<TableExtProps> = ({
     }
 
     if (_width !== -1) {
-      columnConfig.width = pxToRem(_width);
+      columnConfig.width = keepNumber ? Math.max(Math.ceil(_width), 50) : pxToRem(_width);
     }
   }
+
+  function processColumns(sourceColumns: ColumnsType | ColumnTypeExt[] | undefined): ColumnTypeExt[] {
+    const cloned = (sourceColumns ?? []).map((column) => {
+      const next = { ...(column as ColumnTypeExt) };
+
+      if (next.children && Array.isArray(next.children)) {
+        next.children = processColumns(next.children as ColumnTypeExt[]);
+      }
+
+      return next;
+    });
+
+    const walk = (cols: ColumnTypeExt[]) => {
+      cols.forEach((columnConfig) => {
+        if (columnConfig.children && Array.isArray(columnConfig.children)) {
+          walk(columnConfig.children as ColumnTypeExt[]);
+          return;
+        }
+
+        if ('width' in columnConfig && columnConfig.width) {
+          setColumnWidth(columnConfig, isVirtual);
+        }
+      });
+    };
+
+    walk(cloned);
+
+    // 仅 virtual 需要把列宽规范成 number（antd virtual 约束）
+    if (isVirtual) {
+      return normalizeColumnWidths(cloned, (props?.dataSource ?? []) as any[]);
+    }
+
+    return cloned;
+  }
+
+  const targetColumns = useMemo<ColumnsType>(() => {
+    return processColumns(columns as ColumnTypeExt[]) as ColumnsType;
+  }, [
+    columns,
+    props.dataSource,
+    isVirtual,
+    defaultColumnTitleFontSize,
+    defaultColumnFontFamily,
+    defaultColumnSpacing,
+    defaultColumnSpace,
+    defaultCellFontSize,
+    defaultCellFontFamily,
+    defaultCellSpace,
+    defaultCellSpacing,
+    size,
+    targetDefaultColumnTitleFontSize,
+    targetDefaultColumnFontFamily,
+    targetDefaultColumnSpacing,
+    targetDefaultColumnSpace,
+    targetDefaultCellFontSize,
+    targetDefaultCellFontFamily,
+    targetDefaultCellSpace,
+    targetDefaultCellSpacing,
+  ]);
+
+  const targetTableProps = useMemo(() => {
+    const targetProps = { ...props };
+
+    if (targetFixedHeaderAutoTable) {
+      if (targetProps.scroll) {
+        targetProps.scroll = {
+          ...targetProps.scroll,
+          y: scrollY,
+        };
+      } else {
+        targetProps.scroll = { y: scrollY };
+      }
+    }
+
+    if (isVirtual) {
+      const userScrollX = props.scroll?.x;
+      const scrollX =
+        typeof userScrollX === 'number'
+          ? userScrollX
+          : getColumnsScrollX(targetColumns as ColumnTypeExt[]);
+
+      targetProps.scroll = {
+        ...(targetProps.scroll ?? {}),
+        x: scrollX,
+        ...(targetFixedHeaderAutoTable && typeof scrollY === 'number' ? { y: scrollY } : {}),
+      };
+
+      // antd virtual 要求 tableLayout:fixed + 数值 scroll.x
+      targetProps.tableLayout = 'fixed';
+
+      if (typeof targetProps.scroll.y !== 'number') {
+        delete targetProps.scroll.y;
+      }
+    }
+
+    return targetProps;
+  }, [
+    scrollY,
+    props,
+    targetFixedHeaderAutoTable,
+    isVirtual,
+    targetColumns,
+  ]);
 
   useEffect(() => {
     if (!tableWrapRef.current) return;
@@ -376,6 +590,8 @@ const TableExt: FC<TableExtProps> = ({
       }
     };
   });
+
+  debugger;
 
   return (
     <div

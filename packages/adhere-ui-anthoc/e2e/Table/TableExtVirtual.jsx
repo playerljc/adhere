@@ -7,13 +7,14 @@ import { flatDataSource } from './tableExtMock';
 import '../../src/index.less';
 
 /**
- * TableExt 基础表格（与虚拟滚动示例列、数据一致，仅关闭 virtual）
+ * TableExt 虚拟滚动 + width:{} 列宽测算示例
+ * 列、数据与基础表格一致，仅开启 virtual
  */
 export default () => {
   return (
     <div style={{ height: '100%', border: '1px solid #ccc' }}>
       <Table.TableExt
-        virtual={false}
+        virtual
         fixedHeaderAutoTable
         fixedTableSpaceBetween
         rowSelection={{

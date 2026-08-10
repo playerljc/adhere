@@ -807,7 +807,7 @@ export default () => {
       fixedHeaderAutoTable
       fixedTableSpaceBetween
       antdTableProps={{
-        virtual: false,
+        virtual: true,
       }}
     />
   );
