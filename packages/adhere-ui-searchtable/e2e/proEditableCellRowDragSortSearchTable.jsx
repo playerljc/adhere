@@ -317,187 +317,187 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
           },
         },
       },
-      // {
-      //   title: '身高',
-      //   dataIndex: 'height',
-      //   key: 'height',
-      //   align: 'center',
-      //   width: 150,
-      //   sorter: true,
-      //   sortOrder: this.sortOrder('height'),
-      //   $search: {
-      //     type: 'inputNumberDecimal2',
-      //     visible: true,
-      //   },
-      //   $editable: {
-      //     editable: true,
-      //     type: 'inputNumberDecimal2',
-      //     rules: [
-      //       {
-      //         required: true,
-      //         message: '请输入身高',
-      //       },
-      //     ],
-      //     onSave: ({ record, dataIndex, value }) => {
-      //       return new Promise((resolve) => {
-      //         this.updateEditorCellDate({
-      //           record,
-      //           dataIndex,
-      //           value,
-      //         }).then(() => resolve());
-      //       });
-      //     },
-      //   },
-      // },
-      // {
-      //   title: '体重',
-      //   dataIndex: 'width',
-      //   key: 'width',
-      //   align: 'center',
-      //   width: 150,
-      //   sorter: true,
-      //   sortOrder: this.sortOrder('width'),
-      //   $search: {
-      //     type: 'inputNumberDecimal2',
-      //     visible: true,
-      //   },
-      //   $editable: {
-      //     editable: true,
-      //     type: 'inputNumberDecimal2',
-      //     rules: [
-      //       {
-      //         required: true,
-      //         message: '请输入体重',
-      //       },
-      //     ],
-      //     onSave: ({ record, dataIndex, value }) => {
-      //       return new Promise((resolve) => {
-      //         this.updateEditorCellDate({
-      //           record,
-      //           dataIndex,
-      //           value,
-      //         }).then(() => resolve());
-      //       });
-      //     },
-      //   },
-      // },
-      // {
-      //   title: '籍贯',
-      //   dataIndex: 'homeTown',
-      //   key: 'homeTown',
-      //   ellipsis: true,
-      //   width: 200,
-      //   fixed: 'right',
-      //   $search: {
-      //     type: 'input',
-      //     visible: true,
-      //   },
-      //   $editable: {
-      //     editable: true,
-      //     type: 'input',
-      //     rules: [
-      //       {
-      //         required: true,
-      //         message: '请输入籍贯',
-      //       },
-      //     ],
-      //     onSave: ({ record, dataIndex, value }) => {
-      //       return new Promise((resolve) => {
-      //         this.updateEditorCellDate({
-      //           record,
-      //           dataIndex,
-      //           value,
-      //         }).then(() => resolve());
-      //       });
-      //     },
-      //   },
-      // },
-      // {
-      //   title: '现居住地',
-      //   dataIndex: 'address',
-      //   key: 'address',
-      //   width: 300,
-      //   fixed: 'right',
-      //   $search: {
-      //     type: 'input',
-      //     visible: true,
-      //     valueAttrs: {
-      //       // colSpan: 5,
-      //     },
-      //   },
-      //   $editable: {
-      //     editable: true,
-      //     type: 'input',
-      //     rules: [
-      //       {
-      //         required: true,
-      //         message: '请输入居住地',
-      //       },
-      //     ],
-      //     onSave: ({ record, dataIndex, value }) => {
-      //       return new Promise((resolve) => {
-      //         this.updateEditorCellDate({
-      //           record,
-      //           dataIndex,
-      //           value,
-      //         }).then(() => resolve());
-      //       });
-      //     },
-      //   },
-      // },
-      // {
-      //   title: '操作',
-      //   dataIndex: this.getOptionsColumnDataIndex(),
-      //   key: this.getOptionsColumnDataIndex(),
-      //   width: 500,
-      //   render: (v, record) => (
-      //     <OptionsWrap style={{ justifyContent: 'center' }} ellipsisCount={100}>
-      //       {this.renderOptionColumn(
-      //         [
-      //           {
-      //             key: 'view',
-      //             value: <a>查看</a>,
-      //           },
-      //           {
-      //             key: 'delete',
-      //             value: (
-      //               <DelConfirm
-      //                 success={() =>
-      //                   Promise.resolve().then(() => {
-      //                     this.fetchData();
-      //                   })
-      //                 }
-      //               >
-      //                 <a>删除</a>
-      //               </DelConfirm>
-      //             ),
-      //           },
-      //           {
-      //             key: 'view',
-      //             value: <a>查看</a>,
-      //           },
-      //           {
-      //             key: 'view',
-      //             value: <a>查看</a>,
-      //           },
-      //           {
-      //             key: 'view',
-      //             value: <a>查看</a>,
-      //           },
-      //           {
-      //             key: 'view',
-      //             value: <a>查看</a>,
-      //           },
-      //           {
-      //             key: 'view',
-      //             value: <a>查看</a>,
-      //           },
-      //         ],
-      //         { value: v, record },
-      //       )}
-      //     </OptionsWrap>
-      //   ),
-      // },
+      {
+        title: '身高',
+        dataIndex: 'height',
+        key: 'height',
+        align: 'center',
+        width: 150,
+        sorter: true,
+        sortOrder: this.sortOrder('height'),
+        $search: {
+          type: 'inputNumberDecimal2',
+          visible: true,
+        },
+        $editable: {
+          editable: true,
+          type: 'inputNumberDecimal2',
+          rules: [
+            {
+              required: true,
+              message: '请输入身高',
+            },
+          ],
+          onSave: ({ record, dataIndex, value }) => {
+            return new Promise((resolve) => {
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
+            });
+          },
+        },
+      },
+      {
+        title: '体重',
+        dataIndex: 'width',
+        key: 'width',
+        align: 'center',
+        width: 150,
+        sorter: true,
+        sortOrder: this.sortOrder('width'),
+        $search: {
+          type: 'inputNumberDecimal2',
+          visible: true,
+        },
+        $editable: {
+          editable: true,
+          type: 'inputNumberDecimal2',
+          rules: [
+            {
+              required: true,
+              message: '请输入体重',
+            },
+          ],
+          onSave: ({ record, dataIndex, value }) => {
+            return new Promise((resolve) => {
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
+            });
+          },
+        },
+      },
+      {
+        title: '籍贯',
+        dataIndex: 'homeTown',
+        key: 'homeTown',
+        ellipsis: true,
+        width: 200,
+        fixed: 'right',
+        $search: {
+          type: 'input',
+          visible: true,
+        },
+        $editable: {
+          editable: true,
+          type: 'input',
+          rules: [
+            {
+              required: true,
+              message: '请输入籍贯',
+            },
+          ],
+          onSave: ({ record, dataIndex, value }) => {
+            return new Promise((resolve) => {
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
+            });
+          },
+        },
+      },
+      {
+        title: '现居住地',
+        dataIndex: 'address',
+        key: 'address',
+        width: 300,
+        fixed: 'right',
+        $search: {
+          type: 'input',
+          visible: true,
+          valueAttrs: {
+            // colSpan: 5,
+          },
+        },
+        $editable: {
+          editable: true,
+          type: 'input',
+          rules: [
+            {
+              required: true,
+              message: '请输入居住地',
+            },
+          ],
+          onSave: ({ record, dataIndex, value }) => {
+            return new Promise((resolve) => {
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
+            });
+          },
+        },
+      },
+      {
+        title: '操作',
+        dataIndex: this.getOptionsColumnDataIndex(),
+        key: this.getOptionsColumnDataIndex(),
+        width: 500,
+        render: (v, record) => (
+          <OptionsWrap style={{ justifyContent: 'center' }} ellipsisCount={100}>
+            {this.renderOptionColumn(
+              [
+                {
+                  key: 'view',
+                  value: <a>查看</a>,
+                },
+                {
+                  key: 'delete',
+                  value: (
+                    <DelConfirm
+                      success={() =>
+                        Promise.resolve().then(() => {
+                          this.fetchData();
+                        })
+                      }
+                    >
+                      <a>删除</a>
+                    </DelConfirm>
+                  ),
+                },
+                {
+                  key: 'view',
+                  value: <a>查看</a>,
+                },
+                {
+                  key: 'view',
+                  value: <a>查看</a>,
+                },
+                {
+                  key: 'view',
+                  value: <a>查看</a>,
+                },
+                {
+                  key: 'view',
+                  value: <a>查看</a>,
+                },
+                {
+                  key: 'view',
+                  value: <a>查看</a>,
+                },
+              ],
+              { value: v, record },
+            )}
+          </OptionsWrap>
+        ),
+      },
     ]);
   }
 }

@@ -1,6 +1,6 @@
 import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
-import type { FC, ReactElement, ReactNode } from 'react';
-import React, { useContext, useMemo } from 'react';
+import type { ReactElement, ReactNode } from 'react';
+import React, { forwardRef, useContext, useMemo } from 'react';
 
 import type SearchTable from '../../SearchTable';
 import { SearchTableContext } from '../../SearchTable';
@@ -11,10 +11,10 @@ import useEditableTableCell from '../EditableCell/EditableTableCell';
 
 /**
  * TableCell
- * @description 表格列组件
+ * @description 表格列组件（virtual 模式必须透传 ref 到 td）
  * @param {TableCellComponentProps} props
  */
-const TableCell: FC<TableCellComponentProps> = (props) => {
+const TableCell = forwardRef<HTMLTableCellElement, TableCellComponentProps>((props, ref) => {
   const { record, column, rowIndex, columns, ...restProps } = props;
 
   // 上下文
@@ -48,7 +48,7 @@ const TableCell: FC<TableCellComponentProps> = (props) => {
   // 默认的row组件是一个td
   // ant-table-cell-with-append 这个是treeData的样式
   const tdREL = (
-    <td {...(restProps ?? {})} style={styleList}>
+    <td {...(restProps ?? {})} ref={ref} style={styleList}>
       {restProps?.children}
     </td>
   );
@@ -89,7 +89,7 @@ const TableCell: FC<TableCellComponentProps> = (props) => {
       value: tdREL,
     },
   ).value as any;
-};
+});
 
 TableCell.displayName = 'TableCell';
 

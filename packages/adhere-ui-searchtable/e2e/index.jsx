@@ -58,31 +58,18 @@ const store = createStore(null, {}, applyMiddleware(createLoggerMiddleware(), sa
 registerModels();
 
 const ProSearchStateTableImpl = lazy(() =>
-  import(/* webpackChunkName: "conditionalrender" */ './proEditableCellRowDragSortSearchTable.jsx'),
+  import(/* webpackChunkName: "conditionalrender" */ './proStateSearchTable.jsx'),
 );
 
 e2e.PC({
   children: (
     <Provider store={store}>
-      <ConfigProvider
-        theme={{
-          components: {
-            normal: {
-              SearchTable: {
-                SearchWrapperGapMarginBottom: '100px',
-              },
-            },
-          },
-        }}
-      >
+      <ConfigProvider>
         {() => {
           return (
             <div style={{ height: '100%' }}>
               <Suspense fallback={<div>loading</div>}>
-                <ProSearchStateTableImpl
-                  pagination={true}
-                  FieldGeneratorToDict={FieldGeneratorToDict}
-                />
+                <ProSearchStateTableImpl FieldGeneratorToDict={FieldGeneratorToDict} />
               </Suspense>
             </div>
           );

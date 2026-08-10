@@ -8,6 +8,8 @@ import SearchTable from '../src/index';
 import { names } from './config/dict/dict/dict.test.config';
 import './serviceRegister';
 
+import './index.less';
+
 const {
   ProSearchStateTable,
   /*ProEditableCellSearchStateTable,*/ OptionsWrap,
@@ -38,6 +40,14 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
     return 'height';
   }
 
+  getLimit() {
+    return 500;
+  }
+
+  getPagination() {
+    return false;
+  }
+
   /**
    * hasAdvancedSearch
    * @description 是否有高级搜索
@@ -47,9 +57,9 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
     return false;
   }
 
-  // hasOptionColumnFixed() {
-  //   return !this.isMobile();
-  // }
+  hasOptionColumnFixed() {
+    return false;
+  }
 
   /**
    * getDataKey
@@ -158,10 +168,12 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
   getColumns() {
     return super.getColumns([
       {
-        title: () => <div style={{ color: 'red' }}>姓名</div>,
+        // title: () => <div style={{ color: 'red' }}>姓名</div>,
+        title: '姓名',
         dataIndex: 'name',
         key: 'name',
-        width: 200,
+        // width: 200,
+        width: {},
         // align: 'left',
         // render: (val) => <div style={{ color: 'red' }}>{val}</div>,
         $search: {
@@ -268,9 +280,10 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         dataIndex: 'width',
         key: 'width',
         align: 'center',
-        width: {
-          minWidth: 300,
-        },
+        // width: {
+        //   minWidth: 300,
+        // },
+        width: {},
         sorter: true,
         sortOrder: this.sortOrder('width'),
         $search: {
@@ -303,9 +316,10 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         dataIndex: 'homeTown',
         key: 'homeTown',
         ellipsis: false,
-        width: {
-          maxWidth: 1000,
-        },
+        // width: {
+        //   maxWidth: 1000,
+        // },
+        width: {},
         $search: {
           type: 'input',
           visible: true,
@@ -336,7 +350,8 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         dataIndex: 'birthday',
         key: 'birthday',
         align: 'center',
-        width: 200,
+        // width: 200,
+        width: {},
         sorter: true,
         sortOrder: this.sortOrder('birthday'),
         render: (val) => <DateDisplay.DateDisplay10 value={val} />,
@@ -400,6 +415,278 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         // $hide: true,
       },
       {
+        title: '年龄',
+        dataIndex: 'age',
+        key: 'age',
+        align: 'center',
+        // width: 100,
+        width: {},
+        sorter: true,
+        sortOrder: this.sortOrder('age'),
+        $search: {
+          type: 'inputNumber',
+          visible: true,
+        },
+        $editable: {
+          editable: true,
+          type: 'inputNumber',
+          rules: [
+            {
+              required: true,
+              message: '请输入年龄',
+            },
+          ],
+          onSave: ({ record, dataIndex, value }) => {
+            return new Promise((resolve) => {
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
+            });
+          },
+        },
+      },
+      {
+        title: '部门',
+        dataIndex: 'deptName',
+        key: 'deptName',
+        // width: 160,
+        width: {},
+        $search: {
+          type: 'input',
+          visible: true,
+        },
+        $editable: {
+          editable: true,
+          type: 'input',
+          rules: [
+            {
+              required: true,
+              message: '请输入部门',
+            },
+          ],
+          onSave: ({ record, dataIndex, value }) => {
+            return new Promise((resolve) => {
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
+            });
+          },
+        },
+      },
+      {
+        title: '邮箱',
+        dataIndex: 'email',
+        key: 'email',
+        // width: 220,
+        width: {},
+        $search: {
+          type: 'input',
+          visible: true,
+        },
+        $editable: {
+          editable: true,
+          type: 'input',
+          rules: [
+            {
+              required: true,
+              message: '请输入邮箱',
+            },
+          ],
+          onSave: ({ record, dataIndex, value }) => {
+            return new Promise((resolve) => {
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
+            });
+          },
+        },
+      },
+      {
+        title: '手机号',
+        dataIndex: 'phone',
+        key: 'phone',
+        // width: 140,
+        width: {},
+        $search: {
+          type: 'input',
+          visible: true,
+        },
+        $editable: {
+          editable: true,
+          type: 'input',
+          rules: [
+            {
+              required: true,
+              message: '请输入手机号',
+            },
+          ],
+          onSave: ({ record, dataIndex, value }) => {
+            return new Promise((resolve) => {
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
+            });
+          },
+        },
+      },
+      {
+        title: '民族',
+        dataIndex: 'nation',
+        key: 'nation',
+        // width: 120,
+        width: {},
+        $search: {
+          type: 'input',
+          visible: true,
+        },
+        $editable: {
+          editable: true,
+          type: 'input',
+          onSave: ({ record, dataIndex, value }) => {
+            return new Promise((resolve) => {
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
+            });
+          },
+        },
+      },
+      {
+        title: '学历',
+        dataIndex: 'education',
+        key: 'education',
+        // width: 120,
+        width: {},
+        $search: {
+          type: 'input',
+          visible: true,
+        },
+        $editable: {
+          editable: true,
+          type: 'input',
+          onSave: ({ record, dataIndex, value }) => {
+            return new Promise((resolve) => {
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
+            });
+          },
+        },
+      },
+      {
+        title: '公司',
+        dataIndex: 'company',
+        key: 'company',
+        // width: 220,
+        width: {},
+        ellipsis: true,
+        $search: {
+          type: 'input',
+          visible: true,
+        },
+        $editable: {
+          editable: true,
+          type: 'input',
+          onSave: ({ record, dataIndex, value }) => {
+            return new Promise((resolve) => {
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
+            });
+          },
+        },
+      },
+      {
+        title: '职位',
+        dataIndex: 'position',
+        key: 'position',
+        // width: 140,
+        width: {},
+        $search: {
+          type: 'input',
+          visible: true,
+        },
+        $editable: {
+          editable: true,
+          type: 'input',
+          onSave: ({ record, dataIndex, value }) => {
+            return new Promise((resolve) => {
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
+            });
+          },
+        },
+      },
+      {
+        title: '薪资',
+        dataIndex: 'salary',
+        key: 'salary',
+        align: 'center',
+        // width: 120,
+        width: {},
+        sorter: true,
+        sortOrder: this.sortOrder('salary'),
+        $search: {
+          type: 'inputNumber',
+          visible: true,
+        },
+        $editable: {
+          editable: true,
+          type: 'inputNumber',
+          onSave: ({ record, dataIndex, value }) => {
+            return new Promise((resolve) => {
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
+            });
+          },
+        },
+      },
+      {
+        title: '备注',
+        dataIndex: 'remark',
+        key: 'remark',
+        // width: 200,
+        width: {},
+        ellipsis: true,
+        $search: {
+          type: 'input',
+          visible: true,
+        },
+        $editable: {
+          editable: true,
+          type: 'input',
+          onSave: ({ record, dataIndex, value }) => {
+            return new Promise((resolve) => {
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
+            });
+          },
+        },
+      },
+      {
         title: '操作',
         dataIndex: this.getOptionsColumnDataIndex(),
         key: this.getOptionsColumnDataIndex(),
@@ -459,16 +746,20 @@ const Wrap = SearchTableStateImplementFactory({
 export default () => {
   return (
     <Wrap
-      style={{
-        height: '100%',
-      }}
+      className="Wrapper"
+      wrapClassName="Wrapper"
+      // style={{ height: '100%' }}
+      // wrapStyle={{ height: '100%' }}
       FieldGeneratorToDict={FieldGeneratorToDict}
       // isShowExpandSearch={false}
-      isColumnMaxContent={true}
-      isShowExpandSearch={!false}
-      autoFixed={!false}
-      fixedHeaderAutoTable={!false}
-      fixedTableSpaceBetween={!false}
+      // isColumnMaxContent
+      isShowExpandSearch
+      autoFixed
+      fixedHeaderAutoTable
+      fixedTableSpaceBetween
+      antdTableProps={{
+        virtual: true,
+      }}
     />
   );
 };

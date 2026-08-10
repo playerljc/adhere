@@ -186,6 +186,6 @@ import '../src/index.less';
 e2e.PC({
   // children: <TransferSelect />,
   // children: isTagGallery ? <TableTransfer /> : <ScrollFirstError />,
-  children: <TagTypesGallery />,
+  children: <SegmentedTabs />,
   // children: <RevolvingTableNormal />,
 });

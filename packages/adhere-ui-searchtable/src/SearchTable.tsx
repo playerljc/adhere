@@ -1687,7 +1687,8 @@ abstract class SearchTable<
     const numberGeneratorRule =
       this.getNumberGeneratorRule() ?? SearchTable.NUMBER_GENERATOR_RULE_ALONE;
 
-    const { page = 1, limit = this.getLimit() } = this.state;
+    const { limit = this.getLimit() } = this.state;
+    const current = this.getCurrent() ?? this.state?.page ?? 1;
 
     return {
       ...{
@@ -1701,12 +1702,7 @@ abstract class SearchTable<
             // 单独生成
             conditional={numberGeneratorRule === SearchTable.NUMBER_GENERATOR_RULE_ALONE}
             noMatch={() =>
-              /*this.renderTableNumberColumn((page - 1) * limit + (index + 1), {
-                value: v,
-                record: r,
-                index,
-              })*/
-              this.renderTableNumberColumn((this.getCurrent() - 1) * limit + (index + 1), {
+              this.renderTableNumberColumn((current - 1) * limit + (index + 1), {
                 value: v,
                 record: r,
                 index,
@@ -2783,6 +2779,116 @@ abstract class SearchTable<
   }
 
   /**
+   * isVirtualTable
+   * @description 是否开启 antd Table 虚拟滚动
+   */
+  isVirtualTable() {
+    return !!this.props?.antdTableProps?.virtual;
+  }
+
+  /**
+   * parseColumnWidthToNumber
+   * @description 将列宽解析为像素数值（virtual 的 scroll.x 只接受 number）
+   */
+  parseColumnWidthToNumber(width: ColumnTypeExt['width'], fallback = 150): number {
+    if (typeof width === 'number' && !Number.isNaN(width)) {
+      return width;
+    }
+
+    if (typeof width === 'string') {
+      const value = parseFloat(width);
+      if (Number.isNaN(value)) {
+        return fallback;
+      }
+
+      if (width.endsWith('rem')) {
+        return Util.remToPx(value);
+      }
+
+      return value;
+    }
+
+    if (width && typeof width === 'object') {
+      const widthConfig = width as ColumnWidthMaxContent;
+      if (typeof widthConfig.minWidth === 'number') {
+        return widthConfig.minWidth;
+      }
+      if (typeof widthConfig.maxWidth === 'number') {
+        return widthConfig.maxWidth;
+      }
+    }
+
+    return fallback;
+  }
+
+  /**
+   * flattenLeafColumns
+   * @description 展平叶子列
+   */
+  flattenLeafColumns(columns: ColumnTypeExt[] = []): ColumnTypeExt[] {
+    return columns.reduce<ColumnTypeExt[]>((result, column) => {
+      if (column?.children && Array.isArray(column.children)) {
+        return result.concat(this.flattenLeafColumns(column.children as ColumnTypeExt[]));
+      }
+
+      return result.concat(column);
+    }, []);
+  }
+
+  /**
+   * normalizeColumnsForVirtual
+   * @description virtual 要求列宽必须是 number，且每个叶子列都要有明确 width
+   */
+  normalizeColumnsForVirtual(columns: ColumnTypeExt[] = []): ColumnTypeExt[] {
+    const normalize = (cols: ColumnTypeExt[]): ColumnTypeExt[] =>
+      cols.map((column) => {
+        if (column?.children && Array.isArray(column.children)) {
+          return {
+            ...column,
+            children: normalize(column.children as ColumnTypeExt[]),
+          };
+        }
+
+        const rawWidth =
+          column?.width ??
+          (column as ColumnTypeExt & { minWidth?: number | string })?.minWidth ??
+          150;
+        const width = this.parseColumnWidthToNumber(rawWidth as ColumnTypeExt['width']);
+
+        return {
+          ...column,
+          width,
+          // virtual + tableLayout=fixed 下 minWidth 无意义，避免干扰 colgroup
+          minWidth: undefined,
+        };
+      });
+
+    return normalize(columns);
+  }
+
+  /**
+   * getColumnsScrollX
+   * @description 根据列宽汇总 virtual 所需的 scroll.x 数值
+   */
+  getColumnsScrollX(columns: ColumnTypeExt[] = []): number {
+    const total = this.flattenLeafColumns(columns).reduce((sum, column) => {
+      const width =
+        column?.width ??
+        (column as ColumnTypeExt & { minWidth?: number | string })?.minWidth ??
+        150;
+
+      return sum + this.parseColumnWidthToNumber(width as ColumnTypeExt['width']);
+    }, 0);
+
+    // rowSelection 列不在 columns 中，需要单独计入，否则 scroll.x 偏小会导致错位
+    const selectionWidth = this.getRowSelection()
+      ? this.parseColumnWidthToNumber(this.getTableCheckAllColumnWidth(), 50)
+      : 0;
+
+    return Math.max(Math.ceil(total + selectionWidth), 1);
+  }
+
+  /**
    * columnMaxContent
    * @descriptionn 实现列的max-content操作
    * @param columns
@@ -2850,6 +2956,7 @@ abstract class SearchTable<
     // 优化：只调用一次 getDataSource，复用结果
     const dataSource = this.getDataSource();
     const isColumnMaxContent = this.isColumnMaxContent();
+    const isVirtual = this.isVirtualTable();
 
     // 优化：生成缓存 key，用于判断是否需要重新计算列配置
     const columnsCacheKey = JSON.stringify({
@@ -2857,6 +2964,7 @@ abstract class SearchTable<
       columnSettingKeys: columnSetting.map((c) => c.key).join(','),
       dataSourceLength: dataSource.length,
       isColumnMaxContent,
+      isVirtual,
       isShowColumnSetting: !!isShowColumnSetting,
       tableDensity,
     });
@@ -2889,6 +2997,11 @@ abstract class SearchTable<
         columns = this.columnMaxContent({ columns, dataSource });
       }
 
+      // virtual 下强制把列宽规范成 number，否则 header/body 会错位
+      if (isVirtual) {
+        columns = this.normalizeColumnsForVirtual(columns);
+      }
+
       columns.sort((c1, c2) => {
         if (c1.sort > c2.sort) return 1;
         if (c1.sort < c2.sort) return -1;
@@ -2908,9 +3021,12 @@ abstract class SearchTable<
       fixedHeaderAutoTable: !!fixedHeaderAutoTable,
       scrollY,
       isColumnMaxContent,
+      isVirtual,
       // 包含 antdTableProps 的关键属性
       hasAntdTableProps: !!antdTableProps,
       antdTablePropsKeys: antdTableProps ? Object.keys(antdTableProps).sort().join(',') : '',
+      antdTablePropsScrollX: antdTableProps?.scroll?.x ?? null,
+      antdTablePropsScrollY: antdTableProps?.scroll?.y ?? null,
     });
 
     // 优化：检查 tableProps 缓存
@@ -2932,12 +3048,38 @@ abstract class SearchTable<
       if (fixedHeaderAutoTable) {
         scrollConfig.y = scrollY;
       }
-      if (isColumnMaxContent) {
+
+      // antd virtual 要求 scroll.x / scroll.y 必须是 number，
+      // 'max-content' / true 会导致横向滚动失效（内部会回退成极小宽度）
+      if (isVirtual) {
+        const userScrollX = antdTableProps?.scroll?.x;
+        scrollConfig.x =
+          typeof userScrollX === 'number' ? userScrollX : this.getColumnsScrollX(columns);
+      } else if (isColumnMaxContent) {
         scrollConfig.x = 'max-content';
       }
+
       // 合并 antdTableProps 中的 scroll
       if (antdTableProps?.scroll) {
-        scrollConfig = { ...antdTableProps.scroll, ...scrollConfig };
+        if (isVirtual) {
+          // virtual 下保留用户配置，但 x/y 必须是 number
+          scrollConfig = {
+            ...scrollConfig,
+            ...antdTableProps.scroll,
+          };
+
+          if (typeof scrollConfig.x !== 'number') {
+            scrollConfig.x = this.getColumnsScrollX(columns);
+          }
+
+          if (fixedHeaderAutoTable && typeof scrollY === 'number') {
+            scrollConfig.y = scrollY;
+          } else if (typeof scrollConfig.y !== 'number') {
+            delete scrollConfig.y;
+          }
+        } else {
+          scrollConfig = { ...antdTableProps.scroll, ...scrollConfig };
+        }
       }
 
       // Table的antdProps配置
@@ -2958,8 +3100,9 @@ abstract class SearchTable<
         onRow: (record: any, index: any) => this.onTableRow(columns, record, index),
         // 优化：只在有 scroll 配置时才添加 scroll 属性
         ...(Object.keys(scrollConfig).length > 0 ? { scroll: scrollConfig } : {}),
-        // 优化：isColumnMaxContent 时添加 tableLayout
-        ...(isColumnMaxContent ? { tableLayout: 'auto' as const } : {}),
+        // 优化：isColumnMaxContent 时添加 tableLayout（virtual 需要 fixed）
+        ...(isColumnMaxContent && !isVirtual ? { tableLayout: 'auto' as const } : {}),
+        ...(isVirtual ? { tableLayout: 'fixed' as const } : {}),
         // 优化：合并 antdTableProps（排除已处理的 scroll）
         ...(antdTableProps ? { ...antdTableProps, scroll: scrollConfig } : {}),
       };

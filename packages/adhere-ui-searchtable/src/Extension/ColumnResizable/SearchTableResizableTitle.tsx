@@ -13,6 +13,14 @@ import { selectorPrefix } from '../../SearchTable';
 function SearchTableResizableTitle(props) {
   const { onResize, width, column, ...restProps } = props;
 
+  // Resizable / virtual 都需要 number 宽度，避免 "200px" 导致 header/body 错位
+  const numericWidth =
+    typeof width === 'number'
+      ? width
+      : typeof width === 'string'
+        ? parseFloat(width)
+        : undefined;
+
   const styleList = useMemo(() => {
     if (column) {
       let textAlign = 'center';
@@ -34,7 +42,7 @@ function SearchTableResizableTitle(props) {
     return restProps?.style ?? {};
   }, [restProps]);
 
-  if (!onResize && !width) {
+  if (!onResize && !numericWidth) {
     return <th {...restProps} style={styleList} />;
   }
 
@@ -42,7 +50,7 @@ function SearchTableResizableTitle(props) {
     // 外包一层Resizable组件
     // 其中onResize属性调用col.onResize方法
     <Resizable
-      width={width}
+      width={numericWidth || 0}
       height={0}
       handle={
         <span
