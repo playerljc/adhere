@@ -10,6 +10,7 @@ declare namespace SearchTableResizableTitle {
     var propTypes: {
         width: any;
         onResize: any;
+        onResizeStart: any;
         column: any;
     };
     var displayName: string;
