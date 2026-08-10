@@ -303,6 +303,7 @@ export interface ColumnTypeExt extends ColumnType<any> {
     width?: undefined | string | number | ColumnWidthMaxContent;
     titleToString?: string;
     renderToString?: (value: any, record: any, rowIndex: number) => string;
+    children?: ColumnTypeExt[];
 }
 /**
  * SearchProps

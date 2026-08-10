@@ -2854,7 +2854,7 @@ abstract class SearchTable<
   flattenLeafColumns(columns: ColumnTypeExt[] = []): ColumnTypeExt[] {
     return columns.reduce<ColumnTypeExt[]>((result, column) => {
       if (column?.children && Array.isArray(column.children)) {
-        return result.concat(this.flattenLeafColumns(column.children as ColumnTypeExt[]));
+        return result.concat(this.flattenLeafColumns(column.children));
       }
 
       return result.concat(column);
@@ -2974,7 +2974,7 @@ abstract class SearchTable<
         if (column?.children && Array.isArray(column.children)) {
           return {
             ...column,
-            children: normalize(column.children as ColumnTypeExt[]),
+            children: normalize(column.children),
           };
         }
 

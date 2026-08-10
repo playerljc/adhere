@@ -47,8 +47,8 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
             cell: typeof SearchTableResizableTitle;
         };
         body: {
-            row: React.FC<import("./types").TableRowComponentProps>;
-            cell: React.FC<import("./types").TableCellComponentProps>;
+            row: React.ForwardRefExoticComponent<Omit<import("./types").TableRowComponentProps, "ref"> & React.RefAttributes<HTMLTableRowElement>>;
+            cell: React.ForwardRefExoticComponent<Omit<import("./types").TableCellComponentProps, "ref"> & React.RefAttributes<HTMLTableCellElement>>;
         };
     };
     protected columnResizable: ColumnResizable;
@@ -639,6 +639,51 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @description 是否开启列自适应宽度
      */
     isColumnMaxContent(): any;
+    /**
+     * isVirtualTable
+     * @description 是否开启 antd Table 虚拟滚动
+     */
+    isVirtualTable(): boolean;
+    /**
+     * parseColumnWidthToNumber
+     * @description 将列宽解析为像素数值（virtual 的 scroll.x 只接受 number）
+     */
+    parseColumnWidthToNumber(width: ColumnTypeExt['width'] | unknown, fallback?: number): number;
+    /**
+     * flattenLeafColumns
+     * @description 展平叶子列
+     */
+    flattenLeafColumns(columns?: ColumnTypeExt[]): ColumnTypeExt[];
+    /**
+     * getMeasurableTitleText
+     * @description 获取可测量的表头文本（ReactNode 表头回退为空，避免 [object Object]）
+     */
+    getMeasurableTitleText(columnConfig: ColumnTypeExt): string;
+    /**
+     * getColumnExtraWidth
+     * @description 表头额外占位（排序、tip、可编辑等），缩小测量宽与真实渲染宽的误差
+     */
+    getColumnExtraWidth(columnConfig: ColumnTypeExt): number;
+    /**
+     * getColumnContentWidth
+     * @description 按表头 + 单元格内容测算列宽
+     */
+    getColumnContentWidth(columnConfig: ColumnTypeExt, dataSource?: any[]): number;
+    /**
+     * resolveColumnNumberWidth
+     * @description 将列宽解析为 number（供 virtual 模式使用）
+     */
+    resolveColumnNumberWidth(columnConfig: ColumnTypeExt, dataSource?: any[]): number;
+    /**
+     * normalizeColumnWidths
+     * @description virtual 模式下将列宽规范成 number（antd virtual 约束）
+     */
+    normalizeColumnWidths(columns?: ColumnTypeExt[], dataSource?: any[]): ColumnTypeExt[];
+    /**
+     * getColumnsScrollX
+     * @description 根据列宽汇总 virtual 所需的 scroll.x 数值
+     */
+    getColumnsScrollX(columns?: ColumnTypeExt[]): number;
     /**
      * columnMaxContent
      * @descriptionn 实现列的max-content操作

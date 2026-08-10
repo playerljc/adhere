@@ -441,6 +441,8 @@ export interface ColumnTypeExt extends ColumnType<any> {
   width?: undefined | string | number | ColumnWidthMaxContent;
   titleToString?: string;
   renderToString?: (value: any, record: any, rowIndex: number) => string;
+  // 表头分组列（对应 antd ColumnGroupType.children）
+  children?: ColumnTypeExt[];
   // 列头属性设置
   // onHeaderCell?: () => any;
 }
