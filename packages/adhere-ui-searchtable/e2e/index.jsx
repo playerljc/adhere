@@ -1,4 +1,5 @@
-import React, { Suspense, lazy } from 'react';
+import { Tabs } from 'antd';
+import React, { Suspense, lazy, useState } from 'react';
 
 import e2e from '@baifendian/adhere-e2e';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -58,21 +59,55 @@ const store = createStore(null, {}, applyMiddleware(createLoggerMiddleware(), sa
 registerModels();
 
 const ProSearchStateTableImpl = lazy(() =>
-  import(/* webpackChunkName: "conditionalrender" */ './proStateSearchTable.jsx'),
+  import(/* webpackChunkName: "proStateSearchTable" */ './proStateSearchTable.jsx'),
 );
+const ProSearchStateTreeTableImpl = lazy(() =>
+  import(/* webpackChunkName: "proStateTreeSearchTable" */ './proStateTreeSearchTable.jsx'),
+);
+const ProSearchStateHeaderGroupTableImpl = lazy(() =>
+  import(
+    /* webpackChunkName: "proStateHeaderGroupSearchTable" */ './proStateHeaderGroupSearchTable.jsx'
+  ),
+);
+
+const Demo = () => {
+  const [activeKey, setActiveKey] = useState('base');
+
+  return (
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Tabs
+        activeKey={activeKey}
+        onChange={setActiveKey}
+        items={[
+          { key: 'base', label: '基础表格' },
+          { key: 'tree', label: '树形 children' },
+          { key: 'headerGroup', label: '表头分组' },
+        ]}
+        style={{ marginBottom: 0, padding: '0 16px' }}
+      />
+      <div style={{ flex: 1, minHeight: 0 }}>
+        <Suspense fallback={<div>loading</div>}>
+          {activeKey === 'base' && (
+            <ProSearchStateTableImpl FieldGeneratorToDict={FieldGeneratorToDict} />
+          )}
+          {activeKey === 'tree' && (
+            <ProSearchStateTreeTableImpl FieldGeneratorToDict={FieldGeneratorToDict} />
+          )}
+          {activeKey === 'headerGroup' && (
+            <ProSearchStateHeaderGroupTableImpl FieldGeneratorToDict={FieldGeneratorToDict} />
+          )}
+        </Suspense>
+      </div>
+    </div>
+  );
+};
 
 e2e.PC({
   children: (
     <Provider store={store}>
       <ConfigProvider>
         {() => {
-          return (
-            <div style={{ height: '100%' }}>
-              <Suspense fallback={<div>loading</div>}>
-                <ProSearchStateTableImpl FieldGeneratorToDict={FieldGeneratorToDict} />
-              </Suspense>
-            </div>
-          );
+          return <Demo />;
         }}
       </ConfigProvider>
     </Provider>

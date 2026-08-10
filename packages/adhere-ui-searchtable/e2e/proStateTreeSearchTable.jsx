@@ -19,21 +19,17 @@ const { ComponentNames, genDictComponentName } = FieldGeneratorToDict;
 const serviceName = 'user';
 
 /**
- * ProSearchStateTableImpl
- * @class ProSearchStateTableImpl
- * @classdesc ProSearchStateTableImpl
+ * ProSearchStateTreeTableImpl
+ * @class ProSearchStateTreeTableImpl
+ * @classdesc ProSearchStateTreeTableImpl - children 树形表格示例
  */
-class ProSearchStateTableImpl extends ProSearchStateTable {
-  // getComponentId() {
-  //   return 'ProSearchStateTableImpl';
-  // }
-
+class ProSearchStateTreeTableImpl extends ProSearchStateTable {
   getServiceName() {
     return serviceName;
   }
 
   getFetchListPropName() {
-    return 'fetchList';
+    return 'fetchTreeList';
   }
 
   getOrderFieldValue() {
@@ -740,7 +736,7 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
   }
 }
 
-ProSearchStateTableImpl.propTypes = {};
+ProSearchStateTreeTableImpl.propTypes = {};
 
 const models = [];
 const requireComponent = require.context('./model', false, /.*\.(js)$/);
@@ -754,24 +750,22 @@ const Wrap = SearchTableStateImplementFactory({
   middleWares: [],
   reducer: null,
   models,
-})(ProSearchStateTableImpl);
+})(ProSearchStateTreeTableImpl);
 
 export default () => {
   return (
     <Wrap
       className="Wrapper"
       wrapClassName="Wrapper"
-      // style={{ height: '100%' }}
-      // wrapStyle={{ height: '100%' }}
       FieldGeneratorToDict={FieldGeneratorToDict}
-      // isShowExpandSearch={false}
-      // isColumnMaxContent
       isShowExpandSearch
       autoFixed
       fixedHeaderAutoTable
       fixedTableSpaceBetween
       antdTableProps={{
+        // 树形展开与 virtual 不兼容，这里关闭虚拟滚动
         virtual: false,
+        defaultExpandAllRows: true,
       }}
     />
   );

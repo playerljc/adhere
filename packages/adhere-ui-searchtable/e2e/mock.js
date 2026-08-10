@@ -56,83 +56,16 @@ const createUserRecord = () => ({
 
 const dataSource = Array.from({ length: 500 }).map(() => createUserRecord());
 
-const treeDataSource = Array.from({ length: 100 }).map((t) => ({
-  id: Mockjs.mock('@guid'),
-  name: Mockjs.mock('@name'),
-  sex: `${Util.generatorRandom(0, 1)}`,
-  homeTown: Mockjs.mock('@name'),
-  address: Mockjs.mock('@name'),
-  birthday: new Date().getTime(),
-  deptName: Mockjs.mock('@name'),
-  height: Mockjs.mock('@integer'),
-  width: Mockjs.mock('@integer'),
-  children: Array.from({ length: 2 }).map((t) => ({
-    id: Mockjs.mock('@guid'),
-    name: Mockjs.mock('@name'),
-    sex: `${Util.generatorRandom(0, 1)}`,
-    homeTown: Mockjs.mock('@name'),
-    address: Mockjs.mock('@name'),
-    birthday: new Date().getTime(),
-    deptName: Mockjs.mock('@name'),
-    height: Mockjs.mock('@integer'),
-    width: Mockjs.mock('@integer'),
-    children: Array.from({ length: 2 }).map((t) => ({
-      id: Mockjs.mock('@guid'),
-      name: Mockjs.mock('@name'),
-      sex: `${Util.generatorRandom(0, 1)}`,
-      homeTown: Mockjs.mock('@name'),
-      address: Mockjs.mock('@name'),
-      birthday: new Date().getTime(),
-      deptName: Mockjs.mock('@name'),
-      height: Mockjs.mock('@integer'),
-      width: Mockjs.mock('@integer'),
-      children: Array.from({ length: 2 }).map((t) => ({
-        id: Mockjs.mock('@guid'),
-        name: Mockjs.mock('@name'),
-        sex: `${Util.generatorRandom(0, 1)}`,
-        homeTown: Mockjs.mock('@name'),
-        address: Mockjs.mock('@name'),
-        birthday: new Date().getTime(),
-        deptName: Mockjs.mock('@name'),
-        height: Mockjs.mock('@integer'),
-        width: Mockjs.mock('@integer'),
-        children: Array.from({ length: 2 }).map((t) => ({
-          id: Mockjs.mock('@guid'),
-          name: Mockjs.mock('@name'),
-          sex: `${Util.generatorRandom(0, 1)}`,
-          homeTown: Mockjs.mock('@name'),
-          address: Mockjs.mock('@name'),
-          birthday: new Date().getTime(),
-          deptName: Mockjs.mock('@name'),
-          height: Mockjs.mock('@integer'),
-          width: Mockjs.mock('@integer'),
-          children: Array.from({ length: 2 }).map((t) => ({
-            id: Mockjs.mock('@guid'),
-            name: Mockjs.mock('@name'),
-            sex: `${Util.generatorRandom(0, 1)}`,
-            homeTown: Mockjs.mock('@name'),
-            address: Mockjs.mock('@name'),
-            birthday: new Date().getTime(),
-            deptName: Mockjs.mock('@name'),
-            height: Mockjs.mock('@integer'),
-            width: Mockjs.mock('@integer'),
-            children: Array.from({ length: 2 }).map((t) => ({
-              id: Mockjs.mock('@guid'),
-              name: Mockjs.mock('@name'),
-              sex: `${Util.generatorRandom(0, 1)}`,
-              homeTown: Mockjs.mock('@name'),
-              address: Mockjs.mock('@name'),
-              birthday: new Date().getTime(),
-              deptName: Mockjs.mock('@name'),
-              height: Mockjs.mock('@integer'),
-              width: Mockjs.mock('@integer'),
-            })),
-          })),
-        })),
-      })),
-    })),
-  })),
-}));
+/** 树形示例数据：3 层结构，字段与平铺用户数据一致 */
+const createTreeUserRecord = (depth = 0, maxDepth = 2) => {
+  const record = createUserRecord();
+  if (depth < maxDepth) {
+    record.children = Array.from({ length: 2 }).map(() => createTreeUserRecord(depth + 1, maxDepth));
+  }
+  return record;
+};
+
+const treeDataSource = Array.from({ length: 30 }).map(() => createTreeUserRecord());
 
 const ssqData = Province.map((t) => {
   return {
@@ -160,6 +93,7 @@ export const fetchTreeData = (params) => ({
   code: 200,
   data: {
     totalCount: treeDataSource.length,
+    current: params.page,
     list: JSON.parse(JSON.stringify(treeDataSource)).slice(
       (params.page - 1) * params.limit,
       params.page * params.limit,
