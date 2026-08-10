@@ -40,13 +40,13 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
     return 'height';
   }
 
-  getLimit() {
-    return 500;
-  }
+  // getLimit() {
+  //   return 500;
+  // }
 
-  getPagination() {
-    return false;
-  }
+  // getPagination() {
+  //   return false;
+  // }
 
   /**
    * hasAdvancedSearch
@@ -242,6 +242,7 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
             });
           },
         },
+        $resizable: true,
         // $hide: true,
       },
       {
@@ -764,13 +765,13 @@ export default () => {
       // wrapStyle={{ height: '100%' }}
       FieldGeneratorToDict={FieldGeneratorToDict}
       // isShowExpandSearch={false}
-      isColumnMaxContent
+      // isColumnMaxContent
       isShowExpandSearch
       autoFixed
       fixedHeaderAutoTable
       fixedTableSpaceBetween
       antdTableProps={{
-        virtual: false,
+        virtual: true,
       }}
     />
   );

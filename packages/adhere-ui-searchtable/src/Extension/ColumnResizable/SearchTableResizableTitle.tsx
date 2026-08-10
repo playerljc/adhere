@@ -13,13 +13,21 @@ import { selectorPrefix } from '../../SearchTable';
 function SearchTableResizableTitle(props) {
   const { onResize, width, column, ...restProps } = props;
 
-  // Resizable / virtual 都需要 number 宽度，避免 "200px" 导致 header/body 错位
-  const numericWidth =
-    typeof width === 'number'
-      ? width
-      : typeof width === 'string'
-        ? parseFloat(width)
-        : undefined;
+  // Resizable 需要正数宽度；width: {} / "xxpx" / 未就绪时不能落成 0，否则首次拖动会突然变窄
+  const numericWidth = (() => {
+    if (typeof width === 'number' && !Number.isNaN(width) && width > 0) {
+      return width;
+    }
+
+    if (typeof width === 'string') {
+      const value = parseFloat(width);
+      if (!Number.isNaN(value) && value > 0) {
+        return value;
+      }
+    }
+
+    return undefined;
+  })();
 
   const styleList = useMemo(() => {
     if (column) {
@@ -42,7 +50,8 @@ function SearchTableResizableTitle(props) {
     return restProps?.style ?? {};
   }, [restProps]);
 
-  if (!onResize && !numericWidth) {
+  // 没有有效宽度时先渲染普通 th，等 colgroup 实测宽度后再挂 Resizable
+  if (!onResize || !numericWidth) {
     return <th {...restProps} style={styleList} />;
   }
 
@@ -50,7 +59,7 @@ function SearchTableResizableTitle(props) {
     // 外包一层Resizable组件
     // 其中onResize属性调用col.onResize方法
     <Resizable
-      width={numericWidth || 0}
+      width={numericWidth}
       height={0}
       handle={
         <span

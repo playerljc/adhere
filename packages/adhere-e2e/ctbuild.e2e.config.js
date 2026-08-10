@@ -61,6 +61,9 @@ function getConfig({ webpackConfig, webpack, plugins }) {
   // 变量的引入
   webpackConfig.plugins.push(
     new webpack.DefinePlugin({
+      // 浏览器侧 polyfill：react-draggable 等依赖会读 process.env.*
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      'process.env.DRAGGABLE_DEBUG': JSON.stringify(process.env.DRAGGABLE_DEBUG || ''),
       CustomEvnVars: {
         mode: JSON.stringify(process.env.mode),
         skin: JSON.stringify(modifyVars),
