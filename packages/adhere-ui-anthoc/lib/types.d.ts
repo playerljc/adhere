@@ -991,12 +991,31 @@ export interface InputMultipleSelectProps extends Omit<InputMultipleProps, 'opti
 export type InputMultipleHOCComponent = ReturnType<typeof createFactory<InputMultipleProps>> & {
     Select: typeof Select;
 };
+export interface ColumnWidthMaxContent {
+    minWidth?: number;
+    maxWidth?: number;
+    cellSpacing?: number;
+    cellFontSize?: number;
+    cellFontFamily?: string;
+    cellSpacingSpace?: number;
+    titleSpacing?: number;
+    titleFontSize?: number;
+    titleFontFamily?: string;
+    titleSpacingSpace?: number;
+}
+export type ColumnTypeExt = Omit<ColumnType<any>, 'width'> & {
+    width?: undefined | string | number | ColumnWidthMaxContent;
+    titleToString?: string;
+    renderToString?: (value: any, record?: Record<string, any>, index?: number) => string;
+    children?: ColumnTypeExt[];
+    minWidth?: number | string;
+};
 export type TableExtProps = Omit<TableProps, 'columns'> & {
     wrapperClassName?: string;
     wrapperStyle?: CSSProperties;
     fixedHeaderAutoTable?: boolean;
     fixedTableSpaceBetween?: boolean;
-    columns: TableProps['columns'];
+    columns: ColumnTypeExt[];
     defaultColumnTitleFontSize?: number;
     defaultColumnFontFamily?: string;
     defaultColumnSpacing?: number;
@@ -1079,21 +1098,4 @@ export interface RevolvingTableProps<T, U> {
 }
 export type ProxyFormInstance<Values> = FormInstance & {
     validateFieldsWithNesting?: ValidateFields<Values>;
-};
-export interface ColumnWidthMaxContent {
-    minWidth?: number;
-    maxWidth?: number;
-    cellSpacing?: number;
-    cellFontSize?: number;
-    cellFontFamily?: string;
-    cellSpacingSpace?: number;
-    titleSpacing?: number;
-    titleFontSize?: number;
-    titleFontFamily?: string;
-    titleSpacingSpace?: number;
-}
-export type ColumnTypeExt = Omit<ColumnType<any>, 'width'> & {
-    width?: undefined | string | number | ColumnWidthMaxContent;
-    titleToString?: string;
-    renderToString?: (value: any) => string;
 };
