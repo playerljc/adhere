@@ -3,7 +3,6 @@ import React from 'react';
 import Mock from '@baifendian/adhere-mock';
 
 import SearchTable from '../src/index';
-import { fetchSSQData } from './mock';
 import './serviceRegister';
 
 const { City } = Mock;
@@ -38,7 +37,7 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
   }
 
   getFetchListPropName() {
-    return 'fetchSSQData';
+    return 'fetchSSQList';
   }
 
   getOrderFieldValue() {

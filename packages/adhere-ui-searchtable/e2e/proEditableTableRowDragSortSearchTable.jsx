@@ -322,6 +322,7 @@ import React from 'react';
 import { DateDisplay, Resource } from '@baifendian/adhere';
 
 import SearchTable from '../src/index';
+import './serviceRegister';
 
 const {
   SearchTableImplementFactory,

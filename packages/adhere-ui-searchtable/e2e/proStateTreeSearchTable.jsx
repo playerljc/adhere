@@ -11,8 +11,8 @@ import './serviceRegister';
 import './index.less';
 
 const {
-  ProSearchStateTable,
-  /*ProEditableCellSearchStateTable,*/ OptionsWrap,
+  ProEditableCellSearchStateTable,
+  OptionsWrap,
   SearchTableStateImplementFactory,
 } = SearchTable;
 const { ComponentNames, genDictComponentName } = FieldGeneratorToDict;
@@ -23,7 +23,7 @@ const serviceName = 'user';
  * @class ProSearchStateTreeTableImpl
  * @classdesc ProSearchStateTreeTableImpl - children 树形表格示例
  */
-class ProSearchStateTreeTableImpl extends ProSearchStateTable {
+class ProSearchStateTreeTableImpl extends ProEditableCellSearchStateTable {
   getServiceName() {
     return serviceName;
   }
@@ -89,7 +89,7 @@ class ProSearchStateTreeTableImpl extends ProSearchStateTable {
             key="add"
             type="primary"
             onClick={() => {
-              this.validateAllEditableRow(false);
+              this.validatorAll();
             }}
           >
             保存
@@ -103,7 +103,7 @@ class ProSearchStateTreeTableImpl extends ProSearchStateTable {
             key="add"
             type="primary"
             onClick={() => {
-              this.validateAllEditableRow(false);
+              this.validatorAll();
             }}
           >
             保存
@@ -117,7 +117,7 @@ class ProSearchStateTreeTableImpl extends ProSearchStateTable {
             key="add"
             type="primary"
             onClick={() => {
-              this.validateAllEditableRow(false);
+              this.validatorAll();
             }}
           >
             保存

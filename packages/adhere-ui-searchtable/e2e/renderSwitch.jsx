@@ -76,6 +76,9 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
           this.renderSwitch({
             record,
             dataIndex: 'sex',
+            defaultValue: record.sex === '1',
+            onOriginValue: '1',
+            offOriginValue: '0',
             switchProps: {},
             onChange: () => {
               return Promise.reject();

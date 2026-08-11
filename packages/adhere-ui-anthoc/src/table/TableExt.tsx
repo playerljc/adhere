@@ -720,6 +720,7 @@ const TableExt: FC<TableExtProps> = ({
       }
     }
 
+    // 如果是虚拟滚动
     if (isVirtual) {
       // 用户显式传了 number 的 scroll.x 则尊重；否则按列宽汇总
       const userScrollX = props.scroll?.x;
