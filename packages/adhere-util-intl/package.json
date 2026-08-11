@@ -21,19 +21,19 @@
     "umd"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
     "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
-    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename AdhereIntl --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "upgrade": "yarn upgrade",
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-intl-universal": "^2.13.4"
+    "react-intl-universal": "^2.14.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",

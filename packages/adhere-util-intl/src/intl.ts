@@ -59,6 +59,25 @@ function toVariables(
 ): ReactIntlUniversalVariables | undefined {
   return variables ?? undefined;
 }
+
+/**
+ * Convert locale codes to BCP 47 for react-intl-universal@2.14+ / Intl APIs.
+ * Public API keeps underscore form (e.g. `pt_PT`); runtime needs hyphens (`pt-PT`).
+ */
+function toBCP47Locale(locale: string): string {
+  return locale.replace(/_/g, '-');
+}
+
+/**
+ * Remap locale dictionary keys to BCP 47
+ */
+function toBCP47Locales<T>(locales: Record<string, T>): Record<string, T> {
+  return Object.keys(locales).reduce<Record<string, T>>((acc, key) => {
+    acc[toBCP47Locale(key)] = locales[key] as T;
+    return acc;
+  }, {});
+}
+
 /**
  * Initialization configuration interface
  */
@@ -250,11 +269,15 @@ const IntlService = {
       }
     });
 
-    // Initialize react-intl-universal
+    // Initialize react-intl-universal (BCP 47 locale tags required since 2.14.0)
+    const { fallbackLocale, ...otherRest } = rest;
     await intl.init({
-      currentLocale,
-      locales: mainLocales,
-      ...rest,
+      ...otherRest,
+      currentLocale: toBCP47Locale(currentLocale),
+      locales: toBCP47Locales(mainLocales),
+      ...(typeof fallbackLocale === 'string'
+        ? { fallbackLocale: toBCP47Locale(fallbackLocale) }
+        : {}),
     });
 
     // Initialize internal maps
@@ -432,7 +455,7 @@ const IntlService = {
    * ```
    */
   load(locales: Record<string, any>): void {
-    intl.load(locales);
+    intl.load(toBCP47Locales(locales));
   },
 
   /**
