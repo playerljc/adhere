@@ -614,6 +614,15 @@ export type TreeTransferProps = Omit<TransferProps<any>, 'dataSource'> & {
     isHideInvalidValue?: boolean;
     treeDataSimpleMode?: TreeSelectProps['treeDataSimpleMode'];
     arrayToAntdTreeConfig?: IFlatTreeArrNode;
+    /**
+     * 父子节点选中是否关联
+     * @description true（默认）时互不影响；false 时勾选父节点会级联勾选子孙节点
+     */
+    checkStrictly?: boolean;
+    /**
+     * 是否只能选择叶子节点
+     */
+    leafOnly?: boolean;
 };
 export type TableTransferProps = TransferProps<any> & {
     leftColumns: TableColumnsType<any>;

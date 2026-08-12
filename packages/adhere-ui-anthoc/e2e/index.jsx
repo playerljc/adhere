@@ -160,7 +160,9 @@ import Transfer from './Transfer/Transfer';
 import TransferHideInvalidValue from './Transfer/TransferHideInvalidValue';
 import TransferSelect from './Transfer/TransferSelect';
 import TreeTransfer from './Transfer/TreeTransfer';
+import TreeTransferLeafCascade from './Transfer/TreeTransferLeafCascade';
 import TreeTransferSelect from './Transfer/TreeTransferSelect';
+import TreeTransferSelectLeafCascade from './Transfer/TreeTransferSelectLeafCascade';
 import TreeTransferSelectSimpleMode from './Transfer/TreeTransferSelectSimpleMode';
 import TreeTransferSimpleMode from './Transfer/TreeTransferSimpleMode';
 import TreeEntityValueHOC from './TreeEntityValueHOC';
@@ -193,5 +195,7 @@ e2e.PC({
   // children: <RevolvingTableNormal />,
   // children: <TableExtGallery />,
   // children: <TreeTransferSimpleMode />,
-  children: <TreeTransferSelectSimpleMode />,
+  // children: <TreeTransferSelectSimpleMode />,
+  // children: <TreeTransferLeafCascade />,
+  children: <TreeTransferSelectLeafCascade />,
 });

@@ -13,5 +13,13 @@ export declare function treeToSelectOptions(treeNodes?: TreeDataNode[], result?:
     value: TransferSelectOptionValue;
 }[];
 export declare function isTransferTreeNodeChecked(selectedKeys: Key[], eventKey: Key): boolean;
-export declare function generateTransferTree(treeNodes?: TreeDataNode[], checkedKeys?: TransferProps['targetKeys']): TreeDataNode[];
+export declare function isTreeLeafNode(node: {
+    isLeaf?: boolean;
+    children?: TreeDataNode[] | null;
+}): boolean;
+/** 收集节点自身及其所有子孙 key（用于级联勾选） */
+export declare function getTreeNodeAndDescendantKeys(node: TreeDataNode): Key[];
+export declare function generateTransferTree(treeNodes?: TreeDataNode[], checkedKeys?: TransferProps['targetKeys'], options?: {
+    leafOnly?: boolean;
+}): TreeDataNode[];
 export declare function toTableTransferDataSource<T extends Record<string, any>>(items: unknown): T[];

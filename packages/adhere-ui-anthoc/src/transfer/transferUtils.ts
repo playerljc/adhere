@@ -67,15 +67,46 @@ export function isTransferTreeNodeChecked(selectedKeys: Key[], eventKey: Key) {
   return selectedKeys.includes(eventKey);
 }
 
+export function isTreeLeafNode(node: {
+  isLeaf?: boolean;
+  children?: TreeDataNode[] | null;
+}): boolean {
+  if ('isLeaf' in node && node.isLeaf !== undefined) {
+    return !!node.isLeaf;
+  }
+
+  return !node.children?.length;
+}
+
+/** 收集节点自身及其所有子孙 key（用于级联勾选） */
+export function getTreeNodeAndDescendantKeys(node: TreeDataNode): Key[] {
+  const keys: Key[] = [node.key as Key];
+
+  (node.children ?? []).forEach((child) => {
+    keys.push(...getTreeNodeAndDescendantKeys(child));
+  });
+
+  return keys;
+}
+
 export function generateTransferTree(
   treeNodes: TreeDataNode[] = [],
   checkedKeys: TransferProps['targetKeys'] = [],
+  options?: { leafOnly?: boolean },
 ): TreeDataNode[] {
-  return normalizeTreeData(treeNodes).map(({ children, ...props }) => ({
-    ...props,
-    disabled: checkedKeys?.includes(props.key as string),
-    children: generateTransferTree(children, checkedKeys),
-  }));
+  const leafOnly = !!options?.leafOnly;
+
+  return normalizeTreeData(treeNodes).map(({ children, ...props }) => {
+    const transferred = !!checkedKeys?.includes(props.key as string);
+    const leaf = isTreeLeafNode({ ...props, children });
+
+    return {
+      ...props,
+      disabled: transferred,
+      disableCheckbox: transferred ? undefined : leafOnly ? !leaf : props.disableCheckbox,
+      children: generateTransferTree(children, checkedKeys, options),
+    };
+  });
 }
 
 export function toTableTransferDataSource<T extends Record<string, any>>(items: unknown): T[] {

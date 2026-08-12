@@ -8,7 +8,9 @@ import Transfer from './Transfer';
 import {
   flattenTreeData,
   generateTransferTree,
+  getTreeNodeAndDescendantKeys,
   isTransferTreeNodeChecked,
+  isTreeLeafNode,
   normalizeTreeData,
 } from './transferUtils';
 
@@ -20,6 +22,8 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
     showSelectAll = false,
     treeDataSimpleMode,
     arrayToAntdTreeConfig,
+    checkStrictly = true,
+    leafOnly = false,
     ...restProps
   }) => {
     const { token } = theme.useToken();
@@ -42,9 +46,33 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
         showSelectAll={showSelectAll}
         render={(item) => item.title!}
       >
-        {({ direction, onItemSelect, selectedKeys }) => {
+        {({ direction, onItemSelect, onItemSelectAll, selectedKeys }) => {
           if (direction === 'left') {
             const checkedKeys = [...selectedKeys, ...(targetKeys ?? [])];
+
+            const handleCheckNode = (node: Parameters<typeof isTreeLeafNode>[0] & { key: any }) => {
+              if (leafOnly && !isTreeLeafNode(node)) {
+                return;
+              }
+
+              if (checkStrictly) {
+                onItemSelect(node.key as string, !isTransferTreeNodeChecked(checkedKeys, node.key));
+                return;
+              }
+
+              const keys = getTreeNodeAndDescendantKeys(node as any)
+                .filter((key) => !(targetKeys ?? []).includes(key as string))
+                .filter((key) => {
+                  if (!leafOnly) {
+                    return true;
+                  }
+
+                  const item = transferDataSource.find((data) => data.key === key);
+                  return item ? isTreeLeafNode(item as any) : true;
+                }) as string[];
+
+              onItemSelectAll(keys, !isTransferTreeNodeChecked(checkedKeys, node.key));
+            };
 
             return (
               <div style={{ padding: token.paddingXS }}>
@@ -54,12 +82,12 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
                   checkStrictly
                   defaultExpandAll
                   checkedKeys={checkedKeys}
-                  treeData={generateTransferTree(treeData, targetKeys)}
-                  onCheck={(_, { node: { key } }) => {
-                    onItemSelect(key as string, !isTransferTreeNodeChecked(checkedKeys, key));
+                  treeData={generateTransferTree(treeData, targetKeys, { leafOnly })}
+                  onCheck={(_, { node }) => {
+                    handleCheckNode(node);
                   }}
-                  onSelect={(_, { node: { key } }) => {
-                    onItemSelect(key as string, !isTransferTreeNodeChecked(checkedKeys, key));
+                  onSelect={(_, { node }) => {
+                    handleCheckNode(node);
                   }}
                 />
               </div>
