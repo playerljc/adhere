@@ -19,6 +19,7 @@ import type {
   TagProps,
   TimePickerProps,
   TransferProps,
+  TreeProps,
   TreeSelectProps,
 } from 'antd';
 import type { ColumnsType as TableColumnsType } from 'antd/es/table';
@@ -463,6 +464,19 @@ export interface UseCascaderData {
   }): CascaderProps['options'] | ReturnType<TreeUtilType['arrayToAntdTreeSelect']>;
 }
 
+export interface UseTreeData {
+  (arg: {
+    treeData: TreeProps['treeData'];
+    treeDataSimpleMode?: TreeSelectProps['treeDataSimpleMode'];
+    config?: IFlatTreeArrNode;
+  }): TreeProps['treeData'] | ReturnType<TreeUtilType['arrayToAntdTree']>;
+}
+
+export type TreeHOCProps = TreeProps & {
+  treeDataSimpleMode?: TreeSelectProps['treeDataSimpleMode'];
+  arrayToAntdTreeConfig?: IFlatTreeArrNode;
+};
+
 export type UseTableRenderProps = (
   tableProps: TableSelectProps['tableProps'],
 ) => (arg: {
@@ -837,6 +851,8 @@ export type TransferSelectProps = DropdownRenderSelectProps & {
 export type TreeTransferProps = Omit<TransferProps<any>, 'dataSource'> & {
   dataSource?: TreeDataNode[];
   isHideInvalidValue?: boolean;
+  treeDataSimpleMode?: TreeSelectProps['treeDataSimpleMode'];
+  arrayToAntdTreeConfig?: IFlatTreeArrNode;
 };
 
 export type TableTransferProps = TransferProps<any> & {

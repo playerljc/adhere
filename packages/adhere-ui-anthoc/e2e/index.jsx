@@ -161,6 +161,8 @@ import TransferHideInvalidValue from './Transfer/TransferHideInvalidValue';
 import TransferSelect from './Transfer/TransferSelect';
 import TreeTransfer from './Transfer/TreeTransfer';
 import TreeTransferSelect from './Transfer/TreeTransferSelect';
+import TreeTransferSelectSimpleMode from './Transfer/TreeTransferSelectSimpleMode';
+import TreeTransferSimpleMode from './Transfer/TreeTransferSimpleMode';
 import TreeEntityValueHOC from './TreeEntityValueHOC';
 import AsyncTreeLeafSelect from './TreeSelect/AsyncTreeLeafSelect';
 import AsyncTreeSelectEcho from './TreeSelect/AsyncTreeSelectEcho';
@@ -189,5 +191,7 @@ e2e.PC({
   // children: isTagGallery ? <TableTransfer /> : <ScrollFirstError />,
   // children: <SegmentedTabs />,
   // children: <RevolvingTableNormal />,
-  children: <TableExtGallery />,
+  // children: <TableExtGallery />,
+  // children: <TreeTransferSimpleMode />,
+  children: <TreeTransferSelectSimpleMode />,
 });

@@ -1,4 +1,4 @@
-import type { FormItemProps as AntFormItemProps, AutoCompleteProps as AntdAutoCompleteProps, CalendarProps, CascaderProps, CheckboxProps, DatePickerProps, FormProps, FormRule, InputProps, ListProps, PaginationProps, RadioProps, SelectProps, SpaceProps, StepsProps, TableProps, TabsProps, TimePickerProps, TransferProps, TreeSelectProps } from 'antd';
+import type { FormItemProps as AntFormItemProps, AutoCompleteProps as AntdAutoCompleteProps, CalendarProps, CascaderProps, CheckboxProps, DatePickerProps, FormProps, FormRule, InputProps, ListProps, PaginationProps, RadioProps, SelectProps, SpaceProps, StepsProps, TableProps, TabsProps, TimePickerProps, TransferProps, TreeProps, TreeSelectProps } from 'antd';
 import type { ColumnsType as TableColumnsType } from 'antd/es/table';
 import type { DataNode as TreeDataNode } from 'antd/es/tree';
 import type { CheckboxGroupProps, CheckboxOptionType } from 'antd/es/checkbox';
@@ -349,6 +349,17 @@ export interface UseCascaderData {
         config: IFlatTreeArrNode;
     }): CascaderProps['options'] | ReturnType<TreeUtilType['arrayToAntdTreeSelect']>;
 }
+export interface UseTreeData {
+    (arg: {
+        treeData: TreeProps['treeData'];
+        treeDataSimpleMode?: TreeSelectProps['treeDataSimpleMode'];
+        config?: IFlatTreeArrNode;
+    }): TreeProps['treeData'] | ReturnType<TreeUtilType['arrayToAntdTree']>;
+}
+export type TreeHOCProps = TreeProps & {
+    treeDataSimpleMode?: TreeSelectProps['treeDataSimpleMode'];
+    arrayToAntdTreeConfig?: IFlatTreeArrNode;
+};
 export type UseTableRenderProps = (tableProps: TableSelectProps['tableProps']) => (arg: {
     value?: SelectProps['value'];
     onChange?: SelectProps['onChange'];
@@ -601,6 +612,8 @@ export type TransferSelectProps = DropdownRenderSelectProps & {
 export type TreeTransferProps = Omit<TransferProps<any>, 'dataSource'> & {
     dataSource?: TreeDataNode[];
     isHideInvalidValue?: boolean;
+    treeDataSimpleMode?: TreeSelectProps['treeDataSimpleMode'];
+    arrayToAntdTreeConfig?: IFlatTreeArrNode;
 };
 export type TableTransferProps = TransferProps<any> & {
     leftColumns: TableColumnsType<any>;

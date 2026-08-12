@@ -1,6 +1,8 @@
-import { theme, Tree } from 'antd';
+import { theme } from 'antd';
 import React, { memo, useMemo } from 'react';
 
+import Tree from '../tree';
+import useTreeData from '../tree/useTreeData';
 import type { DisplayNameInternal, TreeTransferProps } from '../types';
 import Transfer from './Transfer';
 import {
@@ -11,10 +13,24 @@ import {
 } from './transferUtils';
 
 const InternalTreeTransfer = memo<TreeTransferProps>(
-  ({ dataSource = [], targetKeys, className, showSelectAll = false, ...restProps }) => {
+  ({
+    dataSource = [],
+    targetKeys,
+    className,
+    showSelectAll = false,
+    treeDataSimpleMode,
+    arrayToAntdTreeConfig,
+    ...restProps
+  }) => {
     const { token } = theme.useToken();
 
-    const treeData = useMemo(() => normalizeTreeData(dataSource), [dataSource]);
+    const resolvedTreeData = useTreeData({
+      treeData: dataSource,
+      treeDataSimpleMode,
+      config: arrayToAntdTreeConfig,
+    });
+
+    const treeData = useMemo(() => normalizeTreeData(resolvedTreeData), [resolvedTreeData]);
     const transferDataSource = useMemo(() => flattenTreeData(treeData), [treeData]);
 
     return (

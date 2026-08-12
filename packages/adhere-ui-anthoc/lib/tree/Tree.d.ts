@@ -1,7 +1,8 @@
 import { Tree } from 'antd';
-import type { TreeProps } from 'antd';
+import type { DisplayNameInternal, TreeHOCProps } from '../types';
 declare const TreeHOC: typeof Tree & {
-    defaultProps?: Partial<TreeProps>;
-    override?: (props: Partial<TreeProps>) => Partial<TreeProps>;
+    defaultProps?: Partial<TreeHOCProps>;
+    override?: (props: Partial<TreeHOCProps>) => Partial<TreeHOCProps>;
 };
-export default TreeHOC;
+declare const _default: DisplayNameInternal<typeof TreeHOC> & typeof Tree;
+export default _default;
