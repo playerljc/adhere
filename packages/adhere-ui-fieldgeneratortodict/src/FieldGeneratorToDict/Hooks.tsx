@@ -73,14 +73,19 @@ export function useDynamicDict<D>({
   // @ts-ignore
   const [dataSource, setDataSource] = useState<D>([]);
 
-  const dictValue = Dict.value[dictName]?.value;
-
+  // Intentionally read Dict.value inside loadData rather than at render time.
+  // For handlers that return a Promise directly (not a function), accessing
+  // Dict.value[dictName] triggers initValue → handler() → HTTP request immediately.
+  // Deferring to an effect ensures the request fires only on mount / cascadeParams
+  // change, not on every render.
   function loadData() {
+    const dictValue = Dict.value[dictName]?.value;
+
     if (dictValue instanceof Function) {
       dictValue(cascadeParams).then((res) => {
         setDataSource(res);
       });
-    } else if (dictValue.then) {
+    } else if (dictValue?.then) {
       dictValue.then((res) => {
         setDataSource(cloneDeep(res));
       });

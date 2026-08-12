@@ -103,7 +103,7 @@ declare const _default: {
             readonly VerticalCheckable: "TagVerticalCheckable";
             readonly CheckAllVerticalCheckable: "TagCheckAllVerticalCheckable";
             readonly Horizontal: "TagHorizontal";
-            readonly HorizontalCheckable: "TagVerticalCheckable";
+            readonly HorizontalCheckable: "TagHorizontalCheckable";
             readonly CheckAllHorizontalCheckable: "TagCheckAllHorizontalCheckable";
             readonly SuspenseVertical: "TagSuspenseVertical";
             readonly SuspenseVerticalCheckable: "TagSuspenseVerticalCheckable";
