@@ -212,8 +212,14 @@ declare const _default: {
             readonly SuspenseStandard: "TransferSuspenseStandard";
             readonly Select: "TransferSelect";
             readonly Tree: "TransferTree";
+            readonly TreeFlat: "TransferTreeFlat";
+            readonly TreeLeaf: "TransferTreeLeaf";
+            readonly TreeCascade: "TransferTreeCascade";
             readonly Table: "TransferTable";
             readonly TreeSelect: "TransferTreeSelect";
+            readonly TreeSelectFlat: "TransferTreeSelectFlat";
+            readonly TreeSelectLeaf: "TransferTreeSelectLeaf";
+            readonly TreeSelectCascade: "TransferTreeSelectCascade";
             readonly TableSelect: "TransferTableSelect";
         };
         readonly TransferDynamic: {
@@ -221,8 +227,14 @@ declare const _default: {
             readonly SuspenseStandard: "TransferDynamicSuspenseStandard";
             readonly Select: "TransferDynamicSelect";
             readonly Tree: "TransferDynamicTree";
+            readonly TreeFlat: "TransferDynamicTreeFlat";
+            readonly TreeLeaf: "TransferDynamicTreeLeaf";
+            readonly TreeCascade: "TransferDynamicTreeCascade";
             readonly Table: "TransferDynamicTable";
             readonly TreeSelect: "TransferDynamicTreeSelect";
+            readonly TreeSelectFlat: "TransferDynamicTreeSelectFlat";
+            readonly TreeSelectLeaf: "TransferDynamicTreeSelectLeaf";
+            readonly TreeSelectCascade: "TransferDynamicTreeSelectCascade";
             readonly TableSelect: "TransferDynamicTableSelect";
         };
         readonly TransferAC: {

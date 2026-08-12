@@ -380,9 +380,18 @@ import TransferDynamicSuspenseStandard from './Transfer/SuspenseStandard';
 import TransferDynamicTable from './Transfer/Table';
 import TransferDynamicTableSelect from './Transfer/TableSelect';
 import TransferTree from './Transfer/Tree';
+import TransferTreeCascade from './Transfer/TreeCascade';
+import TransferTreeFlat from './Transfer/TreeFlat';
+import TransferTreeLeaf from './Transfer/TreeLeaf';
+import TransferTreeLeafCascadeFlat from './Transfer/TreeLeafCascadeFlat';
 import TransferTreeSelect from './Transfer/TreeSelect';
+import TransferTreeSelectCascade from './Transfer/TreeSelectCascade';
+import TransferTreeSelectFlat from './Transfer/TreeSelectFlat';
+import TransferTreeSelectLeaf from './Transfer/TreeSelectLeaf';
+import TransferTreeSelectLeafCascadeFlat from './Transfer/TreeSelectLeafCascadeFlat';
 import TransferDynamicStandard from './Transfer/TransferDynamicStandard';
 import TransferDynamicTree from './Transfer/TransferDynamicTree';
+import TransferDynamicTreeFlat from './Transfer/TransferDynamicTreeFlat';
 import TransferDynamicTreeSelect from './Transfer/TransferDynamicTreeSelect';
 import TransferStaticSelect from './Transfer/TransferStaticSelect';
 import TransferStaticSuspenseStandard from './Transfer/TransferStaticSuspenseStandard';
@@ -478,5 +487,6 @@ import '../src/index.less';
 // });
 
 e2e.PC({
-  children: <TransferTreeSelect />,
+  // children: <TransferTreeSelect />,
+  children: <TransferTreeLeafCascadeFlat />,
 });

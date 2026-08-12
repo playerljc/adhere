@@ -194,6 +194,35 @@ const FLAT_TABLE_TREE_DATA = Util.treeToArray(
   'id',
 );
 
+const SYSTEM_ORG_TREE = [
+  {
+    title: 'Node1',
+    value: '0-0',
+    key: '0-0',
+    isLeaf: false,
+    children: [
+      {
+        title: 'Child Node1',
+        value: '0-0-1',
+        key: '0-0-1',
+        isLeaf: true,
+      },
+      {
+        title: 'Child Node2',
+        value: '0-0-2',
+        key: '0-0-2',
+        isLeaf: true,
+      },
+    ],
+  },
+  {
+    title: 'Node2',
+    value: '0-1',
+    key: '0-1',
+    isLeaf: true,
+  },
+];
+
 const { names, values } = genModuleDict({
   // 静态字典
   SystemTestSex: {
@@ -291,34 +320,22 @@ const { names, values } = genModuleDict({
   },
   SystemOrg: {
     isStatic: true,
-    handler: () => [
-      {
-        title: 'Node1',
-        value: '0-0',
-        key: '0-0',
-        isLeaf: false,
-        children: [
-          {
-            title: 'Child Node1',
-            value: '0-0-1',
-            key: '0-0-1',
-            isLeaf: true,
-          },
-          {
-            title: 'Child Node2',
-            value: '0-0-2',
-            key: '0-0-2',
-            isLeaf: true,
-          },
-        ],
-      },
-      {
-        title: 'Node2',
-        value: '0-1',
-        key: '0-1',
-        isLeaf: true,
-      },
-    ],
+    handler: () => SYSTEM_ORG_TREE,
+  },
+  SystemOrgFlat: {
+    isStatic: true,
+    handler: () =>
+      Util.treeToArray(
+        SYSTEM_ORG_TREE,
+        {
+          parentIdAttr: 'pId',
+          rootParentId: 0,
+        },
+        'key',
+      ).map((t) => ({
+        ...t,
+        id: t.key,
+      })),
   },
   // SystemUser: {
   //   isStatic: true,
@@ -1609,6 +1626,9 @@ const { names, values } = genModuleDict({
   },
   SystemTreeDynamic: {
     handler: () => Promise.resolve(TREE_DATA),
+  },
+  SystemTreeDynamicFlat: {
+    handler: () => Promise.resolve(FLAT_TREE_DATA),
   },
 });
 

@@ -93,6 +93,63 @@ setItem<TreeTransferProps, TreeTransferProps['dataSource']>(
 );
 
 /**
+ * TransferTreeFlat
+ * @description 简单格式（扁平）树数据
+ */
+setItem<TreeTransferProps, TreeTransferProps['dataSource']>(
+  'Transfer',
+  'TreeFlat',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const dataSource = useDict<TreeTransferProps['dataSource']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return <Transfer.TreeTransfer {...props} dataSource={dataSource} treeDataSimpleMode />;
+    },
+);
+
+/**
+ * TransferTreeLeaf
+ * @description 只能选择叶子节点
+ */
+setItem<TreeTransferProps, TreeTransferProps['dataSource']>(
+  'Transfer',
+  'TreeLeaf',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const dataSource = useDict<TreeTransferProps['dataSource']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return <Transfer.TreeTransfer {...props} dataSource={dataSource} leafOnly />;
+    },
+);
+
+/**
+ * TransferTreeCascade
+ * @description 级联选择（父子节点选中关联）
+ */
+setItem<TreeTransferProps, TreeTransferProps['dataSource']>(
+  'Transfer',
+  'TreeCascade',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const dataSource = useDict<TreeTransferProps['dataSource']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return <Transfer.TreeTransfer {...props} dataSource={dataSource} checkStrictly={false} />;
+    },
+);
+
+/**
  * TransferTable
  */
 setItem<TableTransferProps, TableTransferProps['dataSource']>(
@@ -125,6 +182,93 @@ setItem<TreeTransferSelectProps, TreeTransferSelectProps['treeData']>(
       });
 
       return <Transfer.TreeTransferSelect {...props} treeData={treeData} />;
+    },
+);
+
+/**
+ * TransferTreeSelectFlat
+ * @description 简单格式（扁平）树数据
+ */
+setItem<TreeTransferSelectProps, TreeTransferSelectProps['treeData']>(
+  'Transfer',
+  'TreeSelectFlat',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const treeData = useDict<TreeTransferSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+      const { transferProps, ...restProps } = props;
+
+      return (
+        <Transfer.TreeTransferSelect
+          {...restProps}
+          treeData={treeData}
+          transferProps={{
+            ...(transferProps ?? {}),
+            treeDataSimpleMode: true,
+          }}
+        />
+      );
+    },
+);
+
+/**
+ * TransferTreeSelectLeaf
+ * @description 只能选择叶子节点
+ */
+setItem<TreeTransferSelectProps, TreeTransferSelectProps['treeData']>(
+  'Transfer',
+  'TreeSelectLeaf',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const treeData = useDict<TreeTransferSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+      const { transferProps, ...restProps } = props;
+
+      return (
+        <Transfer.TreeTransferSelect
+          {...restProps}
+          treeData={treeData}
+          transferProps={{
+            ...(transferProps ?? {}),
+            leafOnly: true,
+          }}
+        />
+      );
+    },
+);
+
+/**
+ * TransferTreeSelectCascade
+ * @description 级联选择（父子节点选中关联）
+ */
+setItem<TreeTransferSelectProps, TreeTransferSelectProps['treeData']>(
+  'Transfer',
+  'TreeSelectCascade',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const treeData = useDict<TreeTransferSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+      const { transferProps, ...restProps } = props;
+
+      return (
+        <Transfer.TreeTransferSelect
+          {...restProps}
+          treeData={treeData}
+          transferProps={{
+            ...(transferProps ?? {}),
+            checkStrictly: false,
+          }}
+        />
+      );
     },
 );
 
@@ -223,6 +367,63 @@ setItem<TreeTransferProps, TreeTransferProps['dataSource']>(
 );
 
 /**
+ * TransferDynamicTreeFlat
+ * @description 简单格式（扁平）树数据
+ */
+setItem<TreeTransferProps, TreeTransferProps['dataSource']>(
+  'TransferDynamic',
+  'TreeFlat',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const dataSource = useDynamicDict<TreeTransferProps['dataSource']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return <Transfer.TreeTransfer {...props} dataSource={dataSource} treeDataSimpleMode />;
+    },
+);
+
+/**
+ * TransferDynamicTreeLeaf
+ * @description 只能选择叶子节点
+ */
+setItem<TreeTransferProps, TreeTransferProps['dataSource']>(
+  'TransferDynamic',
+  'TreeLeaf',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const dataSource = useDynamicDict<TreeTransferProps['dataSource']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return <Transfer.TreeTransfer {...props} dataSource={dataSource} leafOnly />;
+    },
+);
+
+/**
+ * TransferDynamicTreeCascade
+ * @description 级联选择（父子节点选中关联）
+ */
+setItem<TreeTransferProps, TreeTransferProps['dataSource']>(
+  'TransferDynamic',
+  'TreeCascade',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const dataSource = useDynamicDict<TreeTransferProps['dataSource']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return <Transfer.TreeTransfer {...props} dataSource={dataSource} checkStrictly={false} />;
+    },
+);
+
+/**
  * TransferDynamicTable
  */
 setItem<TableTransferProps, TableTransferProps['dataSource']>(
@@ -255,6 +456,93 @@ setItem<TreeTransferSelectProps, TreeTransferSelectProps['treeData']>(
       });
 
       return <Transfer.TreeTransferSelect {...props} treeData={treeData} />;
+    },
+);
+
+/**
+ * TransferDynamicTreeSelectFlat
+ * @description 简单格式（扁平）树数据
+ */
+setItem<TreeTransferSelectProps, TreeTransferSelectProps['treeData']>(
+  'TransferDynamic',
+  'TreeSelectFlat',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const treeData = useDynamicDict<TreeTransferSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+      const { transferProps, ...restProps } = props;
+
+      return (
+        <Transfer.TreeTransferSelect
+          {...restProps}
+          treeData={treeData}
+          transferProps={{
+            ...(transferProps ?? {}),
+            treeDataSimpleMode: true,
+          }}
+        />
+      );
+    },
+);
+
+/**
+ * TransferDynamicTreeSelectLeaf
+ * @description 只能选择叶子节点
+ */
+setItem<TreeTransferSelectProps, TreeTransferSelectProps['treeData']>(
+  'TransferDynamic',
+  'TreeSelectLeaf',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const treeData = useDynamicDict<TreeTransferSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+      const { transferProps, ...restProps } = props;
+
+      return (
+        <Transfer.TreeTransferSelect
+          {...restProps}
+          treeData={treeData}
+          transferProps={{
+            ...(transferProps ?? {}),
+            leafOnly: true,
+          }}
+        />
+      );
+    },
+);
+
+/**
+ * TransferDynamicTreeSelectCascade
+ * @description 级联选择（父子节点选中关联）
+ */
+setItem<TreeTransferSelectProps, TreeTransferSelectProps['treeData']>(
+  'TransferDynamic',
+  'TreeSelectCascade',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const treeData = useDynamicDict<TreeTransferSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+      const { transferProps, ...restProps } = props;
+
+      return (
+        <Transfer.TreeTransferSelect
+          {...restProps}
+          treeData={treeData}
+          transferProps={{
+            ...(transferProps ?? {}),
+            checkStrictly: false,
+          }}
+        />
+      );
     },
 );
 
