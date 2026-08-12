@@ -30,11 +30,10 @@ const InternalDropdownRenderSelect = memo<DropdownRenderSelectProps>(
     /**
      * onSelectChange
      * @description 从下方组件触发的
-     * @param _values
      */
-    const onSelectChange = (_values) => {
+    const onSelectChange = (...args: [any, ...any[]]) => {
       // @ts-ignore
-      props.onChange?.(_values);
+      props.onChange?.(...args);
 
       if (!isMultiple) {
         // 单选
@@ -66,8 +65,7 @@ const InternalDropdownRenderSelect = memo<DropdownRenderSelectProps>(
           originNode: _originNode,
           value: props.value,
           onChange: (...arg: [any, ...any[]]) => {
-            onSelectChange(arg[0]);
-            props.onChange?.(...arg);
+            onSelectChange(...arg);
           },
           options: filterOptions,
         };
@@ -96,16 +94,17 @@ const InternalDropdownRenderSelect = memo<DropdownRenderSelectProps>(
         popupRender={onDropdownRender}
         open={open}
         onOpenChange={setOpen}
+        {...props}
         onSearch={(v) => {
-          setInputValue(v?.trim?.());
-          props?.onSearch?.(v?.trim?.());
+          const trimmed = v?.trim?.() ?? '';
+          setInputValue(trimmed);
+          props?.onSearch?.(trimmed);
         }}
         onClear={() => {
           setInputValue('');
           props?.onClear?.();
         }}
-        {...props}
-        onChange={(_value) => onSelectChange(_value)}
+        onChange={onSelectChange}
       />
     );
   },

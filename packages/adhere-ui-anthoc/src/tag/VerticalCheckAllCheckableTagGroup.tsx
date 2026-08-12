@@ -48,6 +48,7 @@ const InternalVerticalCheckAllCheckableTagGroup = memo<VerticalCheckableTagGroup
               const option = t as CheckboxOptionType;
 
               return {
+                ...option,
                 label: option.label,
                 value: option.value as string,
               };
@@ -58,10 +59,7 @@ const InternalVerticalCheckAllCheckableTagGroup = memo<VerticalCheckableTagGroup
       [props.value, props.onChange, props.options],
     );
 
-    const ChildrenOrigin = useMemo(
-      () => <VerticalCheckableTagGroup {...props} mode="multiple" />,
-      [props],
-    );
+    const ChildrenOrigin = <VerticalCheckableTagGroup {...props} mode="multiple" />;
 
     return (
       <div

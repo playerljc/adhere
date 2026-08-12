@@ -42,7 +42,7 @@ const InternalCheckableTagGroup = memo<CheckableTagGroupProps>(
 
                   if (_checked) {
                     values = [...values, _value];
-                    onChange?.(values, checked, value ?? []);
+                    onChange?.(values, _checked, values);
                   } else {
                     values = values.filter((_v) => _v !== _value);
                     onChange?.(values, false, values);

@@ -1,7 +1,6 @@
 import { useMount } from 'ahooks';
 import { useUpdateEffect } from 'ahooks';
-import type { SelectProps } from 'antd';
-import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
+import React, { memo, useCallback, useRef, useState } from 'react';
 
 import Suspense from '@baifendian/adhere-ui-suspense';
 import ASync from '@baifendian/adhere-ui-suspense/es/Async';
@@ -43,8 +42,8 @@ const ListPaging = memo<ListPagingProps<any>>(
       suspenseRef: suspenseRef.current,
     });
 
-    const onListPagingChange = useMemo<SelectProps['onChange']>(
-      () => (_value, option) => {
+    const onListPagingChange = useCallback(
+      (_value: any, option: any) => {
         setCurrentValue(_value);
         onChange?.(_value, option);
       },

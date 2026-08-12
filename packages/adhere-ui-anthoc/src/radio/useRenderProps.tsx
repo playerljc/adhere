@@ -12,6 +12,7 @@ const useRadioRenderProps: UseRadioRenderProps =
     onChange: (e) => onChange?.(e.target.value, []),
     options:
       options?.map?.((t) => ({
+        ...t,
         label: t.label,
         value: t.value as string,
       })) ?? [],

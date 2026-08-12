@@ -15,12 +15,12 @@ const TransferHOC: TransferHOCComponent = createFactory(
     const realSelectedKeys = useMemo(
       () =>
         isHideInvalidValue ? getTransferValue({ value: selectedKeys, dataSource }) : selectedKeys,
-      [selectedKeys, dataSource],
+      [isHideInvalidValue, selectedKeys, dataSource],
     );
 
     const realTargetKeys = useMemo(
       () => (isHideInvalidValue ? getTransferValue({ value: targetKeys, dataSource }) : targetKeys),
-      [targetKeys, dataSource],
+      [isHideInvalidValue, targetKeys, dataSource],
     );
 
     return (

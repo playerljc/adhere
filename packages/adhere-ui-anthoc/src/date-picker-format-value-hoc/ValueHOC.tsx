@@ -35,6 +35,11 @@ const ValueHOC: FC<DatePickerFormatValueHOCProps> = ({
   const targetDefaultValue = useMemo(() => originValueToDateJSObject(defaultValue), [defaultValue]);
 
   function _onChange(_value, dateString) {
+    if (_value === null || _value === undefined) {
+      onChange?.(null, dateString, _value, null);
+      return;
+    }
+
     onChange?.(_value.format(props.format ?? 'L LTS'), dateString, _value, {
       year: _value.year(),
       quarter: _value.quarter(),

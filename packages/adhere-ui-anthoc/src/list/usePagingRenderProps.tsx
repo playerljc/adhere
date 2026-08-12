@@ -1,5 +1,5 @@
 import { useUpdateEffect } from 'ahooks';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { UsePagingListRenderProps } from '../types';
 
@@ -28,31 +28,37 @@ const usePagingListRenderProps: UsePagingListRenderProps = ({
     limit: defaultPageSize,
   });
 
+  // 用 ref 始终持有最新的 paging，供 fetchData 直接读取，避免在 state updater 中执行副作用
+  const pagingRef = useRef(paging);
+  useEffect(() => {
+    pagingRef.current = paging;
+  });
+
   const [totalCount, setTotalCount] = useState<number>(0);
   const [options, setOptions] = useState<any[]>([]);
 
   const isMultiple = useMemo(() => mode === 'multiple', [mode]);
 
   function fetchData() {
+    const { page: _currentPage, limit: _currentLimit } = pagingRef.current;
+
+    if (!loadData) {
+      return Promise.resolve();
+    }
+
     return new Promise((resolve, reject) => {
-      setPaging((_paging) => {
-        const { page: _currentPage, limit: _currentLimit } = _paging;
+      loadData(_currentPage, _currentLimit, kw.current)
+        ?.then?.((res) => {
+          const { totalCount, data } = res;
 
-        loadData?.(_currentPage, _currentLimit, kw.current)
-          ?.then?.((res) => {
-            const { totalCount, data } = res;
+          setTotalCount(totalCount);
+          setOptions(data);
 
-            setTotalCount(totalCount);
-            setOptions(data);
+          onDataSourceChange?.(_currentPage, data);
 
-            onDataSourceChange?.(_currentPage, data);
-
-            resolve(res);
-          })
-          .catch((error) => reject(error));
-
-        return _paging;
-      });
+          resolve(res);
+        })
+        .catch((error) => reject(error));
     });
   }
 

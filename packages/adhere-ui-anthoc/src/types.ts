@@ -32,7 +32,7 @@ import type { CheckableTagProps } from 'antd/es/tag';
 import type { ColumnType } from 'antd/lib/table/interface';
 import dayjs from 'dayjs';
 import { ValidateFields } from 'rc-field-form/es/interface';
-import type { CSSProperties, NamedExoticComponent, ReactElement, ReactNode } from 'react';
+import type { CSSProperties, MutableRefObject, NamedExoticComponent, ReactElement, ReactNode } from 'react';
 import type { SwiperOptions } from 'swiper/types';
 
 import type { TreeAutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
@@ -1046,8 +1046,8 @@ export type UseCheckAllMultiple = (
       loading?: boolean;
     },
 ) => {
-  currentOriginNode: ReactNode;
-  dropdownRenderElement: ReactNode;
+  currentOriginNode: MutableRefObject<ReactNode>;
+  dropdownRenderElement: MutableRefObject<ReactNode>;
   renderProps: (arg: {
     originNode?: ReactElement;
     value?: SelectProps['value'];
@@ -1153,7 +1153,7 @@ export type DatePickerFormatValueHOCProps = Omit<
   onChange?: (
     data: string | null | undefined,
     dateString: string,
-    datejs: dayjs.Dayjs,
+    datejs: dayjs.Dayjs | null | undefined,
     extra: {
       // 年
       year?: number;
@@ -1173,7 +1173,7 @@ export type DatePickerFormatValueHOCProps = Omit<
       minute?: number;
       // 秒
       second?: number;
-    },
+    } | null,
   ) => void;
 };
 
@@ -1186,7 +1186,7 @@ export type DatePickerTimestampValueHOCProps = Omit<
   onChange?: (
     data: number | null | undefined,
     dateString: string,
-    datejs: dayjs.Dayjs | null,
+    datejs: dayjs.Dayjs | null | undefined,
     extra: {
       // 年
       year?: number;
@@ -1206,7 +1206,7 @@ export type DatePickerTimestampValueHOCProps = Omit<
       minute?: number;
       // 秒
       second?: number;
-    },
+    } | null,
   ) => void;
   // value的类型
   type?: 'milliseconds' | 'seconds';
@@ -1272,7 +1272,7 @@ export type TimePickerFormatValueHOCProps = Omit<
   onChange?: (
     data: string | null | undefined,
     dateString: string,
-    datejs: dayjs.Dayjs,
+    datejs: dayjs.Dayjs | null | undefined,
     extra: {
       // 小时
       hour?: number;
@@ -1280,7 +1280,7 @@ export type TimePickerFormatValueHOCProps = Omit<
       minute?: number;
       // 秒
       second?: number;
-    },
+    } | null,
   ) => void;
 };
 
@@ -1291,9 +1291,9 @@ export type TimePickerTimestampValueHOCProps = Omit<
   defaultValue?: number | null;
   value?: number | null;
   onChange?: (
-    data: number,
+    data: number | null | undefined,
     timeString: string,
-    datejs: dayjs.Dayjs | null,
+    datejs: dayjs.Dayjs | null | undefined,
     extra: {
       // 小时
       hour?: number;
@@ -1301,7 +1301,7 @@ export type TimePickerTimestampValueHOCProps = Omit<
       minute?: number;
       // 秒
       second?: number;
-    },
+    } | null,
   ) => void;
   // value的类型
   type?: 'milliseconds' | 'seconds';
@@ -1346,7 +1346,7 @@ export type AsyncTreeEntityValueHOCProps = {
   value?: any;
   onChange?: (...argv: any[]) => any;
   valueProp?: string;
-  // isUsePrimaryValue?: boolean;
+  isUsePrimaryValue?: boolean;
   [prop: string]: any;
 };
 

@@ -747,7 +747,23 @@ const TableExt: FC<TableExtProps> = ({
   }, [scrollY, props, targetFixedHeaderAutoTable, isVirtual, targetColumns]);
 
   /**
-   * 固定表头时根据容器高度计算 scroll.y；卸载时清理测宽节点
+   * 组件卸载时清理离屏测宽节点，仅执行一次
+   */
+  useEffect(() => {
+    return () => {
+      if (_hackerElement.current) {
+        try {
+          document.body.removeChild(_hackerElement.current);
+          _hackerElement.current = null;
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+  }, []);
+
+  /**
+   * 固定表头时根据容器高度计算 scroll.y
    */
   useEffect(() => {
     if (!tableWrapRef.current) return;
@@ -775,17 +791,6 @@ const TableExt: FC<TableExtProps> = ({
         );
       }
     }
-
-    return () => {
-      if (_hackerElement.current) {
-        try {
-          document.body.removeChild(_hackerElement.current);
-          _hackerElement.current = null;
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
   });
 
   return (

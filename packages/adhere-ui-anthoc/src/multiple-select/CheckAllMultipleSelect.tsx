@@ -38,7 +38,7 @@ const InternalCheckAllSelect = memo<CheckAllSelectProps>(
       <DropdownRenderSelect
         {...props}
         mode="multiple"
-        filterOption={() => dropdownRenderElement === currentOriginNode}
+        filterOption={() => Object.is(dropdownRenderElement.current, currentOriginNode.current)}
       >
         {(arg) =>
           renderProps({

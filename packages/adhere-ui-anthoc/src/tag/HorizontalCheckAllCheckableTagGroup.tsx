@@ -48,6 +48,7 @@ const InternalHorizontalCheckAllCheckableTagGroup = memo<HorizontalCheckableTagG
               const option = t as CheckboxOptionType;
 
               return {
+                ...option,
                 label: option.label,
                 value: option.value as string,
               };
@@ -58,10 +59,7 @@ const InternalHorizontalCheckAllCheckableTagGroup = memo<HorizontalCheckableTagG
       [props.value, props.onChange, props.options],
     );
 
-    const ChildrenOrigin = useMemo(
-      () => <HorizontalCheckableTagGroup {...props} mode="multiple" />,
-      [props],
-    );
+    const ChildrenOrigin = <HorizontalCheckableTagGroup {...props} mode="multiple" />;
 
     return (
       <div

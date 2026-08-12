@@ -55,7 +55,7 @@ const ValueHOC: FC<CalendarFormatValueHOCProps> = ({
   const targetDefaultValue = useMemo(() => originValueToDateJSObject(defaultValue), [defaultValue]);
 
   const targetValidRange = useMemo<[dayjs.Dayjs, dayjs.Dayjs]>(
-    () => [originValueToDateJSObject(validRange?.[0]), originValueToDateJSObject(validRange?.[0])],
+    () => [originValueToDateJSObject(validRange?.[0]), originValueToDateJSObject(validRange?.[1])],
     [validRange],
   );
 

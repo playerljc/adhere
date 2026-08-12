@@ -109,7 +109,10 @@ const useAsyncCascader: UseAsyncCascader = ({
     new Promise<unknown>((resolve) => {
       const targetOption = selectedOptions[selectedOptions.length - 1];
       // 如果加载过则不加载
-      if (!!targetOption.isLoading) return;
+      if (!!targetOption.isLoading) {
+        resolve(undefined);
+        return;
+      }
 
       // 标识为已经加载过
       targetOption.isLoading = true;
@@ -170,7 +173,9 @@ const useAsyncCascader: UseAsyncCascader = ({
   });
 
   useUpdateEffect(() => {
-    if (!changeValue.current) {
+    const wasChangedByUser = !!changeValue.current;
+    changeValue.current = undefined;
+    if (!wasChangedByUser) {
       loadDefaultBranchData();
     }
   }, [value]);

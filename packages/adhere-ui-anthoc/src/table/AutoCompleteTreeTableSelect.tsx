@@ -41,7 +41,7 @@ const InternalAutoCompleteTreeTableSelect = memo<AutoCompleteTreeTableSelectProp
 
     const treeCheckable = useMemo(() => {
       return isMultiple ? !targetCheckStrictly : false;
-    }, [targetCheckStrictly]);
+    }, [isMultiple, targetCheckStrictly]);
 
     const renderProps = useTreeRender(tableProps);
 

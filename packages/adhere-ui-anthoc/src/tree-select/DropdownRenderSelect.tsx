@@ -26,6 +26,9 @@ const InternalDropdownRenderSelect = memo<TreeDropdownRenderSelectProps>(
       return _targetValues.reduce((result, _id) => {
         const node = targetFlatTreeData.find((t) => t[treeTransformConfig.keyAttr] === _id);
 
+        // 节点不存在时（数据尚未加载完毕或值非法），跳过
+        if (!node) return result;
+
         // 如果是根节点
         if (node[treeTransformConfig.parentIdAttr] === treeTransformConfig.rootParentId) {
           result[_id] = [node];
@@ -57,8 +60,7 @@ const InternalDropdownRenderSelect = memo<TreeDropdownRenderSelectProps>(
 
       setPaths(getPathsByValues(_values));
 
-      // @ts-ignore
-      props.onChange?.(_values);
+      props.onChange?.(_values, label, extra);
     }
 
     const [paths, setPaths] = useState<object>({});

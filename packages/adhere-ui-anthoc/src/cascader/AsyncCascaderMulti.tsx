@@ -10,7 +10,7 @@ import AsyncCascader from './AsyncCascader';
  */
 const InternalAsyncCascaderMulti = memo<AsyncCascaderProps>((props) => (
   // @ts-ignore
-  <AsyncCascader multiple maxTagCount="responsive" {...props} />
+  <AsyncCascader {...props} multiple maxTagCount="responsive" />
 ));
 
 const AsyncCascaderMulti = InternalAsyncCascaderMulti as DisplayNameInternal<

@@ -9,7 +9,7 @@ import type { CheckableTagProps } from 'antd/es/tag';
 import type { ColumnType } from 'antd/lib/table/interface';
 import dayjs from 'dayjs';
 import { ValidateFields } from 'rc-field-form/es/interface';
-import type { CSSProperties, NamedExoticComponent, ReactElement, ReactNode } from 'react';
+import type { CSSProperties, MutableRefObject, NamedExoticComponent, ReactElement, ReactNode } from 'react';
 import type { SwiperOptions } from 'swiper/types';
 import type { TreeAutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
@@ -776,8 +776,8 @@ export type UseCheckAllMultiple = (arg: CheckAllWrapperStyleProps & DropdownWrap
     renderLoading?: () => ReactNode;
     loading?: boolean;
 }) => {
-    currentOriginNode: ReactNode;
-    dropdownRenderElement: ReactNode;
+    currentOriginNode: MutableRefObject<ReactNode>;
+    dropdownRenderElement: MutableRefObject<ReactNode>;
     renderProps: (arg: {
         originNode?: ReactElement;
         value?: SelectProps['value'];
@@ -851,7 +851,7 @@ export type DisplayNameInternal<T> = T & {
 export type DatePickerFormatValueHOCProps = Omit<DatePickerProps, 'value' | 'onChange' | 'defaultValue'> & {
     defaultValue?: string | null;
     value?: string | null;
-    onChange?: (data: string | null | undefined, dateString: string, datejs: dayjs.Dayjs, extra: {
+    onChange?: (data: string | null | undefined, dateString: string, datejs: dayjs.Dayjs | null | undefined, extra: {
         year?: number;
         quarter?: number;
         month?: number;
@@ -861,12 +861,12 @@ export type DatePickerFormatValueHOCProps = Omit<DatePickerProps, 'value' | 'onC
         hour?: number;
         minute?: number;
         second?: number;
-    }) => void;
+    } | null) => void;
 };
 export type DatePickerTimestampValueHOCProps = Omit<DatePickerProps, 'defaultValue' | 'value' | 'onChange'> & {
     defaultValue?: number | null;
     value?: number | null;
-    onChange?: (data: number | null | undefined, dateString: string, datejs: dayjs.Dayjs | null, extra: {
+    onChange?: (data: number | null | undefined, dateString: string, datejs: dayjs.Dayjs | null | undefined, extra: {
         year?: number;
         quarter?: number;
         month?: number;
@@ -876,7 +876,7 @@ export type DatePickerTimestampValueHOCProps = Omit<DatePickerProps, 'defaultVal
         hour?: number;
         minute?: number;
         second?: number;
-    }) => void;
+    } | null) => void;
     type?: 'milliseconds' | 'seconds';
 };
 export type DateTimePickerExtra = {
@@ -904,20 +904,20 @@ export type RangePickerTimestampValueHOCProps = Omit<RangePickerProps, 'defaultV
 export type TimePickerFormatValueHOCProps = Omit<TimePickerProps, 'value' | 'onChange' | 'defaultValue'> & {
     defaultValue?: string | null;
     value?: string | null;
-    onChange?: (data: string | null | undefined, dateString: string, datejs: dayjs.Dayjs, extra: {
+    onChange?: (data: string | null | undefined, dateString: string, datejs: dayjs.Dayjs | null | undefined, extra: {
         hour?: number;
         minute?: number;
         second?: number;
-    }) => void;
+    } | null) => void;
 };
 export type TimePickerTimestampValueHOCProps = Omit<TimePickerProps, 'defaultValue' | 'value' | 'onChange'> & {
     defaultValue?: number | null;
     value?: number | null;
-    onChange?: (data: number, timeString: string, datejs: dayjs.Dayjs | null, extra: {
+    onChange?: (data: number | null | undefined, timeString: string, datejs: dayjs.Dayjs | null | undefined, extra: {
         hour?: number;
         minute?: number;
         second?: number;
-    }) => void;
+    } | null) => void;
     type?: 'milliseconds' | 'seconds';
 };
 export type ArrayEntityValueHOCProps = {
@@ -953,6 +953,7 @@ export type AsyncTreeEntityValueHOCProps = {
     value?: any;
     onChange?: (...argv: any[]) => any;
     valueProp?: string;
+    isUsePrimaryValue?: boolean;
     [prop: string]: any;
 };
 export type CalendarFormatValueHOCProps = CalendarProps<dayjs.Dayjs>;

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import type { UseTreeTransferRenderProps } from '../types';
-import { normalizeTreeData } from './transferUtils';
 
 const useTreeTransferRenderProps: UseTreeTransferRenderProps = (transferProps) => {
   const [selectedKeys, setSelectedKeys] = useState<any[]>([]);
@@ -10,7 +9,7 @@ const useTreeTransferRenderProps: UseTreeTransferRenderProps = (transferProps) =
     render: (item) => item.title,
     selectedKeys: [...selectedKeys],
     targetKeys: value,
-    dataSource: normalizeTreeData(treeData ?? []),
+    dataSource: treeData ?? [],
     onChange: (targetKeys) => onChange?.(targetKeys, []),
     onSelectChange: (sourceSelectedKeys, targetSelectedKeys) => {
       setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);

@@ -54,7 +54,7 @@ const InternalCustomCheckAllCheckbox = memo<CustomCheckAllCheckboxProps>(
       [props.value, props.onChange, props.options],
     );
 
-    const ChildrenOrigin = useMemo(() => <CustomCheckbox {...props} />, [props]);
+    const ChildrenOrigin = <CustomCheckbox {...props} />;
 
     useTheme<HTMLElement>({
       elRef: wrapperRef,

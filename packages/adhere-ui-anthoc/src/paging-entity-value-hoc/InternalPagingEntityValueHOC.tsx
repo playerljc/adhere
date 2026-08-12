@@ -43,7 +43,10 @@ const InternalPagingEntityValueHOC = memo<PagingEntityValueHOCProps>((props) => 
       return hoc[path];
     }, hoc);
 
+    const originalOnDataSourceChange = pagingProps.onDataSourceChange;
     pagingProps.onDataSourceChange = (page, _dataSource) => {
+      originalOnDataSourceChange?.(page, _dataSource);
+
       const targetDataSource = props?.getOptionsByDataSource?.(_dataSource) ?? _dataSource;
 
       dataSourceStore.current.set(page, targetDataSource);

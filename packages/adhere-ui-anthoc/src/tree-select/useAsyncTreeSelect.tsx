@@ -118,24 +118,33 @@ const useAsyncTreeSelect: UseAsyncTreeSelect = ({
               return [...(data ?? []), ...(_treeData?.filter?.((t) => t.pId !== id) ?? [])];
             }
 
-            // 正常数据处理
-            const node = findNodeById(_treeData, id);
+            // 正常数据处理 —— 不可直接 mutation state 节点，需要返回新树
+            function cloneTreeWithNewChildren(nodes: any[]): any[] {
+              return nodes.map((n) => {
+                if (!Object.is(n.value, id)) {
+                  return n.children
+                    ? { ...n, children: cloneTreeWithNewChildren(n.children) }
+                    : n;
+                }
 
-            // children中可能有回显数据，需要分情况处理
-            if (node.children && Array.isArray(node.children)) {
-              if (!node.children.length) {
-                node.children = data;
-              } else {
-                node.children = [
-                  ...node.children,
-                  ...(data?.filter?.((t) => node.children.find((n) => n.value !== t.value)) ?? []),
-                ];
-              }
-            } else {
-              node.children = data;
+                // 找到目标节点，生成新 children
+                const existingChildren: any[] = Array.isArray(n.children) ? n.children : [];
+                const newChildren =
+                  existingChildren.length === 0
+                    ? (data ?? [])
+                    : [
+                        ...existingChildren,
+                        // 过滤掉已存在的子节点（按 value 去重）
+                        ...(data?.filter?.(
+                          (t) => !existingChildren.find((c) => c.value === t.value),
+                        ) ?? []),
+                      ];
+
+                return { ...n, children: newChildren };
+              });
             }
 
-            return [...(_treeData ?? [])];
+            return cloneTreeWithNewChildren(_treeData ?? []);
           });
         });
 
@@ -167,6 +176,8 @@ const useAsyncTreeSelect: UseAsyncTreeSelect = ({
   useUpdateEffect(() => {
     if (!changeValue.current) {
       loadDefaultBranchData();
+    } else {
+      changeValue.current = undefined;
     }
   }, [value]);
 

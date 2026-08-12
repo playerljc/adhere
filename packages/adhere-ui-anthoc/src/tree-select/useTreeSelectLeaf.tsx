@@ -9,23 +9,20 @@ import type { UseTreeSelectLeaf } from '../types';
  */
 const useTreeSelectLeaf: UseTreeSelectLeaf = (treeData) =>
   useMemo(() => {
-    function loop(nodes) {
-      (nodes || []).forEach((node) => {
-        if ('isLeaf' in node) {
-          node.disabled = !node.isLeaf;
-        } else {
-          node.disabled = !!node?.children?.length;
+    function loop(nodes): any[] {
+      return (nodes || []).map((node) => {
+        const disabled = 'isLeaf' in node ? !node.isLeaf : !!node?.children?.length;
+        const cloned: any = { ...node, disabled };
+
+        if (node.children) {
+          cloned.children = loop(node.children);
         }
 
-        loop(node.children);
+        return cloned;
       });
     }
 
-    const source = [...(treeData ?? [])];
-
-    loop(source);
-
-    return source;
+    return loop(treeData ?? []);
   }, [treeData]);
 
 export default useTreeSelectLeaf;

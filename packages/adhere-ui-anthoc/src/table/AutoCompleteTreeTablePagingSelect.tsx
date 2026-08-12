@@ -70,7 +70,7 @@ const InternalAutoCompleteTreeTablePagingSelect = memo<AutoCompleteTreeTablePagi
 
     const treeCheckable = useMemo(() => {
       return isMultiple ? !targetCheckStrictly : false;
-    }, [targetCheckStrictly]);
+    }, [isMultiple, targetCheckStrictly]);
 
     const Component = useMemo(
       () => (isMultiple ? AutoCompleteTreeMultiSelect : AutoCompleteTreeSelect),

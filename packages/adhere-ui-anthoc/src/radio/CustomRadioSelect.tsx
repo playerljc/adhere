@@ -27,6 +27,6 @@ const InternalCustomRadioSelect = memo<CustomRadioSelectProps>(
 const CustomRadioSelect = InternalCustomRadioSelect as DisplayNameInternal<
   typeof InternalCustomRadioSelect
 >;
-CustomRadioSelect.displayName = 'CustomRadio';
+CustomRadioSelect.displayName = 'CustomRadioSelect';
 
 export default CustomRadioSelect;

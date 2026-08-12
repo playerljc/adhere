@@ -1,5 +1,5 @@
 import { useUpdateEffect } from 'ahooks';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import type { UsePagingTreeTableRenderProps } from '../types';
 
@@ -29,6 +29,12 @@ const usePagingTreeRenderProps: UsePagingTreeTableRenderProps = ({
     limit: defaultPageSize,
   });
 
+  // 用 ref 始终持有最新的 paging，供 fetchData 直接读取，避免在 state updater 中执行副作用
+  const pagingRef = useRef(paging);
+  useEffect(() => {
+    pagingRef.current = paging;
+  });
+
   const [totalCount, setTotalCount] = useState<number>(0);
   const [treeData, setTreeData] = useState<any[]>([]);
 
@@ -37,25 +43,25 @@ const usePagingTreeRenderProps: UsePagingTreeTableRenderProps = ({
   const isTreeDataSimpleMode = useMemo(() => !!treeDataSimpleMode, [treeDataSimpleMode]);
 
   function fetchData() {
+    const { page: _currentPage, limit: _currentLimit } = pagingRef.current;
+
+    if (!loadData) {
+      return Promise.resolve();
+    }
+
     return new Promise((resolve, reject) => {
-      setPaging((_paging) => {
-        const { page: _currentPage, limit: _currentLimit } = _paging;
+      loadData(_currentPage, _currentLimit, kw.current)
+        ?.then?.((res) => {
+          const { totalCount, data } = res;
 
-        loadData?.(_currentPage, _currentLimit, kw.current)
-          ?.then?.((res) => {
-            const { totalCount, data } = res;
+          setTotalCount(totalCount);
+          setTreeData(data);
 
-            setTotalCount(totalCount);
-            setTreeData(data);
+          onDataSourceChange?.(_currentPage, data);
 
-            onDataSourceChange?.(_currentPage, data);
-
-            resolve(res);
-          })
-          .catch((error) => reject(error));
-
-        return _paging;
-      });
+          resolve(res);
+        })
+        .catch((error) => reject(error));
     });
   }
 

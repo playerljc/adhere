@@ -44,6 +44,11 @@ const ValueHOC: FC<TimePickerTimestampValueHOCProps> = ({
   const targetDefaultValue = useMemo(() => originValueToDateJSObject(defaultValue), [defaultValue]);
 
   const _onChange = (_value, dateString) => {
+    if (_value === null || _value === undefined) {
+      onChange?.(null, dateString, _value, null);
+      return;
+    }
+
     onChange?.(changeValueMillisecondsToTargetValue(_value.valueOf()), dateString, _value, {
       hour: _value.hour(),
       minute: _value.minute(),

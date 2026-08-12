@@ -55,7 +55,7 @@ const InternalHorizontalCheckAllCheckbox = memo<HorizontalCheckAllCheckboxProps>
       [props.value, props.options, props.onChange],
     );
 
-    const ChildrenOrigin = useMemo(() => <HorizontalCheckbox {...props} />, [props]);
+    const ChildrenOrigin = <HorizontalCheckbox {...props} />;
 
     useTheme<HTMLElement>({
       elRef: wrapperRef,

@@ -49,6 +49,11 @@ const ValueHOC: FC<DatePickerTimestampValueHOCProps> = ({
   const targetDefaultValue = useMemo(() => originValueToDateJSObject(defaultValue), [defaultValue]);
 
   const _onChange = (_value, dateString) => {
+    if (_value === null || _value === undefined) {
+      onChange?.(null, dateString, _value, null);
+      return;
+    }
+
     onChange?.(changeValueMillisecondsToTargetValue(_value.valueOf()), dateString, _value, {
       year: _value.year(),
       quarter: _value.quarter(),

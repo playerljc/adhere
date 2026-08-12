@@ -1,11 +1,11 @@
-import React, { useCallback } from 'react';
+import { useMemo } from 'react';
 
 import Util from '@baifendian/adhere-util';
 
 import type { UseCascaderData } from '../types';
 
 const useCascaderData: UseCascaderData = ({ options, treeDataSimpleMode, config }) => {
-  const getTreeData = useCallback(
+  const treeData = useMemo(
     () =>
       // @ts-ignore
       Util.arrayToAntdTreeSelect(options, {
@@ -14,10 +14,10 @@ const useCascaderData: UseCascaderData = ({ options, treeDataSimpleMode, config 
         rootParentId: config?.rootParentId ?? 0,
         parentIdAttr: config?.parentIdAttr ?? 'pId',
       }),
-    [options],
+    [options, config?.keyAttr, config?.titleAttr, config?.rootParentId, config?.parentIdAttr],
   );
 
-  return treeDataSimpleMode ? getTreeData() : options;
+  return treeDataSimpleMode ? treeData : options;
 };
 
 export default useCascaderData;

@@ -9,6 +9,7 @@ const InternalAsyncTreeEntityValueHOC = memo<AsyncTreeEntityValueHOCProps>((prop
   const children = cloneElement(props.children, {
     ...(props?.children?.props ?? {}),
     onDataSourceChange: (_treeData) => {
+      props?.children?.props?.onDataSourceChange?.(_treeData);
       setTreeData(_treeData);
     },
   });

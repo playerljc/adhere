@@ -126,9 +126,10 @@ const FormInternal = memo<FormInternalProps>((props) => {
 
   const style = useMemo(() => {
     return {
+      ...(restProps.style ?? {}),
       scrollMarginTop,
     };
-  }, [scrollMarginTop]);
+  }, [scrollMarginTop, restProps.style]);
 
   return (
     // @ts-ignore - FormProps 的 children 类型与 Form 组件的类型定义不完全兼容

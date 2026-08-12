@@ -42,7 +42,7 @@ const SelectHOC: SelectHOCComponent = createFactory(
     const wrapperRef = useRef<HTMLElement | undefined>(undefined);
 
     const targetValue = useMemo(
-      () => (isHideInvalidValue ? getOptionsValue(value, options) : defaultValue),
+      () => (isHideInvalidValue ? getOptionsValue(value, options) : value),
       [value, options, isHideInvalidValue],
     );
 

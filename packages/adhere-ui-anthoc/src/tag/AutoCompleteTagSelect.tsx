@@ -18,10 +18,8 @@ const InternalAutoCompleteTagSelect = memo<AutoCompleteTagSelectProps>(({ tagPro
   const renderProps = useRenderProps(tagProps);
 
   const Component = useMemo(() => {
-    return 'mode' in (tagProps ?? {}) && tagProps?.mode === 'multiple'
-      ? AutoCompleteMultipleSelect
-      : AutoComplete;
-  }, [(tagProps ?? {}).mode]);
+    return props.mode === 'multiple' ? AutoCompleteMultipleSelect : AutoComplete;
+  }, [props.mode]);
 
   return (
     <Component {...props}>

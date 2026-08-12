@@ -53,15 +53,16 @@ const ValueHOC: FC<RangePickerFormatValueHOCProps> = ({
   const targetDefaultValue = useMemo(() => originValueToDateJSObject(defaultValue), [defaultValue]);
 
   const _onChange = (_value, dateString) => {
+    const isFilled =
+      _value != null && _value.length === 2 && _value[0] != null && _value[1] != null;
+
     onChange?.(
-      _value && !!_value.length
+      isFilled
         ? [_value[0].format(props.format ?? 'L LTS'), _value[1].format(props.format ?? 'L LTS')]
         : _value,
       dateString,
       _value,
-      _value && !!_value.length
-        ? [dateJSObjectToExtra(_value[0]), dateJSObjectToExtra(_value[1])]
-        : null,
+      isFilled ? [dateJSObjectToExtra(_value[0]), dateJSObjectToExtra(_value[1])] : null,
     );
   };
 

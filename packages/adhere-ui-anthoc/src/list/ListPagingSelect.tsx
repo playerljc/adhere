@@ -56,7 +56,7 @@ const InternalListPagingSelect = memo<ListPagingSelectProps<any>>(
         const rows = _values
           .map((_value) => options.find((t) => t.value === _value))
           .filter((t) => !!t);
-        return uniqBy([...selectedRows, ...rows], 'value');
+        return uniqBy([..._selectedRows, ...rows], 'value');
       });
 
       props?.onChange?.(_values);

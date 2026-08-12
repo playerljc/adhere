@@ -58,7 +58,7 @@ const InternalTreeTablePagingSelect = memo<TreeTablePagingSelectProps>(
 
     const treeCheckable = useMemo(() => {
       return isMultiple ? !targetCheckStrictly : false;
-    }, [targetCheckStrictly]);
+    }, [isMultiple, targetCheckStrictly]);
 
     useEffect(() => {
       fetchData();

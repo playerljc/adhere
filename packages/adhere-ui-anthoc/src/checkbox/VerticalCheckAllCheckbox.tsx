@@ -55,7 +55,7 @@ const InternalVerticalCheckAllCheckbox = memo<VerticalCheckAllCheckboxProps>(
       [props.value, props.options, props.onChange],
     );
 
-    const ChildrenOrigin = useMemo(() => <VerticalCheckbox {...props} />, [props]);
+    const ChildrenOrigin = <VerticalCheckbox {...props} />;
 
     useTheme<HTMLElement>({
       elRef: wrapperRef,

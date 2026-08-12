@@ -33,8 +33,8 @@ const useCheckAllMultiple: UseCheckAllMultiple = ({
   const fetchLoading = useAutoCompleteFetchLoading(renderLoading);
 
   return {
-    currentOriginNode: currentOriginNode.current,
-    dropdownRenderElement: dropdownRenderElement.current,
+    currentOriginNode,
+    dropdownRenderElement,
     renderProps: ({ originNode, ..._renderProps }) => {
       currentOriginNode.current = originNode;
 

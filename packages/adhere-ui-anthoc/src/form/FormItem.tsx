@@ -60,7 +60,7 @@ const FormItem: FC<FormItemProps> = ({
     }
 
     return props?.validateTrigger ?? 'onChange';
-  }, [children]);
+  }, [children, props?.validateTrigger]);
 
   const [errorContainer, setErrorContainer] = useState<HTMLElement | null | undefined>();
 
@@ -138,6 +138,10 @@ const FormItem: FC<FormItemProps> = ({
                   ref: (child as any).ref,
                   ...(childProps.status === undefined && { status }),
                   ...(childProps.errors === undefined && { errors }),
+                  onChange: (...args) => {
+                    childProps?.onChange?.(...args);
+                    rest?.onChange?.(...args);
+                  },
                 });
               });
             }

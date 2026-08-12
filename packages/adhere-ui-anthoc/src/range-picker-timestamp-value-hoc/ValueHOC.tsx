@@ -35,19 +35,15 @@ const ValueHOC: FC<RangePickerTimestampValueHOCProps> = ({
 
     if (!_value.length) return [];
 
-    let targetType = Array.isArray(type ?? DEFAULT_TYPE)
+    const rawType = Array.isArray(type ?? DEFAULT_TYPE)
       ? (type ?? DEFAULT_TYPE).slice(0, 2)
-      : DEFAULT_TYPE;
+      : [...DEFAULT_TYPE];
 
-    for (let i = 0; i < 2; i++) {
-      if (!['seconds', 'milliseconds'].includes(targetType[i])) {
-        targetType[i] = 'milliseconds';
-      }
-    }
+    const targetType = rawType.map((t) =>
+      ['seconds', 'milliseconds'].includes(t) ? t : 'milliseconds',
+    );
 
     if (targetType.join() === ['seconds', 'seconds'].join()) {
-      return [dayjs.unix(_value[0]), dayjs.unix(_value[1])];
-    } else if (targetType.join() === ['seconds', 'seconds'].join()) {
       return [dayjs.unix(_value[0]), dayjs.unix(_value[1])];
     } else if (targetType.join() === ['seconds', 'milliseconds'].join()) {
       return [dayjs.unix(_value[0]), dayjs(_value[1])];
@@ -95,15 +91,16 @@ const ValueHOC: FC<RangePickerTimestampValueHOCProps> = ({
   const targetDefaultValue = useMemo(() => originValueToDateJSObject(defaultValue), [defaultValue]);
 
   const _onChange = (_value, dateString) => {
+    const isFilled =
+      _value != null && _value.length === 2 && _value[0] != null && _value[1] != null;
+
     onChange?.(
-      _value && !!_value.length
+      isFilled
         ? changeValueMillisecondsToTargetValue([_value[0].valueOf(), _value[1].valueOf()])
         : _value,
       dateString,
       _value,
-      _value && !!_value.length
-        ? [dateJSObjectToExtra(_value[0]), dateJSObjectToExtra(_value[1])]
-        : null,
+      isFilled ? [dateJSObjectToExtra(_value[0]), dateJSObjectToExtra(_value[1])] : null,
     );
   };
 

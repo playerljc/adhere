@@ -32,7 +32,7 @@ const InternalTreeTableSelect = memo<TreeTableSelectProps>(
 
     const treeCheckable = useMemo(() => {
       return isMultiple ? !targetCheckStrictly : false;
-    }, [targetCheckStrictly]);
+    }, [isMultiple, targetCheckStrictly]);
 
     const renderProps = useTreeRender(tableProps);
 

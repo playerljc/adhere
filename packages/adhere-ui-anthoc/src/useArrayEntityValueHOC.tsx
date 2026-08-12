@@ -1,9 +1,18 @@
 import omit from 'omit.js';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 
 import Util from '@baifendian/adhere-util';
 
 import type { ArrayEntityValueHOCProps } from './types';
+
+const ARRAY_ENTITY_VALUE_HOC_OMIT_KEYS = [
+  'children',
+  'options',
+  'valueProp',
+  'optionsProp',
+  'isUsePrimaryValue',
+  'changePropagation',
+];
 
 const optionKeys = ['value', 'key', 'id'];
 
@@ -21,7 +30,7 @@ export default (props: ArrayEntityValueHOCProps) => {
   }, [props.isUsePrimaryValue]);
 
   function getEntityValue(entity) {
-    if (props.valueProp ?? DEFAULT_VALUE_PROP in entity) {
+    if ((props.valueProp ?? DEFAULT_VALUE_PROP) in entity) {
       return entity[props.valueProp ?? DEFAULT_VALUE_PROP];
     }
 
@@ -134,14 +143,20 @@ export default (props: ArrayEntityValueHOCProps) => {
     return value;
   }
 
-  if (isPrimitive(value)) {
-    onChange?.(valueToEntity(value));
-  } else if (isMultiplePrimitive(value)) {
-    onChange?.(valuesToEntities(value));
-  }
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
+
+  useEffect(() => {
+    if (isPrimitive(value)) {
+      onChangeRef.current?.(valueToEntity(value));
+    } else if (isMultiplePrimitive(value)) {
+      onChangeRef.current?.(valuesToEntities(value));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   return React.cloneElement(children, {
-    ...omit(props, ['children', 'options']),
+    ...omit(props, ARRAY_ENTITY_VALUE_HOC_OMIT_KEYS),
     ...children.props,
     value: _isUsePrimaryValue ? getInternalValue() : value,
     realValue: value,

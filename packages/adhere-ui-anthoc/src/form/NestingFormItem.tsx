@@ -51,11 +51,15 @@ const InternalNestingFormItem = memo<
       }
 
       useMount(() => {
-        form.setFieldsValue(value);
+        if (value != null) {
+          form.setFieldsValue(value);
+        }
       });
 
       useUpdateEffect(() => {
-        form.setFieldsValue(value);
+        if (value != null) {
+          form.setFieldsValue(value);
+        }
       }, [value]);
 
       useImperativeHandle(ref, () => ({

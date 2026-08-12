@@ -36,6 +36,11 @@ const ValueHOC: FC<TimePickerFormatValueHOCProps> = ({
   const targetDefaultValue = useMemo(() => originValueToDateJSObject(defaultValue), [defaultValue]);
 
   function _onChange(_value, dateString) {
+    if (_value === null || _value === undefined) {
+      onChange?.(null, dateString, _value, null);
+      return;
+    }
+
     onChange?.(_value.format(props.format ?? 'LTS'), dateString, _value, {
       hour: _value.hour(),
       minute: _value.minute(),

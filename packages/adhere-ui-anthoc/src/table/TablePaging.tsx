@@ -1,6 +1,5 @@
 import { useMount, useUpdateEffect } from 'ahooks';
-import type { SelectProps } from 'antd';
-import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
+import React, { memo, useCallback, useRef, useState } from 'react';
 
 import Suspense from '@baifendian/adhere-ui-suspense';
 import ASync from '@baifendian/adhere-ui-suspense/es/Async';
@@ -42,8 +41,8 @@ const InternalTablePaging = memo<TablePagingProps<any>>(
       suspenseRef: suspenseRef.current,
     });
 
-    const onTablePagingChange = useMemo<SelectProps['onChange']>(
-      () => (_value, option) => {
+    const onTablePagingChange = useCallback(
+      (_value: any, option: any) => {
         setCurrentValue(_value);
         onChange?.(_value, option);
       },
