@@ -6,6 +6,14 @@ import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 import type { BreakPoint, BreakPoints, BreakPointsCondition } from './types';
 
 /**
+ * 将断点名转为条件字段名（与 getMediaQueryByBreakPoints / MediaQuery 查找保持一致）
+ * 例如 mobile → isMobile
+ */
+export function formatConditionKey(breakPointName: string): string {
+  return `is${startCase(String(breakPointName)).replace(/\s/g, '')}`;
+}
+
+/**
  * isInBetween
  * @param breakpoint
  * @param width
@@ -39,10 +47,10 @@ export function isInBetween({
 export function getMediaQueryByBreakPoints<T extends Record<string, BreakPoint>>(
   breakPoints: BreakPoints<T>,
 ): BreakPointsCondition<T> {
-  const width = window.innerWidth;
+  const width = typeof window !== 'undefined' ? window.innerWidth : 0;
 
   return Object.keys(breakPoints).reduce<BreakPointsCondition<T>>((breakPointsCondition, key) => {
-    const formattedKey = `is${startCase(key).replace(/\s/g, '')}` as keyof BreakPointsCondition<T>;
+    const formattedKey = formatConditionKey(key) as keyof BreakPointsCondition<T>;
     (breakPointsCondition as any)[formattedKey] = isInBetween({
       breakpoint: breakPoints[key],
       width,

@@ -13,7 +13,7 @@ import { getMediaQueryByBreakPoints } from './utils';
 export function useMediaQuery<T extends Record<string, BreakPoint>>(
   breakPoints: BreakPoints<T>,
 ): BreakPointsCondition<T> {
-  const [mediaQuery, setMediaQuery] = useState(getMediaQueryByBreakPoints(breakPoints));
+  const [mediaQuery, setMediaQuery] = useState(() => getMediaQueryByBreakPoints(breakPoints));
 
   useLayoutEffect(() => {
     function onWindowResize() {

@@ -14,6 +14,7 @@ import type {
   DataItemRow,
   DensityType,
   GroupRenderDetail,
+  LayoutType,
   RenderDetail,
   RenderGridSearchForm,
   RenderGridSearchFormParams,
@@ -529,11 +530,11 @@ function getRenderDetail(
   } = props ?? {};
 
   const visibleData = filterVisibleData(data);
-  const layout = props?.layout ?? 'horizontal';
+  const layout = props?.layout;
 
   const result: RenderDetail = {
     rowCount: 0,
-    layout,
+    layout: layout as LayoutType,
     detail: [],
   };
 

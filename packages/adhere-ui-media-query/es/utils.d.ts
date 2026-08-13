@@ -1,5 +1,10 @@
 import type { BreakPoint, BreakPoints, BreakPointsCondition } from './types';
 /**
+ * 将断点名转为条件字段名（与 getMediaQueryByBreakPoints / MediaQuery 查找保持一致）
+ * 例如 mobile → isMobile
+ */
+export declare function formatConditionKey(breakPointName: string): string;
+/**
  * isInBetween
  * @param breakpoint
  * @param width

@@ -315,65 +315,48 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       const sortAndFilterData = useMemo(() => {
         const { searchKeyWord = '', filterValues = {}, sortValues = [] } = combinationParams;
 
-        // 拷贝一份，避免后续排序 mutate 原始 state
-        let targetData = [...((isUseDNDMode ? optionDataSource.data : dataSource.data) ?? [])];
+        let targetData = dataSource.data ?? [];
 
-        // 只对原始值做字符串包含匹配，其余类型(对象/数组等)视为不匹配
-        const isFieldMatch = (fieldValue: any, kw: any) => {
-          if (fieldValue === null || fieldValue === undefined) return false;
-
-          if (['string', 'number', 'boolean'].includes(typeof fieldValue)) {
-            return `${fieldValue}`.includes(`${kw}`);
-          }
-
-          return false;
-        };
-
-        // sort(跳过 order 为空的项，空 order 表示不参与排序)
-        const validSortValues = (sortValues ?? []).filter(
-          (t) => t?.order === 'asc' || t?.order === 'desc',
-        );
-
-        if (validSortValues.length) {
-          targetData = validSortValues.reduce(
-            (_dataSource, sortValue) => {
-              const { order, name } = sortValue;
-
-              return [..._dataSource].sort((r1, r2) => {
-                if (order === 'asc') {
-                  if (r1[name] > r2[name]) return 1;
-                  else if (r1[name] < r2[name]) return -1;
-                  else return 0;
-                } else {
-                  if (r1[name] < r2[name]) return 1;
-                  else if (r1[name] > r2[name]) return -1;
-                  else return 0;
-                }
-              });
-            },
-            targetData,
-          );
+        if (isUseDNDMode) {
+          targetData = optionDataSource.data;
         }
 
-        // filter(关键字与筛选条件叠加生效)
-        const hasSearchKeyWord = !!searchKeyWord;
-        const hasFilterValues = !isPrimaryEmpty(filterValues);
+        // sort
+        if ((sortValues ?? []).length) {
+          targetData = sortValues.reduce((_dataSource, sortValue) => {
+            const { order, name } = sortValue;
 
-        if (hasSearchKeyWord || hasFilterValues) {
+            _dataSource = _dataSource.sort((r1, r2) => {
+              if (order === 'asc') {
+                if (r1[name] > r2[name]) return 1;
+                else if (r1[name] < r2[name]) return -1;
+                else return 0;
+              } else {
+                if (r1[name] < r2[name]) return 1;
+                else if (r1[name] > r2[name]) return -1;
+                else return 0;
+              }
+            });
+            return [..._dataSource];
+          }, dataSource.data ?? []);
+        }
+
+        // filter
+        if (!(!searchKeyWord && isPrimaryEmpty(filterValues) && !sortValues.length)) {
           targetData = targetData.filter((record) => {
-            const matchKeyWord =
-              !hasSearchKeyWord ||
-              Object.keys(record).some((_key) => isFieldMatch(record[_key], searchKeyWord));
+            if (searchKeyWord) {
+              return Object.keys(record).some(
+                (_key) => record[_key]?.indexOf?.(searchKeyWord) !== -1,
+              );
+            } else if (!isPrimaryEmpty(filterValues)) {
+              return Object.keys(filterValues)
+                .filter((_key) => !!filterValues[_key])
+                .every((_key) => {
+                  return record[_key]?.indexOf?.(filterValues[_key]) !== -1;
+                });
+            }
 
-            const matchFilter =
-              !hasFilterValues ||
-              Object.keys(filterValues as Record<string, any>)
-                .filter((_key) => !!(filterValues as Record<string, any>)[_key])
-                .every((_key) =>
-                  isFieldMatch(record[_key], (filterValues as Record<string, any>)[_key]),
-                );
-
-            return matchKeyWord && matchFilter;
+            return true;
           });
         }
 
@@ -1170,11 +1153,8 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         return scrollLoadRef.current?.getScrollContainer() ?? scrollRef.current ?? document.body;
       }
 
-      function pullToRefresh(
-        _resetCallback: () => void,
-        _params?: typeof combinationParams,
-      ): Promise<void> {
-        const params = _params ?? {
+      function pullToRefresh(_resetCallback: () => void): Promise<void> {
+        const params = {
           searchKeyWord: defaultSearchKeyWord,
           filterValues: defaultFilterValues,
           sortValues: defaultSortValues,
@@ -1209,8 +1189,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       }
 
       function pullToRefreshPagination() {
-        // 只重置分页，查询条件保持当前值，与界面上显示的搜索/筛选状态一致
-        return pullToRefresh(resetScrollLoadAndPaging, { ...combinationParams });
+        return pullToRefresh(resetScrollLoadAndPaging);
       }
 
       /**

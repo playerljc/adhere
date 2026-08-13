@@ -1,5 +1,5 @@
 import { useMount } from 'ahooks';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import type { Use, UseResult, UseType } from './types';
 
@@ -36,11 +36,11 @@ const FAIL_STATUS = {
  * @param {(...args: Args) => Promise<T>} p - 要执行的 Promise 函数
  * @param {Args} [defaultArgs] - 默认参数，组件挂载时自动执行
  * @returns {UseResult<T>} 返回包含数据、状态和操作函数的对象
- * 
+ *
  * @example
  * ```tsx
  * const { data, isPending, isValidate, reset, reload } = use(fetchUserData, [userId]);
- * 
+ *
  * if (isPending) return <Loading />;
  * if (isValidate) return <Error />;
  * return <UserInfo data={data} />;
@@ -50,6 +50,8 @@ const use: Use = <T = any, Args extends any[] = any[]>(
   p: (...args: Args) => Promise<T>,
   defaultArgs?: Args,
 ): UseResult<T> => {
+  const requestIdRef = useRef(0);
+
   const [result, setResult] = useState<Omit<UseResult<T>, 'type' | 'reset' | 'reload'>>({
     ...DEFAULT_STATUS,
   });
@@ -63,22 +65,28 @@ const use: Use = <T = any, Args extends any[] = any[]>(
    * @returns {Promise<T>} Promise 执行结果
    */
   function executePromise(_defaultArgs: Args): Promise<T> {
+    const requestId = ++requestIdRef.current;
+
     return (
       p
         ?.apply?.(undefined, _defaultArgs)
         ?.then((res: T) => {
-          setResult({
-            data: res,
-            ...SUCCESS_STATUS,
-          });
+          if (requestId === requestIdRef.current) {
+            setResult({
+              data: res,
+              ...SUCCESS_STATUS,
+            });
+          }
 
           return res;
         })
         .catch((err: any) => {
-          setResult({
-            data: err,
-            ...FAIL_STATUS,
-          });
+          if (requestId === requestIdRef.current) {
+            setResult({
+              data: err,
+              ...FAIL_STATUS,
+            });
+          }
 
           throw err;
         })
@@ -108,10 +116,10 @@ const use: Use = <T = any, Args extends any[] = any[]>(
    * @returns {Promise<T>} Promise 执行结果
    */
   function reload(...args: Args): Promise<T> {
-    setResult({
+    setResult((prev) => ({
       ...DEFAULT_STATUS,
-      data: result.data,
-    });
+      data: prev.data,
+    }));
 
     setType('reload');
 
