@@ -48,7 +48,7 @@ function useCalendarPopover({
     }
 
     return '';
-  }, [value]);
+  }, [value, locale, config.locale.locale, renderDisplay, calendarPickerViewProps.selectionMode]);
 
   const isRangeMode = calendarPickerViewProps.selectionMode === 'range';
 

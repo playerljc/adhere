@@ -22,7 +22,7 @@ const InternalDateDialog = memo<DateDialogProps>(
     return (
       <Dialog.Trigger
         {...dialogTriggerProps}
-        title={dialogTriggerProps?.title}
+        title={dialogTriggerProps?.title ?? <span>&nbsp;</span>}
         value={value}
         onChange={onChange}
         actions={actions}

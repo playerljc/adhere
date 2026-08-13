@@ -647,7 +647,7 @@ export type UseDateTimerPopover<T extends DateTimeViewProps, Value> = (
     formatValue: ReactNode;
   },
 ) => {
-  key: Symbol;
+  key: string;
   setInternalValue: (value: DateTimePopoverProps<T>['value']) => void;
   actions: (Omit<Action, 'onClick'> & {
     onClick?: () => Promise<Value>;

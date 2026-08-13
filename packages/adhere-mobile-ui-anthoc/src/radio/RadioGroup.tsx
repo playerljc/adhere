@@ -21,7 +21,9 @@ const RadioGroup: FC<RadioGroupProps> = ({
       {...(spaceProps ?? {})}
     >
       {options?.map?.((t) => (
-        <Radio key={t.value} block {...t} />
+        <Radio key={t.value} block {...t}>
+          {t.title}
+        </Radio>
       ))}
     </Space>
   </Radio.Group>

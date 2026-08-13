@@ -49,7 +49,7 @@ function useDateTimePopover<T extends DateTimeViewProps>({
           key: 'submit',
           text: okLabel ?? Intl.get('confirm'),
           primary: true,
-          onClick: () => Promise.resolve(internalValue.current ?? new Date()),
+          onClick: () => Promise.resolve(internalValue.current ?? undefined),
         },
         allowClearValue && {
           key: 'clear',
@@ -67,7 +67,7 @@ function useDateTimePopover<T extends DateTimeViewProps>({
           },
         },
       ].filter((t) => !!t),
-    [allowClearValue, clearLabel, okLabel, cancelLabel, value, internalValue.current],
+    [allowClearValue, clearLabel, okLabel, cancelLabel, value],
   );
 
   useUpdateEffect(() => {

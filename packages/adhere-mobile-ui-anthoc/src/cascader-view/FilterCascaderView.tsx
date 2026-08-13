@@ -25,7 +25,10 @@ const InternalFilterCascaderView = memo<FilterCascaderViewProps>(
     renderLabel,
     ...cascaderViewProps
   }) => {
-    const preTreeData = useRef<InternalCascaderViewProps['options'] | undefined>(undefined);
+    const preTreeData = useRef<{
+      input: InternalCascaderViewProps['options'];
+      output: InternalCascaderViewProps['options'];
+    } | undefined>(undefined);
 
     return (
       <TreeFilter
@@ -44,28 +47,28 @@ const InternalFilterCascaderView = memo<FilterCascaderViewProps>(
         renderEmpty={renderEmpty}
         children={(treeData, filterValue) => {
           let targetTreeData = treeData;
-          function loop(_treeData) {
-            _treeData.forEach((_opition) => {
-              if (renderLabel) {
-                _opition[filterProps?.optionFilterProp ?? 'label'] = renderLabel(
-                  _opition,
-                  filterValue,
-                );
-              }
-
-              if (_opition.children) {
-                loop(_opition.children);
-              }
-            });
-          }
 
           if (renderLabel) {
-            if (!Object.is(preTreeData.current, treeData)) {
-              loop(treeData);
+            if (!Object.is(preTreeData.current?.input, treeData)) {
+              const loop = (_treeData): any[] => {
+                return _treeData.map((_option) => {
+                  const labeled = {
+                    ..._option,
+                    [filterProps?.optionFilterProp ?? 'label']: renderLabel!(_option, filterValue),
+                  };
+                  if (labeled.children) {
+                    labeled.children = loop(labeled.children);
+                  }
+                  return labeled;
+                });
+              };
+
+              targetTreeData = loop(treeData) as InternalCascaderViewProps['options'];
+              preTreeData.current = { input: treeData, output: targetTreeData };
+            } else {
+              targetTreeData = preTreeData.current!.output;
             }
           }
-
-          preTreeData.current = treeData;
 
           return (
             <InternalCascaderView

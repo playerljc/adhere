@@ -81,7 +81,7 @@ const InternalModalTrigger = memo<ModalTriggerProps<any>>(
      */
     const renderPopover = useCallback(() => {
       setVisible(true);
-    }, [targetModalProps]);
+    }, []);
 
     function close() {
       setVisible(false);

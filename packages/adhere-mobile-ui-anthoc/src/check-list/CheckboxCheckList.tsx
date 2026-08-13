@@ -19,7 +19,11 @@ const InternalCheckboxCheckList = memo<CheckboxCheckListProps>(
         (checkListProps?.options ?? []).map((t) => ({
           ...t,
           title: (
-            <Checkbox key={t.value} checked={(checkListProps.value ?? []).includes(t.value)}>
+            <Checkbox
+              key={t.value}
+              checked={(checkListProps.value ?? []).includes(t.value)}
+              disabled={t.disabled}
+            >
               {t.title}
             </Checkbox>
           ),

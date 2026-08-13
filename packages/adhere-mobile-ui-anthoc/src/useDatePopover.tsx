@@ -43,7 +43,7 @@ function useDatePopover({
         result = [ymd[0], ymd[1]].join('/');
         break;
       case 'minute':
-        `${value.toLocaleDateString(targetLocale)} ${[value.getHours(), value.getMinutes()].join(
+        result = `${value.toLocaleDateString(targetLocale)} ${[value.getHours(), value.getMinutes()].join(
           ':',
         )}`;
         break;
@@ -65,7 +65,7 @@ function useDatePopover({
     }
 
     return result;
-  }, [value]);
+  }, [value, locale, config.locale.locale, renderDisplay, datePickerViewProps.precision]);
 
   const { key, actions, popoverTriggerProps, setInternalValue } =
     useDateTimePopover<DatePickerViewProps>({

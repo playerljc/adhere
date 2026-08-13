@@ -137,7 +137,7 @@ export function show(props: PopupShowProps): PopupShowHandler {
 
   const root = createRoot(el);
 
-  render(false);
+  render(true);
 
   popupHandlers.set(el, root);
 

@@ -87,7 +87,7 @@ const InternalPopupTrigger = memo<PopupTriggerProps<any>>(
      */
     const renderPopover = useCallback(() => {
       setVisible(true);
-    }, [targetPopupProps]);
+    }, []);
 
     function close() {
       setVisible(false);

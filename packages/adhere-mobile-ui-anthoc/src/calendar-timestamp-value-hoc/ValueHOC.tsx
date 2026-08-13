@@ -35,25 +35,19 @@ const ValueHOC: FC<CalendarTimestampValueHOCProps> = ({
     const isRangeMode = Array.isArray(_value);
 
     if (isRangeMode) {
-      if (!Array.isArray(_value)) return null;
-
       if (!_value.length) return [];
 
-      let targetType = (
-        Array.isArray(type ?? DEFAULT_TYPE) ? (type ?? DEFAULT_TYPE).slice(0, 2) : DEFAULT_TYPE
-      ) as string[];
+      const rawType: string[] = Array.isArray(type ?? DEFAULT_TYPE)
+        ? ((type ?? DEFAULT_TYPE) as string[]).slice(0, 2)
+        : [...DEFAULT_TYPE];
 
-      for (let i = 0; i < 2; i++) {
-        if (!['seconds', 'milliseconds'].includes(targetType[i])) {
-          targetType[i] = 'milliseconds';
-        }
-      }
+      const targetType = rawType.map((t) =>
+        ['seconds', 'milliseconds'].includes(t) ? t : 'milliseconds',
+      ) as string[];
 
       let result: any[];
 
       if (targetType.join() === ['seconds', 'seconds'].join()) {
-        result = [dayjs.unix(_value[0]), dayjs.unix(_value[1])];
-      } else if (targetType.join() === ['seconds', 'seconds'].join()) {
         result = [dayjs.unix(_value[0]), dayjs.unix(_value[1])];
       } else if (targetType.join() === ['seconds', 'milliseconds'].join()) {
         result = [dayjs.unix(_value[0]), dayjs(_value[1])];

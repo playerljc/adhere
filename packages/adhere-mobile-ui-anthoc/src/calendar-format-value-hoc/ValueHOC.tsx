@@ -31,8 +31,6 @@ const ValueHOC: FC<CalendarFormatValueHOCProps> = ({
     const isRangeMode = Array.isArray(_value);
 
     if (isRangeMode) {
-      if (!Array.isArray(_value)) return null;
-
       if (!_value.length) return [];
 
       return [dayjs(_value[0]), dayjs(_value[1])].map((item) => item.toDate());

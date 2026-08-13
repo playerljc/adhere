@@ -1,6 +1,6 @@
 import { Dialog } from 'antd-mobile';
 import classNames from 'classnames';
-import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import Intl from '@baifendian/adhere-util-intl';
@@ -33,6 +33,11 @@ const InternalDialogTrigger = memo<DialogTriggerProps<any>>(
 
     const valueHOCRef = useRef<ValueHOCHandle>({} as ValueHOCHandle);
 
+    const onChangeRef = useRef(onChange);
+    useEffect(() => {
+      onChangeRef.current = onChange;
+    });
+
     /**
      * onConfirm
      * @param onClick
@@ -40,7 +45,7 @@ const InternalDialogTrigger = memo<DialogTriggerProps<any>>(
     function onConfirm(onClick) {
       onClick?.()?.then((result) => {
         close();
-        onChange?.(
+        onChangeRef.current?.(
           result !== undefined
             ? result === null
               ? undefined
@@ -65,7 +70,7 @@ const InternalDialogTrigger = memo<DialogTriggerProps<any>>(
       }
 
       return result;
-    }, [actions, showCloseButton]);
+    }, [actions, showCloseButton, closeActionKey, closeActionText]);
 
     const targetDialogProps = useMemo(() => {
       return {
@@ -100,7 +105,7 @@ const InternalDialogTrigger = memo<DialogTriggerProps<any>>(
      */
     const renderPopover = useCallback(() => {
       setVisible(true);
-    }, [targetDialogProps]);
+    }, []);
 
     function close() {
       setVisible(false);

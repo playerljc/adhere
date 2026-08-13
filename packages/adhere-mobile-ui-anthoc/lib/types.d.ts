@@ -192,7 +192,7 @@ export type CheckListHOCComponent = ReturnType<typeof createFactory<CheckListPro
     AutoCompletePagingCheckList: typeof AutoCompletePagingCheckList;
     AutoCompletePagingCheckboxCheckList: typeof AutoCompletePagingCheckboxCheckList;
 };
-export type CheckboxHOCComponent = ReturnType<typeof createFactory<CheckboxGroupProps>> & {
+export type CheckboxHOCComponent = ReturnType<typeof createFactory<AntMobileCheckbox>> & {
     CheckAllCheckbox: typeof CheckAllCheckbox;
     FilterCheckbox: typeof FilterCheckbox;
     FilterCheckAllCheckbox: typeof FilterCheckAllCheckbox;
@@ -454,7 +454,7 @@ export type UseDateTimerPopover<T extends DateTimeViewProps, Value> = (props: Pi
     defaultValue?: Value;
     formatValue: ReactNode;
 }) => {
-    key: Symbol;
+    key: string;
     setInternalValue: (value: DateTimePopoverProps<T>['value']) => void;
     actions: (Omit<Action, 'onClick'> & {
         onClick?: () => Promise<Value>;
@@ -475,10 +475,10 @@ export type CalendarModalHOCComponent = ReturnType<typeof createFactory<Calendar
     RangeCalendarModal: typeof RangeCalendarModal;
 };
 export type CalendarDialogHOCComponent = ReturnType<typeof createFactory<CalendarDialogProps>> & {
-    RangeCalendarModal: typeof RangeCalendarDialog;
+    RangeCalendarDialog: typeof RangeCalendarDialog;
 };
 export type CalendarPopupHOCComponent = ReturnType<typeof createFactory<CalendarPopupProps>> & {
-    RangeCalendarModal: typeof RangeCalendarPopup;
+    RangeCalendarPopup: typeof RangeCalendarPopup;
 };
 export type DateTimestampValueHOCProps = Omit<DatePickerViewProps | DateModalProps | DateDialogProps | DatePopupProps, 'defaultValue' | 'value' | 'onChange'> & {
     defaultValue?: number | null;

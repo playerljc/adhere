@@ -38,7 +38,7 @@ function useTimePopover({
     }
 
     return value.toLocaleTimeString(targetLocale);
-  }, [value]);
+  }, [value, locale, config.locale.locale, renderDisplay, timePickerViewProps.format]);
 
   const { key, actions, popoverTriggerProps, setInternalValue } =
     useDateTimePopover<TimePickerViewProps>({

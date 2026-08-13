@@ -21,7 +21,9 @@ const InternalCheckbox: FC<CheckboxGroupProps> = ({
       {...(spaceProps ?? {})}
     >
       {options?.map?.((t) => (
-        <Checkbox key={t.value} block {...t} />
+        <Checkbox key={t.value} block {...t}>
+          {t.title}
+        </Checkbox>
       ))}
     </Space>
   </Checkbox.Group>

@@ -103,8 +103,8 @@ const InputMultiple: FC<InputMultipleProps<string>> = ({
         return [
           ...(_options ?? []),
           {
-            label: inputValue,
-            value: inputValue,
+            label: targetInputValue,
+            value: targetInputValue,
           },
         ];
       });

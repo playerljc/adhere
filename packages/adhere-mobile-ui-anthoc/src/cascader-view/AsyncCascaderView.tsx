@@ -95,7 +95,7 @@ const InternalAsyncCascader = memo<AsyncCascaderViewProps>(
 
       loop(value);
 
-      deleteIndexes.forEach((index) => {
+      deleteIndexes.sort((a, b) => b - a).forEach((index) => {
         draft.splice(index, 1);
       });
     }
