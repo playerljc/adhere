@@ -24,7 +24,7 @@ export type TreeDataItem = Readonly<{
 
 export type TreeDataFlatItem = Readonly<
   Omit<TreeDataItem, 'children'> & {
-    pId: number;
+    pId: string | number;
   }
 >;
 
@@ -69,7 +69,8 @@ export interface TreeProps {
   size?: 'large' | 'middle' | 'small';
   // 支持点选多个节点（节点本身）
   multiple?: boolean;
-  // checkable 状态下节点选择完全受控（父子节点选中状态不再关联）
+  // 父子节点选中状态是否级联(默认true)。true: 勾选/取消勾选会级联更新子孙节点和父级节点; false: 只操作当前节点，父子状态不关联
+  // 注意: 该语义与antd的checkStrictly相反
   checkStrictly?: boolean;
   // title之前的节点的图标
   icon?: (nodeData: TreeDataItemExtra) => ReactNode;
@@ -138,7 +139,8 @@ export type TreeSelectProps = Omit<TreeProps, 'className' | 'style' | 'checkable
   onChange?: TreeProps['onCheck'];
 };
 
-export type TreeNodeProps = TreeDataItem & {
+// key不作为props传递(React会将其作为保留的key使用)，节点key通过id传入
+export type TreeNodeProps = Omit<TreeDataItem, 'key'> & {
   // 层级(从0开始)
   level: number;
   // 设置为叶子节点 (设置了 loadData 时有效)。为 false 时会强制将其作为父节点	boolean

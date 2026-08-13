@@ -48,15 +48,15 @@ export function getItem<P>({
 
   if (!name) return null;
 
-  const item = memoized.createMemoFun(map.get(`${itemName}${functionName}`) as (originDictName: string, dictName?: string) => any)?.(
-    name,
-    dictName,
-  );
+  const handler = map.get(`${itemName}${functionName}`);
+
+  if (!handler) return null;
+
+  const createItem = memoized.createMemoFun(handler);
+  const item = createItem?.(name, dictName);
 
   if (React.isValidElement(item)) {
-    return DictRefreshHOC<P>(
-      memoized.createMemoFun(map.get(`${itemName}${functionName}`) as (originDictName: string, dictName?: string) => any)?.(name, dictName),
-    );
+    return DictRefreshHOC<P>(item as any);
   }
 
   return item;

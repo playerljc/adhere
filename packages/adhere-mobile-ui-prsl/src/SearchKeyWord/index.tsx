@@ -1,4 +1,4 @@
-import { useMount, useUpdateEffect } from 'ahooks';
+import { useUpdateEffect } from 'ahooks';
 import { SearchBar, SearchBarRef } from 'antd-mobile';
 import classNames from 'classnames';
 import React, { memo, useEffect, useMemo, useRef } from 'react';
@@ -26,7 +26,7 @@ const SearchKeyWord = memo<SearchKeyWordProps>(
     style,
     searchKeyWordBarProps,
     searchKeyWordMode,
-    searchKeyWordHistoryMaxSize,
+    searchKeyWordHistoryMaxSize = 50,
     isSearchKeyWordHistoryIntoStore,
     searchKeyWordHistoryStoreType,
     defaultSearchKeyWord,
@@ -88,11 +88,12 @@ const SearchKeyWord = memo<SearchKeyWordProps>(
 
     const isUseHistoryMode = useMemo(() => searchKeyWordMode === 'history', [searchKeyWordMode]);
 
-    useMount(() => {
-      if (triggerRef.current && triggerRef.current?.nativeElement) {
-        triggerRef.current.nativeElement.setAttribute('readonly', '');
-      }
-    });
+    // trigger SearchBar 会因 key 变化重挂载，用 ref callback 保证 readonly 始终生效
+    function setTriggerRef(ref: SearchBarRef | null) {
+      triggerRef.current = ref;
+
+      ref?.nativeElement?.setAttribute('readonly', '');
+    }
 
     useEffect(() => {
       if (!searchRef.current || !searchRef.current.nativeElement) return;
@@ -102,7 +103,7 @@ const SearchKeyWord = memo<SearchKeyWordProps>(
       } else {
         searchRef.current.nativeElement.removeAttribute('readonly');
       }
-    }, [disabled]);
+    }, [disabled, defaultSearchKeyWord]);
 
     useUpdateEffect(() => {
       listHistory(getDefaultHistoryData());
@@ -120,12 +121,14 @@ const SearchKeyWord = memo<SearchKeyWordProps>(
 
     return (
       <div
-        key={defaultSearchKeyWord}
         className={classNames(`${selectorPrefix}-wrapper`, className ?? '')}
         style={style ?? {}}
       >
         {(disabled || !isUseHistoryMode) && (
           <SearchBar
+            // key 放在 SearchBar 上，让关键字变化时只重置输入框；
+            // 若放在外层 div 会重挂载整个组件，内存中的搜索历史随之丢失
+            key={defaultSearchKeyWord}
             ref={searchRef}
             defaultValue={defaultSearchKeyWord ?? ''}
             onSearch={search}
@@ -138,7 +141,8 @@ const SearchKeyWord = memo<SearchKeyWordProps>(
           <AdherePopup.Trigger
             renderTrigger={() => (
               <SearchBar
-                ref={triggerRef}
+                key={defaultSearchKeyWord}
+                ref={setTriggerRef}
                 clearable={false}
                 className={`${selectorPrefix}-trigger`}
                 defaultValue={defaultSearchKeyWord ?? ''}
@@ -151,7 +155,7 @@ const SearchKeyWord = memo<SearchKeyWordProps>(
             <SearchHistory
               title={Intl.get('search_history')}
               searchKeyWordBarProps={{
-                placeholder: Intl.get('请输入关查询键字'),
+                placeholder: Intl.get('enter_keyword'),
               }}
               defaultSearchKeyWord={defaultSearchKeyWord ?? ''}
               onSearch={onSearch}

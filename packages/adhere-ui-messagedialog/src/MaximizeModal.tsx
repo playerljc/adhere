@@ -118,7 +118,7 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
             setDraggableDisabled(true);
           }}
         >
-          <div className={`${selectorPrefix}-header-title`} title={title as string}>
+          <div className={`${selectorPrefix}-header-title`} title={typeof title === 'string' ? title : undefined}>
             {title}
           </div>
           <div
@@ -218,6 +218,7 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
     <Modal
       {...restProps}
       config={{
+        closable: false,
         ...(restConfig ?? {}),
         className: modalClassName,
         modalRender,

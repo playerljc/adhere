@@ -19,7 +19,7 @@ const { useTheme } = ConfigProvider;
 const ModalDialog = memo<ModalDialogProps>((props) => {
   const { config, closeBtn, close, open, closeBtnText, children } = props;
 
-  const { footer = [], centered = true, ...rest } = config;
+  const { footer = [], centered = true, onCancel: onCancelFromConfig, ...rest } = config;
 
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -78,22 +78,26 @@ const ModalDialog = memo<ModalDialogProps>((props) => {
   }, [footer, closeBtn, closeBtnText, renderCloseBtn]);
 
   /**
-   * 取消回调函数
+   * 取消回调：先执行用户 onCancel，再走内部 close，避免 config.onCancel 覆盖后 portal 泄漏
    */
-  const onCancel = useCallback((): void => {
-    close?.();
-  }, [close]);
+  const onCancel = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLElement>): void => {
+      onCancelFromConfig?.(e);
+      close?.();
+    },
+    [onCancelFromConfig, close],
+  );
 
   return (
     <div ref={wrapperRef}>
       <Modal
         centered={centered}
         wrapClassName={selectorPrefix}
-        onCancel={onCancel}
         open={open}
         {...rest}
         getContainer={() => wrapperRef.current ?? document.body}
         footer={footerNode}
+        onCancel={onCancel}
       >
         {children}
       </Modal>

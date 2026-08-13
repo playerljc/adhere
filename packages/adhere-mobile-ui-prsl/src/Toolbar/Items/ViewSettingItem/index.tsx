@@ -74,7 +74,7 @@ const ViewSettingItem: FC<ViewSettingProps> = ({
         onClick: reset,
       },
     ];
-  }, [viewSettingTriggerMode]);
+  }, [viewSettingTriggerMode, reset]);
 
   const renderViewSettingElement = useCallback(
     ({ close }) => {
@@ -209,7 +209,7 @@ const ViewSettingItem: FC<ViewSettingProps> = ({
         </AdherePopup.Trigger>
       );
     }
-  }, [viewSettingTriggerMode, viewSettingTriggerProps, triggerElement, triggerContext, actions]);
+  }, [viewSettingTriggerMode, viewSettingTriggerProps, triggerElement, triggerContext, actions, disabled]);
 
   function viewSetting(viewSettingValue: typeof defaultViewSettingValue) {
     setViewSettingValue(viewSettingValue);

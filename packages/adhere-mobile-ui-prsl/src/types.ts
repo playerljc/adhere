@@ -83,7 +83,7 @@ export interface SearchKeyWordProps {
   // 关键字搜索模式
   searchKeyWordMode?: 'normal' | 'history';
   // 搜索历史最大历史数量，超过则替换最早的
-  searchKeyWordHistoryMaxSize: number;
+  searchKeyWordHistoryMaxSize?: number;
   // 是否将搜索历史放入store
   isSearchKeyWordHistoryIntoStore?: boolean;
   // 存入store的类型
@@ -133,24 +133,24 @@ export interface ToolBarProps
   // 工具栏之后的渲染
   afterToolBarRenderClassName?: string;
   afterToolBarRenderStyle?: CSSProperties;
-  toolbarCollapseCount: number;
+  toolbarCollapseCount?: number;
   toolbarConfig?: (defaultElements: ReactElement[]) => (ToolbarConfigItem | ReactElement)[];
   isShowFilterTrigger?: boolean;
   // 渲染筛选按钮(ok)
-  renderFilterTrigger: (defaultUI: ReactElement) => ReactElement;
+  renderFilterTrigger?: (defaultUI: ReactElement) => ReactElement;
   isShowSortTrigger?: boolean;
   // 渲染排序按钮
-  renderSortTrigger: (defaultUI: ReactElement) => ReactElement;
+  renderSortTrigger?: (defaultUI: ReactElement) => ReactElement;
   isShowViewSettingTrigger?: boolean;
   // 渲染视图设置按钮
-  renderViewSettingTrigger: (defaultUI: ReactElement) => ReactElement;
+  renderViewSettingTrigger?: (defaultUI: ReactElement) => ReactElement;
   total?: number;
   disabled?: boolean;
 }
 
 export interface FilterItemProps {
   disabled?: boolean;
-  children?: (defaultUI: ReactElement) => ReactElement;
+  children?: (defaultUI: ReactElement) => ReactElement | undefined;
   // Trigger的弹出方式(ok)
   filterTriggerMode?: TriggerMode;
   // Trigger的配置(ok)
@@ -171,7 +171,7 @@ export interface FilterItemProps {
 
 export interface SortItemProps {
   disabled?: boolean;
-  children?: (defaultUI: ReactElement) => ReactElement;
+  children?: (defaultUI: ReactElement) => ReactElement | undefined;
   // 排序UI的弹出方式
   sortTriggerMode?: TriggerMode;
   // Trigger的配置
@@ -190,7 +190,7 @@ export interface SortItemProps {
 
 export interface ViewSettingProps {
   disabled?: boolean;
-  children?: (defaultUI: ReactElement) => ReactElement;
+  children?: (defaultUI: ReactElement) => ReactElement | undefined;
   // 视图设置UI的弹出方式
   viewSettingTriggerMode?: TriggerMode;
   // Trigger的配置
@@ -311,11 +311,11 @@ export interface PRSLProps
   // 自定义无网络UI
   renderOffLine?: () => ReactElement;
   // 是否使用首次加载loading
-  isUseFirstLoading: boolean;
+  isUseFirstLoading?: boolean;
   // 首次渲染UI
   firstLoading?: () => ReactNode;
   // 是否是加载中
-  isLoading: boolean;
+  isLoading?: boolean;
 
   // ---------------------------- 下拉重置设置 -------------
   // 下拉刷新的配置

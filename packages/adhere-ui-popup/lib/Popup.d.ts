@@ -20,6 +20,8 @@ export declare class Popup {
     private root;
     /** 弹窗处理器映射 */
     private popupHandlers;
+    /** 打开动画延迟定时器，关闭/销毁时需清除 */
+    private showTimer;
     /**
      * 构造函数
      * @param config - 弹窗配置
@@ -36,11 +38,20 @@ export declare class Popup {
      */
     private render;
     /**
+     * 只拷贝 ConfigProvider 上的 CSS 变量，避免 cssText 整段覆盖冲掉 zIndex / display
+     */
+    private applyConfigProviderStyle;
+    /**
      * 触发回调函数
      * @param hookName - 回调名称
      * @private
      */
     private trigger;
+    private clearShowTimer;
+    /**
+     * display:none → block 后延迟加 modal-in，保证 CSS transition 能跑起来
+     */
+    private playShowAnimation;
     /**
      * 更新弹窗内容
      * @param newChildren - 新的子元素

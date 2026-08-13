@@ -49,6 +49,8 @@ const ArrayEntityValueHOC = memo<
       } else {
         setOptions(props?.getOptionsByDataSource?.(_dataSource) ?? _dataSource);
       }
+
+      children.props?.onDataSourceChange?.(_dataSource, extra);
     },
   });
 

@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import { produce } from 'immer';
 import React, { ReactNode, createRef } from 'react';
-import { Root, createRoot } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -58,9 +58,29 @@ let lock = false;
 let renderToWrapper: ((children: () => ReactNode) => ReactNode) | undefined;
 
 /**
- * 存储MessageDialog实例的WeakMap
+ * 存储弹层句柄，close(el) 与 handle.close 共用同一条清理路径
  */
-const MessageDialogHandlers = new WeakMap<HTMLElement, Root>();
+const MessageDialogHandlers = new WeakMap<HTMLElement, DialogHandle>();
+
+/**
+ * 合并 Prompt 字段 schema：先展开用户配置，再保证 autoFocus 默认存在且可被用户 props 覆盖
+ */
+function mergePromptValueSchema(
+  widget: 'input' | 'textArea' | 'inputNumber',
+  type: 'string' | 'number',
+  userValue?: PromptArgv['config']['schema']['properties'][string],
+) {
+  return {
+    required: true,
+    type,
+    widget,
+    ...(userValue ?? {}),
+    props: {
+      autoFocus: true,
+      ...(userValue?.props ?? {}),
+    },
+  };
+}
 
 type PortalDialogOptions = {
   config?: ModalArgv['config'];
@@ -147,10 +167,8 @@ function createPortalDialog({
   }
 
   render();
-  MessageDialogHandlers.set(el, root);
-  document.body.appendChild(el);
 
-  return {
+  const handle: DialogHandle = {
     el,
     close,
     setConfig: (callback: (draft: any) => void, _children?: ReactNode): void => {
@@ -165,6 +183,11 @@ function createPortalDialog({
       render(_children);
     },
   };
+
+  MessageDialogHandlers.set(el, handle);
+  document.body.appendChild(el);
+
+  return handle;
 }
 
 /**
@@ -223,7 +246,7 @@ const MessageDialogFactory = {
                 result?.close?.();
               } catch (error) {
                 console.error('Confirm dialog onSuccess error:', error);
-                result?.close?.();
+                // 与 Prompt 一致：失败时不关闭，便于调用方保留弹窗处理错误
               }
             }}
           >
@@ -348,16 +371,7 @@ const MessageDialogFactory = {
           type: 'object',
           properties: {
             ...(config?.schema?.properties ?? {}),
-            value: {
-              required: true,
-              type: 'string',
-              widget: 'input',
-              props: {
-                autoFocus: true,
-                ...(config?.schema?.properties?.value?.props ?? {}),
-              },
-              ...(config?.schema?.properties?.value ?? {}),
-            },
+            value: mergePromptValueSchema('input', 'string', config?.schema?.properties?.value),
           },
         },
       },
@@ -379,16 +393,7 @@ const MessageDialogFactory = {
           type: 'object',
           properties: {
             ...(config?.schema?.properties ?? {}),
-            value: {
-              required: true,
-              type: 'string',
-              widget: 'textArea',
-              props: {
-                autoFocus: true,
-                ...(config?.schema?.properties?.value?.props ?? {}),
-              },
-              ...(config?.schema?.properties?.value ?? {}),
-            },
+            value: mergePromptValueSchema('textArea', 'string', config?.schema?.properties?.value),
           },
         },
       },
@@ -410,16 +415,7 @@ const MessageDialogFactory = {
           type: 'object',
           properties: {
             ...(config?.schema?.properties ?? {}),
-            value: {
-              required: true,
-              type: 'number',
-              widget: 'inputNumber',
-              props: {
-                autoFocus: true,
-                ...(config?.schema?.properties?.value?.props ?? {}),
-              },
-              ...(config?.schema?.properties?.value ?? {}),
-            },
+            value: mergePromptValueSchema('inputNumber', 'number', config?.schema?.properties?.value),
           },
         },
       },
@@ -497,15 +493,12 @@ const MessageDialogFactory = {
    * @param el - 对话框DOM元素
    */
   close(el: HTMLElement): void {
-    const root = MessageDialogHandlers.get(el);
-    if (root) {
-      try {
-        root.unmount();
-      } catch {
-        // ignore
-      }
-      MessageDialogHandlers.delete(el);
+    const handle = MessageDialogHandlers.get(el);
+    if (handle) {
+      handle.close();
+      return;
     }
+
     el.parentElement?.removeChild(el);
     lock = false;
   },

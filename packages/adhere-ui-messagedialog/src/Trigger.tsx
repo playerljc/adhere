@@ -47,6 +47,7 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
     ref,
   ) => {
     const dialog = useRef<DialogHandle | null>(null);
+    const onTriggerRef = useRef<() => void>(() => undefined);
 
     const bodyChildren = useMemo(() => {
       // 确保children是有效的ReactElement
@@ -145,6 +146,22 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
       }
     }
 
+    onTriggerRef.current = onTrigger;
+
+    const debouncedOnTrigger = useMemo(
+      () =>
+        debounce(() => {
+          onTriggerRef.current();
+        }, 200),
+      [],
+    );
+
+    useEffect(() => {
+      return () => {
+        debouncedOnTrigger.cancel();
+      };
+    }, [debouncedOnTrigger]);
+
     // 仅在弹层打开且配置/内容变化时同步，避免关闭后对已卸载 root 调用 setConfig
     useEffect(() => {
       if (!dialog.current?.setConfig) return;
@@ -176,7 +193,7 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
       <div
         className={classNames(`${selectorPrefix}-trigger`, className ?? '')}
         style={style ?? {}}
-        onClick={debounce(onTrigger, 200)}
+        onClick={debouncedOnTrigger}
       >
         {renderTrigger?.()}
       </div>

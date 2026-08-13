@@ -15,7 +15,7 @@ export type TreeDataItem = Readonly<{
     indent?: TreeProps['indent'];
 }>;
 export type TreeDataFlatItem = Readonly<Omit<TreeDataItem, 'children'> & {
-    pId: number;
+    pId: string | number;
 }>;
 export type TreeDataItemExtra = Readonly<Omit<TreeDataItem | TreeDataFlatItem, 'title' | 'children'> & {
     level: number;
@@ -82,7 +82,7 @@ export type TreeSelectProps = Omit<TreeProps, 'className' | 'style' | 'checkable
     value?: string[];
     onChange?: TreeProps['onCheck'];
 };
-export type TreeNodeProps = TreeDataItem & {
+export type TreeNodeProps = Omit<TreeDataItem, 'key'> & {
     level: number;
     isLeaf?: boolean;
     id: TreeDataItem['key'];

@@ -17,7 +17,7 @@ const selectorPrefix = 'adhere-ui-tabs-jumbo-tabs';
  * @returns JSX元素
  */
 const InternalSystemJumboTabs = memo<SystemJumboTabsProps>(
-  ({ className, style, innerClassName, innerStyle, items, ...props }) => {
+  ({ className, style, innerClassName, innerStyle, items, children, ...props }) => {
     const wrapperRef = useRef<HTMLDivElement | undefined>(undefined);
 
     useTheme<HTMLElement>({
@@ -34,9 +34,9 @@ const InternalSystemJumboTabs = memo<SystemJumboTabsProps>(
         style={style ?? {}}
       >
         <JumboTabs {...props} className={innerClassName ?? ''} style={innerStyle ?? {}}>
-          {items?.map?.((item, index) => (
-            <JumboTabs.Tab key={item.key || index} {...item} />
-          ))}
+          {items?.length
+            ? items.map(({ key, ...item }, index) => <JumboTabs.Tab key={key ?? index} {...item} />)
+            : children}
         </JumboTabs>
       </div>
     );

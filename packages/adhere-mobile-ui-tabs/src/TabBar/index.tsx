@@ -49,8 +49,8 @@ const TabBarNav: FC<SystemTabBarNavProps> = (props) => {
 
   return (
     <TabBar activeKey={activeKey} onChange={handleTabChange}>
-      {items.map((item, index) => (
-        <TabBar.Item key={item.key || index} {...item} />
+      {items.map(({ key, ...item }, index) => (
+        <TabBar.Item key={key ?? index} {...item} />
       ))}
     </TabBar>
   );
@@ -88,10 +88,10 @@ const SystemTabBar = memo<SystemTabBarProps>((props) => {
   });
 
   /**
-   * 获取当前激活的标签页key
+   * 获取当前激活的标签页key（以当前路由为准，未获取到时回退到 activeKey）
    */
   const getCurrentActiveKey = useCallback((): string => {
-    return activeKey !== history.location.pathname ? history.location.pathname : activeKey || '';
+    return history.location.pathname ?? activeKey ?? '';
   }, [activeKey, history.location.pathname]);
 
   return (

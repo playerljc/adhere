@@ -92,7 +92,8 @@ function searchTableClassFactory({
 
       this.state = {
         ...this.state,
-        selectedRowKeys: props.value ? [props.value].flat() : [],
+        selectedRowKeys:
+          props.value != null && props.value !== '' ? [props.value].flat() : [],
       };
     }
 
@@ -112,7 +113,10 @@ function searchTableClassFactory({
       } else {
         if (prevProps.value !== this.props.value) {
           this.setState({
-            selectedRowKeys: [this.props.value],
+            selectedRowKeys:
+              this.props.value != null && this.props.value !== ''
+                ? [this.props.value]
+                : [],
           });
         }
       }
@@ -439,9 +443,10 @@ export function createSearchTableSelect({
     const isMulti = selectionMode === 'multiple';
 
     const [selectedRows, setSelectedRows] = useState<any[]>(defaultOptions ?? []);
+    const defaultOptionsSignature = JSON.stringify(defaultOptions ?? []);
     useUpdateEffect(() => {
       setSelectedRows(defaultOptions ?? []);
-    }, [defaultOptions]);
+    }, [defaultOptionsSignature]);
 
     const allOptions = useMemo(
       () => uniqBy([...(options ?? []), ...selectedRows], 'value'),

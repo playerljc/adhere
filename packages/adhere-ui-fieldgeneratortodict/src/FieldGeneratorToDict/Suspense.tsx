@@ -15,7 +15,7 @@ const Suspense = memo<SuspenseProps>((props) => {
   return (
     <AdhereSuspense.Sync
       {...props}
-      isEmpty={() => (isEmpty ? isEmpty?.(data) : data.length === 0)}
+      isEmpty={() => (isEmpty ? isEmpty?.(data) : !data || data.length === 0)}
       renderEmpty={renderEmpty ? renderEmpty() : emptyComponent}
     >
       {children}

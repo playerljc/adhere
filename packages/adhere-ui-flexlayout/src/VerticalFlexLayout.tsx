@@ -6,7 +6,7 @@ import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Auto from './Auto';
 import Fixed from './Fixed';
 import FlexLayout from './FlexLayout';
-import type { VerticalFlexLayoutProps, RenderFunction } from './types';
+import type { VerticalFlexLayoutProps } from './types';
 
 /**
  * VerticalFlexLayout 组件

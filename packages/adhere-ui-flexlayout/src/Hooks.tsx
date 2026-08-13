@@ -139,6 +139,15 @@ export const useTrigger = ({
     }
   }, [collapseDirection, collapsible]);
 
+  /**
+   * 处理折叠状态变化
+   */
+  const _onCollapse = useCallback(() => {
+    const newCollapsed = !collapsible;
+    setCollapsible(newCollapsed);
+    onCollapse?.(newCollapsed);
+  }, [collapsible, onCollapse]);
+
   // 渲染触发器
   const renderTrigger = useCallback(() => {
     if (!trigger) return null;
@@ -158,7 +167,7 @@ export const useTrigger = ({
         {triggerInner}
       </div>
     );
-  }, [trigger, collapseDirection, DefaultTrigger, collapsible, selectorPrefix]);
+  }, [trigger, collapseDirection, DefaultTrigger, collapsible, selectorPrefix, _onCollapse]);
 
   // 计算折叠样式
   const collapseStyle = useMemo(() => {
@@ -184,15 +193,6 @@ export const useTrigger = ({
   useUpdateEffect(() => {
     setCollapsible(defaultCollapsible);
   }, [defaultCollapsible]);
-
-  /**
-   * 处理折叠状态变化
-   */
-  const _onCollapse = useCallback(() => {
-    const newCollapsed = !collapsible;
-    setCollapsible(newCollapsed);
-    onCollapse?.(newCollapsed);
-  }, [collapsible, onCollapse]);
 
   return {
     renderTrigger,

@@ -40,6 +40,8 @@ const TreeEntityValueHOC = memo<
       } else {
         setTreeData(props?.getTreeDataByDataSource?.(_treeData) ?? _treeData);
       }
+
+      children.props?.onDataSourceChange?.(_treeData, extra);
     },
   });
 

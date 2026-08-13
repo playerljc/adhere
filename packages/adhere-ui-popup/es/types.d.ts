@@ -1,5 +1,5 @@
 import { ButtonProps as AntdMobileButtonProps } from 'antd-mobile';
-import { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties, MouseEvent, ReactNode } from 'react';
 /**
  * Popup配置接口
  * @interface IConfig
@@ -84,7 +84,7 @@ export type TriggerPromptProps = TriggerProps & {
  */
 export type SubmitButtonProps = Omit<AntdMobileButtonProps, 'onClick'> & {
     /** 点击回调 */
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => Promise<any> | void;
+    onClick?: (e: MouseEvent<HTMLButtonElement>) => Promise<any> | void;
 };
 /**
  * TriggerPrompt组件引用

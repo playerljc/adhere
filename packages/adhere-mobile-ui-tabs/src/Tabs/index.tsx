@@ -1,7 +1,8 @@
 import { Swiper, Tabs } from 'antd-mobile';
 import type { SwiperRef } from 'antd-mobile/es/components/swiper/swiper';
 import classNames from 'classnames';
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import type { ReactElement } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -44,9 +45,18 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
   const childrenEffectFirst = useRef(false);
   const swiperLoad = useRef(new Map<string, boolean>());
 
+  // 归一化 children：JSX 传单个子元素时不是数组，统一转为数组处理
+  const childList = useMemo<ReactElement[]>(() => {
+    if (!children) return [];
+    return (Array.isArray(children) ? children : [children]) as ReactElement[];
+  }, [children]);
+
   const [activeKey, setActiveKey] = useState<string>(
-    externalActiveKey || (children && children.length ? (children[0].key as string) : ''),
+    externalActiveKey || (childList.length ? (childList[0].key as string) : ''),
   );
+
+  // 记录最新 activeKey，用于 swiper onIndexChange 中判重（swipeTo 也会触发 onIndexChange，避免重复 onChange）
+  const activeKeyRef = useRef<string>(activeKey);
 
   useTheme<HTMLElement>({
     // @ts-ignore
@@ -66,9 +76,9 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
   const getActiveIndexByKey = useCallback(
     (key?: string): number => {
       if (!key) return -1;
-      return children?.findIndex?.((c) => c.key === key) ?? -1;
+      return childList.findIndex((c) => c.key === key);
     },
-    [children],
+    [childList],
   );
 
   /**
@@ -78,6 +88,7 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
    */
   const handleKeyChange = useCallback(
     (key: string) => {
+      activeKeyRef.current = key;
       setActiveKey(key);
       const index = getActiveIndexByKey(key);
       if (index >= 0) {
@@ -97,6 +108,7 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
   useEffect(() => {
     if (!externalActiveKey) return;
 
+    activeKeyRef.current = externalActiveKey;
     setActiveKey(externalActiveKey);
     const index = getActiveIndexByKey(externalActiveKey);
     if (index >= 0) {
@@ -120,12 +132,15 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
    */
   const handleSwiperIndexChange = useCallback(
     (index: number) => {
-      const newKey = children?.[index]?.key as string;
-      if (newKey) {
-        setActiveKey(newKey);
-      }
+      const newKey = childList[index]?.key as string;
+      if (!newKey || newKey === activeKeyRef.current) return;
+
+      activeKeyRef.current = newKey;
+      setActiveKey(newKey);
+      // 手势滑动切换也要通知外部，保持与点击 tab 头的行为一致
+      onChange?.(newKey);
     },
-    [children],
+    [childList, onChange],
   );
 
   return (
@@ -146,7 +161,7 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
       >
         {ConditionalRender.conditionalRender({
           conditional: !!swiper,
-          match: children?.map?.((reactElement) =>
+          match: childList.map((reactElement) =>
             React.isValidElement(reactElement)
               ? React.cloneElement(reactElement, { children: null } as any)
               : reactElement,
@@ -160,13 +175,13 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
           zIndex={arrowZIndex ?? 100}
           // @ts-ignore
           wrapRef={wrapperRef}
-          data={children
-            ?.map?.((reactElement) =>
+          data={childList
+            .map((reactElement) =>
               React.isValidElement(reactElement)
                 ? { key: reactElement.key as any, title: (reactElement.props as any)?.title }
                 : null,
             )
-            ?.filter(Boolean) as any}
+            .filter(Boolean) as any}
           activeKey={activeKey}
           swiper={!!swiper}
           getActiveIndexByKey={getActiveIndexByKey}
@@ -179,35 +194,35 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
           ref={swiperRef}
           direction="horizontal"
           indicator={() => null}
-          defaultIndex={getActiveIndexByKey(activeKey)}
+          defaultIndex={Math.max(getActiveIndexByKey(activeKey), 0)}
           onIndexChange={handleSwiperIndexChange}
           loop={false}
           {...(swiperProps ?? {})}
         >
-          {children
-            ?.map?.((reactElement) => {
-            if (!React.isValidElement(reactElement)) return null;
-            const el = reactElement as React.ReactElement<any>;
-            const {
-              key,
-              props: { children: elementChildren },
-            } = el;
+          {childList
+            .map((reactElement) => {
+              if (!React.isValidElement(reactElement)) return null;
+              const el = reactElement as React.ReactElement<any>;
+              const {
+                key,
+                props: { children: elementChildren },
+              } = el;
 
-            if (key === activeKey) {
-              swiperLoad.current.set(key as string, true);
-            }
+              if (key === activeKey) {
+                swiperLoad.current.set(key as string, true);
+              }
 
-            return (
-              <Swiper.Item key={key as string}>
-                <ConditionalRender
-                  conditional={!!(key === activeKey || swiperLoad.current.get(key as string))}
-                >
-                  {() => elementChildren}
-                </ConditionalRender>
-              </Swiper.Item>
-            );
+              return (
+                <Swiper.Item key={key as string}>
+                  <ConditionalRender
+                    conditional={!!(key === activeKey || swiperLoad.current.get(key as string))}
+                  >
+                    {() => elementChildren}
+                  </ConditionalRender>
+                </Swiper.Item>
+              );
             })
-            ?.filter(Boolean) as any}
+            .filter(Boolean) as any}
         </Swiper>
       )}
     </div>

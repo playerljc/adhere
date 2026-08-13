@@ -47,6 +47,7 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
   ) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const popup = useRef<PopupInner | null>(null);
+    const onTriggerRef = useRef<() => void>(() => undefined);
 
     useTheme<HTMLElement>({
       elRef: wrapperRef as React.RefObject<HTMLElement>,
@@ -152,18 +153,18 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
       return (
         <div ref={wrapperRef} className={classNames(triggerSelectorInnerPrefix)}>
           <div className={classNames(`${triggerSelectorInnerPrefix}-header`)}>
-            <div
-              className={`${triggerSelectorInnerPrefix}-close`}
-              onClick={() => {
-                popup.current?.close();
-              }}
-            >
-              {closeIcon && (
+            {closeIcon ? (
+              <div
+                className={`${triggerSelectorInnerPrefix}-close`}
+                onClick={() => {
+                  popup.current?.close();
+                }}
+              >
                 <span className={`${triggerSelectorInnerPrefix}-close-inner`}>
-                  <LeftOutline />
+                  {closeIcon === true ? <LeftOutline /> : closeIcon}
                 </span>
-              )}
-            </div>
+              </div>
+            ) : null}
 
             {title && <div className={`${triggerSelectorInnerPrefix}-title`}>{title}</div>}
 
@@ -195,6 +196,7 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
             (popupConfig ?? {})?.onAfterClose?.();
             if (popup.current) {
               Popup.destroy(popup.current);
+              popup.current = null;
             }
           },
           children: popupChildren,
@@ -206,20 +208,42 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
       if (!beforeTrigger) {
         execute();
       } else {
-        beforeTrigger().then(() => {
-          execute();
-        });
+        beforeTrigger()
+          .then(() => {
+            execute();
+          })
+          .catch((error) => {
+            console.error('Trigger beforeTrigger error:', error);
+          });
       }
     };
 
-    // 更新弹窗内容
+    onTriggerRef.current = onTrigger;
+
+    const debouncedOnTrigger = useMemo(
+      () =>
+        debounce(() => {
+          onTriggerRef.current();
+        }, 200),
+      [],
+    );
+
     useEffect(() => {
+      return () => {
+        debouncedOnTrigger.cancel();
+      };
+    }, [debouncedOnTrigger]);
+
+    // 仅在弹层仍存在时同步内容，避免对已卸载 root 调用 render
+    useEffect(() => {
+      if (!popup.current || popup.current.isDestroy()) return;
+
       try {
-        popup.current?.update(popupChildren);
+        popup.current.update(popupChildren);
       } catch (err) {
         console.error('Failed to update popup:', err);
       }
-    });
+    }, [popupChildren]);
 
     // 暴露方法给父组件
     useImperativeHandle(ref, () => ({
@@ -232,7 +256,7 @@ const Trigger = forwardRef<TriggerHandle, TriggerProps>(
       <div
         className={classNames(triggerSelectorPrefix, className ?? '')}
         style={style ?? {}}
-        onClick={debounce(onTrigger, 200)}
+        onClick={debouncedOnTrigger}
       >
         {renderTrigger?.()}
       </div>

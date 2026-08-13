@@ -473,8 +473,8 @@ export interface InternalSpaceBetweenProps {
   className?: string;
   /** 自定义样式 */
   style?: CSSProperties;
-  /** 布局方向 */
-  direction: FlexLayoutProps['direction'];
+  /** 布局方向（默认 horizontal） */
+  direction?: FlexLayoutProps['direction'];
   /** 子元素 */
   children?: ReactNode;
 }
@@ -487,8 +487,8 @@ export interface InternalSpaceAroundProps {
   className?: string;
   /** 自定义样式 */
   style?: CSSProperties;
-  /** 布局方向 */
-  direction: FlexLayoutProps['direction'];
+  /** 布局方向（默认 horizontal） */
+  direction?: FlexLayoutProps['direction'];
   /** 子元素 */
   children?: ReactNode;
 }

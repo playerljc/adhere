@@ -141,7 +141,7 @@ export interface TableGridLayoutProps {
   /** Component styles */
   style?: CSSProperties;
   /** Layout type */
-  layout: LayoutType;
+  layout?: LayoutType;
   /** Density setting */
   density?: DensityType;
   /** Display mode */

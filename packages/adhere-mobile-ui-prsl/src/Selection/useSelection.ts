@@ -108,10 +108,13 @@ export default function UseSelection({
     });
   }
 
+  // 用序列化结果做依赖，避免父组件传内联数组字面量时每次渲染都重置选中项
+  const selectedRowKeysSignature = JSON.stringify(selectedRowKeys ?? []);
+
   useUpdateEffect(() => {
     setTargetSelectedRowKeys(selectedRowKeys ?? []);
     setOptionSelectedRowKeys(selectedRowKeys ?? []);
-  }, [selectedRowKeys]);
+  }, [selectedRowKeysSignature]);
 
   return {
     optionSelectedRowKeys,

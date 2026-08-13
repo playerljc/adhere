@@ -16,8 +16,8 @@ const SubmitButton: FC<SubmitButtonProps> = (props) => {
 
   return (
     <Button
-      loading={loading}
       {...props}
+      loading={loading}
       onClick={async (e) => {
         if (!props.onClick) return;
 

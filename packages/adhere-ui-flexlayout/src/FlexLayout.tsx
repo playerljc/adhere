@@ -30,6 +30,9 @@ export const selectorPrefix = 'adhere-ui-flex-layout';
 
 const { useTheme } = ConfigProvider;
 
+// 模块级默认值，避免每次渲染生成新数组导致 memo/Context 依赖失效
+const DEFAULT_GUTTER: GutterType = [0, 0];
+
 /**
  * 内部 FlexLayout 组件
  *
@@ -39,7 +42,7 @@ const { useTheme } = ConfigProvider;
  */
 const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes<HTMLDivElement>>(
   forwardRef<HTMLDivElement, FlexLayoutProps>((props, ref) => {
-    const { className, style, direction, gutter = [0, 0], children, ...attrs } = props;
+    const { className, style, direction, gutter = DEFAULT_GUTTER, children, ...attrs } = props;
 
     const { media } = useContext(ConfigProvider.Context);
 
@@ -119,14 +122,18 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
       };
     }, [style, getGridStyle]);
 
+    // 记忆化 Context value，避免每次渲染都使 Fixed/Auto 等 consumer 的 memo 失效
+    const contextValue = useMemo(
+      () => ({
+        gutter,
+        direction: targetDirection,
+        children: React.Children.toArray(children),
+      }),
+      [gutter, targetDirection, children],
+    );
+
     return (
-      <FlexContext.Provider
-        value={{
-          gutter,
-          direction: targetDirection,
-          children: React.Children.toArray(children),
-        }}
-      >
+      <FlexContext.Provider value={contextValue}>
         <div
           ref={(node) => {
             innerRef.current = node;

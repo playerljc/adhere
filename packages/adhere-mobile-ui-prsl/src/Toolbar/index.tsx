@@ -57,7 +57,7 @@ const ToolBar = memo<ToolBarProps>(
     defaultViewSettingValue,
     onViewSetting,
     onViewSettingReset,
-    toolbarCollapseCount,
+    toolbarCollapseCount = 3,
     toolbarConfig,
     filterTriggerMode,
     filterTriggerProps,
@@ -94,7 +94,13 @@ const ToolBar = memo<ToolBarProps>(
 
     // 显示Total的WrapperUI
     const showTotalElementWrapper = useMemo(() => {
-      return <div className={classNames(`${selectorPrefix}-show-total`)}>{showTotalElement}</div>;
+      if (!showTotalElement) return null;
+
+      return (
+        <div key="show-total" className={classNames(`${selectorPrefix}-show-total`)}>
+          {showTotalElement}
+        </div>
+      );
     }, [showTotalElement]);
 
     // 筛选按钮UI
@@ -198,7 +204,11 @@ const ToolBar = memo<ToolBarProps>(
         .map((el) => {
           if (isElement(el)) return el;
 
-          return <NormalItem disabled={disabled ?? false} {...(el as ToolbarConfigItem)} />;
+          const { key: itemKey, ...itemConfig } = el as ToolbarConfigItem;
+
+          return (
+            <NormalItem key={itemKey} disabled={disabled ?? false} {...itemConfig} />
+          );
         })
         .filter((t) => !!t) as ReactElement[];
     }, [toolbarConfig, filterItemElement, sortItemElement, viewSettingItemElement, disabled]);
@@ -206,9 +216,14 @@ const ToolBar = memo<ToolBarProps>(
     // 工具栏可显示的按钮
     const displayItemElements = useMemo(() => {
       return (
-        <div className={`${selectorPrefix}-tool-items`}>
-          {toolbarItemElements.slice(0, toolbarCollapseCount).map((_item) => (
-            <div className={classNames(`${selectorPrefix}-tool-item`)}>{_item}</div>
+        <div key="tool-items" className={`${selectorPrefix}-tool-items`}>
+          {toolbarItemElements.slice(0, toolbarCollapseCount).map((_item, _index) => (
+            <div
+              key={_item.key ?? `tool-item-${_index}`}
+              className={classNames(`${selectorPrefix}-tool-item`)}
+            >
+              {_item}
+            </div>
           ))}
         </div>
       );
@@ -221,14 +236,16 @@ const ToolBar = memo<ToolBarProps>(
       if (!!popoverMenuElements.length) {
         return (
           <Popover
+            key="tool-menu"
             ref={popoverRef}
             placement="bottom-start"
             trigger="click"
             visible={popoverVisible}
             content={
               <ul className={`${selectorPrefix}-tool-menu-items`}>
-                {popoverMenuElements.map((_element) => (
+                {popoverMenuElements.map((_element, _index) => (
                   <li
+                    key={_element.key ?? `tool-menu-item-${_index}`}
                     className={`${selectorPrefix}-tool-menu-item`}
                     onClick={() => {
                       setPopoverVisible(false);

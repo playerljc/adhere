@@ -37,7 +37,7 @@ import './fields/TreeSelect';
 
 export const validatorNormal = (message) => ({
   validator(_, value) {
-    if (!value) {
+    if (value === undefined || value === null || value === '') {
       return Promise.reject(message);
     }
 
@@ -47,7 +47,7 @@ export const validatorNormal = (message) => ({
 
 export const validatorMulti = (message) => ({
   validator(_, value) {
-    if (!value) {
+    if (value === undefined || value === null || value === '') {
       return Promise.reject(message);
     }
 
@@ -96,7 +96,14 @@ const genDictComponentName = (dictName: string, componentName: string) => {
  * @returns
  */
 const getDictComponent = <P>(dictName: string, componentName: string) => {
-  const { componentName: itemName, functionName } = dictComponentHash[componentName];
+  const config = dictComponentHash[componentName];
+
+  if (!config) {
+    console.warn(`[FieldGeneratorToDict] Unknown component name: ${componentName}`);
+    return null;
+  }
+
+  const { componentName: itemName, functionName } = config;
   return ItemFactory<P>({ dictName, itemName, functionName });
 };
 

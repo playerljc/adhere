@@ -78,7 +78,7 @@ const SortItem: FC<SortItemProps> = ({
         onClick: reset,
       },
     ];
-  }, [sortTriggerMode]);
+  }, [sortTriggerMode, reset]);
 
   const renderSortElement = useCallback(
     ({ close }) => {
@@ -103,14 +103,14 @@ const SortItem: FC<SortItemProps> = ({
               }}
               extra={
                 <div className={`${selectorPrefix}-list-item-order`}>
-                  <SortDescendingOutlined
+                  <SortAscendingOutlined
                     className={classNames(`${selectorPrefix}-list-order-item`, {
                       [`${selectorPrefix}-active`]: sortValues?.some(
                         (t) => t.name === sortValue.name && t.order === 'asc',
                       ),
                     })}
                   />
-                  <SortAscendingOutlined
+                  <SortDescendingOutlined
                     className={classNames(`${selectorPrefix}-list-order-item`, {
                       [`${selectorPrefix}-active`]: sortValues?.some(
                         (t) => t.name === sortValue.name && t.order === 'desc',
@@ -212,42 +212,31 @@ const SortItem: FC<SortItemProps> = ({
         </AdherePopup.Trigger>
       );
     }
-  }, [sortTriggerMode, sortTriggerProps, triggerElement, triggerContext, actions]);
+  }, [sortTriggerMode, sortTriggerProps, triggerElement, triggerContext, actions, disabled]);
 
   function sort(sortItemConfig: SortConfigItem) {
-    const draft = [...(sortValues ?? [])];
+    let draft = [...(sortValues ?? [])];
 
     const sortValueIndex = draft.findIndex((t) => t.name === sortItemConfig.name);
 
+    // 循环: 无 -> asc -> desc -> 取消排序
     if (sortValueIndex === -1) {
       draft.push({
         name: sortItemConfig.name,
         order: 'asc',
       });
+    } else if (draft[sortValueIndex].order === 'asc') {
+      draft[sortValueIndex] = {
+        ...draft[sortValueIndex],
+        order: 'desc',
+      };
     } else {
-      if (!draft[sortValueIndex].order) {
-        draft[sortValueIndex] = {
-          ...draft[sortValueIndex],
-          order: 'desc',
-        };
-      } else {
-        if (draft[sortValueIndex].order === 'asc') {
-          draft[sortValueIndex] = {
-            ...draft[sortValueIndex],
-            order: '',
-          };
-        } else if (draft[sortValueIndex].order === 'desc') {
-          draft[sortValueIndex] = {
-            ...draft[sortValueIndex],
-            order: 'asc',
-          };
-        }
-      }
+      draft = draft.filter((_, _index) => _index !== sortValueIndex);
     }
 
     setSortValues(draft);
 
-    return onSort?.(draft ?? []);
+    return onSort?.(draft);
   }
 
   function reset(): Promise<void> {

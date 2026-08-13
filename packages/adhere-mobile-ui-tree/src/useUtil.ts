@@ -21,8 +21,9 @@ function useUtil() {
     treeData: TreeData;
     keys: string[];
   }): TreeDataItemExtra[] {
+    // key可能在树中找不到(如搜索过滤后)，过滤掉undefined
     // @ts-ignore
-    return keys.map((key) => Util.findNodeByKey(treeData, key, { keyAttr: 'key' }));
+    return keys.map((key) => Util.findNodeByKey(treeData, key, { keyAttr: 'key' })).filter((t) => !!t);
   }
 
   /**
@@ -37,6 +38,29 @@ function useUtil() {
       (nodeData) => nodeData[DEFAULT_TREE_UTIL_CONFIG.keyAttr],
     );
     return keys.filter((key) => leafKeys.includes(key));
+  }
+
+  /**
+   * getParentKeys
+   * @description 获取所有有children的节点keys(用于expandAll)
+   * @param {TreeData} treeData
+   * @return {string[]}
+   */
+  function getParentKeys(treeData: TreeData): string[] {
+    const keys: string[] = [];
+
+    function walk(nodes) {
+      (nodes ?? []).forEach((node) => {
+        if (node?.children?.length) {
+          keys.push(node[DEFAULT_TREE_UTIL_CONFIG.keyAttr]);
+          walk(node.children);
+        }
+      });
+    }
+
+    walk(treeData);
+
+    return keys;
   }
 
   /**
@@ -105,6 +129,7 @@ function useUtil() {
   return {
     getTreeNodesByKeys,
     getLeafKeys,
+    getParentKeys,
     getValueWithUnit,
     getValue,
     omitDisabledKeys,

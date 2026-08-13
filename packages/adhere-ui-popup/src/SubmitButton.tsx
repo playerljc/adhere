@@ -31,8 +31,8 @@ const SubmitButton: FC<SubmitButtonProps> = (props) => {
 
   return (
     <Button
-      loading={loading}
       {...props}
+      loading={loading}
       onClick={handleClick}
     >
       {props.children}

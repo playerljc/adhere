@@ -75,6 +75,6 @@ export declare function useMobileAsyncTree({ dictName, treeDataSimpleMode }: {
     dictName: any;
     treeDataSimpleMode: any;
 }): {
-    treeData: never[];
+    treeData: any[];
     loadData: (_nodeData: any) => any;
 };

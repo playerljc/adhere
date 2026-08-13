@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { RefObject, createContext, memo, useContext, useRef } from 'react';
+import React, { RefObject, createContext, memo, useContext, useMemo, useRef } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
@@ -46,12 +46,11 @@ const ScrollLayout = memo<ScrollLayoutProps>((props) => {
     displayName: 'FlexLayout',
   });
 
+  // getEl 通过 ref 取值，value 可全程稳定，避免 consumer 无谓重渲染
+  const contextValue = useMemo(() => ({ getEl: () => wrapperRef.current }), []);
+
   return (
-    <ScrollLayoutContext.Provider
-      value={{
-        getEl: () => wrapperRef.current,
-      }}
-    >
+    <ScrollLayoutContext.Provider value={contextValue}>
       <div
         ref={wrapperRef}
         {...attrs}

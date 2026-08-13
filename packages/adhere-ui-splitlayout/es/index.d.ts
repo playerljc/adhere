@@ -13,12 +13,12 @@
  * <SplitLayout minSize={100} maxSize="80%" />
  *
  * // 使用预定义布局
- * <SplitLayout.TRBLC.TLRCLayout>
- *   <div>顶部</div>
- *   <div>左侧</div>
- *   <div>右侧</div>
- *   <div>中心</div>
- * </SplitLayout.TRBLC.TLRCLayout>
+ * <SplitLayout.TRBLC.TLRCSplitLayout
+ *   tProps={{ children: <div>顶部</div> }}
+ *   lProps={{ children: <div>左侧</div> }}
+ *   rProps={{ children: <div>右侧</div> }}
+ *   cProps={{ children: <div>中心</div> }}
+ * />
  * ```
  */
 import SplitLayout from './SplitLayout';

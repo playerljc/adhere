@@ -1,7 +1,7 @@
 import type { DragEndEvent } from '@dnd-kit/core';
 import { DndContext, PointerSensor, TouchSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
-import { SortableContext, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import React, { useContext, useMemo } from 'react';
 
 import Context from '../Context';
 import type { SortableContainerProps } from '../types';
@@ -11,14 +11,9 @@ export default function SortableContainer({ children, onSortEnd }: SortableConta
 
   const length = getDatasourceLength?.() ?? 0;
 
-  const initialItems = useMemo(() => Array.from({ length }, (_, i) => i), [length]);
-
-  const [items, setItems] = useState<number[]>(initialItems);
-
-  useEffect(() => {
-    setItems(initialItems);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [length]);
+  // 每次拖拽结束后父级会对数据 arrayMove，子项重新按 0..n-1 的顺序渲染，
+  // 所以 items 恒为顺序索引，不能在这里维护本地状态(会与实际渲染顺序脱节，导致第二次拖拽错位)
+  const items = useMemo(() => Array.from({ length }, (_, i) => i), [length]);
 
   // 为移动端配置传感器：同时支持触摸和指针，并设置激活距离以避免误触
   const sensors = useSensors(
@@ -39,11 +34,11 @@ export default function SortableContainer({ children, onSortEnd }: SortableConta
     const { active, over } = event ?? {};
     if (!active || !over || active?.id === over?.id) return;
 
-    const oldIndex = items.indexOf(Number(active.id));
-    const newIndex = items.indexOf(Number(over.id));
+    // id 即数据中的索引
+    const oldIndex = Number(active.id);
+    const newIndex = Number(over.id);
 
-    if (oldIndex !== -1 && newIndex !== -1 && oldIndex !== newIndex) {
-      setItems((prev) => arrayMove(prev, oldIndex, newIndex));
+    if (!Number.isNaN(oldIndex) && !Number.isNaN(newIndex) && oldIndex !== newIndex) {
       onSortEnd?.({ oldIndex, newIndex });
     }
   }

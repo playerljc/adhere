@@ -43,6 +43,48 @@ function getColSpanFromElement(el: React.ReactNode): number {
 }
 
 /**
+ * 给单元格补 key，并在 require 时加 class（不改写调用方传入的元素引用）
+ */
+function normalizeCell(
+  el: ReactElement,
+  fallbackKey: string,
+  require?: boolean,
+): ReactElement {
+  if (!React.isValidElement(el)) {
+    return el;
+  }
+
+  const needRequire = !!require;
+  const needKey = el.key == null;
+
+  if (!needRequire && !needKey) {
+    return el;
+  }
+
+  return React.cloneElement(el, {
+    ...(needKey ? { key: fallbackKey } : {}),
+    ...(needRequire
+      ? {
+          className: classNames(
+            'require',
+            (el.props as { className?: string }).className ?? '',
+          ),
+        }
+      : {}),
+  });
+}
+
+/** 与组件渲染一致：过滤 show:false 和空分组 */
+function filterVisibleData(data?: DataItem[]): DataItem[] {
+  return (data ?? [])
+    .map((record) => ({
+      ...record,
+      data: record.data?.filter?.((item) => !('show' in item) || !!item.show),
+    }))
+    .filter((record) => !!record?.data?.length);
+}
+
+/**
  * Density class mapping
  */
 const DENSITY_CLASS_MAP = new Map<DensityType, string>([
@@ -70,6 +112,11 @@ const renderHorizontal: RenderHorizontal = (
    * Creates a single row in horizontal layout
    */
   function createRow(): void {
+    // columnCount 为 0 时 while 会立刻 break 且 _index 不前进，必须拦住递归
+    if (columnCount <= 0) {
+      return;
+    }
+
     const startIndex = _index;
 
     // All columns in one row
@@ -139,8 +186,8 @@ const renderHorizontal: RenderHorizontal = (
     const endIndex = _index - 1;
 
     detail.push({
-      startIndex: startIndex / 2,
-      endIndex: (endIndex - 1) / 2,
+      startIndex: Math.floor(startIndex / 2),
+      endIndex: Math.floor(endIndex / 2),
     });
 
     if (_index < flatData.length) {
@@ -158,31 +205,15 @@ const renderHorizontal: RenderHorizontal = (
   const flatSpans: number[] = [];
 
   (_data || []).forEach((item: DataItemRow) => {
-    let label = item.label;
-
-    if ('require' in item && !!item.require) {
-      label = React.cloneElement(
-        label,
-        {
-          // @ts-ignore
-          ...label.props,
-          className: classNames(
-            'require',
-            // @ts-ignore
-            label.props.className ?? '',
-          ),
-        },
-        // @ts-ignore
-        label.props.children,
-      );
-    }
+    const label = normalizeCell(item.label, `${item.key}-label`, item.require);
+    const value = normalizeCell(item.value, `${item.key}-value`);
 
     const labelSpan = item.labelColSpan ?? getColSpanFromElement(label);
-    const valueSpan = item.valueColSpan ?? getColSpanFromElement(item.value);
+    const valueSpan = item.valueColSpan ?? getColSpanFromElement(value);
 
     flatData.push(label);
     flatSpans.push(labelSpan);
-    flatData.push(item.value);
+    flatData.push(value);
     flatSpans.push(valueSpan);
   });
 
@@ -213,26 +244,35 @@ const renderVertical: RenderVertical = (
 ): RenderHorizontalResult => {
   const { columnCount: _columnCount, data: _data } = data;
 
+  const normalizedData: DataItemRow[] = (_data || []).map((item) => ({
+    ...item,
+    label: normalizeCell(item.label, `${item.key}-label`, item.require),
+    value: normalizeCell(item.value, `${item.key}-value`),
+  }));
+
   // Per-item column span (labelColSpan/valueColSpan or from element.props.colSpan) for layout count
-  const itemSpans: number[] = [];
-  (_data || []).forEach((item: DataItemRow) => {
+  const itemSpans: number[] = normalizedData.map((item) => {
     const labelSpan = item.labelColSpan ?? getColSpanFromElement(item.label);
     const valueSpan = item.valueColSpan ?? getColSpanFromElement(item.value);
-    itemSpans.push(Math.max(labelSpan, valueSpan));
+    return Math.max(labelSpan, valueSpan);
   });
 
   /**
    * Creates a single row in vertical layout
    */
   function createRow(): void {
+    if (columnCount <= 0) {
+      return;
+    }
+
     const tdLabelJSXS: ReactElement[] = [];
     const tdValueJSXS: ReactElement[] = [];
 
     let columnsCount = 0;
     const startIndex = _index;
 
-    while (_index < (_data || []).length) {
-      const item = (_data || [])[_index];
+    while (_index < normalizedData.length) {
+      const item = normalizedData[_index];
       const span = itemSpans[_index] ?? 1;
 
       if (columnsCount === columnCount) break;
@@ -297,7 +337,7 @@ const renderVertical: RenderVertical = (
       endIndex,
     });
 
-    if (_index < (_data || []).length) {
+    if (_index < normalizedData.length) {
       createRow();
     }
   }
@@ -306,27 +346,6 @@ const renderVertical: RenderVertical = (
 
   // Number of columns per row
   const columnCount = _columnCount as number;
-
-  (_data || []).forEach((item: DataItemRow) => {
-    let label = item.label;
-
-    if ('require' in item && !!item.require) {
-      item.label = React.cloneElement(
-        label,
-        {
-          // @ts-ignore
-          ...label.props,
-          className: classNames(
-            'require',
-            // @ts-ignore
-            label.props.className ?? '',
-          ),
-        },
-        // @ts-ignore
-        label.props.children,
-      );
-    }
-  });
 
   let _index = 0;
 
@@ -509,24 +528,28 @@ function getRenderDetail(
     ...renderGridSearchFormProps
   } = props ?? {};
 
+  const visibleData = filterVisibleData(data);
+  const layout = props?.layout ?? 'horizontal';
+
   const result: RenderDetail = {
     rowCount: 0,
-    layout: props.layout,
+    layout,
     detail: [],
   };
 
-  data.forEach((group) => {
+  visibleData.forEach((group) => {
     const rowCountRef: RowCountRef = { current: 0 };
 
     const params: RenderHorizontalParams = {
       data: group,
       rowCountRef,
       ...renderGridSearchFormProps,
+      layout,
     };
 
     let detail: GroupRenderDetail = [];
 
-    if (props.layout === 'horizontal') {
+    if (layout === 'horizontal') {
       detail = renderHorizontal(params).detail;
     } else {
       detail = renderVertical(params.data, rowCountRef).detail;
@@ -536,7 +559,7 @@ function getRenderDetail(
 
     result.detail.push({
       name: group.name!,
-      rowCount: props.layout === 'horizontal' ? rowCountRef.current : rowCountRef.current / 2,
+      rowCount: layout === 'horizontal' ? rowCountRef.current : rowCountRef.current / 2,
       detail,
     });
   });
@@ -573,19 +596,10 @@ function getRenderDetail(
  * ```
  */
 const InternalTableGridLayout = memo<TableGridLayoutProps>(
-  ({ data, className, style, ...props }) => {
+  ({ data, className, style, layout = 'horizontal', ...props }) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
 
-    const targetData = useMemo(
-      () =>
-        (data ?? [])
-          .map((record) => ({
-            ...record,
-            data: record.data?.filter?.((item) => !('show' in item) || !!item.show),
-          }))
-          .filter((record) => !!record?.data?.length),
-      [data],
-    );
+    const targetData = useMemo(() => filterVisibleData(data), [data]);
 
     const configProvider = useContext(ConfigProvider.Context);
 
@@ -597,7 +611,7 @@ const InternalTableGridLayout = memo<TableGridLayoutProps>(
 
     return (
       <div ref={wrapperRef} className={classNames(selectorPrefix, className)} style={style ?? {}}>
-        {renderGridSearchFormGroup(targetData, props, configProvider.media)}
+        {renderGridSearchFormGroup(targetData, { layout, ...props }, configProvider.media)}
       </div>
     );
   },
@@ -676,7 +690,9 @@ TableGridLayout.propTypes = {
       /** Default padding */
       padding: PropTypes.arrayOf(PropTypes.number),
       /** Column settings, 'auto' means adaptive */
-      colgroup: PropTypes.arrayOf(PropTypes.number).isRequired,
+      colgroup: PropTypes.arrayOf(
+        PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto'])]),
+      ),
       /** Number of columns */
       columnCount: PropTypes.number.isRequired,
       data: PropTypes.arrayOf(

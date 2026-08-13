@@ -1,6 +1,6 @@
 import { useUpdateEffect } from 'ahooks';
 import isEqual from 'lodash.isequal';
-import uniqBy from 'lodash.sortby';
+import uniqBy from 'lodash.uniqby';
 import sortby from 'lodash.sortby';
 import React, { useMemo, useState } from 'react';
 
@@ -72,7 +72,8 @@ function searchListClassFactory({
 
       this.state = {
         ...this.state,
-        selectedRowKeys: props.value ? [props.value].flat() : [],
+        selectedRowKeys:
+          props.value != null && props.value !== '' ? [props.value].flat() : [],
       };
     }
 
@@ -92,7 +93,10 @@ function searchListClassFactory({
       } else {
         if (prevProps.value !== this.props.value) {
           this.setState({
-            selectedRowKeys: [this.props.value],
+            selectedRowKeys:
+              this.props.value != null && this.props.value !== ''
+                ? [this.props.value]
+                : [],
           });
         }
       }
@@ -258,9 +262,10 @@ export function createSearchListSelect({
     const isMulti = selectionMode === 'multiple';
 
     const [selectedRows, setSelectedRows] = useState<any[]>(defaultOptions ?? []);
+    const defaultOptionsSignature = JSON.stringify(defaultOptions ?? []);
     useUpdateEffect(() => {
       setSelectedRows(defaultOptions ?? []);
-    }, [defaultOptions]);
+    }, [defaultOptionsSignature]);
 
     const allOptions = useMemo(
       () => uniqBy([...(options ?? []), ...selectedRows], 'value'),

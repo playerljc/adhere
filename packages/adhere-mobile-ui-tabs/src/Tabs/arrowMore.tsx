@@ -69,8 +69,8 @@ const ArrowMore: FC<SystemTabArrowMoreProps> = (props) => {
    * 处理箭头点击
    */
   const handleArrowClick = useCallback(() => {
-    setCollapse(!collapse);
-  }, [collapse]);
+    setCollapse((prevCollapse) => !prevCollapse);
+  }, []);
 
   /**
    * 处理遮罩点击

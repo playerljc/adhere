@@ -15,7 +15,7 @@ const CheckAllManage = () => {
 
   const dataSourceLength = getDatasourceLength();
 
-  const isCheckAll = optionSelectedRowKeys.length === dataSourceLength;
+  const isCheckAll = dataSourceLength > 0 && optionSelectedRowKeys.length === dataSourceLength;
 
   return (
     <div className={`${selectorPrefix}-check-all`}>

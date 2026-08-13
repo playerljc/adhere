@@ -60,7 +60,7 @@ export interface SearchKeyWordProps {
     style?: CSSProperties;
     searchKeyWordBarProps?: SearchBarProps;
     searchKeyWordMode?: 'normal' | 'history';
-    searchKeyWordHistoryMaxSize: number;
+    searchKeyWordHistoryMaxSize?: number;
     isSearchKeyWordHistoryIntoStore?: boolean;
     searchKeyWordHistoryStoreType?: 'session' | 'local';
     disabled?: boolean;
@@ -92,20 +92,20 @@ export interface ToolBarProps extends Omit<FilterItemProps, 'children'>, Omit<So
     beforeToolBarRenderStyle?: CSSProperties;
     afterToolBarRenderClassName?: string;
     afterToolBarRenderStyle?: CSSProperties;
-    toolbarCollapseCount: number;
+    toolbarCollapseCount?: number;
     toolbarConfig?: (defaultElements: ReactElement[]) => (ToolbarConfigItem | ReactElement)[];
     isShowFilterTrigger?: boolean;
-    renderFilterTrigger: (defaultUI: ReactElement) => ReactElement;
+    renderFilterTrigger?: (defaultUI: ReactElement) => ReactElement;
     isShowSortTrigger?: boolean;
-    renderSortTrigger: (defaultUI: ReactElement) => ReactElement;
+    renderSortTrigger?: (defaultUI: ReactElement) => ReactElement;
     isShowViewSettingTrigger?: boolean;
-    renderViewSettingTrigger: (defaultUI: ReactElement) => ReactElement;
+    renderViewSettingTrigger?: (defaultUI: ReactElement) => ReactElement;
     total?: number;
     disabled?: boolean;
 }
 export interface FilterItemProps {
     disabled?: boolean;
-    children?: (defaultUI: ReactElement) => ReactElement;
+    children?: (defaultUI: ReactElement) => ReactElement | undefined;
     filterTriggerMode?: TriggerMode;
     filterTriggerProps?: TriggerProps;
     renderFilter?: (defaultFilterValues: Record<string, any>) => ReactElement;
@@ -117,7 +117,7 @@ export interface FilterItemProps {
 }
 export interface SortItemProps {
     disabled?: boolean;
-    children?: (defaultUI: ReactElement) => ReactElement;
+    children?: (defaultUI: ReactElement) => ReactElement | undefined;
     sortTriggerMode?: TriggerMode;
     sortTriggerProps?: TriggerProps;
     renderSort?: (defaultSortValues: DefaultSortValue[]) => ReactElement;
@@ -128,7 +128,7 @@ export interface SortItemProps {
 }
 export interface ViewSettingProps {
     disabled?: boolean;
-    children?: (defaultUI: ReactElement) => ReactElement;
+    children?: (defaultUI: ReactElement) => ReactElement | undefined;
     viewSettingTriggerMode?: TriggerMode;
     viewSettingTriggerProps?: TriggerProps;
     renderViewSetting?: (defaultViewSettingValue: string) => ReactElement;
@@ -218,9 +218,9 @@ export interface PRSLProps extends Omit<SearchKeyWordProps, 'className' | 'style
     loadData?: (params: LoadDataSourceParams) => Promise<DataSource>;
     renderEmpty?: () => ReactElement;
     renderOffLine?: () => ReactElement;
-    isUseFirstLoading: boolean;
+    isUseFirstLoading?: boolean;
     firstLoading?: () => ReactNode;
-    isLoading: boolean;
+    isLoading?: boolean;
     pullToRefreshProps?: Omit<PullToRefreshProps, 'onRefresh'>;
     onRefreshBefore?: (params: LoadDataSourceParams) => Promise<void>;
     onRefresh?: (params: LoadDataSourceParams) => Promise<DataSource>;

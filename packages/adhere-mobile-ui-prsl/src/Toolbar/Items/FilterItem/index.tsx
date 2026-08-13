@@ -92,7 +92,7 @@ const FilterItem: FC<FilterItemProps> = ({
         onClick: reset,
       },
     ];
-  }, [filterTriggerMode]);
+  }, [filterTriggerMode, search, reset]);
 
   const searchElement = useMemo(() => {
     if (renderFilter) {

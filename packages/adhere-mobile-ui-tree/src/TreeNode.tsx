@@ -91,14 +91,15 @@ const TreeNode = memo<TreeNodeProps>(
         disabled,
         selectable,
         checkable,
-        isLeaf: !children?.length,
+        // 显式指定了isLeaf(异步加载场景)时以isLeaf为准
+        isLeaf: isLeaf ?? !children?.length,
         props,
       }),
-      [id, level, disabled, selectable, checkable, props, children],
+      [id, level, disabled, selectable, checkable, props, children, isLeaf],
     );
 
     // 当前节点的icon
-    const targetIcon = useMemo(() => icon?.(nodeDataExtra), [nodeDataExtra]);
+    const targetIcon = useMemo(() => icon?.(nodeDataExtra), [nodeDataExtra, icon]);
 
     const { updateParentChecked: next, existsCheckableNodeInParentChildren: existsCheckable } =
       useContext(TreeNodeContext);
@@ -139,7 +140,7 @@ const TreeNode = memo<TreeNodeProps>(
       }
 
       return !isLeaf;
-    }, [targetChildrenData]);
+    }, [targetChildrenData, isLeaf]);
 
     const targetCheckboxWidth = useMemo(
       () => getValueWithUnit(checkboxWidth, media) ?? commonCheckboxWidth(),
@@ -174,30 +175,34 @@ const TreeNode = memo<TreeNodeProps>(
     //    1.1.2
     const childrenElement = useMemo(
       () =>
-        targetChildrenData.map((_treeNodeData) => (
-          <TreeNodeContext.Provider
-            value={{
-              updateParentChecked: ({ key, checked, checkedKeys }) => {
-                updateParentChecked({
-                  key,
-                  checked,
-                  checkedKeys,
-                  childrenData: targetChildrenData,
-                  parentId: id,
-                  next,
-                });
-              },
-              existsCheckableNodeInParentChildren: () =>
-                existsCheckableNodeInParentChildren(targetChildrenData),
-            }}
-          >
-            <TreeNode
-              level={level + 1}
-              id={_treeNodeData[DEFAULT_TREE_UTIL_CONFIG.keyAttr]}
-              {..._treeNodeData}
-            />
-          </TreeNodeContext.Provider>
-        )),
+        targetChildrenData.map((_treeNodeData) => {
+          const nodeKey = _treeNodeData[DEFAULT_TREE_UTIL_CONFIG.keyAttr];
+
+          // key不能通过spread传入JSX(React 19会警告)，单独取出
+          const { key: _key, ...restTreeNodeData } = _treeNodeData as Record<string, any>;
+
+          return (
+            <TreeNodeContext.Provider
+              key={nodeKey}
+              value={{
+                updateParentChecked: ({ key, checked, checkedKeys }) => {
+                  updateParentChecked({
+                    key,
+                    checked,
+                    checkedKeys,
+                    childrenData: targetChildrenData,
+                    parentId: id,
+                    next,
+                  });
+                },
+                existsCheckableNodeInParentChildren: () =>
+                  existsCheckableNodeInParentChildren(targetChildrenData),
+              }}
+            >
+              <TreeNode level={level + 1} id={nodeKey} {...restTreeNodeData} />
+            </TreeNodeContext.Provider>
+          );
+        }),
       [targetChildrenData],
     );
 
@@ -230,8 +235,8 @@ const TreeNode = memo<TreeNodeProps>(
     function onLoadData(e) {
       if (isLock(id)) return;
 
-      // 如果当前节点已经加载过
-      if (loadedKeys().includes(id)) {
+      // 如果当前节点已经加载过，或者已经有children(静态数据)，直接展开不再请求
+      if (loadedKeys().includes(id) || targetChildrenData.length) {
         onExpanded(e);
 
         return;
@@ -293,19 +298,14 @@ const TreeNode = memo<TreeNodeProps>(
           setLoadedKeys((_loadedKeys) => [..._loadedKeys, id]);
         })
         .catch((error) => {
-          // 出现错误从checkedKeys去掉自己
-          if (checkedKeys().includes(id)) {
-            setLoadedKeys((_loadedKeys) => _loadedKeys.filter((key) => key !== id));
-          }
-
           // 解锁
           unLock(id);
 
           // 图标还原(必须先unLock才能update，上下语句不能换位置)
           update();
 
-          // 抛出异常
-          throw new Error(error);
+          // 不能在Promise链末端rethrow(会变成unhandled rejection)，记录错误即可
+          console.error(error);
         });
     }
 
@@ -325,27 +325,18 @@ const TreeNode = memo<TreeNodeProps>(
         };
       }
 
-      if (isExpanded) {
-        // 关闭
-        setExpandedKeys((_expandedKeys) => {
-          const targetExpandedKeys = (_expandedKeys ?? []).filter((_id) => _id !== id);
+      // 回调不能在setState的updater中触发(updater必须是纯函数，StrictMode下会被双调)
+      const _expandedKeys = expandedKeys() ?? [];
 
-          onExpand?.(targetExpandedKeys, _e(targetExpandedKeys));
+      const targetExpandedKeys = isExpanded
+        ? // 关闭
+          _expandedKeys.filter((_id) => _id !== id)
+        : // 展开
+          [..._expandedKeys, id];
 
-          return targetExpandedKeys;
-        });
+      setExpandedKeys(targetExpandedKeys);
 
-        return;
-      }
-
-      // 展开
-      setExpandedKeys((_expandedKeys) => {
-        const targetExpandedKeys = [...(_expandedKeys ?? []), id];
-
-        onExpand?.(targetExpandedKeys, _e(targetExpandedKeys));
-
-        return targetExpandedKeys;
-      });
+      onExpand?.(targetExpandedKeys, _e(targetExpandedKeys));
     }
 
     /**
@@ -366,27 +357,18 @@ const TreeNode = memo<TreeNodeProps>(
 
       // 多选
       if (multiple()) {
-        if (isSelected) {
-          // 关闭
-          setSelectedKeys((_selectedKeys) => {
-            const targetSelectedKeys = (_selectedKeys ?? []).filter((_id) => _id !== id);
+        // 回调不能在setState的updater中触发(updater必须是纯函数，StrictMode下会被双调)
+        const _selectedKeys = selectedKeys() ?? [];
 
-            onSelect?.(targetSelectedKeys, _e(targetSelectedKeys));
+        const targetSelectedKeys = isSelected
+          ? // 取消选中
+            _selectedKeys.filter((_id) => _id !== id)
+          : // 选中
+            [..._selectedKeys, id];
 
-            return targetSelectedKeys;
-          });
+        setSelectedKeys(targetSelectedKeys);
 
-          return;
-        }
-
-        // 展开
-        setSelectedKeys((_selectedKeys) => {
-          const targetSelectedKeys = [...(_selectedKeys ?? []), id];
-
-          onSelect?.(targetSelectedKeys, _e(targetSelectedKeys));
-
-          return targetSelectedKeys;
-        });
+        onSelect?.(targetSelectedKeys, _e(targetSelectedKeys));
 
         return;
       }
@@ -410,7 +392,9 @@ const TreeNode = memo<TreeNodeProps>(
      * @param {boolean} _checked
      */
     function onChecked(_checked) {
-      const _checkedKeys = checkedKeys();
+      // 拷贝一份，handleCheck/updateParentChecked内部会对数组push/splice，
+      // 不能直接mutate state数组本身
+      const _checkedKeys = [...checkedKeys()];
 
       handleCheck({
         node: {
@@ -423,7 +407,7 @@ const TreeNode = memo<TreeNodeProps>(
         next,
       });
 
-      setCheckedKeys([..._checkedKeys]);
+      setCheckedKeys(_checkedKeys);
 
       let targetCheckedKeys = [..._checkedKeys];
 

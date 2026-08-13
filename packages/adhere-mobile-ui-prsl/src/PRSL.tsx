@@ -1,7 +1,7 @@
 import { useMount, useNetwork, useUpdate, useUpdateEffect } from 'ahooks';
 import { Button, DotLoading, ErrorBlock, PullToRefresh, Radio, Skeleton } from 'antd-mobile';
 import classNames from 'classnames';
-import { WritableDraft } from 'immer/dist/internal';
+import type { Draft } from 'immer';
 import isPrimaryEmpty from 'lodash.isempty';
 import React, {
   forwardRef,
@@ -52,6 +52,8 @@ const DEFAULT_DISTANCE = 50;
 const DEFAULT_TOOLBAR_COLLAPSE_COUNT = 3;
 
 const DEFAULT_SEARCH_KEY_WORD_HISTORY_STORE_TYPE = 'session';
+
+const DEFAULT_SEARCH_KEY_WORD_HISTORY_MAX_SIZE = 50;
 
 const DEFAULT_ROW_KEY = 'id';
 
@@ -313,48 +315,65 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       const sortAndFilterData = useMemo(() => {
         const { searchKeyWord = '', filterValues = {}, sortValues = [] } = combinationParams;
 
-        let targetData = dataSource.data ?? [];
+        // 拷贝一份，避免后续排序 mutate 原始 state
+        let targetData = [...((isUseDNDMode ? optionDataSource.data : dataSource.data) ?? [])];
 
-        if (isUseDNDMode) {
-          targetData = optionDataSource.data;
+        // 只对原始值做字符串包含匹配，其余类型(对象/数组等)视为不匹配
+        const isFieldMatch = (fieldValue: any, kw: any) => {
+          if (fieldValue === null || fieldValue === undefined) return false;
+
+          if (['string', 'number', 'boolean'].includes(typeof fieldValue)) {
+            return `${fieldValue}`.includes(`${kw}`);
+          }
+
+          return false;
+        };
+
+        // sort(跳过 order 为空的项，空 order 表示不参与排序)
+        const validSortValues = (sortValues ?? []).filter(
+          (t) => t?.order === 'asc' || t?.order === 'desc',
+        );
+
+        if (validSortValues.length) {
+          targetData = validSortValues.reduce(
+            (_dataSource, sortValue) => {
+              const { order, name } = sortValue;
+
+              return [..._dataSource].sort((r1, r2) => {
+                if (order === 'asc') {
+                  if (r1[name] > r2[name]) return 1;
+                  else if (r1[name] < r2[name]) return -1;
+                  else return 0;
+                } else {
+                  if (r1[name] < r2[name]) return 1;
+                  else if (r1[name] > r2[name]) return -1;
+                  else return 0;
+                }
+              });
+            },
+            targetData,
+          );
         }
 
-        // sort
-        if ((sortValues ?? []).length) {
-          targetData = sortValues.reduce((_dataSource, sortValue) => {
-            const { order, name } = sortValue;
+        // filter(关键字与筛选条件叠加生效)
+        const hasSearchKeyWord = !!searchKeyWord;
+        const hasFilterValues = !isPrimaryEmpty(filterValues);
 
-            _dataSource = _dataSource.sort((r1, r2) => {
-              if (order === 'asc') {
-                if (r1[name] > r2[name]) return 1;
-                else if (r1[name] < r2[name]) return -1;
-                else return 0;
-              } else {
-                if (r1[name] < r2[name]) return 1;
-                else if (r1[name] > r2[name]) return -1;
-                else return 0;
-              }
-            });
-            return [..._dataSource];
-          }, dataSource.data ?? []);
-        }
-
-        // filter
-        if (!(!searchKeyWord && isPrimaryEmpty(filterValues) && !sortValues.length)) {
+        if (hasSearchKeyWord || hasFilterValues) {
           targetData = targetData.filter((record) => {
-            if (searchKeyWord) {
-              return Object.keys(record).some(
-                (_key) => record[_key]?.indexOf?.(searchKeyWord) !== -1,
-              );
-            } else if (!isPrimaryEmpty(filterValues)) {
-              return Object.keys(filterValues)
-                .filter((_key) => !!filterValues[_key])
-                .every((_key) => {
-                  return record[_key]?.indexOf?.(filterValues[_key]) !== -1;
-                });
-            }
+            const matchKeyWord =
+              !hasSearchKeyWord ||
+              Object.keys(record).some((_key) => isFieldMatch(record[_key], searchKeyWord));
 
-            return true;
+            const matchFilter =
+              !hasFilterValues ||
+              Object.keys(filterValues as Record<string, any>)
+                .filter((_key) => !!(filterValues as Record<string, any>)[_key])
+                .every((_key) =>
+                  isFieldMatch(record[_key], (filterValues as Record<string, any>)[_key]),
+                );
+
+            return matchKeyWord && matchFilter;
           });
         }
 
@@ -502,7 +521,9 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
             style={searchKeyWordWrapperStyle ?? {}}
             searchKeyWordBarProps={searchKeyWordBarProps}
             searchKeyWordMode={searchKeyWordMode ?? DEFAULT_SEARCH_KEY_WORD_MODE}
-            searchKeyWordHistoryMaxSize={searchKeyWordHistoryMaxSize ?? DEFAULT_DISTANCE}
+            searchKeyWordHistoryMaxSize={
+              searchKeyWordHistoryMaxSize ?? DEFAULT_SEARCH_KEY_WORD_HISTORY_MAX_SIZE
+            }
             isSearchKeyWordHistoryIntoStore={isSearchKeyWordHistoryIntoStore ?? true}
             searchKeyWordHistoryStoreType={
               searchKeyWordHistoryStoreType ?? DEFAULT_SEARCH_KEY_WORD_HISTORY_STORE_TYPE
@@ -656,10 +677,10 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
           <ScrollLoad
             ref={scrollLoadRef}
             renderLoading={renderLoadMoreLoading}
-            distance={scrollLoadProps?.distance || 50}
+            distance={scrollLoadProps?.distance || DEFAULT_DISTANCE}
             onScrollBottom={onScrollBottom}
             {...(scrollLoadProps || {})}
-            disabled={pages <= 1 || !isUseNormalMode}
+            disabled={!!scrollLoadProps?.disabled || pages <= 1 || !isUseNormalMode}
             className={classNames(
               `${selectorPrefix}-scroll-load`,
               scrollLoadProps?.className ?? '',
@@ -682,8 +703,10 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         scrollLoadProps,
         targetChildren,
         pages,
+        combinationParams,
       ]);
 
+      // 非分页模式也需要经过 renderScrollChildren，否则 DND/单选包裹会丢失
       const normalListElement = useMemo(() => {
         return (
           <div
@@ -691,11 +714,18 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
             ref={scrollRef}
           >
             {scrollLoadBeforeInnerElement}
-            {targetChildren}
+            {renderScrollChildren()}
             {scrollLoadAfterInnerElement}
           </div>
         );
-      }, [targetChildren]);
+      }, [
+        scrollLoadBeforeInnerElement,
+        scrollLoadAfterInnerElement,
+        isUseDNDMode,
+        isUseSelectionMode,
+        isSelectionMultiple,
+        targetChildren,
+      ]);
 
       const backTopAnimationElement = useMemo(() => {
         return (
@@ -744,6 +774,9 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         dndLabel,
         dndFinishLabel,
         dndCancelLabel,
+        dndFinish,
+        dndCancel,
+        onDNDChange,
       ]);
 
       const selectionManageButton = useMemo(() => {
@@ -782,6 +815,9 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         selectionCancelLabel,
         isUseSelectionMode,
         isUseNormalMode,
+        selectionFinish,
+        selectionCancel,
+        onSelectChange,
       ]);
 
       const pullToRefreshElement = useMemo(() => {
@@ -946,22 +982,31 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
           return;
         }
 
-        return onLoadMore?.({
+        // 没有提供 onLoadMore 时直接结束 loading，避免加载动画卡死
+        if (!onLoadMore) {
+          callbackHandler.current?.(status.current);
+          callbackHandler.current = null;
+          return;
+        }
+
+        return onLoadMore({
           page: pagingRef.current.page + 1,
           pageSize: pagingRef.current.pageSize,
           ...combinationParams,
-        }).then((res) => {
-          pagingRef.current.page += 1;
+        })
+          .then((res) => {
+            pagingRef.current.page += 1;
 
-          setDataSource((_dataSource) => {
-            _dataSource.total = res.total;
-            _dataSource.data = [..._dataSource.data, ...res.data];
-
-            return {
-              ..._dataSource,
-            };
+            setDataSource((_dataSource) => ({
+              total: res.total,
+              data: [..._dataSource.data, ...res.data],
+            }));
+          })
+          .catch(() => {
+            // 加载失败时结束 loading，否则 ScrollLoad 状态卡死
+            callbackHandler.current?.(ScrollLoad.ERROR);
+            callbackHandler.current = null;
           });
-        });
       }
 
       function resetScrollLoadAndPaging() {
@@ -1004,9 +1049,9 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
 
       function resetSearchAndFilterAndSort() {
         setCombinationParams((draft) => {
-          draft.searchKeyWord = defaultSearchKeyWord;
-          draft.filterValues = defaultFilterValues;
-          draft.sortValues = defaultSortValues;
+          draft.searchKeyWord = defaultSearchKeyWord ?? '';
+          draft.filterValues = defaultFilterValues ?? {};
+          draft.sortValues = defaultSortValues ?? [];
         });
       }
 
@@ -1015,7 +1060,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         resetSearchAndFilterAndSort();
       }
 
-      function onFilter(filterData: WritableDraft<Record<string, any>> | undefined) {
+      function onFilter(filterData: Draft<Record<string, any>> | undefined) {
         resetScrollLoadAndPaging();
 
         setCombinationParams((draft) => {
@@ -1049,7 +1094,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         });
       }
 
-      function onSort(sortData: WritableDraft<DefaultSortValue>[] | undefined) {
+      function onSort(sortData: Draft<DefaultSortValue>[] | undefined) {
         resetScrollLoadAndPaging();
 
         setCombinationParams((draft) => {
@@ -1125,8 +1170,11 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         return scrollLoadRef.current?.getScrollContainer() ?? scrollRef.current ?? document.body;
       }
 
-      function pullToRefresh(_resetCallback: () => void): Promise<void> {
-        const params = {
+      function pullToRefresh(
+        _resetCallback: () => void,
+        _params?: typeof combinationParams,
+      ): Promise<void> {
+        const params = _params ?? {
           searchKeyWord: defaultSearchKeyWord,
           filterValues: defaultFilterValues,
           sortValues: defaultSortValues,
@@ -1161,7 +1209,8 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       }
 
       function pullToRefreshPagination() {
-        return pullToRefresh(resetScrollLoadAndPaging);
+        // 只重置分页，查询条件保持当前值，与界面上显示的搜索/筛选状态一致
+        return pullToRefresh(resetScrollLoadAndPaging, { ...combinationParams });
       }
 
       /**
@@ -1230,6 +1279,14 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         }
       }, [targetDataSource.data, pages /*pagingRef.current.page*/]);
 
+      // 用序列化结果做依赖，避免父组件传入内联字面量(如 defaultSortValues={[]})时
+      // 每次渲染都触发 reset + 重新加载
+      const combinationDefaultsSignature = JSON.stringify({
+        defaultSearchKeyWord,
+        defaultSortValues,
+        defaultFilterValues,
+      });
+
       useUpdateEffect(() => {
         reset();
 
@@ -1238,7 +1295,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
           filterValues: defaultFilterValues,
           sortValues: defaultSortValues,
         });
-      }, [defaultSearchKeyWord, defaultSortValues, defaultFilterValues, isLocal]);
+      }, [combinationDefaultsSignature, isLocal]);
 
       useImperativeHandle(ref, () => ({
         getScrollEl,
@@ -1262,25 +1319,44 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         },
       }));
 
-      const contextExpose = {
-        isUseSelectionMode: () => isUseSelectionMode,
-        isUseDNDMode: () => isUseDNDMode,
-        isUseNormalMode: () => isUseNormalMode,
-        selectionChange,
-        selectionAllChange,
-        getRowKey: () => targetRowKey,
-        getOptionSelectedRowKeys: () => optionSelectedRowKeys ?? [],
-        getDatasourceLength: () => dataSource.data.length,
-        getSelectionMultiple: () => isSelectionMultiple,
-        getIndexByIdFormOptionDataSource: (id: string | number) => {
-          return optionDataSource.data.findIndex((t) => t[targetRowKey] === id);
-        },
-        getDndDragHandle: () => dndDragHandle,
-        getActionTriggerMode: () => targetActionTriggerMode,
-        getRenderActionSheetTrigger: () => renderActionSheetTrigger?.(),
-        onAction: (record: Record<string, any>, rowIndex: number) =>
-          onAction?.(record, rowIndex) ?? [],
-      };
+      // memo 化 context value，避免每次渲染都触发所有 PRSLItem 重新渲染
+      const contextExpose = useMemo(
+        () => ({
+          isUseSelectionMode: () => isUseSelectionMode,
+          isUseDNDMode: () => isUseDNDMode,
+          isUseNormalMode: () => isUseNormalMode,
+          selectionChange,
+          selectionAllChange,
+          getRowKey: () => targetRowKey,
+          getOptionSelectedRowKeys: () => optionSelectedRowKeys ?? [],
+          getDatasourceLength: () => dataSource.data.length,
+          getSelectionMultiple: () => isSelectionMultiple,
+          getIndexByIdFormOptionDataSource: (id: string | number) => {
+            return optionDataSource.data.findIndex((t) => t[targetRowKey] === id);
+          },
+          getDndDragHandle: () => dndDragHandle,
+          getActionTriggerMode: () => targetActionTriggerMode,
+          getRenderActionSheetTrigger: () => renderActionSheetTrigger?.(),
+          onAction: (record: Record<string, any>, rowIndex: number) =>
+            onAction?.(record, rowIndex) ?? [],
+        }),
+        [
+          isUseSelectionMode,
+          isUseDNDMode,
+          isUseNormalMode,
+          selectionChange,
+          selectionAllChange,
+          targetRowKey,
+          optionSelectedRowKeys,
+          dataSource.data,
+          isSelectionMultiple,
+          optionDataSource,
+          dndDragHandle,
+          targetActionTriggerMode,
+          renderActionSheetTrigger,
+          onAction,
+        ],
+      );
 
       return (
         <Context.Provider value={contextExpose}>

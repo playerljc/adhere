@@ -7,7 +7,7 @@ import Auto from './Auto';
 import Fixed from './Fixed';
 import FlexLayout from './FlexLayout';
 import { selectorPrefix } from './FlexLayout';
-import type { HorizontalFlexLayoutProps, RenderFunction } from './types';
+import type { HorizontalFlexLayoutProps } from './types';
 
 /**
  * HorizontalFlexLayout 组件

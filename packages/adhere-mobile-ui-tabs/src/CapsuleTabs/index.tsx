@@ -17,7 +17,7 @@ const selectorPrefix = 'adhere-ui-tabs-capsule-tabs';
  * @returns JSX元素
  */
 const InternalSystemCapsuleTabs = memo<SystemCapsuleTabsProps>(
-  ({ className, style, innerClassName, innerStyle, items, ...props }) => {
+  ({ className, style, innerClassName, innerStyle, items, children, ...props }) => {
     const wrapperRef = useRef<HTMLDivElement | undefined>(undefined);
 
     useTheme<HTMLElement>({
@@ -34,9 +34,11 @@ const InternalSystemCapsuleTabs = memo<SystemCapsuleTabsProps>(
         style={style ?? {}}
       >
         <CapsuleTabs {...props} className={innerClassName} style={innerStyle ?? {}}>
-          {items?.map?.((item, index) => (
-            <CapsuleTabs.Tab key={item.key || index} {...item} />
-          ))}
+          {items?.length
+            ? items.map(({ key, ...item }, index) => (
+                <CapsuleTabs.Tab key={key ?? index} {...item} />
+              ))
+            : children}
         </CapsuleTabs>
       </div>
     );

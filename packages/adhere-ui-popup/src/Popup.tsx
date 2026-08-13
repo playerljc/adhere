@@ -49,6 +49,8 @@ export class Popup {
   private root: Root | null = null;
   /** 弹窗处理器映射 */
   private popupHandlers = new WeakMap<HTMLElement, Root>();
+  /** 打开动画延迟定时器，关闭/销毁时需清除 */
+  private showTimer: ReturnType<typeof setTimeout> | null = null;
 
   /**
    * 构造函数
@@ -94,14 +96,9 @@ export class Popup {
     const element = (
       <MountEffect
         onMounted={() => {
-          this.el.appendChild(this.popupEl!);
-
-          const configProviderEL = Util.getTopDom(this.popupEl!, 'adhere-ui-config-provider');
-
-          if (configProviderEL) {
-            this.popupEl!.style.cssText = configProviderEL.style.cssText;
-          }
-
+          if (!this.popupEl) return;
+          this.el.appendChild(this.popupEl);
+          this.applyConfigProviderStyle();
           this.trigger('onCreate');
         }}
       >
@@ -111,6 +108,24 @@ export class Popup {
 
     this.root.render(renderToWrapper?.(() => element) ?? element);
     this.popupHandlers.set(this.popupEl, this.root);
+  }
+
+  /**
+   * 只拷贝 ConfigProvider 上的 CSS 变量，避免 cssText 整段覆盖冲掉 zIndex / display
+   */
+  private applyConfigProviderStyle(): void {
+    if (!this.popupEl) return;
+
+    const configProviderEL = Util.getTopDom(this.popupEl, 'adhere-ui-config-provider');
+    if (!configProviderEL) return;
+
+    const src = configProviderEL.style;
+    for (let i = 0; i < src.length; i++) {
+      const name = src.item(i);
+      if (name?.startsWith('--')) {
+        this.popupEl.style.setProperty(name, src.getPropertyValue(name));
+      }
+    }
   }
 
   /**
@@ -125,33 +140,40 @@ export class Popup {
     }
   }
 
+  private clearShowTimer(): void {
+    if (this.showTimer != null) {
+      clearTimeout(this.showTimer);
+      this.showTimer = null;
+    }
+  }
+
+  /**
+   * display:none → block 后延迟加 modal-in，保证 CSS transition 能跑起来
+   */
+  private playShowAnimation(): void {
+    this.clearShowTimer();
+    this.showTimer = setTimeout(() => {
+      this.showTimer = null;
+      if (!this.isShow || !this.popupEl) return;
+      maskEl?.classList.add('modal-in');
+      this.popupEl.classList.add('modal-in');
+    }, 100);
+  }
+
   /**
    * 更新弹窗内容
    * @param newChildren - 新的子元素
    */
   update(newChildren?: ReactNode): void {
+    if (!this.root || !this.popupEl) return;
+
     const { children } = this.config;
     const elementToRender = newChildren ?? children;
 
-    const element = (
-      <MountEffect
-        onMounted={() => {
-          this.el.appendChild(this.popupEl!);
+    const element = <>{elementToRender}</>;
 
-          const configProviderEL = Util.getTopDom(this.popupEl!, 'adhere-ui-config-provider');
-
-          if (configProviderEL) {
-            this.popupEl!.style.cssText = configProviderEL.style.cssText;
-          }
-
-          this.trigger('onUpdate');
-        }}
-      >
-        {elementToRender as React.ReactElement}
-      </MountEffect>
-    );
-
-    this.root?.render(renderToWrapper?.(() => element) ?? element);
+    this.root.render(renderToWrapper?.(() => element) ?? element);
+    this.trigger('onUpdate');
   }
 
   /**
@@ -159,24 +181,18 @@ export class Popup {
    * @returns 是否成功显示
    */
   show(): boolean {
+    if (!this.popupEl) return false;
+
     if (!maskEl) {
       this.createMask();
     }
 
     maskEl!.style.display = 'block';
-    this.popupEl!.style.display = 'block';
+    this.popupEl.style.display = 'block';
     this.isShow = true;
 
     this.trigger('onBeforeShow');
-
-    setTimeout(() => {
-      if (maskEl) {
-        maskEl.classList.add('modal-in');
-      }
-      if (this.popupEl) {
-        this.popupEl.classList.add('modal-in');
-      }
-    }, 100);
+    this.playShowAnimation();
 
     return true;
   }
@@ -186,6 +202,8 @@ export class Popup {
    * @returns 是否成功显示
    */
   showClosePrePopup(): boolean {
+    if (!this.popupEl) return false;
+
     if (!maskEl) {
       this.createMask();
     }
@@ -195,19 +213,11 @@ export class Popup {
     }
 
     maskEl!.style.display = 'block';
-    this.popupEl!.style.display = 'block';
+    this.popupEl.style.display = 'block';
     this.isShow = true;
 
     this.trigger('onBeforeShow');
-
-    setTimeout(() => {
-      if (maskEl) {
-        maskEl.classList.add('modal-in');
-      }
-      if (this.popupEl) {
-        this.popupEl.classList.add('modal-in');
-      }
-    }, 100);
+    this.playShowAnimation();
 
     return true;
   }
@@ -217,10 +227,9 @@ export class Popup {
    * @returns 是否成功关闭
    */
   close(): boolean {
-    if (!maskEl) {
-      this.createMask();
-    }
+    if (!this.popupEl) return false;
 
+    this.clearShowTimer();
     this.isShow = false;
 
     const promise = this.config.onBeforeClose?.();
@@ -259,13 +268,23 @@ export class Popup {
    * @returns 是否成功销毁
    */
   destroy(): boolean {
+    this.clearShowTimer();
+
     if (this.popupEl) {
-      const root = this.popupHandlers.get(this.popupEl);
-      if (root) {
-        root.unmount();
+      this.popupEl.removeEventListener('transitionend', this.onInnerElTransitionend);
+
+      try {
+        this.root?.unmount();
+      } catch {
+        // root 可能已卸载
       }
+
+      this.popupHandlers.delete(this.popupEl);
+      this.popupEl.parentElement?.removeChild(this.popupEl);
       this.popupEl = null;
     }
+
+    this.root = null;
 
     this.trigger('onDestroy');
     return true;
@@ -291,11 +310,17 @@ export class Popup {
    * 过渡动画结束回调
    * @private
    */
-  private onInnerElTransitionend(): void {
+  private onInnerElTransitionend(e: TransitionEvent): void {
+    if (e.target !== this.popupEl) return;
+
     if (!this.isShow) {
       prePopup = null;
-      this.popupEl!.style.display = 'none';
-      maskEl!.style.display = 'none';
+      if (this.popupEl) {
+        this.popupEl.style.display = 'none';
+      }
+      if (maskEl) {
+        maskEl.style.display = 'none';
+      }
       this.trigger('onAfterClose');
     } else {
       prePopup = this;

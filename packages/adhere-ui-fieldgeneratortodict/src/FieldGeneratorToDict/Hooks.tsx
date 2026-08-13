@@ -1,6 +1,6 @@
 import { useMount, useUpdateEffect } from 'ahooks';
 import cloneDeep from 'lodash.clonedeep';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import type {
   AsyncTreeLeafSelectProps as MobileAsyncTreeLeafSelectProps,
@@ -23,6 +23,17 @@ import Dict from '@baifendian/adhere-util-dict';
 import type { UseDictParams } from '../types';
 
 /**
+ * 将 cascadeParams 转为稳定签名，避免调用方每次传入新对象引用时重复加载
+ */
+function getParamsSignature(value: unknown): string {
+  try {
+    return JSON.stringify(value ?? null);
+  } catch {
+    return '';
+  }
+}
+
+/**
  * useDict
  * @description 静态字典处理
  * @param {string} dictName 字典名称
@@ -31,6 +42,7 @@ import type { UseDictParams } from '../types';
  */
 export function useDict<D>({ dictName, cascadeParams, onDataSourceChange }: UseDictParams<D>): D {
   const dictValue = Dict.value[dictName]?.value;
+  const cascadeParamsSignature = getParamsSignature(cascadeParams);
 
   // @ts-ignore
   const [dataSource, setDataSource] = useState<D>([]);
@@ -49,7 +61,7 @@ export function useDict<D>({ dictName, cascadeParams, onDataSourceChange }: UseD
 
   useUpdateEffect(() => {
     loadData();
-  }, [cascadeParams]);
+  }, [cascadeParamsSignature]);
 
   useUpdateEffect(() => {
     onDataSourceChange?.(dataSource);
@@ -72,6 +84,8 @@ export function useDynamicDict<D>({
 }: UseDictParams<D>): D {
   // @ts-ignore
   const [dataSource, setDataSource] = useState<D>([]);
+  const requestIdRef = useRef(0);
+  const cascadeParamsSignature = getParamsSignature(cascadeParams);
 
   // Intentionally read Dict.value inside loadData rather than at render time.
   // For handlers that return a Promise directly (not a function), accessing
@@ -79,15 +93,20 @@ export function useDynamicDict<D>({
   // Deferring to an effect ensures the request fires only on mount / cascadeParams
   // change, not on every render.
   function loadData() {
+    const requestId = ++requestIdRef.current;
     const dictValue = Dict.value[dictName]?.value;
 
     if (dictValue instanceof Function) {
       dictValue(cascadeParams).then((res) => {
-        setDataSource(res);
+        if (requestId === requestIdRef.current) {
+          setDataSource(res);
+        }
       });
     } else if (dictValue?.then) {
       dictValue.then((res) => {
-        setDataSource(cloneDeep(res));
+        if (requestId === requestIdRef.current) {
+          setDataSource(cloneDeep(res));
+        }
       });
     }
   }
@@ -98,7 +117,7 @@ export function useDynamicDict<D>({
 
   useUpdateEffect(() => {
     loadData();
-  }, [cascadeParams]);
+  }, [cascadeParamsSignature]);
 
   useUpdateEffect(() => {
     onDataSourceChange?.(dataSource);
@@ -119,10 +138,10 @@ export function useAutoCompleteDict<D>({
   cascadeParams,
   onDataSourceChange,
 }: UseDictParams<D>): { options: any[]; loadData: AutoCompleteProps['loadData'] } {
-  const dictValue = Dict.value[dictName]?.value;
-
   // @ts-ignore
   const [dataSource, setDataSource] = useState<D>([]);
+  const requestIdRef = useRef(0);
+  const cascadeParamsSignature = getParamsSignature(cascadeParams);
 
   useUpdateEffect(() => {
     onDataSourceChange?.(dataSource);
@@ -131,14 +150,19 @@ export function useAutoCompleteDict<D>({
   const loadData = useCallback(
     (_kw) =>
       new Promise<void>((resolve, reject) => {
+        const requestId = ++requestIdRef.current;
+        const dictValue = Dict.value[dictName]?.value;
+
         dictValue(_kw, cascadeParams)
           .then((res) => {
-            setDataSource(res);
+            if (requestId === requestIdRef.current) {
+              setDataSource(res);
+            }
             resolve();
           })
           .catch((error) => reject(error));
       }),
-    [cascadeParams],
+    [dictName, cascadeParamsSignature],
   );
 
   return {
@@ -162,10 +186,10 @@ export function useTreeAutoCompleteDict<D>({
   treeData: TreeAutoCompleteProps['treeData'] | MobileTreeAutoCompleteProps['searchDataSource'];
   loadData: TreeAutoCompleteProps['loadData'] | MobileTreeAutoCompleteProps['loadData'];
 } {
-  const dictValue = Dict.value[dictName]?.value;
-
   // @ts-ignore
   const [dataSource, setDataSource] = useState<D>([]);
+  const requestIdRef = useRef(0);
+  const cascadeParamsSignature = getParamsSignature(cascadeParams);
 
   useUpdateEffect(() => {
     onDataSourceChange?.(dataSource);
@@ -174,14 +198,19 @@ export function useTreeAutoCompleteDict<D>({
   const loadData = useCallback(
     (_kw) =>
       new Promise<void>((resolve, reject) => {
+        const requestId = ++requestIdRef.current;
+        const dictValue = Dict.value[dictName]?.value;
+
         dictValue(_kw, cascadeParams)
           .then((res) => {
-            setDataSource(res);
+            if (requestId === requestIdRef.current) {
+              setDataSource(res);
+            }
             resolve();
           })
           .catch((error) => reject(error));
       }),
-    [cascadeParams],
+    [dictName, cascadeParamsSignature],
   );
 
   return {
@@ -203,16 +232,19 @@ export function usePaging<D>({
   cascadeParams,
   onDataSourceChange,
 }: UseDictParams<D>): PagingWrapperProps<any>['loadData'] {
-  const dictValue = Dict.value[dictName]?.value;
+  const cascadeParamsSignature = getParamsSignature(cascadeParams);
 
   // @ts-ignore
   return useCallback(
-    (page, limit) =>
-      dictValue(page, limit, cascadeParams).then((res) => {
+    (page, limit) => {
+      const dictValue = Dict.value[dictName]?.value;
+
+      return dictValue(page, limit, cascadeParams).then((res) => {
         onDataSourceChange?.(res, { type: 'paging', info: { page, limit } });
         return res;
-      }),
-    [dictName, onDataSourceChange, cascadeParams],
+      });
+    },
+    [dictName, onDataSourceChange, cascadeParamsSignature],
   );
 }
 
@@ -235,15 +267,18 @@ export function useAutoCompletePaging<D>({
   totalCount: number;
   data: any[];
 }> {
-  const dictValue = Dict.value[dictName]?.value;
+  const cascadeParamsSignature = getParamsSignature(cascadeParams);
 
   return useCallback<any>(
-    (page, limit, kw) =>
-      dictValue(page, limit, kw, cascadeParams).then((res) => {
+    (page, limit, kw) => {
+      const dictValue = Dict.value[dictName]?.value;
+
+      return dictValue(page, limit, kw, cascadeParams).then((res) => {
         onDataSourceChange?.(res, { type: 'paging', info: { page, limit } });
         return res;
-      }),
-    [dictName, onDataSourceChange, cascadeParams],
+      });
+    },
+    [dictName, onDataSourceChange, cascadeParamsSignature],
   );
 }
 
@@ -261,13 +296,15 @@ export function useAsyncTree<D>({
   | AsyncCascaderProps['fetchData']
   | MobileAsyncTreeLeafSelectProps['loadData']
   | MobileAsyncTreeSelectProps['loadData'] {
-  const dictValue = Dict.value[dictName]?.value;
+  const cascadeParamsSignature = getParamsSignature(cascadeParams);
 
   return useCallback<any>(
     (...params) => {
+      const dictValue = Dict.value[dictName]?.value;
+
       return dictValue(...params, cascadeParams);
     },
-    [dictName, cascadeParams],
+    [dictName, cascadeParamsSignature],
   );
 }
 
@@ -277,9 +314,7 @@ export function useAsyncTree<D>({
  * @param {boolean} treeDataSimpleMode
  */
 export function useMobileAsyncTree({ dictName, treeDataSimpleMode }) {
-  const [treeData, setTreeData] = useState([]);
-
-  const dictValue = Dict.value[dictName]?.value;
+  const [treeData, setTreeData] = useState<any[]>([]);
 
   /**
    * normalData
@@ -293,14 +328,15 @@ export function useMobileAsyncTree({ dictName, treeDataSimpleMode }) {
         return resultTreeData;
       }
 
+      const nextTreeData = cloneDeep(_treeData);
       // @ts-ignore
-      const item = Util.findNodeByKey(_treeData, _nodeData.key, { keyAttr: 'key' });
+      const item = Util.findNodeByKey(nextTreeData, _nodeData.key, { keyAttr: 'key' });
 
       if (item) {
         item.children = resultTreeData ?? [];
       }
 
-      return cloneDeep(_treeData);
+      return nextTreeData;
     });
   }
 
@@ -332,21 +368,22 @@ export function useMobileAsyncTree({ dictName, treeDataSimpleMode }) {
         return treeToArray(resultTreeData);
       }
 
+      const nextTreeData = cloneDeep(_treeData);
       // @ts-ignore
-      const item = Util.findNodeByKey(_treeData, _nodeData.key, { keyAttr });
+      const item = Util.findNodeByKey(nextTreeData, _nodeData.key, { keyAttr });
 
       if (item) {
         item.children = resultTreeData ?? [];
       }
 
-      const data = treeToArray(_treeData);
-
-      return cloneDeep(data);
+      return treeToArray(nextTreeData);
     });
   }
 
   const loadData = useCallback(
     (_nodeData) => {
+      const dictValue = Dict.value[dictName]?.value;
+
       return dictValue(_nodeData).then((resultTreeData) => {
         if (['boolean', 'object'].includes(typeof treeDataSimpleMode)) {
           // 简单的数据
@@ -387,7 +424,7 @@ export function useMobileAsyncTree({ dictName, treeDataSimpleMode }) {
         return resultTreeData;
       });
     },
-    [dictName],
+    [dictName, treeDataSimpleMode],
   );
 
   useMount(() => {

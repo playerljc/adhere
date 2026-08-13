@@ -12,6 +12,7 @@ declare function useUtil(): {
         treeData: TreeData;
         keys: string[];
     }) => string[];
+    getParentKeys: (treeData: TreeData) => string[];
     getValueWithUnit: (pixel: number | string | undefined | null, media: ConfigProviderProps["media"]) => string | number | null | undefined;
     getValue: (pixel: number, media?: ConfigProviderProps["media"]) => number;
     omitDisabledKeys: (treeData: TreeData, keys: string[]) => string[];

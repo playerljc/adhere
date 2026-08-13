@@ -199,21 +199,43 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
   };
 
   /** 取 fixed 面板 DOM（可能在前，也可能在后） */
-  const getFixedEl = (): HTMLElement => {
-    const { previousElementSibling, nextElementSibling } = el.current as HTMLDivElement;
+  const getFixedEl = (): HTMLElement | null => {
+    if (!el.current) {
+      return null;
+    }
 
-    return previousElementSibling?.classList.contains(`${flexLayoutSelectorPrefix}-fixed`)
-      ? (previousElementSibling as HTMLElement)
-      : (nextElementSibling as HTMLElement);
+    const { previousElementSibling, nextElementSibling } = el.current;
+    const fixedClass = `${flexLayoutSelectorPrefix}-fixed`;
+
+    if (previousElementSibling?.classList.contains(fixedClass)) {
+      return previousElementSibling as HTMLElement;
+    }
+
+    if (nextElementSibling?.classList.contains(fixedClass)) {
+      return nextElementSibling as HTMLElement;
+    }
+
+    return null;
   };
 
   /** 取 auto 面板 DOM */
-  const getAutoEl = (): HTMLElement => {
-    const { previousElementSibling, nextElementSibling } = el.current as HTMLDivElement;
+  const getAutoEl = (): HTMLElement | null => {
+    if (!el.current) {
+      return null;
+    }
 
-    return previousElementSibling?.classList.contains(`${flexLayoutSelectorPrefix}-auto`)
-      ? (previousElementSibling as HTMLElement)
-      : (nextElementSibling as HTMLElement);
+    const { previousElementSibling, nextElementSibling } = el.current;
+    const autoClass = `${flexLayoutSelectorPrefix}-auto`;
+
+    if (previousElementSibling?.classList.contains(autoClass)) {
+      return previousElementSibling as HTMLElement;
+    }
+
+    if (nextElementSibling?.classList.contains(autoClass)) {
+      return nextElementSibling as HTMLElement;
+    }
+
+    return null;
   };
 
   /** 悬停时光标 class：横向 col-resize，纵向 row-resize */
@@ -255,6 +277,10 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
     const fixed = getFixedEl();
     const auto = getAutoEl();
     const { offset } = getProps();
+
+    if (!fixed || !auto) {
+      return 0;
+    }
 
     maxDimension.current = fixed[offset] + auto[offset];
 
@@ -346,6 +372,7 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
     el.current?.classList.remove(`${selectorPrefix}-is-dragging`);
     // 去掉容器上的 dragging：恢复面板 transition / pointer-events（见 index.less）
     containerEl.current?.classList.remove(`${selectorPrefix}-dragging`);
+    containerEl.current?.classList.remove(`${selectorPrefix}-no-select`);
     restoreTransitions();
   };
 
@@ -358,13 +385,16 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
       return false;
     }
 
-    fixedEl.current = getFixedEl();
-    autoEl.current = getAutoEl();
-    containerEl.current = el.current?.parentElement as HTMLElement;
+    const nextFixedEl = getFixedEl();
+    const nextAutoEl = getAutoEl();
 
-    if (containerEl.current) {
-      containerEl.current.classList.add(`${selectorPrefix}-no-select`);
+    if (!nextFixedEl || !nextAutoEl) {
+      return false;
     }
+
+    fixedEl.current = nextFixedEl;
+    autoEl.current = nextAutoEl;
+    containerEl.current = el.current?.parentElement as HTMLElement;
 
     return true;
   };
@@ -441,7 +471,9 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
     }
 
     if (isDown.current) {
-      computeAndApplySize(e[dragPage.current]);
+      const targetValue = computeAndApplySize(e[dragPage.current]);
+      // 先回调再清零 startVal / delta，保证 onDragFinished 拿到真实结束尺寸
+      onDragFinishedRef.current?.(createDragEventParams(e, targetValue));
 
       isDown.current = false;
       isMove.current = false;
@@ -451,7 +483,6 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
       // 下次拖动重新测量可用空间
       maxDimension.current = 0;
       detachDocumentDrag();
-      onDragFinishedRef.current?.(createDragEventParams(e, 0));
     } else {
       detachDocumentDrag();
     }
@@ -507,6 +538,7 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
 
     prevBodyUserSelect.current = document.body.style.userSelect;
     document.body.style.userSelect = 'none';
+    containerEl.current?.classList.add(`${selectorPrefix}-no-select`);
 
     // 记录引用以便 detach 时精确移除；passive 移动监听减少主线程阻塞
     documentMoveHandler.current = onMousemove;
