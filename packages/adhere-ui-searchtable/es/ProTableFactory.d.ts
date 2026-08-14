@@ -9,6 +9,16 @@ declare const _default: (SuperClass: any, searchAndPaginationParamsMemo: any) =>
         componentDidMount(): void;
         componentWillUnmount(): void;
         /**
+         * _isInputType
+         * @description 判断是否是文本输入型控件（需要 debounce 实时查询，支持 onPressEnter）
+         */
+        _isInputType(type: string): boolean;
+        /**
+         * _getRealtimeSearchDebounced
+         * @description 获取（或懒创建）指定字段的 debounced search 函数，按 dataIndex + ms 缓存
+         */
+        _getRealtimeSearchDebounced(dataIndex: string, ms?: number): () => void;
+        /**
          * onSubTableChange
          * @param pagination
          * @param filters
@@ -45,7 +55,7 @@ declare const _default: (SuperClass: any, searchAndPaginationParamsMemo: any) =>
         hasAdvancedSearch(): boolean;
         /**
          * hasNumberColumnFixed
-         * @description 序号列是否固定
+         * @description 序号列是否固定：数据不为空时固定，数据为空时不固定
          * @returns {boolean}
          */
         hasNumberColumnFixed(): boolean;

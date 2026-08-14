@@ -54,6 +54,10 @@ export interface ColumnSearchConfig {
     startName?: string;
     endName?: string;
     isShowLabelSymbol?: boolean;
+    realtimeSearch?: boolean | {
+        enabled?: boolean;
+        debounce?: number;
+    };
 }
 export interface ColumnParams {
     value: string;

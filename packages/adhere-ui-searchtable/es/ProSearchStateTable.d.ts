@@ -9,6 +9,8 @@ declare const ProSearchStateTable: {
         [x: string]: any;
         componentDidMount(): void;
         componentWillUnmount(): void;
+        _isInputType(type: string): boolean;
+        _getRealtimeSearchDebounced(dataIndex: string, ms?: number): () => void;
         onSubTableChange(pagination: any, filters: any, sorter: any): void;
         onSearchPanelCollapseBefore(): void;
         unMountSearchAndPaginationParamsDeal(): void;
