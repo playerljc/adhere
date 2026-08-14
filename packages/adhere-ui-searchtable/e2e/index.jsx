@@ -78,6 +78,9 @@ const EnterToSearchTableImpl = lazy(() =>
 const HideSearchButtonTableImpl = lazy(() =>
   import(/* webpackChunkName: "hideSearchButtonTable" */ './hideSearchButtonTable.jsx'),
 );
+const NumberColumnFixedTableImpl = lazy(() =>
+  import(/* webpackChunkName: "numberColumnFixedTable" */ './numberColumnFixedTable.jsx'),
+);
 
 const Demo = () => {
   const [activeKey, setActiveKey] = useState('base');
@@ -94,6 +97,7 @@ const Demo = () => {
           { key: 'realtimeSearch', label: '实时查询' },
           { key: 'enterToSearch', label: '回车查询' },
           { key: 'hideSearchButton', label: '隐藏查询按钮' },
+          { key: 'numberColumnFixed', label: '序号列动态固定' },
         ]}
         style={{ marginBottom: 0, padding: '0 16px' }}
       />
@@ -111,6 +115,7 @@ const Demo = () => {
           {activeKey === 'realtimeSearch' && <RealtimeSearchTableImpl />}
           {activeKey === 'enterToSearch' && <EnterToSearchTableImpl />}
           {activeKey === 'hideSearchButton' && <HideSearchButtonTableImpl />}
+          {activeKey === 'numberColumnFixed' && <NumberColumnFixedTableImpl />}
         </Suspense>
       </div>
     </div>

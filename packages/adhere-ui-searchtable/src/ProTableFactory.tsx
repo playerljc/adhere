@@ -487,11 +487,11 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
 
     /**
      * hasNumberColumnFixed
-     * @description 序号列是否固定
+     * @description 序号列是否固定：数据不为空时固定，数据为空时不固定
      * @returns {boolean}
      */
     hasNumberColumnFixed(): boolean {
-      return true;
+      return (this.getData() ?? []).length > 0;
     }
 
     /**
