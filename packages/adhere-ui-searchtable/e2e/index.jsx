@@ -69,6 +69,15 @@ const ProSearchStateHeaderGroupTableImpl = lazy(() =>
     /* webpackChunkName: "proStateHeaderGroupSearchTable" */ './proStateHeaderGroupSearchTable.jsx'
   ),
 );
+const RealtimeSearchTableImpl = lazy(() =>
+  import(/* webpackChunkName: "realtimeSearchTable" */ './realtimeSearchTable.jsx'),
+);
+const EnterToSearchTableImpl = lazy(() =>
+  import(/* webpackChunkName: "enterToSearchTable" */ './enterToSearchTable.jsx'),
+);
+const HideSearchButtonTableImpl = lazy(() =>
+  import(/* webpackChunkName: "hideSearchButtonTable" */ './hideSearchButtonTable.jsx'),
+);
 
 const Demo = () => {
   const [activeKey, setActiveKey] = useState('base');
@@ -82,6 +91,9 @@ const Demo = () => {
           { key: 'base', label: '基础表格' },
           { key: 'tree', label: '树形 children' },
           { key: 'headerGroup', label: '表头分组' },
+          { key: 'realtimeSearch', label: '实时查询' },
+          { key: 'enterToSearch', label: '回车查询' },
+          { key: 'hideSearchButton', label: '隐藏查询按钮' },
         ]}
         style={{ marginBottom: 0, padding: '0 16px' }}
       />
@@ -96,6 +108,9 @@ const Demo = () => {
           {activeKey === 'headerGroup' && (
             <ProSearchStateHeaderGroupTableImpl FieldGeneratorToDict={FieldGeneratorToDict} />
           )}
+          {activeKey === 'realtimeSearch' && <RealtimeSearchTableImpl />}
+          {activeKey === 'enterToSearch' && <EnterToSearchTableImpl />}
+          {activeKey === 'hideSearchButton' && <HideSearchButtonTableImpl />}
         </Suspense>
       </div>
     </div>

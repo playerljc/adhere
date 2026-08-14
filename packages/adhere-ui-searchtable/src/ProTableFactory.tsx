@@ -11,6 +11,7 @@ import {
 import type { InputProps } from 'antd';
 import type { TextAreaProps } from 'antd/es/input';
 import dayjs from 'dayjs';
+import debounce from 'lodash.debounce';
 import merge from 'lodash.merge';
 import omit from 'omit.js';
 import qs from 'qs';
@@ -206,6 +207,9 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       this.onDateTimeRangeChangeDebounced = (dayjs: any, startName: string, endName: string) => {
         this.onDateTimeRangeChange([startName, endName], dayjs);
       };
+
+      // 实时查询用的 per-field debounced search 缓存
+      this._realtimeSearchDebouncedMap = new Map<string, (...args: any[]) => void>();
     }
 
     componentDidMount() {
@@ -271,6 +275,36 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           searchAndPaginationParamsMemo.clearAll();
         }
       }
+
+      // 清理实时查询的 debounced 函数
+      this._realtimeSearchDebouncedMap?.forEach((fn: any) => fn.cancel?.());
+      this._realtimeSearchDebouncedMap?.clear();
+    }
+
+    /**
+     * _isInputType
+     * @description 判断是否是文本输入型控件（需要 debounce 实时查询，支持 onPressEnter）
+     */
+    _isInputType(type: string): boolean {
+      return (
+        type === 'input' ||
+        type === 'textArea' ||
+        type.startsWith('inputNumber') ||
+        type.startsWith('inputNegativeNumber') ||
+        type.startsWith('inputPositiveNumber')
+      );
+    }
+
+    /**
+     * _getRealtimeSearchDebounced
+     * @description 获取（或懒创建）指定字段的 debounced search 函数，按 dataIndex + ms 缓存
+     */
+    _getRealtimeSearchDebounced(dataIndex: string, ms = 300): () => void {
+      const key = `${dataIndex}_${ms}`;
+      if (!this._realtimeSearchDebouncedMap.has(key)) {
+        this._realtimeSearchDebouncedMap.set(key, debounce(() => this.search(), ms));
+      }
+      return this._realtimeSearchDebouncedMap.get(key)!;
     }
 
     /**
@@ -1111,6 +1145,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         // 时间区域控件
         startName: '',
         endName: '',
+        // 实时查询配置
+        realtimeSearch: false,
       };
 
       return {
@@ -1377,6 +1413,92 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           ) : null,
       };
 
+      // ── 实时查询配置解析 ──────────────────────────────────────────────
+      const realtimeSearch = searchConfig?.realtimeSearch;
+      const realtimeEnabled =
+        realtimeSearch === true ||
+        (typeof realtimeSearch === 'object' && realtimeSearch !== null && realtimeSearch.enabled !== false);
+      const realtimeDebounceMs =
+        typeof realtimeSearch === 'object' && realtimeSearch !== null
+          ? (realtimeSearch.debounce ?? 300)
+          : 300;
+      const isInputField = this._isInputType(type);
+
+      // 非实时查询 + 输入型控件：回车触发查询
+      const pressEnterProps = !realtimeEnabled && isInputField ? { onPressEnter: () => this.search() } : {};
+
+      // 文本输入型 onChange（input / textArea）
+      const handleInputChange = (e) => {
+        if (realtimeEnabled) {
+          this.setState({ [dataIndex]: e?.target?.value }, () => {
+            this._getRealtimeSearchDebounced(dataIndex, realtimeDebounceMs)();
+          });
+        } else {
+          this.onInputChangeDebounced(dataIndex, e);
+        }
+      };
+
+      // 数字输入型 onChange（inputNumber 及所有变体）
+      const handleInputNumberChange = (v) => {
+        if (realtimeEnabled) {
+          this.setState({ [dataIndex]: v }, () => {
+            this._getRealtimeSearchDebounced(dataIndex, realtimeDebounceMs)();
+          });
+        } else {
+          this.onSelectChangeDebounced(dataIndex, v);
+        }
+      };
+
+      // 选择/滑块/开关等非输入型 onChange
+      const handleSelectChange = (v) => {
+        if (realtimeEnabled) {
+          this.setState({ [dataIndex]: v }, () => this.search());
+        } else {
+          this.onSelectChangeDebounced(dataIndex, v);
+        }
+      };
+
+      // Switch（checked 参数）
+      const handleCheckedChange = (checked) => {
+        if (realtimeEnabled) {
+          this.setState({ [dataIndex]: checked }, () => this.search());
+        } else {
+          this.onSelectChangeDebounced(dataIndex, checked);
+        }
+      };
+
+      // 日期选择器 onChange
+      const handleDateChange = (d) => {
+        if (realtimeEnabled) {
+          this.setState({ [dataIndex]: d ?? null }, () => this.search());
+        } else {
+          this.onDateChangeDebounced(dataIndex, d);
+        }
+      };
+
+      // 日期区间 onChange
+      const handleRangeChange = (values) => {
+        const { startName, endName } = searchConfig;
+        if (realtimeEnabled) {
+          this.setState(
+            { [startName]: values?.[0] ?? null, [endName]: values?.[1] ?? null },
+            () => this.search(),
+          );
+        } else {
+          this.onDateTimeRangeChangeDebounced(values, startName, endName);
+        }
+      };
+
+      // dict 型 onChange
+      const handleDictChange = (e) => {
+        if (realtimeEnabled) {
+          this.setState({ [dataIndex]: e }, () => this.search());
+        } else {
+          this.onSelectChange(dataIndex, e);
+        }
+      };
+      // ─────────────────────────────────────────────────────────────────
+
       const renderInput = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
 
@@ -1385,7 +1507,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(e) => this.onInputChangeDebounced(dataIndex, e)}
+            onChange={handleInputChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1401,7 +1524,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(e) => this.onInputChangeDebounced(dataIndex, e)}
+            onChange={handleInputChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1417,7 +1541,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1433,7 +1558,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1449,7 +1575,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1465,7 +1592,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1481,7 +1609,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1497,7 +1626,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1513,7 +1643,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1529,7 +1660,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1545,7 +1677,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1561,7 +1694,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1577,7 +1711,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1593,7 +1728,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1609,7 +1745,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1625,7 +1762,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1641,7 +1779,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1657,7 +1796,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1673,7 +1813,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1689,7 +1830,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1705,7 +1847,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1721,7 +1864,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1737,7 +1881,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1753,7 +1898,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleInputNumberChange}
+            {...pressEnterProps}
             {...{
               placeholder: searchConfig.title ?? column.title,
               ...(searchConfig.props ?? {}),
@@ -1769,7 +1915,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(d) => this.onDateChangeDebounced(dataIndex, d)}
+            onChange={handleDateChange}
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1784,7 +1930,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(d) => this.onDateChangeDebounced(dataIndex, d)}
+            onChange={handleDateChange}
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1799,7 +1945,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(d) => this.onDateChangeDebounced(dataIndex, d)}
+            onChange={handleDateChange}
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1814,7 +1960,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(d) => this.onDateChangeDebounced(dataIndex, d)}
+            onChange={handleDateChange}
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1833,7 +1979,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={inputKey}
             {...commonProps}
             value={[startValue, endValue]}
-            onChange={(values) => this.onDateTimeRangeChangeDebounced(values, startName, endName)}
+            onChange={handleRangeChange}
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1848,7 +1994,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleSelectChange}
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1864,7 +2010,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             {...commonProps}
             range
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleSelectChange}
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1879,7 +2025,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleSelectChange}
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1894,7 +2040,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             checked={!!value}
-            onChange={(checked) => this.onSelectChangeDebounced(dataIndex, checked)}
+            onChange={handleCheckedChange}
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1909,7 +2055,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             key={dataIndex}
             {...commonProps}
             value={value}
-            onChange={(v) => this.onSelectChangeDebounced(dataIndex, v)}
+            onChange={handleSelectChange}
             {...{
               ...(searchConfig.props ?? {}),
             }}
@@ -1953,7 +2099,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
           <Component
             {...commonProps}
             value={this.state[dataIndex]}
-            onChange={(e) => this.onSelectChange(dataIndex, e)}
+            onChange={handleDictChange}
             {...Object.assign(
               {
                 placeholder: searchConfig.title ?? column.title,

@@ -835,8 +835,13 @@ abstract class SearchTable<
   onBodyKeyup(e) {
     if (e.keyCode === 13) {
       if (document.activeElement) {
-        if (this.searchFormRef.current?.contains(document.activeElement)) {
-          // 回车键的键码是13
+        const tag = (document.activeElement as HTMLElement).tagName.toLowerCase();
+        // input / textarea 已通过 onPressEnter 直接处理，跳过避免重复触发
+        const isInputElement = tag === 'input' || tag === 'textarea';
+        if (
+          !isInputElement &&
+          this.searchFormRef.current?.contains(document.activeElement)
+        ) {
           this.search();
         }
       }

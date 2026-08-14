@@ -162,6 +162,8 @@ export interface ColumnSearchConfig {
   endName?: string;
   // 是否显示label后面的：
   isShowLabelSymbol?: boolean;
+  // 实时查询配置：true 启用（输入型默认 debounce 300ms），或传入对象自定义 debounce 时长
+  realtimeSearch?: boolean | { enabled?: boolean; debounce?: number };
 }
 
 export interface ColumnParams {
