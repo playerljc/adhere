@@ -9,6 +9,11 @@ declare const _default: (SuperClass: any, searchAndPaginationParamsMemo: any) =>
         componentDidMount(): void;
         componentWillUnmount(): void;
         /**
+         * clearSearch
+         * @description 重置前先取消所有 pending 的实时查询 debounced 调用，防止重置后再次触发查询
+         */
+        clearSearch(): Promise<void>;
+        /**
          * _isInputType
          * @description 判断是否是文本输入型控件（需要 debounce 实时查询，支持 onPressEnter）
          */

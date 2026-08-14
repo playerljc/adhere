@@ -56,22 +56,26 @@ const _selectorPrefix = `${selectorPrefix}-pro-table`;
  * 保持输入框的即时响应，同时延迟状态更新到父组件
  */
 const OptimizedInput = React.memo(({ value, onChange, ...restProps }: InputProps) => {
-  const [localValue, setLocalValue] = useState(value || '');
+  const [localValue, setLocalValue] = useState(value ?? '');
   const deferredValue = useDeferredValue(localValue);
   const prevDeferredValueRef = React.useRef(deferredValue);
 
   // 当外部value变化时同步本地状态（例如重置等情况）
   useEffect(() => {
-    if (value !== localValue) {
-      setLocalValue(value || '');
+    const normalized = value ?? '';
+    if (normalized !== localValue) {
+      setLocalValue(normalized);
     }
   }, [value]);
 
   // 当deferredValue稳定后，通知父组件更新
   useEffect(() => {
-    // 只有当deferredValue真正变化且与当前value不同时才触发更新
-    if (deferredValue !== prevDeferredValueRef.current && deferredValue !== value) {
-      prevDeferredValueRef.current = deferredValue;
+    const prevDeferred = prevDeferredValueRef.current;
+    // 始终同步 ref，避免 ref 滞留旧值
+    prevDeferredValueRef.current = deferredValue;
+    // 只有当 deferredValue 真正变化，且与外部 value（规范化后）不同时才触发 onChange
+    // 用 value ?? '' 规范化，避免 value=undefined 与 deferredValue='' 被误判为"有变化"
+    if (deferredValue !== prevDeferred && deferredValue !== (value ?? '')) {
       // 创建一个合成事件对象来模拟onChange事件
       const syntheticEvent = {
         target: { value: deferredValue },
@@ -96,22 +100,25 @@ OptimizedInput.displayName = 'OptimizedInput';
  * 优化的TextArea组件，使用useDeferredValue来减少快速输入时的卡顿
  */
 const OptimizedTextArea = React.memo(({ value, onChange, ...restProps }: TextAreaProps) => {
-  const [localValue, setLocalValue] = useState(value || '');
+  const [localValue, setLocalValue] = useState(value ?? '');
   const deferredValue = useDeferredValue(localValue);
   const prevDeferredValueRef = React.useRef(deferredValue);
 
   // 当外部value变化时同步本地状态（例如重置等情况）
   useEffect(() => {
-    if (value !== localValue) {
-      setLocalValue(value || '');
+    const normalized = value ?? '';
+    if (normalized !== localValue) {
+      setLocalValue(normalized);
     }
   }, [value]);
 
   // 当deferredValue稳定后，通知父组件更新
   useEffect(() => {
-    // 只有当deferredValue真正变化且与当前value不同时才触发更新
-    if (deferredValue !== prevDeferredValueRef.current && deferredValue !== value) {
-      prevDeferredValueRef.current = deferredValue;
+    const prevDeferred = prevDeferredValueRef.current;
+    // 始终同步 ref，避免 ref 滞留旧值
+    prevDeferredValueRef.current = deferredValue;
+    // 用 value ?? '' 规范化，避免 value=undefined 与 deferredValue='' 被误判为"有变化"
+    if (deferredValue !== prevDeferred && deferredValue !== (value ?? '')) {
       // 创建一个合成事件对象来模拟onChange事件
       const syntheticEvent = {
         target: { value: deferredValue },
@@ -279,6 +286,15 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       // 清理实时查询的 debounced 函数
       this._realtimeSearchDebouncedMap?.forEach((fn: any) => fn.cancel?.());
       this._realtimeSearchDebouncedMap?.clear();
+    }
+
+    /**
+     * clearSearch
+     * @description 重置前先取消所有 pending 的实时查询 debounced 调用，防止重置后再次触发查询
+     */
+    clearSearch(): Promise<void> {
+      this._realtimeSearchDebouncedMap?.forEach((fn: any) => fn.cancel?.());
+      return super.clearSearch();
     }
 
     /**
