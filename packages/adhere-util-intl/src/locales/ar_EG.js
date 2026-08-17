@@ -408,9 +408,9 @@ export default [
     template_contact_desc: 'أقسام Card لمعلومات الشركة ومحتوى الاستفسار وتفضيلات التواصل',
     template_login_name: 'نموذج تسجيل الدخول',
     template_login_desc: 'أقسام Card لطريقة الدخول وبيانات الحساب وخيارات التحقق',
-    template_register_name: 'نموذج التسجيل',
+    template_register_name: 'جميع عناصر التحكم',
     template_register_desc:
-      'أقسام Card للمعلومات الأساسية والعائلية مع جدول قابل للتحرير، لجمع بيانات تسجيل المستخدم',
+      'أمثلة لعناصر تحكم نماذج antd الشائعة لمعاينة وتجربة جميع عناصر التحكم بسرعة',
     template_feedback_name: 'نموذج الملاحظات',
     template_feedback_desc: 'أقسام Card لتفاصيل الملاحظات وبيانات التواصل',
     template_card_contact_basic: 'المعلومات الأساسية',

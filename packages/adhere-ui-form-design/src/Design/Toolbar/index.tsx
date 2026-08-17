@@ -141,21 +141,37 @@ function useRowOverflowCount(args: {
   entryCount: number;
   maxVisible?: number;
   ellipsisFallbackPx: number;
+  /** 可用宽度；不传则用 container.clientWidth。用于左侧内容撑开时避免自我裁剪 */
+  getAvailableWidth?: () => number;
 }): number {
-  const { containerRef, measureRef, ellipsisMeasureRef, entryCount, maxVisible, ellipsisFallbackPx } =
-    args;
+  const {
+    containerRef,
+    measureRef,
+    ellipsisMeasureRef,
+    entryCount,
+    maxVisible,
+    ellipsisFallbackPx,
+    getAvailableWidth,
+  } = args;
   const [visible, setVisible] = useState(entryCount);
 
   const recalc = useCallback(() => {
     const container = containerRef.current;
     const measure = measureRef.current;
     if (!container || !measure || entryCount === 0) {
-      setVisible(0);
+      setVisible(entryCount);
       return;
     }
 
     const children = Array.from(measure.children) as HTMLElement[];
     const childWidths = children.map((c) => c.getBoundingClientRect().width);
+
+    // 测量不到（未挂载 / 尚未布局 / 容器不可见）时全部展示，避免误把工具收进省略菜单
+    if (childWidths.length === 0 || childWidths.every((width) => width <= 0)) {
+      setVisible(entryCount);
+      return;
+    }
+
     const gapPx = parseGapPx(measure);
     const ellipsisReservePx =
       ellipsisMeasureRef.current?.getBoundingClientRect().width ||
@@ -165,7 +181,10 @@ function useRowOverflowCount(args: {
         ellipsisFallbackPx,
       );
 
-    const w = container.clientWidth;
+    const w = getAvailableWidth?.() ?? container.clientWidth;
+    // 布局未完成时不要裁成 0，否则内容区塌陷后永远算不出宽度
+    if (w <= 0) return;
+
     const k = computeVisibleCount({
       containerWidth: w,
       childWidths,
@@ -182,22 +201,25 @@ function useRowOverflowCount(args: {
     entryCount,
     maxVisible,
     ellipsisFallbackPx,
+    getAvailableWidth,
   ]);
 
   useLayoutEffect(() => {
+    setVisible(entryCount);
     recalc();
     const id = requestAnimationFrame(() => recalc());
     return () => cancelAnimationFrame(id);
-  }, [recalc]);
+  }, [recalc, entryCount]);
 
   useLayoutEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
+    const targets = [container, container?.parentElement].filter(Boolean) as HTMLElement[];
+    if (targets.length === 0) return;
 
     const ro = new ResizeObserver(() => {
       recalc();
     });
-    ro.observe(container);
+    targets.forEach((el) => ro.observe(el));
     return () => ro.disconnect();
   }, [containerRef, recalc]);
 
@@ -253,6 +275,7 @@ const Toolbar: FC<ToolbarProps> = ({
 
   const toolbarEntries = useMemo(() => flattenToolbarGroups(toolbarGroup), [toolbarGroup]);
 
+  const toolbarRootRef = useRef<HTMLDivElement>(null);
   const groupContainerRef = useRef<HTMLDivElement>(null);
   const groupMeasureRef = useRef<HTMLDivElement>(null);
   const groupEllipsisMeasureRef = useRef<HTMLDivElement>(null);
@@ -261,6 +284,21 @@ const Toolbar: FC<ToolbarProps> = ({
   const menuMeasureRef = useRef<HTMLDivElement>(null);
   const menuEllipsisMeasureRef = useRef<HTMLDivElement>(null);
 
+  const getGroupAvailableWidth = useCallback(() => {
+    const root = toolbarRootRef.current;
+    const menuMeasure = menuMeasureRef.current;
+    if (!root) return 0;
+    const rootStyle = getComputedStyle(root);
+    const gapPx = parseFloat(rootStyle.columnGap || rootStyle.gap || '0') || 0;
+    // 用菜单真实内容宽，而不是 flex 拉伸后的容器宽，避免左侧可用宽度被算成接近 0
+    const menuContentWidth = menuMeasure?.scrollWidth ?? 0;
+    const menuEllipsisWidth =
+      menuEllipsisMeasureRef.current?.getBoundingClientRect().width || 32;
+    // 预留右侧菜单省略按钮，避免极端窄屏互相挤压
+    const menuReserve = menuContentWidth > 0 ? menuContentWidth + menuEllipsisWidth : 0;
+    return Math.max(0, root.clientWidth - menuReserve - gapPx);
+  }, []);
+
   const toolbarVisible = useRowOverflowCount({
     containerRef: groupContainerRef,
     measureRef: groupMeasureRef,
@@ -268,6 +306,7 @@ const Toolbar: FC<ToolbarProps> = ({
     entryCount: toolbarEntries.length,
     maxVisible: toolbarEllipseCount,
     ellipsisFallbackPx: 32,
+    getAvailableWidth: getGroupAvailableWidth,
   });
 
   const menuVisible = useRowOverflowCount({
@@ -294,7 +333,7 @@ const Toolbar: FC<ToolbarProps> = ({
   const showMenuEllipsis = menu.slice(menuVisible).length > 0;
 
   return (
-    <div className={classNames(selectPrefix)}>
+    <div ref={toolbarRootRef} className={classNames(selectPrefix)}>
       <div className={classNames(`${selectPrefix}-group`)}>
         <div className={classNames(`${selectPrefix}-group-inner`)} ref={groupContainerRef}>
           <div

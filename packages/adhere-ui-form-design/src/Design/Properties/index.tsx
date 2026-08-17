@@ -1,3 +1,4 @@
+import { ControlOutlined } from '@ant-design/icons';
 import { useUpdateEffect } from 'ahooks';
 import classNames from 'classnames';
 import React, { useContext, useMemo, useState } from 'react';
@@ -92,7 +93,12 @@ const Properties: FC<PropertiesProps> = () => {
     <div className={classNames(selectPrefix)}>
       {!activeFieldId && (
         <div className={classNames(`${selectPrefix}-no-selected`)}>
-          {Intl.get('select_field_to_edit_properties')}
+          <span className={classNames(`${selectPrefix}-no-selected-icon`)} aria-hidden>
+            <ControlOutlined />
+          </span>
+          <span className={classNames(`${selectPrefix}-no-selected-text`)}>
+            {Intl.get('select_field_to_edit_properties')}
+          </span>
         </div>
       )}
 

@@ -409,9 +409,9 @@ export default [
       'Secções Card para dados da empresa, conteúdo do pedido e preferências de contacto',
     template_login_name: 'Formulário de início de sessão',
     template_login_desc: 'Secções Card com método de login, credenciais e opções de verificação',
-    template_register_name: 'Formulário de registo',
+    template_register_name: 'Todos os controlos',
     template_register_desc:
-      'Secções Card com informações básicas e familiares, com tabela editável, para recolha de dados de registo',
+      'Exemplos dos controlos de formulário antd comuns para pré-visualizar e experimentar todos os controlos',
     template_feedback_name: 'Formulário de feedback',
     template_feedback_desc: 'Secções Card para detalhes do feedback e informações de contacto',
     template_card_contact_basic: 'Informação básica',
