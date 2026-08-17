@@ -39,6 +39,8 @@ export type UseDesignHistoryOptions = {
 
 /**
  * 对当前设计树做不可变快照，供 past/future 存储。
+ * 热路径（属性面板每次输入）的 reducer 已改为路径浅拷，不再整树 clone；
+ * 历史栈仍只在 burst 开始 / immediate / undo / redo 时整树快照，语义不变。
  * @param value 当前 designValue，undefined 时不入栈
  */
 function snapshotDesignValue(value: DesignValue | undefined): DesignValue | undefined {

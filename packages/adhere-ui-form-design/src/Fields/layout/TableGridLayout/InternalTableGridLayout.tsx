@@ -7,7 +7,7 @@ import type { TableGridLayoutProps } from '@baifendian/adhere-ui-tablegridlayout
 
 import { DesignContext } from '../../../Design/Context';
 import type { InternalTableGridLayoutProps } from '../../../types';
-import { parseDesign } from '../../parse';
+import { useParseDesignCached } from '../../parse';
 import { resolveTableGridChildForMobileParse } from './resolveFieldPropsForDesignEditor';
 
 /**
@@ -17,6 +17,7 @@ import { resolveTableGridChildForMobileParse } from './resolveFieldPropsForDesig
 const InternalTableGridLayout: FC<InternalTableGridLayoutProps> = ({ children, id, ...props }) => {
   const context = useContext(DesignContext);
   const terminal = context.getTerminal();
+  const parseDesignCached = useParseDesignCached();
 
   const targetProps = useMemo<TableGridLayoutProps>(() => {
     // 基本的数据在props中都给了
@@ -24,7 +25,7 @@ const InternalTableGridLayout: FC<InternalTableGridLayoutProps> = ({ children, i
 
     // 对children进行解析
     tableGridLayoutProps.data[0].data = children?.map((_item) => {
-      return parseDesign({
+      return parseDesignCached({
         parentId: id,
         value: resolveTableGridChildForMobileParse(_item, terminal),
         context,
@@ -32,7 +33,7 @@ const InternalTableGridLayout: FC<InternalTableGridLayoutProps> = ({ children, i
     });
 
     return tableGridLayoutProps;
-  }, [children, context, id, props, terminal]);
+  }, [children, context, id, parseDesignCached, props, terminal]);
 
   return <TableGridLayout {...targetProps} />;
 };

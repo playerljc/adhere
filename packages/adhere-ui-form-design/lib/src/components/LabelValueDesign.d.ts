@@ -1,12 +1,12 @@
 import React, { type CSSProperties, type ReactNode } from 'react';
 import type { DesignValue, FieldProps, FormItemProps, StyleProps } from '../types';
 import { type DesignFormInjectedProps } from './FormItemBridge';
-export declare function LabelDesign({ formItemProps, styleProps, className, }: {
+export declare const LabelDesign: React.NamedExoticComponent<{
     formItemProps?: FormItemProps;
     styleProps?: StyleProps;
     className?: string;
-}): React.JSX.Element;
-export declare function ValueDesign({ value: { id, type, props: { formItemProps, fieldProps, styleProps, actionsProps, fieldActionTypes }, }, children, }: {
+}>;
+export declare const ValueDesign: React.NamedExoticComponent<{
     value: DesignValue;
     children: (params: {
         fieldProps: FieldProps;
@@ -24,4 +24,4 @@ export declare function ValueDesign({ value: { id, type, props: { formItemProps,
         countdownActions?: Record<string, (...args: any[]) => any>;
         lang: string;
     } & DesignFormInjectedProps) => ReactNode;
-}): React.JSX.Element;
+}>;

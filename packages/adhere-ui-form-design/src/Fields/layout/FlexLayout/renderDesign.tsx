@@ -12,12 +12,17 @@ import {
   normalizeDesignChildren,
   styleCodeStringToCSSProperties,
 } from '../../../utils';
+import { memoDesignNode } from '../../parse';
 import InternalFlexLayout, { type InternalFlexLayoutProps } from './InternalFlexLayout';
 import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
 const selectorPrefix = `${SELECT_PREFIX}-layout`;
 
-function FlexLayoutDesign({ value }: { value: DesignValue }) {
+const FlexLayoutDesign = memoDesignNode(function FlexLayoutDesign({
+  value,
+}: {
+  value: DesignValue;
+}) {
   const { id, props } = value;
   const { children, styleProps, flexProps, fieldActionTypes } = props;
 
@@ -65,6 +70,7 @@ function FlexLayoutDesign({ value }: { value: DesignValue }) {
   return (
     <DesignFieldWrapper
       id={id}
+      type={value.type}
       fieldActionTypes={fieldActionTypes}
       className={classNames(`${selectorPrefix}-design-field-wrapper`, {
         [`${selectorPrefix}-design-field-wrapper-fill`]: isRootFieldId(id),
@@ -89,7 +95,7 @@ function FlexLayoutDesign({ value }: { value: DesignValue }) {
       </DroppableContainer>
     </DesignFieldWrapper>
   );
-}
+});
 
 /**
  * renderDesign

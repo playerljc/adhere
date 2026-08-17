@@ -11,7 +11,7 @@ import { SELECT_PREFIX } from '../../../constant';
 import type { CollapsePanelSettingItem } from '../../../components/CollapsePanelSettingFormItem';
 import type { DesignValue, I18nValue, StyleProps } from '../../../types';
 import { resolveI18nText, styleCodeStringToCSSProperties } from '../../../utils';
-import { parseDesign } from '../../parse';
+import { useParseDesignCached } from '../../parse';
 
 export type { CollapsePanelSettingItem };
 
@@ -45,6 +45,7 @@ const InternalCollapse: FC<InternalCollapseLayoutProps> = ({
   const context = useContext(DesignContext);
   const { intl } = useContext(ConfigProvider.Context);
   const lang = intl?.lang ?? 'zh_CN';
+  const parseDesignCached = useParseDesignCached();
 
   const targetProps = useMemo(() => {
     const rootStyle = styleCodeStringToCSSProperties(styleProps?.styles ?? '');
@@ -55,7 +56,7 @@ const InternalCollapse: FC<InternalCollapseLayoutProps> = ({
       ? (itemsFromRender as NonNullable<CollapseProps['items']>)
       : (() => {
           const parsedChildren = (children?.map((_item) =>
-            parseDesign({
+            parseDesignCached({
               parentId: id,
               value: _item,
               context,
@@ -90,7 +91,7 @@ const InternalCollapse: FC<InternalCollapseLayoutProps> = ({
       },
       ...rest,
     };
-  }, [children, className, context, id, itemsFromRender, lang, panelItems, rest, styleProps]);
+  }, [children, className, context, id, itemsFromRender, lang, panelItems, parseDesignCached, rest, styleProps]);
 
   return <Collapse {...targetProps} />;
 };

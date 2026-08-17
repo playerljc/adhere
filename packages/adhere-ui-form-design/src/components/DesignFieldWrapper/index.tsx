@@ -30,6 +30,7 @@ const selectPrefix = `${SELECT_PREFIX}-design-field-wrapper`;
  */
 const DesignFieldWrapper: FC<DesignFieldWrapperProps> = ({
   id,
+  type: typeProp,
   className,
   style,
   fieldActionTypes,
@@ -61,7 +62,10 @@ const DesignFieldWrapper: FC<DesignFieldWrapperProps> = ({
 
   const toolbox = getToolBox?.();
 
-  const fieldType = useMemo(() => findTypeById({ id, designValue }), [designValue, id]);
+  const fieldType = useMemo(
+    () => typeProp ?? findTypeById({ id, designValue }),
+    [designValue, id, typeProp],
+  );
 
   const item: DesignItem | undefined = useMemo(() => {
     return items.find((_item) => _item.type === fieldType);

@@ -114,6 +114,16 @@ export function useDesignFieldTableDataSource(
   const [dynamicRows, setDynamicRows] = useState<TableDataRow[]>([]);
   const [dynamicLoading, setDynamicLoading] = useState(false);
 
+  const dynamicConfigId = source?.type === 'dynamic' ? source.dynamicConfigId : undefined;
+  const dataSourceConfig = getDesignValue()?.dataSourceConfig;
+  const referencedConfig = useMemo(
+    () =>
+      dynamicConfigId
+        ? findDataSourceItemConfigByDynamicId(getDesignValue(), dynamicConfigId)
+        : undefined,
+    [dynamicConfigId, dataSourceConfig, getDesignValue],
+  );
+
   useEffect(() => {
     if (source?.type !== 'dynamic' || !source.dynamicConfigId) {
       setDynamicRows([]);
@@ -121,8 +131,7 @@ export function useDesignFieldTableDataSource(
       return;
     }
 
-    const root = getDesignValue();
-    const cfg = findDataSourceItemConfigByDynamicId(root, source.dynamicConfigId);
+    const cfg = referencedConfig;
     if (!cfg?.request?.url?.trim()) {
       setDynamicRows([]);
       setDynamicLoading(false);
@@ -152,7 +161,7 @@ export function useDesignFieldTableDataSource(
     return () => {
       cancelled = true;
     };
-  }, [source, getDesignValue]);
+  }, [source, referencedConfig]);
 
   const dataSource = source?.type === 'dynamic' ? dynamicRows : staticRows;
   const loading = source?.type === 'dynamic' ? dynamicLoading : false;

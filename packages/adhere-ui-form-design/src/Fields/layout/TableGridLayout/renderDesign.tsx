@@ -8,11 +8,16 @@ import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignValue } from '../../../types';
 import { normalizeDesignChildren, styleCodeStringToCSSProperties } from '../../../utils';
+import { memoDesignNode } from '../../parse';
 import { TableGridLayoutContext } from './Context';
 import InternalTableGridLayout from './InternalTableGridLayout';
 import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
-function TableGridLayoutDesign({ value }: { value: DesignValue }) {
+const TableGridLayoutDesign = memoDesignNode(function TableGridLayoutDesign({
+  value,
+}: {
+  value: DesignValue;
+}) {
   const { id, props } = value;
   const { children, styleProps, flexProps, fieldActionTypes } = props;
 
@@ -51,7 +56,12 @@ function TableGridLayoutDesign({ value }: { value: DesignValue }) {
   }, [flexProps]);
 
   return (
-    <DesignFieldWrapper id={id} fieldActionTypes={fieldActionTypes} style={targetFlexStyle}>
+    <DesignFieldWrapper
+      id={id}
+      type={value.type}
+      fieldActionTypes={fieldActionTypes}
+      style={targetFlexStyle}
+    >
       <DroppableContainer id={id} value={value} style={targetContainerStyle}>
         <TableGridLayoutContext.Provider
           value={{
@@ -68,7 +78,7 @@ function TableGridLayoutDesign({ value }: { value: DesignValue }) {
       </DroppableContainer>
     </DesignFieldWrapper>
   );
-}
+});
 
 /**
  * renderDesign

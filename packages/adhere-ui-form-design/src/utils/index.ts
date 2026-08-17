@@ -9,7 +9,14 @@ import {
   genNewName,
   typeToNamePrefix,
 } from './designValue';
-import { findParentWithChildIndex, flattenDesignChildren } from './designValueTree';
+import {
+  clonePathContainingIds,
+  deleteDesignValueById,
+  findParentWithChildIndex,
+  flattenDesignChildren,
+  mapDesignChildren,
+  updateDesignValueById,
+} from './designValueTree';
 import { findTypeById } from './findTypeById';
 import { formItemToProps } from './formItemToProps';
 import { getDesignFormControlProps } from './getDesignFormControlProps';
@@ -66,6 +73,10 @@ export {
   findParentDesignValueById,
   findParentWithChildIndex,
   flattenDesignChildren,
+  mapDesignChildren,
+  updateDesignValueById,
+  deleteDesignValueById,
+  clonePathContainingIds,
   useDesignFieldDataSourceOptions,
   resolveI18nText,
   isResolvedI18nTextEmpty,

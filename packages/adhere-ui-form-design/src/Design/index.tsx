@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, {
   forwardRef,
   memo,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useMemo,
@@ -36,8 +37,8 @@ import {
   ActionsProps,
   type DataSourceConfig,
   DesignComponent,
+  DesignContextType,
   DesignHandler,
-  DesignItem,
   DesignProps,
   DesignValue,
   DesignValueProps,
@@ -48,6 +49,7 @@ import {
   type FormItemProps,
   type MobileViewportPresetId,
   type StyleProps,
+  type Terminal,
   ToolBoxItem,
 } from '../types';
 import {
@@ -132,20 +134,64 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       // Editor中激活的item id
       const [activeFieldId, setActiveFieldId] = useState<string>();
 
+      // 当前正在拖拽的组件 ID
+      const [activeToolItemData, setActiveToolItemData] = useState<
+        DraggableToolItemProps['data'] | null
+      >(null);
+
+      // 拖拽时覆盖层的鼠标样式
+      const [overlayCursor, setOverlayCursor] = useState<CSSProperties['cursor']>('not-allowed');
+
+      const designValueRef = useRef(designValue);
+      designValueRef.current = designValue;
+      const activeFieldIdRef = useRef(activeFieldId);
+      activeFieldIdRef.current = activeFieldId;
+      const currentTerminalRef = useRef(currentTerminal);
+      currentTerminalRef.current = currentTerminal;
+      const mobileViewportPresetIdRef = useRef(mobileViewportPresetId);
+      mobileViewportPresetIdRef.current = mobileViewportPresetId;
+      const overlayCursorRef = useRef(overlayCursor);
+      overlayCursorRef.current = overlayCursor;
+      const activeToolItemDataRef = useRef(activeToolItemData);
+      activeToolItemDataRef.current = activeToolItemData;
+      const toolBoxRef = useRef(toolBox);
+      toolBoxRef.current = toolBox;
+      const renderToolBarRef = useRef(renderToolBar);
+      renderToolBarRef.current = renderToolBar;
+      const renderMenuBarRef = useRef(renderMenuBar);
+      renderMenuBarRef.current = renderMenuBar;
+      const toolbarEllipseCountRef = useRef(toolbarEllipseCount);
+      toolbarEllipseCountRef.current = toolbarEllipseCount;
+      const menuBarEllipseCountRef = useRef(menuBarEllipseCount);
+      menuBarEllipseCountRef.current = menuBarEllipseCount;
+
       const { recordBeforeChange, undo, redo, getCanUndo, getCanRedo } = useDesignHistory({
-        getDesignValue: () => designValue,
-        getActiveFieldId: () => activeFieldId,
+        getDesignValue: () => designValueRef.current,
+        getActiveFieldId: () => activeFieldIdRef.current,
         dispatch,
         setActiveFieldId,
       });
 
-      function commitDesignChange(
-        action: DesignValueAction,
-        options?: { immediate?: boolean },
-      ) {
-        recordBeforeChange(options?.immediate);
-        dispatch(action);
-      }
+      const recordBeforeChangeRef = useRef(recordBeforeChange);
+      recordBeforeChangeRef.current = recordBeforeChange;
+      const undoRef = useRef(undo);
+      undoRef.current = undo;
+      const redoRef = useRef(redo);
+      redoRef.current = redo;
+      const getCanUndoRef = useRef(getCanUndo);
+      getCanUndoRef.current = getCanUndo;
+      const getCanRedoRef = useRef(getCanRedo);
+      getCanRedoRef.current = getCanRedo;
+      const setCurrentTerminalRef = useRef(setCurrentTerminal);
+      setCurrentTerminalRef.current = setCurrentTerminal;
+
+      const commitDesignChange = useCallback(
+        (action: DesignValueAction, options?: { immediate?: boolean }) => {
+          recordBeforeChangeRef.current(options?.immediate);
+          dispatch(action);
+        },
+        [dispatch],
+      );
 
       // Editor中激活的field的designValue
       const activeDesignFieldValue = useMemo(() => {
@@ -175,13 +221,12 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
         return find(designValue as DesignValue, activeFieldId);
       }, [activeFieldId, designValue]);
 
-      // 当前正在拖拽的组件 ID
-      const [activeToolItemData, setActiveToolItemData] = useState<
-        DraggableToolItemProps['data'] | null
-      >(null);
+      const activeDesignFieldValueRef = useRef(activeDesignFieldValue);
+      activeDesignFieldValueRef.current = activeDesignFieldValue;
 
-      // 拖拽时覆盖层的鼠标样式
-      const [overlayCursor, setOverlayCursor] = useState<CSSProperties['cursor']>('not-allowed');
+      const designItems = useMemo(() => [flexLayoutDefine(), ...(items ?? [])], [items]);
+      const designItemsRef = useRef(designItems);
+      designItemsRef.current = designItems;
 
       // 拖拽的传感器
       const sensors = useSensors(
@@ -287,203 +332,194 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
       }
 
       function getItemByType(type: FieldType) {
-        return getItems().find((item) => item.type === type);
+        return designItemsRef.current.find((item) => item.type === type);
       }
 
-      function getDesignValue() {
-        return designValue;
-      }
-
-      function getTerminal() {
-        return currentTerminal;
-      }
-
-      function getMobileViewportPresetId() {
-        return mobileViewportPresetId;
-      }
-
-      function setMobileViewportPresetIdState(presetId: MobileViewportPresetId) {
+      const getDesignValue = useCallback(() => designValueRef.current, []);
+      const getTerminal = useCallback(() => currentTerminalRef.current, []);
+      const getMobileViewportPresetId = useCallback(() => mobileViewportPresetIdRef.current, []);
+      const setMobileViewportPresetIdState = useCallback((presetId: MobileViewportPresetId) => {
         setMobileViewportPresetId(presetId);
-      }
+      }, []);
+      const getActiveFieldId = useCallback(() => activeFieldIdRef.current, []);
+      const getActiveDesignFieldValue = useCallback(() => activeDesignFieldValueRef.current, []);
+      const getItems = useCallback(() => designItemsRef.current, []);
+      const getOverlayCursor = useCallback(() => overlayCursorRef.current, []);
+      const getActiveToolItemData = useCallback(() => activeToolItemDataRef.current, []);
+      const getToolBox = useCallback(() => toolBoxRef.current, []);
+      const getRenderToolBar = useCallback(() => renderToolBarRef.current, []);
+      const getRenderMenuBar = useCallback(() => renderMenuBarRef.current, []);
+      const getToolbarEllipseCount = useCallback(() => toolbarEllipseCountRef.current, []);
+      const getMenuBarEllipseCount = useCallback(() => menuBarEllipseCountRef.current, []);
+      const getFormDisabled = useCallback(() => undefined, []);
+      const setCurrentTerminalStable = useCallback((next: Terminal) => {
+        setCurrentTerminalRef.current(next);
+      }, []);
 
-      function getActiveFieldId() {
-        return activeFieldId;
-      }
-
-      function getActiveDesignFieldValue() {
-        return activeDesignFieldValue;
-      }
-
-      function getItems(): DesignItem[] {
-        return [flexLayoutDefine(), ...(items ?? [])];
-      }
-
-      function getOverlayCursor() {
-        return overlayCursor;
-      }
-
-      function getActiveToolItemData() {
-        return activeToolItemData;
-      }
-
-      function getToolBox() {
-        return toolBox;
-      }
-
-      function getRenderToolBar() {
-        return renderToolBar;
-      }
-
-      function getRenderMenuBar() {
-        return renderMenuBar;
-      }
-
-      function getToolbarEllipseCount() {
-        return toolbarEllipseCount;
-      }
-
-      function getMenuBarEllipseCount() {
-        return menuBarEllipseCount;
-      }
-
-      function getFormDisabled() {
-        return undefined;
-      }
-
-      function setFormItemProps(id: string, props: FormItemProps) {
-        commitDesignChange({
-          type: REDUCER_ACTION_TYPE.updateFormItemProps,
-          payload: {
-            id,
-            props,
-          },
-        });
-      }
-
-      function setActionsProps(id: string, props: ActionsProps) {
-        commitDesignChange({
-          type: REDUCER_ACTION_TYPE.updateActionsProps,
-          payload: {
-            id,
-            props,
-          },
-        });
-      }
-
-      function setFlexProps(id: string, props: FlexProps) {
-        commitDesignChange({
-          type: REDUCER_ACTION_TYPE.updateFlexProps,
-          payload: {
-            id,
-            props,
-          },
-        });
-      }
-
-      function setFieldProps(id: string, props: FieldProps) {
-        // 如果移动端就调用updateFieldPropsByTerminal去修改数据
-        if (currentTerminal === 'mobile') {
-          const root = designValue as DesignValue | undefined;
-          if (!root) return;
-
-          const raw = findDesignValueById(id, root);
-          if (!raw) return;
-
-          const patch = computeFieldPropsOverlayPatch(raw.props.fieldProps, props);
-
+      const setFormItemProps = useCallback(
+        (id: string, props: FormItemProps) => {
           commitDesignChange({
-            type: REDUCER_ACTION_TYPE.updateFieldPropsByTerminal,
+            type: REDUCER_ACTION_TYPE.updateFormItemProps,
             payload: {
               id,
-              terminal: 'mobile',
-              props: patch,
+              props,
             },
           });
-          return;
-        }
+        },
+        [commitDesignChange],
+      );
 
-        // 否则就是调用updateFieldProps去修改数据
-        commitDesignChange({
-          type: REDUCER_ACTION_TYPE.updateFieldProps,
-          payload: {
-            id,
-            props,
-          },
-        });
-      }
-
-      function setStyleProps(id: string, props: StyleProps) {
-        commitDesignChange({
-          type: REDUCER_ACTION_TYPE.updateStyleProps,
-          payload: {
-            id,
-            props,
-          },
-        });
-      }
-
-      function deleteFieldByChildren(id: string) {
-        commitDesignChange(
-          {
-            type: REDUCER_ACTION_TYPE.deleteChildrenById,
+      const setActionsProps = useCallback(
+        (id: string, props: ActionsProps) => {
+          commitDesignChange({
+            type: REDUCER_ACTION_TYPE.updateActionsProps,
             payload: {
               id,
+              props,
             },
-          },
-          { immediate: true },
-        );
-      }
+          });
+        },
+        [commitDesignChange],
+      );
 
-      function addChildrenById(id: string, child: DesignValue) {
-        commitDesignChange(
-          {
-            type: REDUCER_ACTION_TYPE.addChildrenById,
+      const setFlexProps = useCallback(
+        (id: string, props: FlexProps) => {
+          commitDesignChange({
+            type: REDUCER_ACTION_TYPE.updateFlexProps,
             payload: {
               id,
-              child,
+              props,
             },
-          },
-          { immediate: true },
-        );
-      }
+          });
+        },
+        [commitDesignChange],
+      );
 
-      function updateChildrenById(id: string, children: DesignValueProps['children']) {
-        commitDesignChange(
-          {
-            type: REDUCER_ACTION_TYPE.updateChildrenProps,
+      const setFieldProps = useCallback(
+        (id: string, props: FieldProps) => {
+          // 如果移动端就调用updateFieldPropsByTerminal去修改数据
+          if (currentTerminalRef.current === 'mobile') {
+            const root = designValueRef.current as DesignValue | undefined;
+            if (!root) return;
+
+            const raw = findDesignValueById(id, root);
+            if (!raw) return;
+
+            const patch = computeFieldPropsOverlayPatch(raw.props.fieldProps, props);
+
+            commitDesignChange({
+              type: REDUCER_ACTION_TYPE.updateFieldPropsByTerminal,
+              payload: {
+                id,
+                terminal: 'mobile',
+                props: patch,
+              },
+            });
+            return;
+          }
+
+          // 否则就是调用updateFieldProps去修改数据
+          commitDesignChange({
+            type: REDUCER_ACTION_TYPE.updateFieldProps,
             payload: {
               id,
-              props: children,
+              props,
             },
-          },
-          { immediate: true },
-        );
-      }
+          });
+        },
+        [commitDesignChange],
+      );
 
-      function swapOutlineNodes(idA: string, idB: string) {
-        commitDesignChange(
-          {
-            type: REDUCER_ACTION_TYPE.swapNodes,
+      const setStyleProps = useCallback(
+        (id: string, props: StyleProps) => {
+          commitDesignChange({
+            type: REDUCER_ACTION_TYPE.updateStyleProps,
             payload: {
-              idA,
-              idB,
+              id,
+              props,
             },
-          },
-          { immediate: true },
-        );
-      }
+          });
+        },
+        [commitDesignChange],
+      );
 
-      function setDataSourceConfig(id: string, dataSourceConfig: DataSourceConfig) {
-        commitDesignChange({
-          type: REDUCER_ACTION_TYPE.updateDataSourceConfig,
-          payload: {
-            id,
-            dataSourceConfig,
-          },
-        });
-      }
+      const deleteFieldByChildren = useCallback(
+        (id: string) => {
+          commitDesignChange(
+            {
+              type: REDUCER_ACTION_TYPE.deleteChildrenById,
+              payload: {
+                id,
+              },
+            },
+            { immediate: true },
+          );
+        },
+        [commitDesignChange],
+      );
 
-      function resetDesignValue() {
+      const addChildrenById = useCallback(
+        (id: string, child: DesignValue) => {
+          commitDesignChange(
+            {
+              type: REDUCER_ACTION_TYPE.addChildrenById,
+              payload: {
+                id,
+                child,
+              },
+            },
+            { immediate: true },
+          );
+        },
+        [commitDesignChange],
+      );
+
+      const updateChildrenById = useCallback(
+        (id: string, children: DesignValueProps['children']) => {
+          commitDesignChange(
+            {
+              type: REDUCER_ACTION_TYPE.updateChildrenProps,
+              payload: {
+                id,
+                props: children,
+              },
+            },
+            { immediate: true },
+          );
+        },
+        [commitDesignChange],
+      );
+
+      const swapOutlineNodes = useCallback(
+        (idA: string, idB: string) => {
+          commitDesignChange(
+            {
+              type: REDUCER_ACTION_TYPE.swapNodes,
+              payload: {
+                idA,
+                idB,
+              },
+            },
+            { immediate: true },
+          );
+        },
+        [commitDesignChange],
+      );
+
+      const setDataSourceConfig = useCallback(
+        (id: string, dataSourceConfig: DataSourceConfig) => {
+          commitDesignChange({
+            type: REDUCER_ACTION_TYPE.updateDataSourceConfig,
+            payload: {
+              id,
+              dataSourceConfig,
+            },
+          });
+        },
+        [commitDesignChange],
+      );
+
+      const resetDesignValue = useCallback(() => {
         commitDesignChange(
           {
             type: REDUCER_ACTION_TYPE.replaceDesignValue,
@@ -494,9 +530,9 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
           { immediate: true },
         );
         setActiveFieldId(undefined);
-      }
+      }, [commitDesignChange]);
 
-      function loadDesignValue(nextDesignValue: DesignValue) {
+      const loadDesignValue = useCallback((nextDesignValue: DesignValue) => {
         commitDesignChange(
           {
             type: REDUCER_ACTION_TYPE.replaceDesignValue,
@@ -507,7 +543,12 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
           { immediate: true },
         );
         setActiveFieldId(undefined);
-      }
+      }, [commitDesignChange]);
+
+      const undoStable = useCallback(() => undoRef.current(), []);
+      const redoStable = useCallback(() => redoRef.current(), []);
+      const getCanUndoStable = useCallback(() => getCanUndoRef.current(), []);
+      const getCanRedoStable = useCallback(() => getCanRedoRef.current(), []);
 
       useEffect(() => {
         const isEditableTarget = (target: EventTarget | null) => {
@@ -524,23 +565,107 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
 
           const key = e.key.toLowerCase();
           if (key === 'z' && !e.shiftKey) {
-            if (getCanUndo()) {
+            if (getCanUndoStable()) {
               e.preventDefault();
-              undo();
+              undoStable();
             }
             return;
           }
           if (key === 'y' || (key === 'z' && e.shiftKey)) {
-            if (getCanRedo()) {
+            if (getCanRedoStable()) {
               e.preventDefault();
-              redo();
+              redoStable();
             }
           }
         };
 
         window.addEventListener('keydown', onKeyDown);
         return () => window.removeEventListener('keydown', onKeyDown);
-      }, [getCanRedo, getCanUndo, redo, undo]);
+      }, [getCanRedoStable, getCanUndoStable, redoStable, undoStable]);
+
+      const designContextValue = useMemo<DesignContextType>(
+        () => ({
+          fullscreenRootRef,
+          // getter
+          getDesignValue,
+          getTerminal,
+          getMobileViewportPresetId,
+          setMobileViewportPresetId: setMobileViewportPresetIdState,
+          getActiveFieldId,
+          getActiveDesignFieldValue,
+          getItems,
+          getOverlayCursor,
+          getActiveToolItemData,
+          getToolBox,
+          getRenderToolBar,
+          getRenderMenuBar,
+          getToolbarEllipseCount,
+          getMenuBarEllipseCount,
+          getFormDisabled,
+          // setter
+          setCurrentTerminal: setCurrentTerminalStable,
+          setActiveFieldId,
+          setFormItemProps,
+          setFieldProps,
+          setStyleProps,
+          setActionsProps,
+          setFlexProps,
+          setDataSourceConfig,
+          // add
+          addChildrenById,
+          // delete
+          deleteFieldByChildren,
+          // update
+          updateChildrenById,
+          swapOutlineNodes,
+          resetDesignValue,
+          loadDesignValue,
+          getCanUndo: getCanUndoStable,
+          getCanRedo: getCanRedoStable,
+          undo: undoStable,
+          redo: redoStable,
+        }),
+        [
+          activeFieldId,
+          addChildrenById,
+          currentTerminal,
+          deleteFieldByChildren,
+          designItems,
+          designValue?.dataSourceConfig,
+          getActiveDesignFieldValue,
+          getActiveFieldId,
+          getActiveToolItemData,
+          getCanRedoStable,
+          getCanUndoStable,
+          getDesignValue,
+          getFormDisabled,
+          getItems,
+          getMenuBarEllipseCount,
+          getMobileViewportPresetId,
+          getOverlayCursor,
+          getRenderMenuBar,
+          getRenderToolBar,
+          getTerminal,
+          getToolBox,
+          getToolbarEllipseCount,
+          loadDesignValue,
+          mobileViewportPresetId,
+          redoStable,
+          resetDesignValue,
+          setActionsProps,
+          setActiveFieldId,
+          setCurrentTerminalStable,
+          setDataSourceConfig,
+          setFieldProps,
+          setFlexProps,
+          setFormItemProps,
+          setMobileViewportPresetIdState,
+          setStyleProps,
+          swapOutlineNodes,
+          undoStable,
+          updateChildrenById,
+        ],
+      );
 
       // 提供对外的方法
       useImperativeHandle(ref, () => ({
@@ -558,49 +683,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
             onDragOver={handleDragOver}
             onDragEnd={handleDragEnd}
           >
-            <DesignContext
-              value={{
-                fullscreenRootRef,
-                // getter
-                getDesignValue,
-                getTerminal,
-                getMobileViewportPresetId,
-                setMobileViewportPresetId: setMobileViewportPresetIdState,
-                getActiveFieldId,
-                getActiveDesignFieldValue,
-                getItems,
-                getOverlayCursor,
-                getActiveToolItemData,
-                getToolBox,
-                getRenderToolBar,
-                getRenderMenuBar,
-                getToolbarEllipseCount,
-                getMenuBarEllipseCount,
-                getFormDisabled,
-                // setter
-                setCurrentTerminal,
-                setActiveFieldId,
-                setFormItemProps,
-                setFieldProps,
-                setStyleProps,
-                setActionsProps,
-                setFlexProps,
-                setDataSourceConfig,
-                // add
-                addChildrenById,
-                // delete
-                deleteFieldByChildren,
-                // update
-                updateChildrenById,
-                swapOutlineNodes,
-                resetDesignValue,
-                loadDesignValue,
-                getCanUndo,
-                getCanRedo,
-                undo,
-                redo,
-              }}
-            >
+            <DesignContext value={designContextValue}>
               <div
                 ref={fullscreenRootRef}
                 className={classNames(`${SELECT_PREFIX}-design-wrapper`, className)}
@@ -640,7 +723,7 @@ const InternalFormDesign = memo<PropsWithoutRef<DesignProps> & RefAttributes<Des
                     )}
                     style={editorStyle}
                   >
-                    <Editor />
+                    <Editor value={designValue as DesignValue} />
                   </FlexLayout.Auto>
 
                   <SplitLayout

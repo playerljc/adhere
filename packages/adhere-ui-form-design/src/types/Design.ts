@@ -30,6 +30,8 @@ export type DesignFieldWrapperProps = {
   className?: string;
   style?: CSSProperties;
   id: string;
+  /** 与 findTypeById(id) 等价；传入后不再整树查找 type */
+  type?: FieldType;
   children?: ReactNode;
   fieldActionTypes?: DesignValueProps['fieldActionTypes'];
 };

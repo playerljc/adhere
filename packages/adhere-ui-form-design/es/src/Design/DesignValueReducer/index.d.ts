@@ -48,7 +48,7 @@ export type DesignValueAction = {
 };
 /**
  * reducer
- * @description 对设计值进行修改
+ * @description 对设计值进行修改（路径浅拷，未变更子树保持原引用）
  */
 declare const reducer: Reducer<DesignValueState, DesignValueAction>;
 export default reducer;

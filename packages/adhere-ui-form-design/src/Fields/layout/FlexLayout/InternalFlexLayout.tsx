@@ -5,7 +5,7 @@ import type { CSSProperties, FC } from 'react';
 import { DesignContext } from '../../../Design/Context';
 import { SELECT_PREFIX } from '../../../constant';
 import type { DesignValue } from '../../../types';
-import { parseDesign } from '../../parse';
+import { useParseDesignCached } from '../../parse';
 
 export interface InternalFlexLayoutProps {
   id?: string;
@@ -37,6 +37,7 @@ const InternalFlexLayout: FC<InternalFlexLayoutProps> = ({
   ...props
 }) => {
   const context = useContext(DesignContext);
+  const parseDesignCached = useParseDesignCached();
 
   const targetProps = useMemo(() => {
     // 基本的数据在props中都给了
@@ -81,7 +82,7 @@ const InternalFlexLayout: FC<InternalFlexLayoutProps> = ({
 
     // 对children进行解析
     layoutProps.children = children?.map((_item) =>
-      parseDesign({
+      parseDesignCached({
         parentId: id,
         value: _item,
         context,
@@ -89,7 +90,7 @@ const InternalFlexLayout: FC<InternalFlexLayoutProps> = ({
     );
 
     return layoutProps;
-  }, [children, style, direction, wrap, justifyContent, alignItems, alignContent, gap, props]);
+  }, [children, context, id, parseDesignCached, style, direction, wrap, justifyContent, alignItems, alignContent, gap, props]);
 
   return <div className={selectorPrefix} {...targetProps} />;
 };

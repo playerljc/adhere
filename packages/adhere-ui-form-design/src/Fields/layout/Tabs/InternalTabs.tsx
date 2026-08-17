@@ -10,7 +10,7 @@ import { DesignContext } from '../../../Design/Context';
 import type { TabsTabSettingItem } from '../../../components/TabsTabSettingFormItem';
 import type { DesignValue, I18nValue, StyleProps } from '../../../types';
 import { resolveI18nText, styleCodeStringToCSSProperties } from '../../../utils';
-import { parseDesign } from '../../parse';
+import { useParseDesignCached } from '../../parse';
 import { SELECT_PREFIX } from '../../../constant';
 
 export type { TabsTabSettingItem };
@@ -55,6 +55,7 @@ const InternalTabs: FC<InternalTabsLayoutProps> = ({
   const context = useContext(DesignContext);
   const { intl } = useContext(ConfigProvider.Context);
   const lang = intl?.lang ?? 'zh_CN';
+  const parseDesignCached = useParseDesignCached();
 
   const targetProps = useMemo(() => {
     const rootStyle = styleCodeStringToCSSProperties(styleProps?.styles ?? '');
@@ -65,7 +66,7 @@ const InternalTabs: FC<InternalTabsLayoutProps> = ({
       ? (itemsFromRender as NonNullable<TabsProps['items']>)
       : (() => {
           const parsedChildren = (children?.map((_item) =>
-            parseDesign({
+            parseDesignCached({
               parentId: id,
               value: _item,
               context,
@@ -121,6 +122,7 @@ const InternalTabs: FC<InternalTabsLayoutProps> = ({
     destroyOnHidden,
     id,
     lang,
+    parseDesignCached,
     itemsFromRender,
     tabBarGutter,
     hideAdd,

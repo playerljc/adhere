@@ -10,13 +10,17 @@ import { SELECT_PREFIX } from '../../../constant';
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import type { DesignValue, I18nValue } from '../../../types';
 import { actionsCodeStringToEvents, isRootFieldId, resolveI18nText } from '../../../utils';
-import { parseDesign } from '../../parse';
+import { memoDesignNode, useParseDesignCached } from '../../parse';
 import InternalSteps, { type InternalStepsLayoutProps } from './InternalSteps';
 import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
 const selectorPrefix = `${SELECT_PREFIX}-layout`;
 
-function StepsLayoutDesign({ value }: { value: DesignValue }) {
+const StepsLayoutDesign = memoDesignNode(function StepsLayoutDesign({
+  value,
+}: {
+  value: DesignValue;
+}) {
   const { id, props } = value;
   const {
     children,
@@ -41,6 +45,7 @@ function StepsLayoutDesign({ value }: { value: DesignValue }) {
 
   const { intl } = useContext(ConfigProvider.Context);
   const lang = intl?.lang ?? 'zh_CN';
+  const parseDesignCached = useParseDesignCached();
 
   const actions = actionsCodeStringToEvents({
     actions: actionsProps?.actions ?? [],
@@ -65,7 +70,7 @@ function StepsLayoutDesign({ value }: { value: DesignValue }) {
         title: titleText,
         ...(descriptionText ? { description: descriptionText } : {}),
         disabled: step.disabled,
-        children: parseDesign({
+        children: parseDesignCached({
           parentId: id,
           value: children?.[index] as DesignValue,
           context: designContext,
@@ -94,7 +99,7 @@ function StepsLayoutDesign({ value }: { value: DesignValue }) {
         },
       } as StepsSwiperItemProps;
     });
-  }, [actions, children, designContext, fieldProps, id, lang, rawFieldProps]);
+  }, [actions, children, designContext, fieldProps, id, lang, parseDesignCached, rawFieldProps]);
 
   const targetFlexStyle = useMemo<CSSProperties>(() => {
     const { minSize, scroll, ..._flexProps } = flexProps ?? {};
@@ -127,6 +132,7 @@ function StepsLayoutDesign({ value }: { value: DesignValue }) {
   return (
     <DesignFieldWrapper
       id={id}
+      type={value.type}
       fieldActionTypes={fieldActionTypes}
       className={classNames(`${selectorPrefix}-design-field-wrapper`, {
         [`${selectorPrefix}-design-field-wrapper-fill`]: isRootFieldId(id),
@@ -162,7 +168,7 @@ function StepsLayoutDesign({ value }: { value: DesignValue }) {
       </div>
     </DesignFieldWrapper>
   );
-}
+});
 
 /**
  * renderDesign

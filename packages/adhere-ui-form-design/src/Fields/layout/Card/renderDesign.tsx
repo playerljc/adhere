@@ -8,12 +8,17 @@ import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import DroppableContainer from '../../../components/DroppableContainer';
 import type { DesignValue } from '../../../types';
 import { isRootFieldId, normalizeDesignChildren } from '../../../utils';
+import { memoDesignNode } from '../../parse';
 import InternalCard, { type InternalCardLayoutProps } from './InternalCard';
 import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
 const selectorPrefix = `${SELECT_PREFIX}-layout`;
 
-function CardLayoutDesign({ value }: { value: DesignValue }) {
+const CardLayoutDesign = memoDesignNode(function CardLayoutDesign({
+  value,
+}: {
+  value: DesignValue;
+}) {
   const { id, props } = value;
   const { children, styleProps, flexProps, fieldActionTypes } = props;
 
@@ -56,6 +61,7 @@ function CardLayoutDesign({ value }: { value: DesignValue }) {
   return (
     <DesignFieldWrapper
       id={id}
+      type={value.type}
       fieldActionTypes={fieldActionTypes}
       className={classNames(`${selectorPrefix}-design-field-wrapper`, {
         [`${selectorPrefix}-design-field-wrapper-fill`]: isRootFieldId(id),
@@ -80,7 +86,7 @@ function CardLayoutDesign({ value }: { value: DesignValue }) {
       </DroppableContainer>
     </DesignFieldWrapper>
   );
-}
+});
 
 /**
  * renderDesign

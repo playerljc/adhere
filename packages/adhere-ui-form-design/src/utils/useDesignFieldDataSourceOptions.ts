@@ -50,6 +50,16 @@ export function useDesignFieldDataSourceOptions(
   const [dynamicOptions, setDynamicOptions] = useState<DesignFieldDataSourceOption[]>([]);
   const [dynamicLoading, setDynamicLoading] = useState(false);
 
+  const dynamicConfigId = source?.type === 'dynamic' ? source.dynamicConfigId : undefined;
+  const dataSourceConfig = getDesignValue()?.dataSourceConfig;
+  const referencedConfig = useMemo(
+    () =>
+      dynamicConfigId
+        ? findDataSourceItemConfigByDynamicId(getDesignValue(), dynamicConfigId)
+        : undefined,
+    [dynamicConfigId, dataSourceConfig, getDesignValue],
+  );
+
   useEffect(() => {
     if (source?.type !== 'dynamic' || !source.dynamicConfigId) {
       setDynamicOptions([]);
@@ -57,8 +67,7 @@ export function useDesignFieldDataSourceOptions(
       return;
     }
 
-    const root = getDesignValue();
-    const cfg = findDataSourceItemConfigByDynamicId(root, source.dynamicConfigId);
+    const cfg = referencedConfig;
     if (!cfg?.request?.url?.trim()) {
       setDynamicOptions([]);
       setDynamicLoading(false);
@@ -88,7 +97,7 @@ export function useDesignFieldDataSourceOptions(
     return () => {
       cancelled = true;
     };
-  }, [source, getDesignValue]);
+  }, [source, referencedConfig]);
 
   const options = source?.type === 'dynamic' ? dynamicOptions : staticOptions;
   const loading = source?.type === 'dynamic' ? dynamicLoading : false;

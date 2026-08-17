@@ -11,7 +11,7 @@ import { DesignContext } from '../../../Design/Context';
 import { SELECT_PREFIX } from '../../../constant';
 import type { DesignValue, I18nValue, StyleProps } from '../../../types';
 import { resolveI18nText, styleCodeStringToCSSProperties } from '../../../utils';
-import { parseDesign } from '../../parse';
+import { useParseDesignCached } from '../../parse';
 
 export type { StepsStepSettingItem };
 
@@ -46,6 +46,7 @@ const InternalSteps: FC<InternalStepsLayoutProps> = ({
   const context = useContext(DesignContext);
   const { intl } = useContext(ConfigProvider.Context);
   const lang = intl?.lang ?? 'zh_CN';
+  const parseDesignCached = useParseDesignCached();
 
   const currentRef = useRef(rest.current ?? rest.initial ?? 0);
   currentRef.current = rest.current ?? rest.initial ?? 0;
@@ -59,7 +60,7 @@ const InternalSteps: FC<InternalStepsLayoutProps> = ({
       ? itemsFromRender
       : (() => {
           const parsedChildren = (children?.map((_item) =>
-            parseDesign({
+            parseDesignCached({
               parentId: id,
               value: _item,
               context,
@@ -101,7 +102,7 @@ const InternalSteps: FC<InternalStepsLayoutProps> = ({
       contentStyle: { ...(rest.contentStyle ?? {}), ...bodyStyle },
       items: computedItems,
     };
-  }, [children, className, context, id, itemsFromRender, lang, rest, stepItems, style, styleProps]);
+  }, [children, className, context, id, itemsFromRender, lang, parseDesignCached, rest, stepItems, style, styleProps]);
 
   return <Steps.StepsSwiper {...targetProps} />;
 };

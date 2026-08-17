@@ -9,7 +9,7 @@ import { SELECT_PREFIX } from '../../../constant';
 import DesignFieldWrapper from '../../../components/DesignFieldWrapper';
 import type { DesignValue } from '../../../types';
 import { actionsCodeStringToEvents, isRootFieldId, resolveI18nText } from '../../../utils';
-import { parseDesign } from '../../parse';
+import { memoDesignNode, useParseDesignCached } from '../../parse';
 import InternalCollapse, { type InternalCollapseLayoutProps } from './InternalCollapse';
 import { resolveFieldPropsForDesignEditor } from './resolveFieldPropsForDesignEditor';
 
@@ -29,7 +29,11 @@ function normalizeActiveKeyForCollapse(
   return [v];
 }
 
-function CollapseLayoutDesign({ value }: { value: DesignValue }) {
+const CollapseLayoutDesign = memoDesignNode(function CollapseLayoutDesign({
+  value,
+}: {
+  value: DesignValue;
+}) {
   const { id, props } = value;
   const {
     children,
@@ -57,6 +61,7 @@ function CollapseLayoutDesign({ value }: { value: DesignValue }) {
 
   const { intl } = useContext(ConfigProvider.Context);
   const lang = intl?.lang ?? 'zh_CN';
+  const parseDesignCached = useParseDesignCached();
 
   const items = useMemo(() => {
     const _fieldProps = (fieldProps ?? {}) as InternalCollapseLayoutProps;
@@ -70,14 +75,14 @@ function CollapseLayoutDesign({ value }: { value: DesignValue }) {
         destroyOnHidden: panel.destroyOnHidden,
         showArrow: panel.showArrow,
         collapsible: panel.collapsible,
-        children: (parseDesign({
+        children: (parseDesignCached({
           parentId: id,
           value: children?.[index] as DesignValue,
           context: designContext,
         }) ?? null) as ReactNode,
       };
     });
-  }, [children, designContext, fieldProps, id, lang]);
+  }, [children, designContext, fieldProps, id, lang, parseDesignCached]);
 
   const targetFlexStyle = useMemo<CSSProperties>(() => {
     const { minSize, scroll, ..._flexProps } = flexProps ?? {};
@@ -116,6 +121,7 @@ function CollapseLayoutDesign({ value }: { value: DesignValue }) {
   return (
     <DesignFieldWrapper
       id={id}
+      type={value.type}
       fieldActionTypes={fieldActionTypes}
       className={classNames(`${selectorPrefix}-design-field-wrapper`, {
         [`${selectorPrefix}-design-field-wrapper-fill`]: isRootFieldId(id),
@@ -159,7 +165,7 @@ function CollapseLayoutDesign({ value }: { value: DesignValue }) {
       </div>
     </DesignFieldWrapper>
   );
-}
+});
 
 /**
  * renderDesign

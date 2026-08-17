@@ -22,6 +22,8 @@ const Toolbox: FC<ToolboxProps> = ({ toolBox }) => {
         classNames={{
           root: `${selectPrefix}-tabs`,
           header: `${selectPrefix}-tabs-header`,
+          // antd 6：body 对应内容区容器；antd 5 会忽略未知 key
+          body: `${selectPrefix}-tabs-body`,
           content: `${selectPrefix}-tabs-content`,
         }}
         items={[

@@ -163,6 +163,16 @@ export function useDesignPhoneAreaCodeOptions(
   const [dynamicOptions, setDynamicOptions] = useState<PhoneAreaCodeItem[]>([]);
   const [dynamicLoading, setDynamicLoading] = useState(false);
 
+  const dynamicConfigId = source?.type === 'dynamic' ? source.dynamicConfigId : undefined;
+  const dataSourceConfig = getDesignValue()?.dataSourceConfig;
+  const referencedConfig = useMemo(
+    () =>
+      dynamicConfigId
+        ? dataSourceConfig?.find((c) => c.id === dynamicConfigId)
+        : undefined,
+    [dynamicConfigId, dataSourceConfig],
+  );
+
   useEffect(() => {
     if (source?.type !== 'dynamic' || !source.dynamicConfigId) {
       setDynamicOptions([]);
@@ -170,8 +180,7 @@ export function useDesignPhoneAreaCodeOptions(
       return;
     }
 
-    const root = getDesignValue();
-    const cfg = root?.dataSourceConfig?.find((c) => c.id === source.dynamicConfigId);
+    const cfg = referencedConfig;
     if (!cfg?.request?.url?.trim()) {
       setDynamicOptions([]);
       setDynamicLoading(false);
@@ -195,7 +204,7 @@ export function useDesignPhoneAreaCodeOptions(
     return () => {
       cancelled = true;
     };
-  }, [source, getDesignValue]);
+  }, [source, referencedConfig]);
 
   const options = source?.type === 'dynamic' ? dynamicOptions : staticOptions;
   const loading = source?.type === 'dynamic' ? dynamicLoading : false;

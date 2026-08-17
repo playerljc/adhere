@@ -144,6 +144,16 @@ export function useDesignFieldTreeDataSource(
   const [dynamicNodes, setDynamicNodes] = useState<TreeDataNode[]>([]);
   const [dynamicLoading, setDynamicLoading] = useState(false);
 
+  const dynamicConfigId = source?.type === 'dynamic' ? source.dynamicConfigId : undefined;
+  const dataSourceConfig = getDesignValue()?.dataSourceConfig;
+  const referencedConfig = useMemo(
+    () =>
+      dynamicConfigId
+        ? findDataSourceItemConfigByDynamicId(getDesignValue(), dynamicConfigId)
+        : undefined,
+    [dynamicConfigId, dataSourceConfig, getDesignValue],
+  );
+
   useEffect(() => {
     if (source?.type !== 'dynamic' || !source.dynamicConfigId) {
       setDynamicNodes([]);
@@ -151,8 +161,7 @@ export function useDesignFieldTreeDataSource(
       return;
     }
 
-    const root = getDesignValue();
-    const cfg = findDataSourceItemConfigByDynamicId(root, source.dynamicConfigId);
+    const cfg = referencedConfig;
     if (!cfg?.request?.url?.trim()) {
       setDynamicNodes([]);
       setDynamicLoading(false);
@@ -182,7 +191,7 @@ export function useDesignFieldTreeDataSource(
     return () => {
       cancelled = true;
     };
-  }, [source, getDesignValue]);
+  }, [source, referencedConfig]);
 
   const treeData = source?.type === 'dynamic' ? dynamicNodes : staticNodes;
   const loading = source?.type === 'dynamic' ? dynamicLoading : false;

@@ -1,4 +1,4 @@
-import React, { type CSSProperties, type ReactNode, useContext } from 'react';
+import React, { memo, type CSSProperties, type ReactNode, useContext } from 'react';
 
 import { Form } from '@baifendian/adhere-ui-anthoc';
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -18,7 +18,7 @@ import FormItemBridge, { type DesignFormInjectedProps } from './FormItemBridge';
 
 const { Label, Value } = TableGridLayout;
 
-export function LabelDesign({
+export const LabelDesign = memo(function LabelDesign({
   formItemProps,
   styleProps,
   className,
@@ -48,9 +48,9 @@ export function LabelDesign({
       {label}
     </Label>
   );
-}
+});
 
-export function ValueDesign({
+export const ValueDesign = memo(function ValueDesign({
   value: {
     id,
     type,
@@ -136,6 +136,7 @@ export function ValueDesign({
     >
       <DesignFieldWrapper
         id={id}
+        type={type}
         fieldActionTypes={fieldActionTypes}
         style={{ width: '100%' }}
       >
@@ -167,4 +168,4 @@ export function ValueDesign({
       </DesignFieldWrapper>
     </Value>
   );
-}
+}, (prev, next) => prev.value === next.value);

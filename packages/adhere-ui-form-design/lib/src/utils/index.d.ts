@@ -1,7 +1,7 @@
 import { actionsCodeStringToEvents } from './actionsCodeStringToEvents';
 import { computeLabelValueColSpan } from './computeLabelValueColSpan';
 import { deleteDesignValueByIdInChildren, findDesignValueById, findDesignValueByIdToClone, findParentDesignValueById, findParentIdById, genNewName, typeToNamePrefix } from './designValue';
-import { findParentWithChildIndex, flattenDesignChildren } from './designValueTree';
+import { clonePathContainingIds, deleteDesignValueById, findParentWithChildIndex, flattenDesignChildren, mapDesignChildren, updateDesignValueById } from './designValueTree';
 import { findTypeById } from './findTypeById';
 import { formItemToProps } from './formItemToProps';
 import { getDesignFormControlProps } from './getDesignFormControlProps';
@@ -24,7 +24,7 @@ import { toI18nLabel } from './toI18nLabel';
 import { useDesignFieldDataSourceOptions } from './useDesignFieldDataSourceOptions';
 export { createMainProperty, renderMainProperty as renderMainPropertyWithCreate, } from './createMainProperty';
 export type { CreateMainPropertyOptions, GetDefaultFormItemsCtx } from './createMainProperty';
-export { actionsCodeStringToEvents, computeLabelValueColSpan, formItemToProps, getDesignFormControlProps, getLabel, rulesSettingToRules, styleCodeStringToCSSProperties, isLayoutFieldByType, isDesktop, isReactNode, normalizeDesignChildren, findDesignValueById, deleteDesignValueByIdInChildren, findDesignValueByIdToClone, findParentIdById, genNewName, typeToNamePrefix, genRootFieldId, getRootFieldId, isRootFieldId, createDefaultRootDesignValue, hasDesignCanvasUserContent, getLabelByType, getToolBoxItemByType, findTypeById, findParentDesignValueById, findParentWithChildIndex, flattenDesignChildren, useDesignFieldDataSourceOptions, resolveI18nText, isResolvedI18nTextEmpty, omitFieldTip, toI18nLabel, isNoFormFieldByType, isRichEditorHtmlEmpty, RICH_EDITOR_EMPTY_VALIDATOR_CODE, isContainerFieldByType, };
+export { actionsCodeStringToEvents, computeLabelValueColSpan, formItemToProps, getDesignFormControlProps, getLabel, rulesSettingToRules, styleCodeStringToCSSProperties, isLayoutFieldByType, isDesktop, isReactNode, normalizeDesignChildren, findDesignValueById, deleteDesignValueByIdInChildren, findDesignValueByIdToClone, findParentIdById, genNewName, typeToNamePrefix, genRootFieldId, getRootFieldId, isRootFieldId, createDefaultRootDesignValue, hasDesignCanvasUserContent, getLabelByType, getToolBoxItemByType, findTypeById, findParentDesignValueById, findParentWithChildIndex, flattenDesignChildren, mapDesignChildren, updateDesignValueById, deleteDesignValueById, clonePathContainingIds, useDesignFieldDataSourceOptions, resolveI18nText, isResolvedI18nTextEmpty, omitFieldTip, toI18nLabel, isNoFormFieldByType, isRichEditorHtmlEmpty, RICH_EDITOR_EMPTY_VALIDATOR_CODE, isContainerFieldByType, };
 export { mergeMobilePreviewFieldProps, mergeFieldPropsTerminalOverlay, computeFieldPropsOverlayPatch, } from './fieldPropsTerminal';
 export { MOBILE_VIEWPORT_PRESETS, MOBILE_VIEWPORT_DEFAULT_PRESET_ID, getMobileViewportPresetById, getMobileViewportLabel, } from './mobileViewportPresets';
 export type { MobileViewportPreset } from './mobileViewportPresets';

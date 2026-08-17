@@ -4,15 +4,26 @@
 @import './OutlineView/index.less';
 
 .@{prefix-cls}-design-toolbox-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   height: 100%;
   min-height: 0;
+  overflow: hidden;
   background: var(--fd-surface, #fff);
 }
 
 .@{prefix-cls}-design-toolbox-tabs {
+  display: flex !important;
+  flex: 1;
+  flex-direction: column !important;
   height: 100%;
+  min-height: 0;
+  overflow: hidden;
 
-  > .ant-tabs-nav {
+  .ant-tabs-nav,
+  .@{prefix-cls}-design-toolbox-tabs-header {
+    flex-shrink: 0;
     margin: 0;
     padding: 12px 14px 0;
     background: var(--fd-surface, #fff);
@@ -30,14 +41,47 @@
       }
     }
   }
+
+  // antd 5: content-holder；antd 6: body-holder。滚动条落在这一层，避免只裁切不滚动。
+  .ant-tabs-content-holder,
+  .ant-tabs-body-holder,
+  > *:last-child {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden auto;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--fd-design-toolbox-scrollbar-thumb, rgba(15, 23, 42, 0.1));
+      border-radius: 6px;
+    }
+  }
+
+  .ant-tabs-content-holder > .ant-tabs-content,
+  .ant-tabs-body-holder > .ant-tabs-body,
+  .ant-tabs-tabpane,
+  .ant-tabs-body-holder .ant-tabs-content {
+    height: 100%;
+    min-height: 0;
+  }
 }
 
 .@{prefix-cls}-design-toolbox-tabs-header {
   padding: 0;
 }
 
+.@{prefix-cls}-design-toolbox-tabs-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden auto;
+}
+
 .@{prefix-cls}-design-toolbox-tabs-content {
   height: 100%;
+  min-height: 0;
   background: var(--fd-surface, #fff);
 }
 

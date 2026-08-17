@@ -29,7 +29,7 @@ const selectPrefix = `${SELECT_PREFIX}-design-editor`;
 /**
  * DesignEditor
  */
-const DesignEditor: FC<DesignEditorProps> = () => {
+const DesignEditor: FC<DesignEditorProps> = ({ value: valueProp }) => {
   const [form] = Form.useForm();
 
   const context = useContext(DesignContext);
@@ -45,7 +45,7 @@ const DesignEditor: FC<DesignEditorProps> = () => {
     getMenuBarEllipseCount,
   } = context;
 
-  const value = getDesignValue() as DesignValue;
+  const value = (valueProp ?? getDesignValue()) as DesignValue;
   const terminal = getTerminal();
   const isMobilePreview = !isDesktop(terminal);
   const mobilePresetId = getMobileViewportPresetId();
