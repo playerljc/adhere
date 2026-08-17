@@ -14,11 +14,13 @@
       position: absolute;
       bottom: 0;
       left: 0;
+      z-index: 5;
       display: inline-flex;
       flex-direction: row;
       gap: var(--design-field-wrapper-label-gap, 4px);
       align-items: center;
       max-width: 100%;
+      pointer-events: none;
       padding: var(--design-field-wrapper-label-padding, 2px 8px);
       color: var(--design-field-wrapper-label-color, var(--ant-color-text-light-solid, #fff));
       font-size: 11px;
@@ -52,18 +54,28 @@
       }
     }
 
+    // 描边用 outline 而非 border：outline 不参与盒模型，
+    // 悬停/选中时画布不会因为多出边框与预留空间而改变宽高
+    outline-offset: calc(-1 * var(--design-field-wrapper-outline-width, 1.5px));
+
     &:hover {
-      border: var(
+      outline: var(
         --design-field-wrapper-hover-border,
         1.5px dashed rgba(59, 130, 246, 0.35)
       );
     }
 
     &.@{prefix-cls}-design-field-wrapper-active {
-      padding: var(--design-field-wrapper-active-padding, 2px 2px 36px 2px);
-      border: var(
+      outline: var(
         --design-field-wrapper-active-border,
         1.5px solid #3b82f6
+      );
+
+      // 需要底部工具条独占一条不与控件重叠的空间时，把该变量设为 36px 之类的值；
+      // 默认 0 表示工具条浮在控件上，选中前后尺寸完全一致
+      padding-bottom: calc(
+        var(--design-field-wrapper-padding, 4px) +
+          var(--design-field-wrapper-active-reserve-bottom, 0px)
       );
     }
 
