@@ -1,2 +1,0 @@
-var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_AllFields=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.buildRegisterForm=buildRegisterForm,_interopRequireDefault(require("../../../../../../json/AllFields.json"))),_loadTemplateFromJson=require("../utils/loadTemplateFromJson");function buildRegisterForm(e){return(0,_loadTemplateFromJson.loadTemplateFromJson)(_AllFields.default)}
-//# sourceMappingURL=registerForm.js.map

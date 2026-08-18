@@ -1,0 +1,1804 @@
+{
+  "id": "936e5899-a248-40f7-832e-0b6e1bf65316",
+  "type": "flex-layout",
+  "props": {
+    "fieldProps": {
+      "direction": "vertical",
+      "wrap": false,
+      "justifyContent": "flex-start",
+      "alignItems": "stretch",
+      "alignContent": "normal",
+      "gap": 8
+    },
+    "flexProps": {
+      "minSize": true,
+      "scroll": true
+    },
+    "children": [
+      {
+        "id": "48bd58db-7449-437b-998b-b1bb69cf2eee",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "企业信息",
+              "en_US": "Company profile",
+              "pt_PT": "Perfil da empresa",
+              "ar_EG": "بيانات الشركة"
+            }
+          },
+          "flexProps": {
+            "flex": 1,
+            "flexShrink": 1,
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "9867a6d8-2a98-4689-b860-008dc724ec4b",
+              "type": "flex-layout",
+              "props": {
+                "fieldProps": {
+                  "direction": "vertical",
+                  "wrap": false,
+                  "justifyContent": "flex-start",
+                  "alignItems": "stretch",
+                  "alignContent": "normal",
+                  "gap": 12
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "80e94617-de9a-40bb-a8be-7247bb80f847",
+                    "type": "table-grid-layout",
+                    "props": {
+                      "fieldProps": {
+                        "layout": "vertical",
+                        "bordered": false,
+                        "density": "default",
+                        "mode": "normal",
+                        "data": [
+                          {
+                            "name": "g1",
+                            "columnCount": 2,
+                            "colgroup": [
+                              "auto",
+                              "auto"
+                            ],
+                            "data": []
+                          }
+                        ]
+                      },
+                      "flexProps": {
+                        "minSize": true,
+                        "scroll": true
+                      },
+                      "children": [
+                        {
+                          "id": "dcb42185-3850-4287-a360-15f988e0f9a4",
+                          "type": "ant-alert",
+                          "props": {
+                            "formItemProps": {
+                              "noStyle": true
+                            },
+                            "fieldProps": {
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "商务咨询",
+                                "en_US": "Business inquiry",
+                                "pt_PT": "Pedido comercial",
+                                "ar_EG": "استفسار تجاري"
+                              },
+                              "description": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "提交后客户经理将在 1 个工作日内联系您，请尽量填写完整以便评估方案。",
+                                "en_US": "A sales manager will contact you within 1 business day. Please fill in as much as possible.",
+                                "pt_PT": "Um gestor irá contactá-lo em 1 dia útil. Preencha o máximo possível.",
+                                "ar_EG": "سيتواصل معك مدير المبيعات خلال يوم عمل واحد. يرجى تعبئة أكبر قدر ممكن."
+                              },
+                              "type": "info",
+                              "closable": false,
+                              "showIcon": true,
+                              "fill": false
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "b072e618-d41a-4ca1-8da6-ccf616943286",
+                          "type": "ant-input",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "公司名称",
+                                "en_US": "Company name",
+                                "pt_PT": "Nome da empresa",
+                                "ar_EG": "اسم الشركة"
+                              },
+                              "name": "company",
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请输入公司名称",
+                                      "en_US": "Please enter company name",
+                                      "pt_PT": "Introduza o nome da empresa",
+                                      "ar_EG": "يرجى إدخال اسم الشركة"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "type": "text",
+                              "allowClear": true,
+                              "readOnly": false,
+                              "disabled": false,
+                              "variant": "outlined",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入公司全称",
+                                "en_US": "Enter full company name",
+                                "pt_PT": "Introduza o nome completo da empresa",
+                                "ar_EG": "أدخل الاسم الكامل للشركة"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "b0ad544f-6406-4f64-aa92-79f5a4aad87b",
+                          "type": "ant-select",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "所属行业",
+                                "en_US": "Industry",
+                                "pt_PT": "Setor",
+                                "ar_EG": "القطاع"
+                              },
+                              "name": "industry",
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请选择行业",
+                                      "en_US": "Please select industry",
+                                      "pt_PT": "Selecione o setor",
+                                      "ar_EG": "يرجى اختيار القطاع"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "allowClear": false,
+                              "disabled": false,
+                              "defaultActiveFirstOption": true,
+                              "listHeight": 256,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请选择行业",
+                                "en_US": "Select industry",
+                                "pt_PT": "Selecione o setor",
+                                "ar_EG": "اختر القطاع"
+                              },
+                              "selectOptions": {
+                                "type": "static",
+                                "dataSource": [
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "互联网 / 软件",
+                                      "en_US": "Internet / Software",
+                                      "pt_PT": "Internet / Software",
+                                      "ar_EG": "Internet / Software"
+                                    },
+                                    "value": "it",
+                                    "__fdSortId": "fd-sort-allfields-12"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "金融",
+                                      "en_US": "Finance",
+                                      "pt_PT": "Finance",
+                                      "ar_EG": "Finance"
+                                    },
+                                    "value": "finance",
+                                    "__fdSortId": "fd-sort-allfields-13"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "制造",
+                                      "en_US": "Manufacturing",
+                                      "pt_PT": "Manufacturing",
+                                      "ar_EG": "Manufacturing"
+                                    },
+                                    "value": "manufacture",
+                                    "__fdSortId": "fd-sort-allfields-14"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "教育",
+                                      "en_US": "Education",
+                                      "pt_PT": "Education",
+                                      "ar_EG": "Education"
+                                    },
+                                    "value": "edu",
+                                    "__fdSortId": "fd-sort-allfields-15"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "医疗健康",
+                                      "en_US": "Healthcare",
+                                      "pt_PT": "Healthcare",
+                                      "ar_EG": "Healthcare"
+                                    },
+                                    "value": "health",
+                                    "__fdSortId": "fd-sort-allfields-16"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "零售电商",
+                                      "en_US": "Retail / E-commerce",
+                                      "pt_PT": "Retail / E-commerce",
+                                      "ar_EG": "Retail / E-commerce"
+                                    },
+                                    "value": "retail",
+                                    "__fdSortId": "fd-sort-allfields-17"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "其他",
+                                      "en_US": "Other",
+                                      "pt_PT": "Other",
+                                      "ar_EG": "Other"
+                                    },
+                                    "value": "other",
+                                    "__fdSortId": "fd-sort-allfields-18"
+                                  }
+                                ]
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "344b7ae8-d4ca-408c-b63a-d72d355d74a6",
+                          "type": "ant-select",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "企业规模",
+                                "en_US": "Company size",
+                                "pt_PT": "Dimensão da empresa",
+                                "ar_EG": "حجم الشركة"
+                              },
+                              "name": "companySize"
+                            },
+                            "fieldProps": {
+                              "allowClear": false,
+                              "disabled": false,
+                              "defaultActiveFirstOption": true,
+                              "listHeight": 256,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请选择规模",
+                                "en_US": "Select size",
+                                "pt_PT": "Selecione a dimensão",
+                                "ar_EG": "اختر الحجم"
+                              },
+                              "selectOptions": {
+                                "type": "static",
+                                "dataSource": [
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "1–50 人",
+                                      "en_US": "1–50 employees",
+                                      "pt_PT": "1–50 employees",
+                                      "ar_EG": "1–50 employees"
+                                    },
+                                    "value": "s",
+                                    "__fdSortId": "fd-sort-allfields-19"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "51–200 人",
+                                      "en_US": "51–200 employees",
+                                      "pt_PT": "51–200 employees",
+                                      "ar_EG": "51–200 employees"
+                                    },
+                                    "value": "m",
+                                    "__fdSortId": "fd-sort-allfields-20"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "201–1000 人",
+                                      "en_US": "201–1000 employees",
+                                      "pt_PT": "201–1000 employees",
+                                      "ar_EG": "201–1000 employees"
+                                    },
+                                    "value": "l",
+                                    "__fdSortId": "fd-sort-allfields-21"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "1000 人以上",
+                                      "en_US": "1000+ employees",
+                                      "pt_PT": "1000+ employees",
+                                      "ar_EG": "1000+ employees"
+                                    },
+                                    "value": "xl",
+                                    "__fdSortId": "fd-sort-allfields-22"
+                                  }
+                                ]
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "b649c523-785d-43e8-acb4-f2d21389e098",
+                          "type": "ant-cascader",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "所在地区",
+                                "en_US": "Region",
+                                "pt_PT": "Region",
+                                "ar_EG": "Region"
+                              },
+                              "name": "region"
+                            },
+                            "fieldProps": {
+                              "allowClear": false,
+                              "changeOnSelect": false,
+                              "disabled": false,
+                              "multiple": false,
+                              "showCheckedStrategy": "SHOW_PARENT",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "所在地区",
+                                "en_US": "Region",
+                                "pt_PT": "Region",
+                                "ar_EG": "Region"
+                              },
+                              "searchPlaceholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入关键字搜索",
+                                "en_US": "Enter keyword to search",
+                                "pt_PT": "Enter keyword to search",
+                                "ar_EG": "Enter keyword to search"
+                              },
+                              "treeOptions": {
+                                "type": "static",
+                                "treeDataJson": "[\n  {\n    \"value\": \"zhejiang\",\n    \"label\": \"浙江省\",\n    \"children\": [\n      {\n        \"value\": \"hangzhou\",\n        \"label\": \"杭州市\",\n        \"children\": [\n          {\n            \"value\": \"xihu\",\n            \"label\": \"西湖区\"\n          },\n          {\n            \"value\": \"binjiang\",\n            \"label\": \"滨江区\"\n          }\n        ]\n      },\n      {\n        \"value\": \"ningbo\",\n        \"label\": \"宁波市\",\n        \"children\": [\n          {\n            \"value\": \"haishu\",\n            \"label\": \"海曙区\"\n          }\n        ]\n      }\n    ]\n  },\n  {\n    \"value\": \"jiangsu\",\n    \"label\": \"江苏省\",\n    \"children\": [\n      {\n        \"value\": \"nanjing\",\n        \"label\": \"南京市\",\n        \"children\": [\n          {\n            \"value\": \"xuanwu\",\n            \"label\": \"玄武区\"\n          }\n        ]\n      },\n      {\n        \"value\": \"suzhou\",\n        \"label\": \"苏州市\",\n        \"children\": [\n          {\n            \"value\": \"gusu\",\n            \"label\": \"姑苏区\"\n          }\n        ]\n      }\n    ]\n  }\n]"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "a85ce957-0f53-4e0d-a0e1-d8f33aada9f3",
+                          "type": "ant-input",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "公司网站",
+                                "en_US": "Company website",
+                                "pt_PT": "Site da empresa",
+                                "ar_EG": "موقع الشركة"
+                              },
+                              "name": "website"
+                            },
+                            "fieldProps": {
+                              "type": "text",
+                              "allowClear": true,
+                              "readOnly": false,
+                              "disabled": false,
+                              "variant": "outlined",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入公司官网地址",
+                                "en_US": "Enter company website URL",
+                                "pt_PT": "Introduza o URL do site",
+                                "ar_EG": "أدخل رابط موقع الشركة"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        }
+                      ],
+                      "fieldActionTypes": [
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      },
+      {
+        "id": "011a675f-f05b-47ad-9ee7-8e3ac5cf0529",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "联系人",
+              "en_US": "Contact person",
+              "pt_PT": "Pessoa de contacto",
+              "ar_EG": "جهة الاتصال"
+            }
+          },
+          "flexProps": {
+            "flex": 1,
+            "flexShrink": 1,
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "8047d769-05f6-4529-b036-3be87ee408b1",
+              "type": "flex-layout",
+              "props": {
+                "fieldProps": {
+                  "direction": "vertical",
+                  "wrap": false,
+                  "justifyContent": "flex-start",
+                  "alignItems": "stretch",
+                  "alignContent": "normal",
+                  "gap": 12
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "8418b23d-ba48-4420-b056-cf1daac8fa20",
+                    "type": "table-grid-layout",
+                    "props": {
+                      "fieldProps": {
+                        "layout": "vertical",
+                        "bordered": false,
+                        "density": "default",
+                        "mode": "normal",
+                        "data": [
+                          {
+                            "name": "g1",
+                            "columnCount": 2,
+                            "colgroup": [
+                              "auto",
+                              "auto"
+                            ],
+                            "data": []
+                          }
+                        ]
+                      },
+                      "flexProps": {
+                        "minSize": true,
+                        "scroll": true
+                      },
+                      "children": [
+                        {
+                          "id": "31534d6a-955d-49a1-a131-7fa1a0843211",
+                          "type": "ant-input",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "姓名",
+                                "en_US": "Name",
+                                "pt_PT": "Nome",
+                                "ar_EG": "الاسم"
+                              },
+                              "name": "contactName",
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请输入姓名",
+                                      "en_US": "Please enter your name",
+                                      "pt_PT": "Introduza o nome",
+                                      "ar_EG": "يرجى إدخال الاسم"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "type": "text",
+                              "allowClear": true,
+                              "readOnly": false,
+                              "disabled": false,
+                              "variant": "outlined",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入姓名",
+                                "en_US": "Enter your name",
+                                "pt_PT": "Introduza o nome",
+                                "ar_EG": "أدخل الاسم"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "acb30091-4416-40ba-9451-5c6e60a02a9a",
+                          "type": "ant-input",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "职位",
+                                "en_US": "Job title",
+                                "pt_PT": "Cargo",
+                                "ar_EG": "المسمى الوظيفي"
+                              },
+                              "name": "jobTitle"
+                            },
+                            "fieldProps": {
+                              "type": "text",
+                              "allowClear": true,
+                              "readOnly": false,
+                              "disabled": false,
+                              "variant": "outlined",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入您的职位",
+                                "en_US": "Enter your job title",
+                                "pt_PT": "Introduza o seu cargo",
+                                "ar_EG": "أدخل مسماك الوظيفي"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "ba925cf8-6137-43ff-bcb6-845c13c7cbb5",
+                          "type": "ant-select",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "所属部门",
+                                "en_US": "Department",
+                                "pt_PT": "Departamento",
+                                "ar_EG": "القسم"
+                              },
+                              "name": "department"
+                            },
+                            "fieldProps": {
+                              "allowClear": false,
+                              "disabled": false,
+                              "defaultActiveFirstOption": true,
+                              "listHeight": 256,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请选择部门",
+                                "en_US": "Select department",
+                                "pt_PT": "Selecione o departamento",
+                                "ar_EG": "اختر القسم"
+                              },
+                              "selectOptions": {
+                                "type": "static",
+                                "dataSource": [
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "研发中心",
+                                      "en_US": "R&D Center",
+                                      "pt_PT": "R&D Center",
+                                      "ar_EG": "R&D Center"
+                                    },
+                                    "value": "rd",
+                                    "__fdSortId": "fd-sort-allfields-1"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "产品部",
+                                      "en_US": "Product",
+                                      "pt_PT": "Product",
+                                      "ar_EG": "Product"
+                                    },
+                                    "value": "product",
+                                    "__fdSortId": "fd-sort-allfields-2"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "运营部",
+                                      "en_US": "Operations",
+                                      "pt_PT": "Operations",
+                                      "ar_EG": "Operations"
+                                    },
+                                    "value": "ops",
+                                    "__fdSortId": "fd-sort-allfields-3"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "人力资源部",
+                                      "en_US": "Human Resources",
+                                      "pt_PT": "Human Resources",
+                                      "ar_EG": "Human Resources"
+                                    },
+                                    "value": "hr",
+                                    "__fdSortId": "fd-sort-allfields-4"
+                                  }
+                                ]
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "49816e4b-5bbb-4c6c-a270-7ba13bc4e021",
+                          "type": "phone-with-area-code",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "手机号",
+                                "en_US": "Mobile",
+                                "pt_PT": "Telemóvel",
+                                "ar_EG": "الجوال"
+                              },
+                              "name": "phone",
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请输入手机号",
+                                      "en_US": "Please enter mobile number",
+                                      "pt_PT": "Introduza o telemóvel",
+                                      "ar_EG": "يرجى إدخال رقم الجوال"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "defaultCode": "+86",
+                              "allowClear": true,
+                              "disabled": false,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "手机号",
+                                "en_US": "Mobile",
+                                "pt_PT": "Telemóvel",
+                                "ar_EG": "الجوال"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "6ea5904a-9063-46cb-ba41-259d34c76c7e",
+                          "type": "ant-input",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "工作邮箱",
+                                "en_US": "Work email",
+                                "pt_PT": "E-mail profissional",
+                                "ar_EG": "البريد المهني"
+                              },
+                              "name": "email",
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请输入邮箱",
+                                      "en_US": "Please enter email",
+                                      "pt_PT": "Introduza o e-mail",
+                                      "ar_EG": "يرجى إدخال البريد الإلكتروني"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "pattern",
+                                  "config": {
+                                    "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请输入有效的邮箱地址",
+                                      "en_US": "Please enter a valid email address",
+                                      "pt_PT": "Introduza um e-mail válido",
+                                      "ar_EG": "يرجى إدخال بريد إلكتروني صالح"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "type": "email",
+                              "allowClear": true,
+                              "readOnly": false,
+                              "disabled": false,
+                              "variant": "outlined",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入邮箱地址",
+                                "en_US": "Enter email address",
+                                "pt_PT": "Introduza o endereço de e-mail",
+                                "ar_EG": "أدخل عنوان البريد الإلكتروني"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "d6012331-1e7a-41eb-a0a3-7e8c8d4a45e2",
+                          "type": "ant-input",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "微信号",
+                                "en_US": "WeChat ID",
+                                "pt_PT": "WeChat",
+                                "ar_EG": "WeChat"
+                              },
+                              "name": "wechat"
+                            },
+                            "fieldProps": {
+                              "type": "text",
+                              "allowClear": true,
+                              "readOnly": false,
+                              "disabled": false,
+                              "variant": "outlined",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "选填，便于即时沟通",
+                                "en_US": "Optional, for instant messaging",
+                                "pt_PT": "Opcional, para contacto imediato",
+                                "ar_EG": "اختياري للتواصل الفوري"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        }
+                      ],
+                      "fieldActionTypes": [
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      },
+      {
+        "id": "510b7103-ed0b-4cda-b4da-34dfd9579107",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "咨询内容",
+              "en_US": "Inquiry details",
+              "pt_PT": "Detalhes do pedido",
+              "ar_EG": "تفاصيل الاستفسار"
+            }
+          },
+          "flexProps": {
+            "flex": 1,
+            "flexShrink": 1,
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "6d587c65-eb2f-44f8-9f66-1a2549ddcc2a",
+              "type": "flex-layout",
+              "props": {
+                "fieldProps": {
+                  "direction": "vertical",
+                  "wrap": false,
+                  "justifyContent": "flex-start",
+                  "alignItems": "stretch",
+                  "alignContent": "normal",
+                  "gap": 12
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "fbcc1022-b897-4a5b-85d4-3ffe42374721",
+                    "type": "table-grid-layout",
+                    "props": {
+                      "fieldProps": {
+                        "layout": "vertical",
+                        "bordered": false,
+                        "density": "default",
+                        "mode": "normal",
+                        "data": [
+                          {
+                            "name": "g1",
+                            "columnCount": 2,
+                            "colgroup": [
+                              "auto",
+                              "auto"
+                            ],
+                            "data": []
+                          }
+                        ]
+                      },
+                      "flexProps": {
+                        "minSize": true,
+                        "scroll": true
+                      },
+                      "children": [
+                        {
+                          "id": "b350ed16-c0bb-48ae-aca7-2758f822d84e",
+                          "type": "ant-radio-group",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "咨询类型",
+                                "en_US": "Inquiry type",
+                                "pt_PT": "Tipo de pedido",
+                                "ar_EG": "نوع الاستفسار"
+                              },
+                              "name": "inquiryType",
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请选择咨询类型",
+                                      "en_US": "Please select inquiry type",
+                                      "pt_PT": "Selecione o tipo",
+                                      "ar_EG": "يرجى اختيار النوع"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "optionType": "button",
+                              "buttonStyle": "outline",
+                              "block": false,
+                              "optionWrap": false,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "咨询类型",
+                                "en_US": "Inquiry type",
+                                "pt_PT": "Tipo de pedido",
+                                "ar_EG": "نوع الاستفسار"
+                              },
+                              "selectOptions": {
+                                "type": "static",
+                                "dataSource": [
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "产品咨询",
+                                      "en_US": "Product inquiry",
+                                      "pt_PT": "Product inquiry",
+                                      "ar_EG": "Product inquiry"
+                                    },
+                                    "value": "product",
+                                    "__fdSortId": "fd-sort-allfields-28"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "商务合作",
+                                      "en_US": "Business partnership",
+                                      "pt_PT": "Business partnership",
+                                      "ar_EG": "Business partnership"
+                                    },
+                                    "value": "partner",
+                                    "__fdSortId": "fd-sort-allfields-29"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "技术支持",
+                                      "en_US": "Technical support",
+                                      "pt_PT": "Technical support",
+                                      "ar_EG": "Technical support"
+                                    },
+                                    "value": "support",
+                                    "__fdSortId": "fd-sort-allfields-30"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "采购招标",
+                                      "en_US": "Procurement",
+                                      "pt_PT": "Procurement",
+                                      "ar_EG": "Procurement"
+                                    },
+                                    "value": "purchase",
+                                    "__fdSortId": "fd-sort-allfields-31"
+                                  }
+                                ]
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "dc01fa21-83c1-4f96-9117-620b30351a01",
+                          "type": "ant-select",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "预算范围",
+                                "en_US": "Budget range",
+                                "pt_PT": "Orçamento",
+                                "ar_EG": "نطاق الميزانية"
+                              },
+                              "name": "budget"
+                            },
+                            "fieldProps": {
+                              "allowClear": false,
+                              "disabled": false,
+                              "defaultActiveFirstOption": true,
+                              "listHeight": 256,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请选择预算",
+                                "en_US": "Select budget",
+                                "pt_PT": "Selecione o orçamento",
+                                "ar_EG": "اختر الميزانية"
+                              },
+                              "selectOptions": {
+                                "type": "static",
+                                "dataSource": [
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "10 万以内",
+                                      "en_US": "Under 100k",
+                                      "pt_PT": "Under 100k",
+                                      "ar_EG": "Under 100k"
+                                    },
+                                    "value": "lt10",
+                                    "__fdSortId": "fd-sort-allfields-23"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "10–50 万",
+                                      "en_US": "100k–500k",
+                                      "pt_PT": "100k–500k",
+                                      "ar_EG": "100k–500k"
+                                    },
+                                    "value": "10to50",
+                                    "__fdSortId": "fd-sort-allfields-24"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "50–100 万",
+                                      "en_US": "500k–1M",
+                                      "pt_PT": "500k–1M",
+                                      "ar_EG": "500k–1M"
+                                    },
+                                    "value": "50to100",
+                                    "__fdSortId": "fd-sort-allfields-25"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "100 万以上",
+                                      "en_US": "Over 1M",
+                                      "pt_PT": "Over 1M",
+                                      "ar_EG": "Over 1M"
+                                    },
+                                    "value": "gt100",
+                                    "__fdSortId": "fd-sort-allfields-26"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "暂不确定",
+                                      "en_US": "Not sure yet",
+                                      "pt_PT": "Not sure yet",
+                                      "ar_EG": "Not sure yet"
+                                    },
+                                    "value": "unknown",
+                                    "__fdSortId": "fd-sort-allfields-27"
+                                  }
+                                ]
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "f117fc67-0606-4fee-8e48-db798dde5390",
+                          "type": "ant-date-picker",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "期望上线日期",
+                                "en_US": "Expected go-live date",
+                                "pt_PT": "Data prevista de lançamento",
+                                "ar_EG": "تاريخ الإطلاق المتوقع"
+                              },
+                              "name": "expectedDate"
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "format": "YYYY-MM-DD",
+                              "showTime": false,
+                              "allowClear": true,
+                              "isBirthday": false,
+                              "dateBoundMode": "",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "期望上线日期",
+                                "en_US": "Expected go-live date",
+                                "pt_PT": "Data prevista de lançamento",
+                                "ar_EG": "تاريخ الإطلاق المتوقع"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "947961c1-cceb-494a-b16d-bacd85fdde21",
+                          "type": "ant-checkbox-group",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "关注产品",
+                                "en_US": "Products of interest",
+                                "pt_PT": "Produtos de interesse",
+                                "ar_EG": "المنتجات محل الاهتمام"
+                              },
+                              "name": "products",
+                              "colSpan": 2
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "optionWrap": false,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "关注产品",
+                                "en_US": "Products of interest",
+                                "pt_PT": "Produtos de interesse",
+                                "ar_EG": "المنتجات محل الاهتمام"
+                              },
+                              "selectOptions": {
+                                "type": "static",
+                                "dataSource": [
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "表单设计器",
+                                      "en_US": "Form designer",
+                                      "pt_PT": "Form designer",
+                                      "ar_EG": "Form designer"
+                                    },
+                                    "value": "form-design",
+                                    "__fdSortId": "fd-sort-allfields-32"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "低代码平台",
+                                      "en_US": "Low-code platform",
+                                      "pt_PT": "Low-code platform",
+                                      "ar_EG": "Low-code platform"
+                                    },
+                                    "value": "lowcode",
+                                    "__fdSortId": "fd-sort-allfields-33"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "数据中台",
+                                      "en_US": "Data platform",
+                                      "pt_PT": "Data platform",
+                                      "ar_EG": "Data platform"
+                                    },
+                                    "value": "data",
+                                    "__fdSortId": "fd-sort-allfields-34"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "移动端组件",
+                                      "en_US": "Mobile components",
+                                      "pt_PT": "Mobile components",
+                                      "ar_EG": "Mobile components"
+                                    },
+                                    "value": "mobile",
+                                    "__fdSortId": "fd-sort-allfields-35"
+                                  }
+                                ]
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "d1a20e55-12fa-4c39-a75a-e0a66c65b0b0",
+                          "type": "ant-textarea",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "需求说明",
+                                "en_US": "Requirement details",
+                                "pt_PT": "Descrição da necessidade",
+                                "ar_EG": "تفاصيل الاحتياج"
+                              },
+                              "name": "message",
+                              "colSpan": 2,
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请填写需求说明",
+                                      "en_US": "Please enter requirement details",
+                                      "pt_PT": "Introduza a descrição",
+                                      "ar_EG": "يرجى إدخال التفاصيل"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "allowClear": true,
+                              "readOnly": false,
+                              "disabled": false,
+                              "showCount": true,
+                              "autoSize": true,
+                              "variant": "outlined",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请描述业务场景、现有系统和期望效果",
+                                "en_US": "Describe the scenario, current systems, and expected outcome",
+                                "pt_PT": "Descreva o cenário, sistemas atuais e resultado esperado",
+                                "ar_EG": "صف السيناريو والأنظمة الحالية والنتيجة المتوقعة"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "f7c38659-1635-4928-a935-61c84430e407",
+                          "type": "ant-file-upload",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "value": [],
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "相关材料",
+                                "en_US": "Attachments",
+                                "pt_PT": "Anexos",
+                                "ar_EG": "مرفقات"
+                              },
+                              "name": "attachments",
+                              "colSpan": 2
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "accept": "",
+                              "multiple": true,
+                              "listType": "text",
+                              "showUploadList": true,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "相关材料",
+                                "en_US": "Attachments",
+                                "pt_PT": "Anexos",
+                                "ar_EG": "مرفقات"
+                              },
+                              "uploadDataSource": {
+                                "type": "dynamic"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        }
+                      ],
+                      "fieldActionTypes": [
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      },
+      {
+        "id": "df489899-a1dd-4940-9fbf-9defffde9d78",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "联系偏好",
+              "en_US": "Contact preferences",
+              "pt_PT": "Preferências de contacto",
+              "ar_EG": "تفضيلات التواصل"
+            }
+          },
+          "flexProps": {
+            "flex": 1,
+            "flexShrink": 1,
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "812a9a0f-4505-4bbc-a763-81eb9c48ac90",
+              "type": "flex-layout",
+              "props": {
+                "fieldProps": {
+                  "direction": "vertical",
+                  "wrap": false,
+                  "justifyContent": "flex-start",
+                  "alignItems": "stretch",
+                  "alignContent": "normal",
+                  "gap": 12
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "ed75e539-14a6-4125-807e-4cda29c13ffd",
+                    "type": "table-grid-layout",
+                    "props": {
+                      "fieldProps": {
+                        "layout": "vertical",
+                        "bordered": false,
+                        "density": "default",
+                        "mode": "normal",
+                        "data": [
+                          {
+                            "name": "g1",
+                            "columnCount": 2,
+                            "colgroup": [
+                              "auto",
+                              "auto"
+                            ],
+                            "data": []
+                          }
+                        ]
+                      },
+                      "flexProps": {
+                        "minSize": true,
+                        "scroll": true
+                      },
+                      "children": [
+                        {
+                          "id": "d0ecd6b5-e573-4237-8b4e-9e1942e5336c",
+                          "type": "ant-radio-group",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "偏好联系方式",
+                                "en_US": "Preferred contact method",
+                                "pt_PT": "Método de contacto preferido",
+                                "ar_EG": "طريقة التواصل المفضلة"
+                              },
+                              "name": "contactMethod"
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "optionType": "default",
+                              "buttonStyle": "outline",
+                              "block": false,
+                              "optionWrap": false,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "偏好联系方式",
+                                "en_US": "Preferred contact method",
+                                "pt_PT": "Método de contacto preferido",
+                                "ar_EG": "طريقة التواصل المفضلة"
+                              },
+                              "selectOptions": {
+                                "type": "static",
+                                "dataSource": [
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "电话",
+                                      "en_US": "Phone",
+                                      "pt_PT": "Telefone",
+                                      "ar_EG": "هاتف"
+                                    },
+                                    "value": "phone"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "邮件",
+                                      "en_US": "Email",
+                                      "pt_PT": "E-mail",
+                                      "ar_EG": "بريد"
+                                    },
+                                    "value": "email"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "微信",
+                                      "en_US": "WeChat",
+                                      "pt_PT": "WeChat",
+                                      "ar_EG": "WeChat"
+                                    },
+                                    "value": "wechat"
+                                  }
+                                ]
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "41ef8d1e-4c6a-403f-a29d-ca46c02479bf",
+                          "type": "ant-time-range-picker",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "方便联系时段",
+                                "en_US": "Preferred time window",
+                                "pt_PT": "Horário preferido",
+                                "ar_EG": "الفترة المناسبة"
+                              },
+                              "name": "preferredTime"
+                            },
+                            "fieldProps": {
+                              "format": "HH:mm:ss",
+                              "allowClear": true,
+                              "disabled": false,
+                              "minuteStep": 1,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "方便联系时段",
+                                "en_US": "Preferred time window",
+                                "pt_PT": "Horário preferido",
+                                "ar_EG": "الفترة المناسبة"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "cb31aeba-1f82-45f1-b85f-053234b7137a",
+                          "type": "ant-switch",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "checked",
+                              "value": false,
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "接受上门演示",
+                                "en_US": "Accept on-site demo",
+                                "pt_PT": "Aceitar demonstração presencial",
+                                "ar_EG": "قبول عرض ميداني"
+                              },
+                              "name": "acceptVisit"
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "loading": false,
+                              "size": "default",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "接受上门演示",
+                                "en_US": "Accept on-site demo",
+                                "pt_PT": "Aceitar demonstração presencial",
+                                "ar_EG": "قبول عرض ميداني"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "30751225-8f6e-4765-9587-11e2ed9be935",
+                          "type": "ant-checkbox",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "checked",
+                              "value": false,
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "已阅读并同意隐私政策",
+                                "en_US": "I agree to the privacy policy",
+                                "pt_PT": "Aceito a política de privacidade",
+                                "ar_EG": "أوافق على سياسة الخصوصية"
+                              },
+                              "name": "agreePrivacy",
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请同意隐私政策",
+                                      "en_US": "Please agree to the privacy policy",
+                                      "pt_PT": "Aceite a política de privacidade",
+                                      "ar_EG": "يرجى الموافقة على سياسة الخصوصية"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "indeterminate": false,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "已阅读并同意隐私政策",
+                                "en_US": "I agree to the privacy policy",
+                                "pt_PT": "Aceito a política de privacidade",
+                                "ar_EG": "أوافق على سياسة الخصوصية"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "b6c0a21a-acaa-4ff6-8ca1-9199fe5c6c8e",
+                          "type": "ant-submit-button",
+                          "props": {
+                            "formItemProps": {
+                              "noStyle": true
+                            },
+                            "fieldProps": {
+                              "children": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "提交咨询",
+                                "en_US": "Submit inquiry",
+                                "pt_PT": "Enviar pedido",
+                                "ar_EG": "إرسال الاستفسار"
+                              },
+                              "type": "primary",
+                              "shape": "default",
+                              "size": "middle",
+                              "htmlType": "submit",
+                              "ghost": false,
+                              "danger": false,
+                              "loading": false,
+                              "disabled": false,
+                              "block": true,
+                              "fill": false
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        }
+                      ],
+                      "fieldActionTypes": [
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      }
+    ],
+    "fieldActionTypes": []
+  }
+}

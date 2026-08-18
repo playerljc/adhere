@@ -1,0 +1,963 @@
+{
+  "id": "b4aacc4f-0af6-4732-ba05-1b62a1af9582",
+  "type": "flex-layout",
+  "props": {
+    "fieldProps": {
+      "direction": "vertical",
+      "wrap": false,
+      "justifyContent": "flex-start",
+      "alignItems": "stretch",
+      "alignContent": "normal",
+      "gap": 8
+    },
+    "flexProps": {
+      "minSize": true,
+      "scroll": true
+    },
+    "children": [
+      {
+        "id": "69de4525-4bca-40de-a7ad-c8f5fabf88f8",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "答题人信息",
+              "en_US": "Respondent",
+              "pt_PT": "Respondent",
+              "ar_EG": "Respondent"
+            }
+          },
+          "flexProps": {
+            "flex": 1,
+            "flexShrink": 1,
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "a199938c-abdb-44e1-92f2-86adf37cf774",
+              "type": "table-grid-layout",
+              "props": {
+                "fieldProps": {
+                  "layout": "vertical",
+                  "bordered": false,
+                  "density": "default",
+                  "mode": "normal",
+                  "data": [
+                    {
+                      "name": "g1",
+                      "columnCount": 2,
+                      "colgroup": [
+                        "auto",
+                        "auto"
+                      ],
+                      "data": []
+                    }
+                  ]
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "84062866-a80a-4753-9a4b-267eb3c717e9",
+                    "type": "ant-alert",
+                    "props": {
+                      "formItemProps": {
+                        "noStyle": true
+                      },
+                      "fieldProps": {
+                        "message": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "产品体验问卷",
+                          "en_US": "Product experience survey",
+                          "pt_PT": "Product experience survey",
+                          "ar_EG": "Product experience survey"
+                        },
+                        "description": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "大约需要 3 分钟。结果仅用于改进产品，不会用于营销推销。",
+                          "en_US": "Takes about 3 minutes. Results are used for product improvement only.",
+                          "pt_PT": "Takes about 3 minutes. Results are used for product improvement only.",
+                          "ar_EG": "Takes about 3 minutes. Results are used for product improvement only."
+                        },
+                        "type": "info",
+                        "closable": false,
+                        "showIcon": true,
+                        "fill": false
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "b8af0146-368b-4140-9754-409495cf3131",
+                    "type": "ant-radio-group",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "您的角色",
+                          "en_US": "Your role",
+                          "pt_PT": "Your role",
+                          "ar_EG": "Your role"
+                        },
+                        "name": "role"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "optionType": "default",
+                        "buttonStyle": "outline",
+                        "block": false,
+                        "optionWrap": false,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "您的角色",
+                          "en_US": "Your role",
+                          "pt_PT": "Your role",
+                          "ar_EG": "Your role"
+                        },
+                        "selectOptions": {
+                          "type": "static",
+                          "dataSource": [
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "业务人员",
+                                "en_US": "Business user",
+                                "pt_PT": "Business user",
+                                "ar_EG": "Business user"
+                              },
+                              "value": "biz",
+                              "__fdSortId": "fd-sort-allfields-58"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "开发人员",
+                                "en_US": "Developer",
+                                "pt_PT": "Developer",
+                                "ar_EG": "Developer"
+                              },
+                              "value": "dev",
+                              "__fdSortId": "fd-sort-allfields-59"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "管理员",
+                                "en_US": "Administrator",
+                                "pt_PT": "Administrator",
+                                "ar_EG": "Administrator"
+                              },
+                              "value": "admin",
+                              "__fdSortId": "fd-sort-allfields-60"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "实施顾问",
+                                "en_US": "Consultant",
+                                "pt_PT": "Consultant",
+                                "ar_EG": "Consultant"
+                              },
+                              "value": "consultant",
+                              "__fdSortId": "fd-sort-allfields-61"
+                            }
+                          ]
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "d7f353a0-7827-4d9d-b3ef-00a05e9b09cd",
+                    "type": "ant-segmented",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "使用时长",
+                          "en_US": "Usage duration",
+                          "pt_PT": "Usage duration",
+                          "ar_EG": "Usage duration"
+                        },
+                        "name": "tenure"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "block": false,
+                        "orientation": "horizontal",
+                        "size": "medium",
+                        "shape": "default",
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "使用时长",
+                          "en_US": "Usage duration",
+                          "pt_PT": "Usage duration",
+                          "ar_EG": "Usage duration"
+                        },
+                        "selectOptions": {
+                          "type": "static",
+                          "dataSource": [
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "不到 1 个月",
+                                "en_US": "Less than 1 month",
+                                "pt_PT": "Less than 1 month",
+                                "ar_EG": "Less than 1 month"
+                              },
+                              "value": "lt1m",
+                              "__fdSortId": "fd-sort-allfields-55"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "1–6 个月",
+                                "en_US": "1–6 months",
+                                "pt_PT": "1–6 months",
+                                "ar_EG": "1–6 months"
+                              },
+                              "value": "1to6m",
+                              "__fdSortId": "fd-sort-allfields-56"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "半年以上",
+                                "en_US": "Over 6 months",
+                                "pt_PT": "Over 6 months",
+                                "ar_EG": "Over 6 months"
+                              },
+                              "value": "gt6m",
+                              "__fdSortId": "fd-sort-allfields-57"
+                            }
+                          ]
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "b89bdf8c-8abd-470c-9209-da87f554bcdd",
+                    "type": "ant-select",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "所在部门",
+                          "en_US": "Department",
+                          "pt_PT": "Department",
+                          "ar_EG": "Department"
+                        },
+                        "name": "department"
+                      },
+                      "fieldProps": {
+                        "allowClear": false,
+                        "disabled": false,
+                        "defaultActiveFirstOption": true,
+                        "listHeight": 256,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "所在部门",
+                          "en_US": "Department",
+                          "pt_PT": "Department",
+                          "ar_EG": "Department"
+                        },
+                        "selectOptions": {
+                          "type": "static",
+                          "dataSource": [
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "研发中心",
+                                "en_US": "R&D Center",
+                                "pt_PT": "R&D Center",
+                                "ar_EG": "R&D Center"
+                              },
+                              "value": "rd",
+                              "__fdSortId": "fd-sort-allfields-1"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "产品部",
+                                "en_US": "Product",
+                                "pt_PT": "Product",
+                                "ar_EG": "Product"
+                              },
+                              "value": "product",
+                              "__fdSortId": "fd-sort-allfields-2"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "运营部",
+                                "en_US": "Operations",
+                                "pt_PT": "Operations",
+                                "ar_EG": "Operations"
+                              },
+                              "value": "ops",
+                              "__fdSortId": "fd-sort-allfields-3"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "人力资源部",
+                                "en_US": "Human Resources",
+                                "pt_PT": "Human Resources",
+                                "ar_EG": "Human Resources"
+                              },
+                              "value": "hr",
+                              "__fdSortId": "fd-sort-allfields-4"
+                            }
+                          ]
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "f0454709-f81d-4b9b-9c72-e0bcb2f0339f",
+                    "type": "ant-radio-group",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "是否首次使用本产品",
+                          "en_US": "First-time user",
+                          "pt_PT": "First-time user",
+                          "ar_EG": "First-time user"
+                        },
+                        "name": "firstUse"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "optionType": "button",
+                        "buttonStyle": "outline",
+                        "block": false,
+                        "optionWrap": false,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "是否首次使用本产品",
+                          "en_US": "First-time user",
+                          "pt_PT": "First-time user",
+                          "ar_EG": "First-time user"
+                        },
+                        "selectOptions": {
+                          "type": "static",
+                          "dataSource": [
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "是",
+                                "en_US": "Yes",
+                                "pt_PT": "Yes",
+                                "ar_EG": "Yes"
+                              },
+                              "value": "yes",
+                              "__fdSortId": "fd-sort-allfields-77"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "否",
+                                "en_US": "No",
+                                "pt_PT": "No",
+                                "ar_EG": "No"
+                              },
+                              "value": "no",
+                              "__fdSortId": "fd-sort-allfields-78"
+                            }
+                          ]
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      },
+      {
+        "id": "503b04f4-fb1a-46f1-afbd-c54bbc278474",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "体验评价",
+              "en_US": "Experience",
+              "pt_PT": "Experience",
+              "ar_EG": "Experience"
+            }
+          },
+          "flexProps": {
+            "flex": 1,
+            "flexShrink": 1,
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "17235dbe-61fa-45be-ba2b-ee383919df20",
+              "type": "table-grid-layout",
+              "props": {
+                "fieldProps": {
+                  "layout": "vertical",
+                  "bordered": false,
+                  "density": "default",
+                  "mode": "normal",
+                  "data": [
+                    {
+                      "name": "g1",
+                      "columnCount": 2,
+                      "colgroup": [
+                        "auto",
+                        "auto"
+                      ],
+                      "data": []
+                    }
+                  ]
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "89453457-6164-44d6-ae19-ec06dce82440",
+                    "type": "ant-rate",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "整体推荐意愿",
+                          "en_US": "Likelihood to recommend",
+                          "pt_PT": "Likelihood to recommend",
+                          "ar_EG": "Likelihood to recommend"
+                        },
+                        "name": "nps"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "allowHalf": false,
+                        "count": 5,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "整体推荐意愿",
+                          "en_US": "Likelihood to recommend",
+                          "pt_PT": "Likelihood to recommend",
+                          "ar_EG": "Likelihood to recommend"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "9469186b-d85a-4d28-b39b-884e0420a41f",
+                    "type": "ant-slider",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "value": 0,
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "易用程度",
+                          "en_US": "Ease of use",
+                          "pt_PT": "Ease of use",
+                          "ar_EG": "Ease of use"
+                        },
+                        "name": "easeOfUse"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "keyboard": true,
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "orientation": "horizontal",
+                        "reverse": false,
+                        "dots": false,
+                        "included": true,
+                        "range": false,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "易用程度",
+                          "en_US": "Ease of use",
+                          "pt_PT": "Ease of use",
+                          "ar_EG": "Ease of use"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "b430d327-d74a-4f95-afe6-540c5dbf0677",
+                    "type": "ant-rate",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "稳定性",
+                          "en_US": "Stability",
+                          "pt_PT": "Stability",
+                          "ar_EG": "Stability"
+                        },
+                        "name": "stability"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "allowHalf": false,
+                        "count": 5,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "稳定性",
+                          "en_US": "Stability",
+                          "pt_PT": "Stability",
+                          "ar_EG": "Stability"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "1a1a9917-6df8-4297-ada2-a6f7f2bb3d18",
+                    "type": "ant-rate",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "性能体验",
+                          "en_US": "Performance",
+                          "pt_PT": "Performance",
+                          "ar_EG": "Performance"
+                        },
+                        "name": "performance"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "allowHalf": false,
+                        "count": 5,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "性能体验",
+                          "en_US": "Performance",
+                          "pt_PT": "Performance",
+                          "ar_EG": "Performance"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "a4b14b4b-6ffa-4909-b7de-d3ef584fa6e9",
+                    "type": "ant-checkbox-group",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "最有价值的能力",
+                          "en_US": "Most valuable features",
+                          "pt_PT": "Most valuable features",
+                          "ar_EG": "Most valuable features"
+                        },
+                        "name": "lovedFeatures",
+                        "colSpan": 2
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "optionWrap": false,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "最有价值的能力",
+                          "en_US": "Most valuable features",
+                          "pt_PT": "Most valuable features",
+                          "ar_EG": "Most valuable features"
+                        },
+                        "selectOptions": {
+                          "type": "static",
+                          "dataSource": [
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "拖拽设计",
+                                "en_US": "Drag-and-drop design",
+                                "pt_PT": "Drag-and-drop design",
+                                "ar_EG": "Drag-and-drop design"
+                              },
+                              "value": "dnd",
+                              "__fdSortId": "fd-sort-allfields-62"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "数据源联动",
+                                "en_US": "Data source binding",
+                                "pt_PT": "Data source binding",
+                                "ar_EG": "Data source binding"
+                              },
+                              "value": "datasource",
+                              "__fdSortId": "fd-sort-allfields-63"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "校验规则",
+                                "en_US": "Validation rules",
+                                "pt_PT": "Validation rules",
+                                "ar_EG": "Validation rules"
+                              },
+                              "value": "rules",
+                              "__fdSortId": "fd-sort-allfields-64"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "移动端适配",
+                                "en_US": "Mobile layout",
+                                "pt_PT": "Mobile layout",
+                                "ar_EG": "Mobile layout"
+                              },
+                              "value": "mobile",
+                              "__fdSortId": "fd-sort-allfields-65"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "模板库",
+                                "en_US": "Template library",
+                                "pt_PT": "Template library",
+                                "ar_EG": "Template library"
+                              },
+                              "value": "template",
+                              "__fdSortId": "fd-sort-allfields-66"
+                            }
+                          ]
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "4df2c3ee-a76e-4f94-842f-338068fddb97",
+                    "type": "ant-radio-group",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "希望如何接收更新",
+                          "en_US": "Preferred update channel",
+                          "pt_PT": "Preferred update channel",
+                          "ar_EG": "Preferred update channel"
+                        },
+                        "name": "notifyChannel"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "optionType": "default",
+                        "buttonStyle": "outline",
+                        "block": false,
+                        "optionWrap": false,
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "希望如何接收更新",
+                          "en_US": "Preferred update channel",
+                          "pt_PT": "Preferred update channel",
+                          "ar_EG": "Preferred update channel"
+                        },
+                        "selectOptions": {
+                          "type": "static",
+                          "dataSource": [
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "邮件",
+                                "en_US": "Email",
+                                "pt_PT": "Email",
+                                "ar_EG": "Email"
+                              },
+                              "value": "email",
+                              "__fdSortId": "fd-sort-allfields-5"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "短信",
+                                "en_US": "SMS",
+                                "pt_PT": "SMS",
+                                "ar_EG": "SMS"
+                              },
+                              "value": "sms",
+                              "__fdSortId": "fd-sort-allfields-6"
+                            },
+                            {
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "站内信",
+                                "en_US": "In-app Message",
+                                "pt_PT": "In-app Message",
+                                "ar_EG": "In-app Message"
+                              },
+                              "value": "inbox",
+                              "__fdSortId": "fd-sort-allfields-7"
+                            }
+                          ]
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "348a2a31-164e-4a59-83ea-4001fabc1642",
+                    "type": "ant-switch",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "checked",
+                        "value": false,
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "愿意接受回访",
+                          "en_US": "Accept follow-up interview",
+                          "pt_PT": "Accept follow-up interview",
+                          "ar_EG": "Accept follow-up interview"
+                        },
+                        "name": "followUp"
+                      },
+                      "fieldProps": {
+                        "disabled": false,
+                        "loading": false,
+                        "size": "default",
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "愿意接受回访",
+                          "en_US": "Accept follow-up interview",
+                          "pt_PT": "Accept follow-up interview",
+                          "ar_EG": "Accept follow-up interview"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "0ffd5a9f-70cc-4344-a56e-3bbf6be78308",
+                    "type": "ant-textarea",
+                    "props": {
+                      "formItemProps": {
+                        "require": false,
+                        "hidden": false,
+                        "noStyle": false,
+                        "validateFirst": false,
+                        "validateTrigger": "onChange",
+                        "valuePropName": "value",
+                        "label": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "最想改进的一点",
+                          "en_US": "Top improvement",
+                          "pt_PT": "Top improvement",
+                          "ar_EG": "Top improvement"
+                        },
+                        "name": "suggestion",
+                        "colSpan": 2
+                      },
+                      "fieldProps": {
+                        "allowClear": true,
+                        "readOnly": false,
+                        "disabled": false,
+                        "showCount": true,
+                        "autoSize": true,
+                        "variant": "outlined",
+                        "fill": true,
+                        "placeholder": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "最想改进的一点",
+                          "en_US": "Top improvement",
+                          "pt_PT": "Top improvement",
+                          "ar_EG": "Top improvement"
+                        }
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  },
+                  {
+                    "id": "7ca8e3f6-e47d-4f95-8e31-46d4710f07ed",
+                    "type": "ant-submit-button",
+                    "props": {
+                      "formItemProps": {
+                        "noStyle": true
+                      },
+                      "fieldProps": {
+                        "children": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "提交问卷",
+                          "en_US": "Submit survey",
+                          "pt_PT": "Submit survey",
+                          "ar_EG": "Submit survey"
+                        },
+                        "type": "primary",
+                        "shape": "default",
+                        "size": "middle",
+                        "htmlType": "submit",
+                        "ghost": false,
+                        "danger": false,
+                        "loading": false,
+                        "disabled": false,
+                        "block": true,
+                        "fill": false
+                      },
+                      "fieldActionTypes": [
+                        "copy",
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      }
+    ],
+    "fieldActionTypes": []
+  }
+}

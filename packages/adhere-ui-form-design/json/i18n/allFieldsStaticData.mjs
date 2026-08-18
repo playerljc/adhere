@@ -54,6 +54,175 @@ export const skillCheckboxOptions = {
   ],
 };
 
+export const industrySelectOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('互联网 / 软件', 'Internet / Software', 'it'),
+    selectOption('金融', 'Finance', 'finance'),
+    selectOption('制造', 'Manufacturing', 'manufacture'),
+    selectOption('教育', 'Education', 'edu'),
+    selectOption('医疗健康', 'Healthcare', 'health'),
+    selectOption('零售电商', 'Retail / E-commerce', 'retail'),
+    selectOption('其他', 'Other', 'other'),
+  ],
+};
+
+export const companySizeOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('1–50 人', '1–50 employees', 's'),
+    selectOption('51–200 人', '51–200 employees', 'm'),
+    selectOption('201–1000 人', '201–1000 employees', 'l'),
+    selectOption('1000 人以上', '1000+ employees', 'xl'),
+  ],
+};
+
+export const budgetOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('10 万以内', 'Under 100k', 'lt10'),
+    selectOption('10–50 万', '100k–500k', '10to50'),
+    selectOption('50–100 万', '500k–1M', '50to100'),
+    selectOption('100 万以上', 'Over 1M', 'gt100'),
+    selectOption('暂不确定', 'Not sure yet', 'unknown'),
+  ],
+};
+
+export const inquiryTypeOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('产品咨询', 'Product inquiry', 'product'),
+    selectOption('商务合作', 'Business partnership', 'partner'),
+    selectOption('技术支持', 'Technical support', 'support'),
+    selectOption('采购招标', 'Procurement', 'purchase'),
+  ],
+};
+
+export const productInterestOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('表单设计器', 'Form designer', 'form-design'),
+    selectOption('低代码平台', 'Low-code platform', 'lowcode'),
+    selectOption('数据中台', 'Data platform', 'data'),
+    selectOption('移动端组件', 'Mobile components', 'mobile'),
+  ],
+};
+
+export const genderRadioOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('男', 'Male', 'male'),
+    selectOption('女', 'Female', 'female'),
+    selectOption('其他', 'Other', 'other'),
+  ],
+};
+
+export const educationSelectOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('高中及以下', 'High school or below', 'highschool'),
+    selectOption('大专', 'College', 'college'),
+    selectOption('本科', 'Bachelor', 'bachelor'),
+    selectOption('硕士', 'Master', 'master'),
+    selectOption('博士', 'Doctorate', 'phd'),
+  ],
+};
+
+export const employeeTypeOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('正式员工', 'Full-time', 'fulltime'),
+    selectOption('实习生', 'Intern', 'intern'),
+    selectOption('外包', 'Contractor', 'contractor'),
+    selectOption('劳务派遣', 'Dispatched', 'dispatch'),
+  ],
+};
+
+export const environmentRadioOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('生产环境', 'Production', 'prod'),
+    selectOption('预发环境', 'Staging', 'staging'),
+    selectOption('测试环境', 'Test', 'test'),
+  ],
+};
+
+export const severityRadioOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('阻断', 'Blocker', 'blocker'),
+    selectOption('严重', 'Critical', 'critical'),
+    selectOption('一般', 'Major', 'major'),
+    selectOption('轻微', 'Minor', 'minor'),
+  ],
+};
+
+export const usageDurationOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('不到 1 个月', 'Less than 1 month', 'lt1m'),
+    selectOption('1–6 个月', '1–6 months', '1to6m'),
+    selectOption('半年以上', 'Over 6 months', 'gt6m'),
+  ],
+};
+
+export const userRoleRadioOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('业务人员', 'Business user', 'biz'),
+    selectOption('开发人员', 'Developer', 'dev'),
+    selectOption('管理员', 'Administrator', 'admin'),
+    selectOption('实施顾问', 'Consultant', 'consultant'),
+  ],
+};
+
+export const productFeatureOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('拖拽设计', 'Drag-and-drop design', 'dnd'),
+    selectOption('数据源联动', 'Data source binding', 'datasource'),
+    selectOption('校验规则', 'Validation rules', 'rules'),
+    selectOption('移动端适配', 'Mobile layout', 'mobile'),
+    selectOption('模板库', 'Template library', 'template'),
+  ],
+};
+
+export const maritalStatusOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('未婚', 'Single', 'single'),
+    selectOption('已婚', 'Married', 'married'),
+    selectOption('其他', 'Other', 'other'),
+  ],
+};
+
+export const idTypeOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('身份证', 'National ID', 'idcard'),
+    selectOption('护照', 'Passport', 'passport'),
+    selectOption('港澳通行证', 'HK/Macau permit', 'hkmo'),
+  ],
+};
+
+export const bloodTypeOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('A', 'A', 'a'),
+    selectOption('B', 'B', 'b'),
+    selectOption('AB', 'AB', 'ab'),
+    selectOption('O', 'O', 'o'),
+  ],
+};
+
+export const yesNoOptions = {
+  type: 'static',
+  dataSource: [
+    selectOption('是', 'Yes', 'yes'),
+    selectOption('否', 'No', 'no'),
+  ],
+};
+
 export const viewSegmentedOptions = {
   type: 'static',
   dataSource: [

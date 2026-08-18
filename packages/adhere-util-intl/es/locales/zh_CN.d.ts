@@ -590,6 +590,16 @@ declare const _default: {
     template_register_desc: string;
     template_feedback_name: string;
     template_feedback_desc: string;
+    template_layout_name: string;
+    template_layout_desc: string;
+    template_validation_name: string;
+    template_validation_desc: string;
+    template_many_fields_name: string;
+    template_many_fields_desc: string;
+    template_widget_gallery_name: string;
+    template_widget_gallery_desc: string;
+    template_survey_name: string;
+    template_survey_desc: string;
     template_card_contact_basic: string;
     template_card_contact_message: string;
     template_card_contact_preference: string;

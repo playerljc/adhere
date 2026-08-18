@@ -1,2 +1,0 @@
-import{getLocales}from"@baifendian/adhere-util-intl";import{SELECT_VALUE_KEY_NAME}from"../../../../../constant";var LOCALE_KEYS=["zh_CN","en_US","pt_PT","ar_EG"];function getLocaleDict(t){return null!=(t=getLocales()[t])?t:{}}function i18nFromKey(t){(e={})[SELECT_VALUE_KEY_NAME]="zh_CN";for(var e,n=e,r=0,o=LOCALE_KEYS;r<o.length;r++){var i=o[r];n[i]=null!=(i=getLocaleDict(i)[t])?i:t}return n}function textFromKey(t,e){return null!=(e=getLocaleDict(e=void 0===e?"zh_CN":e)[t])?e:t}export{i18nFromKey,textFromKey};
-//# sourceMappingURL=i18nFromKey.js.map

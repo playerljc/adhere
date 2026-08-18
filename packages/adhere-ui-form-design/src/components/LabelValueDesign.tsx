@@ -86,13 +86,16 @@ export const ValueDesign = memo(function ValueDesign({
   const designCanvasInteractive = designItem?.designCanvasInteractive === true;
   const finalFieldProps = (() => {
     if (!isFormMode && !designCanvasInteractive) {
-      // 设计态：默认只读展示；designCanvasInteractive 的控件在 define() 中自行声明
+      // 设计态：默认只读展示，避免在画布上误录入；不写进 DesignValue
       return { ...fieldProps, readOnly: true } as FieldProps;
     }
-    if (formDisabled === undefined) {
-      return fieldProps as FieldProps;
+
+    // 预览 / 运行态：不要沿用画布保护用的 readOnly（旧 defaultValue 曾把它写入树）
+    const next = { ...fieldProps, readOnly: false } as FieldProps;
+    if (formDisabled !== undefined) {
+      next.disabled = formDisabled;
     }
-    return { ...fieldProps, disabled: formDisabled } as FieldProps;
+    return next;
   })();
 
   const style = styleCodeStringToCSSProperties(styleProps?.styles ?? '');

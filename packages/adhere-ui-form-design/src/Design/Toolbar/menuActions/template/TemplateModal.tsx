@@ -1,11 +1,10 @@
 import { Modal } from 'antd';
 import classNames from 'classnames';
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useContext } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
 import { SELECT_PREFIX } from '../../../../constant';
-import type { DesignItem, FieldType } from '../../../../types';
 import { hasDesignCanvasUserContent } from '../../../../utils';
 import { DesignContext } from '../../../Context';
 import { FORM_TEMPLATES } from './definitions';
@@ -20,20 +19,15 @@ export interface TemplateModalProps {
 }
 
 export default function TemplateModal({ open, onClose }: TemplateModalProps) {
-  const { getDesignValue, getItems, loadDesignValue } = useContext(DesignContext);
-
-  const getItemByType = useMemo(() => {
-    const items = getItems() ?? [];
-    return (type: FieldType): DesignItem | undefined => items.find((item) => item.type === type);
-  }, [getItems]);
+  const { getDesignValue, loadDesignValue } = useContext(DesignContext);
 
   const applyTemplate = useCallback(
     (template: FormTemplate) => {
-      const designValue = regenerateDesignValueIds(template.build(getItemByType));
+      const designValue = regenerateDesignValueIds(template.build());
       loadDesignValue(designValue);
       onClose();
     },
-    [getItemByType, loadDesignValue, onClose],
+    [loadDesignValue, onClose],
   );
 
   const handleSelect = useCallback(

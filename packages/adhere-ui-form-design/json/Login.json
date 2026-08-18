@@ -1,0 +1,664 @@
+{
+  "id": "ef9b55f0-7e74-47f7-ae3e-43dabad63b1a",
+  "type": "flex-layout",
+  "props": {
+    "fieldProps": {
+      "direction": "vertical",
+      "wrap": false,
+      "justifyContent": "flex-start",
+      "alignItems": "stretch",
+      "alignContent": "normal",
+      "gap": 8
+    },
+    "flexProps": {
+      "minSize": true,
+      "scroll": true
+    },
+    "children": [
+      {
+        "id": "0d80f485-8531-41b3-a023-a63d0eaf0e8b",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "账号密码登录",
+              "en_US": "Password login",
+              "pt_PT": "Início de sessão com palavra-passe",
+              "ar_EG": "تسجيل الدخول بكلمة المرور"
+            }
+          },
+          "flexProps": {
+            "flex": 1,
+            "flexShrink": 1,
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "ae8f3826-9993-43fd-b073-3b8ebef0eba0",
+              "type": "flex-layout",
+              "props": {
+                "fieldProps": {
+                  "direction": "vertical",
+                  "wrap": false,
+                  "justifyContent": "flex-start",
+                  "alignItems": "stretch",
+                  "alignContent": "normal",
+                  "gap": 12
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "da5b0421-3bb2-417b-8c4c-6923951937b6",
+                    "type": "table-grid-layout",
+                    "props": {
+                      "fieldProps": {
+                        "layout": "vertical",
+                        "bordered": false,
+                        "density": "default",
+                        "mode": "normal",
+                        "data": [
+                          {
+                            "name": "g1",
+                            "columnCount": 2,
+                            "colgroup": [
+                              "auto",
+                              "auto"
+                            ],
+                            "data": []
+                          }
+                        ]
+                      },
+                      "flexProps": {
+                        "minSize": true,
+                        "scroll": true
+                      },
+                      "children": [
+                        {
+                          "id": "07501c48-bb6d-48ff-9791-53479c536f2a",
+                          "type": "ant-alert",
+                          "props": {
+                            "formItemProps": {
+                              "noStyle": true
+                            },
+                            "fieldProps": {
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "企业员工登录",
+                                "en_US": "Employee sign-in",
+                                "pt_PT": "Início de sessão de colaborador",
+                                "ar_EG": "تسجيل دخول الموظفين"
+                              },
+                              "description": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请使用公司分配的账号。连续失败 5 次将锁定 15 分钟。",
+                                "en_US": "Use your company account. 5 failed attempts will lock the account for 15 minutes.",
+                                "pt_PT": "Use a conta da empresa. 5 falhas bloqueiam a conta por 15 minutos.",
+                                "ar_EG": "استخدم حساب الشركة. 5 محاولات فاشلة تقفل الحساب لمدة 15 دقيقة."
+                              },
+                              "type": "warning",
+                              "closable": false,
+                              "showIcon": true,
+                              "fill": false
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "bdbce7a4-54a0-478f-958f-60bffd65f511",
+                          "type": "ant-input",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "工号 / 邮箱",
+                                "en_US": "Employee ID / Email",
+                                "pt_PT": "ID / E-mail",
+                                "ar_EG": "الرقم الوظيفي / البريد"
+                              },
+                              "name": "account",
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请输入账号",
+                                      "en_US": "Please enter account",
+                                      "pt_PT": "Introduza a conta",
+                                      "ar_EG": "يرجى إدخال الحساب"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "type": "text",
+                              "allowClear": true,
+                              "readOnly": false,
+                              "disabled": false,
+                              "variant": "outlined",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入工号或企业邮箱",
+                                "en_US": "Enter employee ID or work email",
+                                "pt_PT": "Introduza o ID ou e-mail",
+                                "ar_EG": "أدخل الرقم الوظيفي أو البريد"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "7c5d0b9c-c348-4c35-8ed9-9a5b47086f1b",
+                          "type": "ant-input-password",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "登录密码",
+                                "en_US": "Password",
+                                "pt_PT": "Palavra-passe",
+                                "ar_EG": "كلمة المرور"
+                              },
+                              "name": "password",
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请输入密码",
+                                      "en_US": "Please enter password",
+                                      "pt_PT": "Introduza a palavra-passe",
+                                      "ar_EG": "يرجى إدخال كلمة المرور"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "allowClear": true,
+                              "disabled": false,
+                              "variant": "outlined",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入登录密码",
+                                "en_US": "Enter password",
+                                "pt_PT": "Introduza a palavra-passe",
+                                "ar_EG": "أدخل كلمة المرور"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "2ba0fe6f-d73e-407a-b5b4-48331cfd253d",
+                          "type": "image-captcha",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "图形验证码",
+                                "en_US": "Captcha",
+                                "pt_PT": "Captcha",
+                                "ar_EG": "رمز التحقق"
+                              },
+                              "name": "imageCaptcha",
+                              "colSpan": 2,
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请输入验证码",
+                                      "en_US": "Please enter captcha",
+                                      "pt_PT": "Introduza o captcha",
+                                      "ar_EG": "يرجى إدخال رمز التحقق"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "mode": "image",
+                              "fill": true
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "1986726b-d113-4402-b7dc-f979edc0366f",
+                          "type": "ant-switch",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "checked",
+                              "value": false,
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "7 天内免登录",
+                                "en_US": "Keep me signed in for 7 days",
+                                "pt_PT": "Manter sessão 7 dias",
+                                "ar_EG": "البقاء مسجلاً لمدة 7 أيام"
+                              },
+                              "name": "rememberMe"
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "loading": false,
+                              "size": "default",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "7 天内免登录",
+                                "en_US": "Keep me signed in for 7 days",
+                                "pt_PT": "Manter sessão 7 dias",
+                                "ar_EG": "البقاء مسجلاً لمدة 7 أيام"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "c58019f2-9f8d-4966-b661-14031eb2231f",
+                          "type": "ant-link",
+                          "props": {
+                            "formItemProps": {
+                              "noStyle": true
+                            },
+                            "fieldProps": {
+                              "children": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "忘记密码？",
+                                "en_US": "Forgot password?",
+                                "pt_PT": "Esqueceu a palavra-passe?",
+                                "ar_EG": "نسيت كلمة المرور؟"
+                              },
+                              "href": "#",
+                              "target": "_blank",
+                              "disabled": false,
+                              "fill": false
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "1ed41eef-113d-414e-a280-704e2353238c",
+                          "type": "ant-submit-button",
+                          "props": {
+                            "formItemProps": {
+                              "noStyle": true
+                            },
+                            "fieldProps": {
+                              "children": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "登录",
+                                "en_US": "Sign in",
+                                "pt_PT": "Iniciar sessão",
+                                "ar_EG": "تسجيل الدخول"
+                              },
+                              "type": "primary",
+                              "shape": "default",
+                              "size": "middle",
+                              "htmlType": "submit",
+                              "ghost": false,
+                              "danger": false,
+                              "loading": false,
+                              "disabled": false,
+                              "block": true,
+                              "fill": false
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        }
+                      ],
+                      "fieldActionTypes": [
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      },
+      {
+        "id": "eb6ceacd-a101-4997-b6e6-2cdb7066ebed",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "手机验证码登录",
+              "en_US": "SMS login",
+              "pt_PT": "Início de sessão por SMS",
+              "ar_EG": "تسجيل الدخول برسالة"
+            }
+          },
+          "flexProps": {
+            "flex": 1,
+            "flexShrink": 1,
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "ac823228-6930-4649-84cc-b492a03f925b",
+              "type": "flex-layout",
+              "props": {
+                "fieldProps": {
+                  "direction": "vertical",
+                  "wrap": false,
+                  "justifyContent": "flex-start",
+                  "alignItems": "stretch",
+                  "alignContent": "normal",
+                  "gap": 12
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "f134a63f-fe27-4018-ba01-92623bf65a7e",
+                    "type": "table-grid-layout",
+                    "props": {
+                      "fieldProps": {
+                        "layout": "vertical",
+                        "bordered": false,
+                        "density": "default",
+                        "mode": "normal",
+                        "data": [
+                          {
+                            "name": "g1",
+                            "columnCount": 2,
+                            "colgroup": [
+                              "auto",
+                              "auto"
+                            ],
+                            "data": []
+                          }
+                        ]
+                      },
+                      "flexProps": {
+                        "minSize": true,
+                        "scroll": true
+                      },
+                      "children": [
+                        {
+                          "id": "68d236fa-c906-4f91-97be-8ed29c2132f1",
+                          "type": "phone-with-area-code",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "手机号",
+                                "en_US": "Mobile",
+                                "pt_PT": "Telemóvel",
+                                "ar_EG": "الجوال"
+                              },
+                              "name": "mobile",
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请输入手机号",
+                                      "en_US": "Please enter mobile number",
+                                      "pt_PT": "Introduza o telemóvel",
+                                      "ar_EG": "يرجى إدخال رقم الجوال"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "defaultCode": "+86",
+                              "allowClear": true,
+                              "disabled": false,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "手机号",
+                                "en_US": "Mobile",
+                                "pt_PT": "Telemóvel",
+                                "ar_EG": "الجوال"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "1f567157-f7a7-4bdd-a236-a5b56d64889b",
+                          "type": "send-sms",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "短信验证码",
+                                "en_US": "SMS code",
+                                "pt_PT": "Código SMS",
+                                "ar_EG": "رمز الرسالة"
+                              },
+                              "name": "smsCode",
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请输入短信验证码",
+                                      "en_US": "Please enter SMS code",
+                                      "pt_PT": "Introduza o código SMS",
+                                      "ar_EG": "يرجى إدخال رمز الرسالة"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "defaultCode": "+86",
+                              "allowClear": true,
+                              "disabled": false,
+                              "readOnly": false,
+                              "countdownSeconds": 60,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "短信验证码",
+                                "en_US": "SMS code",
+                                "pt_PT": "Código SMS",
+                                "ar_EG": "رمز الرسالة"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "1bffc242-e6f2-40ff-8c11-c53d70845ae6",
+                          "type": "ant-input-otp",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "动态口令（可选）",
+                                "en_US": "OTP (optional)",
+                                "pt_PT": "OTP (opcional)",
+                                "ar_EG": "كلمة مرور لمرة واحدة (اختياري)"
+                              },
+                              "name": "otp",
+                              "colSpan": 2
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "length": 6,
+                              "mask": false,
+                              "size": "middle",
+                              "variant": "outlined",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "动态口令（可选）",
+                                "en_US": "OTP (optional)",
+                                "pt_PT": "OTP (opcional)",
+                                "ar_EG": "كلمة مرور لمرة واحدة (اختياري)"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "e14e22e6-4026-4c50-bfa6-9cf73f350348",
+                          "type": "ant-submit-button",
+                          "props": {
+                            "formItemProps": {
+                              "noStyle": true
+                            },
+                            "fieldProps": {
+                              "children": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "验证并登录",
+                                "en_US": "Verify and sign in",
+                                "pt_PT": "Verificar e iniciar sessão",
+                                "ar_EG": "تحقق وسجّل الدخول"
+                              },
+                              "type": "primary",
+                              "shape": "default",
+                              "size": "middle",
+                              "htmlType": "submit",
+                              "ghost": false,
+                              "danger": false,
+                              "loading": false,
+                              "disabled": false,
+                              "block": true,
+                              "fill": false
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        }
+                      ],
+                      "fieldActionTypes": [
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      }
+    ],
+    "fieldActionTypes": []
+  }
+}

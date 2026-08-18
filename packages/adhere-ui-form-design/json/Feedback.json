@@ -1,0 +1,1287 @@
+{
+  "id": "bb1ea2fa-ff36-4326-a0e3-0cf3fddf6bce",
+  "type": "flex-layout",
+  "props": {
+    "fieldProps": {
+      "direction": "vertical",
+      "wrap": false,
+      "justifyContent": "flex-start",
+      "alignItems": "stretch",
+      "alignContent": "normal",
+      "gap": 8
+    },
+    "flexProps": {
+      "minSize": true,
+      "scroll": true
+    },
+    "children": [
+      {
+        "id": "a6ed8245-ada3-46ed-a550-9698270b90ad",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "问题定位",
+              "en_US": "Issue context",
+              "pt_PT": "Contexto do problema",
+              "ar_EG": "سياق المشكلة"
+            }
+          },
+          "flexProps": {
+            "flex": 1,
+            "flexShrink": 1,
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "55f18499-6ca8-4a1e-bf04-4c3ecaebfce4",
+              "type": "flex-layout",
+              "props": {
+                "fieldProps": {
+                  "direction": "vertical",
+                  "wrap": false,
+                  "justifyContent": "flex-start",
+                  "alignItems": "stretch",
+                  "alignContent": "normal",
+                  "gap": 12
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "95dc505b-5e97-4b72-adb5-acde98007f01",
+                    "type": "table-grid-layout",
+                    "props": {
+                      "fieldProps": {
+                        "layout": "vertical",
+                        "bordered": false,
+                        "density": "default",
+                        "mode": "normal",
+                        "data": [
+                          {
+                            "name": "g1",
+                            "columnCount": 2,
+                            "colgroup": [
+                              "auto",
+                              "auto"
+                            ],
+                            "data": []
+                          }
+                        ]
+                      },
+                      "flexProps": {
+                        "minSize": true,
+                        "scroll": true
+                      },
+                      "children": [
+                        {
+                          "id": "52cee454-bdeb-4503-98b5-3020d3249209",
+                          "type": "ant-alert",
+                          "props": {
+                            "formItemProps": {
+                              "noStyle": true
+                            },
+                            "fieldProps": {
+                              "message": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "缺陷与建议提单",
+                                "en_US": "Bug / suggestion ticket",
+                                "pt_PT": "Ticket de erro / sugestão",
+                                "ar_EG": "بلاغ خطأ / اقتراح"
+                              },
+                              "description": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请尽量附上截图、发生时间和环境信息，便于研发快速复现。",
+                                "en_US": "Please attach screenshots, time, and environment so engineering can reproduce quickly.",
+                                "pt_PT": "Anexe capturas, hora e ambiente para reprodução rápida.",
+                                "ar_EG": "يرجى إرفاق لقطات ووقت وبيئة التشغيل لإعادة الإنتاج بسرعة."
+                              },
+                              "type": "info",
+                              "closable": false,
+                              "showIcon": true,
+                              "fill": false
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "77a406bc-c135-410f-9867-38cb2ef84b08",
+                          "type": "ant-radio-group",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "反馈类型",
+                                "en_US": "Feedback type",
+                                "pt_PT": "Tipo de feedback",
+                                "ar_EG": "نوع الملاحظات"
+                              },
+                              "name": "category",
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请选择反馈类型",
+                                      "en_US": "Please select feedback type",
+                                      "pt_PT": "Selecione o tipo",
+                                      "ar_EG": "يرجى اختيار النوع"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "optionType": "button",
+                              "buttonStyle": "outline",
+                              "block": false,
+                              "optionWrap": false,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "反馈类型",
+                                "en_US": "Feedback type",
+                                "pt_PT": "Tipo de feedback",
+                                "ar_EG": "نوع الملاحظات"
+                              },
+                              "selectOptions": {
+                                "type": "static",
+                                "dataSource": [
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "缺陷",
+                                      "en_US": "Bug",
+                                      "pt_PT": "Erro",
+                                      "ar_EG": "خطأ"
+                                    },
+                                    "value": "bug"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "体验问题",
+                                      "en_US": "UX issue",
+                                      "pt_PT": "Problema de UX",
+                                      "ar_EG": "مشكلة تجربة"
+                                    },
+                                    "value": "ux"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "功能建议",
+                                      "en_US": "Feature request",
+                                      "pt_PT": "Sugestão",
+                                      "ar_EG": "اقتراح ميزة"
+                                    },
+                                    "value": "feature"
+                                  }
+                                ]
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "374f07dc-8075-4fca-9729-47d7ef4f1589",
+                          "type": "ant-radio-group",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "严重程度",
+                                "en_US": "Severity",
+                                "pt_PT": "Gravidade",
+                                "ar_EG": "الخطورة"
+                              },
+                              "name": "severity",
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请选择严重程度",
+                                      "en_US": "Please select severity",
+                                      "pt_PT": "Selecione a gravidade",
+                                      "ar_EG": "يرجى اختيار الخطورة"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "optionType": "default",
+                              "buttonStyle": "outline",
+                              "block": false,
+                              "optionWrap": false,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "严重程度",
+                                "en_US": "Severity",
+                                "pt_PT": "Gravidade",
+                                "ar_EG": "الخطورة"
+                              },
+                              "selectOptions": {
+                                "type": "static",
+                                "dataSource": [
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "阻断",
+                                      "en_US": "Blocker",
+                                      "pt_PT": "Blocker",
+                                      "ar_EG": "Blocker"
+                                    },
+                                    "value": "blocker",
+                                    "__fdSortId": "fd-sort-allfields-51"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "严重",
+                                      "en_US": "Critical",
+                                      "pt_PT": "Critical",
+                                      "ar_EG": "Critical"
+                                    },
+                                    "value": "critical",
+                                    "__fdSortId": "fd-sort-allfields-52"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "一般",
+                                      "en_US": "Major",
+                                      "pt_PT": "Major",
+                                      "ar_EG": "Major"
+                                    },
+                                    "value": "major",
+                                    "__fdSortId": "fd-sort-allfields-53"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "轻微",
+                                      "en_US": "Minor",
+                                      "pt_PT": "Minor",
+                                      "ar_EG": "Minor"
+                                    },
+                                    "value": "minor",
+                                    "__fdSortId": "fd-sort-allfields-54"
+                                  }
+                                ]
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "440c04ca-4099-46d5-a08e-ad2c6aa56fdc",
+                          "type": "ant-select",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "所属模块",
+                                "en_US": "Module",
+                                "pt_PT": "Módulo",
+                                "ar_EG": "الوحدة"
+                              },
+                              "name": "productModule",
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请选择模块",
+                                      "en_US": "Please select module",
+                                      "pt_PT": "Selecione o módulo",
+                                      "ar_EG": "يرجى اختيار الوحدة"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "allowClear": false,
+                              "disabled": false,
+                              "defaultActiveFirstOption": true,
+                              "listHeight": 256,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请选择模块",
+                                "en_US": "Select module",
+                                "pt_PT": "Selecione o módulo",
+                                "ar_EG": "اختر الوحدة"
+                              },
+                              "selectOptions": {
+                                "type": "static",
+                                "dataSource": [
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "表单设计器",
+                                      "en_US": "Form designer",
+                                      "pt_PT": "Form designer",
+                                      "ar_EG": "Form designer"
+                                    },
+                                    "value": "form-design",
+                                    "__fdSortId": "fd-sort-allfields-32"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "低代码平台",
+                                      "en_US": "Low-code platform",
+                                      "pt_PT": "Low-code platform",
+                                      "ar_EG": "Low-code platform"
+                                    },
+                                    "value": "lowcode",
+                                    "__fdSortId": "fd-sort-allfields-33"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "数据中台",
+                                      "en_US": "Data platform",
+                                      "pt_PT": "Data platform",
+                                      "ar_EG": "Data platform"
+                                    },
+                                    "value": "data",
+                                    "__fdSortId": "fd-sort-allfields-34"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "移动端组件",
+                                      "en_US": "Mobile components",
+                                      "pt_PT": "Mobile components",
+                                      "ar_EG": "Mobile components"
+                                    },
+                                    "value": "mobile",
+                                    "__fdSortId": "fd-sort-allfields-35"
+                                  }
+                                ]
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "fb11984d-f2d1-416b-b220-7369c85479d2",
+                          "type": "ant-input",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "版本号",
+                                "en_US": "Version",
+                                "pt_PT": "Versão",
+                                "ar_EG": "الإصدار"
+                              },
+                              "name": "version"
+                            },
+                            "fieldProps": {
+                              "type": "text",
+                              "allowClear": true,
+                              "readOnly": false,
+                              "disabled": false,
+                              "variant": "outlined",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "如 2.11.0",
+                                "en_US": "e.g. 2.11.0",
+                                "pt_PT": "ex. 2.11.0",
+                                "ar_EG": "مثال 2.11.0"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "d28bc5c7-9d09-4fa9-8bd1-dbef3c132f65",
+                          "type": "ant-radio-group",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "发生环境",
+                                "en_US": "Environment",
+                                "pt_PT": "Ambiente",
+                                "ar_EG": "البيئة"
+                              },
+                              "name": "environment"
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "optionType": "button",
+                              "buttonStyle": "outline",
+                              "block": false,
+                              "optionWrap": false,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "发生环境",
+                                "en_US": "Environment",
+                                "pt_PT": "Ambiente",
+                                "ar_EG": "البيئة"
+                              },
+                              "selectOptions": {
+                                "type": "static",
+                                "dataSource": [
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "生产环境",
+                                      "en_US": "Production",
+                                      "pt_PT": "Production",
+                                      "ar_EG": "Production"
+                                    },
+                                    "value": "prod",
+                                    "__fdSortId": "fd-sort-allfields-48"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "预发环境",
+                                      "en_US": "Staging",
+                                      "pt_PT": "Staging",
+                                      "ar_EG": "Staging"
+                                    },
+                                    "value": "staging",
+                                    "__fdSortId": "fd-sort-allfields-49"
+                                  },
+                                  {
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "测试环境",
+                                      "en_US": "Test",
+                                      "pt_PT": "Test",
+                                      "ar_EG": "Test"
+                                    },
+                                    "value": "test",
+                                    "__fdSortId": "fd-sort-allfields-50"
+                                  }
+                                ]
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "4ba39409-32c8-46b2-8135-16635913f5e2",
+                          "type": "ant-date-picker",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "发生时间",
+                                "en_US": "Occurred at",
+                                "pt_PT": "Ocorrido em",
+                                "ar_EG": "وقت الحدوث"
+                              },
+                              "name": "occurredAt"
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "format": "YYYY-MM-DD HH:mm",
+                              "showTime": true,
+                              "allowClear": true,
+                              "isBirthday": false,
+                              "dateBoundMode": "",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "发生时间",
+                                "en_US": "Occurred at",
+                                "pt_PT": "Ocorrido em",
+                                "ar_EG": "وقت الحدوث"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "3f425043-28ff-4ecc-993e-8b8e99706191",
+                          "type": "ant-rate",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "业务影响程度",
+                                "en_US": "Business impact",
+                                "pt_PT": "Impacto no negócio",
+                                "ar_EG": "أثر العمل"
+                              },
+                              "name": "impact"
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "allowHalf": false,
+                              "count": 5,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "业务影响程度",
+                                "en_US": "Business impact",
+                                "pt_PT": "Impacto no negócio",
+                                "ar_EG": "أثر العمل"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        }
+                      ],
+                      "fieldActionTypes": [
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      },
+      {
+        "id": "04e2b353-da4a-403a-82cd-31a018a929c8",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "问题描述",
+              "en_US": "Description",
+              "pt_PT": "Descrição",
+              "ar_EG": "الوصف"
+            }
+          },
+          "flexProps": {
+            "flex": 1,
+            "flexShrink": 1,
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "31d4f9a9-1023-4b65-8a44-352e62a5a652",
+              "type": "flex-layout",
+              "props": {
+                "fieldProps": {
+                  "direction": "vertical",
+                  "wrap": false,
+                  "justifyContent": "flex-start",
+                  "alignItems": "stretch",
+                  "alignContent": "normal",
+                  "gap": 12
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "4cc36b9a-97da-4122-9bcf-66f6897781b7",
+                    "type": "table-grid-layout",
+                    "props": {
+                      "fieldProps": {
+                        "layout": "vertical",
+                        "bordered": false,
+                        "density": "default",
+                        "mode": "normal",
+                        "data": [
+                          {
+                            "name": "g1",
+                            "columnCount": 2,
+                            "colgroup": [
+                              "auto",
+                              "auto"
+                            ],
+                            "data": []
+                          }
+                        ]
+                      },
+                      "flexProps": {
+                        "minSize": true,
+                        "scroll": true
+                      },
+                      "children": [
+                        {
+                          "id": "dbb137e7-4955-4b59-aa78-66ba6370158b",
+                          "type": "ant-input",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "标题",
+                                "en_US": "Title",
+                                "pt_PT": "Título",
+                                "ar_EG": "العنوان"
+                              },
+                              "name": "subject",
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请输入标题",
+                                      "en_US": "Please enter title",
+                                      "pt_PT": "Introduza o título",
+                                      "ar_EG": "يرجى إدخال العنوان"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "type": "text",
+                              "allowClear": true,
+                              "readOnly": false,
+                              "disabled": false,
+                              "variant": "outlined",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请用一句话概括问题",
+                                "en_US": "Summarize the issue in one sentence",
+                                "pt_PT": "Resuma o problema numa frase",
+                                "ar_EG": "لخص المشكلة في جملة واحدة"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "8d5fd80a-9c64-4597-9fe7-54d33516079f",
+                          "type": "ant-textarea",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "复现步骤",
+                                "en_US": "Steps to reproduce",
+                                "pt_PT": "Passos para reproduzir",
+                                "ar_EG": "خطوات إعادة الإنتاج"
+                              },
+                              "name": "reproSteps",
+                              "colSpan": 2,
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请填写复现步骤",
+                                      "en_US": "Please enter reproduction steps",
+                                      "pt_PT": "Introduza os passos",
+                                      "ar_EG": "يرجى إدخال الخطوات"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "allowClear": true,
+                              "readOnly": false,
+                              "disabled": false,
+                              "showCount": true,
+                              "autoSize": true,
+                              "variant": "outlined",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "1. 打开页面… 2. 点击… 3. 出现…",
+                                "en_US": "1. Open the page… 2. Click… 3. Observe…",
+                                "pt_PT": "1. Abrir a página… 2. Clicar… 3. Observar…",
+                                "ar_EG": "1. افتح الصفحة… 2. انقر… 3. لاحظ…"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "63cc18ab-9eb8-4d22-ae10-c9f2fdab79ed",
+                          "type": "ant-textarea",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "期望结果",
+                                "en_US": "Expected result",
+                                "pt_PT": "Resultado esperado",
+                                "ar_EG": "النتيجة المتوقعة"
+                              },
+                              "name": "expected",
+                              "colSpan": 2
+                            },
+                            "fieldProps": {
+                              "allowClear": true,
+                              "readOnly": false,
+                              "disabled": false,
+                              "showCount": true,
+                              "autoSize": true,
+                              "variant": "outlined",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请描述正确行为",
+                                "en_US": "Describe the expected behavior",
+                                "pt_PT": "Descreva o comportamento esperado",
+                                "ar_EG": "صف السلوك المتوقع"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "56722db7-2f8b-4626-8e84-9f9a628ac551",
+                          "type": "ant-image-upload",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "value": [],
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "截图 / 录屏封面",
+                                "en_US": "Screenshots",
+                                "pt_PT": "Capturas",
+                                "ar_EG": "لقطات الشاشة"
+                              },
+                              "name": "screenshots",
+                              "colSpan": 2
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "accept": "image/*",
+                              "multiple": true,
+                              "listType": "picture-card",
+                              "showUploadList": true,
+                              "cropEnabled": true,
+                              "cropShape": "rect",
+                              "cropAllowFlip": true,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "截图 / 录屏封面",
+                                "en_US": "Screenshots",
+                                "pt_PT": "Capturas",
+                                "ar_EG": "لقطات الشاشة"
+                              },
+                              "uploadDataSource": {
+                                "type": "dynamic"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "938bccdb-325d-4a6a-bc18-43c788a69ed1",
+                          "type": "ant-file-upload",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "value": [],
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "日志 / HAR 附件",
+                                "en_US": "Logs / HAR files",
+                                "pt_PT": "Logs / ficheiros HAR",
+                                "ar_EG": "سجلات / ملفات HAR"
+                              },
+                              "name": "logs",
+                              "colSpan": 2
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "accept": "",
+                              "multiple": true,
+                              "listType": "text",
+                              "showUploadList": true,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "日志 / HAR 附件",
+                                "en_US": "Logs / HAR files",
+                                "pt_PT": "Logs / ficheiros HAR",
+                                "ar_EG": "سجلات / ملفات HAR"
+                              },
+                              "uploadDataSource": {
+                                "type": "dynamic"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        }
+                      ],
+                      "fieldActionTypes": [
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      },
+      {
+        "id": "83bc8e1c-57b2-4cd2-a289-fb6878b4ee52",
+        "type": "card-layout",
+        "props": {
+          "fieldProps": {
+            "variant": "outlined",
+            "size": "default",
+            "hoverable": false,
+            "loading": false,
+            "autoHeight": false,
+            "title": {
+              "selectValue": "zh_CN",
+              "zh_CN": "联系与跟进",
+              "en_US": "Contact and follow-up",
+              "pt_PT": "Contacto e acompanhamento",
+              "ar_EG": "التواصل والمتابعة"
+            }
+          },
+          "flexProps": {
+            "flex": 1,
+            "flexShrink": 1,
+            "minSize": false,
+            "scroll": false
+          },
+          "children": [
+            {
+              "id": "7216f5ad-770f-4732-9d9c-df69f6cae1b1",
+              "type": "flex-layout",
+              "props": {
+                "fieldProps": {
+                  "direction": "vertical",
+                  "wrap": false,
+                  "justifyContent": "flex-start",
+                  "alignItems": "stretch",
+                  "alignContent": "normal",
+                  "gap": 12
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "8b018cc6-6e09-4133-968c-b517d0bdc2ea",
+                    "type": "table-grid-layout",
+                    "props": {
+                      "fieldProps": {
+                        "layout": "vertical",
+                        "bordered": false,
+                        "density": "default",
+                        "mode": "normal",
+                        "data": [
+                          {
+                            "name": "g1",
+                            "columnCount": 2,
+                            "colgroup": [
+                              "auto",
+                              "auto"
+                            ],
+                            "data": []
+                          }
+                        ]
+                      },
+                      "flexProps": {
+                        "minSize": true,
+                        "scroll": true
+                      },
+                      "children": [
+                        {
+                          "id": "f760632a-8c3e-4a70-b2e5-b5c590fd71a2",
+                          "type": "ant-input",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "反馈人",
+                                "en_US": "Reporter",
+                                "pt_PT": "Autor",
+                                "ar_EG": "المُبلِّغ"
+                              },
+                              "name": "contactName"
+                            },
+                            "fieldProps": {
+                              "type": "text",
+                              "allowClear": true,
+                              "readOnly": false,
+                              "disabled": false,
+                              "variant": "outlined",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入姓名",
+                                "en_US": "Enter your name",
+                                "pt_PT": "Introduza o nome",
+                                "ar_EG": "أدخل الاسم"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "2f85b647-eb4b-4f76-b6a8-683aeedb50ef",
+                          "type": "phone-with-area-code",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "联系电话",
+                                "en_US": "Phone",
+                                "pt_PT": "Telefone",
+                                "ar_EG": "الهاتف"
+                              },
+                              "name": "phone"
+                            },
+                            "fieldProps": {
+                              "defaultCode": "+86",
+                              "allowClear": true,
+                              "disabled": false,
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "联系电话",
+                                "en_US": "Phone",
+                                "pt_PT": "Telefone",
+                                "ar_EG": "الهاتف"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "e2c0ab09-21be-4023-94b2-3a36276f93a0",
+                          "type": "ant-input",
+                          "props": {
+                            "formItemProps": {
+                              "require": true,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "value",
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "邮箱",
+                                "en_US": "Email",
+                                "pt_PT": "E-mail",
+                                "ar_EG": "البريد الإلكتروني"
+                              },
+                              "name": "email",
+                              "rules": [
+                                {
+                                  "type": "required",
+                                  "config": {
+                                    "required": true,
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请输入邮箱",
+                                      "en_US": "Please enter email",
+                                      "pt_PT": "Introduza o e-mail",
+                                      "ar_EG": "يرجى إدخال البريد"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "pattern",
+                                  "config": {
+                                    "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+                                    "message": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "请输入有效的邮箱地址",
+                                      "en_US": "Please enter a valid email address",
+                                      "pt_PT": "Introduza um e-mail válido",
+                                      "ar_EG": "يرجى إدخال بريد صالح"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "fieldProps": {
+                              "type": "email",
+                              "allowClear": true,
+                              "readOnly": false,
+                              "disabled": false,
+                              "variant": "outlined",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "请输入邮箱地址",
+                                "en_US": "Enter email address",
+                                "pt_PT": "Introduza o e-mail",
+                                "ar_EG": "أدخل البريد"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "3efc9e6a-3430-44e1-8535-d7c66484532e",
+                          "type": "ant-switch",
+                          "props": {
+                            "formItemProps": {
+                              "require": false,
+                              "hidden": false,
+                              "noStyle": false,
+                              "validateFirst": false,
+                              "validateTrigger": "onChange",
+                              "valuePropName": "checked",
+                              "value": false,
+                              "label": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "状态变更时通知我",
+                                "en_US": "Notify me on status change",
+                                "pt_PT": "Notificar-me sobre o estado",
+                                "ar_EG": "أبلغني عند تغير الحالة"
+                              },
+                              "name": "notifyProgress",
+                              "initialValue": true
+                            },
+                            "fieldProps": {
+                              "disabled": false,
+                              "loading": false,
+                              "size": "default",
+                              "fill": true,
+                              "placeholder": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "状态变更时通知我",
+                                "en_US": "Notify me on status change",
+                                "pt_PT": "Notificar-me sobre o estado",
+                                "ar_EG": "أبلغني عند تغير الحالة"
+                              }
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "7968a3f9-9ae0-4a9d-815d-bfd480ea1977",
+                          "type": "ant-submit-button",
+                          "props": {
+                            "formItemProps": {
+                              "noStyle": true
+                            },
+                            "fieldProps": {
+                              "children": {
+                                "selectValue": "zh_CN",
+                                "zh_CN": "提交工单",
+                                "en_US": "Submit ticket",
+                                "pt_PT": "Enviar ticket",
+                                "ar_EG": "إرسال التذكرة"
+                              },
+                              "type": "primary",
+                              "shape": "default",
+                              "size": "middle",
+                              "htmlType": "submit",
+                              "ghost": false,
+                              "danger": false,
+                              "loading": false,
+                              "disabled": false,
+                              "block": true,
+                              "fill": false
+                            },
+                            "fieldActionTypes": [
+                              "copy",
+                              "delete"
+                            ]
+                          }
+                        }
+                      ],
+                      "fieldActionTypes": [
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      }
+    ],
+    "fieldActionTypes": []
+  }
+}

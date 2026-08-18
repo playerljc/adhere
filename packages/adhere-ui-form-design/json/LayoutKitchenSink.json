@@ -1,0 +1,2462 @@
+{
+  "id": "82821463-5443-468c-b7eb-077d4971b874",
+  "type": "flex-layout",
+  "props": {
+    "fieldProps": {
+      "direction": "vertical",
+      "wrap": false,
+      "justifyContent": "flex-start",
+      "alignItems": "stretch",
+      "alignContent": "normal",
+      "gap": 8
+    },
+    "flexProps": {
+      "minSize": true,
+      "scroll": true
+    },
+    "children": [
+      {
+        "id": "156d93a3-08cc-4cd1-a9be-37cdb76a082e",
+        "type": "tabs-layout",
+        "props": {
+          "fieldProps": {
+            "tabItems": [
+              {
+                "id": "6c41e007-d97a-444f-9839-911d239f7d4d",
+                "key": "1",
+                "label": {
+                  "selectValue": "zh_CN",
+                  "zh_CN": "入职登记",
+                  "en_US": "Onboarding",
+                  "pt_PT": "Onboarding",
+                  "ar_EG": "Onboarding"
+                },
+                "closable": true
+              },
+              {
+                "id": "205dac23-6f48-42eb-a85c-b508630812d4",
+                "key": "2",
+                "label": {
+                  "selectValue": "zh_CN",
+                  "zh_CN": "人事档案",
+                  "en_US": "HR file",
+                  "pt_PT": "HR file",
+                  "ar_EG": "HR file"
+                },
+                "closable": true
+              },
+              {
+                "id": "b82bb5e3-096f-4488-997e-99874ece0b67",
+                "key": "3",
+                "label": {
+                  "selectValue": "zh_CN",
+                  "zh_CN": "入职办理",
+                  "en_US": "Process",
+                  "pt_PT": "Process",
+                  "ar_EG": "Process"
+                },
+                "closable": true
+              }
+            ],
+            "defaultActiveKey": "1",
+            "type": "line",
+            "size": "middle",
+            "tabPlacement": "top",
+            "centered": false
+          },
+          "flexProps": {
+            "minSize": true,
+            "scroll": true
+          },
+          "children": [
+            {
+              "id": "7d1d5dad-f41e-40cf-876a-63dce0ec765e",
+              "type": "flex-layout",
+              "props": {
+                "fieldProps": {
+                  "direction": "vertical",
+                  "wrap": false,
+                  "justifyContent": "flex-start",
+                  "alignItems": "stretch",
+                  "alignContent": "normal",
+                  "gap": 8
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "17b62a46-151b-448c-a626-1e3272a941ab",
+                    "type": "card-layout",
+                    "props": {
+                      "fieldProps": {
+                        "variant": "outlined",
+                        "size": "default",
+                        "hoverable": false,
+                        "loading": false,
+                        "autoHeight": false,
+                        "title": {
+                          "selectValue": "zh_CN",
+                          "zh_CN": "员工基本信息",
+                          "en_US": "Employee profile",
+                          "pt_PT": "Employee profile",
+                          "ar_EG": "Employee profile"
+                        }
+                      },
+                      "flexProps": {
+                        "flex": 1,
+                        "flexShrink": 1,
+                        "minSize": false,
+                        "scroll": false
+                      },
+                      "children": [
+                        {
+                          "id": "2d1e43ae-8bcc-474b-9e8d-9e25ca6c20c7",
+                          "type": "table-grid-layout",
+                          "props": {
+                            "fieldProps": {
+                              "layout": "vertical",
+                              "bordered": false,
+                              "density": "default",
+                              "mode": "normal",
+                              "data": [
+                                {
+                                  "name": "g1",
+                                  "columnCount": 2,
+                                  "colgroup": [
+                                    "auto",
+                                    "auto"
+                                  ],
+                                  "data": []
+                                }
+                              ]
+                            },
+                            "flexProps": {
+                              "minSize": true,
+                              "scroll": true
+                            },
+                            "children": [
+                              {
+                                "id": "cd87cfeb-e0b8-4484-a7ee-5998fcb0d717",
+                                "type": "ant-input",
+                                "props": {
+                                  "formItemProps": {
+                                    "require": false,
+                                    "hidden": false,
+                                    "noStyle": false,
+                                    "validateFirst": false,
+                                    "validateTrigger": "onChange",
+                                    "valuePropName": "value",
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "姓名",
+                                      "en_US": "Name",
+                                      "pt_PT": "Name",
+                                      "ar_EG": "Name"
+                                    },
+                                    "name": "name"
+                                  },
+                                  "fieldProps": {
+                                    "type": "text",
+                                    "allowClear": true,
+                                    "readOnly": false,
+                                    "disabled": false,
+                                    "variant": "outlined",
+                                    "fill": true,
+                                    "placeholder": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "姓名",
+                                      "en_US": "Name",
+                                      "pt_PT": "Name",
+                                      "ar_EG": "Name"
+                                    }
+                                  },
+                                  "fieldActionTypes": [
+                                    "copy",
+                                    "delete"
+                                  ]
+                                }
+                              },
+                              {
+                                "id": "3b0252df-c2d9-472b-85ce-23fab889b2f7",
+                                "type": "ant-radio-group",
+                                "props": {
+                                  "formItemProps": {
+                                    "require": false,
+                                    "hidden": false,
+                                    "noStyle": false,
+                                    "validateFirst": false,
+                                    "validateTrigger": "onChange",
+                                    "valuePropName": "value",
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "性别",
+                                      "en_US": "Gender",
+                                      "pt_PT": "Gender",
+                                      "ar_EG": "Gender"
+                                    },
+                                    "name": "gender"
+                                  },
+                                  "fieldProps": {
+                                    "disabled": false,
+                                    "optionType": "button",
+                                    "buttonStyle": "outline",
+                                    "block": false,
+                                    "optionWrap": false,
+                                    "fill": true,
+                                    "placeholder": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "性别",
+                                      "en_US": "Gender",
+                                      "pt_PT": "Gender",
+                                      "ar_EG": "Gender"
+                                    },
+                                    "selectOptions": {
+                                      "type": "static",
+                                      "dataSource": [
+                                        {
+                                          "label": {
+                                            "selectValue": "zh_CN",
+                                            "zh_CN": "男",
+                                            "en_US": "Male",
+                                            "pt_PT": "Male",
+                                            "ar_EG": "Male"
+                                          },
+                                          "value": "male",
+                                          "__fdSortId": "fd-sort-allfields-36"
+                                        },
+                                        {
+                                          "label": {
+                                            "selectValue": "zh_CN",
+                                            "zh_CN": "女",
+                                            "en_US": "Female",
+                                            "pt_PT": "Female",
+                                            "ar_EG": "Female"
+                                          },
+                                          "value": "female",
+                                          "__fdSortId": "fd-sort-allfields-37"
+                                        },
+                                        {
+                                          "label": {
+                                            "selectValue": "zh_CN",
+                                            "zh_CN": "其他",
+                                            "en_US": "Other",
+                                            "pt_PT": "Other",
+                                            "ar_EG": "Other"
+                                          },
+                                          "value": "other",
+                                          "__fdSortId": "fd-sort-allfields-38"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "fieldActionTypes": [
+                                    "copy",
+                                    "delete"
+                                  ]
+                                }
+                              },
+                              {
+                                "id": "ec20b871-321b-424b-b752-7e7bd896bfe2",
+                                "type": "phone-with-area-code",
+                                "props": {
+                                  "formItemProps": {
+                                    "require": false,
+                                    "hidden": false,
+                                    "noStyle": false,
+                                    "validateFirst": false,
+                                    "validateTrigger": "onChange",
+                                    "valuePropName": "value",
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "手机号",
+                                      "en_US": "Mobile",
+                                      "pt_PT": "Mobile",
+                                      "ar_EG": "Mobile"
+                                    },
+                                    "name": "mobile"
+                                  },
+                                  "fieldProps": {
+                                    "defaultCode": "+86",
+                                    "allowClear": true,
+                                    "disabled": false,
+                                    "fill": true,
+                                    "placeholder": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "手机号",
+                                      "en_US": "Mobile",
+                                      "pt_PT": "Mobile",
+                                      "ar_EG": "Mobile"
+                                    }
+                                  },
+                                  "fieldActionTypes": [
+                                    "copy",
+                                    "delete"
+                                  ]
+                                }
+                              },
+                              {
+                                "id": "09ff74f8-c9e3-4cab-85cc-ac2804d03612",
+                                "type": "ant-input",
+                                "props": {
+                                  "formItemProps": {
+                                    "require": false,
+                                    "hidden": false,
+                                    "noStyle": false,
+                                    "validateFirst": false,
+                                    "validateTrigger": "onChange",
+                                    "valuePropName": "value",
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "企业邮箱",
+                                      "en_US": "Work email",
+                                      "pt_PT": "Work email",
+                                      "ar_EG": "Work email"
+                                    },
+                                    "name": "email"
+                                  },
+                                  "fieldProps": {
+                                    "type": "email",
+                                    "allowClear": true,
+                                    "readOnly": false,
+                                    "disabled": false,
+                                    "variant": "outlined",
+                                    "fill": true,
+                                    "placeholder": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "企业邮箱",
+                                      "en_US": "Work email",
+                                      "pt_PT": "Work email",
+                                      "ar_EG": "Work email"
+                                    }
+                                  },
+                                  "fieldActionTypes": [
+                                    "copy",
+                                    "delete"
+                                  ]
+                                }
+                              },
+                              {
+                                "id": "db348ac0-2c14-45fe-a2c0-daa3d87ef69d",
+                                "type": "ant-select",
+                                "props": {
+                                  "formItemProps": {
+                                    "require": false,
+                                    "hidden": false,
+                                    "noStyle": false,
+                                    "validateFirst": false,
+                                    "validateTrigger": "onChange",
+                                    "valuePropName": "value",
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "入职部门",
+                                      "en_US": "Department",
+                                      "pt_PT": "Department",
+                                      "ar_EG": "Department"
+                                    },
+                                    "name": "department"
+                                  },
+                                  "fieldProps": {
+                                    "allowClear": false,
+                                    "disabled": false,
+                                    "defaultActiveFirstOption": true,
+                                    "listHeight": 256,
+                                    "fill": true,
+                                    "placeholder": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "入职部门",
+                                      "en_US": "Department",
+                                      "pt_PT": "Department",
+                                      "ar_EG": "Department"
+                                    },
+                                    "selectOptions": {
+                                      "type": "static",
+                                      "dataSource": [
+                                        {
+                                          "label": {
+                                            "selectValue": "zh_CN",
+                                            "zh_CN": "研发中心",
+                                            "en_US": "R&D Center",
+                                            "pt_PT": "R&D Center",
+                                            "ar_EG": "R&D Center"
+                                          },
+                                          "value": "rd",
+                                          "__fdSortId": "fd-sort-allfields-1"
+                                        },
+                                        {
+                                          "label": {
+                                            "selectValue": "zh_CN",
+                                            "zh_CN": "产品部",
+                                            "en_US": "Product",
+                                            "pt_PT": "Product",
+                                            "ar_EG": "Product"
+                                          },
+                                          "value": "product",
+                                          "__fdSortId": "fd-sort-allfields-2"
+                                        },
+                                        {
+                                          "label": {
+                                            "selectValue": "zh_CN",
+                                            "zh_CN": "运营部",
+                                            "en_US": "Operations",
+                                            "pt_PT": "Operations",
+                                            "ar_EG": "Operations"
+                                          },
+                                          "value": "ops",
+                                          "__fdSortId": "fd-sort-allfields-3"
+                                        },
+                                        {
+                                          "label": {
+                                            "selectValue": "zh_CN",
+                                            "zh_CN": "人力资源部",
+                                            "en_US": "Human Resources",
+                                            "pt_PT": "Human Resources",
+                                            "ar_EG": "Human Resources"
+                                          },
+                                          "value": "hr",
+                                          "__fdSortId": "fd-sort-allfields-4"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "fieldActionTypes": [
+                                    "copy",
+                                    "delete"
+                                  ]
+                                }
+                              },
+                              {
+                                "id": "7cb0d94d-16a1-4043-b896-ba55abae0a88",
+                                "type": "ant-select",
+                                "props": {
+                                  "formItemProps": {
+                                    "require": false,
+                                    "hidden": false,
+                                    "noStyle": false,
+                                    "validateFirst": false,
+                                    "validateTrigger": "onChange",
+                                    "valuePropName": "value",
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "用工类型",
+                                      "en_US": "Employment type",
+                                      "pt_PT": "Employment type",
+                                      "ar_EG": "Employment type"
+                                    },
+                                    "name": "employeeType"
+                                  },
+                                  "fieldProps": {
+                                    "allowClear": false,
+                                    "disabled": false,
+                                    "defaultActiveFirstOption": true,
+                                    "listHeight": 256,
+                                    "fill": true,
+                                    "placeholder": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "用工类型",
+                                      "en_US": "Employment type",
+                                      "pt_PT": "Employment type",
+                                      "ar_EG": "Employment type"
+                                    },
+                                    "selectOptions": {
+                                      "type": "static",
+                                      "dataSource": [
+                                        {
+                                          "label": {
+                                            "selectValue": "zh_CN",
+                                            "zh_CN": "正式员工",
+                                            "en_US": "Full-time",
+                                            "pt_PT": "Full-time",
+                                            "ar_EG": "Full-time"
+                                          },
+                                          "value": "fulltime",
+                                          "__fdSortId": "fd-sort-allfields-44"
+                                        },
+                                        {
+                                          "label": {
+                                            "selectValue": "zh_CN",
+                                            "zh_CN": "实习生",
+                                            "en_US": "Intern",
+                                            "pt_PT": "Intern",
+                                            "ar_EG": "Intern"
+                                          },
+                                          "value": "intern",
+                                          "__fdSortId": "fd-sort-allfields-45"
+                                        },
+                                        {
+                                          "label": {
+                                            "selectValue": "zh_CN",
+                                            "zh_CN": "外包",
+                                            "en_US": "Contractor",
+                                            "pt_PT": "Contractor",
+                                            "ar_EG": "Contractor"
+                                          },
+                                          "value": "contractor",
+                                          "__fdSortId": "fd-sort-allfields-46"
+                                        },
+                                        {
+                                          "label": {
+                                            "selectValue": "zh_CN",
+                                            "zh_CN": "劳务派遣",
+                                            "en_US": "Dispatched",
+                                            "pt_PT": "Dispatched",
+                                            "ar_EG": "Dispatched"
+                                          },
+                                          "value": "dispatch",
+                                          "__fdSortId": "fd-sort-allfields-47"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "fieldActionTypes": [
+                                    "copy",
+                                    "delete"
+                                  ]
+                                }
+                              },
+                              {
+                                "id": "ac6fbdbe-2f3d-4d63-b295-16d15a8eade5",
+                                "type": "ant-date-picker",
+                                "props": {
+                                  "formItemProps": {
+                                    "require": false,
+                                    "hidden": false,
+                                    "noStyle": false,
+                                    "validateFirst": false,
+                                    "validateTrigger": "onChange",
+                                    "valuePropName": "value",
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "入职日期",
+                                      "en_US": "Join date",
+                                      "pt_PT": "Join date",
+                                      "ar_EG": "Join date"
+                                    },
+                                    "name": "joinDate"
+                                  },
+                                  "fieldProps": {
+                                    "disabled": false,
+                                    "format": "YYYY-MM-DD",
+                                    "showTime": false,
+                                    "allowClear": true,
+                                    "isBirthday": false,
+                                    "dateBoundMode": "",
+                                    "fill": true,
+                                    "placeholder": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "入职日期",
+                                      "en_US": "Join date",
+                                      "pt_PT": "Join date",
+                                      "ar_EG": "Join date"
+                                    }
+                                  },
+                                  "fieldActionTypes": [
+                                    "copy",
+                                    "delete"
+                                  ]
+                                }
+                              },
+                              {
+                                "id": "32ab0ff7-fbb5-4eda-bf8d-333908772a45",
+                                "type": "ant-switch",
+                                "props": {
+                                  "formItemProps": {
+                                    "require": false,
+                                    "hidden": false,
+                                    "noStyle": false,
+                                    "validateFirst": false,
+                                    "validateTrigger": "onChange",
+                                    "valuePropName": "checked",
+                                    "value": false,
+                                    "label": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "试用期员工",
+                                      "en_US": "On probation",
+                                      "pt_PT": "On probation",
+                                      "ar_EG": "On probation"
+                                    },
+                                    "name": "probation"
+                                  },
+                                  "fieldProps": {
+                                    "disabled": false,
+                                    "loading": false,
+                                    "size": "default",
+                                    "fill": true,
+                                    "placeholder": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "试用期员工",
+                                      "en_US": "On probation",
+                                      "pt_PT": "On probation",
+                                      "ar_EG": "On probation"
+                                    }
+                                  },
+                                  "fieldActionTypes": [
+                                    "copy",
+                                    "delete"
+                                  ]
+                                }
+                              }
+                            ],
+                            "fieldActionTypes": [
+                              "delete"
+                            ]
+                          }
+                        }
+                      ],
+                      "fieldActionTypes": [
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            },
+            {
+              "id": "026add77-d687-487a-92f0-b5e5cc9b2ed9",
+              "type": "flex-layout",
+              "props": {
+                "fieldProps": {
+                  "direction": "vertical",
+                  "wrap": false,
+                  "justifyContent": "flex-start",
+                  "alignItems": "stretch",
+                  "alignContent": "normal",
+                  "gap": 8
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "e5e0bedf-88a1-4bd9-aa6a-50f133bacda1",
+                    "type": "collapse-layout",
+                    "props": {
+                      "fieldProps": {
+                        "panelItems": [
+                          {
+                            "id": "39e64d21-cd07-4149-8a64-2e821fec6547",
+                            "key": "1",
+                            "label": {
+                              "selectValue": "zh_CN",
+                              "zh_CN": "紧急联系人",
+                              "en_US": "Emergency contact",
+                              "pt_PT": "Emergency contact",
+                              "ar_EG": "Emergency contact"
+                            },
+                            "forceRender": false,
+                            "destroyOnHidden": false,
+                            "showArrow": true
+                          },
+                          {
+                            "id": "3499b4fb-e26c-49c7-9e1a-4933cdc0e470",
+                            "key": "2",
+                            "label": {
+                              "selectValue": "zh_CN",
+                              "zh_CN": "薪酬与社保",
+                              "en_US": "Payroll and social security",
+                              "pt_PT": "Payroll and social security",
+                              "ar_EG": "Payroll and social security"
+                            },
+                            "forceRender": false,
+                            "destroyOnHidden": false,
+                            "showArrow": true
+                          },
+                          {
+                            "id": "b573b0a5-70eb-4a12-993a-e0f6ba541dea",
+                            "key": "3",
+                            "label": {
+                              "selectValue": "zh_CN",
+                              "zh_CN": "岗位编制",
+                              "en_US": "Headcount",
+                              "pt_PT": "Headcount",
+                              "ar_EG": "Headcount"
+                            },
+                            "forceRender": false,
+                            "destroyOnHidden": false,
+                            "showArrow": true
+                          }
+                        ],
+                        "defaultActiveKey": [
+                          "1"
+                        ],
+                        "accordion": false,
+                        "bordered": true,
+                        "ghost": false,
+                        "size": "medium",
+                        "expandIconPlacement": "start",
+                        "destroyOnHidden": false
+                      },
+                      "flexProps": {
+                        "minSize": true,
+                        "scroll": true
+                      },
+                      "children": [
+                        {
+                          "id": "bd7f29e3-3b28-4468-aac0-7d68bdcfeffb",
+                          "type": "flex-layout",
+                          "props": {
+                            "fieldProps": {
+                              "direction": "vertical",
+                              "wrap": false,
+                              "justifyContent": "flex-start",
+                              "alignItems": "stretch",
+                              "alignContent": "normal",
+                              "gap": 8
+                            },
+                            "flexProps": {
+                              "minSize": true,
+                              "scroll": true
+                            },
+                            "children": [
+                              {
+                                "id": "318929b0-36be-4160-ad6e-d5f3ce945e36",
+                                "type": "card-layout",
+                                "props": {
+                                  "fieldProps": {
+                                    "variant": "outlined",
+                                    "size": "default",
+                                    "hoverable": false,
+                                    "loading": false,
+                                    "autoHeight": false,
+                                    "title": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "紧急联系人",
+                                      "en_US": "Emergency contact",
+                                      "pt_PT": "Emergency contact",
+                                      "ar_EG": "Emergency contact"
+                                    }
+                                  },
+                                  "flexProps": {
+                                    "flex": 1,
+                                    "flexShrink": 1,
+                                    "minSize": false,
+                                    "scroll": false
+                                  },
+                                  "children": [
+                                    {
+                                      "id": "e0c01ec2-3118-4de8-9288-406291ea0576",
+                                      "type": "table-grid-layout",
+                                      "props": {
+                                        "fieldProps": {
+                                          "layout": "vertical",
+                                          "bordered": false,
+                                          "density": "default",
+                                          "mode": "normal",
+                                          "data": [
+                                            {
+                                              "name": "g1",
+                                              "columnCount": 2,
+                                              "colgroup": [
+                                                "auto",
+                                                "auto"
+                                              ],
+                                              "data": []
+                                            }
+                                          ]
+                                        },
+                                        "flexProps": {
+                                          "minSize": true,
+                                          "scroll": true
+                                        },
+                                        "children": [
+                                          {
+                                            "id": "1338521a-a3f4-42c6-bde6-c36cd8cfa801",
+                                            "type": "ant-input",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "value",
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "联系人姓名",
+                                                  "en_US": "Contact name",
+                                                  "pt_PT": "Contact name",
+                                                  "ar_EG": "Contact name"
+                                                },
+                                                "name": "emergencyName"
+                                              },
+                                              "fieldProps": {
+                                                "type": "text",
+                                                "allowClear": true,
+                                                "readOnly": false,
+                                                "disabled": false,
+                                                "variant": "outlined",
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "联系人姓名",
+                                                  "en_US": "Contact name",
+                                                  "pt_PT": "Contact name",
+                                                  "ar_EG": "Contact name"
+                                                }
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          },
+                                          {
+                                            "id": "af4488da-6852-435d-9748-386cef3f4249",
+                                            "type": "phone-with-area-code",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "value",
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "联系人电话",
+                                                  "en_US": "Contact phone",
+                                                  "pt_PT": "Contact phone",
+                                                  "ar_EG": "Contact phone"
+                                                },
+                                                "name": "emergencyPhone"
+                                              },
+                                              "fieldProps": {
+                                                "defaultCode": "+86",
+                                                "allowClear": true,
+                                                "disabled": false,
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "联系人电话",
+                                                  "en_US": "Contact phone",
+                                                  "pt_PT": "Contact phone",
+                                                  "ar_EG": "Contact phone"
+                                                }
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          },
+                                          {
+                                            "id": "a9a79890-f2cb-4ac2-b1d6-f13c9daef8b9",
+                                            "type": "ant-select",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "value",
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "与本人关系",
+                                                  "en_US": "Relationship",
+                                                  "pt_PT": "Relationship",
+                                                  "ar_EG": "Relationship"
+                                                },
+                                                "name": "emergencyRelation"
+                                              },
+                                              "fieldProps": {
+                                                "allowClear": false,
+                                                "disabled": false,
+                                                "defaultActiveFirstOption": true,
+                                                "listHeight": 256,
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "与本人关系",
+                                                  "en_US": "Relationship",
+                                                  "pt_PT": "Relationship",
+                                                  "ar_EG": "Relationship"
+                                                },
+                                                "selectOptions": {
+                                                  "type": "static",
+                                                  "dataSource": [
+                                                    {
+                                                      "label": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "配偶",
+                                                        "en_US": "Spouse",
+                                                        "pt_PT": "Spouse",
+                                                        "ar_EG": "Spouse"
+                                                      },
+                                                      "value": "spouse"
+                                                    },
+                                                    {
+                                                      "label": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "父母",
+                                                        "en_US": "Parent",
+                                                        "pt_PT": "Parent",
+                                                        "ar_EG": "Parent"
+                                                      },
+                                                      "value": "parent"
+                                                    },
+                                                    {
+                                                      "label": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "子女",
+                                                        "en_US": "Child",
+                                                        "pt_PT": "Child",
+                                                        "ar_EG": "Child"
+                                                      },
+                                                      "value": "child"
+                                                    },
+                                                    {
+                                                      "label": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "其他",
+                                                        "en_US": "Other",
+                                                        "pt_PT": "Other",
+                                                        "ar_EG": "Other"
+                                                      },
+                                                      "value": "other"
+                                                    }
+                                                  ]
+                                                }
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          },
+                                          {
+                                            "id": "fca6b4c7-2773-4c63-9488-317b07bec437",
+                                            "type": "ant-input",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "value",
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "联系地址",
+                                                  "en_US": "Address",
+                                                  "pt_PT": "Address",
+                                                  "ar_EG": "Address"
+                                                },
+                                                "name": "emergencyAddress"
+                                              },
+                                              "fieldProps": {
+                                                "type": "text",
+                                                "allowClear": true,
+                                                "readOnly": false,
+                                                "disabled": false,
+                                                "variant": "outlined",
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "联系地址",
+                                                  "en_US": "Address",
+                                                  "pt_PT": "Address",
+                                                  "ar_EG": "Address"
+                                                }
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        "fieldActionTypes": [
+                                          "delete"
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  "fieldActionTypes": [
+                                    "delete"
+                                  ]
+                                }
+                              }
+                            ],
+                            "fieldActionTypes": [
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "d918022b-7f66-44ab-8a78-036e18cafd64",
+                          "type": "flex-layout",
+                          "props": {
+                            "fieldProps": {
+                              "direction": "vertical",
+                              "wrap": false,
+                              "justifyContent": "flex-start",
+                              "alignItems": "stretch",
+                              "alignContent": "normal",
+                              "gap": 8
+                            },
+                            "flexProps": {
+                              "minSize": true,
+                              "scroll": true
+                            },
+                            "children": [
+                              {
+                                "id": "cd74fc13-875f-49f9-870f-d63918cbbf2e",
+                                "type": "card-layout",
+                                "props": {
+                                  "fieldProps": {
+                                    "variant": "outlined",
+                                    "size": "default",
+                                    "hoverable": false,
+                                    "loading": false,
+                                    "autoHeight": false,
+                                    "title": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "薪酬与社保",
+                                      "en_US": "Payroll and social security",
+                                      "pt_PT": "Payroll and social security",
+                                      "ar_EG": "Payroll and social security"
+                                    }
+                                  },
+                                  "flexProps": {
+                                    "flex": 1,
+                                    "flexShrink": 1,
+                                    "minSize": false,
+                                    "scroll": false
+                                  },
+                                  "children": [
+                                    {
+                                      "id": "c38a2dcc-ad36-4194-a7b1-49bfe2c942ae",
+                                      "type": "table-grid-layout",
+                                      "props": {
+                                        "fieldProps": {
+                                          "layout": "vertical",
+                                          "bordered": false,
+                                          "density": "default",
+                                          "mode": "normal",
+                                          "data": [
+                                            {
+                                              "name": "g1",
+                                              "columnCount": 2,
+                                              "colgroup": [
+                                                "auto",
+                                                "auto"
+                                              ],
+                                              "data": []
+                                            }
+                                          ]
+                                        },
+                                        "flexProps": {
+                                          "minSize": true,
+                                          "scroll": true
+                                        },
+                                        "children": [
+                                          {
+                                            "id": "c8fff591-6104-40ef-8117-231732830bde",
+                                            "type": "ant-input",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "value",
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "开户银行",
+                                                  "en_US": "Bank name",
+                                                  "pt_PT": "Bank name",
+                                                  "ar_EG": "Bank name"
+                                                },
+                                                "name": "bankName"
+                                              },
+                                              "fieldProps": {
+                                                "type": "text",
+                                                "allowClear": true,
+                                                "readOnly": false,
+                                                "disabled": false,
+                                                "variant": "outlined",
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "开户银行",
+                                                  "en_US": "Bank name",
+                                                  "pt_PT": "Bank name",
+                                                  "ar_EG": "Bank name"
+                                                }
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          },
+                                          {
+                                            "id": "b39a3608-9336-4bf0-87ac-9290583b3062",
+                                            "type": "ant-input",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "value",
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "工资卡号",
+                                                  "en_US": "Payroll account",
+                                                  "pt_PT": "Payroll account",
+                                                  "ar_EG": "Payroll account"
+                                                },
+                                                "name": "bankAccount"
+                                              },
+                                              "fieldProps": {
+                                                "type": "text",
+                                                "allowClear": true,
+                                                "readOnly": false,
+                                                "disabled": false,
+                                                "variant": "outlined",
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "工资卡号",
+                                                  "en_US": "Payroll account",
+                                                  "pt_PT": "Payroll account",
+                                                  "ar_EG": "Payroll account"
+                                                }
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          },
+                                          {
+                                            "id": "43aee6c3-181d-42ad-885a-74e6d8a537e6",
+                                            "type": "ant-input",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "value",
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "社保账号",
+                                                  "en_US": "Social security no.",
+                                                  "pt_PT": "Social security no.",
+                                                  "ar_EG": "Social security no."
+                                                },
+                                                "name": "socialSecurityNo"
+                                              },
+                                              "fieldProps": {
+                                                "type": "text",
+                                                "allowClear": true,
+                                                "readOnly": false,
+                                                "disabled": false,
+                                                "variant": "outlined",
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "社保账号",
+                                                  "en_US": "Social security no.",
+                                                  "pt_PT": "Social security no.",
+                                                  "ar_EG": "Social security no."
+                                                }
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          },
+                                          {
+                                            "id": "e89b5edb-3091-4fb3-a890-c6207b987c7c",
+                                            "type": "ant-input",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "value",
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "公积金账号",
+                                                  "en_US": "Housing fund no.",
+                                                  "pt_PT": "Housing fund no.",
+                                                  "ar_EG": "Housing fund no."
+                                                },
+                                                "name": "housingFundNo"
+                                              },
+                                              "fieldProps": {
+                                                "type": "text",
+                                                "allowClear": true,
+                                                "readOnly": false,
+                                                "disabled": false,
+                                                "variant": "outlined",
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "公积金账号",
+                                                  "en_US": "Housing fund no.",
+                                                  "pt_PT": "Housing fund no.",
+                                                  "ar_EG": "Housing fund no."
+                                                }
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          },
+                                          {
+                                            "id": "a11e69ba-a08c-49ae-8d51-4b5626b065a0",
+                                            "type": "ant-checkbox-group",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "value",
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "福利项",
+                                                  "en_US": "Benefits",
+                                                  "pt_PT": "Benefits",
+                                                  "ar_EG": "Benefits"
+                                                },
+                                                "name": "benefits",
+                                                "colSpan": 2
+                                              },
+                                              "fieldProps": {
+                                                "disabled": false,
+                                                "optionWrap": false,
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "福利项",
+                                                  "en_US": "Benefits",
+                                                  "pt_PT": "Benefits",
+                                                  "ar_EG": "Benefits"
+                                                },
+                                                "selectOptions": {
+                                                  "type": "static",
+                                                  "dataSource": [
+                                                    {
+                                                      "label": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "补充医疗",
+                                                        "en_US": "Supplementary medical",
+                                                        "pt_PT": "Supplementary medical",
+                                                        "ar_EG": "Supplementary medical"
+                                                      },
+                                                      "value": "medical"
+                                                    },
+                                                    {
+                                                      "label": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "年度体检",
+                                                        "en_US": "Annual checkup",
+                                                        "pt_PT": "Annual checkup",
+                                                        "ar_EG": "Annual checkup"
+                                                      },
+                                                      "value": "checkup"
+                                                    },
+                                                    {
+                                                      "label": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "交通补贴",
+                                                        "en_US": "Transport allowance",
+                                                        "pt_PT": "Transport allowance",
+                                                        "ar_EG": "Transport allowance"
+                                                      },
+                                                      "value": "transport"
+                                                    },
+                                                    {
+                                                      "label": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "餐补",
+                                                        "en_US": "Meal allowance",
+                                                        "pt_PT": "Meal allowance",
+                                                        "ar_EG": "Meal allowance"
+                                                      },
+                                                      "value": "meal"
+                                                    }
+                                                  ]
+                                                }
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        "fieldActionTypes": [
+                                          "delete"
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  "fieldActionTypes": [
+                                    "delete"
+                                  ]
+                                }
+                              }
+                            ],
+                            "fieldActionTypes": [
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "ba96bb3d-826c-40d3-88c0-9c2ad3e29f36",
+                          "type": "flex-layout",
+                          "props": {
+                            "fieldProps": {
+                              "direction": "vertical",
+                              "wrap": false,
+                              "justifyContent": "flex-start",
+                              "alignItems": "stretch",
+                              "alignContent": "normal",
+                              "gap": 8
+                            },
+                            "flexProps": {
+                              "minSize": true,
+                              "scroll": true
+                            },
+                            "children": [
+                              {
+                                "id": "6d7c0758-4ee4-40a5-b23c-0cf71c452249",
+                                "type": "flex-layout",
+                                "props": {
+                                  "fieldProps": {
+                                    "direction": "horizontal",
+                                    "wrap": false,
+                                    "justifyContent": "flex-start",
+                                    "alignItems": "stretch",
+                                    "alignContent": "normal",
+                                    "gap": 12
+                                  },
+                                  "flexProps": {
+                                    "minSize": true,
+                                    "scroll": true
+                                  },
+                                  "children": [
+                                    {
+                                      "id": "5b7aaec9-0a5e-486a-91c9-d6f20acd942d",
+                                      "type": "card-layout",
+                                      "props": {
+                                        "fieldProps": {
+                                          "variant": "outlined",
+                                          "size": "default",
+                                          "hoverable": false,
+                                          "loading": false,
+                                          "autoHeight": false,
+                                          "title": {
+                                            "selectValue": "zh_CN",
+                                            "zh_CN": "编制信息",
+                                            "en_US": "Headcount",
+                                            "pt_PT": "Headcount",
+                                            "ar_EG": "Headcount"
+                                          }
+                                        },
+                                        "flexProps": {
+                                          "flex": 1,
+                                          "flexShrink": 1,
+                                          "minSize": false,
+                                          "scroll": false
+                                        },
+                                        "children": [
+                                          {
+                                            "id": "fc3ae4bb-d09a-42af-b38b-22f36852a147",
+                                            "type": "table-grid-layout",
+                                            "props": {
+                                              "fieldProps": {
+                                                "layout": "vertical",
+                                                "bordered": false,
+                                                "density": "default",
+                                                "mode": "normal",
+                                                "data": [
+                                                  {
+                                                    "name": "g1",
+                                                    "columnCount": 2,
+                                                    "colgroup": [
+                                                      "auto",
+                                                      "auto"
+                                                    ],
+                                                    "data": []
+                                                  }
+                                                ]
+                                              },
+                                              "flexProps": {
+                                                "minSize": true,
+                                                "scroll": true
+                                              },
+                                              "children": [
+                                                {
+                                                  "id": "0790eb66-634c-4e75-8484-83a9aed5fc84",
+                                                  "type": "ant-input",
+                                                  "props": {
+                                                    "formItemProps": {
+                                                      "require": false,
+                                                      "hidden": false,
+                                                      "noStyle": false,
+                                                      "validateFirst": false,
+                                                      "validateTrigger": "onChange",
+                                                      "valuePropName": "value",
+                                                      "label": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "工号",
+                                                        "en_US": "Employee ID",
+                                                        "pt_PT": "Employee ID",
+                                                        "ar_EG": "Employee ID"
+                                                      },
+                                                      "name": "employeeNo",
+                                                      "initialValue": "待系统生成"
+                                                    },
+                                                    "fieldProps": {
+                                                      "type": "text",
+                                                      "allowClear": true,
+                                                      "readOnly": true,
+                                                      "disabled": false,
+                                                      "variant": "outlined",
+                                                      "fill": true,
+                                                      "placeholder": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "工号",
+                                                        "en_US": "Employee ID",
+                                                        "pt_PT": "Employee ID",
+                                                        "ar_EG": "Employee ID"
+                                                      }
+                                                    },
+                                                    "fieldActionTypes": [
+                                                      "copy",
+                                                      "delete"
+                                                    ]
+                                                  }
+                                                },
+                                                {
+                                                  "id": "24e7ba4e-b59e-48e2-860a-45f6b22d54fd",
+                                                  "type": "ant-tree-select",
+                                                  "props": {
+                                                    "formItemProps": {
+                                                      "require": false,
+                                                      "hidden": false,
+                                                      "noStyle": false,
+                                                      "validateFirst": false,
+                                                      "validateTrigger": "onChange",
+                                                      "valuePropName": "value",
+                                                      "label": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "组织节点",
+                                                        "en_US": "Org node",
+                                                        "pt_PT": "Org node",
+                                                        "ar_EG": "Org node"
+                                                      },
+                                                      "name": "orgNode"
+                                                    },
+                                                    "fieldProps": {
+                                                      "allowClear": false,
+                                                      "disabled": false,
+                                                      "labelInValue": false,
+                                                      "multiple": false,
+                                                      "treeCheckable": false,
+                                                      "showCheckedStrategy": "SHOW_CHILD",
+                                                      "treeDefaultExpandAll": false,
+                                                      "treeLine": false,
+                                                      "virtual": true,
+                                                      "listHeight": 256,
+                                                      "fill": true,
+                                                      "placeholder": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "组织节点",
+                                                        "en_US": "Org node",
+                                                        "pt_PT": "Org node",
+                                                        "ar_EG": "Org node"
+                                                      },
+                                                      "searchPlaceholder": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "请输入关键字搜索",
+                                                        "en_US": "Enter keyword to search",
+                                                        "pt_PT": "Enter keyword to search",
+                                                        "ar_EG": "Enter keyword to search"
+                                                      },
+                                                      "treeOptions": {
+                                                        "type": "static",
+                                                        "treeDataJson": "[\n  {\n    \"value\": \"hq\",\n    \"label\": \"总公司\",\n    \"children\": [\n      {\n        \"value\": \"rd\",\n        \"label\": \"研发中心\",\n        \"children\": [\n          {\n            \"value\": \"fe\",\n            \"label\": \"前端组\"\n          },\n          {\n            \"value\": \"be\",\n            \"label\": \"后端组\"\n          },\n          {\n            \"value\": \"qa\",\n            \"label\": \"测试组\"\n          }\n        ]\n      },\n      {\n        \"value\": \"product\",\n        \"label\": \"产品部\",\n        \"children\": [\n          {\n            \"value\": \"pm\",\n            \"label\": \"产品经理组\"\n          },\n          {\n            \"value\": \"ux\",\n            \"label\": \"设计组\"\n          }\n        ]\n      },\n      {\n        \"value\": \"hr\",\n        \"label\": \"人力资源部\"\n      },\n      {\n        \"value\": \"finance\",\n        \"label\": \"财务部\"\n      }\n    ]\n  }\n]"
+                                                      }
+                                                    },
+                                                    "fieldActionTypes": [
+                                                      "copy",
+                                                      "delete"
+                                                    ]
+                                                  }
+                                                }
+                                              ],
+                                              "fieldActionTypes": [
+                                                "delete"
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        "fieldActionTypes": [
+                                          "delete"
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "id": "77c14595-591e-46df-ba64-039fd1b84b7b",
+                                      "type": "card-layout",
+                                      "props": {
+                                        "fieldProps": {
+                                          "variant": "outlined",
+                                          "size": "default",
+                                          "hoverable": false,
+                                          "loading": false,
+                                          "autoHeight": false,
+                                          "title": {
+                                            "selectValue": "zh_CN",
+                                            "zh_CN": "职级信息",
+                                            "en_US": "Job grade",
+                                            "pt_PT": "Job grade",
+                                            "ar_EG": "Job grade"
+                                          }
+                                        },
+                                        "flexProps": {
+                                          "flex": 1,
+                                          "flexShrink": 1,
+                                          "minSize": false,
+                                          "scroll": false
+                                        },
+                                        "children": [
+                                          {
+                                            "id": "58ba7080-6f5c-42d9-9bc9-1d80ecf7f1b4",
+                                            "type": "table-grid-layout",
+                                            "props": {
+                                              "fieldProps": {
+                                                "layout": "vertical",
+                                                "bordered": false,
+                                                "density": "default",
+                                                "mode": "normal",
+                                                "data": [
+                                                  {
+                                                    "name": "g1",
+                                                    "columnCount": 2,
+                                                    "colgroup": [
+                                                      "auto",
+                                                      "auto"
+                                                    ],
+                                                    "data": []
+                                                  }
+                                                ]
+                                              },
+                                              "flexProps": {
+                                                "minSize": true,
+                                                "scroll": true
+                                              },
+                                              "children": [
+                                                {
+                                                  "id": "138ef006-2dd9-414c-9ea0-f4ccde471dd5",
+                                                  "type": "ant-input",
+                                                  "props": {
+                                                    "formItemProps": {
+                                                      "require": false,
+                                                      "hidden": false,
+                                                      "noStyle": false,
+                                                      "validateFirst": false,
+                                                      "validateTrigger": "onChange",
+                                                      "valuePropName": "value",
+                                                      "label": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "岗位名称",
+                                                        "en_US": "Job title",
+                                                        "pt_PT": "Job title",
+                                                        "ar_EG": "Job title"
+                                                      },
+                                                      "name": "jobTitle"
+                                                    },
+                                                    "fieldProps": {
+                                                      "type": "text",
+                                                      "allowClear": true,
+                                                      "readOnly": false,
+                                                      "disabled": false,
+                                                      "variant": "outlined",
+                                                      "fill": true,
+                                                      "placeholder": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "岗位名称",
+                                                        "en_US": "Job title",
+                                                        "pt_PT": "Job title",
+                                                        "ar_EG": "Job title"
+                                                      }
+                                                    },
+                                                    "fieldActionTypes": [
+                                                      "copy",
+                                                      "delete"
+                                                    ]
+                                                  }
+                                                },
+                                                {
+                                                  "id": "b605d9ac-ac4c-47c4-b3f7-157b0ee43634",
+                                                  "type": "ant-input-number",
+                                                  "props": {
+                                                    "formItemProps": {
+                                                      "require": false,
+                                                      "hidden": false,
+                                                      "noStyle": false,
+                                                      "validateFirst": false,
+                                                      "validateTrigger": "onChange",
+                                                      "valuePropName": "value",
+                                                      "label": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "职级",
+                                                        "en_US": "Grade",
+                                                        "pt_PT": "Grade",
+                                                        "ar_EG": "Grade"
+                                                      },
+                                                      "name": "grade"
+                                                    },
+                                                    "fieldProps": {
+                                                      "disabled": false,
+                                                      "variant": "outlined",
+                                                      "fill": true,
+                                                      "placeholder": {
+                                                        "selectValue": "zh_CN",
+                                                        "zh_CN": "职级",
+                                                        "en_US": "Grade",
+                                                        "pt_PT": "Grade",
+                                                        "ar_EG": "Grade"
+                                                      },
+                                                      "min": 1,
+                                                      "max": 20
+                                                    },
+                                                    "fieldActionTypes": [
+                                                      "copy",
+                                                      "delete"
+                                                    ]
+                                                  }
+                                                }
+                                              ],
+                                              "fieldActionTypes": [
+                                                "delete"
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        "fieldActionTypes": [
+                                          "delete"
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  "fieldActionTypes": [
+                                    "delete"
+                                  ]
+                                }
+                              }
+                            ],
+                            "fieldActionTypes": [
+                              "delete"
+                            ]
+                          }
+                        }
+                      ],
+                      "fieldActionTypes": [
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            },
+            {
+              "id": "ab631025-6553-45e7-bdae-8b215ee9c2f8",
+              "type": "flex-layout",
+              "props": {
+                "fieldProps": {
+                  "direction": "vertical",
+                  "wrap": false,
+                  "justifyContent": "flex-start",
+                  "alignItems": "stretch",
+                  "alignContent": "normal",
+                  "gap": 8
+                },
+                "flexProps": {
+                  "minSize": true,
+                  "scroll": true
+                },
+                "children": [
+                  {
+                    "id": "79f96177-ec11-41ee-aa34-97e98af7aaca",
+                    "type": "steps-layout",
+                    "props": {
+                      "fieldProps": {
+                        "stepItems": [
+                          {
+                            "id": "297c9d59-0b23-46d9-89b7-d97426409b88",
+                            "title": {
+                              "selectValue": "zh_CN",
+                              "zh_CN": "材料上传",
+                              "en_US": "Documents",
+                              "pt_PT": "Documents",
+                              "ar_EG": "Documents"
+                            }
+                          },
+                          {
+                            "id": "71359d0e-7056-498b-a78a-ab16e3e617f0",
+                            "title": {
+                              "selectValue": "zh_CN",
+                              "zh_CN": "合同确认",
+                              "en_US": "Contract",
+                              "pt_PT": "Contract",
+                              "ar_EG": "Contract"
+                            }
+                          },
+                          {
+                            "id": "b63f87f0-74fd-4699-a1bc-8a340167eb23",
+                            "title": {
+                              "selectValue": "zh_CN",
+                              "zh_CN": "签署提交",
+                              "en_US": "Sign and submit",
+                              "pt_PT": "Sign and submit",
+                              "ar_EG": "Sign and submit"
+                            }
+                          }
+                        ],
+                        "current": 0,
+                        "initial": 0,
+                        "direction": "top",
+                        "type": "default",
+                        "size": "default",
+                        "itemRenderMode": "lazy",
+                        "itemLayoutMode": "surplus",
+                        "isFullWidth": true,
+                        "isFullHeight": true,
+                        "titlePlacement": "horizontal"
+                      },
+                      "flexProps": {
+                        "minSize": true,
+                        "scroll": true
+                      },
+                      "children": [
+                        {
+                          "id": "2de945c4-9859-48f3-9c4b-b956ae707f87",
+                          "type": "flex-layout",
+                          "props": {
+                            "fieldProps": {
+                              "direction": "vertical",
+                              "wrap": false,
+                              "justifyContent": "flex-start",
+                              "alignItems": "stretch",
+                              "alignContent": "normal",
+                              "gap": 8
+                            },
+                            "flexProps": {
+                              "minSize": true,
+                              "scroll": true
+                            },
+                            "children": [
+                              {
+                                "id": "6b7aa228-ddd4-4f2b-b2b1-5f939083f3b9",
+                                "type": "card-layout",
+                                "props": {
+                                  "fieldProps": {
+                                    "variant": "outlined",
+                                    "size": "default",
+                                    "hoverable": false,
+                                    "loading": false,
+                                    "autoHeight": false,
+                                    "title": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "入职材料",
+                                      "en_US": "Onboarding documents",
+                                      "pt_PT": "Onboarding documents",
+                                      "ar_EG": "Onboarding documents"
+                                    }
+                                  },
+                                  "flexProps": {
+                                    "flex": 1,
+                                    "flexShrink": 1,
+                                    "minSize": false,
+                                    "scroll": false
+                                  },
+                                  "children": [
+                                    {
+                                      "id": "0dcbac66-0329-466c-97c6-2b24147e5eb5",
+                                      "type": "table-grid-layout",
+                                      "props": {
+                                        "fieldProps": {
+                                          "layout": "vertical",
+                                          "bordered": false,
+                                          "density": "default",
+                                          "mode": "normal",
+                                          "data": [
+                                            {
+                                              "name": "g1",
+                                              "columnCount": 2,
+                                              "colgroup": [
+                                                "auto",
+                                                "auto"
+                                              ],
+                                              "data": []
+                                            }
+                                          ]
+                                        },
+                                        "flexProps": {
+                                          "minSize": true,
+                                          "scroll": true
+                                        },
+                                        "children": [
+                                          {
+                                            "id": "dcea3379-8210-49f4-90dd-68d82b466d80",
+                                            "type": "ant-image-upload",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "value",
+                                                "value": [],
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "证件照",
+                                                  "en_US": "ID photo",
+                                                  "pt_PT": "ID photo",
+                                                  "ar_EG": "ID photo"
+                                                },
+                                                "name": "idPhoto",
+                                                "colSpan": 2
+                                              },
+                                              "fieldProps": {
+                                                "disabled": false,
+                                                "accept": "image/*",
+                                                "multiple": true,
+                                                "listType": "picture-card",
+                                                "showUploadList": true,
+                                                "cropEnabled": true,
+                                                "cropShape": "rect",
+                                                "cropAllowFlip": true,
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "证件照",
+                                                  "en_US": "ID photo",
+                                                  "pt_PT": "ID photo",
+                                                  "ar_EG": "ID photo"
+                                                },
+                                                "uploadDataSource": {
+                                                  "type": "dynamic"
+                                                }
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          },
+                                          {
+                                            "id": "8f6dd698-7841-4725-ba81-95eda954860c",
+                                            "type": "ant-file-upload",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "value",
+                                                "value": [],
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "简历 / 学历证明",
+                                                  "en_US": "Resume / diploma",
+                                                  "pt_PT": "Resume / diploma",
+                                                  "ar_EG": "Resume / diploma"
+                                                },
+                                                "name": "resume",
+                                                "colSpan": 2
+                                              },
+                                              "fieldProps": {
+                                                "disabled": false,
+                                                "accept": "",
+                                                "multiple": true,
+                                                "listType": "text",
+                                                "showUploadList": true,
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "简历 / 学历证明",
+                                                  "en_US": "Resume / diploma",
+                                                  "pt_PT": "Resume / diploma",
+                                                  "ar_EG": "Resume / diploma"
+                                                },
+                                                "uploadDataSource": {
+                                                  "type": "dynamic"
+                                                }
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        "fieldActionTypes": [
+                                          "delete"
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  "fieldActionTypes": [
+                                    "delete"
+                                  ]
+                                }
+                              }
+                            ],
+                            "fieldActionTypes": [
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "7c1e795c-1eb5-4731-b716-8211d8027453",
+                          "type": "flex-layout",
+                          "props": {
+                            "fieldProps": {
+                              "direction": "vertical",
+                              "wrap": false,
+                              "justifyContent": "flex-start",
+                              "alignItems": "stretch",
+                              "alignContent": "normal",
+                              "gap": 8
+                            },
+                            "flexProps": {
+                              "minSize": true,
+                              "scroll": true
+                            },
+                            "children": [
+                              {
+                                "id": "74ebcc9e-e137-4a4d-989c-e64b9e71010a",
+                                "type": "card-layout",
+                                "props": {
+                                  "fieldProps": {
+                                    "variant": "outlined",
+                                    "size": "default",
+                                    "hoverable": false,
+                                    "loading": false,
+                                    "autoHeight": false,
+                                    "title": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "劳动合同",
+                                      "en_US": "Labor contract",
+                                      "pt_PT": "Labor contract",
+                                      "ar_EG": "Labor contract"
+                                    }
+                                  },
+                                  "flexProps": {
+                                    "flex": 1,
+                                    "flexShrink": 1,
+                                    "minSize": false,
+                                    "scroll": false
+                                  },
+                                  "children": [
+                                    {
+                                      "id": "381af842-8b04-4bed-8f53-eabef8b5f177",
+                                      "type": "table-grid-layout",
+                                      "props": {
+                                        "fieldProps": {
+                                          "layout": "vertical",
+                                          "bordered": false,
+                                          "density": "default",
+                                          "mode": "normal",
+                                          "data": [
+                                            {
+                                              "name": "g1",
+                                              "columnCount": 2,
+                                              "colgroup": [
+                                                "auto",
+                                                "auto"
+                                              ],
+                                              "data": []
+                                            }
+                                          ]
+                                        },
+                                        "flexProps": {
+                                          "minSize": true,
+                                          "scroll": true
+                                        },
+                                        "children": [
+                                          {
+                                            "id": "6118a6ee-556d-4075-83ae-134cd439dc25",
+                                            "type": "ant-date-dange-picker",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "value",
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "合同期限",
+                                                  "en_US": "Contract period",
+                                                  "pt_PT": "Contract period",
+                                                  "ar_EG": "Contract period"
+                                                },
+                                                "name": "contractPeriod"
+                                              },
+                                              "fieldProps": {
+                                                "format": "YYYY-MM-DD",
+                                                "allowClear": true,
+                                                "disabled": false,
+                                                "showTime": false,
+                                                "allowEmpty": [
+                                                  true,
+                                                  true
+                                                ],
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "合同期限",
+                                                  "en_US": "Contract period",
+                                                  "pt_PT": "Contract period",
+                                                  "ar_EG": "Contract period"
+                                                }
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          },
+                                          {
+                                            "id": "fca542e2-2f26-4d5e-a31c-717709e11081",
+                                            "type": "ant-input-number",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "value",
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "试用期(月)",
+                                                  "en_US": "Probation (months)",
+                                                  "pt_PT": "Probation (months)",
+                                                  "ar_EG": "Probation (months)"
+                                                },
+                                                "name": "probationMonths"
+                                              },
+                                              "fieldProps": {
+                                                "disabled": false,
+                                                "variant": "outlined",
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "试用期(月)",
+                                                  "en_US": "Probation (months)",
+                                                  "pt_PT": "Probation (months)",
+                                                  "ar_EG": "Probation (months)"
+                                                },
+                                                "min": 0,
+                                                "max": 6
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          },
+                                          {
+                                            "id": "dd67d8c6-eec3-46d2-a05d-ddbbeeabb8d5",
+                                            "type": "ant-cascader",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "value",
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "工作地点",
+                                                  "en_US": "Work location",
+                                                  "pt_PT": "Work location",
+                                                  "ar_EG": "Work location"
+                                                },
+                                                "name": "workLocation"
+                                              },
+                                              "fieldProps": {
+                                                "allowClear": false,
+                                                "changeOnSelect": false,
+                                                "disabled": false,
+                                                "multiple": false,
+                                                "showCheckedStrategy": "SHOW_PARENT",
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "工作地点",
+                                                  "en_US": "Work location",
+                                                  "pt_PT": "Work location",
+                                                  "ar_EG": "Work location"
+                                                },
+                                                "searchPlaceholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "请输入关键字搜索",
+                                                  "en_US": "Enter keyword to search",
+                                                  "pt_PT": "Enter keyword to search",
+                                                  "ar_EG": "Enter keyword to search"
+                                                },
+                                                "treeOptions": {
+                                                  "type": "static",
+                                                  "treeDataJson": "[\n  {\n    \"value\": \"zhejiang\",\n    \"label\": \"浙江省\",\n    \"children\": [\n      {\n        \"value\": \"hangzhou\",\n        \"label\": \"杭州市\",\n        \"children\": [\n          {\n            \"value\": \"xihu\",\n            \"label\": \"西湖区\"\n          },\n          {\n            \"value\": \"binjiang\",\n            \"label\": \"滨江区\"\n          }\n        ]\n      },\n      {\n        \"value\": \"ningbo\",\n        \"label\": \"宁波市\",\n        \"children\": [\n          {\n            \"value\": \"haishu\",\n            \"label\": \"海曙区\"\n          }\n        ]\n      }\n    ]\n  },\n  {\n    \"value\": \"jiangsu\",\n    \"label\": \"江苏省\",\n    \"children\": [\n      {\n        \"value\": \"nanjing\",\n        \"label\": \"南京市\",\n        \"children\": [\n          {\n            \"value\": \"xuanwu\",\n            \"label\": \"玄武区\"\n          }\n        ]\n      },\n      {\n        \"value\": \"suzhou\",\n        \"label\": \"苏州市\",\n        \"children\": [\n          {\n            \"value\": \"gusu\",\n            \"label\": \"姑苏区\"\n          }\n        ]\n      }\n    ]\n  }\n]"
+                                                }
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          },
+                                          {
+                                            "id": "b9103131-df6e-44a2-8988-43c5bf1b63b8",
+                                            "type": "ant-switch",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "checked",
+                                                "value": false,
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "允许远程办公",
+                                                  "en_US": "Remote allowed",
+                                                  "pt_PT": "Remote allowed",
+                                                  "ar_EG": "Remote allowed"
+                                                },
+                                                "name": "remoteAllowed"
+                                              },
+                                              "fieldProps": {
+                                                "disabled": false,
+                                                "loading": false,
+                                                "size": "default",
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "允许远程办公",
+                                                  "en_US": "Remote allowed",
+                                                  "pt_PT": "Remote allowed",
+                                                  "ar_EG": "Remote allowed"
+                                                }
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        "fieldActionTypes": [
+                                          "delete"
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  "fieldActionTypes": [
+                                    "delete"
+                                  ]
+                                }
+                              }
+                            ],
+                            "fieldActionTypes": [
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "1d2b3077-7b63-4e7e-9946-2ff7c4a217cf",
+                          "type": "flex-layout",
+                          "props": {
+                            "fieldProps": {
+                              "direction": "vertical",
+                              "wrap": false,
+                              "justifyContent": "flex-start",
+                              "alignItems": "stretch",
+                              "alignContent": "normal",
+                              "gap": 8
+                            },
+                            "flexProps": {
+                              "minSize": true,
+                              "scroll": true
+                            },
+                            "children": [
+                              {
+                                "id": "b3387152-6219-4eee-859f-66c27454ea38",
+                                "type": "card-layout",
+                                "props": {
+                                  "fieldProps": {
+                                    "variant": "outlined",
+                                    "size": "default",
+                                    "hoverable": false,
+                                    "loading": false,
+                                    "autoHeight": false,
+                                    "title": {
+                                      "selectValue": "zh_CN",
+                                      "zh_CN": "入职承诺",
+                                      "en_US": "Onboarding pledge",
+                                      "pt_PT": "Onboarding pledge",
+                                      "ar_EG": "Onboarding pledge"
+                                    }
+                                  },
+                                  "flexProps": {
+                                    "flex": 1,
+                                    "flexShrink": 1,
+                                    "minSize": false,
+                                    "scroll": false
+                                  },
+                                  "children": [
+                                    {
+                                      "id": "ac234fd9-059f-4ffc-9494-c35e6c91d208",
+                                      "type": "table-grid-layout",
+                                      "props": {
+                                        "fieldProps": {
+                                          "layout": "vertical",
+                                          "bordered": false,
+                                          "density": "default",
+                                          "mode": "normal",
+                                          "data": [
+                                            {
+                                              "name": "g1",
+                                              "columnCount": 2,
+                                              "colgroup": [
+                                                "auto",
+                                                "auto"
+                                              ],
+                                              "data": []
+                                            }
+                                          ]
+                                        },
+                                        "flexProps": {
+                                          "minSize": true,
+                                          "scroll": true
+                                        },
+                                        "children": [
+                                          {
+                                            "id": "cd72adaa-11c2-4878-a2e1-79d90ff05f76",
+                                            "type": "ant-checkbox",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "checked",
+                                                "value": false,
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "已阅读员工手册",
+                                                  "en_US": "I have read the employee handbook",
+                                                  "pt_PT": "I have read the employee handbook",
+                                                  "ar_EG": "I have read the employee handbook"
+                                                },
+                                                "name": "agreeHandbook"
+                                              },
+                                              "fieldProps": {
+                                                "disabled": false,
+                                                "indeterminate": false,
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "已阅读员工手册",
+                                                  "en_US": "I have read the employee handbook",
+                                                  "pt_PT": "I have read the employee handbook",
+                                                  "ar_EG": "I have read the employee handbook"
+                                                }
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          },
+                                          {
+                                            "id": "09c36e2b-cf20-40bf-a76b-e4abb66350d8",
+                                            "type": "ant-signature-pad",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "value",
+                                                "initialValue": "",
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "本人签名",
+                                                  "en_US": "Signature",
+                                                  "pt_PT": "Signature",
+                                                  "ar_EG": "Signature"
+                                                },
+                                                "name": "signature",
+                                                "colSpan": 2
+                                              },
+                                              "fieldProps": {
+                                                "value": "",
+                                                "penColor": "#000000",
+                                                "backgroundColor": "#ffffff",
+                                                "mode": "free",
+                                                "lineWidth": 2,
+                                                "canvasWidth": 300,
+                                                "canvasHeight": 200,
+                                                "clearOnResize": false,
+                                                "fill": true
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          },
+                                          {
+                                            "id": "5e6aea9c-53b1-401d-979d-a63864d66e4d",
+                                            "type": "ant-textarea",
+                                            "props": {
+                                              "formItemProps": {
+                                                "require": false,
+                                                "hidden": false,
+                                                "noStyle": false,
+                                                "validateFirst": false,
+                                                "validateTrigger": "onChange",
+                                                "valuePropName": "value",
+                                                "label": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "补充说明",
+                                                  "en_US": "Remarks",
+                                                  "pt_PT": "Remarks",
+                                                  "ar_EG": "Remarks"
+                                                },
+                                                "name": "remarks",
+                                                "colSpan": 2
+                                              },
+                                              "fieldProps": {
+                                                "allowClear": true,
+                                                "readOnly": false,
+                                                "disabled": false,
+                                                "showCount": false,
+                                                "autoSize": true,
+                                                "variant": "outlined",
+                                                "fill": true,
+                                                "placeholder": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "补充说明",
+                                                  "en_US": "Remarks",
+                                                  "pt_PT": "Remarks",
+                                                  "ar_EG": "Remarks"
+                                                }
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          },
+                                          {
+                                            "id": "2c2e2746-414d-489f-8d06-046cd0334a93",
+                                            "type": "ant-submit-button",
+                                            "props": {
+                                              "formItemProps": {
+                                                "noStyle": true
+                                              },
+                                              "fieldProps": {
+                                                "children": {
+                                                  "selectValue": "zh_CN",
+                                                  "zh_CN": "提交入职申请",
+                                                  "en_US": "Submit onboarding",
+                                                  "pt_PT": "Submit onboarding",
+                                                  "ar_EG": "Submit onboarding"
+                                                },
+                                                "type": "primary",
+                                                "shape": "default",
+                                                "size": "middle",
+                                                "htmlType": "submit",
+                                                "ghost": false,
+                                                "danger": false,
+                                                "loading": false,
+                                                "disabled": false,
+                                                "block": false,
+                                                "fill": false
+                                              },
+                                              "fieldActionTypes": [
+                                                "copy",
+                                                "delete"
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        "fieldActionTypes": [
+                                          "delete"
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  "fieldActionTypes": [
+                                    "delete"
+                                  ]
+                                }
+                              }
+                            ],
+                            "fieldActionTypes": [
+                              "delete"
+                            ]
+                          }
+                        }
+                      ],
+                      "fieldActionTypes": [
+                        "delete"
+                      ]
+                    }
+                  }
+                ],
+                "fieldActionTypes": [
+                  "delete"
+                ]
+              }
+            }
+          ],
+          "fieldActionTypes": [
+            "delete"
+          ]
+        }
+      }
+    ],
+    "fieldActionTypes": []
+  }
+}

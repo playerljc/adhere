@@ -568,16 +568,30 @@ export default [
       'The canvas already has content. Loading a template will replace the current design. Continue?',
     template_contact_name: 'Contact form',
     template_contact_desc:
-      'Card sections for company info, inquiry content, and contact preferences for business inquiries',
+      'Enterprise inquiry: company profile, product interest, budget, attachments, and contact preferences',
     template_login_name: 'Login form',
     template_login_desc:
-      'Card sections for login method, credentials, and verification options for admin sign-in',
+      'Password and SMS login with captcha, optional OTP, and keep-me-signed-in options',
     template_register_name: 'All controls',
     template_register_desc:
       'Common antd form control examples for quickly previewing and trying all controls',
     template_feedback_name: 'Feedback form',
     template_feedback_desc:
-      'Card sections for feedback details and contact information for product feedback',
+      'Bug/suggestion ticket: environment, severity, repro steps, screenshots, and follow-up',
+    template_layout_name: 'Layout kitchen sink',
+    template_layout_desc:
+      'Employee onboarding with Tabs / Collapse / Steps covering HR file, documents, contract, and signature',
+    template_validation_name: 'Validation and states',
+    template_validation_desc:
+      'Onboarding verification: required fields, read-only ID, hidden token, disabled master data, contract period',
+    template_many_fields_name: 'Many fields',
+    template_many_fields_desc: '8 real employee-file sections for scrolling, outline, and performance',
+    template_widget_gallery_name: 'Widget gallery',
+    template_widget_gallery_desc:
+      'Project workspace request: permissions, members, uploads, signature, QR, and identity verification',
+    template_survey_name: 'Satisfaction survey',
+    template_survey_desc:
+      'Product experience survey: role, tenure, recommendation, feature preference, and follow-up',
     template_card_contact_basic: 'Basic information',
     template_card_contact_message: 'Inquiry content',
     template_card_contact_preference: 'Contact preferences',

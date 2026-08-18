@@ -413,6 +413,19 @@ export default [
       'أمثلة لعناصر تحكم نماذج antd الشائعة لمعاينة وتجربة جميع عناصر التحكم بسرعة',
     template_feedback_name: 'نموذج الملاحظات',
     template_feedback_desc: 'أقسام Card لتفاصيل الملاحظات وبيانات التواصل',
+    template_layout_name: 'تركيبات التخطيط',
+    template_layout_desc:
+      'Tabs و Collapse و Steps متداخلة مع Card / TableGrid / Flex للتحقق من التخطيطات المعقدة',
+    template_validation_name: 'التحقق والحالات',
+    template_validation_desc:
+      'حقول مطلوبة ومخفية وقيم افتراضية للقراءة فقط والمعطلة وامتداد الأعمدة',
+    template_many_fields_name: 'حقول كثيرة',
+    template_many_fields_desc: '8 مجموعات و 96 حقلاً للتحقق من التمرير والمخطط والأداء',
+    template_widget_gallery_name: 'معرض عناصر التحكم',
+    template_widget_gallery_desc:
+      'نقل وشجرة واختيار جدول وجدول قابل للتحرير ورفع وتوقيع ورمز QR ونص غني',
+    template_survey_name: 'استبيان الرضا',
+    template_survey_desc: 'اختيار واحد ومتعدد وتقييم ومنزلق ومجزأ ومفتاح',
     template_card_contact_basic: 'المعلومات الأساسية',
     template_card_contact_message: 'محتوى الاستفسار',
     template_card_contact_preference: 'تفضيلات التواصل',

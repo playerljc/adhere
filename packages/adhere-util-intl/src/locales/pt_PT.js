@@ -414,6 +414,19 @@ export default [
       'Exemplos dos controlos de formulário antd comuns para pré-visualizar e experimentar todos os controlos',
     template_feedback_name: 'Formulário de feedback',
     template_feedback_desc: 'Secções Card para detalhes do feedback e informações de contacto',
+    template_layout_name: 'Combinação de layouts',
+    template_layout_desc:
+      'Tabs, Collapse e Steps aninhados com Card / TableGrid / Flex para validar layouts complexos',
+    template_validation_name: 'Validação e estados',
+    template_validation_desc:
+      'Obrigatório, campos ocultos, valores iniciais, só leitura, desativado e colSpan',
+    template_many_fields_name: 'Muitos campos',
+    template_many_fields_desc: '8 grupos e 96 campos para validar scroll, outline, seleção e desempenho',
+    template_widget_gallery_name: 'Galeria de controlos',
+    template_widget_gallery_desc:
+      'Transfer, árvore, seleção de tabela, tabela editável, uploads, assinatura, QR e texto rico',
+    template_survey_name: 'Inquérito de satisfação',
+    template_survey_desc: 'Rádio, checkbox, classificação, slider, segmented e switch',
     template_card_contact_basic: 'Informação básica',
     template_card_contact_message: 'Conteúdo do pedido',
     template_card_contact_preference: 'Preferências de contacto',

@@ -34,7 +34,7 @@ export function define(): DesignItem {
         validateTrigger: 'onChange',
       },
       fieldProps: {
-        readOnly: true,
+        readOnly: false,
         allowClear: true,
         disabled: false,
         showCount: false,
