@@ -173,15 +173,19 @@ function handleResizeStart(context, columnsWidth) {
 /**
  * resolveResizableWidth
  * @description 解析列拖拽初始宽度：拖拽缓存 > 明确 width/minWidth > DOM 实测
+ * @param {boolean} isEmpty - 当前数据源是否为空；为空时不回退到 DOM 实测宽度，
+ * 否则会把"有数据时"渲染出的旧列宽（此时 DOM 还未提交本次空数据的渲染）继续用到空数据的展示上
  */
 function resolveResizableWidth({
   column,
   columnsWidth,
   computedWidth,
+  isEmpty,
 }: {
   column: any;
   columnsWidth: Map<string, { width: number; height: number }>;
   computedWidth?: number;
+  isEmpty?: boolean;
 }): number | undefined {
   const columnSizeItem = columnsWidth.get(column.key as string);
   if (columnSizeItem) {
@@ -199,6 +203,10 @@ function resolveResizableWidth({
   const minWidth = parseWidthToNumber(column.minWidth);
   if (minWidth) {
     return minWidth;
+  }
+
+  if (isEmpty) {
+    return undefined;
   }
 
   return parseWidthToNumber(computedWidth);
@@ -228,11 +236,13 @@ export default ({
 
   const colEl = colEls.length > spanCount ? colEls[spanCount + colIndex] : null;
   const computedWidth = getRenderedColWidth(colEl);
+  const isEmpty = (context?.getDataSource?.() ?? []).length === 0;
 
   const width = resolveResizableWidth({
     column,
     columnsWidth,
     computedWidth,
+    isEmpty,
   });
 
   return {
@@ -270,6 +280,7 @@ export default ({
           column: { ..._others, key: column.key, minWidth: column.minWidth ?? _others.minWidth },
           columnsWidth,
           computedWidth,
+          isEmpty,
         }) ?? width;
 
       return {

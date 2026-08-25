@@ -3249,7 +3249,14 @@ abstract class SearchTable<
     this.tableRowComponentReducers = this.onTableRowComponentReducers(columns);
     this.tableCellComponentReducers = this.onTableCellComponentReducers(columns);
 
-    return <Table {...tableProps} />;
+    // isColumnMaxContent + 非 virtual 场景下使用 tableLayout: 'auto'，
+    // antd/rc-table 会把浏览器实测的列宽直接写到 colgroup 的 <col> 上；
+    // 该测量结果在数据变为空时不会重新测算/清空，导致空数据后仍残留之前有数据时的列宽。
+    // 通过在"有数据 <-> 无数据"切换时改变 key 强制重建 Table，清掉 rc-table 内部的测量缓存。
+    const tableKey =
+      isColumnMaxContent && !isVirtual ? (dataSource.length === 0 ? 'empty' : 'data') : undefined;
+
+    return <Table key={tableKey} {...tableProps} />;
   }
 
   /**
