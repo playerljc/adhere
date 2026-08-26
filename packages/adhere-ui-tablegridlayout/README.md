@@ -69,6 +69,7 @@ const MyComponent = () => {
 | `bordered` | `boolean` | `false` | Whether to show borders |
 | `density` | `'default' \| 'middle' \| 'small'` | `'default'` | Table density |
 | `mode` | `'normal' \| 'parity' \| 'bordered'` | `'normal'` | Display mode |
+| `requirePosition` | `'before' \| 'after'` | `'before'` | Position of the required asterisk relative to the label text |
 | `className` | `string` | - | Additional CSS class name |
 | `style` | `CSSProperties` | - | Additional CSS styles |
 | `innerClassName` | `string` | - | Inner wrapper class name |
@@ -96,6 +97,7 @@ interface DataItem {
 interface DataItemRow {
   key: string;
   require?: boolean;
+  requirePosition?: 'before' | 'after';
   label: ReactElement;
   value: ReactElement;
   show?: boolean;
@@ -214,6 +216,27 @@ const data = [
 }
 ```
 
+The required asterisk is placed before the label by default. Use `requirePosition` to put it after the label:
+
+```tsx
+<TableGridLayout
+  data={data}
+  requirePosition="after"
+/>
+```
+
+A row can override the component-level position:
+
+```tsx
+{
+  key: 'email',
+  require: true,
+  requirePosition: 'before',
+  label: <TableGridLayout.Label>Email:</TableGridLayout.Label>,
+  value: <TableGridLayout.Value>john@example.com</TableGridLayout.Value>,
+}
+```
+
 ### Conditional Display
 
 ```tsx
@@ -292,6 +315,8 @@ The component uses the following CSS class naming convention:
 - `.adhere-ui-table-grid-layout-table-row-label`: Label cell
 - `.adhere-ui-table-grid-layout-table-row-value`: Value cell
 - `.adhere-ui-table-grid-layout-table-no-border`: Empty cell
+- `.require`: Required label (asterisk before the text)
+- `.require.require-after`: Required label with asterisk after the text
 
 ## Browser Support
 

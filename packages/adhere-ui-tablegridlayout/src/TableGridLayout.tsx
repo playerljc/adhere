@@ -22,6 +22,7 @@ import type {
   RenderHorizontalParams,
   RenderHorizontalResult,
   RenderVertical,
+  RequirePositionType,
   RowCountRef,
   TableGridLayoutComponent,
   TableGridLayoutProps,
@@ -43,6 +44,14 @@ function getColSpanFromElement(el: React.ReactNode): number {
   return Number.isFinite(n) && n > 0 ? n : 1;
 }
 
+/** 行级 requirePosition 优先于组件级，缺省为 before */
+function resolveRequirePosition(
+  itemRequirePosition?: RequirePositionType,
+  layoutRequirePosition?: RequirePositionType,
+): RequirePositionType {
+  return itemRequirePosition ?? layoutRequirePosition ?? 'before';
+}
+
 /**
  * 给单元格补 key，并在 require 时加 class（不改写调用方传入的元素引用）
  */
@@ -50,6 +59,7 @@ function normalizeCell(
   el: ReactElement,
   fallbackKey: string,
   require?: boolean,
+  requirePosition?: RequirePositionType,
 ): ReactElement {
   if (!React.isValidElement(el)) {
     return el;
@@ -68,6 +78,7 @@ function normalizeCell(
       ? {
           className: classNames(
             'require',
+            requirePosition === 'after' && 'require-after',
             (el.props as { className?: string }).className ?? '',
           ),
         }
@@ -107,6 +118,7 @@ const renderHorizontal: RenderHorizontal = (
   const {
     data: { columnCount: _columnCount, data: _data },
     rowCountRef,
+    requirePosition,
   } = params;
 
   /**
@@ -206,7 +218,12 @@ const renderHorizontal: RenderHorizontal = (
   const flatSpans: number[] = [];
 
   (_data || []).forEach((item: DataItemRow) => {
-    const label = normalizeCell(item.label, `${item.key}-label`, item.require);
+    const label = normalizeCell(
+      item.label,
+      `${item.key}-label`,
+      item.require,
+      resolveRequirePosition(item.requirePosition, requirePosition),
+    );
     const value = normalizeCell(item.value, `${item.key}-value`);
 
     const labelSpan = item.labelColSpan ?? getColSpanFromElement(label);
@@ -242,12 +259,18 @@ const renderHorizontal: RenderHorizontal = (
 const renderVertical: RenderVertical = (
   data: DataItem,
   rowCountRef: RowCountRef,
+  requirePosition?: RequirePositionType,
 ): RenderHorizontalResult => {
   const { columnCount: _columnCount, data: _data } = data;
 
   const normalizedData: DataItemRow[] = (_data || []).map((item) => ({
     ...item,
-    label: normalizeCell(item.label, `${item.key}-label`, item.require),
+    label: normalizeCell(
+      item.label,
+      `${item.key}-label`,
+      item.require,
+      resolveRequirePosition(item.requirePosition, requirePosition),
+    ),
     value: normalizeCell(item.value, `${item.key}-value`),
   }));
 
@@ -438,7 +461,9 @@ const renderGridSearchForm: RenderGridSearchForm = (
       <tbody>
         <ConditionalRender
           conditional={layout === 'horizontal'}
-          noMatch={() => renderVertical(params.data, rowCountRef).element}
+          noMatch={() =>
+            renderVertical(params.data, rowCountRef, params.requirePosition).element
+          }
         >
           {() => renderHorizontal(params).element}
         </ConditionalRender>
@@ -553,7 +578,7 @@ function getRenderDetail(
     if (layout === 'horizontal') {
       detail = renderHorizontal(params).detail;
     } else {
-      detail = renderVertical(params.data, rowCountRef).detail;
+      detail = renderVertical(params.data, rowCountRef, params.requirePosition).detail;
     }
 
     result.rowCount += rowCountRef.current;
@@ -662,6 +687,7 @@ TableGridLayout.defaultProps = {
   layout: 'horizontal',
   bordered: false,
   mode: 'normal',
+  requirePosition: 'before',
 };
 
 TableGridLayout.propTypes = {
@@ -677,6 +703,8 @@ TableGridLayout.propTypes = {
   density: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   /** Display mode */
   mode: PropTypes.string,
+  /** Position of the required asterisk */
+  requirePosition: PropTypes.oneOf(['before', 'after']),
   /** Data configuration, each item represents a table */
   data: PropTypes.arrayOf(
     PropTypes.shape({
@@ -699,6 +727,10 @@ TableGridLayout.propTypes = {
       data: PropTypes.arrayOf(
         PropTypes.shape({
           key: PropTypes.string.isRequired,
+          /** Whether the field is required */
+          require: PropTypes.bool,
+          /** Position of the required asterisk */
+          requirePosition: PropTypes.oneOf(['before', 'after']),
           /** Label component */
           label: PropTypes.node.isRequired,
           /** Value component */

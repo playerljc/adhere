@@ -15,6 +15,10 @@ export type LayoutType = 'vertical' | 'horizontal';
  */
 export type ModeType = 'normal' | 'parity' | 'bordered';
 /**
+ * Position of the required asterisk relative to the label text
+ */
+export type RequirePositionType = 'before' | 'after';
+/**
  * Row count reference for tracking row numbers
  */
 export interface RowCountRef {
@@ -30,6 +34,8 @@ export interface RenderHorizontalParams {
     density?: DensityType;
     mode?: ModeType;
     media?: ConfigProviderProps['media'];
+    /** Position of the required asterisk */
+    requirePosition?: RequirePositionType;
 }
 /**
  * Result of horizontal rendering
@@ -45,7 +51,7 @@ export type RenderHorizontal = (params: RenderHorizontalParams) => RenderHorizon
 /**
  * Vertical rendering function type
  */
-export type RenderVertical = (data: DataItem, rowCountRef: RowCountRef) => RenderHorizontalResult;
+export type RenderVertical = (data: DataItem, rowCountRef: RowCountRef, requirePosition?: RequirePositionType) => RenderHorizontalResult;
 /**
  * Parameters for grid search form rendering
  */
@@ -56,6 +62,8 @@ export interface RenderGridSearchFormParams {
     mode?: ModeType;
     rowCountRef: RowCountRef;
     media?: ConfigProviderProps['media'];
+    /** Position of the required asterisk */
+    requirePosition?: RequirePositionType;
 }
 /**
  * Grid search form rendering function type
@@ -92,6 +100,8 @@ export interface DataItemRow {
     key: string;
     /** Whether the field is required */
     require?: boolean;
+    /** Position of the required asterisk, overrides TableGridLayout.requirePosition */
+    requirePosition?: RequirePositionType;
     /** Label component */
     label: ReactElement;
     /** Value component */
@@ -125,6 +135,8 @@ export interface TableGridLayoutProps {
     density?: DensityType;
     /** Display mode */
     mode?: ModeType;
+    /** Position of the required asterisk relative to the label text */
+    requirePosition?: RequirePositionType;
 }
 /**
  * Group render detail for tracking row information

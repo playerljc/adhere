@@ -8,6 +8,7 @@ import P7CodeText from '!!raw-loader!./examples/p7';
 import P8CodeText from '!!raw-loader!./examples/p8';
 import P9CodeText from '!!raw-loader!./examples/p9';
 import P10CodeText from '!!raw-loader!./examples/p10';
+import P11CodeText from '!!raw-loader!./examples/p11';
 
 import React from 'react';
 
@@ -28,6 +29,7 @@ import P7 from './examples/p7';
 import P8 from './examples/p8';
 import P9 from './examples/p9';
 import P10 from './examples/p10';
+import P11 from './examples/p11';
 
 export default () => {
   // console.log(
@@ -235,6 +237,21 @@ export default () => {
             codeText: P10CodeText,
             renderChildren: () => <P10 />,
           },
+          {
+            id: `p11`,
+            name: `必填星号位置`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: '必填星号位置',
+                info: '通过 requirePosition 将必填 * 放在 label 前或后，行级可覆盖',
+              },
+            },
+            type: 'PlayGround',
+            codeText: P11CodeText,
+            renderChildren: () => <P11 />,
+          },
         ]}
       />
 
@@ -387,6 +404,12 @@ export default () => {
                 type: 'IDataItem[]',
                 defaultVal: '[]',
               },
+              {
+                params: 'requirePosition',
+                desc: '必填 * 相对 label 的位置，行级 requirePosition 可覆盖',
+                type: "'before' | 'after'",
+                defaultVal: 'before',
+              },
             ],
           },
           {
@@ -447,9 +470,11 @@ export default () => {
                 type: `
                   Array<{
                     key: string;
+                    require?: boolean;
+                    requirePosition?: 'before' | 'after';
                     label: JSX.Element;
                     value: JSX.Element;
-                    show: boolean;
+                    show?: boolean;
                   }>
                 `,
                 defaultVal: '[]',

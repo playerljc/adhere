@@ -7,6 +7,7 @@ import FieldShowToggle from './FieldShowToggle';
 import HorizontalBasic from './HorizontalBasic';
 import ModeAndDensity from './ModeAndDensity';
 import RenderDetailAndSearchForm from './RenderDetailAndSearchForm';
+import RequirePosition from './RequirePosition';
 import VerticalBorderedMultiGroup from './VerticalBorderedMultiGroup';
 
 e2e.PC({
@@ -15,5 +16,6 @@ e2e.PC({
   // children: <ModeAndDensity />,
   // children: <FieldShowToggle />,
   // children: <RenderDetailAndSearchForm />,
+  // children: <RequirePosition />,
   children: <VerticalBorderedMultiGroup />,
 });

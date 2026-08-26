@@ -90,7 +90,7 @@
         word-break: keep-all;
 
         &.require {
-          &::before {
+          &:not(.require-after)::before {
             //margin-right: 5px;
             margin-right: var(--table-row-label-require-before-margin-right, 5px);
             //color: @adhere-ui-table-grid-layout-table-row-label-require-color;
@@ -99,6 +99,19 @@
               @adhere-ui-table-grid-layout-table-row-label-require-color
             );
             vertical-align: middle;
+            content: '*';
+          }
+
+          &.require-after::after {
+            display: inline-block;
+            margin-left: var(--table-row-label-require-after-margin-left, 5px);
+            color: var(
+              --table-row-label-require-after-color,
+              @adhere-ui-table-grid-layout-table-row-label-require-color
+            );
+            line-height: 1;
+            // * 字形在字盒上半部，middle 会看起来偏上，用负值光学居中
+            vertical-align: var(--table-row-label-require-after-vertical-align, -0.15em);
             content: '*';
           }
         }

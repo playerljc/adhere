@@ -27,6 +27,7 @@ export type {
   DensityType,
   LayoutType,
   ModeType,
+  RequirePositionType,
   LabelProps,
   ValueProps,
 } from './types';
