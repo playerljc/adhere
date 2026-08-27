@@ -18,6 +18,10 @@ export interface OptionsWrapProps {
   renderEllipsis?: () => React.ReactElement;
   children?: any;
   more?: DropdownProps;
+  /**
+   * Split 分割条大小，数字为像素，字符串可带单位
+   */
+  size?: string | number;
 }
 
 /**
@@ -30,6 +34,7 @@ export interface OptionsWrapProps {
  * @param isEllipsesShowOnlyOneAfterCollapsing
  * @param renderEllipsis
  * @param more
+ * @param size
  * @return {JSX.Element}
  */
 const OptionsWrap: React.FC<OptionsWrapProps> = ({
@@ -40,6 +45,7 @@ const OptionsWrap: React.FC<OptionsWrapProps> = ({
   renderEllipsis,
   children,
   more,
+  size,
 }): React.ReactElement => {
   let result;
 
@@ -110,7 +116,7 @@ const OptionsWrap: React.FC<OptionsWrapProps> = ({
       // current 0 1 2 3 4
       for (let i = 0; i <= currentChildren.length - 2; i++) {
         const index = result.findIndex((t) => t === currentChildren[i]);
-        result.splice(index + 1, 0, <Split direction="horizontal" />);
+        result.splice(index + 1, 0, <Split direction="horizontal" size={size} />);
       }
     }
   }
