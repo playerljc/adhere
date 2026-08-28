@@ -236,11 +236,12 @@ export function usePaging<D>({
 
   // @ts-ignore
   return useCallback(
-    (page, limit, kw) => {
+    (page, limit) => {
       const dictValue = Dict.value[dictName]?.value;
 
-      return dictValue(page, limit, kw, cascadeParams).then((res) => {
-        onDataSourceChange?.(res, { type: 'paging', info: { page, limit, kw } });
+      // 分页字典约定：(page, limit, cascadeParams)，kw 仅用于 AutoComplete 分页
+      return dictValue(page, limit, cascadeParams).then((res) => {
+        onDataSourceChange?.(res, { type: 'paging', info: { page, limit } });
         return res;
       });
     },

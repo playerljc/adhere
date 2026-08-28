@@ -987,21 +987,12 @@ const { names, values } = genModuleDict({
     },
   },
   SystemUserPagin: {
-    handler: () => (page, limit, _kw) => {
-      debugger
+    handler: () => (page, limit) => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          const data = !_kw
-            ? UserData
-            : UserData.filter(
-                ({ label, title }) =>
-                  String(label ?? '').indexOf(_kw) !== -1 ||
-                  String(title ?? '').indexOf(_kw) !== -1,
-              );
-
           resolve({
-            totalCount: data.length,
-            data: data.slice((page - 1) * limit, page * limit),
+            totalCount: UserData.length,
+            data: UserData.slice((page - 1) * limit, page * limit),
           });
         }, 1000);
       });

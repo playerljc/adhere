@@ -10,7 +10,6 @@ export type UseDictParams<D> = {
         info: {
             page: number;
             limit: number;
-            kw?: string;
         } | {
             pid: number | string | symbol;
         };
@@ -23,7 +22,6 @@ export type DictComponentProps<T, D> = Omit<T, 'options' | 'dataSource' | 'treeD
         info: {
             page: number;
             limit: number;
-            kw?: string;
         } | {
             pid: number | string | symbol;
         };

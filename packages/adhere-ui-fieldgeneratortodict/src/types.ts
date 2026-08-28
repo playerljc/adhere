@@ -237,7 +237,7 @@ export type UseDictParams<D> = {
     dataSource: D,
     extra?: {
       type: 'paging';
-      info: { page: number; limit: number; kw?: string } | { pid: number | string | symbol };
+      info: { page: number; limit: number } | { pid: number | string | symbol };
     },
   ) => void;
 };
@@ -248,7 +248,7 @@ export type DictComponentProps<T, D> = Omit<T, 'options' | 'dataSource' | 'treeD
     dataSource: D,
     extra: {
       type: 'paging';
-      info: { page: number; limit: number; kw?: string } | { pid: number | string | symbol };
+      info: { page: number; limit: number } | { pid: number | string | symbol };
     },
   ) => void;
 };
