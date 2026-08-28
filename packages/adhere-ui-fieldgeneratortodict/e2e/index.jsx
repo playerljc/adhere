@@ -98,48 +98,20 @@ import MobileTreeSelectLeaf from './MobileTreeSelect/MobileTreeSelectLeaf';
 import MobileTreeSelectShowAll from './MobileTreeSelect/MobileTreeSelectShowAll';
 import MobileTreeSelectShowChild from './MobileTreeSelect/MobileTreeSelectShowChild';
 import MobileTreeSelectStandard from './MobileTreeSelect/MobileTreeSelectStandard';
-import SearchListMultipleSelect from './SearchList/MultipleSelect';
-import SearchListSingleSelect from './SearchList/SingleSelect';
-import SearchListStandard from './SearchList/Standard';
-import SearchTableAsyncContinuousMultipleSelect from './SearchTable/AsyncContinuousMultipleSelect';
-import SearchTableAsyncMultipleSelect from './SearchTable/AsyncMultipleSelect';
-import SearchTableAsyncSingleSelect from './SearchTable/AsyncSingleSelect';
-import SearchTableContinuousMultipleSelect from './SearchTable/ContinuousMultipleSelect';
-import SearchTableEditorCell from './SearchTable/EditorCell';
-import SearchTableEditorCellRowDragSort from './SearchTable/EditorCellRowDragSort';
-import SearchTableEditorRow from './SearchTable/EditorRow';
-import SearchTableEditorRowDragSort from './SearchTable/EditorRowDragSort';
-import SearchTableEditorTable from './SearchTable/EditorTable';
-import SearchTableEditorTableRowDragSort from './SearchTable/EditorTableRowDragSort';
-import SearchTableMultipleSelect from './SearchTable/MultipleSelect';
-import SearchTableRowDragSort from './SearchTable/RowDragSort';
-import SearchTableSingleSelect from './SearchTable/SingleSelect';
-import SearchTableStandard from './SearchTable/Standard';
-import SearchTableTreeContinuousMultipleSelect from './SearchTable/TreeContinuousMultipleSelect';
-import SearchTableTreeMultipleSelect from './SearchTable/TreeMultipleSelect';
-import SearchTableTreeSingleSelect from './SearchTable/TreeSingleSelect';
-
-
 
 import React, { Suspense, lazy } from 'react';
 
-
-
 import e2e from '@baifendian/adhere-e2e';
+import { Provider } from '@ctsj/state/lib/react';
 
-
-
-// import { createLoggerMiddleware } from '@ctsj/state/lib/middleware';
-// import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
-// import { Provider } from '@ctsj/state/lib/react';
-// import { applyMiddleware, createStore } from '@ctsj/state/lib/state';
-// import DictConfig from '@/dict/dict.config';
 import FieldGeneratorToDict from '../src/index';
 import AutoCompleteDynamicSelectInput from './AutoComplete/AutoCompleteDynamicSelectInput';
 import AutoCompleteDynamicStandard from './AutoComplete/AutoCompleteDynamicStandard';
 import AutoCompleteSelectInput from './AutoComplete/SelectInput';
 import AutoCompleteStandard from './AutoComplete/Standard';
 import BreadcrumbTest from './Breadcrumb/SuspenseStandard';
+import CascaderAsync from './Cascader/CascaderAsync.tsx';
+import CascaderAsyncChangeOnSelect from './Cascader/CascaderAsyncChangeOnSelect.tsx';
 import CascaderAsyncEntityValueHOC from './Cascader/CascaderAsyncEntityValueHOC.jsx';
 import CascaderAsyncFlatChangeOnSelect from './Cascader/CascaderAsyncFlatChangeOnSelect.tsx';
 import CascaderAsyncFlatEntityValueHOC from './Cascader/CascaderAsyncFlatEntityValueHOC.jsx';
@@ -177,8 +149,6 @@ import CascaderShowChild from './Cascader/ShowChild.tsx';
 import CascaderShowParent from './Cascader/ShowParent.tsx';
 import CascaderStandard from './Cascader/Standard.tsx';
 import CascaderTreeSelect from './Cascader/TreeSelect.tsx';
-import CascaderAsync from './Cascader/CascaderAsync.tsx';
-import CascaderAsyncChangeOnSelect from './Cascader/CascaderAsyncChangeOnSelect.tsx';
 import AutoCompleteCheckboxCheckAllCustomSelect from './Checkbox/AutoCompleteCheckboxCheckAllCustomSelect.tsx';
 import AutoCompleteCheckboxCheckAllSelect from './Checkbox/AutoCompleteCheckboxCheckAllSelect.tsx';
 import AutoCompleteCheckboxCustomSelect from './Checkbox/AutoCompleteCheckboxCustomSelect.tsx';
@@ -292,6 +262,26 @@ import RadioSuspenseCustomDynamic from './Radio/SuspenseCustom.tsx';
 import RadioSuspenseHorizontalDynamic from './Radio/SuspenseHorizontal.tsx';
 import RadioSuspenseVerticalDynamic from './Radio/SuspenseVertical.tsx';
 import VerticalRadio from './Radio/VerticalRadio.tsx';
+import SearchListMultipleSelect from './SearchList/MultipleSelect';
+import SearchListSingleSelect from './SearchList/SingleSelect';
+import SearchListStandard from './SearchList/Standard';
+import SearchTableAsyncContinuousMultipleSelect from './SearchTable/AsyncContinuousMultipleSelect';
+import SearchTableAsyncMultipleSelect from './SearchTable/AsyncMultipleSelect';
+import SearchTableAsyncSingleSelect from './SearchTable/AsyncSingleSelect';
+import SearchTableContinuousMultipleSelect from './SearchTable/ContinuousMultipleSelect';
+import SearchTableEditorCell from './SearchTable/EditorCell';
+import SearchTableEditorCellRowDragSort from './SearchTable/EditorCellRowDragSort';
+import SearchTableEditorRow from './SearchTable/EditorRow';
+import SearchTableEditorRowDragSort from './SearchTable/EditorRowDragSort';
+import SearchTableEditorTable from './SearchTable/EditorTable';
+import SearchTableEditorTableRowDragSort from './SearchTable/EditorTableRowDragSort';
+import SearchTableMultipleSelect from './SearchTable/MultipleSelect';
+import SearchTableRowDragSort from './SearchTable/RowDragSort';
+import SearchTableSingleSelect from './SearchTable/SingleSelect';
+import SearchTableStandard from './SearchTable/Standard';
+import SearchTableTreeContinuousMultipleSelect from './SearchTable/TreeContinuousMultipleSelect';
+import SearchTableTreeMultipleSelect from './SearchTable/TreeMultipleSelect';
+import SearchTableTreeSingleSelect from './SearchTable/TreeSingleSelect';
 import SegmentedTest from './Segmented/SuspenseStandard';
 import SelectTest from './Select/ArrayEntityValueHOC';
 import AutoCompleteCheckAllMultipleSelect from './Select/AutoCompleteCheckAllMultipleSelect';
@@ -306,8 +296,8 @@ import SelectDropdownRender from './Select/SelectDropdownRender';
 import SelectDynamicStandard from './Select/SelectDynamicStandard';
 import SelectMulti from './Select/SelectMulti';
 import StepsTest from './Steps/SuspenseStandard';
-import TableACMulti from './Table/AutoCompleteCheckboxTable';
 import TableACMultiPaging from './Table/AutoCompleteCheckboxPagin';
+import TableACMulti from './Table/AutoCompleteCheckboxTable';
 import TableACPaging from './Table/AutoCompleteRadioPagin';
 import TableACStandard from './Table/AutoCompleteRadioTable';
 import TableTreeACMulti from './Table/AutoCompleteTableTreeMulti';
@@ -316,13 +306,13 @@ import TableTreeACMultiPagingValueHOC from './Table/AutoCompleteTableTreeMultiPa
 import TableTreeACMultiValueHOC from './Table/AutoCompleteTableTreeMultiValueHOC';
 import TableTreeACPaging from './Table/AutoCompleteTableTreePaging';
 import TableTreeACStandard from './Table/AutoCompleteTableTreeStandard';
-import TablePaginationMultiEntityValueHOC from './Table/CheckboxTablePagingEntityValueHOC';
 import TablePaginationMulti from './Table/CheckboxTablePaging';
+import TablePaginationMultiEntityValueHOC from './Table/CheckboxTablePagingEntityValueHOC';
 import TablePaginationMultiSelect from './Table/CheckboxTablePagingSelect';
 import TablePaginationMultiSelectEntityValueHOC from './Table/CheckboxTablePagingSelectEntityValueHOC';
 import TableDynamicMultiSelect from './Table/MultiSelect';
-import TablePaginationStandardEntityValueHOC from './Table/RadioTablePagingEntityValueHOC';
 import TablePaginationStandard from './Table/RadioTablePaging';
+import TablePaginationStandardEntityValueHOC from './Table/RadioTablePagingEntityValueHOC';
 import TablePaginationSelect from './Table/RadioTablePagingSelect';
 import TablePaginationSelectEntityValueHOC from './Table/RadioTablePagingSelectEntityValueHOC';
 import TableDynamicSelect from './Table/Select';
@@ -379,6 +369,14 @@ import TransferStandard from './Transfer/Standard';
 import TransferDynamicSuspenseStandard from './Transfer/SuspenseStandard';
 import TransferDynamicTable from './Transfer/Table';
 import TransferDynamicTableSelect from './Transfer/TableSelect';
+import TransferDynamicStandard from './Transfer/TransferDynamicStandard';
+import TransferDynamicTree from './Transfer/TransferDynamicTree';
+import TransferDynamicTreeFlat from './Transfer/TransferDynamicTreeFlat';
+import TransferDynamicTreeSelect from './Transfer/TransferDynamicTreeSelect';
+import TransferStaticSelect from './Transfer/TransferStaticSelect';
+import TransferStaticSuspenseStandard from './Transfer/TransferStaticSuspenseStandard';
+import TransferStaticTable from './Transfer/TransferStaticTable';
+import TransferStaticTableSelect from './Transfer/TransferStaticTableSelect';
 import TransferTree from './Transfer/Tree';
 import TransferTreeCascade from './Transfer/TreeCascade';
 import TransferTreeFlat from './Transfer/TreeFlat';
@@ -389,104 +387,74 @@ import TransferTreeSelectCascade from './Transfer/TreeSelectCascade';
 import TransferTreeSelectFlat from './Transfer/TreeSelectFlat';
 import TransferTreeSelectLeaf from './Transfer/TreeSelectLeaf';
 import TransferTreeSelectLeafCascadeFlat from './Transfer/TreeSelectLeafCascadeFlat';
-import TransferDynamicStandard from './Transfer/TransferDynamicStandard';
-import TransferDynamicTree from './Transfer/TransferDynamicTree';
-import TransferDynamicTreeFlat from './Transfer/TransferDynamicTreeFlat';
-import TransferDynamicTreeSelect from './Transfer/TransferDynamicTreeSelect';
-import TransferStaticSelect from './Transfer/TransferStaticSelect';
-import TransferStaticSuspenseStandard from './Transfer/TransferStaticSuspenseStandard';
-import TransferStaticTable from './Transfer/TransferStaticTable';
-import TransferStaticTableSelect from './Transfer/TransferStaticTableSelect';
-
-import TreeStandard from './Tree/Standard.tsx';
-import TreeMulti from './Tree/Multi.tsx';
-import TreeLeaf from './Tree/Leaf.tsx';
-import TreeLeafMulti from './Tree/LeafMulti.tsx';
 import TreeCheckedShowAll from './Tree/CheckedShowAll.tsx';
 import TreeCheckedShowChild from './Tree/CheckedShowChild.tsx';
 import TreeCheckedShowParent from './Tree/CheckedShowParent.tsx';
-import TreeStaticFlat from './Tree/TreeStaticFlat.tsx';
-import TreeStaticFlatMulti from './Tree/TreeStaticFlatMulti.tsx';
-import TreeStaticFlatLeaf from './Tree/TreeStaticFlatLeaf.tsx';
-import TreeStaticFlatLeafMulti from './Tree/TreeStaticFlatLeafMulti.tsx';
-import TreeStaticFlatCheckedShowAll from './Tree/TreeStaticFlatCheckedShowAll.tsx';
-import TreeStaticFlatCheckedShowChild from './Tree/TreeStaticFlatCheckedShowChild.tsx';
-import TreeStaticFlatCheckedShowParent from './Tree/TreeStaticFlatCheckedShowParent.tsx';
-import TreeDynamicStandard from './Tree/TreeDynamicStandard.tsx';
-import TreeDynamicMulti from './Tree/TreeDynamicMulti.tsx';
-import TreeDynamicLeaf from './Tree/TreeDynamicLeaf.tsx';
-import TreeDynamicLeafMulti from './Tree/TreeDynamicLeafMulti.tsx';
-import TreeDynamicCheckedShowAll from './Tree/TreeDynamicCheckedShowAll.tsx';
-import TreeDynamicCheckedShowChild from './Tree/TreeDynamicCheckedShowChild.tsx';
-import TreeDynamicCheckedShowParent from './Tree/TreeDynamicCheckedShowParent.tsx';
 import TreeDynamicFlat from './Tree/Flat.tsx';
-import TreeDynamicFlatMulti from './Tree/FlatMulti.tsx';
-import TreeDynamicFlatLeaf from './Tree/FlatLeaf.tsx';
-import TreeDynamicFlatLeafMulti from './Tree/FlatLeafMulti.tsx';
 import TreeDynamicFlatCheckedShowAll from './Tree/FlatCheckedShowAll.tsx';
 import TreeDynamicFlatCheckedShowChild from './Tree/FlatCheckedShowChild.tsx';
 import TreeDynamicFlatCheckedShowParent from './Tree/FlatCheckedShowParent.tsx';
+import TreeDynamicFlatLeaf from './Tree/FlatLeaf.tsx';
+import TreeDynamicFlatLeafMulti from './Tree/FlatLeafMulti.tsx';
+import TreeDynamicFlatMulti from './Tree/FlatMulti.tsx';
+import TreeLeaf from './Tree/Leaf.tsx';
+import TreeLeafMulti from './Tree/LeafMulti.tsx';
+import TreeMulti from './Tree/Multi.tsx';
+import TreeStandard from './Tree/Standard.tsx';
 import TreeAsyncStandard from './Tree/TreeAsync.tsx';
-import TreeAsyncMulti from './Tree/TreeAsyncMulti.tsx';
-import TreeAsyncLeaf from './Tree/TreeAsyncLeaf.tsx';
-import TreeAsyncLeafMulti from './Tree/TreeAsyncLeafMulti.tsx';
 import TreeAsyncCheckedShowAll from './Tree/TreeAsyncCheckedShowAll.tsx';
 import TreeAsyncCheckedShowChild from './Tree/TreeAsyncCheckedShowChild.tsx';
 import TreeAsyncCheckedShowParent from './Tree/TreeAsyncCheckedShowParent.tsx';
-import TreeAsyncFlatStandard from './Tree/TreeAsyncFlatStandard.tsx';
-import TreeAsyncFlatMulti from './Tree/TreeAsyncFlatMulti.tsx';
-import TreeAsyncFlatLeaf from './Tree/TreeAsyncFlatLeaf.tsx';
-import TreeAsyncFlatLeafMulti from './Tree/TreeAsyncFlatLeafMulti.tsx';
+import TreeAsyncEntityValueHOC from './Tree/TreeAsyncEntityValueHOC.jsx';
 import TreeAsyncFlatCheckedShowAll from './Tree/TreeAsyncFlatCheckedShowAll.tsx';
 import TreeAsyncFlatCheckedShowChild from './Tree/TreeAsyncFlatCheckedShowChild.tsx';
 import TreeAsyncFlatCheckedShowParent from './Tree/TreeAsyncFlatCheckedShowParent.tsx';
-import TreeACStandard from './Tree/TreeAutoCompleteStandard.jsx';
-import TreeACMulti from './Tree/TreeAutoCompleteMulti.jsx';
+import TreeAsyncFlatEntityValueHOC from './Tree/TreeAsyncFlatEntityValueHOC.jsx';
+import TreeAsyncFlatLeaf from './Tree/TreeAsyncFlatLeaf.tsx';
+import TreeAsyncFlatLeafMulti from './Tree/TreeAsyncFlatLeafMulti.tsx';
+import TreeAsyncFlatMulitEntityValueHOC from './Tree/TreeAsyncFlatMulitEntityValueHOC.jsx';
+import TreeAsyncFlatMulti from './Tree/TreeAsyncFlatMulti.tsx';
+import TreeAsyncFlatStandard from './Tree/TreeAsyncFlatStandard.tsx';
+import TreeAsyncLeaf from './Tree/TreeAsyncLeaf.tsx';
+import TreeAsyncLeafMulti from './Tree/TreeAsyncLeafMulti.tsx';
+import TreeAsyncMulitEntityValueHOC from './Tree/TreeAsyncMulitEntityValueHOC.jsx';
+import TreeAsyncMulti from './Tree/TreeAsyncMulti.tsx';
 import TreeACLeaf from './Tree/TreeAutoCompleteLeaf.jsx';
+import TreeACMulti from './Tree/TreeAutoCompleteMulti.jsx';
 import TreeACMultiLeaf from './Tree/TreeAutoCompleteMultiLeaf.jsx';
+import TreeAutoCompleteMultiValueHOC from './Tree/TreeAutoCompleteMultiValueHOC.jsx';
+import TreeACStandard from './Tree/TreeAutoCompleteStandard.jsx';
+import TreeDynamicCheckedShowAll from './Tree/TreeDynamicCheckedShowAll.tsx';
+import TreeDynamicCheckedShowChild from './Tree/TreeDynamicCheckedShowChild.tsx';
+import TreeDynamicCheckedShowParent from './Tree/TreeDynamicCheckedShowParent.tsx';
+import TreeDynamicLeaf from './Tree/TreeDynamicLeaf.tsx';
+import TreeDynamicLeafMulti from './Tree/TreeDynamicLeafMulti.tsx';
+import TreeDynamicMulti from './Tree/TreeDynamicMulti.tsx';
+import TreeDynamicStandard from './Tree/TreeDynamicStandard.tsx';
 import TreeEntityValueHOC from './Tree/TreeEntityValueHOC.jsx';
-import TreeMultiEntityValueHOC from './Tree/TreeMultiEntityValueHOC.jsx';
-import TreeLeafEntityValueHOC from './Tree/TreeLeafEntityValueHOC.jsx';
+import TreeFlatCheckedShowAllEntityValueHOC from './Tree/TreeFlatCheckedShowAllEntityValueHOC.jsx';
 import TreeFlatEntityValueHOC from './Tree/TreeFlatEntityValueHOC.jsx';
 import TreeFlatMultiEntityValueHOC from './Tree/TreeFlatMultiEntityValueHOC.jsx';
-import TreeFlatCheckedShowAllEntityValueHOC from './Tree/TreeFlatCheckedShowAllEntityValueHOC.jsx';
-import TreeAsyncEntityValueHOC from './Tree/TreeAsyncEntityValueHOC.jsx';
-import TreeAsyncMulitEntityValueHOC from './Tree/TreeAsyncMulitEntityValueHOC.jsx';
-import TreeAsyncFlatEntityValueHOC from './Tree/TreeAsyncFlatEntityValueHOC.jsx';
-import TreeAsyncFlatMulitEntityValueHOC from './Tree/TreeAsyncFlatMulitEntityValueHOC.jsx';
-import TreeAutoCompleteMultiValueHOC from './Tree/TreeAutoCompleteMultiValueHOC.jsx';
+import TreeLeafEntityValueHOC from './Tree/TreeLeafEntityValueHOC.jsx';
+import TreeMultiEntityValueHOC from './Tree/TreeMultiEntityValueHOC.jsx';
+import TreeStaticFlat from './Tree/TreeStaticFlat.tsx';
+import TreeStaticFlatCheckedShowAll from './Tree/TreeStaticFlatCheckedShowAll.tsx';
+import TreeStaticFlatCheckedShowChild from './Tree/TreeStaticFlatCheckedShowChild.tsx';
+import TreeStaticFlatCheckedShowParent from './Tree/TreeStaticFlatCheckedShowParent.tsx';
+import TreeStaticFlatLeaf from './Tree/TreeStaticFlatLeaf.tsx';
+import TreeStaticFlatLeafMulti from './Tree/TreeStaticFlatLeafMulti.tsx';
+import TreeStaticFlatMulti from './Tree/TreeStaticFlatMulti.tsx';
+import DictConfig from './dict/dict.config';
+import { store } from './saga';
 
-
-
-
-// import sage from './saga';
 import '../src/index.less';
 
-
-// 设置Saga实例
-// ServiceRegister.setSage(sage);
-
-// DictConfig();
-
-// store初始化
-// const store = createStore(null, {}, applyMiddleware(createLoggerMiddleware(), sage));
-
-// const SearchTable = lazy(() =>
-//   import(/* webpackChunkName: "searchtable" */ './SearchTable/SingleSelect.jsx'),
-// );
-
-// e2e.PC({
-//   children: (
-//     /*<Provider store={store}>
-//       <Suspense fallback={<div>loading</div>}>
-//         <SearchTable />
-//       </Suspense>
-//     </Provider>*/
-//     <AutoCompleteSelect />
-//   ),
-// });
+DictConfig();
 
 e2e.PC({
-  // children: <TransferTreeSelect />,
-  children: <TransferTreeLeafCascadeFlat />,
+  children: (
+    <Provider store={store}>
+      <TableDynamicSelect />
+    </Provider>
+  ),
 });

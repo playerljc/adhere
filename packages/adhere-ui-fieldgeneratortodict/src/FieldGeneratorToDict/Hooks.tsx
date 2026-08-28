@@ -236,11 +236,11 @@ export function usePaging<D>({
 
   // @ts-ignore
   return useCallback(
-    (page, limit) => {
+    (page, limit, kw) => {
       const dictValue = Dict.value[dictName]?.value;
 
-      return dictValue(page, limit, cascadeParams).then((res) => {
-        onDataSourceChange?.(res, { type: 'paging', info: { page, limit } });
+      return dictValue(page, limit, kw, cascadeParams).then((res) => {
+        onDataSourceChange?.(res, { type: 'paging', info: { page, limit, kw } });
         return res;
       });
     },

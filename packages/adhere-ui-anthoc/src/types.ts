@@ -203,10 +203,21 @@ export type CheckAllSelectProps = DropdownWrapperStyleProps &
   CheckAllWrapperStyleProps &
   DropdownRenderSelectProps;
 
-export type DropdownRenderSelectProps = Omit<SelectProps, 'children'> & {
+export type DropdownRenderSelectProps = Omit<SelectProps, 'children' | 'optionFilterProp'> & {
   defaultInputValue?: string;
   emptyContent?: ReactElement;
   shouldRenderEmptyData?: boolean;
+  /**
+   * 下拉搜索匹配的字段，支持单个或多个，默认 'label'
+   * @example optionFilterProp="label"
+   * @example optionFilterProp={['label', 'name']}
+   */
+  optionFilterProp?: string | string[];
+  /**
+   * 是否对 options 做本地过滤。分页远程搜索场景应设为 false
+   * @default true
+   */
+  localFilter?: boolean;
   children?: (arg: {
     originNode?: ReactElement;
     value?: SelectProps['value'];

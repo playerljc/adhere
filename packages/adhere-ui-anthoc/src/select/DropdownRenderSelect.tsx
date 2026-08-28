@@ -13,6 +13,7 @@ import Select from './Select';
  * @param options
  * @param defaultInputValue
  * @param emptyContent
+ * @param optionFilterProp
  * @param props
  * @constructor
  */
@@ -23,6 +24,8 @@ const InternalDropdownRenderSelect = memo<DropdownRenderSelectProps>(
     defaultInputValue,
     emptyContent,
     shouldRenderEmptyData = false,
+    optionFilterProp = 'label',
+    localFilter = true,
     ...props
   }) => {
     const isMultiple = 'mode' in props && props.mode === 'multiple';
@@ -49,13 +52,28 @@ const InternalDropdownRenderSelect = memo<DropdownRenderSelectProps>(
 
     const dropdownRenderElement = useRef<ReactElement | undefined>(undefined);
 
+    const filterFields = useMemo(() => {
+      const prop = optionFilterProp ?? 'label';
+      return Array.isArray(prop) ? prop : [prop];
+    }, [optionFilterProp]);
+
     const filterOptions = useMemo(() => {
-      if (inputValue) {
-        return options?.filter?.((t) => (t.label as string).indexOf?.(inputValue) !== -1);
+      if (!localFilter || !inputValue) {
+        return options;
       }
 
-      return options;
-    }, [inputValue, options]);
+      return options?.filter?.((option) =>
+        filterFields.some((field) => {
+          const fieldValue = option?.[field as keyof typeof option];
+
+          if (fieldValue == null) {
+            return false;
+          }
+
+          return String(fieldValue).indexOf(inputValue) !== -1;
+        }),
+      );
+    }, [inputValue, options, filterFields, localFilter]);
 
     const onDropdownRender = useCallback(
       (_originNode) => {

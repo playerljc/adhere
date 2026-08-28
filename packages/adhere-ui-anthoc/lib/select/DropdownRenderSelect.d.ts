@@ -7,6 +7,7 @@ import type { DisplayNameInternal, DropdownRenderSelectProps } from '../types';
  * @param options
  * @param defaultInputValue
  * @param emptyContent
+ * @param optionFilterProp
  * @param props
  * @constructor
  */

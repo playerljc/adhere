@@ -25,6 +25,7 @@ const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
       defaultCurrentPage,
       defaultPageSize,
       setPaging,
+      setKw,
       fetchData,
       renderProps,
     } = usePagingRenderProps({
@@ -62,6 +63,15 @@ const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
       props?.onChange?.(_values);
     };
 
+    const onSearch = (v: string) => {
+      setInputValue(v);
+      setKw(v);
+      setPaging({
+        page: defaultCurrentPage,
+        limit: defaultPageSize,
+      });
+    };
+
     useMount(() => {
       fetchData();
     });
@@ -69,10 +79,13 @@ const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
     return (
       <DropdownRenderSelect
         {...props}
+        localFilter={false}
         defaultInputValue={inputValue}
         options={allOptions}
-        onSearch={setInputValue}
+        onSearch={onSearch}
         onClear={() => {
+          setInputValue('');
+          setKw(undefined);
           setPaging({
             page: defaultCurrentPage,
             limit: defaultPageSize,

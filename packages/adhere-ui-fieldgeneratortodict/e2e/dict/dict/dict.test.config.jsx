@@ -848,21 +848,20 @@ const { names, values } = genModuleDict({
   },
   SystemBookCatalogText: {
     isStatic: true,
-    handler: () =>
-      [
-        '中国文学',
-        '外国文学',
-        '儿童文学',
-        '散文',
-        '经典名著',
-        '小说',
-        '历史',
-        '教育',
-        '成功励志',
-        '心灵鸡汤',
-        '人物传记',
-        '影视原著',
-      ],
+    handler: () => [
+      '中国文学',
+      '外国文学',
+      '儿童文学',
+      '散文',
+      '经典名著',
+      '小说',
+      '历史',
+      '教育',
+      '成功励志',
+      '心灵鸡汤',
+      '人物传记',
+      '影视原著',
+    ],
   },
   SystemBookCatalogTextDynamic: {
     handler: () =>
@@ -988,12 +987,20 @@ const { names, values } = genModuleDict({
     },
   },
   SystemUserPagin: {
-    handler: () => (page, limit) => {
+    handler: () => (page, limit, _kw) => {
       return new Promise((resolve) => {
         setTimeout(() => {
+          const data = !_kw
+            ? UserData
+            : UserData.filter(
+                ({ label, title }) =>
+                  String(label ?? '').indexOf(_kw) !== -1 ||
+                  String(title ?? '').indexOf(_kw) !== -1,
+              );
+
           resolve({
-            totalCount: UserData.length,
-            data: UserData.slice((page - 1) * limit, page * limit),
+            totalCount: data.length,
+            data: data.slice((page - 1) * limit, page * limit),
           });
         }, 1000);
       });
