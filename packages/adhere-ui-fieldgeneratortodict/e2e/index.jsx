@@ -454,7 +454,7 @@ DictConfig();
 e2e.PC({
   children: (
     <Provider store={store}>
-      <TableDynamicSelect />
+      <TablePaginationMultiSelect />
     </Provider>
   ),
 });

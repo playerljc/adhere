@@ -17,6 +17,7 @@ export default () => {
       )
     ];
 
+  debugger
   return (
     <DictComponent
       placeholder={names.SystemUserPagin}

@@ -25,7 +25,6 @@ const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
       defaultCurrentPage,
       defaultPageSize,
       setPaging,
-      setKw,
       fetchData,
       renderProps,
     } = usePagingRenderProps({
@@ -45,11 +44,6 @@ const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
       [options, selectedRows],
     );
 
-    const targetOptions = useMemo(
-      () => (allOptions ?? []).slice(0, defaultPageSize),
-      [defaultPageSize, allOptions],
-    );
-
     const onChange = (_values) => {
       setSelectedRows((_selectedRows) => {
         if (!_values.length) return [];
@@ -63,15 +57,6 @@ const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
       props?.onChange?.(_values);
     };
 
-    const onSearch = (v: string) => {
-      setInputValue(v);
-      setKw(v);
-      setPaging({
-        page: defaultCurrentPage,
-        limit: defaultPageSize,
-      });
-    };
-
     useMount(() => {
       fetchData();
     });
@@ -79,13 +64,11 @@ const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
     return (
       <DropdownRenderSelect
         {...props}
-        localFilter={false}
         defaultInputValue={inputValue}
         options={allOptions}
-        onSearch={onSearch}
+        onSearch={setInputValue}
         onClear={() => {
           setInputValue('');
-          setKw(undefined);
           setPaging({
             page: defaultCurrentPage,
             limit: defaultPageSize,
@@ -94,9 +77,10 @@ const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
         onChange={onChange}
       >
         {({ originNode, ...rest }) => {
+          // rest.options 已经过 DropdownRenderSelect 本地过滤，再截断到一页展示
           const tableProps = renderProps({
             ...rest,
-            options: targetOptions,
+            options: (rest.options ?? []).slice(0, defaultPageSize),
           });
 
           return (

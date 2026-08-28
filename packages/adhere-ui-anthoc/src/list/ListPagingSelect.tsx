@@ -25,7 +25,6 @@ const InternalListPagingSelect = memo<ListPagingSelectProps<any>>(
       defaultCurrentPage,
       defaultPageSize,
       setPaging,
-      setKw,
       fetchData,
       renderProps,
     } = usePagingRenderProps({
@@ -45,11 +44,6 @@ const InternalListPagingSelect = memo<ListPagingSelectProps<any>>(
       [options, selectedRows],
     );
 
-    const targetOptions = useMemo(
-      () => (allOptions ?? []).slice(0, defaultPageSize),
-      [defaultPageSize, allOptions],
-    );
-
     const onChange = (_values) => {
       setSelectedRows((_selectedRows) => {
         if (!_values.length) return [];
@@ -63,15 +57,6 @@ const InternalListPagingSelect = memo<ListPagingSelectProps<any>>(
       props?.onChange?.(_values);
     };
 
-    const onSearch = (v: string) => {
-      setInputValue(v);
-      setKw(v);
-      setPaging({
-        page: defaultCurrentPage,
-        limit: defaultPageSize,
-      });
-    };
-
     useMount(() => {
       fetchData();
     });
@@ -79,13 +64,11 @@ const InternalListPagingSelect = memo<ListPagingSelectProps<any>>(
     return (
       <DropdownRenderSelect
         {...props}
-        localFilter={false}
         defaultInputValue={inputValue}
         options={allOptions}
-        onSearch={onSearch}
+        onSearch={setInputValue}
         onClear={() => {
           setInputValue('');
-          setKw(undefined);
           setPaging({
             page: defaultCurrentPage,
             limit: defaultPageSize,
@@ -96,7 +79,7 @@ const InternalListPagingSelect = memo<ListPagingSelectProps<any>>(
         {({ originNode, ...rest }) => {
           const listProps = renderProps({
             ...rest,
-            options: targetOptions,
+            options: (rest.options ?? []).slice(0, defaultPageSize),
           });
 
           return (
