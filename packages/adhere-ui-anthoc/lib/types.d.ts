@@ -617,12 +617,19 @@ export type CustomRadioSelectProps = DropdownRenderSelectProps & {
     children: CustomRadioProps['children'];
     radioProps: RadioSelectProps['radioProps'];
 };
+export type TransferHOCProps = TransferProps<any> & {
+    isHideInvalidValue?: boolean;
+    /** Form.Item 兼容别名，等价于 targetKeys；未传时忽略 */
+    value?: TransferProps<any>['targetKeys'];
+};
 export type TransferSelectProps = DropdownRenderSelectProps & {
     transferProps?: Omit<TransferProps<any>, 'value' | 'onChange' | 'options'>;
 };
 export type TreeTransferProps = Omit<TransferProps<any>, 'dataSource'> & {
     dataSource?: TreeDataNode[];
     isHideInvalidValue?: boolean;
+    /** Form.Item 兼容别名，等价于 targetKeys；未传时忽略 */
+    value?: TransferProps<any>['targetKeys'];
     treeDataSimpleMode?: TreeSelectProps['treeDataSimpleMode'];
     arrayToAntdTreeConfig?: IFlatTreeArrNode;
     /**
@@ -639,15 +646,17 @@ export type TableTransferProps = TransferProps<any> & {
     leftColumns: TableColumnsType<any>;
     rightColumns: TableColumnsType<any>;
     isHideInvalidValue?: boolean;
+    /** Form.Item 兼容别名，等价于 targetKeys；未传时忽略 */
+    value?: TransferProps<any>['targetKeys'];
 };
 export type TreeTransferSelectProps = DropdownRenderSelectProps & {
     treeData?: TreeDataNode[];
-    transferProps?: Omit<TreeTransferProps, 'dataSource' | 'targetKeys' | 'onChange' | 'selectedKeys' | 'onSelectChange'>;
+    transferProps?: Omit<TreeTransferProps, 'dataSource' | 'targetKeys' | 'value' | 'onChange' | 'selectedKeys' | 'onSelectChange'>;
 };
 export type TableTransferSelectProps = DropdownRenderSelectProps & {
     leftColumns: TableColumnsType<any>;
     rightColumns: TableColumnsType<any>;
-    transferProps?: Omit<TableTransferProps, 'dataSource' | 'targetKeys' | 'onChange' | 'leftColumns' | 'rightColumns' | 'selectedKeys' | 'onSelectChange'>;
+    transferProps?: Omit<TableTransferProps, 'dataSource' | 'targetKeys' | 'value' | 'onChange' | 'leftColumns' | 'rightColumns' | 'selectedKeys' | 'onSelectChange'>;
 };
 export type CheckboxHOCComponent = ReturnType<typeof createFactory<CheckboxProps>> & {
     AutoCompleteCheckboxSelect: typeof AutoCompleteCheckboxSelect;
@@ -742,7 +751,7 @@ export type TagHOCComponent = ReturnType<typeof createFactory<InternalTagProps>>
     VerticalCheckableTagGroup: typeof VerticalCheckableTagGroup;
     VerticalTagGroup: typeof VerticalTagGroup;
 };
-export type TransferHOCComponent = ReturnType<typeof createFactory<TransferProps<any>>> & {
+export type TransferHOCComponent = ReturnType<typeof createFactory<TransferHOCProps>> & {
     AutoCompleteTransferSelect: typeof AutoCompleteTransferSelect;
     TransferSelect: typeof TransferSelect;
     TreeTransfer: typeof TreeTransfer;

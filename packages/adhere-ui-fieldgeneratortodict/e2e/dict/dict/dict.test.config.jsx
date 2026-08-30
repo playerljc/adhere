@@ -1115,7 +1115,8 @@ const { names, values } = genModuleDict({
     handler: () => Promise.resolve(books),
   },
   SystemTableBook: {
-    handler: () => {
+    handler: () => (params) => {
+      debugger
       const options = books.map(({ children, ...t }) => ({
         ...t,
         value: t.id,

@@ -18,6 +18,7 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
   ({
     dataSource = [],
     targetKeys,
+    value,
     className,
     showSelectAll = false,
     treeDataSimpleMode,
@@ -27,6 +28,7 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
     ...restProps
   }) => {
     const { token } = theme.useToken();
+    const mergedTargetKeys = value !== undefined ? value : targetKeys;
 
     const resolvedTreeData = useTreeData({
       treeData: dataSource,
@@ -42,13 +44,13 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
         {...restProps}
         className={['tree-transfer', className].filter(Boolean).join(' ')}
         dataSource={transferDataSource}
-        targetKeys={targetKeys}
+        targetKeys={mergedTargetKeys}
         showSelectAll={showSelectAll}
         render={(item) => item.title!}
       >
         {({ direction, onItemSelect, onItemSelectAll, selectedKeys }) => {
           if (direction === 'left') {
-            const checkedKeys = [...selectedKeys, ...(targetKeys ?? [])];
+            const checkedKeys = [...selectedKeys, ...(mergedTargetKeys ?? [])];
 
             const handleCheckNode = (node: Parameters<typeof isTreeLeafNode>[0] & { key: any }) => {
               if (leafOnly && !isTreeLeafNode(node)) {
@@ -61,7 +63,7 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
               }
 
               const keys = getTreeNodeAndDescendantKeys(node as any)
-                .filter((key) => !(targetKeys ?? []).includes(key as string))
+                .filter((key) => !(mergedTargetKeys ?? []).includes(key as string))
                 .filter((key) => {
                   if (!leafOnly) {
                     return true;
@@ -82,7 +84,7 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
                   checkStrictly
                   defaultExpandAll
                   checkedKeys={checkedKeys}
-                  treeData={generateTransferTree(treeData, targetKeys, { leafOnly })}
+                  treeData={generateTransferTree(treeData, mergedTargetKeys, { leafOnly })}
                   onCheck={(_, { node }) => {
                     handleCheckNode(node);
                   }}

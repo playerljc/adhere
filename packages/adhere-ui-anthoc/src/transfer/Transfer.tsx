@@ -1,17 +1,22 @@
-import { Transfer, TransferProps } from 'antd';
+import { Transfer } from 'antd';
 import React, { useMemo } from 'react';
 
-import { TransferHOCComponent } from '../types';
+import { TransferHOCComponent, TransferHOCProps } from '../types';
 import { createFactory, getTransferValue } from '../util';
 
-const InternalTransfer: TransferHOCComponent = createFactory<
-  TransferProps & {
-    isHideInvalidValue?: boolean;
-  }
->(Transfer, {});
+const InternalTransfer: TransferHOCComponent = createFactory<TransferHOCProps>(Transfer, {});
 
 const TransferHOC: TransferHOCComponent = createFactory(
-  ({ dataSource, selectedKeys, targetKeys, isHideInvalidValue = true, ...resetProps }) => {
+  ({
+    dataSource,
+    selectedKeys,
+    targetKeys,
+    value,
+    isHideInvalidValue = true,
+    ...resetProps
+  }: TransferHOCProps) => {
+    const mergedTargetKeys = value !== undefined ? value : targetKeys;
+
     const realSelectedKeys = useMemo(
       () =>
         isHideInvalidValue ? getTransferValue({ value: selectedKeys, dataSource }) : selectedKeys,
@@ -19,8 +24,11 @@ const TransferHOC: TransferHOCComponent = createFactory(
     );
 
     const realTargetKeys = useMemo(
-      () => (isHideInvalidValue ? getTransferValue({ value: targetKeys, dataSource }) : targetKeys),
-      [isHideInvalidValue, targetKeys, dataSource],
+      () =>
+        isHideInvalidValue
+          ? getTransferValue({ value: mergedTargetKeys, dataSource })
+          : mergedTargetKeys,
+      [isHideInvalidValue, mergedTargetKeys, dataSource],
     );
 
     return (

@@ -157,6 +157,7 @@ import TransferTest from './Transfer/AutoCompleteTransferSelect.tsx';
 import TableTransfer from './Transfer/TableTransfer';
 import TableTransferSelect from './Transfer/TableTransferSelect';
 import Transfer from './Transfer/Transfer';
+import TransferFormItem from './Transfer/TransferFormItem';
 import TransferHideInvalidValue from './Transfer/TransferHideInvalidValue';
 import TransferSelect from './Transfer/TransferSelect';
 import TreeTransfer from './Transfer/TreeTransfer';
@@ -197,5 +198,6 @@ e2e.PC({
   // children: <TreeTransferSimpleMode />,
   // children: <TreeTransferSelectSimpleMode />,
   // children: <TreeTransferLeafCascade />,
+  // children: <TransferFormItem />,
   children: <TreeTransferSelectLeafCascade />,
 });

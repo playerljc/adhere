@@ -1,5 +1,5 @@
 import { usePrevious } from 'ahooks';
-import { Table, theme } from 'antd';
+import { theme } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import classNames from 'classnames';
 import React, { type FC, useContext, useEffect, useMemo, useRef, useState } from 'react';
@@ -9,6 +9,7 @@ import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Util from '@baifendian/adhere-util';
 
 import type { ColumnTypeExt, ColumnWidthMaxContent, TableExtProps } from '../types';
+import Table from './Table';
 
 const selectorPrefix = 'adhere-ui-anthoc-table';
 

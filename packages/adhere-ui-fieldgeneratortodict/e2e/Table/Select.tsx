@@ -21,6 +21,7 @@ export default () => {
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
+      cascadeParams={{ a: 1 }}
       optionFilterProp={['label', 'jp']}
       tableProps={{
         columns: [

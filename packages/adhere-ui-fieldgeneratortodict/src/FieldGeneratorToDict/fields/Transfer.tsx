@@ -1,4 +1,3 @@
-import type { TransferProps } from 'antd';
 import React from 'react';
 
 import { Transfer } from '@baifendian/adhere-ui-anthoc';
@@ -6,6 +5,7 @@ import type {
   AutoCompleteTransferSelectProps,
   TableTransferProps,
   TableTransferSelectProps,
+  TransferHOCProps,
   TransferSelectProps,
   TreeTransferProps,
   TreeTransferSelectProps,
@@ -19,12 +19,12 @@ import Suspense from '../Suspense';
 /**
  * TransferStandard
  */
-setItem<TransferProps<any>, TransferProps<any>['dataSource']>(
+setItem<TransferHOCProps, TransferHOCProps['dataSource']>(
   'Transfer',
   'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const options = useDict<TransferProps<any>['dataSource']>({
+      const options = useDict<TransferHOCProps['dataSource']>({
         dictName,
         cascadeParams,
         onDataSourceChange,
@@ -37,12 +37,12 @@ setItem<TransferProps<any>, TransferProps<any>['dataSource']>(
 /**
  * TransferSuspenseStandard
  */
-setItem<SuspenseComponentProps<TransferProps<any>>, TransferProps<any>['dataSource']>(
+setItem<SuspenseComponentProps<TransferHOCProps>, TransferHOCProps['dataSource']>(
   'Transfer',
   'SuspenseStandard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
-      const options = useDict<TransferProps<any>['dataSource']>({
+      const options = useDict<TransferHOCProps['dataSource']>({
         dictName,
         cascadeParams,
         onDataSourceChange,
@@ -293,12 +293,12 @@ setItem<TableTransferSelectProps, TableTransferSelectProps['options']>(
 /**
  * TransferDynamicStandard
  */
-setItem<TransferProps<any>, TransferProps<any>['dataSource']>(
+setItem<TransferHOCProps, TransferHOCProps['dataSource']>(
   'TransferDynamic',
   'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const options = useDynamicDict<TransferProps<any>['dataSource']>({
+      const options = useDynamicDict<TransferHOCProps['dataSource']>({
         dictName,
         cascadeParams,
         onDataSourceChange,
@@ -311,12 +311,12 @@ setItem<TransferProps<any>, TransferProps<any>['dataSource']>(
 /**
  * TransferDynamicSuspenseStandard
  */
-setItem<SuspenseComponentProps<TransferProps<any>>, TransferProps<any>['dataSource']>(
+setItem<SuspenseComponentProps<TransferHOCProps>, TransferHOCProps['dataSource']>(
   'TransferDynamic',
   'SuspenseStandard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
-      const options = useDynamicDict<TransferProps<any>['dataSource']>({
+      const options = useDynamicDict<TransferHOCProps['dataSource']>({
         dictName,
         cascadeParams,
         onDataSourceChange,
