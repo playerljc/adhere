@@ -75,6 +75,12 @@ const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
           });
         }}
         onChange={onChange}
+        onOpenChange={(nextOpen) => {
+          if (!nextOpen) {
+            // 下拉框关闭时同步清空外部搜索关键字，避免重新打开时数据仍是过滤后的结果
+            setInputValue('');
+          }
+        }}
       >
         {({ originNode, ...rest }) => {
           // rest.options 已经过 DropdownRenderSelect 本地过滤，再截断到一页展示

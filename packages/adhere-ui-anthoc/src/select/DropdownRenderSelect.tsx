@@ -30,6 +30,18 @@ const InternalDropdownRenderSelect = memo<DropdownRenderSelectProps>(
   }) => {
     const isMultiple = 'mode' in props && props.mode === 'multiple';
 
+    const [inputValue, setInputValue] = useState(defaultInputValue ?? '');
+
+    const [open, setOpen] = useState(false);
+
+    /**
+     * resetInputValue
+     * @description 重置本地搜索关键字，恢复未过滤前的状态
+     */
+    const resetInputValue = useCallback(() => {
+      setInputValue(defaultInputValue ?? '');
+    }, [defaultInputValue]);
+
     /**
      * onSelectChange
      * @description 从下方组件触发的
@@ -39,14 +51,11 @@ const InternalDropdownRenderSelect = memo<DropdownRenderSelectProps>(
       props.onChange?.(...args);
 
       if (!isMultiple) {
-        // 单选
+        // 单选，选中后下拉框会关闭，一并重置搜索关键字
         setOpen(false);
+        resetInputValue();
       }
     };
-
-    const [inputValue, setInputValue] = useState(defaultInputValue ?? '');
-
-    const [open, setOpen] = useState(false);
 
     const currentOriginNode = useRef<ReactElement | undefined>(undefined);
 
@@ -111,7 +120,6 @@ const InternalDropdownRenderSelect = memo<DropdownRenderSelectProps>(
         filterOption={() => Object.is(dropdownRenderElement.current, currentOriginNode.current)}
         popupRender={onDropdownRender}
         open={open}
-        onOpenChange={setOpen}
         {...props}
         onSearch={(v) => {
           const trimmed = v?.trim?.() ?? '';
@@ -123,6 +131,16 @@ const InternalDropdownRenderSelect = memo<DropdownRenderSelectProps>(
           props?.onClear?.();
         }}
         onChange={onSelectChange}
+        onOpenChange={(nextOpen) => {
+          setOpen(nextOpen);
+
+          if (!nextOpen) {
+            // 下拉框关闭（失焦/点击外部）时重置搜索关键字，避免下次打开时数据仍是过滤后的结果
+            resetInputValue();
+          }
+
+          props?.onOpenChange?.(nextOpen);
+        }}
       />
     );
   },

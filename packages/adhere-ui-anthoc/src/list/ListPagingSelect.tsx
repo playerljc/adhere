@@ -75,6 +75,12 @@ const InternalListPagingSelect = memo<ListPagingSelectProps<any>>(
           });
         }}
         onChange={onChange}
+        onOpenChange={(nextOpen) => {
+          if (!nextOpen) {
+            // 下拉框关闭时同步清空外部搜索关键字，避免重新打开时数据仍是过滤后的结果
+            setInputValue('');
+          }
+        }}
       >
         {({ originNode, ...rest }) => {
           const listProps = renderProps({
