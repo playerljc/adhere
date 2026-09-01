@@ -22,6 +22,10 @@ const usePagingListRenderProps: UsePagingListRenderProps = ({
   const defaultPageSize = defaultLimit ?? DEFAULT_LIMIT;
   const defaultCurrentPage = defaultPage ?? DEFAULT_PAGE;
 
+  // 请求序号：服务器搜索场景下，若旧请求（如网络较慢）晚于新请求返回，用它来丢弃过期响应，
+  // 避免连续输入时结果被过期数据覆盖，出现"卡顿/跳动"的错觉
+  const requestIdRef = useRef(0);
+
   const [inputValue, setInputValue] = useState('');
   const [paging, setPaging] = useState({
     page: defaultCurrentPage,
@@ -46,9 +50,18 @@ const usePagingListRenderProps: UsePagingListRenderProps = ({
       return Promise.resolve();
     }
 
+    const requestId = ++requestIdRef.current;
+
     return new Promise((resolve, reject) => {
       loadData(_currentPage, _currentLimit, kw.current)
         ?.then?.((res) => {
+          // 丢弃过期响应：请求发出后又有更新的请求发出（如继续输入触发了新的服务器搜索），
+          // 此时即使旧请求先到也不应用它的结果，防止把新结果覆盖回旧结果
+          if (requestId !== requestIdRef.current) {
+            resolve(res);
+            return;
+          }
+
           const { totalCount, data } = res;
 
           setTotalCount(totalCount);
