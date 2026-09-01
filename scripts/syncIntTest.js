@@ -13,6 +13,7 @@ const targetRoots = [
   'D:\\self\\work\\bfd\\project\\overseas\\k6\\prestaodecontas-web\\packages\\Common\\src\\lib\\adhere',
   'D:\\GitHub\\adhere-reactpro-react19\\react-pro-monorepo\\packages\\Common\\src\\lib\\adhere',
   'D:\\self\\work\\bfd\\project\\overseas\\k2\\social-security-web\\packages\\Common\\src\\lib\\adhere',
+  'D:\\self\\work\\bfd\\project\\overseas\\P4\\interop-platform-web\\packages\\Common\\src\\lib\\adhere',
 ];
 
 function sync(targetRoot) {

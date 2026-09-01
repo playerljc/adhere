@@ -25,6 +25,7 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
     arrayToAntdTreeConfig,
     checkStrictly = true,
     leafOnly = false,
+    render,
     ...restProps
   }) => {
     const { token } = theme.useToken();
@@ -46,7 +47,7 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
         dataSource={transferDataSource}
         targetKeys={mergedTargetKeys}
         showSelectAll={showSelectAll}
-        render={(item) => item.title!}
+        render={render ?? ((item) => item.title!)}
       >
         {({ direction, onItemSelect, onItemSelectAll, selectedKeys }) => {
           if (direction === 'left') {
