@@ -142,7 +142,7 @@ export type PagingProps = {
     onPagingChange: PaginationProps['onChange'];
 };
 export type PagingWrapperProps<T> = {
-    loadData: (page: number, limit: number, kw?: string) => Promise<{
+    loadData: (page: number, limit: number, kw?: string | Record<string, string>) => Promise<{
         totalCount: number;
         data: T[];
     }>;
@@ -268,6 +268,11 @@ export type ListPagingProps<T> = {
 };
 export type PagingSelectProps = Omit<DropdownRenderSelectProps, 'children'> & {
     defaultOptions?: any[];
+    /**
+     * 服务器搜索（localFilter=false）时，连续输入的防抖等待时间（ms）
+     * @default 300
+     */
+    searchDebounceWait?: number;
 };
 export type ListPagingSelectProps<T> = PagingSelectProps & Omit<ListPagingProps<T>, 'mode' | 'value' | 'onChange'>;
 export type TablePagingProps<T> = {
@@ -412,7 +417,7 @@ export type UsePagingTableRenderProps = (arg: PagingWrapperProps<any> & {
     defaultPageSize: number;
     isMultiple: boolean;
     fetchData: () => any;
-    setKw: (_kw?: string) => void;
+    setKw: (_kw?: string | Record<string, string>) => void;
     renderProps: (arg: {
         value?: SelectProps['value'];
         onChange?: SelectProps['onChange'];
@@ -466,7 +471,7 @@ export type UsePagingListRenderProps = (arg: PagingWrapperProps<any> & {
     defaultPageSize: number;
     isMultiple: boolean;
     fetchData: any;
-    setKw: (_kw?: string) => void;
+    setKw: (_kw?: string | Record<string, string>) => void;
     renderProps: (arg: {
         value?: SelectProps['value'];
         onChange?: SelectProps['onChange'];

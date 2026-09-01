@@ -107,6 +107,38 @@ export function getValue(
   return size;
 }
 
+/**
+ * normalizeOptionFilterProp
+ * @description 将 optionFilterProp（单个或数组）归一化为字段名数组，未传入时默认 'label'
+ * @param optionFilterProp
+ */
+export function normalizeOptionFilterProp(optionFilterProp?: string | string[]): string[] {
+  const prop = optionFilterProp ?? 'label';
+  return Array.isArray(prop) ? prop : [prop];
+}
+
+/**
+ * buildSearchQueryParams
+ * @description 服务器搜索场景下，根据 optionFilterProp 和关键字构造查询参数对象
+ * 例如 optionFilterProp={['label','title']} + keyword='张三' -> { label: '张三', title: '张三' }
+ * @param optionFilterProp
+ * @param keyword
+ */
+export function buildSearchQueryParams(
+  optionFilterProp: string | string[] | undefined,
+  keyword?: string,
+): Record<string, string> | undefined {
+  if (!keyword) return undefined;
+
+  return normalizeOptionFilterProp(optionFilterProp).reduce<Record<string, string>>(
+    (result, field) => {
+      result[field] = keyword;
+      return result;
+    },
+    {},
+  );
+}
+
 export function existsValueInLabeledValueOptions(value: string | number, options: LabeledValue[]) {
   return options.findIndex(({ value: itemValue }) => value === itemValue) !== -1;
 }

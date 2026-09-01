@@ -169,7 +169,9 @@ export type PagingWrapperProps<T> = {
   loadData: (
     page: number,
     limit: number,
-    kw?: string,
+    // AutoComplete 系列传入原始关键字字符串；TablePagingSelect/ListPagingSelect 服务器搜索
+    // （localFilter=false）时传入由 optionFilterProp 构造的查询参数对象
+    kw?: string | Record<string, string>,
   ) => Promise<{
     totalCount: number;
     data: T[];
@@ -334,6 +336,11 @@ export type ListPagingProps<T> = {
 
 export type PagingSelectProps = Omit<DropdownRenderSelectProps, 'children'> & {
   defaultOptions?: any[];
+  /**
+   * 服务器搜索（localFilter=false）时，连续输入的防抖等待时间（ms）
+   * @default 300
+   */
+  searchDebounceWait?: number;
 };
 
 export type ListPagingSelectProps<T> = PagingSelectProps &
@@ -537,7 +544,7 @@ export type UsePagingTableRenderProps = (
   defaultPageSize: number;
   isMultiple: boolean;
   fetchData: () => any;
-  setKw: (_kw?: string) => void;
+  setKw: (_kw?: string | Record<string, string>) => void;
   renderProps: (arg: {
     value?: SelectProps['value'];
     onChange?: SelectProps['onChange'];
@@ -601,7 +608,7 @@ export type UsePagingListRenderProps = (
   defaultPageSize: number;
   isMultiple: boolean;
   fetchData: any;
-  setKw: (_kw?: string) => void;
+  setKw: (_kw?: string | Record<string, string>) => void;
   renderProps: (arg: {
     value?: SelectProps['value'];
     onChange?: SelectProps['onChange'];

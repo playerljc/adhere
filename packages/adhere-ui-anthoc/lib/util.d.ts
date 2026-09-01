@@ -24,6 +24,20 @@ export declare function createFactory<P>(Component: any, defaultProps: Partial<P
  * @return {string}
  */
 export declare function getValue(media: ConfigProviderProps['media'], size: number | string): number | string;
+/**
+ * normalizeOptionFilterProp
+ * @description 将 optionFilterProp（单个或数组）归一化为字段名数组，未传入时默认 'label'
+ * @param optionFilterProp
+ */
+export declare function normalizeOptionFilterProp(optionFilterProp?: string | string[]): string[];
+/**
+ * buildSearchQueryParams
+ * @description 服务器搜索场景下，根据 optionFilterProp 和关键字构造查询参数对象
+ * 例如 optionFilterProp={['label','title']} + keyword='张三' -> { label: '张三', title: '张三' }
+ * @param optionFilterProp
+ * @param keyword
+ */
+export declare function buildSearchQueryParams(optionFilterProp: string | string[] | undefined, keyword?: string): Record<string, string> | undefined;
 export declare function existsValueInLabeledValueOptions(value: string | number, options: LabeledValue[]): boolean;
 export declare function isLabeledValue(val: LabeledValue): boolean;
 export declare function checkLabeledValueExists(value: string | number | LabeledValue, options: LabeledValue[]): boolean;

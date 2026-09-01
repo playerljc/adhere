@@ -4,6 +4,7 @@ import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 
 import Empty from '../empty';
 import type { DisplayNameInternal, DropdownRenderSelectProps } from '../types';
+import { normalizeOptionFilterProp } from '../util';
 import Select from './Select';
 
 /**
@@ -61,10 +62,10 @@ const InternalDropdownRenderSelect = memo<DropdownRenderSelectProps>(
 
     const dropdownRenderElement = useRef<ReactElement | undefined>(undefined);
 
-    const filterFields = useMemo(() => {
-      const prop = optionFilterProp ?? 'label';
-      return Array.isArray(prop) ? prop : [prop];
-    }, [optionFilterProp]);
+    const filterFields = useMemo(
+      () => normalizeOptionFilterProp(optionFilterProp),
+      [optionFilterProp],
+    );
 
     const filterOptions = useMemo(() => {
       if (!localFilter || !inputValue) {

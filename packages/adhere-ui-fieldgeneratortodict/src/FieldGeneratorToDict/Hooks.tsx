@@ -236,11 +236,13 @@ export function usePaging<D>({
 
   // @ts-ignore
   return useCallback(
-    (page, limit) => {
+    (page, limit, queryParams) => {
       const dictValue = Dict.value[dictName]?.value;
 
-      // 分页字典约定：(page, limit, cascadeParams)，kw 仅用于 AutoComplete 分页
-      return dictValue(page, limit, cascadeParams).then((res) => {
+      // 分页字典约定：(page, limit, cascadeParams, queryParams)
+      // queryParams 仅在 TablePagingSelect/ListPagingSelect 设置 localFilter={false}（服务器搜索）时才会有值，
+      // 由 optionFilterProp 对应字段名和搜索关键字组成，例如 { label: '关键字' }
+      return dictValue(page, limit, cascadeParams, queryParams).then((res) => {
         onDataSourceChange?.(res, { type: 'paging', info: { page, limit } });
         return res;
       });

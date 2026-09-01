@@ -25,6 +25,9 @@ export default () => {
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
+      // localFilter=false 演示服务器搜索：查询参数由 optionFilterProp 构造
+      localFilter={false}
+      optionFilterProp={['label', 'title']}
       pagingProps={{
         defaultLimit: 10,
       }}

@@ -987,12 +987,24 @@ const { names, values } = genModuleDict({
     },
   },
   SystemUserPagin: {
-    handler: () => (page, limit) => {
+    // 分页字典约定：(page, limit, cascadeParams, queryParams)
+    // queryParams 仅在 TablePagingSelect/ListPagingSelect 设置 localFilter={false}（服务器搜索）时才会有值，
+    // 由 optionFilterProp 对应字段名和搜索关键字组成，例如 { label: '关键字' }，多个字段之间为 OR 关系
+    handler: () => (page, limit, cascadeParams, queryParams) => {
       return new Promise((resolve) => {
         setTimeout(() => {
+          const filtered = queryParams
+            ? UserData.filter((item) =>
+                Object.entries(queryParams).some(([field, kw]) => {
+                  const value = item[field];
+                  return kw && value != null && String(value).indexOf(kw) !== -1;
+                }),
+              )
+            : UserData;
+
           resolve({
-            totalCount: UserData.length,
-            data: UserData.slice((page - 1) * limit, page * limit),
+            totalCount: filtered.length,
+            data: filtered.slice((page - 1) * limit, page * limit),
           });
         }, 1000);
       });
