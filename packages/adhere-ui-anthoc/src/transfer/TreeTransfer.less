@@ -1,0 +1,31 @@
+.tree-transfer {
+  &.ant-transfer-customize-list {
+    .ant-transfer-list-body {
+      overflow: hidden;
+    }
+
+    .ant-transfer-list-body-customize-wrapper {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+    }
+
+    .ant-transfer-list-content {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+
+      &-item {
+        width: max-content;
+        min-width: 100%;
+
+        &-text {
+          overflow: visible;
+          text-overflow: clip;
+          white-space: nowrap;
+          flex: none;
+        }
+      }
+    }
+  }
+}

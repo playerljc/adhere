@@ -36,15 +36,17 @@ export default () => {
   const [targetKeys, setTargetKeys] = useState<string[]>(['0', '1']);
 
   return (
-    <Transfer.TableTransfer
-      dataSource={mockData}
-      targetKeys={targetKeys}
-      onChange={setTargetKeys}
-      titles={['可选', '已选']}
-      showSearch
-      filterOption={(input, item) => item.title?.includes(input) || item.tag?.includes(input)}
-      leftColumns={columns}
-      rightColumns={columns}
-    />
+    <div style={{ width: 500 }}>
+      <Transfer.TableTransfer
+        dataSource={mockData}
+        targetKeys={targetKeys}
+        onChange={setTargetKeys}
+        titles={['可选', '已选']}
+        showSearch
+        filterOption={(input, item) => item.title?.includes(input) || item.tag?.includes(input)}
+        leftColumns={columns}
+        rightColumns={columns}
+      />
+    </div>
   );
 };

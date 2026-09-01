@@ -14,6 +14,8 @@ import {
   normalizeTreeData,
 } from './transferUtils';
 
+import './TreeTransfer.less';
+
 const InternalTreeTransfer = memo<TreeTransferProps>(
   ({
     dataSource = [],
@@ -26,6 +28,8 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
     checkStrictly = true,
     leafOnly = false,
     render,
+    listStyle,
+    styles,
     ...restProps
   }) => {
     const { token } = theme.useToken();
@@ -47,6 +51,8 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
         dataSource={transferDataSource}
         targetKeys={mergedTargetKeys}
         showSelectAll={showSelectAll}
+        listStyle={listStyle}
+        styles={styles}
         render={render ?? ((item) => item.title!)}
       >
         {({ direction, onItemSelect, onItemSelectAll, selectedKeys }) => {

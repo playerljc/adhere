@@ -10,12 +10,14 @@ type TransferItem = GetProp<TransferProps, 'dataSource'>[number];
 type TableRowSelection<T extends object> = TableProps<T>['rowSelection'];
 
 const InternalTableTransfer = memo<TableTransferProps>(
-  ({ leftColumns, rightColumns, showSelectAll = false, style, dataSource, ...restProps }) => (
+  ({ leftColumns, rightColumns, showSelectAll = false, style, dataSource, listStyle, className, ...restProps }) => (
     <Transfer
       style={{ width: '100%', ...style }}
       {...restProps}
+      className={['table-transfer', className].filter(Boolean).join(' ')}
       dataSource={toTableTransferDataSource(dataSource)}
       showSelectAll={showSelectAll}
+      listStyle={listStyle}
     >
       {({
         direction,
@@ -42,6 +44,7 @@ const InternalTableTransfer = memo<TableTransferProps>(
             columns={columns}
             dataSource={toTableTransferDataSource(filteredItems)}
             size="small"
+            scroll={{ x: 'max-content' }}
             style={{ pointerEvents: listDisabled ? 'none' : undefined }}
             onRow={({ key, disabled: itemDisabled }) => ({
               onClick: () => {
