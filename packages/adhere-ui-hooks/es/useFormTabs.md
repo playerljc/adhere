@@ -57,6 +57,7 @@ import { useSegmentedFormTabs } from '@/hooks/useSegmentedFormTabs';
 5. 若按顺序未命中，再按第一个错误字段名做前缀回退查找（同样支持 Form.List 下标对齐）。
 6. 错误字段不在任何 `tabs.fieldNames` 中（如表单底部的公共字段）时，**不切换**分段。
 7. 仍将原始校验错误 `throw`，调用方 `catch` 行为与 antd 一致。
+8. `tabs` 引用变化时，若当前 `activeTab` 仍存在于新 `tabs` 中，**保持当前分段**。`defaultTab` 的**值**变化时仍切换到新的 `defaultTab`（与原先 `defaultTab` 变化时的行为一致）。仅当当前 key 已不存在时才回退到 `defaultTab` / `tabs[0].key`。
 
 **示例**：第一页 `checkList`、第二页 `judge` 均未填，用户在第二页提交 → 切换到第一页（`tabs` 中靠前的分段优先）。
 

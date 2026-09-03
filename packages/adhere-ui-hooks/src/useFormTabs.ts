@@ -1,9 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
-
-
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { FormTabsErrorField, FormTabsNamePath, SegmentedFormTab, UseFormTabs } from './types';
-
 
 function namePathToSegments(name: FormTabsNamePath): string[] {
   if (Array.isArray(name)) {
@@ -118,6 +115,21 @@ type ValidateErrorLike = {
   errorFields?: FormTabsErrorField[];
 };
 
+function getTabKeys(tabs: SegmentedFormTab[] | undefined): string[] {
+  return (tabs ?? []).map((tab) => tab?.key);
+}
+
+function resolveFallbackTab(
+  tabs: SegmentedFormTab[] | undefined,
+  defaultTab: string | undefined,
+): string | undefined {
+  if (typeof defaultTab !== 'undefined') {
+    return defaultTab;
+  }
+
+  return getTabKeys(tabs)[0];
+}
+
 /**
  * Segmented 多页签与单 Form 联动：校验失败时按 tabs 顺序切换到首个有错误的页签。
  *
@@ -142,7 +154,11 @@ type ValidateErrorLike = {
  * ```
  */
 const useFormTabs: UseFormTabs = ({ form, tabs, defaultTab }) => {
-  const [activeTab, setActiveTab] = useState<string | undefined>(() => defaultTab ?? tabs[0]?.key);
+  const [activeTab, setActiveTab] = useState<string | undefined>(() =>
+    resolveFallbackTab(tabs, defaultTab),
+  );
+
+  const prevDefaultTabRef = useRef(defaultTab);
 
   const validateFields = useCallback(
     ((...args: Parameters<typeof form.validateFields>) => {
@@ -160,7 +176,21 @@ const useFormTabs: UseFormTabs = ({ form, tabs, defaultTab }) => {
   );
 
   useEffect(() => {
-    setActiveTab(defaultTab ?? tabs[0]?.key);
+    const tabKeys = getTabKeys(tabs);
+    const defaultTabChanged = prevDefaultTabRef.current !== defaultTab;
+    prevDefaultTabRef.current = defaultTab;
+
+    setActiveTab((prev) => {
+      if (defaultTabChanged && typeof defaultTab !== 'undefined' && tabKeys.includes(defaultTab)) {
+        return defaultTab;
+      }
+
+      if (prev != null && tabKeys.includes(prev)) {
+        return prev;
+      }
+
+      return resolveFallbackTab(tabs, defaultTab);
+    });
   }, [defaultTab, tabs]);
 
   return {
