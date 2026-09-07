@@ -399,7 +399,7 @@ abstract class SearchTable<
       ].join('|');
     });
     this.getWidthByHacker = memoize(this.getWidthByHacker.bind(this), (obj) =>
-      [obj?.text, obj?.font, obj?.family, obj?.spacing, obj?.space].join('|'),
+      [obj?.text, obj?.font, obj?.family, obj?.spacing, obj?.space, obj?.fontWeight].join('|'),
     );
     this.getCellText = memoize(this.getCellText.bind(this), (obj) =>
       [
@@ -1070,8 +1070,14 @@ abstract class SearchTable<
 
     if (!this._hackerElement) {
       this._hackerElement = document.createElement('span');
-      this._hackerElement.style.visibility = 'visible';
+      // 离屏 + 不可见 + 不换行：保证测出来的是单行文本的真实渲染宽度，
+      // 不会因为容器边界而提前换行导致宽度被严重低估
       this._hackerElement.style.position = 'fixed';
+      this._hackerElement.style.top = '-9999px';
+      this._hackerElement.style.left = '-9999px';
+      this._hackerElement.style.visibility = 'hidden';
+      this._hackerElement.style.whiteSpace = 'nowrap';
+      this._hackerElement.style.pointerEvents = 'none';
       document.body.appendChild(this._hackerElement);
     }
 
@@ -1120,6 +1126,7 @@ abstract class SearchTable<
    * @param family
    * @param spacing
    * @param space
+   * @param fontWeight
    * @private
    */
   getWidthByHacker({
@@ -1128,12 +1135,14 @@ abstract class SearchTable<
     family,
     spacing = 0,
     space,
+    fontWeight,
   }: {
     text: string;
     font: number | string;
     family: string;
     spacing?: number;
     space?: number;
+    fontWeight?: number | string;
   }) {
     // // 创建一个 canvas 元素
     // const context = this.getCtx();
@@ -1152,6 +1161,7 @@ abstract class SearchTable<
 
     context.style.fontFamily = family;
     context.style.fontSize = `${font}px`;
+    context.style.fontWeight = fontWeight != null ? String(fontWeight) : 'normal';
     context.innerText = text == null ? '' : String(text);
 
     return context.offsetWidth + 2 * spacing + 2 * (space as number);
@@ -1189,6 +1199,7 @@ abstract class SearchTable<
         family: widthConfig.cellFontFamily ?? this.getDefaultCellFontFamily(),
         spacing: widthConfig.cellSpacing ?? this.getDefaultCellSpacing(),
         space: widthConfig.cellSpacingSpace ?? this.getDefaultCellSpace(),
+        fontWeight: widthConfig.cellFontWeight ?? this.getDefaultCellFontWeight(),
       }),
     );
   }
@@ -1407,6 +1418,7 @@ abstract class SearchTable<
       family: widthConfig.titleFontFamily ?? this.getDefaultColumnFontFamily(),
       spacing: widthConfig.titleSpacing ?? this.getDefaultColumnSpacing(),
       space: widthConfig.titleSpacingSpace ?? this.getDefaultColumnSpace(),
+      fontWeight: widthConfig.titleFontWeight ?? this.getDefaultColumnTitleFontWeight(),
     });
 
     // const cellsWidth = dataSource.map((record, rowIndex) =>
@@ -1428,55 +1440,42 @@ abstract class SearchTable<
 
     // console.log('titleAndCellMaxWidth', titleAndCellMaxWidth);
 
-    // 设置了区间值
+    // 同时设置了 minWidth 和 maxWidth：夹在 [min, max] 之间，且始终写回一个确定的 width，
+    // 不能像"只设 minWidth"那样只留下限——否则内容没达到 maxWidth 时，width 会一直是
+    // 用户传入的 { minWidth, maxWidth, ... } 配置对象，被原样传给 antd Table 当成非法的列宽
     if (widthConfig.minWidth && widthConfig.maxWidth) {
-      // const titleAndCellMaxWidth = Math.max(
-      //   titleWidth,
-      //   Math.max(...this.getCellsWidth({ dataSource, columnConfig })),
-      // );
-      //
-      // if (titleWidth <= widthConfig.minWidth) {
-      //   _width = widthConfig.minWidth;
-      // } else if (titleAndCellMaxWidth >= widthConfig.maxWidth) {
-      //   _width = widthConfig.maxWidth;
-      //   setMethodName = 'width';
-      // } else {
-      //   _width = titleWidth;
-      // }
       const titleAndCellMaxWidth = Math.max(
         titleWidth,
         Math.max(...this.getCellsWidth({ dataSource, columnConfig })),
       );
 
-      let _minWidth = -1;
-      let _width = -1;
+      let _width: number;
+      let isTriggerMaxWidth = false;
 
-      if (titleWidth <= widthConfig.minWidth) {
-        _minWidth = widthConfig.minWidth;
-      } else {
-        _minWidth = titleWidth;
-      }
-
-      if (titleAndCellMaxWidth >= widthConfig.maxWidth) {
+      if (titleAndCellMaxWidth <= widthConfig.minWidth) {
+        _width = widthConfig.minWidth;
+      } else if (titleAndCellMaxWidth >= widthConfig.maxWidth) {
         _width = widthConfig.maxWidth;
+        isTriggerMaxWidth = true;
+      } else {
+        _width = titleAndCellMaxWidth;
       }
 
-      if (_minWidth !== -1) {
-        // @ts-ignore
-        columnConfig.minWidth = this.pxToRem(_minWidth, media);
-      }
+      columnConfig.width = this.pxToRem(_width, media);
+      delete columnConfig.minWidth;
 
-      if (_width !== -1) {
-        columnConfig.width = this.pxToRem(_width, media);
+      if (isTriggerMaxWidth) {
+        this.applyMaxWidthOverflow(columnConfig, widthConfig.maxWidth as number, media);
       }
     }
-    // 其他的情况
+    // 只设置了其中一项，或者都没设置
     else {
       let _width: number = -1;
       let setMethodName = 'minWidth';
       let targetWidth = '';
+      let isTriggerMaxWidth = false;
 
-      // 只设置了最大值
+      // 只设置了最小值：允许内容继续把列撑宽，minWidth 只是下限
       if (widthConfig.minWidth) {
         if (titleWidth <= widthConfig.minWidth) {
           _width = widthConfig.minWidth;
@@ -1484,7 +1483,7 @@ abstract class SearchTable<
           _width = titleWidth;
         }
       }
-      // 只设置了最大值
+      // 只设置了最大值：达到上限就封顶，并做视觉截断
       else if (widthConfig.maxWidth) {
         const titleAndCellMaxWidth = Math.max(
           titleWidth,
@@ -1494,35 +1493,63 @@ abstract class SearchTable<
         if (titleAndCellMaxWidth >= widthConfig.maxWidth) {
           _width = widthConfig.maxWidth;
           setMethodName = 'width';
+          isTriggerMaxWidth = true;
         } else {
           _width = titleWidth;
         }
       }
-      // 另外
+      // 都没设置：完全按内容测算，只作为 minWidth 下限
       else {
         _width = titleWidth;
       }
 
-      // console.log('_width===', _width);
-
       if (_width !== -1) {
-        // console.log('_width1===', this.pxToRem(_width));
-        /*columnConfig.width*/
-
         targetWidth = this.pxToRem(_width, media);
       }
-
-      // console.timeEnd('setColumnWidth');
-
-      // return targetWidth;
-      // console.log('targetWidth', setMethodName, _width, targetWidth, columnConfig.dataIndex);
 
       columnConfig[setMethodName] = targetWidth;
 
       if (setMethodName === 'minWidth') {
         delete columnConfig.width;
       }
+
+      if (isTriggerMaxWidth) {
+        this.applyMaxWidthOverflow(columnConfig, widthConfig.maxWidth as number, media);
+      }
     }
+  }
+
+  /**
+   * applyMaxWidthOverflow
+   * @description 触发 maxWidth 后做视觉封顶。
+   * table-layout: auto 下单纯给 column.width 设置一个数值挡不住内容把列撑宽
+   * （auto 布局会按 nowrap 文本的自然宽度反推列宽，width 只是个提示值）。
+   * 真正生效的办法是给渲染内容套一层有明确 CSS width 的 overflow:hidden 容器——
+   * 显式宽度的块级盒子会被浏览器严格遵守，从而把该列在 auto 布局算法里的贡献宽度钉死在 maxWidth。
+   * $editable 列的展示由 EditableCellView/EditableCellEdit 接管，会整体替换掉 render 的输出，
+   * 包裹在这里不会生效，故跳过。
+   * @private
+   */
+  private applyMaxWidthOverflow(
+    columnConfig: ColumnTypeExt,
+    maxWidth: number,
+    media: ConfigProviderProps['media'],
+  ) {
+    if (columnConfig.$editable?.editable) return;
+
+    const width = this.pxToRem(maxWidth, media);
+    const originRender = columnConfig.render;
+
+    columnConfig.render = (...params: Parameters<NonNullable<typeof originRender>>) => {
+      const content = originRender ? originRender(...params) : params[0];
+      const titleAttr = typeof content === 'string' || typeof content === 'number' ? String(content) : undefined;
+
+      return (
+        <div className={`${selectorPrefix}-overflow`} style={{ width }} title={titleAttr}>
+          {content}
+        </div>
+      );
+    };
   }
 
   protected getDefaultColumnTitleFontSize(): number {
@@ -1531,6 +1558,22 @@ abstract class SearchTable<
 
   protected getDefaultColumnFontFamily(): string {
     return theme.getDesignToken().fontFamily;
+  }
+
+  /**
+   * getDefaultColumnTitleFontWeight
+   * @description antd 表头文本默认是加粗的，测算时也要按加粗字重来，否则量出来的宽度会偏窄
+   */
+  protected getDefaultColumnTitleFontWeight(): number | string {
+    return theme.getDesignToken().fontWeightStrong ?? 600;
+  }
+
+  /**
+   * getDefaultCellFontWeight
+   * @description 单元格内容默认是常规字重
+   */
+  protected getDefaultCellFontWeight(): number | string {
+    return 'normal';
   }
 
   protected getDefaultColumnSpacing(): number {
@@ -2902,6 +2945,12 @@ abstract class SearchTable<
       extra += 8;
     }
 
+    // 列头查询图标（TableHeadSearch 的 filterIcon），virtual 模式没有浏览器纠偏，
+    // 漏算会导致列头图标被挤/裁切
+    if (columnConfig.$search?.showColumnHeader) {
+      extra += 20;
+    }
+
     return extra;
   }
 
@@ -2921,6 +2970,7 @@ abstract class SearchTable<
       family: widthConfig.titleFontFamily ?? this.getDefaultColumnFontFamily(),
       spacing: widthConfig.titleSpacing ?? this.getDefaultColumnSpacing(),
       space: widthConfig.titleSpacingSpace ?? this.getDefaultColumnSpace(),
+      fontWeight: widthConfig.titleFontWeight ?? this.getDefaultColumnTitleFontWeight(),
     });
 
     let cellMaxWidth = 0;

@@ -285,10 +285,12 @@ export interface ColumnWidthMaxContent {
     cellFontSize?: number;
     cellFontFamily?: string;
     cellSpacingSpace?: number;
+    cellFontWeight?: number | string;
     titleSpacing?: number;
     titleFontSize?: number;
     titleFontFamily?: string;
     titleSpacingSpace?: number;
+    titleFontWeight?: number | string;
 }
 /**
  * ColumnTypeExt

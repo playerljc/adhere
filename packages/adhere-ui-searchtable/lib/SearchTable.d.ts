@@ -362,14 +362,16 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @param family
      * @param spacing
      * @param space
+     * @param fontWeight
      * @private
      */
-    getWidthByHacker({ text, font, family, spacing, space, }: {
+    getWidthByHacker({ text, font, family, spacing, space, fontWeight, }: {
         text: string;
         font: number | string;
         family: string;
         spacing?: number;
         space?: number;
+        fontWeight?: number | string;
     }): number;
     /**
      * pxToRem
@@ -391,8 +393,30 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
         dataSource: any[];
         media: ConfigProviderProps['media'];
     }): void;
+    /**
+     * applyMaxWidthOverflow
+     * @description 触发 maxWidth 后做视觉封顶。
+     * table-layout: auto 下单纯给 column.width 设置一个数值挡不住内容把列撑宽
+     * （auto 布局会按 nowrap 文本的自然宽度反推列宽，width 只是个提示值）。
+     * 真正生效的办法是给渲染内容套一层有明确 CSS width 的 overflow:hidden 容器——
+     * 显式宽度的块级盒子会被浏览器严格遵守，从而把该列在 auto 布局算法里的贡献宽度钉死在 maxWidth。
+     * $editable 列的展示由 EditableCellView/EditableCellEdit 接管，会整体替换掉 render 的输出，
+     * 包裹在这里不会生效，故跳过。
+     * @private
+     */
+    private applyMaxWidthOverflow;
     protected getDefaultColumnTitleFontSize(): number;
     protected getDefaultColumnFontFamily(): string;
+    /**
+     * getDefaultColumnTitleFontWeight
+     * @description antd 表头文本默认是加粗的，测算时也要按加粗字重来，否则量出来的宽度会偏窄
+     */
+    protected getDefaultColumnTitleFontWeight(): number | string;
+    /**
+     * getDefaultCellFontWeight
+     * @description 单元格内容默认是常规字重
+     */
+    protected getDefaultCellFontWeight(): number | string;
     protected getDefaultColumnSpacing(): number;
     protected getDefaultColumnSpace(): number;
     protected getDefaultCellFontSize(): number;

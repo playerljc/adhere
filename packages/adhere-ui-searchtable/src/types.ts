@@ -408,11 +408,15 @@ export interface ColumnWidthMaxContent {
   cellFontSize?: number;
   cellFontFamily?: string;
   cellSpacingSpace?: number;
+  // 单元格字重，默认 normal
+  cellFontWeight?: number | string;
   // 列title
   titleSpacing?: number;
   titleFontSize?: number;
   titleFontFamily?: string;
   titleSpacingSpace?: number;
+  // 表头字重，默认取粗体（与 antd 表头视觉一致），避免测算宽度偏窄
+  titleFontWeight?: number | string;
 }
 
 /**
