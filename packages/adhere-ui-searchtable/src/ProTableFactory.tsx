@@ -714,6 +714,77 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
     }
 
     /**
+     * _isStartDateField
+     * @description 判断字段是否为时间区间的开始字段（命名中包含 start/Start）
+     * @param key
+     */
+    _isStartDateField(key: string): boolean {
+      return ['start', 'Start'].some((t) => key.indexOf(t) !== -1);
+    }
+
+    /**
+     * _isEndDateField
+     * @description 判断字段是否为时间区间的结束字段（命名中包含 end/End）
+     * @param key
+     */
+    _isEndDateField(key: string): boolean {
+      return ['end', 'End'].some((t) => key.indexOf(t) !== -1);
+    }
+
+    /**
+     * _getDateDependenciesDisabledDate
+     * @description 根据 $search.dependencies 配置，生成 datePicker 之间相互制约的 disabledDate。
+     * 依赖 dataIndex 的命名约定（与 getFetchDateParams 一致）：
+     * - 命名中包含 start/Start 视为区间"开始"字段
+     * - 命名中包含 end/End 视为区间"结束"字段
+     * 制约规则：
+     * - 自身是"开始"字段，依赖项是"结束"字段时：禁止选择晚于依赖项已选日期的日期
+     * - 自身是"结束"字段，依赖项是"开始"字段时：禁止选择早于依赖项已选日期的日期
+     * @param dataIndex 当前控件的dataIndex
+     * @param dependencies $search.dependencies配置的依赖字段dataIndex数组
+     * @param userDisabledDate $search.props中用户自定义的disabledDate，会与依赖制约逻辑组合生效
+     */
+    _getDateDependenciesDisabledDate(
+      dataIndex: string,
+      dependencies?: string[],
+      userDisabledDate?: (current: any, info?: any) => boolean,
+    ) {
+      if (!dependencies || !dependencies.length) {
+        return userDisabledDate;
+      }
+
+      const isSelfStart = this._isStartDateField(dataIndex);
+      const isSelfEnd = this._isEndDateField(dataIndex);
+
+      return (current: any, info?: any) => {
+        if (userDisabledDate?.(current, info)) {
+          return true;
+        }
+
+        if (!current) return false;
+
+        return dependencies.some((depKey) => {
+          const depValue = this.state[depKey];
+
+          if (!depValue) return false;
+
+          const isDepStart = this._isStartDateField(depKey);
+          const isDepEnd = this._isEndDateField(depKey);
+
+          if (isSelfStart && isDepEnd) {
+            return current.isAfter(depValue, 'day');
+          }
+
+          if (isSelfEnd && isDepStart) {
+            return current.isBefore(depValue, 'day');
+          }
+
+          return false;
+        });
+      };
+    }
+
+    /**
      * getColumns
      * @param columns
      * @return {*}
@@ -1925,6 +1996,12 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       };
       const renderDatePicker = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
+        const { dependencies, props: customProps = {} } = searchConfig;
+        const disabledDate = this._getDateDependenciesDisabledDate(
+          dataIndex,
+          dependencies,
+          customProps.disabledDate,
+        );
 
         return (
           <DatePicker
@@ -1933,7 +2010,8 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
             value={value}
             onChange={handleDateChange}
             {...{
-              ...(searchConfig.props ?? {}),
+              ...customProps,
+              ...(disabledDate ? { disabledDate } : {}),
             }}
           />
         );

@@ -58,6 +58,7 @@ export interface ColumnSearchConfig {
         enabled?: boolean;
         debounce?: number;
     };
+    dependencies?: string[];
 }
 export interface ColumnParams {
     value: string;

@@ -164,6 +164,8 @@ export interface ColumnSearchConfig {
   isShowLabelSymbol?: boolean;
   // 实时查询配置：true 启用（输入型默认 debounce 300ms），或传入对象自定义 debounce 时长
   realtimeSearch?: boolean | { enabled?: boolean; debounce?: number };
+  // 时间控件开始结束的依赖关系
+  dependencies?: string[];
 }
 
 export interface ColumnParams {

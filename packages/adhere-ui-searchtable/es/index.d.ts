@@ -77,6 +77,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -150,6 +153,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -223,6 +229,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -296,6 +305,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -369,6 +381,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -442,6 +457,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -515,6 +533,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -588,6 +609,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -661,6 +685,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -734,6 +761,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -807,6 +837,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -880,6 +913,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -953,6 +989,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -1026,6 +1065,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -1099,6 +1141,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -1172,6 +1217,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;
@@ -1245,6 +1293,9 @@ declare const _default: {
             getTotalKey(): string;
             getLimit(): number;
             getFetchDateParams(): {};
+            _isStartDateField(key: string): boolean;
+            _isEndDateField(key: string): boolean;
+            _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
             getColumns(columns: any): any;
             getTableColumns(): any;
             getTableColumnSearchHeaderIcon(column: import("./types").ColumnTypeExt): import("react").JSX.Element;

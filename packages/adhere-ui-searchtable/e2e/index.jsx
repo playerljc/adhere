@@ -81,6 +81,11 @@ const HideSearchButtonTableImpl = lazy(() =>
 const NumberColumnFixedTableImpl = lazy(() =>
   import(/* webpackChunkName: "numberColumnFixedTable" */ './numberColumnFixedTable.jsx'),
 );
+const DatePickerDependenciesSearchTableImpl = lazy(() =>
+  import(
+    /* webpackChunkName: "datePickerDependenciesSearchTable" */ './datePickerDependenciesSearchTable.jsx'
+  ),
+);
 
 const Demo = () => {
   const [activeKey, setActiveKey] = useState('base');
@@ -98,6 +103,7 @@ const Demo = () => {
           { key: 'enterToSearch', label: '回车查询' },
           { key: 'hideSearchButton', label: '隐藏查询按钮' },
           { key: 'numberColumnFixed', label: '序号列动态固定' },
+          { key: 'datePickerDependencies', label: '日期相互制约' },
         ]}
         style={{ marginBottom: 0, padding: '0 16px' }}
       />
@@ -116,6 +122,7 @@ const Demo = () => {
           {activeKey === 'enterToSearch' && <EnterToSearchTableImpl />}
           {activeKey === 'hideSearchButton' && <HideSearchButtonTableImpl />}
           {activeKey === 'numberColumnFixed' && <NumberColumnFixedTableImpl />}
+          {activeKey === 'datePickerDependencies' && <DatePickerDependenciesSearchTableImpl />}
         </Suspense>
       </div>
     </div>
