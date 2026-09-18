@@ -116,31 +116,24 @@ declare const _default: (SuperClass: any, searchAndPaginationParamsMemo: any) =>
          */
         getFetchDateParams(): {};
         /**
-         * _isStartDateField
-         * @description 判断字段是否为时间区间的开始字段（命名中包含 start/Start）
-         * @param key
+         * getSearchFieldCollectorOptions
+         * @description 获取查询项收集上下文
          */
-        _isStartDateField(key: string): boolean;
+        getSearchFieldCollectorOptions(): {
+            columns: any;
+            assignSearchConfig: (searchConfig: any, column: any) => any;
+            hasAuthority: any;
+        };
         /**
-         * _isEndDateField
-         * @description 判断字段是否为时间区间的结束字段（命名中包含 end/End）
-         * @param key
+         * validateSearchFields
+         * @description 校验所有可见查询项；遇到第一个错误即阻断并 notification 提示
          */
-        _isEndDateField(key: string): boolean;
+        validateSearchFields(): Promise<boolean>;
         /**
-         * _getDateDependenciesDisabledDate
-         * @description 根据 $search.dependencies 配置，生成 datePicker 之间相互制约的 disabledDate。
-         * 依赖 dataIndex 的命名约定（与 getFetchDateParams 一致）：
-         * - 命名中包含 start/Start 视为区间"开始"字段
-         * - 命名中包含 end/End 视为区间"结束"字段
-         * 制约规则：
-         * - 自身是"开始"字段，依赖项是"结束"字段时：禁止选择晚于依赖项已选日期的日期
-         * - 自身是"结束"字段，依赖项是"开始"字段时：禁止选择早于依赖项已选日期的日期
-         * @param dataIndex 当前控件的dataIndex
-         * @param dependencies $search.dependencies配置的依赖字段dataIndex数组
-         * @param userDisabledDate $search.props中用户自定义的disabledDate，会与依赖制约逻辑组合生效
+         * onSearch
+         * @description 查询前先执行校验，失败则阻断
          */
-        _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
+        onSearch(): Promise<any>;
         /**
          * getColumns
          * @param columns

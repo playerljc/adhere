@@ -1,13 +1,16 @@
-import BirthdayPicker from './BirthdayPicker';
-import BoundedTimePicker from './BoundedTimePicker';
-import DatePicker from './DatePicker';
+export {
+  DateFieldDependencyProvider,
+  getDateDependenciesDisabledDate,
+  isEndDateField,
+  isStartDateField,
+  useDateFieldDependency,
+} from './dependency';
+export { createDatePickerWithStatics } from './createDatePickerWithStatics';
+export type {
+  DateFieldDependencyProviderProps,
+  DatePickerProps,
+} from './types';
 
-const DatePickerWithStaticProps = DatePicker as typeof DatePicker & {
-  BirthdayPicker: typeof BirthdayPicker;
-  BoundedTimePicker: typeof BoundedTimePicker;
-};
+import { createDatePickerWithStatics } from './createDatePickerWithStatics';
 
-DatePickerWithStaticProps.BirthdayPicker = BirthdayPicker;
-DatePickerWithStaticProps.BoundedTimePicker = BoundedTimePicker;
-
-export default DatePickerWithStaticProps;
+export default createDatePickerWithStatics();

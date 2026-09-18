@@ -1,0 +1,2 @@
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.resolveDateFieldValue=resolveDateFieldValue;var normalizeDateFieldValue_1=require("./normalizeDateFieldValue");function resolveDateFieldValue(e){var l=e.fieldKey,a=e.registry,i=e.form,e=e.externalGetFieldValue;if(e){e=e(l);if(void 0!==e)return(0,normalizeDateFieldValue_1.normalizeDateFieldValue)(e)}if(i){e=i.getFieldValue(l);if(void 0!==e)return(0,normalizeDateFieldValue_1.normalizeDateFieldValue)(e)}return a[l]}
+//# sourceMappingURL=resolveDateFieldValue.js.map

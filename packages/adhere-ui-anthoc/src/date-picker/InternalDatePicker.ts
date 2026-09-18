@@ -4,7 +4,7 @@ import type { DatePickerProps } from 'antd';
 import '../util/setupDayjs';
 import { createFactory } from '../util';
 
-const DatePickerHOC: typeof DatePicker & {
+const InternalDatePicker: typeof DatePicker & {
   defaultProps?: Partial<DatePickerProps>;
   override?: (props: Partial<DatePickerProps>) => Partial<DatePickerProps>;
 } = createFactory<DatePickerProps>(DatePicker, {
@@ -12,6 +12,6 @@ const DatePickerHOC: typeof DatePicker & {
   placement: 'bottomLeft',
 });
 
-DatePickerHOC.displayName = 'DatePicker';
+InternalDatePicker.displayName = 'InternalDatePicker';
 
-export default DatePickerHOC;
+export default InternalDatePicker;

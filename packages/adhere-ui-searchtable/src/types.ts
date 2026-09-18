@@ -166,6 +166,16 @@ export interface ColumnSearchConfig {
   realtimeSearch?: boolean | { enabled?: boolean; debounce?: number };
   // 时间控件开始结束的依赖关系
   dependencies?: string[];
+  // 是否必填（参照 antd Form.Item.required）
+  required?: boolean;
+  // 校验规则（参照 antd Form.Item.rules）
+  rules?: Rule[];
+  // 帮助说明（参照 antd Form.Item.help）
+  help?: ReactNode;
+  // required 为 true 时，必填符号 * 相对 label 文本的位置，默认 before
+  requiredMarkPlacement?: 'before' | 'after';
+  // 自定义必填符号渲染（参照 antd Form requiredMark 语义）
+  renderRequiredMark?: (mark: ReactNode) => ReactNode;
 }
 
 export interface ColumnParams {

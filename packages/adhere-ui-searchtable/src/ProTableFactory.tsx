@@ -43,6 +43,13 @@ import Validator from '@baifendian/adhere-util-validator';
 import AdvancedSearchPanel from './Extension/AdvancedSearchPanel';
 import ColumnTipTitle from './Extension/ColumnTipTitle';
 import RouteListen from './Extension/SearchAndPaginParams/routeListen';
+import {
+  collectSearchFieldConfigs,
+  getDateDependenciesDisabledDate,
+  renderSearchHelp,
+  renderSearchLabelContent,
+  validateSearchFields as runSearchFieldsValidation,
+} from './Extension/SearchField';
 import { selectorPrefix } from './SearchTable';
 import { hasCommonPathRelation } from './Util';
 import type { AdvancedSearchPanelGroupData, ColumnTypeExt } from './types';
@@ -714,74 +721,40 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
     }
 
     /**
-     * _isStartDateField
-     * @description 判断字段是否为时间区间的开始字段（命名中包含 start/Start）
-     * @param key
+     * getSearchFieldCollectorOptions
+     * @description 获取查询项收集上下文
      */
-    _isStartDateField(key: string): boolean {
-      return ['start', 'Start'].some((t) => key.indexOf(t) !== -1);
+    getSearchFieldCollectorOptions() {
+      return {
+        columns: this.getColumns(super.getColumns?.() || []) || [],
+        assignSearchConfig: this.assignSearchConfig.bind(this),
+        hasAuthority: this.hasAuthority?.bind(this),
+      };
     }
 
     /**
-     * _isEndDateField
-     * @description 判断字段是否为时间区间的结束字段（命名中包含 end/End）
-     * @param key
+     * validateSearchFields
+     * @description 校验所有可见查询项；遇到第一个错误即阻断并 notification 提示
      */
-    _isEndDateField(key: string): boolean {
-      return ['end', 'End'].some((t) => key.indexOf(t) !== -1);
+    validateSearchFields(): Promise<boolean> {
+      return runSearchFieldsValidation({
+        state: this.state,
+        fields: collectSearchFieldConfigs(this.getSearchFieldCollectorOptions()),
+      });
     }
 
     /**
-     * _getDateDependenciesDisabledDate
-     * @description 根据 $search.dependencies 配置，生成 datePicker 之间相互制约的 disabledDate。
-     * 依赖 dataIndex 的命名约定（与 getFetchDateParams 一致）：
-     * - 命名中包含 start/Start 视为区间"开始"字段
-     * - 命名中包含 end/End 视为区间"结束"字段
-     * 制约规则：
-     * - 自身是"开始"字段，依赖项是"结束"字段时：禁止选择晚于依赖项已选日期的日期
-     * - 自身是"结束"字段，依赖项是"开始"字段时：禁止选择早于依赖项已选日期的日期
-     * @param dataIndex 当前控件的dataIndex
-     * @param dependencies $search.dependencies配置的依赖字段dataIndex数组
-     * @param userDisabledDate $search.props中用户自定义的disabledDate，会与依赖制约逻辑组合生效
+     * onSearch
+     * @description 查询前先执行校验，失败则阻断
      */
-    _getDateDependenciesDisabledDate(
-      dataIndex: string,
-      dependencies?: string[],
-      userDisabledDate?: (current: any, info?: any) => boolean,
-    ) {
-      if (!dependencies || !dependencies.length) {
-        return userDisabledDate;
-      }
-
-      const isSelfStart = this._isStartDateField(dataIndex);
-      const isSelfEnd = this._isEndDateField(dataIndex);
-
-      return (current: any, info?: any) => {
-        if (userDisabledDate?.(current, info)) {
-          return true;
+    onSearch(): Promise<any> {
+      return this.validateSearchFields().then((valid) => {
+        if (!valid) {
+          return Promise.resolve(null);
         }
 
-        if (!current) return false;
-
-        return dependencies.some((depKey) => {
-          const depValue = this.state[depKey];
-
-          if (!depValue) return false;
-
-          const isDepStart = this._isStartDateField(depKey);
-          const isDepEnd = this._isEndDateField(depKey);
-
-          if (isSelfStart && isDepEnd) {
-            return current.isAfter(depValue, 'day');
-          }
-
-          if (isSelfEnd && isDepStart) {
-            return current.isBefore(depValue, 'day');
-          }
-
-          return false;
-        });
-      };
+        return super.onSearch();
+      });
     }
 
     /**
@@ -1143,7 +1116,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
               sort: $search.sort,
               label: layout !== 'prefix' && (
                 <Label {...($search.labelAttrs ?? {})}>
-                  {Util.isFunction(currentTitle) ? currentTitle() : currentTitle}
+                  {renderSearchLabelContent(currentTitle, searchConfig, _selectorPrefix)}
                   {this.getSearchLabelSymbol($search)}
                 </Label>
               ),
@@ -1161,6 +1134,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
                       layout,
                       currentTitle,
                     })}
+                    {renderSearchHelp(searchConfig, _selectorPrefix)}
                   </Value>
                 ),
                 noMatch: $search.renderNoAuthority ? (
@@ -1234,6 +1208,14 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         endName: '',
         // 实时查询配置
         realtimeSearch: false,
+        // 是否必填
+        required: false,
+        // 校验规则
+        rules: [],
+        // help 说明
+        help: null,
+        // 必填符号位置
+        requiredMarkPlacement: 'before',
       };
 
       return {
@@ -1494,7 +1476,7 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
         prefix:
           layout === 'prefix' ? (
             <>
-              {Util.isFunction(currentTitle) ? currentTitle() : currentTitle}
+              {renderSearchLabelContent(currentTitle, searchConfig, _selectorPrefix)}
               {this.getSearchLabelSymbol(searchConfig)}
             </>
           ) : null,
@@ -1997,9 +1979,10 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       const renderDatePicker = ({ searchConfig, dataIndex }) => {
         const value = this.state[dataIndex];
         const { dependencies, props: customProps = {} } = searchConfig;
-        const disabledDate = this._getDateDependenciesDisabledDate(
+        const disabledDate = getDateDependenciesDisabledDate(
           dataIndex,
           dependencies,
+          (fieldKey) => this.state[fieldKey],
           customProps.disabledDate,
         );
 

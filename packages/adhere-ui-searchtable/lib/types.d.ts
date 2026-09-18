@@ -59,6 +59,11 @@ export interface ColumnSearchConfig {
         debounce?: number;
     };
     dependencies?: string[];
+    required?: boolean;
+    rules?: Rule[];
+    help?: ReactNode;
+    requiredMarkPlacement?: 'before' | 'after';
+    renderRequiredMark?: (mark: ReactNode) => ReactNode;
 }
 export interface ColumnParams {
     value: string;

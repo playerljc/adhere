@@ -1,6 +1,6 @@
-import type { DatePickerProps } from 'antd';
 import type { Dayjs } from 'dayjs';
 import React from 'react';
+import type { DatePickerProps } from './types';
 /**
  * BoundedTimePicker Props
  */

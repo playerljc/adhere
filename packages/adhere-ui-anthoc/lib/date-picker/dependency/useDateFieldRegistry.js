@@ -1,0 +1,2 @@
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.useDateFieldRegistry=useDateFieldRegistry;var react_1=require("react");function useDateFieldRegistry(){var t=(0,react_1.useRef)({}),e=(0,react_1.useState)(0),r=e[0],u=e[1],a=(0,react_1.useCallback)(function(){u(function(e){return e+1})},[]);return{register:(0,react_1.useCallback)(function(e,r){t.current[e]!==r&&(t.current[e]=r,a())},[a]),unregister:(0,react_1.useCallback)(function(e){e in t.current&&(delete t.current[e],a())},[a]),registryRef:t,version:r}}
+//# sourceMappingURL=useDateFieldRegistry.js.map

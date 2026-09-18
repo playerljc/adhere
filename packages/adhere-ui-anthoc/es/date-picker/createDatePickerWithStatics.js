@@ -1,0 +1,2 @@
+import BirthdayPicker from"./BirthdayPicker";import BoundedTimePicker from"./BoundedTimePicker";import DatePicker from"./DatePicker";import{DateFieldDependencyProvider}from"./dependency";import InternalDatePicker from"./InternalDatePicker";function createDatePickerWithStatics(){var e=Object.assign(DatePicker,InternalDatePicker);return e.BirthdayPicker=BirthdayPicker,e.BoundedTimePicker=BoundedTimePicker,e.DateFieldDependencyProvider=DateFieldDependencyProvider,e}export{createDatePickerWithStatics};
+//# sourceMappingURL=createDatePickerWithStatics.js.map

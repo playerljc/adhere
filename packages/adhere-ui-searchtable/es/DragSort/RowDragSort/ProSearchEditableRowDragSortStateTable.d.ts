@@ -28,9 +28,13 @@ declare const _default: {
         getTotalKey(): string;
         getLimit(): number;
         getFetchDateParams(): {};
-        _isStartDateField(key: string): boolean;
-        _isEndDateField(key: string): boolean;
-        _getDateDependenciesDisabledDate(dataIndex: string, dependencies?: string[], userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
+        getSearchFieldCollectorOptions(): {
+            columns: any;
+            assignSearchConfig: (searchConfig: any, column: any) => any;
+            hasAuthority: any;
+        };
+        validateSearchFields(): Promise<boolean>;
+        onSearch(): Promise<any>;
         getColumns(columns: any): any;
         getTableColumns(): any;
         getTableColumnSearchHeaderIcon(column: import("../../types").ColumnTypeExt): React.JSX.Element;

@@ -1,5 +1,5 @@
-import type { DatePickerProps } from 'antd';
 import React from 'react';
+import type { DatePickerProps } from './types';
 /**
  * BirthdayPicker Props
  */

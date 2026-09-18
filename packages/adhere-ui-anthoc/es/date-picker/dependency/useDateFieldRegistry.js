@@ -1,0 +1,2 @@
+import{useCallback,useRef,useState}from"react";function useDateFieldRegistry(){var t=useRef({}),e=useState(0),r=e[0],u=e[1],n=useCallback(function(){u(function(e){return e+1})},[]);return{register:useCallback(function(e,r){t.current[e]!==r&&(t.current[e]=r,n())},[n]),unregister:useCallback(function(e){e in t.current&&(delete t.current[e],n())},[n]),registryRef:t,version:r}}export{useDateFieldRegistry};
+//# sourceMappingURL=useDateFieldRegistry.js.map

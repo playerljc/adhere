@@ -86,6 +86,9 @@ const DatePickerDependenciesSearchTableImpl = lazy(() =>
     /* webpackChunkName: "datePickerDependenciesSearchTable" */ './datePickerDependenciesSearchTable.jsx'
   ),
 );
+const SearchValidationSearchTableImpl = lazy(() =>
+  import(/* webpackChunkName: "searchValidationSearchTable" */ './searchValidationSearchTable.jsx'),
+);
 
 const Demo = () => {
   const [activeKey, setActiveKey] = useState('base');
@@ -104,6 +107,7 @@ const Demo = () => {
           { key: 'hideSearchButton', label: '隐藏查询按钮' },
           { key: 'numberColumnFixed', label: '序号列动态固定' },
           { key: 'datePickerDependencies', label: '日期相互制约' },
+          { key: 'searchValidation', label: '查询校验' },
         ]}
         style={{ marginBottom: 0, padding: '0 16px' }}
       />
@@ -123,6 +127,7 @@ const Demo = () => {
           {activeKey === 'hideSearchButton' && <HideSearchButtonTableImpl />}
           {activeKey === 'numberColumnFixed' && <NumberColumnFixedTableImpl />}
           {activeKey === 'datePickerDependencies' && <DatePickerDependenciesSearchTableImpl />}
+          {activeKey === 'searchValidation' && <SearchValidationSearchTableImpl />}
         </Suspense>
       </div>
     </div>

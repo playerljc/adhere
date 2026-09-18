@@ -1,9 +1,9 @@
-import type { DatePickerProps } from 'antd';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import React from 'react';
 
 import DatePicker from './DatePicker';
+import type { DateFieldDisabledDate, DatePickerProps } from './types';
 
 /**
  * BoundedTimePicker Props
@@ -27,7 +27,7 @@ const BoundedTimePicker: React.FC<BoundedTimePickerProps> = ({
   includeBaseValue = true,
   ...props
 }) => {
-  const disabledDate: DatePickerProps['disabledDate'] = (current) => {
+  const disabledDate: DateFieldDisabledDate = (current) => {
     if (!current) return false;
 
     if (boundMode === 'before') {
