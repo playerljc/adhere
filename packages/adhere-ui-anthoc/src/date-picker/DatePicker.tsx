@@ -7,6 +7,10 @@ import { useDateFieldDependencyDatePicker } from './dependency';
 
 export type { DatePickerProps } from './types';
 
+/**
+ * DatePicker
+ * @description 在 InternalDatePicker 基础上支持 fieldKey / dependencies 日期相互制约
+ */
 const DatePicker: FC<DatePickerProps> = ({
   fieldKey,
   dependencies,

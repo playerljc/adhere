@@ -4,6 +4,10 @@ import DatePicker from './DatePicker';
 import { DateFieldDependencyProvider } from './dependency';
 import InternalDatePicker from './InternalDatePicker';
 
+/**
+ * createDatePickerWithStatics
+ * @description 挂载 BirthdayPicker、BoundedTimePicker、DateFieldDependencyProvider 等静态属性
+ */
 export function createDatePickerWithStatics() {
   const DatePickerWithStaticProps = Object.assign(DatePicker, InternalDatePicker) as typeof InternalDatePicker & {
     BirthdayPicker: typeof BirthdayPicker;
