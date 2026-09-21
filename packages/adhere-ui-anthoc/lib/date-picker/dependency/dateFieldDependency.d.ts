@@ -12,5 +12,8 @@ export declare function isEndDateField(key: string): boolean;
 /**
  * getDateDependenciesDisabledDate
  * @description 根据 dependencies 生成 datePicker 之间相互制约的 disabledDate
+ *
+ * 与用户自定义 disabledDate 为合并关系：先执行 userDisabledDate，
+ * 再按 dependencies 逐个读取依赖值并应用 start/end 规则。
  */
 export declare function getDateDependenciesDisabledDate(fieldKey: string, dependencies: string[] | undefined, getFieldValue: (fieldKey: string) => DateFieldValue, userDisabledDate?: DateFieldDisabledDate): DateFieldDisabledDate | undefined;

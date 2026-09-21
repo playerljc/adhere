@@ -1,11 +1,13 @@
 import { theme } from 'antd';
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useState } from 'react';
+import type { Key } from 'react';
 
 import Tree from '../tree';
 import useTreeData from '../tree/useTreeData';
 import type { DisplayNameInternal, TreeTransferProps } from '../types';
 import Transfer from './Transfer';
 import {
+  filterTreeByFilteredKeys,
   flattenTreeData,
   generateTransferTree,
   getTreeNodeAndDescendantKeys,
@@ -16,6 +18,14 @@ import {
 
 import './TreeTransfer.less';
 
+function getShowSearchDefaultValue(showSearch: TreeTransferProps['showSearch']) {
+  if (showSearch && typeof showSearch === 'object' && showSearch.defaultValue != null) {
+    return String(showSearch.defaultValue);
+  }
+
+  return '';
+}
+
 const InternalTreeTransfer = memo<TreeTransferProps>(
   ({
     dataSource = [],
@@ -23,6 +33,7 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
     value,
     className,
     showSelectAll = false,
+    showSearch,
     treeDataSimpleMode,
     arrayToAntdTreeConfig,
     checkStrictly = true,
@@ -30,10 +41,14 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
     render,
     listStyle,
     styles,
+    onSearch,
     ...restProps
   }) => {
     const { token } = theme.useToken();
     const mergedTargetKeys = value !== undefined ? value : targetKeys;
+    const [leftSearchValue, setLeftSearchValue] = useState(() =>
+      getShowSearchDefaultValue(showSearch),
+    );
 
     const resolvedTreeData = useTreeData({
       treeData: dataSource,
@@ -51,13 +66,29 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
         dataSource={transferDataSource}
         targetKeys={mergedTargetKeys}
         showSelectAll={showSelectAll}
+        showSearch={showSearch}
         listStyle={listStyle}
         styles={styles}
         render={render ?? ((item) => item.title!)}
+        onSearch={(direction, value) => {
+          if (direction === 'left') {
+            setLeftSearchValue(value);
+          }
+          onSearch?.(direction, value);
+        }}
       >
-        {({ direction, onItemSelect, onItemSelectAll, selectedKeys }) => {
+        {({ direction, onItemSelect, onItemSelectAll, selectedKeys, filteredItems }) => {
           if (direction === 'left') {
             const checkedKeys = [...selectedKeys, ...(mergedTargetKeys ?? [])];
+            // 无搜索时保持原逻辑：完整树 + targetKeys 节点 disabled
+            // 有搜索时按 Transfer filteredItems 裁剪树（保留匹配节点及其祖先）
+            const hasLeftSearch = leftSearchValue !== '';
+            const visibleTreeData = hasLeftSearch
+              ? filterTreeByFilteredKeys(
+                  treeData,
+                  new Set((filteredItems ?? []).map((item) => item.key as Key)),
+                )
+              : treeData;
 
             const handleCheckNode = (node: Parameters<typeof isTreeLeafNode>[0] & { key: any }) => {
               if (leafOnly && !isTreeLeafNode(node)) {
@@ -91,7 +122,7 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
                   checkStrictly
                   defaultExpandAll
                   checkedKeys={checkedKeys}
-                  treeData={generateTransferTree(treeData, mergedTargetKeys, { leafOnly })}
+                  treeData={generateTransferTree(visibleTreeData, mergedTargetKeys, { leafOnly })}
                   onCheck={(_, { node }) => {
                     handleCheckNode(node);
                   }}

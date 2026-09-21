@@ -1,6 +1,10 @@
 import BirthdayPicker from './BirthdayPicker';
 import BoundedTimePicker from './BoundedTimePicker';
 import { DateFieldDependencyProvider } from './dependency';
+/**
+ * createDatePickerWithStatics
+ * @description 挂载 BirthdayPicker、BoundedTimePicker、DateFieldDependencyProvider 等静态属性
+ */
 export declare function createDatePickerWithStatics(): (<ValueType = import("dayjs").Dayjs, IsMultiple extends boolean = false>(props: import("antd/es/date-picker/generatePicker/interface").PickerPropsWithMultiple<import("dayjs").Dayjs, import("antd/es/date-picker/generatePicker").PickerProps<import("dayjs").Dayjs>, ValueType, IsMultiple>) => React.ReactElement) & {
     displayName?: string;
 } & {

@@ -109,6 +109,32 @@ export function generateTransferTree(
   });
 }
 
+/**
+ * Keep nodes that match filteredKeys, or ancestors of matching nodes.
+ * Used so TreeTransfer left panel respects Transfer search (`filteredItems`).
+ */
+export function filterTreeByFilteredKeys(
+  treeNodes: TreeDataNode[] = [],
+  filteredKeys: Iterable<Key> | Set<Key> = [],
+): TreeDataNode[] {
+  const keySet = filteredKeys instanceof Set ? filteredKeys : new Set(filteredKeys);
+
+  return normalizeTreeData(treeNodes).reduce<TreeDataNode[]>((acc, node) => {
+    const children = node.children
+      ? filterTreeByFilteredKeys(node.children, keySet)
+      : [];
+
+    if (keySet.has(node.key as Key) || children.length) {
+      acc.push({
+        ...node,
+        children: children.length ? children : undefined,
+      });
+    }
+
+    return acc;
+  }, []);
+}
+
 export function toTableTransferDataSource<T extends Record<string, any>>(items: unknown): T[] {
   if (!Array.isArray(items)) {
     return [];

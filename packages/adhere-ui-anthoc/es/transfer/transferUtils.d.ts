@@ -22,4 +22,9 @@ export declare function getTreeNodeAndDescendantKeys(node: TreeDataNode): Key[];
 export declare function generateTransferTree(treeNodes?: TreeDataNode[], checkedKeys?: TransferProps['targetKeys'], options?: {
     leafOnly?: boolean;
 }): TreeDataNode[];
+/**
+ * Keep nodes that match filteredKeys, or ancestors of matching nodes.
+ * Used so TreeTransfer left panel respects Transfer search (`filteredItems`).
+ */
+export declare function filterTreeByFilteredKeys(treeNodes?: TreeDataNode[], filteredKeys?: Iterable<Key> | Set<Key>): TreeDataNode[];
 export declare function toTableTransferDataSource<T extends Record<string, any>>(items: unknown): T[];

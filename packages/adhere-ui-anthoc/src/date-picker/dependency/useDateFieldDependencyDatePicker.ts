@@ -45,12 +45,7 @@ export function useDateFieldDependencyDatePicker({
       return userDisabledDate;
     }
 
-    return getDateDependenciesDisabledDate(
-      fieldKey,
-      dependencies,
-      getFieldValue,
-      userDisabledDate,
-    );
+    return getDateDependenciesDisabledDate(fieldKey, dependencies, getFieldValue, userDisabledDate);
     // version / value 变化时需要重算 disabledDate，以便反映依赖字段的最新值
   }, [fieldKey, dependencies, userDisabledDate, getFieldValue, version, value]);
 
