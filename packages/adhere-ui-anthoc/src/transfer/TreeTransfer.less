@@ -8,22 +8,48 @@
       flex: 1 1 auto;
       min-height: 0;
       overflow: auto;
+
+      // 覆盖 normalize-antd 对 .ant-tree-title 的 max-width + ellipsis，
+      // 否则横向滚动出现后文字仍被截断为 ...
+      .ant-tree {
+        min-width: max-content;
+
+        .ant-tree-treenode {
+          width: max-content;
+          min-width: 100%;
+        }
+
+        &.ant-tree-block-node .ant-tree-node-content-wrapper {
+          flex: none;
+          overflow: visible;
+        }
+
+        .ant-tree-title {
+          display: inline-block;
+          max-width: none;
+          overflow: visible;
+          white-space: nowrap;
+          text-overflow: clip;
+        }
+      }
     }
 
-    .ant-transfer-list-content {
-      flex: 1 1 auto;
-      min-height: 0;
-      overflow: auto;
+    .ant-transfer-section {
+      .ant-transfer-list-content {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: auto;
 
-      &-item {
-        width: max-content;
-        min-width: 100%;
+        &-item {
+          width: max-content;
+          min-width: 100%;
 
-        &-text {
-          overflow: visible;
-          text-overflow: clip;
-          white-space: nowrap;
-          flex: none;
+          &-text {
+            flex: none;
+            overflow: visible;
+            white-space: nowrap;
+            text-overflow: clip;
+          }
         }
       }
     }

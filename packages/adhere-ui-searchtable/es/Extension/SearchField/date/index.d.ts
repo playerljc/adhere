@@ -1,3 +1,7 @@
+import type { DatePickerProps } from 'antd';
+import type { Dayjs } from 'dayjs';
+type DateFieldValue = Dayjs | null | undefined;
+type DateFieldDisabledDate = DatePickerProps['disabledDate'];
 /**
  * isStartDateField
  * @description 判断字段是否为时间区间的开始字段（命名中包含 start/Start）
@@ -12,4 +16,5 @@ export declare function isEndDateField(key: string): boolean;
  * getDateDependenciesDisabledDate
  * @description 根据 $search.dependencies 生成 datePicker 之间相互制约的 disabledDate
  */
-export declare function getDateDependenciesDisabledDate(dataIndex: string, dependencies: string[] | undefined, getFieldValue: (fieldKey: string) => any, userDisabledDate?: (current: any, info?: any) => boolean): ((current: any, info?: any) => boolean) | undefined;
+export declare function getDateDependenciesDisabledDate(fieldKey: string, dependencies: string[] | undefined, getFieldValue: (fieldKey: string) => DateFieldValue, userDisabledDate?: DateFieldDisabledDate): DateFieldDisabledDate | undefined;
+export {};

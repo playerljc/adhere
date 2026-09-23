@@ -1,11 +1,5 @@
-import type { ReactNode } from 'react';
-import type { ColumnSearchConfig, ColumnTypeExt, ValidatorRule } from '../../types';
-import type { SearchFieldItem, SearchFieldValidationContext } from './types';
-/**
- * resolveSearchTitleNode
- * @description 将查询项 title 解析为可渲染节点
- */
-export declare function resolveSearchTitleNode(currentTitle: ReactNode): ReactNode;
+import type { ColumnSearchConfig, ColumnTypeExt, ValidatorRule } from '../../../types';
+import type { SearchFieldItem, SearchFieldValidationContext } from '../types';
 /**
  * getSearchFieldTitle
  * @description 获取查询项标题文本（用于 notification 等纯文本场景）
