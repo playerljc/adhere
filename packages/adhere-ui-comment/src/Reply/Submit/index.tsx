@@ -55,7 +55,7 @@ const LOCAL_MAP = new Map<string, any>([
 const Reply = memo<ReplyProps>((props) => {
   const { local = 'zh', emojiPickerProps = {}, onResult, onCancel } = props;
 
-  const [valueRef, setValue] = useSetState<string>('');
+  const [value, setValue] = useSetState<string>('');
 
   // 回复内容的textarea
   const textAreaRef = useRef<HTMLDivElement | null>(null);
@@ -68,30 +68,26 @@ const Reply = memo<ReplyProps>((props) => {
    * onEmojiSelect
    * @param native
    */
-  const onEmojiSelect = useCallback(
-    ({ native }) => {
-      // 获取textarea的dom
-      const textareaEl = textAreaRef?.current?.querySelector('textarea') as HTMLTextAreaElement;
+  const onEmojiSelect = useCallback(({ native }) => {
+    // 获取textarea的dom
+    const textareaEl = textAreaRef?.current?.querySelector('textarea') as HTMLTextAreaElement;
 
-      // 光标开始索引
-      const { selectionStart } = textareaEl;
+    // 光标开始索引
+    const { selectionStart } = textareaEl;
 
-      // (0) 1 (1) 2 (2) 3 (3)
-      setValue(
-        `${valueRef.current.substring(0, selectionStart)}${native}${valueRef.current.substring(
-          selectionStart,
-        )}`,
-        () => {
-          textareaEl.focus();
-          textareaEl.setSelectionRange(
-            selectionStart + native.length,
-            selectionStart + native.length,
-          );
-        },
-      );
-    },
-    [valueRef.current],
-  );
+    // (0) 1 (1) 2 (2) 3 (3)
+    setValue(
+      (prev) =>
+        `${prev.substring(0, selectionStart)}${native}${prev.substring(selectionStart)}`,
+      () => {
+        textareaEl.focus();
+        textareaEl.setSelectionRange(
+          selectionStart + native.length,
+          selectionStart + native.length,
+        );
+      },
+    );
+  }, []);
 
   const PopoverContent = useMemo(
     () => (
@@ -136,7 +132,7 @@ const Reply = memo<ReplyProps>((props) => {
           className={`${selectorPrefix}-textarea`}
           placeholder={Intl.get('enter_reply')}
           autoFocus={true}
-          value={valueRef.current}
+          value={value}
           onChange={(e) => setValue(e.target.value)}
           showCount
           maxLength={100}
@@ -166,8 +162,8 @@ const Reply = memo<ReplyProps>((props) => {
           <Button
             type="primary"
             className={`${selectorPrefix}-toolbar-item`}
-            disabled={!valueRef.current}
-            onClick={() => onResult?.(valueRef.current.trim())}
+            disabled={!value}
+            onClick={() => onResult?.(value.trim())}
           >
             {Intl.get('add')}
           </Button>

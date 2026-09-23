@@ -1,2 +1,2 @@
-import{useLayoutEffect,useRef}from"react";import useLatestState from"./useLatestState";function useSetState(t){var t=useLatestState(t),e=t[0],u=t[1],r=useRef(void 0);return useLayoutEffect(function(){var t;null!=(t=null==r?void 0:r.current)&&t.call(r)},[e.current]),[e,function(t,e){r.current=e,u(t)}]}export default useSetState;
+import{useEffect,useEffectEvent,useRef,useState}from"react";function useSetState(e){var e=useState(e),t=e[0],u=e[1],f=useRef(t),n=(f.current=t,useRef([])),r=useEffectEvent(function(){var t,e=n.current;0!==e.length&&(n.current=[],t=f.current,e.forEach(function(e){e(t)}))});return useEffect(function(){r()},[t,r]),[t,useEffectEvent(function(e,t){t&&n.current.push(t),u(e)})]}export default useSetState;
 //# sourceMappingURL=useSetState.js.map

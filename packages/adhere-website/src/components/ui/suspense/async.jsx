@@ -7,7 +7,7 @@ import { Hooks, Space, Suspense } from '@baifendian/adhere';
 const { useSetState } = Hooks;
 
 export default (props) => {
-  const [dataRef, setData] = useSetState([]);
+  const [data, setData] = useSetState([]);
 
   const ref = useRef();
 
@@ -66,7 +66,7 @@ export default (props) => {
     <Suspense.ASync
       ref={ref}
       fetchData={fetchData}
-      isEmpty={() => dataRef.current.length === 0}
+      isEmpty={() => data.length === 0}
       {...props}
     >
       <Space.Group direction="horizontal">
@@ -77,7 +77,7 @@ export default (props) => {
           加载数据
         </Button>
       </Space.Group>
-      <Table rowKey="id" columns={getColumns()} dataSource={dataRef.current} pagination={false} />
+      <Table rowKey="id" columns={getColumns()} dataSource={data} pagination={false} />
     </Suspense.ASync>
   );
 };

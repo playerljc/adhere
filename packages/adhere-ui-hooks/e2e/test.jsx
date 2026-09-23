@@ -7,8 +7,8 @@ import FlexLayout from '../src/index';
 
 import 'antd/dist/reset.css';
 
-import '../src/index.less';
-import './index.less';
+// import '../src/index.less';
+// import './index.less';
 
 const { Fixed } = FlexLayout;
 

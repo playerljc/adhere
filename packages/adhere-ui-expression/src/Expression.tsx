@@ -125,10 +125,10 @@ const InternalExpression = memo<
       const comStart = useRef(false);
 
       // 状态管理
-      const [operatorsShowRef, setOperatorsShow] = useSetState(false);
-      const [quickTipShowRef, setQuickTipShow] = useSetState(false);
-      const [placeholderShowRef, setPlaceholderShow] = useSetState(true);
-      const [showAllowClearRef, setShowAllClear] = useSetState(false);
+      const [operatorsShow, setOperatorsShow] = useSetState(false);
+      const [quickTipShow, setQuickTipShow] = useSetState(false);
+      const [placeholderShow, setPlaceholderShow] = useSetState(true);
+      const [showAllowClear, setShowAllClear] = useSetState(false);
 
       // 触发字符
       const triggerChar = useMemo(
@@ -275,7 +275,7 @@ const InternalExpression = memo<
        * 显示运算符选择器
        */
       function showOperators(): void {
-        showModal(operatorsRef.current as HTMLElement, () => setOperatorsShow(true, () => {}));
+        showModal(operatorsRef.current as HTMLElement, () => setOperatorsShow(true));
       }
 
       /**
@@ -737,7 +737,7 @@ const InternalExpression = memo<
           />
 
           {/* 清空按钮 */}
-          {!!allowClear && showAllowClearRef.current && (
+          {!!allowClear && showAllowClear && (
             <div className={`${selectorPrefix}-editor-clear`}>
               <CloseCircleOutlined
                 onClick={() => {
@@ -751,7 +751,7 @@ const InternalExpression = memo<
           {/* 占位符 */}
           <div
             className={classNames(`${selectorPrefix}-editor-placeholder`, {
-              [`${selectorPrefix}-editor-placeholder--show`]: placeholderShowRef.current,
+              [`${selectorPrefix}-editor-placeholder--show`]: placeholderShow,
             })}
             ref={placeholderRef}
           >
@@ -762,7 +762,7 @@ const InternalExpression = memo<
           <div
             ref={operatorsRef}
             className={classNames(`${selectorPrefix}-operators`, operatorWrapClassName ?? '', {
-              [`${selectorPrefix}-operators--show`]: operatorsShowRef.current,
+              [`${selectorPrefix}-operators--show`]: operatorsShow,
             })}
             style={operatorWrapStyle ?? {}}
           >
@@ -789,7 +789,7 @@ const InternalExpression = memo<
           <div
             ref={quickTipRef}
             className={classNames(`${selectorPrefix}-quick-tips`, quickTipWrapClassName ?? '', {
-              [`${selectorPrefix}-quick-tips--show`]: quickTipShowRef.current,
+              [`${selectorPrefix}-quick-tips--show`]: quickTipShow,
             })}
             style={quickTipWrapStyle ?? {}}
           >

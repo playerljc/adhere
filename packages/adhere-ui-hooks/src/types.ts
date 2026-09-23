@@ -52,24 +52,43 @@ export type Use = <T = any, Args extends any[] = any[]>(
 ) => UseResult<T>;
 
 /**
- * useSetState hook 回调函数类型
+ * useSetState hook 回调函数类型。
+ * 在对应更新提交后调用，参数是提交后的状态。
+ * @template T - 状态类型
  */
-export type SetStateCallback = () => void;
+export type SetStateCallback<T> = (state: T) => void;
+
+/**
+ * useSetState 的设置函数。第二个参数在这次更新提交后调用。
+ * @template T - 状态类型
+ */
+export type SetStateWithCallback<T> = (
+  action: React.SetStateAction<T>,
+  callback?: SetStateCallback<T>,
+) => void;
 
 /**
  * useSetState hook 返回类型
  * @template T - 状态类型
  */
-export type UseSetStateReturn<T> = [
-  React.RefObject<T>,
-  (value: T | ((prevState: T) => T), callback?: SetStateCallback) => void,
-];
+export type UseSetStateReturn<T> = [T, SetStateWithCallback<T>];
 
 /**
  * useSetState hook 类型定义
  * @template T - 状态类型
  */
 export type UseSetState = <T>(initialState: T | (() => T)) => UseSetStateReturn<T>;
+
+/**
+ * usePropToState hook 配置项
+ * @template T - 状态类型
+ */
+export type UsePropToStateOptions<T> = {
+  /**
+   * 自定义相等比较函数，返回 true 表示相等，不触发同步。默认 Object.is
+   */
+  isEqual?: (prev: T, next: T) => boolean;
+};
 
 /**
  * usePropToState hook 返回类型
@@ -81,7 +100,10 @@ export type UsePropToStateReturn<T> = [T, React.Dispatch<React.SetStateAction<T>
  * usePropToState hook 类型定义
  * @template T - 状态类型
  */
-export type UsePropToState = <T>(propValue: T) => UsePropToStateReturn<T>;
+export type UsePropToState = <T>(
+  propValue: T,
+  options?: UsePropToStateOptions<T>,
+) => UsePropToStateReturn<T>;
 
 /**
  * useLatestState hook 返回类型

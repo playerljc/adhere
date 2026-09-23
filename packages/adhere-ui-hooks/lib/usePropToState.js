@@ -1,2 +1,2 @@
-Object.defineProperty(exports,"__esModule",{value:!0});var ahooks_1=require("ahooks"),react_1=require("react");function usePropToState(e){var t=(0,react_1.useState)(e),r=t[0],o=t[1];return(0,ahooks_1.useUpdateEffect)(function(){o(e)},[e]),[r,o]}exports.default=usePropToState;
+Object.defineProperty(exports,"__esModule",{value:!0});var ahooks_1=require("ahooks"),react_1=require("react");function usePropToState(e,r){var r=(null!=r?r:{}).isEqual,r=void 0===r?Object.is:r,t=(0,react_1.useState)(e),u=t[0],a=t[1],o=(0,react_1.useRef)(e),c=(0,react_1.useRef)(r);return c.current=r,(0,ahooks_1.useUpdateEffect)(function(){c.current(o.current,e)||a(e),o.current=e},[e]),[u,a]}exports.default=usePropToState;
 //# sourceMappingURL=usePropToState.js.map

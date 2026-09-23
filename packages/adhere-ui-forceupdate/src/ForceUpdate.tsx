@@ -41,7 +41,7 @@ const ForceUpdate = forwardRef<ForceUpdateRefHandle, ForceUpdateProps>((props, r
   const { children } = props;
 
   // 使用 uuid v1 生成唯一的 key
-  const [keyRef, setKey] = useSetState<string>(v1());
+  const [key, setKey] = useSetState<string>(v1());
 
   /**
    * 强制重新挂载子组件
@@ -52,7 +52,7 @@ const ForceUpdate = forwardRef<ForceUpdateRefHandle, ForceUpdateProps>((props, r
     return new Promise<void>((resolve) => {
       setKey(v1(), () => resolve());
     });
-  }, [setKey]);
+  }, []);
 
   // 暴露 reMount 方法给父组件
   useImperativeHandle(
@@ -60,12 +60,12 @@ const ForceUpdate = forwardRef<ForceUpdateRefHandle, ForceUpdateProps>((props, r
     () => ({
       reMount,
     }),
-    [reMount]
+    [reMount],
   );
 
   // 克隆子组件并添加新的 key
   return cloneElement(children, {
-    key: keyRef.current,
+    key,
     ...(children.props ?? {}),
   });
 });

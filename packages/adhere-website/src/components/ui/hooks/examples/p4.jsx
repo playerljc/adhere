@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Hooks } from '@baifendian/adhere';
 
 const { useSetState } = Hooks;
 
 export default () => {
-  const [countRef, setCount] = useSetState(0);
+  const [count, setCount] = useSetState(0);
 
-  setInterval(() => {
-    setCount(countRef.current + 1, () => {
-      // console.log('countRef.current', countRef.current);
-    });
-  }, 1000);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCount((prev) => prev + 1, (latest) => {
+        // console.log('latest', latest);
+      });
+    }, 1000);
 
-  return <div>{countRef.current}</div>;
+    return () => clearInterval(timer);
+  }, []);
+
+  return <div>{count}</div>;
 };

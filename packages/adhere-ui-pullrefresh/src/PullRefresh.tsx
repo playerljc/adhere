@@ -1,4 +1,4 @@
-import { useUpdate } from 'ahooks';
+import { useLatest, useUpdate } from 'ahooks';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
 import debounce from 'lodash.debounce';
@@ -65,10 +65,12 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
 
     // 引用对象
     const ro = useRef<ResizeObserver>({} as ResizeObserver);
-    const [isCanRef, setCan] = useSetState<PullRefreshState['isCanRef']>(false);
-    const [preUpdateTimeRef, setPreUpdateTime] = useSetState<PullRefreshState['preUpdateTime']>(
+    const [isCan, setCan] = useSetState<PullRefreshState['isCanRef']>(false);
+    const [preUpdateTime, setPreUpdateTime] = useSetState<PullRefreshState['preUpdateTime']>(
       dayjs().valueOf(),
     );
+    const isCanRef = useLatest(isCan);
+    const preUpdateTimeRef = useLatest(preUpdateTime);
 
     // DOM 元素引用
     const rootEl = useRef<HTMLDivElement>(null);
@@ -138,12 +140,12 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
     const _renderLabel = useCallback(
       (): ReactElement => (
         <p className={`${selectorPrefix}-trigger-label`}>
-          <ConditionalRender conditional={isCanRef.current} noMatch={() => renderLabel?.()}>
+          <ConditionalRender conditional={isCan} noMatch={() => renderLabel?.()}>
             {() => renderCanLabel?.()}
           </ConditionalRender>
         </p>
       ),
-      [isCanRef.current, renderLabel, renderCanLabel],
+      [isCan, renderLabel, renderCanLabel],
     );
 
     /**
@@ -157,13 +159,13 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
             <p className={`${selectorPrefix}-trigger-update`}>
               {Intl.get('update_time')}：
               <span className={`${selectorPrefix}-trigger-update-label`}>
-                {dayjs(preUpdateTimeRef.current).format(updateTimeFormat)}
+                {dayjs(preUpdateTime).format(updateTimeFormat)}
               </span>
             </p>
           )}
         </ConditionalRender>
       ),
-      [isShowUpdateTime, preUpdateTimeRef.current, updateTimeFormat],
+      [isShowUpdateTime, preUpdateTime, updateTimeFormat],
     );
 
     /**
@@ -390,7 +392,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
           setCan(next);
         }
       },
-      [isCanRef, setCan],
+      [isCanRef],
     );
 
     /**
@@ -485,7 +487,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
       translateY(elElement, `calc(-100% + ${refreshHeight.current}px)`, 500);
 
       if (iconEl.current) rotateIcon(iconEl.current, 180, 300);
-    }, [cancelPendingTranslate, removeEvents, trigger, setPreUpdateTime, translateY, rotateIcon]);
+    }, [cancelPendingTranslate, removeEvents, trigger, translateY, rotateIcon]);
 
     /**
      * 重置组件状态
@@ -515,14 +517,11 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
      * @param updateTime - 新的更新时间戳
      * @returns Promise<void>
      */
-    const resetUpdateTime = useCallback(
-      (updateTime: number): Promise<void> => {
-        return new Promise((resolve) =>
-          setPreUpdateTime(updateTime || dayjs().valueOf(), () => resolve()),
-        );
-      },
-      [setPreUpdateTime],
-    );
+    const resetUpdateTime = useCallback((updateTime: number): Promise<void> => {
+      return new Promise((resolve) =>
+        setPreUpdateTime(updateTime || dayjs().valueOf(), () => resolve()),
+      );
+    }, []);
 
     /**
      * 获取当前更新时间
@@ -712,7 +711,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
     // 监听更新时间变化
     useEffect(() => {
       setPreUpdateTime(props.updateTime || dayjs().valueOf());
-    }, [props.updateTime, setPreUpdateTime]);
+    }, [props.updateTime]);
 
     // 初始化遮罩层
     useEffect(() => {

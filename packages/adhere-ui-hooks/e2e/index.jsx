@@ -17,5 +17,5 @@ import UseSetState from './useSetState';
 import UseTriggerQuery from './useTriggerQuery';
 
 e2e.PC({
-  children: <UseItemsRef />,
+  children: <UseSetState />,
 });

@@ -173,26 +173,26 @@ if (element) {
 
 ### useSetState
 
-带有更新成功回调函数的状态管理 Hook，返回最新的值。
+与 `useState` 相同的入参和返回值。设置函数可以多传一个回调，在这次更新提交后调用，参数是提交后的状态。
 
 ```tsx
 import { useSetState } from '@baifendian/adhere-ui-hooks';
 
-const [valueRef, setValue] = useSetState(0);
+const [count, setCount] = useSetState(0);
 
-const handleClick = () => {
-  setValue(
-    prev => prev + 1,
-    () => {
-      console.log('状态更新完成，当前值:', valueRef.current);
-    }
-  );
-};
+setCount(1);
+setCount((prev) => prev + 1);
 
-// 使用最新值
-useEffect(() => {
-  console.log('最新值:', valueRef.current);
-}, []);
+setCount(1, (latestCount) => {
+  console.log(latestCount);
+});
+
+setCount(
+  (prev) => prev + 1,
+  (latestCount) => {
+    console.log(latestCount);
+  },
+);
 ```
 
 ### useFormTabs

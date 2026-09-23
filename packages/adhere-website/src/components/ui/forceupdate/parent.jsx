@@ -9,7 +9,7 @@ const { useSetState } = Hooks;
 
 export default () => {
   const ref = useRef();
-  const [countRef, setCount] = useSetState(0);
+  const [count, setCount] = useSetState(0);
 
   return (
     <ForceUpdate ref={ref}>
@@ -27,7 +27,7 @@ export default () => {
             重置
           </Button>
         </Space.Group>
-        <Sub count={countRef.current} />
+        <Sub count={count} />
       </div>
     </ForceUpdate>
   );

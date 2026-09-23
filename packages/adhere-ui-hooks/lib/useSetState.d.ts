@@ -1,32 +1,20 @@
-import { type RefObject } from 'react';
-import type { SetStateCallback } from './types';
-type SetStateAction<S> = S | ((prevState: S) => S);
-type Dispatch<A> = (value: A, callback?: SetStateCallback) => void;
+import type { UseSetStateReturn } from './types';
 /**
- * useSetState hook
- * @description 带有更新成功回调函数的状态管理 Hook，返回最新的值
- * @template S - 状态类型
- * @param {S | (() => S)} initialState - 初始状态值或获取初始状态的函数
- * @returns {UseSetStateReturn<S>} 返回最新的状态引用和设置函数
+ * useSetState
  *
- * @example
- * ```tsx
- * const [valueRef, setValue] = useSetState(0);
+ * A useState-compatible hook with an optional post-commit callback.
  *
- * const handleClick = () => {
- *   setValue(
- *     prev => prev + 1,
- *     () => {
- *       console.log('状态更新完成，当前值:', valueRef.current);
- *     }
- *   );
- * };
+ * Supported forms:
+ *   setState(value)
+ *   setState(updater)
+ *   setState(value, callback)
+ *   setState(updater, callback)
  *
- * // 使用最新值
- * useEffect(() => {
- *   console.log('最新值:', valueRef.current);
- * }, []);
- * ```
+ * The callback receives the latest committed state, so it does not
+ * need to rely on a stale render closure.
+ *
+ * Multiple updates can be batched by React; callbacks are queued and
+ * are flushed after the commit.
  */
-declare function useSetState<S>(initialState: S | (() => S)): [RefObject<S>, Dispatch<SetStateAction<S>>];
+declare function useSetState<S>(initialState: S | (() => S)): UseSetStateReturn<S>;
 export default useSetState;

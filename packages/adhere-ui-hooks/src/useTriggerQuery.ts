@@ -54,9 +54,10 @@ function useTriggerQuery<T extends Record<string, any>>(defaultValue: T): UseTri
   const [fieldsValue, setFieldsValue] = useImmer<T>(memoDefaultValue ?? {});
 
   // 查询参数
-  const [targetSearchParamsRef, setSearchParams] = useSetState<T>(memoDefaultValue ?? {});
+  const [searchParams, setSearchParams] = useSetState<T>(memoDefaultValue ?? {});
 
   const targetFieldsValueRef = useLatest(fieldsValue);
+  const targetSearchParamsRef = useLatest(searchParams);
 
   /**
    * 执行搜索

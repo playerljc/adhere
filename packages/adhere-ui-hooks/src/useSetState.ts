@@ -1,53 +1,67 @@
-import { type RefObject, useLayoutEffect, useRef } from 'react';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 
-import type { SetStateCallback } from './types';
-import useLatestState from './useLatestState';
-
-type SetStateAction<S> = S | ((prevState: S) => S);
-type Dispatch<A> = (value: A, callback?: SetStateCallback) => void;
+import type { SetStateCallback, SetStateWithCallback, UseSetStateReturn } from './types';
 
 /**
- * useSetState hook
- * @description 带有更新成功回调函数的状态管理 Hook，返回最新的值
- * @template S - 状态类型
- * @param {S | (() => S)} initialState - 初始状态值或获取初始状态的函数
- * @returns {UseSetStateReturn<S>} 返回最新的状态引用和设置函数
+ * useSetState
  *
- * @example
- * ```tsx
- * const [valueRef, setValue] = useSetState(0);
+ * A useState-compatible hook with an optional post-commit callback.
  *
- * const handleClick = () => {
- *   setValue(
- *     prev => prev + 1,
- *     () => {
- *       console.log('状态更新完成，当前值:', valueRef.current);
- *     }
- *   );
- * };
+ * Supported forms:
+ *   setState(value)
+ *   setState(updater)
+ *   setState(value, callback)
+ *   setState(updater, callback)
  *
- * // 使用最新值
- * useEffect(() => {
- *   console.log('最新值:', valueRef.current);
- * }, []);
- * ```
+ * The callback receives the latest committed state, so it does not
+ * need to rely on a stale render closure.
+ *
+ * Multiple updates can be batched by React; callbacks are queued and
+ * are flushed after the commit.
  */
-function useSetState<S>(initialState: S | (() => S)): [RefObject<S>, Dispatch<SetStateAction<S>>] {
-  const [valueRef, setValue] = useLatestState<S>(initialState);
-  const callbackRef = useRef<SetStateCallback>(undefined);
+function useSetState<S>(initialState: S | (() => S)): UseSetStateReturn<S> {
+  const [state, setState] = useState<S>(initialState);
 
-  // 状态更新后执行回调
-  useLayoutEffect(() => {
-    callbackRef?.current?.();
-  }, [valueRef.current]);
+  // Always points at the latest committed/rendered state.
+  const stateRef = useRef(state);
+  stateRef.current = state;
 
-  return [
-    valueRef,
-    (_value, callback) => {
-      callbackRef.current = callback;
-      setValue(_value);
-    },
-  ];
+  // One queue entry per setState callback. This prevents callbacks
+  // from being overwritten when several updates are batched together.
+  const callbackQueueRef = useRef<SetStateCallback<S>[]>([]);
+
+  const flushCallbacks = useEffectEvent(() => {
+    const callbacks = callbackQueueRef.current;
+
+    if (callbacks.length === 0) {
+      return;
+    }
+
+    // Clear before invoking callbacks so callbacks that call setState
+    // create a new queue for the next commit.
+    callbackQueueRef.current = [];
+
+    const latestState = stateRef.current;
+
+    callbacks.forEach((callback) => {
+      callback(latestState);
+    });
+  });
+
+  // useEffect runs after the state update has committed.
+  useEffect(() => {
+    flushCallbacks();
+  }, [state, flushCallbacks]);
+
+  const dispatch = useEffectEvent<SetStateWithCallback<S>>((action, callback) => {
+    if (callback) {
+      callbackQueueRef.current.push(callback);
+    }
+
+    setState(action);
+  });
+
+  return [state, dispatch];
 }
 
 export default useSetState;
