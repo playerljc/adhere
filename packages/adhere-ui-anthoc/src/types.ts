@@ -866,6 +866,11 @@ export type TransferHOCProps = TransferProps<any> & {
   isHideInvalidValue?: boolean;
   /** Form.Item 兼容别名，等价于 targetKeys；未传时忽略 */
   value?: TransferProps<any>['targetKeys'];
+  /**
+   * 锁定项：左侧置灰不可取消，且不进入右侧 targetKeys
+   * @description 未传或空数组时行为与原先一致
+   */
+  lockedKeys?: TransferProps<any>['targetKeys'];
 };
 
 export type TransferSelectProps = DropdownRenderSelectProps & {
@@ -877,6 +882,11 @@ export type TreeTransferProps = Omit<TransferProps<any>, 'dataSource'> & {
   isHideInvalidValue?: boolean;
   /** Form.Item 兼容别名，等价于 targetKeys；未传时忽略 */
   value?: TransferProps<any>['targetKeys'];
+  /**
+   * 锁定项：左侧勾选且置灰，且不进入右侧 targetKeys
+   * @description 未传或空数组时行为与原先一致
+   */
+  lockedKeys?: TransferProps<any>['targetKeys'];
   treeDataSimpleMode?: TreeSelectProps['treeDataSimpleMode'];
   arrayToAntdTreeConfig?: IFlatTreeArrNode;
   /**

@@ -31,6 +31,7 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
     dataSource = [],
     targetKeys,
     value,
+    lockedKeys,
     className,
     showSelectAll = false,
     showSearch,
@@ -42,10 +43,25 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
     listStyle,
     styles,
     onSearch,
+    onChange,
     ...restProps
   }) => {
     const { token } = theme.useToken();
     const mergedTargetKeys = value !== undefined ? value : targetKeys;
+    const lockedKeyList = useMemo(
+      () => (lockedKeys ?? []).map((key) => String(key)),
+      [lockedKeys],
+    );
+    const lockedKeySet = useMemo(() => new Set(lockedKeyList), [lockedKeyList]);
+    // 右侧只展示非锁定项；锁定项仅在左侧勾选+置灰
+    const transferTargetKeys = useMemo(
+      () => (mergedTargetKeys ?? []).filter((key) => !lockedKeySet.has(String(key))),
+      [mergedTargetKeys, lockedKeySet],
+    );
+    const disabledAndCheckedKeys = useMemo(
+      () => [...transferTargetKeys, ...lockedKeyList],
+      [transferTargetKeys, lockedKeyList],
+    );
     const [leftSearchValue, setLeftSearchValue] = useState(() =>
       getShowSearchDefaultValue(showSearch),
     );
@@ -64,12 +80,16 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
         {...restProps}
         className={['tree-transfer', className].filter(Boolean).join(' ')}
         dataSource={transferDataSource}
-        targetKeys={mergedTargetKeys}
+        targetKeys={transferTargetKeys}
         showSelectAll={showSelectAll}
         showSearch={showSearch}
         listStyle={listStyle}
         styles={styles}
         render={render ?? ((item) => item.title!)}
+        onChange={(nextKeys, direction, moveKeys) => {
+          const next = (nextKeys ?? []).filter((key) => !lockedKeySet.has(String(key)));
+          onChange?.(next, direction, moveKeys);
+        }}
         onSearch={(direction, value) => {
           if (direction === 'left') {
             setLeftSearchValue(value);
@@ -79,7 +99,7 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
       >
         {({ direction, onItemSelect, onItemSelectAll, selectedKeys, filteredItems }) => {
           if (direction === 'left') {
-            const checkedKeys = [...selectedKeys, ...(mergedTargetKeys ?? [])];
+            const checkedKeys = [...selectedKeys, ...disabledAndCheckedKeys];
             // 无搜索时保持原逻辑：完整树 + targetKeys 节点 disabled
             // 有搜索时按 Transfer filteredItems 裁剪树（保留匹配节点及其祖先）
             const hasLeftSearch = leftSearchValue !== '';
@@ -91,6 +111,10 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
               : treeData;
 
             const handleCheckNode = (node: Parameters<typeof isTreeLeafNode>[0] & { key: any }) => {
+              if (lockedKeySet.has(String(node.key))) {
+                return;
+              }
+
               if (leafOnly && !isTreeLeafNode(node)) {
                 return;
               }
@@ -101,7 +125,7 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
               }
 
               const keys = getTreeNodeAndDescendantKeys(node as any)
-                .filter((key) => !(mergedTargetKeys ?? []).includes(key as string))
+                .filter((key) => !disabledAndCheckedKeys.includes(key as string))
                 .filter((key) => {
                   if (!leafOnly) {
                     return true;
@@ -122,7 +146,9 @@ const InternalTreeTransfer = memo<TreeTransferProps>(
                   checkStrictly
                   defaultExpandAll
                   checkedKeys={checkedKeys}
-                  treeData={generateTransferTree(visibleTreeData, mergedTargetKeys, { leafOnly })}
+                  treeData={generateTransferTree(visibleTreeData, disabledAndCheckedKeys, {
+                    leafOnly,
+                  })}
                   onCheck={(_, { node }) => {
                     handleCheckNode(node);
                   }}

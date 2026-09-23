@@ -12,10 +12,16 @@ const TransferHOC: TransferHOCComponent = createFactory(
     selectedKeys,
     targetKeys,
     value,
+    lockedKeys,
     isHideInvalidValue = true,
+    onChange,
     ...resetProps
   }: TransferHOCProps) => {
     const mergedTargetKeys = value !== undefined ? value : targetKeys;
+    const lockedKeySet = useMemo(
+      () => new Set((lockedKeys ?? []).map((key) => String(key))),
+      [lockedKeys],
+    );
 
     const realSelectedKeys = useMemo(
       () =>
@@ -23,20 +29,40 @@ const TransferHOC: TransferHOCComponent = createFactory(
       [isHideInvalidValue, selectedKeys, dataSource],
     );
 
-    const realTargetKeys = useMemo(
-      () =>
-        isHideInvalidValue
-          ? getTransferValue({ value: mergedTargetKeys, dataSource })
-          : mergedTargetKeys,
-      [isHideInvalidValue, mergedTargetKeys, dataSource],
-    );
+    const realTargetKeys = useMemo(() => {
+      const keys = isHideInvalidValue
+        ? getTransferValue({ value: mergedTargetKeys, dataSource })
+        : mergedTargetKeys;
+
+      if (!lockedKeySet.size) {
+        return keys;
+      }
+
+      return (keys ?? []).filter((key) => !lockedKeySet.has(String(key)));
+    }, [isHideInvalidValue, mergedTargetKeys, dataSource, lockedKeySet]);
+
+    const realDataSource = useMemo(() => {
+      if (!lockedKeySet.size || !dataSource?.length) {
+        return dataSource;
+      }
+
+      return dataSource.map((item) =>
+        lockedKeySet.has(String(item.key)) ? { ...item, disabled: true } : item,
+      );
+    }, [dataSource, lockedKeySet]);
 
     return (
       <InternalTransfer
         {...resetProps}
-        dataSource={dataSource}
+        dataSource={realDataSource}
         selectedKeys={realSelectedKeys}
         targetKeys={realTargetKeys}
+        onChange={(nextKeys, direction, moveKeys) => {
+          const next = lockedKeySet.size
+            ? (nextKeys ?? []).filter((key) => !lockedKeySet.has(String(key)))
+            : nextKeys;
+          onChange?.(next, direction, moveKeys);
+        }}
       />
     );
   },
