@@ -27,25 +27,39 @@ export function createFactory<P>(
   const fn = (_props) => {
     const { getEl } = useScrollLayout();
 
-    const [overrideProps, setOverrideProps] = useState<Partial<P> | undefined>(undefined);
+    const [asyncOverrideProps, setAsyncOverrideProps] = useState<Partial<P> | undefined>(
+      undefined,
+    );
+
+    // 同步 override 在 render 期计算，避免 useEffect + await 用旧 props 覆盖当前 value
+    const overrideResult = fn.override ? fn.override({ ...(_props ?? {}) }) : undefined;
+    const isAsyncOverride =
+      !!overrideResult && typeof (overrideResult as Promise<Partial<P>>).then === 'function';
 
     useEffect(() => {
       let cancelled = false;
 
       const run = async () => {
         if (!fn.override) {
-          setOverrideProps(undefined);
+          setAsyncOverrideProps(undefined);
+          return;
+        }
+
+        const result = fn.override({ ...(_props ?? {}) });
+
+        // 同步结果已在 render 使用，不写入 state，避免额外渲染与陈旧覆盖
+        if (!result || typeof (result as Promise<Partial<P>>).then !== 'function') {
           return;
         }
 
         try {
-          const result = await fn.override({ ...(_props ?? {}) });
+          const resolved = await result;
           if (!cancelled) {
-            setOverrideProps(result ?? undefined);
+            setAsyncOverrideProps(resolved ?? undefined);
           }
         } catch (e) {
           if (!cancelled) {
-            setOverrideProps(undefined);
+            setAsyncOverrideProps(undefined);
           }
         }
       };
@@ -56,6 +70,10 @@ export function createFactory<P>(
         cancelled = true;
       };
     }, [_props]);
+
+    const overrideProps = isAsyncOverride
+      ? asyncOverrideProps
+      : (overrideResult as Partial<P> | undefined);
 
     const props = {
       ...fn.defaultProps,

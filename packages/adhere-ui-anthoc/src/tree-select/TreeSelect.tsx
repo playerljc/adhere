@@ -18,7 +18,6 @@ const InternalTreeSelect: TreeSelectHOCComponent = createFactory<
     placement: 'bottomLeft',
   },
   (props) => ({
-    ...props,
     // @ts-ignore
     value: props.realValue ?? props.value,
   }),

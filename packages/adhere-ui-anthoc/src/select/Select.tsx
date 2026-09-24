@@ -23,7 +23,6 @@ const InternalSelect: SelectHOCComponent = createFactory<
       (option?.label as any)?.toLowerCase?.()?.indexOf?.(input.toLowerCase()) >= 0,
   },
   (props) => ({
-    ...props,
     // @ts-ignore
     value: props.realValue ?? props.value,
   }),
