@@ -24,7 +24,7 @@ function clearAll() {
 
 /**
  * Listener
- * @description 路由监听函数：处理 PUSH 和 POP 操作
+ * @description 路由监听函数：处理 PUSH、REPLACE 和 POP 操作
  */
 const Listener = function (history, action) {
   const location = history.location;
@@ -34,23 +34,29 @@ const Listener = function (history, action) {
 
     if (historyStack.length === 0) {
       historyStack.push(pathname);
-    } else {
-      const top = historyStack[historyStack.length - 1];
-
-      // 不是一个体系中的
-      if (!hasCommonPathRelation(top, pathname)) {
-        clearAll();
-
-        historyStack = [];
-      } else {
-        historyStack.push(pathname);
-      }
+      return;
     }
+
+    const top = historyStack[historyStack.length - 1];
+
+    // 不是一个体系中的：清掉查询缓存，并把落地页作为新的栈起点。
+    // 不能把栈置空。卸载阶段若看到 getLength()===0，会把刚离开的页面又写回缓存。
+    if (!hasCommonPathRelation(top, pathname)) {
+      clearAll();
+      historyStack = [pathname];
+      return;
+    }
+
+    historyStack.push(pathname);
   }
 
-  if (action.action === 'PUSH') {
+  // 菜单跳转是 PUSH；布局 Tab 切换是 REPLACE。两者都要立刻区分是否还在同一路由体系。
+  // POP 延后到下一页构造函数里执行，先用缓存初始化再处理栈。
+  const navigationAction = action.action;
+
+  if (navigationAction === 'PUSH' || navigationAction === 'REPLACE') {
     handlePush();
-  } else if (action.action === 'POP') {
+  } else if (navigationAction === 'POP') {
     codeStack.push(handlePush);
   }
 };

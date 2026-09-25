@@ -278,14 +278,13 @@ export default (SuperClass, searchAndPaginationParamsMemo) =>
       //   }
       // }
       if (this.isUseMemo()) {
-        if (
-          RouteListen.getLength() === 0 ||
-          hasCommonPathRelation(this.pathname, this.lastPathname)
-        ) {
-          // 是一个体系中的保存缓存数据
+        // 同一体系（例如 .../table 与 .../view，只差最后一级）才保留查询和分页。
+        // 切到别的模块时 lastPathname 已是目标路由，这里要清缓存。
+        // 不能用 getLength()===0 判断：跨模块时路由监听会重置栈，卸载阶段栈长为 0，
+        // 若据此再写入，离开前的查询条件会被存回去，返回时命中缓存。
+        if (!this.lastPathname || hasCommonPathRelation(this.pathname, this.lastPathname)) {
           this.unMountSearchAndPaginationParamsDeal();
         } else {
-          // 不是则清空全部的缓存
           searchAndPaginationParamsMemo.clearAll();
         }
       }
