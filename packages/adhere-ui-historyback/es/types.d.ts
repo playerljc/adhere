@@ -18,7 +18,13 @@ export interface HistoryObject {
     forward?: () => void;
     length?: number;
     location?: LocationObject;
-    listen?: (listener: (location: any) => void) => () => void;
+    /**
+     * Subscribe to navigation events.
+     * Supports both callback shapes:
+     * - React Router v5 / `history@4`: `(location, action) => void`
+     * - React Router v6 / `history@5`: `(update: { action, location }) => void`
+     */
+    listen?: (listener: (location: any, action?: any) => void) => () => void;
 }
 /**
  * Function type for handling history back navigation

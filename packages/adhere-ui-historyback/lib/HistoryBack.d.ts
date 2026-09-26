@@ -9,7 +9,12 @@ import { HistoryFunction, HistoryObject } from './types';
  * Full support for browser history mechanism:
  * - PUSH: Add new record to history stack
  * - REPLACE: Replace current record (doesn't increase stack length)
- * - POP: Back/forward operations (remove from stack)
+ * - POP: Back/forward/`go(n)` operations (resync stack pointer)
+ *
+ * Safe to call from multiple places (e.g. more than one component effect):
+ * each call replaces the active listener, and each returned cleanup only
+ * tears down the listener it actually registered - it won't accidentally
+ * kill a listener registered by a later call.
  *
  * @param history - History object from React Router
  * @returns Unlisten function for cleanup
@@ -30,10 +35,10 @@ import { HistoryFunction, HistoryObject } from './types';
  *   return <div>App Content</div>;
  * };
  *
- * // push and replace are correctly identified and handled
+ * // push, replace, and back/forward are all correctly tracked
  * history.push('/new-page');    // Stack: [..., '/new-page']
  * history.replace('/updated');  // Stack: [..., '/updated'] (replaced /new-page)
- * history.back();               // Stack: [...] (removed /updated)
+ * history.back();               // Stack: [...] (pointer moved back one step)
  * ```
  */
 export declare const initHistoryListener: (history: HistoryObject) => (() => void);
@@ -101,6 +106,10 @@ export declare const initHistoryListener: (history: HistoryObject) => (() => voi
 declare const History: HistoryFunction;
 /**
  * Get a copy of current history stack (for debugging)
+ *
+ * The returned array only includes the "back" timeline up to the current
+ * position (i.e. entries reachable by going back), matching the previous
+ * stack-based contract: the last element is always the current path.
  *
  * @returns Copy of history stack array
  *

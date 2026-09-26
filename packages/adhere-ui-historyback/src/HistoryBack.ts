@@ -1,14 +1,23 @@
 import { HistoryFunction, HistoryObject } from './types';
 
 /**
- * Route history stack to record visited paths
+ * Route history entries, in the order they were visited.
+ * `currentIndex` points at the entry that represents the current location.
+ *
+ * This "entries + pointer" model (instead of a plain push/pop stack) is what
+ * lets us correctly resync on browser back, forward, and multi-step
+ * `history.go(n)` navigations, which all surface as a single `POP` action.
  */
-const historyStack: string[] = [];
+let entries: string[] = [];
+let currentIndex = -1;
 
 /**
- * Store the unlisten function for cleanup
+ * Store the unlisten function for cleanup, plus a token to guard against a
+ * stale cleanup (from an earlier `initHistoryListener` call) tearing down a
+ * listener registered by a later call.
  */
 let unlistenHistory: (() => void) | null = null;
+let listenerToken = 0;
 
 /**
  * Check if two paths are siblings
@@ -60,7 +69,13 @@ const isSiblingPath = (path1: string, path2: string): boolean => {
 };
 
 /**
- * Detect if using hash routing mode
+ * Detect if using hash routing mode.
+ *
+ * This is only a best-effort heuristic for the fallback path where no
+ * `history` object with `.listen`/`.location` is available (raw
+ * `window.location` access). It cannot reliably distinguish a hash-mode
+ * route from an in-page anchor (e.g. `/user/profile#section`) - prefer
+ * passing a real `history` object whenever possible.
  *
  * @returns Whether hash mode is enabled
  */
@@ -111,21 +126,16 @@ const extractPathFromHash = (hash: string): string => {
  * @returns Current path
  */
 const getCurrentPath = (history: HistoryObject): string => {
-  // Try to get from history.location first
-  if (history.location && history.location.pathname) {
-    // For hash mode, extract path from hash
-    if (history.location.hash) {
-      const hashPath = extractPathFromHash(history.location.hash);
-      if (hashPath !== '/') {
-        return hashPath;
-      }
-    }
-    return history.location.pathname;
+  // A history object's `location.pathname` is already normalized by the
+  // underlying router (both browser and hash history report the real
+  // route here) - trust it directly instead of re-parsing `location.hash`,
+  // which may just be an in-page anchor.
+  if (history.location && typeof history.location.pathname === 'string') {
+    return history.location.pathname || '/';
   }
 
-  // Fallback to window.location
+  // Fallback to window.location when no history object/location is available.
   if (typeof window !== 'undefined' && window.location) {
-    // Check for hash mode
     if (isHashMode()) {
       return extractPathFromHash(window.location.hash);
     }
@@ -136,43 +146,109 @@ const getCurrentPath = (history: HistoryObject): string => {
 };
 
 /**
- * Add path to history stack (push operation)
+ * Extract a path string from a `history.listen` location payload.
+ *
+ * @param location - Location value (string or location-like object)
+ * @returns Extracted path
+ */
+const extractPathFromLocation = (location: any): string => {
+  if (typeof location === 'string') {
+    return location;
+  }
+
+  if (location && typeof location.pathname === 'string') {
+    return location.pathname || '/';
+  }
+
+  return '/';
+};
+
+/**
+ * Normalize the arguments passed to a `history.listen` callback.
+ *
+ * - React Router v5 / `history@4`: callback receives `(location, action)`.
+ * - React Router v6 / `history@5`: callback receives a single
+ *   `{ action, location }` update object.
+ *
+ * @param update - First callback argument
+ * @param legacyAction - Second callback argument (v5 style)
+ * @returns Normalized `{ location, action }`
+ */
+const normalizeHistoryUpdate = (
+  update: any,
+  legacyAction?: string,
+): { location: any; action?: string } => {
+  if (update && typeof update === 'object' && update.location && typeof update.location === 'object') {
+    // v6 style: single argument shaped like { action, location }
+    return { location: update.location, action: update.action };
+  }
+
+  // v5 style: (location, action)
+  return { location: update, action: legacyAction };
+};
+
+/**
+ * Push a new entry onto the history timeline (truncates any "forward"
+ * entries beyond the current pointer, matching real browser behavior).
  *
  * @param path - Path to add
  */
-const addToStack = (path: string): void => {
-  // Only add if different from top of stack
-  if (historyStack.length === 0 || historyStack[historyStack.length - 1] !== path) {
-    historyStack.push(path);
-    console.log('HistoryStack [PUSH]:', [...historyStack]);
-  }
+const pushEntry = (path: string): void => {
+  entries = entries.slice(0, currentIndex + 1);
+  entries.push(path);
+  currentIndex = entries.length - 1;
 };
 
 /**
- * Replace top of history stack (replace operation)
+ * Replace the entry at the current pointer.
  *
  * @param path - Path to replace with
  */
-const replaceInStack = (path: string): void => {
-  if (historyStack.length > 0) {
-    // Replace top element
-    historyStack[historyStack.length - 1] = path;
-    console.log('HistoryStack [REPLACE]:', [...historyStack]);
-  } else {
-    // If stack is empty, add instead
-    historyStack.push(path);
-    console.log('HistoryStack [REPLACE->PUSH]:', [...historyStack]);
+const replaceEntry = (path: string): void => {
+  if (currentIndex === -1) {
+    pushEntry(path);
+    return;
   }
+  entries[currentIndex] = path;
 };
 
 /**
- * Remove current path from history stack (back/pop operation)
+ * Resync the current pointer to match a path reached via a `POP`
+ * navigation (browser back, forward, or a multi-step `history.go(n)`).
+ *
+ * Checks the immediate neighbors first (the common single-step case), then
+ * searches the rest of the timeline. If the path can't be found at all
+ * (e.g. we started tracking after the browser already navigated away from
+ * it), it's treated as a new entry so the pointer never goes stale.
+ *
+ * @param path - Path the browser navigated to
  */
-const popFromStack = (): void => {
-  if (historyStack.length > 0) {
-    historyStack.pop();
-    console.log('HistoryStack [POP]:', [...historyStack]);
+const resyncToPath = (path: string): void => {
+  if (currentIndex > 0 && entries[currentIndex - 1] === path) {
+    currentIndex -= 1;
+    return;
   }
+
+  if (currentIndex >= 0 && currentIndex < entries.length - 1 && entries[currentIndex + 1] === path) {
+    currentIndex += 1;
+    return;
+  }
+
+  for (let i = currentIndex - 1; i >= 0; i--) {
+    if (entries[i] === path) {
+      currentIndex = i;
+      return;
+    }
+  }
+
+  for (let i = currentIndex + 1; i < entries.length; i++) {
+    if (entries[i] === path) {
+      currentIndex = i;
+      return;
+    }
+  }
+
+  pushEntry(path);
 };
 
 /**
@@ -185,7 +261,12 @@ const popFromStack = (): void => {
  * Full support for browser history mechanism:
  * - PUSH: Add new record to history stack
  * - REPLACE: Replace current record (doesn't increase stack length)
- * - POP: Back/forward operations (remove from stack)
+ * - POP: Back/forward/`go(n)` operations (resync stack pointer)
+ *
+ * Safe to call from multiple places (e.g. more than one component effect):
+ * each call replaces the active listener, and each returned cleanup only
+ * tears down the listener it actually registered - it won't accidentally
+ * kill a listener registered by a later call.
  *
  * @param history - History object from React Router
  * @returns Unlisten function for cleanup
@@ -206,51 +287,40 @@ const popFromStack = (): void => {
  *   return <div>App Content</div>;
  * };
  *
- * // push and replace are correctly identified and handled
+ * // push, replace, and back/forward are all correctly tracked
  * history.push('/new-page');    // Stack: [..., '/new-page']
  * history.replace('/updated');  // Stack: [..., '/updated'] (replaced /new-page)
- * history.back();               // Stack: [...] (removed /updated)
+ * history.back();               // Stack: [...] (pointer moved back one step)
  * ```
  */
 export const initHistoryListener = (history: HistoryObject): (() => void) => {
   // Cancel existing listener if any
   if (unlistenHistory) {
     unlistenHistory();
+    unlistenHistory = null;
   }
 
-  // Record initial path
-  const initialPath = getCurrentPath(history);
-  addToStack(initialPath);
+  const token = ++listenerToken;
+
+  // Record initial path (only if we haven't tracked anything yet, so a
+  // remount doesn't wipe out an already-in-progress timeline)
+  if (currentIndex === -1) {
+    pushEntry(getCurrentPath(history));
+  }
 
   // Listen to history changes (React Router v5/v6)
   if (typeof history.listen === 'function') {
-    unlistenHistory = history.listen((location: any, action?: string) => {
-      let newPath: string;
+    unlistenHistory = history.listen((update: any, legacyAction?: string) => {
+      const { location, action } = normalizeHistoryUpdate(update, legacyAction);
+      const newPath = extractPathFromLocation(location);
 
-      if (typeof location === 'string') {
-        newPath = location;
-      } else if (location.hash) {
-        // Hash mode: extract path from hash
-        newPath = extractPathFromHash(location.hash);
+      if (action === 'REPLACE') {
+        replaceEntry(newPath);
+      } else if (action === 'POP') {
+        resyncToPath(newPath);
       } else {
-        // History mode: use pathname
-        newPath = location.pathname || '/';
-      }
-
-      // Execute different stack operations based on action type
-      // React Router v5: second parameter is action ('PUSH', 'REPLACE', 'POP')
-      // React Router v6: location.action or second parameter
-      const historyAction = action || (location && location.action);
-
-      if (historyAction === 'REPLACE') {
-        // Replace operation: replace top element
-        replaceInStack(newPath);
-      } else if (historyAction === 'POP') {
-        // Pop operation (browser back/forward): remove top element
-        popFromStack();
-      } else {
-        // Push operation (default): add to top
-        addToStack(newPath);
+        // Push operation (default)
+        pushEntry(newPath);
       }
     });
   } else if (typeof window !== 'undefined') {
@@ -259,18 +329,7 @@ export const initHistoryListener = (history: HistoryObject): (() => void) => {
     if (hashMode) {
       // Hash mode: listen to hashchange event
       const handleHashChange = () => {
-        const currentPath = extractPathFromHash(window.location.hash);
-
-        // Determine if back/forward or new navigation
-        const currentIndex = historyStack.indexOf(currentPath);
-
-        if (currentIndex !== -1 && currentIndex < historyStack.length - 1) {
-          // Path in stack and not at top, means back operation
-          popFromStack();
-        } else {
-          // New path or forward, treat as push
-          addToStack(currentPath);
-        }
+        resyncToPath(extractPathFromHash(window.location.hash));
       };
 
       window.addEventListener('hashchange', handleHashChange);
@@ -281,18 +340,7 @@ export const initHistoryListener = (history: HistoryObject): (() => void) => {
     } else {
       // History mode: listen to popstate event
       const handlePopState = () => {
-        const currentPath = window.location.pathname;
-
-        // Determine if back/forward or new navigation
-        const currentIndex = historyStack.indexOf(currentPath);
-
-        if (currentIndex !== -1 && currentIndex < historyStack.length - 1) {
-          // Path in stack and not at top, means back operation
-          popFromStack();
-        } else {
-          // New path or forward, treat as push
-          addToStack(currentPath);
-        }
+        resyncToPath(window.location.pathname);
       };
 
       window.addEventListener('popstate', handlePopState);
@@ -303,9 +351,10 @@ export const initHistoryListener = (history: HistoryObject): (() => void) => {
     }
   }
 
-  // Return unlisten function
+  // Return unlisten function. Guarded by `token` so a stale cleanup from an
+  // earlier call can't tear down a listener registered by a later call.
   return () => {
-    if (unlistenHistory) {
+    if (listenerToken === token && unlistenHistory) {
       unlistenHistory();
       unlistenHistory = null;
     }
@@ -378,9 +427,6 @@ const History: HistoryFunction = (
   initialPathname: string,
   routePath?: string,
 ): void => {
-  // Save the initial pathname at function entry for sibling path comparison
-  console.log('initialPathname======', initialPathname);
-
   // Validate input parameters
   if (!history) {
     throw new Error('History object cannot be null');
@@ -395,24 +441,21 @@ const History: HistoryFunction = (
     return;
   }
 
-  // Get current path
-  const currentPath = getCurrentPath(history);
-
   // If stack is empty, warn and initialize
-  if (historyStack.length === 0) {
+  if (currentIndex === -1) {
     console.warn(
       'HistoryBack: History stack is empty, recommend calling initHistoryListener first',
     );
-    addToStack(currentPath);
+    pushEntry(getCurrentPath(history));
   }
 
   // Determine if can go back
   let canGoBack = false;
 
-  // Condition 1: Has previous path (stack has at least 2 elements)
-  if (historyStack.length >= 2) {
-    // Get previous path (second from top)
-    const previousPath = historyStack[historyStack.length - 2];
+  // Condition 1: Has previous path (pointer is past the first entry)
+  if (currentIndex >= 1) {
+    // Get previous path (entry right before the current one)
+    const previousPath = entries[currentIndex - 1];
 
     // Condition 2: Initial pathname must be sibling of previous path
     if (isSiblingPath(initialPathname, previousPath)) {
@@ -424,13 +467,15 @@ const History: HistoryFunction = (
   if (canGoBack) {
     try {
       // Execute back operation
-      // Note: Stack update is handled automatically by listener (POP action)
+      // Note: the stack pointer resyncs automatically via the active
+      // listener (history.listen POP action, or the popstate/hashchange
+      // fallback) once the browser actually navigates back.
       if (typeof history.back === 'function') {
         history.back();
-      } else {
-        // Fallback: use native back, manually update stack
-        popFromStack();
+      } else if (typeof window.history.back === 'function') {
         window.history.back();
+      } else {
+        throw new Error('No back navigation method available on history or window');
       }
     } catch (error) {
       console.warn('HistoryBack: Back operation failed', error);
@@ -455,6 +500,10 @@ const History: HistoryFunction = (
 /**
  * Get a copy of current history stack (for debugging)
  *
+ * The returned array only includes the "back" timeline up to the current
+ * position (i.e. entries reachable by going back), matching the previous
+ * stack-based contract: the last element is always the current path.
+ *
  * @returns Copy of history stack array
  *
  * @example
@@ -466,7 +515,7 @@ const History: HistoryFunction = (
  * ```
  */
 export const getHistoryStack = (): string[] => {
-  return [...historyStack];
+  return entries.slice(0, currentIndex + 1);
 };
 
 /**
@@ -481,8 +530,8 @@ export const getHistoryStack = (): string[] => {
  * ```
  */
 export const clearHistoryStack = (): void => {
-  historyStack.length = 0;
-  console.log('HistoryStack [CLEAR]:', []);
+  entries = [];
+  currentIndex = -1;
 };
 
 export default History;

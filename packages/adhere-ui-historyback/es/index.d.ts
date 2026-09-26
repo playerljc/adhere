@@ -15,36 +15,17 @@
  *
  * @example
  * ```typescript
- * import historyBack, { initHistoryListener } from '@adhere/ui-historyback';
+ * import historyBack, { initHistoryListener } from '@baifendian/adhere-ui-historyback';
  *
- * // 1. Initialize listener at app entry (auto-detects history/hash mode)
- * const App = () => {
- *   const history = useHistory();
+ * const history = useHistory();
+ * const location = useLocation();
  *
- *   useEffect(() => {
- *     const unlisten = initHistoryListener(history);
- *     return unlisten; // Cleanup function
- *   }, [history]);
+ * useEffect(() => initHistoryListener(history), [history]);
  *
- *   return <Routes />;
- * };
- *
- * // 2. Use back navigation in components (same usage for both modes)
- * const MyComponent = () => {
- *   const history = useHistory();
- *
- *   const handleBack = () => {
- *     // If previous path is sibling, go back; otherwise replace to /dashboard
- *     // History mode navigates to: /dashboard
- *     // Hash mode navigates to: #/dashboard
- *     historyBack(history, '/dashboard');
- *   };
- *
- *   return <button onClick={handleBack}>Back</button>;
- * };
+ * historyBack(history, location.pathname, '/dashboard');
  * ```
  */
-import HistoryBack, { initHistoryListener } from './HistoryBack';
+import HistoryBack, { clearHistoryStack, getHistoryStack, initHistoryListener } from './HistoryBack';
 export default HistoryBack;
-export { initHistoryListener };
+export { initHistoryListener, getHistoryStack, clearHistoryStack };
 export type { HistoryFunction, HistoryObject, LocationObject } from './types';
