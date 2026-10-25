@@ -1,51 +1,57 @@
-import React, { cloneElement, memo, useRef, useState } from 'react';
+import React, { cloneElement, isValidElement, memo, useRef, useState } from 'react';
+import type { ReactElement } from 'react';
 
 import { TreeEntityValueHOC as AntHOCTreeEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
 import type { TreeEntityValueHOCProps } from '@baifendian/adhere-ui-anthoc/es/types';
-
-const DEFAULT_TREE_DATA_PROP = 'treeData';
 
 const TreeEntityValueHOC = memo<
   TreeEntityValueHOCProps & {
     getTreeDataByDataSource?: (dataSource?: any) => any;
   }
 >(({ children, ...props }) => {
-  const [treeData, setTreeData] = useState([]);
+  const [treeData, setTreeData] = useState<any[]>([]);
 
-  const dataSourceStore = useRef<Map<number | string | symbol, any[]>>(
-    new Map<number | string | symbol, any[]>(),
-  );
+  const dataSourceStore = useRef<Map<number, any[]>>(new Map<number, any[]>());
 
-  const targetChildren = cloneElement(children, {
-    [props.treeDataProp ?? DEFAULT_TREE_DATA_PROP]: treeData,
-    ...(children.props ?? {}),
-    onDataSourceChange: (_treeData, extra) => {
-      if (extra) {
-        if (extra.type === 'paging') {
-          if (
-            extra?.info?.page !== undefined &&
-            extra?.info?.page !== null &&
-            extra?.info?.page !== '' &&
-            extra?.info?.page !== 0 &&
-            typeof extra?.info?.page === 'number'
-          ) {
-            const targetDataSource = props?.getTreeDataByDataSource?.(_treeData) ?? _treeData;
+  const onDataSourceChange = (_treeData, extra) => {
+    if (extra?.type === 'paging') {
+      const page = extra?.info?.page;
+      if (typeof page === 'number' && page > 0) {
+        const targetDataSource = props?.getTreeDataByDataSource?.(_treeData) ?? _treeData;
 
-            dataSourceStore.current.set(extra?.info?.page, targetDataSource);
-
-            // @ts-ignore
-            setTreeData(Array.from(dataSourceStore.current.values()).flat());
-          }
+        if (page === 1) {
+          dataSourceStore.current.clear();
         }
-      } else {
-        setTreeData(props?.getTreeDataByDataSource?.(_treeData) ?? _treeData);
+
+        dataSourceStore.current.set(page, targetDataSource);
+        setTreeData(Array.from(dataSourceStore.current.values()).flat());
       }
+    } else if (!extra) {
+      setTreeData(props?.getTreeDataByDataSource?.(_treeData) ?? _treeData);
+    }
 
-      children.props?.onDataSourceChange?.(_treeData, extra);
-    },
-  });
+    if (isValidElement(children)) {
+      (children.props as { onDataSourceChange?: typeof onDataSourceChange })?.onDataSourceChange?.(
+        _treeData,
+        extra,
+      );
+    }
+  };
 
-  return <AntHOCTreeEntityValueHOC {...props}>{targetChildren}</AntHOCTreeEntityValueHOC>;
+  const treeDataProp = props.treeDataProp ?? 'treeData';
+  const targetChildren = isValidElement(children)
+    ? cloneElement(children as ReactElement<any>, {
+        ...(children.props as object),
+        [treeDataProp]: treeData,
+        onDataSourceChange,
+      })
+    : children;
+
+  return (
+    <AntHOCTreeEntityValueHOC {...props} treeData={treeData}>
+      {targetChildren}
+    </AntHOCTreeEntityValueHOC>
+  );
 });
 
 export default TreeEntityValueHOC;

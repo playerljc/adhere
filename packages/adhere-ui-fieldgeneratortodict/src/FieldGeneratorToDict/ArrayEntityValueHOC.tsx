@@ -1,9 +1,8 @@
-import React, { cloneElement, memo, useRef, useState } from 'react';
+import React, { cloneElement, isValidElement, memo, useRef, useState } from 'react';
+import type { ReactElement } from 'react';
 
 import { ArrayEntityValueHOC as AntHOCArrayEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
 import type { ArrayEntityValueHOCProps } from '@baifendian/adhere-ui-anthoc/es/types';
-
-const DEFAULT_OPTIONS_PROP = 'options';
 
 const ArrayEntityValueHOC = memo<
   ArrayEntityValueHOCProps & {
@@ -12,49 +11,47 @@ const ArrayEntityValueHOC = memo<
 >(({ children, ...props }) => {
   const [options, setOptions] = useState<any[]>([]);
 
-  const dataSourceStore = useRef<Map<number | string | symbol, any[]>>(
-    new Map<number | string | symbol, any[]>(),
-  );
+  const dataSourceStore = useRef<Map<number, any[]>>(new Map<number, any[]>());
 
-  const targetChildren = cloneElement(children, {
-    [props.optionsProp ?? DEFAULT_OPTIONS_PROP]: options,
-    ...(children.props ?? {}),
-    onDataSourceChange: (_dataSource, extra) => {
-      if (extra) {
-        if (extra.type === 'paging') {
-          if (
-            extra?.info?.page !== undefined &&
-            extra?.info?.page !== null &&
-            extra?.info?.page !== '' &&
-            extra?.info?.page !== 0 &&
-            typeof extra?.info?.page === 'number'
-          ) {
-            const targetDataSource = props?.getOptionsByDataSource?.(_dataSource) ?? _dataSource;
+  const onDataSourceChange = (_dataSource, extra) => {
+    if (extra?.type === 'paging') {
+      const page = extra?.info?.page;
+      if (typeof page === 'number' && page > 0) {
+        const targetDataSource = props?.getOptionsByDataSource?.(_dataSource) ?? _dataSource;
 
-            dataSourceStore.current.set(extra?.info?.page, targetDataSource);
+        if (page === 1) {
+          dataSourceStore.current.clear();
+        }
 
-            setOptions(Array.from<any[]>(dataSourceStore.current.values()).flat());
-          }
-        } /*else if (extra.type === 'treeAsync') {
-          if (
-            extra?.info?.pid !== undefined &&
-            extra?.info?.pid !== null &&
-            extra?.info?.pid !== ''
-          ) {
-            dataSourceStore.current.set(extra?.info?.pid, _dataSource);
-
-            setOptions(Array.from(dataSourceStore.current.values()).flat());
-          }
-        }*/
-      } else {
-        setOptions(props?.getOptionsByDataSource?.(_dataSource) ?? _dataSource);
+        dataSourceStore.current.set(page, targetDataSource);
+        setOptions(Array.from(dataSourceStore.current.values()).flat());
       }
+    } else if (!extra) {
+      setOptions(props?.getOptionsByDataSource?.(_dataSource) ?? _dataSource);
+    }
 
-      children.props?.onDataSourceChange?.(_dataSource, extra);
-    },
-  });
+    if (isValidElement(children)) {
+      (children.props as { onDataSourceChange?: typeof onDataSourceChange })?.onDataSourceChange?.(
+        _dataSource,
+        extra,
+      );
+    }
+  };
 
-  return <AntHOCArrayEntityValueHOC {...props}>{targetChildren}</AntHOCArrayEntityValueHOC>;
+  const optionsProp = props.optionsProp ?? 'options';
+  const targetChildren = isValidElement(children)
+    ? cloneElement(children as ReactElement<any>, {
+        ...(children.props as object),
+        [optionsProp]: options,
+        onDataSourceChange,
+      })
+    : children;
+
+  return (
+    <AntHOCArrayEntityValueHOC {...props} options={options}>
+      {targetChildren}
+    </AntHOCArrayEntityValueHOC>
+  );
 });
 
 export default ArrayEntityValueHOC;

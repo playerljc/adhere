@@ -444,6 +444,7 @@ import TreeStaticFlatCheckedShowParent from './Tree/TreeStaticFlatCheckedShowPar
 import TreeStaticFlatLeaf from './Tree/TreeStaticFlatLeaf.tsx';
 import TreeStaticFlatLeafMulti from './Tree/TreeStaticFlatLeafMulti.tsx';
 import TreeStaticFlatMulti from './Tree/TreeStaticFlatMulti.tsx';
+import ValueHOCSuite from './ValueHOC/suite';
 import DictConfig from './dict/dict.config';
 import { store } from './saga';
 
@@ -454,7 +455,8 @@ DictConfig();
 e2e.PC({
   children: (
     <Provider store={store}>
-      <TableDynamicSelect />
+      {/* <TableDynamicSelect /> */}
+      <ValueHOCSuite />
     </Provider>
   ),
 });
