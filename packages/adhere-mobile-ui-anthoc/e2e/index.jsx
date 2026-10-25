@@ -109,9 +109,11 @@ import TreeLeafSelect from './TreeSelect/TreeLeafSelect';
 import TreeSelect from './TreeSelect/TreeSelect';
 import TreeShowAllSelect from './TreeSelect/TreeShowAllSelect';
 import TreeShowChildSelect from './TreeSelect/TreeShowChildSelect';
+import ValueHOCSuite from './ValueHOC/suite';
 
 import '@baifendian/adhere-e2e/es/index.less';
 
 e2e.Mobile({
-  children: <ModalTriggerPrompt />,
+  // children: <ModalTriggerPrompt />,
+  children: <ValueHOCSuite />,
 });

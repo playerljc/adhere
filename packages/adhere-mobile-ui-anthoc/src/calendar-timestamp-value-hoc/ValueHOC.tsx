@@ -1,15 +1,18 @@
 import dayjs from 'dayjs';
-import quarterOfYear from 'dayjs/plugin/quarterOfYear';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
 import React, { cloneElement, useMemo } from 'react';
 import type { FC } from 'react';
 
 import type { CalendarTimestampValueHOCProps } from '../types';
-
-dayjs.extend(weekOfYear);
-dayjs.extend(quarterOfYear);
-
-const DEFAULT_TYPE = ['milliseconds', 'milliseconds'];
+import {
+  dayjsPairToDate,
+  dayjsToDate,
+  formatTimestamp,
+  formatTimestampPair,
+  normalizeRangeTypes,
+  normalizeTimestampType,
+  parseTimestamp,
+  parseTimestampPair,
+} from '../value-hoc/dateValue';
 
 /**
  * ValueHOC
@@ -25,94 +28,49 @@ const ValueHOC: FC<CalendarTimestampValueHOCProps> = ({
   defaultValue,
   value,
   onChange,
-  type = DEFAULT_TYPE,
+  type = 'milliseconds',
   children,
   ...props
 }) => {
-  function originValueToDateObject(_value) {
-    if (_value === null || _value === undefined) return _value;
+  const typeKey = Array.isArray(type) ? `${type[0] ?? ''}|${type[1] ?? ''}` : type;
+  const rangeUnits = useMemo(
+    () => normalizeRangeTypes(Array.isArray(type) ? type : undefined),
+    // typeKey 把内联数组收成稳定字符串，避免每次渲染都换一组单位
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [typeKey],
+  );
+  const unit = normalizeTimestampType(typeof type === 'string' ? type : undefined);
 
-    const isRangeMode = Array.isArray(_value);
+  const targetValue = useMemo(() => {
+    if (Array.isArray(value)) return dayjsPairToDate(parseTimestampPair(value, rangeUnits));
+    return dayjsToDate(parseTimestamp(value, unit));
+  }, [value, rangeUnits, unit]);
 
-    if (isRangeMode) {
-      if (!_value.length) return [];
-
-      const rawType: string[] = Array.isArray(type ?? DEFAULT_TYPE)
-        ? ((type ?? DEFAULT_TYPE) as string[]).slice(0, 2)
-        : [...DEFAULT_TYPE];
-
-      const targetType = rawType.map((t) =>
-        ['seconds', 'milliseconds'].includes(t) ? t : 'milliseconds',
-      ) as string[];
-
-      let result: any[];
-
-      if (targetType.join() === ['seconds', 'seconds'].join()) {
-        result = [dayjs.unix(_value[0]), dayjs.unix(_value[1])];
-      } else if (targetType.join() === ['seconds', 'milliseconds'].join()) {
-        result = [dayjs.unix(_value[0]), dayjs(_value[1])];
-      } else if (targetType.join() === ['milliseconds', 'seconds'].join()) {
-        result = [dayjs(_value[0]), dayjs.unix(_value[1])];
-      } else {
-        result = [dayjs(_value[0]), dayjs(_value[1])];
-      }
-
-      return result.map((item) => item.toDate());
+  const targetDefaultValue = useMemo(() => {
+    if (Array.isArray(defaultValue)) {
+      return dayjsPairToDate(parseTimestampPair(defaultValue, rangeUnits)) ?? undefined;
     }
-
-    if (type === 'seconds') {
-      return dayjs.unix(_value).toDate();
-    }
-
-    return dayjs(_value).toDate();
-  }
-
-  function millisecondsToSeconds(milliseconds) {
-    return Math.round(milliseconds / 1000);
-  }
-
-  function changeValueMillisecondsToTargetValue(milliseconds) {
-    const isRangeMode = Array.isArray(milliseconds);
-
-    if (isRangeMode) {
-      if (!type || !Array.isArray(type) || type.length < 2) {
-        return milliseconds;
-      } else if (type[0] === 'milliseconds' && type[1] === 'seconds') {
-        return [milliseconds[0], millisecondsToSeconds(milliseconds[1])];
-      } else if (type[0] === 'seconds' && type[1] === 'milliseconds') {
-        return [millisecondsToSeconds(milliseconds[0]), milliseconds[1]];
-      } else if (type[0] === 'seconds' && type[1] === 'seconds') {
-        return [millisecondsToSeconds(milliseconds[0]), millisecondsToSeconds(milliseconds[1])];
-      }
-    }
-
-    if (type === 'seconds') {
-      return millisecondsToSeconds(milliseconds);
-    }
-
-    return milliseconds;
-  }
-
-  const targetValue = useMemo(() => originValueToDateObject(value), [value]);
-
-  const targetDefaultValue = useMemo(() => originValueToDateObject(defaultValue), [defaultValue]);
+    return dayjsToDate(parseTimestamp(defaultValue, unit)) ?? undefined;
+  }, [defaultValue, rangeUnits, unit]);
 
   const _onChange = (_date) => {
-    if (_date) {
-      let params: any;
-
-      if (Array.isArray(_date)) {
-        params = changeValueMillisecondsToTargetValue([_date[0].getTime(), _date[1].getTime()]);
-      } else {
-        params = changeValueMillisecondsToTargetValue(_date.getTime());
-      }
-
-      onChange?.(params);
-
+    if (_date == null) {
+      onChange?.(null);
       return;
     }
 
-    onChange?.(_date);
+    if (Array.isArray(_date)) {
+      const toDayjs = (item) => {
+        if (item == null) return null;
+        const current = dayjs(item);
+        return current.isValid() ? current : null;
+      };
+      onChange?.(formatTimestampPair([toDayjs(_date[0]), toDayjs(_date[1])], rangeUnits));
+      return;
+    }
+
+    const current = dayjs(_date);
+    onChange?.(current.isValid() ? formatTimestamp(current, unit) : null);
   };
 
   return useMemo(() => {

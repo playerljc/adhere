@@ -1,19 +1,24 @@
 import dayjs from 'dayjs';
-import quarterOfYear from 'dayjs/plugin/quarterOfYear';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
 import React, { cloneElement, useMemo } from 'react';
 import type { FC } from 'react';
 
 import type { CalendarFormatValueHOCProps } from '../types';
-
-dayjs.extend(weekOfYear);
-dayjs.extend(quarterOfYear);
+import {
+  DEFAULT_DATE_FORMAT,
+  dayjsPairToDate,
+  dayjsToDate,
+  formatDayjs,
+  formatDayjsPair,
+  parseDayjs,
+  parseDayjsPair,
+} from '../value-hoc/dateValue';
 
 /**
  * ValueHOC
  * @param defaultValue
  * @param value
  * @param onChange
+ * @param format
  * @param children
  * @param props
  * @constructor
@@ -22,46 +27,40 @@ const ValueHOC: FC<CalendarFormatValueHOCProps> = ({
   defaultValue,
   value,
   onChange,
+  format,
   children,
   ...props
 }) => {
-  function originValueToDateObject(_value) {
-    if (_value === null || _value === undefined) return _value;
+  const targetValue = useMemo(() => {
+    if (Array.isArray(value)) return dayjsPairToDate(parseDayjsPair(value, format, DEFAULT_DATE_FORMAT));
+    return dayjsToDate(parseDayjs(value, format, DEFAULT_DATE_FORMAT));
+  }, [value, format]);
 
-    const isRangeMode = Array.isArray(_value);
-
-    if (isRangeMode) {
-      if (!_value.length) return [];
-
-      return [dayjs(_value[0]), dayjs(_value[1])].map((item) => item.toDate());
+  const targetDefaultValue = useMemo(() => {
+    if (Array.isArray(defaultValue)) {
+      return dayjsPairToDate(parseDayjsPair(defaultValue, format, DEFAULT_DATE_FORMAT)) ?? undefined;
     }
-
-    return dayjs(_value).toDate();
-  }
-
-  const targetValue = useMemo(() => originValueToDateObject(value), [value]);
-
-  const targetDefaultValue = useMemo(() => originValueToDateObject(defaultValue), [defaultValue]);
+    return dayjsToDate(parseDayjs(defaultValue, format, DEFAULT_DATE_FORMAT)) ?? undefined;
+  }, [defaultValue, format]);
 
   const _onChange = (_date) => {
-    if (_date) {
-      let params: any;
-
-      if (Array.isArray(_date)) {
-        params = [
-          dayjs(_date[0]).format(props.format ?? 'L LTS'),
-          dayjs(_date[1]).format(props.format ?? 'L LTS'),
-        ];
-      } else {
-        params = dayjs(_date).format(props.format ?? 'L LTS');
-      }
-
-      onChange?.(params);
-
+    if (_date == null) {
+      onChange?.(null);
       return;
     }
 
-    onChange?.(_date);
+    if (Array.isArray(_date)) {
+      const toDayjs = (item) => {
+        if (item == null) return null;
+        const current = dayjs(item);
+        return current.isValid() ? current : null;
+      };
+      onChange?.(formatDayjsPair([toDayjs(_date[0]), toDayjs(_date[1])], format, DEFAULT_DATE_FORMAT));
+      return;
+    }
+
+    const current = dayjs(_date);
+    onChange?.(current.isValid() ? formatDayjs(current, format, DEFAULT_DATE_FORMAT) : null);
   };
 
   return useMemo(() => {

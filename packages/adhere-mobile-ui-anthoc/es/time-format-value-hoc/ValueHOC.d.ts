@@ -5,6 +5,7 @@ import type { TimeFormatValueHOCProps } from '../types';
  * @param defaultValue
  * @param value
  * @param onChange
+ * @param format
  * @param children
  * @param props
  * @constructor

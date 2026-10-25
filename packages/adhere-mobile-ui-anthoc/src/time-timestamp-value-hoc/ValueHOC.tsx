@@ -3,6 +3,12 @@ import React, { cloneElement, useMemo } from 'react';
 import type { FC } from 'react';
 
 import type { TimeTimestampValueHOCProps } from '../types';
+import {
+  dayjsToDate,
+  formatTimestamp,
+  normalizeTimestampType,
+  parseTimestamp,
+} from '../value-hoc/dateValue';
 
 /**
  * ValueHOC
@@ -22,35 +28,23 @@ const ValueHOC: FC<TimeTimestampValueHOCProps> = ({
   children,
   ...props
 }) => {
-  function originValueToDateObject(_value) {
-    if (_value === null || _value === undefined) return _value;
+  const unit = normalizeTimestampType(type);
 
-    if (type === 'seconds') {
-      return dayjs.unix(_value).toDate();
-    }
+  const targetValue = useMemo(() => dayjsToDate(parseTimestamp(value, unit)), [value, unit]);
 
-    return dayjs(_value).toDate();
-  }
-
-  function changeValueMillisecondsToTargetValue(milliseconds) {
-    if (type === 'seconds') {
-      return Math.round(milliseconds / 1000);
-    }
-
-    return milliseconds;
-  }
-
-  const targetValue = useMemo(() => originValueToDateObject(value), [value, type]);
-
-  const targetDefaultValue = useMemo(() => originValueToDateObject(defaultValue), [defaultValue, type]);
+  const targetDefaultValue = useMemo(
+    () => dayjsToDate(parseTimestamp(defaultValue, unit)) ?? undefined,
+    [defaultValue, unit],
+  );
 
   const _onChange = (_date) => {
-    if (_date) {
-      onChange?.(changeValueMillisecondsToTargetValue(_date.getTime()));
+    if (_date == null) {
+      onChange?.(null);
       return;
     }
 
-    onChange?.(_date);
+    const current = dayjs(_date);
+    onChange?.(current.isValid() ? formatTimestamp(current, unit) : null);
   };
 
   return useMemo(() => {

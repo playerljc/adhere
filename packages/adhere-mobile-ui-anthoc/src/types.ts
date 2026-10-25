@@ -732,9 +732,9 @@ export type CalendarFormatValueHOCProps = Omit<
   CalendarPickerViewProps | CalendarModalProps | CalendarDialogProps | CalendarPopupProps,
   'defaultValue' | 'value' | 'onChange'
 > & {
-  defaultValue?: string[] | string | null;
-  value?: string[] | string | null;
-  onChange?: (data: [string, string] | string | null | undefined) => void;
+  defaultValue?: Array<string | null> | string | null;
+  value?: Array<string | null> | string | null;
+  onChange?: (data: [string | null, string | null] | string | null | undefined) => void;
   children: ReactElement;
   format?: string;
 };
@@ -743,9 +743,9 @@ export type CalendarTimestampValueHOCProps = Omit<
   CalendarPickerViewProps | CalendarModalProps | CalendarDialogProps | CalendarPopupProps,
   'defaultValue' | 'value' | 'onChange'
 > & {
-  defaultValue?: number[] | number | null;
-  value?: number[] | number | null;
-  onChange?: (data: [number, number] | number | null | undefined) => void;
+  defaultValue?: Array<number | null> | number | null;
+  value?: Array<number | null> | number | null;
+  onChange?: (data: [number | null, number | null] | number | null | undefined) => void;
   // value的类型
   type?: ['milliseconds' | 'seconds', 'milliseconds' | 'seconds'] | 'milliseconds' | 'seconds';
   children: ReactElement;
