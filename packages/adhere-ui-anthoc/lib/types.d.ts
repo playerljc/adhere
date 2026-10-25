@@ -926,14 +926,14 @@ export type DateTimePickerExtra = {
     second?: number;
 };
 export type RangePickerFormatValueHOCProps = Omit<RangePickerProps, 'defaultValue' | 'value' | 'onChange'> & {
-    defaultValue?: string[] | null;
-    value?: string[] | null;
-    onChange?: (data: [string, string] | null | undefined, dateStrings: [string, string], datejs: [dayjs.Dayjs, dayjs.Dayjs] | null, extra: [DateTimePickerExtra, DateTimePickerExtra] | null) => void;
+    defaultValue?: Array<string | null> | null;
+    value?: Array<string | null> | null;
+    onChange?: (data: [string | null, string | null] | null, dateStrings: [string, string], datejs: [dayjs.Dayjs | null, dayjs.Dayjs | null] | null, extra: [DateTimePickerExtra, DateTimePickerExtra] | null) => void;
 };
 export type RangePickerTimestampValueHOCProps = Omit<RangePickerProps, 'defaultValue' | 'value' | 'onChange'> & {
-    defaultValue?: number[] | null;
-    value?: number[] | null;
-    onChange?: (data: [number, number] | null | undefined, dateStrings: [string, string], datejs: [dayjs.Dayjs, dayjs.Dayjs] | null, extra: [DateTimePickerExtra, DateTimePickerExtra] | null) => void;
+    defaultValue?: Array<number | null> | null;
+    value?: Array<number | null> | null;
+    onChange?: (data: [number | null, number | null] | null, dateStrings: [string, string], datejs: [dayjs.Dayjs | null, dayjs.Dayjs | null] | null, extra: [DateTimePickerExtra, DateTimePickerExtra] | null) => void;
     type?: ['milliseconds' | 'seconds', 'milliseconds' | 'seconds'];
 };
 export type TimePickerFormatValueHOCProps = Omit<TimePickerProps, 'value' | 'onChange' | 'defaultValue'> & {
@@ -973,6 +973,7 @@ export type TreeEntityValueHOCProps = {
     childrenProp?: string;
     treeData?: TreeSelectProps['treeData'];
     isUsePrimaryValue?: boolean;
+    changePropagation?: boolean;
     [prop: string]: any;
 };
 export type PagingEntityValueHOCProps = {
@@ -980,7 +981,7 @@ export type PagingEntityValueHOCProps = {
     onChange?: (...argv: any[]) => any;
     valueProp?: string;
     changePropagation?: boolean;
-    getOptionsByDataSource: (_dataSource: any[]) => any[];
+    getOptionsByDataSource?: (_dataSource: any[]) => any[];
     pagingPropsPath?: string[];
     [prop: string]: any;
 };
@@ -989,12 +990,32 @@ export type AsyncTreeEntityValueHOCProps = {
     onChange?: (...argv: any[]) => any;
     valueProp?: string;
     isUsePrimaryValue?: boolean;
+    changePropagation?: boolean;
     [prop: string]: any;
 };
-export type CalendarFormatValueHOCProps = CalendarProps<dayjs.Dayjs>;
-export type CalendarTimestampValueHOC = CalendarProps<dayjs.Dayjs> & {
+type CalendarCellInfo = Parameters<NonNullable<CalendarProps<dayjs.Dayjs>['cellRender']>>[1];
+type CalendarSelectInfo = Parameters<NonNullable<CalendarProps<dayjs.Dayjs>['onSelect']>>[1];
+type CalendarValueProps<T> = {
+    defaultValue?: T | null;
+    value?: T | null;
+    validRange?: [T, T];
+    onChange?: (date: T) => void;
+    onPanelChange?: (date: T, mode: CalendarProps<dayjs.Dayjs>['mode']) => void;
+    onSelect?: (date: T, selectInfo: CalendarSelectInfo) => void;
+    disabledDate?: (date: T) => boolean;
+    dateFullCellRender?: (date: T) => ReactNode;
+    dateCellRender?: (date: T) => ReactNode;
+    monthFullCellRender?: (date: T) => ReactNode;
+    monthCellRender?: (date: T) => ReactNode;
+    cellRender?: (date: T, info: CalendarCellInfo) => ReactNode;
+    fullCellRender?: (date: T, info: CalendarCellInfo) => ReactNode;
+};
+type CalendarValueHOCProps<T> = Omit<CalendarProps<dayjs.Dayjs>, 'value' | 'defaultValue' | 'validRange' | 'onChange' | 'onPanelChange' | 'onSelect' | 'disabledDate' | 'dateFullCellRender' | 'dateCellRender' | 'monthFullCellRender' | 'monthCellRender' | 'cellRender' | 'fullCellRender'> & CalendarValueProps<T>;
+export type CalendarFormatValueHOCProps = CalendarValueHOCProps<string>;
+export type CalendarTimestampValueHOCProps = CalendarValueHOCProps<number> & {
     type?: 'milliseconds' | 'seconds';
 };
+export type CalendarTimestampValueHOC = CalendarTimestampValueHOCProps;
 export type AutoCompleteTreeLeafSelectProps = TreeAutoCompleteProps & {
     treeSelectProps?: TreeSelectProps;
 };
@@ -1157,3 +1178,4 @@ export interface RevolvingTableProps<T, U> {
 export type ProxyFormInstance<Values> = FormInstance & {
     validateFieldsWithNesting?: ValidateFields<Values>;
 };
+export {};

@@ -1,4 +1,4 @@
-import { cloneElement, memo, useMemo, useRef, useState } from 'react';
+import { cloneElement, isValidElement, memo, useMemo, useRef, useState } from 'react';
 
 import type { DisplayNameInternal, PagingEntityValueHOCProps } from '../types';
 import useArrayEntityValueHOC from '../useArrayEntityValueHOC';
@@ -49,6 +49,10 @@ const InternalPagingEntityValueHOC = memo<PagingEntityValueHOCProps>((props) => 
 
       const targetDataSource = props?.getOptionsByDataSource?.(_dataSource) ?? _dataSource;
 
+      if (page === 1) {
+        dataSourceStore.current.clear();
+      }
+
       dataSourceStore.current.set(page, targetDataSource);
 
       setOptions(Array.from(dataSourceStore.current.values()).flat());
@@ -57,10 +61,12 @@ const InternalPagingEntityValueHOC = memo<PagingEntityValueHOCProps>((props) => 
     return hoc;
   }
 
-  const children = cloneElement(props.children, {
-    ...(props?.children?.props ?? {}),
-    ...createPagingPropsHOC(),
-  });
+  const children = isValidElement(props.children)
+    ? cloneElement(props.children, {
+        ...(props?.children?.props ?? {}),
+        ...createPagingPropsHOC(),
+      })
+    : props.children;
 
   return useArrayEntityValueHOC({ ...props, children, options });
 });

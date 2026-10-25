@@ -1,12 +1,14 @@
-import type { CalendarFormatValueHOCProps } from '../types';
+import type { CalendarTimestampValueHOCProps } from '../types';
 import { createFactory } from '../util';
 import ValueHOC from './ValueHOC';
 
-const CalendarFormatValueHOC: typeof ValueHOC & {
-  defaultProps?: Partial<CalendarFormatValueHOCProps>;
-  override?: (props: Partial<CalendarFormatValueHOCProps>) => Partial<CalendarFormatValueHOCProps>;
-} = createFactory<CalendarFormatValueHOCProps>(ValueHOC, {});
+const CalendarTimestampValueHOC: typeof ValueHOC & {
+  defaultProps?: Partial<CalendarTimestampValueHOCProps>;
+  override?: (
+    props: Partial<CalendarTimestampValueHOCProps>,
+  ) => Partial<CalendarTimestampValueHOCProps>;
+} = createFactory<CalendarTimestampValueHOCProps>(ValueHOC, {});
 
-CalendarFormatValueHOC.displayName = 'CalendarFormatValueHOC';
+CalendarTimestampValueHOC.displayName = 'CalendarTimestampValueHOC';
 
-export default CalendarFormatValueHOC;
+export default CalendarTimestampValueHOC;

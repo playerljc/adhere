@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { isValidElement, memo } from 'react';
 
 import type { DisplayNameInternal, TreeEntityValueHOCProps } from '../types';
 import useTreeEntityValueHOC from '../useTreeEntityValueHOC';
@@ -9,6 +9,8 @@ const DEFAULT_TREE_DATA_PROP = 'treeData';
 
 const InternalTreeEntityValueHOC = memo<TreeEntityValueHOCProps>((props) => {
   function getTreeDataByEntity(entity) {
+    if (entity == null || typeof entity !== 'object') return undefined;
+
     if ((props.treeDataProp ?? DEFAULT_TREE_DATA_PROP) in entity) {
       return entity[props.treeDataProp ?? DEFAULT_TREE_DATA_PROP];
     }
@@ -25,7 +27,9 @@ const InternalTreeEntityValueHOC = memo<TreeEntityValueHOCProps>((props) => {
     return treeData;
   }
 
-  const treeData = getTreeDataByEntity(props.children.props);
+  const treeData = isValidElement(props.children)
+    ? getTreeDataByEntity(props.children.props)
+    : undefined;
 
   return useTreeEntityValueHOC({ ...props, treeData });
 });

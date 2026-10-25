@@ -1,20 +1,21 @@
-import dayjs from 'dayjs';
-import quarterOfYear from 'dayjs/plugin/quarterOfYear';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
 import React, { useMemo } from 'react';
 import type { FC } from 'react';
 
 import TimePicker from '../time-picker';
 import type { TimePickerFormatValueHOCProps } from '../types';
-
-dayjs.extend(weekOfYear);
-dayjs.extend(quarterOfYear);
+import {
+  DEFAULT_TIME_FORMAT,
+  formatDayjs,
+  parseDayjs,
+  toTimeParts,
+} from '../value-hoc/dateValue';
 
 /**
  * ValueHOC
  * @param defaultValue
  * @param value
  * @param onChange
+ * @param format
  * @param props
  * @constructor
  */
@@ -22,35 +23,32 @@ const ValueHOC: FC<TimePickerFormatValueHOCProps> = ({
   defaultValue,
   value,
   onChange,
+  format,
   ...props
 }) => {
-  function originValueToDateJSObject(_value) {
-    if (_value === null || _value === undefined) return _value;
+  const targetValue = useMemo(
+    () => parseDayjs(value, format, DEFAULT_TIME_FORMAT),
+    [value, format],
+  );
 
-    const ymd = dayjs().format('L');
-    return dayjs(`${ymd} ${_value}`);
-  }
-
-  const targetValue = useMemo(() => originValueToDateJSObject(value), [value]);
-
-  const targetDefaultValue = useMemo(() => originValueToDateJSObject(defaultValue), [defaultValue]);
+  const targetDefaultValue = useMemo(
+    () => parseDayjs(defaultValue, format, DEFAULT_TIME_FORMAT),
+    [defaultValue, format],
+  );
 
   function _onChange(_value, dateString) {
-    if (_value === null || _value === undefined) {
+    if (_value == null) {
       onChange?.(null, dateString, _value, null);
       return;
     }
 
-    onChange?.(_value.format(props.format ?? 'LTS'), dateString, _value, {
-      hour: _value.hour(),
-      minute: _value.minute(),
-      second: _value.second(),
-    });
+    onChange?.(formatDayjs(_value, format, DEFAULT_TIME_FORMAT), dateString, _value, toTimeParts(_value));
   }
 
   return (
     <TimePicker
       {...props}
+      format={format}
       defaultValue={targetDefaultValue}
       value={targetValue}
       onChange={_onChange}

@@ -1,4 +1,3 @@
-import React from 'react';
 import type { TreeEntityValueHOCProps } from './types';
-declare const _default: (props: TreeEntityValueHOCProps) => React.DetailedReactHTMLElement<any, HTMLElement>;
+declare const _default: (props: TreeEntityValueHOCProps) => any;
 export default _default;

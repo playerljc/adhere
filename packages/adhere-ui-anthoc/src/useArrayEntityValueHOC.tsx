@@ -1,9 +1,18 @@
 import omit from 'omit.js';
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { isValidElement, useEffect, useMemo, useRef } from 'react';
 
 import Util from '@baifendian/adhere-util';
 
 import type { ArrayEntityValueHOCProps } from './types';
+import {
+  childPassesThroughValue,
+  isMultiplePrimitiveValue,
+  isMultipleRefValue,
+  isPrimitiveValue,
+  isRefValue,
+  readEntityValue,
+  sameEntityValue,
+} from './value-hoc/entityValue';
 
 const ARRAY_ENTITY_VALUE_HOC_OMIT_KEYS = [
   'children',
@@ -12,11 +21,9 @@ const ARRAY_ENTITY_VALUE_HOC_OMIT_KEYS = [
   'optionsProp',
   'isUsePrimaryValue',
   'changePropagation',
+  'pagingPropsPath',
+  'getOptionsByDataSource',
 ];
-
-const optionKeys = ['value', 'key', 'id'];
-
-const DEFAULT_VALUE_PROP = 'value';
 
 export default (props: ArrayEntityValueHOCProps) => {
   const { value, onChange, children, options } = props;
@@ -29,149 +36,92 @@ export default (props: ArrayEntityValueHOCProps) => {
     return true;
   }, [props.isUsePrimaryValue]);
 
-  function getEntityValue(entity) {
-    if ((props.valueProp ?? DEFAULT_VALUE_PROP) in entity) {
-      return entity[props.valueProp ?? DEFAULT_VALUE_PROP];
-    }
-
-    let value = entity[DEFAULT_VALUE_PROP];
-
-    for (let i = 0; i < optionKeys.length; i++) {
-      if (optionKeys[i] in entity) {
-        value = entity[optionKeys[i]];
-        break;
-      }
-    }
-
-    return value;
-  }
-
-  function isPrimitive(_value) {
-    return (
-      _value !== null && _value !== undefined && _value?.trim?.() !== '' && Util.isPrimitive(_value)
-    );
-  }
-
-  function isRef(_value) {
-    return (
-      _value !== null &&
-      _value !== undefined &&
-      _value?.trim?.() !== '' &&
-      !Util.isArray(_value) &&
-      Util.isRef(_value)
-    );
-  }
-
-  function isMultiplePrimitive(_value) {
-    return (
-      _value !== null &&
-      _value !== undefined &&
-      _value?.trim?.() !== '' &&
-      Util.isArray(_value) &&
-      !!_value.length &&
-      _value.some((t) => Util.isPrimitive(t))
-    );
-  }
-
-  function isMultipleRef(_value) {
-    return (
-      _value !== null &&
-      _value !== undefined &&
-      _value?.trim?.() !== '' &&
-      Util.isArray(_value) &&
-      !!_value.length &&
-      _value.every((t) => Util.isRef(t))
-    );
-  }
-
-  function valuesToEntities(_values) {
-    return _values.map((t) => {
-      if (isPrimitive(t)) {
-        return valueToEntity(t);
-      }
-
-      return t;
-    });
-  }
-
-  function valuesToPrimitive(_values) {
-    return _values.map((t) => valueToPrimitive(t));
-  }
+  const childProps = isValidElement(children) ? (children.props as any) : undefined;
+  const preferredKey = props.valueProp || childProps?.fieldNames?.value;
+  const passThrough = childPassesThroughValue(childProps);
 
   function valueToEntity(_value) {
     const targetOptions = [...(options ?? [])];
 
-    if (Array.isArray(props.value)) {
-      props.value.forEach((_value) => {
-        if (Util.isObject(_value)) {
-          targetOptions.push(_value);
+    if (Array.isArray(value)) {
+      value.forEach((item) => {
+        if (Util.isObject(item)) {
+          targetOptions.push(item);
         }
       });
-    } else {
-      if (Util.isObject(props.value)) {
-        targetOptions.push(props.value);
-      }
+    } else if (Util.isObject(value)) {
+      targetOptions.push(value);
     }
 
     return (
-      (targetOptions ?? []).find((t) => {
-        return Object.is(getEntityValue(t), _value);
-      }) ?? _value
+      targetOptions.find((item) => Object.is(readEntityValue(item, preferredKey), _value)) ?? _value
     );
   }
 
-  function valueToPrimitive(_value) {
-    let res = _value[DEFAULT_VALUE_PROP];
-
-    for (let i = 0; i < optionKeys.length; i++) {
-      if (optionKeys[i] in _value) {
-        res = _value[optionKeys[i]];
-        break;
+  function valuesToEntities(_values) {
+    return _values.map((item) => {
+      if (isPrimitiveValue(item)) {
+        return valueToEntity(item);
       }
-    }
 
-    return res;
+      return item;
+    });
   }
 
-  function getInternalValue() {
-    if (isRef(value)) {
-      return valueToPrimitive(value);
-    } else if (isMultipleRef(value)) {
-      return valuesToPrimitive(value);
-    }
+  function valuesToPrimitive(_values) {
+    return _values.map((item) => readEntityValue(item, preferredKey));
+  }
 
+  const internalValue = useMemo(() => {
+    if (passThrough || !_isUsePrimaryValue) return value;
+    if (isRefValue(value)) return readEntityValue(value, preferredKey);
+    if (isMultipleRefValue(value)) return valuesToPrimitive(value);
     return value;
-  }
+    // valuesToPrimitive 只依赖 value 与 preferredKey，选项变化不应生成新的 value 引用
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, preferredKey, passThrough, _isUsePrimaryValue]);
 
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
 
   useEffect(() => {
-    if (isPrimitive(value)) {
-      onChangeRef.current?.(valueToEntity(value));
-    } else if (isMultiplePrimitive(value)) {
-      onChangeRef.current?.(valuesToEntities(value));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+    if (passThrough || !isValidElement(children)) return;
 
-  return React.cloneElement(children, {
+    const next = isPrimitiveValue(value)
+      ? valueToEntity(value)
+      : isMultiplePrimitiveValue(value)
+        ? valuesToEntities(value)
+        : value;
+
+    if (sameEntityValue(next, value)) return;
+    onChangeRef.current?.(next);
+    // 选项晚到时要重新还原；结果与当前 value 相同时不向外写入
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, options, preferredKey, passThrough]);
+
+  if (!isValidElement(children)) {
+    return children;
+  }
+
+  const element = children as React.ReactElement<any>;
+
+  return React.cloneElement(element, {
     ...omit(props, ARRAY_ENTITY_VALUE_HOC_OMIT_KEYS),
-    ...children.props,
-    value: _isUsePrimaryValue ? getInternalValue() : value,
+    ...element.props,
+    value: internalValue,
     realValue: value,
     onChange: (_selectValue, ...rest) => {
-      if (isPrimitive(_selectValue)) {
+      if (isPrimitiveValue(_selectValue)) {
         onChange?.(valueToEntity(_selectValue), ...rest);
-      } else if (isMultiplePrimitive(_selectValue)) {
+      } else if (isMultiplePrimitiveValue(_selectValue)) {
         onChange?.(valuesToEntities(_selectValue), ...rest);
       } else {
         onChange?.(_selectValue, ...rest);
       }
 
-      if (!Object.is(onChange, children.props?.onChange)) {
+      if (!Object.is(onChange, childProps?.onChange)) {
         if (!('changePropagation' in props) || props.changePropagation) {
-          children.props?.onChange?.(_selectValue, ...rest);
+          childProps?.onChange?.(_selectValue, ...rest);
         }
       }
     },

@@ -1,9 +1,14 @@
-import dayjs from 'dayjs';
 import React, { useMemo } from 'react';
 import type { FC } from 'react';
 
 import TimePicker from '../time-picker';
 import type { TimePickerTimestampValueHOCProps } from '../types';
+import {
+  formatTimestamp,
+  normalizeTimestampType,
+  parseTimestamp,
+  toTimeParts,
+} from '../value-hoc/dateValue';
 
 /**
  * ValueHOC
@@ -21,39 +26,22 @@ const ValueHOC: FC<TimePickerTimestampValueHOCProps> = ({
   type = 'milliseconds',
   ...props
 }) => {
-  function originValueToDateJSObject(_value) {
-    if (_value === null || _value === undefined) return _value;
+  const unit = normalizeTimestampType(type);
 
-    if (type === 'seconds') {
-      return dayjs.unix(_value);
-    }
+  const targetValue = useMemo(() => parseTimestamp(value, unit), [value, unit]);
 
-    return dayjs(_value);
-  }
-
-  function changeValueMillisecondsToTargetValue(milliseconds) {
-    if (type === 'seconds') {
-      return Math.round(milliseconds / 1000);
-    }
-
-    return milliseconds;
-  }
-
-  const targetValue = useMemo(() => originValueToDateJSObject(value), [value]);
-
-  const targetDefaultValue = useMemo(() => originValueToDateJSObject(defaultValue), [defaultValue]);
+  const targetDefaultValue = useMemo(
+    () => parseTimestamp(defaultValue, unit),
+    [defaultValue, unit],
+  );
 
   const _onChange = (_value, dateString) => {
-    if (_value === null || _value === undefined) {
+    if (_value == null) {
       onChange?.(null, dateString, _value, null);
       return;
     }
 
-    onChange?.(changeValueMillisecondsToTargetValue(_value.valueOf()), dateString, _value, {
-      hour: _value.hour(),
-      minute: _value.minute(),
-      second: _value.second(),
-    });
+    onChange?.(formatTimestamp(_value, unit), dateString, _value, toTimeParts(_value));
   };
 
   return (

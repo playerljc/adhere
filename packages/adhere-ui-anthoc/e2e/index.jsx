@@ -41,6 +41,7 @@ import HorizontalCheckbox from './Checkbox/HorizontalCheckbox';
 import VerticalCheckAllCheckbox from './Checkbox/VerticalCheckAllCheckbox';
 import VerticalCheckbox from './Checkbox/VerticalCheckbox';
 import DateFieldDependency from './DatePicker/DateFieldDependency';
+import ValueHOCSuite from './ValueHOC/suite';
 import DatePickerValueHOCInFormTest from './DatePickerValueHOCInFormTest';
 import DatePickerValueHOCTest from './DatePickerValueHOCTest';
 import CheckboxWrapperFormItm from './Form/CheckboxWrapperFormItm';
@@ -201,5 +202,6 @@ e2e.PC({
   // children: <TreeTransferLeafCascade />,
   // children: <TransferFormItem />,
   // children: <TreeTransferSelect />,
-  children: <DateFieldDependency />,
+  // children: <DateFieldDependency />,
+  children: <ValueHOCSuite />,
 });

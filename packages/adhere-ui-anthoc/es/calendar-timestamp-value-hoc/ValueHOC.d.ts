@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { CalendarTimestampValueHOC } from '../types';
+import type { CalendarTimestampValueHOCProps } from '../types';
 /**
  * ValueHOC
  * @param defaultValue
@@ -19,5 +19,5 @@ import type { CalendarTimestampValueHOC } from '../types';
  * @param props
  * @constructor
  */
-declare const ValueHOC: FC<CalendarTimestampValueHOC>;
+declare const ValueHOC: FC<CalendarTimestampValueHOCProps>;
 export default ValueHOC;

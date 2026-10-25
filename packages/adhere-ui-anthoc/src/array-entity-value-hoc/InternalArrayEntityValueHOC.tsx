@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { isValidElement, memo } from 'react';
 
 import type { ArrayEntityValueHOCProps, DisplayNameInternal } from '../types';
 import useArrayEntityValueHOC from '../useArrayEntityValueHOC';
@@ -9,6 +9,8 @@ const DEFAULT_OPTIONS_PROP = 'options';
 
 const InternalArrayEntityValueHOC = memo<ArrayEntityValueHOCProps>((props) => {
   function getOptionsByEntity(entity) {
+    if (entity == null || typeof entity !== 'object') return undefined;
+
     if ((props.optionsProp ?? DEFAULT_OPTIONS_PROP) in entity) {
       return entity[props.optionsProp ?? DEFAULT_OPTIONS_PROP];
     }
@@ -25,7 +27,9 @@ const InternalArrayEntityValueHOC = memo<ArrayEntityValueHOCProps>((props) => {
     return options;
   }
 
-  const options = getOptionsByEntity(props.children.props);
+  const options = isValidElement(props.children)
+    ? getOptionsByEntity(props.children.props)
+    : undefined;
 
   return useArrayEntityValueHOC({ ...props, options });
 });

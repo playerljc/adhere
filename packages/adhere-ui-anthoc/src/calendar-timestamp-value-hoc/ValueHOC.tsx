@@ -1,14 +1,10 @@
-import dayjs from 'dayjs';
-import quarterOfYear from 'dayjs/plugin/quarterOfYear';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
 import React, { useMemo } from 'react';
 import type { FC } from 'react';
+import type { Dayjs } from 'dayjs';
 
 import Calendar from '../calendar';
-import type { CalendarTimestampValueHOC } from '../types';
-
-dayjs.extend(weekOfYear);
-dayjs.extend(quarterOfYear);
+import type { CalendarTimestampValueHOCProps } from '../types';
+import { formatTimestamp, normalizeTimestampType, parseTimestamp } from '../value-hoc/dateValue';
 
 /**
  * ValueHOC
@@ -29,7 +25,7 @@ dayjs.extend(quarterOfYear);
  * @param props
  * @constructor
  */
-const ValueHOC: FC<CalendarTimestampValueHOC> = ({
+const ValueHOC: FC<CalendarTimestampValueHOCProps> = ({
   defaultValue,
   value,
   validRange,
@@ -46,72 +42,29 @@ const ValueHOC: FC<CalendarTimestampValueHOC> = ({
   type = 'milliseconds',
   ...props
 }) => {
-  function originValueToDateJSObject(_value) {
-    if (_value === null || _value === undefined) return _value;
+  const unit = normalizeTimestampType(type);
 
-    if (type === 'seconds') {
-      return dayjs.unix(_value);
-    }
+  const formatValue = (current?: Dayjs | null) => {
+    if (current == null) return undefined;
+    return formatTimestamp(current, unit);
+  };
 
-    return dayjs(_value);
-  }
+  const targetValue = useMemo(() => parseTimestamp(value, unit), [value, unit]);
 
-  function changeValueMillisecondsToTargetValue(milliseconds) {
-    if (type === 'seconds') {
-      return Math.round(milliseconds / 1000);
-    }
-
-    return milliseconds;
-  }
-
-  const targetValue = useMemo(() => originValueToDateJSObject(value), [value]);
-
-  const targetDefaultValue = useMemo(() => originValueToDateJSObject(defaultValue), [defaultValue]);
-
-  const targetValidRange = useMemo<[dayjs.Dayjs, dayjs.Dayjs]>(
-    () => [originValueToDateJSObject(validRange?.[0]), originValueToDateJSObject(validRange?.[1])],
-    [validRange],
+  const targetDefaultValue = useMemo(
+    () => parseTimestamp(defaultValue, unit),
+    [defaultValue, unit],
   );
 
-  function _onChange(_value) {
-    onChange?.(changeValueMillisecondsToTargetValue(_value.valueOf()));
-  }
+  const targetValidRange = useMemo(() => {
+    if (validRange?.[0] == null || validRange?.[1] == null) return undefined;
 
-  function _disabledDate(_value) {
-    return disabledDate?.(changeValueMillisecondsToTargetValue(_value.valueOf())) as boolean;
-  }
+    const start = parseTimestamp(validRange[0], unit);
+    const end = parseTimestamp(validRange[1], unit);
+    if (start == null || end == null) return undefined;
 
-  function _dateFullCellRender(_value) {
-    return dateFullCellRender?.(changeValueMillisecondsToTargetValue(_value.valueOf()));
-  }
-
-  function _dateCellRender(_value) {
-    return dateCellRender?.(changeValueMillisecondsToTargetValue(_value.valueOf()));
-  }
-
-  function _monthFullCellRender(_value) {
-    return monthFullCellRender?.(changeValueMillisecondsToTargetValue(_value.valueOf()));
-  }
-
-  function _monthCellRender(_value) {
-    return monthCellRender?.(changeValueMillisecondsToTargetValue(_value.valueOf()));
-  }
-
-  function _cellRender(_value, info) {
-    return cellRender?.(changeValueMillisecondsToTargetValue(_value.valueOf()), info);
-  }
-
-  function _fullCellRender(_value, info) {
-    return fullCellRender?.(changeValueMillisecondsToTargetValue(_value.valueOf()), info);
-  }
-
-  function _onPanelChange(_value, mode) {
-    onPanelChange?.(changeValueMillisecondsToTargetValue(_value.valueOf()), mode);
-  }
-
-  function _onSelect(_value, selectInfo) {
-    onSelect?.(changeValueMillisecondsToTargetValue(_value.valueOf()), selectInfo);
-  }
+    return [start, end] as [Dayjs, Dayjs];
+  }, [validRange, unit]);
 
   return (
     <Calendar
@@ -119,16 +72,86 @@ const ValueHOC: FC<CalendarTimestampValueHOC> = ({
       defaultValue={targetDefaultValue}
       value={targetValue}
       validRange={targetValidRange}
-      onChange={_onChange}
-      disabledDate={_disabledDate}
-      dateFullCellRender={_dateFullCellRender}
-      dateCellRender={_dateCellRender}
-      monthFullCellRender={_monthFullCellRender}
-      monthCellRender={_monthCellRender}
-      cellRender={_cellRender}
-      fullCellRender={_fullCellRender}
-      onPanelChange={_onPanelChange}
-      onSelect={_onSelect}
+      {...(onChange
+        ? {
+            onChange: (current) => {
+              const next = formatValue(current);
+              if (next != null) onChange(next);
+            },
+          }
+        : {})}
+      {...(disabledDate
+        ? {
+            disabledDate: (current) => {
+              const next = formatValue(current);
+              return next != null ? Boolean(disabledDate(next)) : false;
+            },
+          }
+        : {})}
+      {...(dateFullCellRender
+        ? {
+            dateFullCellRender: (current) => {
+              const next = formatValue(current);
+              return next == null ? null : dateFullCellRender(next);
+            },
+          }
+        : {})}
+      {...(dateCellRender
+        ? {
+            dateCellRender: (current) => {
+              const next = formatValue(current);
+              return next == null ? null : dateCellRender(next);
+            },
+          }
+        : {})}
+      {...(monthFullCellRender
+        ? {
+            monthFullCellRender: (current) => {
+              const next = formatValue(current);
+              return next == null ? null : monthFullCellRender(next);
+            },
+          }
+        : {})}
+      {...(monthCellRender
+        ? {
+            monthCellRender: (current) => {
+              const next = formatValue(current);
+              return next == null ? null : monthCellRender(next);
+            },
+          }
+        : {})}
+      {...(cellRender
+        ? {
+            cellRender: (current, info) => {
+              const next = formatValue(current);
+              return next == null ? info?.originNode : cellRender(next, info);
+            },
+          }
+        : {})}
+      {...(fullCellRender
+        ? {
+            fullCellRender: (current, info) => {
+              const next = formatValue(current);
+              return next == null ? info?.originNode : fullCellRender(next, info);
+            },
+          }
+        : {})}
+      {...(onPanelChange
+        ? {
+            onPanelChange: (current, mode) => {
+              const next = formatValue(current);
+              if (next != null) onPanelChange(next, mode);
+            },
+          }
+        : {})}
+      {...(onSelect
+        ? {
+            onSelect: (current, selectInfo) => {
+              const next = formatValue(current);
+              if (next != null) onSelect(next, selectInfo);
+            },
+          }
+        : {})}
     />
   );
 };

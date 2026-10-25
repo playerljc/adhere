@@ -1,4 +1,3 @@
-import React from 'react';
 import type { ArrayEntityValueHOCProps } from './types';
-declare const _default: (props: ArrayEntityValueHOCProps) => React.DetailedReactHTMLElement<any, HTMLElement>;
+declare const _default: (props: ArrayEntityValueHOCProps) => any;
 export default _default;

@@ -1,14 +1,10 @@
-import dayjs from 'dayjs';
-import quarterOfYear from 'dayjs/plugin/quarterOfYear';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
 import React, { useMemo } from 'react';
 import type { FC } from 'react';
+import type { Dayjs } from 'dayjs';
 
 import Calendar from '../calendar';
 import type { CalendarFormatValueHOCProps } from '../types';
-
-dayjs.extend(weekOfYear);
-dayjs.extend(quarterOfYear);
+import { DEFAULT_DATE_FORMAT, formatDayjs, parseDayjs } from '../value-hoc/dateValue';
 
 /**
  * ValueHOC
@@ -44,60 +40,30 @@ const ValueHOC: FC<CalendarFormatValueHOCProps> = ({
   onSelect,
   ...props
 }) => {
-  function originValueToDateJSObject(_value) {
-    if (_value === null || _value === undefined) return _value;
+  const formatValue = (current?: Dayjs | null) => {
+    if (current == null) return undefined;
+    return formatDayjs(current, undefined, DEFAULT_DATE_FORMAT);
+  };
 
-    return dayjs(_value);
-  }
-
-  const targetValue = useMemo(() => originValueToDateJSObject(value), [value]);
-
-  const targetDefaultValue = useMemo(() => originValueToDateJSObject(defaultValue), [defaultValue]);
-
-  const targetValidRange = useMemo<[dayjs.Dayjs, dayjs.Dayjs]>(
-    () => [originValueToDateJSObject(validRange?.[0]), originValueToDateJSObject(validRange?.[1])],
-    [validRange],
+  const targetValue = useMemo(
+    () => parseDayjs(value, undefined, DEFAULT_DATE_FORMAT),
+    [value],
   );
 
-  function _onChange(_value) {
-    onChange?.(_value.format('L LTS'));
-  }
+  const targetDefaultValue = useMemo(
+    () => parseDayjs(defaultValue, undefined, DEFAULT_DATE_FORMAT),
+    [defaultValue],
+  );
 
-  function _disabledDate(_value) {
-    return disabledDate?.(_value.format('L LTS')) as boolean;
-  }
+  const targetValidRange = useMemo(() => {
+    if (validRange?.[0] == null || validRange?.[1] == null) return undefined;
 
-  function _dateFullCellRender(_value) {
-    return dateFullCellRender?.(_value.format('L LTS'));
-  }
+    const start = parseDayjs(validRange[0], undefined, DEFAULT_DATE_FORMAT);
+    const end = parseDayjs(validRange[1], undefined, DEFAULT_DATE_FORMAT);
+    if (start == null || end == null) return undefined;
 
-  function _dateCellRender(_value) {
-    return dateCellRender?.(_value.format('L LTS'));
-  }
-
-  function _monthFullCellRender(_value) {
-    return monthFullCellRender?.(_value.format('L LTS'));
-  }
-
-  function _monthCellRender(_value) {
-    return monthCellRender?.(_value.format('L LTS'));
-  }
-
-  function _cellRender(_value, info) {
-    return cellRender?.(_value.format('L LTS'), info);
-  }
-
-  function _fullCellRender(_value, info) {
-    return fullCellRender?.(_value.format('L LTS'), info);
-  }
-
-  function _onPanelChange(_value, mode) {
-    onPanelChange?.(_value.format('L LTS'), mode);
-  }
-
-  function _onSelect(_value, selectInfo) {
-    onSelect?.(_value.format('L LTS'), selectInfo);
-  }
+    return [start, end] as [Dayjs, Dayjs];
+  }, [validRange]);
 
   return (
     <Calendar
@@ -105,16 +71,86 @@ const ValueHOC: FC<CalendarFormatValueHOCProps> = ({
       defaultValue={targetDefaultValue}
       value={targetValue}
       validRange={targetValidRange}
-      onChange={_onChange}
-      disabledDate={_disabledDate}
-      dateFullCellRender={_dateFullCellRender}
-      dateCellRender={_dateCellRender}
-      monthFullCellRender={_monthFullCellRender}
-      monthCellRender={_monthCellRender}
-      cellRender={_cellRender}
-      fullCellRender={_fullCellRender}
-      onPanelChange={_onPanelChange}
-      onSelect={_onSelect}
+      {...(onChange
+        ? {
+            onChange: (current) => {
+              const next = formatValue(current);
+              if (next != null) onChange(next);
+            },
+          }
+        : {})}
+      {...(disabledDate
+        ? {
+            disabledDate: (current) => {
+              const next = formatValue(current);
+              return next != null ? Boolean(disabledDate(next)) : false;
+            },
+          }
+        : {})}
+      {...(dateFullCellRender
+        ? {
+            dateFullCellRender: (current) => {
+              const next = formatValue(current);
+              return next == null ? null : dateFullCellRender(next);
+            },
+          }
+        : {})}
+      {...(dateCellRender
+        ? {
+            dateCellRender: (current) => {
+              const next = formatValue(current);
+              return next == null ? null : dateCellRender(next);
+            },
+          }
+        : {})}
+      {...(monthFullCellRender
+        ? {
+            monthFullCellRender: (current) => {
+              const next = formatValue(current);
+              return next == null ? null : monthFullCellRender(next);
+            },
+          }
+        : {})}
+      {...(monthCellRender
+        ? {
+            monthCellRender: (current) => {
+              const next = formatValue(current);
+              return next == null ? null : monthCellRender(next);
+            },
+          }
+        : {})}
+      {...(cellRender
+        ? {
+            cellRender: (current, info) => {
+              const next = formatValue(current);
+              return next == null ? info?.originNode : cellRender(next, info);
+            },
+          }
+        : {})}
+      {...(fullCellRender
+        ? {
+            fullCellRender: (current, info) => {
+              const next = formatValue(current);
+              return next == null ? info?.originNode : fullCellRender(next, info);
+            },
+          }
+        : {})}
+      {...(onPanelChange
+        ? {
+            onPanelChange: (current, mode) => {
+              const next = formatValue(current);
+              if (next != null) onPanelChange(next, mode);
+            },
+          }
+        : {})}
+      {...(onSelect
+        ? {
+            onSelect: (current, selectInfo) => {
+              const next = formatValue(current);
+              if (next != null) onSelect(next, selectInfo);
+            },
+          }
+        : {})}
     />
   );
 };

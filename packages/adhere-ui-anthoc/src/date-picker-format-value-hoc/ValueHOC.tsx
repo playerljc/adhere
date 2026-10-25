@@ -1,20 +1,21 @@
-import dayjs from 'dayjs';
-import quarterOfYear from 'dayjs/plugin/quarterOfYear';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
 import React, { useMemo } from 'react';
 import type { FC } from 'react';
 
 import DatePicker from '../date-picker';
 import type { DatePickerFormatValueHOCProps } from '../types';
-
-dayjs.extend(weekOfYear);
-dayjs.extend(quarterOfYear);
+import {
+  DEFAULT_DATE_FORMAT,
+  formatDayjs,
+  parseDayjs,
+  toDateParts,
+} from '../value-hoc/dateValue';
 
 /**
  * ValueHOC
  * @param defaultValue
  * @param value
  * @param onChange
+ * @param format
  * @param props
  * @constructor
  */
@@ -22,40 +23,32 @@ const ValueHOC: FC<DatePickerFormatValueHOCProps> = ({
   defaultValue,
   value,
   onChange,
+  format,
   ...props
 }) => {
-  function originValueToDateJSObject(_value) {
-    if (_value === null || _value === undefined) return _value;
+  const targetValue = useMemo(
+    () => parseDayjs(value, format, DEFAULT_DATE_FORMAT),
+    [value, format],
+  );
 
-    return dayjs(_value);
-  }
-
-  const targetValue = useMemo(() => originValueToDateJSObject(value), [value]);
-
-  const targetDefaultValue = useMemo(() => originValueToDateJSObject(defaultValue), [defaultValue]);
+  const targetDefaultValue = useMemo(
+    () => parseDayjs(defaultValue, format, DEFAULT_DATE_FORMAT),
+    [defaultValue, format],
+  );
 
   function _onChange(_value, dateString) {
-    if (_value === null || _value === undefined) {
+    if (_value == null) {
       onChange?.(null, dateString, _value, null);
       return;
     }
 
-    onChange?.(_value.format(props.format ?? 'L LTS'), dateString, _value, {
-      year: _value.year(),
-      quarter: _value.quarter(),
-      month: _value.month(),
-      week: _value.week(),
-      day: _value.day(),
-      date: _value.date(),
-      hour: _value.hour(),
-      minute: _value.minute(),
-      second: _value.second(),
-    });
+    onChange?.(formatDayjs(_value, format, DEFAULT_DATE_FORMAT), dateString, _value, toDateParts(_value));
   }
 
   return (
     <DatePicker
       {...props}
+      format={format}
       defaultValue={targetDefaultValue}
       value={targetValue}
       onChange={_onChange}

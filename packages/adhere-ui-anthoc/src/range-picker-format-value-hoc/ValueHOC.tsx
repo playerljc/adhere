@@ -1,20 +1,21 @@
-import dayjs from 'dayjs';
-import quarterOfYear from 'dayjs/plugin/quarterOfYear';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
 import React, { useMemo } from 'react';
 import type { FC } from 'react';
 
 import RangePicker from '../range-picker';
 import { RangePickerFormatValueHOCProps } from '../types';
-
-dayjs.extend(weekOfYear);
-dayjs.extend(quarterOfYear);
+import {
+  DEFAULT_DATE_FORMAT,
+  formatDayjsPair,
+  parseDayjsPair,
+  toDateParts,
+} from '../value-hoc/dateValue';
 
 /**
  * ValueHOC
  * @param defaultValue
  * @param value
  * @param onChange
+ * @param format
  * @param props
  * @constructor
  */
@@ -22,54 +23,41 @@ const ValueHOC: FC<RangePickerFormatValueHOCProps> = ({
   defaultValue,
   value,
   onChange,
+  format,
   ...props
 }) => {
-  function originValueToDateJSObject(_value) {
-    if (_value === null || _value === undefined) return _value;
+  const targetValue = useMemo(
+    () => parseDayjsPair(value, format, DEFAULT_DATE_FORMAT),
+    [value, format],
+  );
 
-    if (!Array.isArray(_value)) return null;
-
-    if (!_value.length) return [];
-
-    return [dayjs(_value[0]), dayjs(_value[1])];
-  }
-
-  function dateJSObjectToExtra(_dateJSObject) {
-    return {
-      year: _dateJSObject.year(),
-      quarter: _dateJSObject.quarter(),
-      month: _dateJSObject.month(),
-      week: _dateJSObject.week(),
-      day: _dateJSObject.day(),
-      date: _dateJSObject.date(),
-      hour: _dateJSObject.hour(),
-      minute: _dateJSObject.minute(),
-      second: _dateJSObject.second(),
-    };
-  }
-
-  const targetValue = useMemo(() => originValueToDateJSObject(value), [value]);
-
-  const targetDefaultValue = useMemo(() => originValueToDateJSObject(defaultValue), [defaultValue]);
+  const targetDefaultValue = useMemo(
+    () => parseDayjsPair(defaultValue, format, DEFAULT_DATE_FORMAT),
+    [defaultValue, format],
+  );
 
   const _onChange = (_value, dateString) => {
-    const isFilled =
-      _value != null && _value.length === 2 && _value[0] != null && _value[1] != null;
+    if (_value == null) {
+      onChange?.(null, dateString, _value, null);
+      return;
+    }
+
+    const data = formatDayjsPair(_value, format, DEFAULT_DATE_FORMAT);
+    const isFilled = data != null && data[0] != null && data[1] != null;
 
     onChange?.(
-      isFilled
-        ? [_value[0].format(props.format ?? 'L LTS'), _value[1].format(props.format ?? 'L LTS')]
-        : _value,
+      data,
       dateString,
       _value,
-      isFilled ? [dateJSObjectToExtra(_value[0]), dateJSObjectToExtra(_value[1])] : null,
+      isFilled ? [toDateParts(_value[0]), toDateParts(_value[1])] : null,
     );
   };
 
   return (
     <RangePicker
       {...props}
-      defaultValue={targetDefaultValue}
+      format={format}
+      defaultValue={targetDefaultValue ?? undefined}
       value={targetValue}
       onChange={_onChange}
     />

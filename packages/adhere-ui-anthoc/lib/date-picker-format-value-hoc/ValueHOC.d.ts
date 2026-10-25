@@ -5,6 +5,7 @@ import type { DatePickerFormatValueHOCProps } from '../types';
  * @param defaultValue
  * @param value
  * @param onChange
+ * @param format
  * @param props
  * @constructor
  */

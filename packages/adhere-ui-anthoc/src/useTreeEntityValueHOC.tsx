@@ -1,21 +1,28 @@
 import omit from 'omit.js';
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { isValidElement, useEffect, useMemo, useRef } from 'react';
 
 import Util from '@baifendian/adhere-util';
 
 import type { TreeEntityValueHOCProps } from './types';
+import {
+  childPassesThroughValue,
+  isMultiplePrimitiveValue,
+  isMultipleRefValue,
+  isPrimitiveValue,
+  isRefValue,
+  readEntityValue,
+  sameEntityValue,
+} from './value-hoc/entityValue';
 
 const TREE_ENTITY_VALUE_HOC_OMIT_KEYS = [
   'children',
+  'treeData',
   'treeDataProp',
   'valueProp',
   'childrenProp',
   'isUsePrimaryValue',
+  'changePropagation',
 ];
-
-const optionKeys = ['value', 'key', 'id'];
-
-const DEFAULT_VALUE_PROP = 'value';
 
 export default (props: TreeEntityValueHOCProps) => {
   const { value, onChange, children, treeData } = props;
@@ -28,94 +35,25 @@ export default (props: TreeEntityValueHOCProps) => {
     return true;
   }, [props.isUsePrimaryValue]);
 
-  function getEntityValue(entity) {
-    if ((props.valueProp ?? DEFAULT_VALUE_PROP) in entity) {
-      return entity[props.valueProp ?? DEFAULT_VALUE_PROP];
-    }
+  const childProps = isValidElement(children) ? (children.props as any) : undefined;
+  const preferredKey = props.valueProp || childProps?.fieldNames?.value;
+  const childrenKey = props.childrenProp || childProps?.fieldNames?.children || 'children';
+  const passThrough = childPassesThroughValue(childProps);
+  const simpleMode = Boolean(childProps?.treeDataSimpleMode);
 
-    let value = entity[DEFAULT_VALUE_PROP];
-
-    for (let i = 0; i < optionKeys.length; i++) {
-      if (optionKeys[i] in entity) {
-        value = entity[optionKeys[i]];
-        break;
-      }
-    }
-
-    return value;
-  }
-
-  function isPrimitive(_value) {
-    return (
-      _value !== null && _value !== undefined && _value?.trim?.() !== '' && Util.isPrimitive(_value)
-    );
-  }
-
-  function isRef(_value) {
-    return (
-      _value !== null &&
-      _value !== undefined &&
-      _value?.trim?.() !== '' &&
-      !Util.isArray(_value) &&
-      Util.isRef(_value)
-    );
-  }
-
-  function isMultiplePrimitive(_value) {
-    return (
-      _value !== null &&
-      _value !== undefined &&
-      _value?.trim?.() !== '' &&
-      Util.isArray(_value) &&
-      !!_value.length &&
-      _value.flat().some((t) => Util.isPrimitive(t))
-    );
-  }
-
-  function isMultipleRef(_value) {
-    return (
-      _value !== null &&
-      _value !== undefined &&
-      _value?.trim?.() !== '' &&
-      Util.isArray(_value) &&
-      !!_value.length &&
-      _value.flat().every((t) => Util.isRef(t))
-    );
-  }
-
-  function valuesToEntities(_values) {
-    return _values.map((t) => {
-      if (isPrimitive(t)) {
-        return valueToEntity(t);
-      }
-
-      return Util.isArray(t) ? valuesToEntities(t) : t;
-    });
-  }
-
-  function isSimpleMode() {
-    return 'treeDataSimpleMode' in children.props && !!children.props.treeDataSimpleMode;
-  }
-
-  /**
-   * 需要改
-   * @param _value
-   */
   function valueToEntity(_value) {
     function loop(nodes) {
+      if (!Array.isArray(nodes)) return undefined;
+
       let entity;
-      for (let i = 0; i < nodes.length; i++) {
-        const value = getEntityValue(nodes[i]);
-        if (Object.is(value, _value)) {
-          entity = nodes[i];
+      for (let index = 0; index < nodes.length; index++) {
+        if (Object.is(readEntityValue(nodes[index], preferredKey), _value)) {
+          entity = nodes[index];
           break;
         }
 
-        entity = loop(nodes[i]?.[props.childrenProp ?? 'children'] ?? []);
-
-        if (entity) {
-          break;
-        }
+        entity = loop(nodes[index]?.[childrenKey] ?? []);
+        if (entity) break;
       }
 
       return entity;
@@ -123,89 +61,96 @@ export default (props: TreeEntityValueHOCProps) => {
 
     const targetTreeData = [...(treeData ?? [])];
 
-    if (Array.isArray(props.value)) {
-      props.value.forEach((_value) => {
-        if (Util.isObject(_value)) {
-          targetTreeData.push(_value);
+    if (Array.isArray(value)) {
+      value.forEach((item) => {
+        if (Util.isObject(item)) {
+          targetTreeData.push(item);
         }
       });
-    } else {
-      if (Util.isObject(props.value)) {
-        targetTreeData.push(props.value);
-      }
+    } else if (Util.isObject(value)) {
+      targetTreeData.push(value);
     }
 
-    if (isSimpleMode()) {
+    if (simpleMode) {
       return (
-        (targetTreeData ?? []).find((t) => {
-          return Object.is(getEntityValue(t), _value);
-        }) ?? _value
+        targetTreeData.find((item) => Object.is(readEntityValue(item, preferredKey), _value)) ??
+        _value
       );
-    } else {
-      return loop(targetTreeData ?? []) ?? _value;
     }
+
+    return loop(targetTreeData) ?? _value;
   }
 
-  function valuesToPrimitive(_values) {
-    return _values.map((t) => {
-      if (Util.isArray(t)) {
-        return valuesToPrimitive(t);
+  function valuesToEntities(_values) {
+    return _values.map((item) => {
+      if (isPrimitiveValue(item)) {
+        return valueToEntity(item);
       }
 
-      return valueToPrimitive(t);
+      return Util.isArray(item) ? valuesToEntities(item) : item;
     });
   }
 
-  function valueToPrimitive(_value) {
-    let res = _value[DEFAULT_VALUE_PROP];
-
-    for (let i = 0; i < optionKeys.length; i++) {
-      if (optionKeys[i] in _value) {
-        res = _value[optionKeys[i]];
-        break;
+  function valuesToPrimitive(_values) {
+    return _values.map((item) => {
+      if (Util.isArray(item)) {
+        return valuesToPrimitive(item);
       }
-    }
 
-    return res;
+      return readEntityValue(item, preferredKey);
+    });
   }
 
-  function getInternalValue() {
-    if (isRef(value)) {
-      return valueToPrimitive(value);
-    } else if (isMultipleRef(value)) {
-      return valuesToPrimitive(value);
-    }
-
+  const internalValue = useMemo(() => {
+    if (passThrough || !_isUsePrimaryValue) return value;
+    if (isRefValue(value)) return readEntityValue(value, preferredKey);
+    if (isMultipleRefValue(value, true)) return valuesToPrimitive(value);
     return value;
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, preferredKey, passThrough, _isUsePrimaryValue]);
 
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
 
   useEffect(() => {
-    if (isPrimitive(value)) {
-      onChangeRef.current?.(valueToEntity(value));
-    } else if (isMultiplePrimitive(value)) {
-      onChangeRef.current?.(valuesToEntities(value));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+    if (passThrough || !isValidElement(children)) return;
 
-  return React.cloneElement(children, {
+    const next = isPrimitiveValue(value)
+      ? valueToEntity(value)
+      : isMultiplePrimitiveValue(value, true)
+        ? valuesToEntities(value)
+        : value;
+
+    if (sameEntityValue(next, value)) return;
+    onChangeRef.current?.(next);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, treeData, preferredKey, childrenKey, passThrough, simpleMode]);
+
+  if (!isValidElement(children)) {
+    return children;
+  }
+
+  const element = children as React.ReactElement<any>;
+
+  return React.cloneElement(element, {
     ...omit(props, TREE_ENTITY_VALUE_HOC_OMIT_KEYS),
-    ...children.props,
-    value: _isUsePrimaryValue ? getInternalValue() : value,
+    ...element.props,
+    value: internalValue,
     realValue: value,
     onChange: (val, ...rest) => {
-      if (isPrimitive(val)) {
+      if (isPrimitiveValue(val)) {
         onChange?.(valueToEntity(val), ...rest);
-      } else if (isMultiplePrimitive(val)) {
+      } else if (isMultiplePrimitiveValue(val, true)) {
         onChange?.(valuesToEntities(val), ...rest);
       } else {
         onChange?.(val, ...rest);
       }
 
-      children.props?.onChange?.(val, ...rest);
+      if (!Object.is(onChange, childProps?.onChange)) {
+        if (!('changePropagation' in props) || props.changePropagation) {
+          childProps?.onChange?.(val, ...rest);
+        }
+      }
     },
   });
 };
