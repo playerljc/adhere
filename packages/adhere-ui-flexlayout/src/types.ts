@@ -106,6 +106,8 @@ export interface FlexLayoutFunction<P> extends NamedExoticComponent<P> {
  * FlexLayout 基础属性
  */
 export interface FlexLayoutProps {
+  /** 是否启用响应式布局，仅影响直接子元素 Auto 和 Fixed，默认 false */
+  isResponsive?: boolean;
   /** 自定义类名 */
   className?: string;
   /** 自定义样式 */

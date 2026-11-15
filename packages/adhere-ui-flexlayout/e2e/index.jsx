@@ -8,6 +8,7 @@ import Basic from './Basic';
 import Collapse from './Collapse';
 import Gutter from './Gutter';
 import HorizontalFlexLayout from './HorizontalFlexLayout';
+import Responsive from './Responsive';
 import ScrollLayout from './ScrollLayout';
 import SpaceAround from './SpaceAround';
 import SpaceBetween from './SpaceBetween';
@@ -23,5 +24,5 @@ import TCLayout from './TRBLC/TCLayout';
 import './index.less';
 
 e2e.PC({
-  children: <Basic />,
+  children: <Responsive />,
 });

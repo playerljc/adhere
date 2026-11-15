@@ -195,6 +195,23 @@
   }
 }
 
+.adhere-ui-flex-layout.adhere-ui-flex-layout-responsive {
+  &.adhere-ui-flex-layout-horizontal,
+  &.adhere-ui-flex-layout-vertical {
+    flex-wrap: wrap;
+  }
+
+  > .adhere-ui-flex-layout-auto {
+    flex: 9999 1 auto;
+  }
+
+  > .adhere-ui-flex-layout-fixed {
+    flex: 1 1 max-content;
+    // 仅保留折叠动画，避免响应式尺寸变化时与 Auto 不同步。
+    transition: max-width 0.2s, max-height 0.2s;
+  }
+}
+
 .adhere-ui-flex-layout-space-between,
 .adhere-ui-flex-layout-space-around {
   display: flex;

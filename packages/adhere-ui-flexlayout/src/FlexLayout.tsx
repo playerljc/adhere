@@ -42,7 +42,15 @@ const DEFAULT_GUTTER: GutterType = [0, 0];
  */
 const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes<HTMLDivElement>>(
   forwardRef<HTMLDivElement, FlexLayoutProps>((props, ref) => {
-    const { className, style, direction, gutter = DEFAULT_GUTTER, children, ...attrs } = props;
+    const {
+      className,
+      style,
+      direction,
+      gutter = DEFAULT_GUTTER,
+      isResponsive = false,
+      children,
+      ...attrs
+    } = props;
 
     const { media } = useContext(ConfigProvider.Context);
 
@@ -107,8 +115,11 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
 
     // 计算类名
     const classList = useMemo(
-      () => classNames(selectorPrefix, className, `${selectorPrefix}-${targetDirection}`),
-      [className, targetDirection],
+      () =>
+        classNames(selectorPrefix, className, `${selectorPrefix}-${targetDirection}`, {
+          [`${selectorPrefix}-responsive`]: isResponsive,
+        }),
+      [className, targetDirection, isResponsive],
     );
 
     // 计算样式
