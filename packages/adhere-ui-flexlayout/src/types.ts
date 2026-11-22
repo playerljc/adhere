@@ -108,6 +108,8 @@ export interface FlexLayoutFunction<P> extends NamedExoticComponent<P> {
 export interface FlexLayoutProps {
   /** 是否启用响应式布局，仅影响直接子元素 Auto 和 Fixed，默认 false */
   isResponsive?: boolean;
+  /** 横向响应式布局中每个直接子 Auto 的宽度基准，单位为 CSS 像素 */
+  autoMinWidth?: number;
   /** 自定义类名 */
   className?: string;
   /** 自定义样式 */

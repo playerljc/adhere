@@ -201,8 +201,23 @@
     flex-wrap: wrap;
   }
 
-  > .adhere-ui-flex-layout-auto {
+  &:not(:where([data-flex-layout-auto-mode])) > .adhere-ui-flex-layout-auto {
     flex: 9999 1 auto;
+  }
+
+  &[data-flex-layout-auto-mode='fill'] > .adhere-ui-flex-layout-auto {
+    // 折行后平均填满每行，桌面用的内联列权重在此模式下不参与分配。
+    flex-grow: 1 !important;
+  }
+
+  &.adhere-ui-flex-layout-horizontal[data-flex-layout-auto-min-width] {
+    > .adhere-ui-flex-layout-auto {
+      flex-basis: min(100%, var(--adhere-flex-layout-auto-min-width));
+    }
+
+    > .adhere-ui-flex-layout-fixed {
+      flex-basis: auto;
+    }
   }
 
   > .adhere-ui-flex-layout-fixed {

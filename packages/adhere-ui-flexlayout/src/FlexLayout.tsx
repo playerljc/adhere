@@ -48,6 +48,7 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
       direction,
       gutter = DEFAULT_GUTTER,
       isResponsive = false,
+      autoMinWidth,
       children,
       ...attrs
     } = props;
@@ -63,6 +64,12 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
     });
 
     const targetDirection = useMemo(() => direction ?? 'vertical', [direction]);
+    const hasAutoMinWidth =
+      isResponsive &&
+      targetDirection === 'horizontal' &&
+      typeof autoMinWidth === 'number' &&
+      Number.isFinite(autoMinWidth) &&
+      autoMinWidth >= 0;
 
     /**
      * 获取垂直栅格样式
@@ -75,6 +82,8 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
      * @returns {React.CSSProperties} 水平栅格样式
      */
     const getHorizontalGridStyle = useCallback((): React.CSSProperties => {
+      if (gutter === DEFAULT_GUTTER) return {};
+
       let rowGapOrigin = 0;
       let columnGapOrigin = 0;
 
@@ -127,11 +136,15 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
       const defaultStyle = style ?? {};
       const gridStyle = getGridStyle();
 
-      return {
+      const nextStyle: React.CSSProperties & { '--adhere-flex-layout-auto-min-width'?: string } = {
         ...defaultStyle,
         ...gridStyle,
       };
-    }, [style, getGridStyle]);
+      if (hasAutoMinWidth) {
+        nextStyle['--adhere-flex-layout-auto-min-width'] = autoMinWidth + 'px';
+      }
+      return nextStyle;
+    }, [style, getGridStyle, hasAutoMinWidth, autoMinWidth]);
 
     // 记忆化 Context value，避免每次渲染都使 Fixed/Auto 等 consumer 的 memo 失效
     const contextValue = useMemo(
@@ -159,6 +172,7 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
           {...attrs}
           className={classList}
           style={styleList}
+          data-flex-layout-auto-min-width={hasAutoMinWidth || undefined}
         >
           {children}
         </div>

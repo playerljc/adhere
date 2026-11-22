@@ -42,6 +42,17 @@ pnpm add @baifendian/adhere-ui-flexlayout
 
 ### 基础用法
 
+横向布局省略 `gutter` 时，行距由 CSS 的 `gap` 或 `row-gap` 决定。传入 `gutter` 时使用传入的间距，包括显式设置的 `0`。
+
+横向响应式布局可选传入 `autoMinWidth`（`number`，单位为 CSS 像素），让每个直接子 `FlexLayout.Auto` 使用同一个宽度基准。同行且伸缩权重相同的列等分可用空间，放不下时自动折行。`FlexLayout.Fixed` 以配置宽度参与折行。省略 `autoMinWidth` 时使用原有的内容基准。
+
+```jsx
+<FlexLayout direction="horizontal" isResponsive autoMinWidth={480}>
+  <FlexLayout.Auto>地图与榜单</FlexLayout.Auto>
+  <FlexLayout.Auto>图表</FlexLayout.Auto>
+</FlexLayout>
+```
+
 ```tsx
 import React from 'react';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
